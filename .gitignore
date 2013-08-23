@@ -1,0 +1,89 @@
+*~
+/LibSources/switches.yaml
+/LibSources/Mechatronix-Info.plist
+
+# Compiled source #
+###################
+test1
+test2
+test3
+test4
+test5
+
+*.com
+*.class
+*.dll
+*.exe
+*.framework
+*.bundle
+*.mexmaci*
+*.tar.gz
+*.tgz
+*.bak
+*.mla
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# WINDOWS specific binary
+*.dll
+*.obj
+*.lib
+*.exe
+*.pdb
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.pkg
+*.mpkg
+*.deb
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store*
+.AppleDouble
+._*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+/doc/html
+
+# auto git version noise
+InfoPlist.h
+ 
+# old skool
+.svn
+ 
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
