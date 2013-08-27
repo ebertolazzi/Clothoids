@@ -67,6 +67,42 @@ GenericContainer::clear() {
   data_type = GenericContainer::NOTYPE ;
 }
 
+//! Assign a generic container `a` to the generic container.
+GenericContainer const &
+GenericContainer::operator = ( GenericContainer const & gc ) {
+  this -> clear() ;
+  switch (gc.data_type) {
+    case NOTYPE:      this -> clear()                ; break ;
+    case POINTER:     this -> set_pointer(gc.data.p) ; break ;
+    case BOOL:        this -> set_bool(gc.data.b)    ; break ;
+    case INT:         this -> set_int(gc.data.i)     ; break ;
+    case REAL:        this -> set_real(gc.data.r)    ; break ;
+    case STRING:      this -> set_string(*gc.data.s) ; break ;
+      
+    case VEC_POINTER: this -> set_vec_pointer(*gc.data.v_p) ; break ;
+    case VEC_BOOL:    this -> set_vec_bool(*gc.data.v_b)    ; break ;
+    case VEC_INT:     this -> set_vec_int(*gc.data.v_i)     ; break ;
+    case VEC_REAL:    this -> set_vec_real(*gc.data.v_r)    ; break ;
+    case VEC_STRING:  this -> set_vec_string(*gc.data.v_s)  ; break ;
+      
+    case VECTOR:
+    { unsigned N = unsigned(gc.data.v->size()) ;
+      allocate_vector( N ) ;
+      std::copy( gc.data.v->begin(),
+                 gc.data.v->end(),
+                 this->data.v->begin() ) ;
+    }
+      break ;
+    case MAP:
+    { allocate_map() ;
+      this->data.m->insert( gc.data.m->begin(), gc.data.m->end() ) ;
+    }
+    default:
+      break ;
+  }
+  return * this ;
+}
+
 void
 GenericContainer::ck(char const who[], TypeAllowed tp) const {
   ASSERT( tp == data_type,
@@ -193,14 +229,35 @@ GenericContainer::set_vec_pointer( unsigned sz ) {
   return *data.v_p ;
 }
 
+GenericContainer::vec_pointer_type &
+GenericContainer::set_vec_pointer( vec_pointer_type const & v ) {
+  allocate_vec_pointer( unsigned(v.size()) ) ;
+  std::copy( v.begin(), v.end(), data.v_p->begin() ) ;
+  return *data.v_p ;
+}
+
 GenericContainer::vec_bool_type &
 GenericContainer::set_vec_bool( unsigned sz ) {
   allocate_vec_bool( sz ) ; return *data.v_b ;
 }
 
+GenericContainer::vec_bool_type &
+GenericContainer::set_vec_bool( vec_bool_type const & v ) {
+  allocate_vec_bool( unsigned(v.size()) ) ;
+  std::copy( v.begin(), v.end(), data.v_b->begin() ) ;
+  return *data.v_b ;
+}
+
 GenericContainer::vec_int_type &
 GenericContainer::set_vec_int( unsigned sz ) {
   allocate_vec_int( sz ) ;
+  return *data.v_i ;
+}
+
+GenericContainer::vec_int_type &
+GenericContainer::set_vec_int( vec_int_type const & v ) {
+  allocate_vec_int( unsigned(v.size()) ) ;
+  std::copy( v.begin(), v.end(), data.v_i->begin() ) ;
   return *data.v_i ;
 }
 
@@ -210,9 +267,23 @@ GenericContainer::set_vec_real( unsigned sz ) {
   return *data.v_r ;
 }
 
+GenericContainer::vec_real_type &
+GenericContainer::set_vec_real( vec_real_type const & v ) {
+  allocate_vec_real( unsigned(v.size()) ) ;
+  std::copy( v.begin(), v.end(), data.v_r->begin() ) ;
+  return *data.v_r ;
+}
+
 GenericContainer::vec_string_type &
 GenericContainer::set_vec_string( unsigned sz ) {
   allocate_vec_string( sz ) ;
+  return *data.v_s ;
+}
+
+GenericContainer::vec_string_type &
+GenericContainer::set_vec_string( vec_string_type const & v ) {
+  allocate_vec_string( unsigned(v.size()) ) ;
+  std::copy( v.begin(), v.end(), data.v_s->begin() ) ;
   return *data.v_s ;
 }
 

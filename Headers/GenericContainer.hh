@@ -188,11 +188,25 @@ public:
   vec_pointer_type & set_vec_pointer( unsigned sz = 0 ) ;
 
   /*! \brief
+   Set data to `vec_pointer_type`, allocate and initialize.
+   Return a reference to vector of pointer.
+   Copy the data from vector `v`.
+   */
+  vec_pointer_type & set_vec_pointer( vec_pointer_type const & v ) ;
+
+  /*! \brief
       Set data to `vec_bool_type`, allocate and initialize.
       Return a reference to vector of booleans.
       If `sz` > 0 then the vector is allocated to size `sz`.
    */
   vec_bool_type & set_vec_bool( unsigned sz = 0 ) ;
+
+  /*! \brief
+   Set data to `vec_bool_type`, allocate and initialize.
+   Return a reference to vector of `bool`.
+   Copy the data from vector `v`.
+   */
+  vec_bool_type & set_vec_bool( vec_bool_type const & v ) ;
 
   /*! \brief
       Set data to `vec_int_type`, allocate and initialize.
@@ -202,6 +216,13 @@ public:
   vec_int_type & set_vec_int( unsigned sz = 0 ) ;
 
   /*! \brief
+   Set data to `vec_int_type`, allocate and initialize.
+   Return a reference to vector of integer.
+   Copy the data from vector `v`.
+   */
+  vec_int_type & set_vec_int( vec_int_type const & v ) ;
+
+  /*! \brief
       Set data to `vec_real_type`, allocate and initialize.
       Return a reference to vector of floating point numbers.
    If `sz` > 0 then the vector is allocated to size `sz`.
@@ -209,11 +230,27 @@ public:
   vec_real_type & set_vec_real( unsigned sz = 0 ) ;
 
   /*! \brief
+   Set data to `vec_real_type`, allocate and initialize.
+   Return a reference to vector of floating point number.
+   Copy the data from vector `v`.
+   */
+  vec_real_type & set_vec_real( vec_real_type const & v ) ;
+
+  /*! \brief
       Set data to `vec_string_type`, allocate and initialize.
       Return a reference to vector of strings.
       If `sz` > 0 then the vector is allocated to size `sz`.
    */
   vec_string_type & set_vec_string( unsigned sz = 0 ) ;
+
+  
+  /*! \brief
+   Set data to `vec_string_type`, allocate and initialize.
+   Return a reference to vector of strings.
+   Copy the data from vector `v`.
+   */
+  vec_string_type & set_vec_string( vec_string_type const & v ) ;
+
   //@}
 
   //! \name Initialize generic data
@@ -381,25 +418,35 @@ public:
   //@{
 
   //! Assign a boolean to the generic container.
-  GenericContainer & operator = ( bool a )       { this -> set_bool(a) ; return * this ; }
+  GenericContainer & operator = ( bool a )
+  { this -> set_bool(a) ; return * this ; }
 
   //! Assign an integer to the generic container.
-  GenericContainer & operator = ( unsigned a )   { this -> set_int(a)  ; return * this ; }
+  GenericContainer & operator = ( unsigned a )
+  { this -> set_int(a)  ; return * this ; }
 
   //! Assign an integer to the generic container.
-  GenericContainer & operator = ( int a )        { this -> set_int(a)  ; return * this ; }
+  GenericContainer & operator = ( int a )
+  { this -> set_int(a)  ; return * this ; }
 
   //! Assign a floating point number to the generic container.
-  GenericContainer & operator = ( float a )      { this -> set_real(a) ; return * this ; }
+  GenericContainer & operator = ( float a )
+  { this -> set_real(a) ; return * this ; }
 
   //! Assign a floating point number to the generic container.
-  GenericContainer & operator = ( double a )     { this -> set_real(a) ; return * this ; }
+  GenericContainer & operator = ( double a )
+  { this -> set_real(a) ; return * this ; }
 
   //! Assign a string to the generic container.
-  GenericContainer & operator = ( char const a[] )         { this -> set_string(a) ; return * this ; }
+  GenericContainer & operator = ( char const a[] )
+  { this -> set_string(a) ; return * this ; }
 
   //! Assign a string to the generic container.
-  GenericContainer & operator = ( std::string const & a )  { this -> set_string(a) ; return * this ; }
+  GenericContainer & operator = ( std::string const & a )
+  { this -> set_string(a) ; return * this ; }
+
+  //! Assign a generic container `a` to the generic container.
+  GenericContainer const & operator = ( GenericContainer const & a ) ;
   //@}
   
   
@@ -407,30 +454,32 @@ public:
   //@{
   
   //! Construct a generic container storing a boolean
-  GenericContainer( bool a )       { *this = a ; }
+  GenericContainer( bool a ) { *this = a ; }
   
   //! Construct a generic container storing an integer
-  GenericContainer( unsigned a )   { *this = a ; }
+  GenericContainer( unsigned a ) { *this = a ; }
   
   //! Construct a generic container storing an integer
-  GenericContainer( int a )        { *this = a ; }
+  GenericContainer( int a ) { *this = a ; }
   
   //! Construct a generic container storing a floating point number
-  GenericContainer( float a )      { *this = a ; }
+  GenericContainer( float a ) { *this = a ; }
   
   //! Construct a generic container storing a floating point number
-  GenericContainer( double a )     { *this = a ; }
+  GenericContainer( double a ) { *this = a ; }
   
   //! Construct a generic container storing a string
   GenericContainer( char const a[] ) { *this = a ; }
-  
+
   //! Construct a generic container storing a string
-  GenericContainer( std::string const & a )  { *this = a ; }
+  GenericContainer( std::string const & a ) { *this = a ; }
+
+  //! Construct a generic container copying container `gc`
+  GenericContainer( GenericContainer const & gc ) { *this = gc ; }
   //@}
 
   void print( std::ostream &, std::string const & prefix = "" ) const ;
   void to_yaml( std::ostream &, std::string const & prefix = "" ) const ;
-
 } ;
 
 

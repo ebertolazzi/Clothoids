@@ -72,14 +72,21 @@ main() {
     vg[1] = 3.14 ;
     vg[2] = "nonna papera" ;
   
-    cout << "Print gc:\n";
-    //gc.print(cout) ;
-    gc.to_yaml(cout) ;
+    cout << "\n\n\nPrint gc:\n";
+    gc.print(cout) ;
+    //gc.to_yaml(cout) ;
+    
+    GenericContainer gc1 = gc ; // save a copy
     gc.clear() ;
+
+    cout << "\n\n\nPrint gc:\n";
+    gc.print(cout) ;
+    //gc.to_yaml(cout) ;
+
+    cout << "\n\n\nPrint gc1:\n";
+    gc1.print(cout) ;
+    //gc1.to_yaml(cout) ;
   
-    cout << "Print gc:\n";
-    //gc.print(cout) ;
-    gc.to_yaml(cout) ;
   }
   catch ( std::exception & exc ) {
     cout << exc.what() << '\n'  ;
