@@ -610,7 +610,7 @@ GenericContainer::print( std::ostream & stream, std::string const & prefix ) con
     case VEC_STRING:
       { vec_string_type const & v = this -> get_vec_string() ;
         for ( int i = 0 ; i < v.size() ; ++i )
-          stream << prefix << "vec_string(" << i << "): ''" << v[i] << "''\n" ;
+          stream << prefix << "vec_string(" << i << "): " << v[i] << "\n" ;
       }
       break ;
 

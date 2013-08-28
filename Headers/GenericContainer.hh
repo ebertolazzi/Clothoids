@@ -21,6 +21,39 @@
 /// file: GenericContainer.hh
 ///
 
+/*! 
+\mainpage  Generic container class
+\author    Enrico Bertolazzi (enrico.bertolazzi@unitn.it), homepage: http://www.ing.unitn.it/~bertolaz
+\version   1.0.2
+\date      2013
+\copyright GNU Public License.
+
+\details
+
+This class is used to interchange data with scripting languages.
+`GenericContainer` is a class which permit to store eterogeneous data:
+
+- pointer
+- boolean
+- integer
+- floating point
+- string
+- vector of pointer
+- vector of boolean
+- vector of integer
+- vector of floating point
+- vector of string
+
+in addition to this data type the following two container are added
+
+- vector of `GenericContainer`
+- map of `GenericContainer`
+
+this permits to build complex recursive data.
+The main usage of the class is in interchange data with
+scripting language like `Ruby`, `Lua`, `MATLAB`.
+*/
+
 #ifndef GENERIC_CONTAINER_HH
 #define GENERIC_CONTAINER_HH
 
@@ -32,37 +65,21 @@
 #include <stdexcept>
 
 #ifndef ASSERT
-  #ifdef MECHATRONIX_DEBUG
-    #define ASSERT(COND,MSG)                           \
-      if ( !(COND) ) {                                 \
-        std::ostringstream ost, ost1 ;                 \
-        ost1 << MSG ;                                  \
-        printTrace(__LINE__,__FILE__,ost1.str(),ost) ; \
-        throw std::runtime_error(ost.str()) ;          \
-      }
-  #else
-    #define ASSERT(COND,MSG)                           \
-      if ( !(COND) ) {                                 \
-        std::ostringstream ost ;                       \
-        ost << "On line: " << __LINE__                 \
-            << " file: " << __FILE__                   \
-            << '\n' << MSG << '\n' ;                   \
-        throw std::runtime_error(ost.str()) ;          \
-      }  
-  #endif
+  #define ASSERT(COND,MSG)                  \
+    if ( !(COND) ) {                        \
+      std::ostringstream ost ;              \
+      ost << "On line: " << __LINE__        \
+          << " file: " << __FILE__          \
+          << '\n' << MSG << '\n' ;          \
+      throw std::runtime_error(ost.str()) ; \
+    }
 #endif
 
-//!  
 /*!
-  \brief     Generic container class
-  \details   This class is used to interchange data with scripting languages.
-  \author    Enrico Bertolazzi
-  \version   1.0
-  \date      2013
-  \copyright GNU Public License.
+  \brief
 
-  `GenericContainer` is a class with permit to store eterogeneous data:
-  
+  `GenericContainer` is a class which permit to store eterogeneous data:
+
   - pointer
   - boolean
   - integer
@@ -78,10 +95,6 @@
 
   - vector of `GenericContainer`
   - map of `GenericContainer`
-
-  this permits to build complex recursive data.
-  The main usage of the class is in interchange data with
-  scripting language like `Ruby`, `Lua`, `MATLAB`.
 
  */
 class GenericContainer {
