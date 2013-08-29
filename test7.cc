@@ -16,39 +16,43 @@
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
-
 /*!
- \example test1.cc
-
- Simple usage of `GenericContainer` class.
- The class is used to store one element
- of the basic available types.
+ \example test7.cc
  
+ Example of I/O utilities. `GenericContainer` is used 
+ to read and store a table from a file and to print
+ a formatted table on a stream.
  */
 
 #include "GenericContainer.hh"
+#include <iostream>
+#include <fstream>
 
 using namespace std ;
 
 int
 main() {
+  
   cout << "\n\n\n"
        << "***********************\n"
-       << "       test N.1        \n"
+       << "       test N.7        \n"
        << "***********************\n\n" ;
-  // Simple example using simple data
-  GenericContainer gc1 = 1 ;
-  GenericContainer gc2 = 1.2 ;
-  GenericContainer gc3 = true ;
-  GenericContainer gc4 = "pippo" ;
-  GenericContainer gc5 ;
   
-  cout << "GenericContainer simple usage\n" ;
-  cout << "gc1: " ; gc1.info(cout) ;
-  cout << "gc2: " ; gc2.info(cout) ;
-  cout << "gc3: " ; gc3.info(cout) ;
-  cout << "gc4: " ; gc4.info(cout) ;
-  cout << "gc5: " ; gc5.info(cout) ;
-
+  try {
+    GenericContainer gc ;
+    ifstream file("data_example.txt") ;
+    if ( file.fail() ) throw std::runtime_error("file to open file") ;
+    gc.readFormattedData( file, "#", "\t " ) ;
+    gc.print(cout) ;
+    cout << "\n\nData Read:\n" ;
+    gc.writeFormattedData( cout, '\t' ) ;
+  }
+  catch ( std::exception & exc ) {
+    cout << exc.what() << '\n'  ;
+  }
+  catch (...) {
+    cout << "Unknonwn error\n" ;
+  }
+  
   cout << "ALL DONE!\n\n\n\n" ;
 }

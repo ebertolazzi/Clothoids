@@ -17,6 +17,10 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+/*!
+ \example test5.cc
+ */
+
 #include "GenericContainer.hh"
 
 using namespace std ;
@@ -32,8 +36,7 @@ main() {
   try {
     
     GenericContainer gc ;
-    gc.set_vector() ;
-    GenericContainer::vector_type & v = gc.get_vector() ;
+    GenericContainer::vector_type & v = gc.set_vector() ;
     v.resize(10) ;
     v[0] = 1 ;
     v[1].set_vec_real() ;
@@ -51,7 +54,9 @@ main() {
     mm["pippo"]    = 13 ;
     mm["pluto"]    = 1  ;
     mm["paperino"] = 3  ;
-    v[2]["aaa"]    = "stringa"  ; // is the same as mm["aaa"] = "stringa"
+    GenericContainer & gmm = v[2] ; // access element 2 as GenericContainer
+    gmm["aaa"]     = "stringa1"  ; // is the same as mm["aaa"] = "stringa"
+    gmm["bbb"]     = "stringa2"  ; // is the same as mm["aaa"] = "stringa"
     GenericContainer::vec_string_type & vs = v[3].get_vec_string() ;
     vs.push_back("string1");
     vs.push_back("string2");

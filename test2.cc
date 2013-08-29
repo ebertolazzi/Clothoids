@@ -17,6 +17,17 @@
  |                                                                          |
  \*--------------------------------------------------------------------------*/
 
+/*!
+ \example test2.cc
+ 
+ Simple usage of `GenericContainer` class.
+ The class is used to store one element
+ of the basic available types.
+ The elements are initialized by deducing the type
+ on the right of `=` operator.
+ 
+ */
+
 #include "GenericContainer.hh"
 
 using namespace std ;

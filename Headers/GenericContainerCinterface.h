@@ -17,20 +17,20 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: GenericContainerCinterface.h
-///
+/*
+// file: GenericContainerCinterface.h
+*/
 
 /*!
   \addtogroup Generic Container C interface
  */
 
-//@{
+/* @{ */
 
 #ifndef GENERIC_CONTAINER_C_INTERFACE_H
 #define GENERIC_CONTAINER_C_INTERFACE_H
 
-#ifdef __cplusplus__
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -42,31 +42,31 @@ enum {
   GENERIC_CONTAINER_BAD_HEAD
 } ;
 
-//! Select or create a new `GenericContainer` object 'name'
+/*! Select or create a new `GenericContainer` object 'name' */
 int GC_select( char const name[] ) ;
 
-//! Delete the `GenericContainer` object 'name'
+/*! Delete the `GenericContainer` object 'name' */
 int GC_delete( char const name[] ) ;
 
-//! Move `head` up to a level
+/*! Move `head` up to a level */
 int GC_pop_head() ;
 
-//! Print the actual `GenericContainer`
+/*! Print the actual `GenericContainer` */
 int GC_print() ;
   
-//! Get pointer to the internal `GenericContainer` object 'name'
+/*! Get pointer to the internal `GenericContainer` object 'name' */
 void * GC_mem_ptr( char const name[] ) ;
   
-//! Set actual pointed element of `GenericContainer` to `bool` with value `a`
-int GC_set_bool( bool const a ) ;
+/*! Set actual pointed element of `GenericContainer` to `bool` with value `a` */
+int GC_set_bool( int const a ) ;
 
-//! Set actual pointed element of `GenericContainer` to `int` with value `a`
+/*! Set actual pointed element of `GenericContainer` to `int` with value `a` */
 int GC_set_int( int const a ) ;
 
-//! Set actual pointed element of `GenericContainer` to `double` with value `a`
+/*! Set actual pointed element of `GenericContainer` to `double` with value `a` */
 int GC_set_real( double const a ) ;
 
-//! Set actual pointed element of `GenericContainer` to `string` with value `a`
+/*! Set actual pointed element of `GenericContainer` to `string` with value `a` */
 int GC_set_string( char const a[] ) ;
 
 /*! \brief
@@ -110,7 +110,7 @@ int GC_push_real( double const a ) ;
  *  a vector of strings of size `nelem` and copy vector
  *  of strings `a` to the element.
  */
-int GC_set_vector_of_string( char const *a[], int nelem ) ;
+int GC_set_vector_of_string( char const *a[], unsigned nelem ) ;
   
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to
@@ -155,14 +155,14 @@ int GC_set_map() ;
  */
 int GC_set_map_position( char const pos[] ) ;
 
-#ifdef __cplusplus__
-  } ;
+#ifdef __cplusplus
+}
 #endif
 
 #endif
 
-//@}
+/* @} */
 
-///
-/// eof: GenericContainerCinterface.hh
-///
+/*
+// eof: GenericContainerCinterface.hh
+*/

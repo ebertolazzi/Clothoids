@@ -17,6 +17,17 @@
  |                                                                          |
  \*--------------------------------------------------------------------------*/
 
+/*!
+ \example test3.cc
+ 
+ Complex usage of `GenericContainer` class.
+ The class is used to store a generic vector, i.e.
+ a vector whose elements are of type `GenericContainer`
+ or basic types.
+ An error is forced to show an error message.
+ 
+ */
+
 #include "GenericContainer.hh"
 
 using namespace std ;
@@ -39,7 +50,7 @@ main() {
     gc . set_vector() ;
     cout << "gc: " ; gc.info(cout) ;
 
-    GenericContainer::vector_type & v = gc . get_vector() ;
+    GenericContainer::vector_type & v = gc.get_vector() ;
     v.resize(10) ;
     cout << "gc: " ; gc.info(cout) ;
 

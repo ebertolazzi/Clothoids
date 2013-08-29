@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: GenericContainer.hh
-///
+//
+// file: GenericContainer.hh
+//
 
 /*! 
 \mainpage  Generic container class
@@ -29,9 +29,13 @@
 \copyright GNU Public License.
 
 \details
+ 
+This library available at
+ 
+ - https://github.com/ebertolazzi/GenericContainer
+ - https://bitbucket.org/ebertolazzi/genericcontainer
 
-This class is used to interchange data with scripting languages.
-`GenericContainer` is a class which permit to store eterogeneous data:
+implement `GenericContainer` a class which permit to store eterogeneous data:
 
 - pointer
 - boolean
@@ -52,19 +56,53 @@ in addition to this data type the following two container are added
 this permits to build complex recursive data.
 The main usage of the class is in interchange data with
 scripting language like `Ruby`, `Lua`, `MATLAB`.
+
+
+The usage is simple, for example it
+can be used as an associative array with eterogenous data
+
+~~~~~~~~~~~~~{.cc}
+GenericContainer gc ;
+gc["one"]  = 1       ; // store integer
+gc["two"]  = true    ; // store a boolean
+gc["3"]    = 1.4     ; // store floating point number
+gc["four"] = "pippo" ; // store a string
+gc["five"].set_vec_int(10) ; // store a vector of integer of 10 elements
+~~~~~~~~~~~~~
+
+and to retrieve elements
+
+~~~~~~~~~~~~~{.cc}
+cout << gc["one"].get_int()     << '\n' ;
+cout << gc["two"].get_bool()    << '\n' ;
+cout << gc["3"].get_real()      << '\n' ;
+cout << gc["four"].get_string() << '\n' ;
+GenericContainer::vec_int_type & v = gc["five"].get_vec_int();
+cout << v[1] << '\n' ;
+~~~~~~~~~~~~~
+
 */
 
 #ifndef GENERIC_CONTAINER_HH
 #define GENERIC_CONTAINER_HH
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <map>
 #include <vector>
-#include <sstream>
-#include <stdexcept>
+
+// if C++ < C++11 define nullptr
+#if __cplusplus <= 199711L
+  #include <cstddef>
+  #define nullptr NULL
+#endif
 
 #ifndef ASSERT
+  #if defined(__MINGW32__) || defined(__MINGW64__)
+    #include <cstdlib>
+  #endif
+  #include <stdexcept>
   #define ASSERT(COND,MSG)                  \
     if ( !(COND) ) {                        \
       std::ostringstream ost ;              \
@@ -116,19 +154,19 @@ public:
   typedef std::vector<GenericContainer>          vector_type ; //!< vector of `GenericContainer`
   typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
 
-  enum TypeAllowed { NOTYPE=0,
-                     POINTER,
-                     BOOL,
-                     INT,
-                     REAL,
-                     STRING,
-                     VEC_POINTER,
-                     VEC_BOOL,
-                     VEC_INT,
-                     VEC_REAL,
-                     VEC_STRING,
-                     VECTOR,
-                     MAP } ;
+  enum TypeAllowed { GC_NOTYPE=0,
+                     GC_POINTER,
+                     GC_BOOL,
+                     GC_INT,
+                     GC_REAL,
+                     GC_STRING,
+                     GC_VEC_POINTER,
+                     GC_VEC_BOOL,
+                     GC_VEC_INT,
+                     GC_VEC_REAL,
+                     GC_VEC_STRING,
+                     GC_VECTOR,
+                     GC_MAP } ;
 
 private:
 
@@ -164,20 +202,29 @@ private:
 
   void allocate_vector( unsigned sz ) ;
   void allocate_map() ;
+
   void ck(char const [],TypeAllowed) const ;
+  int  ck(TypeAllowed) const ;
 
 public:
 
-  GenericContainer() ; //!< build an instance of `GenericContainer` with empty data
-  ~GenericContainer() { clear() ; } //!< destroy the instance of `GenericContainer`
-
-  void clear() ; //!< free memory of the data stored in `GenericContainer`, data type become `NOTYPE`
-
+  //! build an instance of `GenericContainer` with empty data
+  GenericContainer() ;
+  
+  //! destroy the instance of `GenericContainer`
+  ~GenericContainer() { clear() ; }
+  
+  //! free memory of the data stored in `GenericContainer`, data type become `NOTYPE`
+  void clear() ;
+  
   //! \name Initialize simple data
   //@{
   //! Set data to `pointer_type` initialize and return a reference to the data
   pointer_type & set_pointer( pointer_type value );
-  
+
+  //! Free pointer to memory pointed, set data to `NO TYPE` initialize and return a reference to the data
+  GenericContainer & free_pointer() ;
+
   //! Set data to `bool_type` initialize and return a reference to the data
   bool_type & set_bool( bool_type value ) ;
 
@@ -281,7 +328,7 @@ public:
   //! \name Access to a single element
   //@{
   
-  //! Return an integer reprsenting the type of data stored
+  //! Return an integer representing the type of data stored
   /*!
      Integer to data type map
      ------------------------
@@ -301,17 +348,23 @@ public:
        12. `map_type`
 
   */
-  unsigned get_type() const { return data_type ; }
+  TypeAllowed get_type() const { return data_type ; }
   
+  //! Return a string representing the type of data stored
+  std::string get_type_name() const ;
+
   //! Print to stream the kind of data stored
   GenericContainer const & info( std::ostream & stream ) const ;
 
   //! If data is boolean, integer or floating point return number, otherwise return `0`.
   real_type get_number() const ;
+  
+  template <typename T>
+  T * & get_pointer() { ck("get_pointer",GC_POINTER) ; return (T*)data.p ; }
 
-  pointer_type &       get_pointer() ;
-  pointer_type const & get_pointer() const ;
-  //!< Return teh stored generic pointer (if fails issue an error).
+  template <typename T>
+  T const * get_pointer() const { ck("get_pointer",GC_POINTER) ; return (T const*)data.p ; }
+  //!< Return the stored generic pointer (if fails issue an error).
 
   bool_type       & get_bool() ;
   bool_type const & get_bool() const ;
@@ -360,10 +413,14 @@ public:
   //! \name Access to element of vector type data
   //@{
   //! If `i`-th element of the vector is boolean, integer or floating point then return number, otherwise return `0`.
-  real_type get_number( unsigned i ) { return (*this)[i].get_number() ; }
+  real_type get_number( unsigned i ) const ;
 
-  void *       get_pointer( unsigned i )       { return (*this)[i].get_pointer() ; }
-  void const * get_pointer( unsigned i ) const { return (*this)[i].get_pointer() ; }
+  template <typename T>
+  T * get_pointer( unsigned i ) { return (*this)[i].get_pointer<T>() ; }
+
+  template <typename T>
+  T const * get_pointer( unsigned i ) const
+  { return (*this)[i].get_pointer<T>() ; }
   //!< Return `i`-th generic pointer (if fails issue an error).
   
   bool_type       & get_bool( unsigned i )       { return (*this)[i].get_bool() ; }
@@ -412,12 +469,15 @@ public:
    */
   GenericContainer const & operator () ( unsigned i ) const ;
   
+
+  GenericContainer & operator [] ( std::string const & s ) ;
+
   /*! \brief
-     Overload of the `[]` operator to access the `i`-th element of a stored generic map. 
+     Overload of the `[]` operator to access the `s`-th element of a stored generic map. 
      If the element do not exists it is created.
   */
-  GenericContainer & operator [] ( std::string const & s ) ;
-  
+  GenericContainer const & operator [] ( std::string const & s ) const ;
+
   /*! \brief 
      Overload of the `()` operator to access the `i`-th element of a stored generic map. 
      If the element do not exists an error is issued.
@@ -461,8 +521,7 @@ public:
   //! Assign a generic container `a` to the generic container.
   GenericContainer const & operator = ( GenericContainer const & a ) ;
   //@}
-  
-  
+
   //! \name Initialize data by overloading constructor
   //@{
   
@@ -491,13 +550,67 @@ public:
   GenericContainer( GenericContainer const & gc ) { *this = gc ; }
   //@}
 
-  void print( std::ostream &, std::string const & prefix = "" ) const ;
-  void to_yaml( std::ostream &, std::string const & prefix = "" ) const ;
-} ;
+  //! \name I/O for `GenericContainer` objects
+  //@{
 
+  //! print the contents of the object in a human readable way
+  void print( std::ostream &, std::string const & prefix = "" ) const ;
+
+  //! print the contents of the object in yaml syntax
+  void to_yaml( std::ostream &, std::string const & prefix = "" ) const ;
+
+  /*! 
+    \brief write `GenericContainer` as regular formatted data
+     
+    Write the contents of the `GenericContainer` object to stream.
+   
+    `GenericContainer` must be a map which contains the fields:
+     
+    - "headers" this element must be a `vec_string_type` which contains
+                the strings of the headers of the columns of the data
+
+    - "data"    this element must be a `vector_type` which contais the
+                vectors which are the columns of the data to be saved.
+                Each column can be of type
+                
+                1. `vec_bool_type`
+                2. `vec_int_type`
+                3. `vec_real_type`
+   
+                all the vector must have the same size.
+
+     \param stream     stream to write the output
+     \param delimiter  desired delimiter (optional). Default is tab.
+   */
+
+  GenericContainer const &
+  writeFormattedData( std::ostream & stream, char const delimiter = '\t' ) const ;
+
+  /*! 
+    \brief read regular formatted data from `stream` to `GenericContainer`.
+   
+    After successful read `GenericContainer` will be a map which contains the fields:
+     
+    - "headers"  a `vec_string_type` which contains
+                 the strings of the headers of the columns of the data
+
+    - "data"     a `vector_type` which contais the vectors which are the
+                 columns of the data readed of type `vec_real_type`.
+
+     \param stream       stream to write the output
+     \param commentChars lines beginnig with one of this chars are treated as comments. 
+                         Default are `#` and `%`
+     \param delimiters   caracters used as delimiter for headers
+   */
+  GenericContainer &
+  readFormattedData( std::istream & stream,
+                     char const commentChars[] = "#%",
+                     char const delimiters[] = " \t" ) ;
+
+} ;
 
 #endif
 
-///
-/// eof: GenericContainer.hh
-///
+//
+// eof: GenericContainer.hh
+//

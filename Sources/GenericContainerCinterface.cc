@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: GenericContainerCinterface.cc
-///
+//
+// file: GenericContainerCinterface.cc
+//
 
 /*
  \file GenericContainerCinterface.cc
@@ -39,7 +39,7 @@ using namespace std ;
 #define EXTERN_C extern "C"
 
 static std::map<std::string,GenericContainer> gc_stored ;
-std::deque<GenericContainer*>                 head ;
+static std::deque<GenericContainer*>          head ;
 
 static
 int
@@ -57,7 +57,7 @@ static
 int
 check_no_data( int data_type ) {
   if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD ;
-  if ( GenericContainer::NOTYPE == head.back() -> get_type() ||
+  if ( GenericContainer::GC_NOTYPE == head.back() -> get_type() ||
        data_type == head.back() -> get_type() ) return GENERIC_CONTAINER_OK ;
   return GENERIC_CONTAINER_NOT_EMPTY ;
 }
@@ -78,6 +78,7 @@ GC_delete( char const name[] ) {
   return GENERIC_CONTAINER_OK ;
 }
 
+EXTERN_C
 int
 GC_pop_head() {
   if ( head.empty() ) {
@@ -88,6 +89,7 @@ GC_pop_head() {
   return GENERIC_CONTAINER_OK ;
 }
 
+EXTERN_C
 int
 GC_print() {
   if ( head.empty() ) {
@@ -98,43 +100,49 @@ GC_print() {
   }
 }
 
+EXTERN_C
 void *
 GC_mem_ptr( char const name[] ) {
   // check if exists ?
   return (void*) & gc_stored[name] ;
 }
 
+EXTERN_C
 int
-GC_set_bool( bool const a ) {
-  int ok = check_no_data( GenericContainer::BOOL ) ;
+GC_set_bool( int const a ) {
+  int ok = check_no_data( GenericContainer::GC_BOOL ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_bool(a) ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_int( int const a ) {
-  int ok = check_no_data( GenericContainer::INT ) ;
+  int ok = check_no_data( GenericContainer::GC_INT ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_int(a) ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_real( double const a ) {
-  int ok = check_no_data( GenericContainer::REAL ) ;
+  int ok = check_no_data( GenericContainer::GC_REAL ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_real(a) ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_string( char const a[] ) {
-  int ok = check_no_data( GenericContainer::STRING ) ;
+  int ok = check_no_data( GenericContainer::GC_STRING ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_string(a) ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_vector_of_int( int const a[], int nelem ) {
-  int ok = check_no_data( GenericContainer::VEC_INT ) ;
+  int ok = check_no_data( GenericContainer::GC_VEC_INT ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
     head.back() -> set_vec_int( nelem ) ;
     GenericContainer::vec_int_type & v = head.back() -> get_vec_int() ;
@@ -143,20 +151,22 @@ GC_set_vector_of_int( int const a[], int nelem ) {
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_empty_vector_of_int() {
-  int ok = check_no_data( GenericContainer::VEC_INT ) ;
+  int ok = check_no_data( GenericContainer::GC_VEC_INT ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_vec_int() ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_push_int( int const a ) {
-  int ok = check( GenericContainer::VEC_INT ) ;
+  int ok = check( GenericContainer::GC_VEC_INT ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
     GenericContainer::vec_int_type & v = head.back() -> get_vec_int() ;
     v.push_back( a ) ;
-  } else if ( (ok = check( GenericContainer::VECTOR )) == GENERIC_CONTAINER_OK ) {
+  } else if ( (ok = check( GenericContainer::GC_VECTOR )) == GENERIC_CONTAINER_OK ) {
     GenericContainer::vector_type & v = head.back() -> get_vector() ;
     GenericContainer tmp ;
     tmp . set_int( a ) ;
@@ -165,9 +175,10 @@ GC_push_int( int const a ) {
   return ok ;  
 }
 
+EXTERN_C
 int
 GC_set_vector_of_real( double const a[], int nelem ) {
-  int ok = check_no_data( GenericContainer::VEC_REAL ) ;
+  int ok = check_no_data( GenericContainer::GC_VEC_REAL ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
     head.back() -> set_vec_real( nelem ) ;
     GenericContainer::vec_real_type & v = head.back() -> get_vec_real() ;
@@ -176,74 +187,83 @@ GC_set_vector_of_real( double const a[], int nelem ) {
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_empty_vector_of_real() {
-  int ok = check_no_data( GenericContainer::VEC_REAL ) ;
+  int ok = check_no_data( GenericContainer::GC_VEC_REAL ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_vec_real() ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_push_real( double const a ) {
-  int ok = check( GenericContainer::VEC_REAL ) ;
+  int ok = check( GenericContainer::GC_VEC_REAL ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
     GenericContainer::vec_real_type & v = head.back() -> get_vec_real() ;
     v.push_back( a ) ;
-  } else if ( (ok = check( GenericContainer::VECTOR )) == GENERIC_CONTAINER_OK ) {
+  } else if ( (ok = check( GenericContainer::GC_VECTOR )) == GENERIC_CONTAINER_OK ) {
     GenericContainer::vector_type & v = head.back() -> get_vector() ;
     v.push_back( a ) ;
   }
   return ok ;
 }
 
+EXTERN_C
 int
-GC_set_vector_of_string( char const *a[], int nelem ) {
-  int ok = check_no_data( GenericContainer::VEC_STRING ) ;
+GC_set_vector_of_string( char const *a[], unsigned nelem ) {
+  int ok = check_no_data( GenericContainer::GC_VEC_STRING ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
     head.back() -> set_vec_string( nelem ) ;
     GenericContainer::vec_string_type & v = head.back() -> get_vec_string() ;
-    for ( unsigned i = 0 ; i < nelem ; ++i ) v[i] = a[i] ;
+    for ( unsigned i = 0 ; i < nelem ; ++i )
+      v[i] = a[i] ;
   }
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_empty_vector_of_string() {
-  int ok = check_no_data( GenericContainer::VEC_STRING ) ;
+  int ok = check_no_data( GenericContainer::GC_VEC_STRING ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_vec_string() ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_push_string( char const a[] ) {
-  int ok = check( GenericContainer::VEC_STRING ) ;
+  int ok = check( GenericContainer::GC_VEC_STRING ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
     GenericContainer::vec_string_type & v = head.back() -> get_vec_string() ;
     v.push_back( a ) ;
-  } else if ( (ok = check( GenericContainer::VECTOR )) == GENERIC_CONTAINER_OK ) {
+  } else if ( (ok = check( GenericContainer::GC_VECTOR )) == GENERIC_CONTAINER_OK ) {
     GenericContainer::vector_type & v = head.back() -> get_vector() ;
     v.push_back( a ) ;
   }
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_vector( int nelem ) {
-  int ok = check_no_data( GenericContainer::VECTOR ) ;
+  int ok = check_no_data( GenericContainer::GC_VECTOR ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_vector( nelem ) ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_empty_vector() {
-  int ok = check_no_data( GenericContainer::VECTOR ) ;
+  int ok = check_no_data( GenericContainer::GC_VECTOR ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_vector() ;
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_vector_position( int pos ) {
-  int ok = check( GenericContainer::VECTOR ) ;
+  int ok = check( GenericContainer::GC_VECTOR ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
     GenericContainer * gc = &(*head.back())[pos] ;
     head.push_back(gc) ;
@@ -251,9 +271,10 @@ GC_set_vector_position( int pos ) {
   return ok ;
 }
 
+EXTERN_C
 int
 GC_set_map() {
-  int ok = check_no_data( GenericContainer::MAP ) ;
+  int ok = check_no_data( GenericContainer::GC_MAP ) ;
   if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_map() ;
   return ok ;
 }
@@ -262,16 +283,18 @@ GC_set_map() {
  *  Set the position of insertion point is at the `pos` element
  *  of the actual map.
  */
+EXTERN_C
 int
 GC_set_map_position( char const pos[] ) {
-  int ok = check( GenericContainer::MAP ) ;
+  int ok = check( GenericContainer::GC_MAP ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
-    GenericContainer * gc = &(*head.back())[pos] ;
+    std::string tmp(pos) ; // temporary to make happy clang compiler
+    GenericContainer * gc = &(*head.back())[tmp] ;
     head.push_back(gc) ;
   }
   return ok ;
 }
 
-///
-/// eof: GenericContainerCinterface.cc
-///
+//
+// eof: GenericContainerCinterface.cc
+//

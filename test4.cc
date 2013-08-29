@@ -17,6 +17,16 @@
  |                                                                          |
  \*--------------------------------------------------------------------------*/
 
+/*!
+ \example test4.cc
+ 
+ Complex usage of `GenericContainer` class.
+ The class is used to store a generic map, i.e.
+ a map whose elements are of type `GenericContainer`
+ or basic types.
+ 
+ */
+
 #include "GenericContainer.hh"
 
 using namespace std ;

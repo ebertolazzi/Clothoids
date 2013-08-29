@@ -34,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>test7.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -63,6 +68,11 @@
 			<true/>
 		</dict>
 		<key>D9DB2C0D17BA37B000BBE02D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D9F123CF17CFDF6D0045F645</key>
 		<dict>
 			<key>primary</key>
 			<true/>
