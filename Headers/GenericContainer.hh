@@ -81,6 +81,9 @@ GenericContainer::vec_int_type & v = gc["five"].get_vec_int();
 cout << v[1] << '\n' ;
 ~~~~~~~~~~~~~
 
+For more complex emxamples and recursive data see example test files
+in the distribution.
+
 */
 
 #ifndef GENERIC_CONTAINER_HH
@@ -91,6 +94,7 @@ cout << v[1] << '\n' ;
 #include <string>
 #include <map>
 #include <vector>
+#include <cstdlib>
 
 // if C++ < C++11 define nullptr
 #if __cplusplus <= 199711L
@@ -98,18 +102,25 @@ cout << v[1] << '\n' ;
   #define nullptr NULL
 #endif
 
-#ifndef ASSERT
-  #if defined(__MINGW32__) || defined(__MINGW64__)
-    #include <cstdlib>
-  #endif
+#ifndef GC_ASSERT
   #include <stdexcept>
-  #define ASSERT(COND,MSG)                  \
-    if ( !(COND) ) {                        \
-      std::ostringstream ost ;              \
-      ost << "On line: " << __LINE__        \
-          << " file: " << __FILE__          \
-          << '\n' << MSG << '\n' ;          \
+  #define GC_ASSERT(COND,MSG)                           \
+    if ( !(COND) ) {                                    \
+      std::ostringstream ost ;                          \
+      ost << "On line: " << __LINE__                    \
+          << " file: " << __FILE__                      \
+          << "\nin GenericContainer: " << MSG << '\n' ; \
       throw std::runtime_error(ost.str()) ; \
+    }
+#endif
+
+#ifndef GC_WARNING
+  #include <stdexcept>
+  #define GC_WARNING(COND,MSG)                                 \
+    if ( !(COND) ) {                                           \
+      std::cout << "On line: " << __LINE__                     \
+                << " file: " << __FILE__                       \
+                 << "\nin GenericContainer: " << MSG << '\n' ; \
     }
 #endif
 
@@ -363,7 +374,7 @@ public:
   T * & get_pointer() { ck("get_pointer",GC_POINTER) ; return (T*)data.p ; }
 
   template <typename T>
-  T const * get_pointer() const { ck("get_pointer",GC_POINTER) ; return (T const*)data.p ; }
+  T get_pointer() const { ck("get_pointer",GC_POINTER) ; return (T)data.p ; }
   //!< Return the stored generic pointer (if fails issue an error).
 
   bool_type       & get_bool() ;
@@ -517,6 +528,10 @@ public:
   //! Assign a string to the generic container.
   GenericContainer & operator = ( std::string const & a )
   { this -> set_string(a) ; return * this ; }
+
+  //! Assign a string to the generic container.
+  GenericContainer & operator = ( void * a )
+  { this -> set_pointer(a) ; return * this ; }
 
   //! Assign a generic container `a` to the generic container.
   GenericContainer const & operator = ( GenericContainer const & a ) ;

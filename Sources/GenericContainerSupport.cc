@@ -160,9 +160,9 @@ GenericContainer::readFormattedData( std::istream & stream,
     tokenizeString( line, tokens, delimiters ) ;
     if ( tokens.size() == 0 ) break ; // riga vuota!
 
-    ASSERT( (unsigned) tokens.size() == ncol,
-            "readFormattedDataFile, in reading line: " << nline <<
-            " expected " << ncol << " found: " << tokens.size() ) ;
+    GC_ASSERT( (unsigned) tokens.size() == ncol,
+               "readFormattedDataFile, in reading line: " << nline <<
+               " expected " << ncol << " found: " << tokens.size() ) ;
 
     // store data in row vector
     for ( unsigned icol = 0 ; icol < ncol ; ++icol )

@@ -50,7 +50,7 @@ void
 GenericContainer::clear() {
   switch (data_type) {
     case GC_POINTER:
-      ASSERT( data.p == nullptr, "In deleting GenericContainer find a pointer not deallocated!") ;
+      GC_WARNING( data.p == nullptr, "In deleting GenericContainer find a pointer not deallocated!") ;
       break ;
     case GC_STRING:      delete data.s   ; break ;
 
@@ -119,10 +119,10 @@ GenericContainer::ck( TypeAllowed tp ) const {
 
 void
 GenericContainer::ck(char const who[], TypeAllowed tp) const {
-  ASSERT( tp == data_type,
-          "GenericContainer::" << who <<
-          " bad data type\nexpect: " << typeName[tp] <<
-          "\nbut data stored is of type: " << typeName[data_type] ) ;
+  GC_ASSERT( tp == data_type,
+             who <<
+             " bad data type\nexpect: " << typeName[tp] <<
+             "\nbut data stored is of type: " << typeName[data_type] ) ;
 }
 
 /*
@@ -153,9 +153,9 @@ GenericContainer::allocate_vec_pointer( unsigned sz ) {
 
 GenericContainer &
 GenericContainer::free_pointer() {
-  ASSERT( GC_POINTER == data_type || GC_NOTYPE == data_type,
-         "GenericContainer::free_pointer() bad data type\nexpect: " << typeName[GC_POINTER] <<
-         "\nbut data stored is of type: " << typeName[data_type] ) ;
+  GC_ASSERT( GC_POINTER == data_type || GC_NOTYPE == data_type,
+             "free_pointer() bad data type\nexpect: " << typeName[GC_POINTER] <<
+             "\nbut data stored is of type: " << typeName[data_type] ) ;
   data.p = nullptr ;
   data_type = GenericContainer::GC_NOTYPE ;
   return *this ;
@@ -578,18 +578,18 @@ GenericContainer::info( std::ostream & stream ) const {
 GenericContainer &
 GenericContainer::operator [] ( unsigned i ) {
   ck("operator []",GC_VECTOR) ;
-  ASSERT( i < data.v->size(),
-          "GenericContainer::operator [ " << i << " ] out of range\n"<<
-          "Vector size: " << data.v->size() ) ;
+  GC_ASSERT( i < data.v->size(),
+             "operator [ " << i << " ] out of range\n"<<
+             "Vector size: " << data.v->size() ) ;
   return (*data.v)[i] ;
 }
 
 GenericContainer const &
 GenericContainer::operator [] ( unsigned i ) const {
   ck("operator []",GC_VECTOR) ;
-  ASSERT( i < data.v->size(),
-         "GenericContainer::operator [ " << i << " ] out of range\n"<<
-         "Vector size: " << data.v->size() ) ;
+  GC_ASSERT( i < data.v->size(),
+             "operator [ " << i << " ] out of range\n"<<
+             "Vector size: " << data.v->size() ) ;
   return (*data.v)[i] ;
 }
 
@@ -644,7 +644,7 @@ GenericContainer const &
 GenericContainer::operator () ( std::string const & s ) const {
   ck("operator ()",GC_MAP) ;
   map_type::const_iterator iv = (*data.m) . find(s) ;
-  ASSERT( iv != (*data.m) . end(), "GenericContainer, operator['" << s << "'] Cant find !" ) ;
+  GC_ASSERT( iv != (*data.m) . end(), "operator['" << s << "'] Cant find !" ) ;
   return iv -> second ;
 }
 
@@ -665,7 +665,7 @@ GenericContainer::print( std::ostream & stream, std::string const & prefix ) con
       stream << prefix << "Empty!\n" ;
       break ;
     case GC_POINTER:
-      stream << prefix << "pointer: " << (unsigned long)get_pointer<void>() << '\n' ;
+      stream << prefix << "pointer: " << (unsigned long)get_pointer<void*>() << '\n' ;
       break ;
     case GC_BOOL:
       stream << prefix << "bool: " << (this -> get_bool()?"true":"false") << '\n' ;
@@ -729,7 +729,7 @@ GenericContainer::print( std::ostream & stream, std::string const & prefix ) con
       break ;
 
     default:
-      ASSERT(false,"Error, GenericContainer::print(...) unknown type!\n") ;
+      GC_ASSERT(false,"Error, print(...) unknown type!\n") ;
       break ;
   }
 }
@@ -816,7 +816,7 @@ GenericContainer::to_yaml( std::ostream & stream, std::string const & prefix ) c
       break ;
       
     default:
-      ASSERT( false, "Error, GenericContainer::print(...) unknown type!\n" ) ;
+      GC_ASSERT( false, "Error, print(...) unknown type!\n" ) ;
       break ;
   }
 }
