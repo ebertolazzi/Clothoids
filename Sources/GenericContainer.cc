@@ -93,19 +93,20 @@ GenericContainer::operator = ( GenericContainer const & gc ) {
     case GC_VEC_STRING:  this -> set_vec_string(*gc.data.v_s)  ; break ;
       
     case GC_VECTOR:
-    { unsigned N = unsigned(gc.data.v->size()) ;
-      allocate_vector( N ) ;
-      std::copy( gc.data.v->begin(),
-                 gc.data.v->end(),
-                 this->data.v->begin() ) ;
-    }
-      break ;
+      { unsigned N = unsigned(gc.data.v->size()) ;
+        allocate_vector( N ) ;
+        std::copy( gc.data.v->begin(),
+                   gc.data.v->end(),
+                   this->data.v->begin() ) ;
+      }
+    break ;
     case GC_MAP:
-    { allocate_map() ;
-      this->data.m->insert( gc.data.m->begin(), gc.data.m->end() ) ;
-    }
+      { allocate_map() ;
+        this->data.m->insert( gc.data.m->begin(), gc.data.m->end() ) ;
+      }
+    break ;
     default:
-      break ;
+    break ;
   }
   return * this ;
 }
@@ -524,7 +525,7 @@ GenericContainer const &
 GenericContainer::info( std::ostream & stream ) const {
   switch ( data_type ) {
     case GC_NOTYPE:
-      stream << "No data stored\n" ;
+      stream << "GenericContainer: No data stored\n" ;
       break ;
     case GC_POINTER:
       stream << "Generic pointer: " << std::hex << (unsigned long)(data.p) << '\n' ;
@@ -561,6 +562,9 @@ GenericContainer::info( std::ostream & stream ) const {
       break ;
     case GC_MAP:
       stream << "Map\n" ;
+      break ;
+    default:
+      stream << "Type N. " << data_type << " not recognized\n" ;
       break ;
   }
   return *this ;

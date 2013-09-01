@@ -68,6 +68,10 @@ To generate documentation (using DOXYGEN: http://www.stack.nl/~dimitri/doxygen/i
 
 make doc
 
+DOXYGEN documentation
+---------------------
+Available at: http://www.ing.unitn.it/~bertolaz/4-software/genericContainer/index.html
+
 * * *
 
 Enrico Bertolazzi<br>

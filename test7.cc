@@ -32,7 +32,7 @@ using namespace std ;
 
 int
 main() {
-  
+
   cout << "\n\n\n"
        << "***********************\n"
        << "       test N.7        \n"
