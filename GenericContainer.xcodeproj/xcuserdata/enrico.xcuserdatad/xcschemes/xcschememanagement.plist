@@ -4,37 +4,37 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>test1.xcscheme</key>
+		<key>example1.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>test2.xcscheme</key>
+		<key>example2.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>test3.xcscheme</key>
+		<key>example3.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>test4.xcscheme</key>
+		<key>example4.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>test5.xcscheme</key>
+		<key>example5.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>test6.xcscheme</key>
+		<key>example6.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
-		<key>test7.xcscheme</key>
+		<key>example7.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>6</integer>

@@ -394,37 +394,38 @@ in the distribution.
 #define GENERIC_CONTAINER_HH
 
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <map>
 #include <vector>
-#include <cstdlib>
 
 // if C++ < C++11 define nullptr
 #if __cplusplus <= 199711L
-  #include <cstddef>
-  #define nullptr NULL
+  #include <cstdlib>
+  #ifndef nullptr
+    #include <cstddef>
+    #define nullptr NULL
+  #endif
 #endif
 
 #ifndef GC_ASSERT
+  #include <sstream>
   #include <stdexcept>
-  #define GC_ASSERT(COND,MSG)                           \
-    if ( !(COND) ) {                                    \
-      std::ostringstream ost ;                          \
-      ost << "On line: " << __LINE__                    \
-          << " file: " << __FILE__                      \
-          << "\nin GenericContainer: " << MSG << '\n' ; \
-      throw std::runtime_error(ost.str()) ; \
+  #define GC_ASSERT(COND,MSG)                            \
+    if ( !(COND) ) {                                     \
+      std::ostringstream ost ;                           \
+      ost << "in GenericContainer: " << MSG << '\n' ;    \
+      GenericContainer::exception( ost.str().c_str() ) ; \
     }
 #endif
 
 #ifndef GC_WARNING
+  #include <sstream>
   #include <stdexcept>
   #define GC_WARNING(COND,MSG)                                 \
     if ( !(COND) ) {                                           \
       std::cout << "On line: " << __LINE__                     \
                 << " file: " << __FILE__                       \
-                 << "\nin GenericContainer: " << MSG << '\n' ; \
+                << "\nin GenericContainer: " << MSG << '\n' ;  \
     }
 #endif
 
@@ -737,21 +738,21 @@ public:
   T const * get_pointer( unsigned i ) const
   { return (*this)[i].get_pointer<T>() ; }
   //!< Return `i`-th generic pointer (if fails issue an error).
-  
-  bool_type       & get_bool( unsigned i )       { return (*this)[i].get_bool() ; }
-  bool_type const & get_bool( unsigned i ) const { return (*this)[i].get_bool() ; }
+
+  bool_type get_bool( unsigned i ) ;
+  bool_type get_bool( unsigned i ) const ;
   //!< Return `i`-th boolean (if fails issue an error).
   
-  int_type       & get_int( unsigned i )       { return (*this)[i].get_int() ; }
-  int_type const & get_int( unsigned i ) const { return (*this)[i].get_int() ; }
+  int_type       & get_int( unsigned i ) ;
+  int_type const & get_int( unsigned i ) const ;
   //!< Return `i`-th integer (if fails issue an error).
 
-  real_type       & get_real( unsigned i )       { return (*this)[i].get_real() ; }
-  real_type const & get_real( unsigned i ) const { return (*this)[i].get_real() ; }
+  real_type       & get_real( unsigned i ) ;
+  real_type const & get_real( unsigned i ) const ;
   //!< Return `i`-th floating point number (if fails issue an error).
 
-  string_type       & get_string( unsigned i )       { return (*this)[i].get_string() ; }
-  string_type const & get_string( unsigned i ) const { return (*this)[i].get_string() ; }
+  string_type       & get_string( unsigned i ) ;
+  string_type const & get_string( unsigned i ) const ;
   //!< Return `i`-th string (if fails issue an error).
 
   GenericContainer       & get_gc( unsigned i )       { return (*this)[i] ; }
@@ -787,7 +788,6 @@ public:
    NO run time bound check.
    */
   GenericContainer const & operator () ( unsigned i ) const ;
-  
 
   GenericContainer & operator [] ( std::string const & s ) ;
 
@@ -840,9 +840,27 @@ public:
   //! Assign a pointer to the generic container.
   GenericContainer & operator = ( void * a )
   { this -> set_pointer(a) ; return * this ; }
-  
+
   //! Assign a generic container `a` to the generic container.
   GenericContainer const & operator = ( GenericContainer const & a ) ;
+  //@}
+
+  //! \name Promotion to a ``bigger'' data
+  //@{
+  //! If data contains a boolean it is promoted to an integer.
+  GenericContainer const & promote_to_int() ;
+
+  //! If data contains a boolean or an integer it is promoted to a real.
+  GenericContainer const & promote_to_real() ;
+
+  //! If data contains vector of booleans it is promoted to a vector of integer.
+  GenericContainer const & promote_to_vec_int() ;
+
+  //! If data contains vector of booleans or integer it is promoted to a vector of real.
+  GenericContainer const & promote_to_vec_real() ;
+
+  //! If data contains vector of someting it is promoted to a vector of `GenericContainer`.
+  GenericContainer const & promote_to_vector() ;
   //@}
 
   //! \name Initialize data by overloading constructor
@@ -932,6 +950,8 @@ public:
   readFormattedData( std::istream & stream,
                      char const commentChars[] = "#%",
                      char const delimiters[] = " \t" ) ;
+
+  static void exception( char const msg[] ) ;
 
 } ;
 

@@ -24,6 +24,8 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 
+#define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
+
 static char const *typeName[] = {
   "NOTYPE",
   "pointer",
@@ -512,6 +514,68 @@ GenericContainer::exists( std::string const & s ) const {
   return iv != (*data.m).end() ;
 }
 
+// --------------------------------------------------------------
+
+GenericContainer::bool_type
+GenericContainer::get_bool( unsigned i ) {
+  ck("get_bool",GC_VEC_BOOL) ;
+  CHECK_RESIZE(data.v_b,i) ;
+  return (*data.v_b)[i] ;
+}
+
+GenericContainer::bool_type
+GenericContainer::get_bool( unsigned i ) const {
+  ck("get_bool",GC_VEC_BOOL) ;
+  GC_ASSERT( i < data.v_b->size(), "get_bool( " << i << " ) const, out of range" ) ;
+  return (*data.v_b)[i] ;
+}
+
+GenericContainer::int_type &
+GenericContainer::get_int( unsigned i ) {
+  if ( data_type != GC_VEC_INT ) promote_to_vec_int() ;
+  CHECK_RESIZE(data.v_i,i) ;
+  return (*data.v_i)[i] ;
+}
+
+GenericContainer::int_type const &
+GenericContainer::get_int( unsigned i ) const {
+  ck("get_int",GC_VEC_INT) ;
+  GC_ASSERT( i < data.v_i->size(), "get_int( " << i << " ) const, out of range" ) ;
+  return (*data.v_i)[i] ;
+}
+
+GenericContainer::real_type &
+GenericContainer::get_real( unsigned i ) {
+  if ( data_type != GC_VEC_REAL ) promote_to_vec_real() ;
+  CHECK_RESIZE(data.v_r,i) ;
+  return (*data.v_r)[i] ;
+}
+
+GenericContainer::real_type const &
+GenericContainer::get_real( unsigned i ) const  {
+  ck("get_real",GC_VEC_REAL) ;
+  GC_ASSERT( i < data.v_r->size(), "get_real( " << i << " ) const, out of range" ) ;
+  return (*data.v_r)[i] ;
+}
+
+GenericContainer::string_type &
+GenericContainer::get_string( unsigned i ) {
+  if ( data_type == GC_VEC_STRING ) {
+    CHECK_RESIZE(data.v_s,i) ;
+    return (*data.v_s)[i] ;
+  } else {
+    promote_to_vector() ;
+    return (*this)[i].get_string() ;
+  }
+}
+
+GenericContainer::string_type const &
+GenericContainer::get_string( unsigned i ) const {
+  ck("get_real",GC_VEC_STRING) ;
+  GC_ASSERT( i < data.v_s->size(), "get_string( " << i << " ) const, out of range" ) ;
+  return (*data.v_s)[i] ;
+}
+
 /*
 //   _        __
 //  (_)_ __  / _| ___
@@ -581,19 +645,19 @@ GenericContainer::info( std::ostream & stream ) const {
 
 GenericContainer &
 GenericContainer::operator [] ( unsigned i ) {
-  ck("operator []",GC_VECTOR) ;
-  GC_ASSERT( i < data.v->size(),
-             "operator [ " << i << " ] out of range\n"<<
-             "Vector size: " << data.v->size() ) ;
+  switch ( ck( GC_VECTOR ) ) {
+    case 0: break ; // data present
+    default: set_vector() ; // data must be allocated ;
+  }
+  //ck("operator []",GC_VECTOR) ;
+  CHECK_RESIZE(data.v,i) ;
   return (*data.v)[i] ;
 }
 
 GenericContainer const &
 GenericContainer::operator [] ( unsigned i ) const {
   ck("operator []",GC_VECTOR) ;
-  GC_ASSERT( i < data.v->size(),
-             "operator [ " << i << " ] out of range\n"<<
-             "Vector size: " << data.v->size() ) ;
+  GC_ASSERT( i < data.v->size(), "operator [] const, index " << i << " out of range" ) ;
   return (*data.v)[i] ;
 }
 
@@ -610,12 +674,14 @@ GenericContainer::operator [] ( unsigned i ) const {
 GenericContainer &
 GenericContainer::operator () ( unsigned i ) {
   ck("operator ()",GC_VECTOR) ;
+  GC_ASSERT( i < data.v->size(), "operator (), index " << i << " out of range" ) ;
   return (*data.v)[i] ;
 }
 
 GenericContainer const &
 GenericContainer::operator () ( unsigned i ) const {
   ck("operator ()",GC_VECTOR) ;
+  GC_ASSERT( i < data.v->size(), "operator () const, index " << i << " out of range" ) ;
   return (*data.v)[i] ;
 }
 
@@ -648,8 +714,184 @@ GenericContainer const &
 GenericContainer::operator () ( std::string const & s ) const {
   ck("operator ()",GC_MAP) ;
   map_type::const_iterator iv = (*data.m) . find(s) ;
-  GC_ASSERT( iv != (*data.m) . end(), "operator['" << s << "'] Cant find !" ) ;
+  GC_ASSERT( iv != (*data.m) . end(), "operator('" << s << "') Cant find !" ) ;
   return iv -> second ;
+}
+
+/*
+//   ____                            _
+//  |  _ \ _ __ ___  _ __ ___   ___ | |_ ___
+//  | |_) | '__/ _ \| '_ ` _ \ / _ \| __/ _ \
+//  |  __/| | | (_) | | | | | | (_) | ||  __/
+//  |_|   |_|  \___/|_| |_| |_|\___/ \__\___|
+*/
+
+GenericContainer const &
+GenericContainer::promote_to_int() {
+  switch (data_type) {
+    case GC_NOTYPE:
+      set_int(0) ;
+      break ;
+    case GC_BOOL:
+      set_int(data.b?1:0) ;
+      break ;
+    case GC_INT:
+      break ;
+    default:
+      GC_ASSERT( false, ":promote_to_int() cannot promote " << get_type_name() << " to int") ;
+      break ;
+  }
+  return *this ;
+}
+
+GenericContainer const &
+GenericContainer::promote_to_real() {
+  switch (data_type) {
+    case GC_NOTYPE:
+      set_real(0) ;
+      break ;
+    case GC_BOOL:
+      set_real(data.b?1:0) ;
+      break ;
+    case GC_INT:
+      set_real(data.i) ;
+      break ;
+    case GC_REAL:
+      break ;
+    default:
+      GC_ASSERT( false, ":promote_to_real() cannot promote " << get_type_name() << " to real") ;
+      break ;
+  }
+  return *this ;
+}
+
+GenericContainer const &
+GenericContainer::promote_to_vec_int() {
+  switch (data_type) {
+    case GC_NOTYPE:
+      { set_vec_int(1) ; get_int(0) = 0 ; }
+      break ;
+    case GC_BOOL:
+      { int_type tmp = data.b?1:0 ; set_vec_int(1) ; get_int(0) = tmp ; }
+      break ;
+    case GC_INT:
+      { int_type tmp = data.i ; set_vec_int(1) ; get_int(0) = tmp ; }
+      break ;
+    case GC_VEC_BOOL:
+      { unsigned sz = unsigned(data.v_b->size()) ;
+        vec_int_type tmp(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) tmp[i] = (*data.v_b)[i] ? 1 : 0 ;
+        set_vec_int(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v_i)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VEC_INT:
+      break ;
+    default:
+      GC_ASSERT( false, ":promote_to_vec_int() cannot promote " << get_type_name() << " to real") ;
+      break ;
+  }
+  return *this ;
+
+}
+
+//! If data contains vector of booleans or integer it is promoted to a vector of real.
+GenericContainer const &
+GenericContainer::promote_to_vec_real() {
+  switch (data_type) {
+    case GC_NOTYPE:
+      { set_vec_real(1) ; get_real(0) = 0 ; }
+      break ;
+    case GC_BOOL:
+      { real_type tmp = data.b?1:0 ; set_vec_real(1) ; get_real(0) = tmp ; }
+      break ;
+    case GC_INT:
+      { real_type tmp = data.i ; set_vec_real(1) ; get_real(0) = tmp ; }
+      break ;
+    case GC_REAL:
+      { real_type tmp = data.r ; set_vec_real(1) ; get_real(0) = tmp ; }
+      break ;
+    case GC_VEC_BOOL:
+      { unsigned sz = unsigned(data.v_b->size()) ;
+        vec_real_type tmp(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) tmp[i] = (*data.v_b)[i] ? 1 : 0 ;
+        set_vec_real(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v_r)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VEC_INT:
+      { unsigned sz = unsigned(data.v_i->size()) ;
+        vec_real_type tmp(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) tmp[i] = (*data.v_i)[i] ;
+        set_vec_real(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v_r)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VEC_REAL:
+    default:
+      GC_ASSERT( false, ":promote_to_vec_real() cannot promote " << get_type_name() << " to real") ;
+      break ;
+  }
+  return *this ;
+}
+
+//! If data contains vector of someting it is promoted to a vector of `GenericContainer`.
+GenericContainer const &
+GenericContainer::promote_to_vector() {
+  switch (data_type) {
+    case GC_NOTYPE:
+      { set_vector(1) ; (*this)[0] = 0 ; }
+      break ;
+    case GC_POINTER:
+      { set_vector(1) ; (*this)[0] = data.p ; }
+      break ;
+    case GC_BOOL:
+      { set_vector(1) ; (*this)[0] = data.b ; }
+      break ;
+    case GC_INT:
+      { set_vector(1) ; (*this)[0] = data.i ; }
+      break ;
+    case GC_REAL:
+      { set_vector(1) ; (*this)[0] = data.r ; }
+      break ;
+    case GC_STRING:
+      { set_vector(1) ; (*this)[0] = *data.s ; }
+      break ;
+    case GC_VEC_POINTER:
+      { vec_pointer_type tmp(data.v_p->begin(), data.v_p->end()); // range-based constructor
+        unsigned sz = unsigned(tmp.size()) ;
+        set_vector(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VEC_BOOL:
+      { vec_bool_type tmp(data.v_b->begin(), data.v_b->end()); // range-based constructor
+        unsigned sz = unsigned(tmp.size()) ;
+        set_vector(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VEC_INT:
+      { vec_int_type tmp(data.v_i->begin(), data.v_i->end()); // range-based constructor
+        unsigned sz = unsigned(tmp.size()) ;
+        set_vector(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VEC_REAL:
+      { vec_real_type tmp(data.v_r->begin(), data.v_r->end()); // range-based constructor
+        unsigned sz = unsigned(tmp.size()) ;
+        set_vector(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VECTOR:
+      break ;
+    default:
+      GC_ASSERT( false, ":promote_to_vector() cannot promote " << get_type_name() << " to real") ;
+      break ;
+  }
+  return *this ;
 }
 
 /*
@@ -692,20 +934,24 @@ GenericContainer::print( std::ostream & stream, std::string const & prefix ) con
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type const & v = this -> get_vec_bool() ;
+        stream << prefix << "vec_bool_type[0.." << v.size()-1 << "]:" ;
         for ( vec_bool_type::size_type i = 0 ; i < v.size() ; ++i )
-          stream << prefix << "vec_bool(" << i << "): " << v[i] << '\n' ;
+          stream << (v[i]?" true":" false")  ;
+        stream << '\n' ;
       }
       break ;
     case GC_VEC_INT:
       { vec_int_type const & v = this -> get_vec_int() ;
-        for ( vec_int_type::size_type i = 0 ; i < v.size() ; ++i )
-          stream << prefix << "vec_int(" << i << "): " << v[i] << '\n' ;
+        stream << prefix << "vec_int_type[0.." << v.size()-1 << "]:" ;
+        for ( vec_int_type::size_type i = 0 ; i < v.size() ; ++i ) stream << " " << v[i] ;
+        stream << '\n' ;
       }
       break ;
     case GC_VEC_REAL:
       { vec_real_type const & v = this -> get_vec_real() ;
-        for ( vec_real_type::size_type i = 0 ; i < v.size() ; ++i )
-          stream << prefix << "vec_real(" << i << "): " << v[i] << '\n' ;
+        stream << prefix << "vec_real_type[0.." << v.size()-1 << "]:" ;
+        for ( vec_real_type::size_type i = 0 ; i < v.size() ; ++i ) stream << " " << v[i] ;
+        stream << '\n' ;
       }
       break ;
     case GC_VEC_STRING:
@@ -823,6 +1069,11 @@ GenericContainer::to_yaml( std::ostream & stream, std::string const & prefix ) c
       GC_ASSERT( false, "Error, print(...) unknown type!\n" ) ;
       break ;
   }
+}
+
+void
+GenericContainer::exception( char const msg[] ) {
+  throw std::runtime_error(msg) ;
 }
 
 //

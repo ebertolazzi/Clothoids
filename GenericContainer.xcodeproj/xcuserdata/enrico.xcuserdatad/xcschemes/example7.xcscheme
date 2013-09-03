@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D976EC7F17C80D5B008E86F6"
-               BuildableName = "test5"
-               BlueprintName = "test5"
+               BlueprintIdentifier = "D9F123CF17CFDF6D0045F645"
+               BuildableName = "example7"
+               BlueprintName = "example7"
                ReferencedContainer = "container:GenericContainer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D976EC7F17C80D5B008E86F6"
-            BuildableName = "test5"
-            BlueprintName = "test5"
+            BlueprintIdentifier = "D9F123CF17CFDF6D0045F645"
+            BuildableName = "example7"
+            BlueprintName = "example7"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -43,7 +43,8 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "NO"
+      useCustomWorkingDirectory = "YES"
+      customWorkingDirectory = "/Users/enrico/Ricerca/develop/myBitBucketProjetcs/myGenericContainer/examples"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
@@ -51,9 +52,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D976EC7F17C80D5B008E86F6"
-            BuildableName = "test5"
-            BlueprintName = "test5"
+            BlueprintIdentifier = "D9F123CF17CFDF6D0045F645"
+            BuildableName = "example7"
+            BlueprintName = "example7"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,9 +70,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D976EC7F17C80D5B008E86F6"
-            BuildableName = "test5"
-            BlueprintName = "test5"
+            BlueprintIdentifier = "D9F123CF17CFDF6D0045F645"
+            BuildableName = "example7"
+            BlueprintName = "example7"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

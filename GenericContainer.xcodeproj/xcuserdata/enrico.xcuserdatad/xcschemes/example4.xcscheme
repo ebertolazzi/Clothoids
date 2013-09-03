@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D95C248217CD4341007A0BE4"
-               BuildableName = "test6"
-               BlueprintName = "test6"
+               BlueprintIdentifier = "D976EC7217C80D4F008E86F6"
+               BuildableName = "example4"
+               BlueprintName = "example4"
                ReferencedContainer = "container:GenericContainer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95C248217CD4341007A0BE4"
-            BuildableName = "test6"
-            BlueprintName = "test6"
+            BlueprintIdentifier = "D976EC7217C80D4F008E86F6"
+            BuildableName = "example4"
+            BlueprintName = "example4"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95C248217CD4341007A0BE4"
-            BuildableName = "test6"
-            BlueprintName = "test6"
+            BlueprintIdentifier = "D976EC7217C80D4F008E86F6"
+            BuildableName = "example4"
+            BlueprintName = "example4"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95C248217CD4341007A0BE4"
-            BuildableName = "test6"
-            BlueprintName = "test6"
+            BlueprintIdentifier = "D976EC7217C80D4F008E86F6"
+            BuildableName = "example4"
+            BlueprintName = "example4"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
