@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 /*!
- \example test1.cc
+ \example example1.cc
 
  Simple usage of `GenericContainer` class.
  The class is used to store one element
@@ -34,7 +34,7 @@ int
 main() {
   cout << "\n\n\n"
        << "***********************\n"
-       << "       test N.1        \n"
+       << "     example N.1       \n"
        << "***********************\n\n" ;
   // Simple example using simple data
   GenericContainer gc1 = 1 ;

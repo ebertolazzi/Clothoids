@@ -17,7 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 /*!
- \example test7.cc
+ \example example7.cc
  
  Example of I/O utilities. `GenericContainer` is used 
  to read and store a table from a file and to print
@@ -35,7 +35,7 @@ main() {
 
   cout << "\n\n\n"
        << "***********************\n"
-       << "       test N.7        \n"
+       << "      example N.7      \n"
        << "***********************\n\n" ;
   
   try {

@@ -18,7 +18,7 @@
  \*--------------------------------------------------------------------------*/
 
 /*!
- \example test3.cc
+ \example example3.cc
  
  Complex usage of `GenericContainer` class.
  The class is used to store a generic vector, i.e.
@@ -37,7 +37,7 @@ main() {
 
   cout << "\n\n\n"
        << "***********************\n"
-       << "       test N.3        \n"
+       << "      example N.3      \n"
        << "***********************\n\n" ;
 
   // Using complex data

@@ -18,7 +18,7 @@
  \*--------------------------------------------------------------------------*/
 
 /*!
- \example test4.cc
+ \example example4.cc
  
  Complex usage of `GenericContainer` class.
  The class is used to store a generic map, i.e.
@@ -36,7 +36,7 @@ main() {
 
   cout << "\n\n\n"
        << "***********************\n"
-       << "       test N.4        \n"
+       << "      example N.4      \n"
        << "***********************\n\n" ;
 
   // Using complex data

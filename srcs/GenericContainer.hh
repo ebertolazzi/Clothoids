@@ -24,7 +24,7 @@
 /*! 
 \mainpage  Generic container class
 \author    Enrico Bertolazzi (enrico.bertolazzi@unitn.it), homepage: http://www.ing.unitn.it/~bertolaz
-\version   1.0.2
+\version   1.0.3
 \date      2013
 \copyright GNU Public License.
 
@@ -81,7 +81,7 @@ GenericContainer::vec_int_type & v = gc["five"].get_vec_int();
 cout << v[1] << '\n' ;
 ~~~~~~~~~~~~~
 
-For more complex examples and recursive data see example test files
+For more complex examples and recursive data see examples files
 in the distribution.
 
 ============================
@@ -385,7 +385,7 @@ gc["pluto"] = 4 ; // access element "pluto" of the generic map
  
 \section sec5 Build complex data structures
 
-For more complex examples and recursive data see example test files
+For more complex examples and recursive data see examples files
 in the distribution.
 
 */
@@ -470,6 +470,7 @@ public:
   typedef std::vector<GenericContainer>          vector_type ; //!< vector of `GenericContainer`
   typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
 
+  //! Type allowed for the `GenericContainer`
   enum TypeAllowed { GC_NOTYPE=0,
                      GC_POINTER,
                      GC_BOOL,

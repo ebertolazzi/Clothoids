@@ -17,7 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 /*!
- \example test6.c
+ \example example6.c
  
  Example of usage of the C interface.
  */
@@ -34,7 +34,7 @@ main() {
 
   printf("\n\n\n");
   printf("***********************\n");
-  printf("       test N.6        \n");
+  printf("      example N.6      \n");
   printf("***********************\n\n");
 
   CK( GC_select( "generic_container" ) ) ;
