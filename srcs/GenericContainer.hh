@@ -425,7 +425,7 @@ in the distribution.
     if ( !(COND) ) {                                           \
       std::cout << "On line: " << __LINE__                     \
                 << " file: " << __FILE__                       \
-                << "\nin GenericContainer: " << MSG << '\n' ;  \
+                << " in GenericContainer\nWARNING: " << MSG << '\n' ;  \
     }
 #endif
 

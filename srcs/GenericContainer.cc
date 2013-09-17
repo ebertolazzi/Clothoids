@@ -52,7 +52,7 @@ void
 GenericContainer::clear() {
   switch (data_type) {
     case GC_POINTER:
-      GC_WARNING( data.p == nullptr, "In deleting GenericContainer find a pointer not deallocated!") ;
+      GC_WARNING( data.p == nullptr, "find a pointer not deallocated!") ;
       break ;
     case GC_STRING:      delete data.s   ; break ;
 
