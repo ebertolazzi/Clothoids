@@ -71,7 +71,7 @@ GenericContainer::clear() {
 }
 
 //! Return a string representing the type of data stored
-std::string
+char const *
 GenericContainer::get_type_name() const {
   return typeName[data_type] ;
 }

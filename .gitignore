@@ -2,6 +2,10 @@
 /LibSources/switches.yaml
 /LibSources/Mechatronix-Info.plist
 /doc
+/doc/html
+
+*.xcodeproj
+
 
 # Compiled source #
 ###################
@@ -73,8 +77,6 @@ test5
 ehthumbs.db
 Icon?
 Thumbs.db
-
-/doc/html
 
 # auto git version noise
 InfoPlist.h
