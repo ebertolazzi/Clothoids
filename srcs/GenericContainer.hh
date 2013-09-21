@@ -666,8 +666,8 @@ public:
   */
   TypeAllowed get_type() const { return data_type ; }
   
-  //! Return a string representing the type of data stored
-  std::string get_type_name() const ;
+  //! Return a string pointer representing the type of data stored
+  char const * get_type_name() const ;
 
   //! Print to stream the kind of data stored
   GenericContainer const & info( std::ostream & stream ) const ;
