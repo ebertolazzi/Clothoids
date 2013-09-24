@@ -38,8 +38,10 @@ using namespace std ;
 
 #define EXTERN_C extern "C"
 
-static std::map<std::string,GenericContainer> gc_stored ;
-static std::deque<GenericContainer*>          head ;
+typedef std::map<std::string,GenericContainer> MAP_GC ;
+
+static MAP_GC                        gc_stored ;
+static std::deque<GenericContainer*> head ;
 
 static GenericContainer::map_type         * ptr_map ;
 static GenericContainer::map_type::iterator map_iterator ;
@@ -67,72 +69,77 @@ check_no_data( int data_type ) {
 
 EXTERN_C
 int
-GC_select( char const name[] ) {
+GC_new( char const id[] ) {
+  // ckeck if exists
+  MAP_GC::iterator it = gc_stored.find(id) ;
   head.clear() ;
-  head.push_back(&gc_stored[name]) ;
+  if ( it == gc_stored.end() ) head.push_back(&gc_stored[id]) ;
+  else                         head.push_back(&it->second) ;
   return GENERIC_CONTAINER_OK ;
 }
 
 EXTERN_C
 int
-GC_delete( char const name[] ) {
-  gc_stored[name].clear() ;
+GC_select( char const id[] ) {
   head.clear() ;
+  MAP_GC::iterator it = gc_stored.find(id) ;
+  if ( it != gc_stored.end() ) {
+    head.push_back(&it->second) ;
+  } else {
+    head.push_back(&gc_stored[id]) ;
+  }
+  return GENERIC_CONTAINER_OK ;
+}
+
+EXTERN_C
+int
+GC_delete( char const id[] ) {
+  head.clear() ;
+  MAP_GC::iterator it = gc_stored.find(id) ;
+  if ( it != gc_stored.end() ) {
+    it->second.clear() ;
+    gc_stored.erase(it) ;
+  }
   return GENERIC_CONTAINER_OK ;
 }
 
 EXTERN_C
 int
 GC_pop_head() {
-  if ( head.empty() ) {
-    return GENERIC_CONTAINER_NO_DATA ;
-  } else {
-    head.pop_back() ;
-  }
+  if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA ;
+  head.pop_back() ;
   return GENERIC_CONTAINER_OK ;
 }
 
 EXTERN_C
 int
 GC_reset_head() {
-  if ( head.empty() ) {
-    return GENERIC_CONTAINER_NO_DATA ;
-  } else {
-    while ( head.size() > 1 ) head.pop_back() ;
-  }
+  if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA ;
+  while ( head.size() > 1 ) head.pop_back() ;
   return GENERIC_CONTAINER_OK ;
 }
 
 EXTERN_C
 int
 GC_print() {
-  if ( head.empty() ) {
-    return GENERIC_CONTAINER_NO_DATA ;
-  } else {
-    head.back() -> print(cout) ;
-    return GENERIC_CONTAINER_OK ;
-  }
+  if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA ;
+  head.back() -> print(cout) ;
+  return GENERIC_CONTAINER_OK ;
 }
 
 EXTERN_C
 int
 GC_get_type() {
-  if ( head.empty() ) {
-    return -1 ;
-  } else {
-    return head.back() -> get_type() ;
-  }
+  if ( head.empty() ) return -1 ;
+  return head.back() -> get_type() ;
 }
 
 EXTERN_C
 char const *
 GC_get_type_name() {
   static char const empty[] = "" ;
-  if ( head.empty() ) {
-    return empty ;
-  } else {
-    return head.back() -> get_type_name() ;
-  }
+  if ( head.empty() ) return empty ;
+  return head.back() -> get_type_name() ;
 }
 
 EXTERN_C

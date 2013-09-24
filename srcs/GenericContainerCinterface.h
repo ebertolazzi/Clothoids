@@ -42,11 +42,14 @@ enum {
   GENERIC_CONTAINER_BAD_HEAD
 } ;
 
-/*! Select or create a new `GenericContainer` object 'name' */
-int GC_select( char const name[] ) ;
+/*! Select or create a new `GenericContainer` object 'id' */
+int GC_select( char const id[] ) ;
 
-/*! Delete the `GenericContainer` object 'name' */
-int GC_delete( char const name[] ) ;
+/*! Create the `GenericContainer` object 'id' */
+int GC_new( char const id[] ) ;
+
+/*! Delete the `GenericContainer` object 'id' */
+int GC_delete( char const id[] ) ;
 
 /*! Move `head` up to a level */
 int GC_pop_head() ;
@@ -63,8 +66,8 @@ int GC_get_type() ;
 /*! Get type of actual pointed element of `GenericContainer` */
 char const * GC_get_type_name() ;
   
-/*! Get pointer to the internal `GenericContainer` object 'name' */
-void * GC_mem_ptr( char const name[] ) ;
+/*! Get pointer to the internal `GenericContainer` object 'id' */
+void * GC_mem_ptr( char const id[] ) ;
 
 /*! Set actual pointed element of `GenericContainer` to `bool` with value `a` */
 int GC_set_bool( int const a ) ;

@@ -3,6 +3,10 @@
 /LibSources/Mechatronix-Info.plist
 /doc
 /doc/html
+/bin/*
+/libs/*.dylib
+/libs/*.so
+/libs/*.dll
 
 *.xcodeproj
 
