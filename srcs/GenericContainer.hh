@@ -24,7 +24,7 @@
 /*! 
 \mainpage  Generic container class
 \author    Enrico Bertolazzi (enrico.bertolazzi@unitn.it), homepage: http://www.ing.unitn.it/~bertolaz
-\version   1.0.3
+\version   1.0.4
 \date      2013
 \copyright GNU Public License.
 
@@ -523,6 +523,8 @@ private:
   void ck(char const [],TypeAllowed) const ;
   int  ck(TypeAllowed) const ;
 
+  void initialize() { data_type = GC_NOTYPE ; }
+
 public:
 
   //! build an instance of `GenericContainer` with empty data
@@ -868,31 +870,31 @@ public:
   //@{
   
   //! Construct a generic container storing a boolean
-  GenericContainer( bool a ) { this->operator=(a) ; }
+  GenericContainer( bool a ) { initialize() ; this->operator=(a) ; }
   
   //! Construct a generic container storing an integer
-  GenericContainer( unsigned a ) { *this = a ; }
+  GenericContainer( unsigned a ) { initialize() ; *this = a ; }
   
   //! Construct a generic container storing an integer
-  GenericContainer( int a ) { this->operator=(a) ; }
+  GenericContainer( int a ) { initialize() ; this->operator=(a) ; }
   
   //! Construct a generic container storing a floating point number
-  GenericContainer( float a ) { this->operator=(a) ; }
+  GenericContainer( float a ) { initialize() ; this->operator=(a) ; }
   
   //! Construct a generic container storing a floating point number
-  GenericContainer( double a ) { this->operator=(a) ; }
+  GenericContainer( double a ) { initialize() ; this->operator=(a) ; }
   
   //! Construct a generic container storing a string
-  GenericContainer( char const a[] ) { this->operator=(a) ; }
+  GenericContainer( char const a[] ) { initialize() ; this->operator=(a) ; }
 
   //! Construct a generic container storing a string
-  GenericContainer( std::string const & a ) { this->operator=(a) ; }
+  GenericContainer( std::string const & a ) { initialize() ; this->operator=(a) ; }
   
   //! Construct a generic container storing a pointer
-  GenericContainer( void * a ) { this->operator=(a) ; }
+  GenericContainer( void * a ) { initialize() ; this->operator=(a) ; }
 
   //! Construct a generic container copying container `gc`
-  GenericContainer( GenericContainer const & gc ) { this->operator=(gc) ; }
+  GenericContainer( GenericContainer const & gc ) { initialize() ; this->operator=(gc) ; }
   //@}
 
   //! \name I/O for `GenericContainer` objects
