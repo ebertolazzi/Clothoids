@@ -35,7 +35,7 @@ srcs/%.o: srcs/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 libGenericContainer.a: $(OBJS)
-	$(AR) libs/libGenericContainer.a $(OBJS) 
+	$(AR) libs/libGenericContainer.* $(OBJS) 
 
 run:
 	cd bin ; ./example1

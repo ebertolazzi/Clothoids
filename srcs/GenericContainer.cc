@@ -52,7 +52,7 @@ void
 GenericContainer::clear() {
   switch (data_type) {
     case GC_POINTER:
-      GC_WARNING( data.p == nullptr, "find a pointer not deallocated!") ;
+      GC_WARNING( data.p == nullptr, "find a pointer not deallocated!" ) ;
       break ;
     case GC_STRING:      delete data.s   ; break ;
 
@@ -517,13 +517,6 @@ GenericContainer::exists( std::string const & s ) const {
 // --------------------------------------------------------------
 
 GenericContainer::bool_type
-GenericContainer::get_bool( unsigned i ) {
-  ck("get_bool",GC_VEC_BOOL) ;
-  CHECK_RESIZE(data.v_b,i) ;
-  return (*data.v_b)[i] ;
-}
-
-GenericContainer::bool_type
 GenericContainer::get_bool( unsigned i ) const {
   ck("get_bool",GC_VEC_BOOL) ;
   GC_ASSERT( i < data.v_b->size(), "get_bool( " << i << " ) const, out of range" ) ;
@@ -532,9 +525,15 @@ GenericContainer::get_bool( unsigned i ) const {
 
 GenericContainer::int_type &
 GenericContainer::get_int( unsigned i ) {
-  if ( data_type != GC_VEC_INT ) promote_to_vec_int() ;
-  CHECK_RESIZE(data.v_i,i) ;
-  return (*data.v_i)[i] ;
+  if ( data_type == GC_VEC_BOOL ) promote_to_vec_int() ;
+  if ( data_type == GC_VEC_INT ) {
+    CHECK_RESIZE(data.v_i,i) ; // correct type, check size
+    return (*data.v_i)[i] ;
+  } else {
+    if ( data_type != GC_VECTOR ) promote_to_vector() ;
+    CHECK_RESIZE(data.v,i) ;
+    return (*data.v)[i].set_int(0) ;
+  }
 }
 
 GenericContainer::int_type const &
@@ -546,9 +545,15 @@ GenericContainer::get_int( unsigned i ) const {
 
 GenericContainer::real_type &
 GenericContainer::get_real( unsigned i ) {
-  if ( data_type != GC_VEC_REAL ) promote_to_vec_real() ;
-  CHECK_RESIZE(data.v_r,i) ;
-  return (*data.v_r)[i] ;
+  if ( data_type == GC_VEC_BOOL || data_type == GC_VEC_INT ) promote_to_vec_real() ;
+  if ( data_type == GC_VEC_REAL ) {
+    CHECK_RESIZE(data.v_r,i) ; // correct type, check size
+    return (*data.v_r)[i] ;
+  } else {
+    if ( data_type != GC_VECTOR ) promote_to_vector() ;
+    CHECK_RESIZE(data.v,i) ;
+    return (*data.v)[i].set_real(0) ;
+  }
 }
 
 GenericContainer::real_type const &
@@ -565,13 +570,13 @@ GenericContainer::get_string( unsigned i ) {
     return (*data.v_s)[i] ;
   } else {
     promote_to_vector() ;
-    return (*this)[i].get_string() ;
+    return (*this)[i].set_string("") ;
   }
 }
 
 GenericContainer::string_type const &
 GenericContainer::get_string( unsigned i ) const {
-  ck("get_real",GC_VEC_STRING) ;
+  ck("get_string",GC_VEC_STRING) ;
   GC_ASSERT( i < data.v_s->size(), "get_string( " << i << " ) const, out of range" ) ;
   return (*data.v_s)[i] ;
 }
@@ -840,7 +845,7 @@ GenericContainer const &
 GenericContainer::promote_to_vector() {
   switch (data_type) {
     case GC_NOTYPE:
-      { set_vector(1) ; (*this)[0] = 0 ; }
+      { set_vector(1) ; (*this)[0].initialize() ; } // set data to no type
       break ;
     case GC_POINTER:
       { set_vector(1) ; (*this)[0] = data.p ; }
@@ -880,6 +885,13 @@ GenericContainer::promote_to_vector() {
       break ;
     case GC_VEC_REAL:
       { vec_real_type tmp(data.v_r->begin(), data.v_r->end()); // range-based constructor
+        unsigned sz = unsigned(tmp.size()) ;
+        set_vector(sz) ;
+        for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v)[i] = tmp[i] ;
+      }
+      break ;
+    case GC_VEC_STRING:
+      { vec_string_type tmp(data.v_s->begin(), data.v_s->end()); // range-based constructor
         unsigned sz = unsigned(tmp.size()) ;
         set_vector(sz) ;
         for ( unsigned i = 0 ; i < sz ; ++i ) (*data.v)[i] = tmp[i] ;
