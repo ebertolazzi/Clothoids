@@ -800,7 +800,9 @@ public:
   */
   GenericContainer const & operator [] ( std::string const & s ) const ;
 
-  /*! \brief 
+  GenericContainer & operator () ( std::string const & s ) ;
+
+  /*! \brief
      Overload of the `()` operator to access the `i`-th element of a stored generic map. 
      If the element do not exists an error is issued.
    */

@@ -730,6 +730,14 @@ GenericContainer::operator [] ( std::string const & s ) const {
   return (*_data.m)[s] ;
 }
 
+GenericContainer &
+GenericContainer::operator () ( std::string const & s ) {
+  ck("operator ()",GC_MAP) ;
+  map_type::iterator iv = (*_data.m) . find(s) ;
+  GC_ASSERT( iv != (*_data.m) . end(), "operator('" << s << "') Cant find !" ) ;
+  return iv -> second ;
+}
+
 GenericContainer const &
 GenericContainer::operator () ( std::string const & s ) const {
   ck("operator ()",GC_MAP) ;
