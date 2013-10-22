@@ -742,6 +742,7 @@ public:
   { return (*this)[i].get_pointer<T>() ; }
   //!< Return `i`-th generic pointer (if fails issue an error).
 
+  bool_type get_bool( unsigned i ) ;
   bool_type get_bool( unsigned i ) const ;
   //!< Return `i`-th boolean (if fails issue an error).
   

@@ -515,6 +515,18 @@ GenericContainer::exists( std::string const & s ) const {
 }
 
 // --------------------------------------------------------------
+GenericContainer::bool_type
+GenericContainer::get_bool( unsigned i ) {
+  if ( _data_type == GC_NOTYPE   ) set_vec_bool() ;
+  if ( _data_type == GC_VEC_BOOL ) {
+    CHECK_RESIZE(_data.v_b,i) ; // correct type, check size
+    return (*_data.v_b)[i] ;
+  } else {
+    if ( _data_type != GC_VECTOR ) promote_to_vector() ;
+    CHECK_RESIZE(_data.v,i) ;
+    return (*_data.v)[i].set_bool(false) ;
+  }
+}
 
 GenericContainer::bool_type
 GenericContainer::get_bool( unsigned i ) const {
