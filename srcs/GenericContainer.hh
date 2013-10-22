@@ -522,17 +522,22 @@ private:
 
   void ck(char const [],TypeAllowed) const ;
   int  ck(TypeAllowed) const ;
+  void ck_or_set(char const [], TypeAllowed) ;
 
   void initialize() { _data_type = GC_NOTYPE ; }
+
+  bool simple_data() const {
+    return _data_type != GC_VECTOR && _data_type != GC_MAP && _data_type != GC_VEC_STRING ;
+  }
 
 public:
 
   //! build an instance of `GenericContainer` with empty data
   GenericContainer() ;
-  
+
   //! destroy the instance of `GenericContainer`
   ~GenericContainer() { clear() ; }
-  
+
   //! free memory of the data stored in `GenericContainer`, data type become `NOTYPE`
   void clear() ;
   

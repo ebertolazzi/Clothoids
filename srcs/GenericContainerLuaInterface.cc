@@ -71,10 +71,14 @@ push_vec_element( lua_State        * L,
       break ;
     case LUA_TNUMBER:
       {
-        valueType  val = lua_tonumber(L, -1) ;
-        indexType ival = indexType(val) ;
-        if ( ival == val ) gc.get_int(idx)  = ival ;
-        else               gc.get_real(idx) = val ;
+        valueType val = lua_tonumber(L, -1) ;
+        if ( gc.get_type() == GenericContainer::GC_VEC_REAL ) {
+          gc.get_real(idx) = val ;
+        } else if ( indexType(val) == val ) {
+          gc.get_int(idx)  = indexType(val) ;
+        } else {
+          gc.get_real(idx) = val ;
+        }
       }
       break ;
     case LUA_TSTRING:

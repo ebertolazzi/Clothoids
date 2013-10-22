@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -15,7 +15,7 @@
  |      Universita` degli Studi di Trento                                   |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
-\*--------------------------------------------------------------------------*/
+ \*--------------------------------------------------------------------------*/
 
 //
 // file: GenericContainer.cc
@@ -65,7 +65,7 @@ GenericContainer::clear() {
     case GC_VECTOR:      delete _data.v   ; break ;
     case GC_MAP:         delete _data.m   ; break ;
     default:
-    break ;
+      break ;
   }
   _data_type = GenericContainer::GC_NOTYPE ;
 }
@@ -87,13 +87,13 @@ GenericContainer::operator = ( GenericContainer const & gc ) {
     case GC_INT:         this -> set_int(gc._data.i)     ; break ;
     case GC_REAL:        this -> set_real(gc._data.r)    ; break ;
     case GC_STRING:      this -> set_string(*gc._data.s) ; break ;
-      
+
     case GC_VEC_POINTER: this -> set_vec_pointer(*gc._data.v_p) ; break ;
     case GC_VEC_BOOL:    this -> set_vec_bool(*gc._data.v_b)    ; break ;
     case GC_VEC_INT:     this -> set_vec_int(*gc._data.v_i)     ; break ;
     case GC_VEC_REAL:    this -> set_vec_real(*gc._data.v_r)    ; break ;
     case GC_VEC_STRING:  this -> set_vec_string(*gc._data.v_s)  ; break ;
-      
+
     case GC_VECTOR:
       { unsigned N = unsigned(gc._data.v->size()) ;
         allocate_vector( N ) ;
@@ -101,14 +101,14 @@ GenericContainer::operator = ( GenericContainer const & gc ) {
                    gc._data.v->end(),
                    this->_data.v->begin() ) ;
       }
-    break ;
+      break ;
     case GC_MAP:
       { allocate_map() ;
         this->_data.m->insert( gc._data.m->begin(), gc._data.m->end() ) ;
       }
-    break ;
+      break ;
     default:
-    break ;
+      break ;
   }
   return * this ;
 }
@@ -123,18 +123,30 @@ GenericContainer::ck( TypeAllowed tp ) const {
 void
 GenericContainer::ck(char const who[], TypeAllowed tp) const {
   GC_ASSERT( tp == _data_type,
-             who <<
-             " bad data type\nexpect: " << typeName[tp] <<
-             "\nbut data stored is of type: " << typeName[_data_type] ) ;
+            who <<
+            " bad data type\nexpect: " << typeName[tp] <<
+            "\nbut data stored is of type: " << typeName[_data_type] ) ;
+}
+
+void
+GenericContainer::ck_or_set(char const who[], TypeAllowed tp) {
+  if ( _data_type == GC_NOTYPE ) {
+    _data_type = tp ;
+  } else {
+    GC_ASSERT( tp == _data_type,
+              who <<
+              " bad data type\nexpect: " << typeName[tp] <<
+              "\nbut data stored is of type: " << typeName[_data_type] ) ;
+  }
 }
 
 /*
-//      _    _ _                 _       
-//     / \  | | | ___   ___ __ _| |_ ___ 
-//    / _ \ | | |/ _ \ / __/ _` | __/ _ \
-//   / ___ \| | | (_) | (_| (_| | ||  __/
-//  /_/   \_\_|_|\___/ \___\__,_|\__\___|
-*/
+ //      _    _ _                 _
+ //     / \  | | | ___   ___ __ _| |_ ___
+ //    / _ \ | | |/ _ \ / __/ _` | __/ _ \
+ //   / ___ \| | | (_) | (_| (_| | ||  __/
+ //  /_/   \_\_|_|\___/ \___\__,_|\__\___|
+ */
 void
 GenericContainer::allocate_string() {
   if ( _data_type != GenericContainer::GC_STRING ) {
@@ -157,8 +169,8 @@ GenericContainer::allocate_vec_pointer( unsigned sz ) {
 GenericContainer &
 GenericContainer::free_pointer() {
   GC_ASSERT( GC_POINTER == _data_type || GC_NOTYPE == _data_type,
-             "free_pointer() bad data type\nexpect: " << typeName[GC_POINTER] <<
-             "\nbut data stored is of type: " << typeName[_data_type] ) ;
+            "free_pointer() bad data type\nexpect: " << typeName[GC_POINTER] <<
+            "\nbut data stored is of type: " << typeName[_data_type] ) ;
   _data.p = nullptr ;
   _data_type = GenericContainer::GC_NOTYPE ;
   return *this ;
@@ -225,12 +237,12 @@ GenericContainer::allocate_map() {
 }
 
 /*
-//   ____       _
-//  / ___|  ___| |_
-//  \___ \ / _ \ __|
-//   ___) |  __/ |_
-//  |____/ \___|\__|
-*/
+ //   ____       _
+ //  / ___|  ___| |_
+ //  \___ \ / _ \ __|
+ //   ___) |  __/ |_
+ //  |____/ \___|\__|
+ */
 
 GenericContainer::pointer_type &
 GenericContainer::set_pointer( pointer_type value ) {
@@ -343,12 +355,12 @@ GenericContainer::set_map() {
 }
 
 /*
-//    ____      _
-//   / ___| ___| |_
-//  | |  _ / _ \ __|
-//  | |_| |  __/ |_
-//   \____|\___|\__|
-*/
+ //    ____      _
+ //   / ___| ___| |_
+ //  | |  _ / _ \ __|
+ //  | |_| |  __/ |_
+ //   \____|\___|\__|
+ */
 
 //! If data is boolean, integer or floating point return number, otherwise return `0`.
 GenericContainer::real_type
@@ -377,7 +389,7 @@ GenericContainer::get_number( unsigned i ) const {
 
 GenericContainer::bool_type &
 GenericContainer::get_bool() {
-  ck("get_bool",GC_BOOL) ;
+  ck_or_set("get_bool",GC_BOOL) ;
   return _data.b ;
 }
 
@@ -389,7 +401,7 @@ GenericContainer::get_bool() const {
 
 GenericContainer::int_type &
 GenericContainer::get_int() {
-  ck("get_int",GC_INT) ;
+  ck_or_set("get_int",GC_INT) ;
   return _data.i ;
 }
 
@@ -401,7 +413,7 @@ GenericContainer::get_int() const {
 
 GenericContainer::real_type &
 GenericContainer::get_real() {
-  ck("get_real",GC_REAL) ;
+  ck_or_set("get_real",GC_REAL) ;
   return _data.r ;
 }
 
@@ -413,7 +425,7 @@ GenericContainer::get_real() const {
 
 GenericContainer::string_type &
 GenericContainer::get_string() {
-  ck("get_string",GC_STRING) ;
+  ck_or_set("get_string",GC_STRING) ;
   return *_data.s ;
 }
 
@@ -597,12 +609,12 @@ GenericContainer::get_string( unsigned i ) const {
 }
 
 /*
-//   _        __
-//  (_)_ __  / _| ___
-//  | | '_ \| |_ / _ \
-//  | | | | |  _| (_) |
-//  |_|_| |_|_|  \___/
-*/
+ //   _        __
+ //  (_)_ __  / _| ___
+ //  | | '_ \| |_ / _ \
+ //  | | | | |  _| (_) |
+ //  |_|_| |_|_|  \___/
+ */
 
 //! Print to stream the kind of data stored
 GenericContainer const &
@@ -655,13 +667,13 @@ GenericContainer::info( std::ostream & stream ) const {
 }
 
 /*
-//                              _               __ __
-//    ___  _ __   ___ _ __ __ _| |_ ___  _ __  | _|_ |
-//   / _ \| '_ \ / _ \ '__/ _` | __/ _ \| '__| | | | |
-//  | (_) | |_) |  __/ | | (_| | || (_) | |    | | | |
-//   \___/| .__/ \___|_|  \__,_|\__\___/|_|    | | | |
-//        |_|                                  |__|__|
-*/
+ //                              _               __ __
+ //    ___  _ __   ___ _ __ __ _| |_ ___  _ __  | _|_ |
+ //   / _ \| '_ \ / _ \ '__/ _` | __/ _ \| '__| | | | |
+ //  | (_) | |_) |  __/ | | (_| | || (_) | |    | | | |
+ //   \___/| .__/ \___|_|  \__,_|\__\___/|_|    | | | |
+ //        |_|                                  |__|__|
+ */
 
 GenericContainer &
 GenericContainer::operator [] ( unsigned i ) {
@@ -682,14 +694,14 @@ GenericContainer::operator [] ( unsigned i ) const {
 }
 
 /*
-//                              _                ____
-//    ___  _ __   ___ _ __ __ _| |_ ___  _ __   / /\ \
-//   / _ \| '_ \ / _ \ '__/ _` | __/ _ \| '__| | |  | |
-//  | (_) | |_) |  __/ | | (_| | || (_) | |    | |  | |
-//   \___/| .__/ \___|_|  \__,_|\__\___/|_|    | |  | |
-//        |_|                                   \_\/_/
-//
-*/
+ //                              _                ____
+ //    ___  _ __   ___ _ __ __ _| |_ ___  _ __   / /\ \
+ //   / _ \| '_ \ / _ \ '__/ _` | __/ _ \| '__| | |  | |
+ //  | (_) | |_) |  __/ | | (_| | || (_) | |    | |  | |
+ //   \___/| .__/ \___|_|  \__,_|\__\___/|_|    | |  | |
+ //        |_|                                   \_\/_/
+ //
+ */
 
 GenericContainer &
 GenericContainer::operator () ( unsigned i ) {
@@ -706,13 +718,13 @@ GenericContainer::operator () ( unsigned i ) const {
 }
 
 /*
-//                              _               __ __
-//    ___  _ __   ___ _ __ __ _| |_ ___  _ __  | _|_ |
-//   / _ \| '_ \ / _ \ '__/ _` | __/ _ \| '__| | | | |
-//  | (_) | |_) |  __/ | | (_| | || (_) | |    | | | |
-//   \___/| .__/ \___|_|  \__,_|\__\___/|_|    | | | |
-//        |_|                                  |__|__|
-*/
+ //                              _               __ __
+ //    ___  _ __   ___ _ __ __ _| |_ ___  _ __  | _|_ |
+ //   / _ \| '_ \ / _ \ '__/ _` | __/ _ \| '__| | | | |
+ //  | (_) | |_) |  __/ | | (_| | || (_) | |    | | | |
+ //   \___/| .__/ \___|_|  \__,_|\__\___/|_|    | | | |
+ //        |_|                                  |__|__|
+ */
 
 GenericContainer &
 GenericContainer::operator [] ( std::string const & s ) {
@@ -747,12 +759,12 @@ GenericContainer::operator () ( std::string const & s ) const {
 }
 
 /*
-//   ____                            _
-//  |  _ \ _ __ ___  _ __ ___   ___ | |_ ___
-//  | |_) | '__/ _ \| '_ ` _ \ / _ \| __/ _ \
-//  |  __/| | | (_) | | | | | | (_) | ||  __/
-//  |_|   |_|  \___/|_| |_| |_|\___/ \__\___|
-*/
+ //   ____                            _
+ //  |  _ \ _ __ ___  _ __ ___   ___ | |_ ___
+ //  | |_) | '__/ _ \| '_ ` _ \ / _ \| __/ _ \
+ //  |  __/| | | (_) | | | | | | (_) | ||  __/
+ //  |_|   |_|  \___/|_| |_| |_|\___/ \__\___|
+ */
 
 GenericContainer const &
 GenericContainer::promote_to_int() {
@@ -797,21 +809,21 @@ GenericContainer const &
 GenericContainer::promote_to_vec_int() {
   switch (_data_type) {
     case GC_NOTYPE:
-      { set_vec_int(1) ; get_int(0) = 0 ; }
+    { set_vec_int(1) ; get_int(0) = 0 ; }
       break ;
     case GC_BOOL:
-      { int_type tmp = _data.b?1:0 ; set_vec_int(1) ; get_int(0) = tmp ; }
+    { int_type tmp = _data.b?1:0 ; set_vec_int(1) ; get_int(0) = tmp ; }
       break ;
     case GC_INT:
-      { int_type tmp = _data.i ; set_vec_int(1) ; get_int(0) = tmp ; }
+    { int_type tmp = _data.i ; set_vec_int(1) ; get_int(0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
-      { unsigned sz = unsigned(_data.v_b->size()) ;
-        vec_int_type tmp(sz) ;
-        for ( unsigned i = 0 ; i < sz ; ++i ) tmp[i] = (*_data.v_b)[i] ? 1 : 0 ;
-        set_vec_int(sz) ;
-        for ( unsigned i = 0 ; i < sz ; ++i ) (*_data.v_i)[i] = tmp[i] ;
-      }
+    { unsigned sz = unsigned(_data.v_b->size()) ;
+      vec_int_type tmp(sz) ;
+      for ( unsigned i = 0 ; i < sz ; ++i ) tmp[i] = (*_data.v_b)[i] ? 1 : 0 ;
+      set_vec_int(sz) ;
+      for ( unsigned i = 0 ; i < sz ; ++i ) (*_data.v_i)[i] = tmp[i] ;
+    }
       break ;
     case GC_VEC_INT:
       break ;
@@ -856,6 +868,7 @@ GenericContainer::promote_to_vec_real() {
       }
       break ;
     case GC_VEC_REAL:
+      break ;
     default:
       GC_ASSERT( false, ":promote_to_vec_real() cannot promote " << get_type_name() << " to real") ;
       break ;
@@ -914,7 +927,7 @@ GenericContainer::promote_to_vector() {
       }
       break ;
     case GC_VEC_STRING:
-      { vec_string_type tmp(_data.v_s->begin(), _data.v_s->end()); // range-based constructor
+      { vec_string_type tmp(_data.v_s->begin(), _data.v_s->end()); // range-based   constructor
         unsigned sz = unsigned(tmp.size()) ;
         set_vector(sz) ;
         for ( unsigned i = 0 ; i < sz ; ++i ) (*_data.v)[i] = tmp[i] ;
@@ -949,16 +962,16 @@ GenericContainer::print( std::ostream & stream, std::string const & prefix ) con
       stream << prefix << "pointer: " << (unsigned long)get_pointer<void*>() << '\n' ;
       break ;
     case GC_BOOL:
-      stream << prefix << "bool: " << (this -> get_bool()?"true":"false") << '\n' ;
+      stream << prefix << (this -> get_bool()?"true":"false") << '\n' ;
       break ;
     case GC_INT:
-      stream << prefix << "int: " << this -> get_int() << '\n' ;
+      stream << prefix << this -> get_int() << '\n' ;
       break ;
     case GC_REAL:
-      stream << prefix << "real: " << this -> get_real() << '\n' ;
+      stream << prefix << this -> get_real() << '\n' ;
       break ;
     case GC_STRING:
-      stream << prefix << "string: " << this -> get_string() << '\n' ;
+      stream << prefix << "\"" << this -> get_string() << "\"\n" ;
       break ;
 
     case GC_VEC_POINTER:
@@ -969,46 +982,56 @@ GenericContainer::print( std::ostream & stream, std::string const & prefix ) con
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type const & v = this -> get_vec_bool() ;
-        stream << prefix << "vec_bool_type[0.." << v.size()-1 << "]:" ;
+        stream << prefix << "[" ;
         for ( vec_bool_type::size_type i = 0 ; i < v.size() ; ++i )
           stream << (v[i]?" true":" false")  ;
-        stream << '\n' ;
+        stream << " ]\n" ;
       }
       break ;
     case GC_VEC_INT:
       { vec_int_type const & v = this -> get_vec_int() ;
-        stream << prefix << "vec_int_type[0.." << v.size()-1 << "]:" ;
+        stream << prefix << "[" ;
         for ( vec_int_type::size_type i = 0 ; i < v.size() ; ++i ) stream << " " << v[i] ;
-        stream << '\n' ;
+        stream << " ]\n" ;
       }
       break ;
     case GC_VEC_REAL:
       { vec_real_type const & v = this -> get_vec_real() ;
-        stream << prefix << "vec_real_type[0.." << v.size()-1 << "]:" ;
+        stream << prefix << "[" ;
         for ( vec_real_type::size_type i = 0 ; i < v.size() ; ++i ) stream << " " << v[i] ;
-        stream << '\n' ;
+        stream << " ]\n" ;
       }
       break ;
     case GC_VEC_STRING:
       { vec_string_type const & v = this -> get_vec_string() ;
         for ( vec_string_type::size_type i = 0 ; i < v.size() ; ++i )
-          stream << prefix << "vec_string(" << i << "): " << v[i] << "\n" ;
+          stream << prefix << i << ": \"" << v[i] << "\"\n" ;
       }
       break ;
 
     case GC_VECTOR:
       { vector_type const & v = this -> get_vector() ;
         for ( vector_type::size_type i = 0 ; i < v.size() ; ++i ) {
-          stream << prefix << "vec(" << i << "):\n" ;
-          v[i].print(stream,prefix+"   ") ;
+          if ( v[i].simple_data() ) {
+            stream << prefix << i << ": " ;
+            v[i].print(stream,"") ;
+          } else {
+            stream << prefix << "vec(" << i << "):\n" ;
+            v[i].print(stream,prefix+"  ") ;
+          }
         }
       }
       break ;
     case GC_MAP:
       { map_type const & m = this -> get_map() ;
         for ( map_type::const_iterator im = m.begin() ; im != m.end() ; ++im ) {
-          stream << prefix << "map['" << im->first << "']:\n" ;
-          im->second.print(stream,prefix+"   ") ;
+          if ( im->second.simple_data() ) {
+            stream << prefix << im->first << ": " ;
+            im->second.print(stream,"") ;
+          } else {
+            stream << prefix << im->first << ":\n" ;
+            im->second.print(stream,prefix+"  ") ;
+          }
         }
       }
       break ;
