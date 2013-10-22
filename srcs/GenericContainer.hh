@@ -506,8 +506,8 @@ private:
 
   } DataStorage ;
 
-  DataStorage data      ; //!< The data stored in the class instance
-  TypeAllowed data_type ; //!< The kind of data stored
+  DataStorage _data      ; //!< The data stored in the class instance
+  TypeAllowed _data_type ; //!< The kind of data stored
 
   void allocate_string() ;
 
@@ -523,7 +523,7 @@ private:
   void ck(char const [],TypeAllowed) const ;
   int  ck(TypeAllowed) const ;
 
-  void initialize() { data_type = GC_NOTYPE ; }
+  void initialize() { _data_type = GC_NOTYPE ; }
 
 public:
 
@@ -667,7 +667,7 @@ public:
        12. `map_type`
 
   */
-  TypeAllowed get_type() const { return data_type ; }
+  TypeAllowed get_type() const { return _data_type ; }
   
   //! Return a string pointer representing the type of data stored
   char const * get_type_name() const ;
@@ -679,10 +679,10 @@ public:
   real_type get_number() const ;
   
   template <typename T>
-  T * & get_pointer() { ck("get_pointer",GC_POINTER) ; return (T*)data.p ; }
+  T * & get_pointer() { ck("get_pointer",GC_POINTER) ; return (T*)_data.p ; }
 
   template <typename T>
-  T get_pointer() const { ck("get_pointer",GC_POINTER) ; return (T)data.p ; }
+  T get_pointer() const { ck("get_pointer",GC_POINTER) ; return (T)_data.p ; }
   //!< Return the stored generic pointer (if fails issue an error).
 
   bool_type       & get_bool() ;
