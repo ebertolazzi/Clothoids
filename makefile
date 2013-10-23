@@ -31,7 +31,8 @@ all: libGenericContainer.a
 	$(CXX) $(CFLAGS) -o bin/example5 examples/example5.cc $(LIBS)
 	$(CC)  $(CFLAGS) -o bin/example6 examples/example6.c  $(LIBS) -lstdc++
 	$(CXX) $(CFLAGS) -o bin/example7 examples/example7.cc $(LIBS)
-	$(CXX) $(CFLAGS) -o bin/example8 examples/example8.cc $(LIBS)
+	$(CXX) $(CFLAGS) -o bin/example8 examples/example8.cc $(LIBS) -llua
+	$(CXX) $(CFLAGS) -o bin/example9 examples/example9.cc $(LIBS) -llua
 
 srcs/%.o: srcs/%.cc $(DEPS)
 	$(CXX) $(CFLAGS) -c $< -o $@ 
@@ -54,6 +55,7 @@ run:
 	cd bin ; ./example6
 	cd bin ; ./example7
 	cd bin ; ./example8
+	cd bin ; ./example9
 
 doc:
 	doxygen
@@ -68,4 +70,5 @@ clean:
 	rm -f bin/example6
 	rm -f bin/example7
 	rm -f bin/example8
+	rm -f bin/example9
 	
