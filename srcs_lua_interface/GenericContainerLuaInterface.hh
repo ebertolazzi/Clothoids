@@ -24,16 +24,13 @@
 
 class LuaInterpreter {
   /* lua_State * */ void * void_L ; //!< interpreter status
-  void fromLua( /* mrb_value */ void * p_v, GenericContainer & gc, std::string const & trace ) ;
-  void toLua( GenericContainer const & gc, /* mrb_value */ void * p_v, std::string const & trace ) ;
-  void global_to_GC( GenericContainer & gc ) ;
 public:
   LuaInterpreter() ;
   ~LuaInterpreter() ;
   void dump( std::ostream & stream ) ;
-  void load( char const fname[] ) ;
-  void parseString( char const cmd[] ) ;
-  void toLua( GenericContainer const & gc, char const [] ) ;
+  void execute( char const cmd[] ) ;
+  void do_file( char const fname[], bool check_syntax_only = false ) ;
+  void GC_to_global( GenericContainer const & gc, char const [] ) ; // not yet implemented
   void global_to_GC( char const var[], GenericContainer & gc ) ;
 } ;
 

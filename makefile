@@ -1,10 +1,14 @@
 SRCS = \
 srcs/GenericContainer.cc \
+srcs/GenericContainerSupport.cc \
 srcs/GenericContainerCinterface.cc \
-srcs/GenericContainerSupport.cc
+srcs_lua_interface/GenericContainerLuaInterface.cc
 
 OBJS = $(SRCS:.cc=.o)
-DEPS = srcs/GenericContainer.hh srcs/GenericContainerCinterface.h
+DEPS = \
+srcs/GenericContainer.hh \
+srcs/GenericContainerCinterface.h \
+srcs_lua_interface/GenericContainerLuaInterface.hh
 
 #CC     = llvm-gcc
 #CXX    = llvm-g++
@@ -13,7 +17,7 @@ DEPS = srcs/GenericContainer.hh srcs/GenericContainerCinterface.h
 CC     = gcc
 CXX    = g++
 
-CFLAGS = -I./srcs -Wall -O3
+CFLAGS = -I./srcs -I./srcs_lua_interface -Wall -O3
 LIBS   = -L./libs -lGenericContainer
 
 #AR     = ar rcs
@@ -27,8 +31,12 @@ all: libGenericContainer.a
 	$(CXX) $(CFLAGS) -o bin/example5 examples/example5.cc $(LIBS)
 	$(CC)  $(CFLAGS) -o bin/example6 examples/example6.c  $(LIBS) -lstdc++
 	$(CXX) $(CFLAGS) -o bin/example7 examples/example7.cc $(LIBS)
+	$(CXX) $(CFLAGS) -o bin/example8 examples/example8.cc $(LIBS)
 
 srcs/%.o: srcs/%.cc $(DEPS)
+	$(CXX) $(CFLAGS) -c $< -o $@ 
+
+srcs_lua_interface/%.o: srcs_lua_interface/%.cc $(DEPS)
 	$(CXX) $(CFLAGS) -c $< -o $@ 
 
 srcs/%.o: srcs/%.c $(DEPS)
@@ -45,12 +53,13 @@ run:
 	cd bin ; ./example5
 	cd bin ; ./example6
 	cd bin ; ./example7
+	cd bin ; ./example8
 
 doc:
 	doxygen
 	
 clean:
-	rm -f libs/libGenericContainer.a srcs/*.o
+	rm -f libs/libGenericContainer.* srcs*/*.o
 	rm -f bin/example1
 	rm -f bin/example2
 	rm -f bin/example3
@@ -58,4 +67,5 @@ clean:
 	rm -f bin/example5
 	rm -f bin/example6
 	rm -f bin/example7
+	rm -f bin/example8
 	

@@ -3,6 +3,7 @@
 /LibSources/Mechatronix-Info.plist
 /doc
 /doc/html
+/lua-doc
 /bin/*
 /libs/*.dylib
 /libs/*.so
