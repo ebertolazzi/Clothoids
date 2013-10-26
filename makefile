@@ -1,3 +1,16 @@
+# get the type of OS currently running
+OS=$(shell uname)
+
+# check if the OS string contains 'Linux'
+ifneq (,$(findstring Linux, $(OS)))
+  LIB_GC = libGenericContainer.so
+endif
+
+# check if the OS string contains 'Darwin'
+ifneq (,$(findstring Darwin, $(OS)))
+  LIB_GC = libGenericContainer.dylib
+endif
+
 SRCS = \
 srcs/GenericContainer.cc \
 srcs/GenericContainerSupport.cc \
@@ -10,6 +23,7 @@ srcs/GenericContainer.hh \
 srcs/GenericContainerCinterface.h \
 srcs_lua_interface/GenericContainerLuaInterface.hh
 
+
 #CC     = llvm-gcc
 #CXX    = llvm-g++
 #CC     = clang
@@ -17,13 +31,14 @@ srcs_lua_interface/GenericContainerLuaInterface.hh
 CC     = gcc
 CXX    = g++
 
-CFLAGS = -I./srcs -I./srcs_lua_interface -Wall -O3
-LIBS   = -L./libs -lGenericContainer
+CFLAGS  = -I/usr/local/include -I./srcs -I./srcs_lua_interface -Wall -O3
+LIB_DIR = -L/usr/local/lib -L./libs
+LIBS    = $(LIB_DIR) -lGenericContainer 
 
 #AR     = ar rcs
 AR     = libtool -static -o 
 
-all: libGenericContainer.a
+all: $(LIB_GC) libGenericContainer.a
 	$(CXX) $(CFLAGS) -o bin/example1 examples/example1.cc $(LIBS)
 	$(CXX) $(CFLAGS) -o bin/example2 examples/example2.cc $(LIBS)
 	$(CXX) $(CFLAGS) -o bin/example3 examples/example3.cc $(LIBS)
@@ -44,9 +59,16 @@ srcs/%.o: srcs/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 libGenericContainer.a: $(OBJS)
-	$(AR) libs/libGenericContainer.* $(OBJS) 
+	$(AR) libs/libGenericContainer.a $(OBJS) 
+
+libGenericContainer.dylib: $(OBJS)
+	$(CXX) -dynamiclib $(OBJS) -o libs/libGenericContainer.dylib $(LIB_DIR) -llua -install_name libGenericContainer.dylib -Wl,-rpath,.
+
+libGenericContainer.so: $(OBJS)
+	$(CXX) -shared $(OBJS) -o libs/libGenericContainer.so $(LIB_DIR) -llua
 
 run:
+	cp -f libs/libGenericContainer.??* bin/
 	cd bin ; ./example1
 	cd bin ; ./example2
 	cd bin ; ./example3

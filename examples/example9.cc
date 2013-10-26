@@ -28,6 +28,7 @@
 #include <fstream>
 
 using namespace std ;
+using namespace GC ;
 
 void
 gc_set( GenericContainer & gc ) {

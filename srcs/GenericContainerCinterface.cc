@@ -35,6 +35,7 @@
 #include <deque>
 
 using namespace std ;
+using namespace GC ;
 
 #define EXTERN_C extern "C"
 

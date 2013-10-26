@@ -39,7 +39,7 @@ main() {
        << "***********************\n\n" ;
   
   try {
-    GenericContainer gc ;
+    GC::GenericContainer gc ;
     ifstream file("data_example.txt") ;
     if ( file.fail() ) throw std::runtime_error("file to open file") ;
     gc.readFormattedData( file, "#", "\t " ) ;

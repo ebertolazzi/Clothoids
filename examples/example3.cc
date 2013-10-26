@@ -31,6 +31,7 @@
 #include "GenericContainer.hh"
 
 using namespace std ;
+using namespace GC ;
 
 int
 main() {
