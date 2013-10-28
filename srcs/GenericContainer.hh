@@ -398,6 +398,11 @@ in the distribution.
 #include <map>
 #include <vector>
 
+// use pcre for pattern matching
+#ifndef GENERIC_CONTAINER_NO_PCRE
+#include <pcre.h>
+#endif
+
 // if C++ < C++11 define nullptr
 #if __cplusplus <= 199711L
   #include <cstdlib>
@@ -486,6 +491,13 @@ namespace GC {
                        GC_VEC_STRING,
                        GC_VECTOR,
                        GC_MAP } ;
+
+    #ifndef GENERIC_CONTAINER_NO_PCRE
+    pcre *       reCompiled ;
+    pcre_extra * pcreExtra ;
+    const char * pcreErrorStr ;
+    int          pcreErrorOffset ;
+    #endif
 
   private:
 
@@ -910,7 +922,9 @@ namespace GC {
     //@{
 
     //! print the contents of the object in a human readable way
-    void print( std::ostream &, std::string const & prefix = "" ) const ;
+    void print( std::ostream &,
+                std::string const & prefix = "",
+                std::string const & indent = "    " ) const ;
 
     //! print the contents of the object in yaml syntax
     void to_yaml( std::ostream &, std::string const & prefix = "" ) const ;

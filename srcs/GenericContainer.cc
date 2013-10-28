@@ -24,6 +24,10 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 
+#if __cplusplus > 199711L
+#include <regex>
+#endif
+
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
 namespace GC {
@@ -47,7 +51,19 @@ namespace GC {
   // costruttore
   GenericContainer::GenericContainer()
   : _data_type(GenericContainer::GC_NOTYPE)
-  {}
+  {
+    // compilo regex
+    #ifndef GENERIC_CONTAINER_NO_PCRE
+    reCompiled = pcre_compile("^\\d+\\s*@(-|=|~|_|)\\s*(.*)$", 0, &pcreErrorStr, &pcreErrorOffset, NULL);
+    // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
+    GC_ASSERT( reCompiled != nullptr,
+               "GenericContainer: Could not compile regex for print GenericContainer\n" ) ;
+    // Optimize the regex
+    pcreExtra = pcre_study(reCompiled, 0, &pcreErrorStr);
+    GC_ASSERT( pcreExtra != nullptr,
+              "GenericContainer: Could not optimize regex for print GenericContainer\n" ) ;
+    #endif
+  }
 
   // distruttore
   void
@@ -953,7 +969,10 @@ namespace GC {
   */
 
   void
-  GenericContainer::print( std::ostream & stream, std::string const & prefix ) const {
+  GenericContainer::print( std::ostream      & stream,
+                           std::string const & prefix,
+                           std::string const & indent ) const {
+
     switch (_data_type) {
 
       case GC_NOTYPE:
@@ -974,7 +993,6 @@ namespace GC {
       case GC_STRING:
         stream << prefix << "\"" << this -> get_string() << "\"\n" ;
         break ;
-
       case GC_VEC_POINTER:
         { vec_pointer_type const & v = this -> get_vec_pointer() ;
           for ( vec_pointer_type::size_type i = 0 ; i < v.size() ; ++i )
@@ -1018,7 +1036,7 @@ namespace GC {
               v[i].print(stream,"") ;
             } else {
               stream << prefix << "vec(" << i << "):\n" ;
-              v[i].print(stream,prefix+"  ") ;
+              v[i].print(stream,prefix+indent) ;
             }
           }
         }
@@ -1026,13 +1044,43 @@ namespace GC {
       case GC_MAP:
         { map_type const & m = this -> get_map() ;
           for ( map_type::const_iterator im = m.begin() ; im != m.end() ; ++im ) {
+            // check formatting using pcre
+            #ifdef GENERIC_CONTAINER_NO_PCRE
             if ( im->second.simple_data() ) {
               stream << prefix << im->first << ": " ;
               im->second.print(stream,"") ;
             } else {
               stream << prefix << im->first << ":\n" ;
-              im->second.print(stream,prefix+"  ") ;
+              im->second.print(stream,prefix+indent) ;
             }
+            #else
+            // num+"@"+"underline character"
+            // Try to find the regex in aLineToMatch, and report results.
+            int imatch[30];
+            int pcreExecRet = pcre_exec(reCompiled,
+                                        pcreExtra,
+                                        im->first.c_str(),
+                                        int(im->first.length()), // length of string
+                                        0,                       // Start looking at this point
+                                        0,                       // OPTIONS
+                                        imatch,
+                                        30);                     // Length of subStrVec
+            std::string header = pcreExecRet == 3 ? im->first.substr(imatch[4],imatch[5]) : im->first ;
+            if ( pcreExecRet == 3 && imatch[3] > imatch[2] ) {
+              // found formatting
+              stream << prefix << header << '\n' << prefix ;
+              char fmt = im->first[imatch[2]] ;
+              for ( int n = imatch[5]-imatch[4] ; n>0 ; --n ) stream << fmt ;
+              stream << '\n' ;
+              im->second.print(stream,prefix+indent) ;
+            } else if ( im->second.simple_data() ) {
+              stream << prefix << header << ": " ;
+              im->second.print(stream,"") ;
+            } else {
+              stream << prefix << header << ":\n" ;
+              im->second.print(stream,prefix+indent) ;
+            }
+            #endif
           }
         }
         break ;

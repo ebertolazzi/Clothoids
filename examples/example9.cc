@@ -59,10 +59,10 @@ gc_set( GenericContainer & gc ) {
   vs.push_back("string3");
   vs.push_back("string4");
   GenericContainer::map_type & m = v[6].get_map() ;
-  m["aaa"]    = 123 ;
-  m["bbb"]    = 3.4 ;
-  m["vector"].set_vec_int() ;
-  GenericContainer::vec_int_type & vi = m["vector"].get_vec_int() ;
+  m["1@  aaa"]    = 123 ;
+  m["2@= bbb"]    = 3.4 ;
+  m["3@- vector"].set_vec_int() ;
+  GenericContainer::vec_int_type & vi = m["3@- vector"].get_vec_int() ;
   vi.push_back(12) ;
   vi.push_back(10) ;
   vi.push_back(1) ;
