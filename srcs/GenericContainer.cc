@@ -95,11 +95,11 @@ namespace GC {
   }
 
   //! Assign a generic container `a` to the generic container.
-  GenericContainer const &
-  GenericContainer::operator = ( GenericContainer const & gc ) {
+  void
+  GenericContainer::load( GenericContainer const & gc ) {
     this -> clear() ;
     switch (gc._data_type) {
-      case GC_NOTYPE:      this -> clear()                 ; break ;
+      //case GC_NOTYPE:      this -> clear()                 ; break ;
       case GC_POINTER:     this -> set_pointer(gc._data.p) ; break ;
       case GC_BOOL:        this -> set_bool(gc._data.b)    ; break ;
       case GC_INT:         this -> set_int(gc._data.i)     ; break ;
@@ -122,13 +122,15 @@ namespace GC {
         break ;
       case GC_MAP:
         { allocate_map() ;
-          this->_data.m->insert( gc._data.m->begin(), gc._data.m->end() ) ;
+          // this->_data.m->insert( gc._data.m->begin(), gc._data.m->end() ) ; !!!! DO NOT WORK ON CLANG
+          for ( map_type::iterator it = gc._data.m->begin() ;
+                it != gc._data.m->end() ; ++it )
+            (*this->_data.m)[it->first] = it->second ;
         }
         break ;
       default:
         break ;
     }
-    return * this ;
   }
 
   int
@@ -1079,12 +1081,14 @@ namespace GC {
                 im->second.print(stream,"") ;
               } else {
                 if ( m1 > 1 ) stream << '\n' ; // double ## --> add nel line
-                stream << prefix << header << '\n';
+                stream << prefix << header ;
                 if ( m2 > 0 ) {
-                  stream << prefix ;
+                  stream << '\n'<< prefix ;
                   char fmt = im->first[imatch[4]] ; // underline char
                   while ( m3-- > 0 ) stream << fmt ; // underline header
                   stream << '\n' ;
+                } else {
+                  stream << ":\n" ;
                 }
                 im->second.print(stream,prefix+indent) ;
               }

@@ -866,7 +866,11 @@ namespace GC {
     { this -> set_pointer(a) ; return * this ; }
 
     //! Assign a generic container `a` to the generic container.
-    GenericContainer const & operator = ( GenericContainer const & a ) ;
+    GenericContainer const & operator = ( GenericContainer const & a )
+    { this -> load( a ) ; return * this ; }
+
+    //! Copy a generic container `a` to the generic container.
+    void load( GenericContainer const & a ) ;
     //@}
 
     //! \name Promotion to a ``bigger'' data
