@@ -54,7 +54,7 @@ namespace GC {
   {
     // compilo regex
     #ifndef GENERIC_CONTAINER_NO_PCRE
-    reCompiled = pcre_compile("^\\s*\\d+\\s*(\#\#?)(-|=|~|_|)\\s*(.*)$", 0, &pcreErrorStr, &pcreErrorOffset, NULL);
+    reCompiled = pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$", 0, &pcreErrorStr, &pcreErrorOffset, NULL);
     // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
     GC_ASSERT( reCompiled != nullptr,
                "GenericContainer: Could not compile regex for print GenericContainer\n" ) ;
@@ -1069,10 +1069,9 @@ namespace GC {
             std::string header = pcreExecRet == 3 ? im->first.substr(imatch[4],imatch[5]) : im->first ;
             if ( pcreExecRet == 4 ) {
               // extract match
-              unsigned    m1     = imatch[3]-imatch[2] ; // # or ##
-              unsigned    m2     = imatch[5]-imatch[4] ; // # or ##
-              unsigned    m3     = imatch[7]-imatch[6] ; // # or ##
-              char        fmt    = m2 ? im->first[imatch[4]] : ' ' ; // underline char
+              unsigned m1 = imatch[3]-imatch[2] ; // # or ##
+              unsigned m2 = imatch[5]-imatch[4] ; // -,= etc
+              unsigned m3 = imatch[7]-imatch[6] ; // # or ##
               std::string header = im->first.substr(imatch[6],imatch[7]) ; // header
               // found formatting
               if ( im->second.simple_data() ) {
@@ -1080,9 +1079,13 @@ namespace GC {
                 im->second.print(stream,"") ;
               } else {
                 if ( m1 > 1 ) stream << '\n' ; // double ## --> add nel line
-                stream << prefix << header << '\n' << prefix ;
-                while ( m3-- > 0 ) stream << fmt ;
-                stream << '\n' ;
+                stream << prefix << header << '\n';
+                if ( m2 > 0 ) {
+                  stream << prefix ;
+                  char fmt = im->first[imatch[4]] ; // underline char
+                  while ( m3-- > 0 ) stream << fmt ; // underline header
+                  stream << '\n' ;
+                }
                 im->second.print(stream,prefix+indent) ;
               }
             } else if ( im->second.simple_data() ) {
