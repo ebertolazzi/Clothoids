@@ -54,7 +54,7 @@ namespace GC {
   {
     // compilo regex
     #ifndef GENERIC_CONTAINER_NO_PCRE
-    reCompiled = pcre_compile("^\\d+\\s*@(-|=|~|_|)\\s*(.*)$", 0, &pcreErrorStr, &pcreErrorOffset, NULL);
+    reCompiled = pcre_compile("^\\s*\\d+\\s*(\#\#?)(-|=|~|_|)\\s*(.*)$", 0, &pcreErrorStr, &pcreErrorOffset, NULL);
     // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
     GC_ASSERT( reCompiled != nullptr,
                "GenericContainer: Could not compile regex for print GenericContainer\n" ) ;
@@ -1035,7 +1035,7 @@ namespace GC {
               stream << prefix << i << ": " ;
               v[i].print(stream,"") ;
             } else {
-              stream << prefix << "vec(" << i << "):\n" ;
+              stream << prefix << i << ":\n" ;
               v[i].print(stream,prefix+indent) ;
             }
           }
@@ -1065,14 +1065,26 @@ namespace GC {
                                         0,                       // OPTIONS
                                         imatch,
                                         30);                     // Length of subStrVec
+
             std::string header = pcreExecRet == 3 ? im->first.substr(imatch[4],imatch[5]) : im->first ;
-            if ( pcreExecRet == 3 && imatch[3] > imatch[2] ) {
+            if ( pcreExecRet == 4 ) {
+              // extract match
+              unsigned    m1     = imatch[3]-imatch[2] ; // # or ##
+              unsigned    m2     = imatch[5]-imatch[4] ; // # or ##
+              unsigned    m3     = imatch[7]-imatch[6] ; // # or ##
+              char        fmt    = m2 ? im->first[imatch[4]] : ' ' ; // underline char
+              std::string header = im->first.substr(imatch[6],imatch[7]) ; // header
               // found formatting
-              stream << prefix << header << '\n' << prefix ;
-              char fmt = im->first[imatch[2]] ;
-              for ( int n = imatch[5]-imatch[4] ; n>0 ; --n ) stream << fmt ;
-              stream << '\n' ;
-              im->second.print(stream,prefix+indent) ;
+              if ( im->second.simple_data() ) {
+                stream << prefix << header << ": " ;
+                im->second.print(stream,"") ;
+              } else {
+                if ( m1 > 1 ) stream << '\n' ; // double ## --> add nel line
+                stream << prefix << header << '\n' << prefix ;
+                while ( m3-- > 0 ) stream << fmt ;
+                stream << '\n' ;
+                im->second.print(stream,prefix+indent) ;
+              }
             } else if ( im->second.simple_data() ) {
               stream << prefix << header << ": " ;
               im->second.print(stream,"") ;

@@ -51,21 +51,26 @@ gc_set( GenericContainer & gc ) {
   mm["pluto"]    = 1  ;
   mm["paperino"] = 3  ;
   GenericContainer & gmm = v[2] ; // access element 2 as GenericContainer
-  gmm["aaa"]     = "stringa1"  ; // is the same as mm["aaa"] = "stringa"
-  gmm["bbb"]     = "stringa2"  ; // is the same as mm["aaa"] = "stringa"
+  gmm["Step 1: aaa"]     = "stringa1"  ; // is the same as mm["aaa"] = "stringa"
+  gmm["Step 2: bbb"]     = "stringa2"  ; // is the same as mm["aaa"] = "stringa"
   GenericContainer::vec_string_type & vs = v[3].get_vec_string() ;
   vs.push_back("string1");
   vs.push_back("string2");
   vs.push_back("string3");
   vs.push_back("string4");
   GenericContainer::map_type & m = v[6].get_map() ;
-  m["1@  aaa"]    = 123 ;
-  m["2@= bbb"]    = 3.4 ;
-  m["3@- vector"].set_vec_int() ;
-  GenericContainer::vec_int_type & vi = m["3@- vector"].get_vec_int() ;
+  m["1#  aaa"]    = 123 ;
+  m["2#= bbb"]    = 3.4 ;
+  m["3##- vector"].set_vec_int() ;
+  m["4##- map"].set_map() ;
+  GenericContainer::vec_int_type & vi = m["3##- vector"].get_vec_int() ;
   vi.push_back(12) ;
   vi.push_back(10) ;
   vi.push_back(1) ;
+  GenericContainer::map_type & mmm = m["4##- map"].get_map() ;
+  mmm["a"] = "a" ;
+  mmm["b"] = 23.4 ;
+  mmm["c"] = 2 ;
 
   GenericContainer::vector_type & vg = v[7].get_vector() ;
   vg.resize(3) ;
