@@ -51,7 +51,7 @@ main() {
     gc . set_vector() ;
     cout << "gc: " ; gc.info(cout) ;
 
-    GenericContainer::vector_type & v = gc.get_vector() ;
+    GC::vector_type & v = gc.get_vector() ;
     v.resize(10) ;
     cout << "gc: " ; gc.info(cout) ;
 

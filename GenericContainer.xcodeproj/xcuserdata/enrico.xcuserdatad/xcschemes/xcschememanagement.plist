@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>compile all.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>example1.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -98,6 +103,11 @@
 			<true/>
 		</dict>
 		<key>D95EEC1318188AAE0076087A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D96BCBF6182AEDA100E31059</key>
 		<dict>
 			<key>primary</key>
 			<true/>

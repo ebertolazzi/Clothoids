@@ -436,6 +436,39 @@ in the distribution.
 
 namespace GC {
 
+  class GenericContainer ;
+
+  typedef void*       pointer_type ; //!< generic pointer type
+  typedef bool        bool_type    ; //!< boolean type data
+  typedef int         int_type     ; //!< integer type data
+  typedef double      real_type    ; //!< floating point type data
+  typedef std::string string_type  ; //!< string type data
+
+  typedef std::vector<pointer_type> vec_pointer_type ; //!< vector of generic pointer
+  typedef std::vector<bool_type>    vec_bool_type    ; //!< vector of boolean
+  typedef std::vector<int_type>     vec_int_type     ; //!< vector of integer
+  typedef std::vector<real_type>    vec_real_type    ; //!< vector of floating point
+  typedef std::vector<string_type>  vec_string_type  ; //!< vector of strings
+
+  typedef std::vector<GenericContainer>          vector_type ; //!< vector of `GenericContainer`
+  typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
+
+  //! Type allowed for the `GenericContainer`
+  enum TypeAllowed { GC_NOTYPE=0,
+    GC_POINTER,
+    GC_BOOL,
+    GC_INT,
+    GC_REAL,
+    GC_STRING,
+    GC_VEC_POINTER,
+    GC_VEC_BOOL,
+    GC_VEC_INT,
+    GC_VEC_REAL,
+    GC_VEC_STRING,
+    GC_VECTOR,
+    GC_MAP
+  } ;
+
   /*!
     \brief
 
@@ -461,36 +494,6 @@ namespace GC {
   class GenericContainer {
 
   public:
-
-    typedef void*       pointer_type ; //!< generic pointer type
-    typedef bool        bool_type    ; //!< boolean type data
-    typedef int         int_type     ; //!< integer type data
-    typedef double      real_type    ; //!< floating point type data
-    typedef std::string string_type  ; //!< string type data
-
-    typedef std::vector<pointer_type> vec_pointer_type ; //!< vector of generic pointer 
-    typedef std::vector<bool_type>    vec_bool_type    ; //!< vector of boolean
-    typedef std::vector<int_type>     vec_int_type     ; //!< vector of integer
-    typedef std::vector<real_type>    vec_real_type    ; //!< vector of floating point
-    typedef std::vector<string_type>  vec_string_type  ; //!< vector of strings
-
-    typedef std::vector<GenericContainer>          vector_type ; //!< vector of `GenericContainer`
-    typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
-
-    //! Type allowed for the `GenericContainer`
-    enum TypeAllowed { GC_NOTYPE=0,
-                       GC_POINTER,
-                       GC_BOOL,
-                       GC_INT,
-                       GC_REAL,
-                       GC_STRING,
-                       GC_VEC_POINTER,
-                       GC_VEC_BOOL,
-                       GC_VEC_INT,
-                       GC_VEC_REAL,
-                       GC_VEC_STRING,
-                       GC_VECTOR,
-                       GC_MAP } ;
 
     #ifndef GENERIC_CONTAINER_NO_PCRE
     pcre *       reCompiled ;

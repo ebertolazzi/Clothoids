@@ -50,7 +50,7 @@ namespace GC {
 
   // costruttore
   GenericContainer::GenericContainer()
-  : _data_type(GenericContainer::GC_NOTYPE)
+  : _data_type(GC::GC_NOTYPE)
   {
     // compilo regex
     #ifndef GENERIC_CONTAINER_NO_PCRE
@@ -85,7 +85,7 @@ namespace GC {
       default:
         break ;
     }
-    _data_type = GenericContainer::GC_NOTYPE ;
+    _data_type = GC::GC_NOTYPE ;
   }
 
   //! Return a string representing the type of data stored
@@ -169,18 +169,18 @@ namespace GC {
    */
   void
   GenericContainer::allocate_string() {
-    if ( _data_type != GenericContainer::GC_STRING ) {
+    if ( _data_type != GC::GC_STRING ) {
       clear() ;
-      _data_type = GenericContainer::GC_STRING ;
+      _data_type = GC::GC_STRING ;
       _data.s    = new string_type ;
     }
   }
 
   void
   GenericContainer::allocate_vec_pointer( unsigned sz ) {
-    if ( _data_type != GenericContainer::GC_VEC_POINTER ) {
+    if ( _data_type != GC::GC_VEC_POINTER ) {
       clear() ;
-      _data_type = GenericContainer::GC_VEC_POINTER ;
+      _data_type = GC::GC_VEC_POINTER ;
       _data.v_p  = new vec_pointer_type() ;
       if ( sz > 0 ) _data.v_p -> resize( sz ) ;
     }
@@ -192,16 +192,16 @@ namespace GC {
                "free_pointer() bad data type\nexpect: " << typeName[GC_POINTER] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
     _data.p = nullptr ;
-    _data_type = GenericContainer::GC_NOTYPE ;
+    _data_type = GC::GC_NOTYPE ;
     return *this ;
   }
 
 
   void
   GenericContainer::allocate_vec_bool( unsigned sz ) {
-    if ( _data_type != GenericContainer::GC_VEC_BOOL ) {
+    if ( _data_type != GC::GC_VEC_BOOL ) {
       clear() ;
-      _data_type = GenericContainer::GC_VEC_BOOL ;
+      _data_type = GC::GC_VEC_BOOL ;
       _data.v_b  = new vec_bool_type() ;
       if ( sz > 0 ) _data.v_b -> resize( sz ) ;
     }
@@ -209,9 +209,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vec_int( unsigned sz ) {
-    if ( _data_type != GenericContainer::GC_VEC_INT ) {
+    if ( _data_type != GC::GC_VEC_INT ) {
       clear() ;
-      _data_type = GenericContainer::GC_VEC_INT ;
+      _data_type = GC::GC_VEC_INT ;
       _data.v_i  = new vec_int_type() ;
       if ( sz > 0 ) _data.v_i -> resize( sz ) ;
     }
@@ -219,9 +219,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vec_real( unsigned sz ) {
-    if ( _data_type != GenericContainer::GC_VEC_REAL ) {
+    if ( _data_type != GC::GC_VEC_REAL ) {
       clear() ;
-      _data_type = GenericContainer::GC_VEC_REAL ;
+      _data_type = GC::GC_VEC_REAL ;
       _data.v_r  = new vec_real_type() ;
       if ( sz > 0 ) _data.v_r -> resize( sz ) ;
     }
@@ -229,9 +229,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vec_string( unsigned sz ) {
-    if ( _data_type != GenericContainer::GC_VEC_STRING ) {
+    if ( _data_type != GC::GC_VEC_STRING ) {
       clear() ;
-      _data_type = GenericContainer::GC_VEC_STRING ;
+      _data_type = GC::GC_VEC_STRING ;
       _data.v_s  = new vec_string_type() ;
       if ( sz > 0 ) _data.v_s -> resize( sz ) ;
     }
@@ -239,9 +239,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vector( unsigned sz ) {
-    if ( _data_type != GenericContainer::GC_VECTOR ) {
+    if ( _data_type != GC::GC_VECTOR ) {
       clear() ;
-      _data_type = GenericContainer::GC_VECTOR ;
+      _data_type = GC::GC_VECTOR ;
       _data.v    = new vector_type() ;
       if ( sz > 0 ) _data.v -> resize( sz ) ;
     }
@@ -249,9 +249,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_map() {
-    if ( _data_type != GenericContainer::GC_MAP ) {
+    if ( _data_type != GC::GC_MAP ) {
       clear() ;
-      _data_type = GenericContainer::GC_MAP ;
+      _data_type = GC::GC_MAP ;
       _data.m    = new map_type() ;
     }
   }
@@ -264,111 +264,111 @@ namespace GC {
   //  |____/ \___|\__|
   */
 
-  GenericContainer::pointer_type &
+  pointer_type &
   GenericContainer::set_pointer( pointer_type value ) {
     clear() ;
-    _data_type = GenericContainer::GC_POINTER ;
+    _data_type = GC::GC_POINTER ;
     return (_data.p = value) ;
   }
 
-  GenericContainer::bool_type &
+  bool_type &
   GenericContainer::set_bool( bool_type value ) {
     clear() ;
-    _data_type = GenericContainer::GC_BOOL ;
+    _data_type = GC::GC_BOOL ;
     return (_data.b = value) ;
   }
 
-  GenericContainer::int_type &
+  int_type &
   GenericContainer::set_int( int_type value ) {
     clear() ;
-    _data_type = GenericContainer::GC_INT ;
+    _data_type = GC::GC_INT ;
     return (_data.i = value) ;
   }
 
-  GenericContainer::real_type &
+  real_type &
   GenericContainer::set_real( real_type value ) {
     clear() ;
-    _data_type = GenericContainer::GC_REAL ;
+    _data_type = GC::GC_REAL ;
     return (_data.r = value) ;
   }
 
-  GenericContainer::string_type &
+  string_type &
   GenericContainer::set_string( string_type const & value ) {
     allocate_string() ;
     return (*_data.s = value) ;
   }
 
-  GenericContainer::vec_pointer_type &
+  vec_pointer_type &
   GenericContainer::set_vec_pointer( unsigned sz ) {
     allocate_vec_pointer( sz ) ;
     return *_data.v_p ;
   }
 
-  GenericContainer::vec_pointer_type &
+  vec_pointer_type &
   GenericContainer::set_vec_pointer( vec_pointer_type const & v ) {
     allocate_vec_pointer( unsigned(v.size()) ) ;
     std::copy( v.begin(), v.end(), _data.v_p->begin() ) ;
     return *_data.v_p ;
   }
 
-  GenericContainer::vec_bool_type &
+  vec_bool_type &
   GenericContainer::set_vec_bool( unsigned sz ) {
     allocate_vec_bool( sz ) ; return *_data.v_b ;
   }
 
-  GenericContainer::vec_bool_type &
+  vec_bool_type &
   GenericContainer::set_vec_bool( vec_bool_type const & v ) {
     allocate_vec_bool( unsigned(v.size()) ) ;
     std::copy( v.begin(), v.end(), _data.v_b->begin() ) ;
     return *_data.v_b ;
   }
 
-  GenericContainer::vec_int_type &
+  vec_int_type &
   GenericContainer::set_vec_int( unsigned sz ) {
     allocate_vec_int( sz ) ;
     return *_data.v_i ;
   }
 
-  GenericContainer::vec_int_type &
+  vec_int_type &
   GenericContainer::set_vec_int( vec_int_type const & v ) {
     allocate_vec_int( unsigned(v.size()) ) ;
     std::copy( v.begin(), v.end(), _data.v_i->begin() ) ;
     return *_data.v_i ;
   }
 
-  GenericContainer::vec_real_type &
+  vec_real_type &
   GenericContainer::set_vec_real( unsigned sz ) {
     allocate_vec_real( sz ) ;
     return *_data.v_r ;
   }
 
-  GenericContainer::vec_real_type &
+  vec_real_type &
   GenericContainer::set_vec_real( vec_real_type const & v ) {
     allocate_vec_real( unsigned(v.size()) ) ;
     std::copy( v.begin(), v.end(), _data.v_r->begin() ) ;
     return *_data.v_r ;
   }
 
-  GenericContainer::vec_string_type &
+  vec_string_type &
   GenericContainer::set_vec_string( unsigned sz ) {
     allocate_vec_string( sz ) ;
     return *_data.v_s ;
   }
 
-  GenericContainer::vec_string_type &
+  vec_string_type &
   GenericContainer::set_vec_string( vec_string_type const & v ) {
     allocate_vec_string( unsigned(v.size()) ) ;
     std::copy( v.begin(), v.end(), _data.v_s->begin() ) ;
     return *_data.v_s ;
   }
 
-  GenericContainer::vector_type &
+  vector_type &
   GenericContainer::set_vector( unsigned sz ) {
     allocate_vector( sz ) ;
     return *_data.v ;
   }
 
-  GenericContainer::map_type &
+  map_type &
   GenericContainer::set_map() {
     allocate_map() ;
     return *_data.m ;
@@ -383,7 +383,7 @@ namespace GC {
   */
 
   //! If data is boolean, integer or floating point return number, otherwise return `0`.
-  GenericContainer::real_type
+  real_type
   GenericContainer::get_number() const {
     switch (_data_type) {
       case GC_BOOL: return (_data.b?1:0) ;
@@ -395,7 +395,7 @@ namespace GC {
     return 0 ;
   }
 
-  GenericContainer::real_type
+  real_type
   GenericContainer::get_number( unsigned i ) const {
     switch (_data_type) {
       case GC_VEC_BOOL: return (*_data.v_b)[i] ;
@@ -407,133 +407,133 @@ namespace GC {
     return 0 ;
   }
 
-  GenericContainer::bool_type &
+  bool_type &
   GenericContainer::get_bool() {
     ck_or_set("get_bool",GC_BOOL) ;
     return _data.b ;
   }
 
-  GenericContainer::bool_type const &
+  bool_type const &
   GenericContainer::get_bool() const {
     ck("get_bool",GC_BOOL) ;
     return _data.b ;
   }
 
-  GenericContainer::int_type &
+  int_type &
   GenericContainer::get_int() {
     ck_or_set("get_int",GC_INT) ;
     return _data.i ;
   }
 
-  GenericContainer::int_type const &
+  int_type const &
   GenericContainer::get_int() const {
     ck("get_int",GC_INT) ;
     return _data.i ;
   }
 
-  GenericContainer::real_type &
+  real_type &
   GenericContainer::get_real() {
     ck_or_set("get_real",GC_REAL) ;
     return _data.r ;
   }
 
-  GenericContainer::real_type const &
+  real_type const &
   GenericContainer::get_real() const {
     ck("get_real",GC_REAL) ;
     return _data.r ;
   }
 
-  GenericContainer::string_type &
+  string_type &
   GenericContainer::get_string() {
     ck_or_set("get_string",GC_STRING) ;
     return *_data.s ;
   }
 
-  GenericContainer::string_type const &
+  string_type const &
   GenericContainer::get_string() const {
     ck("get_string",GC_STRING) ;
     return *_data.s ;
   }
 
-  GenericContainer::vector_type &
+  vector_type &
   GenericContainer::get_vector() {
     ck("get_vector",GC_VECTOR) ;
     return *_data.v ;
   }
 
-  GenericContainer::vector_type const &
+  vector_type const &
   GenericContainer::get_vector() const {
     ck("get_vector",GC_VECTOR) ;
     return *_data.v ;
   }
 
-  GenericContainer::vec_pointer_type &
+  vec_pointer_type &
   GenericContainer::get_vec_pointer() {
     ck("get_vec_pointer",GC_VEC_POINTER) ;
     return *_data.v_p ;
   }
 
-  GenericContainer::vec_pointer_type const &
+  vec_pointer_type const &
   GenericContainer::get_vec_pointer() const {
     ck("get_vec_pointer",GC_VEC_POINTER) ;
     return *_data.v_p ;
   }
 
-  GenericContainer::vec_bool_type &
+  vec_bool_type &
   GenericContainer::get_vec_bool() {
     ck("get_vec_bool",GC_VEC_BOOL) ;
     return *_data.v_b ;
   }
 
-  GenericContainer::vec_bool_type const &
+  vec_bool_type const &
   GenericContainer::get_vec_bool() const {
     ck("get_vec_bool",GC_VEC_BOOL) ;
     return *_data.v_b ;
   }
 
-  GenericContainer::vec_int_type &
+  vec_int_type &
   GenericContainer::get_vec_int() {
     ck("get_vec_int",GC_VEC_INT) ;
     return *_data.v_i ;
   }
 
-  GenericContainer::vec_int_type const &
+  vec_int_type const &
   GenericContainer::get_vec_int() const {
     ck("get_vec_int",GC_VEC_INT) ;
     return *_data.v_i ;
   }
 
-  GenericContainer::vec_real_type &
+  vec_real_type &
   GenericContainer::get_vec_real() {
     ck("get_vec_real",GC_VEC_REAL) ;
     return *_data.v_r ;
   }
 
-  GenericContainer::vec_real_type const &
+  vec_real_type const &
   GenericContainer::get_vec_real() const {
     ck("get_vec_real",GC_VEC_REAL) ;
     return *_data.v_r ;
   }
 
-  GenericContainer::vec_string_type &
+  vec_string_type &
   GenericContainer::get_vec_string() {
     ck("get_vec_string",GC_VEC_STRING) ;
     return *_data.v_s ;
   }
 
-  GenericContainer::vec_string_type const &
+  vec_string_type const &
   GenericContainer::get_vec_string() const {
     ck("get_vec_string",GC_VEC_STRING) ;
     return *_data.v_s ;
   }
 
-  GenericContainer::map_type &
+  map_type &
   GenericContainer::get_map() {
     ck("get_map",GC_MAP) ;
     return *_data.m ;
   }
 
-  GenericContainer::map_type const &
+  map_type const &
   GenericContainer::get_map() const {
     ck("get_map",GC_MAP) ;
     return *_data.m ;
@@ -547,7 +547,7 @@ namespace GC {
   }
 
   // --------------------------------------------------------------
-  GenericContainer::bool_type
+  bool_type
   GenericContainer::get_bool( unsigned i ) {
     if ( _data_type == GC_NOTYPE   ) set_vec_bool() ;
     if ( _data_type == GC_VEC_BOOL ) {
@@ -560,14 +560,14 @@ namespace GC {
     }
   }
 
-  GenericContainer::bool_type
+  bool_type
   GenericContainer::get_bool( unsigned i ) const {
     ck("get_bool",GC_VEC_BOOL) ;
     GC_ASSERT( i < _data.v_b->size(), "get_bool( " << i << " ) const, out of range" ) ;
     return (*_data.v_b)[i] ;
   }
 
-  GenericContainer::int_type &
+  int_type &
   GenericContainer::get_int( unsigned i ) {
     if      ( _data_type == GC_NOTYPE ) set_vec_int() ;
     else if ( _data_type == GC_VEC_BOOL ) promote_to_vec_int() ;
@@ -581,14 +581,14 @@ namespace GC {
     }
   }
 
-  GenericContainer::int_type const &
+  int_type const &
   GenericContainer::get_int( unsigned i ) const {
     ck("get_int",GC_VEC_INT) ;
     GC_ASSERT( i < _data.v_i->size(), "get_int( " << i << " ) const, out of range" ) ;
     return (*_data.v_i)[i] ;
   }
 
-  GenericContainer::real_type &
+  real_type &
   GenericContainer::get_real( unsigned i ) {
     if      ( _data_type == GC_NOTYPE ) set_vec_real() ;
     else if ( _data_type == GC_VEC_BOOL || _data_type == GC_VEC_INT ) promote_to_vec_real() ;
@@ -602,14 +602,14 @@ namespace GC {
     }
   }
 
-  GenericContainer::real_type const &
+  real_type const &
   GenericContainer::get_real( unsigned i ) const  {
     ck("get_real",GC_VEC_REAL) ;
     GC_ASSERT( i < _data.v_r->size(), "get_real( " << i << " ) const, out of range" ) ;
     return (*_data.v_r)[i] ;
   }
 
-  GenericContainer::string_type &
+  string_type &
   GenericContainer::get_string( unsigned i ) {
     if ( _data_type == GC_NOTYPE ) set_vec_string() ;
     if ( _data_type == GC_VEC_STRING ) {
@@ -621,7 +621,7 @@ namespace GC {
     }
   }
 
-  GenericContainer::string_type const &
+  string_type const &
   GenericContainer::get_string( unsigned i ) const {
     ck("get_string",GC_VEC_STRING) ;
     GC_ASSERT( i < _data.v_s->size(), "get_string( " << i << " ) const, out of range" ) ;

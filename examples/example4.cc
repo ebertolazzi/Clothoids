@@ -50,7 +50,7 @@ main() {
     gc . set_map() ;
     cout << "gc: " ; gc.info(cout) ;
     
-    GenericContainer::map_type & m = gc . set_map() ;
+    GC::map_type & m = gc . set_map() ;
     cout << "gc: " ; gc.info(cout) ;
 
     // access using map and vector like syntax 

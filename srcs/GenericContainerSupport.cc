@@ -38,9 +38,9 @@ namespace GC {
   // Original code by Francesco Biral (francesco.biral@unitn.it)
   static
   void
-  tokenizeString( std::string const                 & str,
-                  GenericContainer::vec_string_type & tokens,
-                  std::string const                 & delimiters ) {
+  tokenizeString( std::string const & str,
+                  vec_string_type   & tokens,
+                  std::string const & delimiters ) {
 
     tokens . clear() ;
 
