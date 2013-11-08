@@ -5,6 +5,7 @@
 /doc/html
 /lua-doc
 /bin/*
+!/bin/*.lua
 /libs/*.dylib
 /libs/*.so
 /libs/*.dll

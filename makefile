@@ -33,7 +33,7 @@ CXX    = g++
 
 CFLAGS  = -I/usr/local/include -I./srcs -I./srcs_lua_interface -Wall -O3
 LIB_DIR = -L/usr/local/lib -L./libs
-LIBS    = $(LIB_DIR) -lGenericContainer 
+LIBS    = $(LIB_DIR) -lGenericContainer -lpcre
 
 #AR     = ar rcs
 AR     = libtool -static -o 
@@ -62,10 +62,10 @@ libGenericContainer.a: $(OBJS)
 	$(AR) libs/libGenericContainer.a $(OBJS) 
 
 libGenericContainer.dylib: $(OBJS)
-	$(CXX) -dynamiclib $(OBJS) -o libs/libGenericContainer.dylib $(LIB_DIR) -llua -install_name libGenericContainer.dylib -Wl,-rpath,.
+	$(CXX) -dynamiclib $(OBJS) -o libs/libGenericContainer.dylib $(LIB_DIR) -llua -lpcre -install_name libGenericContainer.dylib -Wl,-rpath,.
 
 libGenericContainer.so: $(OBJS)
-	$(CXX) -shared $(OBJS) -o libs/libGenericContainer.so $(LIB_DIR) -llua
+	$(CXX) -shared $(OBJS) -o libs/libGenericContainer.so $(LIB_DIR) -llua -lpcre
 
 run:
 	cp -f libs/libGenericContainer.??* bin/
