@@ -493,6 +493,8 @@ namespace GC {
 
   vec_int_type &
   GenericContainer::get_vec_int() {
+    if ( _data_type == GC_NOTYPE   ) set_vec_int() ;
+    if ( _data_type == GC_VEC_BOOL ) promote_to_vec_int() ;
     ck("get_vec_int",GC_VEC_INT) ;
     return *_data.v_i ;
   }
@@ -505,6 +507,8 @@ namespace GC {
 
   vec_real_type &
   GenericContainer::get_vec_real() {
+    if ( _data_type == GC_NOTYPE   ) set_vec_int() ;
+    if ( _data_type == GC_VEC_BOOL || _data_type == GC_VEC_INT ) promote_to_vec_real() ;
     ck("get_vec_real",GC_VEC_REAL) ;
     return *_data.v_r ;
   }
