@@ -24,10 +24,6 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 
-#if __cplusplus > 199711L
-#include <regex>
-#endif
-
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
 namespace GC {
