@@ -42,6 +42,9 @@
 
 #include <lua.hpp>
 
+// load string.h for strlen
+#include <string.h>
+
 using namespace std ;
 
 namespace GC {
