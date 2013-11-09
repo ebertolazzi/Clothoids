@@ -470,9 +470,7 @@ namespace GC {
   } ;
 
   /*!
-    \brief
-
-    `GenericContainer` is a class which permit to store eterogeneous data:
+    \brief `GenericContainer` is a class which permit to store eterogeneous data:
 
     - pointer
     - boolean
@@ -842,11 +840,19 @@ namespace GC {
 
     //! Assign an integer to the generic container.
     GenericContainer & operator = ( unsigned a )
-    { this -> set_int(a)  ; return * this ; }
+    { this -> set_int(int(a))  ; return * this ; }
+
+    //! Assign an integer to the generic container.
+    GenericContainer & operator = ( unsigned long a )
+    { this -> set_int(int(a))  ; return * this ; }
 
     //! Assign an integer to the generic container.
     GenericContainer & operator = ( int a )
     { this -> set_int(a)  ; return * this ; }
+
+    //! Assign an integer to the generic container.
+    GenericContainer & operator = ( long a )
+    { this -> set_int(int(a))  ; return * this ; }
 
     //! Assign a floating point number to the generic container.
     GenericContainer & operator = ( float a )

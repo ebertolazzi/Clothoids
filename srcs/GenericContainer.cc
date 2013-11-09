@@ -1071,9 +1071,9 @@ namespace GC {
             std::string header = pcreExecRet == 3 ? im->first.substr(imatch[4],imatch[5]) : im->first ;
             if ( pcreExecRet == 4 ) {
               // extract match
-              unsigned m1 = imatch[3]-imatch[2] ; // # or ##
-              unsigned m2 = imatch[5]-imatch[4] ; // -,= etc
-              unsigned m3 = imatch[7]-imatch[6] ; // # or ##
+              int m1 = imatch[3]-imatch[2] ; // # or ##
+              int m2 = imatch[5]-imatch[4] ; // -,= etc
+              int m3 = imatch[7]-imatch[6] ; // # or ##
               std::string header = im->first.substr(imatch[6],imatch[7]) ; // header
               // found formatting
               if ( im->second.simple_data() ) {

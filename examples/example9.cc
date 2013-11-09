@@ -30,6 +30,7 @@
 using namespace std ;
 using namespace GC ;
 
+static
 void
 gc_set( GenericContainer & gc ) {
   GC::vector_type & v = gc.set_vector() ;

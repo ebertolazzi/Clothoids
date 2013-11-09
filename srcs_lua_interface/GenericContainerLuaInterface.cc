@@ -74,7 +74,7 @@ namespace GC {
                     string const     & indent ) {
     // assegna il valore
     // index start from 1 in LUA
-    int_type    idx  = int_type(lua_tointeger(L, -2)-1) ;
+    unsigned    idx  = unsigned(lua_tointeger(L, -2)-1) ;
     lua_Integer type = lua_type(L, -1) ;
     switch( type ) {
     case LUA_TBOOLEAN:
@@ -199,7 +199,7 @@ namespace GC {
         lua_createtable(L, int(vb.size()), 0);
         for ( unsigned i = 0 ; i < vb.size() ; ++i ) {
           lua_pushboolean(L, vb[i] ? 1 : 0 ) ;
-          lua_rawseti (L, -2, i+1);
+          lua_rawseti (L, -2, int(i+1));
         }
       }
       lua_pushnil(L) ;
@@ -209,7 +209,7 @@ namespace GC {
         lua_createtable(L, int(vi.size()), 0);
         for ( unsigned i = 0 ; i < vi.size() ; ++i ) {
           lua_pushnumber(L, vi[i]);
-          lua_rawseti (L, -2, i+1);
+          lua_rawseti (L, -2, int(i+1));
         }
       }
       break;
@@ -218,7 +218,7 @@ namespace GC {
         lua_createtable(L, int(vr.size()), 0);
         for ( unsigned i = 0 ; i < vr.size() ; ++i ) {
           lua_pushnumber(L, vr[i]);
-          lua_rawseti (L, -2, i+1);
+          lua_rawseti (L, -2, int(i+1));
         }
       }
       break;
@@ -227,7 +227,7 @@ namespace GC {
         lua_createtable(L, int(vs.size()), 0);
         for ( unsigned i = 0 ; i < vs.size() ; ++i ) {
           lua_pushstring(L, vs[i].c_str());
-          lua_rawseti (L, -2, i+1);
+          lua_rawseti (L, -2, int(i+1));
         }
       }
       break;
@@ -236,7 +236,7 @@ namespace GC {
         lua_createtable(L, int(v.size()), 0);
         for ( unsigned i = 0 ; i < v.size() ; ++i ) {
           GC_to_lua( L, v[i] ) ;
-          lua_rawseti (L, -2, i+1);
+          lua_rawseti (L, -2, int(i+1));
         }
       }
       break;

@@ -218,7 +218,7 @@ int
 GC_set_vector_of_bool( int const a[], int nelem ) {
   int ok = check_no_data( GC::GC_VEC_BOOL ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
-    head.back() -> set_vec_bool( nelem ) ;
+    head.back() -> set_vec_bool( unsigned(nelem) ) ;
     GC::vec_bool_type & v = head.back() -> get_vec_bool() ;
     for ( int i = 0 ; i < nelem ; ++i ) v[i] = a[i] != 0 ;
   }
@@ -254,7 +254,7 @@ int
 GC_set_vector_of_int( int const a[], int nelem ) {
   int ok = check_no_data( GC::GC_VEC_INT ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
-    head.back() -> set_vec_int( nelem ) ;
+    head.back() -> set_vec_int( unsigned(nelem) ) ;
     GC::vec_int_type & v = head.back() -> get_vec_int() ;
     std::copy( a, a + nelem, v.begin() ) ;
   }
@@ -290,7 +290,7 @@ int
 GC_set_vector_of_real( double const a[], int nelem ) {
   int ok = check_no_data( GC::GC_VEC_REAL ) ;
   if ( ok == GENERIC_CONTAINER_OK ) {
-    head.back() -> set_vec_real( nelem ) ;
+    head.back() -> set_vec_real( unsigned(nelem) ) ;
     GC::vec_real_type & v = head.back() -> get_vec_real() ;
     std::copy( a, a + nelem, v.begin() ) ;
   }
@@ -358,7 +358,7 @@ EXTERN_C
 int
 GC_set_vector( int nelem ) {
   int ok = check_no_data( GC::GC_VECTOR ) ;
-  if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_vector( nelem ) ;
+  if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_vector( unsigned(nelem) ) ;
   return ok ;
 }
 
@@ -399,7 +399,7 @@ GC_set_vector_position( int pos ) {
   if ( head.back() == nullptr ) return GENERIC_CONTAINER_NO_DATA ;
   int ok = check( GC::GC_VECTOR ) ;
   if ( ok == GENERIC_CONTAINER_OK  ) {
-    GC::GenericContainer * gc = &(*head.back())[pos] ;
+    GC::GenericContainer * gc = &(*head.back())[unsigned(pos)] ;
     head.push_back(gc) ;
   }
   return ok ;
@@ -411,7 +411,7 @@ GC_get_bool_at_pos( int pos ) {
   if ( ! head.empty() && 
        head.back() != nullptr &&
        head.back() -> get_type() == GC::GC_VEC_BOOL ) {
-    return head.back()->get_bool(pos) ? 1 : 0 ;
+    return head.back()->get_bool(unsigned(pos)) ? 1 : 0 ;
   }
   return 0 ;
 }
@@ -422,7 +422,7 @@ GC_get_int_at_pos( int pos ) {
   if ( ! head.empty() && 
        head.back() != nullptr &&
        head.back() -> get_type() == GC::GC_VEC_INT ) {
-    return head.back()->get_int(pos) ;
+    return head.back()->get_int(unsigned(pos)) ;
   }
   return 0 ;
 }
@@ -433,7 +433,7 @@ GC_get_real_at_pos( int pos ) {
   if ( ! head.empty() && 
        head.back() != nullptr &&
        head.back() -> get_type() == GC::GC_VEC_REAL ) {
-    return head.back()->get_real(pos) ;
+    return head.back()->get_real(unsigned(pos)) ;
   }
   return 0 ;
 }
@@ -444,7 +444,7 @@ GC_get_string_at_pos( int pos ) {
   if ( ! head.empty() && 
        head.back() != nullptr &&
        head.back() -> get_type() == GC::GC_VEC_STRING ) {
-    return head.back()->get_string(pos).c_str() ;
+    return head.back()->get_string(unsigned(pos)).c_str() ;
   }
   return 0 ;
 }
