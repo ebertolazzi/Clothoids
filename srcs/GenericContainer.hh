@@ -24,7 +24,7 @@
 /*! 
 \mainpage  Generic container class
 \author    Enrico Bertolazzi (enrico.bertolazzi@unitn.it), homepage: http://www.ing.unitn.it/~bertolaz
-\version   1.0.4
+\version   1.0.5
 \date      2013
 \copyright GNU Public License.
 
@@ -62,7 +62,7 @@ The usage is simple, for example it
 can be used as an associative array with eterogenous data
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer gc ;
+GC::GenericContainer gc ;
 gc["one"]  = 1       ; // store integer
 gc["two"]  = true    ; // store a boolean
 gc["3"]    = 1.4     ; // store floating point number
@@ -77,7 +77,7 @@ cout << gc["one"].get_int()     << '\n' ;
 cout << gc["two"].get_bool()    << '\n' ;
 cout << gc["3"].get_real()      << '\n' ;
 cout << gc["four"].get_string() << '\n' ;
-GenericContainer::vec_int_type & v = gc["five"].get_vec_int();
+GC::vec_int_type & v = gc["five"].get_vec_int();
 cout << v[1] << '\n' ;
 ~~~~~~~~~~~~~
 
@@ -91,7 +91,7 @@ in the distribution.
 Getting an instance of `GenericContainer`
  
 ~~~~~~~~~~~~~{.cc}
-GenericContainer gc; // initialize empty container
+GC::GenericContainer gc; // initialize empty container
 ~~~~~~~~~~~~~
 
 if can be initialized to a boolean
@@ -130,34 +130,34 @@ gc.set_pointer(&cout) ;
 to a vector of boolean, integer or floating points
 
 ~~~~~~~~~~~~~{.cc}
-gc.set_vec_bool(10) ; // a vector of 10 booleans
-GenericContainer::vec_bool_type bv ; // initialize an empty vector of booleans
-bv.push_bach(true) ; bv.push_bach(false) ;  
-gc.set_vec_bool(bv) ; // a vector of 2 booleans copy of bv
+gc.set_vec_bool(10)  ; // a vector of 10 booleans
+GC::vec_bool_type bv ; // initialize an empty vector of booleans
+bv.push_bach(true) ; bv.push_bach(false) ;
+gc.set_vec_bool(bv)  ; // a vector of 2 booleans copy of bv
 
-gc.set_vec_int(10) ; // a vector of 10 integers
-GenericContainer::vec_int_type iv ; // initialize an empty vector of integers
+gc.set_vec_int(10)  ; // a vector of 10 integers
+GC::vec_int_type iv ; // initialize an empty vector of integers
 iv.push_back(1) ; iv.push_back(2) ; iv.push_back(-1) ;
-gc.set_vec_int(iv) ; // a vector of 3 integers copy of iv
+gc.set_vec_int(iv)  ; // a vector of 3 integers copy of iv
 
-gc.set_vec_real(10) ; // a vector of 10 floating point numbers
-GenericContainer::vec_real_type rv ; // initialize an empty vector of integers
+gc.set_vec_real(10)  ; // a vector of 10 floating point numbers
+GC::vec_real_type rv ; // initialize an empty vector of integers
 rv.push_back(1.4) ; rv.push_back(2.1) ; rv.push_back(-1) ;
-gc.set_vec_int(rv) ; // a vector of 3 floating point copy of rv
+gc.set_vec_int(rv)   ; // a vector of 3 floating point copy of rv
 ~~~~~~~~~~~~~
 
 to a vector of strings or pointers
  
 ~~~~~~~~~~~~~{.cc}
-gc.set_vec_string(10) ; // a vector of 10 strings
-GenericContainer::vec_string_type sv ; // initialize an empty vector of booleans
+gc.set_vec_string(10)  ; // a vector of 10 strings
+GC::vec_string_type sv ; // initialize an empty vector of booleans
 sv.push_bach("pippo") ; sv.push_bach("pluto") ;
-gc.set_vec_string(sv) ; // a vector of 2 string copy of sv
+gc.set_vec_string(sv)  ; // a vector of 2 string copy of sv
  
-gc.set_vec_pointer(10) ; // a vector of 10 pointers
-GenericContainer::vec_pointer_type pv ; // initialize an empty vector of pointers
+gc.set_vec_pointer(10)  ; // a vector of 10 pointers
+GC::vec_pointer_type pv ; // initialize an empty vector of pointers
 pv.push_back(&cout) ; pv.push_back(&cin) ;
-gc.set_vec_pointer(pv) ; // a vector of 2 pointers copy of pv
+gc.set_vec_pointer(pv)  ; // a vector of 2 pointers copy of pv
 ~~~~~~~~~~~~~
  
 To build complex aggregate data a generic vector and generic
@@ -178,14 +178,14 @@ are discussed in section \ref sec3
 A generic container can be initialized empty or to a specific value
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer gc1          ; // initialize empty container
-GenericContainer gc2(1)       ; // store an integer
-GenericContainer gc3(1.2)     ; // store a floating point
-GenericContainer gc4("pippo") ; // store a string
-GenericContainer gc5(true)    ; // store a bool
-GenericContainer gc6(&cout)   ; // store a pointer
-GenericContainer gc7(gc6)     ; // store a copy of gc6, a pointer
-GenericContainer gc8(gc1)     ; // store a copy of gc1, no data
+GC::GenericContainer gc1          ; // initialize empty container
+GC::GenericContainer gc2(1)       ; // store an integer
+GC::GenericContainer gc3(1.2)     ; // store a floating point
+GC::GenericContainer gc4("pippo") ; // store a string
+GC::GenericContainer gc5(true)    ; // store a bool
+GC::GenericContainer gc6(&cout)   ; // store a pointer
+GC::GenericContainer gc7(gc6)     ; // store a copy of gc6, a pointer
+GC::GenericContainer gc8(gc1)     ; // store a copy of gc1, no data
 ~~~~~~~~~~~~~
 
 getting information 
@@ -220,7 +220,7 @@ Initialization with operator =
 A generic container can be initialized using `operator =`
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer gc, gc1 ;
+GC::GenericContainer gc, gc1 ;
 gc.info(cout) ;
 gc = 1       ; gc.info(cout) ;
 gc = 1.2     ; gc.info(cout) ;
@@ -233,7 +233,7 @@ gc = gc1     ; gc.info(cout) ;
 the output is:
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer: No data stored
+GC::GenericContainer: No data stored
 Integer: 1
 Floating Point: 1.2
 String: pippo
@@ -266,23 +266,23 @@ accessing by using references (alias)
 -------------------------------------
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer::vec_bool_type & bv = gc.get_bool_vec() ; // make a reference of the vector of booleans
+GC::vec_bool_type & bv = gc.get_bool_vec() ; // make a reference of the vector of booleans
 bv[0] = true  ; // Access the elements [read/write]
 bv[1] = false ;
 
-GenericContainer::vec_int_type & iv = gc.get_int_vec() ; // make a reference of the vector of integers
+GC::vec_int_type & iv = gc.get_int_vec() ; // make a reference of the vector of integers
 iv[0] = 1 ; // Access the elements [read/write]
 iv[1] = 4 ;
 
-GenericContainer::vec_real_type & rv = gc.get_real_vec() ; // make a reference of the vector of floating point numbers
+GC::vec_real_type & rv = gc.get_real_vec() ; // make a reference of the vector of floating point numbers
 rv[0] = 1 ; // Access the elements [read/write]
 rv[1] = 4.5 ;
 
-GenericContainer::vec_string_type & sv = gc.get_string_vec() ; // make a reference of the vector of strings
+GC::vec_string_type & sv = gc.get_string_vec() ; // make a reference of the vector of strings
 sv[0] = "pippo" ; // Access the elements [read/write]
 sv[1] = "pluto" ;
 
-GenericContainer::vec_pointer_type & pv = gc.get_pointer_vec() ; // make a reference of the vector of pointers
+GC::vec_pointer_type & pv = gc.get_pointer_vec() ; // make a reference of the vector of pointers
 pv[0] = &cout ; // Access the elements [read/write]
 pv[1] = &cin ;
 ~~~~~~~~~~~~~
@@ -290,11 +290,11 @@ pv[1] = &cin ;
 elements can be generic vector or generic maps
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer::vector_type & gv = gc.get_vector() ; // make a reference of the generic vector
+GC::vector_type & gv = gc.get_vector() ; // make a reference of the generic vector
 gv[0] = 1   ; // access first element of generic vector
 gv[1] = 1.3 ; // access second element of generic vector
 
-GenericContainer::map_type & m = gc.get_map() ; // make a reference of the generic map
+GC::map_type & m = gc.get_map() ; // make a reference of the generic map
 m["pippo"] = 1 ; // access element "pippo" of the generic map
 m["pluto"] = 4 ; // access element "pluto" of the generic map
 ~~~~~~~~~~~~~
@@ -314,7 +314,7 @@ gc.get_pointer<void*>(i) = &cout   ; // Access the i-th element of vector of poi
 from a generic vector
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer & c = gc.get_gc(i) ; // make a reference of a `GenericContainer` at i-th position
+GC::GenericContainer & c = gc.get_gc(i) ; // make a reference of a `GenericContainer` at i-th position
 c.get_bool() = true ; // if the element is a boolean set it
 c.set_bool(true)    ; // equivalent way
 c = true            ; // equivalent way
@@ -363,9 +363,9 @@ Map are associative array indexed with strings.
 To define a map you can initialize in many ways:
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer gc ; // empty object
+GC::GenericContainer gc ; // empty object
 gc.set_map() ;
-GenericContainer::map_type & m = gc.get_map() ; // get an alias of the map data
+GC::map_type & m = gc.get_map() ; // get an alias of the map data
 m["pippo"] = 1 ; // access element "pippo" of the generic map
 m["pluto"] = 4 ; // access element "pluto" of the generic map
 // equivalent way
@@ -376,7 +376,7 @@ gc["pluto"] = 4 ; // access element "pluto" of the generic map
 operator [] can initialize a map
 
 ~~~~~~~~~~~~~{.cc}
-GenericContainer gc = 1 ; // create `GenericContainer` which store integer 1
+GC::GenericContainer gc = 1 ; // create `GenericContainer` which store integer 1
 gc["pippo"] = 1 ; // gc is reallocated as a map and store 1 at index "pippo"
 gc["pluto"] = 4 ; // access element "pluto" of the generic map
 ~~~~~~~~~~~~~
@@ -454,7 +454,8 @@ namespace GC {
   typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
 
   //! Type allowed for the `GenericContainer`
-  enum TypeAllowed { GC_NOTYPE=0,
+  enum TypeAllowed {
+    GC_NOTYPE=0,
     GC_POINTER,
     GC_BOOL,
     GC_INT,
@@ -504,20 +505,20 @@ namespace GC {
 
     //! Data is stored in a union
     typedef union {
-      pointer_type      p ;
-      bool_type         b ;
-      int_type          i ;
-      real_type         r ;
-      string_type       * s ;
+      pointer_type     p ;
+      bool_type        b ;
+      int_type         i ;
+      real_type        r ;
+      string_type      * s ;
 
-      vec_pointer_type  * v_p ;
-      vec_bool_type     * v_b ;
-      vec_int_type      * v_i ;
-      vec_real_type     * v_r ;
-      vec_string_type   * v_s ;
+      vec_pointer_type * v_p ;
+      vec_bool_type    * v_b ;
+      vec_int_type     * v_i ;
+      vec_real_type    * v_r ;
+      vec_string_type  * v_s ;
 
-      vector_type       * v ;
-      map_type          * m ;
+      vector_type      * v ;
+      map_type         * m ;
 
     } DataStorage ;
 
@@ -542,7 +543,9 @@ namespace GC {
     void initialize() { _data_type = GC_NOTYPE ; }
 
     bool simple_data() const {
-      return _data_type != GC_VECTOR && _data_type != GC_MAP && _data_type != GC_VEC_STRING ;
+      return _data_type != GC_VECTOR &&
+             _data_type != GC_MAP    &&
+             _data_type != GC_VEC_STRING ;
     }
 
   public:

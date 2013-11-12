@@ -1068,7 +1068,6 @@ namespace GC {
                                         imatch,
                                         30);                     // Length of subStrVec
 
-            std::string header = pcreExecRet == 3 ? im->first.substr(imatch[4],imatch[5]) : im->first ;
             if ( pcreExecRet == 4 ) {
               // extract match
               int m1 = imatch[3]-imatch[2] ; // # or ##
@@ -1083,21 +1082,24 @@ namespace GC {
                 if ( m1 > 1 ) stream << '\n' ; // double ## --> add nel line
                 stream << prefix << header ;
                 if ( m2 > 0 ) {
-                  stream << '\n'<< prefix ;
+                  stream << '\n' << prefix ;
                   char fmt = im->first[imatch[4]] ; // underline char
                   while ( m3-- > 0 ) stream << fmt ; // underline header
-                  stream << '\n' ;
                 } else {
-                  stream << ":\n" ;
+                  stream << ':' ;
                 }
+                stream << '\n' ;
                 im->second.print(stream,prefix+indent) ;
               }
-            } else if ( im->second.simple_data() ) {
-              stream << prefix << header << ": " ;
-              im->second.print(stream,"") ;
             } else {
-              stream << prefix << header << ":\n" ;
-              im->second.print(stream,prefix+indent) ;
+              std::string header = pcreExecRet == 3 ? im->first.substr(imatch[4],imatch[5]) : im->first ;
+              if ( im->second.simple_data() ) {
+                stream << prefix << header << ": " ;
+                im->second.print(stream,"") ;
+              } else {
+                stream << prefix << header << ":\n" ;
+                im->second.print(stream,prefix+indent) ;
+              }
             }
             #endif
           }
