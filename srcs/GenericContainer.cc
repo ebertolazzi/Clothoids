@@ -541,7 +541,7 @@ namespace GC {
 
   bool
   GenericContainer::exists( std::string const & s ) const {
-    ck("exists",GC_MAP) ;
+    if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(s) ;
     return iv != (*_data.m).end() ;
   }
