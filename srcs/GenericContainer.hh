@@ -400,11 +400,7 @@ in the distribution.
 
 // use pcre for pattern matching
 #ifndef GENERIC_CONTAINER_NO_PCRE
-  #if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
-    #include <pcrecpp.h>
-  #else
-    #include <pcre.h>
-  #endif
+  #include <pcre.h>
 #endif
 
 // if C++ < C++11 define nullptr
