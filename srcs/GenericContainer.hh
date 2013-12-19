@@ -398,11 +398,6 @@ in the distribution.
 #include <map>
 #include <vector>
 
-// use pcre for pattern matching
-#ifndef GENERIC_CONTAINER_NO_PCRE
-  #include <pcre.h>
-#endif
-
 // if C++ < C++11 define nullptr
 #if __cplusplus <= 199711L
   #include <cstdlib>
@@ -495,9 +490,9 @@ namespace GC {
   public:
 
     #ifndef GENERIC_CONTAINER_NO_PCRE
-    pcre *       reCompiled ;
-    pcre_extra * pcreExtra ;
-    const char * pcreErrorStr ;
+    void       * reCompiled      ; // pcre *
+    void       * pcreExtra       ; // pcre_extra *
+    void const * pcreErrorStr    ; // const char *
     int          pcreErrorOffset ;
     #endif
 

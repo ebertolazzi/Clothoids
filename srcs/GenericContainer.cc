@@ -24,6 +24,11 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 
+// use pcre for pattern matching
+#ifndef GENERIC_CONTAINER_NO_PCRE
+  #include <pcre.h>
+#endif
+
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
 namespace GC {
@@ -50,12 +55,15 @@ namespace GC {
   {
     // compilo regex
     #ifndef GENERIC_CONTAINER_NO_PCRE
-    reCompiled = pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$", 0, &pcreErrorStr, &pcreErrorOffset, NULL);
+    reCompiled = (void*)pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$",
+                                      0,
+                                      (char const **)&pcreErrorStr,
+                                      &pcreErrorOffset, NULL);
     // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
     GC_ASSERT( reCompiled != nullptr,
                "GenericContainer: Could not compile regex for print GenericContainer\n" ) ;
     // Optimize the regex
-    pcreExtra = pcre_study(reCompiled, 0, &pcreErrorStr);
+    pcreExtra = (void*)pcre_study((pcre *)reCompiled, 0, (char const **)&pcreErrorStr);
     GC_ASSERT( pcreExtra != nullptr,
               "GenericContainer: Could not optimize regex for print GenericContainer\n" ) ;
     #endif
@@ -1059,8 +1067,8 @@ namespace GC {
             // num+"@"+"underline character"
             // Try to find the regex in aLineToMatch, and report results.
             int imatch[30];
-            int pcreExecRet = pcre_exec(reCompiled,
-                                        pcreExtra,
+            int pcreExecRet = pcre_exec((pcre *)reCompiled,
+                                        (pcre_extra *)pcreExtra,
                                         im->first.c_str(),
                                         int(im->first.length()), // length of string
                                         0,                       // Start looking at this point
