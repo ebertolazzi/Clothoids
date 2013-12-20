@@ -1081,7 +1081,8 @@ namespace GC {
               int m1 = imatch[3]-imatch[2] ; // # or ##
               int m2 = imatch[5]-imatch[4] ; // -,= etc
               int m3 = imatch[7]-imatch[6] ; // # or ##
-              std::string header = im->first.substr(imatch[6],imatch[7]) ; // header
+              std::string header = im->first.substr((std::string::size_type)imatch[6],
+                                                    (std::string::size_type)imatch[7]) ; // header
               // found formatting
               if ( im->second.simple_data() ) {
                 stream << prefix << header << ": " ;
@@ -1091,7 +1092,7 @@ namespace GC {
                 stream << prefix << header ;
                 if ( m2 > 0 ) {
                   stream << '\n' << prefix ;
-                  char fmt = im->first[imatch[4]] ; // underline char
+                  char fmt = im->first[(std::string::size_type)imatch[4]] ; // underline char
                   while ( m3-- > 0 ) stream << fmt ; // underline header
                 } else {
                   stream << ':' ;
@@ -1100,7 +1101,10 @@ namespace GC {
                 im->second.print(stream,prefix+indent) ;
               }
             } else {
-              std::string header = pcreExecRet == 3 ? im->first.substr(imatch[4],imatch[5]) : im->first ;
+              std::string header = pcreExecRet == 3 ?
+                                   im->first.substr((std::string::size_type)imatch[4],
+                                                    (std::string::size_type)imatch[5]) :
+                                   im->first ;
               if ( im->second.simple_data() ) {
                 stream << prefix << header << ": " ;
                 im->second.print(stream,"") ;

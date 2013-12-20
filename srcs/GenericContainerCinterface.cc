@@ -153,7 +153,7 @@ EXTERN_C
 int
 GC_set_bool( int const a ) {
   int ok = check_no_data( GC::GC_BOOL ) ;
-  if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_bool(a) ;
+  if ( ok == GENERIC_CONTAINER_OK ) head.back() -> set_bool(a?true:false) ;
   return ok ;
 }
 
@@ -220,7 +220,8 @@ GC_set_vector_of_bool( int const a[], int nelem ) {
   if ( ok == GENERIC_CONTAINER_OK ) {
     head.back() -> set_vec_bool( unsigned(nelem) ) ;
     GC::vec_bool_type & v = head.back() -> get_vec_bool() ;
-    for ( int i = 0 ; i < nelem ; ++i ) v[i] = a[i] != 0 ;
+    for ( GC::vec_bool_type::size_type i = 0 ; i < (GC::vec_bool_type::size_type)nelem ; ++i )
+      v[i] = a[i] != 0 ;
   }
   return ok ;
 }

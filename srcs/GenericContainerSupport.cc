@@ -139,7 +139,7 @@ namespace GC {
     GenericContainer & tmp = (*this)["headers"] ;
     
     std::cout << tmp.get_type_name() << '\n';
-    vec_string_type & headers = (*this)["headers"].set_vec_string() ;
+    vec_string_type & headers = tmp.set_vec_string() ;
 
     // reading header line
     unsigned nline = getLineAndSkipComments( stream, line, commentChars ) ; // read  line
