@@ -49,8 +49,10 @@ namespace GC {
     "map_type"
   } ;
 
+  #ifndef GENERIC_CONTAINER_NO_PCRE
   void * GenericContainer::_reCompiled = NULL ;
   void * GenericContainer::_pcreExtra  = NULL ;
+  #endif
 
   // costruttore
   GenericContainer::GenericContainer()
