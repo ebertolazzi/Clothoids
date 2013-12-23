@@ -490,10 +490,10 @@ namespace GC {
   public:
 
     #ifndef GENERIC_CONTAINER_NO_PCRE
-    void       * reCompiled      ; // pcre *
-    void       * pcreExtra       ; // pcre_extra *
-    void const * pcreErrorStr    ; // const char *
-    int          pcreErrorOffset ;
+    static void * _reCompiled      ; // pcre *
+    static void * _pcreExtra       ; // pcre_extra *
+    char const  * pcreErrorStr     ; // const char *
+    int           pcreErrorOffset  ;
     #endif
 
   private:
@@ -697,10 +697,10 @@ namespace GC {
     real_type get_number() const ;
     
     template <typename T>
-    T * & get_pointer() { ck("get_pointer",GC_POINTER) ; return (T*)_data.p ; }
+    T& get_pointer() { ck("get_pointer",GC_POINTER) ; return *(T*)(&(_data.p)) ; }
 
     template <typename T>
-    T get_pointer() const { ck("get_pointer",GC_POINTER) ; return (T)_data.p ; }
+    T get_pointer() const { ck("get_pointer",GC_POINTER) ; return static_cast<T>(_data.p) ; }
     //!< Return the stored generic pointer (if fails issue an error).
 
     bool_type       & get_bool() ;
@@ -753,11 +753,10 @@ namespace GC {
     real_type get_number( unsigned i ) const ;
 
     template <typename T>
-    T * get_pointer( unsigned i ) { return (*this)[i].get_pointer<T>() ; }
+    T& get_pointer( unsigned i ) { return (*this)[i].get_pointer<T>() ; }
 
     template <typename T>
-    T const * get_pointer( unsigned i ) const
-    { return (*this)[i].get_pointer<T>() ; }
+    T get_pointer( unsigned i ) const { return (*this)[i].get_pointer<T>() ; }
     //!< Return `i`-th generic pointer (if fails issue an error).
 
     bool_type get_bool( unsigned i ) ;

@@ -34,7 +34,7 @@ static
 void
 gc_set( GenericContainer & gc ) {
   GC::vector_type & v = gc.set_vector() ;
-  v.resize(10) ;
+  v.resize(12) ;
   v[0] = 1 ;
   v[1].set_vec_real() ;
   v[2].set_map() ;
@@ -64,6 +64,7 @@ gc_set( GenericContainer & gc ) {
   m["2#= bbb"]    = 3.4 ;
   m["3##- vector"].set_vec_int() ;
   m["4##- map"].set_map() ;
+  m["5##- pointer"] = (void*)gc_set ;
   GC::vec_int_type & vi = m["3##- vector"].get_vec_int() ;
   vi.push_back(12) ;
   vi.push_back(10) ;
@@ -74,10 +75,15 @@ gc_set( GenericContainer & gc ) {
   mmm["c"] = 2 ;
 
   GC::vector_type & vg = v[7].get_vector() ;
-  vg.resize(3) ;
+  vg.resize(4) ;
   vg[0] = 123 ;
   vg[1] = 3.14 ;
   vg[2] = "nonna papera" ;
+  vg[3] = (void*)gc_set ;
+  v[9]  = (void*)&gc_set ;
+  v[10] = true ;
+  v[11] = false ;
+
 }
 
 int
@@ -95,6 +101,9 @@ main() {
     gc.clear() ;
     gc_set( gc ) ;
     gc.print(cout) ;
+
+    gc(7)(3).info(cout) ;
+
     cout << "\n\n\n\nConverted in lua\n\n" ;
     lua.GC_to_global( gc, "DATA" ) ;
     lua.do_file("test_print.lua") ;

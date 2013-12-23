@@ -49,23 +49,34 @@ namespace GC {
     "map_type"
   } ;
 
+  void * GenericContainer::_reCompiled = NULL ;
+  void * GenericContainer::_pcreExtra  = NULL ;
+
   // costruttore
   GenericContainer::GenericContainer()
   : _data_type(GC::GC_NOTYPE)
   {
     // compilo regex
     #ifndef GENERIC_CONTAINER_NO_PCRE
-    reCompiled = (void*)pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$",
-                                      0,
-                                      (char const **)&pcreErrorStr,
-                                      &pcreErrorOffset, NULL);
-    // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
-    GC_ASSERT( reCompiled != nullptr,
-               "GenericContainer: Could not compile regex for print GenericContainer\n" ) ;
-    // Optimize the regex
-    pcreExtra = (void*)pcre_study((pcre *)reCompiled, 0, (char const **)&pcreErrorStr);
-    GC_ASSERT( pcreExtra != nullptr,
-              "GenericContainer: Could not optimize regex for print GenericContainer\n" ) ;
+	static bool DoInit = true ; // initialize only once!
+	if ( DoInit ) {
+      pcre       *& reCompiled = *reinterpret_cast<pcre**>(&_reCompiled)      ; // pcre *
+      pcre_extra *& pcreExtra  = *reinterpret_cast<pcre_extra**>(&_pcreExtra) ; // pcre_extra *
+
+      reCompiled = pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$",
+                                0,
+                                &pcreErrorStr,
+                                &pcreErrorOffset,
+                                NULL);
+      // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
+      GC_ASSERT( reCompiled != nullptr,
+                 "GenericContainer: Could not compile regex for print GenericContainer\n" ) ;
+      // Optimize the regex
+      pcreExtra = pcre_study(reCompiled, 0, &pcreErrorStr);
+      GC_ASSERT( pcreExtra != nullptr,
+                "GenericContainer: Could not optimize regex for print GenericContainer\n" ) ;
+	  DoInit = false ;
+	}
     #endif
   }
 
@@ -74,7 +85,8 @@ namespace GC {
   GenericContainer::clear() {
     switch (_data_type) {
       case GC_POINTER:
-        GC_WARNING( _data.p == nullptr, "find a pointer not deallocated!" ) ;
+        // removed annoying warning. To be re-thinked...
+        //GC_WARNING( _data.p == nullptr, "find a pointer not deallocated!" ) ;
         break ;
       case GC_STRING:      delete _data.s   ; break ;
 
@@ -652,7 +664,7 @@ namespace GC {
         stream << "GenericContainer: No data stored\n" ;
         break ;
       case GC_POINTER:
-        stream << "Generic pointer: " << std::hex << (unsigned long)(_data.p) << '\n' ;
+        stream << "Generic pointer: " << _data.p << '\n' ;
         break ;
       case GC_BOOL:
         stream << "Boolean: " << (_data.b?"true":"false") << '\n' ;
@@ -755,10 +767,6 @@ namespace GC {
 
   GenericContainer &
   GenericContainer::operator [] ( std::string const & s ) {
-    switch ( ck( GC_MAP ) ) {
-      case 0: break ; // data present
-      default: set_map() ; // data must be allocated ;
-    }
     if ( ck( GC_MAP ) != 0 ) set_map() ; // if not data present allocate!
     return (*_data.m)[s] ;
   }
@@ -989,7 +997,7 @@ namespace GC {
         stream << prefix << "Empty!\n" ;
         break ;
       case GC_POINTER:
-        stream << prefix << "pointer: " << (unsigned long)get_pointer<void*>() << '\n' ;
+        stream << prefix << get_pointer<void*>() << '\n' ;
         break ;
       case GC_BOOL:
         stream << prefix << (this -> get_bool()?"true":"false") << '\n' ;
@@ -1064,11 +1072,13 @@ namespace GC {
               im->second.print(stream,prefix+indent) ;
             }
             #else
+            pcre       *const& reCompiled = *reinterpret_cast<pcre*const*>(&_reCompiled)      ;
+            pcre_extra *const& pcreExtra  = *reinterpret_cast<pcre_extra*const*>(&_pcreExtra) ;
             // num+"@"+"underline character"
             // Try to find the regex in aLineToMatch, and report results.
             int imatch[30];
-            int pcreExecRet = pcre_exec((pcre *)reCompiled,
-                                        (pcre_extra *)pcreExtra,
+            int pcreExecRet = pcre_exec(reCompiled,
+                                        pcreExtra,
                                         im->first.c_str(),
                                         int(im->first.length()), // length of string
                                         0,                       // Start looking at this point

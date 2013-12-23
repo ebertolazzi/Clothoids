@@ -64,6 +64,7 @@ main() {
     gc["f"] = 1.2 ;
     gc["g"] = true ;
     gc["h"] = "pippo" ;
+    gc["pointer"] = &gc ;
     cout << "Print contents of gc:\n" ;
     gc.print(cout) ;
 
