@@ -400,6 +400,20 @@ namespace GC {
   //   \____|\___|\__|
   */
 
+#if defined(_WIN32) || defined(_WIN64)
+  void *
+  GenericContainer::get_pvoid() const {
+    ck("get_pvoid",GC_POINTER) ;
+    return _data.p ;
+  }
+
+  void **
+  GenericContainer::get_ppvoid() const {
+    ck("get_ppvoid",GC_POINTER) ;
+    return (void **)&_data.p ;
+  }
+#endif
+
   //! If data is boolean, integer or floating point return number, otherwise return `0`.
   real_type
   GenericContainer::get_number() const {
@@ -999,7 +1013,7 @@ namespace GC {
         stream << prefix << "Empty!\n" ;
         break ;
       case GC_POINTER:
-        stream << prefix << get_pointer<void*>() << '\n' ;
+        stream << prefix << this -> get_pvoid() << '\n' ;
         break ;
       case GC_BOOL:
         stream << prefix << (this -> get_bool()?"true":"false") << '\n' ;

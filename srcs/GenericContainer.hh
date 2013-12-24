@@ -695,13 +695,27 @@ namespace GC {
 
     //! If data is boolean, integer or floating point return number, otherwise return `0`.
     real_type get_number() const ;
-    
+
+    #if defined(_WIN32) || defined(_WIN64)
+    void * get_pvoid() const ;
+    void ** get_ppvoid() const ;
+
+    template <typename T>
+    T& get_pointer() { ck("get_pointer",GC_POINTER) ; return *(T*)(get_ppvoid()) ; }
+
+    template <typename T>
+    T get_pointer() const { ck("get_pointer",GC_POINTER) ; return static_cast<T>(get_pvoid()) ; }
+
+    #else
+    void * get_pvoid() const
+    { ck("get_pointer",GC_POINTER) ; return _data.p ; }
+
     template <typename T>
     T& get_pointer() { ck("get_pointer",GC_POINTER) ; return *(T*)(&(_data.p)) ; }
 
     template <typename T>
     T get_pointer() const { ck("get_pointer",GC_POINTER) ; return static_cast<T>(_data.p) ; }
-    //!< Return the stored generic pointer (if fails issue an error).
+    #endif
 
     bool_type       & get_bool() ;
     bool_type const & get_bool() const ;
