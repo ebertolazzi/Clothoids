@@ -797,7 +797,7 @@ namespace GC {
   GenericContainer::operator () ( std::string const & s ) {
     ck("operator ()",GC_MAP) ;
     map_type::iterator iv = (*_data.m) . find(s) ;
-    GC_ASSERT( iv != (*_data.m) . end(), "operator('" << s << "') Cant find !" ) ;
+    GC_ASSERT( iv != (*_data.m) . end(), "operator(): Cannot find key '" << s << "'!" ) ;
     return iv -> second ;
   }
 
@@ -805,7 +805,7 @@ namespace GC {
   GenericContainer::operator () ( std::string const & s ) const {
     ck("operator ()",GC_MAP) ;
     map_type::const_iterator iv = (*_data.m) . find(s) ;
-    GC_ASSERT( iv != (*_data.m) . end(), "operator('" << s << "') Cant find !" ) ;
+    GC_ASSERT( iv != (*_data.m) . end(), "operator(): Cannot find key '" << s << "'!" ) ;
     return iv -> second ;
   }
 
