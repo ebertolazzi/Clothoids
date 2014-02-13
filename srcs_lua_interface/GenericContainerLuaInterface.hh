@@ -31,6 +31,7 @@ namespace GC {
     ~LuaInterpreter() ;
     void dump( std::ostream & stream ) ;
     void execute( char const cmd[] ) ;
+    void call( GenericContainer const & args, GenericContainer & res ) ;
     void do_file( char const fname[], bool check_syntax_only = false ) ;
     void GC_to_global( GenericContainer const & gc, char const [] ) ; // not yet implemented
     void global_to_GC( char const var[], GenericContainer & gc ) ;

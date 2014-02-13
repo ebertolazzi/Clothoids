@@ -63,15 +63,13 @@ namespace GC {
 
   static
   void
-  lua_to_GC( lua_State        * L,
-             GenericContainer & gc,
-             string const     & indent ) ;
+  lua_table_to_GC( lua_State        * L,
+                   GenericContainer & gc ) ;
 
   static
   void
   push_vec_element( lua_State        * L,
-                    GenericContainer & gc,
-                    string const     & indent ) {
+                    GenericContainer & gc ) {
     // assegna il valore
     // index start from 1 in LUA
     unsigned    idx  = unsigned(lua_tointeger(L, -2)-1) ;
@@ -100,7 +98,7 @@ namespace GC {
       gc.get_string(idx) = lua_tostring(L, -1) ;
       break ;
     case LUA_TTABLE:
-      lua_to_GC( L, gc[idx], indent+"  " ) ;
+      lua_table_to_GC( L, gc[idx] ) ;
       break ;
     }
   }
@@ -110,8 +108,7 @@ namespace GC {
   static
   void
   push_hash_element( lua_State        * L,
-                     GenericContainer & gc,
-                     string const     & indent ) {
+                     GenericContainer & gc ) {
     // assegna il valore
     string key  = lua_tostring(L, -2) ;
     int    type = lua_type(L, -1) ;
@@ -131,7 +128,7 @@ namespace GC {
         gc[key].set_string(lua_tostring(L, -1)) ;
         break ;
       case LUA_TTABLE:
-        lua_to_GC( L, gc[key], indent+"  " ) ;
+        lua_table_to_GC( L, gc[key] ) ;
         break ;
     }
   }
@@ -140,22 +137,49 @@ namespace GC {
 
   static
   void
-  lua_to_GC( lua_State        * L,
-             GenericContainer & gc,
-             string const     & indent ) {
+  lua_table_to_GC( lua_State        * L,
+                   GenericContainer & gc ) {
     // ---
     lua_pushnil(L) ; // first key
     // ---
     while ( lua_next(L,-2) != 0 ) {
       switch( lua_type(L, -2) ) {
         case LUA_TNUMBER:
-          push_vec_element( L, gc, indent ) ;
+          push_vec_element( L, gc ) ;
           break ;
         case LUA_TSTRING:
-          push_hash_element( L, gc, indent ) ;
+          push_hash_element( L, gc ) ;
           break ;
       }
       lua_pop(L, 1);  // removes `value'; keeps `key' for next iteration
+    }
+  }
+
+  static
+  void
+  lua_to_GC( lua_State        * L,
+             GenericContainer & gc ) {
+    gc.clear() ;
+    switch( lua_type(L, -1) ) {
+      case LUA_TBOOLEAN:
+        gc.set_bool(lua_toboolean(L, -1)) ;
+        break ;
+      case LUA_TNUMBER:
+        {
+        valueType  val = lua_tonumber(L, -1) ;
+        indexType ival = indexType(val) ;
+        if ( ival == val ) gc.set_int(ival) ;
+        else               gc.set_real(val) ;
+        }
+        break ;
+      case LUA_TSTRING:
+        gc.set_string(lua_tostring(L, -1)) ;
+        break ;
+      case LUA_TTABLE:
+        lua_table_to_GC( L, gc ) ;
+        //global_to_GC( gc ) ;
+        lua_settop(L, 0);
+        break ;
     }
   }
 
@@ -308,6 +332,28 @@ namespace GC {
   // -----------------------------------------------------------------------------
 
   void
+  LuaInterpreter::call( GenericContainer const & fun_io, GenericContainer & res ) {
+    lua_State *& L = *((lua_State**)&void_L) ;
+
+    // args must be of type MAP
+    GC::string_type  const & fname = fun_io("function").get_string() ;
+    GenericContainer const & args  = fun_io("args") ;
+
+    // push functions and arguments
+    lua_getglobal( L, fname.c_str() );  // function to be called
+    GC_to_lua( L, args ) ;
+
+    /* do the call (1 arguments, 1 result) */
+    GC_ASSERT( lua_pcall(L, 1, 1, 0) == 0,
+               "GenericContainer: error running function `" << fname << "'\n");
+
+    /* retrieve result */
+    lua_to_GC( L, res ) ;
+  }
+
+  // -----------------------------------------------------------------------------
+
+  void
   LuaInterpreter::global_to_GC( char const global_var[], GenericContainer & gc ) {
     lua_State *& L = *((lua_State**)&void_L) ;
     ASSERT_DEBUG( L != NULL, "LuaInterpreter::global_to_GC(...) lua_State invalid!" ) ;
@@ -333,7 +379,7 @@ namespace GC {
       gc.set_string(lua_tostring(L, -1)) ;
       break ;
     case LUA_TTABLE:
-      lua_to_GC( L, gc, "" ) ;
+      lua_table_to_GC( L, gc ) ;
       //global_to_GC( gc ) ;
       lua_settop(L, 0);
       break ;

@@ -112,6 +112,26 @@ namespace GC {
     return typeName[_data_type] ;
   }
 
+  unsigned
+  GenericContainer::get_num_elements() const {
+    switch (_data_type) {
+      case GC_POINTER:
+      case GC_BOOL:
+      case GC_INT:
+      case GC_REAL:
+      case GC_STRING:      return 1 ;
+      case GC_VEC_POINTER: return (unsigned)_data.v_p->size() ;
+      case GC_VEC_BOOL:    return (unsigned)_data.v_b->size() ;
+      case GC_VEC_INT:     return (unsigned)_data.v_i->size() ;
+      case GC_VEC_REAL:    return (unsigned)_data.v_r->size() ;
+      case GC_VEC_STRING:  return (unsigned)_data.v_s->size() ;
+      case GC_VECTOR:      return (unsigned)_data.v->size() ;
+      case GC_MAP:         return (unsigned)_data.m->size() ;
+      default:             return 0 ;
+    }
+
+  }
+
   //! Assign a generic container `a` to the generic container.
   void
   GenericContainer::load( GenericContainer const & gc ) {

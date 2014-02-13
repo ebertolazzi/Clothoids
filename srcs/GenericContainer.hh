@@ -693,6 +693,11 @@ namespace GC {
     //! Print to stream the kind of data stored
     GenericContainer const & info( std::ostream & stream ) const ;
 
+    /*! Return the number of the elements of the first level of the generic container
+    //  1 for single element, the size of vector or map, or 0
+    */
+    unsigned get_num_elements() const ;
+
     //! If data is boolean, integer or floating point return number, otherwise return `0`.
     real_type get_number() const ;
 
@@ -1004,6 +1009,19 @@ namespace GC {
     static void exception( char const msg[] ) ;
 
   } ;
+
+  // -------------------------------------------------------
+  // support functions
+  void
+  writeTable( vec_string_type const & headers,
+              vector_type     const & data,
+              std::ostream          & stream,
+              char const delimiter = '\t' ) ;
+
+  void
+  writeTableFormatted( vec_string_type const & headers,
+                       vector_type     const & data,
+                       std::ostream          & stream ) ;
 
 }
 

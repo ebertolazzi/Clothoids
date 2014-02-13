@@ -105,24 +105,9 @@ namespace GC {
   GenericContainer const &
   GenericContainer::writeFormattedData( std::ostream & stream,
                                         char const delimiter ) const {
-    
-    vec_string_type const & headers = (*this)["headers"].get_vec_string() ;
-    vector_type     const & data    = (*this)["data"].get_vector() ;
-      
-    unsigned ncol = (unsigned)headers . size() ;
-    unsigned nrow = (unsigned)data[0] . get_vec_real() . size() ;
-    
-    stream << headers[0] ;
-    for ( unsigned icol = 1 ; icol < ncol ; ++icol )
-      stream << delimiter << headers[icol] ;
-    stream << '\n' ;
-
-    for ( unsigned row = 0 ; row < nrow ; ++row ) {
-      stream << data[0].get_number(row) ;
-      for ( unsigned icol = 1 ; icol < ncol ; ++icol )
-        stream << delimiter << data[icol].get_number(row)  ;
-      stream << '\n' ;
-    }
+    writeTable( (*this)["headers"].get_vec_string(),
+                (*this)["data"].get_vector(),
+                stream, delimiter ) ;
     return *this ;
   }
 
