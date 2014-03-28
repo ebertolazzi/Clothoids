@@ -105,6 +105,15 @@ namespace GC {
   {
   }
 
+  #ifdef GENERIC_CONTAINER_ON_WINDOWS
+  bool
+  GenericContainer::simple_data() const {
+    return _data_type != GC_VECTOR &&
+    _data_type != GC_MAP    &&
+    _data_type != GC_VEC_STRING ;
+  }
+  #endif
+
   // distruttore
   void
   GenericContainer::clear() {
@@ -243,8 +252,8 @@ namespace GC {
       clear() ;
       _data_type = GC::GC_VEC_POINTER ;
       _data.v_p  = new vec_pointer_type() ;
-      if ( sz > 0 ) _data.v_p -> resize( sz ) ;
     }
+    if ( sz > 0 ) _data.v_p -> resize( sz ) ;
   }
 
   GenericContainer &

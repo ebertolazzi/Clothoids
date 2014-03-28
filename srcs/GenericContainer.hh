@@ -429,8 +429,12 @@ in the distribution.
     }
 #endif
 
+#if defined(_WIN32) || defined(_WIN64)
+  #define GENERIC_CONTAINER_ON_WINDOWS
+#endif
+
 #ifndef GENERIC_CONTAINER_API_DLL
-  #if defined(_WIN32) || defined(_WIN64)
+  #ifdef GENERIC_CONTAINER_ON_WINDOWS
     #ifdef GENERIC_CONTAINER_EXPORT
       #define GENERIC_CONTAINER_API_DLL __declspec(dllexport)
     #elif defined(GENERIC_CONTAINER_IMPORT)
@@ -541,11 +545,15 @@ namespace GC {
 
     void initialize() { _data_type = GC_NOTYPE ; }
 
+    #ifdef GENERIC_CONTAINER_ON_WINDOWS
+    bool simple_data() const ;
+    #else
     bool simple_data() const {
       return _data_type != GC_VECTOR &&
              _data_type != GC_MAP    &&
              _data_type != GC_VEC_STRING ;
     }
+    #endif
 
   public:
 
@@ -705,25 +713,29 @@ namespace GC {
     //! If data is boolean, integer or floating point return number, otherwise return `0`.
     real_type get_number() const ;
 
-    #if defined(_WIN32) || defined(_WIN64)
+    #ifdef GENERIC_CONTAINER_ON_WINDOWS
     void * get_pvoid() const ;
     void ** get_ppvoid() const ;
 
     template <typename T>
-    T& get_pointer() { ck("get_pointer",GC_POINTER) ; return *(T*)(get_ppvoid()) ; }
+    T& get_pointer()
+    { ck("get_pointer",GC_POINTER) ; return *(T*)(get_ppvoid()) ; }
 
     template <typename T>
-    T get_pointer() const { ck("get_pointer",GC_POINTER) ; return static_cast<T>(get_pvoid()) ; }
+    T get_pointer() const
+    { ck("get_pointer",GC_POINTER) ; return static_cast<T>(get_pvoid()) ; }
 
     #else
     void * get_pvoid() const
     { ck("get_pointer",GC_POINTER) ; return _data.p ; }
 
     template <typename T>
-    T& get_pointer() { ck("get_pointer",GC_POINTER) ; return *(T*)(&(_data.p)) ; }
+    T& get_pointer()
+    { ck("get_pointer",GC_POINTER) ; return *(T*)(&(_data.p)) ; }
 
     template <typename T>
-    T get_pointer() const { ck("get_pointer",GC_POINTER) ; return static_cast<T>(_data.p) ; }
+    T get_pointer() const
+    { ck("get_pointer",GC_POINTER) ; return static_cast<T>(_data.p) ; }
     #endif
 
     bool_type       & get_bool() ;
@@ -776,10 +788,12 @@ namespace GC {
     real_type get_number( unsigned i ) const ;
 
     template <typename T>
-    T& get_pointer( unsigned i ) { return (*this)[i].get_pointer<T>() ; }
+    T& get_pointer( unsigned i )
+    { return (*this)[i].get_pointer<T>() ; }
 
     template <typename T>
-    T get_pointer( unsigned i ) const { return (*this)[i].get_pointer<T>() ; }
+    T get_pointer( unsigned i ) const
+    { return (*this)[i].get_pointer<T>() ; }
     //!< Return `i`-th generic pointer (if fails issue an error).
 
     bool_type get_bool( unsigned i ) ;
@@ -860,19 +874,19 @@ namespace GC {
 
     //! Assign an integer to the generic container.
     GenericContainer & operator = ( unsigned a )
-    { this -> set_int(int(a))  ; return * this ; }
+    { this -> set_int(int(a)) ; return * this ; }
 
     //! Assign an integer to the generic container.
     GenericContainer & operator = ( unsigned long a )
-    { this -> set_int(int(a))  ; return * this ; }
+    { this -> set_int(int(a)) ; return * this ; }
 
     //! Assign an integer to the generic container.
     GenericContainer & operator = ( int a )
-    { this -> set_int(a)  ; return * this ; }
+    { this -> set_int(a) ; return * this ; }
 
     //! Assign an integer to the generic container.
     GenericContainer & operator = ( long a )
-    { this -> set_int(int(a))  ; return * this ; }
+    { this -> set_int(int(a)) ; return * this ; }
 
     //! Assign a floating point number to the generic container.
     GenericContainer & operator = ( float a )
