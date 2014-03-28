@@ -24,7 +24,7 @@
 
 namespace GC {
 
-  class LuaInterpreter {
+  class GENERIC_CONTAINER_API_DLL LuaInterpreter {
     /* lua_State * */ void * void_L ; //!< interpreter status
   public:
     LuaInterpreter() ;

@@ -56,16 +56,16 @@ namespace GC {
                        vector_type     const & data,
                        std::ostream          & stream ) {
 
-    int ncol = (int)headers.size() ;
-    int nrow = (int)data[0].get_num_elements() ;
+    unsigned ncol = unsigned(headers.size()) ;
+    unsigned nrow = data[0].get_num_elements() ;
 
     if ( ncol == 0 ) return ;
 
     // calcolo lunghezza massima stringhe headers
-    int ml = 0 ;
+    unsigned ml = 0 ;
     vec_string_type::const_iterator is = headers.begin() ;
     for ( ; is != headers.end() ; ++is )
-      if ( ml < (int)is->length() ) ml = (int)is->length() ;
+      if ( ml < is->length() ) ml = unsigned(is->length()) ;
     // taglio a lunghezza min/max
     if      ( ml < 8  ) ml = 8 ;
     else if ( ml > 20 ) ml = 20 ;
@@ -73,15 +73,15 @@ namespace GC {
     string line = std::string(ncol*(ml+1)-1, '-') ;
 
     is = headers.begin() ;
-    stream << std::setw(ml) << *is ;
+    stream << std::setw(int(ml)) << *is ;
     for ( ++is ; is != headers.end() ; ++is )
-      stream << " " << std::setw(ml) << *is ;
+      stream << " " << std::setw(int(ml)) << *is ;
     stream << '\n' << line << '\n';
 
-    for ( int row = 0 ; row < nrow ; ++row ) {
-      stream << std::setw(ml) << data[0].get_number(row) ;
-      for ( int icol = 1 ; icol < ncol ; ++icol )
-        stream << " " << std::setw(ml) << data[icol].get_number(row)  ;
+    for ( unsigned row = 0 ; row < nrow ; ++row ) {
+      stream << std::setw(int(ml)) << data[0].get_number(row) ;
+      for ( unsigned icol = 1 ; icol < ncol ; ++icol )
+        stream << " " << std::setw(int(ml)) << data[icol].get_number(row)  ;
       stream << '\n' ;
     }
     stream << line << '\n';

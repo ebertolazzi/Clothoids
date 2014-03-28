@@ -429,6 +429,20 @@ in the distribution.
     }
 #endif
 
+#ifndef GENERIC_CONTAINER_API_DLL
+  #if defined(_WIN32) || defined(_WIN64)
+    #ifdef GENERIC_CONTAINER_EXPORT
+      #define GENERIC_CONTAINER_API_DLL __declspec(dllexport)
+    #elif defined(GENERIC_CONTAINER_IMPORT)
+     #define GENERIC_CONTAINER_API_DLL __declspec(dllimport)
+    #else
+      #define GENERIC_CONTAINER_API_DLL
+    #endif
+  #else
+    #define GENERIC_CONTAINER_API_DLL
+  #endif
+#endif
+
 namespace GC {
 
   class GenericContainer ;
@@ -485,7 +499,7 @@ namespace GC {
     - map of `GenericContainer`
 
    */
-  class GenericContainer {
+  class GENERIC_CONTAINER_API_DLL GenericContainer {
 
   public:
 

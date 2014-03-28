@@ -79,7 +79,7 @@ namespace GC {
       {
         gc.get_bool(idx) ;
         vec_bool_type & bv = gc.get_vec_bool() ;
-        bv[idx] = lua_toboolean(L, -1) ;
+        bv[idx] = lua_toboolean(L, -1) ? true : false ;
       }
       break ;
     case LUA_TNUMBER:
@@ -114,7 +114,7 @@ namespace GC {
     int    type = lua_type(L, -1) ;
     switch( type ) {
       case LUA_TBOOLEAN:
-        gc[key].set_bool(lua_toboolean(L, -1)) ;
+        gc[key].set_bool( lua_toboolean(L, -1) ? true : false ) ;
         break ;
       case LUA_TNUMBER:
         {
@@ -162,7 +162,7 @@ namespace GC {
     gc.clear() ;
     switch( lua_type(L, -1) ) {
       case LUA_TBOOLEAN:
-        gc.set_bool(lua_toboolean(L, -1)) ;
+        gc.set_bool(lua_toboolean(L, -1) ? true : false ) ;
         break ;
       case LUA_TNUMBER:
         {
@@ -365,7 +365,7 @@ namespace GC {
     gc.clear() ;
     switch( lua_type(L, -1) ) {
     case LUA_TBOOLEAN:
-      gc.set_bool(lua_toboolean(L, -1)) ;
+      gc.set_bool(lua_toboolean(L, -1) ? true : false ) ;
       break ;
     case LUA_TNUMBER:
       {

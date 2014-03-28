@@ -64,27 +64,12 @@ namespace GC {
   }
 
   /*
-   //   ___    _____          _   _ _
-   //  |_ _|  / / _ \   _   _| |_(_) |___
-   //   | |  / / | | | | | | | __| | / __|
-   //   | | / /| |_| | | |_| | |_| | \__ \
-   //  |___/_/  \___/   \__,_|\__|_|_|___/
-   */
-  //! eat characters from stream up to end of line
-  static
-  inline
-  std::istream & eatline( std::istream & s ) {
-    while ( s.get() != '\n' && s.good() ) {}
-    return s ;
-  }
-
-  //! eat one character from stream
-  static
-  inline
-  std::istream & eatchar( std::istream & s )
-  { s.get() ; return s ; }
-
-  // -------------------------------------------------------
+  //   ___    _____          _   _ _
+  //  |_ _|  / / _ \   _   _| |_(_) |___
+  //   | |  / / | | | | | | | __| | / __|
+  //   | | / /| |_| | | |_| | |_| | \__ \
+  //  |___/_/  \___/   \__,_|\__|_|_|___/
+  */
 
   static
   unsigned
