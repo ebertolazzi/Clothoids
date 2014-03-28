@@ -33,6 +33,56 @@
 
 namespace GC {
 
+  #ifndef GENERIC_CONTAINER_NO_PCRE
+
+  class GENERIC_CONTAINER_API_DLL Pcre_for_GC {
+
+  private:
+
+    pcre        * reCompiled      ; // pcre *
+    pcre_extra  * pcreExtra       ; // pcre_extra *
+    char const  * pcreErrorStr    ; // const char *
+    int           pcreErrorOffset ;
+
+  public:
+
+    Pcre_for_GC() {
+      reCompiled = pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$",
+                                0,
+                                &pcreErrorStr,
+                                &pcreErrorOffset,
+                                NULL);
+      // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
+      GC_ASSERT( reCompiled != nullptr,
+                 "Cannot compile regex for GenericContainer\n" ) ;
+      // Optimize the regex
+      pcreExtra = pcre_study(reCompiled, 0, &pcreErrorStr);
+      GC_ASSERT( pcreExtra != nullptr,
+                 "Cannot optimize regex for GenericContainer\n" ) ;
+    }
+
+    int
+    exec( char const str[],
+          int  const len,
+          int        imatch[30] ) {
+      // num+"@"+"underline character"
+      // Try to find the regex in aLineToMatch, and report results.
+      return pcre_exec(reCompiled,
+                       pcreExtra,
+                       str,
+                       len,         // length of string
+                       0,           // Start looking at this point
+                       0,           // OPTIONS
+                       imatch,
+                       30);         // Length of subStrVec
+    }
+
+  } ;
+
+  static Pcre_for_GC pcre_for_GC ;
+
+  #endif
+
   static char const *typeName[] = {
     "NOTYPE",
     "pointer",
@@ -49,37 +99,10 @@ namespace GC {
     "map_type"
   } ;
 
-  #ifndef GENERIC_CONTAINER_NO_PCRE
-  void * GenericContainer::_reCompiled = NULL ;
-  void * GenericContainer::_pcreExtra  = NULL ;
-  #endif
-
   // costruttore
   GenericContainer::GenericContainer()
   : _data_type(GC::GC_NOTYPE)
   {
-    // compilo regex
-    #ifndef GENERIC_CONTAINER_NO_PCRE
-	static bool DoInit = true ; // initialize only once!
-	if ( DoInit ) {
-      pcre       *& reCompiled = *reinterpret_cast<pcre**>(&_reCompiled)      ; // pcre *
-      pcre_extra *& pcreExtra  = *reinterpret_cast<pcre_extra**>(&_pcreExtra) ; // pcre_extra *
-
-      reCompiled = pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$",
-                                0,
-                                &pcreErrorStr,
-                                &pcreErrorOffset,
-                                NULL);
-      // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
-      GC_ASSERT( reCompiled != nullptr,
-                 "GenericContainer: Could not compile regex for print GenericContainer\n" ) ;
-      // Optimize the regex
-      pcreExtra = pcre_study(reCompiled, 0, &pcreErrorStr);
-      GC_ASSERT( pcreExtra != nullptr,
-                "GenericContainer: Could not optimize regex for print GenericContainer\n" ) ;
-	  DoInit = false ;
-	}
-    #endif
   }
 
   // distruttore
@@ -1108,20 +1131,12 @@ namespace GC {
               im->second.print(stream,prefix+indent) ;
             }
             #else
-            pcre       *const& reCompiled = *reinterpret_cast<pcre*const*>(&_reCompiled)      ;
-            pcre_extra *const& pcreExtra  = *reinterpret_cast<pcre_extra*const*>(&_pcreExtra) ;
             // num+"@"+"underline character"
             // Try to find the regex in aLineToMatch, and report results.
             int imatch[30];
-            int pcreExecRet = pcre_exec(reCompiled,
-                                        pcreExtra,
-                                        im->first.c_str(),
-                                        int(im->first.length()), // length of string
-                                        0,                       // Start looking at this point
-                                        0,                       // OPTIONS
-                                        imatch,
-                                        30);                     // Length of subStrVec
-
+            int pcreExecRet = pcre_for_GC.exec( im->first.c_str(),
+                                                int(im->first.length()),
+                                                imatch ) ;
             if ( pcreExecRet == 4 ) {
               // extract match
               int m1 = imatch[3]-imatch[2] ; // # or ##

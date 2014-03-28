@@ -36,7 +36,7 @@
 
 using namespace std ;
 
-#define EXTERN_C extern "C"
+#define EXTERN_C extern "C" GENERIC_CONTAINER_API_DLL 
 
 typedef std::map<std::string,GC::GenericContainer> MAP_GC ;
 

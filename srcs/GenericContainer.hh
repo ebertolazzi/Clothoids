@@ -500,16 +500,6 @@ namespace GC {
 
    */
   class GENERIC_CONTAINER_API_DLL GenericContainer {
-
-  public:
-
-    #ifndef GENERIC_CONTAINER_NO_PCRE
-    static void * _reCompiled      ; // pcre *
-    static void * _pcreExtra       ; // pcre_extra *
-    char const  * pcreErrorStr     ; // const char *
-    int           pcreErrorOffset  ;
-    #endif
-
   private:
 
     //! Data is stored in a union
