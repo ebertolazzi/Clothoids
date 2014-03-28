@@ -241,8 +241,8 @@ namespace GC {
       clear() ;
       _data_type = GC::GC_VEC_BOOL ;
       _data.v_b  = new vec_bool_type() ;
-      if ( sz > 0 ) _data.v_b -> resize( sz ) ;
     }
+    if ( sz > 0 ) _data.v_b -> resize( sz ) ;
   }
 
   void
@@ -251,8 +251,8 @@ namespace GC {
       clear() ;
       _data_type = GC::GC_VEC_INT ;
       _data.v_i  = new vec_int_type() ;
-      if ( sz > 0 ) _data.v_i -> resize( sz ) ;
     }
+    if ( sz > 0 ) _data.v_i -> resize( sz ) ;
   }
 
   void
@@ -261,8 +261,8 @@ namespace GC {
       clear() ;
       _data_type = GC::GC_VEC_REAL ;
       _data.v_r  = new vec_real_type() ;
-      if ( sz > 0 ) _data.v_r -> resize( sz ) ;
     }
+    if ( sz > 0 ) _data.v_r -> resize( sz ) ;
   }
 
   void
@@ -271,8 +271,8 @@ namespace GC {
       clear() ;
       _data_type = GC::GC_VEC_STRING ;
       _data.v_s  = new vec_string_type() ;
-      if ( sz > 0 ) _data.v_s -> resize( sz ) ;
     }
+    if ( sz > 0 ) _data.v_s -> resize( sz ) ;
   }
 
   void
@@ -281,8 +281,8 @@ namespace GC {
       clear() ;
       _data_type = GC::GC_VECTOR ;
       _data.v    = new vector_type() ;
-      if ( sz > 0 ) _data.v -> resize( sz ) ;
     }
+    if ( sz > 0 ) _data.v -> resize( sz ) ;
   }
 
   void
