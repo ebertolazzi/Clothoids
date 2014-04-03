@@ -29,7 +29,7 @@ namespace GC {
   public:
     LuaInterpreter() ;
     ~LuaInterpreter() ;
-    void dump( std::ostream & stream ) ;
+    void dump( std::basic_ostream<char> & stream ) ;
     void execute( char const cmd[] ) ;
     void call( GenericContainer const & args, GenericContainer & res ) ;
     void do_file( char const fname[], bool check_syntax_only = false ) ;

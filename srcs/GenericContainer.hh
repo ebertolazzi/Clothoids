@@ -703,7 +703,7 @@ namespace GC {
     char const * get_type_name() const ;
 
     //! Print to stream the kind of data stored
-    GenericContainer const & info( std::ostream & stream ) const ;
+    GenericContainer const & info( std::basic_ostream<char> & stream ) const ;
 
     /*! Return the number of the elements of the first level of the generic container
     //  1 for single element, the size of vector or map, or 0
@@ -969,12 +969,12 @@ namespace GC {
     //@{
 
     //! print the contents of the object in a human readable way
-    void print( std::ostream &,
+    void print( std::basic_ostream<char> &,
                 std::string const & prefix = "",
                 std::string const & indent = "    " ) const ;
 
     //! print the contents of the object in yaml syntax
-    void to_yaml( std::ostream &, std::string const & prefix = "" ) const ;
+    void to_yaml( std::basic_ostream<char> &, std::string const & prefix = "" ) const ;
 
     /*! 
       \brief write `GenericContainer` as regular formatted data
@@ -1001,7 +1001,7 @@ namespace GC {
      */
 
     GenericContainer const &
-    writeFormattedData( std::ostream & stream, char const delimiter = '\t' ) const ;
+    writeFormattedData( std::basic_ostream<char> & stream, char const delimiter = '\t' ) const ;
 
     /*! 
       \brief read regular formatted data from `stream` to `GenericContainer`.
@@ -1031,15 +1031,15 @@ namespace GC {
   // -------------------------------------------------------
   // support functions
   void
-  writeTable( vec_string_type const & headers,
-              vector_type     const & data,
-              std::ostream          & stream,
+  writeTable( vec_string_type const    & headers,
+              vector_type     const    & data,
+              std::basic_ostream<char> & stream,
               char const delimiter = '\t' ) ;
 
   void
-  writeTableFormatted( vec_string_type const & headers,
-                       vector_type     const & data,
-                       std::ostream          & stream ) ;
+  writeTableFormatted( vec_string_type const    & headers,
+                       vector_type     const    & data,
+                       std::basic_ostream<char> & stream ) ;
 
 }
 

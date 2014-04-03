@@ -30,10 +30,10 @@ namespace GC {
   using namespace std ;
 
   void
-  writeTable( vec_string_type const & headers,
-              vector_type     const & data,
-              std::ostream          & stream,
-              char const              delimiter ) {
+  writeTable( vec_string_type const    & headers,
+              vector_type     const    & data,
+              std::basic_ostream<char> & stream,
+              char const                 delimiter ) {
 
     unsigned ncol = (unsigned)headers.size() ;
     unsigned nrow = (unsigned)data[0].get_num_elements() ;
@@ -52,9 +52,9 @@ namespace GC {
   }
 
   void
-  writeTableFormatted( vec_string_type const & headers,
-                       vector_type     const & data,
-                       std::ostream          & stream ) {
+  writeTableFormatted( vec_string_type const    & headers,
+                       vector_type     const    & data,
+                       std::basic_ostream<char> & stream ) {
 
     unsigned ncol = unsigned(headers.size()) ;
     unsigned nrow = data[0].get_num_elements() ;

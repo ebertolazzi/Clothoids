@@ -88,7 +88,7 @@ namespace GC {
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)
   GenericContainer const &
-  GenericContainer::writeFormattedData( std::ostream & stream,
+  GenericContainer::writeFormattedData( std::basic_ostream<char> & stream,
                                         char const delimiter ) const {
     writeTable( (*this)["headers"].get_vec_string(),
                 (*this)["data"].get_vector(),

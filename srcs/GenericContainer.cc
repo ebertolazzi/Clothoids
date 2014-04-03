@@ -726,7 +726,7 @@ namespace GC {
 
   //! Print to stream the kind of data stored
   GenericContainer const &
-  GenericContainer::info( std::ostream & stream ) const {
+  GenericContainer::info( std::basic_ostream<char> & stream ) const {
     switch ( _data_type ) {
       case GC_NOTYPE:
         stream << "GenericContainer: No data stored\n" ;
@@ -1055,9 +1055,9 @@ namespace GC {
   */
 
   void
-  GenericContainer::print( std::ostream      & stream,
-                           std::string const & prefix,
-                           std::string const & indent ) const {
+  GenericContainer::print( std::basic_ostream<char> & stream,
+                           std::string const        & prefix,
+                           std::string const        & indent ) const {
 
     switch (_data_type) {
 
@@ -1204,7 +1204,7 @@ namespace GC {
   */
 
   void
-  GenericContainer::to_yaml( std::ostream & stream, std::string const & prefix ) const {
+  GenericContainer::to_yaml( std::basic_ostream<char> & stream, std::string const & prefix ) const {
     switch (_data_type) {
         
       case GC_NOTYPE:
