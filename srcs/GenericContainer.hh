@@ -397,9 +397,15 @@ in the distribution.
 #include <string>
 #include <map>
 #include <vector>
+#include <sstream>
+#include <stdexcept>
+
+#if __cplusplus > 199711L
+  #define GENERIC_CONTAINER_USE_CXX11
+#endif
 
 // if C++ < C++11 define nullptr
-#if __cplusplus <= 199711L
+#ifndef GENERIC_CONTAINER_USE_CXX11
   #include <cstdlib>
   #ifndef nullptr
     #include <cstddef>
@@ -408,8 +414,6 @@ in the distribution.
 #endif
 
 #ifndef GC_ASSERT
-  #include <sstream>
-  #include <stdexcept>
   #define GC_ASSERT(COND,MSG)                            \
     if ( !(COND) ) {                                     \
       std::ostringstream ost ;                           \
@@ -419,8 +423,6 @@ in the distribution.
 #endif
 
 #ifndef GC_WARNING
-  #include <sstream>
-  #include <stdexcept>
   #define GC_WARNING(COND,MSG)                                 \
     if ( !(COND) ) {                                           \
       std::cout << "On line: " << __LINE__                     \
@@ -466,6 +468,31 @@ namespace GC {
   typedef std::vector<GenericContainer>          vector_type ; //!< vector of `GenericContainer`
   typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
 
+  class mat_real_type : public vec_real_type {
+    unsigned _numRows ;
+    unsigned _numCols ;
+  public:
+
+    mat_real_type()
+    : _numRows(0)
+    , _numCols(0)
+    {}
+
+    mat_real_type( unsigned nr, unsigned nc )
+    : _numRows(nr)
+    , _numCols(nc)
+    { this->resize(size_type(nr*nc)) ; }
+    
+    unsigned numRows() const { return _numRows ; }
+    unsigned numCols() const { return _numCols ; }
+
+    real_type const & operator () ( unsigned i, unsigned j ) const ;
+    real_type       & operator () ( unsigned i, unsigned j ) ;
+
+  } ;
+  
+  std::ostream & operator << ( std::ostream & s, mat_real_type const & ) ;
+
   //! Type allowed for the `GenericContainer`
   enum TypeAllowed {
     GC_NOTYPE=0,
@@ -479,6 +506,7 @@ namespace GC {
     GC_VEC_INT,
     GC_VEC_REAL,
     GC_VEC_STRING,
+    GC_MAT_REAL,
     GC_VECTOR,
     GC_MAP
   } ;
@@ -495,6 +523,7 @@ namespace GC {
     - vector of boolean
     - vector of integer
     - vector of floating point
+    - matrix of floating point
     - vector of string
 
     in addition to this data type the following two container are added
@@ -518,6 +547,7 @@ namespace GC {
       vec_bool_type    * v_b ;
       vec_int_type     * v_i ;
       vec_real_type    * v_r ;
+      mat_real_type    * m_r ;
       vec_string_type  * v_s ;
 
       vector_type      * v ;
@@ -534,6 +564,7 @@ namespace GC {
     void allocate_vec_bool( unsigned sz ) ;
     void allocate_vec_int( unsigned sz ) ;
     void allocate_vec_real( unsigned sz ) ;
+    void allocate_mat_real( unsigned nr, unsigned nc ) ;
     void allocate_vec_string( unsigned sz ) ;
 
     void allocate_vector( unsigned sz ) ;
@@ -646,12 +677,25 @@ namespace GC {
     vec_real_type & set_vec_real( vec_real_type const & v ) ;
 
     /*! \brief
+        Set data to `mat_real_type`, allocate and initialize.
+        Return a reference to a matrix of floating point numbers.
+     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     */
+    mat_real_type & set_mat_real( unsigned nr = 0, unsigned nc = 0 ) ;
+
+    /*! \brief
+     Set data to `mat_real_type`, allocate and initialize.
+     Return a reference to a matrix of floating point number.
+     Copy the data from matrix `m`.
+     */
+    mat_real_type & set_mat_real( mat_real_type const & m ) ;
+
+    /*! \brief
         Set data to `vec_string_type`, allocate and initialize.
         Return a reference to vector of strings.
         If `sz` > 0 then the vector is allocated to size `sz`.
      */
     vec_string_type & set_vec_string( unsigned sz = 0 ) ;
-
     
     /*! \brief
      Set data to `vec_string_type`, allocate and initialize.
@@ -692,9 +736,10 @@ namespace GC {
          7.  `vec_bool_type`
          8.  `vec_int_type`
          9.  `vec_real_type`
-         10. `vec_string_type`
-         11. `vector_type`
-         12. `map_type`
+         10. `mat_real_type`
+         11. `vec_string_type`
+         12. `vector_type`
+         13. `map_type`
 
     */
     TypeAllowed get_type() const { return _data_type ; }
@@ -777,6 +822,10 @@ namespace GC {
     vec_real_type const & get_vec_real() const ;
     //!< Return reference to a vector of floating point number (if fails issue an error).
 
+    mat_real_type       & get_mat_real() ;
+    mat_real_type const & get_mat_real() const ;
+    //!< Return reference to a matrix of floating point number (if fails issue an error).
+
     vec_string_type       & get_vec_string() ;
     vec_string_type const & get_vec_string() const ;
     //!< Return reference to a vector of strings (if fails issue an error).
@@ -806,6 +855,10 @@ namespace GC {
 
     real_type       & get_real( unsigned i ) ;
     real_type const & get_real( unsigned i ) const ;
+    //!< Return `i`-th floating point number (if fails issue an error).
+
+    real_type       & get_real( unsigned i, unsigned j ) ;
+    real_type const & get_real( unsigned i, unsigned j ) const ;
     //!< Return `i`-th floating point number (if fails issue an error).
 
     string_type       & get_string( unsigned i ) ;
@@ -929,6 +982,9 @@ namespace GC {
 
     //! If data contains vector of booleans or integer it is promoted to a vector of real.
     GenericContainer const & promote_to_vec_real() ;
+
+    //! If data contains vector of booleans, integer or real it is promoted to a vector of real.
+    GenericContainer const & promote_to_mat_real() ;
 
     //! If data contains vector of someting it is promoted to a vector of `GenericContainer`.
     GenericContainer const & promote_to_vector() ;

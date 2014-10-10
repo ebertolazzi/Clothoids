@@ -12,12 +12,22 @@
 		<key>compile all.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>12</integer>
 		</dict>
 		<key>example1.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+		<key>example10.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>example11.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
 		</dict>
 		<key>example2.xcscheme</key>
 		<dict>
@@ -62,6 +72,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>D93EC11819E88EEA00243ACB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D9420C3A17F01D25009C2E81</key>
 		<dict>
 			<key>primary</key>
@@ -93,6 +108,11 @@
 			<true/>
 		</dict>
 		<key>D9420C8517F01DBA009C2E81</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D94AA8C21886937200D2C9E8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
