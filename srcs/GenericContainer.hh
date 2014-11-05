@@ -41,11 +41,13 @@ implement `GenericContainer` a class which permit to store eterogeneous data:
 - boolean
 - integer
 - floating point
+- complex floating point
 - string
 - vector of pointer
 - vector of boolean
 - vector of integer
 - vector of floating point
+- vector of complex floating point
 - vector of string
 
 in addition to this data type the following two container are added
@@ -395,7 +397,9 @@ in the distribution.
 
 #include <iostream>
 #include <string>
+#include <complex>
 #include <map>
+#include <deque>
 #include <vector>
 #include <sstream>
 #include <stdexcept>
@@ -453,20 +457,25 @@ namespace GC {
 
   class GenericContainer ;
 
-  typedef void*       pointer_type ; //!< generic pointer type
-  typedef bool        bool_type    ; //!< boolean type data
-  typedef int         int_type     ; //!< integer type data
-  typedef double      real_type    ; //!< floating point type data
-  typedef std::string string_type  ; //!< string type data
+  typedef void*                   pointer_type ; //!< generic pointer type
+  typedef bool                    bool_type    ; //!< boolean type data
+  typedef int                     int_type     ; //!< integer type data
+  typedef long                    long_type    ; //!< long integer type data
+  typedef double                  real_type    ; //!< floating point type data
+  typedef std::complex<real_type> complex_type ; //!< complex floating point type data
+  typedef std::string             string_type  ; //!< string type data
 
   typedef std::vector<pointer_type> vec_pointer_type ; //!< vector of generic pointer
   typedef std::vector<bool_type>    vec_bool_type    ; //!< vector of boolean
   typedef std::vector<int_type>     vec_int_type     ; //!< vector of integer
   typedef std::vector<real_type>    vec_real_type    ; //!< vector of floating point
+  typedef std::vector<complex_type> vec_complex_type ; //!< vector of complex floating point
   typedef std::vector<string_type>  vec_string_type  ; //!< vector of strings
 
   typedef std::vector<GenericContainer>          vector_type ; //!< vector of `GenericContainer`
   typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
+
+  // ---------------------------------------------------------------------------
 
   class mat_real_type : public vec_real_type {
     unsigned _numRows ;
@@ -490,23 +499,69 @@ namespace GC {
     real_type       & operator () ( unsigned i, unsigned j ) ;
 
   } ;
-  
+
+  // ---------------------------------------------------------------------------
+
+  class mat_complex_type : public vec_complex_type {
+    unsigned _numRows ;
+    unsigned _numCols ;
+  public:
+
+    mat_complex_type()
+    : _numRows(0)
+    , _numCols(0)
+    {}
+
+    mat_complex_type( unsigned nr, unsigned nc )
+    : _numRows(nr)
+    , _numCols(nc)
+    { this->resize(size_type(nr*nc)) ; }
+    
+    unsigned numRows() const { return _numRows ; }
+    unsigned numCols() const { return _numCols ; }
+
+    complex_type const & operator () ( unsigned i, unsigned j ) const ;
+    complex_type       & operator () ( unsigned i, unsigned j ) ;
+
+  } ;
+
+  // ---------------------------------------------------------------------------
+
+  std::ostream & operator << ( std::ostream & s, vec_pointer_type const & v ) ;
+  std::ostream & operator << ( std::ostream & s, vec_bool_type const & v ) ;
+  std::ostream & operator << ( std::ostream & s, vec_int_type const & v ) ;
+  std::ostream & operator << ( std::ostream & s, vec_real_type const & ) ;
+  std::ostream & operator << ( std::ostream & s, vec_complex_type const & ) ;
   std::ostream & operator << ( std::ostream & s, mat_real_type const & ) ;
+  std::ostream & operator << ( std::ostream & s, mat_complex_type const & ) ;
+
+  // ---------------------------------------------------------------------------
 
   //! Type allowed for the `GenericContainer`
   enum TypeAllowed {
+    // simple type
     GC_NOTYPE=0,
     GC_POINTER,
     GC_BOOL,
-    GC_INT,
+    GC_INTEGER,
+    GC_LONG,
     GC_REAL,
+    GC_COMPLEX,
     GC_STRING,
+
+    // vector type
     GC_VEC_POINTER,
     GC_VEC_BOOL,
-    GC_VEC_INT,
+    GC_VEC_INTEGER,
     GC_VEC_REAL,
+    GC_VEC_COMPLEX,
     GC_VEC_STRING,
+
+    // matrix type
     GC_MAT_REAL,
+    GC_MAT_COMPLEX,
+
+    // complex type
     GC_VECTOR,
     GC_MAP
   } ;
@@ -517,13 +572,17 @@ namespace GC {
     - pointer
     - boolean
     - integer
+    - long integer
     - floating point
+    - complex floating point
     - string
     - vector of pointer
     - vector of boolean
     - vector of integer
     - vector of floating point
+    - vector of complex floating point
     - matrix of floating point
+    - matrix of complex floating point
     - vector of string
 
     in addition to this data type the following two container are added
@@ -540,14 +599,18 @@ namespace GC {
       pointer_type     p ;
       bool_type        b ;
       int_type         i ;
+      long_type        l ;
       real_type        r ;
+      complex_type     * c ;
       string_type      * s ;
 
       vec_pointer_type * v_p ;
       vec_bool_type    * v_b ;
       vec_int_type     * v_i ;
       vec_real_type    * v_r ;
+      vec_complex_type * v_c ;
       mat_real_type    * m_r ;
+      mat_complex_type * m_c ;
       vec_string_type  * v_s ;
 
       vector_type      * v ;
@@ -559,12 +622,15 @@ namespace GC {
     TypeAllowed _data_type ; //!< The kind of data stored
 
     void allocate_string() ;
+    void allocate_complex() ;
 
     void allocate_vec_pointer( unsigned sz ) ;
     void allocate_vec_bool( unsigned sz ) ;
     void allocate_vec_int( unsigned sz ) ;
     void allocate_vec_real( unsigned sz ) ;
+    void allocate_vec_complex( unsigned sz ) ;
     void allocate_mat_real( unsigned nr, unsigned nc ) ;
+    void allocate_mat_complex( unsigned nr, unsigned nc ) ;
     void allocate_vec_string( unsigned sz ) ;
 
     void allocate_vector( unsigned sz ) ;
@@ -577,13 +643,11 @@ namespace GC {
     void initialize() { _data_type = GC_NOTYPE ; }
 
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
-    bool simple_data() const ;
+    bool simple_data()     const ;
+    bool simple_vec_data() const ;
     #else
-    bool simple_data() const {
-      return _data_type != GC_VECTOR &&
-             _data_type != GC_MAP    &&
-             _data_type != GC_VEC_STRING ;
-    }
+    bool simple_data()     const { return _data_type <= GC_STRING     ; }
+    bool simple_vec_data() const { return _data_type <= GC_VEC_STRING ; }
     #endif
 
   public:
@@ -610,9 +674,18 @@ namespace GC {
 
     //! Set data to `int_type` initialize and return a reference to the data
     int_type & set_int( int_type value ) ;
-    
+
+    //! Set data to `int_type` initialize and return a reference to the data
+    long_type & set_long( long_type value ) ;
+
     //! Set data to `real_type` initialize and return a reference to the data
     real_type & set_real( real_type value ) ;
+
+    //! Set data to `complex_type` initialize and return a reference to the data
+    complex_type & set_complex( complex_type & value ) ;
+
+    //! Set data to `complex_type` initialize and return a reference to the data
+    complex_type & set_complex( real_type r, real_type i ) ;
 
     //! Set data to `string_type`, allocate and initialize. Return a reference to the data
     string_type & set_string( string_type const & value ) ;
@@ -676,6 +749,21 @@ namespace GC {
      */
     vec_real_type & set_vec_real( vec_real_type const & v ) ;
 
+
+    /*! \brief
+        Set data to `vec_complex_type`, allocate and initialize.
+        Return a reference to vector of complex floating point numbers.
+     If `sz` > 0 then the vector is allocated to size `sz`.
+     */
+    vec_complex_type & set_vec_complex( unsigned sz = 0 ) ;
+
+    /*! \brief
+     Set data to `vec_complex_type`, allocate and initialize.
+     Return a reference to vector of complex floating point number.
+     Copy the data from vector `v`.
+     */
+    vec_complex_type & set_vec_complex( vec_complex_type const & v ) ;
+
     /*! \brief
         Set data to `mat_real_type`, allocate and initialize.
         Return a reference to a matrix of floating point numbers.
@@ -691,6 +779,20 @@ namespace GC {
     mat_real_type & set_mat_real( mat_real_type const & m ) ;
 
     /*! \brief
+        Set data to `mat_complex_type`, allocate and initialize.
+        Return a reference to a matrix of complex floating point numbers.
+     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     */
+    mat_complex_type & set_mat_complex( unsigned nr = 0, unsigned nc = 0 ) ;
+
+    /*! \brief
+     Set data to `mat_complex_type`, allocate and initialize.
+     Return a reference to a matrix of floating point number.
+     Copy the data from matrix `m`.
+     */
+    mat_complex_type & set_mat_complex( mat_complex_type const & m ) ;
+
+    /*! \brief
         Set data to `vec_string_type`, allocate and initialize.
         Return a reference to vector of strings.
         If `sz` > 0 then the vector is allocated to size `sz`.
@@ -703,6 +805,27 @@ namespace GC {
      Copy the data from vector `v`.
      */
     vec_string_type & set_vec_string( vec_string_type const & v ) ;
+
+    //! push boolean if data is `vec_bool_type` or `vector_type'
+    void push_bool( bool ) ;
+
+    //! push integer if data is `vec_int_type` or `vector_type'
+    void push_int( int_type ) ;
+
+    //! push integer if data is `vec_int_type` or `vector_type'
+    void push_long( long_type ) ;
+
+    //! push real if data is `vec_real_type` or `vector_type'
+    void push_real( real_type ) ;
+
+    //! push complex if data is `vec_complex_type` or `vector_type'
+    void push_complex( complex_type & ) ;
+
+    //! push complex if data is `vec_complex_type` or `vector_type'
+    void push_complex( real_type re, real_type im ) ;
+
+    //! push complex if data is `vec_string_type` or `vector_type'
+    void push_string( string_type const & ) ;
 
     //@}
 
@@ -730,16 +853,20 @@ namespace GC {
          1.  `pointer_type`
          2.  `bool_type`
          3.  `int_type`
-         4.  `real_type`
-         5.  `string_data`
-         6.  `vec_pointer_type`
-         7.  `vec_bool_type`
-         8.  `vec_int_type`
-         9.  `vec_real_type`
-         10. `mat_real_type`
-         11. `vec_string_type`
-         12. `vector_type`
-         13. `map_type`
+         4.  `long_type`
+         5.  `real_type`
+         6.  `complex_type`
+         7.  `string_data`
+         8.  `vec_pointer_type`
+         9.  `vec_bool_type`
+         10. `vec_int_type`
+         11. `vec_real_type`
+         12. `vec_complex_type`
+         13. `vec_string_type`
+         14. `mat_real_type`
+         15. `mat_complex_type`
+         16. `vector_type`
+         17. `map_type`
 
     */
     TypeAllowed get_type() const { return _data_type ; }
@@ -755,8 +882,13 @@ namespace GC {
     */
     unsigned get_num_elements() const ;
 
+    unsigned get_numRows() const ;
+    unsigned get_numCols() const ;
+
     //! If data is boolean, integer or floating point return number, otherwise return `0`.
     real_type get_number() const ;
+    complex_type get_complex_number() const ;
+    void get_complex_number( real_type & re, real_type & im ) const ;
 
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
     void * get_pvoid() const ;
@@ -787,13 +919,21 @@ namespace GC {
     bool_type const & get_bool() const ;
     //!< Return the stored boolean (if fails issue an error).
 
-    int_type       &  get_int() ;
-    int_type const &  get_int() const ;
+    int_type       & get_int() ;
+    int_type const & get_int() const ;
     //!< Return the stored integer (if fails issue an error).
+
+    long_type       & get_long() ;
+    long_type const & get_long() const ;
+    //!< Return the stored long integer (if fails issue an error).
 
     real_type       & get_real() ;
     real_type const & get_real() const ;
     //!< Return the stored floating point (if fails issue an error).
+
+    complex_type       & get_complex() ;
+    complex_type const & get_complex() const ;
+    //!< Return the stored complex floating point (if fails issue an error).
 
     string_type       & get_string() ;
     string_type const & get_string() const ;
@@ -822,9 +962,17 @@ namespace GC {
     vec_real_type const & get_vec_real() const ;
     //!< Return reference to a vector of floating point number (if fails issue an error).
 
+    vec_complex_type       & get_vec_complex() ;
+    vec_complex_type const & get_vec_complex() const ;
+    //!< Return reference to a vector of complex floating point number (if fails issue an error).
+
     mat_real_type       & get_mat_real() ;
     mat_real_type const & get_mat_real() const ;
     //!< Return reference to a matrix of floating point number (if fails issue an error).
+
+    mat_complex_type       & get_mat_complex() ;
+    mat_complex_type const & get_mat_complex() const ;
+    //!< Return reference to a matrix of complex floating point number (if fails issue an error).
 
     vec_string_type       & get_vec_string() ;
     vec_string_type const & get_vec_string() const ;
@@ -835,6 +983,8 @@ namespace GC {
     //@{
     //! If `i`-th element of the vector is boolean, integer or floating point then return number, otherwise return `0`.
     real_type get_number( unsigned i ) const ;
+    complex_type get_complex_number( unsigned i ) const ;
+    void get_complex_number( unsigned i, real_type & re, real_type & im ) const ;
 
     template <typename T>
     T& get_pointer( unsigned i )
@@ -848,7 +998,7 @@ namespace GC {
     bool_type get_bool( unsigned i ) ;
     bool_type get_bool( unsigned i ) const ;
     //!< Return `i`-th boolean (if fails issue an error).
-    
+
     int_type       & get_int( unsigned i ) ;
     int_type const & get_int( unsigned i ) const ;
     //!< Return `i`-th integer (if fails issue an error).
@@ -857,9 +1007,17 @@ namespace GC {
     real_type const & get_real( unsigned i ) const ;
     //!< Return `i`-th floating point number (if fails issue an error).
 
+    complex_type       & get_complex( unsigned i ) ;
+    complex_type const & get_complex( unsigned i ) const ;
+    //!< Return `i`-th complex floating point number (if fails issue an error).
+
     real_type       & get_real( unsigned i, unsigned j ) ;
     real_type const & get_real( unsigned i, unsigned j ) const ;
     //!< Return `i`-th floating point number (if fails issue an error).
+
+    complex_type       & get_complex( unsigned i, unsigned j ) ;
+    complex_type const & get_complex( unsigned i, unsigned j ) const ;
+    //!< Return `i`-th complex floating point number (if fails issue an error).
 
     string_type       & get_string( unsigned i ) ;
     string_type const & get_string( unsigned i ) const ;
@@ -927,19 +1085,19 @@ namespace GC {
 
     //! Assign an integer to the generic container.
     GenericContainer & operator = ( unsigned a )
-    { this -> set_int(int(a)) ; return * this ; }
+    { this -> set_int(int_type(a)) ; return * this ; }
 
     //! Assign an integer to the generic container.
-    GenericContainer & operator = ( unsigned long a )
-    { this -> set_int(int(a)) ; return * this ; }
-
-    //! Assign an integer to the generic container.
-    GenericContainer & operator = ( int a )
+    GenericContainer & operator = ( int_type a )
     { this -> set_int(a) ; return * this ; }
 
     //! Assign an integer to the generic container.
-    GenericContainer & operator = ( long a )
-    { this -> set_int(int(a)) ; return * this ; }
+    GenericContainer & operator = ( unsigned long a )
+    { this -> set_long(long_type(a)) ; return * this ; }
+
+    //! Assign an integer to the generic container.
+    GenericContainer & operator = ( long_type a )
+    { this -> set_long(a) ; return * this ; }
 
     //! Assign a floating point number to the generic container.
     GenericContainer & operator = ( float a )
@@ -948,6 +1106,14 @@ namespace GC {
     //! Assign a floating point number to the generic container.
     GenericContainer & operator = ( double a )
     { this -> set_real(a) ; return * this ; }
+
+    //! Assign a floating point number to the generic container.
+    GenericContainer & operator = ( std::complex<float> & a )
+    { this -> set_complex(a.real(),a.imag()) ; return * this ; }
+
+    //! Assign a floating point number to the generic container.
+    GenericContainer & operator = ( std::complex<double> & a )
+    { this -> set_complex(a.real(),a.imag()) ; return * this ; }
 
     //! Assign a string to the generic container.
     GenericContainer & operator = ( char const a[] )
@@ -974,8 +1140,14 @@ namespace GC {
     //! If data contains a boolean it is promoted to an integer.
     GenericContainer const & promote_to_int() ;
 
+    //! If data contains a boolean it is promoted to an integer.
+    GenericContainer const & promote_to_long() ;
+
     //! If data contains a boolean or an integer it is promoted to a real.
     GenericContainer const & promote_to_real() ;
+
+    //! If data contains a boolean or an integer or floating point it is promoted to a complex floating point.
+    GenericContainer const & promote_to_complex() ;
 
     //! If data contains vector of booleans it is promoted to a vector of integer.
     GenericContainer const & promote_to_vec_int() ;
@@ -983,8 +1155,14 @@ namespace GC {
     //! If data contains vector of booleans or integer it is promoted to a vector of real.
     GenericContainer const & promote_to_vec_real() ;
 
-    //! If data contains vector of booleans, integer or real it is promoted to a vector of real.
+    //! If data contains vector of booleans or integer or real it is promoted to a vector of complex.
+    GenericContainer const & promote_to_vec_complex() ;
+
+    //! If data contains vector of booleans, integer or real it is promoted to a matrix of real.
     GenericContainer const & promote_to_mat_real() ;
+
+    //! If data contains vector of booleans, integer or real or complex or matrix of real it is promoted to a matrix of complex.
+    GenericContainer const & promote_to_mat_complex() ;
 
     //! If data contains vector of someting it is promoted to a vector of `GenericContainer`.
     GenericContainer const & promote_to_vector() ;
@@ -1004,9 +1182,15 @@ namespace GC {
     
     //! Construct a generic container storing a floating point number
     GenericContainer( float a ) { initialize() ; this->operator=(a) ; }
-    
+
     //! Construct a generic container storing a floating point number
     GenericContainer( double a ) { initialize() ; this->operator=(a) ; }
+
+    //! Construct a generic container storing a complex floating point number
+    GenericContainer( std::complex<float> & a ) { initialize() ; this->operator=(a) ; }
+
+    //! Construct a generic container storing a complex floating point number
+    GenericContainer( std::complex<double> & a ) { initialize() ; this->operator=(a) ; }
     
     //! Construct a generic container storing a string
     GenericContainer( char const a[] ) { initialize() ; this->operator=(a) ; }
@@ -1097,6 +1281,123 @@ namespace GC {
                        vector_type     const    & data,
                        std::basic_ostream<char> & stream ) ;
 
+  // -------------------------------------------------------
+  class GENERIC_CONTAINER_API_DLL GenericContainerExplorer {
+  private:
+    enum {
+      GENERIC_CONTAINER_OK = 0,
+      GENERIC_CONTAINER_BAD_TYPE,
+      GENERIC_CONTAINER_NO_DATA,
+      GENERIC_CONTAINER_NOT_EMPTY,
+      GENERIC_CONTAINER_BAD_HEAD
+    } ;
+
+    GenericContainer              data ;
+    std::deque<GenericContainer*> head ;
+
+    map_type         * ptr_map ;
+    map_type::iterator map_iterator ;
+
+  public:
+  
+    GenericContainerExplorer() { head.push_back(&data) ; }
+    ~GenericContainerExplorer() {}
+
+    GenericContainer *
+    top() {
+      GC_ASSERT( head.size() > 0, "GenericContainerExplorer::top() empty stack!" ) ;
+      GC_ASSERT( head.back() != nullptr, "GenericContainerExplorer::top() bad top pointer!" ) ;
+      return head.back() ;
+    }
+
+    GenericContainer const *
+    top() const {
+      GC_ASSERT( head.size() > 0, "GenericContainerExplorer::top() empty stack!" ) ;
+      GC_ASSERT( head.back() != nullptr, "GenericContainerExplorer::top() bad top pointer!" ) ;
+      return head.back() ;
+    }
+
+    void       * mem_ptr()       { return &data ; }
+    void const * mem_ptr() const { return &data ; }
+
+    int
+    check( int data_type ) const {
+      if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD ;
+      if ( data_type == head.back() -> get_type() ) {
+        if ( head.back() == nullptr ) return GENERIC_CONTAINER_NO_DATA ;
+        return GENERIC_CONTAINER_OK ;
+      } else {
+        return GENERIC_CONTAINER_BAD_TYPE ;
+      }
+    }
+
+    int
+    check_no_data( int data_type ) const {
+      if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD ;
+      if ( GC::GC_NOTYPE == head.back() -> get_type() ||
+           data_type == head.back() -> get_type() ) return GENERIC_CONTAINER_OK ;
+      return GENERIC_CONTAINER_NOT_EMPTY ;
+    }
+
+    int
+    pop() {
+      if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA ;
+      head.pop_back() ;
+      return GENERIC_CONTAINER_OK ;
+    }
+
+    int
+    push( GenericContainer * gc ) {
+      head.push_back( gc ) ;
+      return GENERIC_CONTAINER_OK ;
+    }
+
+    int
+    push_vector_position( unsigned pos ) {
+      int ok = check( GC::GC_VECTOR ) ;
+      if ( ok == GENERIC_CONTAINER_OK  ) {
+        GC::GenericContainer * gc = &(*head.back())[pos] ;
+        head.push_back( gc ) ;
+      }
+      return ok ;
+    }
+
+    int
+    push_map_position( char const pos[] ) {
+      int ok = check( GC::GC_MAP ) ;
+      if ( ok == GENERIC_CONTAINER_OK  ) {
+        GC::GenericContainer * gc = &(*head.back())[pos] ;
+        head.push_back( gc ) ;
+      }
+      return ok ;
+    }
+
+    int
+    init_map_key() {
+      int ok = check( GC::GC_MAP ) ;
+      if ( ok == GENERIC_CONTAINER_OK ) {
+        ptr_map = &head.back()->get_map() ;
+        map_iterator = ptr_map->begin() ;
+      }
+      return ok ;
+    }
+
+    char const *
+    next_map_key() {
+      if ( map_iterator != ptr_map->end() )
+        return map_iterator++ -> first.c_str() ;
+      else
+        return nullptr ;
+    }
+  
+    int
+    reset() {
+      if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA ;
+      while ( head.size() > 1 ) head.pop_back() ;
+      return GENERIC_CONTAINER_OK ;
+    }
+
+  } ;
 }
 
 #endif

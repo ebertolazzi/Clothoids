@@ -17,7 +17,8 @@
 #                                                                          |
 #--------------------------------------------------------------------------#
 
-require './srcs_lua_interface/GenericContainer_ffi.rb'
+require 'pp'
+require './GenericContainer_ffi.rb'
 
 gc = ::GenericContainer::GenericContainer.new
 
@@ -35,6 +36,10 @@ data = {
     :gm                => 3,
     :uaControlMaxValue => 5,
     :uaControlMinValue => "pippo",
+    :vettore  => [1,2,3,3.4,8,9,10],
+    :vettore1 => [1,2,3,3,8,9,10],
+    :vettore2 => [1,2,"222",3.4,[1,2],9,10],
+    :vettore3 => [1.1,1.2,1],
   },
   :Controls => {
     :uaControl => {
@@ -50,5 +55,11 @@ data = {
   }
 }
 
-gc.load data
+#gc.load data
+#gc.print
+
+gc.fill_for_test
 gc.print
+hsh = gc.get_data
+pp hsh
+

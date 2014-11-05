@@ -35,54 +35,82 @@ module GenericContainer
   else
   end
 
-  attach_function :GC_new,                        [ :string ], :int
   attach_function :GC_select,                     [ :string ], :int
   attach_function :GC_delete,                     [ :string ], :int
+  attach_function :GC_fill_for_test,              [ :string ], :int
+  
   attach_function :GC_get_type,                   [], :int
   attach_function :GC_get_type_name,              [], :string
   attach_function :GC_print,                      [], :int
   attach_function :GC_mem_ptr,                    [ :string ], :pointer
+
   # head movement
   attach_function :GC_pop_head,                   [], :int
   attach_function :GC_reset_head,                 [], :int
-  # bool
+
+  # set
   attach_function :GC_set_bool,                   [ :int ], :int
-  attach_function :GC_get_bool,                   [], :int
-  attach_function :GC_set_vector_of_bool,         [ :pointer, :int ], :int
-  attach_function :GC_set_empty_vector_of_bool,   [], :int
-  attach_function :GC_push_bool,                  [ :int ], :int
-  attach_function :GC_get_bool_at_pos,            [ :int ], :int
-  # int
   attach_function :GC_set_int,                    [ :int ], :int
-  attach_function :GC_get_int,                    [], :int
-  attach_function :GC_set_vector_of_int,          [ :pointer, :int ], :int
-  attach_function :GC_set_empty_vector_of_int,    [], :int
-  attach_function :GC_push_int,                   [ :int ], :int
-  attach_function :GC_get_int_at_pos,             [ :int ], :int
-  # real
   attach_function :GC_set_real,                   [ :double ], :int
-  attach_function :GC_get_real,                   [], :double
-  attach_function :GC_set_vector_of_real,         [ :pointer, :int ], :int
-  attach_function :GC_set_empty_vector_of_real,   [], :int
-  attach_function :GC_push_real,                  [ :double ], :int
-  attach_function :GC_get_real_at_pos,            [ :int ], :double
-  # string
+  attach_function :GC_set_complex2,               [ :double, :double ], :int
   attach_function :GC_set_string,                 [ :string ], :int
+
+  # get
+  attach_function :GC_get_bool,                   [], :int
+  attach_function :GC_get_int,                    [], :int
+  attach_function :GC_get_long,                   [], :long
+  attach_function :GC_get_real,                   [], :double
+  attach_function :GC_get_complex_re,             [], :double
+  attach_function :GC_get_complex_im,             [], :double
   attach_function :GC_get_string,                 [], :string
-  attach_function :GC_set_vector_of_string,       [ :pointer, :int ], :int
-  attach_function :GC_set_empty_vector_of_string, [], :int
+  
+  # push
+  attach_function :GC_push_bool,                  [ :int ], :int
+  attach_function :GC_push_int,                   [ :int ], :int
+  attach_function :GC_push_real,                  [ :double ], :int
+  attach_function :GC_push_complex2,              [ :double, :double ], :int
   attach_function :GC_push_string,                [ :string ], :int
+
+  # get with position
+  attach_function :GC_get_bool_at_pos,            [ :int ], :int
+  attach_function :GC_get_int_at_pos,             [ :int ], :int
+  attach_function :GC_get_real_at_pos,            [ :int ], :double
+  attach_function :GC_get_complex_real_at_pos,    [ :int ], :double
+  attach_function :GC_get_complex_imag_at_pos,    [ :int ], :double
   attach_function :GC_get_string_at_pos,          [ :int ], :string
+
+  attach_function :GC_get_matrix_num_rows,        [], :int
+  attach_function :GC_get_matrix_num_cols,        [], :int
+
+  attach_function :GC_get_real_at_coor,           [ :int, :int ], :double
+  attach_function :GC_get_complex_real_at_coor,   [ :int, :int ], :double
+  attach_function :GC_get_complex_imag_at_coor,   [ :int, :int ], :double
+
+  # empty vectors
+  attach_function :GC_set_empty_vector_of_bool,   [], :int
+  attach_function :GC_set_empty_vector_of_int,    [], :int
+  attach_function :GC_set_empty_vector_of_real,   [], :int
+  attach_function :GC_set_empty_vector_of_complex,[], :int
+  attach_function :GC_set_empty_vector_of_string, [], :int
+
+  # vectors not used
+  #attach_function :GC_set_vector_of_bool,         [ :pointer, :int ], :int
+  #attach_function :GC_set_vector_of_int,          [ :pointer, :int ], :int
+  #attach_function :GC_set_vector_of_real,         [ :pointer, :int ], :int
+  #attach_function :GC_set_vector_of_complex,      [ :pointer, :int ], :int
+  #attach_function :GC_set_vector_of_string,       [ :pointer, :int ], :int
+
   # generic vector
   attach_function :GC_set_vector,                 [ :int ], :int
   attach_function :GC_set_empty_vector,           [], :int
-  attach_function :GC_set_vector_position,        [ :int ], :int
+  attach_function :GC_push_vector_position,       [ :int ], :int
   attach_function :GC_get_vector_size,            [], :int
+
   # generic map
   attach_function :GC_set_map,                    [], :int
-  attach_function :GC_get_map,                    [], :int
-  attach_function :GC_get_key,                    [], :string
-  attach_function :GC_set_map_position,           [ :string ], :int
+  attach_function :GC_init_map_key,               [], :int
+  attach_function :GC_get_next_key,               [], :string
+  attach_function :GC_push_map_position,          [ :string ], :int
   
   #
   #   ____  ____    _           _               _     
@@ -113,6 +141,13 @@ module GenericContainer
     return res
   end
 
+  def self.toComplexVector
+    nelem = self.GC_get_vector_size
+    res = []
+    (0..nelem-1).each { |i| res << [ self.GC_get_complex_real_at_pos(i), self.GC_get_complex_imag_at_pos(i) ] }
+    return res
+  end
+
   def self.toStringVector
     nelem = self.GC_get_vector_size
     res = []
@@ -124,20 +159,54 @@ module GenericContainer
     nelem = self.GC_get_vector_size
     res = []
     (0..nelem-1).each do |i|
-      self.GC_set_vector_position i
+      self.GC_push_vector_position i
       res << self.GC_to_hash
       self.GC_pop_head
     end
     return res
   end
 
+  def self.toRealMatrix
+    puts "in toRealMatrix"
+    nr  = self.GC_get_matrix_num_rows
+    nc  = self.GC_get_matrix_num_cols
+    res = []
+    (0...nr).each do |i|
+      row = []
+      (0...nc).each do |j|
+        row << self.GC_get_real_at_coor(i,j) 
+      end
+      res << row
+    end
+    puts "out toRealMatrix"
+    return res
+  end
+
+  def self.toComplexMatrix
+    puts "in toComplexMatrix"
+    nr  = self.GC_get_matrix_num_rows
+    nc  = self.GC_get_matrix_num_cols
+    res = []
+    (0...nr).each do |i|
+      row = []
+      (0...nc).each do |j|
+        row << [ self.GC_get_complex_real_at_coor(i,j), self.GC_get_complex_imag_at_coor(i,j) ]
+      end
+      res << row
+    end
+    puts "out toComplexMatrix"
+    return res
+  end
+
+
   def self.toMixedHash
-    self.GC_get_map
+    #self.GC_get_map
     keys = []
-    while (key = self.GC_get_key) do keys << key end
+    self.GC_init_map_key
+    while (key = self.GC_get_next_key) do keys << key end
     res = {}
     keys.each do |key|
-      self.GC_set_map_position key
+      self.GC_push_map_position key
       res[key.to_sym] = self.GC_to_hash
       self.GC_pop_head
     end
@@ -153,6 +222,8 @@ module GenericContainer
       res = self.GC_get_bool
     when /^int_type$/
       res = self.GC_get_int
+    when /^long_type$/
+      res = self.GC_get_long
     when /^real_type$/
       res = self.GC_get_real
     when /^string_type$/
@@ -165,6 +236,12 @@ module GenericContainer
       res = self.toRealVector
     when /^vec_string_type$/
       res = self.toStringVector
+    when /^vec_complex_type$/
+      res = self.toComplexVector
+    when /^mat_real_type$/
+      res = self.toRealMatrix
+    when /^mat_complex_type$/
+      res = self.toComplexMatrix
     when /^vector_type$/
       res = self.toVector
     when /^map_type$/
@@ -183,48 +260,44 @@ module GenericContainer
   #   \____|\____|___|_| |_|  \___/|_| |_| |_|___|_| |_|\__,_|___/_| |_|
   #             |_____|                     |_____|                     
   #
-  def self.fromBoolVector(var)
-    if var.all? { |v| (v.class == :TrueClass) || (v.class == :FalseClass) } then
+  def self.addToVector(vec)
+    # empty vectors
+    if vec[0].kind_of?(TrueClass) or vec[0].kind_of?(FalseClass) then
       self.GC_set_empty_vector_of_bool
-      var.each { |v| self.GC_push_bool v }
-      self.GC_pop_head
-    else
-      self.fromIntVector var
-    end
-  end
-
-  def self.fromIntVector(var)
-    if var.all? { |v| v.class == Fixnum } then
+    elsif vec[0].kind_of?(Fixnum) then
       self.GC_set_empty_vector_of_int
-      var.each { |v| self.GC_push_int v }
-    else
-      self.fromRealVector var
-    end
-  end
-
-  def self.fromRealVector(var)
-    if var.all? { |v| v.class == Float } then
+    elsif vec[0].kind_of?(Float) then
       self.GC_set_empty_vector_of_real
-      var.each { |v| self.GC_push_real v }
-    else
-      self.fromStringVector var
-    end
-  end
-
-  def self.fromStringVector(var)
-    if var.all? { |v| v.class == String } then
+    elsif vec[0].kind_of?(String) then
       self.GC_set_empty_vector_of_string
-      var.each { |v| self.GC_push_string v }
     else
-      self.fromVector var
+      self.fromVector vec
+      return ;
     end
+    # add elements
+    vec.each { |var|
+      if var.kind_of?(TrueClass) then
+        self.GC_push_bool 1
+      elsif var.kind_of?(FalseClass) then
+        self.GC_push_bool 0
+      elsif var.kind_of?(Fixnum) then
+        self.GC_push_int var
+      elsif var.kind_of?(Float) then
+        self.GC_push_real var
+      elsif var.kind_of?(String) then
+        self.GC_push_string var
+      else
+        self.fromVector vec
+        return ;
+      end
+    }
   end
 
   def self.fromVector(var)
     nelem = var.length
     self.GC_set_vector nelem
     (0..nelem-1).each do |i|
-      self.GC_set_vector_position i
+      self.GC_push_vector_position i
       self.GC_from_hash var[i]
       self.GC_pop_head
     end
@@ -233,7 +306,7 @@ module GenericContainer
   def self.fromMixedHash(var)
     self.GC_set_map
     var.each do |k,v|
-      self.GC_set_map_position k.to_s
+      self.GC_push_map_position k.to_s
       self.GC_from_hash v
       self.GC_pop_head
     end
@@ -251,17 +324,10 @@ module GenericContainer
     elsif var.kind_of?(String) then
       self.GC_set_string var
     elsif var.kind_of?(Array) then
-      tmp = var[0]
-      if tmp.kind_of?(TrueClass) || tmp.kind_of?(FalseClass) then
-        self.fromBoolVector var
-      elsif tmp.kind_of?(Fixnum) then
-        self.fromIntVector var
-      elsif tmp.kind_of?(Float) then
-        self.fromRealVector var
-      elsif tmp.kind_of?(String) then
-        self.fromStringVector var
+      if var.length > 0 then
+        self.addToVector(var)
       else
-        self.fromVector var
+        self.GC_set_empty_vector_of_bool
       end
     elsif var.kind_of?(Hash) then
       self.fromMixedHash var
@@ -279,9 +345,13 @@ module GenericContainer
  
     def initialize
       @id = self.__id__.to_s
-      ::GenericContainer.GC_new @id
+      ::GenericContainer.GC_select @id
       ObjectSpace.define_finalizer(self, proc { ::GenericContainer.GC_delete @id })
       return @id
+    end
+
+    def fill_for_test
+      ::GenericContainer.GC_fill_for_test @id
     end
 
     def load(data)

@@ -87,7 +87,6 @@ namespace GC {
     stream << line << '\n';
   }
 
-
 }
 
 //

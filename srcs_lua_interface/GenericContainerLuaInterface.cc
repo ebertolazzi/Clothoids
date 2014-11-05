@@ -63,13 +63,11 @@ namespace GC {
 
   static
   void
-  lua_table_to_GC( lua_State        * L,
-                   GenericContainer & gc ) ;
+  lua_table_to_GC( lua_State * L, GenericContainer & gc ) ;
 
   static
   void
-  push_vec_element( lua_State        * L,
-                    GenericContainer & gc ) {
+  push_vec_element( lua_State * L, GenericContainer & gc ) {
     // assegna il valore
     // index start from 1 in LUA
     unsigned    idx  = unsigned(lua_tointeger(L, -2)-1) ;
@@ -107,8 +105,7 @@ namespace GC {
 
   static
   void
-  push_hash_element( lua_State        * L,
-                     GenericContainer & gc ) {
+  push_hash_element( lua_State * L, GenericContainer & gc ) {
     // assegna il valore
     string key  = lua_tostring(L, -2) ;
     int    type = lua_type(L, -1) ;
@@ -137,8 +134,7 @@ namespace GC {
 
   static
   void
-  lua_table_to_GC( lua_State        * L,
-                   GenericContainer & gc ) {
+  lua_table_to_GC( lua_State * L, GenericContainer & gc ) {
     // ---
     lua_pushnil(L) ; // first key
     // ---
@@ -157,8 +153,7 @@ namespace GC {
 
   static
   void
-  lua_to_GC( lua_State        * L,
-             GenericContainer & gc ) {
+  lua_to_GC( lua_State * L, GenericContainer & gc ) {
     gc.clear() ;
     switch( lua_type(L, -1) ) {
       case LUA_TBOOLEAN:
@@ -206,8 +201,11 @@ namespace GC {
     case GC::GC_BOOL:
       lua_pushboolean(L, gc.get_bool() ? 1 : 0 ) ;
       break;
-    case GC::GC_INT:
+    case GC::GC_INTEGER:
       lua_pushnumber(L,gc.get_int()) ;
+      break;
+    case GC::GC_LONG:
+      lua_pushnumber(L,gc.get_long()) ;
       break;
     case GC::GC_REAL:
       lua_pushnumber(L,gc.get_real()) ;
@@ -228,7 +226,7 @@ namespace GC {
       }
       lua_pushnil(L) ;
       break;
-    case GC::GC_VEC_INT:
+    case GC::GC_VEC_INTEGER:
       { GC::vec_int_type const & vi = gc.get_vec_int() ;
         lua_createtable(L, int(vi.size()), 0);
         for ( unsigned i = 0 ; i < vi.size() ; ++i ) {

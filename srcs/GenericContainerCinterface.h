@@ -56,14 +56,23 @@ enum {
   GENERIC_CONTAINER_BAD_HEAD
 } ;
 
+typedef int    int_type ;
+typedef long   long_type ;
+typedef double real_type ;
+
+typedef struct {
+  real_type real ;
+  real_type imag ;
+} complex_type ;
+
 /*! Select or create a new `GenericContainer` object 'id' */
 int GENERIC_CONTAINER_API_DLL GC_select( char const id[] ) ;
 
-/*! Create the `GenericContainer` object 'id' */
-int GENERIC_CONTAINER_API_DLL GC_new( char const id[] ) ;
-
 /*! Delete the `GenericContainer` object 'id' */
 int GENERIC_CONTAINER_API_DLL GC_delete( char const id[] ) ;
+
+/*! Fill the `GenericContainer` object 'id' with data for test purposes */
+int GENERIC_CONTAINER_API_DLL GC_fill_for_test( char const id[] ) ;
 
 /*! Move `head` up to a level */
 int GENERIC_CONTAINER_API_DLL GC_pop_head() ;
@@ -83,29 +92,127 @@ char const * GENERIC_CONTAINER_API_DLL GC_get_type_name() ;
 /*! Get pointer to the internal `GenericContainer` object 'id' */
 void * GENERIC_CONTAINER_API_DLL GC_mem_ptr( char const id[] ) ;
 
+// -----------------------------------------------------------------------------
+
 /*! Set actual pointed element of `GenericContainer` to `bool` with value `a` */
 int GENERIC_CONTAINER_API_DLL GC_set_bool( int const a ) ;
 
-/*! Get actual pointed element of `GenericContainer` of type `bool` */
-int GENERIC_CONTAINER_API_DLL GC_get_bool() ;
-
 /*! Set actual pointed element of `GenericContainer` to `int` with value `a` */
-int GENERIC_CONTAINER_API_DLL GC_set_int( int const a ) ;
+int GENERIC_CONTAINER_API_DLL GC_set_int( int_type const a ) ;
 
-/*! Get actual pointed element of `GenericContainer` of type `int` */
-int GENERIC_CONTAINER_API_DLL GC_get_int() ;
+/*! Set actual pointed element of `GenericContainer` to `real_type` with value `a` */
+int GENERIC_CONTAINER_API_DLL GC_set_real( real_type const a ) ;
 
-/*! Set actual pointed element of `GenericContainer` to `double` with value `a` */
-int GENERIC_CONTAINER_API_DLL GC_set_real( double const a ) ;
+/*! Set actual pointed element of `GenericContainer` to `complex` with value `a` */
+int GENERIC_CONTAINER_API_DLL GC_set_complex( complex_type const * a ) ;
 
-/*! Get actual pointed element of `GenericContainer` of type `double` */
-double GENERIC_CONTAINER_API_DLL GC_get_real() ;
+/*! Set actual pointed element of `GenericContainer` to `complex` with value `a` */
+int GENERIC_CONTAINER_API_DLL GC_set_complex2( real_type const re, real_type const im ) ;
 
 /*! Set actual pointed element of `GenericContainer` to `string` with value `a` */
 int GENERIC_CONTAINER_API_DLL GC_set_string( char const a[] ) ;
 
+// -----------------------------------------------------------------------------
+
+/*! Get actual pointed element of `GenericContainer` of type `bool` */
+int GENERIC_CONTAINER_API_DLL GC_get_bool() ;
+
+/*! Get actual pointed element of `GenericContainer` of type `int` */
+int_type GENERIC_CONTAINER_API_DLL GC_get_int() ;
+
+/*! Get actual pointed element of `GenericContainer` of type `int` */
+long_type GENERIC_CONTAINER_API_DLL GC_get_long() ;
+
+/*! Get actual pointed element of `GenericContainer` of type `real_type` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_real() ;
+
+/*! Get actual pointed element of `GenericContainer` of type `complex` */
+complex_type GENERIC_CONTAINER_API_DLL GC_get_complex() ;
+
+/*! Get actual pointed element of `GenericContainer` of type `complex` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_complex_re() ;
+
+/*! Get actual pointed element of `GenericContainer` of type `complex` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_complex_im() ;
+
 /*! Get actual pointed element of `GenericContainer` of type `string` */
 char const * GENERIC_CONTAINER_API_DLL GC_get_string() ;
+
+// -----------------------------------------------------------------------------
+
+/*! Push `a` to a vector of `bool` */
+int GENERIC_CONTAINER_API_DLL GC_push_bool( int const a ) ;
+
+/*! Push `a` to a vector of `integer` */
+int GENERIC_CONTAINER_API_DLL GC_push_int( int_type const a ) ;
+
+/*! Push `a` to a vector of `real_type` */
+int GENERIC_CONTAINER_API_DLL GC_push_real( real_type const a ) ;
+
+/*! Push `a` to a vector of `complex`  */
+int GENERIC_CONTAINER_API_DLL GC_push_complex( complex_type const * a ) ;
+  
+/*! Push `a` to a vector of `complex`  */
+int GENERIC_CONTAINER_API_DLL GC_push_complex2( real_type const re, real_type const im ) ;
+
+/*! Push `a` to a vector of string */
+int GENERIC_CONTAINER_API_DLL GC_push_string( char const a[] ) ;
+
+// -----------------------------------------------------------------------------
+
+/*! Get boolean at position `pos` of a vector of bool  */
+int GENERIC_CONTAINER_API_DLL GC_get_bool_at_pos( int pos ) ;
+
+/*! Get `int_type` at position `pos` of a vector of `int_type` */
+int_type GENERIC_CONTAINER_API_DLL GC_get_int_at_pos( int pos ) ;
+
+/*! Get `real_type` at position `pos` of a vector of `real_type` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_real_at_pos( int pos ) ;
+
+/*! Get `complex` at position `pos` of a vector of `real_type` */
+complex_type GENERIC_CONTAINER_API_DLL GC_get_complex_at_pos( int pos ) ;
+
+/*! Get `complex` at position `pos` of a vector of `real_type` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_complex_real_at_pos( int pos ) ;
+
+/*! Get `complex` at position `pos` of a vector of `real_type` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_complex_imag_at_pos( int pos ) ;
+
+/*! Get string at position `pos` of a vector of string */
+char const * GENERIC_CONTAINER_API_DLL GC_get_string_at_pos( int pos ) ;
+
+// -----------------------------------------------------------------------------
+
+/*! Get `real_type` at position `i,j` of a matrix of `real_type` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_real_at_coor( int i, int j ) ;
+
+/*! Get `complex` at position `pos` of a vector of `real_type` */
+complex_type GENERIC_CONTAINER_API_DLL GC_get_complex_at_coor( int i, int j ) ;
+
+/*! Get `complex` at position `pos` of a vector of `real_type` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_complex_real_at_coor( int i, int j ) ;
+
+/*! Get `complex` at position `pos` of a vector of `real_type` */
+real_type GENERIC_CONTAINER_API_DLL GC_get_complex_imag_at_coor( int i, int j ) ;
+
+// -----------------------------------------------------------------------------
+
+/*! Set actual pointed element of `GenericContainer` to a vector of `bool` of size `0`. */
+int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_bool() ;
+
+/*! Set actual pointed element of `GenericContainer` to a vector of `integer` of size `0`. */
+int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_int() ;
+
+/*! Set actual pointed element of `GenericContainer` to a vector of `real_type` of size `0`. */
+int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_real() ;
+
+/*! Set actual pointed element of `GenericContainer` to a vector of `complex` of size `0`. */
+int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_complex() ;
+  
+/*! Set actual pointed element of `GenericContainer` to a vector of string of size `0`. */
+int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_string() ;
+
+// -----------------------------------------------------------------------------
 
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to 
@@ -115,69 +222,34 @@ char const * GENERIC_CONTAINER_API_DLL GC_get_string() ;
 int GENERIC_CONTAINER_API_DLL GC_set_vector_of_bool( int const a[], int nelem ) ;
 
 /*! \brief
- *  Set actual pointed element of `GenericContainer` to
- *  a vector of `bool` of size `0`.
- */
-int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_bool() ;
-
-/*! \brief
- *  Push `a` to a vector of `bool`
- */
-int GENERIC_CONTAINER_API_DLL GC_push_bool( int const a ) ;
-
-/*! \brief
  *  Set actual pointed element of `GenericContainer` to 
  *  a vector of integer of size `nelem` and copy vector 
  *  of int `a` to the element.
  */
-int GENERIC_CONTAINER_API_DLL GC_set_vector_of_int( int const a[], int nelem ) ;
+int GENERIC_CONTAINER_API_DLL GC_set_vector_of_int( int_type const a[], int nelem ) ;
 
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to
- *  a vector of `integer` of size `0`.
+ *  a vector of `real_type` of size `nelem` and copy vector
+ *  of real_type `a` to the element.
  */
-int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_int() ;
-
-/*! \brief
- *  Push `a` to a vector of `integer`
- */
-int GENERIC_CONTAINER_API_DLL GC_push_int( int const a ) ;
+int GENERIC_CONTAINER_API_DLL GC_set_vector_of_real( real_type const a[], int nelem ) ;
 
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to
- *  a vector of `double` of size `nelem` and copy vector
- *  of double `a` to the element.
+ *  a vector of `complex` of size `nelem` and copy vector `a`
+ *  of `real_type` to the element.
  */
-int GENERIC_CONTAINER_API_DLL GC_set_vector_of_real( double const a[], int nelem ) ;
-
-/*! \brief
- *  Set actual pointed element of `GenericContainer` to
- *  a vector of `double` of size `0`.
- */
-int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_real() ;
-
-/*! \brief
- *  Push `a` to a vector of integer
- */
-int GENERIC_CONTAINER_API_DLL GC_push_real( double const a ) ;
+int GENERIC_CONTAINER_API_DLL GC_set_vector_of_complex( real_type const re[], real_type const im[], int nelem ) ;
 
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to
  *  a vector of strings of size `nelem` and copy vector
  *  of strings `a` to the element.
  */
-int GENERIC_CONTAINER_API_DLL GC_set_vector_of_string( char const *a[], unsigned nelem ) ;
-  
-/*! \brief
- *  Set actual pointed element of `GenericContainer` to
- *  a vector of string of size `0`.
- */
-int GENERIC_CONTAINER_API_DLL GC_set_empty_vector_of_string() ;
-  
-/*! \brief
- *  Push `a` to a vector of string
- */
-int GENERIC_CONTAINER_API_DLL GC_push_string( char const a[] ) ;
+int GENERIC_CONTAINER_API_DLL GC_set_vector_of_string( char const *a[], int nelem ) ;
+
+// -----------------------------------------------------------------------------
 
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to
@@ -185,7 +257,7 @@ int GENERIC_CONTAINER_API_DLL GC_push_string( char const a[] ) ;
  *  The position of insertion point is at the first element.
  */
 int GENERIC_CONTAINER_API_DLL GC_set_vector( int nelem ) ;
-  
+
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to
  *  a vector of `GenericContainer` of size `0`.
@@ -198,31 +270,22 @@ int GENERIC_CONTAINER_API_DLL GC_set_empty_vector() ;
 int GENERIC_CONTAINER_API_DLL GC_get_vector_size() ;
 
 /*! \brief
+ *  Get the size of the actual matrix.
+ */
+int GENERIC_CONTAINER_API_DLL GC_get_matrix_num_rows() ;
+
+/*! \brief
+ *  Get the size of the actual matrix.
+ */
+int GENERIC_CONTAINER_API_DLL GC_get_matrix_num_cols() ;
+
+/*! \brief
  *  Set the position of insertion point is at the `pos` element 
  *  of the actual generic vector.
  */
-int GENERIC_CONTAINER_API_DLL GC_set_vector_position( int pos ) ;
+int GENERIC_CONTAINER_API_DLL GC_push_vector_position( int pos ) ;
 
-
-/*! \brief
- *  Get boolean at position `pos` of a vector of bool
- */
-int GENERIC_CONTAINER_API_DLL GC_get_bool_at_pos( int pos ) ;
-
-/*! \brief
- *  Get integer at position `pos` of a vector of integer
- */
-int GENERIC_CONTAINER_API_DLL GC_get_int_at_pos( int pos ) ;
-
-/*! \brief
- *  Get double at position `pos` of a vector of double
- */
-double GENERIC_CONTAINER_API_DLL GC_get_real_at_pos( int pos ) ;
-
-/*! \brief
- *  Get string at position `pos` of a vector of string
- */
-char const * GENERIC_CONTAINER_API_DLL GC_get_string_at_pos( int pos ) ;
+// -----------------------------------------------------------------------------
 
 /*! \brief
  *  Set actual pointed element of `GenericContainer` to
@@ -234,18 +297,18 @@ int GENERIC_CONTAINER_API_DLL GC_set_map() ;
  *  Set actual pointed element of `GenericContainer` to
  *  a map of `GenericContainer`.
  */
-int GENERIC_CONTAINER_API_DLL GC_get_map() ;
+int GENERIC_CONTAINER_API_DLL GC_init_map_key() ;
 
 /*! \brief
  *  Return key of the actual element of a map 
  */
-char const * GENERIC_CONTAINER_API_DLL GC_get_key() ;
+char const * GENERIC_CONTAINER_API_DLL GC_get_next_key() ;
 
 /*! \brief
  *  Set the position of insertion point is at the `pos` element
  *  of the actual map.
  */
-int GENERIC_CONTAINER_API_DLL GC_set_map_position( char const pos[] ) ;
+int GENERIC_CONTAINER_API_DLL GC_push_map_position( char const pos[] ) ;
 
 #ifdef __cplusplus
 }
