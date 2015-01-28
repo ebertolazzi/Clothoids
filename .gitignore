@@ -10,9 +10,6 @@
 /libs/*.so
 /libs/*.dll
 
-*.xcodeproj
-
-
 # Compiled source #
 ###################
 test1
