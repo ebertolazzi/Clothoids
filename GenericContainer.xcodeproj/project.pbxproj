@@ -13,6 +13,8 @@
 			buildPhases = (
 			);
 			dependencies = (
+				D9B8D42F1A79492800C003C0 /* PBXTargetDependency */,
+				D9B8D4311A79492800C003C0 /* PBXTargetDependency */,
 				D96BCBFB182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCBFD182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCBFF182AEDB300E31059 /* PBXTargetDependency */,
@@ -211,6 +213,20 @@
 			remoteGlobalIDString = D95EEC1318188AAE0076087A;
 			remoteInfo = example9;
 		};
+		D9B8D42E1A79492800C003C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D94AA8C21886937200D2C9E8;
+			remoteInfo = example10;
+		};
+		D9B8D4301A79492800C003C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D93EC11819E88EEA00243ACB;
+			remoteInfo = example11;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -226,7 +242,7 @@
 		D9420C3517F01C9E009C2E81 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /Users/enrico/Ricerca/develop/myBitBucketProjetcs/myGenericContainer/libs;
+			dstPath = "$(SRCROOT)/libs";
 			dstSubfolderSpec = 0;
 			files = (
 				D9420C3617F01CAE009C2E81 /* libGenericContainer.dylib in CopyFiles */,
@@ -1007,6 +1023,16 @@
 			target = D95EEC1318188AAE0076087A /* example9 */;
 			targetProxy = D96BCC0C182AEDB300E31059 /* PBXContainerItemProxy */;
 		};
+		D9B8D42F1A79492800C003C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D94AA8C21886937200D2C9E8 /* example10 */;
+			targetProxy = D9B8D42E1A79492800C003C0 /* PBXContainerItemProxy */;
+		};
+		D9B8D4311A79492800C003C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D93EC11819E88EEA00243ACB /* example11 */;
+			targetProxy = D9B8D4301A79492800C003C0 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1333,6 +1359,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1342,6 +1369,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

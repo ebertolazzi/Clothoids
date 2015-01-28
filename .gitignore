@@ -94,3 +94,5 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.dylib
+GenericContainer.xcodeproj/project.xcworkspace
+GenericContainer.xcodeproj/xcuserdata/enrico.xcuserdatad/xcdebugger
