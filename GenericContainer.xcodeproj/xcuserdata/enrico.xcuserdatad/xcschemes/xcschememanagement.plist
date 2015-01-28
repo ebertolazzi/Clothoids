@@ -4,62 +4,62 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>compile all.xcscheme</key>
+		<key>compile all.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>11</integer>
 		</dict>
-		<key>example1.xcscheme</key>
+		<key>example1.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>example10.xcscheme</key>
+		<key>example10.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>9</integer>
 		</dict>
-		<key>example11.xcscheme</key>
+		<key>example11.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
-		<key>example2.xcscheme</key>
+		<key>example2.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>example3.xcscheme</key>
+		<key>example3.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>example4.xcscheme</key>
+		<key>example4.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>example5.xcscheme</key>
+		<key>example5.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>example6.xcscheme</key>
+		<key>example6.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
-		<key>example7.xcscheme</key>
+		<key>example7.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
-		<key>example8.xcscheme</key>
+		<key>example8.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
-		<key>example9.xcscheme</key>
+		<key>example9.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>8</integer>

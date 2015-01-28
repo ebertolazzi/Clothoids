@@ -96,3 +96,4 @@ InfoPlist.h
 ehthumbs.db
 Icon?
 Thumbs.db
+*.dylib

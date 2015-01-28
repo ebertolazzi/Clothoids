@@ -6,13 +6,18 @@ GenericContainer
   - pointer
   - boolean
   - integer
+  - long integer
   - floating point
+  - complex floating point
   - string
   - vector of pointer
   - vector of boolean
   - vector of integer
   - vector of floating point
+  - vector of complex floating point
   - vector of string
+  - matrix of floating point
+  - matrix of complex floating point
 
 in addition to this data type the following two container are added
 
