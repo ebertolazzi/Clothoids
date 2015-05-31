@@ -832,13 +832,13 @@ namespace GC {
 #if defined(_WIN32) || defined(_WIN64)
   void *
   GenericContainer::get_pvoid() const {
-    ck("get_pvoid",GC_POINTER) ;
+    ck("get_pvoid()",GC_POINTER) ;
     return _data.p ;
   }
 
   void **
   GenericContainer::get_ppvoid() const {
-    ck("get_ppvoid",GC_POINTER) ;
+    ck("get_ppvoid()",GC_POINTER) ;
     return (void **)&_data.p ;
   }
 #endif
@@ -922,7 +922,7 @@ namespace GC {
 
   bool_type const &
   GenericContainer::get_bool() const {
-    ck("get_bool",GC_BOOL) ;
+    ck("get_bool()",GC_BOOL) ;
     return _data.b ;
   }
 
@@ -934,7 +934,7 @@ namespace GC {
 
   int_type const &
   GenericContainer::get_int() const {
-    ck("get_int",GC_INTEGER) ;
+    ck("get_int()",GC_INTEGER) ;
     return _data.i ;
   }
 
@@ -946,7 +946,7 @@ namespace GC {
 
   long_type const &
   GenericContainer::get_long() const {
-    ck("get_long",GC_LONG) ;
+    ck("get_long()",GC_LONG) ;
     return _data.l ;
   }
 
@@ -958,7 +958,7 @@ namespace GC {
 
   real_type const &
   GenericContainer::get_real() const {
-    ck("get_real",GC_REAL) ;
+    ck("get_real()",GC_REAL) ;
     return _data.r ;
   }
 
@@ -970,7 +970,7 @@ namespace GC {
 
   complex_type const &
   GenericContainer::get_complex() const {
-    ck("get_complex",GC_REAL) ;
+    ck("get_complex()",GC_REAL) ;
     return *_data.c ;
   }
 
@@ -982,43 +982,43 @@ namespace GC {
 
   string_type const &
   GenericContainer::get_string() const {
-    ck("get_string",GC_STRING) ;
+    ck("get_string()",GC_STRING) ;
     return *_data.s ;
   }
 
   vector_type &
   GenericContainer::get_vector() {
-    ck("get_vector",GC_VECTOR) ;
+    ck("get_vector()",GC_VECTOR) ;
     return *_data.v ;
   }
 
   vector_type const &
   GenericContainer::get_vector() const {
-    ck("get_vector",GC_VECTOR) ;
+    ck("get_vector()",GC_VECTOR) ;
     return *_data.v ;
   }
 
   vec_pointer_type &
   GenericContainer::get_vec_pointer() {
-    ck("get_vec_pointer",GC_VEC_POINTER) ;
+    ck("get_vec_pointer()",GC_VEC_POINTER) ;
     return *_data.v_p ;
   }
 
   vec_pointer_type const &
   GenericContainer::get_vec_pointer() const {
-    ck("get_vec_pointer",GC_VEC_POINTER) ;
+    ck("get_vec_pointer()",GC_VEC_POINTER) ;
     return *_data.v_p ;
   }
 
   vec_bool_type &
   GenericContainer::get_vec_bool() {
-    ck("get_vec_bool",GC_VEC_BOOL) ;
+    ck("get_vec_bool()",GC_VEC_BOOL) ;
     return *_data.v_b ;
   }
 
   vec_bool_type const &
   GenericContainer::get_vec_bool() const {
-    ck("get_vec_bool",GC_VEC_BOOL) ;
+    ck("get_vec_bool()",GC_VEC_BOOL) ;
     return *_data.v_b ;
   }
 
@@ -1026,13 +1026,13 @@ namespace GC {
   GenericContainer::get_vec_int() {
     if ( _data_type == GC_NOTYPE   ) set_vec_int() ;
     if ( _data_type == GC_VEC_BOOL ) promote_to_vec_int() ;
-    ck("get_vec_int",GC_VEC_INTEGER) ;
+    ck("get_vec_int()",GC_VEC_INTEGER) ;
     return *_data.v_i ;
   }
 
   vec_int_type const &
   GenericContainer::get_vec_int() const {
-    ck("get_vec_int",GC_VEC_INTEGER) ;
+    ck("get_vec_int()",GC_VEC_INTEGER) ;
     return *_data.v_i ;
   }
 
@@ -1041,13 +1041,13 @@ namespace GC {
     if ( _data_type == GC_NOTYPE   ) set_vec_real() ;
     if ( _data_type == GC_VEC_BOOL ||
          _data_type == GC_VEC_INTEGER ) promote_to_vec_real() ;
-    ck("get_vec_real",GC_VEC_REAL) ;
+    ck("get_vec_real()",GC_VEC_REAL) ;
     return *_data.v_r ;
   }
 
   vec_real_type const &
   GenericContainer::get_vec_real() const {
-    ck("get_vec_real",GC_VEC_REAL) ;
+    ck("get_vec_real()",GC_VEC_REAL) ;
     return *_data.v_r ;
   }
 
@@ -1057,13 +1057,13 @@ namespace GC {
     if ( _data_type == GC_VEC_BOOL    ||
          _data_type == GC_VEC_INTEGER ||
          _data_type == GC_VEC_REAL ) promote_to_vec_complex() ;
-    ck("get_vec_complex",GC_VEC_COMPLEX) ;
+    ck("get_vec_complex()",GC_VEC_COMPLEX) ;
     return *_data.v_c ;
   }
 
   vec_complex_type const &
   GenericContainer::get_vec_complex() const {
-    ck("get_vec_complex",GC_VEC_COMPLEX) ;
+    ck("get_vec_complex()",GC_VEC_COMPLEX) ;
     return *_data.v_c ;
   }
 
@@ -1073,13 +1073,13 @@ namespace GC {
     if ( _data_type == GC_VEC_BOOL    ||
          _data_type == GC_VEC_INTEGER ||
          _data_type == GC_VEC_REAL ) promote_to_mat_real() ;
-    ck("get_mat_real",GC_MAT_REAL) ;
+    ck("get_mat_real()",GC_MAT_REAL) ;
     return *_data.m_r ;
   }
 
   mat_real_type const &
   GenericContainer::get_mat_real() const {
-    ck("get_mat_real",GC_MAT_REAL) ;
+    ck("get_mat_real()",GC_MAT_REAL) ;
     return *_data.m_r ;
   }
 
@@ -1091,37 +1091,37 @@ namespace GC {
          _data_type == GC_VEC_REAL    ||
          _data_type == GC_MAT_REAL    ||
          _data_type == GC_VEC_COMPLEX ) promote_to_mat_complex() ;
-    ck("get_mat_complex",GC_MAT_COMPLEX) ;
+    ck("get_mat_complex()",GC_MAT_COMPLEX) ;
     return *_data.m_c ;
   }
 
   mat_complex_type const &
   GenericContainer::get_mat_complex() const {
-    ck("get_mat_complex",GC_MAT_COMPLEX) ;
+    ck("get_mat_complex()",GC_MAT_COMPLEX) ;
     return *_data.m_c ;
   }
 
   vec_string_type &
   GenericContainer::get_vec_string() {
-    ck("get_vec_string",GC_VEC_STRING) ;
+    ck("get_vec_string()",GC_VEC_STRING) ;
     return *_data.v_s ;
   }
 
   vec_string_type const &
   GenericContainer::get_vec_string() const {
-    ck("get_vec_string",GC_VEC_STRING) ;
+    ck("get_vec_string()",GC_VEC_STRING) ;
     return *_data.v_s ;
   }
 
   map_type &
   GenericContainer::get_map() {
-    ck("get_map",GC_MAP) ;
+    ck("get_map()",GC_MAP) ;
     return *_data.m ;
   }
 
   map_type const &
   GenericContainer::get_map() const {
-    ck("get_map",GC_MAP) ;
+    ck("get_map()",GC_MAP) ;
     return *_data.m ;
   }
 
@@ -1148,7 +1148,7 @@ namespace GC {
 
   bool_type
   GenericContainer::get_bool( unsigned i ) const {
-    ck("get_bool",GC_VEC_BOOL) ;
+    ck("get_bool()",GC_VEC_BOOL) ;
     GC_ASSERT( i < _data.v_b->size(), "get_bool( " << i << " ) const, out of range" ) ;
     return (*_data.v_b)[i] ;
   }
@@ -1169,7 +1169,7 @@ namespace GC {
 
   int_type const &
   GenericContainer::get_int( unsigned i ) const {
-    ck("get_int",GC_VEC_INTEGER) ;
+    ck("get_int()",GC_VEC_INTEGER) ;
     GC_ASSERT( i < _data.v_i->size(), "get_int( " << i << " ) const, out of range" ) ;
     return (*_data.v_i)[i] ;
   }
@@ -1190,7 +1190,10 @@ namespace GC {
 
   real_type const &
   GenericContainer::get_real( unsigned i ) const  {
-    ck("get_real",GC_VEC_REAL) ;
+    GC_ASSERT( GC_VEC_REAL == _data_type,
+               "get_real( " << i << " ) bad data type" <<
+               "\nexpect: " << typeName[GC_VEC_REAL] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     GC_ASSERT( i < _data.v_r->size(), "get_real( " << i << " ) const, out of range" ) ;
     return (*_data.v_r)[i] ;
   }
@@ -1201,13 +1204,19 @@ namespace GC {
     else if ( _data_type == GC_VEC_BOOL    ||
               _data_type == GC_VEC_INTEGER ||
               _data_type == GC_VEC_REAL ) promote_to_mat_real() ;
-    ck("get_real",GC_MAT_REAL) ;
+    GC_ASSERT( GC_MAT_REAL == _data_type,
+               "get_real( " << i << ", " << j << " ) bad data type" <<
+               "\nexpect: " << typeName[GC_MAT_REAL] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_r)(i,j) ;
   }
 
   real_type const &
   GenericContainer::get_real( unsigned i, unsigned j ) const  {
-    ck("get_real",GC_MAT_REAL) ;
+    GC_ASSERT( GC_MAT_REAL == _data_type,
+               "get_real( " << i << ", " << j << " ) bad data type" <<
+               "\nexpect: " << typeName[GC_MAT_REAL] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_r)(i,j) ;
   }
 
@@ -1229,7 +1238,10 @@ namespace GC {
 
   complex_type const &
   GenericContainer::get_complex( unsigned i ) const  {
-    ck("get_complex",GC_VEC_COMPLEX) ;
+    GC_ASSERT( GC_VEC_COMPLEX == _data_type,
+               "get_complex( " << i << " ) bad data type" <<
+               "\nexpect: " << typeName[GC_VEC_COMPLEX] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     GC_ASSERT( i < _data.v_c->size(), "get_complex( " << i << " ) const, out of range" ) ;
     return (*_data.v_c)[i] ;
   }
@@ -1242,13 +1254,19 @@ namespace GC {
               _data_type == GC_VEC_REAL    ||
               _data_type == GC_VEC_COMPLEX ||
               _data_type == GC_MAT_REAL ) promote_to_mat_complex() ;
-    ck("get_complex",GC_MAT_COMPLEX) ;
+    GC_ASSERT( GC_MAT_COMPLEX == _data_type,
+               "get_complex( " << i << ", " << j << " ) bad data type" <<
+               "\nexpect: " << typeName[GC_MAT_COMPLEX] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_c)(i,j) ;
   }
 
   complex_type const &
   GenericContainer::get_complex( unsigned i, unsigned j ) const  {
-    ck("get_complex",GC_MAT_COMPLEX) ;
+    GC_ASSERT( GC_MAT_COMPLEX == _data_type,
+               "get_complex( " << i << ", " << j << " ) bad data type" <<
+               "\nexpect: " << typeName[GC_MAT_COMPLEX] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_c)(i,j) ;
   }
 
@@ -1266,7 +1284,10 @@ namespace GC {
 
   string_type const &
   GenericContainer::get_string( unsigned i ) const {
-    ck("get_string",GC_VEC_STRING) ;
+    GC_ASSERT( GC_VEC_STRING == _data_type,
+               "get_string( " << i << " ) bad data type" <<
+               "\nexpect: " << typeName[GC_VEC_STRING] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     GC_ASSERT( i < _data.v_s->size(), "get_string( " << i << " ) const, out of range" ) ;
     return (*_data.v_s)[i] ;
   }
@@ -1365,7 +1386,10 @@ namespace GC {
 
   GenericContainer const &
   GenericContainer::operator [] ( unsigned i ) const {
-    ck("operator []",GC_VECTOR) ;
+    GC_ASSERT( GC_VECTOR == _data_type,
+               "operator [] integer argument = " << i <<
+               "\nexpect: " << typeName[GC_VECTOR] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     GC_ASSERT( i < _data.v->size(), "operator [] const, index " << i << " out of range" ) ;
     return (*_data.v)[i] ;
   }
@@ -1382,14 +1406,19 @@ namespace GC {
 
   GenericContainer &
   GenericContainer::operator () ( unsigned i ) {
-    ck("operator ()",GC_VECTOR) ;
-    GC_ASSERT( i < _data.v->size(), "operator (), index " << i << " out of range" ) ;
+    GC_ASSERT( GC_VECTOR == _data_type,
+               "operator () integer argument = " << i <<
+               " bad data type\nexpect: " << typeName[GC_VECTOR] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.v)[i] ;
   }
 
   GenericContainer const &
   GenericContainer::operator () ( unsigned i ) const {
-    ck("operator ()",GC_VECTOR) ;
+    GC_ASSERT( GC_VECTOR == _data_type,
+               "operator () integer argument = " << i <<
+               " bad data type\nexpect: " << typeName[GC_VECTOR] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     GC_ASSERT( i < _data.v->size(), "operator () const, index " << i << " out of range" ) ;
     return (*_data.v)[i] ;
   }
@@ -1411,13 +1440,19 @@ namespace GC {
 
   GenericContainer const &
   GenericContainer::operator [] ( std::string const & s ) const {
-    ck("operator []",GC_MAP) ;
+    GC_ASSERT( GC_MAP == _data_type,
+               "operator [] string argument ``" << s << "''"
+               "\nexpect: " << typeName[GC_MAP] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m)[s] ;
   }
 
   GenericContainer &
   GenericContainer::operator () ( std::string const & s ) {
-    ck("operator ()",GC_MAP) ;
+    GC_ASSERT( GC_MAP == _data_type,
+               "operator () string argument = ``" << s <<
+               "'' bad data type\nexpect: " << typeName[GC_MAP] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     map_type::iterator iv = (*_data.m) . find(s) ;
     GC_ASSERT( iv != (*_data.m) . end(), "operator(): Cannot find key '" << s << "'!" ) ;
     return iv -> second ;
@@ -1425,7 +1460,10 @@ namespace GC {
 
   GenericContainer const &
   GenericContainer::operator () ( std::string const & s ) const {
-    ck("operator ()",GC_MAP) ;
+    GC_ASSERT( GC_MAP == _data_type,
+               "operator () string argument = ``" << s <<
+               "'' bad data type\nexpect: " << typeName[GC_MAP] <<
+               "\nbut data stored is of type: " << typeName[_data_type] ) ;
     map_type::const_iterator iv = (*_data.m) . find(s) ;
     GC_ASSERT( iv != (*_data.m) . end(), "operator(): Cannot find key '" << s << "'!" ) ;
     return iv -> second ;
