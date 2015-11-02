@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D95EEC1318188AAE0076087A"
-               BuildableName = "example9"
-               BlueprintName = "example9"
+               BlueprintIdentifier = "D9D7FC5417F01B05002F07F8"
+               BuildableName = "libGenericContainer.dylib"
+               BlueprintName = "GenericContainer"
                ReferencedContainer = "container:GenericContainer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95EEC1318188AAE0076087A"
-            BuildableName = "example9"
-            BlueprintName = "example9"
-            ReferencedContainer = "container:GenericContainer.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -46,22 +37,20 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/enrico/Ricerca/develop/myBitBucketProjetcs/myGenericContainer/bin"
+      useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95EEC1318188AAE0076087A"
-            BuildableName = "example9"
-            BlueprintName = "example9"
+            BlueprintIdentifier = "D9D7FC5417F01B05002F07F8"
+            BuildableName = "libGenericContainer.dylib"
+            BlueprintName = "GenericContainer"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -71,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D95EEC1318188AAE0076087A"
-            BuildableName = "example9"
-            BlueprintName = "example9"
+            BlueprintIdentifier = "D9D7FC5417F01B05002F07F8"
+            BuildableName = "libGenericContainer.dylib"
+            BlueprintName = "GenericContainer"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -13,8 +13,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				D9B8D42F1A79492800C003C0 /* PBXTargetDependency */,
-				D9B8D4311A79492800C003C0 /* PBXTargetDependency */,
 				D96BCBFB182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCBFD182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCBFF182AEDB300E31059 /* PBXTargetDependency */,
@@ -25,6 +23,8 @@
 				D96BCC09182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCC0B182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCC0D182AEDB300E31059 /* PBXTargetDependency */,
+				D9B8D42F1A79492800C003C0 /* PBXTargetDependency */,
+				D9B8D4311A79492800C003C0 /* PBXTargetDependency */,
 			);
 			name = "compile all";
 			productName = "compile all";
@@ -782,7 +782,7 @@
 		D9D7FC4D17F01B05002F07F8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 			};
 			buildConfigurationList = D9D7FC5017F01B05002F07F8 /* Build configuration list for PBXProject "GenericContainer" */;
@@ -1269,6 +1269,7 @@
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",

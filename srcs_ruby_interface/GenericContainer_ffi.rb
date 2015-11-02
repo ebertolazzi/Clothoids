@@ -22,17 +22,31 @@ require 'ffi'
 module GenericContainer
   
   extend FFI::Library
-  
-  HOST_OS = RbConfig::CONFIG['host_os']
-  
-  case HOST_OS
-  when /mac|darwin/
-    ffi_lib %w[libGenericContainer.dylib ./libGenericContainer.dylib ./libs/libGenericContainer.dylib]
-  when /linux|cygwin|bsd/
-    ffi_lib %w[libGenericContainer.so ./libGenericContainer.so ./libs/libGenericContainer.so]
-  when /mswin|win|mingw/
-    ffi_lib %w[libGenericContainer.dll ./libGenericContainer.dll ./libs/libGenericContainer.dll]
+
+  if @libname then
+    ffi_lib @libname
   else
+    HOST_OS  = RbConfig::CONFIG['host_os']
+    @libname = "GenericContainer"
+    @ext     = ".noextension"
+    case HOST_OS
+    when /mac|darwin/
+      @ext = ".dylib" ;
+    when /linux|cygwin|bsd/
+      @ext = ".so" ;
+    when /mswin|win|mingw/
+      @ext = ".dll" ;
+    end
+    ffi_lib [ @libname+@ext,
+              "./lib/"+@libname+@ext,
+              "../lib/"+@libname+@ext,
+              "./libs/"+@libname+@ext,
+              "../libs/"+@libname+@ext,
+              "lib"+@libname+@ext,
+              "./lib/lib"+@libname+@ext,
+              "../lib/lib"+@libname+@ext,
+              "./libs/lib"+@libname+@ext,
+              "../libs/lib"+@libname+@ext ]
   end
 
   attach_function :GC_select,                     [ :string ], :int
@@ -270,6 +284,8 @@ module GenericContainer
       self.GC_set_empty_vector_of_real
     elsif vec[0].kind_of?(String) then
       self.GC_set_empty_vector_of_string
+    elsif vec[0].kind_of?(Symbol) then
+      self.GC_set_empty_vector_of_string
     else
       self.fromVector vec
       return ;
@@ -286,6 +302,8 @@ module GenericContainer
         self.GC_push_real var
       elsif var.kind_of?(String) then
         self.GC_push_string var
+      elsif var.kind_of?(Symbol) then
+        self.GC_push_string var.to_s
       else
         self.fromVector vec
         return ;
@@ -323,6 +341,8 @@ module GenericContainer
       self.GC_set_real var
     elsif var.kind_of?(String) then
       self.GC_set_string var
+    elsif var.kind_of?(Symbol) then
+      self.GC_set_string var.to_s
     elsif var.kind_of?(Array) then
       if var.length > 0 then
         self.addToVector(var)

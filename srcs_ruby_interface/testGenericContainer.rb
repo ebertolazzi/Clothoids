@@ -52,13 +52,14 @@ data = {
       :epsi      => 0.1e-2,
       :tolerance => 0.5e-2,
     },
-  }
+  },
+  :prova => [ :a, :b, "pippo" ]
 }
 
-#gc.load data
+gc.load data
 #gc.print
 
-gc.fill_for_test
+#gc.fill_for_test
 gc.print
 hsh = gc.get_data
 pp hsh
