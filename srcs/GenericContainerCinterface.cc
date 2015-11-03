@@ -57,7 +57,6 @@ GC_delete( char const id[] ) {
   return GENERIC_CONTAINER_OK ;
 }
 
-
 EXTERN_C
 int
 GC_fill_for_test( char const id[] ) {
@@ -556,7 +555,6 @@ GC_get_matrix_num_cols() {
   if ( gc_active == nullptr ) return 0 ;
   return int(gc_active -> top() -> get_numCols()) ;
 }
-
 
 EXTERN_C
 int

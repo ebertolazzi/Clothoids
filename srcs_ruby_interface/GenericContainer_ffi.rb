@@ -23,8 +23,20 @@ module GenericContainer
   
   extend FFI::Library
 
-  if @libname then
-    ffi_lib @libname
+  @GENERIC_CONTAINER_OK        = 0 ;
+  @GENERIC_CONTAINER_BAD_TYPE  = 1 ;
+  @GENERIC_CONTAINER_NO_DATA   = 2 ;
+  @GENERIC_CONTAINER_NOT_EMPTY = 3 ;
+  @GENERIC_CONTAINER_BAD_HEAD  = 4 ;
+
+  @error_messages = [ "Generic Container, ok",
+                      "Generic Container, bad type",
+                      "Generic Container, no data",
+                      "Generic Container, not empty",
+                      "Generic Container, bad head" ] ;
+
+  if @libGenericContainer then
+    ffi_lib @libGenericContainer
   else
     HOST_OS  = RbConfig::CONFIG['host_os']
     @libname = "GenericContainer"
@@ -52,15 +64,15 @@ module GenericContainer
   attach_function :GC_select,                     [ :string ], :int
   attach_function :GC_delete,                     [ :string ], :int
   attach_function :GC_fill_for_test,              [ :string ], :int
-  
-  attach_function :GC_get_type,                   [], :int
-  attach_function :GC_get_type_name,              [], :string
-  attach_function :GC_print,                      [], :int
-  attach_function :GC_mem_ptr,                    [ :string ], :pointer
 
   # head movement
   attach_function :GC_pop_head,                   [], :int
   attach_function :GC_reset_head,                 [], :int
+
+  attach_function :GC_get_type,                   [], :int
+  attach_function :GC_get_type_name,              [], :string
+  attach_function :GC_print,                      [], :int
+  attach_function :GC_mem_ptr,                    [ :string ], :pointer
 
   # set
   attach_function :GC_set_bool,                   [ :int ], :int
@@ -173,15 +185,16 @@ module GenericContainer
     nelem = self.GC_get_vector_size
     res = []
     (0..nelem-1).each do |i|
-      self.GC_push_vector_position i
+      ok = self.GC_push_vector_position i
+      raise RuntimeError, @error_messages[ok] unless ok == 0
       res << self.GC_to_hash
-      self.GC_pop_head
+      ok = self.GC_pop_head
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     end
     return res
   end
 
   def self.toRealMatrix
-    puts "in toRealMatrix"
     nr  = self.GC_get_matrix_num_rows
     nc  = self.GC_get_matrix_num_cols
     res = []
@@ -192,12 +205,10 @@ module GenericContainer
       end
       res << row
     end
-    puts "out toRealMatrix"
     return res
   end
 
   def self.toComplexMatrix
-    puts "in toComplexMatrix"
     nr  = self.GC_get_matrix_num_rows
     nc  = self.GC_get_matrix_num_cols
     res = []
@@ -208,10 +219,8 @@ module GenericContainer
       end
       res << row
     end
-    puts "out toComplexMatrix"
     return res
   end
-
 
   def self.toMixedHash
     #self.GC_get_map
@@ -315,18 +324,22 @@ module GenericContainer
     nelem = var.length
     self.GC_set_vector nelem
     (0..nelem-1).each do |i|
-      self.GC_push_vector_position i
+      ok = self.GC_push_vector_position i
+      raise RuntimeError, @error_messages[ok] unless ok == 0
       self.GC_from_hash var[i]
-      self.GC_pop_head
+      ok = self.GC_pop_head
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     end
   end
 
   def self.fromMixedHash(var)
     self.GC_set_map
     var.each do |k,v|
-      self.GC_push_map_position k.to_s
+      ok = self.GC_push_map_position k.to_s
+      raise RuntimeError, @error_messages[ok] unless ok == 0
       self.GC_from_hash v
-      self.GC_pop_head
+      ok = self.GC_pop_head
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     end
   end
 

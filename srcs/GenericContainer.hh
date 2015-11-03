@@ -1285,11 +1285,11 @@ namespace GC {
   class GENERIC_CONTAINER_API_DLL GenericContainerExplorer {
   private:
     enum {
-      GENERIC_CONTAINER_OK = 0,
-      GENERIC_CONTAINER_BAD_TYPE,
-      GENERIC_CONTAINER_NO_DATA,
-      GENERIC_CONTAINER_NOT_EMPTY,
-      GENERIC_CONTAINER_BAD_HEAD
+      GENERIC_CONTAINER_OK        = 0,
+      GENERIC_CONTAINER_BAD_TYPE  = 1,
+      GENERIC_CONTAINER_NO_DATA   = 2,
+      GENERIC_CONTAINER_NOT_EMPTY = 3,
+      GENERIC_CONTAINER_BAD_HEAD  = 4
     } ;
 
     GenericContainer              data ;
