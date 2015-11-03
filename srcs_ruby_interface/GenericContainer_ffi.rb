@@ -61,6 +61,7 @@ module GenericContainer
               "../libs/lib"+@libname+@ext ]
   end
 
+  attach_function :GC_new,                        [ :string ], :int
   attach_function :GC_select,                     [ :string ], :int
   attach_function :GC_delete,                     [ :string ], :int
   attach_function :GC_fill_for_test,              [ :string ], :int
@@ -225,13 +226,16 @@ module GenericContainer
   def self.toMixedHash
     #self.GC_get_map
     keys = []
-    self.GC_init_map_key
+    ok = self.GC_init_map_key
+    raise RuntimeError, @error_messages[ok] unless ok == 0
     while (key = self.GC_get_next_key) do keys << key end
     res = {}
     keys.each do |key|
-      self.GC_push_map_position key
+      ok = self.GC_push_map_position key
+      raise RuntimeError, @error_messages[ok] unless ok == 0
       res[key.to_sym] = self.GC_to_hash
-      self.GC_pop_head
+      ok = self.GC_pop_head
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     end
     return res
   end
@@ -286,15 +290,20 @@ module GenericContainer
   def self.addToVector(vec)
     # empty vectors
     if vec[0].kind_of?(TrueClass) or vec[0].kind_of?(FalseClass) then
-      self.GC_set_empty_vector_of_bool
+      ok = self.GC_set_empty_vector_of_bool
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif vec[0].kind_of?(Fixnum) then
-      self.GC_set_empty_vector_of_int
+      ok = self.GC_set_empty_vector_of_int
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif vec[0].kind_of?(Float) then
-      self.GC_set_empty_vector_of_real
+      ok = self.GC_set_empty_vector_of_real
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif vec[0].kind_of?(String) then
-      self.GC_set_empty_vector_of_string
+      ok = self.GC_set_empty_vector_of_string
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif vec[0].kind_of?(Symbol) then
-      self.GC_set_empty_vector_of_string
+      ok = self.GC_set_empty_vector_of_string
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     else
       self.fromVector vec
       return ;
@@ -302,17 +311,23 @@ module GenericContainer
     # add elements
     vec.each { |var|
       if var.kind_of?(TrueClass) then
-        self.GC_push_bool 1
+        ok = self.GC_push_bool 1
+        raise RuntimeError, @error_messages[ok] unless ok == 0
       elsif var.kind_of?(FalseClass) then
-        self.GC_push_bool 0
+        ok = self.GC_push_bool 0
+        raise RuntimeError, @error_messages[ok] unless ok == 0
       elsif var.kind_of?(Fixnum) then
-        self.GC_push_int var
+        ok = self.GC_push_int var
+        raise RuntimeError, @error_messages[ok] unless ok == 0
       elsif var.kind_of?(Float) then
-        self.GC_push_real var
+        ok = self.GC_push_real var
+        raise RuntimeError, @error_messages[ok] unless ok == 0
       elsif var.kind_of?(String) then
-        self.GC_push_string var
+        ok = self.GC_push_string var
+        raise RuntimeError, @error_messages[ok] unless ok == 0
       elsif var.kind_of?(Symbol) then
-        self.GC_push_string var.to_s
+        ok = self.GC_push_string var.to_s
+        raise RuntimeError, @error_messages[ok] unless ok == 0
       else
         self.fromVector vec
         return ;
@@ -345,22 +360,29 @@ module GenericContainer
 
   def self.GC_from_hash(var)
     if var.kind_of?(TrueClass) then
-      self.GC_set_bool 1
+      ok = self.GC_set_bool 1
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif var.kind_of?(FalseClass) then
-      self.GC_set_bool 0
+      ok = self.GC_set_bool 0
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif var.kind_of?(Fixnum) then
-      self.GC_set_int var
+      ok = self.GC_set_int var
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif var.kind_of?(Float) then
-      self.GC_set_real var
+      ok = self.GC_set_real var
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif var.kind_of?(String) then
-      self.GC_set_string var
+      ok = self.GC_set_string var
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif var.kind_of?(Symbol) then
-      self.GC_set_string var.to_s
+      ok = self.GC_set_string var.to_s
+      raise RuntimeError, @error_messages[ok] unless ok == 0
     elsif var.kind_of?(Array) then
       if var.length > 0 then
         self.addToVector(var)
       else
-        self.GC_set_empty_vector_of_bool
+        ok = self.GC_set_empty_vector_of_bool
+        raise RuntimeError, @error_messages[ok] unless ok == 0
       end
     elsif var.kind_of?(Hash) then
       self.fromMixedHash var
@@ -378,7 +400,7 @@ module GenericContainer
  
     def initialize
       @id = self.__id__.to_s
-      ::GenericContainer.GC_select @id
+      ::GenericContainer.GC_new @id
       ObjectSpace.define_finalizer(self, proc { ::GenericContainer.GC_delete @id })
       return @id
     end
@@ -388,7 +410,8 @@ module GenericContainer
     end
 
     def load(data)
-      ::GenericContainer.GC_select    @id
+      ok = ::GenericContainer.GC_select @id
+      raise RuntimeError, @error_messages[ok] unless ok == 0
       ::GenericContainer.GC_from_hash data
     end
     
@@ -397,15 +420,18 @@ module GenericContainer
     end
 
     def get_data
-      ::GenericContainer.GC_select @id
+      ok = ::GenericContainer.GC_select @id
+      raise RuntimeError, @error_messages[ok] unless ok == 0
       return ::GenericContainer.GC_to_hash
     end
 
     def print
-      ::GenericContainer.GC_select @id
+      ok = ::GenericContainer.GC_select @id
+      raise RuntimeError, @error_messages[ok] unless ok == 0
       ::GenericContainer.GC_print
     end
 
   end
 
 end
+

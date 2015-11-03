@@ -65,7 +65,10 @@ typedef struct {
   real_type imag ;
 } complex_type ;
 
-/*! Select or create a new `GenericContainer` object 'id' */
+/*! Create a new `GenericContainer` object 'id' */
+int GENERIC_CONTAINER_API_DLL GC_new( char const id[] ) ;
+
+/*! Select an old `GenericContainer` object 'id' */
 int GENERIC_CONTAINER_API_DLL GC_select( char const id[] ) ;
 
 /*! Delete the `GenericContainer` object 'id' */

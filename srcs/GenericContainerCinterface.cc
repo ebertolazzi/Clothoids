@@ -44,6 +44,14 @@ GC::GenericContainerExplorer * gc_active = nullptr ;
 
 EXTERN_C
 int
+GC_new( char const id[] ) {
+  // ckeck if exists
+  gc_active = &gc_explorer[id] ;
+  return GENERIC_CONTAINER_OK ;
+}
+
+EXTERN_C
+int
 GC_select( char const id[] ) {
   // ckeck if exists
   gc_active = &gc_explorer[id] ;
