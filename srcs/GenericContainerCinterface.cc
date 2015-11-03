@@ -59,6 +59,14 @@ GC_select( char const id[] ) {
 }
 
 EXTERN_C
+void *
+GC_mem_ptr( char const id[] ) {
+  GC_select( id ) ;
+  if ( gc_active == nullptr ) return nullptr ;
+  return gc_active->mem_ptr() ;
+}
+
+EXTERN_C
 int
 GC_delete( char const id[] ) {
   gc_explorer.erase(id) ;
@@ -167,13 +175,6 @@ GC_get_type_name() {
   static char const empty[] = "" ;
   if ( gc_active == nullptr ) return empty ;
   return gc_active -> top() -> get_type_name() ;
-}
-
-EXTERN_C
-void *
-GC_mem_ptr( char const name[] ) {
-  if ( gc_active == nullptr ) return nullptr ;
-  return gc_active->mem_ptr() ;
 }
 
 //..............................................................................
