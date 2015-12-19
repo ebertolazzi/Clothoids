@@ -32,34 +32,34 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		D93EC11E19E88EEA00243ACB /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
+		D93EC11E19E88EEA00243ACB /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D93EC12519E88F9100243ACB /* example11.cc in Sources */ = {isa = PBXBuildFile; fileRef = D93EC11719E88EE200243ACB /* example11.cc */; };
 		D9420C2D17F01BF2009C2E81 /* GenericContainer.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2517F01BF2009C2E81 /* GenericContainer.cc */; };
 		D9420C2E17F01BF2009C2E81 /* GenericContainer.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9420C2617F01BF2009C2E81 /* GenericContainer.hh */; };
 		D9420C3017F01BF2009C2E81 /* GenericContainerCinterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2817F01BF2009C2E81 /* GenericContainerCinterface.cc */; };
 		D9420C3117F01BF2009C2E81 /* GenericContainerCinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = D9420C2917F01BF2009C2E81 /* GenericContainerCinterface.h */; };
 		D9420C3317F01BF2009C2E81 /* GenericContainerSupport.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2B17F01BF2009C2E81 /* GenericContainerSupport.cc */; };
-		D9420C3617F01CAE009C2E81 /* libGenericContainer.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
+		D9420C3617F01CAE009C2E81 /* libGenericContainer.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D9420C4717F01D4A009C2E81 /* example1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C4617F01D4A009C2E81 /* example1.cc */; };
-		D9420C4817F01D87009C2E81 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
-		D9420C4F17F01DB2009C2E81 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
-		D9420C5B17F01DB4009C2E81 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
-		D9420C6717F01DB6009C2E81 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
-		D9420C7317F01DB8009C2E81 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
-		D9420C7F17F01DB9009C2E81 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
-		D9420C8B17F01DBA009C2E81 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
+		D9420C4817F01D87009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
+		D9420C4F17F01DB2009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
+		D9420C5B17F01DB4009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
+		D9420C6717F01DB6009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
+		D9420C7317F01DB8009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
+		D9420C7F17F01DB9009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
+		D9420C8B17F01DBA009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D9420C9717F01E83009C2E81 /* example2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9617F01E73009C2E81 /* example2.cc */; };
 		D9420C9817F01E87009C2E81 /* example3.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9517F01E73009C2E81 /* example3.cc */; };
 		D9420C9917F01E8C009C2E81 /* example4.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9417F01E73009C2E81 /* example4.cc */; };
 		D9420C9A17F01E90009C2E81 /* example5.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9317F01E73009C2E81 /* example5.cc */; };
 		D9420C9B17F01E94009C2E81 /* example6.c in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9217F01E73009C2E81 /* example6.c */; };
 		D9420C9C17F01E99009C2E81 /* example7.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9117F01E73009C2E81 /* example7.cc */; };
-		D94AA8C81886937200D2C9E8 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
-		D95D1F8A1816E7440010C608 /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
+		D94AA8C81886937200D2C9E8 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
+		D95D1F8A1816E7440010C608 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D95D1F921816E7660010C608 /* example8.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95D1F911816E7660010C608 /* example8.cc */; };
 		D95EEC081817DA0A0076087A /* GenericContainerLuaInterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95EEC061817DA0A0076087A /* GenericContainerLuaInterface.cc */; };
 		D95EEC091817DA0A0076087A /* GenericContainerLuaInterface.hh in Headers */ = {isa = PBXBuildFile; fileRef = D95EEC071817DA0A0076087A /* GenericContainerLuaInterface.hh */; };
-		D95EEC1918188AAE0076087A /* libGenericContainer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */; };
+		D95EEC1918188AAE0076087A /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D95EEC2018188ADC0076087A /* example9.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95EEC1218188AA80076087A /* example9.cc */; };
 		D99ADB5D1A0BCABB0045A499 /* example10.cc in Sources */ = {isa = PBXBuildFile; fileRef = D94AA8CF188693C000D2C9E8 /* example10.cc */; };
 		D99C7FAB18AD27F200B35A64 /* GenericContainerTables.cc in Sources */ = {isa = PBXBuildFile; fileRef = D99C7FAA18AD27F200B35A64 /* GenericContainerTables.cc */; };
@@ -245,7 +245,7 @@
 			dstPath = "$(SRCROOT)/libs";
 			dstSubfolderSpec = 0;
 			files = (
-				D9420C3617F01CAE009C2E81 /* libGenericContainer.dylib in CopyFiles */,
+				D9420C3617F01CAE009C2E81 /* libGenericContainer.a in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +372,7 @@
 		D95EEC1218188AA80076087A /* example9.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = example9.cc; path = examples/example9.cc; sourceTree = SOURCE_ROOT; };
 		D95EEC1F18188AAE0076087A /* example9 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = example9; sourceTree = BUILT_PRODUCTS_DIR; };
 		D99C7FAA18AD27F200B35A64 /* GenericContainerTables.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainerTables.cc; sourceTree = "<group>"; };
-		D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libGenericContainer.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libGenericContainer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,7 +380,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D93EC11E19E88EEA00243ACB /* libGenericContainer.dylib in Frameworks */,
+				D93EC11E19E88EEA00243ACB /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,7 +388,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C4817F01D87009C2E81 /* libGenericContainer.dylib in Frameworks */,
+				D9420C4817F01D87009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +396,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C4F17F01DB2009C2E81 /* libGenericContainer.dylib in Frameworks */,
+				D9420C4F17F01DB2009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +404,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C5B17F01DB4009C2E81 /* libGenericContainer.dylib in Frameworks */,
+				D9420C5B17F01DB4009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C6717F01DB6009C2E81 /* libGenericContainer.dylib in Frameworks */,
+				D9420C6717F01DB6009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +420,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C7317F01DB8009C2E81 /* libGenericContainer.dylib in Frameworks */,
+				D9420C7317F01DB8009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,7 +428,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C7F17F01DB9009C2E81 /* libGenericContainer.dylib in Frameworks */,
+				D9420C7F17F01DB9009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +436,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C8B17F01DBA009C2E81 /* libGenericContainer.dylib in Frameworks */,
+				D9420C8B17F01DBA009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,7 +444,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D94AA8C81886937200D2C9E8 /* libGenericContainer.dylib in Frameworks */,
+				D94AA8C81886937200D2C9E8 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,7 +452,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D95D1F8A1816E7440010C608 /* libGenericContainer.dylib in Frameworks */,
+				D95D1F8A1816E7440010C608 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,7 +460,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D95EEC1918188AAE0076087A /* libGenericContainer.dylib in Frameworks */,
+				D95EEC1918188AAE0076087A /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,7 +528,7 @@
 		D9D7FC5617F01B05002F07F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */,
+				D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */,
 				D9420C3B17F01D25009C2E81 /* example1 */,
 				D9420C5417F01DB2009C2E81 /* example2 */,
 				D9420C6017F01DB4009C2E81 /* example3 */,
@@ -773,7 +773,7 @@
 			);
 			name = GenericContainer;
 			productName = GenericContainer;
-			productReference = D9D7FC5517F01B05002F07F8 /* libGenericContainer.dylib */;
+			productReference = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -1359,8 +1359,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = lib;
 				INSTALL_PATH = "@rpath";
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1369,8 +1371,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = lib;
 				INSTALL_PATH = "@rpath";
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
