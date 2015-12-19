@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0710"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D9D7FC5417F01B05002F07F8"
-               BuildableName = "libGenericContainer.dylib"
+               BlueprintIdentifier = "D9A0E5FE1C258D0F00914760"
+               BuildableName = "libGenericContainer.a"
                BlueprintName = "GenericContainer"
                ReferencedContainer = "container:GenericContainer.xcodeproj">
             </BuildableReference>
@@ -45,8 +45,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D9D7FC5417F01B05002F07F8"
-            BuildableName = "libGenericContainer.dylib"
+            BlueprintIdentifier = "D9A0E5FE1C258D0F00914760"
+            BuildableName = "libGenericContainer.a"
             BlueprintName = "GenericContainer"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>
@@ -63,8 +63,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D9D7FC5417F01B05002F07F8"
-            BuildableName = "libGenericContainer.dylib"
+            BlueprintIdentifier = "D9A0E5FE1C258D0F00914760"
+            BuildableName = "libGenericContainer.a"
             BlueprintName = "GenericContainer"
             ReferencedContainer = "container:GenericContainer.xcodeproj">
          </BuildableReference>

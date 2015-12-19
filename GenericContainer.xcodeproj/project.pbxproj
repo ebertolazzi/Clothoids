@@ -13,7 +13,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				D96BCBFB182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCBFD182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCBFF182AEDB300E31059 /* PBXTargetDependency */,
 				D96BCC01182AEDB300E31059 /* PBXTargetDependency */,
@@ -32,124 +31,29 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		D93EC11E19E88EEA00243ACB /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D93EC12519E88F9100243ACB /* example11.cc in Sources */ = {isa = PBXBuildFile; fileRef = D93EC11719E88EE200243ACB /* example11.cc */; };
-		D9420C2D17F01BF2009C2E81 /* GenericContainer.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2517F01BF2009C2E81 /* GenericContainer.cc */; };
-		D9420C2E17F01BF2009C2E81 /* GenericContainer.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9420C2617F01BF2009C2E81 /* GenericContainer.hh */; };
-		D9420C3017F01BF2009C2E81 /* GenericContainerCinterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2817F01BF2009C2E81 /* GenericContainerCinterface.cc */; };
-		D9420C3117F01BF2009C2E81 /* GenericContainerCinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = D9420C2917F01BF2009C2E81 /* GenericContainerCinterface.h */; };
-		D9420C3317F01BF2009C2E81 /* GenericContainerSupport.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2B17F01BF2009C2E81 /* GenericContainerSupport.cc */; };
-		D9420C3617F01CAE009C2E81 /* libGenericContainer.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D9420C4717F01D4A009C2E81 /* example1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C4617F01D4A009C2E81 /* example1.cc */; };
-		D9420C4817F01D87009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
-		D9420C4F17F01DB2009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
-		D9420C5B17F01DB4009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
-		D9420C6717F01DB6009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
-		D9420C7317F01DB8009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
-		D9420C7F17F01DB9009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
-		D9420C8B17F01DBA009C2E81 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D9420C9717F01E83009C2E81 /* example2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9617F01E73009C2E81 /* example2.cc */; };
 		D9420C9817F01E87009C2E81 /* example3.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9517F01E73009C2E81 /* example3.cc */; };
 		D9420C9917F01E8C009C2E81 /* example4.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9417F01E73009C2E81 /* example4.cc */; };
 		D9420C9A17F01E90009C2E81 /* example5.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9317F01E73009C2E81 /* example5.cc */; };
 		D9420C9B17F01E94009C2E81 /* example6.c in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9217F01E73009C2E81 /* example6.c */; };
 		D9420C9C17F01E99009C2E81 /* example7.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9117F01E73009C2E81 /* example7.cc */; };
-		D94AA8C81886937200D2C9E8 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
-		D95D1F8A1816E7440010C608 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D95D1F921816E7660010C608 /* example8.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95D1F911816E7660010C608 /* example8.cc */; };
-		D95EEC081817DA0A0076087A /* GenericContainerLuaInterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95EEC061817DA0A0076087A /* GenericContainerLuaInterface.cc */; };
-		D95EEC091817DA0A0076087A /* GenericContainerLuaInterface.hh in Headers */ = {isa = PBXBuildFile; fileRef = D95EEC071817DA0A0076087A /* GenericContainerLuaInterface.hh */; };
-		D95EEC1918188AAE0076087A /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */; };
 		D95EEC2018188ADC0076087A /* example9.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95EEC1218188AA80076087A /* example9.cc */; };
 		D99ADB5D1A0BCABB0045A499 /* example10.cc in Sources */ = {isa = PBXBuildFile; fileRef = D94AA8CF188693C000D2C9E8 /* example10.cc */; };
-		D99C7FAB18AD27F200B35A64 /* GenericContainerTables.cc in Sources */ = {isa = PBXBuildFile; fileRef = D99C7FAA18AD27F200B35A64 /* GenericContainerTables.cc */; };
+		D9A0E6021C258D0F00914760 /* GenericContainer1.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D9A0E6011C258D0F00914760 /* GenericContainer1.hpp */; };
+		D9A0E6041C258D0F00914760 /* GenericContainer1Priv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D9A0E6031C258D0F00914760 /* GenericContainer1Priv.hpp */; };
+		D9A0E6061C258D0F00914760 /* GenericContainer1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9A0E6051C258D0F00914760 /* GenericContainer1.cpp */; };
+		D9A0E60A1C258D3C00914760 /* GenericContainer.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2517F01BF2009C2E81 /* GenericContainer.cc */; };
+		D9A0E60B1C258D3F00914760 /* GenericContainerCinterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2817F01BF2009C2E81 /* GenericContainerCinterface.cc */; };
+		D9A0E60C1C258D4200914760 /* GenericContainerSupport.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C2B17F01BF2009C2E81 /* GenericContainerSupport.cc */; };
+		D9A0E60D1C258D4400914760 /* GenericContainerTables.cc in Sources */ = {isa = PBXBuildFile; fileRef = D99C7FAA18AD27F200B35A64 /* GenericContainerTables.cc */; };
+		D9A0E60E1C258D4800914760 /* GenericContainerLuaInterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D95EEC061817DA0A0076087A /* GenericContainerLuaInterface.cc */; };
+		D9A0E6101C258DA700914760 /* libGenericContainer.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9A0E5FF1C258D0F00914760 /* libGenericContainer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D93EC11A19E88EEA00243ACB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D9420C4417F01D2A009C2E81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D9420C4B17F01DB2009C2E81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D9420C5717F01DB4009C2E81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D9420C6317F01DB6009C2E81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D9420C6F17F01DB8009C2E81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D9420C7B17F01DB9009C2E81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D9420C8717F01DBA009C2E81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D94AA8C41886937200D2C9E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D95D1F861816E7440010C608 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D95EEC1518188AAE0076087A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
-		D96BCBFA182AEDB300E31059 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9D7FC5417F01B05002F07F8;
-			remoteInfo = GenericContainer;
-		};
 		D96BCBFC182AEDB300E31059 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D9D7FC4D17F01B05002F07F8 /* Project object */;
@@ -236,16 +140,6 @@
 			dstPath = /Users/enrico/Ricerca/develop/myBitBucketProjetcs/myGenericContainer/bin;
 			dstSubfolderSpec = 0;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D9420C3517F01C9E009C2E81 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(SRCROOT)/libs";
-			dstSubfolderSpec = 0;
-			files = (
-				D9420C3617F01CAE009C2E81 /* libGenericContainer.a in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +233,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9A0E60F1C258D9E00914760 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = $SRCROOT/libs;
+			dstSubfolderSpec = 0;
+			files = (
+				D9A0E6101C258DA700914760 /* libGenericContainer.a in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -372,7 +276,10 @@
 		D95EEC1218188AA80076087A /* example9.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = example9.cc; path = examples/example9.cc; sourceTree = SOURCE_ROOT; };
 		D95EEC1F18188AAE0076087A /* example9 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = example9; sourceTree = BUILT_PRODUCTS_DIR; };
 		D99C7FAA18AD27F200B35A64 /* GenericContainerTables.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainerTables.cc; sourceTree = "<group>"; };
-		D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libGenericContainer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9A0E5FF1C258D0F00914760 /* libGenericContainer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGenericContainer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9A0E6011C258D0F00914760 /* GenericContainer1.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GenericContainer1.hpp; sourceTree = "<group>"; };
+		D9A0E6031C258D0F00914760 /* GenericContainer1Priv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GenericContainer1Priv.hpp; sourceTree = "<group>"; };
+		D9A0E6051C258D0F00914760 /* GenericContainer1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainer1.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,7 +287,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D93EC11E19E88EEA00243ACB /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,7 +294,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C4817F01D87009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +301,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C4F17F01DB2009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +308,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C5B17F01DB4009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +315,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C6717F01DB6009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +322,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C7317F01DB8009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,7 +329,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C7F17F01DB9009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +336,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C8B17F01DBA009C2E81 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,7 +343,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D94AA8C81886937200D2C9E8 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,7 +350,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D95D1F8A1816E7440010C608 /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,11 +357,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D95EEC1918188AAE0076087A /* libGenericContainer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D9D7FC5217F01B05002F07F8 /* Frameworks */ = {
+		D9A0E5FC1C258D0F00914760 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -515,12 +411,23 @@
 			path = srcs_lua_interface;
 			sourceTree = "<group>";
 		};
+		D9A0E6001C258D0F00914760 /* GenericContainer1 */ = {
+			isa = PBXGroup;
+			children = (
+				D9A0E6011C258D0F00914760 /* GenericContainer1.hpp */,
+				D9A0E6031C258D0F00914760 /* GenericContainer1Priv.hpp */,
+				D9A0E6051C258D0F00914760 /* GenericContainer1.cpp */,
+			);
+			path = GenericContainer1;
+			sourceTree = "<group>";
+		};
 		D9D7FC4C17F01B05002F07F8 = {
 			isa = PBXGroup;
 			children = (
 				D9420C2417F01BF2009C2E81 /* srcs */,
 				D95EEC051817DA0A0076087A /* srcs_lua_interface */,
 				D9420C3C17F01D25009C2E81 /* examples */,
+				D9A0E6001C258D0F00914760 /* GenericContainer1 */,
 				D9D7FC5617F01B05002F07F8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -528,7 +435,6 @@
 		D9D7FC5617F01B05002F07F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */,
 				D9420C3B17F01D25009C2E81 /* example1 */,
 				D9420C5417F01DB2009C2E81 /* example2 */,
 				D9420C6017F01DB4009C2E81 /* example3 */,
@@ -540,6 +446,7 @@
 				D95EEC1F18188AAE0076087A /* example9 */,
 				D94AA8CE1886937200D2C9E8 /* example10 */,
 				D93EC12419E88EEA00243ACB /* example11 */,
+				D9A0E5FF1C258D0F00914760 /* libGenericContainer.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -547,13 +454,12 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		D9D7FC5317F01B05002F07F8 /* Headers */ = {
+		D9A0E5FD1C258D0F00914760 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C3117F01BF2009C2E81 /* GenericContainerCinterface.h in Headers */,
-				D95EEC091817DA0A0076087A /* GenericContainerLuaInterface.hh in Headers */,
-				D9420C2E17F01BF2009C2E81 /* GenericContainer.hh in Headers */,
+				D9A0E6021C258D0F00914760 /* GenericContainer1.hpp in Headers */,
+				D9A0E6041C258D0F00914760 /* GenericContainer1Priv.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,7 +477,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D93EC11919E88EEA00243ACB /* PBXTargetDependency */,
 			);
 			name = example11;
 			productName = example1;
@@ -589,7 +494,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9420C4517F01D2A009C2E81 /* PBXTargetDependency */,
 			);
 			name = example1;
 			productName = example1;
@@ -607,7 +511,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9420C4A17F01DB2009C2E81 /* PBXTargetDependency */,
 			);
 			name = example2;
 			productName = example1;
@@ -625,7 +528,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9420C5617F01DB4009C2E81 /* PBXTargetDependency */,
 			);
 			name = example3;
 			productName = example1;
@@ -643,7 +545,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9420C6217F01DB6009C2E81 /* PBXTargetDependency */,
 			);
 			name = example4;
 			productName = example1;
@@ -661,7 +562,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9420C6E17F01DB8009C2E81 /* PBXTargetDependency */,
 			);
 			name = example5;
 			productName = example1;
@@ -679,7 +579,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9420C7A17F01DB9009C2E81 /* PBXTargetDependency */,
 			);
 			name = example6;
 			productName = example1;
@@ -697,7 +596,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D9420C8617F01DBA009C2E81 /* PBXTargetDependency */,
 			);
 			name = example7;
 			productName = example1;
@@ -715,7 +613,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D94AA8C31886937200D2C9E8 /* PBXTargetDependency */,
 			);
 			name = example10;
 			productName = example1;
@@ -733,7 +630,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D95D1F851816E7440010C608 /* PBXTargetDependency */,
 			);
 			name = example8;
 			productName = example1;
@@ -751,30 +647,29 @@
 			buildRules = (
 			);
 			dependencies = (
-				D95EEC1418188AAE0076087A /* PBXTargetDependency */,
 			);
 			name = example9;
 			productName = example1;
 			productReference = D95EEC1F18188AAE0076087A /* example9 */;
 			productType = "com.apple.product-type.tool";
 		};
-		D9D7FC5417F01B05002F07F8 /* GenericContainer */ = {
+		D9A0E5FE1C258D0F00914760 /* GenericContainer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D9D7FC5917F01B05002F07F8 /* Build configuration list for PBXNativeTarget "GenericContainer" */;
+			buildConfigurationList = D9A0E6071C258D0F00914760 /* Build configuration list for PBXNativeTarget "GenericContainer" */;
 			buildPhases = (
-				D9D7FC5117F01B05002F07F8 /* Sources */,
-				D9D7FC5217F01B05002F07F8 /* Frameworks */,
-				D9D7FC5317F01B05002F07F8 /* Headers */,
-				D9420C3517F01C9E009C2E81 /* CopyFiles */,
+				D9A0E5FB1C258D0F00914760 /* Sources */,
+				D9A0E5FC1C258D0F00914760 /* Frameworks */,
+				D9A0E5FD1C258D0F00914760 /* Headers */,
+				D9A0E60F1C258D9E00914760 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = GenericContainer;
-			productName = GenericContainer;
-			productReference = D9D7FC5517F01B05002F07F8 /* libGenericContainer.a */;
-			productType = "com.apple.product-type.library.dynamic";
+			productName = GenericContainer1;
+			productReference = D9A0E5FF1C258D0F00914760 /* libGenericContainer.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -784,6 +679,11 @@
 			attributes = {
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
+				TargetAttributes = {
+					D9A0E5FE1C258D0F00914760 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
 			};
 			buildConfigurationList = D9D7FC5017F01B05002F07F8 /* Build configuration list for PBXProject "GenericContainer" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -797,7 +697,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D9D7FC5417F01B05002F07F8 /* GenericContainer */,
+				D9A0E5FE1C258D0F00914760 /* GenericContainer */,
 				D9420C3A17F01D25009C2E81 /* example1 */,
 				D9420C4917F01DB2009C2E81 /* example2 */,
 				D9420C5517F01DB4009C2E81 /* example3 */,
@@ -903,81 +803,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D9D7FC5117F01B05002F07F8 /* Sources */ = {
+		D9A0E5FB1C258D0F00914760 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9420C2D17F01BF2009C2E81 /* GenericContainer.cc in Sources */,
-				D9420C3017F01BF2009C2E81 /* GenericContainerCinterface.cc in Sources */,
-				D95EEC081817DA0A0076087A /* GenericContainerLuaInterface.cc in Sources */,
-				D99C7FAB18AD27F200B35A64 /* GenericContainerTables.cc in Sources */,
-				D9420C3317F01BF2009C2E81 /* GenericContainerSupport.cc in Sources */,
+				D9A0E6061C258D0F00914760 /* GenericContainer1.cpp in Sources */,
+				D9A0E60B1C258D3F00914760 /* GenericContainerCinterface.cc in Sources */,
+				D9A0E60A1C258D3C00914760 /* GenericContainer.cc in Sources */,
+				D9A0E60D1C258D4400914760 /* GenericContainerTables.cc in Sources */,
+				D9A0E60E1C258D4800914760 /* GenericContainerLuaInterface.cc in Sources */,
+				D9A0E60C1C258D4200914760 /* GenericContainerSupport.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D93EC11919E88EEA00243ACB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D93EC11A19E88EEA00243ACB /* PBXContainerItemProxy */;
-		};
-		D9420C4517F01D2A009C2E81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D9420C4417F01D2A009C2E81 /* PBXContainerItemProxy */;
-		};
-		D9420C4A17F01DB2009C2E81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D9420C4B17F01DB2009C2E81 /* PBXContainerItemProxy */;
-		};
-		D9420C5617F01DB4009C2E81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D9420C5717F01DB4009C2E81 /* PBXContainerItemProxy */;
-		};
-		D9420C6217F01DB6009C2E81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D9420C6317F01DB6009C2E81 /* PBXContainerItemProxy */;
-		};
-		D9420C6E17F01DB8009C2E81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D9420C6F17F01DB8009C2E81 /* PBXContainerItemProxy */;
-		};
-		D9420C7A17F01DB9009C2E81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D9420C7B17F01DB9009C2E81 /* PBXContainerItemProxy */;
-		};
-		D9420C8617F01DBA009C2E81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D9420C8717F01DBA009C2E81 /* PBXContainerItemProxy */;
-		};
-		D94AA8C31886937200D2C9E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D94AA8C41886937200D2C9E8 /* PBXContainerItemProxy */;
-		};
-		D95D1F851816E7440010C608 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D95D1F861816E7440010C608 /* PBXContainerItemProxy */;
-		};
-		D95EEC1418188AAE0076087A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D95EEC1518188AAE0076087A /* PBXContainerItemProxy */;
-		};
-		D96BCBFB182AEDB300E31059 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D9D7FC5417F01B05002F07F8 /* GenericContainer */;
-			targetProxy = D96BCBFA182AEDB300E31059 /* PBXContainerItemProxy */;
-		};
 		D96BCBFD182AEDB300E31059 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D9420C3A17F01D25009C2E81 /* example1 */;
@@ -1147,9 +988,12 @@
 		D9420C8217F01DB9009C2E81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-llua",
+					"-lpcre",
+					"-lpcrecpp",
+					"-lstdc++",
 				);
 				PRODUCT_NAME = example6;
 			};
@@ -1158,6 +1002,12 @@
 		D9420C8317F01DB9009C2E81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_LDFLAGS = (
+					"-llua",
+					"-lpcre",
+					"-lpcrecpp",
+					"-lstdc++",
+				);
 				PRODUCT_NAME = example6;
 			};
 			name = Release;
@@ -1248,14 +1098,62 @@
 			};
 			name = Release;
 		};
+		D9A0E6081C258D0F00914760 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D9A0E6091C258D0F00914760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		D9D7FC5717F01B05002F07F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = YES;
@@ -1294,13 +1192,11 @@
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-llua",
 					"-lpcre",
 					"-lpcrecpp",
 				);
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -1310,8 +1206,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = YES;
@@ -1351,31 +1245,6 @@
 					"-lpcre",
 					"-lpcrecpp",
 				);
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		D9D7FC5A17F01B05002F07F8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_EXTENSION = a;
-				EXECUTABLE_PREFIX = lib;
-				INSTALL_PATH = "@rpath";
-				MACH_O_TYPE = staticlib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		D9D7FC5B17F01B05002F07F8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_EXTENSION = a;
-				EXECUTABLE_PREFIX = lib;
-				INSTALL_PATH = "@rpath";
-				MACH_O_TYPE = staticlib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1490,20 +1359,19 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D9A0E6071C258D0F00914760 /* Build configuration list for PBXNativeTarget "GenericContainer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9A0E6081C258D0F00914760 /* Debug */,
+				D9A0E6091C258D0F00914760 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D9D7FC5017F01B05002F07F8 /* Build configuration list for PBXProject "GenericContainer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D9D7FC5717F01B05002F07F8 /* Debug */,
 				D9D7FC5817F01B05002F07F8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D9D7FC5917F01B05002F07F8 /* Build configuration list for PBXNativeTarget "GenericContainer" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D9D7FC5A17F01B05002F07F8 /* Debug */,
-				D9D7FC5B17F01B05002F07F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
