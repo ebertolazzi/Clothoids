@@ -38,9 +38,9 @@ using namespace std ;
 
 #define EXTERN_C extern "C" GENERIC_CONTAINER_API_DLL 
 
-std::map<std::string,GC::GenericContainerExplorer> gc_explorer ;
+std::map<std::string,::GenericContainerNamepace::GenericContainerExplorer> gc_explorer ;
 
-GC::GenericContainerExplorer * gc_active = nullptr ;
+::GenericContainerNamepace::GenericContainerExplorer * gc_active = nullptr ;
 
 EXTERN_C
 int
@@ -79,9 +79,9 @@ GC_fill_for_test( char const id[] ) {
   // ckeck if exists
   gc_active = &gc_explorer[id] ;
 
-  GC::GenericContainer & gc = *(GC::GenericContainer*)gc_active->mem_ptr() ;
+  ::GenericContainerNamepace::GenericContainer & gc = *(::GenericContainerNamepace::GenericContainer*)gc_active->mem_ptr() ;
 
-  GC::vector_type & v = gc.set_vector() ;
+  ::GenericContainerNamepace::vector_type & v = gc.set_vector() ;
   v.resize(11) ;
   v[0] = 1 ;
   v[1].set_vec_real() ;
@@ -92,47 +92,47 @@ GC_fill_for_test( char const id[] ) {
   v[6].set_map() ;
   v[7].set_vector() ;
   v[10] = true ;
-  GC::vec_real_type & vv = v[1].get_vec_real() ;
+  ::GenericContainerNamepace::vec_real_type & vv = v[1].get_vec_real() ;
   vv.resize(10) ;
   vv[2] = 123 ;
-  GC::map_type & mm = v[2].get_map() ;
+  ::GenericContainerNamepace::map_type & mm = v[2].get_map() ;
   mm["pippo"]    = 13 ;
   mm["pluto"]    = 1  ;
   mm["paperino"] = 3  ;
-  GC::GenericContainer & gmm = v[2] ; // access element 2 as GenericContainer
+  ::GenericContainerNamepace::GenericContainer & gmm = v[2] ; // access element 2 as GenericContainer
   gmm["aaa"]     = "stringa1"  ; // is the same as mm["aaa"] = "stringa"
   gmm["bbb"]     = "stringa2"  ; // is the same as mm["aaa"] = "stringa"
-  GC::vec_string_type & vs = v[3].get_vec_string() ;
+  ::GenericContainerNamepace::vec_string_type & vs = v[3].get_vec_string() ;
   vs.push_back("string1");
   vs.push_back("string2");
   vs.push_back("string3");
   vs.push_back("string4");
-  GC::map_type & m = v[6].get_map() ;
+  ::GenericContainerNamepace::map_type & m = v[6].get_map() ;
   m["aaa"]    = 123 ;
   m["bbb"]    = 3.4 ;
   m["vector"].set_vec_int() ;
-  GC::vec_int_type & vi = m["vector"].get_vec_int() ;
+  ::GenericContainerNamepace::vec_int_type & vi = m["vector"].get_vec_int() ;
   vi.push_back(12) ;
   vi.push_back(10) ;
   vi.push_back(1) ;
 
-  GC::vector_type & vg = v[7].get_vector() ;
+  ::GenericContainerNamepace::vector_type & vg = v[7].get_vector() ;
   vg.resize(4) ;
   vg[0] = 123 ;
   vg[1] = 3.14 ;
   vg[2] = "nonna papera" ;
-  GC::vec_complex_type & vg1 = vg[3].set_vec_complex() ;
+  ::GenericContainerNamepace::vec_complex_type & vg1 = vg[3].set_vec_complex() ;
   vg1.push_back(1) ;
   vg1.push_back(2) ;
   vg1.push_back(3) ;
   vg1.push_back(std::complex<double>(-12,2)) ;
 
-  GC::GenericContainer & gm = v[8] ;
+  ::GenericContainerNamepace::GenericContainer & gm = v[8] ;
   gm.set_mat_real(2,2) ;
   gm.get_real(1,1) = 2 ;
   gm.get_real(0,1) = 3 ;
 
-  GC::GenericContainer & gm1 = v[9] ;
+  ::GenericContainerNamepace::GenericContainer & gm1 = v[9] ;
   gm1.set_mat_complex(2,2) ;
   gm1.get_complex(1,1) = std::complex<double>(2,2) ;
   gm1.get_complex(0,1) = std::complex<double>(1,-1) ;
@@ -408,7 +408,7 @@ GC_get_complex_at_coor( int i, int j ) {
   complex_type tmp ;
   tmp.real = tmp.imag = 0 ;
   if ( gc_active != nullptr ) {
-    GC::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
+    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
     tmp.real = res.real() ;
     tmp.imag = res.imag() ;
   }
@@ -419,7 +419,7 @@ EXTERN_C
 real_type
 GC_get_complex_real_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
-    GC::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
+    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
     return res.real() ;
   }
   return 0 ;
@@ -429,7 +429,7 @@ EXTERN_C
 real_type
 GC_get_complex_imag_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
-    GC::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
+    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
     return res.imag() ;
   }
   return 0 ;
@@ -483,7 +483,7 @@ EXTERN_C
 int
 GC_set_vector_of_bool( int const a[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  GC::vec_bool_type & v = gc_active -> top() -> set_vec_bool( unsigned(nelem) ) ;
+  ::GenericContainerNamepace::vec_bool_type & v = gc_active -> top() -> set_vec_bool( unsigned(nelem) ) ;
   for ( unsigned i = 0 ; i < unsigned(nelem) ; ++i ) v[i] = a[i] != 0 ;
   return GENERIC_CONTAINER_OK ;
 }
@@ -494,7 +494,7 @@ EXTERN_C
 int
 GC_set_vector_of_int( int_type const a[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  GC::vec_int_type & v = gc_active -> top() -> set_vec_int( unsigned(nelem) ) ;
+  ::GenericContainerNamepace::vec_int_type & v = gc_active -> top() -> set_vec_int( unsigned(nelem) ) ;
   std::copy( a, a + nelem, v.begin() ) ;
   return GENERIC_CONTAINER_OK ;
 }
@@ -503,7 +503,7 @@ EXTERN_C
 int
 GC_set_vector_of_real( real_type const a[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  GC::vec_real_type & v = gc_active -> top() -> set_vec_real( unsigned(nelem) ) ;
+  ::GenericContainerNamepace::vec_real_type & v = gc_active -> top() -> set_vec_real( unsigned(nelem) ) ;
   std::copy( a, a + nelem, v.begin() ) ;
   return GENERIC_CONTAINER_OK ;
 }
@@ -512,8 +512,8 @@ EXTERN_C
 int
 GC_set_vector_of_complex( real_type const re[], real_type const im[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  GC::vec_complex_type & v = gc_active -> top() -> set_vec_complex( unsigned(nelem) ) ;
-  for ( unsigned i = 0 ; i < unsigned(nelem) ; ++i ) v[i] = GC::complex_type(re[i],im[i]) ;
+  ::GenericContainerNamepace::vec_complex_type & v = gc_active -> top() -> set_vec_complex( unsigned(nelem) ) ;
+  for ( unsigned i = 0 ; i < unsigned(nelem) ; ++i ) v[i] = ::GenericContainerNamepace::complex_type(re[i],im[i]) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -521,7 +521,7 @@ EXTERN_C
 int
 GC_set_vector_of_string( char const *a[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  GC::vec_string_type & v = gc_active -> top() -> set_vec_string( unsigned(nelem) ) ;
+  ::GenericContainerNamepace::vec_string_type & v = gc_active -> top() -> set_vec_string( unsigned(nelem) ) ;
   for ( unsigned i = 0 ; i < unsigned(nelem) ; ++i ) v[i] = a[i] ;
   return GENERIC_CONTAINER_OK ;
 }

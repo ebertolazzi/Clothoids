@@ -24,7 +24,7 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 
-namespace GC {
+namespace GenericContainerNamepace {
   /*
   //   _____     _              _
   //  |_   _|__ | | _____ _ __ (_)_______

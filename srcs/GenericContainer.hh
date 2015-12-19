@@ -453,7 +453,7 @@ in the distribution.
   #endif
 #endif
 
-namespace GC {
+namespace GenericContainerNamepace {
 
   class GenericContainer ;
 
@@ -1334,7 +1334,7 @@ namespace GC {
     int
     check_no_data( int data_type ) const {
       if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD ;
-      if ( GC::GC_NOTYPE == head.back() -> get_type() ||
+      if ( GC_NOTYPE == head.back() -> get_type() ||
            data_type == head.back() -> get_type() ) return GENERIC_CONTAINER_OK ;
       return GENERIC_CONTAINER_NOT_EMPTY ;
     }
@@ -1354,9 +1354,9 @@ namespace GC {
 
     int
     push_vector_position( unsigned pos ) {
-      int ok = check( GC::GC_VECTOR ) ;
+      int ok = check( GC_VECTOR ) ;
       if ( ok == GENERIC_CONTAINER_OK  ) {
-        GC::GenericContainer * gc = &(*head.back())[pos] ;
+        GenericContainer::GenericContainer * gc = &(*head.back())[pos] ;
         head.push_back( gc ) ;
       }
       return ok ;
@@ -1364,9 +1364,9 @@ namespace GC {
 
     int
     push_map_position( char const pos[] ) {
-      int ok = check( GC::GC_MAP ) ;
+      int ok = check( GC_MAP ) ;
       if ( ok == GENERIC_CONTAINER_OK  ) {
-        GC::GenericContainer * gc = &(*head.back())[pos] ;
+        GenericContainer::GenericContainer * gc = &(*head.back())[pos] ;
         head.push_back( gc ) ;
       }
       return ok ;
@@ -1374,7 +1374,7 @@ namespace GC {
 
     int
     init_map_key() {
-      int ok = check( GC::GC_MAP ) ;
+      int ok = check( GC_MAP ) ;
       if ( ok == GENERIC_CONTAINER_OK ) {
         ptr_map = &head.back()->get_map() ;
         map_iterator = ptr_map->begin() ;
@@ -1399,6 +1399,11 @@ namespace GC {
 
   } ;
 }
+
+// do not define alias GC if use X11
+#ifndef XlibSpecificationRelease
+namespace GC = GenericContainerNamepace ;
+#endif
 
 #endif
 

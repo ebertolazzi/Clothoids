@@ -25,7 +25,7 @@
 #include <iomanip>
 #include <string>
 
-namespace GC {
+namespace GenericContainerNamepace {
 
   using namespace std ;
 

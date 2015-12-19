@@ -14,6 +14,7 @@ endif
 SRCS = \
 srcs/GenericContainer.cc \
 srcs/GenericContainerSupport.cc \
+srcs/GenericContainerTables.cc \
 srcs/GenericContainerCinterface.cc \
 srcs_lua_interface/GenericContainerLuaInterface.cc
 

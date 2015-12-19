@@ -31,7 +31,7 @@
 
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
-namespace GC {
+namespace GenericContainerNamepace {
 
   std::ostream &
   operator << ( std::ostream & s, vec_bool_type const & v ) {
@@ -219,7 +219,7 @@ namespace GC {
 
   // costruttore
   GenericContainer::GenericContainer()
-  : _data_type(GC::GC_NOTYPE)
+  : _data_type(GC_NOTYPE)
   {
   }
 
@@ -259,7 +259,7 @@ namespace GC {
       default:
         break ;
     }
-    _data_type = GC::GC_NOTYPE ;
+    _data_type = GC_NOTYPE ;
   }
 
   //! Return a string representing the type of data stored
@@ -423,27 +423,27 @@ namespace GC {
    */
   void
   GenericContainer::allocate_string() {
-    if ( _data_type != GC::GC_STRING ) {
+    if ( _data_type != GC_STRING ) {
       clear() ;
-      _data_type = GC::GC_STRING ;
+      _data_type = GC_STRING ;
       _data.s    = new string_type ;
     }
   }
 
   void
   GenericContainer::allocate_complex() {
-    if ( _data_type != GC::GC_COMPLEX ) {
+    if ( _data_type != GC_COMPLEX ) {
       clear() ;
-      _data_type = GC::GC_COMPLEX ;
+      _data_type = GC_COMPLEX ;
       _data.c    = new complex_type ;
     }
   }
 
   void
   GenericContainer::allocate_vec_pointer( unsigned sz ) {
-    if ( _data_type != GC::GC_VEC_POINTER ) {
+    if ( _data_type != GC_VEC_POINTER ) {
       clear() ;
-      _data_type = GC::GC_VEC_POINTER ;
+      _data_type = GC_VEC_POINTER ;
       _data.v_p  = new vec_pointer_type() ;
     }
     if ( sz > 0 ) _data.v_p -> resize( sz ) ;
@@ -455,16 +455,15 @@ namespace GC {
                "free_pointer() bad data type\nexpect: " << typeName[GC_POINTER] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
     _data.p = nullptr ;
-    _data_type = GC::GC_NOTYPE ;
+    _data_type = GC_NOTYPE ;
     return *this ;
   }
 
-
   void
   GenericContainer::allocate_vec_bool( unsigned sz ) {
-    if ( _data_type != GC::GC_VEC_BOOL ) {
+    if ( _data_type != GC_VEC_BOOL ) {
       clear() ;
-      _data_type = GC::GC_VEC_BOOL ;
+      _data_type = GC_VEC_BOOL ;
       _data.v_b  = new vec_bool_type() ;
     }
     if ( sz > 0 ) _data.v_b -> resize( sz ) ;
@@ -472,9 +471,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vec_int( unsigned sz ) {
-    if ( _data_type != GC::GC_VEC_INTEGER ) {
+    if ( _data_type != GC_VEC_INTEGER ) {
       clear() ;
-      _data_type = GC::GC_VEC_INTEGER ;
+      _data_type = GC_VEC_INTEGER ;
       _data.v_i  = new vec_int_type() ;
     }
     if ( sz > 0 ) _data.v_i -> resize( sz ) ;
@@ -482,9 +481,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vec_real( unsigned sz ) {
-    if ( _data_type != GC::GC_VEC_REAL ) {
+    if ( _data_type != GC_VEC_REAL ) {
       clear() ;
-      _data_type = GC::GC_VEC_REAL ;
+      _data_type = GC_VEC_REAL ;
       _data.v_r  = new vec_real_type() ;
     }
     if ( sz > 0 ) _data.v_r -> resize( sz ) ;
@@ -492,9 +491,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vec_complex( unsigned sz ) {
-    if ( _data_type != GC::GC_VEC_COMPLEX ) {
+    if ( _data_type != GC_VEC_COMPLEX ) {
       clear() ;
-      _data_type = GC::GC_VEC_COMPLEX ;
+      _data_type = GC_VEC_COMPLEX ;
       _data.v_c  = new vec_complex_type() ;
     }
     if ( sz > 0 ) _data.v_c -> resize( sz ) ;
@@ -502,9 +501,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_mat_real( unsigned nr, unsigned nc ) {
-    if ( _data_type != GC::GC_MAT_REAL ) {
+    if ( _data_type != GC_MAT_REAL ) {
       clear() ;
-      _data_type = GC::GC_MAT_REAL ;
+      _data_type = GC_MAT_REAL ;
       _data.m_r  = new mat_real_type( nr, nc ) ;
     } else {
       _data.m_r -> resize( nr, nc ) ;
@@ -513,9 +512,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_mat_complex( unsigned nr, unsigned nc ) {
-    if ( _data_type != GC::GC_MAT_COMPLEX ) {
+    if ( _data_type != GC_MAT_COMPLEX ) {
       clear() ;
-      _data_type = GC::GC_MAT_COMPLEX ;
+      _data_type = GC_MAT_COMPLEX ;
       _data.m_c  = new mat_complex_type( nr, nc ) ;
     } else {
       _data.m_c -> resize( nr, nc ) ;
@@ -524,9 +523,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vec_string( unsigned sz ) {
-    if ( _data_type != GC::GC_VEC_STRING ) {
+    if ( _data_type != GC_VEC_STRING ) {
       clear() ;
-      _data_type = GC::GC_VEC_STRING ;
+      _data_type = GC_VEC_STRING ;
       _data.v_s  = new vec_string_type() ;
     }
     if ( sz > 0 ) _data.v_s -> resize( sz ) ;
@@ -534,9 +533,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_vector( unsigned sz ) {
-    if ( _data_type != GC::GC_VECTOR ) {
+    if ( _data_type != GC_VECTOR ) {
       clear() ;
-      _data_type = GC::GC_VECTOR ;
+      _data_type = GC_VECTOR ;
       _data.v    = new vector_type() ;
     }
     if ( sz > 0 ) _data.v -> resize( sz ) ;
@@ -544,9 +543,9 @@ namespace GC {
 
   void
   GenericContainer::allocate_map() {
-    if ( _data_type != GC::GC_MAP ) {
+    if ( _data_type != GC_MAP ) {
       clear() ;
-      _data_type = GC::GC_MAP ;
+      _data_type = GC_MAP ;
       _data.m    = new map_type() ;
     }
   }
@@ -562,42 +561,42 @@ namespace GC {
   pointer_type &
   GenericContainer::set_pointer( pointer_type value ) {
     clear() ;
-    _data_type = GC::GC_POINTER ;
+    _data_type = GC_POINTER ;
     return (_data.p = value) ;
   }
 
   bool_type &
   GenericContainer::set_bool( bool_type value ) {
     clear() ;
-    _data_type = GC::GC_BOOL ;
+    _data_type = GC_BOOL ;
     return (_data.b = value) ;
   }
 
   int_type &
   GenericContainer::set_int( int_type value ) {
     clear() ;
-    _data_type = GC::GC_INTEGER ;
+    _data_type = GC_INTEGER ;
     return (_data.i = value) ;
   }
 
   long_type &
   GenericContainer::set_long( long_type value ) {
     clear() ;
-    _data_type = GC::GC_LONG ;
+    _data_type = GC_LONG ;
     return (_data.l = value) ;
   }
 
   real_type &
   GenericContainer::set_real( real_type value ) {
     clear() ;
-    _data_type = GC::GC_REAL ;
+    _data_type = GC_REAL ;
     return (_data.r = value) ;
   }
 
   complex_type &
   GenericContainer::set_complex( complex_type & value ) {
     clear() ;
-    _data_type = GC::GC_COMPLEX ;
+    _data_type = GC_COMPLEX ;
     _data.c    = new complex_type ;
     return (*_data.c=value) ;
   }
@@ -605,7 +604,7 @@ namespace GC {
   complex_type &
   GenericContainer::set_complex( real_type re, real_type im ) {
     clear() ;
-    _data_type = GC::GC_COMPLEX ;
+    _data_type = GC_COMPLEX ;
     _data.c    = new complex_type ;
     _data.c->real(re) ;
     _data.c->imag(im) ;
@@ -742,16 +741,16 @@ namespace GC {
   */
   void
   GenericContainer::push_bool( bool val ) {
-    if ( _data_type == GC::GC_VEC_BOOL ) {
+    if ( _data_type == GC_VEC_BOOL ) {
       _data.v_b->push_back( val ) ;
-    } else if ( _data_type == GC::GC_VEC_INTEGER ) {
+    } else if ( _data_type == GC_VEC_INTEGER ) {
       _data.v_i->push_back( val ? 1 : 0 ) ;
-    } else if ( _data_type == GC::GC_VEC_REAL ) {
+    } else if ( _data_type == GC_VEC_REAL ) {
       _data.v_r->push_back( val ? 1 : 0 ) ;
-    } else if ( _data_type == GC::GC_VEC_COMPLEX ) {
+    } else if ( _data_type == GC_VEC_COMPLEX ) {
       complex_type tmp( val ? 1 : 0, 0 ) ;
       _data.v_c->push_back( tmp ) ;
-    } else if ( _data_type == GC::GC_VECTOR   ) {
+    } else if ( _data_type == GC_VECTOR   ) {
       _data.v->resize(_data.v->size()+1) ;
       _data.v->back().set_bool( val ) ;
     } else {
@@ -761,45 +760,45 @@ namespace GC {
 
   void
   GenericContainer::push_int( int_type val ) {
-    if ( _data_type == GC::GC_VEC_INTEGER ) {
+    if ( _data_type == GC_VEC_INTEGER ) {
       _data.v_i->push_back( val ) ;
-    } else if ( _data_type == GC::GC_VEC_REAL ) {
+    } else if ( _data_type == GC_VEC_REAL ) {
       _data.v_r->push_back( val ) ;
-    } else if ( _data_type == GC::GC_VEC_COMPLEX ) {
+    } else if ( _data_type == GC_VEC_COMPLEX ) {
       complex_type tmp( val, 0 ) ;
       _data.v_c->push_back( tmp ) ;
-    } else if ( _data_type == GC::GC_VECTOR ) {
+    } else if ( _data_type == GC_VECTOR ) {
       _data.v->resize(_data.v->size()+1) ;
       _data.v->back().set_int( val ) ;
     } else {
-      if ( _data_type != GC::GC_VEC_INTEGER ) promote_to_vec_int() ;
+      if ( _data_type != GC_VEC_INTEGER ) promote_to_vec_int() ;
       _data.v_i->push_back( val ) ;
     }
   }
 
   void
   GenericContainer::push_real( real_type val ) {
-    if ( _data_type == GC::GC_VEC_REAL ) {
+    if ( _data_type == GC_VEC_REAL ) {
       _data.v_r->push_back( val ) ;
-    } else if ( _data_type == GC::GC_VEC_COMPLEX ) {
+    } else if ( _data_type == GC_VEC_COMPLEX ) {
       complex_type tmp( val, 0 ) ;
       _data.v_c->push_back( tmp ) ;
-    } else if ( _data_type == GC::GC_VECTOR ) {
+    } else if ( _data_type == GC_VECTOR ) {
       _data.v->resize(_data.v->size()+1) ;
       _data.v->back().set_real( val ) ;
     } else {
-      if ( _data_type != GC::GC_VEC_REAL ) promote_to_vec_real() ;
+      if ( _data_type != GC_VEC_REAL ) promote_to_vec_real() ;
       _data.v_r->push_back( val ) ;
     }
   }
 
   void
   GenericContainer::push_complex( complex_type & val ) {
-    if ( _data_type == GC::GC_VECTOR ) {
+    if ( _data_type == GC_VECTOR ) {
       _data.v->resize(_data.v->size()+1) ;
       _data.v->back().set_complex( val ) ;
     } else {
-      if ( _data_type != GC::GC_VEC_COMPLEX ) promote_to_vec_complex() ;
+      if ( _data_type != GC_VEC_COMPLEX ) promote_to_vec_complex() ;
       _data.v_c->push_back( val ) ;
     }
   }
@@ -812,8 +811,8 @@ namespace GC {
 
   void
   GenericContainer::push_string( string_type const & val ) {
-    if ( _data_type != GC::GC_VEC_STRING ) promote_to_vector() ;
-    if ( _data_type == GC::GC_VEC_STRING ) {
+    if ( _data_type != GC_VEC_STRING ) promote_to_vector() ;
+    if ( _data_type == GC_VEC_STRING ) {
       _data.v_s->push_back( val ) ;
     } else {
       _data.v->resize(_data.v->size()+1) ;

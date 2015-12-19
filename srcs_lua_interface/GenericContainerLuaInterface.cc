@@ -47,7 +47,7 @@
 
 using namespace std ;
 
-namespace GC {
+namespace GenericContainerNamepace {
 
   typedef double valueType ;
   typedef int    indexType ;
@@ -83,7 +83,7 @@ namespace GC {
     case LUA_TNUMBER:
       {
         valueType val = lua_tonumber(L, -1) ;
-        if ( gc.get_type() == GC::GC_VEC_REAL ) {
+        if ( gc.get_type() == GC_VEC_REAL ) {
           gc.get_real(idx) = val ;
         } else if ( indexType(val) == val ) {
           gc.get_int(idx)  = indexType(val) ;
@@ -192,32 +192,32 @@ namespace GC {
   GC_to_lua( lua_State * L, GenericContainer const & gc ) {
     // inizializzazione
     switch ( gc.get_type() ) {
-    case GC::GC_NOTYPE:
+    case GC_NOTYPE:
       lua_pushnil(L) ;
       break;
-    case GC::GC_POINTER:
+    case GC_POINTER:
       lua_pushnil(L) ;
       break;
-    case GC::GC_BOOL:
+    case GC_BOOL:
       lua_pushboolean(L, gc.get_bool() ? 1 : 0 ) ;
       break;
-    case GC::GC_INTEGER:
+    case GC_INTEGER:
       lua_pushnumber(L,gc.get_int()) ;
       break;
-    case GC::GC_LONG:
+    case GC_LONG:
       lua_pushnumber(L,gc.get_long()) ;
       break;
-    case GC::GC_REAL:
+    case GC_REAL:
       lua_pushnumber(L,gc.get_real()) ;
       break;
-    case GC::GC_STRING:
+    case GC_STRING:
       lua_pushstring(L, gc.get_string().c_str());
       break;
-    case GC::GC_VEC_POINTER:
+    case GC_VEC_POINTER:
       lua_pushnil(L) ;
       break;
-    case GC::GC_VEC_BOOL:
-      { GC::vec_bool_type const & vb = gc.get_vec_bool() ;
+    case GC_VEC_BOOL:
+      { vec_bool_type const & vb = gc.get_vec_bool() ;
         lua_createtable(L, int(vb.size()), 0);
         for ( unsigned i = 0 ; i < vb.size() ; ++i ) {
           lua_pushboolean(L, vb[i] ? 1 : 0 ) ;
@@ -226,8 +226,8 @@ namespace GC {
       }
       lua_pushnil(L) ;
       break;
-    case GC::GC_VEC_INTEGER:
-      { GC::vec_int_type const & vi = gc.get_vec_int() ;
+    case GC_VEC_INTEGER:
+      { vec_int_type const & vi = gc.get_vec_int() ;
         lua_createtable(L, int(vi.size()), 0);
         for ( unsigned i = 0 ; i < vi.size() ; ++i ) {
           lua_pushnumber(L, vi[i]);
@@ -235,8 +235,8 @@ namespace GC {
         }
       }
       break;
-    case GC::GC_VEC_REAL:
-      { GC::vec_real_type const & vr = gc.get_vec_real() ;
+    case GC_VEC_REAL:
+      { vec_real_type const & vr = gc.get_vec_real() ;
         lua_createtable(L, int(vr.size()), 0);
         for ( unsigned i = 0 ; i < vr.size() ; ++i ) {
           lua_pushnumber(L, vr[i]);
@@ -244,8 +244,8 @@ namespace GC {
         }
       }
       break;
-    case GC::GC_VEC_STRING:
-      { GC::vec_string_type const & vs = gc.get_vec_string() ;
+    case GC_VEC_STRING:
+      { vec_string_type const & vs = gc.get_vec_string() ;
         lua_createtable(L, int(vs.size()), 0);
         for ( unsigned i = 0 ; i < vs.size() ; ++i ) {
           lua_pushstring(L, vs[i].c_str());
@@ -253,8 +253,8 @@ namespace GC {
         }
       }
       break;
-    case GC::GC_VECTOR:
-      { GC::vector_type const & v = gc.get_vector() ;
+    case GC_VECTOR:
+      { vector_type const & v = gc.get_vector() ;
         lua_createtable(L, int(v.size()), 0);
         for ( unsigned i = 0 ; i < v.size() ; ++i ) {
           GC_to_lua( L, v[i] ) ;
@@ -262,10 +262,10 @@ namespace GC {
         }
       }
       break;
-    case GC::GC_MAP:
-      { GC::map_type const & m = gc.get_map() ;
+    case GC_MAP:
+      { map_type const & m = gc.get_map() ;
         lua_createtable(L, int(m.size()), 0);
-        for ( GC::map_type::const_iterator it = m.begin() ; it != m.end() ; ++it ) {
+        for ( map_type::const_iterator it = m.begin() ; it != m.end() ; ++it ) {
           lua_pushstring(L, it->first.c_str());
           GC_to_lua( L, it->second ) ;
           lua_settable(L, -3);
@@ -334,7 +334,7 @@ namespace GC {
     lua_State *& L = *((lua_State**)&void_L) ;
 
     // args must be of type MAP
-    GC::string_type  const & fname = fun_io("function").get_string() ;
+    string_type      const & fname = fun_io("function").get_string() ;
     GenericContainer const & args  = fun_io("args") ;
 
     // push functions and arguments
