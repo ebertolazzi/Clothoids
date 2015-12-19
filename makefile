@@ -2,14 +2,14 @@
 OS=$(shell uname)
 
 # check if the OS string contains 'Linux'
-ifneq (,$(findstring Linux, $(OS)))
-  LIB_GC = libGenericContainer.so
-endif
+#ifneq (,$(findstring Linux, $(OS)))
+#  LIB_GC = libGenericContainer.so
+#endif
 
 # check if the OS string contains 'Darwin'
-ifneq (,$(findstring Darwin, $(OS)))
-  LIB_GC = libGenericContainer.dylib
-endif
+#ifneq (,$(findstring Darwin, $(OS)))
+#  LIB_GC = libGenericContainer.dylib
+#endif
 
 SRCS = \
 srcs/GenericContainer.cc \
@@ -39,7 +39,7 @@ LIBS    = $(LIB_DIR) -lGenericContainer -lpcre
 #AR     = ar rcs
 AR     = libtool -static -o 
 
-all: $(LIB_GC) libGenericContainer.a
+all: libGenericContainer.a
 	$(CXX) $(CFLAGS) -o bin/example1 examples/example1.cc $(LIBS)
 	$(CXX) $(CFLAGS) -o bin/example2 examples/example2.cc $(LIBS)
 	$(CXX) $(CFLAGS) -o bin/example3 examples/example3.cc $(LIBS)
@@ -69,7 +69,6 @@ libGenericContainer.so: $(OBJS)
 	$(CXX) -shared $(OBJS) -o libs/libGenericContainer.so $(LIB_DIR) -llua -lpcre
 
 run:
-	cp -f libs/libGenericContainer.??* bin/
 	cd bin ; ./example1
 	cd bin ; ./example2
 	cd bin ; ./example3

@@ -605,9 +605,7 @@ namespace GenericContainerNamepace {
   GenericContainer::set_complex( real_type re, real_type im ) {
     clear() ;
     _data_type = GC_COMPLEX ;
-    _data.c    = new complex_type ;
-    _data.c->real(re) ;
-    _data.c->imag(im) ;
+    _data.c    = new complex_type(re,im) ;
     return *_data.c ;
   }
 

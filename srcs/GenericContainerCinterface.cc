@@ -38,9 +38,11 @@ using namespace std ;
 
 #define EXTERN_C extern "C" GENERIC_CONTAINER_API_DLL 
 
-std::map<std::string,::GenericContainerNamepace::GenericContainerExplorer> gc_explorer ;
+static std::map<std::string,::GenericContainerNamepace::GenericContainerExplorer> gc_explorer ;
 
-::GenericContainerNamepace::GenericContainerExplorer * gc_active = nullptr ;
+static ::GenericContainerNamepace::GenericContainerExplorer * gc_active = nullptr ;
+
+#define GC_TRY(A) try { A ; } catch (...) { return GENERIC_CONTAINER_NO_DATA ; }
 
 EXTERN_C
 int
@@ -158,7 +160,7 @@ EXTERN_C
 int
 GC_print() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> print(cout) ;
+  GC_TRY( gc_active -> top() -> print(cout) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -183,7 +185,7 @@ EXTERN_C
 int
 GC_set_bool( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_bool(a?true:false) ;
+  GC_TRY( gc_active -> top() -> set_bool(a?true:false) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -191,7 +193,7 @@ EXTERN_C
 int
 GC_set_int( int_type const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_int(a) ;
+  GC_TRY( gc_active -> top() -> set_int(a) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -199,7 +201,7 @@ EXTERN_C
 int
 GC_set_real( real_type const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_real(a) ;
+  GC_TRY( gc_active -> top() -> set_real(a) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -207,7 +209,7 @@ EXTERN_C
 int
 GC_set_complex( complex_type const * a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_complex(a->real,a->imag) ;
+  GC_TRY( gc_active -> top() -> set_complex(a->real,a->imag) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -215,7 +217,7 @@ EXTERN_C
 int
 GC_set_complex2( real_type const re, real_type const im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_complex(re,im) ;
+  GC_TRY( gc_active -> top() -> set_complex(re,im) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -223,7 +225,7 @@ EXTERN_C
 int
 GC_set_string( char const a[] ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_string(a) ;
+  GC_TRY( gc_active -> top() -> set_string(a) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -293,7 +295,7 @@ EXTERN_C
 int
 GC_push_bool( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> push_bool( a != 0 ) ;
+  GC_TRY( gc_active -> top() -> push_bool( a != 0 ) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -301,7 +303,7 @@ EXTERN_C
 int
 GC_push_int( int_type const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> push_int( a ) ;
+  GC_TRY( gc_active -> top() -> push_int( a ) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -309,7 +311,7 @@ EXTERN_C
 int
 GC_push_real( real_type const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> push_real( a ) ;
+  GC_TRY( gc_active -> top() -> push_real( a ) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -317,7 +319,7 @@ EXTERN_C
 int
 GC_push_complex( complex_type const * a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> push_complex( a->real, a->imag ) ;
+  GC_TRY( gc_active -> top() -> push_complex( a->real, a->imag ) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -325,7 +327,7 @@ EXTERN_C
 int
 GC_push_complex2( real_type const re, real_type const im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> push_complex( re, im ) ;
+  GC_TRY( gc_active -> top() -> push_complex( re, im ) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -333,7 +335,7 @@ EXTERN_C
 int
 GC_push_string( char const a[] ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> push_string( a ) ;
+  GC_TRY( gc_active -> top() -> push_string( a ) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -441,7 +443,7 @@ EXTERN_C
 int
 GC_set_empty_vector_of_bool() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_vec_bool() ;
+  GC_TRY( gc_active -> top() -> set_vec_bool() ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -449,7 +451,7 @@ EXTERN_C
 int
 GC_set_empty_vector_of_int() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_vec_int() ;
+  GC_TRY( gc_active -> top() -> set_vec_int() ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -457,7 +459,7 @@ EXTERN_C
 int
 GC_set_empty_vector_of_real() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_vec_real() ;
+  GC_TRY( gc_active -> top() -> set_vec_real() ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -465,7 +467,7 @@ EXTERN_C
 int
 GC_set_empty_vector_of_complex() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_vec_complex() ;
+  GC_TRY( gc_active -> top() -> set_vec_complex() ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -473,7 +475,7 @@ EXTERN_C
 int
 GC_set_empty_vector_of_string() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_vec_string() ;
+  GC_TRY( gc_active -> top() -> set_vec_string() ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -532,7 +534,7 @@ EXTERN_C
 int
 GC_set_vector( int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_vector( unsigned(nelem) ) ;
+  GC_TRY( gc_active -> top() -> set_vector( unsigned(nelem) ) ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -540,7 +542,7 @@ EXTERN_C
 int
 GC_set_empty_vector() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active -> top() -> set_vector() ;
+  GC_TRY( gc_active -> top() -> set_vector() ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -578,7 +580,7 @@ EXTERN_C
 int
 GC_set_map() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
-  gc_active->top()->set_map() ;
+  GC_TRY( gc_active->top()->set_map() ) ;
   return GENERIC_CONTAINER_OK ;
 }
 
