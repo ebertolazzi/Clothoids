@@ -9,6 +9,7 @@
 /libs/*.dylib
 /libs/*.so
 /libs/*.dll
+/DerivedData
 
 # Compiled source #
 ###################
