@@ -18,6 +18,8 @@
 
 #include <sstream>
 
+namespace GenericContainerNamepace {
+
 extern "C"
 void
 mexFunction( int nlhs, mxArray       *plhs[],
@@ -40,10 +42,10 @@ mexFunction( int nlhs, mxArray       *plhs[],
     }
     */
   
-    GC::GenericContainer gc ;
-    GC::mxArray_to_GenericContainer( prhs[0], gc ) ;
-    GC::GenericContainer_to_mxArray( gc, plhs[0] ) ;
-    GC::mexPrint(gc) ;
+    GenericContainer gc ;
+    mxArray_to_GenericContainer( prhs[0], gc ) ;
+    GenericContainer_to_mxArray( gc, plhs[0] ) ;
+    mexPrint(gc) ;
   }
   catch ( std::exception & exc ) {
     mexPrintf("Error: %s\n", exc.what() ) ;
@@ -51,4 +53,6 @@ mexFunction( int nlhs, mxArray       *plhs[],
   catch (...) {
     mexPrintf("Unknown erroe\n") ;
   }
+}
+
 }

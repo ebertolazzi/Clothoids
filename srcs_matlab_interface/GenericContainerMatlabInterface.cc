@@ -20,7 +20,7 @@
 #include <iostream>
 #include <cstdint>
 
-namespace GC {
+namespace GenericContainerNamepace {
 
   using namespace std ;
 

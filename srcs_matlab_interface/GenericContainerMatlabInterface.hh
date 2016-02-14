@@ -15,7 +15,7 @@
 #include "GenericContainer.hh"
 #include "mex.h"
 
-namespace GC {
+namespace GenericContainerNamepace {
 
   void mxArray_to_GenericContainer( mxArray const * mx, GenericContainer & gc ) ;
   void GenericContainer_to_mxArray( GenericContainer const & gc, mxArray * & mx ) ;
