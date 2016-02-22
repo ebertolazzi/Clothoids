@@ -78,6 +78,7 @@ DerivedData
 ehthumbs.db
 Icon?
 Thumbs.db
+DerivedData/*
 
 # auto git version noise
 InfoPlist.h
