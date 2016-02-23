@@ -75,7 +75,7 @@ namespace GenericContainerNamepace {
     switch( type ) {
     case LUA_TBOOLEAN:
       {
-        gc.get_bool(idx) ;
+        gc.get_bool_at(idx) ;
         vec_bool_type & bv = gc.get_vec_bool() ;
         bv[idx] = lua_toboolean(L, -1) ? true : false ;
       }
@@ -84,16 +84,16 @@ namespace GenericContainerNamepace {
       {
         valueType val = lua_tonumber(L, -1) ;
         if ( gc.get_type() == GC_VEC_REAL ) {
-          gc.get_real(idx) = val ;
+          gc.get_real_at(idx) = val ;
         } else if ( indexType(val) == val ) {
-          gc.get_int(idx)  = indexType(val) ;
+          gc.get_int_at(idx) = indexType(val) ;
         } else {
-          gc.get_real(idx) = val ;
+          gc.get_real_at(idx) = val ;
         }
       }
       break ;
     case LUA_TSTRING:
-      gc.get_string(idx) = lua_tostring(L, -1) ;
+      gc.get_string_at(idx) = lua_tostring(L, -1) ;
       break ;
     case LUA_TTABLE:
       lua_table_to_GC( L, gc[idx] ) ;

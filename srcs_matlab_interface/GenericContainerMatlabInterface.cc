@@ -322,7 +322,7 @@ namespace GenericContainerNamepace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateNumericArray(2,dims,mxLOGICAL_CLASS,mxREAL) ;
           mxLogical * ptr = (mxLogical*)mxGetData(mx) ;
-          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_bool(i) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_bool_at(i) ;
         }
       break;
       case GC_VEC_INTEGER:
@@ -330,7 +330,7 @@ namespace GenericContainerNamepace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
           mwSize * ptr = (mwSize*)mxGetData(mx) ;
-          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_int(i) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_int_at(i) ;
         }
       break;
       case GC_VEC_REAL:
@@ -338,7 +338,7 @@ namespace GenericContainerNamepace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateNumericArray(2,dims,mxDOUBLE_CLASS,mxREAL) ;
           double * ptr = mxGetPr(mx) ;
-          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_real(i) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_real_at(i) ;
         }
       break;
       case GC_VEC_COMPLEX:
@@ -347,7 +347,7 @@ namespace GenericContainerNamepace {
           mx = mxCreateNumericArray(2,dims,mxDOUBLE_CLASS,mxCOMPLEX) ;
           double * ptr = mxGetPr(mx) ;
           double * pti = mxGetPi(mx) ;
-          for ( mwSize i = 0 ; i < dims[1] ; ++i ) gc.get_complex_number(i,ptr[i],pti[i]) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) gc.get_complex_number_at(i,ptr[i],pti[i]) ;
         }
       break;
       case GC_VEC_STRING:
@@ -355,7 +355,7 @@ namespace GenericContainerNamepace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateCellMatrix(dims[0], dims[1]) ;
           for( mwSize i = 0 ; i < dims[1] ; ++i )
-            mxSetCell(mx,i,mxCreateString( gc.get_string(i).c_str() ));
+            mxSetCell(mx,i,mxCreateString( gc.get_string_at(i).c_str() ));
         }
       break;
       case GC_MAT_REAL:
@@ -367,7 +367,7 @@ namespace GenericContainerNamepace {
           mwSize k = 0 ;
           for ( mwSize i = 0 ; i < dims[0] ; ++i )
             for ( mwSize j = 0 ; j < dims[1] ; ++j )
-              ptr[k++] = gc.get_real(i,j) ;
+              ptr[k++] = gc.get_real_at(i,j) ;
         }
       break;
       case GC_MAT_COMPLEX:
@@ -380,7 +380,7 @@ namespace GenericContainerNamepace {
           mwSize k = 0 ;
           for ( mwSize i = 0 ; i < dims[0] ; ++i ) {
             for ( mwSize j = 0 ; j < dims[1] ; ++j ) {
-              GC::complex_type val = gc.get_complex( i, j ) ;
+              GC::complex_type val = gc.get_complex_at( i, j ) ;
               ptr[k] = val.real() ;
               pti[k] = val.imag() ;
               ++k ;

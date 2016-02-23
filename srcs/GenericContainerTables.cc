@@ -44,9 +44,9 @@ namespace GenericContainerNamepace {
     stream << '\n' ;
 
     for ( unsigned row = 0 ; row < nrow ; ++row ) {
-      stream << data[0].get_number(row) ;
+      stream << data[0].get_number_at(row) ;
       for ( unsigned icol = 1 ; icol < ncol ; ++icol )
-        stream << delimiter << data[icol].get_number(row)  ;
+        stream << delimiter << data[icol].get_number_at(row)  ;
       stream << '\n' ;
     }
   }
@@ -79,9 +79,9 @@ namespace GenericContainerNamepace {
     stream << '\n' << line << '\n';
 
     for ( unsigned row = 0 ; row < nrow ; ++row ) {
-      stream << std::setw(int(ml)) << data[0].get_number(row) ;
+      stream << std::setw(int(ml)) << data[0].get_number_at(row) ;
       for ( unsigned icol = 1 ; icol < ncol ; ++icol )
-        stream << " " << std::setw(int(ml)) << data[icol].get_number(row)  ;
+        stream << " " << std::setw(int(ml)) << data[icol].get_number_at(row)  ;
       stream << '\n' ;
     }
     stream << line << '\n';

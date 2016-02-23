@@ -828,14 +828,14 @@ namespace GenericContainerNamepace {
 
 #if defined(_WIN32) || defined(_WIN64)
   void *
-  GenericContainer::get_pvoid() const {
-    ck("get_pvoid()",GC_POINTER) ;
+  GenericContainer::get_pvoid( char const msg[] ) const {
+    ck(msg,GC_POINTER) ;
     return _data.p ;
   }
 
   void **
-  GenericContainer::get_ppvoid() const {
-    ck("get_ppvoid()",GC_POINTER) ;
+  GenericContainer::get_ppvoid( char const msg[] ) const {
+    ck(msg,GC_POINTER) ;
     return (void **)&_data.p ;
   }
 #endif
@@ -877,7 +877,7 @@ namespace GenericContainerNamepace {
   }
 
   real_type
-  GenericContainer::get_number( unsigned i ) const {
+  GenericContainer::get_number_at( unsigned i ) const {
     switch (_data_type) {
       case GC_VEC_BOOL:    return (*_data.v_b)[i] ;
       case GC_VEC_INTEGER: return (*_data.v_i)[i] ;
@@ -890,7 +890,7 @@ namespace GenericContainerNamepace {
   }
 
   complex_type
-  GenericContainer::get_complex_number( unsigned i ) const {
+  GenericContainer::get_complex_number_at( unsigned i ) const {
     switch (_data_type) {
       case GC_VEC_BOOL:    return int((*_data.v_b)[i]) ;
       case GC_VEC_INTEGER: return (*_data.v_i)[i] ;
@@ -905,220 +905,220 @@ namespace GenericContainerNamepace {
   }
 
   void
-  GenericContainer::get_complex_number( unsigned i, real_type & re, real_type & im ) const {
-    complex_type tmp = get_complex_number(i) ;
+  GenericContainer::get_complex_number_at( unsigned i, real_type & re, real_type & im ) const {
+    complex_type tmp = get_complex_number_at(i) ;
     re = tmp.real() ;
     im = tmp.imag() ;
   }
 
   bool_type &
-  GenericContainer::get_bool() {
-    ck_or_set("get_bool",GC_BOOL) ;
+  GenericContainer::get_bool( char const msg[] ) {
+    ck_or_set(msg,GC_BOOL) ;
     return _data.b ;
   }
 
   bool_type const &
-  GenericContainer::get_bool() const {
-    ck("get_bool()",GC_BOOL) ;
+  GenericContainer::get_bool( char const msg[] ) const {
+    ck(msg,GC_BOOL) ;
     return _data.b ;
   }
 
   int_type &
-  GenericContainer::get_int() {
-    ck_or_set("get_int",GC_INTEGER) ;
+  GenericContainer::get_int( char const msg[] ) {
+    ck_or_set(msg,GC_INTEGER) ;
     return _data.i ;
   }
 
   int_type const &
-  GenericContainer::get_int() const {
-    ck("get_int()",GC_INTEGER) ;
+  GenericContainer::get_int( char const msg[] ) const {
+    ck(msg,GC_INTEGER) ;
     return _data.i ;
   }
 
   long_type &
-  GenericContainer::get_long() {
-    ck_or_set("get_long",GC_LONG) ;
+  GenericContainer::get_long( char const msg[] ) {
+    ck_or_set(msg,GC_LONG) ;
     return _data.l ;
   }
 
   long_type const &
-  GenericContainer::get_long() const {
-    ck("get_long()",GC_LONG) ;
+  GenericContainer::get_long( char const msg[] ) const {
+    ck(msg,GC_LONG) ;
     return _data.l ;
   }
 
   real_type &
-  GenericContainer::get_real() {
-    ck_or_set("get_real",GC_REAL) ;
+  GenericContainer::get_real( char const msg[] ) {
+    ck_or_set(msg,GC_REAL) ;
     return _data.r ;
   }
 
   real_type const &
-  GenericContainer::get_real() const {
-    ck("get_real()",GC_REAL) ;
+  GenericContainer::get_real( char const msg[] ) const {
+    ck(msg,GC_REAL) ;
     return _data.r ;
   }
 
   complex_type &
-  GenericContainer::get_complex() {
-    ck_or_set("get_complex",GC_COMPLEX) ;
+  GenericContainer::get_complex( char const msg[] ) {
+    ck_or_set(msg,GC_COMPLEX) ;
     return *_data.c ;
   }
 
   complex_type const &
-  GenericContainer::get_complex() const {
-    ck("get_complex()",GC_REAL) ;
+  GenericContainer::get_complex( char const msg[] ) const {
+    ck(msg,GC_REAL) ;
     return *_data.c ;
   }
 
   string_type &
-  GenericContainer::get_string() {
-    ck_or_set("get_string",GC_STRING) ;
+  GenericContainer::get_string( char const msg[] ) {
+    ck_or_set(msg,GC_STRING) ;
     return *_data.s ;
   }
 
   string_type const &
-  GenericContainer::get_string() const {
-    ck("get_string()",GC_STRING) ;
+  GenericContainer::get_string( char const msg[] ) const {
+    ck(msg,GC_STRING) ;
     return *_data.s ;
   }
 
   vector_type &
-  GenericContainer::get_vector() {
-    ck("get_vector()",GC_VECTOR) ;
+  GenericContainer::get_vector( char const msg[] ) {
+    ck(msg,GC_VECTOR) ;
     return *_data.v ;
   }
 
   vector_type const &
-  GenericContainer::get_vector() const {
-    ck("get_vector()",GC_VECTOR) ;
+  GenericContainer::get_vector( char const msg[] ) const {
+    ck(msg,GC_VECTOR) ;
     return *_data.v ;
   }
 
   vec_pointer_type &
-  GenericContainer::get_vec_pointer() {
-    ck("get_vec_pointer()",GC_VEC_POINTER) ;
+  GenericContainer::get_vec_pointer( char const msg[] ) {
+    ck(msg,GC_VEC_POINTER) ;
     return *_data.v_p ;
   }
 
   vec_pointer_type const &
-  GenericContainer::get_vec_pointer() const {
-    ck("get_vec_pointer()",GC_VEC_POINTER) ;
+  GenericContainer::get_vec_pointer( char const msg[] ) const {
+    ck(msg,GC_VEC_POINTER) ;
     return *_data.v_p ;
   }
 
   vec_bool_type &
-  GenericContainer::get_vec_bool() {
-    ck("get_vec_bool()",GC_VEC_BOOL) ;
+  GenericContainer::get_vec_bool( char const msg[] ) {
+    ck(msg,GC_VEC_BOOL) ;
     return *_data.v_b ;
   }
 
   vec_bool_type const &
-  GenericContainer::get_vec_bool() const {
-    ck("get_vec_bool()",GC_VEC_BOOL) ;
+  GenericContainer::get_vec_bool( char const msg[] ) const {
+    ck(msg,GC_VEC_BOOL) ;
     return *_data.v_b ;
   }
 
   vec_int_type &
-  GenericContainer::get_vec_int() {
+  GenericContainer::get_vec_int( char const msg[] ) {
     if ( _data_type == GC_NOTYPE   ) set_vec_int() ;
     if ( _data_type == GC_VEC_BOOL ) promote_to_vec_int() ;
-    ck("get_vec_int()",GC_VEC_INTEGER) ;
+    ck(msg,GC_VEC_INTEGER) ;
     return *_data.v_i ;
   }
 
   vec_int_type const &
-  GenericContainer::get_vec_int() const {
-    ck("get_vec_int()",GC_VEC_INTEGER) ;
+  GenericContainer::get_vec_int( char const msg[] ) const {
+    ck(msg,GC_VEC_INTEGER) ;
     return *_data.v_i ;
   }
 
   vec_real_type &
-  GenericContainer::get_vec_real() {
+  GenericContainer::get_vec_real( char const msg[] ) {
     if ( _data_type == GC_NOTYPE   ) set_vec_real() ;
     if ( _data_type == GC_VEC_BOOL ||
          _data_type == GC_VEC_INTEGER ) promote_to_vec_real() ;
-    ck("get_vec_real()",GC_VEC_REAL) ;
+    ck(msg,GC_VEC_REAL) ;
     return *_data.v_r ;
   }
 
   vec_real_type const &
-  GenericContainer::get_vec_real() const {
-    ck("get_vec_real()",GC_VEC_REAL) ;
+  GenericContainer::get_vec_real( char const msg[] ) const {
+    ck(msg,GC_VEC_REAL) ;
     return *_data.v_r ;
   }
 
   vec_complex_type &
-  GenericContainer::get_vec_complex() {
-    if ( _data_type == GC_NOTYPE   ) set_vec_complex() ;
+  GenericContainer::get_vec_complex( char const msg[] ) {
+    if ( _data_type == GC_NOTYPE ) set_vec_complex() ;
     if ( _data_type == GC_VEC_BOOL    ||
          _data_type == GC_VEC_INTEGER ||
          _data_type == GC_VEC_REAL ) promote_to_vec_complex() ;
-    ck("get_vec_complex()",GC_VEC_COMPLEX) ;
+    ck(msg,GC_VEC_COMPLEX) ;
     return *_data.v_c ;
   }
 
   vec_complex_type const &
-  GenericContainer::get_vec_complex() const {
-    ck("get_vec_complex()",GC_VEC_COMPLEX) ;
+  GenericContainer::get_vec_complex( char const msg[] ) const {
+    ck(msg,GC_VEC_COMPLEX) ;
     return *_data.v_c ;
   }
 
   mat_real_type &
-  GenericContainer::get_mat_real() {
-    if ( _data_type == GC_NOTYPE   ) set_mat_real() ;
+  GenericContainer::get_mat_real( char const msg[] ) {
+    if ( _data_type == GC_NOTYPE ) set_mat_real() ;
     if ( _data_type == GC_VEC_BOOL    ||
          _data_type == GC_VEC_INTEGER ||
          _data_type == GC_VEC_REAL ) promote_to_mat_real() ;
-    ck("get_mat_real()",GC_MAT_REAL) ;
+    ck(msg,GC_MAT_REAL) ;
     return *_data.m_r ;
   }
 
   mat_real_type const &
-  GenericContainer::get_mat_real() const {
-    ck("get_mat_real()",GC_MAT_REAL) ;
+  GenericContainer::get_mat_real( char const msg[] ) const {
+    ck(msg,GC_MAT_REAL) ;
     return *_data.m_r ;
   }
 
   mat_complex_type &
-  GenericContainer::get_mat_complex() {
-    if ( _data_type == GC_NOTYPE   ) set_mat_complex() ;
+  GenericContainer::get_mat_complex( char const msg[] ) {
+    if ( _data_type == GC_NOTYPE ) set_mat_complex() ;
     if ( _data_type == GC_VEC_BOOL    ||
          _data_type == GC_VEC_INTEGER ||
          _data_type == GC_VEC_REAL    ||
          _data_type == GC_MAT_REAL    ||
          _data_type == GC_VEC_COMPLEX ) promote_to_mat_complex() ;
-    ck("get_mat_complex()",GC_MAT_COMPLEX) ;
+    ck(msg,GC_MAT_COMPLEX) ;
     return *_data.m_c ;
   }
 
   mat_complex_type const &
-  GenericContainer::get_mat_complex() const {
-    ck("get_mat_complex()",GC_MAT_COMPLEX) ;
+  GenericContainer::get_mat_complex( char const msg[] ) const {
+    ck(msg,GC_MAT_COMPLEX) ;
     return *_data.m_c ;
   }
 
   vec_string_type &
-  GenericContainer::get_vec_string() {
-    ck("get_vec_string()",GC_VEC_STRING) ;
+  GenericContainer::get_vec_string( char const msg[] ) {
+    ck(msg,GC_VEC_STRING) ;
     return *_data.v_s ;
   }
 
   vec_string_type const &
-  GenericContainer::get_vec_string() const {
-    ck("get_vec_string()",GC_VEC_STRING) ;
+  GenericContainer::get_vec_string( char const msg[] ) const {
+    ck(msg,GC_VEC_STRING) ;
     return *_data.v_s ;
   }
 
   map_type &
-  GenericContainer::get_map() {
-    ck("get_map()",GC_MAP) ;
+  GenericContainer::get_map( char const msg[] ) {
+    ck(msg,GC_MAP) ;
     return *_data.m ;
   }
 
   map_type const &
-  GenericContainer::get_map() const {
-    ck("get_map()",GC_MAP) ;
+  GenericContainer::get_map( char const msg[] ) const {
+    ck(msg,GC_MAP) ;
     return *_data.m ;
   }
 
@@ -1131,7 +1131,7 @@ namespace GenericContainerNamepace {
 
   // --------------------------------------------------------------
   bool_type
-  GenericContainer::get_bool( unsigned i ) {
+  GenericContainer::get_bool_at( unsigned i ) {
     if ( _data_type == GC_NOTYPE   ) set_vec_bool() ;
     if ( _data_type == GC_VEC_BOOL ) {
       CHECK_RESIZE(_data.v_b,i) ; // correct type, check size
@@ -1144,14 +1144,14 @@ namespace GenericContainerNamepace {
   }
 
   bool_type
-  GenericContainer::get_bool( unsigned i ) const {
+  GenericContainer::get_bool_at( unsigned i ) const {
     ck("get_bool()",GC_VEC_BOOL) ;
-    GC_ASSERT( i < _data.v_b->size(), "get_bool( " << i << " ) const, out of range" ) ;
+    GC_ASSERT( i < _data.v_b->size(), "get_bool_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_b)[i] ;
   }
 
   int_type &
-  GenericContainer::get_int( unsigned i ) {
+  GenericContainer::get_int_at( unsigned i ) {
     if      ( _data_type == GC_NOTYPE ) set_vec_int() ;
     else if ( _data_type == GC_VEC_BOOL ) promote_to_vec_int() ;
     if ( _data_type == GC_VEC_INTEGER ) {
@@ -1165,14 +1165,14 @@ namespace GenericContainerNamepace {
   }
 
   int_type const &
-  GenericContainer::get_int( unsigned i ) const {
-    ck("get_int()",GC_VEC_INTEGER) ;
-    GC_ASSERT( i < _data.v_i->size(), "get_int( " << i << " ) const, out of range" ) ;
+  GenericContainer::get_int_at( unsigned i, char const msg[] ) const {
+    ck(msg,GC_VEC_INTEGER) ;
+    GC_ASSERT( i < _data.v_i->size(), "get_int_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_i)[i] ;
   }
 
   real_type &
-  GenericContainer::get_real( unsigned i ) {
+  GenericContainer::get_real_at( unsigned i ) {
     if      ( _data_type == GC_NOTYPE ) set_vec_real() ;
     else if ( _data_type == GC_VEC_BOOL || _data_type == GC_VEC_INTEGER ) promote_to_vec_real() ;
     if ( _data_type == GC_VEC_REAL ) {
@@ -1186,39 +1186,39 @@ namespace GenericContainerNamepace {
   }
 
   real_type const &
-  GenericContainer::get_real( unsigned i ) const  {
+  GenericContainer::get_real_at( unsigned i ) const  {
     GC_ASSERT( GC_VEC_REAL == _data_type,
                "get_real( " << i << " ) bad data type" <<
                "\nexpect: " << typeName[GC_VEC_REAL] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    GC_ASSERT( i < _data.v_r->size(), "get_real( " << i << " ) const, out of range" ) ;
+    GC_ASSERT( i < _data.v_r->size(), "get_real_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_r)[i] ;
   }
 
   real_type &
-  GenericContainer::get_real( unsigned i, unsigned j ) {
+  GenericContainer::get_real_at( unsigned i, unsigned j ) {
     if      ( _data_type == GC_NOTYPE ) set_mat_real(i,j) ;
     else if ( _data_type == GC_VEC_BOOL    ||
               _data_type == GC_VEC_INTEGER ||
               _data_type == GC_VEC_REAL ) promote_to_mat_real() ;
     GC_ASSERT( GC_MAT_REAL == _data_type,
-               "get_real( " << i << ", " << j << " ) bad data type" <<
+               "get_real_at( " << i << ", " << j << " ) bad data type" <<
                "\nexpect: " << typeName[GC_MAT_REAL] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_r)(i,j) ;
   }
 
   real_type const &
-  GenericContainer::get_real( unsigned i, unsigned j ) const  {
+  GenericContainer::get_real_at( unsigned i, unsigned j ) const  {
     GC_ASSERT( GC_MAT_REAL == _data_type,
-               "get_real( " << i << ", " << j << " ) bad data type" <<
+               "get_real_at( " << i << ", " << j << " ) bad data type" <<
                "\nexpect: " << typeName[GC_MAT_REAL] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_r)(i,j) ;
   }
 
   complex_type &
-  GenericContainer::get_complex( unsigned i ) {
+  GenericContainer::get_complex_at( unsigned i ) {
     if      ( _data_type == GC_NOTYPE ) set_vec_complex() ;
     else if ( _data_type == GC_VEC_BOOL    ||
               _data_type == GC_VEC_INTEGER ||
@@ -1234,17 +1234,17 @@ namespace GenericContainerNamepace {
   }
 
   complex_type const &
-  GenericContainer::get_complex( unsigned i ) const  {
+  GenericContainer::get_complex_at( unsigned i ) const  {
     GC_ASSERT( GC_VEC_COMPLEX == _data_type,
                "get_complex( " << i << " ) bad data type" <<
                "\nexpect: " << typeName[GC_VEC_COMPLEX] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    GC_ASSERT( i < _data.v_c->size(), "get_complex( " << i << " ) const, out of range" ) ;
+    GC_ASSERT( i < _data.v_c->size(), "get_complex_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_c)[i] ;
   }
 
   complex_type &
-  GenericContainer::get_complex( unsigned i, unsigned j ) {
+  GenericContainer::get_complex_at( unsigned i, unsigned j ) {
     if      ( _data_type == GC_NOTYPE ) set_mat_complex(i,j) ;
     else if ( _data_type == GC_VEC_BOOL    ||
               _data_type == GC_VEC_INTEGER ||
@@ -1252,23 +1252,23 @@ namespace GenericContainerNamepace {
               _data_type == GC_VEC_COMPLEX ||
               _data_type == GC_MAT_REAL ) promote_to_mat_complex() ;
     GC_ASSERT( GC_MAT_COMPLEX == _data_type,
-               "get_complex( " << i << ", " << j << " ) bad data type" <<
+               "get_complex_at( " << i << ", " << j << " ) bad data type" <<
                "\nexpect: " << typeName[GC_MAT_COMPLEX] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_c)(i,j) ;
   }
 
   complex_type const &
-  GenericContainer::get_complex( unsigned i, unsigned j ) const  {
+  GenericContainer::get_complex_at( unsigned i, unsigned j ) const  {
     GC_ASSERT( GC_MAT_COMPLEX == _data_type,
-               "get_complex( " << i << ", " << j << " ) bad data type" <<
+               "get_complex_at( " << i << ", " << j << " ) bad data type" <<
                "\nexpect: " << typeName[GC_MAT_COMPLEX] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m_c)(i,j) ;
   }
 
   string_type &
-  GenericContainer::get_string( unsigned i ) {
+  GenericContainer::get_string_at( unsigned i ) {
     if ( _data_type == GC_NOTYPE ) set_vec_string() ;
     if ( _data_type == GC_VEC_STRING ) {
       CHECK_RESIZE(_data.v_s,i) ;
@@ -1280,12 +1280,12 @@ namespace GenericContainerNamepace {
   }
 
   string_type const &
-  GenericContainer::get_string( unsigned i ) const {
+  GenericContainer::get_string_at( unsigned i ) const {
     GC_ASSERT( GC_VEC_STRING == _data_type,
                "get_string( " << i << " ) bad data type" <<
                "\nexpect: " << typeName[GC_VEC_STRING] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    GC_ASSERT( i < _data.v_s->size(), "get_string( " << i << " ) const, out of range" ) ;
+    GC_ASSERT( i < _data.v_s->size(), "get_string_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_s)[i] ;
   }
 
@@ -1541,13 +1541,13 @@ namespace GenericContainerNamepace {
   GenericContainer::promote_to_vec_int() {
     switch (_data_type) {
       case GC_NOTYPE:
-      { set_vec_int(1) ; get_int(0) = 0 ; }
+      { set_vec_int(1) ; get_int_at(0) = 0 ; }
         break ;
       case GC_BOOL:
-      { int_type tmp = _data.b?1:0 ; set_vec_int(1) ; get_int(0) = tmp ; }
+      { int_type tmp = _data.b?1:0 ; set_vec_int(1) ; get_int_at(0) = tmp ; }
         break ;
       case GC_INTEGER:
-      { int_type tmp = _data.i ; set_vec_int(1) ; get_int(0) = tmp ; }
+      { int_type tmp = _data.i ; set_vec_int(1) ; get_int_at(0) = tmp ; }
         break ;
       case GC_VEC_BOOL:
         { vec_bool_type * v_b = _data.v_b ;
@@ -1572,19 +1572,19 @@ namespace GenericContainerNamepace {
   GenericContainer::promote_to_vec_real() {
     switch (_data_type) {
       case GC_NOTYPE:
-        { set_vec_real(1) ; get_real(0) = 0 ; }
+        { set_vec_real(1) ; get_real_at(0) = 0 ; }
         break ;
       case GC_BOOL:
-        { real_type tmp = _data.b?1:0 ; set_vec_real(1) ; get_real(0) = tmp ; }
+        { real_type tmp = _data.b?1:0 ; set_vec_real(1) ; get_real_at(0) = tmp ; }
         break ;
       case GC_INTEGER:
-        { real_type tmp = _data.i ; set_vec_real(1) ; get_real(0) = tmp ; }
+        { real_type tmp = _data.i ; set_vec_real(1) ; get_real_at(0) = tmp ; }
         break ;
       case GC_LONG:
-        { real_type tmp = _data.l ; set_vec_real(1) ; get_real(0) = tmp ; }
+        { real_type tmp = _data.l ; set_vec_real(1) ; get_real_at(0) = tmp ; }
         break ;
       case GC_REAL:
-        { real_type tmp = _data.r ; set_vec_real(1) ; get_real(0) = tmp ; }
+        { real_type tmp = _data.r ; set_vec_real(1) ; get_real_at(0) = tmp ; }
         break ;
       case GC_VEC_BOOL:
         { vec_bool_type * v_b = _data.v_b ;
@@ -1616,22 +1616,22 @@ namespace GenericContainerNamepace {
   GenericContainer::promote_to_vec_complex() {
     switch (_data_type) {
       case GC_NOTYPE:
-        { set_vec_complex(1) ; get_complex(0) = 0 ; }
+        { set_vec_complex(1) ; get_complex_at(0) = 0 ; }
         break ;
       case GC_BOOL:
-        { real_type tmp = _data.b?1:0 ; set_vec_complex(1) ; get_complex(0) = tmp ; }
+        { real_type tmp = _data.b?1:0 ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
         break ;
       case GC_INTEGER:
-        { real_type tmp = _data.i ; set_vec_complex(1) ; get_complex(0) = tmp ; }
+        { real_type tmp = _data.i ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
         break ;
       case GC_LONG:
-        { real_type tmp = _data.l ; set_vec_complex(1) ; get_complex(0) = tmp ; }
+        { real_type tmp = _data.l ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
         break ;
       case GC_REAL:
-        { real_type tmp = _data.r ; set_vec_complex(1) ; get_complex(0) = tmp ; }
+        { real_type tmp = _data.r ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
         break ;
       case GC_COMPLEX:
-        { complex_type tmp = *_data.c ; set_vec_complex(1) ; get_complex(0) = tmp ; }
+        { complex_type tmp = *_data.c ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
         break ;
       case GC_VEC_BOOL:
         { vec_bool_type * v_b = _data.v_b ;
@@ -1671,16 +1671,16 @@ namespace GenericContainerNamepace {
   GenericContainer::promote_to_mat_real() {
     switch (_data_type) {
       case GC_NOTYPE:
-        { set_mat_real(1,1) ; get_real(0,0) = 0 ; }
+        { set_mat_real(1,1) ; get_real_at(0,0) = 0 ; }
         break ;
       case GC_BOOL:
-        { real_type tmp = _data.b?1:0 ; set_mat_real(1,1) ; get_real(0,0) = tmp ; }
+        { real_type tmp = _data.b?1:0 ; set_mat_real(1,1) ; get_real_at(0,0) = tmp ; }
         break ;
       case GC_INTEGER:
-        { real_type tmp = _data.i ; set_mat_real(1,1) ; get_real(0,0) = tmp ; }
+        { real_type tmp = _data.i ; set_mat_real(1,1) ; get_real_at(0,0) = tmp ; }
         break ;
       case GC_REAL:
-        { real_type tmp = _data.r ; set_mat_real(1,1) ; get_real(0,0) = tmp ; }
+        { real_type tmp = _data.r ; set_mat_real(1,1) ; get_real_at(0,0) = tmp ; }
         break ;
       case GC_VEC_BOOL:
         { vec_bool_type * v_b = _data.v_b ;
@@ -1720,19 +1720,19 @@ namespace GenericContainerNamepace {
   GenericContainer::promote_to_mat_complex() {
     switch (_data_type) {
       case GC_NOTYPE:
-        { set_mat_complex(1,1) ; get_complex(0,0) = 0 ; }
+        { set_mat_complex(1,1) ; get_complex_at(0,0) = 0 ; }
         break ;
       case GC_BOOL:
-        { real_type tmp = _data.b?1:0 ; set_mat_complex(1,1) ; get_complex(0,0) = tmp ; }
+        { real_type tmp = _data.b?1:0 ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
         break ;
       case GC_INTEGER:
-        { real_type tmp = _data.i ; set_mat_complex(1,1) ; get_complex(0,0) = tmp ; }
+        { real_type tmp = _data.i ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
         break ;
       case GC_LONG:
-        { real_type tmp = _data.l ; set_mat_complex(1,1) ; get_complex(0,0) = tmp ; }
+        { real_type tmp = _data.l ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
         break ;
       case GC_REAL:
-        { real_type tmp = _data.r ; set_mat_complex(1,1) ; get_complex(0,0) = tmp ; }
+        { real_type tmp = _data.r ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
         break ;
       case GC_VEC_BOOL:
         { vec_bool_type * v_b = _data.v_b ;

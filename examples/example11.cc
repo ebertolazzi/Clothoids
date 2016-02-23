@@ -39,8 +39,8 @@ main() {
   try {
     GC::GenericContainer gc, gc_res ;
     gc.set_mat_real(2,2);
-    gc.get_real(1,1) = 2 ;
-    gc.get_real(0,1) = 3 ;
+    gc.get_real_at(1,1) = 2 ;
+    gc.get_real_at(0,1) = 3 ;
     cout << "Result:\n" ;
     gc.print(cout) ;
   }

@@ -131,13 +131,13 @@ GC_fill_for_test( char const id[] ) {
 
   ::GenericContainerNamepace::GenericContainer & gm = v[8] ;
   gm.set_mat_real(2,2) ;
-  gm.get_real(1,1) = 2 ;
-  gm.get_real(0,1) = 3 ;
+  gm.get_real_at(1,1) = 2 ;
+  gm.get_real_at(0,1) = 3 ;
 
   ::GenericContainerNamepace::GenericContainer & gm1 = v[9] ;
   gm1.set_mat_complex(2,2) ;
-  gm1.get_complex(1,1) = std::complex<double>(2,2) ;
-  gm1.get_complex(0,1) = std::complex<double>(1,-1) ;
+  gm1.get_complex_at(1,1) = std::complex<double>(2,2) ;
+  gm1.get_complex_at(0,1) = std::complex<double>(1,-1) ;
 
   return GENERIC_CONTAINER_OK ;
 }
@@ -345,7 +345,7 @@ EXTERN_C
 int
 GC_get_bool_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0 ;
-  bool val = gc_active -> top() -> get_bool( unsigned(pos) ) ;
+  bool val = gc_active -> top() -> get_bool_at( unsigned(pos) ) ;
   return val ? 1 : 0 ;
 }
 
@@ -353,14 +353,14 @@ EXTERN_C
 int_type
 GC_get_int_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0 ;
-  return gc_active -> top() -> get_int( unsigned(pos) ) ;
+  return gc_active -> top() -> get_int_at( unsigned(pos) ) ;
 }
 
 EXTERN_C
 real_type
 GC_get_real_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0 ;
-  return gc_active -> top() -> get_number( unsigned(pos) ) ;
+  return gc_active -> top() -> get_number_at( unsigned(pos) ) ;
 }
 
 EXTERN_C
@@ -368,7 +368,7 @@ complex_type
 GC_get_complex_at_pos( int pos ) {
   complex_type tmp ;
   tmp.real = tmp.imag = 0 ;
-  if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number( unsigned(pos), tmp.real, tmp.imag ) ;
+  if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number_at( unsigned(pos), tmp.real, tmp.imag ) ;
   return tmp ;
 }
 
@@ -376,7 +376,7 @@ EXTERN_C
 real_type
 GC_get_complex_real_at_pos( int pos ) {
   real_type re = 0, im = 0 ;
-  if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number( unsigned(pos), re, im ) ;
+  if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number_at( unsigned(pos), re, im ) ;
   return re ;
 }
 
@@ -384,7 +384,7 @@ EXTERN_C
 real_type
 GC_get_complex_imag_at_pos( int pos ) {
   real_type re = 0, im = 0 ;
-  if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number( unsigned(pos), re, im ) ;
+  if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number_at( unsigned(pos), re, im ) ;
   return im ;
 }
 
@@ -392,7 +392,7 @@ EXTERN_C
 char const *
 GC_get_string_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0 ;
-  return gc_active -> top() -> get_string( unsigned(pos) ).c_str() ;
+  return gc_active -> top() -> get_string_at( unsigned(pos) ).c_str() ;
 }
 
 //..............................................................................
@@ -401,7 +401,7 @@ EXTERN_C
 real_type
 GC_get_real_at_coor( int i, int j ) {
   if ( gc_active == nullptr ) return 0 ;
-  return gc_active -> top() -> get_real( unsigned(i), unsigned(j) ) ;
+  return gc_active -> top() -> get_real_at( unsigned(i), unsigned(j) ) ;
 }
 
 EXTERN_C
@@ -410,7 +410,7 @@ GC_get_complex_at_coor( int i, int j ) {
   complex_type tmp ;
   tmp.real = tmp.imag = 0 ;
   if ( gc_active != nullptr ) {
-    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
+    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex_at( unsigned(i), unsigned(j) ) ;
     tmp.real = res.real() ;
     tmp.imag = res.imag() ;
   }
@@ -421,7 +421,7 @@ EXTERN_C
 real_type
 GC_get_complex_real_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
-    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
+    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex_at( unsigned(i), unsigned(j) ) ;
     return res.real() ;
   }
   return 0 ;
@@ -431,7 +431,7 @@ EXTERN_C
 real_type
 GC_get_complex_imag_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
-    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex( unsigned(i), unsigned(j) ) ;
+    ::GenericContainerNamepace::complex_type res = gc_active -> top() -> get_complex_at( unsigned(i), unsigned(j) ) ;
     return res.imag() ;
   }
   return 0 ;

@@ -491,7 +491,7 @@ namespace GenericContainerNamepace {
     : _numRows(nr)
     , _numCols(nc)
     { this->resize(size_type(nr*nc)) ; }
-    
+
     unsigned numRows() const { return _numRows ; }
     unsigned numCols() const { return _numCols ; }
 
@@ -915,123 +915,123 @@ namespace GenericContainerNamepace {
     { ck("get_pointer",GC_POINTER) ; return static_cast<T>(_data.p) ; }
     #endif
 
-    bool_type       & get_bool() ;
-    bool_type const & get_bool() const ;
+    bool_type       & get_bool( char const msg[] = "get_bool()" ) ;
+    bool_type const & get_bool( char const msg[] = "get_bool()" ) const ;
     //!< Return the stored boolean (if fails issue an error).
 
-    int_type       & get_int() ;
-    int_type const & get_int() const ;
+    int_type       & get_int( char const msg[] = "get_int()" ) ;
+    int_type const & get_int( char const msg[] = "get_int()" ) const ;
     //!< Return the stored integer (if fails issue an error).
 
-    long_type       & get_long() ;
-    long_type const & get_long() const ;
+    long_type       & get_long( char const msg[] = "get_long()") ;
+    long_type const & get_long( char const msg[] = "get_long()") const ;
     //!< Return the stored long integer (if fails issue an error).
 
-    real_type       & get_real() ;
-    real_type const & get_real() const ;
+    real_type       & get_real( char const msg[] = "get_real()" ) ;
+    real_type const & get_real( char const msg[] = "get_real()" ) const ;
     //!< Return the stored floating point (if fails issue an error).
 
-    complex_type       & get_complex() ;
-    complex_type const & get_complex() const ;
+    complex_type       & get_complex( char const msg[] = "get_complex()" ) ;
+    complex_type const & get_complex( char const msg[] = "get_complex()" ) const ;
     //!< Return the stored complex floating point (if fails issue an error).
 
-    string_type       & get_string() ;
-    string_type const & get_string() const ;
+    string_type       & get_string( char const msg[] = "get_string()" ) ;
+    string_type const & get_string( char const msg[] = "get_string()" ) const ;
     //!< Return the stored string (if fails issue an error).
     //@}
 
     //! \name Access to vector type data
     //@{
-    vector_type       & get_vector() ;
-    vector_type const & get_vector() const ;
+    vector_type       & get_vector( char const msg[] = "get_vector()" ) ;
+    vector_type const & get_vector( char const msg[] = "get_vector()" ) const ;
     //!< Return reference to a generic vector (if fails issue an error).
 
-    vec_pointer_type       & get_vec_pointer() ;
-    vec_pointer_type const & get_vec_pointer() const ;
+    vec_pointer_type       & get_vec_pointer( char const msg[] = "get_vec_pointer()" ) ;
+    vec_pointer_type const & get_vec_pointer( char const msg[] = "get_vec_pointer()" ) const ;
     //!< Return reference to a vector of pointer (if fails issue an error).
     
-    vec_bool_type       & get_vec_bool() ;
-    vec_bool_type const & get_vec_bool() const ;
+    vec_bool_type       & get_vec_bool( char const msg[] = "get_vec_bool()" ) ;
+    vec_bool_type const & get_vec_bool( char const msg[] = "get_vec_bool()" ) const ;
     //!< Return reference to a vector of booleans (if fails issue an error).
 
-    vec_int_type       & get_vec_int() ;
-    vec_int_type const & get_vec_int() const ;
+    vec_int_type       & get_vec_int( char const msg[] = "get_vec_int()" ) ;
+    vec_int_type const & get_vec_int( char const msg[] = "get_vec_int()" ) const ;
     //!< Return reference to a vector of integers (if fails issue an error).
 
-    vec_real_type       & get_vec_real() ;
-    vec_real_type const & get_vec_real() const ;
+    vec_real_type       & get_vec_real( char const msg[] = "get_vec_real()" ) ;
+    vec_real_type const & get_vec_real( char const msg[] = "get_vec_real()" ) const ;
     //!< Return reference to a vector of floating point number (if fails issue an error).
 
-    vec_complex_type       & get_vec_complex() ;
-    vec_complex_type const & get_vec_complex() const ;
+    vec_complex_type       & get_vec_complex( char const msg[] = "get_vec_complex()" ) ;
+    vec_complex_type const & get_vec_complex( char const msg[] = "get_vec_complex()" ) const ;
     //!< Return reference to a vector of complex floating point number (if fails issue an error).
 
-    mat_real_type       & get_mat_real() ;
-    mat_real_type const & get_mat_real() const ;
+    mat_real_type       & get_mat_real( char const msg[] = "get_mat_real()" ) ;
+    mat_real_type const & get_mat_real( char const msg[] = "get_mat_real()" ) const ;
     //!< Return reference to a matrix of floating point number (if fails issue an error).
 
-    mat_complex_type       & get_mat_complex() ;
-    mat_complex_type const & get_mat_complex() const ;
+    mat_complex_type       & get_mat_complex( char const msg[] = "get_mat_complex()" ) ;
+    mat_complex_type const & get_mat_complex( char const msg[] = "get_mat_complex()" ) const ;
     //!< Return reference to a matrix of complex floating point number (if fails issue an error).
 
-    vec_string_type       & get_vec_string() ;
-    vec_string_type const & get_vec_string() const ;
+    vec_string_type       & get_vec_string( char const msg[] = "get_vec_string()" ) ;
+    vec_string_type const & get_vec_string( char const msg[] = "get_vec_string()" ) const ;
     //!< Return reference to a vector of strings (if fails issue an error).
     //@}
 
     //! \name Access to element of vector type data
     //@{
     //! If `i`-th element of the vector is boolean, integer or floating point then return number, otherwise return `0`.
-    real_type get_number( unsigned i ) const ;
-    complex_type get_complex_number( unsigned i ) const ;
-    void get_complex_number( unsigned i, real_type & re, real_type & im ) const ;
+    real_type get_number_at( unsigned i ) const ;
+    complex_type get_complex_number_at( unsigned i ) const ;
+    void get_complex_number_at( unsigned i, real_type & re, real_type & im ) const ;
 
     template <typename T>
-    T& get_pointer( unsigned i )
+    T& get_pointer_at( unsigned i )
     { return (*this)[i].get_pointer<T>() ; }
 
     template <typename T>
-    T get_pointer( unsigned i ) const
+    T get_pointer_at( unsigned i ) const
     { return (*this)[i].get_pointer<T>() ; }
     //!< Return `i`-th generic pointer (if fails issue an error).
 
-    bool_type get_bool( unsigned i ) ;
-    bool_type get_bool( unsigned i ) const ;
+    bool_type get_bool_at( unsigned i ) ;
+    bool_type get_bool_at( unsigned i ) const ;
     //!< Return `i`-th boolean (if fails issue an error).
 
-    int_type       & get_int( unsigned i ) ;
-    int_type const & get_int( unsigned i ) const ;
+    int_type       & get_int_at( unsigned i ) ;
+    int_type const & get_int_at( unsigned i, char const msg[] = "get_int_at(...)" ) const ;
     //!< Return `i`-th integer (if fails issue an error).
 
-    real_type       & get_real( unsigned i ) ;
-    real_type const & get_real( unsigned i ) const ;
+    real_type       & get_real_at( unsigned i ) ;
+    real_type const & get_real_at( unsigned i ) const ;
     //!< Return `i`-th floating point number (if fails issue an error).
 
-    complex_type       & get_complex( unsigned i ) ;
-    complex_type const & get_complex( unsigned i ) const ;
+    complex_type       & get_complex_at( unsigned i ) ;
+    complex_type const & get_complex_at( unsigned i ) const ;
     //!< Return `i`-th complex floating point number (if fails issue an error).
 
-    real_type       & get_real( unsigned i, unsigned j ) ;
-    real_type const & get_real( unsigned i, unsigned j ) const ;
+    real_type       & get_real_at( unsigned i, unsigned j ) ;
+    real_type const & get_real_at( unsigned i, unsigned j ) const ;
     //!< Return `i`-th floating point number (if fails issue an error).
 
-    complex_type       & get_complex( unsigned i, unsigned j ) ;
-    complex_type const & get_complex( unsigned i, unsigned j ) const ;
+    complex_type       & get_complex_at( unsigned i, unsigned j ) ;
+    complex_type const & get_complex_at( unsigned i, unsigned j ) const ;
     //!< Return `i`-th complex floating point number (if fails issue an error).
 
-    string_type       & get_string( unsigned i ) ;
-    string_type const & get_string( unsigned i ) const ;
+    string_type       & get_string_at( unsigned i ) ;
+    string_type const & get_string_at( unsigned i ) const ;
     //!< Return `i`-th string (if fails issue an error).
 
-    GenericContainer       & get_gc( unsigned i )       { return (*this)[i] ; }
-    GenericContainer const & get_gc( unsigned i ) const { return (*this)[i] ; }
+    GenericContainer       & get_gc_at( unsigned i )       { return (*this)[i] ; }
+    GenericContainer const & get_gc_at( unsigned i ) const { return (*this)[i] ; }
     //!< Return `i`-th `GenericContainer` of a generic vector (if fails issue an error).
     //@}
 
     //! \name Access to map type element
     //@{
-    map_type       & get_map() ;
-    map_type const & get_map() const ;
+    map_type       & get_map( char const msg[] = "get_map()" ) ;
+    map_type const & get_map( char const msg[] = "get_map()" ) const ;
     //!< Return the reference of the stored map or issue an error.
 
     //! Check if string `s` is a key of the stored map (if fails issue an error).
