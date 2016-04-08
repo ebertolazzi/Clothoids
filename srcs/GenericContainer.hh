@@ -891,8 +891,8 @@ namespace GenericContainerNamepace {
     void get_complex_number( real_type & re, real_type & im ) const ;
 
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
-    void * get_pvoid() const ;
-    void ** get_ppvoid() const ;
+    void * get_pvoid( char const msg[] = nullptr ) const ;
+    void ** get_ppvoid( char const msg[] = nullptr ) const ;
 
     template <typename T>
     T& get_pointer()
@@ -1356,7 +1356,7 @@ namespace GenericContainerNamepace {
     push_vector_position( unsigned pos ) {
       int ok = check( GC_VECTOR ) ;
       if ( ok == GENERIC_CONTAINER_OK  ) {
-        GenericContainer::GenericContainer * gc = &(*head.back())[pos] ;
+        GenericContainer * gc = &((*head.back())[pos]) ;
         head.push_back( gc ) ;
       }
       return ok ;
@@ -1366,7 +1366,7 @@ namespace GenericContainerNamepace {
     push_map_position( char const pos[] ) {
       int ok = check( GC_MAP ) ;
       if ( ok == GENERIC_CONTAINER_OK  ) {
-        GenericContainer::GenericContainer * gc = &(*head.back())[pos] ;
+        GenericContainer * gc = &((*head.back())[pos]) ;
         head.push_back( gc ) ;
       }
       return ok ;
