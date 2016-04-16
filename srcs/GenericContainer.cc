@@ -25,8 +25,8 @@
 #include <iomanip>
 
 // use pcre for pattern matching
-#ifndef GENERIC_CONTAINER_NO_PCRE
-  #include <pcre.h>
+#ifdef GENERIC_CONTAINER_USE_CXX11
+  #include <regex>
 #endif
 
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
@@ -89,7 +89,7 @@ namespace GenericContainerNamepace {
                "mat_real_type::operator() (" << i << ", " << j <<
                ") index out of range: [0," << _numRows <<
                ") x [0," << _numCols << ")\n" ) ;
-    return (*this)[size_type(i+j*_numRows)] ;
+    return (*this)[std::size_t(i+j*_numRows)] ;
   }
 
   real_type &
@@ -98,7 +98,7 @@ namespace GenericContainerNamepace {
                "mat_real_type::operator() (" << i << ", " << j <<
                ") index out of range: [0," << _numRows <<
                ") x [0," << _numCols << ")\n" ) ;
-    return (*this)[size_type(i+j*_numRows)] ;
+    return (*this)[std::size_t(i+j*_numRows)] ;
   }
 
   complex_type const &
@@ -107,7 +107,7 @@ namespace GenericContainerNamepace {
                "mat_real_type::operator() (" << i << ", " << j <<
                ") index out of range: [0," << _numRows <<
                ") x [0," << _numCols << ")\n" ) ;
-    return (*this)[size_type(i+j*_numRows)] ;
+    return (*this)[std::size_t(i+j*_numRows)] ;
   }
 
   complex_type &
@@ -116,7 +116,7 @@ namespace GenericContainerNamepace {
                "mat_real_type::operator() (" << i << ", " << j <<
                ") index out of range: [0," << _numRows <<
                ") x [0," << _numCols << ")\n" ) ;
-    return (*this)[size_type(i+j*_numRows)] ;
+    return (*this)[std::size_t(i+j*_numRows)] ;
   }
 
   std::ostream &
@@ -141,50 +141,31 @@ namespace GenericContainerNamepace {
     return s ;
   }
 
-  #ifndef GENERIC_CONTAINER_NO_PCRE
+  #ifdef GENERIC_CONTAINER_USE_CXX11
 
   class GENERIC_CONTAINER_API_DLL Pcre_for_GC {
 
   private:
-
-    pcre        * reCompiled      ; // pcre *
-    pcre_extra  * pcreExtra       ; // pcre_extra *
-    char const  * pcreErrorStr    ; // const char *
-    int           pcreErrorOffset ;
+  
+    std::regex  reCompiled ;
+    std::smatch reMatches ;
 
   public:
 
-    Pcre_for_GC() {
-      reCompiled = pcre_compile("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$",
-                                0,
-                                &pcreErrorStr,
-                                &pcreErrorOffset,
-                                NULL);
-      // pcre_compile returns NULL on error, and sets pcreErrorOffset & pcreErrorStr
-      GC_ASSERT( reCompiled != nullptr,
-                 "Cannot compile regex for GenericContainer\n" ) ;
-      // Optimize the regex
-      pcreExtra = pcre_study(reCompiled, 0, &pcreErrorStr);
-      GC_ASSERT( pcreExtra != nullptr,
-                 "Cannot optimize regex for GenericContainer\n" ) ;
-    }
+    Pcre_for_GC()
+    : reCompiled("^\\s*\\d+\\s*(##?)(-|=|~|_|)\\s*(.*)$")
+    { }
 
     int
-    exec( char const str[],
-          int  const len,
-          int        imatch[30] ) {
-      // num+"@"+"underline character"
-      // Try to find the regex in aLineToMatch, and report results.
-      return pcre_exec(reCompiled,
-                       pcreExtra,
-                       str,
-                       len,         // length of string
-                       0,           // Start looking at this point
-                       0,           // OPTIONS
-                       imatch,
-                       30);         // Length of subStrVec
+    exec( std::string const & str, std::string matches[4] ) {
+      if ( std::regex_match( str, reMatches, reCompiled ) ) {
+        for ( std::size_t i = 0 ; i < reMatches.size() ; ++i )
+          matches[i] = reMatches[i].str() ;
+        return int(reMatches.size()) ;
+      } else {
+        return 0 ;
+      }
     }
-
   } ;
 
   static Pcre_for_GC pcre_for_GC ;
@@ -1960,7 +1941,7 @@ namespace GenericContainerNamepace {
         { map_type const & m = this -> get_map() ;
           for ( map_type::const_iterator im = m.begin() ; im != m.end() ; ++im ) {
             // check formatting using pcre
-            #ifdef GENERIC_CONTAINER_NO_PCRE
+            #ifndef GENERIC_CONTAINER_USE_CXX11
             if ( im->second.simple_data() ||
                  ( im->second.simple_vec_data() && im->second.get_num_elements() <= 10 ) ) {
               stream << prefix << im->first << ": " ;
@@ -1972,27 +1953,21 @@ namespace GenericContainerNamepace {
             #else
             // num+"@"+"underline character"
             // Try to find the regex in aLineToMatch, and report results.
-            int imatch[30];
-            int pcreExecRet = pcre_for_GC.exec( im->first.c_str(),
-                                                int(im->first.length()),
-                                                imatch ) ;
+            std::string matches[4] ;
+            int pcreExecRet = pcre_for_GC.exec( im->first, matches ) ;
             if ( pcreExecRet == 4 ) {
-              // extract match
-              int m1 = imatch[3]-imatch[2] ; // # or ##
-              int m2 = imatch[5]-imatch[4] ; // -,= etc
-              int m3 = imatch[7]-imatch[6] ; // # or ##
-              std::string header = im->first.substr((std::string::size_type)imatch[6],
-                                                    (std::string::size_type)imatch[7]) ; // header
+              std::string header = matches[3] ; // header
               // found formatting
               if ( im->second.simple_data() ) {
                 stream << prefix << header << ": " ;
                 im->second.print(stream,"") ;
               } else {
-                if ( m1 > 1 ) stream << '\n' ; // double ## --> add nel line
+                if ( matches[1].length() > 1 ) stream << '\n' ; // double ## --> add nel line
                 stream << prefix << header ;
-                if ( m2 > 0 ) {
+                if ( matches[2].length() > 0 ) {
                   stream << '\n' << prefix ;
-                  char fmt = im->first[(std::string::size_type)imatch[4]] ; // underline char
+                  char fmt = matches[2][0] ; // underline char
+                  std::size_t m3 = header.length() ;
                   while ( m3-- > 0 ) stream << fmt ; // underline header
                 } else {
                   stream << ':' ;
@@ -2001,10 +1976,7 @@ namespace GenericContainerNamepace {
                 im->second.print(stream,prefix+indent) ;
               }
             } else {
-              std::string header = pcreExecRet == 3 ?
-                                   im->first.substr((std::string::size_type)imatch[4],
-                                                    (std::string::size_type)imatch[5]) :
-                                   im->first ;
+              std::string header = pcreExecRet == 3 ? matches[3] : im->first ;
               if ( im->second.simple_data() ) {
                 stream << prefix << header << ": " ;
                 im->second.print(stream,"") ;
