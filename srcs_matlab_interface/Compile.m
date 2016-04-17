@@ -1,9 +1,9 @@
 clc;
 
-NAMES = { 'test_gc' } ;
+NAMES = { 'test_gc', 'print_recursive' } ;
 
 disp('---------------------------------------------------------');
-for k=1:1
+for k=1:2
   N=NAMES{k} ;
   fprintf(1,'Compiling: %s\n',N) ;
 
