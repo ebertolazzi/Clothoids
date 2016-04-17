@@ -66,6 +66,8 @@
 
 #if defined(_WIN32) || defined(_WIN64)
   #define GENERIC_CONTAINER_ON_WINDOWS
+  //#pragma comment(lib, "kernel32.lib")
+  //#pragma comment(lib, "user32.lib")
 #endif
 
 #ifndef GENERIC_CONTAINER_API_DLL

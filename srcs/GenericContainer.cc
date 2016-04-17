@@ -1887,7 +1887,7 @@ namespace GenericContainerNamepace {
       case GC_VEC_POINTER:
         { vec_pointer_type const & v = this -> get_vec_pointer() ;
           for ( vec_pointer_type::size_type i = 0 ; i < v.size() ; ++i )
-            stream << prefix << "vec_pointer(" << i << "): " << (unsigned long)v[i] << '\n' ;
+            stream << prefix << "vec_pointer(" << i << "): " << (unsigned long long)v[i] << '\n' ;
         }
         break ;
       case GC_VEC_BOOL:

@@ -10,6 +10,10 @@
 /libs/*.so
 /libs/*.dll
 /DerivedData
+/CMakeFiles
+/vs_2010
+/vs_2013
+/vs_2015
 
 # Compiled source #
 ###################

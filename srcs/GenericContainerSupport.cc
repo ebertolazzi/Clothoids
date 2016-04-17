@@ -42,7 +42,7 @@ namespace GenericContainerNamepace {
                   vec_string_type   & tokens,
                   std::string const & delimiters ) {
 
-    tokens . clear() ;
+    tokens.clear() ;
 
     // Skip delimiters at beginning.
     std::string::size_type lastPos = str.find_first_not_of(delimiters, 0);

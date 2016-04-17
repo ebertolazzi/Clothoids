@@ -8,8 +8,10 @@ A.string  = 'pippo' ;
 A.strings = { 'pippo', 'pluto', 'paperino', [1 2], [1 2 ; 3 5] } ;
 A.struct  = { 'pippo', 'pluto', 'paperino', [1 2], [1 2 ; 3 5], B, sparse(S), sparse(S1) } ;
 
+fprintf(1,'\n\n* * * * * input * * * * *\n') ;
 A
 RES = test_gc(A) ;
 
+fprintf(1,'\n\n* * * * * output * * * * *\n') ;
 RES
 %test_gc(A.') ;
