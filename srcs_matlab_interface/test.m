@@ -16,3 +16,12 @@ RES = test_gc(A) ;
 fprintf(1,'\n\n* * * * * output * * * * *\n') ;
 print_recursive(RES) ;
 %test_gc(A.') ;
+
+
+fprintf(1,'\n\n* * * * * input * * * * *\n') ;
+print_recursive([ 1 2 3 ; 4 5 6]) ;
+RES = test_gc([ 1 2 3 ; 4 5 6]) ;
+%
+fprintf(1,'\n\n* * * * * output * * * * *\n') ;
+print_recursive(RES) ;
+%test_gc(A.') ;

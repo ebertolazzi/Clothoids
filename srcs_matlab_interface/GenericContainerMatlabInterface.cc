@@ -365,8 +365,8 @@ namespace GenericContainerNamepace {
           mx = mxCreateNumericArray(2,dims,mxDOUBLE_CLASS,mxREAL) ;
           double * ptr = mxGetPr(mx) ;
           mwSize k = 0 ;
-          for ( mwSize i = 0 ; i < dims[0] ; ++i )
-            for ( mwSize j = 0 ; j < dims[1] ; ++j )
+          for ( mwSize j = 0 ; j < dims[1] ; ++j )
+            for ( mwSize i = 0 ; i < dims[0] ; ++i )
               ptr[k++] = gc.get_real_at(i,j) ;
         }
       break;
@@ -378,8 +378,8 @@ namespace GenericContainerNamepace {
           double * ptr = mxGetPr(mx) ;
           double * pti = mxGetPi(mx) ;
           mwSize k = 0 ;
-          for ( mwSize i = 0 ; i < dims[0] ; ++i ) {
-            for ( mwSize j = 0 ; j < dims[1] ; ++j ) {
+          for ( mwSize j = 0 ; j < dims[1] ; ++j ) {
+            for ( mwSize i = 0 ; i < dims[0] ; ++i ) {
               GC::complex_type val = gc.get_complex_at( i, j ) ;
               ptr[k] = val.real() ;
               pti[k] = val.imag() ;
