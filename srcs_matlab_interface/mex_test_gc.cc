@@ -18,7 +18,7 @@
 
 #include <sstream>
 
-namespace GenericContainerNamepace {
+namespace GenericContainerNamespace {
 
 extern "C"
 void

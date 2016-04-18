@@ -31,7 +31,7 @@
 
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
-namespace GenericContainerNamepace {
+namespace GenericContainerNamespace {
 
   std::ostream &
   operator << ( std::ostream & s, vec_bool_type const & v ) {

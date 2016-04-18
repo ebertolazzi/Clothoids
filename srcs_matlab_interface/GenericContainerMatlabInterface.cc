@@ -20,7 +20,7 @@
 #include <iostream>
 #include <cstdint>
 
-namespace GenericContainerNamepace {
+namespace GenericContainerNamespace {
 
   using namespace std ;
 

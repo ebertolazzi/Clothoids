@@ -47,7 +47,7 @@
 
 using namespace std ;
 
-namespace GenericContainerNamepace {
+namespace GenericContainerNamespace {
 
   typedef double valueType ;
   typedef int    indexType ;

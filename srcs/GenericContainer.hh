@@ -84,7 +84,7 @@
   #endif
 #endif
 
-namespace GenericContainerNamepace {
+namespace GenericContainerNamespace {
 
   class GenericContainer ;
 
@@ -1033,7 +1033,7 @@ namespace GenericContainerNamepace {
 
 // do not define alias GC if use X11
 #ifndef XlibSpecificationRelease
-namespace GC = GenericContainerNamepace ;
+namespace GC = GenericContainerNamespace ;
 #endif
 
 #endif

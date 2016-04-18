@@ -28,7 +28,7 @@
 #include <fstream>
 
 using namespace std ;
-using namespace GenericContainerNamepace ;
+using namespace GenericContainerNamespace ;
 
 static
 void
