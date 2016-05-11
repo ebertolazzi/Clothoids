@@ -1325,10 +1325,10 @@ namespace GenericContainerNamespace {
         stream << "Vector of string of size " << _data.v_s->size() << '\n' ;
         break ;
       case GC_MAT_REAL:
-        stream << "Matrix of floating point number of size " << _data.m_r->numRows() << " x " << _data.m_c->numCols() << '\n' ;
+        _data.m_r->info(stream) ;
         break ;
       case GC_MAT_COMPLEX:
-        stream << "Matrix of complex floating point number of size " << _data.m_c->numRows() << " x " << _data.m_c->numCols() << '\n' ;
+        _data.m_c->info(stream) ;
         break ;
       case GC_VECTOR:
         stream << "Vector of generic data type of size " << _data.v->size() << '\n' ;

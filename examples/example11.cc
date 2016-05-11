@@ -43,6 +43,7 @@ main() {
     gc.get_real_at(0,1) = 3 ;
     cout << "Result:\n" ;
     gc.print(cout) ;
+    gc.info(cout);
   }
   catch ( std::exception & exc ) {
     cout << exc.what() << '\n'  ;

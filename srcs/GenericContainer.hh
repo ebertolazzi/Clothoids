@@ -129,6 +129,13 @@ namespace GenericContainerNamespace {
     real_type const & operator () ( unsigned i, unsigned j ) const ;
     real_type       & operator () ( unsigned i, unsigned j ) ;
 
+    void
+    info( std::basic_ostream<char> & stream ) const {
+       stream << "Matrix of floating point number of size "
+              << _numRows << " x " << _numCols
+              << '\n' ;
+    }
+
   } ;
 
   // ---------------------------------------------------------------------------
@@ -153,6 +160,13 @@ namespace GenericContainerNamespace {
 
     complex_type const & operator () ( unsigned i, unsigned j ) const ;
     complex_type       & operator () ( unsigned i, unsigned j ) ;
+
+    void
+    info( std::basic_ostream<char> & stream ) const {
+       stream << "Matrix of complex floating point number of size "
+              << _numRows << " x " << _numCols
+              << '\n' ;
+    }
 
   } ;
 
