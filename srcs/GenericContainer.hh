@@ -121,7 +121,14 @@ namespace GenericContainerNamespace {
     mat_real_type( unsigned nr, unsigned nc )
     : _numRows(nr)
     , _numCols(nc)
-    { this->resize(size_type(nr*nc)) ; }
+    { vec_real_type::resize(size_type(nr*nc)) ; }
+
+    void
+    resize( unsigned nr, unsigned nc ) {
+      _numRows = nr ;
+      _numCols = nc ;
+      vec_real_type::resize(size_type(nr*nc)) ;
+    }
 
     unsigned numRows() const { return _numRows ; }
     unsigned numCols() const { return _numCols ; }
@@ -153,8 +160,15 @@ namespace GenericContainerNamespace {
     mat_complex_type( unsigned nr, unsigned nc )
     : _numRows(nr)
     , _numCols(nc)
-    { this->resize(size_type(nr*nc)) ; }
-    
+    { vec_complex_type::resize(size_type(nr*nc)) ; }
+
+    void
+    resize( unsigned nr, unsigned nc ) {
+      _numRows = nr ;
+      _numCols = nc ;
+      vec_complex_type::resize(size_type(nr*nc)) ;
+    }
+
     unsigned numRows() const { return _numRows ; }
     unsigned numCols() const { return _numCols ; }
 
