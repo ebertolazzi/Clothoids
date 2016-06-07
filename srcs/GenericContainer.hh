@@ -33,8 +33,19 @@
 #include <sstream>
 #include <stdexcept>
 
-#if __cplusplus > 199711L
-  #define GENERIC_CONTAINER_USE_CXX11
+// if C++ < C++11 define nullptr
+#if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
+  #if _MSC_VER >= 1900
+    #ifndef DO_NOT_USE_CXX11
+      #define GENERIC_CONTAINER_USE_CXX11
+    #endif
+  #endif
+#else
+  #if __cplusplus > 199711L
+    #ifndef DO_NOT_USE_CXX11
+      #define GENERIC_CONTAINER_USE_CXX11
+    #endif
+  #endif
 #endif
 
 // if C++ < C++11 define nullptr
