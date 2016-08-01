@@ -39,7 +39,8 @@ LIB_DIR = -L/usr/local/lib -L./libs
 LIBS    = $(LIB_DIR) -lGenericContainer -lpcre
 
 #AR     = ar rcs
-AR     = libtool -static -o 
+AR     = libtool -static -o
+MKDIR  = mkdir -p
 
 all: libs/$(LIB_GC)
 	$(CXX) $(CFLAGS) -o bin/example1  examples/example1.cc  $(LIBS)
@@ -64,12 +65,15 @@ srcs/%.o: srcs/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 libs/libGenericContainer.a: $(OBJS)
+	$(MKDIR) libs
 	$(AR) libs/libGenericContainer.a $(OBJS) 
 
 libs/libGenericContainer.dylib: $(OBJS)
+	$(MKDIR) libs
 	$(CXX) -dynamiclib $(OBJS) -o libs/libGenericContainer.dylib $(LIB_DIR) -llua -lpcre -install_name libGenericContainer.dylib -Wl,-rpath,.
 
 libs/libGenericContainer.so: $(OBJS)
+	$(MKDIR) libs
 	$(CXX) -shared $(OBJS) -o libs/libGenericContainer.so $(LIB_DIR) -llua -lpcre
 
 install: libs/$(LIB_GC)
