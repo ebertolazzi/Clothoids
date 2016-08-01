@@ -33,7 +33,6 @@
 This library available at
  
  - https://github.com/ebertolazzi/GenericContainer
- - https://bitbucket.org/ebertolazzi/genericcontainer
 
 implement `GenericContainer` a class which permit to store eterogeneous data:
 

@@ -12,7 +12,9 @@
   GNU General Public License for more details.
 \****************************************************************************/
 
-#include "GenericContainer.hh"
+#ifndef GENERIC_CONTAINER_HH
+  #include "GenericContainer.hh"
+#endif
 #include "mex.h"
 
 namespace GenericContainerNamespace {

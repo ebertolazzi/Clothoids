@@ -12,9 +12,7 @@
   GNU General Public License for more details.
 \****************************************************************************/
 
-#include "GenericContainer.hh"
 #include "GenericContainerMatlabInterface.hh"
-#include "mex.h"
 #include "matrix.h"
 
 #include <iostream>
@@ -33,6 +31,20 @@ namespace GenericContainerNamespace {
   }
 
   // ===========================================================================
+
+  static
+  void
+  mx_to_vec_bool( mxArray const * mx, GenericContainer & gc ) {
+    if ( mxGetNumberOfElements(mx) == 1 ) {
+      gc = mxIsLogicalScalarTrue(mx) ;
+    } else {
+      mxLogical const * pr = mxGetLogicals(mx);
+      mwSize total_num_of_elements = mxGetNumberOfElements(mx);
+      vector_type & vec = gc.set_vector( total_num_of_elements ) ;
+      for ( mwSize index = 0 ; index < total_num_of_elements ; ++index )
+        vec[index] = *pr++ ;
+    }
+  }
 
   template <typename T>
   static
@@ -241,7 +253,7 @@ namespace GenericContainerNamespace {
     } else {
       if ( mxIsComplex(mx) ) {
         switch (category)  {
-          //case mxLOGICAL_CLASS: mx_to_vec_int<mxLogical>(mx,gc); break;
+          case mxLOGICAL_CLASS: mx_to_vec_bool(mx,gc);              break;
           case mxINT8_CLASS:    mx_to_vec_complex<int8_t>(mx,gc);   break;
           case mxUINT8_CLASS:   mx_to_vec_complex<uint8_t>(mx,gc);  break;
           case mxINT16_CLASS:   mx_to_vec_complex<int16_t>(mx,gc);  break;
@@ -258,7 +270,7 @@ namespace GenericContainerNamespace {
         }
       } else {
         switch (category)  {
-          //case mxLOGICAL_CLASS: mx_to_vec_int<mxLogical>(mx,gc); break;
+          case mxLOGICAL_CLASS: mx_to_vec_bool(mx,gc);          break;
           case mxINT8_CLASS:    mx_to_vec_int<int8_t>(mx,gc);   break;
           case mxUINT8_CLASS:   mx_to_vec_int<uint8_t>(mx,gc);  break;
           case mxINT16_CLASS:   mx_to_vec_int<int16_t>(mx,gc);  break;
