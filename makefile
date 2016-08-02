@@ -32,7 +32,8 @@ srcs_lua_interface/GenericContainerLuaInterface.hh
 
 # prefix for installation, use make PREFIX=/new/prefix install
 # to override
-PREFIX=/usr/local
+PREFIX    = /usr/local
+FRAMEWORK = GenericContainer
 
 CFLAGS  = -I/usr/local/include -I./srcs -I./srcs_lua_interface -Wall -O3
 LIB_DIR = -L/usr/local/lib -L./libs
@@ -78,6 +79,11 @@ libs/libGenericContainer.so: $(OBJS)
 
 install: libs/$(LIB_GC)
 	cp srcs/GenericContainer.hh $(PREFIX)/include
+	cp libs/$(LIB_GC)           $(PREFIX)/lib
+
+install_as_framework: libs/$(LIB_GC)
+	$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
+	cp srcs/GenericContainer.hh $(PREFIX)/include/$(FRAMEWORK)
 	cp libs/$(LIB_GC)           $(PREFIX)/lib
 
 run:
