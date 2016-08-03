@@ -1,13 +1,11 @@
+---
 language: cpp
-
 compiler:
   - clang
   - gcc
+script:
+  - "make -e && make run"
 os:
   - linux
   - osx
-
-script:
-  - "make -e && make run"
-
 osx_image: xcode61
