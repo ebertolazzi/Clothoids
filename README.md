@@ -1,5 +1,5 @@
-GenericContainer
-================
+GenericContainer [![Build Status](https://travis-ci.org/ebertolazzi/GenericContainer.svg?branch=master)](https://travis-ci.org/ebertolazzi/GenericContainer)
+=======
 
 `GenericContainer` is a C++ class with permit to store eterogeneous data:
   
