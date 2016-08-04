@@ -101,6 +101,13 @@ namespace GenericContainerNamespace {
     return (*this)[std::size_t(i+j*_numRows)] ;
   }
 
+  void
+  mat_real_type::info( std::basic_ostream<char> & stream ) const {
+    stream << "Matrix of floating point number of size "
+           << _numRows << " x " << _numCols
+           << '\n' ;
+  }
+
   complex_type const &
   mat_complex_type::operator () ( unsigned i, unsigned j ) const {
     GC_ASSERT( i < _numRows && j < _numCols,
@@ -117,6 +124,13 @@ namespace GenericContainerNamespace {
                ") index out of range: [0," << _numRows <<
                ") x [0," << _numCols << ")\n" ) ;
     return (*this)[std::size_t(i+j*_numRows)] ;
+  }
+
+  void
+  mat_complex_type::info( std::basic_ostream<char> & stream ) const {
+    stream << "Matrix of complex floating point number of size "
+           << _numRows << " x " << _numCols
+           << '\n' ;
   }
 
   std::ostream &
@@ -376,23 +390,18 @@ namespace GenericContainerNamespace {
   }
 
   void
-  GenericContainer::ck(char const who[], TypeAllowed tp) const {
+  GenericContainer::ck( char const msg_in[], TypeAllowed tp ) const {
+    char const * msg = msg_in == nullptr ? "" : msg_in ;
     GC_ASSERT( tp == _data_type,
-               who <<
-               " bad data type\nexpect: " << typeName[tp] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
+               msg <<
+               "bad data type, expect: " << typeName[tp] <<
+               " but data stored is of type: " << typeName[_data_type] ) ;
   }
 
   void
-  GenericContainer::ck_or_set(char const who[], TypeAllowed tp) {
-    if ( _data_type == GC_NOTYPE ) {
-      _data_type = tp ;
-    } else {
-      GC_ASSERT( tp == _data_type,
-                 who <<
-                 " bad data type\nexpect: " << typeName[tp] <<
-                 "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    }
+  GenericContainer::ck_or_set( char const msg[], TypeAllowed tp) {
+    if ( _data_type == GC_NOTYPE ) _data_type = tp ;
+    else                           ck(msg,tp) ;
   }
 
   /*
@@ -807,7 +816,6 @@ namespace GenericContainerNamespace {
   //   \____|\___|\__|
   */
 
-#if defined(_WIN32) || defined(_WIN64)
   void *
   GenericContainer::get_pvoid( char const msg[] ) const {
     ck(msg,GC_POINTER) ;
@@ -819,7 +827,6 @@ namespace GenericContainerNamespace {
     ck(msg,GC_POINTER) ;
     return (void **)&_data.p ;
   }
-#endif
 
   //! If data is boolean, integer or floating point return number, otherwise return `0`.
   real_type
@@ -1125,9 +1132,9 @@ namespace GenericContainerNamespace {
   }
 
   bool_type
-  GenericContainer::get_bool_at( unsigned i ) const {
-    ck("get_bool()",GC_VEC_BOOL) ;
-    GC_ASSERT( i < _data.v_b->size(), "get_bool_at( " << i << " ) const, out of range" ) ;
+  GenericContainer::get_bool_at( unsigned i, char const msg[] ) const {
+    ck(msg,GC_VEC_BOOL) ;
+    GC_ASSERT( i < _data.v_b->size(), msg << "\nget_bool_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_b)[i] ;
   }
 
@@ -1148,7 +1155,7 @@ namespace GenericContainerNamespace {
   int_type const &
   GenericContainer::get_int_at( unsigned i, char const msg[] ) const {
     ck(msg,GC_VEC_INTEGER) ;
-    GC_ASSERT( i < _data.v_i->size(), "get_int_at( " << i << " ) const, out of range" ) ;
+    GC_ASSERT( i < _data.v_i->size(), msg << "\nget_int_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_i)[i] ;
   }
 
@@ -1167,12 +1174,9 @@ namespace GenericContainerNamespace {
   }
 
   real_type const &
-  GenericContainer::get_real_at( unsigned i ) const  {
-    GC_ASSERT( GC_VEC_REAL == _data_type,
-               "get_real( " << i << " ) bad data type" <<
-               "\nexpect: " << typeName[GC_VEC_REAL] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    GC_ASSERT( i < _data.v_r->size(), "get_real_at( " << i << " ) const, out of range" ) ;
+  GenericContainer::get_real_at( unsigned i, char const msg[] ) const  {
+    ck(msg,GC_VEC_REAL) ;
+    GC_ASSERT( i < _data.v_r->size(), msg << "\nget_real_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_r)[i] ;
   }
 
@@ -1190,11 +1194,10 @@ namespace GenericContainerNamespace {
   }
 
   real_type const &
-  GenericContainer::get_real_at( unsigned i, unsigned j ) const  {
-    GC_ASSERT( GC_MAT_REAL == _data_type,
-               "get_real_at( " << i << ", " << j << " ) bad data type" <<
-               "\nexpect: " << typeName[GC_MAT_REAL] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
+  GenericContainer::get_real_at( unsigned i, unsigned j, char const msg[] ) const  {
+    ck(msg,GC_MAT_REAL) ;
+    GC_ASSERT( i < _data.v_r->size(),
+               msg << "\bget_real_at( " << i << ", " << j << " ) const, out of range" ) ;
     return (*_data.m_r)(i,j) ;
   }
 
@@ -1215,12 +1218,10 @@ namespace GenericContainerNamespace {
   }
 
   complex_type const &
-  GenericContainer::get_complex_at( unsigned i ) const  {
-    GC_ASSERT( GC_VEC_COMPLEX == _data_type,
-               "get_complex( " << i << " ) bad data type" <<
-               "\nexpect: " << typeName[GC_VEC_COMPLEX] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    GC_ASSERT( i < _data.v_c->size(), "get_complex_at( " << i << " ) const, out of range" ) ;
+  GenericContainer::get_complex_at( unsigned i, char const msg[] ) const  {
+    ck(msg,GC_VEC_COMPLEX) ;
+    GC_ASSERT( i < _data.v_c->size(),
+               msg << "\nget_complex_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_c)[i] ;
   }
 
@@ -1240,11 +1241,8 @@ namespace GenericContainerNamespace {
   }
 
   complex_type const &
-  GenericContainer::get_complex_at( unsigned i, unsigned j ) const  {
-    GC_ASSERT( GC_MAT_COMPLEX == _data_type,
-               "get_complex_at( " << i << ", " << j << " ) bad data type" <<
-               "\nexpect: " << typeName[GC_MAT_COMPLEX] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
+  GenericContainer::get_complex_at( unsigned i, unsigned j, char const msg[] ) const  {
+    ck(msg,GC_MAT_COMPLEX) ;
     return (*_data.m_c)(i,j) ;
   }
 
@@ -1261,13 +1259,20 @@ namespace GenericContainerNamespace {
   }
 
   string_type const &
-  GenericContainer::get_string_at( unsigned i ) const {
-    GC_ASSERT( GC_VEC_STRING == _data_type,
-               "get_string( " << i << " ) bad data type" <<
-               "\nexpect: " << typeName[GC_VEC_STRING] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    GC_ASSERT( i < _data.v_s->size(), "get_string_at( " << i << " ) const, out of range" ) ;
+  GenericContainer::get_string_at( unsigned i, char const msg[] ) const {
+    ck(msg,GC_VEC_STRING) ;
+    GC_ASSERT( i < _data.v_s->size(),
+               msg << "\nget_string_at( " << i << " ) const, out of range" ) ;
     return (*_data.v_s)[i] ;
+  }
+  
+  GenericContainer &
+  GenericContainer::get_gc_at( unsigned i )
+  { return (*this)[i] ; }
+  
+  GenericContainer const &
+  GenericContainer::get_gc_at( unsigned i, char const msg[] ) const {
+    return (*this)(i,msg) ;
   }
 
   /*
@@ -1383,22 +1388,40 @@ namespace GenericContainerNamespace {
   */
 
   GenericContainer &
-  GenericContainer::operator () ( unsigned i ) {
-    GC_ASSERT( GC_VECTOR == _data_type,
-               "operator () integer argument = " << i <<
-               " bad data type\nexpect: " << typeName[GC_VECTOR] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
+  GenericContainer::operator () ( unsigned i, char const msg[] ) {
+    ck(msg,GC_VECTOR) ;
+    GC_ASSERT( i < _data.v->size(),
+               msg << "\noperator () const, index " << i << " out of range" ) ;
     return (*_data.v)[i] ;
   }
 
   GenericContainer const &
-  GenericContainer::operator () ( unsigned i ) const {
-    GC_ASSERT( GC_VECTOR == _data_type,
-               "operator () integer argument = " << i <<
-               " bad data type\nexpect: " << typeName[GC_VECTOR] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    GC_ASSERT( i < _data.v->size(), "operator () const, index " << i << " out of range" ) ;
+  GenericContainer::operator () ( unsigned i, char const msg_in[] ) const {
+    ck(msg_in,GC_VECTOR) ;
+    char const * msg = msg_in == nullptr ? "" : msg_in ;
+    GC_ASSERT( i < _data.v->size(),
+               msg << "\noperator () const, index " << i << " out of range" ) ;
     return (*_data.v)[i] ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator () ( std::string const & s, char const msg_in[] ) {
+    ck(msg_in,GC_MAP) ;
+    map_type::iterator iv = (*_data.m) . find(s) ;
+    char const * msg = msg_in == nullptr ? "" : msg_in ;
+    GC_ASSERT( iv != (*_data.m) . end(),
+               msg << "\noperator(): Cannot find key '" << s << "'!" ) ;
+    return iv -> second ;
+  }
+
+  GenericContainer const &
+  GenericContainer::operator () ( std::string const & s, char const msg_in[] ) const {
+    ck(msg_in,GC_MAP) ;
+    map_type::const_iterator iv = (*_data.m) . find(s) ;
+    char const * msg = msg_in == nullptr ? "" : msg_in ;
+    GC_ASSERT( iv != (*_data.m) . end(),
+               msg << "\noperator(): Cannot find key '" << s << "'!" ) ;
+    return iv -> second ;
   }
 
   /*
@@ -1423,28 +1446,6 @@ namespace GenericContainerNamespace {
                "\nexpect: " << typeName[GC_MAP] <<
                "\nbut data stored is of type: " << typeName[_data_type] ) ;
     return (*_data.m)[s] ;
-  }
-
-  GenericContainer &
-  GenericContainer::operator () ( std::string const & s ) {
-    GC_ASSERT( GC_MAP == _data_type,
-               "operator () string argument = ``" << s <<
-               "'' bad data type\nexpect: " << typeName[GC_MAP] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    map_type::iterator iv = (*_data.m) . find(s) ;
-    GC_ASSERT( iv != (*_data.m) . end(), "operator(): Cannot find key '" << s << "'!" ) ;
-    return iv -> second ;
-  }
-
-  GenericContainer const &
-  GenericContainer::operator () ( std::string const & s ) const {
-    GC_ASSERT( GC_MAP == _data_type,
-               "operator () string argument = ``" << s <<
-               "'' bad data type\nexpect: " << typeName[GC_MAP] <<
-               "\nbut data stored is of type: " << typeName[_data_type] ) ;
-    map_type::const_iterator iv = (*_data.m) . find(s) ;
-    GC_ASSERT( iv != (*_data.m) . end(), "operator(): Cannot find key '" << s << "'!" ) ;
-    return iv -> second ;
   }
 
   /*

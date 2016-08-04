@@ -47,7 +47,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/enrico/Ricerca/develop/myBitBucketProjetcs/myGenericContainer/bin"
+      customWorkingDirectory = "/Users/enrico/Ricerca/develop/myGitProjetcs/myGenericContainer/bin"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"

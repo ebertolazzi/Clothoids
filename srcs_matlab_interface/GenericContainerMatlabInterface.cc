@@ -293,6 +293,7 @@ namespace GenericContainerNamespace {
 
   void
   GenericContainer_to_mxArray( GenericContainer const & gc, mxArray * & mx ) {
+    static char const where[] = "in GenericContainer_to_mxArray" ; 
     mwSize dims[2] = {1,1} ;
     switch ( gc.get_type() ) {
       case GC_NOTYPE:
@@ -334,7 +335,7 @@ namespace GenericContainerNamespace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateNumericArray(2,dims,mxLOGICAL_CLASS,mxREAL) ;
           mxLogical * ptr = (mxLogical*)mxGetData(mx) ;
-          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_bool_at(i) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_bool_at(i,where) ;
         }
       break;
       case GC_VEC_INTEGER:
@@ -342,7 +343,7 @@ namespace GenericContainerNamespace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
           mwSize * ptr = (mwSize*)mxGetData(mx) ;
-          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_int_at(i) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_int_at(i,where) ;
         }
       break;
       case GC_VEC_REAL:
@@ -350,7 +351,7 @@ namespace GenericContainerNamespace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateNumericArray(2,dims,mxDOUBLE_CLASS,mxREAL) ;
           double * ptr = mxGetPr(mx) ;
-          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_real_at(i) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_real_at(i,where) ;
         }
       break;
       case GC_VEC_COMPLEX:
@@ -367,7 +368,7 @@ namespace GenericContainerNamespace {
           dims[1] = gc.get_num_elements() ;
           mx = mxCreateCellMatrix(dims[0], dims[1]) ;
           for( mwSize i = 0 ; i < dims[1] ; ++i )
-            mxSetCell(mx,i,mxCreateString( gc.get_string_at(i).c_str() ));
+            mxSetCell(mx,i,mxCreateString( gc.get_string_at(i,where).c_str()));
         }
       break;
       case GC_MAT_REAL:
@@ -379,7 +380,7 @@ namespace GenericContainerNamespace {
           mwSize k = 0 ;
           for ( mwSize j = 0 ; j < dims[1] ; ++j )
             for ( mwSize i = 0 ; i < dims[0] ; ++i )
-              ptr[k++] = gc.get_real_at(i,j) ;
+              ptr[k++] = gc.get_real_at(i,j,where) ;
         }
       break;
       case GC_MAT_COMPLEX:
@@ -392,7 +393,7 @@ namespace GenericContainerNamespace {
           mwSize k = 0 ;
           for ( mwSize j = 0 ; j < dims[1] ; ++j ) {
             for ( mwSize i = 0 ; i < dims[0] ; ++i ) {
-              GC::complex_type val = gc.get_complex_at( i, j ) ;
+              GC::complex_type val = gc.get_complex_at(i,j,where) ;
               ptr[k] = val.real() ;
               pti[k] = val.imag() ;
               ++k ;

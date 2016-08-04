@@ -33,8 +33,15 @@
 #include <sstream>
 #include <stdexcept>
 
-// if C++ < C++11 define nullptr
+
 #if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
+  #define GENERIC_CONTAINER_ON_WINDOWS
+  //#pragma comment(lib, "kernel32.lib")
+  //#pragma comment(lib, "user32.lib")
+#endif
+
+// if C++ < C++11 define nullptr
+#ifdef GENERIC_CONTAINER_ON_WINDOWS
   #if _MSC_VER >= 1900
     #ifndef DO_NOT_USE_CXX11
       #define GENERIC_CONTAINER_USE_CXX11
@@ -57,13 +64,16 @@
   #endif
 #endif
 
+#ifndef GC_DO_ERROR
+  #define GC_DO_ERROR(MSG) {                           \
+    std::ostringstream ost ;                           \
+    ost << "in GenericContainer: " << MSG << '\n' ;    \
+    GenericContainer::exception( ost.str().c_str() ) ; \
+  }
+#endif
+
 #ifndef GC_ASSERT
-  #define GC_ASSERT(COND,MSG)                            \
-    if ( !(COND) ) {                                     \
-      std::ostringstream ost ;                           \
-      ost << "in GenericContainer: " << MSG << '\n' ;    \
-      GenericContainer::exception( ost.str().c_str() ) ; \
-    }
+  #define GC_ASSERT(COND,MSG) if ( !(COND) ) GC_DO_ERROR(MSG)
 #endif
 
 #ifndef GC_WARNING
@@ -75,18 +85,12 @@
     }
 #endif
 
-#if defined(_WIN32) || defined(_WIN64)
-  #define GENERIC_CONTAINER_ON_WINDOWS
-  //#pragma comment(lib, "kernel32.lib")
-  //#pragma comment(lib, "user32.lib")
-#endif
-
 #ifndef GENERIC_CONTAINER_API_DLL
   #ifdef GENERIC_CONTAINER_ON_WINDOWS
     #ifdef GENERIC_CONTAINER_EXPORT
       #define GENERIC_CONTAINER_API_DLL __declspec(dllexport)
     #elif defined(GENERIC_CONTAINER_IMPORT)
-     #define GENERIC_CONTAINER_API_DLL __declspec(dllimport)
+      #define GENERIC_CONTAINER_API_DLL __declspec(dllimport)
     #else
       #define GENERIC_CONTAINER_API_DLL
     #endif
@@ -147,13 +151,7 @@ namespace GenericContainerNamespace {
     real_type const & operator () ( unsigned i, unsigned j ) const ;
     real_type       & operator () ( unsigned i, unsigned j ) ;
 
-    void
-    info( std::basic_ostream<char> & stream ) const {
-       stream << "Matrix of floating point number of size "
-              << _numRows << " x " << _numCols
-              << '\n' ;
-    }
-
+    void info( std::basic_ostream<char> & stream ) const ;
   } ;
 
   // ---------------------------------------------------------------------------
@@ -186,12 +184,7 @@ namespace GenericContainerNamespace {
     complex_type const & operator () ( unsigned i, unsigned j ) const ;
     complex_type       & operator () ( unsigned i, unsigned j ) ;
 
-    void
-    info( std::basic_ostream<char> & stream ) const {
-       stream << "Matrix of complex floating point number of size "
-              << _numRows << " x " << _numCols
-              << '\n' ;
-    }
+    void info( std::basic_ostream<char> & stream ) const ;
 
   } ;
 
@@ -560,10 +553,10 @@ namespace GenericContainerNamespace {
     complex_type get_complex_number() const ;
     void get_complex_number( real_type & re, real_type & im ) const ;
 
-    #ifdef GENERIC_CONTAINER_ON_WINDOWS
-    void * get_pvoid( char const msg[] = nullptr ) const ;
+    void *  get_pvoid( char const msg[] = nullptr ) const ;
     void ** get_ppvoid( char const msg[] = nullptr ) const ;
 
+    #ifdef GENERIC_CONTAINER_ON_WINDOWS
     template <typename T>
     T& get_pointer()
     { ck("get_pointer",GC_POINTER) ; return *(T*)(get_ppvoid()) ; }
@@ -571,11 +564,7 @@ namespace GenericContainerNamespace {
     template <typename T>
     T get_pointer() const
     { ck("get_pointer",GC_POINTER) ; return static_cast<T>(get_pvoid()) ; }
-
     #else
-    void * get_pvoid() const
-    { ck("get_pointer",GC_POINTER) ; return _data.p ; }
-
     template <typename T>
     T& get_pointer()
     { ck("get_pointer",GC_POINTER) ; return *(T*)(&(_data.p)) ; }
@@ -585,67 +574,67 @@ namespace GenericContainerNamespace {
     { ck("get_pointer",GC_POINTER) ; return static_cast<T>(_data.p) ; }
     #endif
 
-    bool_type       & get_bool( char const msg[] = "get_bool()" ) ;
-    bool_type const & get_bool( char const msg[] = "get_bool()" ) const ;
+    bool_type       & get_bool( char const msg[] = nullptr ) ;
+    bool_type const & get_bool( char const msg[] = nullptr ) const ;
     //!< Return the stored boolean (if fails issue an error).
 
-    int_type       & get_int( char const msg[] = "get_int()" ) ;
-    int_type const & get_int( char const msg[] = "get_int()" ) const ;
+    int_type       & get_int( char const msg[] = nullptr ) ;
+    int_type const & get_int( char const msg[] = nullptr ) const ;
     //!< Return the stored integer (if fails issue an error).
 
-    long_type       & get_long( char const msg[] = "get_long()") ;
-    long_type const & get_long( char const msg[] = "get_long()") const ;
+    long_type       & get_long( char const msg[] = nullptr ) ;
+    long_type const & get_long( char const msg[] = nullptr ) const ;
     //!< Return the stored long integer (if fails issue an error).
 
-    real_type       & get_real( char const msg[] = "get_real()" ) ;
-    real_type const & get_real( char const msg[] = "get_real()" ) const ;
+    real_type       & get_real( char const msg[] = nullptr ) ;
+    real_type const & get_real( char const msg[] = nullptr ) const ;
     //!< Return the stored floating point (if fails issue an error).
 
-    complex_type       & get_complex( char const msg[] = "get_complex()" ) ;
-    complex_type const & get_complex( char const msg[] = "get_complex()" ) const ;
+    complex_type       & get_complex( char const msg[] = nullptr ) ;
+    complex_type const & get_complex( char const msg[] = nullptr ) const ;
     //!< Return the stored complex floating point (if fails issue an error).
 
-    string_type       & get_string( char const msg[] = "get_string()" ) ;
-    string_type const & get_string( char const msg[] = "get_string()" ) const ;
+    string_type       & get_string( char const msg[] = nullptr ) ;
+    string_type const & get_string( char const msg[] = nullptr ) const ;
     //!< Return the stored string (if fails issue an error).
     //@}
 
     //! \name Access to vector type data
     //@{
-    vector_type       & get_vector( char const msg[] = "get_vector()" ) ;
-    vector_type const & get_vector( char const msg[] = "get_vector()" ) const ;
+    vector_type       & get_vector( char const msg[] = nullptr ) ;
+    vector_type const & get_vector( char const msg[] = nullptr ) const ;
     //!< Return reference to a generic vector (if fails issue an error).
 
-    vec_pointer_type       & get_vec_pointer( char const msg[] = "get_vec_pointer()" ) ;
-    vec_pointer_type const & get_vec_pointer( char const msg[] = "get_vec_pointer()" ) const ;
+    vec_pointer_type       & get_vec_pointer( char const msg[] = nullptr ) ;
+    vec_pointer_type const & get_vec_pointer( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of pointer (if fails issue an error).
     
-    vec_bool_type       & get_vec_bool( char const msg[] = "get_vec_bool()" ) ;
-    vec_bool_type const & get_vec_bool( char const msg[] = "get_vec_bool()" ) const ;
+    vec_bool_type       & get_vec_bool( char const msg[] = nullptr ) ;
+    vec_bool_type const & get_vec_bool( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of booleans (if fails issue an error).
 
-    vec_int_type       & get_vec_int( char const msg[] = "get_vec_int()" ) ;
-    vec_int_type const & get_vec_int( char const msg[] = "get_vec_int()" ) const ;
+    vec_int_type       & get_vec_int( char const msg[] = nullptr ) ;
+    vec_int_type const & get_vec_int( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of integers (if fails issue an error).
 
-    vec_real_type       & get_vec_real( char const msg[] = "get_vec_real()" ) ;
-    vec_real_type const & get_vec_real( char const msg[] = "get_vec_real()" ) const ;
+    vec_real_type       & get_vec_real( char const msg[] = nullptr ) ;
+    vec_real_type const & get_vec_real( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of floating point number (if fails issue an error).
 
-    vec_complex_type       & get_vec_complex( char const msg[] = "get_vec_complex()" ) ;
-    vec_complex_type const & get_vec_complex( char const msg[] = "get_vec_complex()" ) const ;
+    vec_complex_type       & get_vec_complex( char const msg[] = nullptr ) ;
+    vec_complex_type const & get_vec_complex( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of complex floating point number (if fails issue an error).
 
-    mat_real_type       & get_mat_real( char const msg[] = "get_mat_real()" ) ;
-    mat_real_type const & get_mat_real( char const msg[] = "get_mat_real()" ) const ;
+    mat_real_type       & get_mat_real( char const msg[] = nullptr ) ;
+    mat_real_type const & get_mat_real( char const msg[] = nullptr ) const ;
     //!< Return reference to a matrix of floating point number (if fails issue an error).
 
-    mat_complex_type       & get_mat_complex( char const msg[] = "get_mat_complex()" ) ;
-    mat_complex_type const & get_mat_complex( char const msg[] = "get_mat_complex()" ) const ;
+    mat_complex_type       & get_mat_complex( char const msg[] = nullptr ) ;
+    mat_complex_type const & get_mat_complex( char const msg[] = nullptr ) const ;
     //!< Return reference to a matrix of complex floating point number (if fails issue an error).
 
-    vec_string_type       & get_vec_string( char const msg[] = "get_vec_string()" ) ;
-    vec_string_type const & get_vec_string( char const msg[] = "get_vec_string()" ) const ;
+    vec_string_type       & get_vec_string( char const msg[] = nullptr ) ;
+    vec_string_type const & get_vec_string( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of strings (if fails issue an error).
     //@}
 
@@ -666,42 +655,42 @@ namespace GenericContainerNamespace {
     //!< Return `i`-th generic pointer (if fails issue an error).
 
     bool_type get_bool_at( unsigned i ) ;
-    bool_type get_bool_at( unsigned i ) const ;
+    bool_type get_bool_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th boolean (if fails issue an error).
 
     int_type       & get_int_at( unsigned i ) ;
-    int_type const & get_int_at( unsigned i, char const msg[] = "get_int_at(...)" ) const ;
+    int_type const & get_int_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th integer (if fails issue an error).
 
     real_type       & get_real_at( unsigned i ) ;
-    real_type const & get_real_at( unsigned i ) const ;
+    real_type const & get_real_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th floating point number (if fails issue an error).
 
     complex_type       & get_complex_at( unsigned i ) ;
-    complex_type const & get_complex_at( unsigned i ) const ;
+    complex_type const & get_complex_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th complex floating point number (if fails issue an error).
 
     real_type       & get_real_at( unsigned i, unsigned j ) ;
-    real_type const & get_real_at( unsigned i, unsigned j ) const ;
+    real_type const & get_real_at( unsigned i, unsigned j, char const msg[] ) const ;
     //!< Return `i`-th floating point number (if fails issue an error).
 
     complex_type       & get_complex_at( unsigned i, unsigned j ) ;
-    complex_type const & get_complex_at( unsigned i, unsigned j ) const ;
+    complex_type const & get_complex_at( unsigned i, unsigned j, char const msg[] ) const ;
     //!< Return `i`-th complex floating point number (if fails issue an error).
 
     string_type       & get_string_at( unsigned i ) ;
-    string_type const & get_string_at( unsigned i ) const ;
+    string_type const & get_string_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th string (if fails issue an error).
 
-    GenericContainer       & get_gc_at( unsigned i )       { return (*this)[i] ; }
-    GenericContainer const & get_gc_at( unsigned i ) const { return (*this)[i] ; }
+    GenericContainer       & get_gc_at( unsigned i ) ;
+    GenericContainer const & get_gc_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th `GenericContainer` of a generic vector (if fails issue an error).
     //@}
 
     //! \name Access to map type element
     //@{
-    map_type       & get_map( char const msg[] = "get_map()" ) ;
-    map_type const & get_map( char const msg[] = "get_map()" ) const ;
+    map_type       & get_map( char const msg[] = nullptr ) ;
+    map_type const & get_map( char const msg[] = nullptr ) const ;
     //!< Return the reference of the stored map or issue an error.
 
     //! Check if string `s` is a key of the stored map (if fails issue an error).
@@ -711,37 +700,35 @@ namespace GenericContainerNamespace {
     //! \name Access using operators
     //@{
     
-    GenericContainer & operator [] ( unsigned i ) ;
-    
+    GenericContainer       & operator [] ( unsigned i ) ;
+    GenericContainer const & operator [] ( unsigned i ) const ;
     /*! \brief
-        Overload of the `()` operator to access the `i`-th element of a stored generic vector.
+        Overload of the `[]` operator to access the `i`-th element of a stored generic vector.
         Run time bound check.
      */
-    GenericContainer const & operator [] ( unsigned i ) const ;
+
+    GenericContainer       & operator [] ( std::string const & s ) ;
+    GenericContainer const & operator [] ( std::string const & s ) const ;
+    /*! \brief
+       Overload of the `[]` operator to access the `s`-th element of a stored generic map. 
+       If the element do not exists it is created.
+    */
     
-    GenericContainer & operator () ( unsigned i ) ;
+    GenericContainer       & operator () ( unsigned i, char const msg[] = nullptr ) ;
+    GenericContainer const & operator () ( unsigned i, char const msg[] = nullptr ) const ;
     
     /*! \brief
      Overload of the `()` operator to access the `i`-th element of a stored generic vector.
      NO run time bound check.
      */
-    GenericContainer const & operator () ( unsigned i ) const ;
 
-    GenericContainer & operator [] ( std::string const & s ) ;
-
-    /*! \brief
-       Overload of the `[]` operator to access the `s`-th element of a stored generic map. 
-       If the element do not exists it is created.
-    */
-    GenericContainer const & operator [] ( std::string const & s ) const ;
-
-    GenericContainer & operator () ( std::string const & s ) ;
+    GenericContainer       & operator () ( std::string const & s, char const msg[] = nullptr ) ;
+    GenericContainer const & operator () ( std::string const & s, char const msg[] = nullptr ) const ;
 
     /*! \brief
-       Overload of the `()` operator to access the `i`-th element of a stored generic map. 
+       Overload of the `()` operator to access the `s`-th element of a stored generic map.
        If the element do not exists an error is issued.
      */
-    GenericContainer const & operator () ( std::string const & s ) const ;
 
     //@}
     
