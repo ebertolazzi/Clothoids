@@ -18,73 +18,77 @@ ifneq (,$(findstring Darwin, $(OS)))
 endif
 
 SRCS = \
-srcs/GenericContainer.cc \
-srcs/GenericContainerSupport.cc \
-srcs/GenericContainerTables.cc \
-srcs/GenericContainerCinterface.cc \
-srcs_lua_interface/GenericContainerLuaInterface.cc
+src/GenericContainer.cc \
+src/GenericContainerSupport.cc \
+src/GenericContainerTables.cc \
+src/GenericContainerCinterface.cc \
+src_lua_interface/GenericContainerLuaInterface.cc
 
 OBJS = $(SRCS:.cc=.o)
 DEPS = \
-srcs/GenericContainer.hh \
-srcs/GenericContainerCinterface.h \
-srcs_lua_interface/GenericContainerLuaInterface.hh
+src/GenericContainer.hh \
+src/GenericContainerCinterface.h \
+src_lua_interface/GenericContainerLuaInterface.hh
 
 # prefix for installation, use make PREFIX=/new/prefix install
 # to override
 PREFIX    = /usr/local
 FRAMEWORK = GenericContainer
 
-CFLAGS  = -I/usr/local/include -I./srcs -I./srcs_lua_interface -Wall -O3
-LIB_DIR = -L/usr/local/lib -L./libs
-LIBS    = $(LIB_DIR) -lGenericContainer -lpcre
+CFLAGS   = -Wall -O3
+CXXFLAGS = -Wall -O3
+INC      = -I/usr/local/include -I./src -I./src_lua_interface
+LIB_DIR  = -L/usr/local/lib -L./lib
+LIBS     = $(LIB_DIR) -lGenericContainer -lpcre
 
 #AR     = ar rcs
 AR     = libtool -static -o
 MKDIR  = mkdir -p
 
-all: libs/$(LIB_GC)
-	$(CXX) $(CFLAGS) -o bin/example1  examples/example1.cc  $(LIBS)
-	$(CXX) $(CFLAGS) -o bin/example2  examples/example2.cc  $(LIBS)
-	$(CXX) $(CFLAGS) -o bin/example3  examples/example3.cc  $(LIBS)
-	$(CXX) $(CFLAGS) -o bin/example4  examples/example4.cc  $(LIBS)
-	$(CXX) $(CFLAGS) -o bin/example5  examples/example5.cc  $(LIBS)
-	$(CC)  $(CFLAGS) -o bin/example6  examples/example6.c   $(LIBS) -lstdc++
-	$(CXX) $(CFLAGS) -o bin/example7  examples/example7.cc  $(LIBS)
-	$(CXX) $(CFLAGS) -o bin/example8  examples/example8.cc  $(LIBS) -llua
-	$(CXX) $(CFLAGS) -o bin/example9  examples/example9.cc  $(LIBS) -llua
-	$(CXX) $(CFLAGS) -o bin/example10 examples/example10.cc $(LIBS) -llua
-	$(CXX) $(CFLAGS) -o bin/example11 examples/example11.cc $(LIBS)
+all: lib
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example1  examples/example1.cc  $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example2  examples/example2.cc  $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example3  examples/example3.cc  $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example4  examples/example4.cc  $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example5  examples/example5.cc  $(LIBS)
+	$(CC)  $(CFLAGS)   $(INC) -o bin/example6  examples/example6.c   $(LIBS) -lstdc++
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example7  examples/example7.cc  $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example8  examples/example8.cc  $(LIBS) -llua
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example9  examples/example9.cc  $(LIBS) -llua
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example10 examples/example10.cc $(LIBS) -llua
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example11 examples/example11.cc $(LIBS)
 
-srcs/%.o: srcs/%.cc $(DEPS)
-	$(CXX) $(CFLAGS) -c $< -o $@ 
+lib: lib/$(LIB_GC)
 
-srcs_lua_interface/%.o: srcs_lua_interface/%.cc $(DEPS)
-	$(CXX) $(CFLAGS) -c $< -o $@ 
+src/%.o: src/%.cc $(DEPS)
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@ 
 
-srcs/%.o: srcs/%.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+src/%.o: src/%.c $(DEPS)
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
-libs/libGenericContainer.a: $(OBJS)
-	$(MKDIR) libs
-	$(AR) libs/libGenericContainer.a $(OBJS) 
+src_lua_interface/%.o: src_lua_interface/%.cc $(DEPS)
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@ 
 
-libs/libGenericContainer.dylib: $(OBJS)
-	$(MKDIR) libs
-	$(CXX) -dynamiclib $(OBJS) -o libs/libGenericContainer.dylib $(LIB_DIR) -llua -lpcre -install_name libGenericContainer.dylib -Wl,-rpath,.
+lib/libGenericContainer.a: $(OBJS)
+	$(MKDIR) lib
+	$(AR) lib/libGenericContainer.a $(OBJS) 
 
-libs/libGenericContainer.so: $(OBJS)
-	$(MKDIR) libs
-	$(CXX) -shared $(OBJS) -o libs/libGenericContainer.so $(LIB_DIR) -llua -lpcre
+lib/libGenericContainer.dylib: $(OBJS)
+	$(MKDIR) lib
+	$(CXX) -dynamiclib $(OBJS) -o lib/libGenericContainer.dylib $(LIB_DIR) -llua -lpcre -install_name libGenericContainer.dylib -Wl,-rpath,.
 
-install: libs/$(LIB_GC)
-	cp srcs/GenericContainer.hh $(PREFIX)/include
-	cp libs/$(LIB_GC)           $(PREFIX)/lib
+lib/libGenericContainer.so: $(OBJS)
+	$(MKDIR) lib
+	$(CXX) -shared $(OBJS) -o lib/libGenericContainer.so $(LIB_DIR) -llua -lpcre
 
-install_as_framework: libs/$(LIB_GC)
+install: lib/$(LIB_GC)
+	cp src/GenericContainer.hh $(PREFIX)/include
+	cp lib/$(LIB_GC)           $(PREFIX)/lib
+
+install_as_framework: lib/$(LIB_GC)
 	$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
-	cp srcs/GenericContainer.hh $(PREFIX)/include/$(FRAMEWORK)
-	cp libs/$(LIB_GC)           $(PREFIX)/lib
+	cp src/GenericContainer.hh $(PREFIX)/include/$(FRAMEWORK)
+	cp lib/$(LIB_GC)           $(PREFIX)/lib
 
 run:
 	cd bin ; ./example1
@@ -103,7 +107,7 @@ doc:
 	doxygen
 	
 clean:
-	rm -f libs/libGenericContainer.* srcs*/*.o
+	rm -f lib/libGenericContainer.* src*/*.o
 	rm -f bin/example1
 	rm -f bin/example2
 	rm -f bin/example3
