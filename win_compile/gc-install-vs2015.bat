@@ -14,5 +14,5 @@ copy vs2015_32\Release\%LIBNAME%.lib %LIBDIR%\%LIBNAME%_vs2013_x86.lib
 copy vs2015_64\Debug\%LIBNAME%.lib   %LIBDIR%\%LIBNAME%_vs2013_x64_debug.lib
 copy vs2015_64\Release\%LIBNAME%.lib %LIBDIR%\%LIBNAME%_vs2013_x64.lib
 
-xcopy /Y /I ..\srcs\*.hh               %INCDIR%
-xcopy /Y /I ..\srcs_lua_interface\*.hh %INCDIR%
+xcopy /Y /I ..\src\*.hh               %INCDIR%
+xcopy /Y /I ..\src_lua_interface\*.hh %INCDIR%
