@@ -7,7 +7,7 @@ for k=1:2
   N=NAMES{k} ;
   fprintf(1,'Compiling: %s\n',N) ;
 
-  CMD = ['mex -I../srcs -output ',N,' -largeArrayDims mex_',N,'.cc ../srcs/GenericContainer.cc GenericContainerMatlabInterface.cc'] ;
+  CMD = ['mex -I../src -output ',N,' -largeArrayDims mex_',N,'.cc ../src/GenericContainer.cc GenericContainerMatlabInterface.cc'] ;
   if isunix
     if ismac
       CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'] ;
