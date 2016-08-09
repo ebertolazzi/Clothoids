@@ -19,10 +19,10 @@
 
 #include "GenericContainerLuaInterface.hh"
 
-#ifndef ASSERT
+#ifndef GC_ASSERT
   #include <sstream>
   #include <stdexcept>
-  #define ASSERT(COND,MSG)                               \
+  #define GC_ASSERT(COND,MSG)                               \
     if ( !(COND) ) {                                     \
       std::ostringstream ost ;                           \
       ost << "in GenericContainer: " << MSG << '\n' ;    \
@@ -31,16 +31,20 @@
 #endif
 
 #ifdef DEBUG
-  #ifndef ASSERT_DEBUG
-    #define ASSERT_DEBUG(COND,MSG) ASSERT(COND,MSG)
+  #ifndef GC_ASSERT_DEBUG
+    #define GC_ASSERT_DEBUG(COND,MSG) GC_ASSERT(COND,MSG)
   #endif
 #else
-  #ifndef ASSERT_DEBUG
-    #define ASSERT_DEBUG(COND,MSG)
+  #ifndef GC_ASSERT_DEBUG
+    #define GC_ASSERT_DEBUG(COND,MSG)
   #endif
 #endif
 
-#include <lua.hpp>
+#ifdef USE_MECHATRONIX_LUA
+  #include <MechatronixCore/lua/lua.hpp>
+#else
+  #include <lua.hpp>
+#endif
 
 // load string.h for strlen
 #include <string.h>
@@ -290,7 +294,7 @@ namespace GenericContainerNamespace {
   LuaInterpreter::LuaInterpreter() {
     lua_State *& L = *((lua_State**)&void_L) ;
     L = luaL_newstate() ; // opens Lua
-    ASSERT_DEBUG( L != NULL, "LuaInterpreter::LuaInterpreter() lua_State invalid!" ) ;
+    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::LuaInterpreter() lua_State invalid!" ) ;
     luaL_openlibs(L) ;
   }
 
@@ -298,7 +302,7 @@ namespace GenericContainerNamespace {
 
   LuaInterpreter::~LuaInterpreter() {
     lua_State *& L = *((lua_State**)&void_L) ;
-    ASSERT_DEBUG( L != NULL, "LuaInterpreter::~LuaInterpreter() lua_State invalid!" ) ;
+    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::~LuaInterpreter() lua_State invalid!" ) ;
     lua_close(L);
   }
 
@@ -307,11 +311,11 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::do_file( char const filename[], bool check_syntax_only ) {
     lua_State *& L = *((lua_State**)&void_L) ;
-    ASSERT_DEBUG( L != NULL, "LuaInterpreter::do_file('" << filename <<
-                             "')\nlua_State invalid!" ) ;
+    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::do_file('" << filename <<
+                                "')\nlua_State invalid!" ) ;
     if ( luaL_loadfile(L, filename) || lua_pcall(L, 0, 0, 0)  ) {
-      ASSERT( lua_isnil(L,-1),
-              "In LuaInterpreter::do_file('" << filename << "')\n" << lua_tostring(L, -1) ) ;
+      GC_ASSERT( lua_isnil(L,-1),
+                 "In LuaInterpreter::do_file('" << filename << "')\n" << lua_tostring(L, -1) ) ;
     }
   }
 
@@ -320,11 +324,11 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::execute( char const cmd[] ) {
     lua_State *& L = *((lua_State**)&void_L) ;
-    ASSERT( L != NULL &&
-            !luaL_loadbuffer(L, cmd, strlen(cmd), "line") &&
-            !lua_pcall(L, 0, 0, 0),
-            "In LuaInterpreter::execute('" << cmd <<
-            "')\ncannot run the command or lua_State invalid" ) ;
+    GC_ASSERT( L != NULL &&
+               !luaL_loadbuffer(L, cmd, strlen(cmd), "line") &&
+               !lua_pcall(L, 0, 0, 0),
+               "In LuaInterpreter::execute('" << cmd <<
+               "')\ncannot run the command or lua_State invalid" ) ;
   }
 
   // -----------------------------------------------------------------------------
@@ -354,11 +358,11 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::global_to_GC( char const global_var[], GenericContainer & gc ) {
     lua_State *& L = *((lua_State**)&void_L) ;
-    ASSERT_DEBUG( L != NULL, "LuaInterpreter::global_to_GC(...) lua_State invalid!" ) ;
+    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::global_to_GC(...) lua_State invalid!" ) ;
       
     lua_getglobal( L, global_var ) ;
-    ASSERT( !lua_isnil(L,-1),
-            "LuaInterpreter::global_to_GC(...) cannot find global variable: '" << global_var << "'" ) ;
+    GC_ASSERT( !lua_isnil(L,-1),
+               "LuaInterpreter::global_to_GC(...) cannot find global variable: '" << global_var << "'" ) ;
 
     gc.clear() ;
     switch( lua_type(L, -1) ) {
@@ -382,9 +386,9 @@ namespace GenericContainerNamespace {
       lua_settop(L, 0);
       break ;
     default:
-      ASSERT( false,
-              "LuaInterpreter::global_to_GC(...) global variable '" <<
-              global_var << "' cannot be converted!" ) ;
+      GC_ASSERT( false,
+                 "LuaInterpreter::global_to_GC(...) global variable '" <<
+                 global_var << "' cannot be converted!" ) ;
 
     }
 

@@ -40,6 +40,8 @@ CXXFLAGS = -Wall -O3
 INC      = -I/usr/local/include -I./src -I./src_lua_interface
 LIB_DIR  = -L/usr/local/lib -L./lib
 LIBS     = $(LIB_DIR) -lGenericContainer -lpcre
+DEFINE   =
+LUALIB   = -llua
 
 #AR     = ar rcs
 AR     = libtool -static -o
@@ -53,9 +55,9 @@ all: lib
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example5  examples/example5.cc  $(LIBS)
 	$(CC)  $(CFLAGS)   $(INC) -o bin/example6  examples/example6.c   $(LIBS) -lstdc++
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example7  examples/example7.cc  $(LIBS)
-	$(CXX) $(CXXFLAGS) $(INC) -o bin/example8  examples/example8.cc  $(LIBS) -llua
-	$(CXX) $(CXXFLAGS) $(INC) -o bin/example9  examples/example9.cc  $(LIBS) -llua
-	$(CXX) $(CXXFLAGS) $(INC) -o bin/example10 examples/example10.cc $(LIBS) -llua
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example8  examples/example8.cc  $(LIBS) $(LUALIB)
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example9  examples/example9.cc  $(LIBS) $(LUALIB)
+	$(CXX) $(CXXFLAGS) $(INC) -o bin/example10 examples/example10.cc $(LIBS) $(LUALIB)
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example11 examples/example11.cc $(LIBS)
 
 lib: lib/$(LIB_GC)
@@ -67,7 +69,7 @@ src/%.o: src/%.c $(DEPS)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 src_lua_interface/%.o: src_lua_interface/%.cc $(DEPS)
-	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@ 
+	$(CXX) $(CXXFLAGS) $(INC) $(DEFINE) -c $< -o $@ 
 
 lib/libGenericContainer.a: $(OBJS)
 	$(MKDIR) lib
