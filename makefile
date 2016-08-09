@@ -8,12 +8,14 @@ CXX    = g++
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   #LIB_GC = libGenericContainer.so
+  AR = ar rcs
 endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  CC     = clang
-  CXX    = clang++
+  CC  = clang
+  CXX = clang++
+  AR  = libtool -static -o
   #LIB_GC = libGenericContainer.dylib
 endif
 
@@ -43,8 +45,6 @@ LIBS     = $(LIB_DIR) -lGenericContainer -lpcre
 DEFINE   =
 LUALIB   = -llua
 
-#AR     = ar rcs
-AR     = libtool -static -o
 MKDIR  = mkdir -p
 
 all: lib
