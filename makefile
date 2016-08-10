@@ -1,5 +1,6 @@
 # get the type of OS currently running
 OS=$(shell uname)
+HASLUA=$(which lua)
 
 LIB_GC = libGenericContainer.a
 CC     = gcc
@@ -19,12 +20,21 @@ ifneq (,$(findstring Darwin, $(OS)))
   #LIB_GC = libGenericContainer.dylib
 endif
 
+# check for lua
+LUALIB  =
+SRCSLUA = 
+ifneq (,$(findstring lua, $(HASLUA)))
+  SRCSLUA = src_lua_interface/GenericContainerLuaInterface.cc 
+  LUALIB  = -llua
+endif
+
+
 SRCS = \
 src/GenericContainer.cc \
 src/GenericContainerSupport.cc \
 src/GenericContainerTables.cc \
 src/GenericContainerCinterface.cc \
-src_lua_interface/GenericContainerLuaInterface.cc
+$(SRCSLUA)
 
 OBJS = $(SRCS:.cc=.o)
 DEPS = \
@@ -43,7 +53,6 @@ INC      = -I/usr/local/include -I./src -I./src_lua_interface
 LIB_DIR  = -L/usr/local/lib -L./lib
 LIBS     = $(LIB_DIR) -lGenericContainer -lpcre
 DEFINE   =
-LUALIB   = -llua
 
 MKDIR  = mkdir -p
 
@@ -55,9 +64,11 @@ all: lib
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example5  examples/example5.cc  $(LIBS)
 	$(CC)  $(CFLAGS)   $(INC) -o bin/example6  examples/example6.c   $(LIBS) -lstdc++
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example7  examples/example7.cc  $(LIBS)
+ifneq (,$(findstring lua, $(HASLUA)))
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example8  examples/example8.cc  $(LIBS) $(LUALIB)
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example9  examples/example9.cc  $(LIBS) $(LUALIB)
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example10 examples/example10.cc $(LIBS) $(LUALIB)
+endif
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example11 examples/example11.cc $(LIBS)
 
 lib: lib/$(LIB_GC)
@@ -100,9 +111,11 @@ run:
 	cd bin ; ./example5
 	cd bin ; ./example6
 	cd bin ; ./example7
+ifneq (,$(findstring lua, $(HASLUA)))
 	cd bin ; ./example8
 	cd bin ; ./example9
 	cd bin ; ./example10
+endif
 	cd bin ; ./example11
 
 doc:

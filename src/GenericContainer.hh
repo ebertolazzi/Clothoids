@@ -40,6 +40,16 @@
   //#pragma comment(lib, "user32.lib")
 #endif
 
+// workaround for gcc < 4.9 that do not support regex
+#ifdef __GNUC__
+  #if __GNUC__ > 5 || ( __GNUC__== 5 && __GNUC_MINOR__ > 8 )
+  #else
+    #ifndef DO_NOT_USE_CXX11
+      #define DO_NOT_USE_CXX11
+    #endif
+  #endif
+#endif
+
 // if C++ < C++11 define nullptr
 #ifdef GENERIC_CONTAINER_ON_WINDOWS
   #if _MSC_VER >= 1900
