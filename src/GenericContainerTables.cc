@@ -35,8 +35,8 @@ namespace GenericContainerNamespace {
               std::basic_ostream<char> & stream,
               char const                 delimiter ) {
 
-    unsigned ncol = (unsigned)headers.size() ;
-    unsigned nrow = (unsigned)data[0].get_num_elements() ;
+    unsigned ncol = unsigned(headers.size()) ;
+    unsigned nrow = unsigned(data[0].get_num_elements()) ;
 
     stream << headers[0] ;
     for ( unsigned icol = 1 ; icol < ncol ; ++icol )

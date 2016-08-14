@@ -114,7 +114,7 @@ namespace GenericContainerNamespace {
     // reading header line
     unsigned nline = getLineAndSkipComments( stream, line, commentChars ) ; // read  line
     tokenizeString( line, headers, delimiters ) ; // tokenize line
-    unsigned ncol = (unsigned)headers . size() ;
+    unsigned ncol = unsigned( headers.size() ) ;
 
     vector_type & data = (*this)["data"].set_vector(ncol) ;
     for ( unsigned icol = 0 ; icol < ncol ; ++icol ) data[icol].set_vec_real() ;
@@ -129,7 +129,7 @@ namespace GenericContainerNamespace {
       tokenizeString( line, tokens, delimiters ) ;
       if ( tokens.size() == 0 ) break ; // riga vuota!
 
-      GC_ASSERT( (unsigned) tokens.size() == ncol,
+      GC_ASSERT( unsigned(tokens.size()) == ncol,
                  "readFormattedDataFile, in reading line: " << nline <<
                  " expected " << ncol << " found: " << tokens.size() ) ;
 

@@ -63,7 +63,7 @@ typedef double real_type ;
 typedef struct {
   real_type real ;
   real_type imag ;
-} complex_type ;
+} c_complex_type ;
 
 /*! Create a new `GenericContainer` object 'id' */
 int GENERIC_CONTAINER_API_DLL GC_new( char const id[] ) ;
@@ -107,7 +107,7 @@ int GENERIC_CONTAINER_API_DLL GC_set_int( int_type const a ) ;
 int GENERIC_CONTAINER_API_DLL GC_set_real( real_type const a ) ;
 
 /*! Set actual pointed element of `GenericContainer` to `complex` with value `a` */
-int GENERIC_CONTAINER_API_DLL GC_set_complex( complex_type const * a ) ;
+int GENERIC_CONTAINER_API_DLL GC_set_complex( c_complex_type const * a ) ;
 
 /*! Set actual pointed element of `GenericContainer` to `complex` with value `a` */
 int GENERIC_CONTAINER_API_DLL GC_set_complex2( real_type const re, real_type const im ) ;
@@ -130,7 +130,7 @@ long_type GENERIC_CONTAINER_API_DLL GC_get_long() ;
 real_type GENERIC_CONTAINER_API_DLL GC_get_real() ;
 
 /*! Get actual pointed element of `GenericContainer` of type `complex` */
-complex_type GENERIC_CONTAINER_API_DLL GC_get_complex() ;
+c_complex_type GENERIC_CONTAINER_API_DLL GC_get_complex() ;
 
 /*! Get actual pointed element of `GenericContainer` of type `complex` */
 real_type GENERIC_CONTAINER_API_DLL GC_get_complex_re() ;
@@ -153,7 +153,7 @@ int GENERIC_CONTAINER_API_DLL GC_push_int( int_type const a ) ;
 int GENERIC_CONTAINER_API_DLL GC_push_real( real_type const a ) ;
 
 /*! Push `a` to a vector of `complex`  */
-int GENERIC_CONTAINER_API_DLL GC_push_complex( complex_type const * a ) ;
+int GENERIC_CONTAINER_API_DLL GC_push_complex( c_complex_type const * a ) ;
   
 /*! Push `a` to a vector of `complex`  */
 int GENERIC_CONTAINER_API_DLL GC_push_complex2( real_type const re, real_type const im ) ;
@@ -173,7 +173,7 @@ int_type GENERIC_CONTAINER_API_DLL GC_get_int_at_pos( int pos ) ;
 real_type GENERIC_CONTAINER_API_DLL GC_get_real_at_pos( int pos ) ;
 
 /*! Get `complex` at position `pos` of a vector of `real_type` */
-complex_type GENERIC_CONTAINER_API_DLL GC_get_complex_at_pos( int pos ) ;
+c_complex_type GENERIC_CONTAINER_API_DLL GC_get_complex_at_pos( int pos ) ;
 
 /*! Get `complex` at position `pos` of a vector of `real_type` */
 real_type GENERIC_CONTAINER_API_DLL GC_get_complex_real_at_pos( int pos ) ;
@@ -190,7 +190,7 @@ char const * GENERIC_CONTAINER_API_DLL GC_get_string_at_pos( int pos ) ;
 real_type GENERIC_CONTAINER_API_DLL GC_get_real_at_coor( int i, int j ) ;
 
 /*! Get `complex` at position `pos` of a vector of `real_type` */
-complex_type GENERIC_CONTAINER_API_DLL GC_get_complex_at_coor( int i, int j ) ;
+c_complex_type GENERIC_CONTAINER_API_DLL GC_get_complex_at_coor( int i, int j ) ;
 
 /*! Get `complex` at position `pos` of a vector of `real_type` */
 real_type GENERIC_CONTAINER_API_DLL GC_get_complex_real_at_coor( int i, int j ) ;
