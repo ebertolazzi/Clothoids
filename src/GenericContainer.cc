@@ -830,6 +830,301 @@ namespace GenericContainerNamespace {
     return const_cast<void **>(&_data.p) ;
   }
 
+  template <>
+  void
+  GenericContainer::get_value( unsigned & v, char const msg[] ) const {
+    switch (_data_type) {
+    case GC_BOOL:
+      v = _data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      GC_ASSERT( _data.i >= 0,
+                 msg <<
+                 "value " << _data.i <<
+                 "' cannot be converted in `unsigned'" ) ;
+      v = unsigned(_data.i) ;
+      break ;
+    case GC_LONG:
+      GC_ASSERT( _data.l >= 0,
+                 msg <<
+                 "value " << _data.l <<
+                 "' cannot be converted in `unsigned'" ) ;
+      v = unsigned(_data.l) ;
+      break ;
+    case GC_REAL:
+      GC_ASSERT( _data.r >= 0 && floor(_data.r) == _data.r,
+                 msg <<
+                 "value " << _data.r <<
+                 "' cannot be converted in `unsigned'" ) ;
+      v = unsigned(_data.r) ;
+      break ;
+    case GC_COMPLEX:
+      GC_ASSERT( _data.c->imag() == 0 &&
+                 _data.c->real() >= 0 &&
+                 floor(_data.c->real()) == _data.c->real(),
+                 msg <<
+                 "value " << *_data.c <<
+                 "' cannot be converted in `unsigned'" ) ;
+      v = unsigned(_data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `unsigned'" ) ;
+    }
+  }
+
+  template <>
+  void
+  GenericContainer::get_value( int & v, char const msg[] ) const {
+    switch (_data_type) {
+    case GC_BOOL:
+      v = _data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      GC_ASSERT( _data.i >= 0,
+                 msg <<
+                 "value " << _data.i <<
+                 "' cannot be converted in `int'" ) ;
+      v = _data.i ;
+      break ;
+    case GC_LONG:
+      v = int(_data.l) ;
+      break ;
+    case GC_REAL:
+      GC_ASSERT( floor(_data.r) == _data.r,
+                 msg <<
+                 "value " << _data.r <<
+                 "' cannot be converted in `unsigned'" ) ;
+      v = int(_data.r) ;
+      break ;
+    case GC_COMPLEX:
+      GC_ASSERT( _data.c->imag() == 0 &&
+                 floor(_data.c->real()) == _data.c->real(),
+                 msg <<
+                 "value " << *_data.c <<
+                 "' cannot be converted in `unsigned'" ) ;
+      v = int(_data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `unsigned'" ) ;
+    }
+  }
+
+  template <>
+  void
+  GenericContainer::get_value( unsigned long & v, char const msg[] ) const {
+    typedef unsigned long ul ;
+    switch (_data_type) {
+    case GC_BOOL:
+      v = _data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      GC_ASSERT( _data.i >= 0,
+                 msg <<
+                 "value " << _data.i <<
+                 "' cannot be converted in `unsigned long'" ) ;
+      v = ul(_data.i) ;
+      break ;
+    case GC_LONG:
+      GC_ASSERT( _data.l >= 0,
+                 msg <<
+                 "value " << _data.l <<
+                 "' cannot be converted in `unsigned long'" ) ;
+      v = ul(_data.l) ;
+      break ;
+    case GC_REAL:
+      GC_ASSERT( _data.r >= 0 && floor(_data.r) == _data.r,
+                 msg <<
+                 "value " << _data.r <<
+                 "' cannot be converted in `unsigned long'" ) ;
+      v = ul(_data.r) ;
+      break ;
+    case GC_COMPLEX:
+      GC_ASSERT( _data.c->imag() == 0 &&
+                 _data.c->real() >= 0 &&
+                 floor(_data.c->real()) == _data.c->real(),
+                 msg <<
+                 "value " << *_data.c <<
+                 "' cannot be converted in `unsigned long'" ) ;
+      v = ul(_data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `unsigned long'" ) ;
+    }
+  }
+
+  template <>
+  void
+  GenericContainer::get_value( long & v, char const msg[] ) const {
+    switch (_data_type) {
+    case GC_BOOL:
+      v = _data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      v = long(_data.i) ;
+      break ;
+    case GC_LONG:
+      v = _data.l ;
+      break ;
+    case GC_REAL:
+      GC_ASSERT( floor(_data.r) == _data.r,
+                 msg <<
+                 "value " << _data.r <<
+                 "' cannot be converted in `long'" ) ;
+      v = long(_data.r) ;
+      break ;
+    case GC_COMPLEX:
+      GC_ASSERT( _data.c->imag() == 0 &&
+                 floor(_data.c->real()) == _data.c->real(),
+                 msg <<
+                 "value " << *_data.c <<
+                 "' cannot be converted in `long'" ) ;
+      v = long(_data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `long'" ) ;
+    }
+  }
+
+  template <>
+  void
+  GenericContainer::get_value( float & v, char const msg[] ) const {
+    switch (_data_type) {
+    case GC_BOOL:
+      v = _data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      v = float(_data.i) ;
+      break ;
+    case GC_LONG:
+      v = float(_data.l) ;
+      break ;
+    case GC_REAL:
+      v = float(_data.r) ;
+      break ;
+    case GC_COMPLEX:
+      GC_ASSERT( _data.c->imag() == 0,
+                 msg <<
+                 "value " << *_data.c <<
+                 "' cannot be converted in `float'" ) ;
+      v = float(_data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `float'" ) ;
+    }
+  }
+
+  template <>
+  void
+  GenericContainer::get_value( double & v, char const msg[] ) const {
+    switch (_data_type) {
+    case GC_BOOL:
+      v = _data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      v = double(_data.i) ;
+      break ;
+    case GC_LONG:
+      v = double(_data.l) ;
+      break ;
+    case GC_REAL:
+      v = _data.r ;
+      break ;
+    case GC_COMPLEX:
+      GC_ASSERT( _data.c->imag() == 0,
+                 msg <<
+                 "value " << *_data.c <<
+                 "' cannot be converted in `double'" ) ;
+      v = _data.c->real() ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `double'" ) ;
+    }
+  }
+
   //! If data is boolean, integer or floating point return number, otherwise return `0`.
   real_type
   GenericContainer::get_number() const {
@@ -894,7 +1189,7 @@ namespace GenericContainerNamespace {
   real_type
   GenericContainer::get_number_at( unsigned i ) const {
     switch (_data_type) {
-    case GC_VEC_BOOL:    return real_type((*_data.v_b)[i]) ;
+    case GC_VEC_BOOL:    return (*_data.v_b)[i] ? 1 : 0 ;
     case GC_VEC_INTEGER: return real_type((*_data.v_i)[i]) ;
     case GC_VEC_REAL:    return real_type((*_data.v_r)[i]) ;
     case GC_MAT_REAL:    return real_type((*_data.m_r)[i]) ;
@@ -1160,6 +1455,510 @@ namespace GenericContainerNamespace {
     ck(msg,GC_MAP) ;
     return *_data.m ;
   }
+
+  // --------------------------------------------------------------
+  void
+  GenericContainer::copyto_vec_int( vec_int_type & v, char const msg[] ) const {
+    v.clear() ;
+    unsigned ne = get_num_elements() ;
+    switch (_data_type) {
+    case GC_VEC_BOOL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) v.push_back( (*_data.v_b)[i] ? 1 : 0 ) ;
+      break ;
+    case GC_VEC_INTEGER:
+      v.resize(ne) ;
+      copy( _data.v_b->begin(), _data.v_b->end(), v.begin() ) ;
+      break ;
+    case GC_VEC_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = (*_data.v_r)[i] ;
+        GC_ASSERT( floor(val) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `integer'" ) ;
+        v.push_back( int_type(val) ) ;
+      }
+      break ;
+    case GC_VEC_COMPLEX:
+    case GC_MAT_COMPLEX:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type val = get_complex_number_at(i) ;
+        GC_ASSERT( val.imag() == 0 && floor(val.real()) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `integer'" ) ;
+        v.push_back( int_type(val.real()) ) ;
+      }
+      break ;
+    case GC_VECTOR:
+    case GC_MAT_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = get_number_at(i) ;
+        GC_ASSERT( floor(val) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `integer'" ) ;
+        v.push_back( int_type(val) ) ;
+      }
+      break;
+    case GC_BOOL:
+      v.reserve(1) ;
+      v.push_back( _data.b ? 1 : 0 ) ;
+      break ;
+    case GC_INTEGER:
+      v.reserve(1) ;
+      v.push_back( _data.i ) ;
+      break ;
+    case GC_LONG:
+      v.reserve(1) ;
+      v.push_back( int_type(_data.l) ) ;
+      break ;
+    case GC_REAL:
+      v.reserve(1) ;
+      GC_ASSERT( floor(_data.r) == _data.r,
+                msg << "copyto_vec_int: value " << _data.r <<
+                " cannot be converted to `integer'" ) ;
+      v.push_back( int_type(_data.r) ) ;
+      break ;
+    case GC_COMPLEX:
+      v.reserve(1) ;
+      GC_ASSERT( _data.c->imag() == 0 && floor(_data.c->real()) == _data.c->real(),
+                 msg << "copyto_vec_int: value " << *_data.c <<
+                 " cannot be converted to `integer'" ) ;
+      v.push_back( int_type(_data.c->real()) ) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_STRING:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `vec_int_type'" ) ;
+    }
+  }
+
+  void
+  GenericContainer::copyto_vec_uint( vec_uint_type & v, char const msg[] ) const {
+    v.clear() ;
+    unsigned ne = get_num_elements() ;
+    switch (_data_type) {
+    case GC_VEC_BOOL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) v.push_back( (*_data.v_b)[i] ? 1 : 0 ) ;
+      break ;
+    case GC_VEC_INTEGER:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        int_type val = (*_data.v_i)[i] ;
+        GC_ASSERT( val >= 0,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned integer'" ) ;
+        v.push_back( uint_type(val) ) ;
+      }
+      break ;
+    case GC_VEC_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = (*_data.v_r)[i] ;
+        GC_ASSERT( floor(val) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned integer'" ) ;
+        v.push_back( uint_type(val) ) ;
+      }
+      break ;
+    case GC_VEC_COMPLEX:
+    case GC_MAT_COMPLEX:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type val = get_complex_number_at(i) ;
+        GC_ASSERT( val.imag() == 0 && floor(val.real()) == val && val.real() >= 0,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned integer'" ) ;
+        v.push_back( uint_type(val.real()) ) ;
+      }
+      break ;
+    case GC_VECTOR:
+    case GC_MAT_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = get_number_at(i) ;
+        GC_ASSERT( floor(val) == val && val >= 0,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned integer'" ) ;
+        v.push_back( uint_type(val) ) ;
+      }
+      break;
+    case GC_BOOL:
+      v.reserve(1) ;
+      v.push_back( _data.b ? 1 : 0 ) ;
+      break ;
+    case GC_INTEGER:
+      v.reserve(1) ;
+      GC_ASSERT( _data.i >= 0,
+                 msg << "copyto_vec_int: value = " << _data.i <<
+                 " cannot be converted to `unsigned integer'" ) ;
+      v.push_back( uint_type(_data.i) ) ;
+      break ;
+    case GC_LONG:
+      v.reserve(1) ;
+      GC_ASSERT( _data.l >= 0,
+                 msg << "copyto_vec_int: value = " << _data.l <<
+                 " cannot be converted to `unsigned integer'" ) ;
+      v.push_back( uint_type(_data.l) ) ;
+      break ;
+    case GC_REAL:
+      v.reserve(1) ;
+      GC_ASSERT( floor(_data.r) == _data.r && _data.r >= 0,
+                msg << "copyto_vec_int: value = " << _data.r <<
+                " cannot be converted to `unsigned integer'" ) ;
+      v.push_back( uint_type(_data.r) ) ;
+      break ;
+    case GC_COMPLEX:
+      v.reserve(1) ;
+      GC_ASSERT( _data.c->imag() == 0 && _data.c->real() >= 0 &&
+                 floor(_data.c->real()) == _data.c->real(),
+                 msg << "copyto_vec_int: value " << *_data.c <<
+                 " cannot be converted to `unsigned integer'" ) ;
+      v.push_back( uint_type(_data.c->real()) ) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_STRING:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `vec_uint_type'" ) ;
+    }
+  }
+
+  void
+  GenericContainer::copyto_vec_long( vec_long_type & v, char const msg[] ) const {
+    v.clear() ;
+    unsigned ne = get_num_elements() ;
+    switch (_data_type) {
+    case GC_VEC_BOOL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) v.push_back( (*_data.v_b)[i] ? 1 : 0 ) ;
+      break ;
+    case GC_VEC_INTEGER:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        int_type val = (*_data.v_i)[i] ;
+        v.push_back( long_type(val) ) ;
+      }
+      break ;
+    case GC_VEC_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = (*_data.v_r)[i] ;
+        GC_ASSERT( floor(val) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `long'" ) ;
+        v.push_back( long_type(val) ) ;
+      }
+      break ;
+    case GC_VEC_COMPLEX:
+    case GC_MAT_COMPLEX:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type val = get_complex_number_at(i) ;
+        GC_ASSERT( val.imag() == 0 && floor(val.real()) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `long'" ) ;
+        v.push_back( long_type(val.real()) ) ;
+      }
+      break ;
+    case GC_VECTOR:
+    case GC_MAT_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = get_number_at(i) ;
+        GC_ASSERT( floor(val) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `long'" ) ;
+        v.push_back( long_type(val) ) ;
+      }
+      break;
+    case GC_BOOL:
+      v.reserve(1) ;
+      v.push_back( _data.b ? 1 : 0 ) ;
+      break ;
+    case GC_INTEGER:
+      v.reserve(1) ;
+      v.push_back( long_type(_data.i) ) ;
+      break ;
+    case GC_LONG:
+      v.reserve(1) ;
+      v.push_back( _data.l ) ;
+      break ;
+    case GC_REAL:
+      v.reserve(1) ;
+      GC_ASSERT( floor(_data.r) == _data.r,
+                msg << "copyto_vec_int: value " << _data.r <<
+                " cannot be converted to `long'" ) ;
+      v.push_back( long_type(_data.r) ) ;
+      break ;
+    case GC_COMPLEX:
+      v.reserve(1) ;
+      GC_ASSERT( _data.c->imag() == 0 && floor(_data.c->real()) == _data.c->real(),
+                 msg << "copyto_vec_int: value " << *_data.c <<
+                 " cannot be converted to `long'" ) ;
+      v.push_back( long_type(_data.c->real()) ) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_STRING:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `vec_long_type'" ) ;
+    }
+
+  }
+
+  void
+  GenericContainer::copyto_vec_ulong( vec_ulong_type & v, char const msg[] ) const {
+    v.clear() ;
+    unsigned ne = get_num_elements() ;
+    switch (_data_type) {
+    case GC_VEC_BOOL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) v.push_back( (*_data.v_b)[i] ? 1 : 0 ) ;
+      break ;
+    case GC_VEC_INTEGER:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        int_type val = (*_data.v_i)[i] ;
+        GC_ASSERT( val >= 0,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned long'" ) ;
+        v.push_back( ulong_type(val) ) ;
+      }
+      break ;
+    case GC_VEC_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = (*_data.v_r)[i] ;
+        GC_ASSERT( floor(val) == val,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned long'" ) ;
+        v.push_back( ulong_type(val) ) ;
+      }
+      break ;
+    case GC_VEC_COMPLEX:
+    case GC_MAT_COMPLEX:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type val = get_complex_number_at(i) ;
+        GC_ASSERT( val.imag() == 0 && floor(val.real()) == val && val.real() >= 0,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned long'" ) ;
+        v.push_back( ulong_type(val.real()) ) ;
+      }
+      break ;
+    case GC_VECTOR:
+    case GC_MAT_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        real_type val = get_number_at(i) ;
+        GC_ASSERT( floor(val) == val && val >= 0,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `unsigned long'" ) ;
+        v.push_back( ulong_type(val) ) ;
+      }
+      break;
+    case GC_BOOL:
+      v.reserve(1) ;
+      v.push_back( _data.b ? 1 : 0 ) ;
+      break ;
+    case GC_INTEGER:
+      v.reserve(1) ;
+      GC_ASSERT( _data.i >= 0,
+                 msg << "copyto_vec_int: value = " << _data.i <<
+                 " cannot be converted to `unsigned long'" ) ;
+      v.push_back( ulong_type(_data.i) ) ;
+      break ;
+    case GC_LONG:
+      v.reserve(1) ;
+      GC_ASSERT( _data.l >= 0,
+                 msg << "copyto_vec_int: value = " << _data.l <<
+                 " cannot be converted to `unsigned long'" ) ;
+      v.push_back( ulong_type(_data.l) ) ;
+      break ;
+    case GC_REAL:
+      v.reserve(1) ;
+      GC_ASSERT( floor(_data.r) == _data.r && _data.r >= 0,
+                msg << "copyto_vec_int: value = " << _data.r <<
+                " cannot be converted to `unsigned long'" ) ;
+      v.push_back( ulong_type(_data.r) ) ;
+      break ;
+    case GC_COMPLEX:
+      v.reserve(1) ;
+      GC_ASSERT( _data.c->imag() == 0 && _data.c->real() >= 0 &&
+                 floor(_data.c->real()) == _data.c->real(),
+                 msg << "copyto_vec_int: value " << *_data.c <<
+                 " cannot be converted to `unsigned long'" ) ;
+      v.push_back( ulong_type(_data.c->real()) ) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_STRING:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `vec_ulong_type'" ) ;
+    }
+
+  }
+
+  void
+  GenericContainer::copyto_vec_real( vec_real_type & v, char const msg[] ) const {
+    v.clear() ;
+    unsigned ne = get_num_elements() ;
+    switch (_data_type) {
+    case GC_VEC_BOOL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) v.push_back( (*_data.v_b)[i] ? 1 : 0 ) ;
+      break ;
+    case GC_VEC_INTEGER:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) v.push_back( real_type( (*_data.v_i)[i] ) ) ;
+      break ;
+    case GC_VEC_REAL:
+      v.resize(ne) ;
+      copy( _data.v_r->begin(), _data.v_r->end(), v.begin() ) ;
+      break ;
+    case GC_VEC_COMPLEX:
+    case GC_MAT_COMPLEX:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type val = get_complex_number_at(i) ;
+        GC_ASSERT( val.imag() == 0,
+                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   " cannot be converted to `real'" ) ;
+        v.push_back( val.real() ) ;
+      }
+      break ;
+    case GC_VECTOR:
+    case GC_MAT_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i )
+        v.push_back( get_number_at(i) ) ;
+      break;
+    case GC_BOOL:
+      v.reserve(1) ;
+      v.push_back( _data.b ? 1 : 0 ) ;
+      break ;
+    case GC_INTEGER:
+      v.reserve(1) ;
+      v.push_back( real_type(_data.i) ) ;
+      break ;
+    case GC_LONG:
+      v.reserve(1) ;
+      v.push_back( real_type(_data.l) ) ;
+      break ;
+    case GC_REAL:
+      v.reserve(1) ;
+      v.push_back( _data.r ) ;
+      break ;
+    case GC_COMPLEX:
+      v.reserve(1) ;
+      GC_ASSERT( _data.c->imag() == 0,
+                 msg << "copyto_vec_int: value " << *_data.c <<
+                 " cannot be converted to `real'" ) ;
+      v.push_back( _data.c->real() ) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_STRING:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `vec_real_type'" ) ;
+    }
+  }
+
+  void
+  GenericContainer::copyto_vec_complex( vec_complex_type & v, char const msg[] ) const {
+    v.clear() ;
+    unsigned ne = get_num_elements() ;
+    switch (_data_type) {
+    case GC_VEC_BOOL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) v.push_back( (*_data.v_b)[i] ? 1 : 0 ) ;
+      break ;
+    case GC_VEC_INTEGER:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type tmp(real_type( (*_data.v_i)[i] ),0) ;
+        v.push_back( tmp ) ;
+      }
+      break ;
+    case GC_VEC_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type tmp((*_data.v_r)[i],0) ;
+        v.push_back( tmp ) ;
+      }
+      break ;
+    case GC_VEC_COMPLEX:
+    case GC_MAT_COMPLEX:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i )
+        v.push_back( get_complex_number_at(i) ) ;
+      break ;
+    case GC_VECTOR:
+    case GC_MAT_REAL:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        complex_type tmp(get_number_at(i),0) ;
+        v.push_back( tmp ) ;
+      }
+      break;
+    case GC_BOOL:
+      v.reserve(1) ;
+      v.push_back( _data.b ? 1 : 0 ) ;
+      break ;
+    case GC_INTEGER:
+      v.reserve(1) ;
+      v.push_back( complex_type( real_type(_data.i), 0 ) ) ;
+      break ;
+    case GC_LONG:
+      v.reserve(1) ;
+      v.push_back( complex_type( real_type(_data.l), 0 ) ) ;
+      break ;
+    case GC_REAL:
+      v.reserve(1) ;
+      v.push_back( complex_type( _data.r, 0 ) ) ;
+      break ;
+    case GC_COMPLEX:
+      v.reserve(1) ;
+      v.push_back( *_data.c ) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_STRING:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `vec_complex_type'" ) ;
+    }
+  }
+
+  // --------------------------------------------------------------
 
   bool
   GenericContainer::exists( std::string const & s ) const {

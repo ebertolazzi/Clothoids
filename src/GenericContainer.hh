@@ -33,7 +33,6 @@
 #include <sstream>
 #include <stdexcept>
 
-
 #if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
   #define GENERIC_CONTAINER_ON_WINDOWS
   //#pragma comment(lib, "kernel32.lib")
@@ -144,6 +143,15 @@ namespace GenericContainerNamespace {
 
   typedef std::vector<GenericContainer>          vector_type ; //!< vector of `GenericContainer`
   typedef std::map<string_type,GenericContainer> map_type    ; //!< associative array of `GenericContainer`
+
+  // ---------------------------------------------------------------------------
+
+  typedef unsigned int   uint_type  ; //!< integer type data
+  typedef unsigned long  ulong_type ; //!< long integer type data
+
+  typedef std::vector<uint_type>  vec_uint_type ; //!< vector of integer
+  typedef std::vector<ulong_type> vec_ulong_type ; //!< vector of integer
+  typedef std::vector<long_type>  vec_long_type ; //!< vector of integer
 
   // ---------------------------------------------------------------------------
 
@@ -579,6 +587,11 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL void *  get_pvoid( char const msg[] = nullptr ) const ;
     GENERIC_CONTAINER_API_DLL void ** get_ppvoid( char const msg[] = nullptr ) const ;
 
+    template <typename T>
+    GENERIC_CONTAINER_API_DLL
+    void
+    get_value( T & v, char const msg[] = "" ) const ;
+
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
     template <typename T>
     T& get_pointer()
@@ -659,6 +672,26 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL vec_string_type       & get_vec_string( char const msg[] = nullptr ) ;
     GENERIC_CONTAINER_API_DLL vec_string_type const & get_vec_string( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of strings (if fails issue an error).
+    //@}
+
+    //! \name Access to vector type data and convert
+    GENERIC_CONTAINER_API_DLL
+    void copyto_vec_int( vec_int_type & v, char const msg[] = "" ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void copyto_vec_uint( vec_uint_type & v, char const msg[] = "" ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void copyto_vec_long( vec_long_type & v, char const msg[] = "" ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void copyto_vec_ulong( vec_ulong_type & v, char const msg[] = "" ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void copyto_vec_real( vec_real_type & v, char const msg[] = "" ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void copyto_vec_complex( vec_complex_type & v, char const msg[] = "" ) const ;
     //@}
 
     //! \name Access to element of vector type data
