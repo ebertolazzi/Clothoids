@@ -56,22 +56,28 @@
     #ifndef DO_NOT_USE_CXX11
       #define GENERIC_CONTAINER_USE_CXX11
     #endif
+  #else
+    #include <cstdlib>
+    #ifndef nullptr
+      #include <cstddef>
+      #ifndef nullptr
+        #define nullptr NULL
+      #endif
+    #endif
   #endif
 #else
+  #pragma clang diagnostic ignored "-Wc++98-compat"
   #if __cplusplus > 199711L
     #ifndef DO_NOT_USE_CXX11
       #define GENERIC_CONTAINER_USE_CXX11
     #endif
-  #endif
-#endif
-
-// if C++ < C++11 define nullptr
-#ifndef GENERIC_CONTAINER_USE_CXX11
-  #include <cstdlib>
-  #ifndef nullptr
-    #include <cstddef>
+  #else
+    #include <cstdlib>
     #ifndef nullptr
-      #define nullptr NULL
+      #include <cstddef>
+      #ifndef nullptr
+        #define nullptr NULL
+      #endif
     #endif
   #endif
 #endif
