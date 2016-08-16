@@ -1046,7 +1046,7 @@ namespace GenericContainerNamespace {
   GenericContainer::get_value( float & v, char const msg[] ) const {
     switch (_data_type) {
     case GC_BOOL:
-      v = _data.b?1:0 ;
+      v = float(_data.b?1:0) ;
       break ;
     case GC_INTEGER:
       v = float(_data.i) ;
