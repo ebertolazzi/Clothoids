@@ -192,7 +192,7 @@ GC_set_bool( int const a ) {
 
 EXTERN_C
 int
-GC_set_int( int_type const a ) {
+GC_set_int( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   GC_TRY( gc_active -> top() -> set_int(a) ) ;
   return GENERIC_CONTAINER_OK ;
@@ -200,7 +200,7 @@ GC_set_int( int_type const a ) {
 
 EXTERN_C
 int
-GC_set_real( real_type const a ) {
+GC_set_real( double const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   GC_TRY( gc_active -> top() -> set_real(a) ) ;
   return GENERIC_CONTAINER_OK ;
@@ -216,7 +216,7 @@ GC_set_complex( c_complex_type const * a ) {
 
 EXTERN_C
 int
-GC_set_complex2( real_type const re, real_type const im ) {
+GC_set_complex2( double const re, real_type const im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   GC_TRY( gc_active -> top() -> set_complex(re,im) ) ;
   return GENERIC_CONTAINER_OK ;
@@ -240,21 +240,21 @@ GC_get_bool() {
 }
 
 EXTERN_C
-int_type
+int
 GC_get_int() {
   if ( gc_active == nullptr ) return 0 ;
   return gc_active -> top() -> get_int() ;
 }
 
 EXTERN_C
-long_type
+long
 GC_get_long() {
   if ( gc_active == nullptr ) return 0 ;
   return gc_active -> top() -> get_long() ;
 }
 
 EXTERN_C
-real_type
+double
 GC_get_real( ) {
   if ( gc_active == nullptr ) return 0 ;
   return gc_active -> top() -> get_real() ;
@@ -273,14 +273,14 @@ GC_get_complex( ) {
 }
 
 EXTERN_C
-real_type
+double
 GC_get_complex_re( ) {
   if ( gc_active != nullptr ) return gc_active -> top() -> get_complex() . real() ;
   return 0 ;
 }
 
 EXTERN_C
-real_type
+double
 GC_get_complex_im( ) {
   if ( gc_active != nullptr ) return gc_active -> top() -> get_complex() . imag() ;
   return 0 ;
@@ -305,7 +305,7 @@ GC_push_bool( int const a ) {
 
 EXTERN_C
 int
-GC_push_int( int_type const a ) {
+GC_push_int( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   GC_TRY( gc_active -> top() -> push_int( a ) ) ;
   return GENERIC_CONTAINER_OK ;
@@ -313,7 +313,7 @@ GC_push_int( int_type const a ) {
 
 EXTERN_C
 int
-GC_push_real( real_type const a ) {
+GC_push_real( double const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   GC_TRY( gc_active -> top() -> push_real( a ) ) ;
   return GENERIC_CONTAINER_OK ;
@@ -329,7 +329,7 @@ GC_push_complex( c_complex_type const * a ) {
 
 EXTERN_C
 int
-GC_push_complex2( real_type const re, real_type const im ) {
+GC_push_complex2( double const re, double const im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   GC_TRY( gc_active -> top() -> push_complex( re, im ) ) ;
   return GENERIC_CONTAINER_OK ;
@@ -354,14 +354,14 @@ GC_get_bool_at_pos( int pos ) {
 }
 
 EXTERN_C
-int_type
+int
 GC_get_int_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0 ;
   return gc_active -> top() -> get_int_at( unsigned(pos) ) ;
 }
 
 EXTERN_C
-real_type
+double
 GC_get_real_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0 ;
   return gc_active -> top() -> get_number_at( unsigned(pos) ) ;
@@ -377,7 +377,7 @@ GC_get_complex_at_pos( int pos ) {
 }
 
 EXTERN_C
-real_type
+double
 GC_get_complex_real_at_pos( int pos ) {
   real_type re = 0, im = 0 ;
   if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number_at( unsigned(pos), re, im ) ;
@@ -385,7 +385,7 @@ GC_get_complex_real_at_pos( int pos ) {
 }
 
 EXTERN_C
-real_type
+double
 GC_get_complex_imag_at_pos( int pos ) {
   real_type re = 0, im = 0 ;
   if ( gc_active != nullptr ) gc_active -> top() -> get_complex_number_at( unsigned(pos), re, im ) ;
@@ -402,7 +402,7 @@ GC_get_string_at_pos( int pos ) {
 //..............................................................................
 
 EXTERN_C
-real_type
+double
 GC_get_real_at_coor( int i, int j ) {
   if ( gc_active == nullptr ) return 0 ;
   return gc_active -> top() -> get_real_at( unsigned(i), unsigned(j) ) ;
@@ -422,7 +422,7 @@ GC_get_complex_at_coor( int i, int j ) {
 }
 
 EXTERN_C
-real_type
+double
 GC_get_complex_real_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
     complex_type res = gc_active -> top() -> get_complex_at( unsigned(i), unsigned(j) ) ;
@@ -432,7 +432,7 @@ GC_get_complex_real_at_coor( int i, int j ) {
 }
 
 EXTERN_C
-real_type
+double
 GC_get_complex_imag_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
     complex_type res = gc_active -> top() -> get_complex_at( unsigned(i), unsigned(j) ) ;
@@ -498,7 +498,7 @@ GC_set_vector_of_bool( int const a[], int nelem ) {
 
 EXTERN_C
 int
-GC_set_vector_of_int( int_type const a[], int nelem ) {
+GC_set_vector_of_int( int const a[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   vec_int_type & v = gc_active -> top() -> set_vec_int( unsigned(nelem) ) ;
   std::copy( a, a + nelem, v.begin() ) ;
@@ -507,7 +507,7 @@ GC_set_vector_of_int( int_type const a[], int nelem ) {
 
 EXTERN_C
 int
-GC_set_vector_of_real( real_type const a[], int nelem ) {
+GC_set_vector_of_real( double const a[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   vec_real_type & v = gc_active -> top() -> set_vec_real( unsigned(nelem) ) ;
   std::copy( a, a + nelem, v.begin() ) ;
@@ -516,7 +516,7 @@ GC_set_vector_of_real( real_type const a[], int nelem ) {
 
 EXTERN_C
 int
-GC_set_vector_of_complex( real_type const re[], real_type const im[], int nelem ) {
+GC_set_vector_of_complex( double const re[], double const im[], int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD ;
   vec_complex_type & v = gc_active -> top() -> set_vec_complex( unsigned(nelem) ) ;
   for ( unsigned i = 0 ; i < unsigned(nelem) ; ++i ) v[i] = complex_type(re[i],im[i]) ;
