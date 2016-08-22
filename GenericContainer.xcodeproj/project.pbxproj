@@ -1358,6 +1358,13 @@
 					"-lpcre",
 					"-lpcrecpp",
 				);
+				WARNING_CFLAGS = (
+					"-Weverything",
+					"-Wno-reserved-id-macro",
+					"-Wno-padded",
+					"-Wno-documentation-unknown-command",
+					"-Wno-float-equal",
+				);
 			};
 			name = Debug;
 		};
@@ -1406,6 +1413,13 @@
 					"-llua",
 					"-lpcre",
 					"-lpcrecpp",
+				);
+				WARNING_CFLAGS = (
+					"-Weverything",
+					"-Wno-reserved-id-macro",
+					"-Wno-padded",
+					"-Wno-documentation-unknown-command",
+					"-Wno-float-equal",
 				);
 			};
 			name = Release;

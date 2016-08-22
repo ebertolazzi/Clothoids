@@ -292,7 +292,7 @@ namespace GenericContainerNamespace {
   */
 
   LuaInterpreter::LuaInterpreter() {
-    lua_State *& L = *((lua_State**)&void_L) ;
+    lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     L = luaL_newstate() ; // opens Lua
     GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::LuaInterpreter() lua_State invalid!" ) ;
     luaL_openlibs(L) ;
@@ -301,7 +301,7 @@ namespace GenericContainerNamespace {
   // -----------------------------------------------------------------------------
 
   LuaInterpreter::~LuaInterpreter() {
-    lua_State *& L = *((lua_State**)&void_L) ;
+    lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::~LuaInterpreter() lua_State invalid!" ) ;
     lua_close(L);
   }
@@ -310,7 +310,7 @@ namespace GenericContainerNamespace {
 
   void
   LuaInterpreter::do_file( char const filename[], bool check_syntax_only ) {
-    lua_State *& L = *((lua_State**)&void_L) ;
+    lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::do_file('" << filename <<
                                 "')\nlua_State invalid!" ) ;
     if ( luaL_loadfile(L, filename) || lua_pcall(L, 0, 0, 0)  ) {
@@ -323,7 +323,7 @@ namespace GenericContainerNamespace {
 
   void
   LuaInterpreter::execute( char const cmd[] ) {
-    lua_State *& L = *((lua_State**)&void_L) ;
+    lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     GC_ASSERT( L != NULL &&
                !luaL_loadbuffer(L, cmd, strlen(cmd), "line") &&
                !lua_pcall(L, 0, 0, 0),
@@ -335,7 +335,7 @@ namespace GenericContainerNamespace {
 
   void
   LuaInterpreter::call( GenericContainer const & fun_io, GenericContainer & res ) {
-    lua_State *& L = *((lua_State**)&void_L) ;
+    lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
 
     // args must be of type MAP
     string_type      const & fname = fun_io("function").get_string() ;
@@ -357,7 +357,7 @@ namespace GenericContainerNamespace {
 
   void
   LuaInterpreter::global_to_GC( char const global_var[], GenericContainer & gc ) {
-    lua_State *& L = *((lua_State**)&void_L) ;
+    lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::global_to_GC(...) lua_State invalid!" ) ;
       
     lua_getglobal( L, global_var ) ;
@@ -398,7 +398,7 @@ namespace GenericContainerNamespace {
 
   void
   LuaInterpreter::GC_to_global( GenericContainer const & gc, char const global_var[] ) {
-    lua_State *& L = *((lua_State**)&void_L) ;
+    lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     GC_to_lua( L, gc ) ;
     lua_setglobal( L, global_var ) ;
   }
