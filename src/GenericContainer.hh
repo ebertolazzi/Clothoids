@@ -68,6 +68,9 @@
   #ifdef __clang__
     #pragma clang diagnostic ignored "-Wc++98-compat"
   #endif
+  #ifdef __GNUC__
+    #pragma GCC diagnostic ignored "-Wc++98-compat"
+  #endif
   #if __cplusplus > 199711L
     #ifndef DO_NOT_USE_CXX11
       #define GENERIC_CONTAINER_USE_CXX11

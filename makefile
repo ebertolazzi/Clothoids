@@ -14,8 +14,8 @@ endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  CC  = clang   -Weverything -Wno-reserved-id-macro -Wno-padded -Wfloat-equal
-  CXX = clang++ -Weverything -Wno-reserved-id-macro -Wno-padded -Wfloat-equal
+  CC  = clang   -Weverything -Wno-reserved-id-macro -Wno-padded
+  CXX = clang++ -Weverything -Wno-reserved-id-macro -Wno-padded
   AR  = libtool -static -o
   #LIB_GC = libGenericContainer.dylib
 endif

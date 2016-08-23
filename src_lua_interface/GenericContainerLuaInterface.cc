@@ -7,7 +7,7 @@
  |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
- |                           /|                   /|                        |
+ |      /Users/enrico/Ricerca/develop/myGitProjetcs/myGenericContainer/GenericContainer_xcode_config/Release.xcconfig                     /|                   /|                        |
  |                           \|                   \|                        |
  |                                                                          |
  |      E.Bertolazzi, F.Biral, P.Bosetti                                    |
@@ -53,8 +53,15 @@ using namespace std ;
 
 namespace GenericContainerNamespace {
 
-  typedef double valueType ;
-  typedef int    indexType ;
+  static
+  inline
+  bool isZero( real_type x )
+  { return FP_ZERO == fpclassify(x) ; }
+
+  static
+  inline
+  bool isInteger( real_type x )
+  { return isZero(x-floor(x)) ; }
 
   /*
   //   _                _           ____  ____
@@ -86,11 +93,11 @@ namespace GenericContainerNamespace {
       break ;
     case LUA_TNUMBER:
       {
-        valueType val = lua_tonumber(L, -1) ;
+        real_type val = lua_tonumber(L, -1) ;
         if ( gc.get_type() == GC_VEC_REAL ) {
           gc.get_real_at(idx) = val ;
-        } else if ( indexType(val) == val ) {
-          gc.get_int_at(idx) = indexType(val) ;
+        } else if ( isInteger(val) ) {
+          gc.get_int_at(idx) = int_type(val) ;
         } else {
           gc.get_real_at(idx) = val ;
         }
@@ -119,10 +126,9 @@ namespace GenericContainerNamespace {
         break ;
       case LUA_TNUMBER:
         {
-          valueType  val = lua_tonumber(L, -1) ;
-          indexType ival = indexType(val) ;
-          if ( ival == val ) gc[key].set_int(ival) ;
-          else               gc[key].set_real(val) ;
+          real_type val = lua_tonumber(L, -1) ;
+          if ( isInteger(val) ) gc[key].set_int(int_type(val)) ;
+          else                  gc[key].set_real(val) ;
         }
         break ;
       case LUA_TSTRING:
@@ -165,10 +171,9 @@ namespace GenericContainerNamespace {
         break ;
       case LUA_TNUMBER:
         {
-        valueType  val = lua_tonumber(L, -1) ;
-        indexType ival = indexType(val) ;
-        if ( ival == val ) gc.set_int(ival) ;
-        else               gc.set_real(val) ;
+        real_type val = lua_tonumber(L, -1) ;
+        if ( isInteger(val) ) gc.set_int(int_type(val)) ;
+        else                  gc.set_real(val) ;
         }
         break ;
       case LUA_TSTRING:
@@ -371,10 +376,9 @@ namespace GenericContainerNamespace {
       break ;
     case LUA_TNUMBER:
       {
-        valueType  val = lua_tonumber(L, -1) ;
-        indexType ival = indexType(val) ;
-        if ( ival == val ) gc.set_int(ival) ;
-        else               gc.set_real(val) ;
+        real_type val = lua_tonumber(L, -1) ;
+        if ( isInteger(val) ) gc.set_int(int_type(val)) ;
+        else                  gc.set_real(val) ;
       }
       break ;
     case LUA_TSTRING:
