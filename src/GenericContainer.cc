@@ -24,6 +24,7 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 #include <cmath>
+#include <ctgmath>
 
 // use pcre for pattern matching
 #ifdef GENERIC_CONTAINER_USE_CXX11
@@ -33,6 +34,8 @@
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
 namespace GenericContainerNamespace {
+
+  using std::fpclassify;
 
   static
   inline
