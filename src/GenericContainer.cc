@@ -1985,7 +1985,8 @@ namespace GenericContainerNamespace {
     case GC_VECTOR:
       v.reserve(ne) ;
       for ( unsigned i = 0 ; i < ne ; ++i ) {
-        v.push_back( get_string_at(i,msg) ) ;
+        GenericContainer const & gc = get_gc_at(i,msg) ;
+        v.push_back( gc.get_string(msg) ) ;
       }
       break;
     case GC_NOTYPE:
