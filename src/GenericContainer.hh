@@ -694,6 +694,9 @@ namespace GenericContainerNamespace {
 
     GENERIC_CONTAINER_API_DLL
     void copyto_vec_complex( vec_complex_type & v, char const msg[] = "" ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void copyto_vec_string( vec_string_type & v, char const msg[] = "" ) const ;
     //@}
 
     //! \name Access to element of vector type data

@@ -1488,7 +1488,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = (*_data.v_r)[i] ;
         GC_ASSERT( isInteger(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_int: v[" << i << "] = " << val <<
                    " cannot be converted to `integer'" ) ;
         v.push_back( int_type(val) ) ;
       }
@@ -1499,7 +1499,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         complex_type val = get_complex_number_at(i) ;
         GC_ASSERT( isZero(val.imag()) && isInteger(val.real()),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_int: v[" << i << "] = " << val <<
                    " cannot be converted to `integer'" ) ;
         v.push_back( int_type(val.real()) ) ;
       }
@@ -1510,7 +1510,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = get_number_at(i) ;
         GC_ASSERT( isInteger(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_int: v[" << i << "] = " << val <<
                    " cannot be converted to `integer'" ) ;
         v.push_back( int_type(val) ) ;
       }
@@ -1567,7 +1567,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         int_type val = (*_data.v_i)[i] ;
         GC_ASSERT( val >= 0,
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_uint: v[" << i << "] = " << val <<
                    " cannot be converted to `unsigned integer'" ) ;
         v.push_back( uint_type(val) ) ;
       }
@@ -1577,7 +1577,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = (*_data.v_r)[i] ;
         GC_ASSERT( isUnsigned(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_uint: v[" << i << "] = " << val <<
                    " cannot be converted to `unsigned integer'" ) ;
         v.push_back( uint_type(val) ) ;
       }
@@ -1588,7 +1588,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         complex_type val = get_complex_number_at(i) ;
         GC_ASSERT( isZero(val.imag()) && isUnsigned(val.real()),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_uint: v[" << i << "] = " << val <<
                    " cannot be converted to `unsigned integer'" ) ;
         v.push_back( uint_type(val.real()) ) ;
       }
@@ -1599,7 +1599,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = get_number_at(i) ;
         GC_ASSERT( isUnsigned(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_uint: v[" << i << "] = " << val <<
                    " cannot be converted to `unsigned integer'" ) ;
         v.push_back( uint_type(val) ) ;
       }
@@ -1611,28 +1611,28 @@ namespace GenericContainerNamespace {
     case GC_INTEGER:
       v.reserve(1) ;
       GC_ASSERT( _data.i >= 0,
-                 msg << "copyto_vec_int: value = " << _data.i <<
+                 msg << "copyto_vec_uint: value = " << _data.i <<
                  " cannot be converted to `unsigned integer'" ) ;
       v.push_back( uint_type(_data.i) ) ;
       break ;
     case GC_LONG:
       v.reserve(1) ;
       GC_ASSERT( _data.l >= 0,
-                 msg << "copyto_vec_int: value = " << _data.l <<
+                 msg << "copyto_vec_uint: value = " << _data.l <<
                  " cannot be converted to `unsigned integer'" ) ;
       v.push_back( uint_type(_data.l) ) ;
       break ;
     case GC_REAL:
       v.reserve(1) ;
       GC_ASSERT( isUnsigned(_data.r),
-                msg << "copyto_vec_int: value = " << _data.r <<
+                msg << "copyto_vec_uint: value = " << _data.r <<
                 " cannot be converted to `unsigned integer'" ) ;
       v.push_back( uint_type(_data.r) ) ;
       break ;
     case GC_COMPLEX:
       v.reserve(1) ;
       GC_ASSERT( isZero(_data.c->imag()) && isUnsigned(_data.c->real()),
-                 msg << "copyto_vec_int: value " << *_data.c <<
+                 msg << "copyto_vec_uint: value " << *_data.c <<
                  " cannot be converted to `unsigned integer'" ) ;
       v.push_back( uint_type(_data.c->real()) ) ;
       break ;
@@ -1669,7 +1669,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = (*_data.v_r)[i] ;
         GC_ASSERT( isInteger(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_long: v[" << i << "] = " << val <<
                    " cannot be converted to `long'" ) ;
         v.push_back( long_type(val) ) ;
       }
@@ -1680,7 +1680,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         complex_type val = get_complex_number_at(i) ;
         GC_ASSERT( isZero(val.imag()) && isInteger(val.real()),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_long: v[" << i << "] = " << val <<
                    " cannot be converted to `long'" ) ;
         v.push_back( long_type(val.real()) ) ;
       }
@@ -1691,7 +1691,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = get_number_at(i) ;
         GC_ASSERT( isInteger(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_long: v[" << i << "] = " << val <<
                    " cannot be converted to `long'" ) ;
         v.push_back( long_type(val) ) ;
       }
@@ -1711,14 +1711,14 @@ namespace GenericContainerNamespace {
     case GC_REAL:
       v.reserve(1) ;
       GC_ASSERT( isInteger(_data.r),
-                msg << "copyto_vec_int: value " << _data.r <<
+                msg << "copyto_vec_long: value " << _data.r <<
                 " cannot be converted to `long'" ) ;
       v.push_back( long_type(_data.r) ) ;
       break ;
     case GC_COMPLEX:
       v.reserve(1) ;
       GC_ASSERT( isZero(_data.c->imag()) && isInteger(_data.c->real()),
-                 msg << "copyto_vec_int: value " << *_data.c <<
+                 msg << "copyto_vec_long: value " << *_data.c <<
                  " cannot be converted to `long'" ) ;
       v.push_back( long_type(_data.c->real()) ) ;
       break ;
@@ -1749,7 +1749,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         int_type val = (*_data.v_i)[i] ;
         GC_ASSERT( val >= 0,
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_ulong: v[" << i << "] = " << val <<
                    " cannot be converted to `unsigned long'" ) ;
         v.push_back( ulong_type(val) ) ;
       }
@@ -1759,7 +1759,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = (*_data.v_r)[i] ;
         GC_ASSERT( isInteger(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_ulong: v[" << i << " = " << val <<
                    " cannot be converted to `unsigned long'" ) ;
         v.push_back( ulong_type(val) ) ;
       }
@@ -1770,7 +1770,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         complex_type val = get_complex_number_at(i) ;
         GC_ASSERT( isZero(val.imag()) && isUnsigned(val.real()),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_ulong: v[" << i << "] = " << val <<
                    " cannot be converted to `unsigned long'" ) ;
         v.push_back( ulong_type(val.real()) ) ;
       }
@@ -1781,7 +1781,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         real_type val = get_number_at(i) ;
         GC_ASSERT( isUnsigned(val),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_ulong: v[" << i << "] = " << val <<
                    " cannot be converted to `unsigned long'" ) ;
         v.push_back( ulong_type(val) ) ;
       }
@@ -1793,28 +1793,28 @@ namespace GenericContainerNamespace {
     case GC_INTEGER:
       v.reserve(1) ;
       GC_ASSERT( _data.i >= 0,
-                 msg << "copyto_vec_int: value = " << _data.i <<
+                 msg << "copyto_vec_ulong: value = " << _data.i <<
                  " cannot be converted to `unsigned long'" ) ;
       v.push_back( ulong_type(_data.i) ) ;
       break ;
     case GC_LONG:
       v.reserve(1) ;
       GC_ASSERT( _data.l >= 0,
-                 msg << "copyto_vec_int: value = " << _data.l <<
+                 msg << "copyto_vec_ulong: value = " << _data.l <<
                  " cannot be converted to `unsigned long'" ) ;
       v.push_back( ulong_type(_data.l) ) ;
       break ;
     case GC_REAL:
       v.reserve(1) ;
       GC_ASSERT( isUnsigned(_data.r),
-                msg << "copyto_vec_int: value = " << _data.r <<
+                msg << "copyto_vec_ulong: value = " << _data.r <<
                 " cannot be converted to `unsigned long'" ) ;
       v.push_back( ulong_type(_data.r) ) ;
       break ;
     case GC_COMPLEX:
       v.reserve(1) ;
       GC_ASSERT( isZero(_data.c->imag()) && isUnsigned(_data.c->real()),
-                 msg << "copyto_vec_int: value " << *_data.c <<
+                 msg << "copyto_vec_ulong: value " << *_data.c <<
                  " cannot be converted to `unsigned long'" ) ;
       v.push_back( ulong_type(_data.c->real()) ) ;
       break ;
@@ -1854,7 +1854,7 @@ namespace GenericContainerNamespace {
       for ( unsigned i = 0 ; i < ne ; ++i ) {
         complex_type val = get_complex_number_at(i) ;
         GC_ASSERT( isZero(val.imag()),
-                   msg << "copyto_vec_int: v[" << i << " = " << val <<
+                   msg << "copyto_vec_real: v[" << i << "] = " << val <<
                    " cannot be converted to `real'" ) ;
         v.push_back( val.real() ) ;
       }
@@ -1884,7 +1884,7 @@ namespace GenericContainerNamespace {
     case GC_COMPLEX:
       v.reserve(1) ;
       GC_ASSERT( isZero(_data.c->imag()),
-                 msg << "copyto_vec_int: value " << *_data.c <<
+                 msg << "copyto_vec_real: value " << *_data.c <<
                  " cannot be converted to `real'" ) ;
       v.push_back( _data.c->real() ) ;
       break ;
@@ -1966,6 +1966,46 @@ namespace GenericContainerNamespace {
     GC_DO_ERROR( msg <<
                  "\nbad data type: `" << typeName[_data_type] <<
                  "' cannot be converted in `vec_complex_type'" ) ;
+    }
+  }
+
+  void
+  GenericContainer::copyto_vec_string( vec_string_type & v, char const msg[] ) const {
+    v.clear() ;
+    unsigned ne = get_num_elements() ;
+    switch (_data_type) {
+    case GC_STRING:
+      v.reserve(ne) ;
+      v.push_back( *_data.s ) ;
+      break;
+    case GC_VEC_STRING:
+      v.resize(ne) ;
+      std::copy( _data.v_s->begin(), _data.v_s->end(), v.begin() ) ;
+      break;
+    case GC_VECTOR:
+      v.reserve(ne) ;
+      for ( unsigned i = 0 ; i < ne ; ++i ) {
+        v.push_back( get_string_at(i,msg) ) ;
+      }
+      break;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    case GC_INTEGER:
+    case GC_LONG:
+    case GC_REAL:
+    case GC_COMPLEX:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_MAT_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_MAT_COMPLEX:
+    case GC_POINTER:
+    case GC_VEC_POINTER:
+    case GC_MAP:
+    GC_DO_ERROR( msg <<
+                 "\nbad data type: `" << typeName[_data_type] <<
+                 "' cannot be converted in `vec_string_type'" ) ;
     }
   }
 
