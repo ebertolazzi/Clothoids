@@ -984,6 +984,9 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL bool exists( std::string const & s ) const ;
 
     GENERIC_CONTAINER_API_DLL
+    bool get_if_exists( char const field[], bool & value ) const ;
+
+    GENERIC_CONTAINER_API_DLL
     bool get_if_exists( char const field[], int_type & value ) const ;
 
     GENERIC_CONTAINER_API_DLL

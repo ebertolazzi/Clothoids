@@ -2020,6 +2020,16 @@ namespace GenericContainerNamespace {
   }
 
   bool
+  GenericContainer::get_if_exists( char const field[], bool & value ) const {
+    if ( _data_type != GC_MAP ) return false;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return false ;
+    if ( iv->second._data_type != GC_BOOL ) return false ;
+    value = iv->second._data.b ;
+    return true ;
+  }
+
+  bool
   GenericContainer::get_if_exists( char const field[], int_type & value ) const {
     if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(field) ;
