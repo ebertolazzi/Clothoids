@@ -2019,6 +2019,248 @@ namespace GenericContainerNamespace {
     return iv != (*_data.m).end() ;
   }
 
+  void
+  GenericContainer::get_if_exists( char const field[], int_type & value ) const {
+    if ( _data_type != GC_MAP ) return ;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return ;
+    switch (iv->second._data_type) {
+    case GC_BOOL:
+      value = iv->second._data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      value = iv->second._data.i ;
+      break ;
+    case GC_LONG:
+      value = int_type(iv->second._data.l) ;
+      break ;
+    case GC_REAL:
+      if ( isInteger(iv->second._data.r) ) value = int_type(iv->second._data.r) ;
+      break ;
+    case GC_COMPLEX:
+      if ( isInteger(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
+        value = int_type(iv->second._data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+      break ;
+    }
+  }
+
+  void
+  GenericContainer::get_if_exists( char const field[], uint_type & value ) const {
+    if ( _data_type != GC_MAP ) return ;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return ;
+    switch (iv->second._data_type) {
+    case GC_BOOL:
+      value = iv->second._data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      if ( isUnsigned(iv->second._data.i) ) value = uint_type(iv->second._data.i) ;
+      break ;
+    case GC_LONG:
+      if ( isUnsigned(iv->second._data.l) ) value = uint_type(iv->second._data.l) ;
+      break ;
+    case GC_REAL:
+      if ( isUnsigned(iv->second._data.r) ) value = uint_type(iv->second._data.r) ;
+      break ;
+    case GC_COMPLEX:
+      if ( isUnsigned(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
+        value = uint_type(iv->second._data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+      break ;
+    }
+  }
+
+  void
+  GenericContainer::get_if_exists( char const field[], long_type & value ) const {
+      if ( _data_type != GC_MAP ) return ;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return ;
+    switch (iv->second._data_type) {
+    case GC_BOOL:
+      value = iv->second._data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      value = long_type(iv->second._data.i) ;
+      break ;
+    case GC_LONG:
+      value = iv->second._data.l ;
+      break ;
+    case GC_REAL:
+      if ( isInteger(iv->second._data.r) ) value = long_type(iv->second._data.r) ;
+      break ;
+    case GC_COMPLEX:
+      if ( isInteger(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
+        value = long_type(iv->second._data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+      break ;
+    }
+  }
+
+  void
+  GenericContainer::get_if_exists( char const field[], ulong_type & value ) const {
+    if ( _data_type != GC_MAP ) return ;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return ;
+    switch (iv->second._data_type) {
+    case GC_BOOL:
+      value = iv->second._data.b?1:0 ;
+      break ;
+    case GC_INTEGER:
+      if ( isUnsigned(iv->second._data.i) ) value = ulong_type(iv->second._data.i) ;
+      break ;
+    case GC_LONG:
+      if ( isUnsigned(iv->second._data.l) ) value = ulong_type(iv->second._data.l) ;
+      break ;
+    case GC_REAL:
+      if ( isUnsigned(iv->second._data.r) ) value = ulong_type(iv->second._data.r) ;
+      break ;
+    case GC_COMPLEX:
+      if ( isUnsigned(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
+        value = ulong_type(iv->second._data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+      break ;
+    }
+  }
+
+  void
+  GenericContainer::get_if_exists( char const field[], real_type & value ) const {
+    if ( _data_type != GC_MAP ) return ;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return ;
+    switch (iv->second._data_type) {
+    case GC_BOOL:
+      value = real_type(iv->second._data.b?1:0) ;
+      break ;
+    case GC_INTEGER:
+      value = real_type(iv->second._data.i) ;
+      break ;
+    case GC_LONG:
+      value = real_type(iv->second._data.l) ;
+      break ;
+    case GC_REAL:
+      value = iv->second._data.r ;
+      break ;
+    case GC_COMPLEX:
+      if ( isZero(iv->second._data.c->imag()) )
+        value = real_type(iv->second._data.c->real()) ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+      break ;
+    }
+  }
+
+  GENERIC_CONTAINER_API_DLL
+  void
+  GenericContainer::get_if_exists( char const field[], complex_type & value ) const {
+    if ( _data_type != GC_MAP ) return ;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return ;
+    switch (iv->second._data_type) {
+    case GC_BOOL:
+      value = complex_type(iv->second._data.b?1:0,0) ;
+      break ;
+    case GC_INTEGER:
+      value = complex_type(iv->second._data.i,0) ;
+      break ;
+    case GC_LONG:
+      value = complex_type(iv->second._data.l,0) ;
+      break ;
+    case GC_REAL:
+      value = complex_type(iv->second._data.r,0) ;
+      break ;
+    case GC_COMPLEX:
+      value = *iv->second._data.c ;
+      break ;
+    case GC_NOTYPE:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VECTOR:
+    case GC_MAP:
+      break ;
+    }
+  }
+
+  void
+  GenericContainer::get_if_exists( char const field[], string_type & value ) const {
+    if ( _data_type != GC_MAP ) return ;
+    map_type::iterator iv = (*_data.m).find(field) ;
+    if ( iv == (*_data.m).end() ) return ;
+    if ( iv->second._data_type == GC_STRING ) value = *iv->second._data.s ;
+  }
+
   // --------------------------------------------------------------
   bool_type
   GenericContainer::get_bool_at( unsigned i ) {

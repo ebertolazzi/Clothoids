@@ -162,16 +162,19 @@ namespace GenericContainerNamespace {
     unsigned _numCols ;
   public:
 
+    GENERIC_CONTAINER_API_DLL
     mat_real_type()
     : _numRows(0)
     , _numCols(0)
     {}
 
+    GENERIC_CONTAINER_API_DLL
     mat_real_type( unsigned nr, unsigned nc )
     : _numRows(nr)
     , _numCols(nc)
     { vec_real_type::resize(size_type(nr*nc)) ; }
 
+    GENERIC_CONTAINER_API_DLL
     void
     resize( unsigned nr, unsigned nc ) {
       _numRows = nr ;
@@ -179,13 +182,19 @@ namespace GenericContainerNamespace {
       vec_real_type::resize(size_type(nr*nc)) ;
     }
 
-    unsigned numRows() const { return _numRows ; }
-    unsigned numCols() const { return _numCols ; }
+    GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
+    GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }
 
+    GENERIC_CONTAINER_API_DLL
     real_type const & operator () ( unsigned i, unsigned j ) const ;
-    real_type       & operator () ( unsigned i, unsigned j ) ;
+    
+    GENERIC_CONTAINER_API_DLL
+    real_type & operator () ( unsigned i, unsigned j ) ;
 
-    void info( std::basic_ostream<char> & stream ) const ;
+    GENERIC_CONTAINER_API_DLL
+    void
+    info( std::basic_ostream<char> & stream ) const ;
+
   } ;
 
   // ---------------------------------------------------------------------------
@@ -195,16 +204,19 @@ namespace GenericContainerNamespace {
     unsigned _numCols ;
   public:
 
+    GENERIC_CONTAINER_API_DLL
     mat_complex_type()
     : _numRows(0)
     , _numCols(0)
     {}
 
+    GENERIC_CONTAINER_API_DLL
     mat_complex_type( unsigned nr, unsigned nc )
     : _numRows(nr)
     , _numCols(nc)
     { vec_complex_type::resize(size_type(nr*nc)) ; }
 
+    GENERIC_CONTAINER_API_DLL
     void
     resize( unsigned nr, unsigned nc ) {
       _numRows = nr ;
@@ -212,24 +224,42 @@ namespace GenericContainerNamespace {
       vec_complex_type::resize(size_type(nr*nc)) ;
     }
 
-    unsigned numRows() const { return _numRows ; }
-    unsigned numCols() const { return _numCols ; }
+    GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
+    GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }
 
+    GENERIC_CONTAINER_API_DLL
     complex_type const & operator () ( unsigned i, unsigned j ) const ;
-    complex_type       & operator () ( unsigned i, unsigned j ) ;
+    
+    GENERIC_CONTAINER_API_DLL
+    complex_type & operator () ( unsigned i, unsigned j ) ;
 
-    void info( std::basic_ostream<char> & stream ) const ;
+    GENERIC_CONTAINER_API_DLL
+    void
+    info( std::basic_ostream<char> & stream ) const ;
 
   } ;
 
   // ---------------------------------------------------------------------------
 
+  GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_pointer_type const & v ) ;
+  
+  GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_bool_type const & v ) ;
+  
+  GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_int_type const & v ) ;
+  
+  GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_real_type const & ) ;
+  
+  GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_complex_type const & ) ;
+  
+  GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, mat_real_type const & ) ;
+  
+  GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, mat_complex_type const & ) ;
 
   // ---------------------------------------------------------------------------
@@ -532,6 +562,7 @@ namespace GenericContainerNamespace {
         Set data to `vector_type`, allocate an empty generic vector and return a reference to it.
         If `sz` > 0 then the vector is allocated to size `sz`.
      */
+    GENERIC_CONTAINER_API_DLL
     vector_type & set_vector( unsigned sz = 0 ) ;
     
     //! Set data to `map_type`, allocate an empty generic map and return a reference to it.
@@ -566,6 +597,7 @@ namespace GenericContainerNamespace {
          17. `map_type`
 
     */
+    GENERIC_CONTAINER_API_DLL
     TypeAllowed get_type() const { return _data_type ; }
     
     //! Return a string pointer representing the type of data stored
@@ -753,9 +785,6 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL map_type       & get_map( char const msg[] = nullptr ) ;
     GENERIC_CONTAINER_API_DLL map_type const & get_map( char const msg[] = nullptr ) const ;
     //!< Return the reference of the stored map or issue an error.
-
-    //! Check if string `s` is a key of the stored map (if fails issue an error).
-    GENERIC_CONTAINER_API_DLL bool exists( std::string const & s ) const ;
     //@}
 
     //! \name Access using operators
@@ -798,59 +827,74 @@ namespace GenericContainerNamespace {
     //@{
 
     //! Assign a boolean to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( bool a )
     { this -> set_bool(a) ; return * this ; }
 
     //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( unsigned a )
     { this -> set_int(int_type(a)) ; return * this ; }
 
     //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( int_type a )
     { this -> set_int(a) ; return * this ; }
 
     //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( unsigned long a )
     { this -> set_long(long_type(a)) ; return * this ; }
 
     //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( long_type a )
     { this -> set_long(a) ; return * this ; }
 
     //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( float a )
     { this -> set_real(real_type(a)) ; return * this ; }
 
     //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( double a )
     { this -> set_real(real_type(a)) ; return * this ; }
 
     //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( std::complex<float> & a )
     { this -> set_complex(real_type(a.real()),real_type(a.imag())) ; return * this ; }
 
     //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( std::complex<double> & a )
     { this -> set_complex(real_type(a.real()),real_type(a.imag())) ; return * this ; }
 
     //! Assign a string to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( char const a[] )
     { this -> set_string(a) ; return * this ; }
 
     //! Assign a string to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( std::string const & a )
     { this -> set_string(a) ; return * this ; }
 
     //! Assign a pointer to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( void * a )
     { this -> set_pointer(a) ; return * this ; }
 
     //! Assign a generic container `a` to the generic container.
+    GENERIC_CONTAINER_API_DLL
     GenericContainer const & operator = ( GenericContainer const & a )
     { this -> load( a ) ; return * this ; }
 
     //! Copy a generic container `a` to the generic container.
-    GENERIC_CONTAINER_API_DLL void load( GenericContainer const & a ) ;
+    GENERIC_CONTAINER_API_DLL
+    void
+    load( GenericContainer const & a ) ;
     //@}
 
     //! \name Promotion to a ``bigger'' data
@@ -890,37 +934,75 @@ namespace GenericContainerNamespace {
     //@{
     
     //! Construct a generic container storing a boolean
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( bool a ) { initialize() ; this->operator=(a) ; }
     
     //! Construct a generic container storing an integer
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( unsigned a ) { initialize() ; *this = a ; }
     
     //! Construct a generic container storing an integer
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( int a ) { initialize() ; this->operator=(a) ; }
     
     //! Construct a generic container storing a floating point number
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( float a ) { initialize() ; this->operator=(a) ; }
 
     //! Construct a generic container storing a floating point number
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( double a ) { initialize() ; this->operator=(a) ; }
 
     //! Construct a generic container storing a complex floating point number
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( std::complex<float> & a ) { initialize() ; this->operator=(a) ; }
 
     //! Construct a generic container storing a complex floating point number
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( std::complex<double> & a ) { initialize() ; this->operator=(a) ; }
     
     //! Construct a generic container storing a string
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( char const a[] ) { initialize() ; this->operator=(a) ; }
 
     //! Construct a generic container storing a string
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( std::string const & a ) { initialize() ; this->operator=(a) ; }
-    
+
     //! Construct a generic container storing a pointer
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( void * a ) { initialize() ; this->operator=(a) ; }
 
     //! Construct a generic container copying container `gc`
+    GENERIC_CONTAINER_API_DLL
     GenericContainer( GenericContainer const & gc ) { initialize() ; this->operator=(gc) ; }
+    //@}
+
+    //! \name Utilities methods
+
+    //! Check if string `s` is a key of the stored map (if fails issue an error).
+    GENERIC_CONTAINER_API_DLL bool exists( std::string const & s ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void get_if_exists( char const field[], int_type & value ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void get_if_exists( char const field[], uint_type & value ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void get_if_exists( char const field[], long_type & value ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void get_if_exists( char const field[], ulong_type & value ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void get_if_exists( char const field[], real_type & value ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void get_if_exists( char const field[], complex_type & value ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void get_if_exists( char const field[], string_type & value ) const ;
     //@}
 
     //! \name I/O for `GenericContainer` objects
