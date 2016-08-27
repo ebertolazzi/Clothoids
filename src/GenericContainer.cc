@@ -2019,11 +2019,11 @@ namespace GenericContainerNamespace {
     return iv != (*_data.m).end() ;
   }
 
-  void
+  bool
   GenericContainer::get_if_exists( char const field[], int_type & value ) const {
-    if ( _data_type != GC_MAP ) return ;
+    if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(field) ;
-    if ( iv == (*_data.m).end() ) return ;
+    if ( iv == (*_data.m).end() ) return false;
     switch (iv->second._data_type) {
     case GC_BOOL:
       value = iv->second._data.b?1:0 ;
@@ -2054,15 +2054,16 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-      break ;
+      return false ;
     }
+    return true ;
   }
 
-  void
+  bool
   GenericContainer::get_if_exists( char const field[], uint_type & value ) const {
-    if ( _data_type != GC_MAP ) return ;
+    if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(field) ;
-    if ( iv == (*_data.m).end() ) return ;
+    if ( iv == (*_data.m).end() ) return false ;
     switch (iv->second._data_type) {
     case GC_BOOL:
       value = iv->second._data.b?1:0 ;
@@ -2093,15 +2094,16 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-      break ;
+      return false ;
     }
+    return true ;
   }
 
-  void
+  bool
   GenericContainer::get_if_exists( char const field[], long_type & value ) const {
-      if ( _data_type != GC_MAP ) return ;
+    if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(field) ;
-    if ( iv == (*_data.m).end() ) return ;
+    if ( iv == (*_data.m).end() ) return false ;
     switch (iv->second._data_type) {
     case GC_BOOL:
       value = iv->second._data.b?1:0 ;
@@ -2132,15 +2134,16 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-      break ;
+      return false ;
     }
+    return true ;
   }
 
-  void
+  bool
   GenericContainer::get_if_exists( char const field[], ulong_type & value ) const {
-    if ( _data_type != GC_MAP ) return ;
+    if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(field) ;
-    if ( iv == (*_data.m).end() ) return ;
+    if ( iv == (*_data.m).end() ) return false ;
     switch (iv->second._data_type) {
     case GC_BOOL:
       value = iv->second._data.b?1:0 ;
@@ -2171,15 +2174,16 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-      break ;
+      return false ;
     }
+    return true ;
   }
 
-  void
+  bool
   GenericContainer::get_if_exists( char const field[], real_type & value ) const {
-    if ( _data_type != GC_MAP ) return ;
+    if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(field) ;
-    if ( iv == (*_data.m).end() ) return ;
+    if ( iv == (*_data.m).end() ) return false ;
     switch (iv->second._data_type) {
     case GC_BOOL:
       value = real_type(iv->second._data.b?1:0) ;
@@ -2210,16 +2214,16 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-      break ;
+      return false ;
     }
+    return true ;
   }
 
-  GENERIC_CONTAINER_API_DLL
-  void
+  bool
   GenericContainer::get_if_exists( char const field[], complex_type & value ) const {
-    if ( _data_type != GC_MAP ) return ;
+    if ( _data_type != GC_MAP ) return false ;
     map_type::iterator iv = (*_data.m).find(field) ;
-    if ( iv == (*_data.m).end() ) return ;
+    if ( iv == (*_data.m).end() ) return false ;
     switch (iv->second._data_type) {
     case GC_BOOL:
       value = complex_type(iv->second._data.b?1:0,0) ;
@@ -2249,16 +2253,19 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-      break ;
+      return false ;
     }
+    return true ;
   }
 
-  void
+  bool
   GenericContainer::get_if_exists( char const field[], string_type & value ) const {
-    if ( _data_type != GC_MAP ) return ;
+    if ( _data_type != GC_MAP ) return false;
     map_type::iterator iv = (*_data.m).find(field) ;
-    if ( iv == (*_data.m).end() ) return ;
-    if ( iv->second._data_type == GC_STRING ) value = *iv->second._data.s ;
+    if ( iv == (*_data.m).end() ) return false ;
+    if ( iv->second._data_type != GC_STRING ) return false ;
+    value = *iv->second._data.s ;
+    return true ;
   }
 
   // --------------------------------------------------------------

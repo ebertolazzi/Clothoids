@@ -984,25 +984,25 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL bool exists( std::string const & s ) const ;
 
     GENERIC_CONTAINER_API_DLL
-    void get_if_exists( char const field[], int_type & value ) const ;
+    bool get_if_exists( char const field[], int_type & value ) const ;
 
     GENERIC_CONTAINER_API_DLL
-    void get_if_exists( char const field[], uint_type & value ) const ;
+    bool get_if_exists( char const field[], uint_type & value ) const ;
 
     GENERIC_CONTAINER_API_DLL
-    void get_if_exists( char const field[], long_type & value ) const ;
+    bool get_if_exists( char const field[], long_type & value ) const ;
 
     GENERIC_CONTAINER_API_DLL
-    void get_if_exists( char const field[], ulong_type & value ) const ;
+    bool get_if_exists( char const field[], ulong_type & value ) const ;
 
     GENERIC_CONTAINER_API_DLL
-    void get_if_exists( char const field[], real_type & value ) const ;
+    bool get_if_exists( char const field[], real_type & value ) const ;
 
     GENERIC_CONTAINER_API_DLL
-    void get_if_exists( char const field[], complex_type & value ) const ;
+    bool get_if_exists( char const field[], complex_type & value ) const ;
 
     GENERIC_CONTAINER_API_DLL
-    void get_if_exists( char const field[], string_type & value ) const ;
+    bool get_if_exists( char const field[], string_type & value ) const ;
     //@}
 
     //! \name I/O for `GenericContainer` objects
