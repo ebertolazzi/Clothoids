@@ -121,6 +121,28 @@ namespace GenericContainerNamespace {
   }
 
   void
+  mat_real_type::getColumn( unsigned nc, vec_real_type & C ) const {
+    GC_ASSERT( nc < _numCols,
+               "mat_real_type::getColumn(" << nc <<
+               ",C) column index out of range max = " << _numCols-1 ) ;
+    C.clear() ;
+    C.reserve(_numRows) ;
+    for ( unsigned i = 0 ; i < _numRows ; ++i )
+      C.push_back( (*this)(i,nc) ) ;
+  }
+
+  void
+  mat_real_type::getRow( unsigned nr, vec_real_type & R ) const {
+    GC_ASSERT( nr < _numRows,
+               "mat_real_type::getRow(" << nr <<
+               ",C) row index out of range max = " << _numRows-1 ) ;
+    R.clear() ;
+    R.reserve(_numCols) ;
+    for ( unsigned j = 0 ; j < _numCols ; ++j )
+      R.push_back( (*this)(nr,j) ) ;
+  }
+
+  void
   mat_real_type::info( std::basic_ostream<char> & stream ) const {
     stream << "Matrix of floating point number of size "
            << _numRows << " x " << _numCols
@@ -143,6 +165,28 @@ namespace GenericContainerNamespace {
                ") index out of range: [0," << _numRows <<
                ") x [0," << _numCols << ")\n" ) ;
     return (*this)[std::size_t(i+j*_numRows)] ;
+  }
+
+  void
+  mat_complex_type::getColumn( unsigned nc, vec_complex_type & C ) const {
+    GC_ASSERT( nc < _numCols,
+               "mat_real_type::getColumn(" << nc <<
+               ",C) column index out of range max = " << _numCols-1 ) ;
+    C.clear() ;
+    C.reserve(_numRows) ;
+    for ( unsigned i = 0 ; i < _numRows ; ++i )
+      C.push_back( (*this)(i,nc) ) ;
+  }
+
+  void
+  mat_complex_type::getRow( unsigned nr, vec_complex_type & R ) const {
+    GC_ASSERT( nr < _numRows,
+               "mat_real_type::getRow(" << nr <<
+               ",C) row index out of range max = " << _numRows-1 ) ;
+    R.clear() ;
+    R.reserve(_numCols) ;
+    for ( unsigned j = 0 ; j < _numCols ; ++j )
+      R.push_back( (*this)(nr,j) ) ;
   }
 
   void

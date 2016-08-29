@@ -182,6 +182,14 @@ namespace GenericContainerNamespace {
       vec_real_type::resize(size_type(nr*nc)) ;
     }
 
+    GENERIC_CONTAINER_API_DLL
+    void
+    getColumn( unsigned nc, vec_real_type & C ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void
+    getRow( unsigned nr, vec_real_type & R ) const ;
+
     GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
     GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }
 
@@ -223,6 +231,14 @@ namespace GenericContainerNamespace {
       _numCols = nc ;
       vec_complex_type::resize(size_type(nr*nc)) ;
     }
+
+    GENERIC_CONTAINER_API_DLL
+    void
+    getColumn( unsigned nc, vec_complex_type & C ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void
+    getRow( unsigned nr, vec_complex_type & R ) const ;
 
     GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
     GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }
