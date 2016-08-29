@@ -190,6 +190,14 @@ namespace GenericContainerNamespace {
     void
     getRow( unsigned nr, vec_real_type & R ) const ;
 
+    GENERIC_CONTAINER_API_DLL
+    void
+    getColumn( unsigned nc, real_type * C ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void
+    getRow( unsigned nr, real_type * R ) const ;
+
     GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
     GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }
 
@@ -238,7 +246,15 @@ namespace GenericContainerNamespace {
 
     GENERIC_CONTAINER_API_DLL
     void
+    getColumn( unsigned nc, complex_type * C ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void
     getRow( unsigned nr, vec_complex_type & R ) const ;
+
+    GENERIC_CONTAINER_API_DLL
+    void
+    getRow( unsigned nr, complex_type * R ) const ;
 
     GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
     GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }

@@ -132,6 +132,15 @@ namespace GenericContainerNamespace {
   }
 
   void
+  mat_real_type::getColumn( unsigned nc, real_type * C ) const {
+    GC_ASSERT( nc < _numCols,
+               "mat_real_type::getColumn(" << nc <<
+               ",C) column index out of range max = " << _numCols-1 ) ;
+    for ( unsigned i = 0 ; i < _numRows ; ++i )
+      *C++ = (*this)(i,nc) ;
+  }
+
+  void
   mat_real_type::getRow( unsigned nr, vec_real_type & R ) const {
     GC_ASSERT( nr < _numRows,
                "mat_real_type::getRow(" << nr <<
@@ -140,6 +149,15 @@ namespace GenericContainerNamespace {
     R.reserve(_numCols) ;
     for ( unsigned j = 0 ; j < _numCols ; ++j )
       R.push_back( (*this)(nr,j) ) ;
+  }
+
+  void
+  mat_real_type::getRow( unsigned nr, real_type * R ) const {
+    GC_ASSERT( nr < _numRows,
+               "mat_real_type::getRow(" << nr <<
+               ",C) row index out of range max = " << _numRows-1 ) ;
+    for ( unsigned j = 0 ; j < _numCols ; ++j )
+      *R++ = (*this)(nr,j) ;
   }
 
   void
@@ -179,6 +197,15 @@ namespace GenericContainerNamespace {
   }
 
   void
+  mat_complex_type::getColumn( unsigned nc, complex_type * C ) const {
+    GC_ASSERT( nc < _numCols,
+               "mat_real_type::getColumn(" << nc <<
+               ",C) column index out of range max = " << _numCols-1 ) ;
+    for ( unsigned i = 0 ; i < _numRows ; ++i )
+      *C++ = (*this)(i,nc) ;
+  }
+
+  void
   mat_complex_type::getRow( unsigned nr, vec_complex_type & R ) const {
     GC_ASSERT( nr < _numRows,
                "mat_real_type::getRow(" << nr <<
@@ -187,6 +214,15 @@ namespace GenericContainerNamespace {
     R.reserve(_numCols) ;
     for ( unsigned j = 0 ; j < _numCols ; ++j )
       R.push_back( (*this)(nr,j) ) ;
+  }
+
+  void
+  mat_complex_type::getRow( unsigned nr, complex_type * R ) const {
+    GC_ASSERT( nr < _numRows,
+               "mat_real_type::getRow(" << nr <<
+               ",C) row index out of range max = " << _numRows-1 ) ;
+    for ( unsigned j = 0 ; j < _numCols ; ++j )
+      *R++ = (*this)(nr,j) ;
   }
 
   void
