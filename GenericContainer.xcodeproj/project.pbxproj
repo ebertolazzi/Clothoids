@@ -31,6 +31,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		D902EC111D74F2F600127551 /* GenericContainerLuaPmain.cc in Sources */ = {isa = PBXBuildFile; fileRef = D902EC101D74F2F600127551 /* GenericContainerLuaPmain.cc */; };
 		D92A20A11C4B146300BDE1D1 /* libGenericContainer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A0E5FF1C258D0F00914760 /* libGenericContainer.a */; };
 		D92A20A31C4B149F00BDE1D1 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D92A20A21C4B149F00BDE1D1 /* Accelerate.framework */; };
 		D93669B51D58B61600B2F03B /* GenericContainer.cc in Sources */ = {isa = PBXBuildFile; fileRef = D93669AE1D58B61600B2F03B /* GenericContainer.cc */; };
@@ -336,6 +337,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D902EC101D74F2F600127551 /* GenericContainerLuaPmain.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainerLuaPmain.cc; sourceTree = "<group>"; };
 		D92A20A21C4B149F00BDE1D1 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		D93669AE1D58B61600B2F03B /* GenericContainer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainer.cc; sourceTree = "<group>"; };
 		D93669AF1D58B61600B2F03B /* GenericContainer.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GenericContainer.hh; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 			isa = PBXGroup;
 			children = (
 				D93669BD1D58B62B00B2F03B /* GenericContainerLuaInterface.cc */,
+				D902EC101D74F2F600127551 /* GenericContainerLuaPmain.cc */,
 				D93669BE1D58B62B00B2F03B /* GenericContainerLuaInterface.hh */,
 			);
 			path = src_lua_interface;
@@ -930,6 +933,7 @@
 			files = (
 				D93669B51D58B61600B2F03B /* GenericContainer.cc in Sources */,
 				D93669BF1D58B62B00B2F03B /* GenericContainerLuaInterface.cc in Sources */,
+				D902EC111D74F2F600127551 /* GenericContainerLuaPmain.cc in Sources */,
 				D93669BA1D58B61600B2F03B /* GenericContainerSupport.cc in Sources */,
 				D93669B81D58B61600B2F03B /* GenericContainerCinterface.cc in Sources */,
 				D93669BB1D58B61600B2F03B /* GenericContainerTables.cc in Sources */,

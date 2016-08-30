@@ -1,7 +1,5 @@
 # get the type of OS currently running
-OS=$(shell uname)
-HASLUA=$(which lua)
-
+OS     = $(shell uname)
 LIB_GC = libGenericContainer.a
 CC     = gcc
 CXX    = g++
@@ -20,10 +18,10 @@ ifneq (,$(findstring Darwin, $(OS)))
   #LIB_GC = libGenericContainer.dylib
 endif
 
-# check for lua
+# to compile with lua make LUA_SUPPORT="YES"
 LUALIB  =
 SRCSLUA = 
-ifneq (,$(findstring lua, $(HASLUA)))
+ifneq (,$(findstring YES, $(LUA_SUPPORT)))
   SRCSLUA = \
   src_lua_interface/GenericContainerLuaInterface.cc \
   src_lua_interface/GenericContainerLuaPmain.cc
