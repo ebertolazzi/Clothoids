@@ -32,7 +32,7 @@ namespace GenericContainerNamespace {
     void dump( std::basic_ostream<char> & stream ) ;
     void execute( char const cmd[] ) ;
     void call( GenericContainer const & args, GenericContainer & res ) ;
-    void do_file( char const fname[], bool check_syntax_only = false ) ;
+    void do_file( char const fname[] ) ;
     void GC_to_global( GenericContainer const & gc, char const [] ) ; // not yet implemented
     void global_to_GC( char const var[], GenericContainer & gc ) ;
     int  interactive( int argc,

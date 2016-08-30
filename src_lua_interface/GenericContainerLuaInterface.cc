@@ -281,7 +281,11 @@ namespace GenericContainerNamespace {
         }
       }
       break;
-    default:
+    case GC_COMPLEX:
+    case GC_VEC_COMPLEX:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    //default:
       lua_pushnil(L) ;
       break;
     }
@@ -314,7 +318,7 @@ namespace GenericContainerNamespace {
   // -----------------------------------------------------------------------------
 
   void
-  LuaInterpreter::do_file( char const filename[], bool check_syntax_only ) {
+  LuaInterpreter::do_file( char const filename[] ) {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::do_file('" << filename <<
                                 "')\nlua_State invalid!" ) ;
