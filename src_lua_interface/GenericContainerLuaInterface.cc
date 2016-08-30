@@ -7,7 +7,6 @@
  |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
- |      /Users/enrico/Ricerca/develop/myGitProjetcs/myGenericContainer/GenericContainer_xcode_config/Release.xcconfig                     /|                   /|                        |
  |                           \|                   \|                        |
  |                                                                          |
  |      E.Bertolazzi, F.Biral, P.Bosetti                                    |
@@ -22,7 +21,7 @@
 #ifndef GC_ASSERT
   #include <sstream>
   #include <stdexcept>
-  #define GC_ASSERT(COND,MSG)                               \
+  #define GC_ASSERT(COND,MSG)                            \
     if ( !(COND) ) {                                     \
       std::ostringstream ost ;                           \
       ost << "in GenericContainer: " << MSG << '\n' ;    \
@@ -40,10 +39,17 @@
   #endif
 #endif
 
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #ifdef USE_MECHATRONIX_LUA
   #include <MechatronixCore/lua/lua.hpp>
+  #include <MechatronixCore/lua/lauxlib.h>
 #else
   #include <lua.hpp>
+  #include <lauxlib.h>
 #endif
 
 // load string.h for strlen
@@ -406,7 +412,18 @@ namespace GenericContainerNamespace {
     GC_to_lua( L, gc ) ;
     lua_setglobal( L, global_var ) ;
   }
+
+  // -----------------------------------------------------------------------------
+  extern "C"
+  int
+  pmain ( lua_State *L ) ;
+
+  extern
+  int
+  report (lua_State *L, int status);
+
 }
+
 //
 // EOF: GenericContainerLuaInterface.cc
 //

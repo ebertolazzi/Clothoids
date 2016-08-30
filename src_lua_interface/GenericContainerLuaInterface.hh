@@ -35,6 +35,10 @@ namespace GenericContainerNamespace {
     void do_file( char const fname[], bool check_syntax_only = false ) ;
     void GC_to_global( GenericContainer const & gc, char const [] ) ; // not yet implemented
     void global_to_GC( char const var[], GenericContainer & gc ) ;
+    int  interactive( int argc,
+                      char const * argv[],
+                      char const * messages[],
+                      char const * prompt ) ; // launch interpret mode
   } ;
 }
 
