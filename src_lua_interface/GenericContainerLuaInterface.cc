@@ -45,7 +45,6 @@
 #include <string.h>
 
 #include <lua.hpp>
-#include <lauxlib.h>
 
 // load string.h for strlen
 #include <string.h>
