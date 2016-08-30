@@ -44,13 +44,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef USE_MECHATRONIX_LUA
-  #include <MechatronixCore/lua/lua.hpp>
-  #include <MechatronixCore/lua/lauxlib.h>
-#else
-  #include <lua.hpp>
-  #include <lauxlib.h>
-#endif
+#include <lua.hpp>
+#include <lauxlib.h>
 
 // load string.h for strlen
 #include <string.h>

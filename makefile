@@ -3,6 +3,7 @@ OS     = $(shell uname)
 LIB_GC = libGenericContainer.a
 CC     = gcc
 CXX    = g++
+INC    =
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
@@ -21,11 +22,12 @@ endif
 # to compile with lua make LUA_SUPPORT="YES"
 LUALIB  =
 SRCSLUA = 
-ifneq (,$(findstring YES, $(LUA_SUPPORT)))
+ifneq (,$(LUA_SUPPORT))
   SRCSLUA = \
   src_lua_interface/GenericContainerLuaInterface.cc \
   src_lua_interface/GenericContainerLuaPmain.cc
   LUALIB  = -llua
+  INC    += $(LUA_SUPPORT)
 endif
 
 SRCS = \
@@ -48,7 +50,7 @@ FRAMEWORK = GenericContainer
 
 CFLAGS   = -Wall -O3
 CXXFLAGS = -Wall -O3
-INC      = -I/usr/local/include -I./src -I./src_lua_interface
+INC     += -I/usr/local/include -I./src -I./src_lua_interface
 LIB_DIR  = -L/usr/local/lib -L./lib
 LIBS     = $(LIB_DIR) -lGenericContainer -lpcre
 DEFINE   =
@@ -96,13 +98,13 @@ lib/libGenericContainer.so: $(OBJS)
 install: lib/$(LIB_GC)
 	cp src/GenericContainer.hh $(PREFIX)/include
 	cp src_lua_interface/GenericContainerLuaInterface.hh $(PREFIX)/include
-	cp lib/$(LIB_GC)           $(PREFIX)/lib
+	cp lib/$(LIB_GC) $(PREFIX)/lib
 
 install_as_framework: lib/$(LIB_GC)
 	$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
 	cp src/GenericContainer.hh $(PREFIX)/include/$(FRAMEWORK)
 	cp src_lua_interface/GenericContainerLuaInterface.hh $(PREFIX)/include/$(FRAMEWORK)
-	cp lib/$(LIB_GC)           $(PREFIX)/lib
+	cp lib/$(LIB_GC) $(PREFIX)/lib
 
 run:
 	cd bin ; ./example1
