@@ -7,14 +7,17 @@ INC    =
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
-  #LIB_GC = libGenericContainer.so
+  WARN = -Weverything -Wno-reserved-id-macro -Wno-padded
+  CC  = gcc $(WARN)
+  CXX = g++ $(WARN) -std=c++11 
   AR = ar rcs
 endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  CC  = clang   -Weverything -Wno-reserved-id-macro -Wno-padded
-  CXX = clang++ -Weverything -Wno-reserved-id-macro -Wno-padded
+  WARN = -Weverything -Wno-reserved-id-macro -Wno-padded
+  CC  = clang   $(WARN)
+  CXX = clang++ $(WARN) -std=c++11 -stdlib=libc++ 
   AR  = libtool -static -o
   #LIB_GC = libGenericContainer.dylib
 endif
