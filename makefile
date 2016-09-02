@@ -7,7 +7,7 @@ INC    =
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
-  WARN = -Weverything -Wno-reserved-id-macro -Wno-padded
+  WARN = -Wall
   CC  = gcc $(WARN)
   CXX = g++ $(WARN) -std=c++11 
   AR = ar rcs
