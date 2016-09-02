@@ -24,6 +24,8 @@
 #ifndef GENERIC_CONTAINER_HH
 #define GENERIC_CONTAINER_HH
 
+#include "GenericContainerConfig.hh"
+
 #include <iostream>
 #include <string>
 #include <complex>
@@ -37,16 +39,6 @@
   #define GENERIC_CONTAINER_ON_WINDOWS
   //#pragma comment(lib, "kernel32.lib")
   //#pragma comment(lib, "user32.lib")
-#endif
-
-// workaround for gcc < 4.9 that do not support regex
-#if defined(__GNUC__) && !defined(__clang__)
-  #if __GNUC__ > 5 || ( __GNUC__== 5 && __GNUC_MINOR__ > 8 )
-  #else
-    #ifndef DO_NOT_USE_CXX11
-      #define DO_NOT_USE_CXX11
-    #endif
-  #endif
 #endif
 
 // if C++ < C++11 define nullptr
@@ -82,6 +74,11 @@
     #endif
   #endif
 #endif
+
+#if !defined(GENERIC_CONTAINER_USE_CXX11) && defined(GENERIC_CONTAINER_USE_REGEX)
+  #error "GenericContainer libray was compiled with regex, needs c++11 support!"
+#endif
+
 
 #ifndef GC_DO_ERROR
   #define GC_DO_ERROR(MSG) {                           \

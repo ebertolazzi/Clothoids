@@ -100,11 +100,15 @@ lib/libGenericContainer.so: $(OBJS)
 
 install: lib/$(LIB_GC)
 	cp src/GenericContainer.hh $(PREFIX)/include
+	cp src/GenericContainerConfig.hh $(PREFIX)/include
+	cp src/GenericContainerCinterface.hh $(PREFIX)/include
 	cp src_lua_interface/GenericContainerLuaInterface.hh $(PREFIX)/include
 	cp lib/$(LIB_GC) $(PREFIX)/lib
 
 install_as_framework: lib/$(LIB_GC)
 	$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
+	cp src/GenericContainerConfig.hh $(PREFIX)/include/$(FRAMEWORK)
+	cp src/GenericContainerCinterface.hh $(PREFIX)/include/$(FRAMEWORK)
 	cp src/GenericContainer.hh $(PREFIX)/include/$(FRAMEWORK)
 	cp src_lua_interface/GenericContainerLuaInterface.hh $(PREFIX)/include/$(FRAMEWORK)
 	cp lib/$(LIB_GC) $(PREFIX)/lib

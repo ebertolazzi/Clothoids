@@ -27,7 +27,7 @@
 #include <ctgmath>
 
 // use pcre for pattern matching
-#ifdef GENERIC_CONTAINER_USE_CXX11
+#ifdef GENERIC_CONTAINER_USE_REGEX
   #include <regex>
 #endif
 
@@ -254,7 +254,7 @@ namespace GenericContainerNamespace {
     return s ;
   }
 
-  #ifdef GENERIC_CONTAINER_USE_CXX11
+  #ifdef GENERIC_CONTAINER_USE_REGEX
 
   class GENERIC_CONTAINER_API_DLL Pcre_for_GC {
 
@@ -3258,7 +3258,7 @@ namespace GenericContainerNamespace {
       { map_type const & m = this -> get_map() ;
         for ( map_type::const_iterator im = m.begin() ; im != m.end() ; ++im ) {
           // check formatting using pcre
-          #ifndef GENERIC_CONTAINER_USE_CXX11
+          #ifndef GENERIC_CONTAINER_USE_REGEX
           if ( im->second.simple_data() ||
                ( im->second.simple_vec_data() && im->second.get_num_elements() <= 10 ) ) {
             stream << prefix << im->first << ": " ;
