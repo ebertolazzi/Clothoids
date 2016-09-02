@@ -1,16 +1,18 @@
 # get the type of OS currently running
-OS     = $(shell uname)
-LIB_GC = libGenericContainer.a
-CC     = gcc
-CXX    = g++
-INC    =
+OS      = $(shell uname)
+LIB_GC  = libGenericContainer.a
+CC      = gcc
+CXX     = g++
+INC     =
+LIBSGCC =
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   WARN = -Wall
   CC  = gcc $(WARN)
   CXX = g++ $(WARN) -std=c++11 
-  AR = ar rcs
+  AR  = ar rcs
+  LIBSGCC = -lstdc++ -lm
 endif
 
 # check if the OS string contains 'Darwin'
@@ -19,6 +21,7 @@ ifneq (,$(findstring Darwin, $(OS)))
   CC  = clang   $(WARN)
   CXX = clang++ $(WARN) -std=c++11 -stdlib=libc++ 
   AR  = libtool -static -o
+  LIBSGCC = -lstdc++ -lm
   #LIB_GC = libGenericContainer.dylib
 endif
 
@@ -51,11 +54,11 @@ src_lua_interface/GenericContainerLuaInterface.hh
 PREFIX    = /usr/local
 FRAMEWORK = GenericContainer
 
-CFLAGS   = -Wall -O3
-CXXFLAGS = -Wall -O3
+CFLAGS   = -O3
+CXXFLAGS = -O3
 INC     += -I/usr/local/include -I./src -I./src_lua_interface
 LIB_DIR  = -L/usr/local/lib -L./lib
-LIBS     = $(LIB_DIR) -lGenericContainer -lpcre
+LIBS     = $(LIB_DIR) -lGenericContainer -lpcre -lm
 DEFINE   =
 
 MKDIR  = mkdir -p
@@ -66,7 +69,7 @@ all: lib
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example3  examples/example3.cc  $(LIBS)
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example4  examples/example4.cc  $(LIBS)
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example5  examples/example5.cc  $(LIBS)
-	$(CC)  $(CFLAGS)   $(INC) -o bin/example6  examples/example6.c   $(LIBS) -lstdc++
+	$(CC)  $(CFLAGS)   $(INC) -o bin/example6  examples/example6.c   $(LIBS) $(LIBSGCC)
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example7  examples/example7.cc  $(LIBS)
 ifneq (,$(findstring lua, $(HASLUA)))
 	$(CXX) $(CXXFLAGS) $(INC) -o bin/example8  examples/example8.cc  $(LIBS) $(LUALIB)
