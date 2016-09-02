@@ -35,6 +35,16 @@
 #include <sstream>
 #include <stdexcept>
 
+// check for gcc < 4.9 that do not support regex
+#if defined(__GNUC__) && !defined(__clang__)
+  #if __GNUC__ > 4 || ( __GNUC__== 4 && __GNUC_MINOR__ > 8 )
+  #else
+    #ifdef GENERIC_CONTAINER_USE_REGEX
+      #error "GenericContainer compiled with regex support, use gcc >= 4.9!"
+    #endif
+  #endif
+#endif
+
 #if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
   #define GENERIC_CONTAINER_ON_WINDOWS
   //#pragma comment(lib, "kernel32.lib")
@@ -78,7 +88,6 @@
 #if !defined(GENERIC_CONTAINER_USE_CXX11) && defined(GENERIC_CONTAINER_USE_REGEX)
   #error "GenericContainer libray was compiled with regex, needs c++11 support!"
 #endif
-
 
 #ifndef GC_DO_ERROR
   #define GC_DO_ERROR(MSG) {                           \
