@@ -64,7 +64,7 @@ gc_set( GenericContainer & gc ) {
   m["2#= bbb"]    = 3.4 ;
   m["3##- vector"].set_vec_int() ;
   m["4##- map"].set_map() ;
-  m["5##- pointer"] = reinterpret_cast<void*>(gc_set) ;
+  m["5##- pointer"].set(&gc_set) ;
   GC::vec_int_type & vi = m["3##- vector"].get_vec_int() ;
   vi.push_back(12) ;
   vi.push_back(10) ;
@@ -79,8 +79,8 @@ gc_set( GenericContainer & gc ) {
   vg[0] = 123 ;
   vg[1] = 3.14 ;
   vg[2] = "nonna papera" ;
-  vg[3] = reinterpret_cast<void*>(gc_set) ;
-  v[9]  = reinterpret_cast<void*>(&gc_set) ;
+  vg[3] = &gc_set ;
+  v[9]  = &gc_set ;
   v[10] = true ;
   v[11] = false ;
 

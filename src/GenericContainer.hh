@@ -810,7 +810,7 @@ namespace GenericContainerNamespace {
 
     //! \name Access using operators
     //@{
-    
+
     GENERIC_CONTAINER_API_DLL GenericContainer       & operator [] ( unsigned i ) ;
     GENERIC_CONTAINER_API_DLL GenericContainer const & operator [] ( unsigned i ) const ;
     /*! \brief
@@ -842,7 +842,62 @@ namespace GenericContainerNamespace {
      */
 
     //@}
-    
+
+    //! \name Initialize data using set command
+    //@{
+
+    //! Assign a boolean to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( bool const & a ) { this -> set_bool(a) ; }
+
+    //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( uint_type const & a ) { this -> set_int(int_type(a)) ; }
+
+    //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( int_type const & a ) { this -> set_int(a) ; }
+
+    //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( ulong_type const & a ) { this -> set_long(long_type(a)) ; }
+
+    //! Assign an integer to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( long_type const & a ) { this -> set_long(a) ; }
+
+    //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( float const & a ) { this -> set_real(real_type(a)) ; }
+
+    //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( double const & a ) { this -> set_real(real_type(a)) ; }
+
+    //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( std::complex<float> const & a )
+    { this -> set_complex(real_type(a.real()),real_type(a.imag())) ; }
+
+    //! Assign a floating point number to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( std::complex<double> const & a )
+    { this -> set_complex(real_type(a.real()),real_type(a.imag())) ; }
+
+    //! Assign a string to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( char const a[] ) { this -> set_string(a) ; }
+
+    //! Assign a string to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( std::string const & a ) { this -> set_string(a) ; }
+
+    //! Assign a pointer to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    void set( pointer_type a ) { this -> set_pointer(a) ; }
+
+    //@}
+
     //! \name Initialize data using operators
     //! The `=` operator is overloaded to initialize the `GenericContainer` on its left side.
     //@{
