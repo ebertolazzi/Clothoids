@@ -51,36 +51,21 @@
   //#pragma comment(lib, "user32.lib")
 #endif
 
-// if C++ < C++11 define nullptr
-#ifdef GENERIC_CONTAINER_ON_WINDOWS
-  #if _MSC_VER >= 1900
-    #ifndef DO_NOT_USE_CXX11
-      #define GENERIC_CONTAINER_USE_CXX11
-    #endif
-  #else
-    #include <cstdlib>
-    #ifndef nullptr
-      #include <cstddef>
-      #ifndef nullptr
-        #define nullptr NULL
-      #endif
-    #endif
+// check if compiler is C++11
+#if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
+    (defined(__cplusplus) && __cplusplus > 199711L)
+  #ifndef GENERIC_CONTAINER_DO_NOT_USE_CXX11
+    #define GENERIC_CONTAINER_USE_CXX11
   #endif
-#else
   #ifdef __clang__
     #pragma clang diagnostic ignored "-Wc++98-compat"
   #endif
-  #if __cplusplus > 199711L
-    #ifndef DO_NOT_USE_CXX11
-      #define GENERIC_CONTAINER_USE_CXX11
-    #endif
-  #else
-    #include <cstdlib>
+#else
+  #include <cstdlib>
+  #ifndef nullptr
+    #include <cstddef>
     #ifndef nullptr
-      #include <cstddef>
-      #ifndef nullptr
-        #define nullptr NULL
-      #endif
+      #define nullptr NULL
     #endif
   #endif
 #endif
