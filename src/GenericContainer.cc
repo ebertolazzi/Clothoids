@@ -3081,7 +3081,7 @@ namespace GenericContainerNamespace {
   GenericContainer::promote_to_vector() {
     switch (_data_type) {
     case GC_NOTYPE:
-      { set_vector(1) ; (*this)[0].initialize() ; } // set data to no type
+      { set_vector(1) ; (*this)[0].clear() ; } // set data to no type
       break ;
     case GC_POINTER:
       { set_vector(1) ; (*this)[0] = _data.p ; }
