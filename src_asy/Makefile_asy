@@ -1,0 +1,20 @@
+#
+# Compile all the *.asy figures in the working directory to pdf figures
+#
+OS = $(shell uname)
+
+FIGSASY = $(shell ls *.asy)
+FIGSPDF = $(patsubst %.asy, %.pdf, $(FIGSASY))
+
+all: $(FIGSPDF)
+
+%.pdf: %.asy
+ifeq ($(OS),windows32)
+	asy -tex pdflatex $<
+	pdf2ps $(patsubst %.asy, %.pdf, $<) $(patsubst %.asy, %.eps, $<)
+else
+	asy -tex pdflatex -f pdf -render 0 -noprc  $<
+	pdf2ps $(patsubst %.asy, %.pdf, $<) $(patsubst %.asy, %.eps, $<)
+endif
+
+clothoid_front.pdf: clothoid_front.asy
