@@ -10,8 +10,6 @@
 % Driver test program to check bounding box on clothoid                       %
 %=============================================================================%
 
-addpath('../G1fitting');
-
 close all ;
 
 c1.x0        = 0 ;

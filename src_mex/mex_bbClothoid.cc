@@ -122,6 +122,13 @@ mexFunction( int nlhs, mxArray       *plhs[],
       mxArray * mx_dk     = mxGetField(prhs[0],0,"dk") ;
       mxArray * mx_L      = mxGetField(prhs[0],0,"L") ;
 
+      ASSERT( mx_x0     != nullptr, "Field `x` is missing" );
+      ASSERT( mx_y0     != nullptr, "Field `y` is missing" );
+      ASSERT( mx_theta0 != nullptr, "Field `theta` is missing" );
+      ASSERT( mx_k      != nullptr, "Field `k` is missing" );
+      ASSERT( mx_dk     != nullptr, "Field `dk` is missing" );
+      ASSERT( mx_L      != nullptr, "Field `L` is missing" );
+
       ASSERT( mxGetClassID(mx_x0) == mxDOUBLE_CLASS && !mxIsComplex(mx_x0),
               "Field `x` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_y0) == mxDOUBLE_CLASS && !mxIsComplex(mx_y0),

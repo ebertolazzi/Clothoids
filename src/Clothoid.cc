@@ -719,6 +719,20 @@ namespace Clothoid {
 
   // ---------------------------------------------------------------------------
 
+  valueType
+  ClothoidCurve::X( valueType s ) const {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*s*s, k*s, theta0, C, S ) ;
+    return x0 + s*C ;
+  }
+  
+  valueType
+  ClothoidCurve::Y( valueType s ) const {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*s*s, k*s, theta0, C, S ) ;
+    return y0 + s*S ;
+  }
+
   void
   ClothoidCurve::eval( valueType   s,
                        valueType & theta,
@@ -1179,6 +1193,27 @@ namespace Clothoid {
     return std::abs( (s_min-s_max)*(k + 0.5*dk*(s_min+s_max) ) ) ;
   }
 
+  valueType
+  ClothoidCurve::integralCurvature2() const {
+    return (s_max-s_min)*( k*(k+(s_max+s_min)*dk) +
+                          (s_max*s_max+s_max*s_min+s_min*s_min)*dk*dk/3 ) ;
+  }
+
+  valueType
+  ClothoidCurve::integralJerk2() const {
+    valueType s_min2 = s_min*s_min ;
+    valueType s_min3 = s_min*s_min2 ;
+    valueType s_min4 = s_min2*s_min2 ;
+    valueType k2     = k*k ;
+    valueType k3     = k*k2 ;
+    valueType k4     = k2*k2 ;
+    valueType t1     = s_max+s_min ;
+    valueType t2     = s_max*t1+s_min2 ;
+    valueType t3     = s_max*t2+s_min3 ;
+    valueType t4     = s_max*t3+s_min4 ;
+    return ((((t4/5*dk+t3*k)*dk+(1+2*t2)*k2)*dk+2*t1*k3)*dk+k4)*(s_max-s_min) ;
+  }
+
   std::ostream &
   operator << ( std::ostream & stream, ClothoidCurve const & c ) {
     stream <<   "x0     = " << c.x0
@@ -1442,7 +1477,7 @@ namespace Clothoid {
     valueType ab = alpha-beta ;
 
     KM_0  = od*(ab*(th0+th1)+DeltaTheta) ;
-    KM_1  = od*(ab*(a0-b1)-(a0+b1)/2) ;
+    KM_1  = od*(a0*(ab-1)-b1*(ab+1))/2 ;
     KM_2  = -2*od*ab ;
 
   }
@@ -1542,6 +1577,19 @@ namespace Clothoid {
     valueType dK0 = dK0_0 + L*dK0_1 + thetaM*dK0_2 ;
     valueType dK1 = dK1_0 + L*dK1_1 + thetaM*dK1_2 ;
     valueType KM  = KM_0  + L*KM_1  + thetaM*KM_2  ;
+    
+    // check solution
+    /*
+    valueType eqd = beta*(KM+dKM)-omega*(L1*k1-dK1) ;
+    valueType eqc = alpha*(KM-dKM)-omega*(L0*k0+dK0) ;
+    valueType eqb = thetaM+KM+dKM/2-th1+L1*k1-dK1/2 ;
+    valueType eqa = thetaM-KM+dKM/2-th0-L0*k0-dK0/2 ;
+    cout << "err a = " << eqa << '\n';
+    cout << "err b = " << eqb << '\n';
+    cout << "err c = " << eqc << '\n';
+    cout << "err d = " << eqd << '\n';
+    cout << "det  = " << (alpha+beta+2)*omega+2*alpha*beta << '\n';
+    */
 
     valueType xa, ya, xmL, ymL ;
     GeneralizedFresnelCS( dK0, k0*L0, th0, xa, ya );

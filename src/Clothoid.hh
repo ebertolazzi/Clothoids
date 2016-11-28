@@ -399,6 +399,15 @@ namespace Clothoid {
     valueType
     thetaTotalVariation() const ;
 
+    valueType
+    integralCurvature2() const ;
+
+    valueType
+    integralJerk2() const ;
+
+    valueType X( valueType s ) const ;
+    valueType Y( valueType s ) const ;
+
     void
     eval( valueType   s,
           valueType & theta,
