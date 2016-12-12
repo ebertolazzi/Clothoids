@@ -1,15 +1,11 @@
 /****************************************************************************\
-  Copyright (c) Enrico Bertolazzi 2014
+  Copyright (c) Enrico Bertolazzi 2016
   All Rights Reserved.
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation;
 
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the file license.txt for more details.
 \****************************************************************************/
 
 #include "Clothoid.hh"
@@ -36,8 +32,8 @@
 "%  On output:                                                                 %\n" \
 "%       S0     = initial arc of clothoid                                      %\n" \
 "%       S1     = final arc of clothoid                                        %\n" \
-"%       flg    = true:  computation success                                   %\n" \
-"%                false: computation failed                                    %\n" \
+"%       flg    = >0 number of iteration used for the computation              %\n" \
+"%                -1 computation failed                                        %\n" \
 "%                                                                             %\n" \
 "%=============================================================================%\n" \
 "%                                                                             %\n" \
@@ -65,9 +61,9 @@
 #define arg_theta1 prhs[6]
 #define arg_kappa1 prhs[7]
 
-#define arg_S0     plhs[0]
-#define arg_S1     plhs[1]
-#define arg_flg    plhs[2]
+#define out_S0     plhs[0]
+#define out_S1     plhs[1]
+#define out_flg    plhs[2]
 
 static
 void
@@ -122,12 +118,12 @@ mexFunction( int nlhs, mxArray       *plhs[],
   Clothoid::valueType k1  = mxGetScalar(arg_kappa1) ;
 
   g2solve2arc.setup( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
-  bool ok = g2solve2arc.solve() ;
+  int iter = g2solve2arc.solve() ;
 
-  if ( ok ) arg_flg = mxCreateLogicalScalar(1);
-  else      arg_flg = mxCreateLogicalScalar(0);
+  save_struct( g2solve2arc.getS0(), out_S0 ) ;
+  save_struct( g2solve2arc.getS1(), out_S1 ) ;
 
-  save_struct( g2solve2arc.getS0(), arg_S0 ) ;
-  save_struct( g2solve2arc.getS1(), arg_S1 ) ;
+  out_flg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+  *static_cast<int *>(mxGetData(out_flg)) = iter ;
 
 }

@@ -21,8 +21,13 @@
 #include "CubicRootsFlocke.hh"
 
 #include <cmath>
+#include <cfloat>
 #include <sstream>
 #include <stdexcept>
+
+#ifndef M_PI
+  #define M_PI 3.1415926535897932385
+#endif
 
 #ifndef CLOTHOID_ASSERT
   #define CLOTHOID_ASSERT(COND,MSG)         \
@@ -1184,13 +1189,48 @@ namespace Clothoid {
   ClothoidCurve::thetaTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    if ( ( dk > 0 && ( 0 > k+dk*s_min || 0 < k+dk*s_max ) ) ||
-         ( dk < 0 && ( 0 < k+dk*s_min || 0 > k+dk*s_max ) ) ) {
+    valueType kL  = k+dk*s_min ;
+    valueType kR  = k+dk*s_max ;
+    valueType thL = s_min*(k+dk*s_min/2) ;
+    valueType thR = s_max*(k+dk*s_max/2) ;
+    if ( kL*kR < 0 ) {
       valueType root = -k/dk ;
-      return std::abs( (s_min-root)*(k + 0.5*dk*(s_min+root) ) ) +
-             std::abs( (s_max-root)*(k + 0.5*dk*(s_max+root) ) ) ;
+      if ( root > s_min && root < s_max ) {
+        valueType thM  = root*(k+dk*root/2) ;
+        return std::abs( thR - thM ) + std::abs( thM - thL ) ;
+      }
     }
-    return std::abs( (s_min-s_max)*(k + 0.5*dk*(s_min+s_max) ) ) ;
+    return std::abs( thR - thL ) ;
+  }
+
+  valueType
+  ClothoidCurve::thetaMinMax( valueType & thMin, valueType & thMax ) const {
+    // cerco punto minimo parabola
+    // root = -k/dk ;
+    valueType kL  = k+dk*s_min ;
+    valueType kR  = k+dk*s_max ;
+    valueType thL = s_min*(k+dk*s_min/2) ;
+    valueType thR = s_max*(k+dk*s_max/2) ;
+    if ( thL < thR ) { thMin = thL ; thMax = thR ; }
+    else             { thMin = thR ; thMax = thL ; }
+    if ( kL*kR < 0 ) {
+      valueType root = -k/dk ;
+      if ( root > s_min && root < s_max ) {
+        valueType thM = root*(k+dk*root/2) ;
+        if      ( thM < thMin ) thMin = thM ;
+        else if ( thM > thMax ) thMax = thM ;
+      }
+    }
+    return thMax - thMin ;
+  }
+
+  valueType
+  ClothoidCurve::curvatureTotalVariation() const {
+    // cerco punto minimo parabola
+    // root = -k/dk ;
+    valueType km = k+s_min*dk ;
+    valueType kp = k+s_max*dk ;
+    return std::abs(kp-km) ;
   }
 
   valueType
@@ -1230,54 +1270,69 @@ namespace Clothoid {
 
   static
   inline
-  bool
+  valueType
   power2( valueType a )
   { return a*a ; }
 
   // **************************************************************************
+  
+  class Solve2x2 {
+    indexType i[2], j[2] ;
+    valueType LU[2][2] ;
+    valueType epsi ;
+    bool      singular ;
 
-  static
-  inline
-  bool
-  solve2x2( valueType const b[2],
-            valueType       A[2][2],
-            valueType       x[2] ) {
-    // full pivoting
-    indexType ij = 0 ;
-    valueType Amax = std::abs(A[0][0]) ;
-    valueType tmp  = std::abs(A[0][1]) ;
-    if ( tmp > Amax ) { ij = 1 ; Amax = tmp ; }
-    tmp = std::abs(A[1][0]) ;
-    if ( tmp > Amax ) { ij = 2 ; Amax = tmp ; }
-    tmp = std::abs(A[1][1]) ;
-    if ( tmp > Amax ) { ij = 3 ; Amax = tmp ; }
-    if ( Amax == 0 ) return false ;
-    indexType i[] = { 0, 1 } ;
-    indexType j[] = { 0, 1 } ;
-    if ( (ij&0x01) == 0x01 ) { j[0] = 1 ; j[1] = 0 ; }
-    if ( (ij&0x02) == 0x02 ) { i[0] = 1 ; i[1] = 0 ; }
-    // apply factorization
-    A[i[1]][j[0]] /= A[i[0]][j[0]] ;
-    A[i[1]][j[1]] -= A[i[1]][j[0]]*A[i[0]][j[1]] ;
-    // check for singularity
-    valueType epsi = 1e-10 ;
-    if ( std::abs( A[i[1]][j[1]] ) < epsi ) {
-      // L^+ Pb
-      valueType tmp = (b[i[0]] + A[i[1]][j[0]]*b[i[1]]) /
-                      ( (1+power2(A[i[1]][j[0]]) ) *
-                        ( power2(A[i[0]][j[0]])+power2(A[i[0]][j[1]]) ) ) ;
-      x[j[0]] = tmp*A[i[0]][j[0]] ;
-      x[j[1]] = tmp*A[i[0]][j[1]] ;
-    } else { // non singular
-      // L^(-1) Pb
-      x[j[0]] = b[i[0]] ;
-      x[j[1]] = b[i[1]]-A[i[1]][j[0]]*x[j[0]] ;
-      // U^(-1) x
-      x[j[1]] /= A[i[1]][j[1]] ;
-      x[j[0]]  = (x[j[0]]-A[i[0]][j[1]]*x[j[1]])/A[i[0]][j[0]] ;
+  public:
+  
+    Solve2x2() : epsi(1e-10) {}
+
+    bool
+    factorize( valueType A[2][2] ) {
+      // full pivoting
+      valueType Amax = std::abs(A[0][0]) ;
+      valueType tmp  = std::abs(A[0][1]) ;
+      indexType ij = 0 ;
+      if ( tmp > Amax ) { ij = 1 ; Amax = tmp ; }
+      tmp = std::abs(A[1][0]) ;
+      if ( tmp > Amax ) { ij = 2 ; Amax = tmp ; }
+      tmp = std::abs(A[1][1]) ;
+      if ( tmp > Amax ) { ij = 3 ; Amax = tmp ; }
+      if ( Amax == 0 ) return false ;
+      if ( (ij&0x01) == 0x01 ) { j[0] = 1 ; j[1] = 0 ; }
+      else                     { j[0] = 0 ; j[1] = 1 ; }
+      if ( (ij&0x02) == 0x02 ) { i[0] = 1 ; i[1] = 0 ; }
+      else                     { i[0] = 0 ; i[1] = 1 ; }
+      // apply factorization
+      LU[0][0] = A[i[0]][j[0]] ;
+      LU[0][1] = A[i[0]][j[1]] ;
+      LU[1][0] = A[i[1]][j[0]] ;
+      LU[1][1] = A[i[1]][j[1]] ;
+
+      LU[1][0] /= LU[0][0] ;
+      LU[1][1] -= LU[1][0]*LU[0][1] ;
+      // check for singularity
+      singular = std::abs( LU[1][1] ) < epsi ;
+      return true ;
     }
-    return true ;
-  }
+
+    void
+    solve( valueType const b[2], valueType x[2] ) const {
+      if ( singular ) {
+        // L^+ Pb
+        valueType tmp = (b[i[0]] + LU[1][0]*b[i[1]]) /
+                        ( (1+power2(LU[1][0]) ) * ( power2(LU[0][0])+power2(LU[0][1]) ) ) ;
+        x[j[0]] = tmp*LU[0][0] ;
+        x[j[1]] = tmp*LU[0][1] ;
+      } else { // non singular
+        // L^(-1) Pb
+        x[j[0]] = b[i[0]] ;
+        x[j[1]] = b[i[1]]-LU[1][0]*x[j[0]] ;
+        // U^(-1) x
+        x[j[1]] /= LU[1][1] ;
+        x[j[0]]  = (x[j[0]]-LU[0][1]*x[j[1]])/LU[0][0] ;
+      }
+    }
+  } ;
 
   // **************************************************************************
 
@@ -1393,24 +1448,27 @@ namespace Clothoid {
   
   // ---------------------------------------------------------------------------
 
-  bool
+  int
   G2solve2arc::solve() {
+    Solve2x2 solver ;
     valueType X[2] = { 0.5, 2 } ;
+    int iter = 0 ;
     bool converged = false ;
-    for ( int i = 0 ; i < maxIter && !converged ; ++i ) {
+    do {
       valueType F[2], J[2][2], d[2] ;
       evalFJ( X, F, J ) ;
-      if ( !solve2x2( F, J, d ) ) break ;
+      if ( !solver.factorize( J ) ) break ;
+      solver.solve( F, d ) ;
       valueType lenF = hypot(F[0],F[1]) ;
       X[0] -= d[0] ;
       X[1] -= d[1] ;
       converged = lenF < tolerance ;
-    }
+    } while ( ++iter < maxIter && !converged ) ;
     if ( converged ) converged = X[1] > 0 && X[0] > 0 && X[0] < 1 ;
     if ( converged ) buildSolution( X[0], X[1] ) ;
-    return converged ;
+    return converged ? iter : -1 ;
   }
-  
+
   // **************************************************************************
 
   void
@@ -1431,20 +1489,9 @@ namespace Clothoid {
   }
 
   // **************************************************************************
-  
-  void
-  G2solve3arc::setup( valueType _x0,
-                      valueType _y0,
-                      valueType _theta0,
-                      valueType _kappa0,
-                      valueType _f0,
-                      valueType _x1,
-                      valueType _y1,
-                      valueType _theta1,
-                      valueType _kappa1,
-                      valueType _f1 ) {
 
-    G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
+  void
+  G2solve3arc::setup( valueType _f0, valueType _f1 ) {
 
     alpha = _f0 ;
     beta  = _f1 ;
@@ -1463,23 +1510,63 @@ namespace Clothoid {
     valueType be1 = 1-beta ;
 
     dK0_0 = ad*((alpha-1)*(3*th0+th1)+beta*DeltaTheta) ;
-    dK0_1 = ad*((beta*DeltaK-2*k0)*omega-4*k0*alpha*(beta+omega));
+    dK0_1 = ad*((beta*DeltaK-2*k0)*omega-4*a0*(beta+omega));
     dK0_2 = 4*ad*al1 ;
 
     dK1_0 = bd*((beta-1)*(3*th1+th0)-alpha*DeltaTheta);
-    dK1_1 = bd*((alpha*DeltaK+2*k1)*omega+4*k1*beta*(alpha+omega));
+    dK1_1 = bd*((alpha*DeltaK+2*k1)*omega+4*b1*(alpha+omega));
     dK1_2 = 4*bd*be1 ;
 
     dKM_0  = 2*od*(al1*th0+be1*th1) ;
-    dKM_1  = od*(al1*a0-be1*b1);
+    //dKM_1  = od*(al1*a0-be1*b1);
+    dKM_1  = od*(2*omega*(a0-b1)-alpha*beta*DeltaK);
     dKM_2  = -2*od*(1+2*omega) ;
 
     valueType ab = alpha-beta ;
 
     KM_0  = od*(ab*(th0+th1)+DeltaTheta) ;
-    KM_1  = od*(a0*(ab-1)-b1*(ab+1))/2 ;
+    //KM_1  = od*(a0*(ab-1)-b1*(ab+1))/2 ;
+    KM_1  = -od*(omega*(a0+b1)+alpha*beta*(k0+k1)) ;
     KM_2  = -2*od*ab ;
 
+  }
+
+  void
+  G2solve3arc::setup( valueType _x0,
+                      valueType _y0,
+                      valueType _theta0,
+                      valueType _kappa0,
+                      valueType _f0,
+                      valueType _x1,
+                      valueType _y1,
+                      valueType _theta1,
+                      valueType _kappa1,
+                      valueType _f1 ) {
+    G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
+    G2solve3arc::setup( _f0, _f1 ) ;
+  }
+
+  void
+  G2solve3arc::evalF( valueType const vars[2],
+                      valueType       F[2] ) const {
+
+    valueType L   = vars[0] ;
+    valueType thM = vars[1] ;
+
+    valueType dK0 = dK0_0 + L*dK0_1 + thM*dK0_2 ;
+    valueType dK1 = dK1_0 + L*dK1_1 + thM*dK1_2 ;
+    valueType dKM = dKM_0 + L*dKM_1 + thM*dKM_2 ;
+    valueType KM  = KM_0  + L*KM_1  + thM*KM_2  ;
+
+    valueType xa, ya, xb, yb, xM, yM, xP, yP ;
+
+    GeneralizedFresnelCS( dK0,  L*a0, th0, xa, ya );
+    GeneralizedFresnelCS( dK1, -L*b1, th1, xb, yb );
+    GeneralizedFresnelCS( dKM, -KM,   thM, xM, yM );
+    GeneralizedFresnelCS( dKM,  KM,   thM, xP, yP );
+
+    F[0] = alpha * xa + beta * xb + omega*(xP+xM) - 2/L ;
+    F[1] = alpha * ya + beta * yb + omega*(yP+yM) ;
   }
 
   void
@@ -1528,9 +1615,7 @@ namespace Clothoid {
               + 2/(L*L) ;
 
     // D F[0] / D thM
-    J[0][1] = - ya[2]*dK0_2
-              - yb[2]*dK1_2
-              - (yMP_2*dKM_2+yMP_1*KM_2+yMP) ;
+    J[0][1] = - ya[2]*dK0_2 - yb[2]*dK1_2 - (yMP_2*dKM_2+yMP_1*KM_2+yMP) ;
 
     // D F[1] / D L
     J[1][0] = (xa[2]*dK0_1+xa[1]*a0) +
@@ -1538,34 +1623,141 @@ namespace Clothoid {
               (xMP_2*dKM_1+xMP_1*KM_1) ;
 
     // D F[1] / D thM
-    J[1][1] = xa[2]*dK0_2
-            + xb[2]*dK1_2
-            + (xMP_2*dKM_2+xMP_1*KM_2+xMP) ;
+    J[1][1] = xa[2]*dK0_2 + xb[2]*dK1_2 + (xMP_2*dKM_2+xMP_1*KM_2+xMP) ;
 
   }
-  
+
+  // ---------------------------------------------------------------------------
+
+  int
+  G2solve3arc::solve() {
+    Solve2x2 solver ;
+    valueType F[2], J[2][2], d[2], X[2] ;
+    X[0] = 2 ;
+    X[1] = 0 ;
+
+    int iter = 0 ;
+    bool converged = false ;
+    try {
+      do {
+        evalFJ( X, F, J ) ;
+        if ( !solver.factorize( J ) ) break ;
+        solver.solve( F, d ) ;
+        X[0] -= d[0] ;
+        X[1] -= d[1] ;
+        valueType lenF = hypot(F[0],F[1]) ;
+        converged = lenF < tolerance ;
+      } while ( ++iter < maxIter && !converged ) ;
+
+      if ( converged )
+         converged = FP_INFINITE != std::fpclassify(X[0]) &&
+                     FP_NAN      != std::fpclassify(X[0]) &&
+                     FP_INFINITE != std::fpclassify(X[1]) &&
+                     FP_NAN      != std::fpclassify(X[1]) &&
+                     X[0] > 0 ;
+      buildSolution( X[0], X[1] ) ; // costruisco comunque soluzione
+    }
+    catch (...) {
+     // do not converge!
+    }
+    return converged ? iter : -1 ;
+  }
+
   // ---------------------------------------------------------------------------
 
   bool
-  G2solve3arc::solve() {
-    valueType F[2], J[2][2], d[2], X[2] ;
-    X[0] = 2 ;
-    X[1] = (th0+th1)/2 ;
-    // valueType dkappaM  = zeta*gamma2 ; // /(eta*eta)*LM*LM ;
-    bool converged = false ;
-    for ( int i = 0 ; i < maxIter && !converged ; ++i ) {
-      evalFJ( X, F, J ) ;
-      if ( !solve2x2( F, J, d ) ) break ;
-      valueType lenF = hypot(F[0],F[1]) ;
-      X[0] -= d[0] ;
-      X[1] -= d[1] ;
-      converged = lenF < tolerance ;
+  G2solve3arc::solve_TV( valueType _x0,
+                         valueType _y0,
+                         valueType _theta0,
+                         valueType _kappa0,
+                         valueType _x1,
+                         valueType _y1,
+                         valueType _theta1,
+                         valueType _kappa1,
+                         indexType N ) {
+    G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
+    // loop per minimizzare qualcosa
+    valueType f0_max = f_max/std::max( 1.0, 0.5*std::abs(k0) ) ;
+    valueType f1_max = f_max/std::max( 1.0, 0.5*std::abs(k1) ) ;
+    valueType f0_min = maxTH/std::max( std::abs(k0), maxTH/f_min ) ;
+    valueType f1_min = maxTH/std::max( std::abs(k1), maxTH/f_min ) ;
+    valueType target = 1e100 ;
+    valueType f0_ott = 0 ;
+    valueType f1_ott = 0 ;
+    valueType ds = 1.0/N ;
+    for ( indexType i = 0 ; i <= N ; ++i ) {
+      valueType f0 = f0_min+(f0_max-f0_min)*(i*ds) ;
+      for ( indexType j = 0 ; j <= N ; ++j ) {
+        valueType f1 = f1_min+(f1_max-f1_min)*(j*ds) ;
+        G2solve3arc::setup( f0, f1 ) ;
+        int iter = G2solve3arc::solve() ;
+        if ( iter > 0 ) { // ok converged
+          valueType newTarget = thetaTotalVariation() ;
+          if ( target > newTarget ) {
+            target = newTarget ;
+            f0_ott = f0 ;
+            f1_ott = f1 ;
+          }
+        }
+      }
     }
-    if ( converged ) converged = X[0] > 0 ; // L > 0 !
-    if ( converged ) buildSolution( X[0], X[1] ) ;
-    return converged ;
+    bool ok = f0_ott > 0 ;
+    if ( ok ) {
+      G2solve3arc::setup( f0_ott, f1_ott ) ;
+      G2solve3arc::solve() ;
+    }
+    return ok ;
   }
-  
+
+  bool
+  G2solve3arc::solve_TV2( valueType _x0,
+                          valueType _y0,
+                          valueType _theta0,
+                          valueType _kappa0,
+                          valueType _x1,
+                          valueType _y1,
+                          valueType _theta1,
+                          valueType _kappa1,
+                          indexType N ) {
+    G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
+    // loop per minimizzare qualcosa
+    valueType f0_max = f_max/std::max( 1.0, 0.5*std::abs(k0) ) ;
+    valueType f1_max = f_max/std::max( 1.0, 0.5*std::abs(k1) ) ;
+    valueType f0_min = maxTH/std::max( std::abs(k0), maxTH/f_min ) ;
+    valueType f1_min = maxTH/std::max( std::abs(k1), maxTH/f_min ) ;
+    valueType target = 1e100 ;
+    valueType f0_ott = 0 ;
+    valueType f1_ott = 0 ;
+    valueType ds = 1.0/N ;
+    for ( indexType i = 0 ; i <= N ; ++i ) {
+      valueType f0 = f0_min+(f0_max-f0_min)*(i*ds) ;
+      for ( indexType j = 0 ; j <= N ; ++j ) {
+        valueType f1 = f1_min+(f1_max-f1_min)*(j*ds) ;
+        G2solve3arc::setup( f0, f1 ) ;
+        int iter = G2solve3arc::solve() ;
+        if ( iter > 0 ) { // ok converged
+          valueType t0 = S0.thetaTotalVariation() ;
+          valueType t1 = S1.thetaTotalVariation() ;
+          valueType tm = SM.thetaTotalVariation() ;
+          valueType newTarget = t0*t0+t1*t1+tm*tm ;
+          if ( target > newTarget ) {
+            target = newTarget ;
+            f0_ott = f0 ;
+            f1_ott = f1 ;
+          }
+        }
+      }
+    }
+    bool ok = f0_ott > 0 ;
+    if ( ok ) {
+      G2solve3arc::setup( f0_ott, f1_ott ) ;
+      G2solve3arc::solve() ;
+    }
+    return ok ;
+  }
+
+  // ---------------------------------------------------------------------------
+
   void
   G2solve3arc::buildSolution( valueType L, valueType thetaM ) {
 
@@ -1621,6 +1813,19 @@ namespace Clothoid {
 
     S1.change_origin( -L1 ) ;
     SM.change_origin( -LM ) ;
+  }
+
+  valueType
+  G2solve3arc::thetaMinMax( valueType & thMin, valueType & thMax ) const {
+    valueType thMin1, thMax1 ;
+    S0.thetaMinMax( thMin,  thMax ) ;
+    S1.thetaMinMax( thMin1, thMax1 ) ;
+    if ( thMin > thMin1 ) thMin = thMin1 ;
+    if ( thMax < thMax1 ) thMax = thMax1 ;
+    SM.thetaMinMax( thMin1, thMax1 ) ;
+    if ( thMin > thMin1 ) thMin = thMin1 ;
+    if ( thMax < thMax1 ) thMax = thMax1 ;
+    return thMax-thMin ;
   }
 
 }

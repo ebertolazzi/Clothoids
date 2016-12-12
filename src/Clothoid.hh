@@ -324,6 +324,7 @@ namespace Clothoid {
     valueType getKappa_D() const { return dk ; }
     valueType getSmin()    const { return s_min ; }
     valueType getSmax()    const { return s_max ; }
+    valueType getL()       const { return s_max-s_min ; }
 
     //! construct a clothoid with the standard parameters
     void
@@ -397,7 +398,16 @@ namespace Clothoid {
     theta_DDD( valueType ) const { return 0 ; }
 
     valueType
+    totalLength() const { return s_max-s_min ; }
+
+    valueType
     thetaTotalVariation() const ;
+
+    valueType
+    thetaMinMax( valueType & thMin, valueType & thMax ) const ;
+
+    valueType
+    curvatureTotalVariation() const ;
 
     valueType
     integralCurvature2() const ;
@@ -612,7 +622,7 @@ namespace Clothoid {
     G2solve2arc() {}
     ~G2solve2arc() {}
 
-    bool
+    int
     solve() ;
 
     ClothoidCurve const & getS0() const { return S0 ; }
@@ -631,12 +641,21 @@ namespace Clothoid {
 
     ClothoidCurve S0, SM, S1, SG ;
 
+    valueType f_min, f_max ;
     valueType alpha, beta, omega ;
     valueType dK0_0, dK0_1, dK0_2 ;
     valueType dK1_0, dK1_1, dK1_2 ;
     valueType dKM_0, dKM_1, dKM_2 ;
     valueType KM_0,  KM_1,  KM_2 ;
     valueType a0, b1 ;
+    // for optimization
+    valueType maxTH ;
+
+    void
+    setup( valueType _f0, valueType _f1 ) ;
+
+    void
+    evalF( valueType const vars[2], valueType F[2] ) const ;
 
     void
     evalFJ( valueType const vars[2],
@@ -652,11 +671,15 @@ namespace Clothoid {
     using G2data::setTolerance ;
     using G2data::setMaxIter ;
 
-    G2solve3arc() {}
+    G2solve3arc()
+    : f_min(0.01)
+    , f_max(0.33333333333)
+    , maxTH(3.1415/8)
+    {}
+
     ~G2solve3arc() {}
 
-    bool
-    solve() ;
+    int solve() ;
 
     void
     setup( valueType _x0,
@@ -669,18 +692,73 @@ namespace Clothoid {
            valueType _theta1,
            valueType _kappa1,
            valueType _beta ) ;
+    bool
+    solve_TV( valueType _x0,
+              valueType _y0,
+              valueType _theta0,
+              valueType _kappa0,
+              valueType _x1,
+              valueType _y1,
+              valueType _theta1,
+              valueType _kappa1,
+              indexType N = 100 ) ;
+    bool
+    solve_TV2( valueType _x0,
+               valueType _y0,
+               valueType _theta0,
+               valueType _kappa0,
+               valueType _x1,
+               valueType _y1,
+               valueType _theta1,
+               valueType _kappa1,
+               indexType N = 100 ) ;
 
     ClothoidCurve const & getS0() const { return S0 ; }
     ClothoidCurve const & getS1() const { return S1 ; }
     ClothoidCurve const & getSM() const { return SM ; }
     ClothoidCurve const & getSG() const { return SG ; }
-    
+
+    valueType getAlpha() const { return alpha ; }
+    valueType getBeta()  const { return beta ; }
+
+    valueType
+    totalLength() const {
+      return S0.totalLength() +
+             S1.totalLength() +
+             SM.totalLength() ;
+    }
+
     valueType
     thetaTotalVariation() const {
       return S0.thetaTotalVariation() +
              S1.thetaTotalVariation() +
              SM.thetaTotalVariation() ;
     }
+
+    valueType
+    curvatureTotalVariation() const {
+      return S0.curvatureTotalVariation() +
+             S1.curvatureTotalVariation() +
+             SM.curvatureTotalVariation() ;
+    }
+
+    valueType
+    integralCurvature2() const {
+      return S0.integralCurvature2() +
+             S1.integralCurvature2() +
+             SM.integralCurvature2() ;
+    }
+
+    valueType
+    integralJerk2() const {
+      return S0.integralJerk2() +
+             S1.integralJerk2() +
+             SM.integralJerk2() ;
+    }
+
+    valueType
+    thetaMinMax( valueType & thMin, valueType & thMax ) const ;
+
   } ;
 
 }
