@@ -343,6 +343,29 @@ namespace GenericContainerNamespace {
 
    */
   class GenericContainer {
+  public:
+    // import type
+    typedef GenericContainerNamespace::pointer_type     pointer_type;
+    typedef GenericContainerNamespace::bool_type        bool_type;
+    typedef GenericContainerNamespace::int_type         int_type;
+    typedef GenericContainerNamespace::long_type        long_type;
+    typedef GenericContainerNamespace::real_type        real_type;
+    typedef GenericContainerNamespace::complex_type     complex_type;
+    typedef GenericContainerNamespace::string_type      string_type;
+    typedef GenericContainerNamespace::vec_pointer_type vec_pointer_type;
+    typedef GenericContainerNamespace::vec_bool_type    vec_bool_type;
+    typedef GenericContainerNamespace::vec_int_type     vec_int_type;
+    typedef GenericContainerNamespace::vec_real_type    vec_real_type;
+    typedef GenericContainerNamespace::vec_complex_type vec_complex_type;
+    typedef GenericContainerNamespace::vec_string_type  vec_string_type;
+    typedef GenericContainerNamespace::vector_type      vector_type;
+    typedef GenericContainerNamespace::map_type         map_type;
+    typedef GenericContainerNamespace::uint_type        uint_type;
+    typedef GenericContainerNamespace::ulong_type       ulong_type;
+    typedef GenericContainerNamespace::vec_uint_type    vec_uint_type;
+    typedef GenericContainerNamespace::vec_ulong_type   vec_ulong_type;
+    typedef GenericContainerNamespace::vec_long_type    vec_long_type;
+
   private:
 
     //! Data is stored in a union
