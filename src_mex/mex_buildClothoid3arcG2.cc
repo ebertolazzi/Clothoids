@@ -121,12 +121,12 @@ save_struct( Clothoid::ClothoidCurve const *curve[7], mxArray * & plhs ) {
     mxSetFieldByNumber( plhs, i, 5, mxCreateDoubleScalar(curve[i]->getSmax()) );
   }
   mxSetFieldByNumber( plhs, 0, 6, mxCreateString("length")) ;
-  mxSetFieldByNumber( plhs, 1, 6, mxCreateString("curv"));
-  mxSetFieldByNumber( plhs, 2, 6, mxCreateString("jerk"));
-  mxSetFieldByNumber( plhs, 3, 6, mxCreateString("snap"));
+  mxSetFieldByNumber( plhs, 1, 6, mxCreateString("curv2"));
+  mxSetFieldByNumber( plhs, 2, 6, mxCreateString("jerk2"));
+  mxSetFieldByNumber( plhs, 3, 6, mxCreateString("snap2"));
   mxSetFieldByNumber( plhs, 4, 6, mxCreateString("TV-angle"));
-  mxSetFieldByNumber( plhs, 5, 6, mxCreateString("TV2-angle"));
-  mxSetFieldByNumber( plhs, 6, 6, mxCreateString("TV-curv"));
+  mxSetFieldByNumber( plhs, 5, 6, mxCreateString("TV-curv"));
+  mxSetFieldByNumber( plhs, 6, 6, mxCreateString("L*(1/f0+1/f1)"));
 }
 
 extern "C"

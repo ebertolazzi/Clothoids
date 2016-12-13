@@ -1225,6 +1225,16 @@ namespace Clothoid {
   }
 
   valueType
+  ClothoidCurve::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
+    // cerco punto minimo parabola
+    // root = -k/dk ;
+    kMin = k+dk*s_min ;
+    kMax = k+dk*s_max ;
+    if ( kMax < kMin ) std::swap( kMax, kMin ) ;
+    return kMax - kMin ;
+  }
+
+  valueType
   ClothoidCurve::curvatureTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
@@ -1727,36 +1737,21 @@ namespace Clothoid {
         int iter = G2solve3arc::solve() ;
         if ( iter > 0 ) { // ok converged
           ok = true ;
-          // L, CURV^2, JERK, SNAP, TV-ANGLE, TV2-ANGLE, TV-CURV
+          // check
           valueType nt[7] ;
-          valueType tv0 = S0.thetaTotalVariation() ;
-          valueType tv1 = S1.thetaTotalVariation() ;
-          valueType tvm = SM.thetaTotalVariation() ;
-          valueType v0 = S0.integralSnap2()*S0.totalLength() ;
-          valueType v1 = S1.integralSnap2()*S1.totalLength() ;
-          valueType vm = SM.integralSnap2()*SM.totalLength() ;
-          //valueType v0 = S0.integralSnap2()*S0.integralJerk2(*S0.totalLength() ;
-          //valueType v1 = S1.integralSnap2()*S1.integralJerk2()*S1.totalLength() ;
-          //valueType vm = SM.integralSnap2()*SM.integralJerk2()*SM.totalLength() ;
-          //valueType v0 = S0.integralSnap2()*S0.totalLength() ;
-          //valueType v1 = S1.integralSnap2()*S1.totalLength() ;
-          //valueType vm = SM.integralSnap2()*SM.totalLength() ;
           nt[0] = totalLength() ;
           nt[1] = integralCurvature2() ;
           nt[2] = integralJerk2() ;
-          nt[3] = integralSnap2()*integralCurvature2()*totalLength() ;
+          nt[3] = integralSnap2() ;
           nt[4] = thetaTotalVariation() ;
-          nt[5] = tv0*tv0+tv1*tv1+tvm*tvm ;
-          nt[6] = curvatureTotalVariation() ;
-
+          //nt[5] = curvatureTotalVariation() ;
+          nt[4] = totalLength()*integralCurvature2()*pow(f0*f1,-0.5) ;
+          nt[5] = totalLength()*thetaTotalVariation()*pow(f0*f1,-0.5) ;
+          nt[6] = totalLength()*curvatureTotalVariation()*pow(f0*f1,-0.25) ;
           for ( int kk = 0 ; kk < 7 ; ++kk ) {
-            if ( nt[kk] < target[kk] ) {
-              target[kk] = nt[kk] ;
-              alpha[kk] = f0 ;
-              beta[kk] = f1 ;
-            }
+            if ( nt[kk] < target[kk] )
+              { target[kk] = nt[kk] ; alpha[kk] = f0 ; beta[kk] = f1 ; }
           }
-
         }
       }
     }
@@ -1833,6 +1828,19 @@ namespace Clothoid {
     if ( thMin > thMin1 ) thMin = thMin1 ;
     if ( thMax < thMax1 ) thMax = thMax1 ;
     return thMax-thMin ;
+  }
+
+  valueType
+  G2solve3arc::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
+    valueType kMin1, kMax1 ;
+    S0.thetaMinMax( kMin,  kMax ) ;
+    S1.thetaMinMax( kMin1, kMax1 ) ;
+    if ( kMin > kMin1 ) kMin = kMin1 ;
+    if ( kMax < kMax1 ) kMax = kMax1 ;
+    SM.thetaMinMax( kMin1, kMax1 ) ;
+    if ( kMin > kMin1 ) kMin = kMin1 ;
+    if ( kMax < kMax1 ) kMax = kMax1 ;
+    return kMax-kMin ;
   }
 
 }
