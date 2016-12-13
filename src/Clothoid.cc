@@ -1254,6 +1254,35 @@ namespace Clothoid {
     return ((((t4/5*dk+t3*k)*dk+(1+2*t2)*k2)*dk+2*t1*k3)*dk+k4)*(s_max-s_min) ;
   }
 
+  valueType
+  ClothoidCurve::integralSnap2() const {
+    valueType s_min2 = s_min*s_min  ;
+    valueType s_min3 = s_min*s_min2 ;
+    valueType s_min4 = s_min3*s_min ;
+    valueType s_min5 = s_min4*s_min ;
+    valueType s_min6 = s_min5*s_min ;
+    valueType k2     = k*k ;
+    valueType k3     = k*k2 ;
+    valueType k4     = k2*k2 ;
+    valueType k5     = k4*k ;
+    valueType k6     = k4*k2 ;
+    valueType dk2    = dk*dk ;
+    valueType dk3    = dk*dk2 ;
+    valueType dk4    = dk2*dk2 ;
+    valueType dk5    = dk4*dk ;
+    valueType dk6    = dk4*dk2 ;
+    valueType t2     = s_max+s_min ;
+    valueType t3     = s_max*t2+s_min2 ;
+    valueType t4     = s_max*t3+s_min3 ;
+    valueType t5     = s_max*t4+s_min4 ;
+    valueType t6     = s_max*t5+s_min5 ;
+    valueType t7     = s_max*t6+s_min6 ;
+
+    return ( (t7/7)*dk6 + dk5*k*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
+             5*dk2*k4*t3 + 3*dk3*t3 + 3*dk*k5*t2 + 9*dk2*k*t2 +
+             k6+9*k2*dk ) * ( s_max - s_min ) ;
+  }
+
   std::ostream &
   operator << ( std::ostream & stream, ClothoidCurve const & c ) {
     stream <<   "x0     = " << c.x0
@@ -1665,8 +1694,9 @@ namespace Clothoid {
 
   // ---------------------------------------------------------------------------
 
+  // L, CURV^2, JERK, SNAP, TV-ANGLE, TV2-ANGLE, TV-CURV
   bool
-  G2solve3arc::solve_TV( valueType _x0,
+  G2solve3arc::optimize( valueType _x0,
                          valueType _y0,
                          valueType _theta0,
                          valueType _kappa0,
@@ -1674,6 +1704,9 @@ namespace Clothoid {
                          valueType _y1,
                          valueType _theta1,
                          valueType _kappa1,
+                         valueType target[7],
+                         valueType alpha[7],
+                         valueType beta[7],
                          indexType N ) {
     G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
     // loop per minimizzare qualcosa
@@ -1681,10 +1714,11 @@ namespace Clothoid {
     valueType f1_max = f_max/std::max( 1.0, 0.5*std::abs(k1) ) ;
     valueType f0_min = maxTH/std::max( std::abs(k0), maxTH/f_min ) ;
     valueType f1_min = maxTH/std::max( std::abs(k1), maxTH/f_min ) ;
-    valueType target = 1e100 ;
-    valueType f0_ott = 0 ;
-    valueType f1_ott = 0 ;
+    std::fill( target, target+7, 1e100 ) ;
+    std::fill( alpha, alpha+7, 0 ) ;
+    std::fill( beta, beta+7, 0 ) ;
     valueType ds = 1.0/N ;
+    bool ok = false ;
     for ( indexType i = 0 ; i <= N ; ++i ) {
       valueType f0 = f0_min+(f0_max-f0_min)*(i*ds) ;
       for ( indexType j = 0 ; j <= N ; ++j ) {
@@ -1692,66 +1726,39 @@ namespace Clothoid {
         G2solve3arc::setup( f0, f1 ) ;
         int iter = G2solve3arc::solve() ;
         if ( iter > 0 ) { // ok converged
-          valueType newTarget = thetaTotalVariation() ;
-          if ( target > newTarget ) {
-            target = newTarget ;
-            f0_ott = f0 ;
-            f1_ott = f1 ;
-          }
-        }
-      }
-    }
-    bool ok = f0_ott > 0 ;
-    if ( ok ) {
-      G2solve3arc::setup( f0_ott, f1_ott ) ;
-      G2solve3arc::solve() ;
-    }
-    return ok ;
-  }
+          ok = true ;
+          // L, CURV^2, JERK, SNAP, TV-ANGLE, TV2-ANGLE, TV-CURV
+          valueType nt[7] ;
+          valueType tv0 = S0.thetaTotalVariation() ;
+          valueType tv1 = S1.thetaTotalVariation() ;
+          valueType tvm = SM.thetaTotalVariation() ;
+          valueType v0 = S0.integralSnap2()*S0.totalLength() ;
+          valueType v1 = S1.integralSnap2()*S1.totalLength() ;
+          valueType vm = SM.integralSnap2()*SM.totalLength() ;
+          //valueType v0 = S0.integralSnap2()*S0.integralJerk2(*S0.totalLength() ;
+          //valueType v1 = S1.integralSnap2()*S1.integralJerk2()*S1.totalLength() ;
+          //valueType vm = SM.integralSnap2()*SM.integralJerk2()*SM.totalLength() ;
+          //valueType v0 = S0.integralSnap2()*S0.totalLength() ;
+          //valueType v1 = S1.integralSnap2()*S1.totalLength() ;
+          //valueType vm = SM.integralSnap2()*SM.totalLength() ;
+          nt[0] = totalLength() ;
+          nt[1] = integralCurvature2() ;
+          nt[2] = integralJerk2() ;
+          nt[3] = integralSnap2()*integralCurvature2()*totalLength() ;
+          nt[4] = thetaTotalVariation() ;
+          nt[5] = tv0*tv0+tv1*tv1+tvm*tvm ;
+          nt[6] = curvatureTotalVariation() ;
 
-  bool
-  G2solve3arc::solve_TV2( valueType _x0,
-                          valueType _y0,
-                          valueType _theta0,
-                          valueType _kappa0,
-                          valueType _x1,
-                          valueType _y1,
-                          valueType _theta1,
-                          valueType _kappa1,
-                          indexType N ) {
-    G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
-    // loop per minimizzare qualcosa
-    valueType f0_max = f_max/std::max( 1.0, 0.5*std::abs(k0) ) ;
-    valueType f1_max = f_max/std::max( 1.0, 0.5*std::abs(k1) ) ;
-    valueType f0_min = maxTH/std::max( std::abs(k0), maxTH/f_min ) ;
-    valueType f1_min = maxTH/std::max( std::abs(k1), maxTH/f_min ) ;
-    valueType target = 1e100 ;
-    valueType f0_ott = 0 ;
-    valueType f1_ott = 0 ;
-    valueType ds = 1.0/N ;
-    for ( indexType i = 0 ; i <= N ; ++i ) {
-      valueType f0 = f0_min+(f0_max-f0_min)*(i*ds) ;
-      for ( indexType j = 0 ; j <= N ; ++j ) {
-        valueType f1 = f1_min+(f1_max-f1_min)*(j*ds) ;
-        G2solve3arc::setup( f0, f1 ) ;
-        int iter = G2solve3arc::solve() ;
-        if ( iter > 0 ) { // ok converged
-          valueType t0 = S0.thetaTotalVariation() ;
-          valueType t1 = S1.thetaTotalVariation() ;
-          valueType tm = SM.thetaTotalVariation() ;
-          valueType newTarget = t0*t0+t1*t1+tm*tm ;
-          if ( target > newTarget ) {
-            target = newTarget ;
-            f0_ott = f0 ;
-            f1_ott = f1 ;
+          for ( int kk = 0 ; kk < 7 ; ++kk ) {
+            if ( nt[kk] < target[kk] ) {
+              target[kk] = nt[kk] ;
+              alpha[kk] = f0 ;
+              beta[kk] = f1 ;
+            }
           }
+
         }
       }
-    }
-    bool ok = f0_ott > 0 ;
-    if ( ok ) {
-      G2solve3arc::setup( f0_ott, f1_ott ) ;
-      G2solve3arc::solve() ;
     }
     return ok ;
   }

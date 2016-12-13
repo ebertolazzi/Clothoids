@@ -6,8 +6,8 @@ k1 = 1.484519846508200 ;
 
 x0     = -2 ; 
 y0     =  3 ;
-theta0 = pi/2;
-kappa0 = -10.2/5;
+theta0 = pi/2+pi/4;
+kappa0 = 10.2/10;
 
 x1     =  3 ;
 y1     = 2 ;
@@ -28,19 +28,51 @@ S
 %draw3curve( S0, S1, SM, true );
 
 
-[ S0, S1, SM, flg, f0, f1 ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
+[ S0, S1, SM, f0, f1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
 flg
 f0
 f1
-subplot(3,1,1) ;
-draw3curve( S0, S1, SM, true );
-subplot(3,1,2) ;
-draw3angle( S0, S1, SM, true );
-subplot(3,1,3) ;
-draw3curvature( S0, S1, SM, true );
+for kkk=1:7
+  subplot(3,3,1) ;
+  draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
+  subplot(3,3,4) ;
+  draw3angle( S0(kkk), S1(kkk), SM(kkk), true );
+  subplot(3,3,7) ;
+  draw3curvature( S0(kkk), S1(kkk), SM(kkk), true );
+end
 
-[ S0, S1, flg ] = buildClothoid2arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
-flg
-S0
-S1
+kkk = 1 ;
+subplot(3,3,2) ;
+draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
+title(SM(kkk).opt) ;
+
+kkk = 2 ;
+subplot(3,3,3) ;
+draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
+title(SM(kkk).opt) ;
+
+kkk = 3 ;
+subplot(3,3,5) ;
+draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
+title(SM(kkk).opt) ;
+
+kkk = 4 ;
+subplot(3,3,6) ;
+draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
+title(SM(kkk).opt) ;
+
+kkk = 5 ;
+subplot(3,3,8) ;
+draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
+title(SM(kkk).opt) ;
+
+kkk = 7 ;
+subplot(3,3,9) ;
+draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
+title(SM(kkk).opt) ;
+
+%[ S0, S1, flg ] = buildClothoid2arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
+%flg
+%S0
+%S1
 

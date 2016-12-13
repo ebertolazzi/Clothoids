@@ -415,6 +415,9 @@ namespace Clothoid {
     valueType
     integralJerk2() const ;
 
+    valueType
+    integralSnap2() const ;
+
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
 
@@ -692,8 +695,10 @@ namespace Clothoid {
            valueType _theta1,
            valueType _kappa1,
            valueType _beta ) ;
+
+    // L, CURV^2, JERK, SNAP, TV-ANGLE, TV2-ANGLE, TV-CURV
     bool
-    solve_TV( valueType _x0,
+    optimize( valueType _x0,
               valueType _y0,
               valueType _theta0,
               valueType _kappa0,
@@ -701,17 +706,10 @@ namespace Clothoid {
               valueType _y1,
               valueType _theta1,
               valueType _kappa1,
+              valueType target[7],
+              valueType alpha[7],
+              valueType beta[7],
               indexType N = 100 ) ;
-    bool
-    solve_TV2( valueType _x0,
-               valueType _y0,
-               valueType _theta0,
-               valueType _kappa0,
-               valueType _x1,
-               valueType _y1,
-               valueType _theta1,
-               valueType _kappa1,
-               indexType N = 100 ) ;
 
     ClothoidCurve const & getS0() const { return S0 ; }
     ClothoidCurve const & getS1() const { return S1 ; }
@@ -754,6 +752,13 @@ namespace Clothoid {
       return S0.integralJerk2() +
              S1.integralJerk2() +
              SM.integralJerk2() ;
+    }
+
+    valueType
+    integralSnap2() const {
+      return S0.integralSnap2() +
+             S1.integralSnap2() +
+             SM.integralSnap2() ;
     }
 
     valueType

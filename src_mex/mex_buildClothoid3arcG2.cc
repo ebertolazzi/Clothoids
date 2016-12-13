@@ -21,10 +21,10 @@
 "%=============================================================================%\n" \
 "%  buildClothoid:  Compute parameters of the G1 Hermite clothoid fitting      %\n" \
 "%                                                                             %\n" \
-"%  USAGE: [ S0, S1, SM, ... ] = buildClothoid2arcG2( x0, y0, th0, k0, f0,     %\n" \
+"%  USAGE: [ S0, S1, SM, ... ] = buildClothoid3arcG2( x0, y0, th0, k0, f0,     %\n" \
 "%                                                    x1, y1, th1, k1, f1 ) ;  %\n" \
 "%                                                                             %\n" \
-"%  USAGE: [ S0, S1, SM, ... ] = buildClothoid2arcG2( x0, y0, th0, k0,         %\n" \
+"%  USAGE: [ S0, S1, SM, ... ] = buildClothoid3arcG2( x0, y0, th0, k0,         %\n" \
 "%                                                    x1, y1, th1, k1 ) ;      %\n" \
 "%                                                                             %\n" \
 "%  On input:                                                                  %\n" \
@@ -45,10 +45,10 @@
 "%                                                                             %\n" \
 "%  Optional Output                                                            %\n" \
 "%                                                                             %\n" \
-"%       flg    = >0 number of iteration used for the computation              %\n" \
-"%                -1 computation failed                                        %\n" \
 "%       f0     = computed fraction portion of initial curve                   %\n" \
 "%       f1     = fraction portion of final curve                              %\n" \
+"%       flg    = >0 number of iteration used for the computation              %\n" \
+"%                -1 computation failed                                        %\n" \
 "%                                                                             %\n" \
 "%=============================================================================%\n" \
 "%                                                                             %\n" \
@@ -90,9 +90,9 @@
 #define out_S0     plhs[0]
 #define out_S1     plhs[1]
 #define out_SM     plhs[2]
-#define out_flg    plhs[3]
-#define out_f0     plhs[4]
-#define out_f1     plhs[5]
+#define out_f0     plhs[3]
+#define out_f1     plhs[4]
+#define out_flg    plhs[5]
 
 static
 void
@@ -105,6 +105,28 @@ save_struct( Clothoid::ClothoidCurve const & curve, mxArray * & plhs ) {
   mxSetFieldByNumber( plhs, 0, 3, mxCreateDoubleScalar(curve.getKappa()) );
   mxSetFieldByNumber( plhs, 0, 4, mxCreateDoubleScalar(curve.getKappa_D()) );
   mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.getSmax()) );
+}
+
+static
+void
+save_struct( Clothoid::ClothoidCurve const *curve[7], mxArray * & plhs ) {
+  char const * fieldnames[] = { "x", "y", "theta", "k", "dk", "L", "opt" } ;
+  plhs = mxCreateStructMatrix(1,7,7,fieldnames);
+  for ( int i = 0 ; i < 7 ; ++i ) {
+    mxSetFieldByNumber( plhs, i, 0, mxCreateDoubleScalar(curve[i]->getX0()) );
+    mxSetFieldByNumber( plhs, i, 1, mxCreateDoubleScalar(curve[i]->getY0()) );
+    mxSetFieldByNumber( plhs, i, 2, mxCreateDoubleScalar(curve[i]->getTheta0()) );
+    mxSetFieldByNumber( plhs, i, 3, mxCreateDoubleScalar(curve[i]->getKappa()) );
+    mxSetFieldByNumber( plhs, i, 4, mxCreateDoubleScalar(curve[i]->getKappa_D()) );
+    mxSetFieldByNumber( plhs, i, 5, mxCreateDoubleScalar(curve[i]->getSmax()) );
+  }
+  mxSetFieldByNumber( plhs, 0, 6, mxCreateString("length")) ;
+  mxSetFieldByNumber( plhs, 1, 6, mxCreateString("curv"));
+  mxSetFieldByNumber( plhs, 2, 6, mxCreateString("jerk"));
+  mxSetFieldByNumber( plhs, 3, 6, mxCreateString("snap"));
+  mxSetFieldByNumber( plhs, 4, 6, mxCreateString("TV-angle"));
+  mxSetFieldByNumber( plhs, 5, 6, mxCreateString("TV2-angle"));
+  mxSetFieldByNumber( plhs, 6, 6, mxCreateString("TV-curv"));
 }
 
 extern "C"
@@ -133,6 +155,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
     ASSERT( nlhs >= 3 && nlhs <= 6,
             "wrong number of output arguments\n"
             "expected 4, 5 or 6, found " << nlhs ) ;
+
     int iter ;
     if ( nrhs == 10 ) {
       x0  = mxGetScalar(arg_x0) ;
@@ -145,8 +168,20 @@ mexFunction( int nlhs, mxArray       *plhs[],
       th1 = mxGetScalar(arg_theta1) ;
       k1  = mxGetScalar(arg_kappa1) ;
       f1  = mxGetScalar(arg_f1) ;
+
       g2solve3arc.setup( x0, y0, th0, k0, f0, x1, y1, th1, k1, f1 ) ;
       iter = g2solve3arc.solve() ;
+
+      save_struct( g2solve3arc.getS0(), out_S0 ) ;
+      save_struct( g2solve3arc.getS1(), out_S1 ) ;
+      save_struct( g2solve3arc.getSM(), out_SM ) ;
+
+      if ( nlhs > 3 ) out_f0 = mxCreateDoubleScalar(g2solve3arc.getAlpha()) ;
+      if ( nlhs > 4 ) out_f1 = mxCreateDoubleScalar(g2solve3arc.getBeta()) ;
+      if ( nlhs > 5 ) {
+        out_flg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *static_cast<int *>(mxGetData(out_flg)) = iter ;
+      }
     } else {
       x0  = mxGetScalar(arg1_x0) ;
       y0  = mxGetScalar(arg1_y0) ;
@@ -156,23 +191,39 @@ mexFunction( int nlhs, mxArray       *plhs[],
       y1  = mxGetScalar(arg1_y1) ;
       th1 = mxGetScalar(arg1_theta1) ;
       k1  = mxGetScalar(arg1_kappa1) ;
-      g2solve3arc.solve_TV2( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
-      iter = 0 ;
-    }
 
-    save_struct( g2solve3arc.getS0(), out_S0 ) ;
-    save_struct( g2solve3arc.getS1(), out_S1 ) ;
-    save_struct( g2solve3arc.getSM(), out_SM ) ;
+      Clothoid::valueType target[7], alpha[7], beta[7] ;
+      g2solve3arc.optimize( x0, y0, th0, k0, x1, y1, th1, k1, target, alpha, beta ) ;
 
-    if ( nlhs > 3 ) {
-      out_flg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-      *static_cast<int *>(mxGetData(out_flg)) = iter ;
-    }
-    if ( nlhs > 4 ) {
-      out_f0 = mxCreateDoubleScalar(g2solve3arc.getAlpha()) ;
-    }
-    if ( nlhs > 5 ) {
-      out_f1 = mxCreateDoubleScalar(g2solve3arc.getBeta()) ;
+      Clothoid::ClothoidCurve const *curve0[7] ;
+      Clothoid::ClothoidCurve const *curve1[7] ;
+      Clothoid::ClothoidCurve const *curveM[7] ;
+      
+      static Clothoid::G2solve3arc g3arc[7] ;
+      for ( int kk = 0 ; kk < 7 ; ++kk ) {
+        g3arc[kk].setup( x0, y0, th0, k0, alpha[kk], x1, y1, th1, k1, beta[kk] ) ;
+        g3arc[kk].solve() ;
+        curve0[kk] = &g3arc[kk].getS0() ;
+        curve1[kk] = &g3arc[kk].getS1() ;
+        curveM[kk] = &g3arc[kk].getSM() ;
+      }
+
+      save_struct( curve0, out_S0 ) ;
+      save_struct( curve1, out_S1 ) ;
+      save_struct( curveM, out_SM ) ;
+
+      if ( nlhs > 3 ) {
+        out_f0 = mxCreateDoubleMatrix(1,7,mxREAL) ;
+        std::copy( alpha, alpha+7, mxGetPr(out_f0) ) ;
+      }
+      if ( nlhs > 4 ) {
+        out_f1 = mxCreateDoubleMatrix(1,7,mxREAL) ;
+        std::copy( beta, beta+7, mxGetPr(out_f1) ) ;
+      }
+      if ( nlhs > 5 ) {
+        out_flg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *static_cast<int *>(mxGetData(out_flg)) = 0 ;
+      }
     }
 
   } catch ( std::exception const & e ) {

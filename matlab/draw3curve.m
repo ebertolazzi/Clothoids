@@ -7,7 +7,7 @@ function draw3curve(S0,S1,SM,flg)
     hold on
 
     XY = pointsOnClothoid( SM, 0:SM.L/400:SM.L ) ;
-    plot( XY(1,:), XY(2,:), '-k', 'LineWidth', 3 ) ;
+    plot( XY(1,:), XY(2,:), '-c', 'LineWidth', 1 ) ;
 
     XY = pointsOnClothoid( S1, 0:S1.L/400:S1.L ) ;
     plot( XY(1,:), XY(2,:), '-r', 'LineWidth', 3 ) ;
@@ -17,7 +17,7 @@ function draw3curve(S0,S1,SM,flg)
     hold on
 
     XY = pointsOnClothoid( SM, 0:SM.L/400:SM.L ) ;
-    plot( XY(1,:), XY(2,:), '-k', 'LineWidth', 1 ) ;
+    plot( XY(1,:), XY(2,:), '-c', 'LineWidth', 1 ) ;
 
     XY = pointsOnClothoid( S1, 0:S1.L/400:S1.L ) ;
     plot( XY(1,:), XY(2,:), '.r', 'LineWidth', 1 ) ;

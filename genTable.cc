@@ -24,8 +24,8 @@ main( int argc, char const * argv [] ) {
   valueType k_exp_max  =  2 ;
 
   // dati per tabella piccola
-  int N_TH = 35 ;
-  int N_K  = 20 ;
+  int N_TH = 4 ; //35 ;
+  int N_K  = 4 ; //20 ;
   
   std::ofstream file0("dataPP.txt") ;
   std::ofstream file1("dataMP.txt") ;
@@ -54,10 +54,14 @@ main( int argc, char const * argv [] ) {
         for ( int i_k1 = 0 ; i_k1 < N_K ; ++i_k1 ) {
           valueType sk1 = i_k1/valueType(N_K-1) ;
           valueType k1  = exp( k_exp_min*(1-sk1) + k_exp_max*sk1 ) ;
-          bool ok0 = g2solve3arc0.solve_TV2( x0, y0, th0,  k0, x1, y1, th1,  k1 ) ;
-          bool ok1 = g2solve3arc1.solve_TV2( x0, y0, th0, -k0, x1, y1, th1,  k1 ) ;
-          bool ok2 = g2solve3arc2.solve_TV2( x0, y0, th0,  k0, x1, y1, th1, -k1 ) ;
-          bool ok3 = g2solve3arc3.solve_TV2( x0, y0, th0, -k0, x1, y1, th1, -k1 ) ;
+          valueType target0[7], alpha0[7], beta0[7] ;
+          valueType target1[7], alpha1[7], beta1[7] ;
+          valueType target2[7], alpha2[7], beta2[7] ;
+          valueType target3[7], alpha3[7], beta3[7] ;
+          bool ok0 = g2solve3arc0.optimize( x0, y0, th0,  k0, x1, y1, th1,  k1, target0, alpha0, beta0 ) ;
+          bool ok1 = g2solve3arc1.optimize( x0, y0, th0, -k0, x1, y1, th1,  k1, target1, alpha1, beta1 ) ;
+          bool ok2 = g2solve3arc2.optimize( x0, y0, th0,  k0, x1, y1, th1, -k1, target2, alpha2, beta2 ) ;
+          bool ok3 = g2solve3arc3.optimize( x0, y0, th0, -k0, x1, y1, th1, -k1, target3, alpha3, beta3 ) ;
           if ( ! ( ok0 && ok1 && ok2 && ok3 ) ) {
             std::cerr
               << "Failed:"
@@ -71,34 +75,27 @@ main( int argc, char const * argv [] ) {
               << "\nok3 = " << (ok3?"TRUE":"FALSE")
               << "\n" ;
           } else {
-            valueType alphaPP = g2solve3arc0.getAlpha() ;
-            valueType betaPP  = g2solve3arc0.getBeta() ;
-            valueType alphaPM = g2solve3arc1.getAlpha() ;
-            valueType betaPM  = g2solve3arc1.getBeta() ;
-            valueType alphaMP = g2solve3arc2.getAlpha() ;
-            valueType betaMP  = g2solve3arc2.getBeta() ;
-            valueType alphaMM = g2solve3arc3.getAlpha() ;
-            valueType betaMM  = g2solve3arc3.getBeta() ;
+            int kkk = 3 ;
             std::cout
-              << th0     << '\t' << th1  << '\t'
-              << k0      << '\t' << k1   << '\t'
-              << alphaPP << '\t' << betaPP << '\n' ;
+              << th0 << '\t' << th1  << '\t'
+              << k0  << '\t' << k1   << '\t'
+              << alpha0[kkk] << '\t' << beta0[kkk] << '\n' ;
             file0
-              << th0     << '\t' << th1  << '\t'
-              << k0      << '\t' << k1   << '\t'
-              << alphaPP << '\t' << betaPP << '\n' ;
+              << th0 << '\t' << th1 << '\t'
+              << k0  << '\t' << k1  << '\t'
+              << alpha0[kkk] << '\t' << beta0[kkk] << '\n' ;
             file1
-              << th0     << '\t' << th1    << '\t'
-              << -k0     << '\t' << k1     << '\t'
-              << alphaMP << '\t' << betaMP << '\n' ;
+              << th0 << '\t' << th1 << '\t'
+              << -k0 << '\t' << k1  << '\t'
+              << alpha1[kkk] << '\t' << beta1[kkk] << '\n' ;
             file2
-              << th0     << '\t' << th1    << '\t'
-              << k0      << '\t' << -k1    << '\t'
-              << alphaPM << '\t' << betaPM << '\n' ;
+              << th0 << '\t' << th1 << '\t'
+              << k0  << '\t' << -k1 << '\t'
+              << alpha2[kkk] << '\t' << beta2[kkk] << '\n' ;
             file3
-              << th0     << '\t' << th1    << '\t'
-              << -k0     << '\t' << -k1    << '\t'
-              << alphaMM << '\t' << betaMM << '\n' ;
+              << th0 << '\t' << th1 << '\t'
+              << -k0 << '\t' << -k1 << '\t'
+              << alpha3[kkk] << '\t' << beta3[kkk] << '\n' ;
           }
         }
       }
