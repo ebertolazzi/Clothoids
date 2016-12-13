@@ -29,6 +29,13 @@
 #include "GenericContainer.hh"
 #include "GenericContainerCinterface.h"
 
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#endif
+
 #include <vector>
 #include <map>
 #include <string>

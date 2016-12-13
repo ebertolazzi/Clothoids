@@ -26,6 +26,13 @@
 #include <cmath>
 #include <ctgmath>
 
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#endif
+
 // use pcre for pattern matching
 #ifdef GENERIC_CONTAINER_USE_REGEX
   #include <regex>

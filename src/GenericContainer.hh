@@ -24,6 +24,17 @@
 #ifndef GENERIC_CONTAINER_HH
 #define GENERIC_CONTAINER_HH
 
+#ifdef __GCC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpadded"
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpadded"
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#endif
+
 #include "GenericContainerConfig.hh"
 
 #include <iostream>
@@ -57,9 +68,6 @@
     (defined(__cplusplus) && __cplusplus > 199711L)
   #ifndef GENERIC_CONTAINER_DO_NOT_USE_CXX11
     #define GENERIC_CONTAINER_USE_CXX11
-  #endif
-  #ifdef __clang__
-    #pragma clang diagnostic ignored "-Wc++98-compat"
   #endif
 #else
   #include <cstdlib>
@@ -1319,6 +1327,13 @@ namespace GenericContainerNamespace {
 // do not define alias GC if use X11
 #ifndef XlibSpecificationRelease
 namespace GC = GenericContainerNamespace ;
+#endif
+
+#ifdef __GCC__
+#pragma GCC diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic pop
 #endif
 
 #endif

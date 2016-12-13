@@ -18,11 +18,18 @@
 
 #include "GenericContainerLuaInterface.hh"
 
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#endif
+
 #ifdef ENABLE_READLINE
 #define LUA_USE_READLINE
 #endif
 
-#define lua_c
+//#define lua_c
 
 #ifdef USE_MECHATRONIX_LUA
   #include <MechatronixCore/lua/lua.hpp>
