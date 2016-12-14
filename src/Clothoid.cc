@@ -1744,9 +1744,9 @@ namespace Clothoid {
           nt[2] = integralJerk2() ;
           nt[3] = integralSnap2() ;
           nt[4] = thetaTotalVariation() ;
-          //nt[5] = curvatureTotalVariation() ;
-          nt[4] = totalLength()*integralCurvature2()*pow(f0*f1,-0.5) ;
-          nt[5] = totalLength()*thetaTotalVariation()*pow(f0*f1,-0.5) ;
+          nt[5] = curvatureTotalVariation() ;
+          //nt[4] = totalLength()*integralCurvature2()*pow(f0*f1,-0.5) ;
+          //nt[5] = totalLength()*thetaTotalVariation()*pow(f0*f1,-0.5) ;
           nt[6] = totalLength()*curvatureTotalVariation()*pow(f0*f1,-0.25) ;
           for ( int kk = 0 ; kk < 7 ; ++kk ) {
             if ( nt[kk] < target[kk] )
