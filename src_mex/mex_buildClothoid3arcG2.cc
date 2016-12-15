@@ -193,7 +193,8 @@ mexFunction( int nlhs, mxArray       *plhs[],
       k1  = mxGetScalar(arg1_kappa1) ;
 
       Clothoid::valueType target[7], alpha[7], beta[7] ;
-      g2solve3arc.optimize( x0, y0, th0, k0, x1, y1, th1, k1, target, alpha, beta ) ;
+      bool ok = g2solve3arc.optimize( x0, y0, th0, k0, x1, y1, th1, k1, target, alpha, beta ) ;
+      ASSERT( ok, " Optimization failed" ) ;
 
       Clothoid::ClothoidCurve const *curve0[7] ;
       Clothoid::ClothoidCurve const *curve1[7] ;

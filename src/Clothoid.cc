@@ -1730,12 +1730,17 @@ namespace Clothoid {
     valueType ds = 1.0/N ;
     bool ok = false ;
     for ( indexType i = 0 ; i <= N ; ++i ) {
-      valueType f0 = f0_min+(f0_max-f0_min)*(i*ds) ;
+      valueType f0 = f0_min+(f0_max-f0_min)*(i*i*ds/N) ;
       for ( indexType j = 0 ; j <= N ; ++j ) {
-        valueType f1 = f1_min+(f1_max-f1_min)*(j*ds) ;
+        valueType f1 = f1_min+(f1_max-f1_min)*(j*j*ds/N) ;
+        if ( f0+f1 >= 0.99 ) continue ;
         G2solve3arc::setup( f0, f1 ) ;
         int iter = G2solve3arc::solve() ;
         if ( iter > 0 ) { // ok converged
+          if ( S0.deltaTheta() > M_PI ||
+               S1.deltaTheta() > M_PI ||
+               SM.deltaTheta() > 2*M_PI ) continue ;
+          //if ( thetaTotalVariation() > 3*M_PI ) continue ;
           ok = true ;
           // check
           valueType nt[7] ;
@@ -1743,11 +1748,11 @@ namespace Clothoid {
           nt[1] = integralCurvature2() ;
           nt[2] = integralJerk2() ;
           nt[3] = integralSnap2() ;
-          nt[4] = thetaTotalVariation() ;
-          nt[5] = curvatureTotalVariation() ;
-          //nt[4] = totalLength()*integralCurvature2()*pow(f0*f1,-0.5) ;
-          //nt[5] = totalLength()*thetaTotalVariation()*pow(f0*f1,-0.5) ;
-          nt[6] = totalLength()*curvatureTotalVariation()*pow(f0*f1,-0.25) ;
+          //nt[4] = thetaTotalVariation() ;
+          //nt[5] = curvatureTotalVariation() ;
+          nt[4] = exp(totalLength()/4)*exp(thetaTotalVariation()/M_PI)*pow(f0*f1,-0.25) ;
+          nt[5] = exp(totalLength()/4)*exp(deltaTheta()/M_PI)*pow(f0*f1,-0.25) ;
+          nt[6] = exp(totalLength()/4)*curvatureTotalVariation()*pow(f0*f1,-0.25) ;
           for ( int kk = 0 ; kk < 7 ; ++kk ) {
             if ( nt[kk] < target[kk] )
               { target[kk] = nt[kk] ; alpha[kk] = f0 ; beta[kk] = f1 ; }

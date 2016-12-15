@@ -407,6 +407,10 @@ namespace Clothoid {
     thetaMinMax( valueType & thMin, valueType & thMax ) const ;
 
     valueType
+    deltaTheta() const
+    { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
+
+    valueType
     curvatureMinMax( valueType & kMin, valueType & kMax ) const ;
 
     valueType
@@ -678,8 +682,8 @@ namespace Clothoid {
     using G2data::setMaxIter ;
 
     G2solve3arc()
-    : f_min(0.05)
-    , f_max(0.25)
+    : f_min(0.001)
+    , f_max(0.9)
     , maxTH(3.1415/8)
     {}
 
@@ -712,7 +716,7 @@ namespace Clothoid {
               valueType target[7],
               valueType alpha[7],
               valueType beta[7],
-              indexType N = 100 ) ;
+              indexType N = 40 ) ;
 
     ClothoidCurve const & getS0() const { return S0 ; }
     ClothoidCurve const & getS1() const { return S1 ; }
@@ -766,6 +770,10 @@ namespace Clothoid {
 
     valueType
     thetaMinMax( valueType & thMin, valueType & thMax ) const ;
+
+    valueType
+    deltaTheta() const
+    { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
 
     valueType
     curvatureMinMax( valueType & kMin, valueType & kMax ) const ;
