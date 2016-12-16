@@ -651,15 +651,13 @@ namespace Clothoid {
 
     ClothoidCurve S0, SM, S1, SG ;
 
-    valueType f_min, f_max ;
+    valueType f_max ;
     valueType alpha, beta, omega ;
     valueType dK0_0, dK0_1, dK0_2 ;
     valueType dK1_0, dK1_1, dK1_2 ;
     valueType dKM_0, dKM_1, dKM_2 ;
     valueType KM_0,  KM_1,  KM_2 ;
     valueType a0, b1 ;
-    // for optimization
-    valueType maxTH ;
 
     void
     setup( valueType _f0, valueType _f1 ) ;
@@ -682,9 +680,7 @@ namespace Clothoid {
     using G2data::setMaxIter ;
 
     G2solve3arc()
-    : f_min(0.001)
-    , f_max(0.9)
-    , maxTH(3.1415/8)
+    : f_max(0.99)
     {}
 
     ~G2solve3arc() {}

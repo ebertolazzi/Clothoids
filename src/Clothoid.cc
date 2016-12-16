@@ -1720,45 +1720,47 @@ namespace Clothoid {
                          indexType N ) {
     G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
     // loop per minimizzare qualcosa
-    valueType f0_max = f_max/std::max( 1.0, 0.5*std::abs(k0) ) ;
-    valueType f1_max = f_max/std::max( 1.0, 0.5*std::abs(k1) ) ;
-    valueType f0_min = maxTH/std::max( std::abs(k0), maxTH/f_min ) ;
-    valueType f1_min = maxTH/std::max( std::abs(k1), maxTH/f_min ) ;
+    valueType f0_max = f_max ;
+    valueType f1_max = f_max ;
+    valueType f0_min = 0 ;
+    valueType f1_min = 0 ;
     std::fill( target, target+7, 1e100 ) ;
     std::fill( alpha, alpha+7, 0 ) ;
     std::fill( beta, beta+7, 0 ) ;
-    valueType ds = 1.0/N ;
     bool ok = false ;
-    for ( indexType i = 0 ; i <= N ; ++i ) {
-      valueType f0 = f0_min+(f0_max-f0_min)*(i*i*ds/N) ;
-      for ( indexType j = 0 ; j <= N ; ++j ) {
-        valueType f1 = f1_min+(f1_max-f1_min)*(j*j*ds/N) ;
-        if ( f0+f1 >= 0.99 ) continue ;
-        G2solve3arc::setup( f0, f1 ) ;
-        int iter = G2solve3arc::solve() ;
-        if ( iter > 0 ) { // ok converged
-          if ( S0.deltaTheta() > M_PI ||
-               S1.deltaTheta() > M_PI ||
-               SM.deltaTheta() > 2*M_PI ) continue ;
-          //if ( thetaTotalVariation() > 3*M_PI ) continue ;
-          ok = true ;
-          // check
-          valueType nt[7] ;
-          nt[0] = totalLength() ;
-          nt[1] = integralCurvature2() ;
-          nt[2] = integralJerk2() ;
-          nt[3] = integralSnap2() ;
-          //nt[4] = thetaTotalVariation() ;
-          //nt[5] = curvatureTotalVariation() ;
-          nt[4] = exp(totalLength()/4)*exp(thetaTotalVariation()/M_PI)*pow(f0*f1,-0.25) ;
-          nt[5] = exp(totalLength()/4)*exp(deltaTheta()/M_PI)*pow(f0*f1,-0.25) ;
-          nt[6] = exp(totalLength()/4)*curvatureTotalVariation()*pow(f0*f1,-0.25) ;
-          for ( int kk = 0 ; kk < 7 ; ++kk ) {
-            if ( nt[kk] < target[kk] )
-              { target[kk] = nt[kk] ; alpha[kk] = f0 ; beta[kk] = f1 ; }
+    for ( indexType level = 0 ; level < 3 && !ok ; ++level ) {
+      valueType ds0 = (f0_max-f0_min)/N ;
+      valueType ds1 = (f1_max-f1_min)/N ;
+      for ( indexType i = 1 ; i <= N ; ++i ) {
+        valueType f0 = f0_min+(f0_max-f0_min)*(i*ds0) ;
+        for ( indexType j = 1 ; j <= N ; ++j ) {
+          valueType f1 = f1_min+(f1_max-f1_min)*(j*ds1) ;
+          if ( f0+f1 >= 0.99 ) continue ;
+          G2solve3arc::setup( f0, f1 ) ;
+          int iter = G2solve3arc::solve() ;
+          if ( iter > 0 ) { // ok converged
+            //if ( deltaTheta()          > 2*M_PI ) continue ;
+            if ( thetaTotalVariation() > 2*M_PI + std::abs(DeltaTheta) ) continue ;
+            ok = true ;
+            // check
+            valueType nt[7] ;
+            nt[0] = pow(totalLength(),2.5)/pow(S0.totalLength()*S1.totalLength()*SM.totalLength(),1./3.) ;
+            valueType bf = nt[0];//pow(totalLength(),2)/(f0*f1) ;
+            nt[1] = bf*sqrt(integralJerk2()) ;
+            nt[2] = bf*sqrt(integralSnap2()) ;
+            nt[3] = bf*sqrt(integralCurvature2()) ;
+            nt[4] = bf*thetaTotalVariation() ;
+            nt[5] = bf*deltaTheta() ;
+            nt[6] = bf*curvatureTotalVariation() ;
+            for ( int kk = 0 ; kk < 7 ; ++kk ) {
+              if ( nt[kk] < target[kk] )
+                { target[kk] = nt[kk] ; alpha[kk] = f0 ; beta[kk] = f1 ; }
+            }
           }
         }
       }
+      f0_max /= N/2 ;
+      f1_max /= N/2 ;
     }
     return ok ;
   }

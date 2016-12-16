@@ -11,9 +11,17 @@ y1     = 0 ;
 kappa1 = 0.018315638888734*10 ;
 angles = -pi:pi/36:pi ;
 
-for theta0=angles(2:4:end-1)
+
+kappa0 = -7.38 ;
+kappa1 = -7.38 ;
+angles0 = -2.97 ;
+angles1 = +2.8 ;
+
+%for theta0=angles(2:4:end-1)
+for theta0=angles0
   theta0
-  for theta1=angles(2:4:end-1)
+%  for theta1=angles(2:4:end-1)
+  for theta1=-angles0
     [ S0, S1, SM, flg, f0, f1 ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
     if flg < 0
       flg

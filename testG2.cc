@@ -25,14 +25,17 @@ main() {
 f0A = 0.3 ;
 f1B = 0.3 ;
 
-x0  = -2 ;
-y0  = 3 ;
-th0 = 1.570796326794896558 ;
-k0  = -1.484519846508199 ; //-10.199999999999999289 ;
-x1  = 3 ;
-y1  = 2 ;
-th1 = 1.570796326794896558 ;
-k1  = 1.48451984650820 ; // -1.5 ;
+x0  = -1 ;
+y0  =  0 ;
+th0 = -2.97 ;
+k0  = -7.38*0 ;
+x1  = 1 ;
+y1  = 0 ;
+th1 = 2.8 ;
+k1  = -7.38*0 ;
+
+f0A = 0.01 ;
+f1B = 0.01 ;
 
   /*
   x0  = -2 ;
@@ -66,6 +69,10 @@ k1  = 1.48451984650820 ; // -1.5 ;
   std::cout << "\n\nS0\n" << g2solve2arc.getS0();
   std::cout << "\n\nS1\n" << g2solve2arc.getS1();
   */
+  
+  valueType target[7], alpha[7], beta[7] ;
+  bool ok = g2solve3arc.optimize( x0, y0, th0,  k0, x1, y1, th1,  k1, target, alpha, beta ) ;
+  std::cout << (ok?"OK":"NO OK") << '\n' ;
 
   // test 3 archi
   std::cout << "\n\nTry Solution with THREE arcs\n";
