@@ -24,6 +24,7 @@
 #ifndef CLOTHOID_HH
 #define CLOTHOID_HH
 
+#include <iostream>
 #include <vector>
 
 //! Clothoid computations routine
