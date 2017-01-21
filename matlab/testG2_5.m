@@ -21,14 +21,14 @@ kappa1 = 7.38 ;
 %kappa0 = -2.500000000 ;
 
 [ S0, S1, SM, f0, f1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
-for kkk=1:7
+for kkk=1:8
   subplot(3,3,kkk) ;
   draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
   title(SM(kkk).opt) ;
 
-  if kkk == 7
-    subplot(3,3,8) ;
-    draw3angle( S0(kkk), S1(kkk), SM(kkk), true );
+  if kkk == 8
+    %subplot(3,3,8) ;
+    %draw3angle( S0(kkk), S1(kkk), SM(kkk), true );
 
     subplot(3,3,9) ;
     draw3curvature( S0(kkk), S1(kkk), SM(kkk), true );

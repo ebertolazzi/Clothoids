@@ -1714,9 +1714,9 @@ namespace Clothoid {
                          valueType _y1,
                          valueType _theta1,
                          valueType _kappa1,
-                         valueType target[7],
-                         valueType alpha[7],
-                         valueType beta[7],
+                         valueType target[8],
+                         valueType alpha[8],
+                         valueType beta[8],
                          indexType N ) {
     G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
     // loop per minimizzare qualcosa
@@ -1724,9 +1724,9 @@ namespace Clothoid {
     valueType f1_max = f_max ;
     valueType f0_min = 0 ;
     valueType f1_min = 0 ;
-    std::fill( target, target+7, 1e100 ) ;
-    std::fill( alpha, alpha+7, 0 ) ;
-    std::fill( beta, beta+7, 0 ) ;
+    std::fill( target, target+8, 1e100 ) ;
+    std::fill( alpha, alpha+8, 0 ) ;
+    std::fill( beta, beta+8, 0 ) ;
     bool ok = false ;
     for ( indexType level = 0 ; level < 3 && !ok ; ++level ) {
       valueType ds0 = (f0_max-f0_min)/N ;
@@ -1743,16 +1743,19 @@ namespace Clothoid {
             if ( thetaTotalVariation() > 2*M_PI + std::abs(DeltaTheta) ) continue ;
             ok = true ;
             // check
-            valueType nt[7] ;
+            valueType nt[8] ;
             nt[0] = pow(totalLength(),2.5)/pow(S0.totalLength()*S1.totalLength()*SM.totalLength(),1./3.) ;
             valueType bf = nt[0];//pow(totalLength(),2)/(f0*f1) ;
-            nt[1] = bf*sqrt(integralJerk2()) ;
-            nt[2] = bf*sqrt(integralSnap2()) ;
-            nt[3] = bf*sqrt(integralCurvature2()) ;
-            nt[4] = bf*thetaTotalVariation() ;
-            nt[5] = bf*deltaTheta() ;
-            nt[6] = bf*curvatureTotalVariation() ;
-            for ( int kk = 0 ; kk < 7 ; ++kk ) {
+            //valueType bf1 =  pow(totalLength(),3)/pow(S0.totalLength()*S1.totalLength()*SM.totalLength(),1./3.);//pow(totalLength(),2)/(f0*f1) ;
+            valueType bf1 = pow(totalLength(),2)/pow(f0*f1*(1-f0-f1),1.0);//pow(totalLength(),2)/(f0*f1) ;
+            nt[1] = bf*sqrt(integralCurvature2()) ;
+            nt[2] = bf*thetaTotalVariation() ;
+            nt[3] = bf1 ;
+            nt[4] = bf1*sqrt(integralCurvature2()) ;
+            nt[5] = bf1*thetaTotalVariation() ;
+            nt[6] = bf1*sqrt(integralCurvature2())*thetaTotalVariation() ;
+            nt[7] = bf1*sqrt(integralCurvature2())*sqrt(integralJerk2()) ;
+            for ( int kk = 0 ; kk < 8 ; ++kk ) {
               if ( nt[kk] < target[kk] )
                 { target[kk] = nt[kk] ; alpha[kk] = f0 ; beta[kk] = f1 ; }
             }

@@ -111,8 +111,8 @@ static
 void
 save_struct( Clothoid::ClothoidCurve const *curve[7], mxArray * & plhs ) {
   char const * fieldnames[] = { "x", "y", "theta", "k", "dk", "L", "opt" } ;
-  plhs = mxCreateStructMatrix(1,7,7,fieldnames);
-  for ( int i = 0 ; i < 7 ; ++i ) {
+  plhs = mxCreateStructMatrix(1,8,7,fieldnames);
+  for ( int i = 0 ; i < 8 ; ++i ) {
     mxSetFieldByNumber( plhs, i, 0, mxCreateDoubleScalar(curve[i]->getX0()) );
     mxSetFieldByNumber( plhs, i, 1, mxCreateDoubleScalar(curve[i]->getY0()) );
     mxSetFieldByNumber( plhs, i, 2, mxCreateDoubleScalar(curve[i]->getTheta0()) );
@@ -121,12 +121,13 @@ save_struct( Clothoid::ClothoidCurve const *curve[7], mxArray * & plhs ) {
     mxSetFieldByNumber( plhs, i, 5, mxCreateDoubleScalar(curve[i]->getSmax()) );
   }
   mxSetFieldByNumber( plhs, 0, 6, mxCreateString("length")) ;
-  mxSetFieldByNumber( plhs, 1, 6, mxCreateString("jerk"));
-  mxSetFieldByNumber( plhs, 2, 6, mxCreateString("snap"));
-  mxSetFieldByNumber( plhs, 3, 6, mxCreateString("curv"));
-  mxSetFieldByNumber( plhs, 4, 6, mxCreateString("TV-angle"));
-  mxSetFieldByNumber( plhs, 5, 6, mxCreateString("DeltaTheta"));
-  mxSetFieldByNumber( plhs, 6, 6, mxCreateString("TV-curv"));
+  mxSetFieldByNumber( plhs, 1, 6, mxCreateString("curv"));
+  mxSetFieldByNumber( plhs, 2, 6, mxCreateString("TV-angle"));
+  mxSetFieldByNumber( plhs, 3, 6, mxCreateString("length1"));
+  mxSetFieldByNumber( plhs, 4, 6, mxCreateString("curv1"));
+  mxSetFieldByNumber( plhs, 5, 6, mxCreateString("TV-angle1"));
+  mxSetFieldByNumber( plhs, 6, 6, mxCreateString("curv*angle"));
+  mxSetFieldByNumber( plhs, 7, 6, mxCreateString("curv*jerk"));
 }
 
 extern "C"
@@ -192,16 +193,16 @@ mexFunction( int nlhs, mxArray       *plhs[],
       th1 = mxGetScalar(arg1_theta1) ;
       k1  = mxGetScalar(arg1_kappa1) ;
 
-      Clothoid::valueType target[7], alpha[7], beta[7] ;
+      Clothoid::valueType target[8], alpha[8], beta[8] ;
       bool ok = g2solve3arc.optimize( x0, y0, th0, k0, x1, y1, th1, k1, target, alpha, beta ) ;
       ASSERT( ok, " Optimization failed" ) ;
 
-      Clothoid::ClothoidCurve const *curve0[7] ;
-      Clothoid::ClothoidCurve const *curve1[7] ;
-      Clothoid::ClothoidCurve const *curveM[7] ;
+      Clothoid::ClothoidCurve const *curve0[8] ;
+      Clothoid::ClothoidCurve const *curve1[8] ;
+      Clothoid::ClothoidCurve const *curveM[8] ;
       
-      static Clothoid::G2solve3arc g3arc[7] ;
-      for ( int kk = 0 ; kk < 7 ; ++kk ) {
+      static Clothoid::G2solve3arc g3arc[8] ;
+      for ( int kk = 0 ; kk < 8 ; ++kk ) {
         g3arc[kk].setup( x0, y0, th0, k0, alpha[kk], x1, y1, th1, k1, beta[kk] ) ;
         g3arc[kk].solve() ;
         curve0[kk] = &g3arc[kk].getS0() ;
@@ -214,12 +215,12 @@ mexFunction( int nlhs, mxArray       *plhs[],
       save_struct( curveM, out_SM ) ;
 
       if ( nlhs > 3 ) {
-        out_f0 = mxCreateDoubleMatrix(1,7,mxREAL) ;
-        std::copy( alpha, alpha+7, mxGetPr(out_f0) ) ;
+        out_f0 = mxCreateDoubleMatrix(1,8,mxREAL) ;
+        std::copy( alpha, alpha+8, mxGetPr(out_f0) ) ;
       }
       if ( nlhs > 4 ) {
-        out_f1 = mxCreateDoubleMatrix(1,7,mxREAL) ;
-        std::copy( beta, beta+7, mxGetPr(out_f1) ) ;
+        out_f1 = mxCreateDoubleMatrix(1,8,mxREAL) ;
+        std::copy( beta, beta+8, mxGetPr(out_f1) ) ;
       }
       if ( nlhs > 5 ) {
         out_flg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
