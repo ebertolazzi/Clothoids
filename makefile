@@ -28,12 +28,12 @@ endif
 # to compile with lua make LUA_SUPPORT="YES"
 LUALIB  =
 SRCSLUA = 
-ifneq (,$(LUA_SUPPORT))
+ifneq (,$(findstring YES, $(LUA_SUPPORT)))
   SRCSLUA = \
   src_lua_interface/GenericContainerLuaInterface.cc \
   src_lua_interface/GenericContainerLuaPmain.cc
   LUALIB  = -llua
-  INC    += $(LUA_SUPPORT)
+  INC    += -Isrc_lua_interface
 endif
 
 SRCS = \
@@ -89,31 +89,40 @@ src/%.o: src/%.c $(DEPS)
 src_lua_interface/%.o: src_lua_interface/%.cc $(DEPS)
 	$(CXX) $(CXXFLAGS) $(INC) $(DEFINE) -c $< -o $@ 
 
-lib/libGenericContainer.a: $(OBJS)
+include_local:
+	@rm -rf lib/include
+	$(MKDIR) lib
+	$(MKDIR) lib/include
+	@cp -f src/GenericContainer.hh lib/include
+	@cp -f src/GenericContainerConfig.hh lib/include
+	@cp -f src/GenericContainerCinterface.h lib/include
+	@cp -f src_lua_interface/GenericContainerLuaInterface.hh lib/include
+
+lib/libGenericContainer.a: $(OBJS) include_local
 	$(MKDIR) lib
 	$(AR) lib/libGenericContainer.a $(OBJS) 
 
-lib/libGenericContainer.dylib: $(OBJS)
+lib/libGenericContainer.dylib: $(OBJS) include_local
 	$(MKDIR) lib
 	$(CXX) -dynamiclib $(OBJS) -o lib/libGenericContainer.dylib $(LIB_DIR) -llua -lpcre -install_name libGenericContainer.dylib -Wl,-rpath,.
 
-lib/libGenericContainer.so: $(OBJS)
+lib/libGenericContainer.so: $(OBJS) include_local
 	$(MKDIR) lib
 	$(CXX) -shared $(OBJS) -o lib/libGenericContainer.so $(LIB_DIR) -llua -lpcre
 
 install: lib/$(LIB_GC)
-	cp src/GenericContainer.hh $(PREFIX)/include
-	cp src/GenericContainerConfig.hh $(PREFIX)/include
-	cp src/GenericContainerCinterface.h $(PREFIX)/include
-	cp src_lua_interface/GenericContainerLuaInterface.hh $(PREFIX)/include
+	cp lib/include/GenericContainer.hh $(PREFIX)/include
+	cp lib/include/GenericContainerConfig.hh $(PREFIX)/include
+	cp lib/include/GenericContainerCinterface.h $(PREFIX)/include
+	cp lib/include/GenericContainerLuaInterface.hh $(PREFIX)/include
 	cp lib/$(LIB_GC) $(PREFIX)/lib
 
 install_as_framework: lib/$(LIB_GC)
 	$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
-	cp src/GenericContainerConfig.hh $(PREFIX)/include/$(FRAMEWORK)
-	cp src/GenericContainerCinterface.h $(PREFIX)/include/$(FRAMEWORK)
-	cp src/GenericContainer.hh $(PREFIX)/include/$(FRAMEWORK)
-	cp src_lua_interface/GenericContainerLuaInterface.hh $(PREFIX)/include/$(FRAMEWORK)
+	cp lib/include/GenericContainerConfig.hh $(PREFIX)/include/$(FRAMEWORK)
+	cp lib/include/GenericContainerCinterface.h $(PREFIX)/include/$(FRAMEWORK)
+	cp lib/include/GenericContainer.hh $(PREFIX)/include/$(FRAMEWORK)
+	cp lib/include/GenericContainerLuaInterface.hh $(PREFIX)/include/$(FRAMEWORK)
 	cp lib/$(LIB_GC) $(PREFIX)/lib
 
 run:

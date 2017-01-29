@@ -20,9 +20,11 @@
 
 #ifdef __GCC__
 #pragma GCC diagnostic ignored "-Wc++98-compat"
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wimplicit-fallthrough"
 #endif
 
 #ifdef ENABLE_READLINE
