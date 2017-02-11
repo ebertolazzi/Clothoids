@@ -28,10 +28,17 @@ endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  WARN = -Weverything -Wno-reserved-id-macro -Wno-padded
-  CC  = clang   $(WARN)
+  WARN    = -Weverything -Wno-reserved-id-macro -Wno-padded
+  CC      = clang   $(WARN)
+  VERSION = $(shell clang++ --version 2>&1 | grep -o "Apple LLVM version [0-9]\.[0-9]\.[0-9]" | grep -o " [0-9]\.")
+  CXX     = clang++ $(WARN)
+ifneq (,$(findstring 8., $(VERSION)))
   CXX = clang++ $(WARN) -std=c++11 -stdlib=libc++ 
-  AR  = libtool -static -o
+endif
+ifneq (,$(findstring 7., $(VERSION)))
+  CXX = clang++ $(WARN) -std=c++11 -stdlib=libc++ 
+endif
+  AR      = libtool -static -o
   LIBSGCC = -lstdc++ -lm
   #LIB_GC = libGenericContainer.dylib
 endif
