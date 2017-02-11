@@ -59,14 +59,22 @@ catch(std::runtime_error & err) { \
 
 using namespace ::GenericContainerNamespace ;
 
-static std::map<std::string,GenericContainerExplorer> gc_explorer ;
+typedef std::map<std::string,GenericContainerExplorer*>  MAP ;
+typedef std::pair<std::string,GenericContainerExplorer*> MAP_DATA ;
+
+static MAP                        gc_explorer ;
 static GenericContainerExplorer * gc_active = nullptr ;
 
 EXTERN_C
 int
 GC_new( char const id[] ) {
   // ckeck if exists
-  gc_active = &gc_explorer[id] ;
+  MAP::iterator pos = gc_explorer.find(id) ;
+  if ( pos == gc_explorer.end() ) {
+    gc_explorer.insert( MAP_DATA( id, new GenericContainerExplorer() ) ) ;
+    pos = gc_explorer.find(id) ;
+  }
+  gc_active = pos->second ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -74,7 +82,12 @@ EXTERN_C
 int
 GC_select( char const id[] ) {
   // ckeck if exists
-  gc_active = &gc_explorer[id] ;
+  MAP::iterator pos = gc_explorer.find(id) ;
+  if ( pos == gc_explorer.end() ) {
+    gc_explorer.insert( MAP_DATA( id, new GenericContainerExplorer() ) ) ;
+    pos = gc_explorer.find(id) ;
+  }
+  gc_active = pos->second ;
   return GENERIC_CONTAINER_OK ;
 }
 
@@ -97,8 +110,7 @@ EXTERN_C
 int
 GC_fill_for_test( char const id[] ) {
   // ckeck if exists
-  gc_active = &gc_explorer[id] ;
-
+  GC_select( id ) ;
   GenericContainer & gc =
      *static_cast<GenericContainer*>(gc_active->mem_ptr()) ;
 
