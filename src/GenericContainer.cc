@@ -466,7 +466,7 @@ namespace GenericContainerNamespace {
     case GC_POINTER:     this -> set_pointer(gc._data.p)  ; break ;
     case GC_BOOL:        this -> set_bool(gc._data.b)     ; break ;
     case GC_INTEGER:     this -> set_int(gc._data.i)      ; break ;
-    case GC_LONG:        this -> set_long(gc._data.l)      ; break ;
+    case GC_LONG:        this -> set_long(gc._data.l)     ; break ;
     case GC_REAL:        this -> set_real(gc._data.r)     ; break ;
     case GC_COMPLEX:     this -> set_complex(*gc._data.c) ; break ;
     case GC_STRING:      this -> set_string(*gc._data.s)  ; break ;

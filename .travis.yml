@@ -8,3 +8,7 @@ script:
 os:
   - linux
   - osx
+branches:
+  only:
+  - master
+  - working

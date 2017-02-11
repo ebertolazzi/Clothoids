@@ -48,7 +48,14 @@
 using namespace std ;
 
 #define EXTERN_C extern "C" GENERIC_CONTAINER_API_DLL 
-#define GC_TRY(A) try { A ; } catch (...) { return GENERIC_CONTAINER_NO_DATA ; }
+#define GC_TRY(A) \
+try { A ; } \
+catch(std::runtime_error & err) { \
+  cerr << "Error: " << err.what() << "\n" ; \
+  return GENERIC_CONTAINER_NO_DATA ; \
+} catch (...) { \
+  return GENERIC_CONTAINER_NO_DATA ; \
+}
 
 using namespace ::GenericContainerNamespace ;
 
