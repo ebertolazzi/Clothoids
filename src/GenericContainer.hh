@@ -38,12 +38,17 @@
 #include <iostream>
 #include <string>
 #include <complex>
-#include <cstdint>
 #include <map>
 #include <deque>
 #include <vector>
 #include <sstream>
 #include <stdexcept>
+
+#ifdef GENERIC_CONTAINER_USE_CXX11
+#include <cstdint>
+#else
+#include <stdint.h>
+#endif
 
 #include "GenericContainerConfig.hh"
 
@@ -80,12 +85,19 @@
 
 namespace GenericContainerNamespace {
 
+  #ifdef GENERIC_CONTAINER_USE_CXX11
+  using std::int32_t ;
+  using std::int64_t ;
+  using std::uint32_t ;
+  using std::uint64_t ;
+  #endif
+
   class GenericContainer ;
 
   typedef void*                   pointer_type ; //!< generic pointer type
   typedef bool                    bool_type    ; //!< boolean type data
-  typedef std::int32_t            int_type     ; //!< integer type data
-  typedef std::int64_t            long_type    ; //!< long integer type data
+  typedef int32_t                 int_type     ; //!< integer type data
+  typedef int64_t                 long_type    ; //!< long integer type data
   typedef double                  real_type    ; //!< floating point type data
   typedef std::complex<real_type> complex_type ; //!< complex floating point type data
   typedef std::string             string_type  ; //!< string type data
@@ -102,8 +114,8 @@ namespace GenericContainerNamespace {
 
   // ---------------------------------------------------------------------------
 
-  typedef std::uint32_t uint_type  ; //!< integer type data
-  typedef std::uint64_t ulong_type ; //!< long integer type data
+  typedef uint32_t uint_type  ; //!< integer type data
+  typedef uint64_t ulong_type ; //!< long integer type data
 
   typedef std::vector<uint_type>  vec_uint_type ; //!< vector of integer
   typedef std::vector<ulong_type> vec_ulong_type ; //!< vector of integer

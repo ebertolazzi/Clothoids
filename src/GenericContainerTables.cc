@@ -38,9 +38,9 @@ namespace GenericContainerNamespace {
     unsigned ncol = unsigned(headers.size()) ;
     unsigned nrow = unsigned(data[0].get_num_elements()) ;
 
-    stream << headers[0] ;
+    stream << headers[0].c_str() ;
     for ( unsigned icol = 1 ; icol < ncol ; ++icol )
-      stream << delimiter << headers[icol] ;
+      stream << delimiter << headers[icol].c_str() ;
     stream << '\n' ;
 
     for ( unsigned row = 0 ; row < nrow ; ++row ) {
@@ -73,10 +73,10 @@ namespace GenericContainerNamespace {
     string line = std::string(ncol*(ml+1)-1, '-') ;
 
     is = headers.begin() ;
-    stream << std::setw(int(ml)) << *is ;
+    stream << std::setw(int(ml)) << is->c_str() ;
     for ( ++is ; is != headers.end() ; ++is )
-      stream << " " << std::setw(int(ml)) << *is ;
-    stream << '\n' << line << '\n';
+      stream << " " << std::setw(int(ml)) << is->c_str() ;
+    stream << '\n' << line.c_str() << '\n';
 
     for ( unsigned row = 0 ; row < nrow ; ++row ) {
       stream << std::setw(int(ml)) << data[0].get_number_at(row) ;
@@ -84,7 +84,7 @@ namespace GenericContainerNamespace {
         stream << " " << std::setw(int(ml)) << data[icol].get_number_at(row)  ;
       stream << '\n' ;
     }
-    stream << line << '\n';
+    stream << line.c_str() << '\n';
   }
 
 }
