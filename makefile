@@ -9,10 +9,10 @@ LIBSGCC =
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   WARN = -Wall
-  CC  = gcc $(WARN)
-  CXX = g++ $(WARN)
+  CC  = gcc
+  CXX = g++
   # activate C++11 for g++ >= 4.9
-  VERSION  = $(shell g++-4.6 -dumpversion)
+  VERSION  = $(shell $(CC) -dumpversion)
 ifneq (,$(findstring 4.9, $(VERSION)))
   CXX += -std=c++11
 endif
@@ -22,6 +22,8 @@ endif
 ifneq (,$(findstring 6., $(VERSION)))
   CXX += -std=c++11
 endif
+  CC  += $(WARN)
+  CXX += $(WARN)
   AR  = ar rcs
   LIBSGCC = -lstdc++ -lm
 endif
@@ -29,15 +31,17 @@ endif
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
   WARN    = -Weverything -Wno-reserved-id-macro -Wno-padded
-  CC      = clang $(WARN)
+  CC      = clang
+  CXX     = clang++
   VERSION = $(shell $(CC) -dumpversion)
-  CXX     = clang++ $(WARN)
 ifneq (,$(findstring 8., $(VERSION)))
   CXX += -std=c++11 -stdlib=libc++ 
 endif
 ifneq (,$(findstring 7., $(VERSION)))
   CXX += -std=c++11 -stdlib=libc++ 
 endif
+  CC     += $(WARN)
+  CXX    += $(WARN)
   AR      = libtool -static -o
   LIBSGCC = -lstdc++ -lm
   #LIB_GC = libGenericContainer.dylib
