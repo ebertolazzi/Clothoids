@@ -12,15 +12,15 @@ ifneq (,$(findstring Linux, $(OS)))
   CC  = gcc $(WARN)
   CXX = g++ $(WARN)
   # activate C++11 for g++ >= 4.9
-  VERSION  = $(shell g++ -v 2>&1 | grep "gcc version" | grep -o 'version [0-9]+\.[0-9]+\.[0-9]+' | grep -o '[0-9]+\.[0-9]+\.[0-9]+' )
+  VERSION  = $(shell g++ -v 2>&1 | grep "gcc version" | grep -o 'version [0-9]\.[0-9]\.[0-9]' | grep -o '[0-9]\.[0-9]\.[0-9]' )
 ifneq (,$(findstring 4.9, $(VERSION)))
-  CXX = g++ $(WARN) -std=c++11 -pthread
+  CXX = g++ $(WARN) -std=c++11
 endif
 ifneq (,$(findstring 5., $(VERSION)))
-  CXX = g++ $(WARN) -std=c++11 -pthread
+  CXX = g++ $(WARN) -std=c++11
 endif
 ifneq (,$(findstring 6., $(VERSION)))
-  CXX = g++ $(WARN) -std=c++11 -pthread
+  CXX = g++ $(WARN) -std=c++11
 endif
   AR  = ar rcs
   LIBSGCC = -lstdc++ -lm
