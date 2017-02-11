@@ -12,15 +12,15 @@ ifneq (,$(findstring Linux, $(OS)))
   CC  = gcc $(WARN)
   CXX = g++ $(WARN)
   # activate C++11 for g++ >= 4.9
-  VERSION  = $(shell g++ -v 2>&1 | grep "gcc version" | grep -o 'version [0-9]\.[0-9]\.[0-9]' | grep -o '[0-9]\.[0-9]\.[0-9]' )
+  VERSION  = $(shell g++-4.6 -dumpversion)
 ifneq (,$(findstring 4.9, $(VERSION)))
-  CXX = g++ $(WARN) -std=c++11
+  CXX += -std=c++11
 endif
 ifneq (,$(findstring 5., $(VERSION)))
-  CXX = g++ $(WARN) -std=c++11
+  CXX += -std=c++11
 endif
 ifneq (,$(findstring 6., $(VERSION)))
-  CXX = g++ $(WARN) -std=c++11
+  CXX += -std=c++11
 endif
   AR  = ar rcs
   LIBSGCC = -lstdc++ -lm
@@ -30,13 +30,13 @@ endif
 ifneq (,$(findstring Darwin, $(OS)))
   WARN    = -Weverything -Wno-reserved-id-macro -Wno-padded
   CC      = clang $(WARN)
-  VERSION = $(shell $(CC) --version 2>&1 | grep -o "Apple LLVM version [0-9]\.[0-9]\.[0-9]" | grep -o " [0-9]\.")
+  VERSION = $(shell $(CC) -dumpversion)
   CXX     = clang++ $(WARN)
 ifneq (,$(findstring 8., $(VERSION)))
-  CXX = clang++ $(WARN) -std=c++11 -stdlib=libc++ 
+  CXX += -std=c++11 -stdlib=libc++ 
 endif
 ifneq (,$(findstring 7., $(VERSION)))
-  CXX = clang++ $(WARN) -std=c++11 -stdlib=libc++ 
+  CXX += -std=c++11 -stdlib=libc++ 
 endif
   AR      = libtool -static -o
   LIBSGCC = -lstdc++ -lm
@@ -72,8 +72,8 @@ src_lua_interface/GenericContainerLuaInterface.hh
 PREFIX    = /usr/local
 FRAMEWORK = GenericContainer
 
-CFLAGS   = -O3
-CXXFLAGS = -O3
+CFLAGS   = -O2
+CXXFLAGS = -O2
 INC     += -I/usr/local/include -I./src -I./src_lua_interface
 LIB_DIR  = -L/usr/local/lib -L./lib
 LIBS     = $(LIB_DIR) -lGenericContainer -lpcre -lm
