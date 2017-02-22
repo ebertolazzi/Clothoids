@@ -53,8 +53,7 @@ namespace GenericContainerNamespace {
     mwSize const * dims = mxGetDimensions(mx) ;
     T * pr = (T*)mxGetData(mx);
     if ( mxGetNumberOfElements(mx) == 1 ) {
-      int_type val = *pr ;
-      gc = val ;
+      gc.set_int( int_type(*pr) ) ;
     } else {
       mwSize number_of_dimensions = mxGetNumberOfDimensions(mx) ;
       switch ( number_of_dimensions ) {
@@ -62,7 +61,7 @@ namespace GenericContainerNamespace {
         { mwSize total_num_of_elements = mxGetNumberOfElements(mx);
           vec_int_type & vec = gc.set_vec_int( total_num_of_elements ) ;
           for ( mwSize index = 0 ; index < total_num_of_elements ; ++index )
-            vec[index] = *pr++ ;
+            vec[index] = int_type(*pr++) ;
         }
         break ;
         case 2:
@@ -70,7 +69,7 @@ namespace GenericContainerNamespace {
             mwSize total_num_of_elements = mxGetNumberOfElements(mx);
             vec_int_type & vec = gc.set_vec_int( total_num_of_elements ) ;
             for ( mwSize index = 0 ; index < total_num_of_elements ; ++index )
-              vec[index] = *pr++ ;
+              vec[index] = int_type(*pr++) ;
           } else {
             mat_real_type & mat = gc.set_mat_real( dims[0], dims[1] ) ;
             for ( mwSize j = 0 ; j < dims[1] ; ++j )
@@ -344,6 +343,14 @@ namespace GenericContainerNamespace {
           mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
           mwSize * ptr = (mwSize*)mxGetData(mx) ;
           for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_int_at(i,where) ;
+        }
+      break;
+      case GC_VEC_LONG:
+        {
+          dims[1] = gc.get_num_elements() ;
+          mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
+          mwSize * ptr = (mwSize*)mxGetData(mx) ;
+          for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = gc.get_long_at(i,where) ;
         }
       break;
       case GC_VEC_REAL:
