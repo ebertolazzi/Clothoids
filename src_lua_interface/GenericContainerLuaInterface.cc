@@ -94,7 +94,7 @@ namespace GenericContainerNamespace {
     case LUA_TNUMBER:
       {
         real_type val = lua_tonumber(L, -1) ;
-        if ( gc.get_type() == GC_VEC_REAL ) {
+        if ( gc.get_type() == GC_VEC_REAL || gc.get_type() == GC_MAT_REAL ) {
           gc.get_real_at(idx) = val ;
         } else if ( isInteger(val) ) {
           gc.get_long_at(idx) = long_type(val) ;

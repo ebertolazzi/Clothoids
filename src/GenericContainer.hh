@@ -1033,6 +1033,11 @@ namespace GenericContainerNamespace {
 
     //! If data contains vector of someting it is promoted to a vector of `GenericContainer`.
     GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_vector() ;
+
+    GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_long_type() ;
+    GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_real_type() ;
+    GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_complex_type() ;
+
     //@}
 
     //! \name Initialize data by overloading constructor
