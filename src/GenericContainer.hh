@@ -105,6 +105,7 @@ namespace GenericContainerNamespace {
   typedef std::vector<pointer_type> vec_pointer_type ; //!< vector of generic pointer
   typedef std::vector<bool_type>    vec_bool_type    ; //!< vector of boolean
   typedef std::vector<int_type>     vec_int_type     ; //!< vector of integer
+  typedef std::vector<long_type>    vec_long_type    ; //!< vector of long integer
   typedef std::vector<real_type>    vec_real_type    ; //!< vector of floating point
   typedef std::vector<complex_type> vec_complex_type ; //!< vector of complex floating point
   typedef std::vector<string_type>  vec_string_type  ; //!< vector of strings
@@ -119,7 +120,6 @@ namespace GenericContainerNamespace {
 
   typedef std::vector<uint_type>  vec_uint_type ; //!< vector of integer
   typedef std::vector<ulong_type> vec_ulong_type ; //!< vector of integer
-  typedef std::vector<long_type>  vec_long_type ; //!< vector of integer
 
   // ---------------------------------------------------------------------------
 
@@ -244,9 +244,12 @@ namespace GenericContainerNamespace {
   
   GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_bool_type const & v ) ;
-  
+
   GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_int_type const & v ) ;
+
+  GENERIC_CONTAINER_API_DLL
+  std::ostream & operator << ( std::ostream & s, vec_long_type const & v ) ;
   
   GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_real_type const & ) ;
@@ -278,6 +281,7 @@ namespace GenericContainerNamespace {
     GC_VEC_POINTER,
     GC_VEC_BOOL,
     GC_VEC_INTEGER,
+    GC_VEC_LONG,
     GC_VEC_REAL,
     GC_VEC_COMPLEX,
     GC_VEC_STRING,
@@ -355,6 +359,7 @@ namespace GenericContainerNamespace {
       vec_pointer_type * v_p ;
       vec_bool_type    * v_b ;
       vec_int_type     * v_i ;
+      vec_long_type    * v_l ;
       vec_real_type    * v_r ;
       vec_complex_type * v_c ;
       mat_real_type    * m_r ;
@@ -375,6 +380,7 @@ namespace GenericContainerNamespace {
     void allocate_vec_pointer( unsigned sz ) ;
     void allocate_vec_bool( unsigned sz ) ;
     void allocate_vec_int( unsigned sz ) ;
+    void allocate_vec_long( unsigned sz ) ;
     void allocate_vec_real( unsigned sz ) ;
     void allocate_vec_complex( unsigned sz ) ;
     void allocate_mat_real( unsigned nr, unsigned nc ) ;
@@ -480,6 +486,20 @@ namespace GenericContainerNamespace {
      Copy the data from vector `v`.
      */
     GENERIC_CONTAINER_API_DLL vec_int_type & set_vec_int( vec_int_type const & v ) ;
+
+    /*! \brief
+        Set data to `vec_int_type`, allocate and initialize.
+        Return a reference to vector of integers.
+        If `sz` > 0 then the vector is allocated to size `sz`.
+     */
+    GENERIC_CONTAINER_API_DLL vec_long_type & set_vec_long( unsigned sz = 0 ) ;
+
+    /*! \brief
+     Set data to `vec_int_type`, allocate and initialize.
+     Return a reference to vector of integer.
+     Copy the data from vector `v`.
+     */
+    GENERIC_CONTAINER_API_DLL vec_long_type & set_vec_long( vec_long_type const & v ) ;
 
     /*! \brief
         Set data to `vec_real_type`, allocate and initialize.
@@ -706,6 +726,10 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL vec_int_type const & get_vec_int( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of integers (if fails issue an error).
 
+    GENERIC_CONTAINER_API_DLL vec_long_type       & get_vec_long( char const msg[] = nullptr ) ;
+    GENERIC_CONTAINER_API_DLL vec_long_type const & get_vec_long( char const msg[] = nullptr ) const ;
+    //!< Return reference to a vector of integers (if fails issue an error).
+
     GENERIC_CONTAINER_API_DLL vec_real_type       & get_vec_real( char const msg[] = nullptr ) ;
     GENERIC_CONTAINER_API_DLL vec_real_type const & get_vec_real( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of floating point number (if fails issue an error).
@@ -772,6 +796,10 @@ namespace GenericContainerNamespace {
 
     GENERIC_CONTAINER_API_DLL int_type       & get_int_at( unsigned i ) ;
     GENERIC_CONTAINER_API_DLL int_type const & get_int_at( unsigned i, char const msg[] ) const ;
+    //!< Return `i`-th integer (if fails issue an error).
+
+    GENERIC_CONTAINER_API_DLL long_type       & get_long_at( unsigned i ) ;
+    GENERIC_CONTAINER_API_DLL long_type const & get_long_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th integer (if fails issue an error).
 
     GENERIC_CONTAINER_API_DLL real_type       & get_real_at( unsigned i ) ;
@@ -987,6 +1015,9 @@ namespace GenericContainerNamespace {
 
     //! If data contains vector of booleans it is promoted to a vector of integer.
     GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_vec_int() ;
+
+    //! If data contains vector of booleans it is promoted to a vector of integer.
+    GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_vec_long() ;
 
     //! If data contains vector of booleans or integer it is promoted to a vector of real.
     GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_vec_real() ;

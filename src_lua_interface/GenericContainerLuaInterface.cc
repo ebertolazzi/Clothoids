@@ -97,7 +97,7 @@ namespace GenericContainerNamespace {
         if ( gc.get_type() == GC_VEC_REAL ) {
           gc.get_real_at(idx) = val ;
         } else if ( isInteger(val) ) {
-          gc.get_int_at(idx) = int_type(val) ;
+          gc.get_long_at(idx) = long_type(val) ;
         } else {
           gc.get_real_at(idx) = val ;
         }
@@ -127,7 +127,7 @@ namespace GenericContainerNamespace {
       case LUA_TNUMBER:
         {
           real_type val = lua_tonumber(L, -1) ;
-          if ( isInteger(val) ) gc[key].set_int(int_type(val)) ;
+          if ( isInteger(val) ) gc[key].set_long(long_type(val)) ;
           else                  gc[key].set_real(val) ;
         }
         break ;
@@ -172,7 +172,7 @@ namespace GenericContainerNamespace {
       case LUA_TNUMBER:
         {
         real_type val = lua_tonumber(L, -1) ;
-        if ( isInteger(val) ) gc.set_int(int_type(val)) ;
+        if ( isInteger(val) ) gc.set_long(long_type(val)) ;
         else                  gc.set_real(val) ;
         }
         break ;
@@ -237,6 +237,15 @@ namespace GenericContainerNamespace {
       break;
     case GC_VEC_INTEGER:
       { vec_int_type const & vi = gc.get_vec_int() ;
+        lua_createtable(L, int(vi.size()), 0);
+        for ( unsigned i = 0 ; i < vi.size() ; ++i ) {
+          lua_pushnumber(L, vi[i]);
+          lua_rawseti (L, -2, int(i+1));
+        }
+      }
+      break;
+    case GC_VEC_LONG:
+      { vec_long_type const & vi = gc.get_vec_long() ;
         lua_createtable(L, int(vi.size()), 0);
         for ( unsigned i = 0 ; i < vi.size() ; ++i ) {
           lua_pushnumber(L, vi[i]);
@@ -381,7 +390,7 @@ namespace GenericContainerNamespace {
     case LUA_TNUMBER:
       {
         real_type val = lua_tonumber(L, -1) ;
-        if ( isInteger(val) ) gc.set_int(int_type(val)) ;
+        if ( isInteger(val) ) gc.set_long(long_type(val)) ;
         else                  gc.set_real(val) ;
       }
       break ;
