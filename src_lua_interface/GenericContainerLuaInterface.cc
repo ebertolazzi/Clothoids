@@ -292,6 +292,8 @@ namespace GenericContainerNamespace {
       break;
     case GC_COMPLEX:
     case GC_VEC_COMPLEX:
+    case GC_MAT_INTEGER:
+    case GC_MAT_LONG:
     case GC_MAT_REAL:
     case GC_MAT_COMPLEX:
     //default:

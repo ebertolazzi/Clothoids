@@ -118,60 +118,61 @@ namespace GenericContainerNamespace {
   typedef uint32_t uint_type  ; //!< integer type data
   typedef uint64_t ulong_type ; //!< long integer type data
 
-  typedef std::vector<uint_type>  vec_uint_type ; //!< vector of integer
-  typedef std::vector<ulong_type> vec_ulong_type ; //!< vector of integer
+  typedef std::vector<uint_type>  vec_uint_type ; //!< vector of unsigned integer
+  typedef std::vector<ulong_type> vec_ulong_type ; //!< vector of unsigned integer
 
   // ---------------------------------------------------------------------------
-
-  class mat_real_type : public vec_real_type {
+  template <typename TYPE>
+  class mat_type : public std::vector<TYPE> {
     unsigned _numRows ;
     unsigned _numCols ;
+    typedef typename std::vector<TYPE>::size_type size_type ;
   public:
 
     GENERIC_CONTAINER_API_DLL
-    mat_real_type()
+    mat_type()
     : _numRows(0)
     , _numCols(0)
     {}
 
     GENERIC_CONTAINER_API_DLL
-    mat_real_type( unsigned nr, unsigned nc )
+    mat_type( unsigned nr, unsigned nc )
     : _numRows(nr)
     , _numCols(nc)
-    { vec_real_type::resize(size_type(nr*nc)) ; }
+    { std::vector<TYPE>::resize(size_type(nr*nc)) ; }
 
     GENERIC_CONTAINER_API_DLL
     void
     resize( unsigned nr, unsigned nc ) {
       _numRows = nr ;
       _numCols = nc ;
-      vec_real_type::resize(size_type(nr*nc)) ;
+      std::vector<TYPE>::resize(size_type(nr*nc)) ;
     }
 
     GENERIC_CONTAINER_API_DLL
     void
-    getColumn( unsigned nc, vec_real_type & C ) const ;
+    getColumn( unsigned nc, std::vector<TYPE> & C ) const ;
 
     GENERIC_CONTAINER_API_DLL
     void
-    getRow( unsigned nr, vec_real_type & R ) const ;
+    getRow( unsigned nr, std::vector<TYPE> & R ) const ;
 
     GENERIC_CONTAINER_API_DLL
     void
-    getColumn( unsigned nc, real_type * C ) const ;
+    getColumn( unsigned nc, TYPE * C ) const ;
 
     GENERIC_CONTAINER_API_DLL
     void
-    getRow( unsigned nr, real_type * R ) const ;
+    getRow( unsigned nr, TYPE * R ) const ;
 
     GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
     GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }
 
     GENERIC_CONTAINER_API_DLL
-    real_type const & operator () ( unsigned i, unsigned j ) const ;
+    TYPE const & operator () ( unsigned i, unsigned j ) const ;
     
     GENERIC_CONTAINER_API_DLL
-    real_type & operator () ( unsigned i, unsigned j ) ;
+    TYPE & operator () ( unsigned i, unsigned j ) ;
 
     GENERIC_CONTAINER_API_DLL
     void
@@ -181,61 +182,10 @@ namespace GenericContainerNamespace {
 
   // ---------------------------------------------------------------------------
 
-  class mat_complex_type : public vec_complex_type {
-    unsigned _numRows ;
-    unsigned _numCols ;
-  public:
-
-    GENERIC_CONTAINER_API_DLL
-    mat_complex_type()
-    : _numRows(0)
-    , _numCols(0)
-    {}
-
-    GENERIC_CONTAINER_API_DLL
-    mat_complex_type( unsigned nr, unsigned nc )
-    : _numRows(nr)
-    , _numCols(nc)
-    { vec_complex_type::resize(size_type(nr*nc)) ; }
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    resize( unsigned nr, unsigned nc ) {
-      _numRows = nr ;
-      _numCols = nc ;
-      vec_complex_type::resize(size_type(nr*nc)) ;
-    }
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    getColumn( unsigned nc, vec_complex_type & C ) const ;
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    getColumn( unsigned nc, complex_type * C ) const ;
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    getRow( unsigned nr, vec_complex_type & R ) const ;
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    getRow( unsigned nr, complex_type * R ) const ;
-
-    GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows ; }
-    GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols ; }
-
-    GENERIC_CONTAINER_API_DLL
-    complex_type const & operator () ( unsigned i, unsigned j ) const ;
-    
-    GENERIC_CONTAINER_API_DLL
-    complex_type & operator () ( unsigned i, unsigned j ) ;
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    info( std::basic_ostream<char> & stream ) const ;
-
-  } ;
+  typedef mat_type<int_type>     mat_int_type ;
+  typedef mat_type<long_type>    mat_long_type ;
+  typedef mat_type<real_type>    mat_real_type ;
+  typedef mat_type<complex_type> mat_complex_type ;
 
   // ---------------------------------------------------------------------------
 
@@ -245,23 +195,13 @@ namespace GenericContainerNamespace {
   GENERIC_CONTAINER_API_DLL
   std::ostream & operator << ( std::ostream & s, vec_bool_type const & v ) ;
 
+  template <typename TYPE>
   GENERIC_CONTAINER_API_DLL
-  std::ostream & operator << ( std::ostream & s, vec_int_type const & v ) ;
+  std::ostream & operator << ( std::ostream & s, std::vector<TYPE> const & v ) ;
 
+  template <typename TYPE>
   GENERIC_CONTAINER_API_DLL
-  std::ostream & operator << ( std::ostream & s, vec_long_type const & v ) ;
-  
-  GENERIC_CONTAINER_API_DLL
-  std::ostream & operator << ( std::ostream & s, vec_real_type const & ) ;
-  
-  GENERIC_CONTAINER_API_DLL
-  std::ostream & operator << ( std::ostream & s, vec_complex_type const & ) ;
-  
-  GENERIC_CONTAINER_API_DLL
-  std::ostream & operator << ( std::ostream & s, mat_real_type const & ) ;
-  
-  GENERIC_CONTAINER_API_DLL
-  std::ostream & operator << ( std::ostream & s, mat_complex_type const & ) ;
+  std::ostream & operator << ( std::ostream & s, mat_type<TYPE> const & ) ;
 
   // ---------------------------------------------------------------------------
 
@@ -287,6 +227,8 @@ namespace GenericContainerNamespace {
     GC_VEC_STRING,
 
     // matrix type
+    GC_MAT_INTEGER,
+    GC_MAT_LONG,
     GC_MAT_REAL,
     GC_MAT_COMPLEX,
 
@@ -326,23 +268,27 @@ namespace GenericContainerNamespace {
     typedef GenericContainerNamespace::pointer_type     pointer_type;
     typedef GenericContainerNamespace::bool_type        bool_type;
     typedef GenericContainerNamespace::int_type         int_type;
+    typedef GenericContainerNamespace::uint_type        uint_type;
     typedef GenericContainerNamespace::long_type        long_type;
+    typedef GenericContainerNamespace::ulong_type       ulong_type;
     typedef GenericContainerNamespace::real_type        real_type;
     typedef GenericContainerNamespace::complex_type     complex_type;
     typedef GenericContainerNamespace::string_type      string_type;
     typedef GenericContainerNamespace::vec_pointer_type vec_pointer_type;
     typedef GenericContainerNamespace::vec_bool_type    vec_bool_type;
     typedef GenericContainerNamespace::vec_int_type     vec_int_type;
+    typedef GenericContainerNamespace::vec_uint_type    vec_uint_type;
+    typedef GenericContainerNamespace::vec_long_type    vec_long_type;
+    typedef GenericContainerNamespace::vec_ulong_type   vec_ulong_type;
     typedef GenericContainerNamespace::vec_real_type    vec_real_type;
     typedef GenericContainerNamespace::vec_complex_type vec_complex_type;
     typedef GenericContainerNamespace::vec_string_type  vec_string_type;
     typedef GenericContainerNamespace::vector_type      vector_type;
     typedef GenericContainerNamespace::map_type         map_type;
-    typedef GenericContainerNamespace::uint_type        uint_type;
-    typedef GenericContainerNamespace::ulong_type       ulong_type;
-    typedef GenericContainerNamespace::vec_uint_type    vec_uint_type;
-    typedef GenericContainerNamespace::vec_ulong_type   vec_ulong_type;
-    typedef GenericContainerNamespace::vec_long_type    vec_long_type;
+    typedef GenericContainerNamespace::mat_int_type     mat_int_type;
+    typedef GenericContainerNamespace::mat_long_type    mat_long_type;
+    typedef GenericContainerNamespace::mat_real_type    mat_real_type;
+    typedef GenericContainerNamespace::mat_complex_type mat_complex_type;
 
   private:
 
@@ -362,9 +308,12 @@ namespace GenericContainerNamespace {
       vec_long_type    * v_l ;
       vec_real_type    * v_r ;
       vec_complex_type * v_c ;
+      vec_string_type  * v_s ;
+
+      mat_int_type     * m_i ;
+      mat_long_type    * m_l ;
       mat_real_type    * m_r ;
       mat_complex_type * m_c ;
-      vec_string_type  * v_s ;
 
       vector_type      * v ;
       map_type         * m ;
@@ -383,6 +332,8 @@ namespace GenericContainerNamespace {
     void allocate_vec_long( unsigned sz ) ;
     void allocate_vec_real( unsigned sz ) ;
     void allocate_vec_complex( unsigned sz ) ;
+    void allocate_mat_int( unsigned nr, unsigned nc ) ;
+    void allocate_mat_long( unsigned nr, unsigned nc ) ;
     void allocate_mat_real( unsigned nr, unsigned nc ) ;
     void allocate_mat_complex( unsigned nr, unsigned nc ) ;
     void allocate_vec_string( unsigned sz ) ;
@@ -531,6 +482,48 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL vec_complex_type & set_vec_complex( vec_complex_type const & v ) ;
 
     /*! \brief
+        Set data to `vec_string_type`, allocate and initialize.
+        Return a reference to vector of strings.
+        If `sz` > 0 then the vector is allocated to size `sz`.
+     */
+    GENERIC_CONTAINER_API_DLL vec_string_type & set_vec_string( unsigned sz = 0 ) ;
+    
+    /*! \brief
+     Set data to `vec_string_type`, allocate and initialize.
+     Return a reference to vector of strings.
+     Copy the data from vector `v`.
+     */
+    GENERIC_CONTAINER_API_DLL vec_string_type & set_vec_string( vec_string_type const & v ) ;
+
+    /*! \brief
+        Set data to `mat_int_type`, allocate and initialize.
+        Return a reference to a matrix of floating point numbers.
+     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     */
+    GENERIC_CONTAINER_API_DLL mat_int_type & set_mat_int( unsigned nr = 0, unsigned nc = 0 ) ;
+
+    /*! \brief
+     Set data to `mat_int_type`, allocate and initialize.
+     Return a reference to a matrix of floating point number.
+     Copy the data from matrix `m`.
+     */
+    GENERIC_CONTAINER_API_DLL mat_int_type & set_mat_int( mat_int_type const & m ) ;
+
+    /*! \brief
+        Set data to `mat_long_type`, allocate and initialize.
+        Return a reference to a matrix of floating point numbers.
+     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     */
+    GENERIC_CONTAINER_API_DLL mat_long_type & set_mat_long( unsigned nr = 0, unsigned nc = 0 ) ;
+
+    /*! \brief
+     Set data to `mat_long_type`, allocate and initialize.
+     Return a reference to a matrix of floating point number.
+     Copy the data from matrix `m`.
+     */
+    GENERIC_CONTAINER_API_DLL mat_long_type & set_mat_long( mat_long_type const & m ) ;
+
+    /*! \brief
         Set data to `mat_real_type`, allocate and initialize.
         Return a reference to a matrix of floating point numbers.
      If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
@@ -557,20 +550,6 @@ namespace GenericContainerNamespace {
      Copy the data from matrix `m`.
      */
     GENERIC_CONTAINER_API_DLL mat_complex_type & set_mat_complex( mat_complex_type const & m ) ;
-
-    /*! \brief
-        Set data to `vec_string_type`, allocate and initialize.
-        Return a reference to vector of strings.
-        If `sz` > 0 then the vector is allocated to size `sz`.
-     */
-    GENERIC_CONTAINER_API_DLL vec_string_type & set_vec_string( unsigned sz = 0 ) ;
-    
-    /*! \brief
-     Set data to `vec_string_type`, allocate and initialize.
-     Return a reference to vector of strings.
-     Copy the data from vector `v`.
-     */
-    GENERIC_CONTAINER_API_DLL vec_string_type & set_vec_string( vec_string_type const & v ) ;
 
     //! push boolean if data is `vec_bool_type` or `vector_type'
     GENERIC_CONTAINER_API_DLL void push_bool( bool ) ;
@@ -627,13 +606,16 @@ namespace GenericContainerNamespace {
          8.  `vec_pointer_type`
          9.  `vec_bool_type`
          10. `vec_int_type`
-         11. `vec_real_type`
-         12. `vec_complex_type`
-         13. `vec_string_type`
-         14. `mat_real_type`
-         15. `mat_complex_type`
-         16. `vector_type`
-         17. `map_type`
+         11. `vec_long_type`
+         12. `vec_real_type`
+         13. `vec_complex_type`
+         14. `vec_string_type`
+         15. `mat_int_type`
+         16. `mat_long_type`
+         17. `mat_real_type`
+         18. `mat_complex_type`
+         19. `vector_type`
+         20. `map_type`
 
     */
     GENERIC_CONTAINER_API_DLL
@@ -738,6 +720,14 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL vec_complex_type const & get_vec_complex( char const msg[] = nullptr ) const ;
     //!< Return reference to a vector of complex floating point number (if fails issue an error).
 
+    GENERIC_CONTAINER_API_DLL mat_int_type       & get_mat_int( char const msg[] = nullptr ) ;
+    GENERIC_CONTAINER_API_DLL mat_int_type const & get_mat_int( char const msg[] = nullptr ) const ;
+    //!< Return reference to a matrix of integers (if fails issue an error).
+
+    GENERIC_CONTAINER_API_DLL mat_long_type       & get_mat_long( char const msg[] = nullptr ) ;
+    GENERIC_CONTAINER_API_DLL mat_long_type const & get_mat_long( char const msg[] = nullptr ) const ;
+    //!< Return reference to a matrix of long intgers (if fails issue an error).
+
     GENERIC_CONTAINER_API_DLL mat_real_type       & get_mat_real( char const msg[] = nullptr ) ;
     GENERIC_CONTAINER_API_DLL mat_real_type const & get_mat_real( char const msg[] = nullptr ) const ;
     //!< Return reference to a matrix of floating point number (if fails issue an error).
@@ -809,6 +799,14 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL complex_type       & get_complex_at( unsigned i ) ;
     GENERIC_CONTAINER_API_DLL complex_type const & get_complex_at( unsigned i, char const msg[] ) const ;
     //!< Return `i`-th complex floating point number (if fails issue an error).
+
+    GENERIC_CONTAINER_API_DLL int_type       & get_int_at( unsigned i, unsigned j ) ;
+    GENERIC_CONTAINER_API_DLL int_type const & get_int_at( unsigned i, unsigned j, char const msg[] ) const ;
+    //!< Return `i`-th integer number (if fails issue an error).
+
+    GENERIC_CONTAINER_API_DLL long_type       & get_long_at( unsigned i, unsigned j ) ;
+    GENERIC_CONTAINER_API_DLL long_type const & get_long_at( unsigned i, unsigned j, char const msg[] ) const ;
+    //!< Return `i`-th long integer number (if fails issue an error).
 
     GENERIC_CONTAINER_API_DLL real_type       & get_real_at( unsigned i, unsigned j ) ;
     GENERIC_CONTAINER_API_DLL real_type const & get_real_at( unsigned i, unsigned j, char const msg[] ) const ;
@@ -1024,6 +1022,12 @@ namespace GenericContainerNamespace {
 
     //! If data contains vector of booleans or integer or real it is promoted to a vector of complex.
     GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_vec_complex() ;
+
+    //! If data contains vector of booleans, integer or real it is promoted to a matrix of integer.
+    GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_mat_int() ;
+
+    //! If data contains vector of booleans, integer or real it is promoted to a matrix of long integer.
+    GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_mat_long() ;
 
     //! If data contains vector of booleans, integer or real it is promoted to a matrix of real.
     GENERIC_CONTAINER_API_DLL GenericContainer const & promote_to_mat_real() ;

@@ -71,7 +71,45 @@ namespace GenericContainerNamespace {
             for ( mwSize index = 0 ; index < total_num_of_elements ; ++index )
               vec[index] = int_type(*pr++) ;
           } else {
-            mat_real_type & mat = gc.set_mat_real( dims[0], dims[1] ) ;
+            mat_int_type & mat = gc.set_mat_int( dims[0], dims[1] ) ;
+            for ( mwSize j = 0 ; j < dims[1] ; ++j )
+              for ( mwSize i = 0 ; i < dims[0] ; ++i )
+                mat(i,j) = *pr++ ;
+          }
+        break ;
+        default:
+          mexPrintf("number_of_dimensions = %d\n", number_of_dimensions ) ;
+        break ;
+      }
+    }
+  }
+
+  template <typename T>
+  static
+  void
+  mx_to_vec_long( mxArray const * mx, GenericContainer & gc ) {
+    mwSize const * dims = mxGetDimensions(mx) ;
+    T * pr = (T*)mxGetData(mx);
+    if ( mxGetNumberOfElements(mx) == 1 ) {
+      gc.set_long( int_type(*pr) ) ;
+    } else {
+      mwSize number_of_dimensions = mxGetNumberOfDimensions(mx) ;
+      switch ( number_of_dimensions ) {
+        case 1:
+        { mwSize total_num_of_elements = mxGetNumberOfElements(mx);
+          vec_long_type & vec = gc.set_vec_long( total_num_of_elements ) ;
+          for ( mwSize index = 0 ; index < total_num_of_elements ; ++index )
+            vec[index] = long_type(*pr++) ;
+        }
+        break ;
+        case 2:
+          if ( dims[0] == 1 ) {
+            mwSize total_num_of_elements = mxGetNumberOfElements(mx);
+            vec_long_type & vec = gc.set_vec_long( total_num_of_elements ) ;
+            for ( mwSize index = 0 ; index < total_num_of_elements ; ++index )
+              vec[index] = long_type(*pr++) ;
+          } else {
+            mat_long_type & mat = gc.set_mat_long( dims[0], dims[1] ) ;
             for ( mwSize j = 0 ; j < dims[1] ; ++j )
               for ( mwSize i = 0 ; i < dims[0] ; ++i )
                 mat(i,j) = *pr++ ;
@@ -259,8 +297,8 @@ namespace GenericContainerNamespace {
           case mxUINT16_CLASS:  mx_to_vec_complex<uint16_t>(mx,gc); break;
           case mxINT32_CLASS:   mx_to_vec_complex<int32_t>(mx,gc);  break;
           case mxUINT32_CLASS:  mx_to_vec_complex<uint32_t>(mx,gc); break;
-          case mxINT64_CLASS:   mx_to_vec_int<int64_t>(mx,gc);      break;
-          case mxUINT64_CLASS:  mx_to_vec_int<uint64_t>(mx,gc);     break;
+          case mxINT64_CLASS:   mx_to_vec_long<int64_t>(mx,gc);     break;
+          case mxUINT64_CLASS:  mx_to_vec_long<uint64_t>(mx,gc);    break;
           case mxSINGLE_CLASS:  mx_to_vec_complex<float>(mx,gc);    break;
           case mxDOUBLE_CLASS:  mx_to_vec_complex<double>(mx,gc);   break;
           default:
@@ -269,17 +307,17 @@ namespace GenericContainerNamespace {
         }
       } else {
         switch (category)  {
-          case mxLOGICAL_CLASS: mx_to_vec_bool(mx,gc);          break;
-          case mxINT8_CLASS:    mx_to_vec_int<int8_t>(mx,gc);   break;
-          case mxUINT8_CLASS:   mx_to_vec_int<uint8_t>(mx,gc);  break;
-          case mxINT16_CLASS:   mx_to_vec_int<int16_t>(mx,gc);  break;
-          case mxUINT16_CLASS:  mx_to_vec_int<uint16_t>(mx,gc); break;
-          case mxINT32_CLASS:   mx_to_vec_int<int32_t>(mx,gc);  break;
-          case mxUINT32_CLASS:  mx_to_vec_int<uint32_t>(mx,gc); break;
-          case mxINT64_CLASS:   mx_to_vec_int<int64_t>(mx,gc);  break;
-          case mxUINT64_CLASS:  mx_to_vec_int<uint64_t>(mx,gc); break;
-          case mxSINGLE_CLASS:  mx_to_vec_real<float>(mx,gc);   break;
-          case mxDOUBLE_CLASS:  mx_to_vec_real<double>(mx,gc);  break;
+          case mxLOGICAL_CLASS: mx_to_vec_bool(mx,gc);           break;
+          case mxINT8_CLASS:    mx_to_vec_int<int8_t>(mx,gc);    break;
+          case mxUINT8_CLASS:   mx_to_vec_int<uint8_t>(mx,gc);   break;
+          case mxINT16_CLASS:   mx_to_vec_int<int16_t>(mx,gc);   break;
+          case mxUINT16_CLASS:  mx_to_vec_int<uint16_t>(mx,gc);  break;
+          case mxINT32_CLASS:   mx_to_vec_int<int32_t>(mx,gc);   break;
+          case mxUINT32_CLASS:  mx_to_vec_int<uint32_t>(mx,gc);  break;
+          case mxINT64_CLASS:   mx_to_vec_long<int64_t>(mx,gc);  break;
+          case mxUINT64_CLASS:  mx_to_vec_long<uint64_t>(mx,gc); break;
+          case mxSINGLE_CLASS:  mx_to_vec_real<float>(mx,gc);    break;
+          case mxDOUBLE_CLASS:  mx_to_vec_real<double>(mx,gc);   break;
           default:
             mexPrintf("Class ID = %d not converted!\n", category ) ;
           break;
@@ -376,6 +414,30 @@ namespace GenericContainerNamespace {
           mx = mxCreateCellMatrix(dims[0], dims[1]) ;
           for( mwSize i = 0 ; i < dims[1] ; ++i )
             mxSetCell(mx,i,mxCreateString( gc.get_string_at(i,where).c_str()));
+        }
+      break;
+      case GC_MAT_INTEGER:
+        {
+          dims[0] = gc.get_numRows() ;
+          dims[1] = gc.get_numCols() ;
+          mx = mxCreateNumericArray(2,dims,mxINT32_CLASS,mxREAL) ;
+          GenericContainer::int_type * ptr = static_cast<GenericContainer::int_type *>(mxGetData(mx)) ;
+          mwSize k = 0 ;
+          for ( mwSize j = 0 ; j < dims[1] ; ++j )
+            for ( mwSize i = 0 ; i < dims[0] ; ++i )
+              ptr[k++] = gc.get_real_at(i,j,where) ;
+        }
+      break;
+      case GC_MAT_LONG:
+        {
+          dims[0] = gc.get_numRows() ;
+          dims[1] = gc.get_numCols() ;
+          mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
+          GenericContainer::long_type * ptr = static_cast<GenericContainer::long_type *>(mxGetData(mx)) ;
+          mwSize k = 0 ;
+          for ( mwSize j = 0 ; j < dims[1] ; ++j )
+            for ( mwSize i = 0 ; i < dims[0] ; ++i )
+              ptr[k++] = gc.get_real_at(i,j,where) ;
         }
       break;
       case GC_MAT_REAL:
