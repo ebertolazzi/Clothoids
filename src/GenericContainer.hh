@@ -971,6 +971,30 @@ namespace GenericContainerNamespace {
     GenericContainer & operator = ( std::complex<double> const & a )
     { this -> set_complex(real_type(a.real()),real_type(a.imag())) ; return * this ; }
 
+    //! Assign a `vec_bool_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( vec_bool_type const & a ) ;
+
+    //! Assign a `vec_int_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( vec_int_type const & a ) ;
+
+    //! Assign a `vec_long_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( vec_long_type const & a ) ;
+
+    //! Assign a `vec_real_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( vec_real_type const & a ) ;
+
+    //! Assign a `vec_complex_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( vec_complex_type const & a ) ;
+
+    //! Assign a `vec_string_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( vec_string_type const & a ) ;
+
     //! Assign a string to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( char const a[] )

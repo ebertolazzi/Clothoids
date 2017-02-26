@@ -65,6 +65,14 @@ main() {
     gc["g"] = true ;
     gc["h"] = "pippo" ;
     gc["pointer"] = &gc ;
+
+    GC::vec_real_type v ;
+    v.push_back(1) ;
+    v.push_back(2) ;
+    v.push_back(3) ;
+    v.push_back(4) ;
+    gc["vec_real"] = v ;
+
     cout << "Print contents of gc:\n" ;
     gc.print(cout) ;
 

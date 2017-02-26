@@ -295,6 +295,49 @@ namespace GenericContainerNamespace {
   }
   #endif
 
+  GenericContainer &
+  GenericContainer::operator = ( vec_bool_type const & a ) {
+    set_vec_bool( unsigned(a.size()) ) ;
+    std::copy( a.begin(), a.end(), _data.v_b->begin() ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( vec_int_type const & a ) {
+    set_vec_int( unsigned(a.size()) ) ;
+    std::copy( a.begin(), a.end(), _data.v_i->begin() ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( vec_long_type const & a ) {
+    set_vec_long( unsigned(a.size()) ) ;
+    std::copy( a.begin(), a.end(), _data.v_l->begin() ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( vec_real_type const & a ) {
+    set_vec_real( unsigned(a.size()) ) ;
+    std::copy( a.begin(), a.end(), _data.v_r->begin() ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( vec_complex_type const & a ) {
+    set_vec_complex( unsigned(a.size()) ) ;
+    std::copy( a.begin(), a.end(), _data.v_c->begin() ) ;
+    return *this ;
+  }
+
+
+  GenericContainer &
+  GenericContainer::operator = ( vec_string_type const & a ) {
+    set_vec_string( unsigned(a.size()) ) ;
+    std::copy( a.begin(), a.end(), _data.v_s->begin() ) ;
+    return *this ;
+  }
+
   // distruttore
   void
   GenericContainer::clear() {
