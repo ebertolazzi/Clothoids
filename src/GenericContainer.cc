@@ -59,7 +59,7 @@ namespace GenericContainerNamespace {
   static
   inline
   bool isInteger( real_type x )
-  { return isZero(x-floor(x)) ; }
+  { return isZero( x-static_cast<long>(floor(x)) ) ; }
 
   static
   inline
