@@ -677,6 +677,11 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL long_type const & get_long( char const msg[] = nullptr ) const ;
     //!< Return the stored long integer (if fails issue an error).
 
+    GENERIC_CONTAINER_API_DLL int_type   get_as_int( char const msg[] = nullptr ) const ;
+    GENERIC_CONTAINER_API_DLL uint_type  get_as_uint( char const msg[] = nullptr ) const ;
+    GENERIC_CONTAINER_API_DLL long_type  get_as_long( char const msg[] = nullptr ) const ;
+    GENERIC_CONTAINER_API_DLL ulong_type get_as_ulong( char const msg[] = nullptr ) const ;
+
     GENERIC_CONTAINER_API_DLL real_type       & get_real( char const msg[] = nullptr ) ;
     GENERIC_CONTAINER_API_DLL real_type const & get_real( char const msg[] = nullptr ) const ;
     //!< Return the stored floating point (if fails issue an error).
