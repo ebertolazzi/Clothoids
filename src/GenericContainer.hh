@@ -69,10 +69,10 @@
 #endif
 
 #ifndef GC_WARNING
-  #define GC_WARNING(COND,MSG)                                 \
-    if ( !(COND) ) {                                           \
-      std::cout << "On line: " << __LINE__                     \
-                << " file: " << __FILE__                       \
+  #define GC_WARNING(COND,MSG)                                         \
+    if ( !(COND) ) {                                                   \
+      std::cout << "On line: " << __LINE__                             \
+                << " file: " << __FILE__                               \
                 << " in GenericContainer\nWARNING: " << MSG << '\n' ;  \
     }
 #endif
@@ -178,6 +178,10 @@ namespace GenericContainerNamespace {
     void
     info( std::basic_ostream<char> & stream ) const ;
 
+    #ifndef GENERIC_CONTAINER_USE_CXX11
+    TYPE       * data()       { return &std::vector<TYPE>::front() ; }
+    TYPE const * data() const { return &std::vector<TYPE>::front() ; }
+    #endif
   } ;
 
   // ---------------------------------------------------------------------------
@@ -641,6 +645,18 @@ namespace GenericContainerNamespace {
 
     GENERIC_CONTAINER_API_DLL void *  get_pvoid( char const msg[] = nullptr ) const ;
     GENERIC_CONTAINER_API_DLL void ** get_ppvoid( char const msg[] = nullptr ) const ;
+
+    GENERIC_CONTAINER_API_DLL int_type const * get_int_pointer() const ;
+    GENERIC_CONTAINER_API_DLL int_type       * get_int_pointer() ;
+
+    GENERIC_CONTAINER_API_DLL long_type const * get_long_pointer() const ;
+    GENERIC_CONTAINER_API_DLL long_type       * get_long_pointer() ;
+
+    GENERIC_CONTAINER_API_DLL real_type const * get_real_pointer() const ;
+    GENERIC_CONTAINER_API_DLL real_type       * get_real_pointer() ;
+
+    GENERIC_CONTAINER_API_DLL complex_type const * get_complex_pointer() const ;
+    GENERIC_CONTAINER_API_DLL complex_type       * get_complex_pointer() ;
 
     template <typename T>
     GENERIC_CONTAINER_API_DLL

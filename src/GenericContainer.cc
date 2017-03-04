@@ -1063,6 +1063,318 @@ namespace GenericContainerNamespace {
     return const_cast<void **>(&_data.p) ;
   }
 
+  int_type const *
+  GenericContainer::get_int_pointer() const {
+    switch (_data_type) {
+    case GC_INTEGER:
+      return &_data.i ;
+    case GC_VEC_INTEGER:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_i->data() ;
+      #else
+      return &_data.v_i->front() ;
+      #endif
+    case GC_MAT_INTEGER:
+      return _data.m_i->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    //case GC_INTEGER:
+    case GC_LONG:
+    case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    //case GC_VEC_INTEGER:
+    case GC_VEC_LONG:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    //case GC_MAT_INTEGER:
+    case GC_MAT_LONG:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+                   "' cannot be referred as `int_type const*'" ) ;
+    }
+  }
+  
+  int_type *
+  GenericContainer::get_int_pointer() {
+    switch (_data_type) {
+    case GC_INTEGER:
+      return &_data.i ;
+    case GC_VEC_INTEGER:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_i->data() ;
+      #else
+      return &_data.v_i->front() ;
+      #endif
+    case GC_MAT_INTEGER:
+      return _data.m_i->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    //case GC_INTEGER:
+    case GC_LONG:
+    case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    //case GC_VEC_INTEGER:
+    case GC_VEC_LONG:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    //case GC_MAT_INTEGER:
+    case GC_MAT_LONG:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+                   "' cannot be referred as `int_type*'" ) ;
+    }
+  }
+
+  long_type const *
+  GenericContainer::get_long_pointer() const {
+    switch (_data_type) {
+    case GC_LONG:
+      return &_data.l ;
+    case GC_VEC_LONG:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_l->data() ;
+      #else
+      return &_data.v_l->front() ;
+      #endif
+    case GC_MAT_LONG:
+      return _data.m_l->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    case GC_INTEGER:
+    //case GC_LONG:
+    case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    //case GC_VEC_LONG:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_MAT_INTEGER:
+    //case GC_MAT_LONG:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_long_pointer, bad data type: `" << typeName[_data_type] <<
+                   "' cannot be referred as `long_type const*'" ) ;
+    }
+  }
+  
+  long_type *
+  GenericContainer::get_long_pointer() {
+    switch (_data_type) {
+    case GC_LONG:
+      return &_data.l ;
+    case GC_VEC_LONG:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_l->data() ;
+      #else
+      return &_data.v_l->front() ;
+      #endif
+    case GC_MAT_LONG:
+      return _data.m_l->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    case GC_INTEGER:
+    //case GC_LONG:
+    case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    //case GC_VEC_LONG:
+    case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_MAT_INTEGER:
+    //case GC_MAT_LONG:
+    case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_long_pointer, bad data type: `" << typeName[_data_type] <<
+                   "' cannot be referred as `long_type*'" ) ;
+    }
+  }
+
+  real_type const *
+  GenericContainer::get_real_pointer() const {
+    switch (_data_type) {
+    case GC_REAL:
+      return &_data.r ;
+    case GC_VEC_REAL:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_r->data() ;
+      #else
+      return &_data.v_r->front() ;
+      #endif
+    case GC_MAT_REAL:
+      return _data.m_r->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    case GC_INTEGER:
+    case GC_LONG:
+    //case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_LONG:
+    //case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_MAT_INTEGER:
+    case GC_MAT_LONG:
+    //case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_real_pointer, bad data type: `" << typeName[_data_type] <<
+                 "' cannot be referred as `real_type cont *'" ) ;
+    }
+  }
+  
+  real_type *
+  GenericContainer::get_real_pointer() {
+    switch (_data_type) {
+    case GC_REAL:
+      return &_data.r ;
+    case GC_VEC_REAL:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_r->data() ;
+      #else
+      return &_data.v_r->front() ;
+      #endif
+    case GC_MAT_REAL:
+      return _data.m_r->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    case GC_INTEGER:
+    case GC_LONG:
+    //case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_LONG:
+    //case GC_VEC_REAL:
+    case GC_VEC_COMPLEX:
+    case GC_MAT_INTEGER:
+    case GC_MAT_LONG:
+    //case GC_MAT_REAL:
+    case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_real_pointer, bad data type: `" << typeName[_data_type] <<
+                 "' cannot be referred as `real_type*'" ) ;
+    }
+  }
+
+  complex_type const *
+  GenericContainer::get_complex_pointer() const {
+    switch (_data_type) {
+    case GC_COMPLEX:
+      return _data.c ;
+    case GC_VEC_COMPLEX:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_c->data() ;
+      #else
+      return &_data.v_c->front() ;
+      #endif
+    case GC_MAT_COMPLEX:
+      return _data.m_c->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    case GC_INTEGER:
+    case GC_LONG:
+    case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    //case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_LONG:
+    case GC_VEC_REAL:
+    //case GC_VEC_COMPLEX:
+    case GC_MAT_INTEGER:
+    case GC_MAT_LONG:
+    case GC_MAT_REAL:
+    //case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+                   "' cannot be referred as `complex_type const*'" ) ;
+    }
+  }
+
+  complex_type *
+  GenericContainer::get_complex_pointer() {
+    switch (_data_type) {
+    case GC_COMPLEX:
+      return _data.c ;
+    case GC_VEC_COMPLEX:
+      #ifdef GENERIC_CONTAINER_USE_CXX11
+      return _data.v_c->data() ;
+      #else
+      return &_data.v_c->front() ;
+      #endif
+    case GC_MAT_COMPLEX:
+      return _data.m_c->data() ;
+    case GC_NOTYPE:
+    case GC_BOOL:
+    case GC_INTEGER:
+    case GC_LONG:
+    case GC_REAL:
+    case GC_POINTER:
+    case GC_STRING:
+    //case GC_COMPLEX:
+    case GC_VEC_POINTER:
+    case GC_VEC_BOOL:
+    case GC_VEC_INTEGER:
+    case GC_VEC_LONG:
+    case GC_VEC_REAL:
+    //case GC_VEC_COMPLEX:
+    case GC_MAT_INTEGER:
+    case GC_MAT_LONG:
+    case GC_MAT_REAL:
+    //case GC_MAT_COMPLEX:
+    case GC_VEC_STRING:
+    case GC_VECTOR:
+    case GC_MAP:
+      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+                   "' cannot be referred as `complex_type const*'" ) ;
+    }
+  }
+
   template <>
   void
   GenericContainer::get_value( unsigned & v, char const msg[] ) const {
