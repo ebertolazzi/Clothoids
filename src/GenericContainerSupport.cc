@@ -90,9 +90,16 @@ namespace GenericContainerNamespace {
   GenericContainer const &
   GenericContainer::writeFormattedData( std::basic_ostream<char> & stream,
                                         char const delimiter ) const {
-    writeTable( (*this)["headers"].get_vec_string(),
-                (*this)["data"].get_vector(),
-                stream, delimiter ) ;
+    GC_ASSERT( exists("headers"),
+               "writeFormattedData, missing field `headers` in container") ;
+    GC_ASSERT( exists("data"),
+               "writeFormattedData, missing field `data` in container") ;
+    GenericContainer const & data    = (*this)("data") ;
+    vec_string_type  const & headers = (*this)("headers").get_vec_string(" writeFormattedData, `header` field must be `vec_string_type`") ;
+    if ( (*this)("data").get_type() == GC_MAT_REAL )
+      writeTable( headers, data.get_mat_real(), stream, delimiter ) ;
+    else
+      writeTable( headers, data.get_vector(), stream, delimiter ) ;
     return *this ;
   }
 

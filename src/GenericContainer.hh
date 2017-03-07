@@ -1252,8 +1252,21 @@ namespace GenericContainerNamespace {
 
   GENERIC_CONTAINER_API_DLL
   void
+  writeTable( vec_string_type const    & headers,
+              mat_real_type   const    & data,
+              std::basic_ostream<char> & stream,
+              char const delimiter = '\t' ) ;
+
+  GENERIC_CONTAINER_API_DLL
+  void
   writeTableFormatted( vec_string_type const    & headers,
                        vector_type     const    & data,
+                       std::basic_ostream<char> & stream ) ;
+
+  GENERIC_CONTAINER_API_DLL
+  void
+  writeTableFormatted( vec_string_type const    & headers,
+                       mat_real_type   const    & data,
                        std::basic_ostream<char> & stream ) ;
 
   // -------------------------------------------------------
