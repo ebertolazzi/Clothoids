@@ -2936,11 +2936,13 @@ namespace GenericContainerNamespace {
       value = int_type(iv->second._data.l) ;
       break ;
     case GC_REAL:
-      if ( isInteger32(iv->second._data.r) ) value = int_type(iv->second._data.r) ;
+      if ( !isInteger32(iv->second._data.r) ) return false ;
+      value = int_type(iv->second._data.r) ;
       break ;
     case GC_COMPLEX:
-      if ( isInteger32(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
-        value = int_type(iv->second._data.c->real()) ;
+      if ( ! ( isInteger32(iv->second._data.c->real()) &&
+               isZero(iv->second._data.c->imag()) ) ) return false ;
+      value = int_type(iv->second._data.c->real()) ;
       break ;
     case GC_NOTYPE:
     case GC_POINTER:
@@ -2973,17 +2975,21 @@ namespace GenericContainerNamespace {
       value = iv->second._data.b?1:0 ;
       break ;
     case GC_INTEGER:
-      if ( isUnsigned32(iv->second._data.i) ) value = uint_type(iv->second._data.i) ;
+      if ( iv->second._data.i < 0 ) return false ;
+      value = uint_type(iv->second._data.i) ;
       break ;
     case GC_LONG:
-      if ( iv->second._data.l >= 0 ) value = uint_type(iv->second._data.l) ;
+      if ( iv->second._data.l < 0 ) return false ;
+      value = uint_type(iv->second._data.l) ;
       break ;
     case GC_REAL:
-      if ( isUnsigned32(iv->second._data.r) ) value = uint_type(iv->second._data.r) ;
+      if ( ! isUnsigned32(iv->second._data.r) ) return false ;
+      value = uint_type(iv->second._data.r) ;
       break ;
     case GC_COMPLEX:
-      if ( isUnsigned32(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
-        value = uint_type(iv->second._data.c->real()) ;
+      if ( ! ( isUnsigned32(iv->second._data.c->real()) &&
+               isZero(iv->second._data.c->imag()) ) ) return false ;
+      value = uint_type(iv->second._data.c->real()) ;
       break ;
     case GC_NOTYPE:
     case GC_POINTER:
@@ -3022,11 +3028,13 @@ namespace GenericContainerNamespace {
       value = iv->second._data.l ;
       break ;
     case GC_REAL:
-      if ( isInteger64(iv->second._data.r) ) value = long_type(iv->second._data.r) ;
+      if ( ! isInteger64(iv->second._data.r) ) return false ;
+      value = long_type(iv->second._data.r) ;
       break ;
     case GC_COMPLEX:
-      if ( isInteger64(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
-        value = long_type(iv->second._data.c->real()) ;
+      if ( ! ( isInteger64(iv->second._data.c->real()) &&
+               isZero(iv->second._data.c->imag()) ) ) return false ;
+      value = long_type(iv->second._data.c->real()) ;
       break ;
     case GC_NOTYPE:
     case GC_POINTER:
@@ -3059,17 +3067,21 @@ namespace GenericContainerNamespace {
       value = iv->second._data.b?1:0 ;
       break ;
     case GC_INTEGER:
-      if ( iv->second._data.i >= 0 ) value = ulong_type(iv->second._data.i) ;
+      if ( iv->second._data.i < 0 ) return false ;
+      value = ulong_type(iv->second._data.i) ;
       break ;
     case GC_LONG:
-      if ( iv->second._data.l >= 0 ) value = ulong_type(iv->second._data.l) ;
+      if ( iv->second._data.l < 0 ) return false ;
+      value = ulong_type(iv->second._data.l) ;
       break ;
     case GC_REAL:
-      if ( isUnsigned64(iv->second._data.r) ) value = ulong_type(iv->second._data.r) ;
+      if ( ! isUnsigned64(iv->second._data.r) ) return false ;
+      value = ulong_type(iv->second._data.r) ;
       break ;
     case GC_COMPLEX:
-      if ( isUnsigned64(iv->second._data.c->real()) && isZero(iv->second._data.c->imag()) )
-        value = ulong_type(iv->second._data.c->real()) ;
+      if ( ! ( isUnsigned64(iv->second._data.c->real()) &&
+               isZero(iv->second._data.c->imag()) ) ) return false ;
+      value = ulong_type(iv->second._data.c->real()) ;
       break ;
     case GC_NOTYPE:
     case GC_POINTER:
@@ -3111,8 +3123,8 @@ namespace GenericContainerNamespace {
       value = iv->second._data.r ;
       break ;
     case GC_COMPLEX:
-      if ( isZero(iv->second._data.c->imag()) )
-        value = real_type(iv->second._data.c->real()) ;
+      if ( ! isZero(iv->second._data.c->imag()) ) return false ;
+      value = real_type(iv->second._data.c->real()) ;
       break ;
     case GC_NOTYPE:
     case GC_POINTER:
