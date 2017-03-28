@@ -343,7 +343,7 @@ namespace GenericContainerNamespace {
   to_mxArray( long_type const & val, mxArray * & mx ) {
     mwSize dims[2] = {1,1} ;
     mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
-    *(mwSize *)mxGetData(mx) = mwSize(val) ;
+    *(int64_t*)mxGetData(mx) = int64_t(val) ;
   }
 
   void
@@ -369,23 +369,24 @@ namespace GenericContainerNamespace {
     mwSize dims[2] = { mwSize(val.size()), 1 } ;
     mx = mxCreateNumericArray(2,dims,mxLOGICAL_CLASS,mxREAL) ;
     mxLogical * ptr = (mxLogical*)mxGetData(mx) ;
-    for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = val[i] ;
+    for ( mwSize i = 0 ; i < dims[0] ; ++i ) ptr[i] = val[i] ;
   }
 
   void
   to_mxArray( vec_int_type const & val, mxArray * & mx ) {
+  cout << "in  to_mxArray( vec_int_type\n" ;
     mwSize dims[2] = { mwSize(val.size()), 1 } ;
-    mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
-    mwSize * ptr = (mwSize*)mxGetData(mx) ;
-    for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = mwSize(val[i]) ;
+    mx = mxCreateNumericArray(2,dims,mxINT32_CLASS,mxREAL) ;
+    int32_t * ptr = (int32_t*)mxGetData(mx) ;
+    for ( mwSize i = 0 ; i < dims[0] ; ++i ) ptr[i] = int32_t(val[i]) ;
   }
 
   void
   to_mxArray( vec_long_type const & val, mxArray * & mx ) {
     mwSize dims[2] = { mwSize(val.size()), 1 } ;
     mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
-    mwSize * ptr = (mwSize*)mxGetData(mx) ;
-    for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = mwSize(val[i]) ;
+    int64_t * ptr = (int64_t*)mxGetData(mx) ;
+    for ( mwSize i = 0 ; i < dims[0] ; ++i ) ptr[i] = int64_t(val[i]) ;
   }
 
   void
@@ -393,7 +394,7 @@ namespace GenericContainerNamespace {
     mwSize dims[2] = { mwSize(val.size()), 1 } ;
     mx = mxCreateNumericArray(2,dims,mxDOUBLE_CLASS,mxREAL) ;
     double * ptr = mxGetPr(mx) ;
-    for ( mwSize i = 0 ; i < dims[1] ; ++i ) ptr[i] = val[i] ;
+    for ( mwSize i = 0 ; i < dims[0] ; ++i ) ptr[i] = val[i] ;
   }
 
   void
@@ -402,7 +403,7 @@ namespace GenericContainerNamespace {
     mx = mxCreateNumericArray(2,dims,mxDOUBLE_CLASS,mxCOMPLEX) ;
     double * ptr = mxGetPr(mx) ;
     double * pti = mxGetPi(mx) ;
-    for ( mwSize i = 0 ; i < dims[1] ; ++i ) {
+    for ( mwSize i = 0 ; i < dims[0] ; ++i ) {
       ptr[i] = val[i].real() ;
       pti[i] = val[i].imag() ;
     }
@@ -412,7 +413,7 @@ namespace GenericContainerNamespace {
   to_mxArray( vec_string_type const & val, mxArray * & mx ) {
     mwSize dims[2] = { mwSize(val.size()), 1 } ;
     mx = mxCreateCellMatrix(dims[0], dims[1]) ;
-    for( mwSize i = 0 ; i < dims[1] ; ++i )
+    for( mwSize i = 0 ; i < dims[0] ; ++i )
       mxSetCell(mx,i,mxCreateString( val[i].c_str()) );
   }
 
@@ -420,7 +421,7 @@ namespace GenericContainerNamespace {
   to_mxArray( mat_int_type const & val, mxArray * & mx ) {
     mwSize dims[2] = { mwSize(val.numRows()), mwSize(val.numCols()) } ;
     mx = mxCreateNumericArray(2,dims,mxINT32_CLASS,mxREAL) ;
-    int_type * ptr = static_cast<int_type *>(mxGetData(mx)) ;
+    int32_t * ptr = static_cast<int32_t*>(mxGetData(mx)) ;
     mwSize k = 0 ;
     for ( mwSize j = 0 ; j < dims[1] ; ++j )
       for ( mwSize i = 0 ; i < dims[0] ; ++i )
@@ -431,7 +432,7 @@ namespace GenericContainerNamespace {
   to_mxArray( mat_long_type const & val, mxArray * & mx ) {
     mwSize dims[2] = { mwSize(val.numRows()), mwSize(val.numCols()) } ;
     mx = mxCreateNumericArray(2,dims,mxINT64_CLASS,mxREAL) ;
-    int_type * ptr = static_cast<int_type *>(mxGetData(mx)) ;
+    int64_t * ptr = static_cast<int64_t*>(mxGetData(mx)) ;
     mwSize k = 0 ;
     for ( mwSize j = 0 ; j < dims[1] ; ++j )
       for ( mwSize i = 0 ; i < dims[0] ; ++i )
