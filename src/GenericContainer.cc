@@ -1887,6 +1887,7 @@ namespace GenericContainerNamespace {
                  ") can't be converted to int" ) ;
       return int_type(_data.c->real()) ;
     }
+    return 0 ;
   }
 
   uint_type
@@ -1930,6 +1931,7 @@ namespace GenericContainerNamespace {
                  ") can't be converted to int" ) ;
       return uint_type(_data.c->real()) ;
     }
+    return 0 ;
   }
 
   long_type
@@ -1969,6 +1971,7 @@ namespace GenericContainerNamespace {
                  ") can't be converted to long" ) ;
       return long_type(_data.c->real()) ;
     }
+    return 0 ;
   }
 
   ulong_type
@@ -2012,6 +2015,7 @@ namespace GenericContainerNamespace {
                  ") can't be converted to ulong" ) ;
       return ulong_type(_data.c->real()) ;
     }
+    return 0 ;
   }
 
 
