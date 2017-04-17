@@ -22,9 +22,11 @@ endif
 ifneq (,$(findstring 6., $(VERSION)))
   CXX += -std=c++11
 endif
-  CC  += $(WARN)
-  CXX += $(WARN)
-  AR  = ar rcs
+  CXXFLAGS = -pthread -msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -g0 -funroll-loops -fPIC
+  CFLAGS   = -pthread -msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -g0 -funroll-loops -fPIC
+  CC      += $(WARN)
+  CXX     += $(WARN)
+  AR       = ar rcs
   LIBSGCC = -lstdc++ -lm
 endif
 
@@ -40,10 +42,12 @@ endif
 ifneq (,$(findstring 7., $(VERSION)))
   CXX += -std=c++11 -stdlib=libc++ 
 endif
-  CC     += $(WARN)
-  CXX    += $(WARN)
-  AR      = libtool -static -o
-  LIBSGCC = -lstdc++ -lm
+  CC      += $(WARN)
+  CXX     += $(WARN)
+  CXXFLAGS = -msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -g0 -funroll-loops -fPIC
+  CXXFLAGS = -msse4.2 -msse4.1 -mssse3 -msse3 -msse2 -msse -mmmx -m64 -O3 -g0 -funroll-loops -fPIC
+  AR       = libtool -static -o
+  LIBSGCC  = -lstdc++ -lm
   #LIB_GC = libGenericContainer.dylib
 endif
 
@@ -76,8 +80,6 @@ src_lua_interface/GenericContainerLuaInterface.hh
 PREFIX    = /usr/local
 FRAMEWORK = GenericContainer
 
-CFLAGS   = -O2
-CXXFLAGS = -O2
 INC     += -I/usr/local/include -I./src -I./src_lua_interface
 LIB_DIR  = -L/usr/local/lib -L./lib
 LIBS     = $(LIB_DIR) -lGenericContainer -lpcre -lm
