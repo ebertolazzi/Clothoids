@@ -727,7 +727,11 @@ namespace Clothoid {
            valueType _x1,
            valueType _y1,
            valueType _theta1,
-           valueType _kappa1 ) ;
+           valueType _kappa1 ) {
+      valueType L0, L1 ;
+      find_length_L01( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1, L0, L1 );
+      setup( _x0, _y0, _theta0, _kappa0, L0, _x1, _y1, _theta1, _kappa1, L1 ) ;
+    }
 
     ClothoidCurve const & getS0() const { return S0 ; }
     ClothoidCurve const & getS1() const { return S1 ; }
@@ -784,6 +788,9 @@ namespace Clothoid {
 
     valueType
     curvatureMinMax( valueType & kMin, valueType & kMax ) const ;
+
+    valueType getL0() const { return s0/Lscale; }
+    valueType getL1() const { return s1/Lscale; }
 
   } ;
 

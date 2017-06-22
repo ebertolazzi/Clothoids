@@ -1593,8 +1593,8 @@ namespace Clothoid {
     valueType k0 = kappa0/Lscale ;
     valueType k1 = kappa1/Lscale ;
 
-    s0 = _L0/Lscale ;
-    s1 = _L1/Lscale ;
+    s0 = _L0*Lscale ;
+    s1 = _L1*Lscale ;
 
     K0 = k0*s0 ;
     K1 = k1*s1 ;
@@ -1617,6 +1617,27 @@ namespace Clothoid {
     c12 = 0.25*(t1*s0 - t0*s1);
     c13 = 0.5*s0*s1;
     c14 = 0.75*(s0 + s1);
+  }
+
+  // **************************************************************************
+
+  void
+  G2solve3arc::find_length_L01( valueType   x0,
+                                valueType   y0,
+                                valueType   theta0,
+                                valueType   kappa0,
+                                valueType   x1,
+                                valueType   y1,
+                                valueType   theta1,
+                                valueType   kappa1,
+                                valueType & L0,
+                                valueType & L1 ) const {
+    valueType L  = hypot( x1 - x0, y1 - y0 ) ;
+    L0 = L1 = 0.45*L ;
+    valueType t0 = std::abs(kappa0)*L0*0.63 ; // 0.63 ~ 2/Pi
+    valueType t1 = std::abs(kappa1)*L1*0.63 ; // 0.63 ~ 2/Pi
+    if ( t0 > 1 ) L0 /= t0 ;
+    if ( t1 > 1 ) L1 /= t1 ;
   }
 
   // **************************************************************************
@@ -1748,9 +1769,9 @@ namespace Clothoid {
     valueType yM = s0 * ya + sM * ymL;
 
     // rovescia trasformazione standard
-    valueType L0 = s0*Lscale;
-    valueType L1 = s1*Lscale;
-    valueType LM = sM*Lscale;
+    valueType L0 = s0/Lscale;
+    valueType L1 = s1/Lscale;
+    valueType LM = sM/Lscale;
 
     dK0 *= power2(Lscale/s0) ;
     dK1 *= power2(Lscale/s1) ;

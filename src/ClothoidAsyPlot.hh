@@ -1,45 +1,88 @@
+/*--------------------------------------------------------------------------*\
+ |                                                                          |
+ |  Copyright (C) 2014                                                      |
+ |                                                                          |
+ |         , __                 , __                                        |
+ |        /|/  \               /|/  \                                       |
+ |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+ |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+ |                           /|                   /|                        |
+ |                           \|                   \|                        |
+ |                                                                          |
+ |      Enrico Bertolazzi and Marco Frego                                   |
+ |      Dipartimento di Ingegneria Industriale                              |
+ |      Universita` degli Studi di Trento                                   |
+ |      email: enrico.bertolazzi@unitn.it                                   |
+ |      email: marco.frego@unitn.it                                         |
+ |                                                                          |
+\*--------------------------------------------------------------------------*/
 
 #ifndef ASYPLOT_H
 #define ASYPLOT_H
+
+#include "Clothoid.hh"
 
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <cmath>
-#include "Clothoid.hh"
 
-using std::string;
-using std::ofstream;
-using Clothoid::Triangle2D;
+//! Clothoid computations routine
+namespace Clothoid {
 
-class AsyPlot
-{
-public:
-    AsyPlot(string filename, bool showAxes);
+  using std::string;
+  using std::ofstream;
+
+  class AsyPlot {
+  public:
+    AsyPlot( string filename, bool showAxes );
     ~AsyPlot();
 
-    void drawClothoid(const Clothoid::ClothoidCurve& c, std::string penna="black", double offset = 0.);
+    void
+    drawClothoid( Clothoid::ClothoidCurve const& c,
+                  std::string const & penna="black",
+                  valueType offset = 0.) const ;
     
-    void dot(double x, double y, std::string penna="black");
-    void triangle(const Triangle2D& t, std::string penna="black");
+    void dot( valueType x, valueType y, string const & penna="black" ) const ;
+    void triangle(const Triangle2D& t, string const & penna="black" ) const ;
 
-	void drawRect(double x0, double y0, double x1, double y1, double x2, double y2, double x3, double y3, string penna="black");
+    void
+    drawRect( valueType x0, valueType y0,
+              valueType x1, valueType y1,
+              valueType x2, valueType y2,
+              valueType x3, valueType y3,
+              string const & penna="black") const ;
 
-    void drawLine(double x0, double y0, double x1, double y1, std::string penna="black");
-	void label(string text, double x, double y, string placement = "", string penna = "black");
-	void displayAxes(string labX, string labY, double xmin, double xmax, double ymin, double ymax);
+    void
+    drawLine( valueType x0, valueType y0,
+              valueType x1, valueType y1,
+              std::string const & penna="black" ) const ;
+    void
+    label( string const & text,
+           valueType      x,
+           valueType      y,
+           string const & placement = "",
+           string const & penna = "black" ) const ;
 
-private:
-    string filename;
-    ofstream file;
+    void
+    displayAxes( string const & labX,
+                 string const & labY,
+                 valueType      xmin,
+                 valueType      xmax,
+                 valueType      ymin,
+                 valueType      ymax ) const ;
+
+  private:
+    mutable ofstream file;
+    string   filename;
     bool showAxes;
-
     bool openFile();
     bool closeFile();
     void initFile();
-    void displayAxes();
+    void displayAxes() const ;
     void compileFile();
-};
-
+  };
+}
 
 #endif 

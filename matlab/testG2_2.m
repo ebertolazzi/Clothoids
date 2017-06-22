@@ -14,20 +14,24 @@ y1     = 2 ;
 theta1 = pi/2; %0*pi/4;
 kappa1 = 1.5/4 ;
 
-[ S0, S1, SM, f0, f1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
-for kkk=1:7
-  subplot(3,3,kkk) ;
-  draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
-  title(SM(kkk).opt) ;
+[ S0, S1, SM, L0, L1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
+subplot(2,1,1) ;
+draw3curve( S0, S1, SM, true );
 
-  if kkk >= 5
-    subplot(3,3,8) ;
-    draw3angle( S0(kkk), S1(kkk), SM(kkk), true );
+[ S0, S1, SM, L0, L1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,L0/2,x1,y1,theta1,kappa1,L1) ;
+subplot(2,1,2) ;
+draw3curve( S0, S1, SM, true );
 
-    subplot(3,3,9) ;
-    draw3curvature( S0(kkk), S1(kkk), SM(kkk), true );
-  end
-end
+%title(SM(kkk).opt) ;
+
+%if kkk >= 5
+%    subplot(3,3,8) ;
+%    draw3angle( S0(kkk), S1(kkk), SM(kkk), true );
+%
+%    subplot(3,3,9) ;
+%    draw3curvature( S0(kkk), S1(kkk), SM(kkk), true );
+%  end
+%end
 
 %f00 = 0.05 ;
 %f11 = 0.05 ;

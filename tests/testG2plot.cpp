@@ -27,7 +27,7 @@ main() {
 
 	Clothoid::G2solve3arc  g2sol;
 	
-	
+  #if 1
 	valueType x0 = -2;
 	valueType y0 = 3;
 	valueType th0 = M_PI/3;
@@ -39,24 +39,21 @@ main() {
 	valueType th1 = M_PI/10;
 	valueType k1 = -0.5;
 	valueType s1 = 1;
-	
-	/*
-	valueType x0 = -1;
-	valueType y0 = 0;
-	valueType th0 = m_pi / 2;
-	valueType k0 = -1;
-	valueType s0 = 0.2;
+	#else
+	valueType x0  = -1;
+	valueType y0  = 0;
+	valueType th0 = M_PI / 2;
+	valueType k0  = -1;
+	valueType s0  = 0.2;
+	valueType x1  = 1;
+	valueType y1  = 0;
+	valueType th1 = -M_PI / 2;
+	valueType k1  = -1;
+	valueType s1  = 2;
+  #endif
 
-	valueType x1 = 1;
-	valueType y1 = 0;
-	valueType th1 = -m_pi / 2;
-	valueType k1 = -1;
-	valueType s1 = 0.2;
-	*/
-	
-
-	
-	g2sol.setup(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
+	//g2sol.setup(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
+	g2sol.setup(x0, y0, th0, k0, x1, y1, th1, k1 );
 	//g2solve3arc.setup( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
 	int iter = g2sol.solve();
 	std::cout << "iter = " << iter << '\n' ;
@@ -64,8 +61,7 @@ main() {
 	Clothoid::ClothoidCurve const & S0 = g2sol.getS0();
 	Clothoid::ClothoidCurve const & S1 = g2sol.getS1();
 	Clothoid::ClothoidCurve const & SM = g2sol.getSM();
-	
-	
+
 	/*
 	std::cout << "theta = " << S0.theta(S0.getSmax()) - SM.theta(SM.getSmin()) << '\n' ;
 	std::cout << "theta = " << SM.theta(SM.getSmax()) - S1.theta(S1.getSmin()) << '\n' ;
@@ -85,7 +81,7 @@ main() {
 	//std::cout << "kappa2 = " << S1.getKappa() << '\n';
 	
 	{
-		AsyPlot ap("G2Interpolation.asy", false);
+		Clothoid::AsyPlot ap("G2Interpolation.asy", false);
 		ap.drawClothoid(S0, "red+bp");
 		ap.drawClothoid(SM, "blue+bp");
 		ap.drawClothoid(S1, "red+bp");
