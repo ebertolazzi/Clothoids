@@ -588,7 +588,7 @@ namespace Clothoid {
     setMaxIter( int tol ) ;
 
   } ;
-  
+
   /*\
    |    ____ ____            _           ____
    |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
@@ -640,7 +640,7 @@ namespace Clothoid {
     ClothoidCurve const & getS1() const { return S1 ; }
 
   } ;
-  
+
   /*\
    |    ____ ____            _           _____
    |   / ___|___ \ ___  ___ | |_   _____|___ /  __ _ _ __ ___
@@ -648,23 +648,28 @@ namespace Clothoid {
    |  | |_| |/ __/\__ \ (_) | |\ V /  __/___) | (_| | | | (__
    |   \____|_____|___/\___/|_| \_/ \___|____/ \__,_|_|  \___|
   \*/
-  class G2solve3arc : public G2data {
+  class G2solve3arc {
 
-    ClothoidCurve S0, SM, S1, SG ;
+    ClothoidCurve S0, SM, S1 ;
 
-    valueType f_max ;
-    valueType alpha, beta, omega ;
-    valueType dK0_0, dK0_1, dK0_2 ;
-    valueType dK1_0, dK1_1, dK1_2 ;
-    valueType dKM_0, dKM_1, dKM_2 ;
-    valueType KM_0,  KM_1,  KM_2 ;
-    valueType a0, b1 ;
+    valueType tolerance ;
+    int       maxIter ;
 
-    void
-    setup( valueType _f0, valueType _f1 ) ;
+    valueType x0 ;
+    valueType y0 ;
+    valueType theta0 ;
+    valueType kappa0 ;
+    valueType x1 ;
+    valueType y1 ;
+    valueType theta1 ;
+    valueType kappa1 ;
 
-    void
-    evalF( valueType const vars[2], valueType F[2] ) const ;
+    // standard problem
+    valueType phi, Lscale ;
+    valueType th0, th1 ;
+    valueType s0, s1 ;
+
+    valueType K0, K1, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14 ;
 
     void
     evalFJ( valueType const vars[2],
@@ -672,19 +677,33 @@ namespace Clothoid {
             valueType       J[2][2] ) const ;
 
     void
-    buildSolution( valueType L, valueType buildSolution ) ;
+    buildSolution( valueType sM, valueType thM ) ;
+    
+  public:
+
+    void
+    find_length_L01( valueType   x0,
+                     valueType   y0,
+                     valueType   theta0,
+                     valueType   kappa0,
+                     valueType   x1,
+                     valueType   y1,
+                     valueType   theta1,
+                     valueType   kappa1,
+                     valueType & L0,
+                     valueType & L1 ) const ;
 
   public:
-    
-    using G2data::setup ;
-    using G2data::setTolerance ;
-    using G2data::setMaxIter ;
 
     G2solve3arc()
-    : f_max(0.99)
+    : tolerance(1e-10)
+    , maxIter(20)
     {}
 
     ~G2solve3arc() {}
+
+    void setTolerance( valueType tol ) ;
+    void setMaxIter( int miter ) ;
 
     int solve() ;
 
@@ -693,35 +712,26 @@ namespace Clothoid {
            valueType _y0,
            valueType _theta0,
            valueType _kappa0,
-           valueType _alpha,
+           valueType _L0,
            valueType _x1,
            valueType _y1,
            valueType _theta1,
            valueType _kappa1,
-           valueType _beta ) ;
+           valueType _L1 ) ;
 
-    // L, CURV^2, JERK, SNAP, TV-ANGLE, TV2-ANGLE, TV-CURV
-    bool
-    optimize( valueType _x0,
-              valueType _y0,
-              valueType _theta0,
-              valueType _kappa0,
-              valueType _x1,
-              valueType _y1,
-              valueType _theta1,
-              valueType _kappa1,
-              valueType target[7],
-              valueType alpha[7],
-              valueType beta[7],
-              indexType N = 40 ) ;
+    void
+    setup( valueType _x0,
+           valueType _y0,
+           valueType _theta0,
+           valueType _kappa0,
+           valueType _x1,
+           valueType _y1,
+           valueType _theta1,
+           valueType _kappa1 ) ;
 
     ClothoidCurve const & getS0() const { return S0 ; }
     ClothoidCurve const & getS1() const { return S1 ; }
     ClothoidCurve const & getSM() const { return SM ; }
-    ClothoidCurve const & getSG() const { return SG ; }
-
-    valueType getAlpha() const { return alpha ; }
-    valueType getBeta()  const { return beta ; }
 
     valueType
     totalLength() const {

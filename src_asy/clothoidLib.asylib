@@ -463,7 +463,6 @@ GeneralizedFresnelCS( real a, real b, real c ) {
   return ( CS.x * cosc - CS.y * sinc, CS.x * sinc + CS.y * cosc ) ;
 }
 
-
 pair []
 GeneralizedFresnelCS( int nk, real a, real b, real c ) {
   pair [] CS ;
@@ -484,6 +483,12 @@ GeneralizedFresnelCS( int nk, real a, real b, real c ) {
     CS[k] = ( xx * cosc - yy * sinc, xx * sinc + yy * cosc ) ;
   }
   return CS ;
+}
+
+pair []
+intCS( real dk, real k, real theta0, real L ) {
+  pair [] iCS = L*GeneralizedFresnelCS( 3, dk*L^2, k*L, theta0 ) ;
+  return iCS ;
 }
 
 /*\

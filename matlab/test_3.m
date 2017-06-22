@@ -74,6 +74,7 @@ xmax =  3.5 ;
 ymin = -1.2 ;
 ymax =  1.2 ;
 
+%for kk=1:9
 for kk=1:9
 
   P1 = tests(kk).P1 ;
@@ -86,6 +87,7 @@ for kk=1:9
   hold off ;
   
   [S,iter] = buildClothoid( P1(1), P1(2), a1, P2(1), P2(2), a2 ) ;
+  
   XY       = pointsOnClothoid( S, 0:S.L/NPTS:S.L ) ;
   plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 2 ) ;
   axis ([xmin,xmax,ymin,ymax]) ;

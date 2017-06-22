@@ -25,10 +25,6 @@
 #include <sstream>
 #include <stdexcept>
 
-#ifndef M_PI
-  #define M_PI 3.1415926535897932385
-#endif
-
 #ifndef CLOTHOID_ASSERT
   #define CLOTHOID_ASSERT(COND,MSG)         \
     if ( !(COND) ) {                        \
@@ -1373,7 +1369,13 @@ namespace Clothoid {
     }
   } ;
 
-  // **************************************************************************
+  /*\
+   |    ____ ____     _       _
+   |   / ___|___ \ __| | __ _| |_ __ _
+   |  | |  _  __) / _` |/ _` | __/ _` |
+   |  | |_| |/ __/ (_| | (_| | || (_| |
+   |   \____|_____\__,_|\__,_|\__\__,_|
+  \*/
 
   void
   G2data::setup( valueType _x0,
@@ -1424,7 +1426,14 @@ namespace Clothoid {
     maxIter = miter ;
   }
 
-  // **************************************************************************
+
+  /*\
+   |    ____ ____            _           ____
+   |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
+   |  | |  _  __) / __|/ _ \| \ \ / / _ \ __) / _` | '__/ __|
+   |  | |_| |/ __/\__ \ (_) | |\ V /  __// __/ (_| | | | (__
+   |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
+  \*/
 
   void
   G2solve2arc::evalA( valueType   alpha,
@@ -1527,47 +1536,28 @@ namespace Clothoid {
     S1.change_origin( -s1 ) ;
   }
 
-  // **************************************************************************
+  /*\
+   |    ____ ____            _           _____
+   |   / ___|___ \ ___  ___ | |_   _____|___ /  __ _ _ __ ___
+   |  | |  _  __) / __|/ _ \| \ \ / / _ \ |_ \ / _` | '__/ __|
+   |  | |_| |/ __/\__ \ (_) | |\ V /  __/___) | (_| | | | (__
+   |   \____|_____|___/\___/|_| \_/ \___|____/ \__,_|_|  \___|
+  \*/
 
   void
-  G2solve3arc::setup( valueType _f0, valueType _f1 ) {
+  G2solve3arc::setTolerance( valueType tol ) {
+    CLOTHOID_ASSERT( tol > 0 && tol <= 0.1,
+                     "G2solve3arc::setTolerance, tolerance = " << tol <<
+                     " must be in (0,0.1]" ) ;
+    tolerance = tol ;
+  }
 
-    alpha = _f0 ;
-    beta  = _f1 ;
-    omega = (1-alpha-beta)/2 ;
-
-    valueType d = (alpha+beta+2)*omega+2*alpha*beta ;
-
-    valueType ad = alpha/d ;
-    valueType bd = beta/d ;
-    valueType od = omega/d ;
-    
-    a0 = alpha*k0 ;
-    b1 = beta*k1 ;
-    
-    valueType al1 = 1-alpha ;
-    valueType be1 = 1-beta ;
-
-    dK0_0 = ad*((alpha-1)*(3*th0+th1)+beta*DeltaTheta) ;
-    dK0_1 = ad*((beta*DeltaK-2*k0)*omega-4*a0*(beta+omega));
-    dK0_2 = 4*ad*al1 ;
-
-    dK1_0 = bd*((beta-1)*(3*th1+th0)-alpha*DeltaTheta);
-    dK1_1 = bd*((alpha*DeltaK+2*k1)*omega+4*b1*(alpha+omega));
-    dK1_2 = 4*bd*be1 ;
-
-    dKM_0  = 2*od*(al1*th0+be1*th1) ;
-    //dKM_1  = od*(al1*a0-be1*b1);
-    dKM_1  = od*(2*omega*(a0-b1)-alpha*beta*DeltaK);
-    dKM_2  = -2*od*(1+2*omega) ;
-
-    valueType ab = alpha-beta ;
-
-    KM_0  = od*(ab*(th0+th1)+DeltaTheta) ;
-    //KM_1  = od*(a0*(ab-1)-b1*(ab+1))/2 ;
-    KM_1  = -od*(omega*(a0+b1)+alpha*beta*(k0+k1)) ;
-    KM_2  = -2*od*ab ;
-
+  void
+  G2solve3arc::setMaxIter( int miter ) {
+    CLOTHOID_ASSERT( miter > 0 && miter <= 1000,
+                     "G2solve3arc::setMaxIter, maxIter = " << miter <<
+                     " must be in [1,1000]" ) ;
+    maxIter = miter ;
   }
 
   void
@@ -1575,257 +1565,217 @@ namespace Clothoid {
                       valueType _y0,
                       valueType _theta0,
                       valueType _kappa0,
-                      valueType _f0,
+                      valueType _L0,
                       valueType _x1,
                       valueType _y1,
                       valueType _theta1,
                       valueType _kappa1,
-                      valueType _f1 ) {
-    G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
-    G2solve3arc::setup( _f0, _f1 ) ;
+                      valueType _L1 ) {
+
+    x0     = _x0 ;
+    y0     = _y0 ;
+    theta0 = _theta0;
+    kappa0 = _kappa0 ;
+    x1     = _x1 ;
+    y1     = _y1 ;
+    theta1 = _theta1 ;
+    kappa1 = _kappa1 ;
+
+    // scale problem
+    valueType dx = x1 - x0 ;
+    valueType dy = y1 - y0 ;
+    phi    = atan2( dy, dx ) ;
+    Lscale = 2/hypot( dx, dy ) ;
+
+    th0 = theta0 - phi ;
+    th1 = theta1 - phi ;
+
+    valueType k0 = kappa0/Lscale ;
+    valueType k1 = kappa1/Lscale ;
+
+    s0 = _L0/Lscale ;
+    s1 = _L1/Lscale ;
+
+    K0 = k0*s0 ;
+    K1 = k1*s1 ;
+
+    valueType t0 = 2*th0+K0;
+    valueType t1 = 2*th1-K1;
+
+    c0  = s0*s1;
+    c1  = 2 * s0;
+    c2  = 0.25*((K1-6*K0-6*th0-2*th1)*s0 - 3*K0*s1);
+    c3  = -c0 * (K0 + th0);
+    c4  = 2 * s1;
+    c5  = 0.25*((6*K1-K0-2*th0-6*th1)*s1 + 3*K1*s0);
+    c6  = c0 * (K1 - th1);
+    c7  = -0.5*(s0 + s1);
+    c8  = th0 + th1 + 0.5*(K0 - K1);
+    c9  = 0.25*(t1*s0 + t0*s1);
+    c10 = 0.5*(s1 - s0);
+    c11 = 0.5*(th1 - th0) - 0.25*(K0 + K1);
+    c12 = 0.25*(t1*s0 - t0*s1);
+    c13 = 0.5*s0*s1;
+    c14 = 0.75*(s0 + s1);
   }
 
-  void
-  G2solve3arc::evalF( valueType const vars[2],
-                      valueType       F[2] ) const {
-
-    valueType L   = vars[0] ;
-    valueType thM = vars[1] ;
-
-    valueType dK0 = dK0_0 + L*dK0_1 + thM*dK0_2 ;
-    valueType dK1 = dK1_0 + L*dK1_1 + thM*dK1_2 ;
-    valueType dKM = dKM_0 + L*dKM_1 + thM*dKM_2 ;
-    valueType KM  = KM_0  + L*KM_1  + thM*KM_2  ;
-
-    valueType xa, ya, xb, yb, xM, yM, xP, yP ;
-
-    GeneralizedFresnelCS( dK0,  L*a0, th0, xa, ya );
-    GeneralizedFresnelCS( dK1, -L*b1, th1, xb, yb );
-    GeneralizedFresnelCS( dKM, -KM,   thM, xM, yM );
-    GeneralizedFresnelCS( dKM,  KM,   thM, xP, yP );
-
-    F[0] = alpha * xa + beta * xb + omega*(xP+xM) - 2/L ;
-    F[1] = alpha * ya + beta * yb + omega*(yP+yM) ;
-  }
+  // **************************************************************************
 
   void
   G2solve3arc::evalFJ( valueType const vars[2],
                        valueType       F[2],
-                       valueType       J[2][2] ) const {
+                       valueType       J[2][2]) const {
 
-    valueType L   = vars[0] ;
-    valueType thM = vars[1] ;
+    valueType sM  = vars[0];
+    valueType thM = vars[1];
 
-    valueType dK0 = dK0_0 + L*dK0_1 + thM*dK0_2 ;
-    valueType dK1 = dK1_0 + L*dK1_1 + thM*dK1_2 ;
-    valueType dKM = dKM_0 + L*dKM_1 + thM*dKM_2 ;
-    valueType KM  = KM_0  + L*KM_1  + thM*KM_2  ;
+    valueType dsM = 1.0 / (c13+(c14+sM)*sM);
+    valueType sM2 = sM*sM;
+    valueType stM = sM*thM;
 
-    valueType xa[3], ya[3], xb[3], yb[3], xM[3], yM[3], xP[3], yP[3] ;
+    valueType dK0 = dsM*(c0*thM + c1*stM - K0*sM2 + c2*sM + c3);
+    valueType dK1 = dsM*(c0*thM + c4*stM + K1*sM2 + c5*sM + c6);
+    valueType dKM = dsM*sM*(c7*thM - 2*stM + c8*sM + c9);
+    valueType KM  = dsM*sM*(c10*thM + c11*sM + c12);
 
-    GeneralizedFresnelCS( 3, dK0,  L*a0, th0, xa, ya );
-    GeneralizedFresnelCS( 3, dK1, -L*b1, th1, xb, yb );
-    GeneralizedFresnelCS( 3, dKM, -KM,   thM, xM, yM );
-    GeneralizedFresnelCS( 3, dKM,  KM,   thM, xP, yP );
+    valueType X0[3],  Y0[3],
+              X1[3],  Y1[3],
+              XMp[3], YMp[3],
+              XMm[3], YMm[3];
+    GeneralizedFresnelCS( 3, dK0,  K0, th0, X0,  Y0);
+    GeneralizedFresnelCS( 3, dK1, -K1, th1, X1,  Y1);
+    GeneralizedFresnelCS( 3, dKM,  KM, thM, XMp, YMp);
+    GeneralizedFresnelCS( 3, dKM, -KM, thM, XMm, YMm);
 
-    xa[0] *= alpha   ; ya[0] *= alpha   ;
-    xa[1] *= alpha   ; ya[1] *= alpha   ;
-    xa[2] *= alpha/2 ; ya[2] *= alpha/2 ;
+    // in the standard problem dx = 2, dy = 0
+    //valueType dx  = x1 - x0;
+    //valueType dy  = y1 - y0;
+    F[0] = s0*X0[0] + s1*X1[0] + sM*(XMm[0] + XMp[0]) - 2 ;
+    F[1] = s0*Y0[0] + s1*Y1[0] + sM*(YMm[0] + YMp[0]) - 0 ;
 
-    xb[0] *= beta    ; yb[0] *= beta   ;
-    xb[1] *= beta    ; yb[1] *= beta   ;
-    xb[2] *= beta/2  ; yb[2] *= beta/2 ;
+    // calcolo J(F)
+    valueType dsM2 = dsM*dsM;
+    valueType g0 = -(2 * sM + c14)*dsM2;
+    valueType g1 = (c13 - sM2)*dsM2;
+    valueType g2 = sM*(sM*c14+2*c13)*dsM2;
 
-    valueType xMP   = omega*(xP[0]+xM[0]) ;
-    valueType xMP_1 = omega*(xP[1]-xM[1]) ;
-    valueType xMP_2 = omega*(xP[2]+xM[2])/2 ;
+    valueType dK0_sM  = (c0*thM+c3)*g0 + (c1*thM+c2)*g1 - K0*g2 ;
+    valueType dK1_sM  = (c0*thM+c6)*g0 + (c4*thM+c5)*g1 + K1*g2 ;
+    valueType dKM_sM  = (c7*thM+c9)*g1 + (c8-2*thM)*g2;
+    valueType KM_sM   = (c10*thM+c12)*g1 + c11*g2;
 
-    valueType yMP   = omega*(yP[0]+yM[0]) ;
-    valueType yMP_1 = omega*(yP[1]-yM[1]) ;
-    valueType yMP_2 = omega*(yP[2]+yM[2])/2 ;
+    valueType dK0_thM = (c0+c1*sM)*dsM;
+    valueType dK1_thM = (c0+c4*sM)*dsM;
+    valueType dKM_thM = (c7-2*sM)*sM*dsM;
+    valueType KM_thM  = c10*sM*dsM;
 
-    F[0] = xa[0] + xb[0] + xMP - 2/L ;
-    F[1] = ya[0] + yb[0] + yMP ;
+    // coeff fresnel per f_j per lo jacobiano
+    valueType f0 = -0.5*s0*Y0[2];
+    valueType f1 = -0.5*s1*Y1[2];
+    valueType f2 = -0.5*sM*(YMm[2] + YMp[2]);
+    valueType f3 = sM*(YMm[1] - YMp[1]);
+    valueType f4 = 0.5*s0*X0[2];
+    valueType f5 = 0.5*s1*X1[2];
+    valueType f6 = 0.5*sM*(XMm[2] + XMp[2]);
+    valueType f7 = sM*(XMp[1] - XMm[1]);
+    valueType f8 = XMp[0]+XMm[0];
+    valueType f9 = YMp[0]+YMm[0];
 
-    // D F[0] / D L
-    J[0][0] = - (ya[2]*dK0_1+ya[1]*a0)
-              - (yb[2]*dK1_1-yb[1]*b1)
-              - (yMP_2*dKM_1+yMP_1*KM_1)
-              + 2/(L*L) ;
-
-    // D F[0] / D thM
-    J[0][1] = - ya[2]*dK0_2 - yb[2]*dK1_2 - (yMP_2*dKM_2+yMP_1*KM_2+yMP) ;
-
-    // D F[1] / D L
-    J[1][0] = (xa[2]*dK0_1+xa[1]*a0) +
-              (xb[2]*dK1_1-xb[1]*b1) +
-              (xMP_2*dKM_1+xMP_1*KM_1) ;
-
-    // D F[1] / D thM
-    J[1][1] = xa[2]*dK0_2 + xb[2]*dK1_2 + (xMP_2*dKM_2+xMP_1*KM_2+xMP) ;
-
+    J[0][0] = f0 * dK0_sM  + f1 * dK1_sM  + f2 * dKM_sM  + f3 * KM_sM  + f8 ;
+    J[0][1] = f0 * dK0_thM + f1 * dK1_thM + f2 * dKM_thM + f3 * KM_thM - sM * f9 ;
+    J[1][0] = f4 * dK0_sM  + f5 * dK1_sM  + f6 * dKM_sM  + f7 * KM_sM  + f9 ;
+    J[1][1] = f4 * dK0_thM + f5 * dK1_thM + f6 * dKM_thM + f7 * KM_thM + sM * f8 ;
   }
 
-  // ---------------------------------------------------------------------------
+  // **************************************************************************
 
   int
   G2solve3arc::solve() {
-    Solve2x2 solver ;
-    valueType F[2], J[2][2], d[2], X[2] ;
+
+    Solve2x2 solver;
+    valueType F[2], J[2][2], d[2], X[2];
     X[0] = 2 ;
     X[1] = 0 ;
 
-    int iter = 0 ;
-    bool converged = false ;
+    int iter = 0;
+    bool converged = false;
     try {
       do {
-        evalFJ( X, F, J ) ;
-        if ( !solver.factorize( J ) ) break ;
-        solver.solve( F, d ) ;
-        X[0] -= d[0] ;
-        X[1] -= d[1] ;
-        valueType lenF = hypot(F[0],F[1]) ;
-        converged = lenF < tolerance ;
-      } while ( ++iter < maxIter && !converged ) ;
+        evalFJ(X, F, J);
+        if (!solver.factorize(J)) break;
+        solver.solve(F, d);
+        X[0] -= d[0];
+        X[1] -= d[1];
+        valueType lenF = hypot(F[0], F[1]);
+        converged = lenF < tolerance;
+      } while ( ++iter < maxIter && !converged );
 
+      // re-check solution
       if ( converged )
-         converged = FP_INFINITE != std::fpclassify(X[0]) &&
-                     FP_NAN      != std::fpclassify(X[0]) &&
-                     FP_INFINITE != std::fpclassify(X[1]) &&
-                     FP_NAN      != std::fpclassify(X[1]) &&
-                     X[0] > 0 ;
-      buildSolution( X[0], X[1] ) ; // costruisco comunque soluzione
+        converged = FP_INFINITE != std::fpclassify(X[0]) &&
+                    FP_NAN      != std::fpclassify(X[0]) &&
+                    FP_INFINITE != std::fpclassify(X[1]) &&
+                    FP_NAN      != std::fpclassify(X[1]) &&
+                    X[0] > 0;
     }
     catch (...) {
-     // do not converge!
+      // nothing to do
     }
-    return converged ? iter : -1 ;
+    if ( converged ) buildSolution(X[0], X[1]); // costruisco comunque soluzione
+    return converged ? iter : -1;
   }
 
-  // ---------------------------------------------------------------------------
+  // **************************************************************************
 
-  // L, CURV^2, JERK, SNAP, TV-ANGLE, TV2-ANGLE, TV-CURV
-  bool
-  G2solve3arc::optimize( valueType _x0,
-                         valueType _y0,
-                         valueType _theta0,
-                         valueType _kappa0,
-                         valueType _x1,
-                         valueType _y1,
-                         valueType _theta1,
-                         valueType _kappa1,
-                         valueType target[8],
-                         valueType alpha[8],
-                         valueType beta[8],
-                         indexType N ) {
-    G2data::setup( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1 ) ;
-    // loop per minimizzare qualcosa
-    valueType f0_max = f_max ;
-    valueType f1_max = f_max ;
-    valueType f0_min = 0 ;
-    valueType f1_min = 0 ;
-    std::fill( target, target+8, 1e100 ) ;
-    std::fill( alpha, alpha+8, 0 ) ;
-    std::fill( beta, beta+8, 0 ) ;
-    bool ok = false ;
-    for ( indexType level = 0 ; level < 3 && !ok ; ++level ) {
-      valueType ds0 = (f0_max-f0_min)/N ;
-      valueType ds1 = (f1_max-f1_min)/N ;
-      for ( indexType i = 1 ; i <= N ; ++i ) {
-        valueType f0 = f0_min+(f0_max-f0_min)*(i*ds0) ;
-        for ( indexType j = 1 ; j <= N ; ++j ) {
-          valueType f1 = f1_min+(f1_max-f1_min)*(j*ds1) ;
-          if ( f0+f1 >= 0.99 ) continue ;
-          G2solve3arc::setup( f0, f1 ) ;
-          int iter = G2solve3arc::solve() ;
-          if ( iter > 0 ) { // ok converged
-            //if ( deltaTheta()          > 2*M_PI ) continue ;
-            if ( thetaTotalVariation() > 2*M_PI + std::abs(DeltaTheta) ) continue ;
-            ok = true ;
-            // check
-            valueType nt[8] ;
-            nt[0] = pow(totalLength(),2.5)/pow(S0.totalLength()*S1.totalLength()*SM.totalLength(),1./3.) ;
-            valueType bf = nt[0];//pow(totalLength(),2)/(f0*f1) ;
-            //valueType bf1 =  pow(totalLength(),3)/pow(S0.totalLength()*S1.totalLength()*SM.totalLength(),1./3.);//pow(totalLength(),2)/(f0*f1) ;
-            valueType bf1 = pow(totalLength(),2)/pow(f0*f1*(1-f0-f1),1.0);//pow(totalLength(),2)/(f0*f1) ;
-            nt[1] = bf*sqrt(integralCurvature2()) ;
-            nt[2] = bf*thetaTotalVariation() ;
-            nt[3] = bf1 ;
-            nt[4] = bf1*sqrt(integralCurvature2()) ;
-            nt[5] = bf1*thetaTotalVariation() ;
-            nt[6] = bf1*sqrt(integralCurvature2())*thetaTotalVariation() ;
-            nt[7] = bf1*sqrt(integralCurvature2())*sqrt(integralJerk2()) ;
-            for ( int kk = 0 ; kk < 8 ; ++kk ) {
-              if ( nt[kk] < target[kk] )
-                { target[kk] = nt[kk] ; alpha[kk] = f0 ; beta[kk] = f1 ; }
-            }
-          }
-        }
-      }
-      f0_max /= N/2 ;
-      f1_max /= N/2 ;
-    }
-    return ok ;
-  }
+  void 
+  G2solve3arc::buildSolution( valueType sM, valueType thM ) {
 
-  // ---------------------------------------------------------------------------
+    // ricostruzione dati clotoidi trasformati
+    valueType dsM = 1.0 / (c13+(c14+sM)*sM);
+    valueType sM2 = sM*sM;
+    valueType stM = sM*thM;
 
-  void
-  G2solve3arc::buildSolution( valueType L, valueType thetaM ) {
+    valueType dK0 = dsM*(c0*thM + c1*stM - K0*sM2 + c2*sM + c3);
+    valueType dK1 = dsM*(c0*thM + c4*stM + K1*sM2 + c5*sM + c6);
+    valueType dKM = dsM*sM*(c7*thM - 2*stM + c8*sM + c9);
+    valueType KM  = dsM*sM*(c10*thM + c11*sM + c12);
 
-    valueType L0 = L*alpha ;
-    valueType L1 = L*beta  ;
-    valueType LM = L*omega ;
+    valueType xa, ya, xmL, ymL;
+    GeneralizedFresnelCS( dK0,  K0, th0, xa,  ya  );
+    GeneralizedFresnelCS( dKM, -KM, thM, xmL, ymL );
 
-    valueType dKM = dKM_0 + L*dKM_1 + thetaM*dKM_2 ;
-    valueType dK0 = dK0_0 + L*dK0_1 + thetaM*dK0_2 ;
-    valueType dK1 = dK1_0 + L*dK1_1 + thetaM*dK1_2 ;
-    valueType KM  = KM_0  + L*KM_1  + thetaM*KM_2  ;
-    
-    // check solution
-    /*
-    valueType eqd = beta*(KM+dKM)-omega*(L1*k1-dK1) ;
-    valueType eqc = alpha*(KM-dKM)-omega*(L0*k0+dK0) ;
-    valueType eqb = thetaM+KM+dKM/2-th1+L1*k1-dK1/2 ;
-    valueType eqa = thetaM-KM+dKM/2-th0-L0*k0-dK0/2 ;
-    cout << "err a = " << eqa << '\n';
-    cout << "err b = " << eqb << '\n';
-    cout << "err c = " << eqc << '\n';
-    cout << "err d = " << eqd << '\n';
-    cout << "det  = " << (alpha+beta+2)*omega+2*alpha*beta << '\n';
-    */
+    valueType xM = s0 * xa + sM * xmL - 1;
+    valueType yM = s0 * ya + sM * ymL;
 
-    valueType xa, ya, xmL, ymL ;
-    GeneralizedFresnelCS( dK0, k0*L0, th0, xa, ya );
-    GeneralizedFresnelCS( dKM, -KM, thetaM, xmL, ymL );
+    // rovescia trasformazione standard
+    valueType L0 = s0*Lscale;
+    valueType L1 = s1*Lscale;
+    valueType LM = sM*Lscale;
 
-    valueType xM = L0 * xa + LM * xmL - 1 ;
-    valueType yM = L0 * ya + LM * ymL ;
-    
-    // rovescia scalatura
-    L0 /= Lscale ;
-    L1 /= Lscale ;
-    LM /= Lscale ;
+    dK0 *= power2(Lscale/s0) ;
+    dK1 *= power2(Lscale/s1) ;
+    dKM *= power2(Lscale/sM) ;
+    KM  *= Lscale/sM ;
 
-    S0.setup( x0, y0, theta0, kappa0, dK0/(L0*L0),  0, L0 ) ;
-    S1.setup( x1, y1, theta1, kappa1, dK1/(L1*L1), -L1, 0 ) ;
+    S0.setup( x0, y0, theta0, kappa0, dK0,   0, L0 );
+    S1.setup( x1, y1, theta1, kappa1, dK1, -L1, 0  );
 
     // la trasformazione inversa da [-1,1] a (x0,y0)-(x1,y1)
     // g(x,y) = RotInv(phi)*(1/lambda*[X;Y] - [xbar;ybar]) = [x;y]
 
-    valueType C  = cos(phi) ;
-    valueType S  = sin(phi) ;
-    valueType dx = (xM+1)/Lscale ;
-    valueType dy = yM/Lscale ;
-    SM.setup( x0 + C * dx - S * dy, y0 + C * dy + S * dx,
-              thetaM+phi, KM/LM, dKM/(LM*LM), -LM, LM ) ;
+    valueType C  = cos(phi);
+    valueType S  = sin(phi);
+    valueType dx = (xM + 1) / Lscale;
+    valueType dy = yM / Lscale;
+    SM.setup( x0 + C * dx - S * dy,
+              y0 + C * dy + S * dx,
+              thM + phi, KM, dKM, -LM, LM );
 
-    //Sguess.setup_G1( x0_orig, y0_orig, theta0_orig,
-    //                 x1_orig, y1_orig, theta1_orig ) ;
-
-    S1.change_origin( -L1 ) ;
-    SM.change_origin( -LM ) ;
+    S1.change_origin(-L1);
+    SM.change_origin(-LM);
   }
+
+  // **************************************************************************
 
   valueType
   G2solve3arc::thetaMinMax( valueType & thMin, valueType & thMax ) const {
@@ -1839,6 +1789,8 @@ namespace Clothoid {
     if ( thMax < thMax1 ) thMax = thMax1 ;
     return thMax-thMin ;
   }
+
+  // **************************************************************************
 
   valueType
   G2solve3arc::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
@@ -1854,3 +1806,5 @@ namespace Clothoid {
   }
 
 }
+
+// EOF: Clothoid.cc
