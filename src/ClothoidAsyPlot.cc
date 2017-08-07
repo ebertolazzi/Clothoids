@@ -42,11 +42,12 @@ namespace Clothoid {
 
   void
   AsyPlot::initFile() {
-    file << "// File generated automatically from C++ \n\n\n";
-    file << "import graph; \n";
-    file << "include \"clothoidLib.asylib\"; \n";
-    file << "size(14cm,7cm); \n";
-    file << "\n\n\n";
+    file
+      << "// File generated automatically from C++ \n\n\n"
+      << "import graph;\n"
+      << "include \"clothoidLib.asylib\";\n"
+      << "size(14cm,7cm);\n"
+      << "\n\n\n" ;
   }
 
   void
@@ -125,8 +126,12 @@ namespace Clothoid {
                         valueType ymin,
                         valueType ymax ) const {
 	  file
-      << "xaxis(\"" <<labX<< "\", black+fontsize(7pt),xmin="<<xmin<<",xmax="<<xmax<< ",Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));\n"
-      << "yaxis(\"" << labY << "\", black+fontsize(7pt),ymin=" << ymin<<",ymax="<<ymax<<",Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));\n";
+      << "xaxis(\"" << labX << "\", black+fontsize(7pt),xmin="
+      << xmin << ",xmax=" << xmax
+      << ",Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));\n"
+      << "yaxis(\"" << labY << "\", black+fontsize(7pt),ymin="
+      << ymin << ",ymax=" << ymax
+      << ",Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));\n";
   }
 
   void

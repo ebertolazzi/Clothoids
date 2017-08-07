@@ -118,6 +118,13 @@ namespace Clothoid {
   static const valueType m_1_pi      = 0.318309886183790671537767526745 ; // 1/pi
   static const valueType m_1_sqrt_pi = 0.564189583547756286948079451561 ; // 1/sqrt(pi)
 
+  void
+  rangeSymm( valueType & ang ) {
+    ang = fmod( ang, m_2pi ) ;
+    while ( ang < -m_pi ) ang += m_2pi ;
+    while ( ang >  m_pi ) ang -= m_2pi ;
+  }
+
   //! \endcond
 
   /*
@@ -1309,65 +1316,60 @@ namespace Clothoid {
   power2( valueType a )
   { return a*a ; }
 
-  // **************************************************************************
-  
-  class Solve2x2 {
-    indexType i[2], j[2] ;
-    valueType LU[2][2] ;
-    valueType epsi ;
-    bool      singular ;
+  /*\
+   |   ____        _           ____       ____
+   |  / ___|  ___ | |_   _____|___ \__  _|___ \
+   |  \___ \ / _ \| \ \ / / _ \ __) \ \/ / __) |
+   |   ___) | (_) | |\ V /  __// __/ >  < / __/
+   |  |____/ \___/|_| \_/ \___|_____/_/\_\_____|
+  \*/
 
-  public:
-  
-    Solve2x2() : epsi(1e-10) {}
+  bool
+  Solve2x2::factorize( valueType A[2][2] ) {
+    // full pivoting
+    valueType Amax = std::abs(A[0][0]) ;
+    valueType tmp  = std::abs(A[0][1]) ;
+    indexType ij = 0 ;
+    if ( tmp > Amax ) { ij = 1 ; Amax = tmp ; }
+    tmp = std::abs(A[1][0]) ;
+    if ( tmp > Amax ) { ij = 2 ; Amax = tmp ; }
+    tmp = std::abs(A[1][1]) ;
+    if ( tmp > Amax ) { ij = 3 ; Amax = tmp ; }
+    if ( Amax == 0 ) return false ;
+    if ( (ij&0x01) == 0x01 ) { j[0] = 1 ; j[1] = 0 ; }
+    else                     { j[0] = 0 ; j[1] = 1 ; }
+    if ( (ij&0x02) == 0x02 ) { i[0] = 1 ; i[1] = 0 ; }
+    else                     { i[0] = 0 ; i[1] = 1 ; }
+    // apply factorization
+    LU[0][0] = A[i[0]][j[0]] ;
+    LU[0][1] = A[i[0]][j[1]] ;
+    LU[1][0] = A[i[1]][j[0]] ;
+    LU[1][1] = A[i[1]][j[1]] ;
 
-    bool
-    factorize( valueType A[2][2] ) {
-      // full pivoting
-      valueType Amax = std::abs(A[0][0]) ;
-      valueType tmp  = std::abs(A[0][1]) ;
-      indexType ij = 0 ;
-      if ( tmp > Amax ) { ij = 1 ; Amax = tmp ; }
-      tmp = std::abs(A[1][0]) ;
-      if ( tmp > Amax ) { ij = 2 ; Amax = tmp ; }
-      tmp = std::abs(A[1][1]) ;
-      if ( tmp > Amax ) { ij = 3 ; Amax = tmp ; }
-      if ( Amax == 0 ) return false ;
-      if ( (ij&0x01) == 0x01 ) { j[0] = 1 ; j[1] = 0 ; }
-      else                     { j[0] = 0 ; j[1] = 1 ; }
-      if ( (ij&0x02) == 0x02 ) { i[0] = 1 ; i[1] = 0 ; }
-      else                     { i[0] = 0 ; i[1] = 1 ; }
-      // apply factorization
-      LU[0][0] = A[i[0]][j[0]] ;
-      LU[0][1] = A[i[0]][j[1]] ;
-      LU[1][0] = A[i[1]][j[0]] ;
-      LU[1][1] = A[i[1]][j[1]] ;
+    LU[1][0] /= LU[0][0] ;
+    LU[1][1] -= LU[1][0]*LU[0][1] ;
+    // check for singularity
+    singular = std::abs( LU[1][1] ) < epsi ;
+    return true ;
+  }
 
-      LU[1][0] /= LU[0][0] ;
-      LU[1][1] -= LU[1][0]*LU[0][1] ;
-      // check for singularity
-      singular = std::abs( LU[1][1] ) < epsi ;
-      return true ;
+  void
+  Solve2x2::solve( valueType const b[2], valueType x[2] ) const {
+    if ( singular ) {
+      // L^+ Pb
+      valueType tmp = (b[i[0]] + LU[1][0]*b[i[1]]) /
+                      ( (1+power2(LU[1][0]) ) * ( power2(LU[0][0])+power2(LU[0][1]) ) ) ;
+      x[j[0]] = tmp*LU[0][0] ;
+      x[j[1]] = tmp*LU[0][1] ;
+    } else { // non singular
+      // L^(-1) Pb
+      x[j[0]] = b[i[0]] ;
+      x[j[1]] = b[i[1]]-LU[1][0]*x[j[0]] ;
+      // U^(-1) x
+      x[j[1]] /= LU[1][1] ;
+      x[j[0]]  = (x[j[0]]-LU[0][1]*x[j[1]])/LU[0][0] ;
     }
-
-    void
-    solve( valueType const b[2], valueType x[2] ) const {
-      if ( singular ) {
-        // L^+ Pb
-        valueType tmp = (b[i[0]] + LU[1][0]*b[i[1]]) /
-                        ( (1+power2(LU[1][0]) ) * ( power2(LU[0][0])+power2(LU[0][1]) ) ) ;
-        x[j[0]] = tmp*LU[0][0] ;
-        x[j[1]] = tmp*LU[0][1] ;
-      } else { // non singular
-        // L^(-1) Pb
-        x[j[0]] = b[i[0]] ;
-        x[j[1]] = b[i[1]]-LU[1][0]*x[j[0]] ;
-        // U^(-1) x
-        x[j[1]] /= LU[1][1] ;
-        x[j[0]]  = (x[j[0]]-LU[0][1]*x[j[1]])/LU[0][0] ;
-      }
-    }
-  } ;
+  }
 
   /*\
    |    ____ ____     _       _

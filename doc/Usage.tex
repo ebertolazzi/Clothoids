@@ -1,0 +1,264 @@
+\makeatletter
+\def\input@path{{macros/}}
+\makeatother 
+
+%\documentclass[final,leqno]{siamltex}
+\documentclass[preprint,3p]{elsarticle}
+\makeatletter
+\def\ps@pprintTitle{}
+\makeatother
+
+
+\usepackage{url,etex,numprint,listings,spverbatim}
+\usepackage[utf8x]{inputenc}
+%\usepackage{epstopdf}
+
+\npthousandsep{\,}
+\npdecimalsign{.}
+\npproductsign{\cdot}
+\npunitseparator{\,}
+
+\usepackage{graphics,graphicx}
+\graphicspath{{./figure/}}
+
+\usepackage[usenames]{xcolor}
+\usepackage{amsfonts,float}
+\usepackage[boxruled,longend,linesnumbered]{algorithm2e}
+
+\newtheorem{problem}{Problem}
+\usepackage[english]{babel}
+
+\usepackage{graphics,graphicx}
+\usepackage{makeidx}
+\usepackage{bm,bbm,cases}
+
+\usepackage[math]{easyeqn}
+\usepackage{easyvector}
+
+\eqrowsep{8pt plus 2pt minus 2pt}
+\eqspacing{12pt plus 4pt minus 2pt}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+%\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+%     funzioni varie   %
+\newcommand{\I}{{\color{red}\imag}}
+\newcommand{\SCAL}[2]{\left<#1,#2\right>}
+\newcommand{\KSCAL}[2]{\left[#1,#2\right]}
+\newcommand{\REC}[1]{{\frac{1}{#1}}}
+\newcommand{\DS}[1]{\displaystyle{#1}}
+\newcommand{\DET}[1]{\left| #1 \right| }
+\newcommand{\EXP}[1]{e^{#1}}
+
+\newcommand{\ROT}[1]{\DS{\left( #1 \right)}}
+\newcommand{\QUAD}[1]{\DS{\left[ #1 \right]}}
+\newcommand{\FRAC}[2]{\DS{\frac{\DS{#1}}{\DS{#2}}}}
+\newcommand{\cbin}[2]{\ROT{ {#1} \atop {#2}} }
+\newcommand{\normb}[1]{\left|\left|\left| #1 \right|\right|\right| }
+\newcommand{\ITER}[1]{{(#1)}}
+
+
+\newcommand{\dtau}{\,\mathrm{d}\tau}
+
+% manipolazione delle formule %
+%\newcommand{\CL}{\mbox{$\cal L$}}
+%\newcommand{\CH}{\mbox{$\cal H$}}
+%\newcommand{\CU}{\mbox{$\cal U$}}
+%\newcommand{\CV}{\mbox{$\cal V$}}
+%\newcommand{\CS}{\mbox{$\cal S$}}
+%\newcommand{\CT}{\mbox{$\cal T$}}
+
+\newcommand{\SSE}{\Longleftrightarrow}
+\newcommand{\IMP}{\Longrightarrow}
+
+\newcommand{\DEF}{\mathrel{\mathop:}=}
+\newcommand{\assign}{\leftarrow}
+\newcommand{\swap}{\rightleftharpoons}
+\newcommand{\ASSIGNl}[1]{\rlap{$#1$}\qquad\assign\,}
+\newcommand{\ASSIGNm}[1]{\rlap{$#1$}\quad\;\assign\,}
+\newcommand{\ASSIGNs}[1]{\rlap{$#1$}\quad\assign\,}
+\newcommand{\vv}{``}
+\newtheorem{theorem}{Theorem}[section]
+
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{problem}[theorem]{Problem}
+\newenvironment{proof}
+{\par{\it Proof}. \ignorespaces}
+{\qed\bigskip\newline}
+
+\newcommand{\imag}{{\color{red}\bm{i}}}
+
+
+
+\begin{document}
+
+\begin{frontmatter}
+
+\markboth{E.Bertolazzi, M.Frego}{$G^1$ Fitting with Clothoids - Readme}
+
+\title{$G^1$ Fitting with Clothoids - Usage}
+
+\author[EB]{Enrico Bertolazzi}
+\ead{enrico.bertolazzi@unitn.it}
+
+\author[EB]{Marco Frego}
+\ead{m.fregox@gmail.com}
+
+\address[EB]{Department of Industrial Engineering -- University of Trento, Italy}
+
+\begin{abstract}
+This file is part of the Matlab Central File Exchange release \vv G1 fitting with clothoids'' and is meant to help the final user in the usage of the software. The distribution is available at the address:\\
+ \url{http://www.mathworks.com/matlabcentral/fileexchange/42113-g1-fitting-with-clothoids}
+\end{abstract}
+
+
+\end{frontmatter}
+
+%\pagestyle{myheadings}
+%\thispagestyle{plain}
+
+\section{Introduction}
+The aim of the release is to compute a single clothoid curve that interpolates (in the $G^1$ sense) two given points with assigned directions. For a theoretical background on clothoid interpolation, details on the implementation and example of application the reference article is \cite{Bertolazzi:2014}, available at:\\
+ \url{http://onlinelibrary.wiley.com/doi/10.1002/mma.3114/abstract}. \\
+In the paper there is a comparison of the state of the art algorithms for clothoid fitting and  discussion of the computation of the Generalized Fresnel Integrals, i.e. the moments. There are also proofs of accuracy and convergence with interesting counterexamples where other methods fail.
+
+\section{Usage}
+Here it is showed how to use the software by means of some easy examples. The problem and the notation are described briefly in the next section. To better follow the description refer to Figure \ref{fig:interpolation}.
+
+\subsection{Problem statement}
+Consider the curve which satisfies the following system of 
+ordinary differential equations (ODEs):
+%%%
+\begin{EQ}[rclrcl]\label{eq:ODE:clot}
+  x'(s)         &=& \cos \vartheta(s),     \qquad & x(0)&=&x_0,\\
+  y'(s)         &=& \sin \vartheta(s),     \qquad & y(0)&=&y_0, \\
+  \vartheta'(s) &=& \mathcal{K}(s), \qquad & \vartheta(0)&=&\vartheta_0, \\
+\end{EQ}
+%%%
+where $s$ is the arc parameter of the curve, $\vartheta(s)$ is the direction of 
+the tangent $(x'(s),y'(s))$ and $\mathcal{K}(s)$ is the 
+curvature at the point $(x(s),y(s))$.
+When $\mathcal{K}(s)\DEF\kappa' s + \kappa$, i.e. when the curvature changes linearly,
+the curve is called  Clothoid.
+As a special case, when $\kappa'=0$ the curve has constant curvature, i.e. is a circle
+and when both $\kappa=\kappa'=0$ the curve is a straight line.
+%%%
+The solution of ODEs~\eqref{eq:ODE:clot} is given by:
+%%%
+%%%
+\begin{EQ}[rclcl]\label{clot}
+  x(s) &=& x_0 + \int_0^s \cos \Big(\frac{1}{2}\kappa'\tau^2+\kappa\tau+\vartheta_0\Big) \dtau
+  &=&  x_0 + sX_0(\kappa's^2,\kappa s,\vartheta_0),
+  \\
+  y(s) &=& y_0 + \int_0^s \sin \Big(\frac{1}{2}\kappa'\tau^2+\kappa\tau+\vartheta_0\Big) \dtau
+  &=&  y_0 + sY_0(\kappa' s^2,\kappa' s,\vartheta_0).
+\end{EQ}
+%%%
+Notice that $\frac{1}{2}\kappa's^2+\kappa s+\vartheta_0$ and 
+$\kappa's+\kappa$ are, respectively, the angle and the curvature
+at the  abscissa $s$.
+%%%
+%%%
+Thus, the problem considered and solved with this release is stated next.
+%%%
+\begin{problem}[$G^1$ Hermite interpolation]\label{prob:1}
+  Given two points $(x_0,y_0)$ and $(x_1,y_1)$
+  and two angles $\vartheta_0$ and $\vartheta_1$, 
+  find a curve segment of the form~\eqref{clot} which
+  satisfies:
+  %%%
+  \begin{EQ}[rclrclrcl]\label{eq:prob:1}
+    x(0) &=& x_0, \qquad &
+    y(0) &=& y_0, \qquad &
+    (x'(0)\,,\,y'(0)) &=& (\cos\vartheta_0,\,\sin\vartheta_0), \\[\jot]
+    x(L) &=& x_1, \qquad &
+    y(L) &=& y_1, \qquad &
+    (x'(L),y'(L)) &=& (\cos\vartheta_1,\,\sin\vartheta_1),
+  \end{EQ}
+  %%%
+  where $L>0$ is the length of the curve segment.\\
+\end{problem}
+%%%
+\begin{figure}[!tb]
+  \begin{center}
+    \includegraphics[scale=0.8]{Art_Figure_1}
+  \end{center}
+  \caption{$G^1$ Hermite interpolation scheme and  notation.}
+  \label{fig:interpolation}
+\end{figure}
+%%%
+\subsection{Solution with Matlab}
+Suppose to interpolate the two points as suggested in the file \texttt{testN0.m},
+%%%
+\begin{lstlisting}[breaklines, backgroundcolor=\color{gray!10},basicstyle=\small\ttfamily]
+% initial point with angle direction
+x0     = 0.5 ;
+y0     = 0   ;
+theta0 = 1   ;
+
+% final point with angle direction
+x1     = 0.5 ;
+y1     = 0.5 ;
+theta1 = 1   ;
+\end{lstlisting}
+%%%
+The call to the function \texttt{buildClothoid} computes the three parameters needed in the computation of \eqref{eq:prob:1}, namely the two components of the curvature $\kappa$, $\kappa'$ and the length of the curve $L$:
+%%%
+\begin{lstlisting}[breaklines, backgroundcolor=\color{gray!10},basicstyle=\small\ttfamily]
+% compute clothoid parameters
+[k,dk,L] = buildClothoid( x0, y0, theta0, x1, y1, theta1 ) ;
+\end{lstlisting}
+%%%
+The input parameter are respectively: $x,y$ component of the starting point, the initial angle, $x,y$ component of the final point, the final angle.
+To use in practice the computed curve, it is useful to have a sampling of the curve in terms of $x,y$ components, this is obtained by the function \texttt{pointsOnClothoid} where \texttt{npts} is the number of sampling points.
+ %%%
+\begin{lstlisting}[breaklines, backgroundcolor=\color{gray!10},basicstyle=\small\ttfamily]
+% compute points on clothoid
+XY = pointsOnClothoid( x0, y0, theta0, k, dk, L, npts ) ;
+\end{lstlisting}
+%%%
+The result can be plotted to check the solution with
+ %%%
+\begin{lstlisting}[breaklines, backgroundcolor=\color{gray!10},basicstyle=\small\ttfamily]
+% plot solution
+plot( XY(1,:), XY(2,:), '-r' ) ;
+axis equal
+\end{lstlisting}
+%%%
+
+
+\section{How to cite}
+If you use the present software in your research, please cite both the article \cite{Bertolazzi:2014} and the implementation \cite{algo:ref}. The respective bibtex are listed below.
+\begin{lstlisting}[breaklines, backgroundcolor=\color{gray!10},basicstyle=\small\ttfamily]
+@article{bertolazzifrego:2014,
+  author    = {Bertolazzi, Enrico and Frego, Marco},
+  title     = {$G^1$ fitting with clothoids},
+  journal   = {Mathematical Methods in the Applied Sciences},
+  publisher = {John Wiley & Sons, Ltd},
+  issn      = {1099-1476},
+  url       = {http://dx.doi.org/10.1002/mma.3114},
+  doi       = {10.1002/mma.3114},
+  year      = {2014},
+}
+
+@misc{bertolazzifrego:2014,
+  Author       = {Bertolazzi, E. and Frego, M.},
+  Howpublished = {\url{http://www.mathworks.com/matlabcentral/fileexchange/42113-g1-fitting-with-clothoids}},
+  Title        = {$G^1$ fitting with clothoids},
+  Year         = 2013,
+}
+\end{lstlisting}
+%%%
+\bibliographystyle{alpha} % global bibliography 
+\bibliography{Clothoid_fitting} % global bibliography 
+
+
+\end{document}

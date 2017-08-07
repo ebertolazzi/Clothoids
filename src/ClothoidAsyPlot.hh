@@ -75,7 +75,7 @@ namespace Clothoid {
 
   private:
     mutable ofstream file;
-    string   filename;
+    string  filename;
     bool showAxes;
     bool openFile();
     bool closeFile();

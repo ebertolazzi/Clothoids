@@ -26,6 +26,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 //! Clothoid computations routine
 namespace Clothoid {
@@ -34,7 +35,57 @@ namespace Clothoid {
 
   typedef double valueType ;
   typedef int    indexType ;
+
+  /*
+  // sin(x)/x
+  */
+  static
+  inline
+  valueType
+  Sinc( valueType x ) {
+    if ( std::abs(x) < 0.002 ) return 1+x*(1/6-x*x/20);
+    else                       return sin(x)/x;
+  }
+
+  /*
+  // (1-cos(x))/x
+  */
+  static
+  inline
+  valueType
+  Cosc( valueType x ) {
+    if ( std::abs(x) < 0.002 ) {
+      valueType x2  = x*x;
+      return (x/2)*(1+(x2/12)*(1-x2/30));
+    } else {
+      return (1-cos(x))/x;
+    }
+  }
+
+  //! Add or remove multiple of \f$ 2\pi \f$ to an angle  in order to put it in the range \f$ [-\pi,\pi]\f$.
+  void rangeSymm( valueType & ang ) ;
+
+  /*\
+   |   ____        _           ____       ____
+   |  / ___|  ___ | |_   _____|___ \__  _|___ \
+   |  \___ \ / _ \| \ \ / / _ \ __) \ \/ / __) |
+   |   ___) | (_) | |\ V /  __// __/ >  < / __/
+   |  |____/ \___/|_| \_/ \___|_____/_/\_\_____|
+  \*/
+
+  class Solve2x2 {
+    indexType i[2], j[2] ;
+    valueType LU[2][2] ;
+    valueType epsi ;
+    bool      singular ;
+
+  public:
   
+    Solve2x2() : epsi(1e-10) {}
+    bool factorize( valueType A[2][2] ) ;
+    void solve( valueType const b[2], valueType x[2] ) const ;
+  } ;
+
   /*\
    |   _____                         _
    |  |  ___| __ ___  ___ _ __   ___| |
@@ -106,7 +157,91 @@ namespace Clothoid {
                         valueType   c,
                         valueType & intC,
                         valueType & intS ) ;
-  
+
+  /*\
+   |    ____ _          _
+   |   / ___(_)_ __ ___| | ___  ___
+   |  | |   | | '__/ __| |/ _ \/ __|
+   |  | |___| | | | (__| |  __/\__ \
+   |   \____|_|_|  \___|_|\___||___/
+  \*/
+
+  void
+  CircleTangentPoints( valueType PA[2],
+                       valueType rA,
+                       valueType PB[2],
+                       valueType rB,
+                       bool &    external_tangents,
+                       valueType PTE0[2][2],
+                       valueType PTE1[2][2],
+                       bool &    internal_tangents,
+                       valueType PTI0[2][2],
+                       valueType PTI1[2][2] ) ;
+
+  bool
+  CircleLineTransition( valueType C[2],
+                        valueType r,
+                        valueType P[2],
+                        valueType theta,
+                        valueType C0[2],
+                        valueType C1[2] ) ;
+  /*! \brief Compute rational B-spline coefficients for a circle arc
+   *
+   * \param x0     initial x position            \f$ x_0      \f$
+   * \param y0     initial y position            \f$ y_0      \f$
+   * \param theta0 initial angle                 \f$ \theta_0 \f$
+   * \param x1     final x position              \f$ x_1      \f$
+   * \param y1     final y position              \f$ y_1      \f$
+   * \param knots  knots of the B-spline
+   * \param Poly   polygon of the B-spline
+   * \return       3 or 4 the number of polygon points
+   */
+
+  indexType
+  ArcToNURBS( valueType x0,
+              valueType y0,
+              valueType theta0,
+              valueType x1,
+              valueType y1,
+              valueType knots[6],
+              valueType Poly[4][3] ) ;
+
+  /*\
+   |   ____  _
+   |  | __ )(_) __ _ _ __ ___
+   |  |  _ \| |/ _` | '__/ __|
+   |  | |_) | | (_| | | | (__
+   |  |____/|_|\__,_|_|  \___|
+  \*/
+  /*! \brief Compute biarc fitting by Hemite data
+   *
+   * \param x0     initial x position            \f$ x_0      \f$
+   * \param y0     initial y position            \f$ y_0      \f$
+   * \param theta0 initial angle                 \f$ \theta_0 \f$
+   * \param x1     final x position              \f$ x_1      \f$
+   * \param y1     final y position              \f$ y_1      \f$
+   * \param theta1 final angle                   \f$ \theta_1 \f$
+   * \param xs     x-coordinate junction point   \f$ x_\star  \f$
+   * \param ys     y-coordinate junction point   \f$ y_\star  \f$
+   * \param thetas angle at the junction point   \f$ \theta_\star \f$
+   * \param L0     lenght of the first arc
+   * \param L1     lenght of the second arc
+   * \return false computation failed
+   */
+
+  bool
+  Biarc( valueType   x0,
+         valueType   y0,
+         valueType   theta0,
+         valueType   x1,
+         valueType   y1,
+         valueType   theta1,
+         valueType & xs,
+         valueType & ys,
+         valueType & thetas,
+         valueType & L0,
+         valueType & L1 ) ;
+
   /*\
    |    ____ _       _   _           _     _
    |   / ___| | ___ | |_| |__   ___ (_) __| |
