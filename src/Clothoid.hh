@@ -83,7 +83,7 @@ namespace Clothoid {
   
     Solve2x2() : epsi(1e-10) {}
     bool factorize( valueType A[2][2] ) ;
-    void solve( valueType const b[2], valueType x[2] ) const ;
+    bool solve( valueType const b[2], valueType x[2] ) const ;
   } ;
 
   /*\
@@ -185,26 +185,29 @@ namespace Clothoid {
                         valueType theta,
                         valueType C0[2],
                         valueType C1[2] ) ;
+
   /*! \brief Compute rational B-spline coefficients for a circle arc
    *
-   * \param x0     initial x position            \f$ x_0      \f$
-   * \param y0     initial y position            \f$ y_0      \f$
-   * \param theta0 initial angle                 \f$ \theta_0 \f$
-   * \param x1     final x position              \f$ x_1      \f$
-   * \param y1     final y position              \f$ y_1      \f$
+   * \param theta0 initial angle      \f$ \theta_0 \f$
+   * \param x0     initial x position \f$ x_0      \f$
+   * \param y0     initial y position \f$ y_0      \f$
+   * \param c0     initial value \f$ \cos(\theta_0) \f$
+   * \param s0     initial value \f$ \sin(\theta_0) \f$
    * \param knots  knots of the B-spline
    * \param Poly   polygon of the B-spline
    * \return       3 or 4 the number of polygon points
    */
 
   indexType
-  ArcToNURBS( valueType x0,
+  ArcToNURBS( valueType theta0,
+              valueType x0,
               valueType y0,
-              valueType theta0,
-              valueType x1,
-              valueType y1,
-              valueType knots[6],
-              valueType Poly[4][3] ) ;
+              valueType c0,
+              valueType s0,
+              valueType L,
+              valueType kappa,
+              valueType knots[12],
+              valueType Poly[9][3] );
 
   /*\
    |   ____  _
@@ -213,34 +216,22 @@ namespace Clothoid {
    |  | |_) | | (_| | | | (__
    |  |____/|_|\__,_|_|  \___|
   \*/
+
+  typedef struct {
+    valueType x0, y0, theta0, c0, s0 ;
+    valueType xs, ys, thetas, cs, ss ;
+    valueType x1, y1, theta1, c1, s1 ;
+    valueType alpha, L0, L1, kappa0, kappa1 ;
+  } BiarcData ;
+
   /*! \brief Compute biarc fitting by Hemite data
    *
-   * \param x0     initial x position            \f$ x_0      \f$
-   * \param y0     initial y position            \f$ y_0      \f$
-   * \param theta0 initial angle                 \f$ \theta_0 \f$
-   * \param x1     final x position              \f$ x_1      \f$
-   * \param y1     final y position              \f$ y_1      \f$
-   * \param theta1 final angle                   \f$ \theta_1 \f$
-   * \param xs     x-coordinate junction point   \f$ x_\star  \f$
-   * \param ys     y-coordinate junction point   \f$ y_\star  \f$
-   * \param thetas angle at the junction point   \f$ \theta_\star \f$
-   * \param L0     lenght of the first arc
-   * \param L1     lenght of the second arc
+   * \param BiData BiArc data structure
    * \return false computation failed
    */
 
   bool
-  Biarc( valueType   x0,
-         valueType   y0,
-         valueType   theta0,
-         valueType   x1,
-         valueType   y1,
-         valueType   theta1,
-         valueType & xs,
-         valueType & ys,
-         valueType & thetas,
-         valueType & L0,
-         valueType & L1 ) ;
+  Biarc( BiarcData & BiData, bool compute_thstar ) ;
 
   /*\
    |    ____ _       _   _           _     _

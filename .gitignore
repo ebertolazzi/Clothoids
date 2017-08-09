@@ -1,2 +1,6 @@
 *.mexmaci64
 DerivedData
+*.aux
+*.bbl
+*.log
+*.gz

@@ -1353,7 +1353,7 @@ namespace Clothoid {
     return true ;
   }
 
-  void
+  bool
   Solve2x2::solve( valueType const b[2], valueType x[2] ) const {
     if ( singular ) {
       // L^+ Pb
@@ -1361,6 +1361,9 @@ namespace Clothoid {
                       ( (1+power2(LU[1][0]) ) * ( power2(LU[0][0])+power2(LU[0][1]) ) ) ;
       x[j[0]] = tmp*LU[0][0] ;
       x[j[1]] = tmp*LU[0][1] ;
+      // check consistency
+      tmp = (LU[0][0]*x[j[0]]+LU[0][1]*x[j[1]]) ;
+      return hypot( b[i[0]]-tmp, b[i[1]]+tmp*LU[1][0] ) < hypot(b[0],b[1])*epsi ;
     } else { // non singular
       // L^(-1) Pb
       x[j[0]] = b[i[0]] ;
@@ -1368,6 +1371,10 @@ namespace Clothoid {
       // U^(-1) x
       x[j[1]] /= LU[1][1] ;
       x[j[0]]  = (x[j[0]]-LU[0][1]*x[j[1]])/LU[0][0] ;
+      return FP_INFINITE != std::fpclassify(x[0]) &&
+             FP_NAN      != std::fpclassify(x[0]) &&
+             FP_INFINITE != std::fpclassify(x[1]) &&
+             FP_NAN      != std::fpclassify(x[1]);
     }
   }
 

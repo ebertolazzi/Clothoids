@@ -24,8 +24,10 @@ hold off
 subplot(2,1,2);
 plot(p(1,:),p(2,:),'k')
 hold on
-[arc1,arc2] = biarc(x0,y0,theta0,x1,y1,theta1);
-biarc_plot(arc1,arc2,true);
+[arc1,arc2,ok] = biarc(x0,y0,theta0,x1,y1,theta1);
+if ok
+  biarc_plot(arc1,arc2,true);
+end
 axis equal
 hold off
 

@@ -190,45 +190,51 @@ namespace Clothoid {
   }
 
   indexType
-  ArcToNURBS( valueType x0,
+  ArcToNURBS( valueType theta0,
+              valueType x0,
               valueType y0,
-              valueType theta0,
-              valueType x1,
-              valueType y1,
-              valueType knots[7],
-              valueType Poly[4][3] ) {
-    valueType dx = x1 - x0;
-    valueType dy = y1 - y0;
-    valueType alpha  = atan2(dy,dx);
-    valueType L      = hypot(dy,dx);
-    valueType th     = theta0-alpha ;
-    valueType theta1 = alpha-th ;
-    if ( abs(th) > m_pi/3 ) {
-      valueType w   = cos(th/2);
-      valueType s   = L/(4*w*w);
-      valueType xm0 = x0+s*cos(theta0) ;
-      valueType ym0 = y0+s*sin(theta0) ;
-      valueType xm1 = x1-s*cos(theta1) ;
-      valueType ym1 = y1-s*sin(theta1) ;
-      knots[0] = knots[1] = knots[2] = 0 ;
-      knots[3] = 1 ;
-      knots[4] = knots[5] = knots[6] = 2 ;
-      Poly[0][0] = x0 ; Poly[1][0] = w*xm0 ; Poly[2][0] = w*xm1 ; Poly[3][0] = x1 ;
-      Poly[0][1] = y0 ; Poly[1][1] = w*ym0 ; Poly[2][1] = w*ym1 ; Poly[3][1] = y1 ;
-      Poly[0][2] = 1  ; Poly[1][2] = w     ; Poly[2][2] = w ;     Poly[3][2] = 1  ;
-      return 4 ;
-    } else {
-      valueType w  = cos(th);
-      valueType s  = L/(2*w);
-      valueType xm = x0+s*cos(theta0) ;
-      valueType ym = y0+s*sin(theta0) ;
-      knots[0] = knots[1] = knots[2] = 0 ;
-      knots[3] = knots[4] = knots[5] = 1 ;
-      Poly[0][0] = x0 ; Poly[1][0] = w*xm ; Poly[2][0] = x1 ;
-      Poly[0][1] = y0 ; Poly[1][1] = w*ym ; Poly[2][1] = y1 ;
-      Poly[0][2] = 1  ; Poly[1][2] = w    ; Poly[2][2] = 1  ;
-      return 3 ;
+              valueType c0,
+              valueType s0,
+              valueType L,
+              valueType kappa,
+              valueType knots[12],
+              valueType Poly[9][3] ) {
+
+    valueType dtheta = L*kappa ;
+    indexType ns     = std::floor(3*std::abs(dtheta)/m_pi) ;
+    if      ( ns < 1 ) ns = 1 ;
+    else if ( ns > 4 ) ns = 4 ;
+    valueType th = dtheta/(2*ns) ;
+    valueType D  = std::abs(tan(th)/kappa);
+    valueType w  = cos(th) ;
+    knots[0] = knots[1] = knots[2] = 0 ;
+    Poly[0][0] = x0 ;
+    Poly[0][1] = y0 ;
+    Poly[0][2] = 1  ;
+    indexType kk = 0 ;
+    for ( indexType k = 0 ; k < ns ; ++k ) {
+      valueType tth = theta0+kk*th ;
+      valueType x1 = Poly[kk][0]+D*cos(tth) ;
+      valueType y1 = Poly[kk][1]+D*sin(tth) ;
+      valueType kL = ((k+1)*dtheta)/ns ;
+      valueType s  = Sinc(kL) ;
+      valueType c  = Cosc(kL) ;
+      valueType Lk = ((k+1)*L)/ns ;
+      valueType x2 = x0+Lk*(c0*s-s0*c) ;
+      valueType y2 = y0+Lk*(s0*s+c0*c) ;
+      ++kk;
+      Poly[kk][0] = w*x1 ;
+      Poly[kk][1] = w*y1 ;
+      Poly[kk][2] = w  ;
+      ++kk;
+      Poly[kk][0] = x2 ;
+      Poly[kk][1] = y2 ;
+      Poly[kk][2] = 1  ;
+      knots[kk+1] = k+1 ;
+      knots[kk+2] = k+1 ;
     }
+    knots[kk+3] = ns ;
+    return 1+2*ns;
   }
 
   /*\
@@ -240,56 +246,72 @@ namespace Clothoid {
   \*/
 
   bool
-  Biarc( valueType   x0,
-         valueType   y0,
-         valueType   theta0,
-         valueType   x1,
-         valueType   y1,
-         valueType   theta1,
-         valueType & xs,
-         valueType & ys,
-         valueType & thstar,
-         valueType & L0,
-         valueType & L1 ) {
+  Biarc( BiarcData & BiData, bool compute_thstar ) {
 
-    valueType b[2] = { x1-x0, y1-y0 } ;
-    valueType alpha = atan2(b[1],b[0]);
+    valueType dx = BiData.x1-BiData.x0 ;
+    valueType dy = BiData.y1-BiData.y0 ;
+
+    BiData.alpha = atan2(dy,dx);
+    valueType d = hypot(dy,dx);
+
     // put in range
+    valueType theta0 = BiData.theta0-BiData.alpha;
+    valueType theta1 = BiData.theta1-BiData.alpha;
+
     rangeSymm(theta0);
     rangeSymm(theta1);
-    valueType c0      = cos(theta0);
-    valueType s0      = sin(theta0);
-    valueType c1      = cos(theta1);
-    valueType s1      = sin(theta1);
-    valueType thave   = (theta0+theta1)/2;
-              thstar  = 2*alpha-thave;
+
+    valueType thstar = compute_thstar ? -(theta0+theta1)/2 : BiData.thetas + BiData.alpha ;
+
+    valueType c0 = cos(theta0);
+    valueType s0 = sin(theta0);
+    valueType c1 = cos(theta1);
+    valueType s1 = sin(theta1);
+
     valueType thstar0 = thstar-theta0;
     valueType thstar1 = thstar-theta1;
-    valueType Sinc0   = Sinc(thstar0);
-    valueType Cosc0   = Cosc(thstar0);
-    valueType Sinc1   = Sinc(thstar1);
-    valueType Cosc1   = Cosc(thstar1);
 
-    Solve2x2 solver;
+    valueType Sinc0 = Sinc(thstar0);
+    valueType Cosc0 = Cosc(thstar0);
+
+    valueType Sinc1 = Sinc(thstar1);
+    valueType Cosc1 = Cosc(thstar1);
+
     valueType A[2][2] = {
       { c0*Sinc0-s0*Cosc0, c1*Sinc1-s1*Cosc1 },
       { s0*Sinc0+c0*Cosc0, s1*Sinc1+c1*Cosc1 }
     };
+
+    valueType b[2] = { 1, 0 };
+
+    Solve2x2 solver;
     solver.factorize(A);
     valueType st[2] ;
-    solver.solve( b, st );
-    valueType epsi = 100*hypot(b[0],b[1])*std::numeric_limits<valueType>::epsilon();
-    bool ok = FP_INFINITE != std::fpclassify(st[0]) &&
-              FP_NAN      != std::fpclassify(st[0]) &&
-              FP_INFINITE != std::fpclassify(st[1]) &&
-              FP_NAN      != std::fpclassify(st[1]) &&
-              st[0] > -epsi && st[0] > -epsi ;
-
+    bool ok = solver.solve( b, st );
     if ( ok ) {
-      L0 = st[0] ;
-      L1 = st[1] ;
-      xs = x0 + L0*A[0][0];
-      ys = y0 + L0*A[1][0];
+      valueType epsi = 100*std::numeric_limits<valueType>::epsilon();
+      ok = st[0] > epsi && st[1] > epsi ; // NO ZERO LENGHT SOLUTION
+    }
+    if ( ok ) {
+
+      BiData.L0     = d*st[0];
+      BiData.L1     = d*st[1];
+      BiData.kappa0 = thstar0/BiData.L0;
+      BiData.kappa1 = -thstar1/BiData.L1;
+
+      valueType ca  = cos(BiData.alpha);
+      valueType sa  = sin(BiData.alpha);
+      BiData.xs = BiData.x0 + BiData.L0*(A[0][0]*ca-A[1][0]*sa);
+      BiData.ys = BiData.y0 + BiData.L0*(A[0][0]*sa+A[1][0]*ca);
+
+      BiData.thetas = thstar+BiData.alpha;
+      BiData.cs     = cos(BiData.thetas);
+      BiData.ss     = sin(BiData.thetas);
+
+      BiData.c0 = cos(BiData.theta0);
+      BiData.s0 = sin(BiData.theta0);
+      BiData.c1 = cos(BiData.theta1);
+      BiData.s1 = sin(BiData.theta1);
     }
 
     return ok ;
