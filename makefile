@@ -27,8 +27,14 @@ ifneq (,$(findstring Darwin, $(OS)))
 endif
 
 SRCS = \
-src/Clothoid.cc \
+src/Biarc.cc \
+src/Circle.cc \
+src/ClothoidAsyPlot.cc \
+src/ClothoidG1.cc \
+src/ClothoidG2.cc \
 src/CubicRootsFlocke.cc \
+src/Fresnel.cc \
+src/G2lib.cc \
 src/Triangle2D.cc
 
 OBJS  = $(SRCS:.cc=.o)
@@ -42,8 +48,8 @@ FRAMEWORK = Clothoid
 
 all: lib
 	@$(MKDIR) bin
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/test1 src_tests/test1.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/test2 src_tests/test2.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2     tests/testG2.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot tests/testG2plot.cc $(LIBS)
 
 lib: lib/$(LIB_CLOTHOID)
 
@@ -80,8 +86,8 @@ install_as_framework: lib
 	cp lib/$(LIB_CLOTHOID)     $(PREFIX)/lib
 
 run:
-	./bin/test1
-	./bin/test2
+	./bin/testG2
+	./bin/testG2plot
 
 doc:
 	doxygen

@@ -40,28 +40,22 @@
  *
  */
 
-#include "Clothoid.hh"
+#include "Triangle2D.hh"
 
-namespace Clothoid {
+namespace Triangle2D {
 
-  static
+  template <typename T>
   inline
-  valueType
-  orient_2d( valueType const a[2],
-             valueType const b[2],
-             valueType const c[2] ) {
+  T
+  orient_2d( T const a[2], T const b[2], T const c[2] ) {
     return (a[0]-c[0]) * (b[1]-c[1]) - (a[1]-c[1]) * (b[0]-c[0]) ;
   }
 
-  static
+  template <typename T>
   inline
   bool
-  intersection_test_vertex( valueType const P1[2],
-                            valueType const Q1[2],
-                            valueType const R1[2],
-                            valueType const P2[2],
-                            valueType const Q2[2],
-                            valueType const R2[2] ) {
+  intersection_test_vertex( T const P1[2], T const Q1[2], T const R1[2],
+                            T const P2[2], T const Q2[2], T const R2[2] ) {
     if ( orient_2d(R2,P2,Q1) >= 0 ) {
       if ( orient_2d(R2,Q2,Q1) <= 0 ) {
         if ( orient_2d(P1,P2,Q1) > 0 ) {
@@ -87,15 +81,11 @@ namespace Clothoid {
     }
   }
 
-  static
+  template <typename T>
   inline
   bool
-  intersection_test_edge( valueType const P1[2],
-                          valueType const Q1[2],
-                          valueType const R1[2],
-                          valueType const P2[2],
-                          valueType const Q2[2],
-                          valueType const R2[2] ) {
+  intersection_test_edge( T const P1[2], T const Q1[2], T const R1[2],
+                          T const P2[2], T const Q2[2], T const R2[2] ) {
     if ( orient_2d(R2,P2,Q1) >= 0 ) {
       if ( orient_2d(P1,P2,Q1) >= 0 ) {
         return orient_2d(P1,Q1,R2) >= 0 ;
@@ -109,15 +99,11 @@ namespace Clothoid {
     return false ;
   }
 
-  static
+  template <typename T>
   inline
   bool
-  tri_tri_intersection_2d( valueType const p1[2],
-                           valueType const q1[2],
-                           valueType const r1[2],
-                           valueType const p2[2],
-                           valueType const q2[2],
-                           valueType const r2[2] ) {
+  tri_tri_intersection_2d( T const p1[2], T const q1[2], T const r1[2],
+                           T const p2[2], T const q2[2], T const r2[2] ) {
     if ( orient_2d(p2,q2,p1) >= 0 ) {
       if ( orient_2d(q2,r2,p1) >= 0 ) {
         return orient_2d(r2,p2,p1) >= 0 || intersection_test_edge(p1,q1,r1,p2,q2,r2) ;
@@ -135,15 +121,11 @@ namespace Clothoid {
     }
   }
 
-  static
+  template <typename T>
   inline
   bool
-  tri_tri_overlap_test_2d( valueType const p1[2],
-                           valueType const q1[2],
-                           valueType const r1[2],
-                           valueType const p2[2],
-                           valueType const q2[2],
-                           valueType const r2[2] ) {
+  tri_tri_overlap_test_2d( T const p1[2], T const q1[2], T const r1[2],
+                           T const p2[2], T const q2[2], T const r2[2] ) {
     if ( orient_2d(p1,q1,r1) < 0 ) {
       if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,r1,q1,p2,r2,q2) ;
       else                           return tri_tri_intersection_2d(p1,r1,q1,p2,q2,r2) ;
@@ -153,14 +135,23 @@ namespace Clothoid {
     }
   }
   
+  template <typename T>
   bool
-  Triangle2D::intersect( Triangle2D const & t2 ) const {
+  Triangle2D<T>::intersect( Triangle2D<T> const & t2 ) const {
     return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
 
+  template <typename T>
   bool
-  Triangle2D::overlap( Triangle2D const & t2 ) const {
+  Triangle2D<T>::overlap( Triangle2D<T> const & t2 ) const {
     return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
 
+  template class Triangle2D<float> ;
+  template class Triangle2D<double> ;
+
 }
+
+///
+/// eof: Triangle2D.cc
+///

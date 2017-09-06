@@ -158,7 +158,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
     // costruisco bb
     Clothoid::ClothoidCurve clot( x0, y0, theta0, k, dk, L ) ;
     std::vector<Clothoid::ClothoidCurve> c ;
-    std::vector<Clothoid::Triangle2D>    t ;
+    std::vector<Clothoid::Triangle2D<Clothoid::valueType> > t ;
 
     clot.bbSplit( max_angle, max_size, offs, c, t ) ;
 

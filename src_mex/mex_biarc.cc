@@ -9,6 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoid.hh"
+#include "Biarc.hh"
 #include "mex.h"
 
 #include <vector>
@@ -67,8 +68,8 @@ mexFunction( int nlhs, mxArray       *plhs[],
              int nrhs, mxArray const *prhs[] ) {
 
   try {
-    Clothoid::BiarcData BiData ;
-    Clothoid::valueType knots[12], Poly[9][3] ;
+    Biarc::Biarc     biarc ;
+    Biarc::valueType knots[12], Poly[9][3] ;
 
     // Check for proper number of arguments, etc
     bool ok = nrhs == 6 || nrhs == 7 ;
@@ -85,22 +86,17 @@ mexFunction( int nlhs, mxArray       *plhs[],
                 "Argument N." << kk+1 << " must be a scalar" );
       }
 
-      BiData.x0     = mxGetScalar(arg_x0) ;
-      BiData.y0     = mxGetScalar(arg_y0) ;
-      BiData.theta0 = mxGetScalar(arg_theta0) ;
-      BiData.x1     = mxGetScalar(arg_x1) ;
-      BiData.y1     = mxGetScalar(arg_y1) ;
-      BiData.theta1 = mxGetScalar(arg_theta1) ;
-      if ( nrhs == 7 ) BiData.thetas = mxGetScalar(arg_thstar) ;
+      ok = biarc.setup( mxGetScalar(arg_x0),
+                        mxGetScalar(arg_y0),
+                        mxGetScalar(arg_theta0),
+                        mxGetScalar(arg_x1),
+                        mxGetScalar(arg_y1),
+                        mxGetScalar(arg_theta1) ) ;
+      //if ( nrhs == 7 ) BiData.thetas = mxGetScalar(arg_thstar) ;
     }
-    if ( ok ) ok = Clothoid::Biarc( BiData, nrhs == 6 ) ;
+    //if ( ok ) ok = Clothoid::Biarc( BiData, nrhs == 6 ) ;
     if ( ok ) {
-      //mwSize npt = Clothoid::ArcToNURBS( BiData.x0, BiData.y0, BiData.theta0,
-      //                                   BiData.xs, BiData.ys, knots, Poly ) ;
-      mwSize npt = Clothoid::ArcToNURBS( BiData.theta0,
-                                         BiData.x0, BiData.y0, BiData.c0, BiData.s0,
-                                         BiData.L0, BiData.kappa0,
-                                         knots, Poly ) ;
+      mwSize npt = biarc.getC0().toNURBS( knots, Poly ) ;
       mxArray * K = mxCreateDoubleMatrix(1, npt+3, mxREAL);
       mxArray * P = mxCreateDoubleMatrix(3, npt, mxREAL);
 
@@ -121,16 +117,10 @@ mexFunction( int nlhs, mxArray       *plhs[],
       mxSetFieldByNumber( plhs[0], 0, 3, mxCreateDoubleScalar(npt) );
       mxSetFieldByNumber( plhs[0], 0, 4, K );
       mxSetFieldByNumber( plhs[0], 0, 5, P );
-      mxSetFieldByNumber( plhs[0], 0, 6, mxCreateDoubleScalar(BiData.L0) );
-      mxSetFieldByNumber( plhs[0], 0, 7, mxCreateDoubleScalar(BiData.kappa0) );
+      mxSetFieldByNumber( plhs[0], 0, 6, mxCreateDoubleScalar(biarc.getC0().getL()) );
+      mxSetFieldByNumber( plhs[0], 0, 7, mxCreateDoubleScalar(biarc.getC0().getKappa()) );
 
-      //npt = Clothoid::ArcToNURBS( BiData.xs, BiData.ys, BiData.thetas,
-      //                            BiData.x1, BiData.y1, knots, Poly ) ;
-      npt = Clothoid::ArcToNURBS( BiData.thetas,
-                                  BiData.xs, BiData.ys, BiData.cs, BiData.ss,
-                                  BiData.L1, BiData.kappa1,
-                                  knots, Poly ) ;
-
+      npt = biarc.getC1().toNURBS( knots, Poly ) ;
       K   = mxCreateDoubleMatrix(1, npt+3, mxREAL);
       P   = mxCreateDoubleMatrix(3, npt, mxREAL);
       pP = mxGetPr(P) ;
@@ -148,8 +138,8 @@ mexFunction( int nlhs, mxArray       *plhs[],
       mxSetFieldByNumber( plhs[1], 0, 3, mxCreateDoubleScalar(npt) );
       mxSetFieldByNumber( plhs[1], 0, 4, K );
       mxSetFieldByNumber( plhs[1], 0, 5, P );
-      mxSetFieldByNumber( plhs[1], 0, 6, mxCreateDoubleScalar(BiData.L1) );
-      mxSetFieldByNumber( plhs[1], 0, 7, mxCreateDoubleScalar(BiData.kappa1) );
+      mxSetFieldByNumber( plhs[1], 0, 6, mxCreateDoubleScalar(biarc.getC1().getL()) );
+      mxSetFieldByNumber( plhs[1], 0, 7, mxCreateDoubleScalar(biarc.getC1().getKappa()) );
     } else {
       plhs[0] = mxCreateDoubleScalar(0.0);
       plhs[1] = mxCreateDoubleScalar(0.0);

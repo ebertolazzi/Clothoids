@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------*\
  |                                                                          |
- |  Copyright (C) 2014                                                      |
+ |  Copyright (C) 2017                                                      |
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
@@ -24,214 +24,16 @@
 #ifndef CLOTHOID_HH
 #define CLOTHOID_HH
 
-#include <iostream>
+#include "Fresnel.hh"
+#include "Triangle2D.hh"
 #include <vector>
-#include <cmath>
 
 //! Clothoid computations routine
 namespace Clothoid {
 
   using std::vector ;
-
-  typedef double valueType ;
-  typedef int    indexType ;
-
-  /*
-  // sin(x)/x
-  */
-  static
-  inline
-  valueType
-  Sinc( valueType x ) {
-    if ( std::abs(x) < 0.002 ) return 1+x*(1/6-x*x/20);
-    else                       return sin(x)/x;
-  }
-
-  /*
-  // (1-cos(x))/x
-  */
-  static
-  inline
-  valueType
-  Cosc( valueType x ) {
-    if ( std::abs(x) < 0.002 ) {
-      valueType x2  = x*x;
-      return (x/2)*(1+(x2/12)*(1-x2/30));
-    } else {
-      return (1-cos(x))/x;
-    }
-  }
-
-  //! Add or remove multiple of \f$ 2\pi \f$ to an angle  in order to put it in the range \f$ [-\pi,\pi]\f$.
-  void rangeSymm( valueType & ang ) ;
-
-  /*\
-   |   ____        _           ____       ____
-   |  / ___|  ___ | |_   _____|___ \__  _|___ \
-   |  \___ \ / _ \| \ \ / / _ \ __) \ \/ / __) |
-   |   ___) | (_) | |\ V /  __// __/ >  < / __/
-   |  |____/ \___/|_| \_/ \___|_____/_/\_\_____|
-  \*/
-
-  class Solve2x2 {
-    indexType i[2], j[2] ;
-    valueType LU[2][2] ;
-    valueType epsi ;
-    bool      singular ;
-
-  public:
-  
-    Solve2x2() : epsi(1e-10) {}
-    bool factorize( valueType A[2][2] ) ;
-    bool solve( valueType const b[2], valueType x[2] ) const ;
-  } ;
-
-  /*\
-   |   _____                         _
-   |  |  ___| __ ___  ___ _ __   ___| |
-   |  | |_ | '__/ _ \/ __| '_ \ / _ \ |
-   |  |  _|| | |  __/\__ \ | | |  __/ |
-   |  |_|  |_|  \___||___/_| |_|\___|_|
-  \*/
-  //! Compute Fresnel integrals
-  /*!
-   * \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
-   *     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
-   * \param x the input abscissa
-   * \param S the value of \f$ S(x) \f$
-   * \param C the value of \f$ C(x) \f$
-   */
-  void
-  FresnelCS( valueType   x,
-             valueType & C,
-             valueType & S ) ;
-
-  //! Compute Fresnel integrals and its derivatives
-  /*!
-   * \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
-   *     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
-   * \param x the input abscissa
-   * \param S S[0]=\f$ S(x) \f$, S[1]=\f$ S'(x) \f$, S[2]=\f$ S''(x) \f$
-   * \param C C[0]=\f$ C(x) \f$, C[1]=\f$ C'(x) \f$, C[2]=\f$ C''(x) \f$
-   */
-  void
-  FresnelCS( indexType nk,
-             valueType x,
-             valueType C[],
-             valueType S[] ) ;
-
-  /*! \brief Compute the Fresnel integrals
-   * \f[ 
-   *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
-   *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
-   * \f]
-   * \param nk   number of momentae to compute
-   * \param a    parameter \f$ a \f$
-   * \param b    parameter \f$ b \f$
-   * \param c    parameter \f$ c \f$
-   * \param intC cosine integrals,
-   * \param intS sine integrals
-   */
-  void
-  GeneralizedFresnelCS( indexType nk,
-                        valueType a,
-                        valueType b,
-                        valueType c,
-                        valueType intC[],
-                        valueType intS[] ) ;
-
-  /*! \brief Compute the Fresnel integrals
-   * \f[ 
-   *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
-   *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
-   * \f]
-   * \param a      parameter \f$ a \f$
-   * \param b      parameter \f$ b \f$
-   * \param c      parameter \f$ c \f$
-   * \param intC   cosine integrals, 
-   * \param intS   sine integrals
-   */
-  void
-  GeneralizedFresnelCS( valueType   a,
-                        valueType   b,
-                        valueType   c,
-                        valueType & intC,
-                        valueType & intS ) ;
-
-  /*\
-   |    ____ _          _
-   |   / ___(_)_ __ ___| | ___  ___
-   |  | |   | | '__/ __| |/ _ \/ __|
-   |  | |___| | | | (__| |  __/\__ \
-   |   \____|_|_|  \___|_|\___||___/
-  \*/
-
-  void
-  CircleTangentPoints( valueType PA[2],
-                       valueType rA,
-                       valueType PB[2],
-                       valueType rB,
-                       bool &    external_tangents,
-                       valueType PTE0[2][2],
-                       valueType PTE1[2][2],
-                       bool &    internal_tangents,
-                       valueType PTI0[2][2],
-                       valueType PTI1[2][2] ) ;
-
-  bool
-  CircleLineTransition( valueType C[2],
-                        valueType r,
-                        valueType P[2],
-                        valueType theta,
-                        valueType C0[2],
-                        valueType C1[2] ) ;
-
-  /*! \brief Compute rational B-spline coefficients for a circle arc
-   *
-   * \param theta0 initial angle      \f$ \theta_0 \f$
-   * \param x0     initial x position \f$ x_0      \f$
-   * \param y0     initial y position \f$ y_0      \f$
-   * \param c0     initial value \f$ \cos(\theta_0) \f$
-   * \param s0     initial value \f$ \sin(\theta_0) \f$
-   * \param knots  knots of the B-spline
-   * \param Poly   polygon of the B-spline
-   * \return       3 or 4 the number of polygon points
-   */
-
-  indexType
-  ArcToNURBS( valueType theta0,
-              valueType x0,
-              valueType y0,
-              valueType c0,
-              valueType s0,
-              valueType L,
-              valueType kappa,
-              valueType knots[12],
-              valueType Poly[9][3] );
-
-  /*\
-   |   ____  _
-   |  | __ )(_) __ _ _ __ ___
-   |  |  _ \| |/ _` | '__/ __|
-   |  | |_) | | (_| | | | (__
-   |  |____/|_|\__,_|_|  \___|
-  \*/
-
-  typedef struct {
-    valueType x0, y0, theta0, c0, s0 ;
-    valueType xs, ys, thetas, cs, ss ;
-    valueType x1, y1, theta1, c1, s1 ;
-    valueType alpha, L0, L1, kappa0, kappa1 ;
-  } BiarcData ;
-
-  /*! \brief Compute biarc fitting by Hemite data
-   *
-   * \param BiData BiArc data structure
-   * \return false computation failed
-   */
-
-  bool
-  Biarc( BiarcData & BiData, bool compute_thstar ) ;
+  using namespace Fresnel ;
+  using namespace Triangle2D ;
 
   /*\
    |    ____ _       _   _           _     _
@@ -287,59 +89,6 @@ namespace Clothoid {
   class ClothoidCurve ; // forward declaration
 
   /*\
-   |   _____     _                   _      ____  ____
-   |  |_   _| __(_) __ _ _ __   __ _| | ___|___ \|  _ \
-   |    | || '__| |/ _` | '_ \ / _` | |/ _ \ __) | | | |
-   |    | || |  | | (_| | | | | (_| | |  __// __/| |_| |
-   |    |_||_|  |_|\__,_|_| |_|\__, |_|\___|_____|____/
-   |                           |___/
-  \*/
-  //! \brief Class to manage Triangle for BB of clothoid curve
-  class Triangle2D {
-
-    valueType p1[2], p2[2], p3[2] ;
-
-  public:
-
-    Triangle2D( ) {
-      p1[0] = p1[1] =
-      p2[0] = p2[1] =
-      p3[0] = p3[1] = 0 ;
-    }
-
-    Triangle2D( valueType x1, valueType y1,
-                valueType x2, valueType y2,
-                valueType x3, valueType y3 ) {
-      p1[0] = x1; p1[1] = y1;
-      p2[0] = x2; p2[1] = y2;
-      p3[0] = x3; p3[1] = y3;
-    }
-
-    Triangle2D( valueType const _p1[2],
-                valueType const _p2[2],
-                valueType const _p3[2] ) {
-      p1[0] = _p1[0] ; p1[1] = _p1[1] ;
-      p2[0] = _p2[0] ; p2[1] = _p2[1] ;
-      p3[0] = _p3[0] ; p3[1] = _p3[1] ;
-    }
-
-    ~Triangle2D() {}
-    
-    valueType x1() const { return p1[0] ; }
-    valueType y1() const { return p1[1] ; }
-    valueType x2() const { return p2[0] ; }
-    valueType y2() const { return p2[1] ; }
-    valueType x3() const { return p3[0] ; }
-    valueType y3() const { return p3[1] ; }
-
-    bool intersect( Triangle2D const & t2 ) const ;
-    bool overlap( Triangle2D const & t2 ) const ;
-    
-    friend class ClothoidCurve ;
-
-  };
-  
-  /*\
    |    ____ _       _   _           _     _  ____
    |   / ___| | ___ | |_| |__   ___ (_) __| |/ ___|   _ _ ____   _____
    |  | |   | |/ _ \| __| '_ \ / _ \| |/ _` | |  | | | | '__\ \ / / _ \
@@ -351,19 +100,19 @@ namespace Clothoid {
 
     valueType x0,       //!< initial x coordinate of the clothoid
               y0,       //!< initial y coordinate of the clothoid
-              theta0 ;  //!< initial angle of the clothoid
+              theta0,   //!< initial angle of the clothoid
+              k,        //!< initial curvature
+              dk ;      //!< curvature derivative
 
-    valueType k,        //!< initial curvature
-              dk,       //!< curvature derivative
-              s_min,    //!< initial curvilinear coordinate of the clothoid segment
+    valueType s_min,    //!< initial curvilinear coordinate of the clothoid segment
               s_max ;   //!< final curvilinear coordinate of the clothoid segment
 
     void
-    bbSplit_internal( valueType               split_angle,
-                      valueType               split_size,
-                      valueType               split_offs,
-                      vector<ClothoidCurve> & c,
-                      vector<Triangle2D>    & t ) const ;
+    bbSplit_internal( valueType                        split_angle,
+                      valueType                        split_size,
+                      valueType                        split_offs,
+                      vector<ClothoidCurve>          & c,
+                      vector<Triangle2D<valueType> > & t ) const ;
 
     //! Use newton and bisection to intersect two small clothoid segment
     bool
@@ -373,7 +122,7 @@ namespace Clothoid {
                         valueType tolerance ) const ;
 
   public:
-  
+
     ClothoidCurve()
     : x0(0)
     , y0(0)
@@ -590,15 +339,19 @@ namespace Clothoid {
                 valueType p2[2] ) const ;
 
     bool
-    bbTriangle( valueType offs, Triangle2D & t ) const
-    { return bbTriangle( offs, t.p1, t.p2, t.p3 ) ; }
+    bbTriangle( valueType offs, Triangle2D<valueType> & t ) const {
+      valueType p0[2], p1[2], p2[2] ;
+      bool ok = bbTriangle( offs, p0, p1, p2 ) ;
+      if ( ok ) t.setup( p0, p1, p2 ) ;
+      return ok ;
+    }
 
     void
-    bbSplit( valueType               split_angle, //!< maximum angle variation
-             valueType               split_size,  //!< maximum height of the triangle
-             valueType               split_offs,  //!< curve offset
-             vector<ClothoidCurve> & c,           //!< clothoid segments
-             vector<Triangle2D>    & t ) const ;  //!< clothoid bounding box
+    bbSplit( valueType                        split_angle, //!< maximum angle variation
+             valueType                        split_size,  //!< maximum height of the triangle
+             valueType                        split_offs,  //!< curve offset
+             vector<ClothoidCurve>          & c,           //!< clothoid segments
+             vector<Triangle2D<valueType> > & t ) const ;  //!< clothoid bounding box
 
     // intersect computation
     void
@@ -674,7 +427,7 @@ namespace Clothoid {
     valueType kappa1 ;
 
     // standard problem
-    valueType phi, Lscale ;
+    valueType lambda, phi, xbar, ybar ;
     valueType th0, th1 ;
     valueType k0, k1 ;
     valueType DeltaK ;
@@ -693,8 +446,10 @@ namespace Clothoid {
     , y1(0)
     , theta1(0)
     , kappa1(0)
+    , lambda(0)
     , phi(0)
-    , Lscale(0)
+    , xbar(0)
+    , ybar(0)
     , th0(0)
     , th1(0)
     , k0(0)

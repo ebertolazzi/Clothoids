@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------*\
  |                                                                          |
- |  Copyright (C) 2014                                                      |
+ |  Copyright (C) 2017                                                      |
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
@@ -45,7 +45,7 @@ namespace Clothoid {
                   valueType offset = 0.) const ;
     
     void dot( valueType x, valueType y, string const & penna="black" ) const ;
-    void triangle(const Triangle2D& t, string const & penna="black" ) const ;
+    void triangle(const Triangle2D<valueType> & t, string const & penna="black" ) const ;
 
     void
     drawRect( valueType x0, valueType y0,

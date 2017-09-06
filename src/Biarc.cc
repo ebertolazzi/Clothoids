@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------*\
  |                                                                          |
- |  Copyright (C) 2014                                                      |
+ |  Copyright (C) 2017                                                      |
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
@@ -18,33 +18,24 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Arcs.cc
+/// file: Biarc.cc
 ///
 
-#include "Clothoid.hh"
-#include "CubicRootsFlocke.hh"
+#include "Biarc.hh"
 
-#include <cmath>
-#include <cfloat>
-#include <sstream>
-#include <stdexcept>
-
-#ifndef CLOTHOID_ASSERT
-  #define CLOTHOID_ASSERT(COND,MSG)         \
-    if ( !(COND) ) {                        \
-      std::ostringstream ost ;              \
-      ost << "On line: " << __LINE__        \
-          << " file: " << __FILE__          \
-          << '\n' << MSG << '\n' ;          \
-      throw std::runtime_error(ost.str()) ; \
-    }
-#endif
-
-namespace Clothoid {
+namespace Biarc {
 
   using namespace std ;
 
-  static const valueType m_pi = 3.14159265358979323846264338328  ; // pi
+  static const valueType m_pi  = 3.14159265358979323846264338328  ; // pi
+  static const valueType m_2pi = 6.28318530717958647692528676656  ; // 2*pi
+
+  void
+  rangeSymm( valueType & ang ) {
+    ang = fmod( ang, m_2pi ) ;
+    while ( ang < -m_pi ) ang += m_2pi ;
+    while ( ang >  m_pi ) ang -= m_2pi ;
+  }
 
   /*\
    |    ____ _          _
@@ -189,54 +180,6 @@ namespace Clothoid {
     return true ;
   }
 
-  indexType
-  ArcToNURBS( valueType theta0,
-              valueType x0,
-              valueType y0,
-              valueType c0,
-              valueType s0,
-              valueType L,
-              valueType kappa,
-              valueType knots[12],
-              valueType Poly[9][3] ) {
-
-    valueType dtheta = L*kappa ;
-    indexType ns     = std::floor(3*std::abs(dtheta)/m_pi) ;
-    if      ( ns < 1 ) ns = 1 ;
-    else if ( ns > 4 ) ns = 4 ;
-    valueType th = dtheta/(2*ns) ;
-    valueType D  = std::abs(tan(th)/kappa);
-    valueType w  = cos(th) ;
-    knots[0] = knots[1] = knots[2] = 0 ;
-    Poly[0][0] = x0 ;
-    Poly[0][1] = y0 ;
-    Poly[0][2] = 1  ;
-    indexType kk = 0 ;
-    for ( indexType k = 0 ; k < ns ; ++k ) {
-      valueType tth = theta0+kk*th ;
-      valueType x1 = Poly[kk][0]+D*cos(tth) ;
-      valueType y1 = Poly[kk][1]+D*sin(tth) ;
-      valueType kL = ((k+1)*dtheta)/ns ;
-      valueType s  = Sinc(kL) ;
-      valueType c  = Cosc(kL) ;
-      valueType Lk = ((k+1)*L)/ns ;
-      valueType x2 = x0+Lk*(c0*s-s0*c) ;
-      valueType y2 = y0+Lk*(s0*s+c0*c) ;
-      ++kk;
-      Poly[kk][0] = w*x1 ;
-      Poly[kk][1] = w*y1 ;
-      Poly[kk][2] = w  ;
-      ++kk;
-      Poly[kk][0] = x2 ;
-      Poly[kk][1] = y2 ;
-      Poly[kk][2] = 1  ;
-      knots[kk+1] = k+1 ;
-      knots[kk+2] = k+1 ;
-    }
-    knots[kk+3] = ns ;
-    return 1+2*ns;
-  }
-
   /*\
    |   ____  _
    |  | __ )(_) __ _ _ __ ___
@@ -246,30 +189,37 @@ namespace Clothoid {
   \*/
 
   bool
-  Biarc( BiarcData & BiData, bool compute_thstar ) {
+  Biarc::setup( valueType x0,
+                valueType y0,
+                valueType theta0,
+                valueType x1,
+                valueType y1,
+                valueType theta1 ) {
 
-    valueType dx = BiData.x1-BiData.x0 ;
-    valueType dy = BiData.y1-BiData.y0 ;
+    valueType dx = x1-x0 ;
+    valueType dy = y1-y0 ;
 
-    BiData.alpha = atan2(dy,dx);
+    alpha = atan2(dy,dx);
     valueType d = hypot(dy,dx);
 
     // put in range
-    valueType theta0 = BiData.theta0-BiData.alpha;
-    valueType theta1 = BiData.theta1-BiData.alpha;
+    valueType th0 = theta0-alpha;
+    valueType th1 = theta1-alpha;
 
-    rangeSymm(theta0);
-    rangeSymm(theta1);
+    rangeSymm(th0);
+    rangeSymm(th1);
 
-    valueType thstar = compute_thstar ? -(theta0+theta1)/2 : BiData.thetas + BiData.alpha ;
+    //valueType thstar = compute_thstar ? -(th0+th1)/2 : BiData.thetas + alpha ;
 
-    valueType c0 = cos(theta0);
-    valueType s0 = sin(theta0);
-    valueType c1 = cos(theta1);
-    valueType s1 = sin(theta1);
+    valueType thstar = -(th0+th1)/2 ;
 
-    valueType thstar0 = thstar-theta0;
-    valueType thstar1 = thstar-theta1;
+    valueType c0 = cos(th0);
+    valueType s0 = sin(th0);
+    valueType c1 = cos(th1);
+    valueType s1 = sin(th1);
+
+    valueType thstar0 = thstar-th0;
+    valueType thstar1 = thstar-th1;
 
     valueType Sinc0 = Sinc(thstar0);
     valueType Cosc0 = Cosc(thstar0);
@@ -294,24 +244,23 @@ namespace Clothoid {
     }
     if ( ok ) {
 
-      BiData.L0     = d*st[0];
-      BiData.L1     = d*st[1];
-      BiData.kappa0 = thstar0/BiData.L0;
-      BiData.kappa1 = -thstar1/BiData.L1;
+      valueType L0     = d*st[0];
+      valueType L1     = d*st[1];
+      valueType kappa0 = thstar0/L0;
+      valueType kappa1 = -thstar1/L1;
 
-      valueType ca  = cos(BiData.alpha);
-      valueType sa  = sin(BiData.alpha);
-      BiData.xs = BiData.x0 + BiData.L0*(A[0][0]*ca-A[1][0]*sa);
-      BiData.ys = BiData.y0 + BiData.L0*(A[0][0]*sa+A[1][0]*ca);
+      C0.setup( x0, y0, theta0, kappa0, L0 );
 
-      BiData.thetas = thstar+BiData.alpha;
-      BiData.cs     = cos(BiData.thetas);
-      BiData.ss     = sin(BiData.thetas);
+      valueType ca = cos(alpha);
+      valueType sa = sin(alpha);
 
-      BiData.c0 = cos(BiData.theta0);
-      BiData.s0 = sin(BiData.theta0);
-      BiData.c1 = cos(BiData.theta1);
-      BiData.s1 = sin(BiData.theta1);
+      xs     = x0 + L0*(A[0][0]*ca-A[1][0]*sa);
+      ys     = y0 + L0*(A[0][0]*sa+A[1][0]*ca);
+      thetas = thstar+alpha;
+      cs     = cos(thetas);
+      ss     = sin(thetas);
+
+      C1.setup( xs, ys, thetas, kappa1, L1 );
     }
 
     return ok ;
@@ -320,5 +269,5 @@ namespace Clothoid {
 }
 
 ///
-/// eof: Circles.cc
+/// eof: Biarc.cc
 ///

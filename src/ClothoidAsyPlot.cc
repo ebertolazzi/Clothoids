@@ -1,27 +1,13 @@
 #include "Clothoid.hh"
 #include "ClothoidAsyPlot.hh"
 
-#include <sstream>
-#include <stdexcept>
-
-#ifndef CLOTHOID_ASSERT
-  #define CLOTHOID_ASSERT(COND,MSG)         \
-    if ( !(COND) ) {                        \
-      std::ostringstream ost ;              \
-      ost << "On line: " << __LINE__        \
-          << " file: " << __FILE__          \
-          << '\n' << MSG << '\n' ;          \
-      throw std::runtime_error(ost.str()) ; \
-    }
-#endif
-
 namespace Clothoid {
 
   AsyPlot::AsyPlot( string _filename, bool _showAxes )
   : filename(_filename)
   , showAxes(_showAxes)
   {
-    CLOTHOID_ASSERT( openFile(), "Failed to open file " << filename )
+    G2LIB_ASSERT( openFile(), "Failed to open file " << filename )
     initFile();
   }
 
@@ -89,7 +75,7 @@ namespace Clothoid {
   }
 
   void
-  AsyPlot::triangle( Triangle2D const & t, string const & penna ) const {
+  AsyPlot::triangle( Triangle2D<valueType> const & t, string const & penna ) const {
     file
       << "draw((" << t.x1() << "," << t.y1() << ") -- "
       << '(' << t.x2() << ',' << t.y2() << ") -- "
