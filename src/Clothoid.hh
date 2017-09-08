@@ -202,6 +202,11 @@ namespace Clothoid {
     valueType getSmax()    const { return s_max ; }
     valueType getL()       const { return s_max-s_min ; }
 
+    valueType getThetaBegin() const { return theta0 + s_min * ( k + s_min * dk / 2 ) ; }
+    valueType getThetaEnd()   const { return theta0 + s_max * ( k + s_max * dk / 2 ) ; }
+    valueType getKappaBegin() const { return k + s_min * dk ; }
+    valueType getKappaEnd()   const { return k + s_max * dk ; }
+
     //! construct a clothoid with the standard parameters
     void
     setup( valueType _x0,
@@ -559,20 +564,9 @@ namespace Clothoid {
 
     void
     buildSolution( valueType sM, valueType thM ) ;
-    
-  public:
 
-    void
-    find_length_L01( valueType   x0,
-                     valueType   y0,
-                     valueType   theta0,
-                     valueType   kappa0,
-                     valueType   x1,
-                     valueType   y1,
-                     valueType   theta1,
-                     valueType   kappa1,
-                     valueType & L0,
-                     valueType & L1 ) const ;
+    int
+    solve( valueType sM_guess, valueType thM_guess ) ;
 
   public:
 
@@ -586,33 +580,33 @@ namespace Clothoid {
     void setTolerance( valueType tol ) ;
     void setMaxIter( int miter ) ;
 
-    int solve() ;
-
-    void
-    setup( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _kappa0,
-           valueType _L0,
-           valueType _x1,
-           valueType _y1,
-           valueType _theta1,
-           valueType _kappa1,
-           valueType _L1 ) ;
-
-    void
-    setup( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _kappa0,
-           valueType _x1,
-           valueType _y1,
-           valueType _theta1,
-           valueType _kappa1 ) {
-      valueType L0, L1 ;
-      find_length_L01( _x0, _y0, _theta0, _kappa0, _x1, _y1, _theta1, _kappa1, L0, L1 );
-      setup( _x0, _y0, _theta0, _kappa0, L0, _x1, _y1, _theta1, _kappa1, L1 ) ;
-    }
+    /*!
+     | Compute the 3 arc clothoid spline that fit the data
+     |
+     | \param[in] x0      initial `x` position
+     | \param[in] y0      initial `y` position
+     | \param[in] theta0  initial angle
+     | \param[in] kappa0  initial curvature
+     | \param[in] x1      final `x` position
+     | \param[in] y1      final `y` position
+     | \param[in] theta1  final angle
+     | \param[in] kappa1  final curvature
+     | \param[in] L0      lenght of first segment, if 0 computed automatically
+     | \param[in] L1      lenght of last segment, if 0 computed automatically
+     | \return
+     |
+    \*/
+    int
+    build( valueType x0,
+           valueType y0,
+           valueType theta0,
+           valueType kappa0,
+           valueType x1,
+           valueType y1,
+           valueType theta1,
+           valueType kappa1,
+           valueType L0 = 0,
+           valueType L1 = 0 ) ;
 
     ClothoidCurve const & getS0() const { return S0 ; }
     ClothoidCurve const & getS1() const { return S1 ; }

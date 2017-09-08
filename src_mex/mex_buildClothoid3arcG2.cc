@@ -170,8 +170,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
       k1  = mxGetScalar(arg_kappa1) ;
       L1  = mxGetScalar(arg_L1) ;
 
-      g2solve3arc.setup( x0, y0, th0, k0, L0, x1, y1, th1, k1, L1 ) ;
-      iter = g2solve3arc.solve() ;
+      iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1, L0, L1 ) ;
 
       save_struct( g2solve3arc.getS0(), out_S0 ) ;
       save_struct( g2solve3arc.getS1(), out_S1 ) ;
@@ -193,8 +192,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
       th1 = mxGetScalar(arg1_theta1) ;
       k1  = mxGetScalar(arg1_kappa1) ;
 
-      g2solve3arc.setup( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
-      iter = g2solve3arc.solve() ;
+      iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
 
       save_struct( g2solve3arc.getS0(), out_S0 ) ;
       save_struct( g2solve3arc.getS1(), out_S1 ) ;

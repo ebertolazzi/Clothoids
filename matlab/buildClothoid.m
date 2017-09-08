@@ -1,33 +1,39 @@
 %=============================================================================%
 %  buildClothoid:  Compute parameters of the G1 Hermite clothoid fitting      %
 %                                                                             %
-%  USAGE: [k,dk,L,iter] = buildClothoid( x0, y0, theta0, x1, y1, theta1 ) ;   %
-%         [k,dk,L,iter,k_1,dk_1,L_1,k_2,dk_2,L_2] = ...                       %
-%                         buildClothoid( x0, y0, theta0, x1, y1, theta1 ) ;   %
+%  USAGE:                                                                     %
+%    [S,iter] = buildClothoid( x0, y0, theta0, x1, y1, theta1 ) ;             %
+%    [S,iter] = buildClothoid( x0, y0, theta0, x1, y1, theta1, derivative ) ; %
 %                                                                             %
 %  On input:                                                                  %
 %                                                                             %
-%       x0, y0  = coodinate of initial point                                  %
-%       theta0  = orientation (angle) of the clothoid at initial point        %
-%       x1, y1  = coodinate of final point                                    %
-%       theta1  = orientation (angle) of the clothoid at final point          %
+%    x0, y0     = coodinate of initial point                                  %
+%    theta0     = orientation (angle) of the clothoid at initial point        %
+%    x1, y1     = coodinate of final point                                    %
+%    theta1     = orientation (angle) of the clothoid at final point          %
+%    derivative = if present and true compute additional                      %
+%                 partial derivative of the solution                          %
 %                                                                             %
 %  On output:                                                                 %
 %                                                                             %
-%       L  = the lenght of the clothoid curve from initial to final point     %
-%       k  = curvature at initial point                                       %
-%       dk = derivative of curvature respect to arclength,                    %
-%            notice that curvature at final point is k+dk*L                   %
-%       iter = Newton Iterations used to solve the interpolation problem      %
+%    S.x     = x-coodinate of initial point                                   %
+%    S.y     = y-coodinate of initial point                                   %
+%    S.theta = orientation (angle) of the clothoid at initial point           %
+%    S.k     = curvature at initial point                                     %
+%    S.dk    = derivative of curvature respect to arclength,                  %
+%              notice that curvature at final point is k+dk*L                 %
+%    S.L     = the lenght of the clothoid curve from initial to final point   %
+%    S.iter  = Newton Iterations used to solve the interpolation problem      %
 %                                                                             %
 %  optional output                                                            %
 %                                                                             %
-%       k_1  = partial derivative of the solution respect to theta0           %
-%       dk_1 = partial derivative of the solution respect to theta0           %
-%       L_1  = partial derivative of the solution respect to theta0           %
-%       k_2  = partial derivative of the solution respect to theta1           %
-%       dk_2 = partial derivative of the solution respect to theta1           %
-%       L_2  = partial derivative of the solution respect to theta1           %
+%    S.k_1   = partial derivative of the solution respect to theta0           %
+%    S.dk_1  = partial derivative of the solution respect to theta0           %
+%    S.L_1   = partial derivative of the solution respect to theta0           %
+%                                                                             %
+%    S.k_2   = partial derivative of the solution respect to theta1           %
+%    S.dk_2  = partial derivative of the solution respect to theta1           %
+%    S.L_2   = partial derivative of the solution respect to theta1           %
 %                                                                             %
 %=============================================================================%
 %                                                                             %

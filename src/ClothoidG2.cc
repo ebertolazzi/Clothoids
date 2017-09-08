@@ -18,7 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoid.hh"
-#include "CubicRootsFlocke.hh"
+#include "Biarc.hh"
+//#include "CubicRootsFlocke.hh"
 
 #include <cmath>
 #include <cfloat>
@@ -26,6 +27,8 @@
 namespace Clothoid {
 
   using namespace std ;
+
+  static const valueType m_pi = 3.14159265358979323846264338328  ; // pi
 
   /*\
    |    ____ ____     _       _
@@ -225,17 +228,31 @@ namespace Clothoid {
     maxIter = miter ;
   }
 
-  void
-  G2solve3arc::setup( valueType _x0,
+  int
+  G2solve3arc::build( valueType _x0,
                       valueType _y0,
                       valueType _theta0,
                       valueType _kappa0,
-                      valueType _L0,
                       valueType _x1,
                       valueType _y1,
                       valueType _theta1,
                       valueType _kappa1,
-                      valueType _L1 ) {
+                      valueType L0,
+                      valueType L1 ) {
+
+    // use G1 for guess and length estimation
+    Biarc::Biarc bi( _x0, _y0, _theta0, _x1, _y1, _theta1 ) ;
+    valueType L3      = std::min(m_pi,bi.getC0().getL()+bi.getC1().getL())/3;
+    valueType dth_max = m_pi ;
+    if ( L0 <= 0 ) {
+      valueType kappa = std::abs( _kappa0 + bi.getC0().getKappa() ) ;
+      L0 = L3*kappa > dth_max ? dth_max / kappa : L3 ;
+    }
+    if ( L1 <= 0 ) {
+      valueType kappa = std::abs( _kappa1 + bi.getC1().getKappa() ) ;
+      L1 = L3*kappa > dth_max ? dth_max / kappa : L3 ;
+      if ( L1*kappa > dth_max ) L1 = dth_max / kappa ;
+    }
 
     x0     = _x0 ;
     y0     = _y0 ;
@@ -258,8 +275,8 @@ namespace Clothoid {
     valueType k0 = kappa0/Lscale ;
     valueType k1 = kappa1/Lscale ;
 
-    s0 = _L0*Lscale ;
-    s1 = _L1*Lscale ;
+    s0 = L0*Lscale ;
+    s1 = L1*Lscale ;
 
     K0 = k0*s0 ;
     K1 = k1*s1 ;
@@ -282,27 +299,12 @@ namespace Clothoid {
     c12 = 0.25*(t1*s0 - t0*s1);
     c13 = 0.5*s0*s1;
     c14 = 0.75*(s0 + s1);
-  }
 
-  // **************************************************************************
-
-  void
-  G2solve3arc::find_length_L01( valueType   x0,
-                                valueType   y0,
-                                valueType   theta0,
-                                valueType   kappa0,
-                                valueType   x1,
-                                valueType   y1,
-                                valueType   theta1,
-                                valueType   kappa1,
-                                valueType & L0,
-                                valueType & L1 ) const {
-    valueType L  = hypot( x1 - x0, y1 - y0 ) ;
-    L0 = L1 = 0.45*L ;
-    valueType t0 = std::abs(kappa0)*L0*0.63 ; // 0.63 ~ 2/Pi
-    valueType t1 = std::abs(kappa1)*L1*0.63 ; // 0.63 ~ 2/Pi
-    if ( t0 > 1 ) L0 /= t0 ;
-    if ( t1 > 1 ) L1 /= t1 ;
+    //return solve( 1.5*L3+0.5*(L0-L1), SM.theta(1.5*L3) ) ;
+    //return solve( L3, SM.theta(1.5*L3), 3*L3 ) ;
+    //return solve( L3, (theta0+theta1)/2, 3*L3 ) ;
+    //return solve( L3, SM.theta(1.5*L3) ) ;
+    return solve( 2, 0 ) ;
   }
 
   // **************************************************************************
@@ -376,12 +378,13 @@ namespace Clothoid {
   // **************************************************************************
 
   int
-  G2solve3arc::solve() {
+  G2solve3arc::solve( valueType sM_guess,
+                      valueType thM_guess ) {
 
     Solve2x2 solver;
     valueType F[2], J[2][2], d[2], X[2];
-    X[0] = 2 ;
-    X[1] = 0 ;
+    X[0] = sM_guess ;
+    X[1] = thM_guess ;
 
     int iter = 0;
     bool converged = false;

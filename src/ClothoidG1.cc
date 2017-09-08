@@ -206,8 +206,8 @@ namespace Clothoid {
                        valueType & y ) const {
     valueType C, S ;
     GeneralizedFresnelCS( dk*s*s, k*s, theta0, C, S ) ;
-    x = x0 + s*C ;
-    y = y0 + s*S ;
+    x     = x0 + s*C ;
+    y     = y0 + s*S ;
     theta = theta0 + s*(k+s*(dk/2)) ;
     kappa = k + s*dk ;
   }

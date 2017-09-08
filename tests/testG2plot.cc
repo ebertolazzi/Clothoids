@@ -52,10 +52,9 @@ main() {
 	valueType s1  = 2;
   #endif
 
-	//g2sol.setup(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
-	g2sol.setup(x0, y0, th0, k0, x1, y1, th1, k1 );
-	//g2solve3arc.setup( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
-	int iter = g2sol.solve();
+	//int iter = g2sol.setup(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
+	int iter = g2sol.build(x0, y0, th0, k0, x1, y1, th1, k1 );
+	//int iter = g2solve3arc.setup( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
 	std::cout << "iter = " << iter << '\n' ;
 
 	Clothoid::ClothoidCurve const & S0 = g2sol.getS0();

@@ -86,7 +86,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
                 "Argument N." << kk+1 << " must be a scalar" );
       }
 
-      ok = biarc.setup( mxGetScalar(arg_x0),
+      ok = biarc.build( mxGetScalar(arg_x0),
                         mxGetScalar(arg_y0),
                         mxGetScalar(arg_theta0),
                         mxGetScalar(arg_x1),

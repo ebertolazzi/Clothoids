@@ -189,7 +189,7 @@ namespace Biarc {
   \*/
 
   bool
-  Biarc::setup( valueType x0,
+  Biarc::build( valueType x0,
                 valueType y0,
                 valueType theta0,
                 valueType x1,
@@ -264,6 +264,18 @@ namespace Biarc {
     }
 
     return ok ;
+  }
+
+  std::ostream &
+  operator << ( std::ostream & stream, Biarc const & bi ) {
+    stream <<   "Biarc"
+           << "\nC0 = " << bi.C0
+           << "\nC1 = " << bi.C1
+           << "\nxs     = " << bi.xs
+           << "\nys     = " << bi.ys
+           << "\nthetas = " << bi.thetas
+           << "\n" ;
+    return stream ;
   }
 
 }

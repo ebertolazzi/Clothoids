@@ -13,7 +13,21 @@ main() {
 
   valueType m_pi = 3.1415926535897932385 ;
 
-#if 0
+#if 1
+  #if 1
+  valueType x0  = -1 ;
+  valueType y0  = 0  ;
+  valueType th0 = 2.8*(-0.8) ;
+  valueType k0  = 7.38 ;
+
+  valueType x1  = 1 ;
+  valueType y1  = 0 ;
+  valueType th1 = -2.8*(-0.8) ;
+  valueType k1  = 7.38 ;
+  valueType s0  = 0.5 ;
+  valueType s1  = 0.5 ;
+
+  #else
   valueType x0  = 0 ;
   valueType y0  = 0 ;
   valueType th0 = m_pi/2+m_pi/4 ;
@@ -26,6 +40,7 @@ main() {
   valueType th1 = -m_pi/2+m_pi/4 ;
   valueType k1  = -0.5 ;
   valueType s1  = 0.5 ;
+  #endif
 #else
   valueType x0  = -1 ;
   valueType y0  = 0 ;
@@ -42,8 +57,7 @@ main() {
 
   // test 3 archi
   std::cout << "\n\nTry Solution with THREE arcs\n";
-  g2solve3arc.setup( x0, y0, th0, k0, s0, x1, y1, th1, k1, s1 ) ;
-  int iter = g2solve3arc.solve() ;
+  int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
   std::cout << "iter = " << iter << '\n' ;
   
   Clothoid::ClothoidCurve const & S0 = g2solve3arc.getS0() ;

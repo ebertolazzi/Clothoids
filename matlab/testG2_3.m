@@ -15,16 +15,34 @@ for theta1=-pi:pi/20:pi
   %f0     = 0.1 ; % 0.25 ;
   %f1     = 0.1 ;
   %[ S0, S1, SM, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,f0,x1,y1,theta1,kappa1,f1) ;
-  [ S0, S1, SM, flg, f0, f1 ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
+  [ S0, S1, SM, f0, f1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
   if flg < 0
     flg
     f0
     f1
+  else
+    subplot(2,1,1) ;
+    draw3curve( S0, S1, SM, false );
   end
-  for kkk=1:8
-    subplot(2,4,kkk);
+  [arc1,arc2,ok] = biarc(x0,y0,theta0,x1,y1,theta1);
+  if ok
+    subplot(2,1,2) ;
+    biarc_plot(arc1,arc2,false);
+    grid on ;
+    axis equal
     hold on
-    draw3curve( S0(kkk), S1(kkk), SM(kkk), false );
-    title(SM(kkk).opt) ;
+  else
+    ok
   end
+  %[ S, iter ] = buildClothoid( x0,y0,theta0,x1,y1,theta1 ) ;
+  %if iter < 0
+  %  iter
+  %else
+  %  subplot(2,1,2) ;
+  %  XY = pointsOnClothoid( S, 0:S.L/400:S.L ) ;
+  %  plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 3 ) ;
+  %  grid on ;
+  %  axis equal
+  %  hold on
+  %end
 end

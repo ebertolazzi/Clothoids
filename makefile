@@ -35,6 +35,7 @@ src/ClothoidG2.cc \
 src/CubicRootsFlocke.cc \
 src/Fresnel.cc \
 src/G2lib.cc \
+src/Line.cc \
 src/Triangle2D.cc
 
 OBJS  = $(SRCS:.cc=.o)

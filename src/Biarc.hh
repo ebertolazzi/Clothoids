@@ -66,7 +66,7 @@ namespace Biarc {
            valueType x1,
            valueType y1,
            valueType theta1 ) {
-      bool ok = setup( x0, y0, theta0, x1, y1, theta1 );
+      bool ok = build( x0, y0, theta0, x1, y1, theta1 );
       G2LIB_ASSERT( ok, "Biarc( x0 = " << x0     <<
                         ", y0 = "      << y0     <<
                         ", theta0 = "  << theta0 <<
@@ -98,7 +98,7 @@ namespace Biarc {
 
     //! construct a clothoid with the standard parameters
     bool
-    setup( valueType x0,
+    build( valueType x0,
            valueType y0,
            valueType theta0,
            valueType x1,
@@ -113,9 +113,9 @@ namespace Biarc {
     void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
     void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
 
-    //friend
-    //std::ostream &
-    //operator << ( std::ostream & stream, Biarc const & c ) ;
+    friend
+    std::ostream &
+    operator << ( std::ostream & stream, Biarc const & bi ) ;
 
   } ;
 

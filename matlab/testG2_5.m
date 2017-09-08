@@ -24,7 +24,7 @@ kappa1 = 7.38 ;
 for kkk=1:8
   subplot(3,3,kkk) ;
   draw3curve( S0(kkk), S1(kkk), SM(kkk), true );
-  title(SM(kkk).opt) ;
+  %title(SM(kkk).opt) ;
 
   if kkk == 8
     %subplot(3,3,8) ;
