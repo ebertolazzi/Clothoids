@@ -21,6 +21,17 @@
 
 namespace G2lib {
 
+
+  static const valueType m_pi  = 3.14159265358979323846264338328 ; // pi
+  static const valueType m_2pi = 6.28318530717958647692528676656 ; // 2*pi
+
+  void
+  rangeSymm( valueType & ang ) {
+    ang = fmod( ang, m_2pi ) ;
+    while ( ang < -m_pi ) ang += m_2pi ;
+    while ( ang >  m_pi ) ang -= m_2pi ;
+  }
+
   /*
   // sin(x)/x
   */

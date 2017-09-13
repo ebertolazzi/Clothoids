@@ -1,27 +1,21 @@
 function draw3curve(S0,S1,SM,flg)
   % compute points on clothoid
 
+  cm = [1.000000000000000   0.598431372549020   0.200000000000000];
+
+  XY = pointsOnClothoid( SM, 0:SM.L/400:SM.L ) ;
   if flg
-    XY = pointsOnClothoid( S0, 0:S0.L/400:S0.L ) ;
-    plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 3 ) ;
-    hold on
-
-    XY = pointsOnClothoid( SM, 0:SM.L/400:SM.L ) ;
-    plot( XY(1,:), XY(2,:), '-c', 'LineWidth', 1 ) ;
-
-    XY = pointsOnClothoid( S1, 0:S1.L/400:S1.L ) ;
-    plot( XY(1,:), XY(2,:), '-r', 'LineWidth', 3 ) ;
+    plot( XY(1,:), XY(2,:), '--', 'LineWidth', 2, 'Color', cm  ) ;
   else
-    XY = pointsOnClothoid( S0, 0:S0.L/400:S0.L ) ;
-    plot( XY(1,:), XY(2,:), '.b', 'LineWidth', 1 ) ;
-    hold on
-
-    XY = pointsOnClothoid( SM, 0:SM.L/400:SM.L ) ;
-    plot( XY(1,:), XY(2,:), '-c', 'LineWidth', 1 ) ;
-
-    XY = pointsOnClothoid( S1, 0:S1.L/400:S1.L ) ;
-    plot( XY(1,:), XY(2,:), '.r', 'LineWidth', 1 ) ;
+    plot( XY(1,:), XY(2,:), '-r', 'LineWidth', 2 ) ;
   end
+  hold on
+  
+  XY = pointsOnClothoid( S0, 0:S0.L/400:S0.L ) ;
+  plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 2 ) ;
+
+  XY = pointsOnClothoid( S1, 0:S1.L/400:S1.L ) ;
+  plot( XY(1,:), XY(2,:), '-k', 'LineWidth', 2 )  ;
 
   if false
   plot( SM.x, SM.y, '-mo',...

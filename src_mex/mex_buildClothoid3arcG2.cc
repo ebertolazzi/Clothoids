@@ -19,23 +19,25 @@
 
 #define MEX_ERROR_MESSAGE \
 "%=============================================================================%\n" \
-"%  buildClothoid:  Compute parameters of the G1 Hermite clothoid fitting      %\n" \
+"%  buildClothoid:  Compute parameters of the G2 Hermite clothoid fitting      %\n" \
 "%                                                                             %\n" \
-"%  USAGE: [ S0, S1, SM, ... ] = buildClothoid3arcG2( x0, y0, th0, k0, L0,     %\n" \
-"%                                                    x1, y1, th1, k1, L1 ) ;  %\n" \
+"%  USAGE: [ S0,S1,SM,iter] = buildClothoid3arcG2( x0, y0, th0, k0,            %\n" \
+"%                                                 x1, y1, th1, k1 ) ;         %\n" \
 "%                                                                             %\n" \
-"%  USAGE: [ S0, S1, SM, ... ] = buildClothoid3arcG2( x0, y0, th0, k0,         %\n" \
-"%                                                    x1, y1, th1, k1 ) ;      %\n" \
+"%  USAGE: [ S0,S1,SM,iter] = buildClothoid3arcG2( x0, y0, th0, k0,            %\n" \
+"%                                                 x1, y1, th1, k1,            %\n" \
+"%                                                 thmax0, thmax1 ) ;          %\n" \
 "%                                                                             %\n" \
 "%  On input:                                                                  %\n" \
 "%                                                                             %\n" \
 "%       x0, y0  = coodinate of initial point                                  %\n" \
 "%       theta0  = orientation (angle) of the clothoid at initial point        %\n" \
 "%       k0      = initial curvature                                           %\n" \
-"%       L0      = length of initial curve                                     %\n" \
 "%       x1, y1  = coodinate of final point                                    %\n" \
 "%       theta1  = orientation (angle) of the clothoid at final point          %\n" \
-"%       L1      = length of final curve                                       %\n" \
+"%                                                                             %\n" \
+"%       thmax0  = rough desidered maximum angle variation of initial segment  %\n" \
+"%       thmax1  = rough desidered maximum angle variation of final segment    %\n" \
 "%                                                                             %\n" \
 "%  On output:                                                                 %\n" \
 "%                                                                             %\n" \
@@ -45,9 +47,7 @@
 "%                                                                             %\n" \
 "%  Optional Output                                                            %\n" \
 "%                                                                             %\n" \
-"%       L0     = computed length of initial curve                             %\n" \
-"%       L1     = computed length of final curve                               %\n" \
-"%       flg    = >0 number of iteration used for the computation              %\n" \
+"%       iter   = >0 number of iteration used for the computation              %\n" \
 "%                -1 computation failed                                        %\n" \
 "%                                                                             %\n" \
 "%=============================================================================%\n" \
@@ -56,7 +56,7 @@
 "%          Department of Industrial Engineering                               %\n" \
 "%          University of Trento                                               %\n" \
 "%          enrico.bertolazzi@unitn.it                                         %\n" \
-"%          m.fregox@gmail.com                                                 %\n" \
+"%          marco.frego@unitn.it                                               %\n" \
 "%                                                                             %\n" \
 "%=============================================================================%\n"
 
@@ -71,12 +71,12 @@
 #define arg_y0     prhs[1]
 #define arg_theta0 prhs[2]
 #define arg_kappa0 prhs[3]
-#define arg_L0     prhs[4]
-#define arg_x1     prhs[5]
-#define arg_y1     prhs[6]
-#define arg_theta1 prhs[7]
-#define arg_kappa1 prhs[8]
-#define arg_L1     prhs[9]
+#define arg_x1     prhs[4]
+#define arg_y1     prhs[5]
+#define arg_theta1 prhs[6]
+#define arg_kappa1 prhs[7]
+#define arg_thmax0 prhs[8]
+#define arg_thmax1 prhs[9]
 
 #define arg1_x0     prhs[0]
 #define arg1_y0     prhs[1]
@@ -90,9 +90,7 @@
 #define out_S0     plhs[0]
 #define out_S1     plhs[1]
 #define out_SM     plhs[2]
-#define out_L0     plhs[3]
-#define out_L1     plhs[4]
-#define out_flg    plhs[5]
+#define out_iter   plhs[3]
 
 static
 void
@@ -107,29 +105,6 @@ save_struct( Clothoid::ClothoidCurve const & curve, mxArray * & plhs ) {
   mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.getSmax()) );
 }
 
-static
-void
-save_struct( Clothoid::ClothoidCurve const *curve[7], mxArray * & plhs ) {
-  char const * fieldnames[] = { "x", "y", "theta", "k", "dk", "L", "opt" } ;
-  plhs = mxCreateStructMatrix(1,8,7,fieldnames);
-  for ( int i = 0 ; i < 8 ; ++i ) {
-    mxSetFieldByNumber( plhs, i, 0, mxCreateDoubleScalar(curve[i]->getX0()) );
-    mxSetFieldByNumber( plhs, i, 1, mxCreateDoubleScalar(curve[i]->getY0()) );
-    mxSetFieldByNumber( plhs, i, 2, mxCreateDoubleScalar(curve[i]->getTheta0()) );
-    mxSetFieldByNumber( plhs, i, 3, mxCreateDoubleScalar(curve[i]->getKappa()) );
-    mxSetFieldByNumber( plhs, i, 4, mxCreateDoubleScalar(curve[i]->getKappa_D()) );
-    mxSetFieldByNumber( plhs, i, 5, mxCreateDoubleScalar(curve[i]->getSmax()) );
-  }
-  mxSetFieldByNumber( plhs, 0, 6, mxCreateString("length")) ;
-  mxSetFieldByNumber( plhs, 1, 6, mxCreateString("curv"));
-  mxSetFieldByNumber( plhs, 2, 6, mxCreateString("TV-angle"));
-  mxSetFieldByNumber( plhs, 3, 6, mxCreateString("length1"));
-  mxSetFieldByNumber( plhs, 4, 6, mxCreateString("curv1"));
-  mxSetFieldByNumber( plhs, 5, 6, mxCreateString("TV-angle1"));
-  mxSetFieldByNumber( plhs, 6, 6, mxCreateString("curv*angle"));
-  mxSetFieldByNumber( plhs, 7, 6, mxCreateString("curv*jerk"));
-}
-
 extern "C"
 void
 mexFunction( int nlhs, mxArray       *plhs[],
@@ -137,7 +112,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
   static Clothoid::G2solve3arc g2solve3arc ;
 
-  Clothoid::valueType x0, y0, th0, k0, L0, x1, y1, th1, k1, L1 ;
+  Clothoid::valueType x0, y0, th0, k0, thmax0, x1, y1, th1, k1, thmax1 ;
 
   try {
 
@@ -153,34 +128,32 @@ mexFunction( int nlhs, mxArray       *plhs[],
   	      mexErrMsgTxt("Input arguments must be real scalars");
     }
 
-    ASSERT( nlhs >= 3 && nlhs <= 6,
+    ASSERT( nlhs >= 3 && nlhs <= 4,
             "wrong number of output arguments\n"
-            "expected 4, 5 or 6, found " << nlhs ) ;
+            "expected 3 or 4, found " << nlhs ) ;
 
     int iter ;
     if ( nrhs == 10 ) {
-      x0  = mxGetScalar(arg_x0) ;
-      y0  = mxGetScalar(arg_y0) ;
-      th0 = mxGetScalar(arg_theta0) ;
-      k0  = mxGetScalar(arg_kappa0) ;
-      L0  = mxGetScalar(arg_L0) ;
-      x1  = mxGetScalar(arg_x1) ;
-      y1  = mxGetScalar(arg_y1) ;
-      th1 = mxGetScalar(arg_theta1) ;
-      k1  = mxGetScalar(arg_kappa1) ;
-      L1  = mxGetScalar(arg_L1) ;
+      x0     = mxGetScalar(arg_x0) ;
+      y0     = mxGetScalar(arg_y0) ;
+      th0    = mxGetScalar(arg_theta0) ;
+      k0     = mxGetScalar(arg_kappa0) ;
+      thmax0 = mxGetScalar(arg_thmax0) ;
+      x1     = mxGetScalar(arg_x1) ;
+      y1     = mxGetScalar(arg_y1) ;
+      th1    = mxGetScalar(arg_theta1) ;
+      k1     = mxGetScalar(arg_kappa1) ;
+      thmax1 = mxGetScalar(arg_thmax1) ;
 
-      iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1, L0, L1 ) ;
+      iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1, thmax0, thmax1 ) ;
 
       save_struct( g2solve3arc.getS0(), out_S0 ) ;
       save_struct( g2solve3arc.getS1(), out_S1 ) ;
       save_struct( g2solve3arc.getSM(), out_SM ) ;
 
-      if ( nlhs > 3 ) out_L0 = mxCreateDoubleScalar(g2solve3arc.getL0()) ;
-      if ( nlhs > 4 ) out_L1 = mxCreateDoubleScalar(g2solve3arc.getL1()) ;
-      if ( nlhs > 5 ) {
-        out_flg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *static_cast<int *>(mxGetData(out_flg)) = iter ;
+      if ( nlhs > 3 ) {
+        out_iter = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *static_cast<int *>(mxGetData(out_iter)) = iter ;
       }
     } else {
       x0  = mxGetScalar(arg1_x0) ;
@@ -198,11 +171,9 @@ mexFunction( int nlhs, mxArray       *plhs[],
       save_struct( g2solve3arc.getS1(), out_S1 ) ;
       save_struct( g2solve3arc.getSM(), out_SM ) ;
 
-      if ( nlhs > 3 ) out_L0 = mxCreateDoubleScalar(g2solve3arc.getL0()) ;
-      if ( nlhs > 4 ) out_L1 = mxCreateDoubleScalar(g2solve3arc.getL1()) ;
-      if ( nlhs > 5 ) {
-        out_flg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *static_cast<int *>(mxGetData(out_flg)) = iter ;
+      if ( nlhs > 3 ) {
+        out_iter = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *static_cast<int *>(mxGetData(out_iter)) = iter ;
       }
     }
 

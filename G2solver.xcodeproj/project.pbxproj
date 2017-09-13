@@ -29,6 +29,16 @@
 		D9BD86191EFC01EE00C82B74 /* testG2plot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD86181EFC01EE00C82B74 /* testG2plot.cc */; };
 		D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
 		D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D9E74A551F68804C00E47B88 /* testG2stat.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E74A541F68804C00E47B88 /* testG2stat.cc */; };
+		D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
+		D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9E74A591F68825600E47B88 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
+		D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
+		D9E74A5C1F68826300E47B88 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
+		D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
+		D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +52,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		D981B3011E8D56AF006C933D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D9E74A4B1F68801C00E47B88 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -76,6 +95,8 @@
 		D9BD86181EFC01EE00C82B74 /* testG2plot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testG2plot.cc; sourceTree = "<group>"; };
 		D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidAsyPlot.cc; sourceTree = "<group>"; };
 		D9BD861B1EFC021300C82B74 /* ClothoidAsyPlot.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClothoidAsyPlot.hh; sourceTree = "<group>"; };
+		D9E74A4D1F68801C00E47B88 /* statistic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9E74A541F68804C00E47B88 /* testG2stat.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testG2stat.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +108,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D981B3001E8D56AF006C933D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9E74A4A1F68801C00E47B88 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -110,6 +138,7 @@
 			children = (
 				D938F4DB1DD3B83000E08A70 /* G2solver */,
 				D981B3031E8D56AF006C933D /* testAB */,
+				D9E74A4D1F68801C00E47B88 /* statistic */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,8 +156,8 @@
 				D918ADA51F62C1CE009893C3 /* Line.cc */,
 				D9099D271F600B9400740ECF /* Circle.hh */,
 				D9099D281F600B9400740ECF /* Circle.cc */,
-				D971F8971F613BC2000E663E /* Biarc.cc */,
 				D971F8981F613BC2000E663E /* Biarc.hh */,
+				D971F8971F613BC2000E663E /* Biarc.cc */,
 				D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */,
 				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
 				D938F4E71DD3B84A00E08A70 /* Clothoid.hh */,
@@ -145,6 +174,7 @@
 			children = (
 				D981B30C1E8D56F0006C933D /* testG2.cc */,
 				D9BD86181EFC01EE00C82B74 /* testG2plot.cc */,
+				D9E74A541F68804C00E47B88 /* testG2stat.cc */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -186,6 +216,23 @@
 			productReference = D981B3031E8D56AF006C933D /* testAB */;
 			productType = "com.apple.product-type.tool";
 		};
+		D9E74A4C1F68801C00E47B88 /* statistic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9E74A531F68801D00E47B88 /* Build configuration list for PBXNativeTarget "statistic" */;
+			buildPhases = (
+				D9E74A491F68801C00E47B88 /* Sources */,
+				D9E74A4A1F68801C00E47B88 /* Frameworks */,
+				D9E74A4B1F68801C00E47B88 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = statistic;
+			productName = statistic;
+			productReference = D9E74A4D1F68801C00E47B88 /* statistic */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -205,6 +252,10 @@
 						DevelopmentTeam = S8X788ZA8Y;
 						ProvisioningStyle = Automatic;
 					};
+					D9E74A4C1F68801C00E47B88 = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = D938F4D61DD3B83000E08A70 /* Build configuration list for PBXProject "G2solver" */;
@@ -221,6 +272,7 @@
 			targets = (
 				D938F4DA1DD3B83000E08A70 /* G2solver */,
 				D981B3021E8D56AF006C933D /* testG2plot */,
+				D9E74A4C1F68801C00E47B88 /* statistic */,
 			);
 		};
 /* End PBXProject section */
@@ -259,6 +311,23 @@
 				D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */,
 				D9BD86191EFC01EE00C82B74 /* testG2plot.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9E74A491F68801C00E47B88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */,
+				D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */,
+				D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */,
+				D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */,
+				D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */,
+				D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */,
+				D9E74A591F68825600E47B88 /* Line.cc in Sources */,
+				D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */,
+				D9E74A551F68804C00E47B88 /* testG2stat.cc in Sources */,
+				D9E74A5C1F68826300E47B88 /* ClothoidG1.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +457,22 @@
 			};
 			name = Release;
 		};
+		D9E74A511F68801D00E47B88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9E74A521F68801D00E47B88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -417,6 +502,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D9E74A531F68801D00E47B88 /* Build configuration list for PBXNativeTarget "statistic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9E74A511F68801D00E47B88 /* Debug */,
+				D9E74A521F68801D00E47B88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

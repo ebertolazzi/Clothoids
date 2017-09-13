@@ -1,40 +1,57 @@
-clear all ;
+addpath('tools');
+addpath('tools/matlab2tikz/src');
+
 close all ;
+format long ;
+x0 = -1 ;
+y0 = 0 ;
+x1 = 1 ;
+y1 = 0 ;
 
-k0 = -1.484519846508199 ;
-k1 = 1.484519846508200 ;
+theta0 = pi/3;
+kappa0 = 0;
+theta1 = [-pi/2,pi/2,-pi/2,pi/2,-pi/2,pi/2,];% [-pi/2,-pi/8,0,pi/4,pi/2];
+kappa1 = [0,0,-4,-4,4,4];
 
-x0     = -2 ; 
-y0     =  3 ;
-theta0 = pi/2+pi/4;
-kappa0 = 10.2/10;
+close all ;
+figure('Position',[1,1,900,800]);
 
-x1     = 3 ;
-y1     = 2 ;
-theta1 = pi/2; %0*pi/4;
-kappa1 = 1.5/4 ;
+AXEL = [-1 1 -0.25 1.25] ;
+AXER = [-1 1 -0.75 0.75] ;
 
-[ S0, S1, SM, L0, L1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
-subplot(2,1,1) ;
-draw3curve( S0, S1, SM, true );
+for k=1:6
+  subaxis(3,2,k, 'Spacing', 0.01, 'Padding', 0.02, 'Margin', 0.02);
+  axis tight ;
+  
+  [ S0, S1, SM, iter ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1(k),kappa1(k)) ;
+  if iter >= 0
+    draw3curve( S0, S1, SM, false );
+    hold on
+    if mod(k,2) == 0
+      axis(AXER);
+    else
+      axis(AXEL);
+    end
+    axis equal;
+    title( sprintf('kappa1 = %g',kappa1(k))) ; 
 
-[ S0, S1, SM, L0, L1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,L0/2,x1,y1,theta1,kappa1,L1) ;
-subplot(2,1,2) ;
-draw3curve( S0, S1, SM, true );
+    [arc1,arc2,ok] = biarc(x0,y0,theta0,x1,y1,theta1(k));
+    if ok
+      biarc_plot(arc1,arc2,false);
+    end
+  else
+    disp('errore') ;
+  end
+  set(gca,'DataAspectRatio',[1,1,1]) ;
+  set(gca,'XTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
+  set(gca,'XTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
+  set(gca,'YTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
+  set(gca,'YTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
+end
 
-%title(SM(kkk).opt) ;
-
-%if kkk >= 5
-%    subplot(3,3,8) ;
-%    draw3angle( S0(kkk), S1(kkk), SM(kkk), true );
-%
-%    subplot(3,3,9) ;
-%    draw3curvature( S0(kkk), S1(kkk), SM(kkk), true );
-%  end
-%end
-
-%f00 = 0.05 ;
-%f11 = 0.05 ;
-%[ S0, S1, SM, f0, f1, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,f00,x1,y1,theta1,kappa1,f11) ;
-%subplot(3,3,7) ;
-%draw3curve( S0, S1, SM, true );
+if true
+  matlab2tikz('figure2.tex', ...
+              'standalone',true, ...
+              'extraaxisoptions',{'xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...
+              'extraTikzpictureOptions',{'cap=round'}); 
+end

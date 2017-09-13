@@ -192,10 +192,11 @@ namespace Clothoid {
 
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s) ; return *this ; }
-    
+
     valueType getX0()      const { return x0 ; }
     valueType getY0()      const { return y0 ; }
     valueType getTheta0()  const { return theta0 ; }
+
     valueType getKappa()   const { return k ; }
     valueType getKappa_D() const { return dk ; }
     valueType getSmin()    const { return s_min ; }
@@ -308,6 +309,16 @@ namespace Clothoid {
 
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
+
+    valueType Xbegin()     const { return X(s_min) ; }
+    valueType Ybegin()     const { return Y(s_min) ; }
+    valueType KappaBegin() const { return theta_D(s_min) ; }
+    valueType ThetaBegin() const { return theta(s_min) ; }
+
+    valueType Xend()     const { return X(s_max) ; }
+    valueType Yend()     const { return Y(s_max) ; }
+    valueType KappaEnd() const { return theta_D(s_max) ; }
+    valueType ThetaEnd() const { return theta(s_max) ; }
 
     void
     eval( valueType   s,
@@ -536,7 +547,7 @@ namespace Clothoid {
   \*/
   class G2solve3arc {
 
-    ClothoidCurve S0, SM, S1 ;
+    ClothoidCurve S0, SM, S1, SG ;
 
     valueType tolerance ;
     int       maxIter ;
@@ -563,6 +574,9 @@ namespace Clothoid {
             valueType       J[2][2] ) const ;
 
     void
+    evalF( valueType const vars[2], valueType F[2] ) const ;
+
+    void
     buildSolution( valueType sM, valueType thM ) ;
 
     int
@@ -572,7 +586,7 @@ namespace Clothoid {
 
     G2solve3arc()
     : tolerance(1e-10)
-    , maxIter(20)
+    , maxIter(100)
     {}
 
     ~G2solve3arc() {}
@@ -591,8 +605,8 @@ namespace Clothoid {
      | \param[in] y1      final `y` position
      | \param[in] theta1  final angle
      | \param[in] kappa1  final curvature
-     | \param[in] L0      lenght of first segment, if 0 computed automatically
-     | \param[in] L1      lenght of last segment, if 0 computed automatically
+     | \param[in] thmax0  rough desidered maximum angle variation of initial segment, if 0 computed automatically
+     | \param[in] thmax1  rough desidered maximum angle variation of final segment, if 0 computed automatically
      | \return
      |
     \*/
@@ -605,12 +619,13 @@ namespace Clothoid {
            valueType y1,
            valueType theta1,
            valueType kappa1,
-           valueType L0 = 0,
-           valueType L1 = 0 ) ;
+           valueType thmax0 = 0,
+           valueType thmax1 = 0 ) ;
 
-    ClothoidCurve const & getS0() const { return S0 ; }
-    ClothoidCurve const & getS1() const { return S1 ; }
-    ClothoidCurve const & getSM() const { return SM ; }
+    ClothoidCurve const & getS0()    const { return S0 ; }
+    ClothoidCurve const & getS1()    const { return S1 ; }
+    ClothoidCurve const & getSM()    const { return SM ; }
+    ClothoidCurve const & getGuess() const { return SG ; }
 
     valueType
     totalLength() const {

@@ -1,6 +1,6 @@
 clc;
 
-NAMES = {'biarc'} ;
+NAMES = {'buildClothoid3arcG2'} ;
 
 LIBS = [ ...
   '-I../src ' ...

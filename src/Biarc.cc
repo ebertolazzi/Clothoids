@@ -27,16 +27,6 @@ namespace Biarc {
 
   using namespace std ;
 
-  static const valueType m_pi  = 3.14159265358979323846264338328  ; // pi
-  static const valueType m_2pi = 6.28318530717958647692528676656  ; // 2*pi
-
-  void
-  rangeSymm( valueType & ang ) {
-    ang = fmod( ang, m_2pi ) ;
-    while ( ang < -m_pi ) ang += m_2pi ;
-    while ( ang >  m_pi ) ang -= m_2pi ;
-  }
-
   /*\
    |    ____ _          _
    |   / ___(_)_ __ ___| | ___  ___
@@ -264,6 +254,24 @@ namespace Biarc {
     }
 
     return ok ;
+  }
+
+  valueType
+  Biarc::X( valueType s ) const {
+    if ( s < C0.getL() ) return C0.X(s);
+    else                 return C1.X(s-C0.getL());
+  }
+
+  valueType
+  Biarc::Y( valueType s ) const {
+    if ( s < C0.getL() ) return C0.Y(s);
+    else                 return C1.Y(s-C0.getL());
+  }
+
+  valueType
+  Biarc::theta( valueType s ) const {
+    if ( s < C0.getL() ) return C0.theta(s);
+    else                 return C1.theta(s-C0.getL());
   }
 
   std::ostream &

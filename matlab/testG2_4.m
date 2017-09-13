@@ -1,40 +1,56 @@
+addpath('tools');
+addpath('tools/matlab2tikz/src');
+
 clear all ;
 close all ;
 
 x0     = -1 ;
 y0     = 0  ;
-theta0 = 0  ;
-kappa0 = 0.018315638888734*10 ;
+theta0 = [-2,-2] ;
+kappa0 = [2,0] ;
 
 x1     = 1 ;
 y1     = 0 ;
-kappa1 = 0.018315638888734*10 ;
-angles = -pi:pi/36:pi ;
+theta1 = [2,-2] ;
+kappa1 = [3,-1] ;
 
+close all ;
+figure('Position',[1,1,800,500]);
 
-kappa0 = -7.38 ;
-kappa1 = -7.38 ;
-angles0 = -2.97 ;
-angles1 = +2.8 ;
+k = 0;
+for ii=1:2
+  k = k+1;
+  subaxis(2,2,k, 'Spacing', 0.03, 'Padding', 0.02, 'Margin', 0.02);
+  [ S0, S1, SM, flg ] = buildClothoid3arcG2(x0,y0,theta0(ii),kappa0(ii),x1,y1,theta1(ii),kappa1(ii)) ;
+  draw3curve( S0, S1, SM, false );
+  axis equal;
 
-%for theta0=angles(2:4:end-1)
-for theta0=angles0
-  theta0
-%  for theta1=angles(2:4:end-1)
-  for theta1=-angles0
-    [ S0, S1, SM, flg, f0, f1 ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
-    if flg < 0
-      flg
-      f0
-      f1
-    end
-    subplot(2,1,1)
-    hold on
-    draw3curve( S0(7), S1(7), SM(7), false );
-    title(SM(7).opt) ;
-    subplot(2,1,2)
-    hold on
-    draw3curve( S0(6), S1(6), SM(6), false );
-    title(SM(6).opt) ;
+  set(gca,'DataAspectRatio',[1,1,1]) ;
+  set(gca,'XTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
+  set(gca,'XTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
+  set(gca,'YTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
+  set(gca,'YTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
+  
+  k = k+1;
+  subaxis(2,2,k, 'Spacing', 0.03, 'Padding', 0.02, 'Margin', 0.02);
+  draw3curvature( S0, S1, SM, false );
+  
+  set(gca,'XTick',[0,0.25,0.5,0.75,1]) ;
+  set(gca,'XTickLabel',{'$0$','$0.25$','$0.5$','$0.75$','$1$'});
+  if k == 2
+  set(gca,'YTick',[0.5,1,1.5,2,2.5,3]) ;
+  set(gca,'YTickLabel',{'$0.5$','$1$','$1.5$','$2$','$2.5$','$3$'}) ;
+  else
+  set(gca,'YTick',[-3,-1.5,0,1.5,3]) ;
+  set(gca,'YTickLabel',{'$-3$','$-1.5$','$0$','$1.5$','$3$'}) ;
   end
+
+end
+
+
+if true
+  matlab2tikz('figure4.tex', ...
+              'standalone',true, ...
+              'extraaxisoptions',{'xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...
+              'extraTikzpictureOptions',{'cap=round'}); 
 end

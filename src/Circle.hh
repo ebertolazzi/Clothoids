@@ -152,6 +152,14 @@ namespace Circle {
     valueType getSmax()      const { return s_max ; }
     valueType getL()         const { return s_max-s_min ; }
 
+    valueType Xbegin()     const { return X(s_min) ; }
+    valueType Ybegin()     const { return Y(s_min) ; }
+    valueType ThetaBegin() const { return theta(s_min) ; }
+
+    valueType Xend()     const { return X(s_max) ; }
+    valueType Yend()     const { return Y(s_max) ; }
+    valueType ThetaEnd() const { return theta(s_max) ; }
+
     //! construct a clothoid with the standard parameters
     void
     setup( valueType _x0,
@@ -193,6 +201,9 @@ namespace Circle {
               valueType _theta0,
               valueType _x1,
               valueType _y1 );
+
+    valueType
+    delta_theta() const { return (s_max-s_min)*k ; }
 
     valueType
     theta( valueType s ) const { return theta0 + s*k ; }

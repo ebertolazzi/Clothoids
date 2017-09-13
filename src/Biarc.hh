@@ -107,11 +107,19 @@ namespace Biarc {
 
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
+    valueType theta( valueType s ) const ;
+
+    valueType Xstar()     const { return xs ; }
+    valueType Ystar()     const { return ys ; }
+    valueType thetaStar() const { return thetas ; }
 
     void eval( valueType s, valueType & x, valueType & y ) const ;
     void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
     void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
     void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+
+    valueType getL() const { return C0.getL() + C1.getL() ; }
+    valueType delta_theta() const { return C0.delta_theta() + C1.delta_theta() ; }
 
     friend
     std::ostream &

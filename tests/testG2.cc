@@ -13,47 +13,15 @@ main() {
 
   valueType m_pi = 3.1415926535897932385 ;
 
-#if 1
-  #if 1
-  valueType x0  = -1 ;
-  valueType y0  = 0  ;
-  valueType th0 = 2.8*(-0.8) ;
-  valueType k0  = 7.38 ;
-
-  valueType x1  = 1 ;
-  valueType y1  = 0 ;
-  valueType th1 = -2.8*(-0.8) ;
-  valueType k1  = 7.38 ;
-  valueType s0  = 0.5 ;
-  valueType s1  = 0.5 ;
-
-  #else
   valueType x0  = 0 ;
-  valueType y0  = 0 ;
-  valueType th0 = m_pi/2+m_pi/4 ;
-  valueType k0  = -0.5 ;
-  valueType s0  = 0.5 ;
-
-  valueType x1  = 2*sqrt(2.0) ;
-  valueType y1  = 2*sqrt(2.0) ;
-
-  valueType th1 = -m_pi/2+m_pi/4 ;
-  valueType k1  = -0.5 ;
-  valueType s1  = 0.5 ;
-  #endif
-#else
-  valueType x0  = -1 ;
-  valueType y0  = 0 ;
-  valueType th0 = m_pi/2 ;
-  valueType k0  = -1 ;
-  valueType s0  = 0.2 ;
+  valueType y0  = 0  ;
+  valueType th0 = 2.9095201640181596 ;
+  valueType k0  = 0.10000000000000001 ;
 
   valueType x1  = 1 ;
   valueType y1  = 0 ;
-  valueType th1 = -m_pi/2 ;
-  valueType k1  = -1 ;
-  valueType s1  = 0.2  ;
-#endif
+  valueType th1 = -3.1101767270538954 ;
+  valueType k1  = 1 ;
 
   // test 3 archi
   std::cout << "\n\nTry Solution with THREE arcs\n";
@@ -67,6 +35,15 @@ main() {
   std::cout << "\n\nS0 (NEW)\n" << S0 ;
   std::cout << "\n\nSM (NEW)\n" << SM ;
   std::cout << "\n\nS1 (NEW)\n" << S1 ;
+
+  std::cout
+    << "\nx  = " << S0.Xend()       << " " << SM.Xbegin()     << " err = " << S0.Xend()-SM.Xbegin()
+    << "\ny  = " << S0.Yend()       << " " << SM.Ybegin()     << " err = " << S0.Yend()-SM.Ybegin()
+    << "\nth = " << S0.ThetaEnd()   << " " << SM.ThetaBegin() << " err = " << S0.ThetaEnd()-SM.ThetaBegin()
+    << "\nx  = " << S1.Xbegin()     << " " << SM.Xend()       << " err = " << S1.Xbegin()-SM.Xend()
+    << "\ny  = " << S1.Ybegin()     << " " << SM.Yend()       << " err = " << S1.Ybegin()-SM.Yend()
+    << "\nth = " << S1.ThetaBegin() << " " << SM.ThetaEnd()   << " err = " << S1.ThetaBegin()-SM.ThetaEnd()
+    << '\n' ;
 
   std::cout << "\n\nALL DONE FOLKS!!!\n" ;
 
