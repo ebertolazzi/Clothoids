@@ -28,13 +28,24 @@ namespace Clothoid {
 
   using namespace std ;
 
-  static const valueType m_pi  = 3.14159265358979323846264338328 ; // pi
-  static const valueType m_2pi = 6.28318530717958647692528676656 ; // 2*pi
+  static const valueType m_pi   = 3.14159265358979323846264338328 ; // pi
+  static const valueType m_2pi  = 6.28318530717958647692528676656 ; // 2*pi
+  static const valueType m_pi_2 = 1.57079632679489661923132169164  ; // pi/2
 
   inline
   valueType
   power2( valueType a )
   { return a*a ; }
+
+  inline
+  valueType
+  power3( valueType a )
+  { return a*a*a ; }
+
+  inline
+  valueType
+  power4( valueType a )
+  { valueType a2 = a*a ; return a2*a2 ; }
 
   /*\
    |    ____ ____     _       _
@@ -243,99 +254,96 @@ namespace Clothoid {
                       valueType _y1,
                       valueType _theta1,
                       valueType _kappa1,
-                      valueType thmax0,
-                      valueType thmax1 ) {
-    // save data
-    x0     = _x0 ;
-    y0     = _y0 ;
-    theta0 = _theta0;
-    kappa0 = _kappa0 ;
-    x1     = _x1 ;
-    y1     = _y1 ;
-    theta1 = _theta1 ;
-    kappa1 = _kappa1 ;
-
-    // transform to reference frame
-    valueType dx = x1 - x0 ;
-    valueType dy = y1 - y0 ;
-    phi    = atan2( dy, dx ) ;
-    Lscale = 2/hypot( dx, dy ) ;
-
-    th0 = theta0 - phi ;
-    th1 = theta1 - phi ;
-
-    // put in range
-    rangeSymm(th0);
-    rangeSymm(th1);
-
-    K0 = (kappa0/Lscale) ; // k0
-    K1 = (kappa1/Lscale) ; // k1
-
-    //
-    if ( thmax0 <= 0 ) thmax0 = m_pi ;
-    if ( thmax1 <= 0 ) thmax1 = m_pi/2 ;
-
-    valueType L = 2, thM = 0 ;
-
-    // use biarc to estimate max length
-    s0 = 0.66 ;
-    s1 = 0.66 ;
-
+                      valueType Dmax,
+                      valueType dmax ) {
     try {
-      valueType amax = m_pi*0.8 ;
-      valueType tth0 = std::max(std::min(th0,amax),-amax) ;
-      valueType tth1 = std::max(std::min(th1,amax),-amax) ;
-      SG.setup_G1( -1, 0, tth0, 1, 0, tth1 ) ;
+      // save data
+      x0     = _x0 ;
+      y0     = _y0 ;
+      theta0 = _theta0;
+      kappa0 = _kappa0 ;
+      x1     = _x1 ;
+      y1     = _y1 ;
+      theta1 = _theta1 ;
+      kappa1 = _kappa1 ;
+
+      // transform to reference frame
+      valueType dx = x1 - x0 ;
+      valueType dy = y1 - y0 ;
+      phi    = atan2( dy, dx ) ;
+      Lscale = 2/hypot( dx, dy ) ;
+
+      th0 = theta0 - phi ;
+      th1 = theta1 - phi ;
+
+      // put in range
+      rangeSymm(th0);
+      rangeSymm(th1);
+
+      K0 = (kappa0/Lscale) ; // k0
+      K1 = (kappa1/Lscale) ; // k1
+
+      if ( Dmax <= 0 || Dmax > m_pi   ) Dmax = m_pi ;
+      if ( dmax <= 0 || dmax > m_pi/8 ) dmax = m_pi/8 ;
+
+      // compute guess G1
+      SG.setup_G1( -1, 0, th0, 1, 0, th1 ) ;
+
       valueType kA = SG.getKappaBegin() ;
       valueType kB = SG.getKappaEnd() ;
+      valueType dk = std::abs(SG.getKappa_D()) ;
       valueType L3 = SG.getL()/3 ;
-      valueType k  = std::abs(SG.getKappa()) ;
 
-      valueType scale = 0.01+exp(-std::abs(K0)/5)/exp(0.0) ;
-      valueType m0 = std::abs(K0-kA)/(2*thmax0) ;
-      s0 = 1/std::max(1/L3,m0) ;
-      valueType m1 = (std::abs(K0+kA)+s0*k)/(2*thmax1*scale) ;
-      s0 = 1/std::max(1/s0,m1) ;
+      valueType tmp = 0.5*std::abs(K0-kA)/dmax;
+      s0 = L3;
+      if ( tmp*s0 > 1 ) s0 = 1/tmp ;
+      tmp = (std::abs(K0+kA)+s0*dk)/(2*Dmax) ;
+      if ( tmp*s0 > 1 ) s0 = 1/tmp ;
 
-      scale = 0.01+exp(-std::abs(K1)/5)/exp(0.0) ;
-      m0 = std::abs(K1-kB)/(2*thmax0) ;
-      s1 = 1/std::max(1/L3,m0) ;
-      m1 = (std::abs(K1+kB)+s1*k)/(2*thmax1*scale) ;
-      s1 = 1/std::max(1/s1,m1) ;
+      tmp = 0.5*std::abs(K1-kB)/dmax ;
+      s1 = L3;
+      if ( tmp*s1 > 1 ) s1 = 1/tmp ;
+      tmp = (std::abs(K1+kB)+s1*dk)/(2*Dmax) ;
+      if ( tmp*s1 > 1 ) s1 = 1/tmp ;
 
-      L   = (3*L3-s0-s1)/2 ;
-      thM = SG.theta(s0+L) ;
+      valueType dth   = std::abs(th0-th1) / m_2pi ;
+      valueType scale = power3(cos( power4(dth)*m_pi_2 )) ;
+      s0 *= scale ;
+      s1 *= scale ;
+
+      valueType L   = (3*L3-s0-s1)/2 ;
+      valueType thM = SG.theta(s0+L) ;
       th0 = SG.getThetaBegin() ;
       th1 = SG.getThetaEnd() ;
 
+      // setup
+
+      K0 *= s0;
+      K1 *= s1;
+
+      valueType t0 = 2*th0+K0;
+      valueType t1 = 2*th1-K1;
+
+      c0  = s0*s1;
+      c1  = 2 * s0;
+      c2  = 0.25*((K1-6*(K0+th0)-2*th1)*s0 - 3*K0*s1);
+      c3  = -c0 * (K0 + th0);
+      c4  = 2 * s1;
+      c5  = 0.25*((6*(K1-th1)-K0-2*th0)*s1 + 3*K1*s0);
+      c6  = c0 * (K1 - th1);
+      c7  = -0.5*(s0 + s1);
+      c8  = th0 + th1 + 0.5*(K0 - K1);
+      c9  = 0.25*(t1*s0 + t0*s1);
+      c10 = 0.5*(s1 - s0);
+      c11 = 0.5*(th1 - th0) - 0.25*(K0 + K1);
+      c12 = 0.25*(t1*s0 - t0*s1);
+      c13 = 0.5*s0*s1;
+      c14 = 0.75*(s0 + s1);
+      return solve( L, thM ) ;
     } catch (...) {
+      return -1 ;
       // nothing to do
     }
-
-    // setup
-
-    K0 *= s0;
-    K1 *= s1;
-
-    valueType t0 = 2*th0+K0;
-    valueType t1 = 2*th1-K1;
-
-    c0  = s0*s1;
-    c1  = 2 * s0;
-    c2  = 0.25*((K1-6*(K0+th0)-2*th1)*s0 - 3*K0*s1);
-    c3  = -c0 * (K0 + th0);
-    c4  = 2 * s1;
-    c5  = 0.25*((6*(K1-th1)-K0-2*th0)*s1 + 3*K1*s0);
-    c6  = c0 * (K1 - th1);
-    c7  = -0.5*(s0 + s1);
-    c8  = th0 + th1 + 0.5*(K0 - K1);
-    c9  = 0.25*(t1*s0 + t0*s1);
-    c10 = 0.5*(s1 - s0);
-    c11 = 0.5*(th1 - th0) - 0.25*(K0 + K1);
-    c12 = 0.25*(t1*s0 - t0*s1);
-    c13 = 0.5*s0*s1;
-    c14 = 0.75*(s0 + s1);
-    return solve( L, thM ) ;
   }
 
   // **************************************************************************
@@ -376,11 +384,12 @@ namespace Clothoid {
     valueType sM  = vars[0];
     valueType thM = vars[1];
 
-    valueType dsM = 1.0 / (c13+(c14+sM)*sM);
-    valueType dK0 = dsM*(c0*thM + sM*(c1*thM + c2-sM*K0) + c3);
-    valueType dK1 = dsM*(c0*thM + sM*(c4*thM + c5+sM*K1) + c6);
-    valueType dKM = dsM*sM*(thM*(c7-2*sM) + c8*sM + c9);
-    valueType KM  = dsM*sM*(c10*thM + c11*sM + c12);
+    valueType dsM   = 1.0 / (c13+(c14+sM)*sM);
+    valueType dsMsM = dsM*sM;
+    valueType dK0   = dsM*(c0*thM + sM*(c1*thM + c2 - sM*K0) + c3);
+    valueType dK1   = dsM*(c0*thM + sM*(c4*thM + c5 + sM*K1) + c6);
+    valueType dKM   = dsMsM*(thM*(c7-2*sM) + c8*sM + c9);
+    valueType KM    = dsMsM*(c10*thM + c11*sM + c12);
 
     valueType X0[3],  Y0[3],
               X1[3],  Y1[3],
@@ -394,14 +403,16 @@ namespace Clothoid {
     // in the standard problem dx = 2, dy = 0
     //valueType dx  = x1 - x0;
     //valueType dy  = y1 - y0;
-    F[0] = s0*X0[0] + s1*X1[0] + sM*(XMm[0] + XMp[0]) - 2 ;
-    F[1] = s0*Y0[0] + s1*Y1[0] + sM*(YMm[0] + YMp[0]) - 0 ;
+    valueType t0 = XMp[0]+XMm[0];
+    valueType t1 = YMp[0]+YMm[0];
+    F[0] = s0*X0[0] + s1*X1[0] + sM*t0 - 2 ;
+    F[1] = s0*Y0[0] + s1*Y1[0] + sM*t1 - 0 ;
 
     // calcolo J(F)
     valueType dsM2 = dsM*dsM;
-    valueType g0 = -(2 * sM + c14)*dsM2;
-    valueType g1 = (c13 - sM*sM)*dsM2;
-    valueType g2 = sM*(sM*c14+2*c13)*dsM2;
+    valueType g0   = -(2 * sM + c14)*dsM2;
+    valueType g1   = (c13 - sM*sM)*dsM2;
+    valueType g2   = sM*(sM*c14+2*c13)*dsM2;
 
     valueType dK0_sM  = (c0*thM+c3)*g0 + (c1*thM+c2)*g1 - K0*g2 ;
     valueType dK1_sM  = (c0*thM+c6)*g0 + (c4*thM+c5)*g1 + K1*g2 ;
@@ -410,8 +421,8 @@ namespace Clothoid {
 
     valueType dK0_thM = (c0+c1*sM)*dsM;
     valueType dK1_thM = (c0+c4*sM)*dsM;
-    valueType dKM_thM = (c7-2*sM)*sM*dsM;
-    valueType KM_thM  = c10*sM*dsM;
+    valueType dKM_thM = (c7-2*sM)*dsMsM;
+    valueType KM_thM  = c10*dsMsM;
 
     // coeff fresnel per f_j per lo jacobiano
     valueType f0 = -0.5*s0*Y0[2];
@@ -422,13 +433,11 @@ namespace Clothoid {
     valueType f5 = 0.5*s1*X1[2];
     valueType f6 = 0.5*sM*(XMm[2] + XMp[2]);
     valueType f7 = sM*(XMp[1] - XMm[1]);
-    valueType f8 = XMp[0]+XMm[0];
-    valueType f9 = YMp[0]+YMm[0];
 
-    J[0][0] = f0 * dK0_sM  + f1 * dK1_sM  + f2 * dKM_sM  + f3 * KM_sM  + f8 ;
-    J[0][1] = f0 * dK0_thM + f1 * dK1_thM + f2 * dKM_thM + f3 * KM_thM - sM * f9 ;
-    J[1][0] = f4 * dK0_sM  + f5 * dK1_sM  + f6 * dKM_sM  + f7 * KM_sM  + f9 ;
-    J[1][1] = f4 * dK0_thM + f5 * dK1_thM + f6 * dKM_thM + f7 * KM_thM + sM * f8 ;
+    J[0][0] = f0 * dK0_sM  + f1 * dK1_sM  + f2 * dKM_sM  + f3 * KM_sM  + t0 ;
+    J[0][1] = f0 * dK0_thM + f1 * dK1_thM + f2 * dKM_thM + f3 * KM_thM - sM * t1 ;
+    J[1][0] = f4 * dK0_sM  + f5 * dK1_sM  + f6 * dKM_sM  + f7 * KM_sM  + t1 ;
+    J[1][1] = f4 * dK0_thM + f5 * dK1_thM + f6 * dKM_thM + f7 * KM_thM + sM * t0 ;
   }
 
   // **************************************************************************
@@ -442,8 +451,8 @@ namespace Clothoid {
     X[0] = sM_guess ;
     X[1] = thM_guess ;
 
-    valueType thmin = min(th0,th1)-m_2pi ;
-    valueType thmax = max(th0,th1)+m_2pi ;
+    //valueType thmin = min(th0,th1)-2*m_2pi ;
+    //valueType thmax = max(th0,th1)+2*m_2pi ;
 
     int iter = 0;
     bool converged = false;
@@ -466,9 +475,9 @@ namespace Clothoid {
           XX[1] = X[1]-tau*d[1];
           evalF(XX, FF);
           solver.solve(FF, dd);
-          step_found = hypot( dd[0], dd[1] ) < (1-tau/2)*nd
-                       && XX[0] > 0 && XX[0] > X[0]/2 && XX[0] < 2*X[0]
-                       && XX[1] > thmin && XX[1] < thmax ;
+          step_found = hypot( dd[0], dd[1] ) < (1-tau/2)*nd;
+                       //&& XX[0] > 0 ; // && XX[0] > X[0]/4 && XX[0] < 4*X[0] ;
+                       //&& XX[1] > thmin && XX[1] < thmax ;
         } while ( tau > 1e-6 && !step_found );
         if ( !step_found ) break ;
         X[0] = XX[0];

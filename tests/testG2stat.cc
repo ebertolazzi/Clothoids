@@ -41,8 +41,8 @@ main(int argc, const char * argv[]) {
   valueType y1 = 0 ;
 
   // insert code here...
-  valueType thmin = -m_pi*0.99 ;
-  valueType thmax =  m_pi*0.99 ;
+  valueType thmin = -m_pi*0.999 ;
+  valueType thmax =  m_pi*0.999 ;
 
   int nkur = 17 ;
   valueType kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 } ;

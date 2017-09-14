@@ -21,12 +21,12 @@
 "%=============================================================================%\n" \
 "%  buildClothoid:  Compute parameters of the G2 Hermite clothoid fitting      %\n" \
 "%                                                                             %\n" \
-"%  USAGE: [ S0,S1,SM,iter] = buildClothoid3arcG2( x0, y0, th0, k0,            %\n" \
-"%                                                 x1, y1, th1, k1 ) ;         %\n" \
+"%  USAGE: [ S0,S1,SM,SG,iter ] = buildClothoid3arcG2( x0, y0, th0, k0,        %\n" \
+"%                                                     x1, y1, th1, k1 ) ;     %\n" \
 "%                                                                             %\n" \
-"%  USAGE: [ S0,S1,SM,iter] = buildClothoid3arcG2( x0, y0, th0, k0,            %\n" \
-"%                                                 x1, y1, th1, k1,            %\n" \
-"%                                                 thmax0, thmax1 ) ;          %\n" \
+"%  USAGE: [ S0,S1,SM,SG,iter ] = buildClothoid3arcG2( x0, y0, th0, k0,        %\n" \
+"%                                                     x1, y1, th1, k1,        %\n" \
+"%                                                     dmax0, dmax1 ) ;        %\n" \
 "%                                                                             %\n" \
 "%  On input:                                                                  %\n" \
 "%                                                                             %\n" \
@@ -36,14 +36,15 @@
 "%       x1, y1  = coodinate of final point                                    %\n" \
 "%       theta1  = orientation (angle) of the clothoid at final point          %\n" \
 "%                                                                             %\n" \
-"%       thmax0  = rough desidered maximum angle variation of initial segment  %\n" \
-"%       thmax1  = rough desidered maximum angle variation of final segment    %\n" \
+"%       dmax0   = rough desidered maximum angle divergence from guess         %\n" \
+"%       dmax1   = rough desidered maximum angle variation                     %\n" \
 "%                                                                             %\n" \
 "%  On output:                                                                 %\n" \
 "%                                                                             %\n" \
 "%       S0     = initial arc of clothoid                                      %\n" \
 "%       SM     = middle arc of clothoid                                       %\n" \
 "%       S1     = final arc of clothoid                                        %\n" \
+"%       SG     = G1 guess clothoid                                            %\n" \
 "%                                                                             %\n" \
 "%  Optional Output                                                            %\n" \
 "%                                                                             %\n" \
@@ -75,22 +76,14 @@
 #define arg_y1     prhs[5]
 #define arg_theta1 prhs[6]
 #define arg_kappa1 prhs[7]
-#define arg_thmax0 prhs[8]
-#define arg_thmax1 prhs[9]
-
-#define arg1_x0     prhs[0]
-#define arg1_y0     prhs[1]
-#define arg1_theta0 prhs[2]
-#define arg1_kappa0 prhs[3]
-#define arg1_x1     prhs[4]
-#define arg1_y1     prhs[5]
-#define arg1_theta1 prhs[6]
-#define arg1_kappa1 prhs[7]
+#define arg_dmax0  prhs[8]
+#define arg_dmax1  prhs[9]
 
 #define out_S0     plhs[0]
 #define out_S1     plhs[1]
 #define out_SM     plhs[2]
-#define out_iter   plhs[3]
+#define out_SG     plhs[3]
+#define out_iter   plhs[4]
 
 static
 void
@@ -112,7 +105,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
   static Clothoid::G2solve3arc g2solve3arc ;
 
-  Clothoid::valueType x0, y0, th0, k0, thmax0, x1, y1, th1, k1, thmax1 ;
+  Clothoid::valueType x0, y0, th0, k0, x1, y1, th1, k1, Dmax, dmax ;
 
   try {
 
@@ -128,9 +121,9 @@ mexFunction( int nlhs, mxArray       *plhs[],
   	      mexErrMsgTxt("Input arguments must be real scalars");
     }
 
-    ASSERT( nlhs >= 3 && nlhs <= 4,
+    ASSERT( nlhs >= 4 && nlhs <= 5,
             "wrong number of output arguments\n"
-            "expected 3 or 4, found " << nlhs ) ;
+            "expected 4 or 5, found " << nlhs ) ;
 
     int iter ;
     if ( nrhs == 10 ) {
@@ -138,40 +131,42 @@ mexFunction( int nlhs, mxArray       *plhs[],
       y0     = mxGetScalar(arg_y0) ;
       th0    = mxGetScalar(arg_theta0) ;
       k0     = mxGetScalar(arg_kappa0) ;
-      thmax0 = mxGetScalar(arg_thmax0) ;
       x1     = mxGetScalar(arg_x1) ;
       y1     = mxGetScalar(arg_y1) ;
       th1    = mxGetScalar(arg_theta1) ;
       k1     = mxGetScalar(arg_kappa1) ;
-      thmax1 = mxGetScalar(arg_thmax1) ;
+      Dmax   = mxGetScalar(arg_dmax0) ;
+      dmax   = mxGetScalar(arg_dmax1) ;
 
-      iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1, thmax0, thmax1 ) ;
+      iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1, Dmax, dmax ) ;
 
-      save_struct( g2solve3arc.getS0(), out_S0 ) ;
-      save_struct( g2solve3arc.getS1(), out_S1 ) ;
-      save_struct( g2solve3arc.getSM(), out_SM ) ;
+      save_struct( g2solve3arc.getS0(),    out_S0 ) ;
+      save_struct( g2solve3arc.getS1(),    out_S1 ) ;
+      save_struct( g2solve3arc.getSM(),    out_SM ) ;
+      save_struct( g2solve3arc.getGuess(), out_SG ) ;
 
-      if ( nlhs > 3 ) {
+      if ( nlhs > 4 ) {
         out_iter = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *static_cast<int *>(mxGetData(out_iter)) = iter ;
       }
     } else {
-      x0  = mxGetScalar(arg1_x0) ;
-      y0  = mxGetScalar(arg1_y0) ;
-      th0 = mxGetScalar(arg1_theta0) ;
-      k0  = mxGetScalar(arg1_kappa0) ;
-      x1  = mxGetScalar(arg1_x1) ;
-      y1  = mxGetScalar(arg1_y1) ;
-      th1 = mxGetScalar(arg1_theta1) ;
-      k1  = mxGetScalar(arg1_kappa1) ;
+      x0  = mxGetScalar(arg_x0) ;
+      y0  = mxGetScalar(arg_y0) ;
+      th0 = mxGetScalar(arg_theta0) ;
+      k0  = mxGetScalar(arg_kappa0) ;
+      x1  = mxGetScalar(arg_x1) ;
+      y1  = mxGetScalar(arg_y1) ;
+      th1 = mxGetScalar(arg_theta1) ;
+      k1  = mxGetScalar(arg_kappa1) ;
 
       iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
 
-      save_struct( g2solve3arc.getS0(), out_S0 ) ;
-      save_struct( g2solve3arc.getS1(), out_S1 ) ;
-      save_struct( g2solve3arc.getSM(), out_SM ) ;
+      save_struct( g2solve3arc.getS0(),    out_S0 ) ;
+      save_struct( g2solve3arc.getS1(),    out_S1 ) ;
+      save_struct( g2solve3arc.getSM(),    out_SM ) ;
+      save_struct( g2solve3arc.getGuess(), out_SG ) ;
 
-      if ( nlhs > 3 ) {
+      if ( nlhs > 4 ) {
         out_iter = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *static_cast<int *>(mxGetData(out_iter)) = iter ;
       }

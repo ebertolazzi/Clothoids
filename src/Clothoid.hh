@@ -605,8 +605,8 @@ namespace Clothoid {
      | \param[in] y1      final `y` position
      | \param[in] theta1  final angle
      | \param[in] kappa1  final curvature
-     | \param[in] thmax0  rough desidered maximum angle variation of initial segment, if 0 computed automatically
-     | \param[in] thmax1  rough desidered maximum angle variation of final segment, if 0 computed automatically
+     | \param[in] Dmax    rough desidered maximum angle variation, if 0 computed automatically
+     | \param[in] dmax    rough desidered maximum angle divergence from guess, if 0 computed automatically
      | \return
      |
     \*/
@@ -619,8 +619,8 @@ namespace Clothoid {
            valueType y1,
            valueType theta1,
            valueType kappa1,
-           valueType thmax0 = 0,
-           valueType thmax1 = 0 ) ;
+           valueType Dmax = 0,
+           valueType dmax = 0 ) ;
 
     ClothoidCurve const & getS0()    const { return S0 ; }
     ClothoidCurve const & getS1()    const { return S1 ; }

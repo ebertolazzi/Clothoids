@@ -23,7 +23,7 @@ for k=1:6
   subaxis(3,2,k, 'Spacing', 0.01, 'Padding', 0.02, 'Margin', 0.02);
   axis tight ;
   
-  [ S0, S1, SM, iter ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1(k),kappa1(k)) ;
+  [ S0, S1, SM, SG, iter ] = buildClothoid3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1(k),kappa1(k)) ;
   if iter >= 0
     draw3curve( S0, S1, SM, false );
     hold on

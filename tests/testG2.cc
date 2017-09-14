@@ -13,6 +13,7 @@ main() {
 
   valueType m_pi = 3.1415926535897932385 ;
 
+#if 0
   valueType x0  = 0 ;
   valueType y0  = 0  ;
   valueType th0 = 2.9095201640181596 ;
@@ -22,6 +23,17 @@ main() {
   valueType y1  = 0 ;
   valueType th1 = -3.1101767270538954 ;
   valueType k1  = 1 ;
+#else
+  valueType x0  = -1 ;
+  valueType y0  = 0  ;
+  valueType th0 = m_pi*0.9;
+  valueType k0  = 0.2 + 1e-10 ;
+
+  valueType x1  = 1 ;
+  valueType y1  = 0 ;
+  valueType th1 = -m_pi ;
+  valueType k1  = 0.2 + 0 ;
+#endif
 
   // test 3 archi
   std::cout << "\n\nTry Solution with THREE arcs\n";

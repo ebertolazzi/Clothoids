@@ -24,7 +24,7 @@ for k=1:4
   subaxis(2,2,k, 'Spacing', 0.02, 'Padding', 0.01, 'Margin', 0.02);
   axis tight ;
   for theta1=-pi:pi/15:pi
-    [ S0, S1, SM, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k)) ;
+    [ S0, S1, SM, SG, flg ] = buildClothoid3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k)) ;
     if flg < 0
       flg
     else

@@ -21,7 +21,7 @@ for k=1:4
   axis tight ;
   %subplot(2,2,k)
   for thmax0=pi*[0.25,1,1.75]
-    [ S0, S1, SM, iter ] = buildClothoid3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k),thmax0,thmax0) ;
+    [ S0, S1, SM, SG, iter ] = buildClothoid3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k),thmax0,thmax0) ;
     if iter >= 0
       draw3curve( S0, S1, SM, thmax0 ~= pi );
       hold on
