@@ -38,7 +38,6 @@ namespace Clothoid {
   static valueType const CF[] = { 2.989696028701907,  0.716228953608281,
                                  -0.458969738821509, -0.502821153340377,
                                   0.261062141752652, -0.045854475238709 } ;
-
   int
   buildClothoid( valueType   x0,
                  valueType   y0,
@@ -183,6 +182,60 @@ namespace Clothoid {
   }
 
   // ---------------------------------------------------------------------------
+  int
+  ClothoidCurve::build( valueType x1,
+                        valueType y1,
+                        valueType theta1 ) {
+
+    // traslazione in (0,0)
+    valueType dx  = x1 - x0 ;
+    valueType dy  = y1 - y0 ;
+    valueType r   = hypot( dx, dy ) ;
+    valueType phi = atan2( dy, dx ) ;
+
+    valueType phi0 = theta0 - phi ;
+    valueType phi1 = theta1 - phi ;
+    
+    phi0 -= m_2pi*round(phi0/m_2pi) ;
+    phi1 -= m_2pi*round(phi1/m_2pi) ;
+
+    if ( phi0 >  m_pi ) phi0 -= m_2pi ;
+    if ( phi0 < -m_pi ) phi0 += m_2pi ;
+    if ( phi1 >  m_pi ) phi1 -= m_2pi ;
+    if ( phi1 < -m_pi ) phi1 += m_2pi ;
+
+    valueType delta = phi1 - phi0 ;
+
+    // punto iniziale
+    valueType X  = phi0*m_1_pi ;
+    valueType Y  = phi1*m_1_pi ;
+    valueType xy = X*Y ;
+    Y *= Y ; X *= X ;
+    valueType A  = (phi0+phi1)*(CF[0]+xy*(CF[1]+xy*CF[2])+(CF[3]+xy*CF[4])*(X+Y)+CF[5]*(X*X+Y*Y)) ;
+
+    // newton
+    valueType g=0, dg, intC[3], intS[3] ;
+    indexType niter = 0 ;
+    do {
+      GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS ) ;
+      g   = intS[0] ;
+      dg  = intC[2] - intC[1] ;
+      A  -= g / dg ;
+    } while ( ++niter <= 10 && std::abs(g) > 1E-12 ) ;
+
+    G2LIB_ASSERT( std::abs(g) < 1E-8, "Newton do not converge, g = " << g << " niter = " << niter ) ;
+    GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] ) ;
+    valueType L = r/intC[0] ;
+
+    G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
+    k  = (delta-A)/L ;
+    dk = 2*A/L/L ;
+
+    s_min = 0 ;
+    s_max = L ;
+
+    return niter ;
+  }
 
   valueType
   ClothoidCurve::X( valueType s ) const {

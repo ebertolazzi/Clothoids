@@ -33,7 +33,7 @@ main(int argc, const char * argv[]) {
 
   Clothoid::G2solve3arc g2solve3arc ;
 
-  int NMAX = 32 ;
+  int NMAX = 128/2 ;
 
   valueType x0 = 0 ;
   valueType y0 = 0 ;
@@ -44,8 +44,16 @@ main(int argc, const char * argv[]) {
   valueType thmin = -m_pi*0.999 ;
   valueType thmax =  m_pi*0.999 ;
 
-  int nkur = 17 ;
-  valueType kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 } ;
+  valueType kur[1000], k0 = 1e-10 ;
+  int nkur = 33 ; // 129 ;
+  kur[0] = 0 ;
+  for ( int ii = 1 ; ii < nkur ; ii += 2 ) {
+    kur[ii]   = k0 ;
+    kur[ii+1] = -kur[ii] ;
+    k0 *= 2.08;
+  }
+
+  // valueType kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 } ;
   for ( int ii = 0 ; ii < nkur ; ++ii ) {
     valueType k0 = kur[ii];
     for ( int jj = 0 ; jj < nkur ; ++jj ) {

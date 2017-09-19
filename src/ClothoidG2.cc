@@ -56,14 +56,14 @@ namespace Clothoid {
   \*/
 
   void
-  G2data::setup( valueType _x0,
-                 valueType _y0,
-                 valueType _theta0,
-                 valueType _kappa0,
-                 valueType _x1,
-                 valueType _y1,
-                 valueType _theta1,
-                 valueType _kappa1 ) {
+  G2solve2arc::setup( valueType _x0,
+                      valueType _y0,
+                      valueType _theta0,
+                      valueType _kappa0,
+                      valueType _x1,
+                      valueType _y1,
+                      valueType _theta1,
+                      valueType _kappa1 ) {
 
     x0     = _x0 ;
     y0     = _y0 ;
@@ -98,16 +98,16 @@ namespace Clothoid {
   }
 
   void
-  G2data::setTolerance( valueType tol ) {
+  G2solve2arc::setTolerance( valueType tol ) {
     G2LIB_ASSERT( tol > 0 && tol <= 0.1,
-                  "setTolerance, tolerance = " << tol << " must be in (0,0.1]" ) ;
+                  "G2solve2arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]" ) ;
     tolerance = tol ;
   }
 
   void
-  G2data::setMaxIter( int miter ) {
+  G2solve2arc::setMaxIter( int miter ) {
     G2LIB_ASSERT( miter > 0 && miter <= 1000,
-                  "setMaxIter, maxIter = " << miter << " must be in [1,1000]" ) ;
+                  "G2solve2arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]" ) ;
     maxIter = miter ;
   }
 
@@ -283,8 +283,11 @@ namespace Clothoid {
       K0 = (kappa0/Lscale) ; // k0
       K1 = (kappa1/Lscale) ; // k1
 
-      if ( Dmax <= 0 || Dmax > m_pi   ) Dmax = m_pi ;
-      if ( dmax <= 0 || dmax > m_pi/8 ) dmax = m_pi/8 ;
+      if ( Dmax <= 0 ) Dmax = m_pi ;
+      if ( dmax <= 0 ) dmax = m_pi/8 ;
+
+      if ( Dmax > m_2pi  ) Dmax = m_2pi ;
+      if ( dmax > m_pi/4 ) dmax = m_pi/4 ;
 
       // compute guess G1
       SG.setup_G1( -1, 0, th0, 1, 0, th1 ) ;
@@ -447,7 +450,7 @@ namespace Clothoid {
                       valueType thM_guess ) {
 
     Solve2x2 solver;
-    valueType F[2], FF[2], d[2], dd[2], X[2], XX[2], J[2][2];
+    valueType F[2], d[2], X[2], J[2][2];
     X[0] = sM_guess ;
     X[1] = thM_guess ;
 
@@ -463,8 +466,11 @@ namespace Clothoid {
         converged = lenF < tolerance;
         if ( converged || !solver.factorize(J) ) break;
         solver.solve(F, d);
-        //X[0] -= d[0];
-        //X[1] -= d[1];
+        #if 1
+        X[0] -= d[0];
+        X[1] -= d[1];
+        #else
+        valueType FF[2], dd[2], XX[2];
         // Affine invariant Newton solver
         valueType nd = hypot( d[0], d[1] ) ;
         bool step_found = false ;
@@ -475,13 +481,14 @@ namespace Clothoid {
           XX[1] = X[1]-tau*d[1];
           evalF(XX, FF);
           solver.solve(FF, dd);
-          step_found = hypot( dd[0], dd[1] ) < (1-tau/2)*nd;
+          step_found = hypot( dd[0], dd[1] ) <= (1-tau/2)*nd + 1e-6 ;
                        //&& XX[0] > 0 ; // && XX[0] > X[0]/4 && XX[0] < 4*X[0] ;
                        //&& XX[1] > thmin && XX[1] < thmax ;
         } while ( tau > 1e-6 && !step_found );
         if ( !step_found ) break ;
         X[0] = XX[0];
         X[1] = XX[1];
+        #endif
       } while ( ++iter < maxIter );
 
       // re-check solution

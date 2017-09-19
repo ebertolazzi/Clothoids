@@ -107,6 +107,9 @@ namespace Clothoid {
     valueType s_min,    //!< initial curvilinear coordinate of the clothoid segment
               s_max ;   //!< final curvilinear coordinate of the clothoid segment
 
+    int
+    build( valueType x1, valueType y1, valueType theta1 );
+
     void
     bbSplit_internal( valueType                        split_angle,
                       valueType                        split_size,
@@ -174,7 +177,8 @@ namespace Clothoid {
     , y0(_P0[1])
     , theta0(_theta0)
     , s_min(0) {
-      buildClothoid( x0, y0, theta0, _P1[0], _P1[1], _theta1, k, dk, s_max ) ;
+      build( _P1[0], _P1[1], _theta1 ) ;
+      //buildClothoid( x0, y0, theta0, _P1[0], _P1[1], _theta1, k, dk, s_max ) ;
     }
 
     void
@@ -242,7 +246,15 @@ namespace Clothoid {
       s_max  = _smax ;
     }
 
-    //! build a clothoid by solving the hermite G1 problem
+    /*! \brief build a clothoid by solving the hermite G1 problem
+     *
+     * \param _x0     initial x position            \f$ x_0      \f$
+     * \param _y0     initial y position            \f$ y_0      \f$
+     * \param _theta0 initial angle                 \f$ \theta_0 \f$
+     * \param _x1     final x position              \f$ x_1      \f$
+     * \param _y1     final y position              \f$ y_1      \f$
+     * \param _theta1 final angle                   \f$ \theta_1 \f$
+     */
     void
     setup_G1( valueType _x0,
               valueType _y0,
@@ -250,14 +262,24 @@ namespace Clothoid {
               valueType _x1,
               valueType _y1,
               valueType _theta1 ) {
-      buildClothoid( _x0, _y0, _theta0, _x1, _y1, _theta1, k, dk, s_max ) ;
       x0     = _x0 ;
       y0     = _y0 ;
       theta0 = _theta0 ;
-      s_min  = 0 ;
+      build( _x1, _y1, _theta1 ) ;
+      //buildClothoid( _x0, _y0, _theta0, _x1, _y1, _theta1, k, dk, s_max ) ;
+      //s_min  = 0 ;
     }
 
-    //! build a clothoid by solving the forward problem
+
+    /*! \brief build a clothoid by solving the forward problem
+     *
+     * \param _x0     initial x position            \f$ x_0      \f$
+     * \param _y0     initial y position            \f$ y_0      \f$
+     * \param _theta0 initial angle                 \f$ \theta_0 \f$
+     * \param _k      initial curvature             \f$ \kappa_0 \f$
+     * \param _x1     final x position              \f$ x_1      \f$
+     * \param _y1     final y position              \f$ y_1      \f$
+     */
     bool
     setup_forward( valueType _x0,
                    valueType _y0,
@@ -418,17 +440,15 @@ namespace Clothoid {
     reverse() ;
 
   } ;
-  
-  /*\
-   |    ____ ____     _       _
-   |   / ___|___ \ __| | __ _| |_ __ _
-   |  | |  _  __) / _` |/ _` | __/ _` |
-   |  | |_| |/ __/ (_| | (_| | || (_| |
-   |   \____|_____\__,_|\__,_|\__\__,_|
-  \*/
-  class G2data {
 
-  protected:
+  /*\
+   |    ____ ____            _           ____
+   |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
+   |  | |  _  __) / __|/ _ \| \ \ / / _ \ __) / _` | '__/ __|
+   |  | |_| |/ __/\__ \ (_) | |\ V /  __// __/ (_| | | | (__
+   |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
+  \*/
+  class G2solve2arc {
 
     valueType tolerance ;
     int       maxIter ;
@@ -448,52 +468,6 @@ namespace Clothoid {
     valueType k0, k1 ;
     valueType DeltaK ;
     valueType DeltaTheta ;
-
-  public:
-  
-    G2data()
-    : tolerance(1e-10)
-    , maxIter(20)
-    , x0(0)
-    , y0(0)
-    , theta0(0)
-    , kappa0(0)
-    , x1(0)
-    , y1(0)
-    , theta1(0)
-    , kappa1(0)
-    , lambda(0)
-    , phi(0)
-    , xbar(0)
-    , ybar(0)
-    , th0(0)
-    , th1(0)
-    , k0(0)
-    , k1(0)
-    {}
-
-    ~G2data() {}
-
-    void
-    setup( valueType x0, valueType y0, valueType theta0, valueType kappa0,
-           valueType x1, valueType y1, valueType theta1, valueType kappa1 ) ;
-
-    void
-    setTolerance( valueType tol ) ;
-
-    void
-    setMaxIter( int tol ) ;
-
-  } ;
-
-  /*\
-   |    ____ ____            _           ____
-   |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
-   |  | |  _  __) / __|/ _ \| \ \ / / _ \ __) / _` | '__/ __|
-   |  | |_| |/ __/\__ \ (_) | |\ V /  __// __/ (_| | | | (__
-   |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
-  \*/
-  class G2solve2arc : public G2data {
 
     ClothoidCurve S0, S1 ;
 
@@ -522,13 +496,39 @@ namespace Clothoid {
     buildSolution( valueType alpha, valueType L ) ;
 
   public:
-  
-    using G2data::setup ;
-    using G2data::setTolerance ;
-    using G2data::setMaxIter ;
 
-    G2solve2arc() {}
+    G2solve2arc()
+    : tolerance(1e-10)
+    , maxIter(20)
+    , x0(0)
+    , y0(0)
+    , theta0(0)
+    , kappa0(0)
+    , x1(0)
+    , y1(0)
+    , theta1(0)
+    , kappa1(0)
+    , lambda(0)
+    , phi(0)
+    , xbar(0)
+    , ybar(0)
+    , th0(0)
+    , th1(0)
+    , k0(0)
+    , k1(0)
+    {}
+
     ~G2solve2arc() {}
+
+    void
+    setup( valueType x0, valueType y0, valueType theta0, valueType kappa0,
+           valueType x1, valueType y1, valueType theta1, valueType kappa1 ) ;
+
+    void
+    setTolerance( valueType tol ) ;
+
+    void
+    setMaxIter( int tol ) ;
 
     int
     solve() ;
