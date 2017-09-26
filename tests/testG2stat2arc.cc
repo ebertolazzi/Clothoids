@@ -8,6 +8,19 @@
 #include <ctime>
 #include <map>
 
+std::stack<clock_t> tictoc_stack;
+
+void tic() {
+	tictoc_stack.push(clock());
+}
+
+void toc() {
+	std::cout << "Time elapsed: "
+		<< ((double)(clock() - tictoc_stack.top())) / CLOCKS_PER_SEC
+		<< std::endl;
+	tictoc_stack.pop();
+}
+
 using Clothoid::valueType;
 
 static const valueType m_pi = 3.14159265358979323846264338328;
@@ -19,10 +32,10 @@ map<int,int> stats ;
 int
 main(int argc, const char * argv[]) {
 
-  Clothoid::G2solve3arc g2solve3arc ;
+  Clothoid::G2solve2arc g2solve2arc ;
   TicToc                tictoc ;
 
-  int NMAX = 128 ;
+  int NMAX = 128/8 ;
 
   valueType x0 = 0 ;
   valueType y0 = 0 ;
@@ -30,8 +43,8 @@ main(int argc, const char * argv[]) {
   valueType y1 = 0 ;
 
   // insert code here...
-  valueType thmin = -m_pi*0.999 ;
-  valueType thmax =  m_pi*0.999 ;
+  valueType thmin = -m_pi*0.99 ;
+  valueType thmax =  m_pi*0.99 ;
 
   valueType kur[1000], kmax = 10 ;
   int nkur = 64 ;
@@ -45,6 +58,7 @@ main(int argc, const char * argv[]) {
     kur[ii+1] = -kur[ii] ;
     k0 *= a;
   }
+
   cout << "\nkur[0]      = " << kur[0]
        << "\nkur[1]      = " << kur[1]
        << "\nkur[2]      = " << kur[2]
@@ -52,10 +66,10 @@ main(int argc, const char * argv[]) {
        << "\nkur[nkur-2] = " << kur[nkur-2]
        << "\n" ;
 
+
   // valueType kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 } ;
   tictoc.tic();
   for ( int ii = 0 ; ii < nkur ; ++ii ) {
-    cout << "ii = " << ii << '\n' ;
     valueType k0 = kur[ii];
     for ( int jj = 0 ; jj < nkur ; ++jj ) {
       valueType k1 = kur[jj] ;
@@ -63,28 +77,29 @@ main(int argc, const char * argv[]) {
         valueType th0 = thmin + ((thmax-thmin)*i)/(NMAX-1);
         for ( int j = 0 ; j < NMAX ; ++j ) {
           valueType th1 = thmin + ((thmax-thmin)*j)/(NMAX-1);
-          int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
-          if ( iter < 0 ) {
-            cout << "iter = " << iter << '\n' ;
-            iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
-            cout << "iter dopo = " << iter << '\n' ;
-          }
+          int iter = g2solve2arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
+          //if ( iter < 0 ) {
+          //  cout << "iter = " << iter << '\n' ;
+          // iter = g2solve2arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
+          //  cout << "iter dopo = " << iter << '\n' ;
+          //}
           stats[iter]++ ;
         }
       }
     }
   }
-  tictoc.toc() ;
+  tictoc.tic();
+
   cout << "stats\n" ;
-  long N = 0;
+  int acc = 0, acc1 = 0 ;
   for ( map<int,int>::const_iterator is = stats.begin();
         is != stats.end() ; ++is ) {
     cout << "iter = " << is->first << " -- " << is->second << '\n' ;
-    N += is->second;
+    if ( is->first>0 ) acc  += is->second ;
+    else               acc1 += is->second ;
   }
+  cout << "ok = " << acc << " perc = " << double(acc)/(acc+acc1) << '\n' ;
   cout << "elapsed = " << tictoc.totalElapsedSeconds() << '\n' ;
-  cout << "ave = " << tictoc.totalElapsedSeconds()/N << '\n' ;
   cout << "All done\n" ;
   return 0;
 }
-

@@ -48,15 +48,15 @@ namespace Clothoid {
   { valueType a2 = a*a ; return a2*a2 ; }
 
   /*\
-   |    ____ ____     _       _
-   |   / ___|___ \ __| | __ _| |_ __ _
-   |  | |  _  __) / _` |/ _` | __/ _` |
-   |  | |_| |/ __/ (_| | (_| | || (_| |
-   |   \____|_____\__,_|\__,_|\__\__,_|
+   |    ____ ____            _           ____
+   |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
+   |  | |  _  __) / __|/ _ \| \ \ / / _ \ __) / _` | '__/ __|
+   |  | |_| |/ __/\__ \ (_) | |\ V /  __// __/ (_| | | | (__
+   |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
   \*/
 
-  void
-  G2solve2arc::setup( valueType _x0,
+  int
+  G2solve2arc::build( valueType _x0,
                       valueType _y0,
                       valueType _theta0,
                       valueType _kappa0,
@@ -95,6 +95,8 @@ namespace Clothoid {
 
     DeltaK     = k1 - k0 ;
     DeltaTheta = th1 - th0 ;
+
+    return solve();
   }
 
   void
@@ -111,14 +113,14 @@ namespace Clothoid {
     maxIter = miter ;
   }
 
-
-  /*\
-   |    ____ ____            _           ____
-   |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
-   |  | |  _  __) / __|/ _ \| \ \ / / _ \ __) / _` | '__/ __|
-   |  | |_| |/ __/\__ \ (_) | |\ V /  __// __/ (_| | | | (__
-   |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
-  \*/
+  void
+  G2solve2arc::evalA( valueType   alpha,
+                      valueType   L,
+                      valueType & A ) const {
+    valueType K  = k0+k1 ;
+    valueType aK = alpha*DeltaK ;
+    A = alpha*(L*(aK-K)+2*DeltaTheta) ;
+  }
 
   void
   G2solve2arc::evalA( valueType   alpha,
@@ -131,6 +133,20 @@ namespace Clothoid {
     A   = alpha*(L*(aK-K)+2*DeltaTheta) ;
     A_1 = (2*aK-K)*L+2*DeltaTheta;
     A_2 = alpha*(aK-K) ;
+  }
+
+  void
+  G2solve2arc::evalG( valueType alpha,
+                      valueType L,
+                      valueType th,
+                      valueType k,
+                      valueType G[2] ) const {
+    valueType A, X, Y ;
+    evalA( alpha, L, A ) ;
+    valueType ak = alpha*k ;
+    GeneralizedFresnelCS( A, ak*L, th, X, Y );
+    G[0] = alpha*X ;
+    G[1] = alpha*Y ;
   }
 
   void
@@ -159,6 +175,17 @@ namespace Clothoid {
   }
 
   void
+  G2solve2arc::evalF( valueType const vars[2], valueType F[2] ) const {
+    valueType alpha = vars[0] ;
+    valueType L     = vars[1] ;
+    valueType G[2] ;
+    evalG( alpha, L, th0, k0, G ) ;
+    F[0] = G[0] - 2/L ;  F[1] = G[1] ;
+    evalG( alpha-1, L, th1, k1, G ) ;
+    F[0] -= G[0] ; F[1] -= G[1] ;
+  }
+
+  void
   G2solve2arc::evalFJ( valueType const vars[2],
                        valueType       F[2],
                        valueType       J[2][2] ) const {
@@ -178,7 +205,7 @@ namespace Clothoid {
     J[0][0] -= G_1[0] ; J[1][0] -= G_1[1] ;
     J[0][1] -= G_2[0] ; J[1][1] -= G_2[1] ;
   }
-  
+
   // ---------------------------------------------------------------------------
 
   int
@@ -193,8 +220,28 @@ namespace Clothoid {
       if ( !solver.factorize( J ) ) break ;
       solver.solve( F, d ) ;
       valueType lenF = hypot(F[0],F[1]) ;
-      X[0] -= d[0] ;
-      X[1] -= d[1] ;
+      #if 0
+      X[0] -= d[0];
+      X[1] -= d[1];
+      #else
+      valueType FF[2], dd[2], XX[2];
+      // Affine invariant Newton solver
+      valueType nd = hypot( d[0], d[1] ) ;
+      bool step_found = false ;
+      valueType tau = 2 ;
+      do {
+        tau  /= 2 ;
+        XX[0] = X[0]-tau*d[0];
+        XX[1] = X[1]-tau*d[1];
+        evalF(XX, FF);
+        solver.solve(FF, dd);
+        step_found = hypot( dd[0], dd[1] ) <= (1-tau/2)*nd + 1e-6
+                     && XX[0] > 0 && XX[0] < 1 && XX[1] > 0 ;
+      } while ( tau > 1e-6 && !step_found );
+      if ( !step_found ) break ;
+      X[0] = XX[0];
+      X[1] = XX[1];
+      #endif
       converged = lenF < tolerance ;
     } while ( ++iter < maxIter && !converged ) ;
     if ( converged ) converged = X[1] > 0 && X[0] > 0 && X[0] < 1 ;
@@ -219,6 +266,143 @@ namespace Clothoid {
     S0.setup( x0, y0, theta0, kappa0, dk0,  0, s0 ) ;
     S1.setup( x1, y1, theta1, kappa1, dk1, -s1, 0 ) ;
     S1.change_origin( -s1 ) ;
+  }
+
+  /*\
+   |    ____ ____            _            ____ _     ____
+   |   / ___|___ \ ___  ___ | |_   _____ / ___| |   / ___|
+   |  | |  _  __) / __|/ _ \| \ \ / / _ \ |   | |  | |
+   |  | |_| |/ __/\__ \ (_) | |\ V /  __/ |___| |__| |___
+   |   \____|_____|___/\___/|_| \_/ \___|\____|_____\____|
+  \*/
+
+  int
+  G2solveCLC::build( valueType _x0,
+                     valueType _y0,
+                     valueType _theta0,
+                     valueType _kappa0,
+                     valueType _x1,
+                     valueType _y1,
+                     valueType _theta1,
+                     valueType _kappa1 ) {
+
+    x0     = _x0 ;
+    y0     = _y0 ;
+    theta0 = _theta0;
+    kappa0 = _kappa0 ;
+    x1     = _x1 ;
+    y1     = _y1 ;
+    theta1 = _theta1 ;
+    kappa1 = _kappa1 ;
+
+    // scale problem
+    valueType dx = x1 - x0 ;
+    valueType dy = y1 - y0 ;
+    phi    = atan2( dy, dx ) ;
+    lambda = hypot( dx, dy ) ;
+
+    valueType C = dx/lambda ;
+    valueType S = dy/lambda ;
+    lambda /= 2 ;
+
+    xbar = -(x0*C+y0*S+lambda) ;
+    ybar = x0*S-y0*C ;
+
+    th0 = theta0 - phi ;
+    th1 = theta1 - phi ;
+
+    k0 = kappa0*lambda ;
+    k1 = kappa1*lambda ;
+
+    return solve();
+  }
+
+  void
+  G2solveCLC::setTolerance( valueType tol ) {
+    G2LIB_ASSERT( tol > 0 && tol <= 0.1,
+                  "G2solveCLC::setTolerance, tolerance = " << tol << " must be in (0,0.1]" ) ;
+    tolerance = tol ;
+  }
+
+  void
+  G2solveCLC::setMaxIter( int miter ) {
+    G2LIB_ASSERT( miter > 0 && miter <= 1000,
+                  "G2solveCLC::setMaxIter, maxIter = " << miter << " must be in [1,1000]" ) ;
+    maxIter = miter ;
+  }
+
+  // ---------------------------------------------------------------------------
+
+  int
+  G2solveCLC::solve() {
+    valueType X0[3], Y0[3], X1[3], Y1[3] ;
+    valueType thM = 0, sM ;
+    int iter = 0 ;
+    bool converged = false ;
+    do {
+      valueType D0 = thM - th0 ;
+      valueType D1 = thM - th1 ;
+
+      GeneralizedFresnelCS( 3, 2*D0, -2*D0, D0, X0, Y0 ) ;
+      GeneralizedFresnelCS( 3, 2*D1, -2*D1, D1, X1, Y1 ) ;
+
+      valueType F  = D0*k1*Y0[0]-D1*k0*Y1[0] - k0*k1*sin(thM) ;
+      valueType dF = D0*k1*(X0[2]-2*X0[1]+X0[0])-D1*k0*(X1[2]-2*X1[1]+X1[0]) - k0*k1*cos(thM) + k1*Y0[0]-k0*Y1[0];
+
+      if ( std::abs(dF) < 1e-10 ) break ;
+      valueType d = F/dF ;
+      #if 0
+      thM -= d;
+      #else
+      valueType FF, dd, thM1 ;
+      // Affine invariant Newton solver
+      bool step_found = false ;
+      valueType tau = 2 ;
+      do {
+        tau  /= 2 ;
+        thM1 = thM-tau*d;
+        D0 = thM1 - th0 ;
+        D1 = thM1 - th1 ;
+        GeneralizedFresnelCS( 1, 2*D0, -2*D0, D0, X0, Y0 ) ;
+        GeneralizedFresnelCS( 1, 2*D1, -2*D1, D1, X1, Y1 ) ;
+        FF = D0*k1*Y0[0]-D1*k0*Y1[0] - k0*k1*sin(thM1) ;
+        dd = FF/dF ;
+        step_found = std::abs( dd ) <= (1-tau/2)*std::abs(d) + 1e-6 ;
+      } while ( tau > 1e-6 && !step_found );
+      if ( !step_found ) break ;
+      thM = thM1 ;
+      #endif
+      converged = std::abs(d) < tolerance ;
+    } while ( ++iter < maxIter && !converged ) ;
+    if ( converged ) {
+      valueType D0 = thM - th0 ;
+      valueType D1 = thM - th1 ;
+      GeneralizedFresnelCS( 1, 2*D0, -2*D0, D0, X0, Y0 ) ;
+      GeneralizedFresnelCS( 1, 2*D1, -2*D1, D1, X1, Y1 ) ;
+      sM = cos(thM) + D1*X1[0]/k1 - D0*X0[0]/k0 ;
+      converged = sM > 0 && sM < 1e100 ;
+    }
+    if ( converged ) converged = buildSolution( sM, thM ) ;
+    return converged ? iter : -1 ;
+  }
+
+  // **************************************************************************
+
+  bool
+  G2solveCLC::buildSolution( valueType sM, valueType thM ) {
+    valueType dk0 = 0.5*power2(k0/lambda)/(th0-thM) ;
+    valueType dk1 = 0.5*power2(k1/lambda)/(th1-thM) ;
+    valueType L0  = 2*lambda*(thM-th0)/k0 ;
+    valueType L1  = 2*lambda*(th1-thM)/k1 ;
+
+    if ( ! ( L0 > 0 && L1 > 0 ) ) return false ;
+
+    S0.setup( x0, y0, theta0, kappa0, dk0,  0 , L0 ) ;
+    S1.setup( x1, y1, theta1, kappa1, dk1, -L1, 0  ) ;
+    S1.change_origin( -L1 ) ;
+    SM.setup( S0.Xend(), S0.Xend(), S0.ThetaEnd(), 0, 0, 0, 2*sM*lambda ) ;
+
+    return true ;
   }
 
   /*\

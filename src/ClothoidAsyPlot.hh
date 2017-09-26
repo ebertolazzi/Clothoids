@@ -45,7 +45,7 @@ namespace Clothoid {
                   valueType offset = 0.) const ;
     
     void dot( valueType x, valueType y, string const & penna="black" ) const ;
-    void triangle(const Triangle2D<valueType> & t, string const & penna="black" ) const ;
+    void triangle(T2D const & t, string const & penna="black" ) const ;
 
     void
     drawRect( valueType x0, valueType y0,

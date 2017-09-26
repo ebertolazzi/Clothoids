@@ -1,4 +1,5 @@
 #include "Clothoid.hh"
+#include "Triangle2D.hh"
 #include "ClothoidAsyPlot.hh"
 
 namespace Clothoid {
@@ -75,7 +76,7 @@ namespace Clothoid {
   }
 
   void
-  AsyPlot::triangle( Triangle2D<valueType> const & t, string const & penna ) const {
+  AsyPlot::triangle( T2D const & t, string const & penna ) const {
     file
       << "draw((" << t.x1() << "," << t.y1() << ") -- "
       << '(' << t.x2() << ',' << t.y2() << ") -- "

@@ -504,11 +504,11 @@ namespace Clothoid {
 
   void
   ClothoidCurve::bbSplit(
-    valueType                        split_angle,
-    valueType                        split_size,
-    valueType                        split_offs,
-    vector<ClothoidCurve>          & c,
-    vector<Triangle2D<valueType> > & t
+    valueType               split_angle,
+    valueType               split_size,
+    valueType               split_offs,
+    vector<ClothoidCurve> & c,
+    vector<T2D>           & t
   ) const {
 
     // step 0: controllo se curvatura passa per 0
@@ -539,11 +539,11 @@ namespace Clothoid {
 
   void
   ClothoidCurve::bbSplit_internal(
-    valueType                        split_angle,
-    valueType                        split_size,
-    valueType                        split_offs,
-    vector<ClothoidCurve>          & c,
-    vector<Triangle2D<valueType> > & t
+    valueType               split_angle,
+    valueType               split_size,
+    valueType               split_offs,
+    vector<ClothoidCurve> & c,
+    vector<T2D>           & t
   ) const {
 
     valueType theta_min, kappa_min, x_min, y_min,
@@ -558,7 +558,7 @@ namespace Clothoid {
     valueType len    = hypot( dy, dx ) ;
     valueType dangle = abs2pi(atan2( dy, dx )-theta_min) ;
     if ( dtheta <= split_angle && len*tan(dangle) <= split_size ) {
-      Triangle2D<valueType> tt ;
+      T2D tt ;
       this->bbTriangle(split_offs,tt) ;
       c.push_back(*this) ;
       t.push_back(tt) ;
@@ -629,8 +629,8 @@ namespace Clothoid {
                             vector<valueType>   & s2,
                             indexType             max_iter,
                             valueType             tolerance ) const {
-    vector<ClothoidCurve>          c0, c1 ;
-    vector<Triangle2D<valueType> > t0, t1 ;
+    vector<ClothoidCurve> c0, c1 ;
+    vector<T2D>           t0, t1 ;
     bbSplit( m_pi/50, (s_max-s_min)/3, offs, c0, t0 ) ;
     clot.bbSplit( m_pi/50, (clot.s_max-clot.s_min)/3, clot_offs, c1, t1 ) ;
     s1.clear() ;
@@ -659,8 +659,8 @@ namespace Clothoid {
                                         valueType             clot_offs,
                                         valueType             max_angle,
                                         valueType             max_size ) const {
-    vector<ClothoidCurve>          c0, c1 ;
-    vector<Triangle2D<valueType> > t0, t1 ;
+    vector<ClothoidCurve> c0, c1 ;
+    vector<T2D>           t0, t1 ;
     bbSplit( max_angle, max_size, offs, c0, t0 ) ;
     clot.bbSplit( max_angle, max_size, clot_offs, c1, t1 ) ;
     for ( indexType i = 0 ; i < indexType(c0.size()) ; ++i ) {

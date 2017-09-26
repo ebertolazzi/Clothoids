@@ -35,10 +35,13 @@ for k=1:6
     axis equal;
     title( sprintf('kappa1 = %g',kappa1(k))) ; 
 
-    [arc1,arc2,ok] = biarc(x0,y0,theta0,x1,y1,theta1(k));
-    if ok
-      biarc_plot(arc1,arc2,false);
-    end
+    [X,Y] = pointsOnClothoid( SG, 0:SG.L/100:SG.L );
+     plot(X,Y,'-m','Linewidth',1);
+
+    %[arc1,arc2,ok] = biarc(x0,y0,theta0,x1,y1,theta1(k));
+    %if ok
+    %  biarc_plot(arc1,arc2,false);
+    %end
   else
     disp('errore') ;
   end
@@ -52,6 +55,6 @@ end
 if true
   matlab2tikz('figure2.tex', ...
               'standalone',true, ...
-              'extraaxisoptions',{'xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...
+              'extraaxisoptions',{'title style={font=\Large}','xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...
               'extraTikzpictureOptions',{'cap=round'}); 
 end

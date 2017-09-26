@@ -33,7 +33,8 @@ namespace Clothoid {
 
   using std::vector ;
   using namespace Fresnel ;
-  using namespace Triangle2D ;
+
+  typedef Triangle2D::Triangle2D<valueType> T2D ;
 
   /*\
    |    ____ _       _   _           _     _
@@ -111,11 +112,11 @@ namespace Clothoid {
     build( valueType x1, valueType y1, valueType theta1 );
 
     void
-    bbSplit_internal( valueType                        split_angle,
-                      valueType                        split_size,
-                      valueType                        split_offs,
-                      vector<ClothoidCurve>          & c,
-                      vector<Triangle2D<valueType> > & t ) const ;
+    bbSplit_internal( valueType               split_angle,
+                      valueType               split_size,
+                      valueType               split_offs,
+                      vector<ClothoidCurve> & c,
+                      vector<T2D>           & t ) const ;
 
     //! Use newton and bisection to intersect two small clothoid segment
     bool
@@ -377,7 +378,7 @@ namespace Clothoid {
                 valueType p2[2] ) const ;
 
     bool
-    bbTriangle( valueType offs, Triangle2D<valueType> & t ) const {
+    bbTriangle( valueType offs, T2D & t ) const {
       valueType p0[2], p1[2], p2[2] ;
       bool ok = bbTriangle( offs, p0, p1, p2 ) ;
       if ( ok ) t.setup( p0, p1, p2 ) ;
@@ -385,11 +386,11 @@ namespace Clothoid {
     }
 
     void
-    bbSplit( valueType                        split_angle, //!< maximum angle variation
-             valueType                        split_size,  //!< maximum height of the triangle
-             valueType                        split_offs,  //!< curve offset
-             vector<ClothoidCurve>          & c,           //!< clothoid segments
-             vector<Triangle2D<valueType> > & t ) const ;  //!< clothoid bounding box
+    bbSplit( valueType               split_angle, //!< maximum angle variation
+             valueType               split_size,  //!< maximum height of the triangle
+             valueType               split_offs,  //!< curve offset
+             vector<ClothoidCurve> & c,           //!< clothoid segments
+             vector<T2D>           & t ) const ;  //!< clothoid bounding box
 
     // intersect computation
     void
@@ -474,6 +475,11 @@ namespace Clothoid {
     void
     evalA( valueType   alpha,
            valueType   L,
+           valueType & A ) const ;
+
+    void
+    evalA( valueType   alpha,
+           valueType   L,
            valueType & A,
            valueType & A_1,
            valueType & A_2 ) const ;
@@ -483,9 +489,19 @@ namespace Clothoid {
            valueType L,
            valueType th,
            valueType k,
+           valueType G[2] ) const ;
+
+    void
+    evalG( valueType alpha,
+           valueType L,
+           valueType th,
+           valueType k,
            valueType G[2],
            valueType G_1[2],
            valueType G_2[2] ) const ;
+
+    void
+    evalF( valueType const vars[2], valueType F[2] ) const ;
 
     void
     evalFJ( valueType const vars[2],
@@ -520,8 +536,8 @@ namespace Clothoid {
 
     ~G2solve2arc() {}
 
-    void
-    setup( valueType x0, valueType y0, valueType theta0, valueType kappa0,
+    int
+    build( valueType x0, valueType y0, valueType theta0, valueType kappa0,
            valueType x1, valueType y1, valueType theta1, valueType kappa1 ) ;
 
     void
@@ -538,6 +554,81 @@ namespace Clothoid {
 
   } ;
 
+  /*\
+   |    ____ ____            _            ____ _     ____
+   |   / ___|___ \ ___  ___ | |_   _____ / ___| |   / ___|
+   |  | |  _  __) / __|/ _ \| \ \ / / _ \ |   | |  | |
+   |  | |_| |/ __/\__ \ (_) | |\ V /  __/ |___| |__| |___
+   |   \____|_____|___/\___/|_| \_/ \___|\____|_____\____|
+  \*/
+
+  class G2solveCLC {
+
+    valueType tolerance ;
+    int       maxIter ;
+
+    valueType x0 ;
+    valueType y0 ;
+    valueType theta0 ;
+    valueType kappa0 ;
+    valueType x1 ;
+    valueType y1 ;
+    valueType theta1 ;
+    valueType kappa1 ;
+
+    // standard problem
+    valueType lambda, phi, xbar, ybar ;
+    valueType th0, th1 ;
+    valueType k0, k1 ;
+
+    ClothoidCurve S0, SM, S1 ;
+
+    bool
+    buildSolution( valueType sM, valueType thM ) ;
+
+  public:
+
+    G2solveCLC()
+    : tolerance(1e-10)
+    , maxIter(20)
+    , x0(0)
+    , y0(0)
+    , theta0(0)
+    , kappa0(0)
+    , x1(0)
+    , y1(0)
+    , theta1(0)
+    , kappa1(0)
+    , lambda(0)
+    , phi(0)
+    , xbar(0)
+    , ybar(0)
+    , th0(0)
+    , th1(0)
+    , k0(0)
+    , k1(0)
+    {}
+
+    ~G2solveCLC() {}
+
+    int
+    build( valueType x0, valueType y0, valueType theta0, valueType kappa0,
+           valueType x1, valueType y1, valueType theta1, valueType kappa1 ) ;
+
+    void
+    setTolerance( valueType tol ) ;
+
+    void
+    setMaxIter( int tol ) ;
+
+    int
+    solve() ;
+
+    ClothoidCurve const & getS0() const { return S0 ; }
+    ClothoidCurve const & getSM() const { return SM ; }
+    ClothoidCurve const & getS1() const { return S1 ; }
+
+  } ;
   /*\
    |    ____ ____            _           _____
    |   / ___|___ \ ___  ___ | |_   _____|___ /  __ _ _ __ ___

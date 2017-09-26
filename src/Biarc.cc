@@ -23,6 +23,8 @@
 
 #include "Biarc.hh"
 
+#include <limits>
+
 namespace Biarc {
 
   using namespace std ;

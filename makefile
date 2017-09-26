@@ -21,6 +21,8 @@ endif
 ifneq (,$(findstring Darwin, $(OS)))
   CC       = clang
   CXX      = clang++
+  #CC       = gcc-7
+  #CXX      = g++-7
   LIBS     = -L./lib -lClothoid
   CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
   AR       = libtool -static -o

@@ -20,35 +20,32 @@ for k=1:4
   subaxis(2,2,k, 'Spacing', 0.02, 'Padding', 0.04, 'Margin', 0.02);
   axis tight ;
   %subplot(2,2,k)
-  for thmax0=pi*[0.25,1,1.75]
-    [ S0, S1, SM, SG, iter ] = buildClothoid3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k),thmax0,thmax0) ;
+  for dmax=[0.3,0.6,1]
+      dmax
+    [ S0, S1, SM, SG, iter ] = buildClothoid3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k),pi,pi/4*dmax) ;
     if iter >= 0
-      draw3curve( S0, S1, SM, thmax0 ~= pi );
+      draw3curve( S0, S1, SM, dmax ~= 1 );
       hold on
       axis equal;
-      title( sprintf('k0=%g, k1=%g',kappa0(k),kappa1(k))); 
+      [X,Y] = pointsOnClothoid( SG, 0:SG.L/100:SG.L );
+      plot(X,Y,'-.g','Linewidth',1);
     else
       disp('errore') ;
     end
   end
+  title( sprintf('$\\kappa_0=%g,\\quad \\kappa_1=%g%s$',kappa0(k),kappa1(k)),...
+         'Interpreter','none'); 
   set(gca,'DataAspectRatio',[1,1,1]) ;
-  if k == 4
-    set(gca,'XTick',[-2,-1,0,1,2]) ;
-    set(gca,'XTickLabel',{'$-2$','$-1$','$0$','$1$','$2$'}) ;
-    set(gca,'YTick',[-2,-1,0,1,2,3]) ;
-    set(gca,'YTickLabel',{'$-2$','$-1$','$0$','$1$','$2$','$3$'}) ;
-  else
-    set(gca,'XTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
-    set(gca,'XTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
-    set(gca,'YTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
-    set(gca,'YTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
-  end
+  set(gca,'XTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
+  set(gca,'XTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
+  set(gca,'YTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
+  set(gca,'YTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
 end
 
 if true
   matlab2tikz('figure1.tex', ...
               'standalone',true, ...
-              'extraaxisoptions',{'xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...
+              'extraaxisoptions',{'title style={font=\Large}','xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...
               'extraTikzpictureOptions',{'cap=round'}); 
 end
 
