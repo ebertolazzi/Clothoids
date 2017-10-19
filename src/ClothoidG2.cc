@@ -336,7 +336,7 @@ namespace Clothoid {
   int
   G2solveCLC::solve() {
     valueType X0[3], Y0[3], X1[3], Y1[3] ;
-    valueType thM = 0, sM ;
+      valueType thM = 0, sM = 0.0 ;
     int iter = 0 ;
     bool converged = false ;
     do {

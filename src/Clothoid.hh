@@ -449,6 +449,7 @@ namespace Clothoid {
    |  | |_| |/ __/\__ \ (_) | |\ V /  __// __/ (_| | | | (__
    |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
   \*/
+  // Clothoid-clothoid
   class G2solve2arc {
 
     valueType tolerance ;
@@ -562,6 +563,7 @@ namespace Clothoid {
    |   \____|_____|___/\___/|_| \_/ \___|\____|_____\____|
   \*/
 
+  // Clothoid-line-clothoid
   class G2solveCLC {
 
     valueType tolerance ;
@@ -636,6 +638,7 @@ namespace Clothoid {
    |  | |_| |/ __/\__ \ (_) | |\ V /  __/___) | (_| | | | (__
    |   \____|_____|___/\___/|_| \_/ \___|____/ \__,_|_|  \___|
   \*/
+  // Clothoid-clothoid-clothoid with G2 continuity
   class G2solve3arc {
 
     ClothoidCurve S0, SM, S1, SG ;

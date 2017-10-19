@@ -25,6 +25,8 @@
 #define TRIANGLE2D_HH
 
 #include <cmath>
+#include <vector>
+#include "G2lib.hh"
 
 //! Clothoid computations routine
 namespace Triangle2D {
@@ -43,7 +45,50 @@ namespace Triangle2D {
   class Triangle2D {
     T p1[2], p2[2], p3[2] ;
 
+    void
+    maxmin3( T const & a, T const & b, T const & c, T & vmin, T & vmax) const ;
+
+    class AABBTree {
+      int numChildren ;
+      T   xmin, ymin, xmax, ymax ;
+      union {
+       Triangle2D<T> const * pTriangle;
+       AABBTree      const * pChildren[2];
+      } data ;
+
+      AABBTree( typename std::vector<Triangle2D<T> const *>::iterator & begin,
+                typename std::vector<Triangle2D<T> const *>::iterator & end ) ;
+
+    public:
+
+      AABBTree( std::vector<Triangle2D<T> > & triangles );
+      AABBTree( Triangle2D<T> const & triangle );
+      AABBTree( AABBTree const * pTree, Triangle2D<T> const & triangle );
+      AABBTree( AABBTree const * pTreeL, AABBTree const * pTreeR );
+
+      ~AABBTree();
+
+      void
+      bbox( T & _xmin, T & _ymin, T & _xmax, T & _ymax ) const
+      { _xmin = xmin ; _ymin = ymin ; _xmax = xmax ; _ymax = ymax ; }
+
+      bool overlap( Triangle2D<T> const & triangle ) const ;
+      bool overlap( AABBTree const * pTree ) const ;
+
+      Triangle2D<T> const & getTriangle() const {
+        G2LIB_ASSERT( numChildren == 0,
+                      "Triangle2D::AABBTree::getTriangle() not a leaf" ) ;
+        return *data.pTriangle ;
+      }
+    };
+
   public:
+
+    Triangle2D( Triangle2D<T> const & t ) {
+      p1[0] = t.p1[0] ; p1[1] = t.p1[1] ;
+      p2[0] = t.p2[0] ; p2[1] = t.p2[1] ;
+      p3[0] = t.p3[0] ; p3[1] = t.p3[1] ;
+    }
 
     Triangle2D( ) {
       p1[0] = p1[1] =
@@ -84,6 +129,15 @@ namespace Triangle2D {
     T y2() const { return p2[1] ; }
     T x3() const { return p3[0] ; }
     T y3() const { return p3[1] ; }
+
+    void
+    bbox( T & xmin, T & ymin, T & xmax, T & ymax ) const {
+      maxmin3( p1[0], p2[0], p3[0], xmin, xmax ) ;
+      maxmin3( p1[1], p2[1], p3[1], ymin, ymax ) ;
+    }
+
+    T baricenterX() const { return (p1[0]+p2[0]+p3[0])/3 ; }
+    T baricenterY() const { return (p1[1]+p2[1]+p3[1])/3 ; }
 
     T const * P1() const { return p1 ; }
     T const * P2() const { return p2 ; }

@@ -1,0 +1,328 @@
+include "clothoidLib.asylib";
+
+
+
+triple f_diff_dist(real s, real [] pars) {
+  // derivative of the distance pt-cloth function	
+  real ff, df, ddf, tmp;
+  real cs, sn;
+  real dk,k0,th;
+  dk = pars[0];
+  k0 = pars[1];
+  th = pars[2];
+  pair P = (pars[3],pars[4]);
+  pair O = (pars[5],pars[6]);
+  cs = cos(1/2*dk*s^2+k0*s+th);
+  sn = sin(1/2*dk*s^2+k0*s+th);
+  pair XY = clothoidPoint(O,th,k0,dk,s);
+  ff  = (XY.x-P.x)*cs + (XY.y-P.y)*sn;
+  tmp = (-(XY.x-P.x)*sn+(XY.y-P.y)*cs);
+  df  = 1+(dk*s+k0)*tmp;
+  ddf = dk*tmp-(dk*s+k0)^2*ff;
+  return (ff,df,ddf);  
+}
+
+triple f_distCloth( real t, real [] pars){
+	// returns sqrt((X(s)-Px)^2+(Y(s)-Py)^2)
+	real dk = pars[0];
+	real Px = pars[1];
+	real Py = pars[2];
+	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 ) ;
+	triple res = (sqrt((CS.x-Px)^2+(CS.y-Py)^2),0,0);
+	return res;
+}
+
+triple f_fresnelX_Ptx( real t, real [] pars){
+	// returns X(s)-Px, first and second derivative
+	// standard fresnel, not generalised
+	real dk = pars[0];
+	real Px = pars[1];
+	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 ) ;
+	triple res = (CS.x-Px,cos(1/2*dk*t^2),-dk*t*sin(1/2*dk*t^2));
+	return res;
+}
+
+triple f_fresnelY_Pty( real t, real [] pars){
+	// returns Y(s)-Py, first and second derivative
+	// standard fresnel, not generalised
+	real dk = pars[0];
+	real Py = pars[1];
+	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 ) ;
+	triple res = (CS.y-Py,sin(1/2*dk*t^2),dk*t*cos(1/2*dk*t^2));
+	return res;
+}
+
+triple func(real t, real[] pars, string fname){
+	if (fname=="diffdistCloth"){
+		// derivative of the distance pt-cloth function
+		return f_diff_dist(t, pars);
+	}
+	else if (fname=="f_fresnelX_Ptx"){
+		// X(s)-Px
+		return f_fresnelX_Ptx(t, pars);
+		
+	}
+	else if (fname=="f_fresnelY_Pty"){
+		// Y(s)-Py
+		return f_fresnelY_Pty(t, pars);
+		
+	}
+	else if (fname=="distCloth"){
+		// sqrt((X(s)-Px)^2+(Y(s)-Py)^2)
+		return f_distCloth(t, pars);
+		
+	}
+    else {
+    triple res = (nan,nan,nan);
+    return res;
+  }
+}
+
+real HalleyHybrid(real a, real b, real[] pars, string fname){
+   triple A = func(a,pars,fname);
+   triple B = func(b,pars,fname);
+   triple C;
+   real s;
+   real tol = 1.e-10;
+  // write(a,b);
+   //write(A.x,B.x);
+  
+  //if ( abs(A.x)< tol ) { return a ;}
+  //if ( abs(B.x)< tol ) { return b ;}
+  
+  if ( A.x * B.x > 0 ) {
+      //write("HalleyHybrid bad input interval") ;
+      return nan ;
+    }
+  
+   bool use_right = true ;
+   for ( int iter = 0 ; iter < 50; ++iter ) {
+    int ierr = 0 ;
+    if ( use_right ) { // uso B come punto per Halley
+      if ( abs(B.y) < tol ) {
+		  ierr = 1 ;
+      } else {
+		 //write("f_B= ",B.x) ;
+	    //s = b - B.x / B.y  / (1-B.x/B.y*B.z/B.y/2) ; // halley
+		s = b - B.x / B.y ; // newton
+		
+	  }
+    } else {
+      if ( abs(A.y) < tol ) {
+		  ierr = 1 ;
+      } else  {
+		 //write("f_A= ",A.x) ;
+		//s = a - A.x / A.y   / (1-A.x/A.y*A.z/A.y/2) ;   // halley  
+		s = a - A.x / A.y ; //newton
+	  }
+    }
+    // controllo che stia nell'intervallo
+    if ( ierr != 0 || s <= min(a,b) || s >= max(a,b) ) { // passo sbagliato applico bisezione
+      write("passo sbagliato uso bisezione, ierr",ierr);
+      s = (a+b)/2 ;
+      use_right = !use_right ;
+    }
+    // selezione nuovo intervallo
+    C = func(s,pars,fname) ;
+    if ( A.x * C.x <0 ) {
+      B    = C ;
+      b    = s ;
+    } else if ( B.x * C.x <0 ) {
+      A    = C ;
+      a    = s ;
+    } else {
+		write("Halley exit, iter = ", iter);
+		//write("f_A= ",A.x) ;
+		//write("f_B= ",B.x) ;
+		//write("f_C= ",C.x) ;
+		if (abs(A.x)<tol) return a;
+		if (abs(B.x)<tol) return b;
+		if (abs(C.x)<tol) return s;
+		
+      //return s ;
+    }
+    
+    // controllo tolleranza
+    if ( abs(C.x) < tol ) {
+      write("Halley OK, iter = ", iter);
+      return s ;
+    }
+  }
+  write("Halley failed, last value and residual = ",s,C.x);
+  return nan ;
+}
+
+
+pair Evoluta(real s, real [] _pars){
+  real dk = _pars[0];
+  real k0 = _pars[1];
+  real th = _pars[2];
+ // pair P = (pars[3],pars[4]);
+  pair O = (_pars[5],_pars[6]);
+	pair XY = clothoidPoint(O,th,k0,dk,s);
+	real cs, sn;
+	cs = cos(1/2*dk*s^2+k0*s+th);
+	sn = sin(1/2*dk*s^2+k0*s+th); 
+	return (XY.x-1/(dk*s+k0)*sn, XY.y+1/(dk*s+k0)*cs);
+}
+
+path pathEvoluta(real a, real b, real [] pars){
+  int Npts = 300;
+  path evo;
+  real h = (b-a)/Npts;
+  //evo = Evoluta(a);
+  for(int i = 0; i<= Npts; ++i){
+  	evo = evo -- Evoluta(a+i*h,pars);
+  }
+  return evo;
+}
+
+pair intersectionInterval(real a, real b, real A, real B){
+  // compute intersection [c,d] between [a,b] and [A,B]
+  // if empty returns [NaN,NaN]
+  real c = max(a,A);
+  real d = min(b,B);
+  if (d<c){
+    return (nan,nan);
+  }
+  else {
+    return (c,d);
+  }
+}
+
+
+real [] distIntervalsPositive(real th, real k0,real dk, pair P, int Nsing){
+  // returns a list of increasing positive abscissas
+  // list = [0,s1,s2,...]
+  // such that there is at most one root in each interval [s_i,s_{i+1}]
+  // th, k0, dk of the clothoid
+  // P point not on the clothoid for which we find the distance
+  // Nsing is the number of singularities to compute in the asymptotic part
+
+  real [] list;
+  list[0] = 0;
+  int i = 0; // index of current element
+
+  // intervals for roots where the Fresnel part is dominant
+  // sc = where the cosine vanishes
+  // ss = where the sine vanishes
+  real sc = sqrt(pi/abs(dk));
+  real ss = sqrt(2*pi/abs(dk));
+
+  real [] pars = {dk, P.x};
+  string fname = "f_fresnelX_Ptx";
+  real tmp_c = HalleyHybrid(0,sc,pars, fname);
+  write("Pos FresX [0,sc] = ", tmp_c);
+  if ((!isnan(tmp_c)) && (tmp_c>0)  ) {
+    ++i;
+    list[i] = tmp_c;
+  }
+
+  real [] pars = {dk, P.y};
+  fname = "f_fresnelY_Pty";
+  real tmp_s = HalleyHybrid(0,sc,pars, fname); //era [0,sc] forse è piu corretto [sc,ss]
+  write("Pos FresY [0,sc] = ", tmp_s);
+  if ((!isnan(tmp_s)) && (tmp_s>0)) {
+    if (list[i]>tmp_s) {
+      list[i+1] = list[i];
+      list[i]   = tmp_s;
+      ++i;
+    } else {
+      ++i;
+      list[i] = tmp_s;
+    }
+  }
+
+  // intervals for roots where the asymptotic trigonometric part is dominant
+  real [] singps;
+  real [] singpc;
+  real sqsings,sqsingc;
+
+  // singularities that separates the roots
+
+  for(int j=0; j<Nsing; ++j){
+    singps[j] = sqrt(2*pi*j/dk);
+    singpc[j] = sqrt(2*pi*j/dk+pi/dk);
+    if (singps[j]>list[i]) {
+      ++i;
+      list[i] = singps[j];
+    }
+    if (singpc[j]>list[i]) {
+      ++i;
+      list[i] = singpc[j];
+    }
+  }
+
+  return list;
+
+
+}
+
+real [] distIntervalsNegative(real th, real k0,real dk, pair P, int Nsing){
+  // returns a list of decreasing negative abscissas
+  // list = [0,s1,s2,...]
+  // such that there is at most one root in each interval [s_i,s_{i+1}]
+  // th, k0, dk of the clothoid
+  // P point not on the clothoid for which we find the distance
+  // Nsing is the number of singularities to compute in the asymptotic part
+
+  real [] list;
+  list[0] = 0;
+  int i = 0; // index of current element
+
+  // intervals for roots where the Fresnel part is dominant
+  // sc = where the cosine vanishes
+  // ss = where the sine vanishes
+  real sc = sqrt(pi/abs(dk));
+  real ss = sqrt(2*pi/abs(dk));
+
+  real [] pars = {dk, P.x};
+  string fname = "f_fresnelX_Ptx";
+  real tmp_c = HalleyHybrid(-sc,0,pars, fname);
+  write("Neg FresX [-sc,0] = ", tmp_c);
+  if ((!isnan(tmp_c)) && (tmp_c<0)  ) {
+    ++i;
+    list[i] = tmp_c;
+  }
+
+  real [] pars = {dk, P.y};
+  fname = "f_fresnelY_Pty";
+  real tmp_s = HalleyHybrid(-sc,0,pars, fname);
+  write("Neg FresY [-sc,0] = ", tmp_s);
+  if ((!isnan(tmp_s)) && (tmp_s<0)) {
+    if (list[i]<tmp_s) {
+      list[i+1] = list[i];
+      list[i]   = tmp_s;
+      ++i;
+    } else {
+      ++i;
+      list[i] = tmp_s;
+    }
+  }
+
+  // intervals for roots where the asymptotic trigonometric part is dominant
+  real [] singms;
+  real [] singmc;
+  real sqsings,sqsingc;
+
+  // singularities that separates the roots
+
+  for(int j=0; j<Nsing; ++j){
+    sqsings = sqrt(2*pi*j*dk-2*dk*th+k0^2);
+    sqsingc = sqrt(2*pi*j*dk+pi*dk-2*dk*th+k0^2);
+    singms[j] = (-k0-sqsings)/dk;
+    singmc[j] = (-k0-sqsingc)/dk;
+    if (singms[j]<list[i]) {
+      ++i;
+      list[i] = singms[j];
+    }
+    if (singmc[j]<list[i]) {
+      ++i;
+      list[i] = singmc[j];
+    }
+  }
+
+  return list;
+
+
+}

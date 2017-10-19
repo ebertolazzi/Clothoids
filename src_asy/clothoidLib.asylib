@@ -1,3 +1,41 @@
+// Mathematics of computation
+// volume 44. number 170
+// april 1985. pages 459-461
+// By Mark A. Heald
+// Rational Approximations for the Fresnel Integrals
+
+real
+f_approx( real x ) {
+  return (1+0.882*x)/(2+1.722*x+3.017*x^2) ;
+}
+
+real
+g_approx( real x ) {
+  return 1/(2 + 4.167*x + 3.274*x^2 + 6.890*x^3) ;
+}
+
+real
+C_approx( real x ) {
+  real arg = pi/2*x^2 ;
+  return 0.5+f_approx(x)*sin(arg)-g_approx(x)*cos(arg) ;
+}
+
+real
+S_approx( real x ) {
+  real arg = pi/2*x^2 ;
+  return 0.5-f_approx(x)*cos(arg)-g_approx(x)*sin(arg) ;
+}
+
+pair
+CS_approx( real x ) {
+  real arg = pi/2*x^2 ;
+  real cc  = cos(arg) ;
+  real ss  = sin(arg) ;
+  real f   = f_approx(x) ;
+  real g   = g_approx(x) ;
+  return (0.5+f*ss-g*cc,0.5-f*cc-g*ss);
+}
+
 /*\
  |   _____                         _  ____ ____
  |  |  ___| __ ___  ___ _ __   ___| |/ ___/ ___|
@@ -463,6 +501,7 @@ GeneralizedFresnelCS( real a, real b, real c ) {
   return ( CS.x * cosc - CS.y * sinc, CS.x * sinc + CS.y * cosc ) ;
 }
 
+
 pair []
 GeneralizedFresnelCS( int nk, real a, real b, real c ) {
   pair [] CS ;
@@ -603,3 +642,14 @@ clothoid( pair p0, real theta0, pair p1, real theta1,
   return clothoidPoints( p0, theta0, k, dk, L, npts, extraPerc ) ;
 }
 
+path
+clothoidOffset( pair p0, real theta0, real k, real dk, real L, int npts, real offset){
+	path XY;
+	for ( int kkk=0 ; kkk <= npts ; ++kkk ) {
+      real s = (kkk*L)/npts ;
+	  real th = 0.5*dk*s^2+k*s+theta0+pi/2;
+      pair iCS = s*GeneralizedFresnelCS( dk*s^2, k*s, theta0 ) ;
+      XY = XY -- ((p0.x+iCS.x,p0.y+iCS.y)+offset*(cos(th),sin(th))) ;
+    }
+    return XY ;
+}
