@@ -86,8 +86,6 @@ namespace Clothoid {
   //! Compute Lommel function
   valueType
   LommelReduced( valueType mu, valueType nu, valueType z ) ;
-  
-  class ClothoidCurve ; // forward declaration
 
   /*\
    |    ____ _       _   _           _     _  ____
@@ -631,6 +629,7 @@ namespace Clothoid {
     ClothoidCurve const & getS1() const { return S1 ; }
 
   } ;
+
   /*\
    |    ____ ____            _           _____
    |   / ___|___ \ ___  ___ | |_   _____|___ /  __ _ _ __ ___
@@ -778,6 +777,21 @@ namespace Clothoid {
 
   } ;
 
+  /*\
+   |   ____ _       _   _           _     _ _     _     _
+   |  / ___| | ___ | |_| |__   ___ (_) __| | |   (_)___| |_
+   | | |   | |/ _ \| __| '_ \ / _ \| |/ _` | |   | / __| __|
+   | | |___| | (_) | |_| | | | (_) | | (_| | |___| \__ \ |_
+   |  \____|_|\___/ \__|_| |_|\___/|_|\__,_|_____|_|___/\__|
+   |
+  \*/
+  //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 con nected)
+  class ClothoidList {
+    std::vector<ClothoidCurve> clotoidList ;
+  public:
+
+
+  };
 }
 
 #endif
