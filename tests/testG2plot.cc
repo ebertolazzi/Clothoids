@@ -38,7 +38,7 @@ main() {
 	valueType y1 = 2;
 	valueType th1 = M_PI/10;
 	valueType k1 = -0.5;
-	valueType s1 = 1;
+	//valueType s1 = 1;
 	#else
 	valueType x0  = -1;
 	valueType y0  = 0;
@@ -52,9 +52,9 @@ main() {
 	valueType s1  = 2;
   #endif
 
-	//int iter = g2sol.setup(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
+	//int iter = g2sol.build(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
 	int iter = g2sol.build(x0, y0, th0, k0, x1, y1, th1, k1 );
-	//int iter = g2solve3arc.setup( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
+	//int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
 	std::cout << "iter = " << iter << '\n' ;
 
 	Clothoid::ClothoidCurve const & S0 = g2sol.getS0();

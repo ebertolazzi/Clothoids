@@ -404,7 +404,7 @@ namespace Clothoid {
   }
 
   bool
-  ClothoidCurve::setup_forward( valueType _x0,
+  ClothoidCurve::build_forward( valueType _x0,
                                 valueType _y0,
                                 valueType _theta0,
                                 valueType _k,

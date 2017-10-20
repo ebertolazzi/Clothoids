@@ -32,7 +32,7 @@ fprintf('final point (%g,%g) final angle = %g\n', x1, y1, theta1) ;
 % compute clothoid parameters
 S = buildClothoid( x0, y0, theta0, x1, y1, theta1 ) ;
 
-fprintf('Computed parameters: k = %g, k'' = %g, L = %g\n', S.k, S.dk, S.L ) ;
+fprintf('Computed parameters: k = %g, k'' = %g, L = %g\n', S.k0, S.dk, S.L ) ;
 
 % compute points on clothoid
 %XY = pointsOnClothoid( S.x, S.y, S.theta, S.k, S.dk, 0:S.L/npts:S.L ) ;

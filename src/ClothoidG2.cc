@@ -263,8 +263,8 @@ namespace Clothoid {
     valueType dk0 = -(k0+tmp)/(alpha*s0) ;
     valueType dk1 =  (k1+tmp)/(alpha*s1) ;
 
-    S0.setup( x0, y0, theta0, kappa0, dk0,  0, s0 ) ;
-    S1.setup( x1, y1, theta1, kappa1, dk1, -s1, 0 ) ;
+    S0.build( x0, y0, theta0, kappa0, dk0,  0, s0 ) ;
+    S1.build( x1, y1, theta1, kappa1, dk1, -s1, 0 ) ;
     S1.change_origin( -s1 ) ;
   }
 
@@ -397,10 +397,10 @@ namespace Clothoid {
 
     if ( ! ( L0 > 0 && L1 > 0 ) ) return false ;
 
-    S0.setup( x0, y0, theta0, kappa0, dk0,  0 , L0 ) ;
-    S1.setup( x1, y1, theta1, kappa1, dk1, -L1, 0  ) ;
+    S0.build( x0, y0, theta0, kappa0, dk0,  0 , L0 ) ;
+    S1.build( x1, y1, theta1, kappa1, dk1, -L1, 0  ) ;
     S1.change_origin( -L1 ) ;
-    SM.setup( S0.Xend(), S0.Xend(), S0.ThetaEnd(), 0, 0, 0, 2*sM*lambda ) ;
+    SM.build( S0.Xend(), S0.Xend(), S0.ThetaEnd(), 0, 0, 0, 2*sM*lambda ) ;
 
     return true ;
   }
@@ -474,7 +474,7 @@ namespace Clothoid {
       if ( dmax > m_pi/4 ) dmax = m_pi/4 ;
 
       // compute guess G1
-      SG.setup_G1( -1, 0, th0, 1, 0, th1 ) ;
+      SG.build_G1( -1, 0, th0, 1, 0, th1 ) ;
 
       valueType kA = SG.getKappaBegin() ;
       valueType kB = SG.getKappaEnd() ;
@@ -696,12 +696,10 @@ namespace Clothoid {
   G2solve3arc::buildSolution( valueType sM, valueType thM ) {
     // soluzione nel frame di riferimento
    /* valueType k0 = K0
-    S0.setup( -1, 0, th0, k0, dK0,   0, L0 );
-    S1.setup( x1, y1, phi+th1, kappa1, dK1, -L1, 0  );
+    S0.build( -1, 0, th0, k0, dK0,   0, L0 );
+    S1.build( x1, y1, phi+th1, kappa1, dK1, -L1, 0  );
     S1.change_origin(-L1);
    */
-
-
 
     // ricostruzione dati clotoidi trasformati
     valueType dsM = 1.0 / (c13+(c14+sM)*sM);
@@ -729,8 +727,8 @@ namespace Clothoid {
 
     //th0 = theta0 - phi ;
     //th1 = theta1 - phi ;
-    S0.setup( x0, y0, phi+th0, kappa0, dK0,   0, L0 );
-    S1.setup( x1, y1, phi+th1, kappa1, dK1, -L1, 0  );
+    S0.build( x0, y0, phi+th0, kappa0, dK0,   0, L0 );
+    S1.build( x1, y1, phi+th1, kappa1, dK1, -L1, 0  );
     S1.change_origin(-L1);
 
     // la trasformazione inversa da [-1,1] a (x0,y0)-(x1,y1)
@@ -740,7 +738,7 @@ namespace Clothoid {
     valueType S  = sin(phi);
     valueType dx = (xM + 1) / Lscale;
     valueType dy = yM / Lscale;
-    SM.setup( x0 + C * dx - S * dy,
+    SM.build( x0 + C * dx - S * dy,
               y0 + C * dy + S * dx,
               thM + phi, KM, dKM, -LM, LM );
 

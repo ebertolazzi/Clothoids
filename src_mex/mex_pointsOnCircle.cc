@@ -24,7 +24,7 @@
 #define arg_x0     prhs[0]
 #define arg_y0     prhs[1]
 #define arg_theta0 prhs[2]
-#define arg_k      prhs[3]
+#define arg_k0     prhs[3]
 #define arg_ss     prhs[4]
 
 #define MEX_ERROR_MESSAGE \
@@ -71,7 +71,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
   try {
 
-    Circle::valueType x0, y0, theta0, k ;
+    Circle::valueType x0, y0, theta0, k0 ;
     int               npts ;
     double            * pSS ;
 
@@ -90,7 +90,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
       x0     = mxGetScalar(arg_x0) ;
       y0     = mxGetScalar(arg_y0) ;
       theta0 = mxGetScalar(arg_theta0) ;
-      k      = mxGetScalar(arg_k) ;
+      k0     = mxGetScalar(arg_k0) ;
 
       ASSERT( mxGetClassID(arg_ss) == mxDOUBLE_CLASS && !mxIsComplex(arg_ss),
               "Argument N.6 must be a real double matrix" );
@@ -105,29 +105,29 @@ mexFunction( int nlhs, mxArray       *plhs[],
       ASSERT( mxGetClassID(prhs[1]) == mxDOUBLE_CLASS && !mxIsComplex(prhs[1]),
               "Argument N.2 must be a real double matrix" );
 
-      mxArray * mx_x0     = mxGetField(prhs[0],0,"x") ;
-      mxArray * mx_y0     = mxGetField(prhs[0],0,"y") ;
-      mxArray * mx_theta0 = mxGetField(prhs[0],0,"theta") ;
-      mxArray * mx_k      = mxGetField(prhs[0],0,"k") ;
+      mxArray * mx_x0     = mxGetField(prhs[0],0,"x0") ;
+      mxArray * mx_y0     = mxGetField(prhs[0],0,"y0") ;
+      mxArray * mx_theta0 = mxGetField(prhs[0],0,"theta0") ;
+      mxArray * mx_k0     = mxGetField(prhs[0],0,"k0") ;
 
-      ASSERT( mx_x0     != nullptr, "Field `x` is missing" );
-      ASSERT( mx_y0     != nullptr, "Field `y` is missing" );
-      ASSERT( mx_theta0 != nullptr, "Field `theta` is missing" );
-      ASSERT( mx_k      != nullptr, "Field `k` is missing" );
+      ASSERT( mx_x0     != nullptr, "Field `x0` is missing" );
+      ASSERT( mx_y0     != nullptr, "Field `y0` is missing" );
+      ASSERT( mx_theta0 != nullptr, "Field `theta0` is missing" );
+      ASSERT( mx_k0     != nullptr, "Field `k0` is missing" );
 
       ASSERT( mxGetClassID(mx_x0) == mxDOUBLE_CLASS && !mxIsComplex(mx_x0),
-              "Field `x` must be a real double scalar" );
+              "Field `x0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_y0) == mxDOUBLE_CLASS && !mxIsComplex(mx_y0),
-              "Field `y` must be a real double scalar" );
+              "Field `y0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_theta0) == mxDOUBLE_CLASS && !mxIsComplex(mx_theta0),
-              "Field `theta` must be a real double scalar" );
-      ASSERT( mxGetClassID(mx_k) == mxDOUBLE_CLASS && !mxIsComplex(mx_k),
-              "Field `k` must be a real double scalar" );
+              "Field `theta0` must be a real double scalar" );
+      ASSERT( mxGetClassID(mx_k0) == mxDOUBLE_CLASS && !mxIsComplex(mx_k0),
+              "Field `k0` must be a real double scalar" );
 
       x0     = mxGetScalar(mx_x0) ;
       y0     = mxGetScalar(mx_y0) ;
       theta0 = mxGetScalar(mx_theta0) ;
-      k      = mxGetScalar(mx_k) ;
+      k0     = mxGetScalar(mx_k0) ;
 
       pSS  = mxGetPr(prhs[1]) ;
       npts = int(mxGetNumberOfElements(prhs[1])) ;
@@ -138,7 +138,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
     }
     
     Circle::CircleArc curve ;
-    curve.setup( x0, y0, theta0, k, 1 ) ;
+    curve.build( x0, y0, theta0, k0, 1 ) ;
 
     if ( nlhs == 1 ) {
   	  plhs[0] = mxCreateDoubleMatrix(2, npts, mxREAL);

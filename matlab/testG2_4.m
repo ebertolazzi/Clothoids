@@ -39,7 +39,7 @@ for ii=1:2
   draw3curvature( S0, S1, SM, false );
   
   X = [ 0, 1] ;
-  K = [ SG.k, SG.k+SG.L*SG.dk ] ;
+  K = [ SG.k0, SG.k0+SG.L*SG.dk ] ;
   plot( X, K, '-m', 'LineWidth', 1 ) ;
   
   set(gca,'XTick',[0,0.25,0.5,0.75,1]) ;

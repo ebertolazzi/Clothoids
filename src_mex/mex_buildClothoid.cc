@@ -133,13 +133,13 @@ mexFunction( int nlhs, mxArray       *plhs[],
                                       k_1, dk_1, L_1,
                                       k_2, dk_2, L_2 ) ;
       static char const * fieldnames[] = {
-        "x", "y", "theta", "k", "dk", "L",
-        "k_1", "dk_1", "L_1", "k_2", "dk_2", "L_2"
+        "x0", "y0", "theta0", "k0", "dk", "L",
+        "k0_1", "dk_1", "L_1", "k0_2", "dk_2", "L_2"
       } ;
       arg_res = mxCreateStructMatrix(1,1,12,fieldnames);
     } else {
       iter = Clothoid::buildClothoid( x0, y0, theta0, x1, y1, theta1, k, dk, L ) ;
-      static char const * fieldnames[] = { "x", "y", "theta", "k", "dk", "L" } ;
+      static char const * fieldnames[] = { "x0", "y0", "theta0", "k0", "dk", "L" } ;
       arg_res = mxCreateStructMatrix(1,1,6,fieldnames);
     }
 

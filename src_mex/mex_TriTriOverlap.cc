@@ -79,17 +79,17 @@ mexFunction( int nlhs, mxArray       *plhs[],
       }
     }
 
-    Clothoid::valueType const * p0 = mxGetPr(arg_p0) ;
-    Clothoid::valueType const * p1 = mxGetPr(arg_p1) ;
-    Clothoid::valueType const * p2 = mxGetPr(arg_p2) ;
+    G2lib::valueType const * p0 = mxGetPr(arg_p0) ;
+    G2lib::valueType const * p1 = mxGetPr(arg_p1) ;
+    G2lib::valueType const * p2 = mxGetPr(arg_p2) ;
 
-    Clothoid::valueType const * q0 = mxGetPr(arg_q0) ;
-    Clothoid::valueType const * q1 = mxGetPr(arg_q1) ;
-    Clothoid::valueType const * q2 = mxGetPr(arg_q2) ;
+    G2lib::valueType const * q0 = mxGetPr(arg_q0) ;
+    G2lib::valueType const * q1 = mxGetPr(arg_q1) ;
+    G2lib::valueType const * q2 = mxGetPr(arg_q2) ;
 
     // costruisco bb
-    Clothoid::Triangle2D<Clothoid::valueType> T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ) ;
-    Clothoid::Triangle2D<Clothoid::valueType> T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1] ) ;
+    Triangle2D::Triangle2D<G2lib::valueType> T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ) ;
+    Triangle2D::Triangle2D<G2lib::valueType> T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1] ) ;
 
     if ( nlhs == 1 ) {
       bool over = T1.overlap(T2) ;

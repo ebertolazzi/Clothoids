@@ -172,6 +172,24 @@ namespace Triangle2D {
   }
 
   template <typename T>
+  class AABBcomparatorX {
+    T cutPos ;
+  public:
+    AABBcomparatorX( T const & cp ) : cutPos(cp) {}
+    bool operator () ( Triangle2D<T> const * pT ) const
+    { return pT->baricenterX() < cutPos; }
+  };
+
+  template <typename T>
+  class AABBcomparatorY {
+    T cutPos ;
+  public:
+    AABBcomparatorY( T const & cp ) : cutPos(cp) {}
+    bool operator () ( Triangle2D<T> const * pT ) const
+    { return pT->baricenterY() < cutPos; }
+  };
+
+  template <typename T>
   Triangle2D<T>::AABBTree::AABBTree( typename std::vector<Triangle2D<T> const *>::iterator & begin,
                                      typename std::vector<Triangle2D<T> const *>::iterator & end ) {
     numChildren = -1 ;
@@ -200,14 +218,12 @@ namespace Triangle2D {
 
     if ( (ymax - ymin) > (xmax - xmin) ) {
       // cut along Y
-      T cutPos = (ymax + ymin)/2;
-      it = std::partition( begin, end,
-                           [cutPos]( Triangle2D<T> const * pT ){ return pT->baricenterY() < cutPos; });
+      AABBcomparatorY<T> comp( (ymax + ymin)/2 ) ;
+      it = std::partition( begin, end, comp );
     } else {
       // cut along X
-      T cutPos = (xmax + xmin)/2;
-      it = std::partition( begin, end,
-                           [cutPos]( Triangle2D<T> const * pT ){ return pT->baricenterX() < cutPos; });
+      AABBcomparatorX<T> comp( (xmax + xmin)/2 ) ;
+      it = std::partition( begin, end, comp );
 
     }
     if ( it - begin > 0 ) {

@@ -12,19 +12,19 @@
 
 close all ;
 
-c1.x     = 0 ;
-c1.y     = 0 ;
-c1.theta = pi*0.7 ;
-c1.k     = -0.1 ;
-c1.dk    = 0.05 ;
-c1.L     = 20 ;
+c1.x0     = 0 ;
+c1.y0     = 0 ;
+c1.theta0 = pi*0.7 ;
+c1.k0     = -0.1 ;
+c1.dk     = 0.05 ;
+c1.L      = 20 ;
 
-c2.x     = -10 ;
-c2.y     = 0 ;
-c2.theta = pi/4 ;
-c2.k     = 0.1 ;
-c2.dk    = -0.05 ;
-c2.L     = 20 ;
+c2.x0     = -10 ;
+c2.y0     = 0 ;
+c2.theta0 = pi/4 ;
+c2.k0     = 0.1 ;
+c2.dk     = -0.05 ;
+c2.L      = 20 ;
 
 max_angle = pi/2 ;
 max_size  = 0.5 ;

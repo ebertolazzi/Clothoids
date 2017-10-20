@@ -213,7 +213,7 @@ namespace Clothoid {
 
     //! construct a clothoid with the standard parameters
     void
-    setup( valueType _x0,
+    build( valueType _x0,
            valueType _y0,
            valueType _theta0,
            valueType _k,
@@ -229,7 +229,7 @@ namespace Clothoid {
     }
 
     void
-    setup( valueType _x0,
+    build( valueType _x0,
            valueType _y0,
            valueType _theta0,
            valueType _k,
@@ -255,7 +255,7 @@ namespace Clothoid {
      * \param _theta1 final angle                   \f$ \theta_1 \f$
      */
     void
-    setup_G1( valueType _x0,
+    build_G1( valueType _x0,
               valueType _y0,
               valueType _theta0,
               valueType _x1,
@@ -280,7 +280,7 @@ namespace Clothoid {
      * \param _y1     final y position              \f$ y_1      \f$
      */
     bool
-    setup_forward( valueType _x0,
+    build_forward( valueType _x0,
                    valueType _y0,
                    valueType _theta0,
                    valueType _k,

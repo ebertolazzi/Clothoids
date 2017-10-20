@@ -241,7 +241,7 @@ namespace Biarc {
       valueType kappa0 = thstar0/L0;
       valueType kappa1 = -thstar1/L1;
 
-      C0.setup( x0, y0, theta0, kappa0, L0 );
+      C0.build( x0, y0, theta0, kappa0, L0 );
 
       valueType ca = cos(alpha);
       valueType sa = sin(alpha);
@@ -252,7 +252,7 @@ namespace Biarc {
       cs     = cos(thetas);
       ss     = sin(thetas);
 
-      C1.setup( xs, ys, thetas, kappa1, L1 );
+      C1.build( xs, ys, thetas, kappa1, L1 );
     }
 
     return ok ;

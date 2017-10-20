@@ -4,3 +4,8 @@ DerivedData
 *.bbl
 *.log
 *.gz
+libClothoid.a
+Usage.pdf
+*.blg
+*.spl
+*.o

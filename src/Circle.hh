@@ -162,7 +162,7 @@ namespace Circle {
 
     //! construct a clothoid with the standard parameters
     void
-    setup( valueType _x0,
+    build( valueType _x0,
            valueType _y0,
            valueType _theta0,
            valueType _k,
@@ -178,7 +178,7 @@ namespace Circle {
     }
 
     void
-    setup( valueType _x0,
+    build( valueType _x0,
            valueType _y0,
            valueType _theta0,
            valueType _k,
@@ -196,7 +196,7 @@ namespace Circle {
 
     //! build a clothoid by solving the hermite G1 problem
     void
-    setup_G1( valueType _x0,
+    build_G1( valueType _x0,
               valueType _y0,
               valueType _theta0,
               valueType _x1,

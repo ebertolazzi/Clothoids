@@ -25,7 +25,7 @@
 #define arg_x0     prhs[0]
 #define arg_y0     prhs[1]
 #define arg_theta0 prhs[2]
-#define arg_k      prhs[3]
+#define arg_k0     prhs[3]
 #define arg_dk     prhs[4]
 #define arg_L      prhs[5]
 
@@ -72,7 +72,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
   try {
 
-    Clothoid::valueType x0, y0, theta0, k, dk, L ;
+    Clothoid::valueType x0, y0, theta0, k0, dk, smax, smin ;
 
     // Check for proper number of arguments, etc
     if ( nrhs == 6 ) {
@@ -88,47 +88,66 @@ mexFunction( int nlhs, mxArray       *plhs[],
       x0     = mxGetScalar(arg_x0) ;
       y0     = mxGetScalar(arg_y0) ;
       theta0 = mxGetScalar(arg_theta0) ;
-      k      = mxGetScalar(arg_k) ;
+      k0     = mxGetScalar(arg_k0) ;
       dk     = mxGetScalar(arg_dk) ;
-      L      = mxGetScalar(arg_L) ;
+      smin   = 0;
+      smax   = mxGetScalar(arg_L) ;
 
     } else if ( nrhs == 1 ) {
       ASSERT( mxIsStruct(prhs[0]),
               "First argument must be a struct" ) ;
 
-      mxArray * mx_x0     = mxGetField(prhs[0],0,"x") ;
-      mxArray * mx_y0     = mxGetField(prhs[0],0,"y") ;
-      mxArray * mx_theta0 = mxGetField(prhs[0],0,"theta") ;
-      mxArray * mx_k      = mxGetField(prhs[0],0,"k") ;
+      mxArray * mx_x0     = mxGetField(prhs[0],0,"x0") ;
+      mxArray * mx_y0     = mxGetField(prhs[0],0,"y0") ;
+      mxArray * mx_theta0 = mxGetField(prhs[0],0,"theta0") ;
+      mxArray * mx_k0     = mxGetField(prhs[0],0,"k0") ;
       mxArray * mx_dk     = mxGetField(prhs[0],0,"dk") ;
       mxArray * mx_L      = mxGetField(prhs[0],0,"L") ;
+      mxArray * mx_smin   = mxGetField(prhs[0],0,"smin") ;
+      mxArray * mx_smax   = mxGetField(prhs[0],0,"smax") ;
 
-      ASSERT( mx_x0     != nullptr, "Field `x` is missing" );
-      ASSERT( mx_y0     != nullptr, "Field `y` is missing" );
-      ASSERT( mx_theta0 != nullptr, "Field `theta` is missing" );
-      ASSERT( mx_k      != nullptr, "Field `k` is missing" );
+      ASSERT( mx_x0     != nullptr, "Field `x0` is missing" );
+      ASSERT( mx_y0     != nullptr, "Field `y0` is missing" );
+      ASSERT( mx_theta0 != nullptr, "Field `theta0` is missing" );
+      ASSERT( mx_k0     != nullptr, "Field `k0` is missing" );
       ASSERT( mx_dk     != nullptr, "Field `dk` is missing" );
-      ASSERT( mx_L      != nullptr, "Field `L` is missing" );
+
+      if ( mx_L == nullptr ) {
+        if ( mx_smin == nullptr || mx_smax == nullptr ) {
+    	    mexErrMsgTxt("missing field `L` or `smin` and `smax`\n") ;
+          mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
+          return ;
+        } else {
+          ASSERT( mxGetClassID(mx_smin) == mxDOUBLE_CLASS && !mxIsComplex(mx_smin),
+                  "Field `smin` must be a real double scalar" );
+          ASSERT( mxGetClassID(mx_smax) == mxDOUBLE_CLASS && !mxIsComplex(mx_smax),
+                  "Field `smax` must be a real double scalar" );
+          smax = mxGetScalar(mx_smax) ;
+          smin = mxGetScalar(mx_smin) ;
+        }
+      } else {
+        ASSERT( mxGetClassID(mx_L) == mxDOUBLE_CLASS && !mxIsComplex(mx_L),
+                "Field `L` must be a real double scalar" );
+        smax = mxGetScalar(mx_L) ;
+        smin = 0 ;
+      }
 
       ASSERT( mxGetClassID(mx_x0) == mxDOUBLE_CLASS && !mxIsComplex(mx_x0),
-              "Field `x` must be a real double scalar" );
+              "Field `x0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_y0) == mxDOUBLE_CLASS && !mxIsComplex(mx_y0),
-              "Field `y` must be a real double scalar" );
+              "Field `y0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_theta0) == mxDOUBLE_CLASS && !mxIsComplex(mx_theta0),
-              "Field `theta` must be a real double scalar" );
-      ASSERT( mxGetClassID(mx_k) == mxDOUBLE_CLASS && !mxIsComplex(mx_k),
-              "Field `k` must be a real double scalar" );
+              "Field `theta0` must be a real double scalar" );
+      ASSERT( mxGetClassID(mx_k0) == mxDOUBLE_CLASS && !mxIsComplex(mx_k0),
+              "Field `k0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_dk) == mxDOUBLE_CLASS && !mxIsComplex(mx_dk),
               "Field `dk` must be a real double scalar" );
-      ASSERT( mxGetClassID(mx_L) == mxDOUBLE_CLASS && !mxIsComplex(mx_L),
-              "Field `L` must be a real double scalar" );
 
       x0     = mxGetScalar(mx_x0) ;
       y0     = mxGetScalar(mx_y0) ;
       theta0 = mxGetScalar(mx_theta0) ;
-      k      = mxGetScalar(mx_k) ;
+      k0     = mxGetScalar(mx_k0) ;
       dk     = mxGetScalar(mx_dk) ;
-      L      = mxGetScalar(mx_L) ;
 
     } else {
       mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
@@ -139,7 +158,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
             "Expected 3 output arguments, found: " << nlhs ) ;
 
     // costruisco bb
-    Clothoid::ClothoidCurve clot( x0, y0, theta0, k, dk, L ) ;
+    Clothoid::ClothoidCurve clot( x0, y0, theta0, k0, dk, smin, smax ) ;
 
     out_TV    = mxCreateDoubleScalar( clot.thetaTotalVariation() ) ;
     out_curv2 = mxCreateDoubleScalar( clot.integralCurvature2() ) ;

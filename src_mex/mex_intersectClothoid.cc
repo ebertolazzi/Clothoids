@@ -23,14 +23,25 @@
 "%  On input:                                                           %\n" \
 "%                                                                      %\n" \
 "%    clot1 = structure with the definition of the first clothoid       %\n" \
-"%            must contain the field                                    %\n" \
-"%      x      = initial x coordinate                                   %\n" \
-"%      y      = initial y coordinate                                   %\n" \
-"%      theta0 = orientation (angle) of the clothoid at initial point   %\n" \
-"%      k      = curvature at initial point                             %\n" \
-"%      dk     = derivative of curvature respect to arclength           %\n" \
-"%      L      = the lenght of the clothoid curve                       %\n" \
 "%    clot2 = structure with the definition of the second clothoid      %\n" \
+"%                                                                      %\n" \
+"%    The structure must contain the field                              %\n" \
+"%      x0     = initial x coordinate                                   %\n" \
+"%      y0     = initial y coordinate                                   %\n" \
+"%      theta0 = orientation (angle) of the clothoid at initial point   %\n" \
+"%      k0     = curvature at initial point                             %\n" \
+"%      dk     = derivative of curvature respect to arclength           %\n" \
+"%                                                                      %\n" \
+"%    A final field                                                     %\n" \
+"%      L      = the lenght of the clothoid curve                       %\n" \
+"%                                                                      %\n" \
+"%    or in alternative                                                 %\n" \
+"%      smin   = initial curvilinear coordinate of the curve            %\n" \
+"%      smax   = final curvilinear coordinate of the curve              %\n" \
+"%                                                                      %\n" \
+"%    NOTE: (x0,y0,theta0,kappa0) are at curviliear coodinates 0        %\n" \
+"%          smax  > smin  and smin may be negative                      %\n" \
+"%          specify L is equivalent to pass smin = 0 and smax = L       %\n" \
 "%                                                                      %\n" \
 "%  On output:                                                          %\n" \
 "%                                                                      %\n" \
@@ -68,7 +79,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
     // Check for proper number of arguments, etc
     Clothoid::ClothoidCurve cc[2] ;
-    Clothoid::valueType     x0, y0, theta0, k, dk, L ;
+    Clothoid::valueType     x0, y0, theta0, k, dk, smin, smax ;
 
     if ( nrhs != 2 ) {
   	  mexErrMsgTxt("expexted 2 input arguments\n") ;
@@ -78,12 +89,14 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
     for ( Clothoid::indexType ii = 0 ; ii < 2 ; ++ii ) {
       if ( mxGetClassID(prhs[ii]) == mxSTRUCT_CLASS ) {
-        mxArray * mxX0     = mxGetField( prhs[ii], 0, "x"     );
-        mxArray * mxY0     = mxGetField( prhs[ii], 0, "y"     );
-        mxArray * mxTheta0 = mxGetField( prhs[ii], 0, "theta" );
-        mxArray * mxK      = mxGetField( prhs[ii], 0, "k"     );
-        mxArray * mxDK     = mxGetField( prhs[ii], 0, "dk"    );
-        mxArray * mxL      = mxGetField( prhs[ii], 0, "L"     );
+        mxArray * mxX0     = mxGetField( prhs[ii], 0, "x0"     );
+        mxArray * mxY0     = mxGetField( prhs[ii], 0, "y0"     );
+        mxArray * mxTheta0 = mxGetField( prhs[ii], 0, "theta0" );
+        mxArray * mxK      = mxGetField( prhs[ii], 0, "k0"     );
+        mxArray * mxDK     = mxGetField( prhs[ii], 0, "dk"     );
+        mxArray * mxL      = mxGetField( prhs[ii], 0, "L"      );
+        mxArray * mxSmin   = mxGetField( prhs[ii], 0, "smin"   );
+        mxArray * mxSmax   = mxGetField( prhs[ii], 0, "smax"   );
         if ( mxX0 == nullptr ) {
     	    mexErrMsgTxt("missing field `x`\n") ;
           mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
@@ -120,13 +133,19 @@ mexFunction( int nlhs, mxArray       *plhs[],
           dk = mxGetScalar(mxDK) ;
         }
         if ( mxL == nullptr ) {
-    	    mexErrMsgTxt("missing field `L`\n") ;
-          mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
-          return ;
+          if ( mxSmin == nullptr || mxSmax == nullptr ) {
+      	    mexErrMsgTxt("missing field `L` or `smin` and `smax`\n") ;
+            mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
+            return ;
+          } else {
+            smax = mxGetScalar(mxSmax) ;
+            smin = mxGetScalar(mxSmin) ;
+          }
         } else {
-          L = mxGetScalar(mxL) ;
+          smax = mxGetScalar(mxL) ;
+          smin = 0 ;
         }
-        cc[ii].setup( x0, y0, theta0, k, dk, L ) ;
+        cc[ii].build( x0, y0, theta0, k, dk, smin, smax ) ;
       } else {
   	    mexErrMsgTxt("Arguments expected to be STRUCT\n") ;
         mexErrMsgTxt(MEX_ERROR_MESSAGE) ;

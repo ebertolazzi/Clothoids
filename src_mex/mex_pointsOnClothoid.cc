@@ -24,7 +24,7 @@
 #define arg_x0     prhs[0]
 #define arg_y0     prhs[1]
 #define arg_theta0 prhs[2]
-#define arg_k      prhs[3]
+#define arg_k0     prhs[3]
 #define arg_dk     prhs[4]
 #define arg_ss     prhs[5]
 #define arg_offs   prhs[6]
@@ -34,25 +34,32 @@
 "%  pointsOnClothoid:  Compute points on a clothoid curve.              %\n" \
 "%                     Used for plotting purpose.                       %\n" \
 "%                                                                      %\n" \
-"%  USAGE: XY    = pointsOnClothoid( x0, y0, theta0, k, dk, ss ) ;      %\n" \
-"%  USAGE: [X,Y] = pointsOnClothoid( x0, y0, theta0, k, dk, ss ) ;      %\n" \
-"%  USAGE: XY    = pointsOnClothoid( S, ss ) ;                          %\n" \
-"%  USAGE: [X,Y] = pointsOnClothoid( S, ss ) ;                          %\n" \
-"%  USAGE: XY    = pointsOnClothoid( x0, y0, theta0, k, dk, ss, offs) ; %\n" \
-"%  USAGE: [X,Y] = pointsOnClothoid( x0, y0, theta0, k, dk, ss, offs) ; %\n" \
-"%  USAGE: XY    = pointsOnClothoid( S, ss, offs ) ;                    %\n" \
-"%  USAGE: [X,Y] = pointsOnClothoid( S, ss, offs ) ;                    %\n" \
+"%  USAGE:                                                              %\n" \
+"%    XY    = pointsOnClothoid( x0, y0, theta0, k0, dk, ss ) ;          %\n" \
+"%    [X,Y] = pointsOnClothoid( x0, y0, theta0, k0, dk, ss ) ;          %\n" \
+"%    XY    = pointsOnClothoid( x0, y0, theta0, k0, dk, ss, offs) ;     %\n" \
+"%    [X,Y] = pointsOnClothoid( x0, y0, theta0, k0, dk, ss, offs) ;     %\n" \
+"%    XY    = pointsOnClothoid( clot, ss ) ;                            %\n" \
+"%    [X,Y] = pointsOnClothoid( clot, ss ) ;                            %\n" \
+"%    XY    = pointsOnClothoid( clot, ss, offs ) ;                      %\n" \
+"%    [X,Y] = pointsOnClothoid( clot, ss, offs ) ;                      %\n" \
 "%                                                                      %\n" \
 "%  On input:                                                           %\n" \
 "%                                                                      %\n" \
-"%    S       = struct with field `x`, `y`, `theta`, `k`, `dk`, `L`     %\n" \
 "%    x0, y0  = coodinate of initial point                              %\n" \
 "%    theta0  = orientation (angle) of the clothoid at initial point    %\n" \
-"%    k       = curvature at initial point                              %\n" \
+"%    k0      = curvature at initial point                              %\n" \
 "%    dk      = derivative of curvature respect to arclength            %\n" \
-"%    ss      = the lenght of the clothoid curve or a vector of length  %\n" \
-"%              where to compute the clothoid values                    %\n" \
+"%    ss      = a vector with the curvilinear coordinates where         %\n" \
+"%              to compute the clothoid values                          %\n" \
 "%    offs    = curve offset                                            %\n" \
+"%                                                                      %\n" \
+"%    clot    = struct with field `x0`, `y0`, `theta0`, `k0`, `dk`      %\n" \
+"%              and a final field                                       %\n" \
+"%                `L` the lenght of the clothoid curve                  %\n" \
+"%              or in alternative two field                             %\n" \
+"%                 `smin` = initial curvilinear coordinate of the curve %\n" \
+"%                 `smax` = final curvilinear coordinate of the curve   %\n" \
 "%                                                                      %\n" \
 "%  On output: (1 argument)                                             %\n" \
 "%                                                                      %\n" \
@@ -79,7 +86,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
   try {
 
-    Clothoid::valueType x0, y0, theta0, k, dk, offs ;
+    Clothoid::valueType x0, y0, theta0, k0, dk, offs ;
     int                 npts ;
     double              * pSS ;
 
@@ -98,7 +105,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
       x0     = mxGetScalar(arg_x0) ;
       y0     = mxGetScalar(arg_y0) ;
       theta0 = mxGetScalar(arg_theta0) ;
-      k      = mxGetScalar(arg_k) ;
+      k0     = mxGetScalar(arg_k0) ;
       dk     = mxGetScalar(arg_dk) ;
       offs   = 0 ;
       if ( nrhs == 7 ) offs = mxGetScalar(arg_offs) ;
@@ -116,33 +123,33 @@ mexFunction( int nlhs, mxArray       *plhs[],
       ASSERT( mxGetClassID(prhs[1]) == mxDOUBLE_CLASS && !mxIsComplex(prhs[1]),
               "Argument N.2 must be a real double matrix" );
 
-      mxArray * mx_x0     = mxGetField(prhs[0],0,"x") ;
-      mxArray * mx_y0     = mxGetField(prhs[0],0,"y") ;
-      mxArray * mx_theta0 = mxGetField(prhs[0],0,"theta") ;
-      mxArray * mx_k      = mxGetField(prhs[0],0,"k") ;
+      mxArray * mx_x0     = mxGetField(prhs[0],0,"x0") ;
+      mxArray * mx_y0     = mxGetField(prhs[0],0,"y0") ;
+      mxArray * mx_theta0 = mxGetField(prhs[0],0,"theta0") ;
+      mxArray * mx_k0     = mxGetField(prhs[0],0,"k0") ;
       mxArray * mx_dk     = mxGetField(prhs[0],0,"dk") ;
 
-      ASSERT( mx_x0     != nullptr, "Field `x` is missing" );
-      ASSERT( mx_y0     != nullptr, "Field `y` is missing" );
-      ASSERT( mx_theta0 != nullptr, "Field `theta` is missing" );
-      ASSERT( mx_k      != nullptr, "Field `k` is missing" );
+      ASSERT( mx_x0     != nullptr, "Field `x0` is missing" );
+      ASSERT( mx_y0     != nullptr, "Field `y0` is missing" );
+      ASSERT( mx_theta0 != nullptr, "Field `theta0` is missing" );
+      ASSERT( mx_k0     != nullptr, "Field `k0` is missing" );
       ASSERT( mx_dk     != nullptr, "Field `dk` is missing" );
 
       ASSERT( mxGetClassID(mx_x0) == mxDOUBLE_CLASS && !mxIsComplex(mx_x0),
-              "Field `x` must be a real double scalar" );
+              "Field `x0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_y0) == mxDOUBLE_CLASS && !mxIsComplex(mx_y0),
-              "Field `y` must be a real double scalar" );
+              "Field `y0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_theta0) == mxDOUBLE_CLASS && !mxIsComplex(mx_theta0),
-              "Field `theta` must be a real double scalar" );
-      ASSERT( mxGetClassID(mx_k) == mxDOUBLE_CLASS && !mxIsComplex(mx_k),
-              "Field `k` must be a real double scalar" );
+              "Field `theta0` must be a real double scalar" );
+      ASSERT( mxGetClassID(mx_k0) == mxDOUBLE_CLASS && !mxIsComplex(mx_k0),
+              "Field `k0` must be a real double scalar" );
       ASSERT( mxGetClassID(mx_dk) == mxDOUBLE_CLASS && !mxIsComplex(mx_dk),
               "Field `dk` must be a real double scalar" );
 
       x0     = mxGetScalar(mx_x0) ;
       y0     = mxGetScalar(mx_y0) ;
       theta0 = mxGetScalar(mx_theta0) ;
-      k      = mxGetScalar(mx_k) ;
+      k0     = mxGetScalar(mx_k0) ;
       dk     = mxGetScalar(mx_dk) ;
 
       offs   = 0 ;
@@ -157,7 +164,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
     }
     
     Clothoid::ClothoidCurve curve ;
-    curve.setup( x0, y0, theta0, k, dk, 1 ) ;
+    curve.build( x0, y0, theta0, k0, dk, 1 ) ;
 
     if ( nlhs == 1 ) {
   	  plhs[0] = mxCreateDoubleMatrix(2, npts, mxREAL);

@@ -88,7 +88,7 @@
 static
 void
 save_struct( Clothoid::ClothoidCurve const & curve, mxArray * & plhs ) {
-  char const * fieldnames[] = { "x", "y", "theta", "k", "dk", "L" } ;
+  char const * fieldnames[] = { "x0", "y0", "theta0", "k0", "dk", "L" } ;
   plhs = mxCreateStructMatrix(1,1,6,fieldnames);
   mxSetFieldByNumber( plhs, 0, 0, mxCreateDoubleScalar(curve.getX0()) );
   mxSetFieldByNumber( plhs, 0, 1, mxCreateDoubleScalar(curve.getY0()) );

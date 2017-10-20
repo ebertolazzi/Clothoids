@@ -68,7 +68,7 @@
 static
 void
 save_struct( Clothoid::ClothoidCurve const & curve, mxArray * & plhs ) {
-  char const * fieldnames[] = { "x", "y", "theta", "k", "dk", "L" } ;
+  char const * fieldnames[] = { "x0", "y0", "theta0", "k0", "dk", "L" } ;
   plhs = mxCreateStructMatrix(1,1,6,fieldnames);
   mxSetFieldByNumber( plhs, 0, 0, mxCreateDoubleScalar(curve.getX0()) );
   mxSetFieldByNumber( plhs, 0, 1, mxCreateDoubleScalar(curve.getY0()) );
@@ -117,7 +117,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
   Clothoid::valueType th1 = mxGetScalar(arg_theta1) ;
   Clothoid::valueType k1  = mxGetScalar(arg_kappa1) ;
 
-  g2solve2arc.setup( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
+  g2solve2arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
   int iter = g2solve2arc.solve() ;
 
   save_struct( g2solve2arc.getS0(), out_S0 ) ;

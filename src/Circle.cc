@@ -32,7 +32,7 @@ namespace Circle {
   \*/
 
   void
-  CircleArc::setup_G1( valueType _x0,
+  CircleArc::build_G1( valueType _x0,
                        valueType _y0,
                        valueType _theta0,
                        valueType _x1,
