@@ -55,11 +55,11 @@ INCLUDE_DIRECTORIES( src )
 
 add_library( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
 
-ADD_EXECUTABLE( test1 src_tests/test1.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( test1 ${TARGET} )
+ADD_EXECUTABLE( testG2 tests-cpp/testG2.cc ${HEADERS} )
+TARGET_LINK_LIBRARIES( testG2 ${TARGET} )
 
-ADD_EXECUTABLE( test2 src_tests/test2.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( test2 ${TARGET} )
+ADD_EXECUTABLE( testG2stat tests-cpp/testG2stat.cc ${HEADERS} )
+TARGET_LINK_LIBRARIES( testG2stat ${TARGET} )
 
 MESSAGE( STATUS "Using ${SSE_FLAGS} extensions")
 MESSAGE( STATUS "C compiler                  = ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER}" )

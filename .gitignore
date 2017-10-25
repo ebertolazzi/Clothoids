@@ -9,3 +9,4 @@ Usage.pdf
 *.blg
 *.spl
 *.o
+cmake
