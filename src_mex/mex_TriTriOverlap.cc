@@ -31,7 +31,7 @@
 
 #define MEX_ERROR_MESSAGE \
 "%======================================================================%\n" \
-"%  TriTriOverlap:  Check if two trinagles overlap                      %\n" \
+"%  TriTriOverlap:  Check if two triangles overlap                      %\n" \
 "%                                                                      %\n" \
 "%  USAGE:                                                              %\n" \
 "%    intersect = TriTriOverlap( p0, p1, p2, q0, q1, q2 ) ;             %\n" \

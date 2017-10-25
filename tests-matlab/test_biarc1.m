@@ -1,3 +1,5 @@
+addpath('../matlab');
+
 %=============================================================================%
 %                                                                             %
 %  Autors: Enrico Bertolazzi                                                  %
@@ -10,28 +12,46 @@
 % Driver test program to check bounding box on clothoid                       %
 %=============================================================================%
 
-close all ;
+subplot(2,1,1);
+hold off
+hold on
 
-x0        = 0 ;
-y0        = 0 ;
-theta0    = 0 ;
-kappa     = -1 ;
-dkappa    = 0.1 ;
-L         = 20 ;
-max_angle = pi/2 ;
-max_size  = 0.25 ;
+subplot(2,1,2);
+hold off
+hold on
 
-XY = pointsOnClothoid( x0, y0, theta0, kappa, dkappa, 0:L/100:L ) ;
-hold off ;
-plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 2 ) ;
-hold on ;
+for a=0:pi/3:2*pi
 
-for offs=[-0.5,0,0.5]
-  TT = bbClothoid( x0, y0, theta0, kappa, dkappa, L, max_angle, max_size, offs ) ;
-  for i=1:size(TT,2)
-    fill( TT(1:2:end,i), TT(2:2:end,i), 'red') ;
+  x0=cos(a);
+  y0=sin(a);
+  x1=2*cos(a);
+  y1=2*sin(a);
+
+  theta0=pi/1.2;
+  theta1=pi/1.7;
+
+  a0=theta0+pi/2+a;
+  a1=theta1+pi/2+a;
+  
+  p=[x0,x1;y0,y1];
+  u=[cos(a0),cos(a1);sin(a0),sin(a1)];
+
+  subplot(2,1,1);
+  plot(p(1,:),p(2,:),'k')
+  bi_arc = fnrfn(rscvn(p,u),[0.5,1.5]);
+  bspline_plot(bi_arc,true);
+
+  subplot(2,1,2);
+  plot(p(1,:),p(2,:),'k')
+  [arc1,arc2,ok] = biarc(x0,y0,theta0+a,x1,y1,theta1+a);
+  if ok
+    biarc_plot(arc1,arc2,true);
   end
 end
-plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 2 ) ;
 
-axis equal ;
+
+subplot(2,1,1);
+axis equal
+
+subplot(2,1,2);
+axis equal

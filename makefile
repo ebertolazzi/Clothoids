@@ -51,8 +51,11 @@ FRAMEWORK = Clothoid
 
 all: lib
 	@$(MKDIR) bin
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2     tests/testG2.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot tests/testG2plot.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2         tests-cpp/testG2.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat     tests-cpp/testG2stat.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat2arc tests-cpp/testG2stat2arc.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2statCLC  tests-cpp/testG2statCLC.cc $(LIBS)
+	#$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot tests-cpp/testG2plot.cc $(LIBS)
 
 lib: lib/$(LIB_CLOTHOID)
 
@@ -90,7 +93,9 @@ install_as_framework: lib
 
 run:
 	./bin/testG2
-	./bin/testG2plot
+	./bin/testG2stat
+	./bin/testG2stat2arc
+	./bin/testG2statCLC
 
 doc:
 	doxygen

@@ -1,3 +1,5 @@
+addpath('../matlab');
+
 %=============================================================================%
 %                                                                             %
 %  Autors: Enrico Bertolazzi and Marco Frego                                  %

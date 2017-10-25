@@ -36,6 +36,7 @@ main(int argc, const char * argv[]) {
   TicToc                tictoc ;
 
   int NMAX = 128/8 ;
+  int nkur = 64/8 ;
 
   valueType x0 = 0 ;
   valueType y0 = 0 ;
@@ -47,7 +48,6 @@ main(int argc, const char * argv[]) {
   valueType thmax =  m_pi*0.99 ;
 
   valueType kur[1000], kmax = 10 ;
-  int nkur = 64 ;
   valueType a = exp( 2*log(kmax)/(nkur-1) ) ;
   nkur = 2*nkur+1 ;
   cout << "a = " << a << "\n" ;

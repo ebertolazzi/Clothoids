@@ -214,7 +214,13 @@ The call to the function \texttt{buildClothoid} computes the three parameters ne
 %%%
 \begin{lstlisting}[breaklines, backgroundcolor=\color{gray!10},basicstyle=\small\ttfamily]
 % compute clothoid parameters
-[k,dk,L] = buildClothoid( x0, y0, theta0, x1, y1, theta1 ) ;
+clot = buildClothoid( x0, y0, theta0, x1, y1, theta1 ) ;
+% clot.x0
+% clot.y0
+% clot.theta0
+% clot.k0
+% clot.dk
+% clot.L
 \end{lstlisting}
 %%%
 The input parameter are respectively: $x,y$ component of the starting point, the initial angle, $x,y$ component of the final point, the final angle.
@@ -222,7 +228,9 @@ To use in practice the computed curve, it is useful to have a sampling of the cu
  %%%
 \begin{lstlisting}[breaklines, backgroundcolor=\color{gray!10},basicstyle=\small\ttfamily]
 % compute points on clothoid
-XY = pointsOnClothoid( x0, y0, theta0, k, dk, L, npts ) ;
+XY = pointsOnClothoid( x0, y0, theta0, k, dk, 0:L/npts:L ) ;
+% or use
+XY = pointsOnClothoid( clot, 0:L/npts:L ) ;
 \end{lstlisting}
 %%%
 The result can be plotted to check the solution with

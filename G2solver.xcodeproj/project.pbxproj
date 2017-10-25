@@ -27,16 +27,18 @@
 		D96E1FB41F75513000115228 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D96E1FB51F75513000115228 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D96E1FB71F75513000115228 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
-		D96E1FBF1F75523300115228 /* testG2stat2arc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D96E1FBE1F75515A00115228 /* testG2stat2arc.cc */; };
 		D971F8991F613BC2000E663E /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D971F89A1F613BC2000E663E /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D971F89D1F6169D2000E663E /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
-		D981B30F1E8D56FE006C933D /* testG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D981B30C1E8D56F0006C933D /* testG2.cc */; };
 		D981B3131E8D571D006C933D /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D981B3151E8D5722006C933D /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D9BD86191EFC01EE00C82B74 /* testG2plot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD86181EFC01EE00C82B74 /* testG2plot.cc */; };
+		D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393501FA14C42009C1E60 /* testG2plot.cc */; };
+		D9A393571FA14C57009C1E60 /* testG2statCLC.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393511FA14C42009C1E60 /* testG2statCLC.cc */; };
+		D9A393581FA14C5C009C1E60 /* testG2stat2arc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393521FA14C42009C1E60 /* testG2stat2arc.cc */; };
+		D9A393591FA14C61009C1E60 /* testG2stat.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393541FA14C42009C1E60 /* testG2stat.cc */; };
+		D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393551FA14C42009C1E60 /* testG2.cc */; };
 		D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
 		D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
 		D9C8B9E41F7AA69400DF4205 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
@@ -48,8 +50,6 @@
 		D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9C8B9EC1F7AA69400DF4205 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
-		D9C8B9F41F7AA6A800DF4205 /* testG2statCLC.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C8B9F31F7AA6A100DF4205 /* testG2statCLC.cc */; };
-		D9E74A551F68804C00E47B88 /* testG2stat.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E74A541F68804C00E47B88 /* testG2stat.cc */; };
 		D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
@@ -126,20 +126,20 @@
 		D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CubicRootsFlocke.hh; sourceTree = "<group>"; };
 		D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle2D.cc; sourceTree = "<group>"; };
 		D96E1FBD1F75513000115228 /* statistic_2arc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_2arc; sourceTree = BUILT_PRODUCTS_DIR; };
-		D96E1FBE1F75515A00115228 /* testG2stat2arc.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2stat2arc.cc; sourceTree = "<group>"; };
 		D971F8971F613BC2000E663E /* Biarc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Biarc.cc; sourceTree = "<group>"; };
 		D971F8981F613BC2000E663E /* Biarc.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Biarc.hh; sourceTree = "<group>"; };
 		D971F89B1F6169D2000E663E /* ClothoidG2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidG2.cc; sourceTree = "<group>"; };
 		D981B3031E8D56AF006C933D /* testAB */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = testAB; path = testG2plot; sourceTree = BUILT_PRODUCTS_DIR; };
-		D981B30C1E8D56F0006C933D /* testG2.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2.cc; sourceTree = "<group>"; };
-		D99118331F75B04900242C8A /* TicToc.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TicToc.hh; sourceTree = "<group>"; };
-		D9BD86181EFC01EE00C82B74 /* testG2plot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testG2plot.cc; sourceTree = "<group>"; };
+		D9A393501FA14C42009C1E60 /* testG2plot.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2plot.cc; sourceTree = "<group>"; };
+		D9A393511FA14C42009C1E60 /* testG2statCLC.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2statCLC.cc; sourceTree = "<group>"; };
+		D9A393521FA14C42009C1E60 /* testG2stat2arc.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2stat2arc.cc; sourceTree = "<group>"; };
+		D9A393531FA14C42009C1E60 /* TicToc.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TicToc.hh; sourceTree = "<group>"; };
+		D9A393541FA14C42009C1E60 /* testG2stat.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2stat.cc; sourceTree = "<group>"; };
+		D9A393551FA14C42009C1E60 /* testG2.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2.cc; sourceTree = "<group>"; };
 		D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidAsyPlot.cc; sourceTree = "<group>"; };
 		D9BD861B1EFC021300C82B74 /* ClothoidAsyPlot.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClothoidAsyPlot.hh; sourceTree = "<group>"; };
 		D9C8B9F21F7AA69400DF4205 /* statistic_CLC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_CLC; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9C8B9F31F7AA6A100DF4205 /* testG2statCLC.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2statCLC.cc; sourceTree = "<group>"; };
 		D9E74A4D1F68801C00E47B88 /* statistic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9E74A541F68804C00E47B88 /* testG2stat.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testG2stat.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,8 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				D938F4DC1DD3B83000E08A70 /* Products */,
+				D9A3934F1FA14C42009C1E60 /* tests-cpp */,
 				D938F4E51DD3B84A00E08A70 /* src */,
-				D981B30A1E8D56F0006C933D /* tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -228,18 +228,18 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		D981B30A1E8D56F0006C933D /* tests */ = {
+		D9A3934F1FA14C42009C1E60 /* tests-cpp */ = {
 			isa = PBXGroup;
 			children = (
-				D981B30C1E8D56F0006C933D /* testG2.cc */,
-				D9BD86181EFC01EE00C82B74 /* testG2plot.cc */,
-				D9E74A541F68804C00E47B88 /* testG2stat.cc */,
-				D96E1FBE1F75515A00115228 /* testG2stat2arc.cc */,
-				D9C8B9F31F7AA6A100DF4205 /* testG2statCLC.cc */,
-				D99118331F75B04900242C8A /* TicToc.hh */,
+				D9A393501FA14C42009C1E60 /* testG2plot.cc */,
+				D9A393511FA14C42009C1E60 /* testG2statCLC.cc */,
+				D9A393521FA14C42009C1E60 /* testG2stat2arc.cc */,
+				D9A393531FA14C42009C1E60 /* TicToc.hh */,
+				D9A393541FA14C42009C1E60 /* testG2stat.cc */,
+				D9A393551FA14C42009C1E60 /* testG2.cc */,
 			);
-			path = tests;
-			sourceTree = "<group>";
+			path = "tests-cpp";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -384,11 +384,11 @@
 				D938F4ED1DD3B85200E08A70 /* Triangle2D.cc in Sources */,
 				D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */,
 				D9099D201F5FFB8300740ECF /* Fresnel.cc in Sources */,
-				D981B30F1E8D56FE006C933D /* testG2.cc in Sources */,
 				D9099D261F600AA600740ECF /* G2lib.cc in Sources */,
 				D971F8991F613BC2000E663E /* Biarc.cc in Sources */,
 				D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D9099D291F600B9400740ECF /* Circle.cc in Sources */,
+				D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */,
 				D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */,
 				D938F4EB1DD3B84E00E08A70 /* ClothoidG1.cc in Sources */,
 			);
@@ -398,7 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D96E1FBF1F75523300115228 /* testG2stat2arc.cc in Sources */,
+				D9A393581FA14C5C009C1E60 /* testG2stat2arc.cc in Sources */,
 				D96E1FAE1F75513000115228 /* G2lib.cc in Sources */,
 				D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */,
 				D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */,
@@ -419,13 +419,13 @@
 				D981B3151E8D5722006C933D /* Triangle2D.cc in Sources */,
 				D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */,
 				D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */,
+				D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */,
 				D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */,
 				D981B3131E8D571D006C933D /* ClothoidG1.cc in Sources */,
 				D971F89A1F613BC2000E663E /* Biarc.cc in Sources */,
 				D918ADA71F62C1CE009893C3 /* Line.cc in Sources */,
 				D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */,
-				D9BD86191EFC01EE00C82B74 /* testG2plot.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,9 +438,9 @@
 				D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */,
 				D9C8B9E71F7AA69400DF4205 /* Biarc.cc in Sources */,
 				D9C8B9E81F7AA69400DF4205 /* Circle.cc in Sources */,
-				D9C8B9F41F7AA6A800DF4205 /* testG2statCLC.cc in Sources */,
 				D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */,
 				D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */,
+				D9A393571FA14C57009C1E60 /* testG2statCLC.cc in Sources */,
 				D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */,
 				D9C8B9EC1F7AA69400DF4205 /* ClothoidG1.cc in Sources */,
 			);
@@ -458,7 +458,7 @@
 				D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */,
 				D9E74A591F68825600E47B88 /* Line.cc in Sources */,
 				D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */,
-				D9E74A551F68804C00E47B88 /* testG2stat.cc in Sources */,
+				D9A393591FA14C61009C1E60 /* testG2stat.cc in Sources */,
 				D9E74A5C1F68826300E47B88 /* ClothoidG1.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
