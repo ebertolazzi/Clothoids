@@ -41,6 +41,7 @@
  */
 
 #include "Triangle2D.hh"
+#include <algorithm>
 
 namespace Triangle2D {
 
