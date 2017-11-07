@@ -21,7 +21,9 @@
 #include "CubicRootsFlocke.hh"
 
 namespace Circle {
-  static const valueType m_pi = 3.14159265358979323846264338328  ; // pi
+
+  static const valueType m_pi   = 3.14159265358979323846264338328  ; // pi
+  static const valueType m_pi_2 = 1.57079632679489661923132169164  ; // pi/2
 
   /*\
    |    ____ _          _         _
@@ -51,6 +53,20 @@ namespace Circle {
     k      = tan(th) / d ;
     s_min  = 0;
     s_max  = 2*d*cos(th)/Sinc(th);
+  }
+
+  void
+  CircleArc::build_3P( valueType _x0,
+                       valueType _y0,
+                       valueType _x1,
+                       valueType _y1,
+                       valueType _x2,
+                       valueType _y2 ) {
+
+    valueType dx = _x1 - _x0 ;
+    valueType dy = _y1 - _y0 ;
+    valueType theta0 = atan2( dy, dx ) + m_pi_2 ;
+    build_G1( _x0, _y0, theta0, _x2, _y2 );
   }
 
   valueType
@@ -205,7 +221,6 @@ namespace Circle {
     }
     knots[kk+3] = ns ;
     return 1+2*ns;
-
   }
 
   std::ostream &

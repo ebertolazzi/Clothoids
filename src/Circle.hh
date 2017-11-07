@@ -160,7 +160,7 @@ namespace Circle {
     valueType Yend()     const { return Y(s_max) ; }
     valueType ThetaEnd() const { return theta(s_max) ; }
 
-    //! construct a clothoid with the standard parameters
+    //! construct a circle with the standard parameters
     void
     build( valueType _x0,
            valueType _y0,
@@ -194,13 +194,22 @@ namespace Circle {
       s_max  = _smax ;
     }
 
-    //! build a clothoid by solving the hermite G1 problem
+    //! build a circle by solving the hermite G1 problem
     void
     build_G1( valueType _x0,
               valueType _y0,
               valueType _theta0,
               valueType _x1,
               valueType _y1 );
+
+    //! build a circle passing by 3 points
+    void
+    build_3P( valueType _x0,
+              valueType _y0,
+              valueType _x1,
+              valueType _y1,
+              valueType _x2,
+              valueType _y2 );
 
     valueType
     delta_theta() const { return (s_max-s_min)*k ; }
