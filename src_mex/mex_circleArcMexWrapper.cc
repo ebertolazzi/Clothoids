@@ -35,46 +35,54 @@
 #define arg_out_3 plhs[3]
 
 #define MEX_ERROR_MESSAGE \
-"%======================================================================%\n" \
-"%  circle:  Compute cicle arc                                          %\n" \
-"%                                                                      %\n" \
-"%  USAGE:                                                              %\n" \
-"%    OBJ = circleArcMexWrapper( 'new', p0, theta0, kur, arclen ) ;     %\n" \
-"%    OBJ = circleArcMexWrapper( 'new_by_G1', p0, theta0, p1 ) ;        %\n" \
-"%    OBJ = circleArcMexWrapper( 'new_by_3p', p0, p1, p2 ) ;            %\n" \
-"%                                                                      %\n" \
-"%    circleArcMexWrapper( 'setup', OBJ, p0, theta0, L ) ;              %\n" \
-"%    circleArcMexWrapper( 'setup_by_G1', OBJ, p0, theta0, p1  ) ;      %\n" \
-"%    circleArcMexWrapper( 'setup_by_3p', OBJ, p0, p1, p2 ) ;           %\n" \
-"%    circleArcMexWrapper( 'origin', OBJ, x0, y0 ) ;                    %\n" \
-"%    circleArcMexWrapper( 'translate', OBJ, tx, ty ) ;                 %\n" \
-"%    circleArcMexWrapper( 'trim', OBJ, smin, smax ) ;                  %\n" \
-"%                                                                      %\n" \
-"%    circleArcMexWrapper( 'delete', OBJ ) ;                            %\n" \
-"%                                                                      %\n" \
-"%    P           = circleArcMexWrapper( 'eval', OBJ, s ) ;             %\n" \
-"%    [P,theta]   = circleArcMexWrapper( 'eval', OBJ, s ) ;             %\n" \
-"%                                                                      %\n" \
-"%    dP          = circleArcMexWrapper( 'eval_D', OBJ, s ) ;           %\n" \
-"%    [dP,dtheta] = circleArcMexWrapper( 'eval_D', OBJ, s ) ;           %\n" \
-"%                                                                      %\n" \
-"%    dP          = circleArcMexWrapper( 'eval_DD', OBJ, s ) ;          %\n" \
-"%    [dP,dtheta] = circleArcMexWrapper( 'eval_DD', OBJ, s ) ;          %\n" \
-"%                                                                      %\n" \
-"%    dP          = circleArcMexWrapper( 'eval_DDD', OBJ, s ) ;         %\n" \
-"%    [dP,dtheta] = circleArcMexWrapper( 'eval_DDD', OBJ, s ) ;         %\n" \
-"%                                                                      %\n" \
-"%    C           = circleArcMexWrapper( 'center', OBJ ) ;              %\n" \
-"%    nurbs       = circleArcMexWrapper( 'to_nurbs', OBJ ) ;            %\n" \
-"%                                                                      %\n" \
-"%======================================================================%\n" \
-"%                                                                      %\n" \
-"%  Autor: Enrico Bertolazzi                                            %\n" \
-"%         Department of Industrial Engineering                         %\n" \
-"%         University of Trento                                         %\n" \
-"%         enrico.bertolazzi@unitn.it                                   %\n" \
-"%                                                                      %\n" \
-"%======================================================================%\n"
+"%==========================================================================%\n" \
+"%  circle:  Compute cicle arc                                              %\n" \
+"%                                                                          %\n" \
+"%  USAGE:                                                                  %\n" \
+"%    OBJ = circleArcMexWrapper( 'new', x0, y0, theta0, kur, L ) ;          %\n" \
+"%    OBJ = circleArcMexWrapper( 'new', x0, y0, theta0, kur, smin, smax ) ; %\n" \
+"%    OBJ = circleArcMexWrapper( 'new', p0, p1, p2 ) ;                      %\n" \
+"%    OBJ = circleArcMexWrapper( 'new', p0, theta0, p1 ) ;                  %\n" \
+"%                                                                          %\n" \
+"%    circleArcMexWrapper( 'delete', OBJ ) ;                                %\n" \
+"%                                                                          %\n" \
+"%    circleArcMexWrapper( 'build', OBJ, x0, y0, theta0, kur, L ) ;         %\n" \
+"%    circleArcMexWrapper( 'build', OBJ, x0, y0, theta0, kur, smin, smax ); %\n" \
+"%    circleArcMexWrapper( 'build', OBJ, p0, p1, p2 ) ;                     %\n" \
+"%    circleArcMexWrapper( 'build', OBJ, p0, theta0, p1 ) ;                 %\n" \
+"%                                                                          %\n" \
+"%    circleArcMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;                  %\n" \
+"%    circleArcMexWrapper( 'translate', OBJ, tx, ty ) ;                     %\n" \
+"%    circleArcMexWrapper( 'trim', OBJ, smin, smax ) ;                      %\n" \
+"%    circleArcMexWrapper( 'changeCurvilinearOrigin', OBJ, s0 ) ;           %\n" \
+"%                                                                          %\n" \
+"%    [p0,p1,p2,ok] = circleArcMexWrapper( 'bbTriangle', OBJ ) ;            %\n" \
+"%                                                                          %\n" \
+"%    burbs = circleArcMexWrapper( 'to_nurbs', OBJ ) ;                      %\n" \
+"%                                                                          %\n" \
+"%    res = circleArcMexWrapper( 'getX0', OBJ ) ;                           %\n" \
+"%    res = circleArcMexWrapper( 'getY0', OBJ ) ;                           %\n" \
+"%    res = circleArcMexWrapper( 'getTheta0', OBJ ) ;                       %\n" \
+"%    res = circleArcMexWrapper( 'getKappa', OBJ ) ;                        %\n" \
+"%    res = circleArcMexWrapper( 'getSmin', OBJ ) ;                         %\n" \
+"%    res = circleArcMexWrapper( 'getSmax', OBJ ) ;                         %\n" \
+"%    res = circleArcMexWrapper( 'length', OBJ ) ;                          %\n" \
+"%                                                                          %\n" \
+"%    [X,Y] = circleArcMexWrapper( 'eval', OBJ, s ) ;                       %\n" \
+"%    [X,Y] = circleArcMexWrapper( 'eval_D', OBJ, s ) ;                     %\n" \
+"%    [X,Y] = circleArcMexWrapper( 'eval_DD', OBJ, s ) ;                    %\n" \
+"%    [X,Y] = circleArcMexWrapper( 'eval_DDD', OBJ, s ) ;                   %\n" \
+"%                                                                          %\n" \
+"%    nurbs = circleArcMexWrapper( 'to_nurbs', OBJ ) ;                      %\n" \
+"%                                                                          %\n" \
+"%==========================================================================%\n" \
+"%                                                                          %\n" \
+"%  Autor: Enrico Bertolazzi                                                %\n" \
+"%         Department of Industrial Engineering                             %\n" \
+"%         University of Trento                                             %\n" \
+"%         enrico.bertolazzi@unitn.it                                       %\n" \
+"%                                                                          %\n" \
+"%==========================================================================%\n"
 
 static
 double
@@ -154,8 +162,8 @@ mexFunction( int nlhs, mxArray       *plhs[],
       } else if ( nrhs == 3+kk ) {
 
         Circle::valueType const * p0 = getArrayValues( prhs[1+kk], size0, "CircleArc: p0 expected to be a real vector" );
-        Circle::valueType const * p1 = getArrayValues( prhs[2+kk], size1, "CircleArc: p0 expected to be a real vector" );
-        Circle::valueType const * p2 = getArrayValues( prhs[3+kk], size2, "CircleArc: p0 expected to be a real vector" );
+        Circle::valueType const * p1 = getArrayValues( prhs[2+kk], size1, "CircleArc: p1 expected to be a real vector" );
+        Circle::valueType const * p2 = getArrayValues( prhs[3+kk], size2, "CircleArc: p2 expected to be a real vector" );
 
         ASSERT( size0 == 2 && size2 == 2 && size1 > 0 && size1 <= 2,
                 "CircleArc: bad dimension size(p0) = " << size0 <<
@@ -261,15 +269,41 @@ mexFunction( int nlhs, mxArray       *plhs[],
         *pr++ = Poly[i][1] ;
         *pr++ = Poly[i][2] ;
       }
-    } else if ( cmd == "length" ) {
-      setScalarValue( arg_out_0, ptr->totalLength());
-    } else if ( cmd == "eval" ) {
-    } else if ( cmd == "eval_D" ) {
-    } else if ( cmd == "eval_DD" ) {
-    } else if ( cmd == "eval_DDD" ) {
-
     } else {
-      ASSERT(false, "Unknown command: " << cmd );
+      if ( nrhs == 3 ) {
+        mwSize size ;
+        double const * s = getArrayValues( arg_in_2, size,  "CircleArc: s expected to be a real vector" ) ;
+        arg_out_0 = mxCreateDoubleMatrix(1,size,mxREAL); double *pX = mxGetPr(arg_out_0) ;
+        arg_out_1 = mxCreateDoubleMatrix(1,size,mxREAL); double *pY = mxGetPr(arg_out_1) ;
+        if ( cmd == "eval" ) {
+          for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+            ptr->eval( *s, *pX, *pY ) ;
+        } else if ( cmd == "eval_D" ) {
+          for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+            ptr->eval_D( *s, *pX, *pY ) ;
+        } else if ( cmd == "eval_DD" ) {
+          for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+            ptr->eval_DD( *s, *pX, *pY ) ;
+        } else if ( cmd == "eval_DDD" ) {
+          for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+            ptr->eval_DDD( *s, *pX, *pY ) ;
+        } else {
+          ASSERT(false, "Unknown command: " << cmd );
+        }
+      } else if ( nrhs == 3 ) {
+        if      ( cmd == "getX0"     ) setScalarValue( arg_out_0, ptr->getX0());
+        else if ( cmd == "getY0"     ) setScalarValue( arg_out_0, ptr->getY0());
+        else if ( cmd == "getTheta0" ) setScalarValue( arg_out_0, ptr->getTheta0());
+        else if ( cmd == "getKappa"  ) setScalarValue( arg_out_0, ptr->getKappa());
+        else if ( cmd == "getSmin"   ) setScalarValue( arg_out_0, ptr->getSmin());
+        else if ( cmd == "getSmax"   ) setScalarValue( arg_out_0, ptr->getSmax());
+        else if ( cmd == "length"    ) setScalarValue( arg_out_0, ptr->totalLength());
+        else {
+          ASSERT(false, "Unknown command: " << cmd );
+        }
+      } else {
+        ASSERT(false, "Unknown command: " << cmd );
+      }
     }
 
   } catch ( std::exception const & e ) {

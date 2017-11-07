@@ -102,11 +102,10 @@ classdef CircleArc < handle
     end
 
     %% Eval
-    function varargout = eval(this, s)
+    function [X,Y] = eval(this, s)
       % eval: method to eval the curve at curvilinear abscissa s
       % Usage:
       %    [x,y] = ref.eval( s )
-      %    [x,y,theta,kappa] = ref.eval( s )
       %    
       % On input:
       %    s: curvilinear coordinates where to evaluate the curve
@@ -114,14 +113,22 @@ classdef CircleArc < handle
       %
       % On output:
       %    x, y:  coordinates of the curve 
-      %    theta: orientation of the curve
-      %    kappa: curvature of the curve
-      [varargout{1:nargout}] = ClothoidMexWrapper('eval', this.objectHandle, s );
+      [X,Y] = ClothoidMexWrapper('eval', this.objectHandle, s );
     end
 
-    %%
-    function [S,X,Y,DST] = closestPoint(this, x, y, ds)
-      [S,X,Y,DST] = CircleArcMexWrapper('closestPoint', this.objectHandle, x, y, ds );
+    %% Eval
+    function [X,Y] = eval_D(this, s)
+      [X,Y] = ClothoidMexWrapper('eval_D', this.objectHandle, s );
+    end
+
+    %% Eval
+    function [X,Y] = eval_DD(this, s)
+      [X,Y] = ClothoidMexWrapper('eval_DD', this.objectHandle, s );
+    end
+
+    %% Eval
+    function [X,Y] = eval_DDD(this, s)
+      [X,Y] = ClothoidMexWrapper('eval_DDD', this.objectHandle, s );
     end
  
     function res = getX0(this)
@@ -136,12 +143,8 @@ classdef CircleArc < handle
       res = CircleArcMexWrapper('getTheta0', this.objectHandle );
     end
  
-    function res = getKappa0(this)
-      res = CircleArcMexWrapper('getKappa0', this.objectHandle );
-    end
- 
-    function res = getDkappa(this)
-      res = CircleArcMexWrapper('getKappa_D', this.objectHandle );
+    function res = getKappa(this)
+      res = CircleArcMexWrapper('getKappa', this.objectHandle );
     end
  
     function res = getSmin(this)
