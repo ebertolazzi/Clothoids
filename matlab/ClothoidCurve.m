@@ -1,4 +1,4 @@
-classdef clothoid < handle
+classdef ClothoidCurve < handle
     % clothoid: MATLAB class wrapper to the underlying C++ class
     properties (SetAccess = private, Hidden = true)
         objectHandle; % Handle to the underlying C++ class instance
@@ -6,7 +6,7 @@ classdef clothoid < handle
     
     methods
         %% Constructor - Create a new C++ class instance
-        function this = clothoid( varargin )
+        function this = ClothoidCurve( varargin )
             % clothoid: constructor for the clothoid object.
             % Usage:
             %    ref = clothoid()
@@ -104,11 +104,24 @@ classdef clothoid < handle
             %    x, y:  coordinates of the curve 
             %    theta: orientation of the curve
             %    kappa: curvature of the curve
+            if nargout == 1
+              [x,y] = ClothoidMexWrapper('eval', this.objectHandle, s );
+              varargout{1} = [x,y] ;
+            else
+              [x,y,varargout{2},varargout{3}] = ClothoidMexWrapper('eval', this.objectHandle, s );
+              varargout{1} = [x,y] ;
+            end
             
-            [varargout{1:nargout}] = ...
-                ClothoidMexWrapper('eval', this.objectHandle, s );
         end
+
         
+        %%
+        function [X,Y,S] = points(this, ds)
+          [~,~,~,~,~,smin,smax] = ClothoidMexWrapper('getPars', this.objectHandle );
+          S = smin:(smax-smin)/ds:smax ;
+          [X,Y] = ClothoidMexWrapper('eval', this.objectHandle, S );
+        end
+ 
         function [x0,y0,theta0,k0,dk,smin,smax] = getPars(this)
             % getPars: method to get the parameters of the curve
             % Usage:
@@ -126,6 +139,12 @@ classdef clothoid < handle
                 ClothoidMexWrapper('getPars', this.objectHandle );
         end
         
+ 
+        function len = length(this)
+            [~,~,~,~,~,smin,smax] = ...
+                ClothoidMexWrapper('getPars', this.objectHandle );
+            len = smax-smin ;
+        end
         
         %% Update
         function trim(this, smin, smax)
