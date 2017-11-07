@@ -255,7 +255,12 @@ namespace Circle {
     }
 
     //! set the origin of the clothoid to the curvilinear abscissa s0
-    void change_origin( valueType s0 ) ;
+    void
+    changeCurvilinearOrigin( valueType s0 ) ;
+
+    void
+    changeOrigin( valueType newx0, valueType newy0 )
+    { x0 = newx0 ; y0 = newy0 ; }
 
     //! get the bounding box triangle (if angle variation less that pi/3)
     bool
@@ -266,10 +271,6 @@ namespace Circle {
     void
     translate( valueType tx, valueType ty )
     { x0 += tx ; y0 += ty ; }
-
-    void
-    moveOrigin( valueType newx0, valueType newy0 )
-    { x0 = newx0 ; y0 = newy0 ; }
 
     /*! \brief Compute rational B-spline coefficients for a circle arc
      *

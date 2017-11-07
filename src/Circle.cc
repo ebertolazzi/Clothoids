@@ -138,7 +138,7 @@ namespace Circle {
 
   //! set the origin of the clothoid to the curvilinear abscissa s0
   void
-  CircleArc::change_origin( valueType s0 ) {
+  CircleArc::changeCurvilinearOrigin( valueType s0 ) {
     valueType sL = s0*k - theta0 ;
     x0     += s0 * Sinc( sL ) ;
     y0     += s0 * Cosc( sL ) ;

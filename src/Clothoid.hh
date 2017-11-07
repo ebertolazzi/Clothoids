@@ -359,6 +359,14 @@ namespace Clothoid {
     void eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const ;
     void eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const ;
 
+    valueType
+    closestPoint( valueType   x,
+                  valueType   y,
+                  valueType   ds,
+                  valueType & X,
+                  valueType & Y,
+                  valueType & S ) const ;
+
     void
     trim( valueType s_begin, valueType s_end ) {
       s_min = s_begin ;

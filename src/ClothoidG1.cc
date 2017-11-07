@@ -344,6 +344,31 @@ namespace Clothoid {
     y_DDD = tmp1*S+tmp2*C ;
   }
 
+
+  valueType
+  ClothoidCurve::closestPoint( valueType   x,
+                               valueType   y,
+                               valueType   ds,
+                               valueType & X,
+                               valueType & Y,
+                               valueType & S ) const {
+    valueType DST = 1e100;
+    valueType s = s_min;
+    while ( s <= s_max ) {
+      valueType x1, y1 ;
+      eval( s, x1, y1 );
+      valueType dst = hypot( x-x1, y-y1 );
+      if ( dst < DST ) {
+        DST = dst ;
+        X   = x1 ;
+        Y   = y1 ;
+        S   = s ;
+      }
+      s += ds ;
+    }
+    return DST ;
+  }
+
   static
   valueType
   kappa( valueType theta0, valueType theta ) {

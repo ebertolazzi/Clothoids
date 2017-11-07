@@ -1,4 +1,5 @@
 clc;
+clear all;
 
 NAMES = { ...
   'CircleArcMexWrapper', ...
@@ -21,6 +22,9 @@ disp('---------------------------------------------------------');
 for k=1:length(NAMES)
   N=NAMES{k} ;
   fprintf(1,'Compiling: %s\n',N) ;
+
+  CMD = [ 'while mislocked(''' N ''') ; munlock(''' N ''') ; end;'] ;
+  disp(CMD);
 
   CMD = ['mex -output ',N,' -largeArrayDims ../src_mex/mex_',N,'.cc ', LIBS] ;
   if isunix
