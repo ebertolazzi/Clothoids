@@ -265,19 +265,103 @@ mexFunction( int nlhs, mxArray       *plhs[],
                 ptr->eval(sVals[i], xVals[i], yVals[i]);
         }
 
-    } else if ( cmd == "getPars" ) {
+    } else if ( cmd == "closestPoint" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 7, "expected 7 outputs");
+        ASSERT( nrhs == 5 , "expected 5 inputs") ;
+        ASSERT( nlhs == 4 , "expected 4 outputs") ;
 
         Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getX0());      // x0
-        setScalarValue(arg_out_1, ptr->getY0());      // y0
-        setScalarValue(arg_out_2, ptr->getTheta0());  // theta0
-        setScalarValue(arg_out_3, ptr->getKappa());   // kappa0
-        setScalarValue(arg_out_4, ptr->getKappa_D()); // kappa_D
-        setScalarValue(arg_out_5, ptr->getSmin());    // smin
-        setScalarValue(arg_out_6, ptr->getSmax());    // smax
+
+
+        Clothoid::valueType x, y, ds, X, Y, S, DST;
+
+        x  = getScalarValue(arg_in_2,"Error in reading x") ;
+        y  = getScalarValue(arg_in_3,"Error in reading y") ;
+        ds = getScalarValue(arg_in_4,"Error in reading ds") ;
+
+
+        int size;
+        double * sVals = getArrayValues(arg_in_2,size,"Error in reading s");
+
+        bool fullData = nlhs==4; // output also theta(s) and kappa(s)
+
+        double *xVals, *yVals, *thetaVals, *kappaVals;
+
+        arg_out_0 = mxCreateDoubleMatrix(1, 1, mxREAL);
+        arg_out_1 = mxCreateDoubleMatrix(1, 1, mxREAL);
+        arg_out_2 = mxCreateDoubleMatrix(1, 1, mxREAL);
+        arg_out_3 = mxCreateDoubleMatrix(1, 1, mxREAL);
+
+        DST = ptr->closestPoint( x, y, ds, X, Y, S );
+
+        *mxGetPr(arg_out_0) = S ;
+        *mxGetPr(arg_out_1) = X ;
+        *mxGetPr(arg_out_2) = Y ;
+        *mxGetPr(arg_out_3) = DST ;
+
+    } else if ( cmd == "getX0" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getX0());
+
+    } else if ( cmd == "getY0" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getY0());
+
+    } else if ( cmd == "getTheta0" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getTheta0());
+
+    } else if ( cmd == "getKappa0" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getKappa());
+
+    } else if ( cmd == "getKappa_D" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getKappa_D());
+
+    } else if ( cmd == "getSmin" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getSmin());
+
+    } else if ( cmd == "getSmax" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getSmax());
+
+    } else if ( cmd == "length" ) {
+
+        ASSERT(nrhs == 2, "expected 2 inputs");
+        ASSERT(nlhs == 1, "expected 1 outputs");
+
+        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+        setScalarValue(arg_out_0, ptr->getSmax()-ptr->getSmin());
 
     } else if ( cmd == "trim" ) {
 
