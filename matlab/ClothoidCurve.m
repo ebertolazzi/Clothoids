@@ -24,12 +24,12 @@ classdef ClothoidCurve < handle
       %
       %  On output:
       %    ref: reference handle to the object instance
-      this.objectHandle = ClothoidMexWrapper('new', varargin{:} );
+      this.objectHandle = ClothoidCurveMexWrapper('new', varargin{:} );
     end
         
     %% Destructor - Destroy the C++ class instance
     function delete(this)
-      ClothoidMexWrapper('delete', this.objectHandle );
+      ClothoidCurveMexWrapper('delete', this.objectHandle );
     end
         
     %% Build
@@ -47,7 +47,7 @@ classdef ClothoidCurve < handle
       %    L :     length of curve from initial to final point
       %    smin:   initial curvilinear coordinate of the curve
       %    smax:   final curvilinear coordinate of the curve
-      ClothoidMexWrapper('build', this.objectHandle, varargin{:} );
+      ClothoidCurveMexWrapper('build', this.objectHandle, varargin{:} );
     end
 
     function build_G1( this, x0, y0, theta0, x1, y1, theta1 )
@@ -61,7 +61,7 @@ classdef ClothoidCurve < handle
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
             
-      ClothoidMexWrapper('build_G1', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      ClothoidCurveMexWrapper('build_G1', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
     end
         
     function res = build_forward( this, x0, y0, theta0, k0, x1, y1 )
@@ -78,7 +78,7 @@ classdef ClothoidCurve < handle
       % On output:
       %    res: true iff the interpolation was successful
       
-      res = ClothoidMexWrapper('build_forward', this.objectHandle, x0, y0, theta0, k0, x1, y1 );
+      res = ClothoidCurveMexWrapper('build_forward', this.objectHandle, x0, y0, theta0, k0, x1, y1 );
     end
         
     %% Eval
@@ -96,44 +96,44 @@ classdef ClothoidCurve < handle
       %    x, y:  coordinates of the curve 
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
-      [varargout{1:nargout}] = ClothoidMexWrapper('eval', this.objectHandle, s );
+      [varargout{1:nargout}] = ClothoidCurveMexWrapper('eval', this.objectHandle, s );
     end
 
     %%
     function [S,X,Y,DST] = closestPoint(this, x, y, ds)
-      [S,X,Y,DST] = ClothoidMexWrapper('closestPoint', this.objectHandle, x, y, ds );
+      [S,X,Y,DST] = ClothoidCurveMexWrapper('closestPoint', this.objectHandle, x, y, ds );
     end
  
     function res = getX0(this)
-      res = ClothoidMexWrapper('getX0', this.objectHandle );
+      res = ClothoidCurveMexWrapper('getX0', this.objectHandle );
     end
  
     function res = getY0(this)
-      res = ClothoidMexWrapper('getY0', this.objectHandle );
+      res = ClothoidCurveMexWrapper('getY0', this.objectHandle );
     end
  
     function res = getTheta0(this)
-      res = ClothoidMexWrapper('getTheta0', this.objectHandle );
+      res = ClothoidCurveMexWrapper('getTheta0', this.objectHandle );
     end
  
     function res = getKappa0(this)
-      res = ClothoidMexWrapper('getKappa0', this.objectHandle );
+      res = ClothoidCurveMexWrapper('getKappa0', this.objectHandle );
     end
  
     function res = getDkappa(this)
-      res = ClothoidMexWrapper('getKappa_D', this.objectHandle );
+      res = ClothoidCurveMexWrapper('getKappa_D', this.objectHandle );
     end
  
     function res = getSmin(this)
-      res = ClothoidMexWrapper('getSmin', this.objectHandle );
+      res = ClothoidCurveMexWrapper('getSmin', this.objectHandle );
     end
  
     function res = getSmax(this)
-      res = ClothoidMexWrapper('getSmax', this.objectHandle );
+      res = ClothoidCurveMexWrapper('getSmax', this.objectHandle );
     end
  
     function res = length(this)
-      res = ClothoidMexWrapper('length', this.objectHandle );
+      res = ClothoidCurveMexWrapper('length', this.objectHandle );
     end
         
     %% Update
@@ -146,7 +146,7 @@ classdef ClothoidCurve < handle
       %    smin:   initial curvilinear coordinate of the curve
       %    smax:   final curvilinear coordinate of the curve
             
-      ClothoidMexWrapper('trim', this.objectHandle, smin, smax );
+      ClothoidCurveMexWrapper('trim', this.objectHandle, smin, smax );
     end
         
     function changeOrigin(this, s0)
@@ -158,7 +158,7 @@ classdef ClothoidCurve < handle
       % On input:
       %    s0: curvilinear coordinate of the origin of the new curve
             
-      ClothoidMexWrapper('changeOrigin', this.objectHandle, s0 );
+      ClothoidCurveMexWrapper('changeOrigin', this.objectHandle, s0 );
     end
         
     function rotate(this, angle, cx, cy)
@@ -170,7 +170,7 @@ classdef ClothoidCurve < handle
       %    angle: the angle of rotation
       %    cx, cy: coordinates of the centre of rotation
             
-      ClothoidMexWrapper('rotate', this.objectHandle, angle, cx, cy );
+      ClothoidCurveMexWrapper('rotate', this.objectHandle, angle, cx, cy );
     end
         
     function translate(this, tx, ty)
@@ -181,7 +181,7 @@ classdef ClothoidCurve < handle
       % On input:
       %    tx, ty: horizontal and vertical translation
             
-      ClothoidMexWrapper('translate', this.objectHandle, tx, ty );
+      ClothoidCurveMexWrapper('translate', this.objectHandle, tx, ty );
     end
 
     function moveOrigin(this, newX0, newY0)
@@ -191,7 +191,7 @@ classdef ClothoidCurve < handle
       %    
       % On input:
       %    newX0, newY0: new coordinates of initial point     
-      ClothoidMexWrapper('moveOrigin', this.objectHandle, newX0, newY0 );
+      ClothoidCurveMexWrapper('moveOrigin', this.objectHandle, newX0, newY0 );
     end
         
     function scale(this, s)
@@ -202,7 +202,7 @@ classdef ClothoidCurve < handle
       % On input:
       %    newX0, newY0: new coordinates of initial point
             
-      ClothoidMexWrapper('scale', this.objectHandle, s );
+      ClothoidCurveMexWrapper('scale', this.objectHandle, s );
     end
         
     function reverse(this)
@@ -210,7 +210,7 @@ classdef ClothoidCurve < handle
       % Usage:
       %    ref.reverse()
             
-      ClothoidMexWrapper('reverse', this.objectHandle );
+      ClothoidCurveMexWrapper('reverse', this.objectHandle );
     end
 
     %% Utils
@@ -234,9 +234,9 @@ classdef ClothoidCurve < handle
       if nargin<2
         step = 0.1;
       end
-      smin  = ClothoidMexWrapper('getSmin', this.objectHandle );
-      smax  = ClothoidMexWrapper('getSmax', this.objectHandle );
-      [X,Y] = ClothoidMexWrapper('eval', this.objectHandle, [smin:step:smax smax] );
+      smin  = ClothoidCurveMexWrapper('getSmin', this.objectHandle );
+      smax  = ClothoidCurveMexWrapper('getSmax', this.objectHandle );
+      [X,Y] = ClothoidCurveMexWrapper('eval', this.objectHandle, [smin:step:smax smax] );
       lineH = plot(X,Y, varargin{:});
     end
   end

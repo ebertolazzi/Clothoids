@@ -17,13 +17,13 @@
 
 #define MEX_ERROR_MESSAGE \
 "%=====================================================================================%\n" \
-"%  ClothoidMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting         %\n" \
+"%  ClothoidCurveMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting    %\n" \
 "%                                                                                     %\n" \
 "%  USAGE:                                                                             %\n" \
 "%  - Constructors:                                                                    %\n" \
-"%      OBJ = ClothoidMexWrapper( 'new' ) ;                                            %\n" \
-"%      OBJ = ClothoidMexWrapper( 'new', x0, y0, theta0, k0, dk, L ) ;                 %\n" \
-"%      OBJ = ClothoidMexWrapper( 'new', x0, y0, theta0, k0, dk, smin, smax ) ;        %\n" \
+"%      OBJ = ClothoidCurveMexWrapper( 'new' ) ;                                       %\n" \
+"%      OBJ = ClothoidCurveMexWrapper( 'new', x0, y0, theta0, k0, dk, L ) ;            %\n" \
+"%      OBJ = ClothoidCurveMexWrapper( 'new', x0, y0, theta0, k0, dk, smin, smax ) ;   %\n" \
 "%                                                                                     %\n" \
 "%      On input:                                                                      %\n" \
 "%        x0, y0     = coordinate of initial point                                     %\n" \
@@ -38,27 +38,27 @@
 "%        OBJ     = pointer to the internal object                                     %\n" \
 "%                                                                                     %\n" \
 "%  - Destructor:                                                                      %\n" \
-"%      ClothoidMexWrapper( 'delete', OBJ ) ;                                          %\n" \
+"%      ClothoidCurveMexWrapper( 'delete', OBJ ) ;                                     %\n" \
 "%                                                                                     %\n" \
 "%  - Build                                                                            %\n" \
-"%      ClothoidMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, L ) ;                %\n" \
-"%      ClothoidMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, smin, smax ) ;       %\n" \
-"%      ClothoidMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;        %\n" \
-"%      res = ClothoidMexWrapper( 'build_forward', OBJ, x0, y0, theta0, k0, x1, y1 ) ; %\n" \
+"%      ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, L ) ;           %\n" \
+"%      ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, smin, smax ) ;  %\n" \
+"%      ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;   %\n" \
+"%      res = ClothoidCurveMexWrapper( 'build_forward', OBJ,x0,y0,theta0,k0,x1,y1 ) ;  %\n" \
 "%                                                                                     %\n" \
 "%  - Eval                                                                             %\n" \
-"%      [x,y] = ClothoidMexWrapper( 'eval', OBJ, ss ) ;                                %\n" \
-"%      [x,y,theta,kappa] = ClothoidMexWrapper( 'eval', OBJ, ss ) ;                    %\n" \
-"%      [x0,y0,theta0,k0,dk,smin,smax] = ClothoidMexWrapper( 'getPars', OBJ ) ;        %\n" \
+"%      [x,y] = ClothoidCurveMexWrapper( 'eval', OBJ, ss ) ;                           %\n" \
+"%      [x,y,theta,kappa] = ClothoidCurveMexWrapper( 'eval', OBJ, ss ) ;               %\n" \
+"%      [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'getPars', OBJ ) ;   %\n" \
 "%                                                                                     %\n" \
 "%  - Transform                                                                        %\n" \
-"%      ClothoidMexWrapper( 'trim', OBJ, smin, smax ) ;                                %\n" \
-"%      ClothoidMexWrapper( 'changeOrigin', OBJ, s0 ) ;                                %\n" \
-"%      ClothoidMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;                           %\n" \
-"%      ClothoidMexWrapper( 'translate', OBJ, tx, ty ) ;                               %\n" \
-"%      ClothoidMexWrapper( 'moveOrigin', OBJ, newX0, newY0 ) ;                        %\n" \
-"%      ClothoidMexWrapper( 'scale', OBJ, scaling ) ;                                  %\n" \
-"%      ClothoidMexWrapper( 'reverse', OBJ ) ;                                         %\n" \
+"%      ClothoidCurveMexWrapper( 'trim', OBJ, smin, smax ) ;                           %\n" \
+"%      ClothoidCurveMexWrapper( 'changeOrigin', OBJ, s0 ) ;                           %\n" \
+"%      ClothoidCurveMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;                      %\n" \
+"%      ClothoidCurveMexWrapper( 'translate', OBJ, tx, ty ) ;                          %\n" \
+"%      ClothoidCurveMexWrapper( 'moveOrigin', OBJ, newX0, newY0 ) ;                   %\n" \
+"%      ClothoidCurveMexWrapper( 'scale', OBJ, scaling ) ;                             %\n" \
+"%      ClothoidCurveMexWrapper( 'reverse', OBJ ) ;                                    %\n" \
 "%                                                                                     %\n" \
 "%=====================================================================================%\n" \
 "%                                                                                     %\n" \
@@ -75,7 +75,7 @@
 #define ASSERT(COND,MSG)                           \
   if ( !(COND) ) {                                 \
     std::ostringstream ost ;                       \
-    ost << "ClothoidMexWrapper: " << MSG << '\n' ; \
+    ost << "ClothoidCurveMexWrapper: " << MSG << '\n' ; \
     ost << MEX_ERROR_MESSAGE ;                     \
     mexErrMsgTxt(ost.str().c_str()) ;              \
   }
@@ -278,7 +278,6 @@ mexFunction( int nlhs, mxArray       *plhs[],
         x  = getScalarValue(arg_in_2,"Error in reading x") ;
         y  = getScalarValue(arg_in_3,"Error in reading y") ;
         ds = getScalarValue(arg_in_4,"Error in reading ds") ;
-
 
         int size;
         double * sVals = getArrayValues(arg_in_2,size,"Error in reading s");
