@@ -250,17 +250,26 @@ namespace Circle {
 
     void
     trim( valueType s_begin, valueType s_end ) {
-      s_min = s_begin ;
-      s_max = s_end ;
+      s_min = s_begin;
+      s_max = s_end;
     }
 
     //! set the origin of the clothoid to the curvilinear abscissa s0
     void
-    changeCurvilinearOrigin( valueType s0 ) ;
+    changeCurvilinearOrigin( valueType s0 );
 
     void
     changeOrigin( valueType newx0, valueType newy0 )
     { x0 = newx0 ; y0 = newy0 ; }
+
+    void
+    rotate( valueType angle, valueType cx, valueType cy );
+
+    void
+    scale( valueType s );
+
+    void
+    reverse();
 
     //! get the bounding box triangle (if angle variation less that pi/3)
     bool

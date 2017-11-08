@@ -149,6 +149,37 @@ namespace Circle {
     this->c0 = cos(theta0) ;
   }
 
+  void
+  CircleArc::rotate( valueType angle, valueType cx, valueType cy ) {
+    valueType dx  = x0 - cx ;
+    valueType dy  = y0 - cy ;
+    valueType C   = cos(angle) ;
+    valueType S   = sin(angle) ;
+    valueType ndx = C*dx - S*dy ;
+    valueType ndy = C*dy + S*dx ;
+    x0      = cx + ndx ;
+    y0      = cy + ndy ;
+    theta0 += angle ;
+  }
+
+  void
+  CircleArc::scale( valueType s ) {
+    k     /= s ;
+    s_min *= s ;
+    s_max *= s ;
+  }
+
+  void
+  CircleArc::reverse() {
+    theta0 = theta0 + m_pi ;
+    if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
+    k     = -k ;
+    valueType tmp = s_max ;
+    s_max = -s_min ;
+    s_min = -tmp ;
+  }
+
+
   //! get the bounding box triangle (if angle variation less that pi/3)
   bool
   CircleArc::bbTriangle( valueType p0[2],

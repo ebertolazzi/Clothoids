@@ -93,6 +93,18 @@ classdef CircleArc < handle
       CircleArcMexWrapper('trim', this.objectHandle, smin, smax );
     end
 
+    function rotate(this, angle, cx, cy)
+      CircleArcMexWrapper('rotate', this.objectHandle, angle, cx, cy );
+    end
+
+    function scale(this, sc)
+      CircleArcMexWrapper('scale', this.objectHandle, sc );
+    end
+
+    function reverse(this)
+      CircleArcMexWrapper('reverse', this.objectHandle );
+    end
+
     function [p0,p1,p2,ok] = bbTriangle(this)
       [p0,p1,p2,ok] = CircleArcMexWrapper('bbTriangle', this.objectHandle);
     end
@@ -118,17 +130,21 @@ classdef CircleArc < handle
 
     %% Eval
     function [X,Y] = eval_D(this, s)
-      [X,Y] = ClothoidMexWrapper('eval_D', this.objectHandle, s );
+      [X,Y] = CircleArcMexWrapper('eval_D', this.objectHandle, s );
     end
 
     %% Eval
     function [X,Y] = eval_DD(this, s)
-      [X,Y] = ClothoidMexWrapper('eval_DD', this.objectHandle, s );
+      [X,Y] = CircleArcMexWrapper('eval_DD', this.objectHandle, s );
     end
 
     %% Eval
     function [X,Y] = eval_DDD(this, s)
-      [X,Y] = ClothoidMexWrapper('eval_DDD', this.objectHandle, s );
+      [X,Y] = CircleArcMexWrapper('eval_DDD', this.objectHandle, s );
+    end
+
+    function [X,Y] = theta(this, s)
+      [X,Y] = CircleArcMexWrapper('theta', this.objectHandle, s );
     end
  
     function res = getX0(this)
