@@ -93,16 +93,30 @@ classdef CircleArc < handle
       CircleArcMexWrapper('trim', this.objectHandle, smin, smax );
     end
 
-    function rotate(this, angle, cx, cy)
-      CircleArcMexWrapper('rotate', this.objectHandle, angle, cx, cy );
-    end
-
     function scale(this, sc)
       CircleArcMexWrapper('scale', this.objectHandle, sc );
     end
+        
+    function rotate(this, angle, cx, cy)
+      % rotate: method to rotate the clothoid curve
+      % Usage:
+      %    ref.rotate(angle, cx, cy)
+      %    
+      % On input:
+      %    angle: the angle of rotation
+      %    cx, cy: coordinates of the centre of rotation
+            
+      CircleArcMexWrapper('rotate', this.objectHandle, angle, cx, cy );
+    end
 
-    function reverse(this)
-      CircleArcMexWrapper('reverse', this.objectHandle );
+    function moveOrigin(this, newX0, newY0)
+      % moveOrigin: method to move the origin of the clothoid curve 
+      % Usage:
+      %    ref.moveOrigin(newX0, newY0)
+      %    
+      % On input:
+      %    newX0, newY0: new coordinates of initial point     
+      CircleArcMexWrapper('moveOrigin', this.objectHandle, newX0, newY0 );
     end
 
     function [p0,p1,p2,ok] = bbTriangle(this)
@@ -173,36 +187,6 @@ classdef CircleArc < handle
  
     function res = length(this)
       res = CircleArcMexWrapper('length', this.objectHandle );
-    end
-        
-    function rotate(this, angle, cx, cy)
-      % rotate: method to rotate the clothoid curve
-      % Usage:
-      %    ref.rotate(angle, cx, cy)
-      %    
-      % On input:
-      %    angle: the angle of rotation
-      %    cx, cy: coordinates of the centre of rotation
-            
-      CircleArcMexWrapper('rotate', this.objectHandle, angle, cx, cy );
-    end
-
-    function moveOrigin(this, newX0, newY0)
-      % moveOrigin: method to move the origin of the clothoid curve 
-      % Usage:
-      %    ref.moveOrigin(newX0, newY0)
-      %    
-      % On input:
-      %    newX0, newY0: new coordinates of initial point     
-      CircleArcMexWrapper('moveOrigin', this.objectHandle, newX0, newY0 );
-    end
-        
-    function reverse(this)
-      % reverse: method to reverse the clothoid curve 
-      % Usage:
-      %    ref.reverse()
-            
-      CircleArcMexWrapper('reverse', this.objectHandle );
     end
 
     %% Utils

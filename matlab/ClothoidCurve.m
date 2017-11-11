@@ -82,7 +82,7 @@ classdef ClothoidCurve < handle
     end
         
     %% Eval
-    function varargout = eval(this, s)
+    function varargout = evaluate(this, s)
       % eval: method to eval the curve at curvilinear abscissa s
       % Usage:
       %    [x,y] = ref.eval( s )
@@ -98,6 +98,27 @@ classdef ClothoidCurve < handle
       %    kappa: curvature of the curve
       [varargout{1:nargout}] = ClothoidCurveMexWrapper('eval', this.objectHandle, s );
     end
+
+    %% Eval
+    function [x,y] = eval(this, varargin )
+      [x,y] = ClothoidCurveMexWrapper('eval', this.objectHandle, varargin{:} );
+    end
+
+    %% Eval
+    function [x_D,y_D] = eval_D(this, varargin )
+      [x_D,y_D] = ClothoidCurveMexWrapper('eval_D', this.objectHandle, varargin{:} );
+    end
+
+    %% Eval
+    function [x_DD,y_DD] = eval_DD(this, varargin )
+      [x_DD,y_DD] = ClothoidCurveMexWrapper('eval_DD', this.objectHandle, varargin{:} );
+    end
+
+    %% Eval
+    function [x_DDD,y_DDD] = eval_DDD(this, varargin )
+      [x_DDD,y_DDD] = ClothoidCurveMexWrapper('eval_DDD', this.objectHandle, varargin{:} );
+    end
+
 
     %%
     function [S,X,Y,DST] = closestPoint(this, x, y, ds)

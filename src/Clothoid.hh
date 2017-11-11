@@ -265,10 +265,7 @@ namespace Clothoid {
       y0     = _y0 ;
       theta0 = _theta0 ;
       build( _x1, _y1, _theta1 ) ;
-      //buildClothoid( _x0, _y0, _theta0, _x1, _y1, _theta1, k, dk, s_max ) ;
-      //s_min  = 0 ;
     }
-
 
     /*! \brief build a clothoid by solving the forward problem
      *

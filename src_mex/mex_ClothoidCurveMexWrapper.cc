@@ -9,125 +9,89 @@
 \****************************************************************************/
 
 #include "Clothoid.hh"
-#include "mex_class_handle.hh"
-#include "mex.h"
-
-#include <sstream>
-#include <stdexcept>
+#include "mex_utils.hh"
 
 #define MEX_ERROR_MESSAGE \
-"%=====================================================================================%\n" \
-"%  ClothoidCurveMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting    %\n" \
-"%                                                                                     %\n" \
-"%  USAGE:                                                                             %\n" \
-"%  - Constructors:                                                                    %\n" \
-"%      OBJ = ClothoidCurveMexWrapper( 'new' ) ;                                       %\n" \
-"%      OBJ = ClothoidCurveMexWrapper( 'new', x0, y0, theta0, k0, dk, L ) ;            %\n" \
-"%      OBJ = ClothoidCurveMexWrapper( 'new', x0, y0, theta0, k0, dk, smin, smax ) ;   %\n" \
-"%                                                                                     %\n" \
-"%      On input:                                                                      %\n" \
-"%        x0, y0     = coordinate of initial point                                     %\n" \
-"%        theta0     = orientation (angle) of the clothoid at initial point            %\n" \
-"%        k0         = curvature of the clothoid at initial point                      %\n" \
-"%        dk         = derivative of curvature respect to arclength                    %\n" \
-"%        L          = length of the clothoid curve from initial to final point        %\n" \
-"%        smin       = initial curvilinear coordinate of the curve                     %\n" \
-"%        smax       = final curvilinear coordinate of the curve                       %\n" \
-"%                                                                                     %\n" \
-"%      On output:                                                                     %\n" \
-"%        OBJ     = pointer to the internal object                                     %\n" \
-"%                                                                                     %\n" \
-"%  - Destructor:                                                                      %\n" \
-"%      ClothoidCurveMexWrapper( 'delete', OBJ ) ;                                     %\n" \
-"%                                                                                     %\n" \
-"%  - Build                                                                            %\n" \
-"%      ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, L ) ;           %\n" \
-"%      ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, smin, smax ) ;  %\n" \
-"%      ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;   %\n" \
-"%      res = ClothoidCurveMexWrapper( 'build_forward', OBJ,x0,y0,theta0,k0,x1,y1 ) ;  %\n" \
-"%                                                                                     %\n" \
-"%  - Eval                                                                             %\n" \
-"%      [x,y] = ClothoidCurveMexWrapper( 'eval', OBJ, ss ) ;                           %\n" \
-"%      [x,y,theta,kappa] = ClothoidCurveMexWrapper( 'eval', OBJ, ss ) ;               %\n" \
-"%      [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'getPars', OBJ ) ;   %\n" \
-"%                                                                                     %\n" \
-"%  - Transform                                                                        %\n" \
-"%      ClothoidCurveMexWrapper( 'trim', OBJ, smin, smax ) ;                           %\n" \
-"%      ClothoidCurveMexWrapper( 'changeOrigin', OBJ, s0 ) ;                           %\n" \
-"%      ClothoidCurveMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;                      %\n" \
-"%      ClothoidCurveMexWrapper( 'translate', OBJ, tx, ty ) ;                          %\n" \
-"%      ClothoidCurveMexWrapper( 'moveOrigin', OBJ, newX0, newY0 ) ;                   %\n" \
-"%      ClothoidCurveMexWrapper( 'scale', OBJ, scaling ) ;                             %\n" \
-"%      ClothoidCurveMexWrapper( 'reverse', OBJ ) ;                                    %\n" \
-"%                                                                                     %\n" \
-"%=====================================================================================%\n" \
-"%                                                                                     %\n" \
-"%  Autors: Enrico Bertolazzi and Marco Frego and Paolo Bevilacqua                     %\n" \
-"%          Department of Industrial Engineering                                       %\n" \
-"%          Department of Information Engineering and Computer Science                 %\n" \
-"%          University of Trento                                                       %\n" \
-"%          enrico.bertolazzi@unitn.it                                                 %\n" \
-"%          m.fregox@gmail.com                                                         %\n" \
-"%          paolo.bevilacqua@unitn.it                                                  %\n" \
-"%                                                                                     %\n" \
-"%=====================================================================================%\n"
-
-#define ASSERT(COND,MSG)                           \
-  if ( !(COND) ) {                                 \
-    std::ostringstream ost ;                       \
-    ost << "ClothoidCurveMexWrapper: " << MSG << '\n' ; \
-    ost << MEX_ERROR_MESSAGE ;                     \
-    mexErrMsgTxt(ost.str().c_str()) ;              \
-  }
-
-#define arg_in_0 prhs[0]
-#define arg_in_1 prhs[1]
-#define arg_in_2 prhs[2]
-#define arg_in_3 prhs[3]
-#define arg_in_4 prhs[4]
-#define arg_in_5 prhs[5]
-#define arg_in_6 prhs[6]
-#define arg_in_7 prhs[7]
-#define arg_in_8 prhs[8]
-
-#define arg_out_0 plhs[0]
-#define arg_out_1 plhs[1]
-#define arg_out_2 plhs[2]
-#define arg_out_3 plhs[3]
-#define arg_out_4 plhs[4]
-#define arg_out_5 plhs[5]
-#define arg_out_6 plhs[6]
-#define arg_out_7 plhs[7]
+"=====================================================================================\n" \
+"ClothoidCurveMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \
+"\n" \
+"USAGE:\n" \
+"  - Constructors:\n" \
+"    OBJ = ClothoidCurveMexWrapper( 'new' ) ;\n" \
+"    OBJ = ClothoidCurveMexWrapper( 'new', x0, y0, theta0, k0, dk, L ) ;\n" \
+"    OBJ = ClothoidCurveMexWrapper( 'new', x0, y0, theta0, k0, dk, smin, smax ) ;\n" \
+"\n" \
+"    On input:\n" \
+"      x0, y0 = coordinate of initial point\n" \
+"      theta0 = orientation (angle) of the clothoid at initial point" \
+"      k0     = curvature of the clothoid at initial point\n" \
+"      dk     = derivative of curvature respect to arclength\n" \
+"      L      = length of the clothoid curve from initial to final point\n" \
+"      smin   = initial curvilinear coordinate of the curve\n" \
+"      smax   = final curvilinear coordinate of the curve\n" \
+"\n" \
+"     On output:\n" \
+"       OBJ   = pointer to the internal object\n" \
+"n" \
+"  - Destructor:\n" \
+"    ClothoidCurveMexWrapper( 'delete', OBJ ) ;\n" \
+"\n" \
+"  - Build:\n" \
+"    ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, L ) ;\n" \
+"    ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, smin, smax ) ;\n" \
+"    ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'build_forward', OBJ,x0,y0,theta0,k0,x1,y1 ) ;\n" \
+"\n" \
+"  - Eval:\n" \
+"    [x,y,theta,kappa] = ClothoidCurveMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
+"    [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'getPars', OBJ ) ;\n" \
+"\n" \
+"    [x,y]         = ClothoidCurveMexWrapper( 'eval', OBJ, ss, offs ) ;\n" \
+"    [x_D,y_D]     = ClothoidCurveMexWrapper( 'eval_D', OBJ, ss, offs ) ;\n" \
+"    [x_DD,y_DD]   = ClothoidCurveMexWrapper( 'eval_DD', OBJ, ss, offs ) ;\n" \
+"    [x_DDD,y_DDD] = ClothoidCurveMexWrapper( 'eval_DDD', OBJ, ss, offs ) ;\n" \
+"\n" \
+"  - Transform:\n" \
+"    ClothoidCurveMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
+"    ClothoidCurveMexWrapper( 'changeOrigin', OBJ, s0 ) ;\n" \
+"    ClothoidCurveMexWrapper( 'moveOrigin', OBJ, newX0, newY0 ) ;\n" \
+"    ClothoidCurveMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
+"    ClothoidCurveMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
+"    ClothoidCurveMexWrapper( 'scale', OBJ, scaling ) ;\n" \
+"    ClothoidCurveMexWrapper( 'reverse', OBJ ) ;\n" \
+"\n" \
+"=====================================================================================\n" \
+"\n" \
+"Autors: Enrico Bertolazzi^(1), Marco Frego^(2) and Paolo Bevilacqua^(2)\n" \
+"  (1) Department of Industrial Engineering\n" \
+"  (2)Department of Information Engineering and Computer Science\n" \
+"  University of Trento\n" \
+"  enrico.bertolazzi@unitn.it\n" \
+"  m.fregox@gmail.com\n" \
+"  paolo.bevilacqua@unitn.it\n" \
+"\n" \
+"=====================================================================================\n"
 
 static
-double
-getScalarValue( mxArray const * arg, char const * msg ) {
-  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
-  ASSERT( number_of_dimensions == 2, msg ) ;
-  mwSize const * dims = mxGetDimensions(arg) ;
-  ASSERT( dims[0] == 1 && dims[1] == 1,
-          msg << ", found " << dims[0] << " x " << dims[1] << " matrix" ) ;
-  return mxGetScalar(arg) ;
+Clothoid::ClothoidCurve *
+DATA_NEW( mxArray * & mx_id ) {
+  Clothoid::ClothoidCurve * ptr = new Clothoid::ClothoidCurve();
+  mx_id = convertPtr2Mat<Clothoid::ClothoidCurve>(ptr);
+  return ptr ;
 }
 
 static
-double *
-getArrayValues( mxArray const * arg, int & size, char const * msg) {
-    mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
-    ASSERT( number_of_dimensions == 2, msg ) ;
-    mwSize const * dims = mxGetDimensions(arg) ;
-    ASSERT( dims[0] == 1 || dims[1] == 1,
-            msg << ", found " << dims[0] << " x " << dims[1] << " matrix" ) ;
-    size = mxGetNumberOfElements(arg);
-    return mxGetPr(arg);
+inline
+Clothoid::ClothoidCurve *
+DATA_GET( mxArray const * & mx_id ) {
+  return convertMat2Ptr<Clothoid::ClothoidCurve>(mx_id);
 }
 
 static
 void
-setScalarValue( mxArray * & arg, double const & value ) {
-    arg = mxCreateDoubleMatrix(1, 1, mxREAL);
-    double * pA = mxGetPr(arg);
-    *pA = value;
+DATA_DELETE( mxArray const * & mx_id ) {
+  Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(mx_id);
+  delete ptr ;
 }
 
 extern "C"
@@ -144,313 +108,283 @@ mexFunction( int nlhs, mxArray       *plhs[],
 
   try {
 
-    ASSERT( mxIsChar(arg_in_0), "First argument must be a string" ) ;
+    MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" ) ;
     std::string cmd = mxArrayToString(arg_in_0) ;
 
+    bool do_new = cmd == "new" ;
+    Clothoid::ClothoidCurve * ptr = do_new ? DATA_NEW(arg_out_0) : DATA_GET(arg_in_1);
 
-    if ( cmd == "new" ) {
+    if ( do_new || cmd == "build"  ) {
 
-      ASSERT( nrhs == 1 || nrhs == 7 || nrhs == 8, "expected 1, 7 or 8 inputs") ;
+      Clothoid::valueType x0(0), y0(0), theta0(0), k0(0), dk(0), smin(0), smax(0);
 
-      Clothoid::valueType x0, y0, theta0, k0, dk, smin, smax;
+      if ( nrhs == 2 ) {
 
-      if (nrhs>=7) {
+        MEX_ASSERT( mxIsStruct(arg_in_1), "Second argument must be a struct" ) ;
+
+        mxArray * mx_x0     = mxGetField( arg_in_1, 0, "x0" ) ;
+        mxArray * mx_y0     = mxGetField( arg_in_1, 0, "y0" ) ;
+        mxArray * mx_theta0 = mxGetField( arg_in_1, 0, "theta0" ) ;
+        mxArray * mx_k0     = mxGetField( arg_in_1, 0, "k0" ) ;
+        mxArray * mx_dk     = mxGetField( arg_in_1, 0, "dk" ) ;
+
+        MEX_ASSERT( mx_x0     != nullptr, "Field `x0` is missing" );
+        MEX_ASSERT( mx_y0     != nullptr, "Field `y0` is missing" );
+        MEX_ASSERT( mx_theta0 != nullptr, "Field `theta0` is missing" );
+        MEX_ASSERT( mx_k0     != nullptr, "Field `k0` is missing" );
+        MEX_ASSERT( mx_dk     != nullptr, "Field `dk` is missing" );
+
+        x0     = getScalarValue( mx_x0,     "Field `x0` must be a real double scalar" ) ;
+        y0     = getScalarValue( mx_y0,     "Field `y0` must be a real double scalar" ) ;
+        theta0 = getScalarValue( mx_theta0, "Field `theta0` must be a real double scalar" ) ;
+        k0     = getScalarValue( mx_k0,     "Field `k0` must be a real double scalar" ) ;
+        dk     = getScalarValue( mx_dk,     "Field `dk` must be a real double scalar" ) ;
+      } else if ( 7 <= nrhs && nrhs <= 8 ) {
         x0     = getScalarValue(arg_in_1,"Error in reading x0") ;
         y0     = getScalarValue(arg_in_2,"Error in reading y0") ;
         theta0 = getScalarValue(arg_in_3,"Error in reading theta0") ;
         k0     = getScalarValue(arg_in_4,"Error in reading k0") ;
         dk     = getScalarValue(arg_in_5,"Error in reading dk") ;
-        if (nrhs==8) {
+        if ( nrhs == 8 ) {
           smin = getScalarValue(arg_in_6,"Error in reading smin") ;
           smax = getScalarValue(arg_in_7,"Error in reading smax") ;
-        }
-        else {  // the curve starts at curvilinear coordinate 0 and ends at L
+        } else {  // the curve starts at curvilinear coordinate 0 and ends at L
           smin = 0;
           smax = getScalarValue(arg_in_6,"Error in reading L") ;
         }
+      } else {
+        MEX_ASSERT( false, "expected 2, 7 or 8 inputs") ;
       }
 
-      Clothoid::ClothoidCurve * ptr = new Clothoid::ClothoidCurve(x0, y0, theta0, k0, dk, smin, smax);
-      plhs[0] = convertPtr2Mat<Clothoid::ClothoidCurve>(ptr);
-
-    } else if ( cmd == "build" ) {
-
-        ASSERT( nrhs == 8 || nrhs == 9, "expected 8 or 9 inputs") ;
-
-        Clothoid::valueType x0, y0, theta0, k0, dk, smin, smax;
-
-        x0     = getScalarValue(arg_in_2,"Error in reading x0") ;
-        y0     = getScalarValue(arg_in_3,"Error in reading y0") ;
-        theta0 = getScalarValue(arg_in_4,"Error in reading theta0") ;
-        k0     = getScalarValue(arg_in_5,"Error in reading k0") ;
-        dk     = getScalarValue(arg_in_6,"Error in reading dk") ;
-        if (nrhs==9) {
-            smin = getScalarValue(arg_in_7,"Error in reading smin") ;
-            smax = getScalarValue(arg_in_8,"Error in reading smax") ;
-        }
-        else {  // the curve starts at curvilinear coordinate 0 and ends at L
-            smin = 0;
-            smax = getScalarValue(arg_in_7,"Error in reading L") ;
-        }
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->build(x0, y0, theta0, k0, dk, smin, smax);
+      ptr->build( x0, y0, theta0, k0, dk, smin, smax );
 
     } else if ( cmd == "build_G1" ) {
 
-        ASSERT( nrhs == 8 , "expected 8 inputs") ;
+      MEX_ASSERT( nrhs == 8 , "expected 8 inputs") ;
 
-        Clothoid::valueType x0, y0, theta0, x1, y1, theta1;
+      Clothoid::valueType x0(0), y0(0), theta0(0), x1(0), y1(0), theta1(0);
 
-        x0     = getScalarValue(arg_in_2,"Error in reading x0") ;
-        y0     = getScalarValue(arg_in_3,"Error in reading y0") ;
-        theta0 = getScalarValue(arg_in_4,"Error in reading theta0") ;
-        x1     = getScalarValue(arg_in_5,"Error in reading x1") ;
-        y1     = getScalarValue(arg_in_6,"Error in reading y1") ;
-        theta1 = getScalarValue(arg_in_7,"Error in reading theta1") ;
+      x0     = getScalarValue( arg_in_2, "Error in reading x0" ) ;
+      y0     = getScalarValue( arg_in_3, "Error in reading y0" ) ;
+      theta0 = getScalarValue( arg_in_4, "Error in reading theta0" ) ;
+      x1     = getScalarValue( arg_in_5, "Error in reading x1" ) ;
+      y1     = getScalarValue( arg_in_6, "Error in reading y1" ) ;
+      theta1 = getScalarValue( arg_in_7, "Error in reading theta1" ) ;
 
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->build_G1(x0, y0, theta0, x1, y1, theta1);
+      ptr->build_G1(x0, y0, theta0, x1, y1, theta1);
 
     } else if ( cmd == "build_forward" ) {
 
-        ASSERT( nrhs == 8 , "expected 8 inputs") ;
+      MEX_ASSERT( nrhs == 8 , "expected 8 inputs") ;
 
-        Clothoid::valueType x0, y0, theta0, kappa0, x1, y1;
+      Clothoid::valueType x0(0), y0(0), theta0(0), kappa0(0), x1(0), y1(0);
 
-        x0     = getScalarValue(arg_in_2,"Error in reading x0") ;
-        y0     = getScalarValue(arg_in_3,"Error in reading y0") ;
-        theta0 = getScalarValue(arg_in_4,"Error in reading theta0") ;
-        kappa0 = getScalarValue(arg_in_5,"Error in reading kappa0") ;
-        x1     = getScalarValue(arg_in_6,"Error in reading x1") ;
-        y1     = getScalarValue(arg_in_6,"Error in reading y1") ;
+      x0     = getScalarValue( arg_in_2, "Error in reading x0" ) ;
+      y0     = getScalarValue( arg_in_3, "Error in reading y0" ) ;
+      theta0 = getScalarValue( arg_in_4, "Error in reading theta0" ) ;
+      kappa0 = getScalarValue( arg_in_5, "Error in reading kappa0" ) ;
+      x1     = getScalarValue( arg_in_6, "Error in reading x1" ) ;
+      y1     = getScalarValue( arg_in_6, "Error in reading y1" ) ;
 
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        bool res = ptr->build_forward(x0, y0, theta0, kappa0, x1, y1);
+      bool res = ptr->build_forward(x0, y0, theta0, kappa0, x1, y1);
 
-        // returns the status of the interpolation
-        mwSize dims[2] = {1,1} ;
-        arg_out_0 = mxCreateLogicalArray(2, dims);
-        ((bool*)mxGetPr(arg_out_0))[0] = res;
-        mexPrintf("Result: %d\n", res);
+      // returns the status of the interpolation
+      mwSize dims[2] = {1,1} ;
+      arg_out_0 = mxCreateLogicalArray(2, dims);
+      ((bool*)mxGetPr(arg_out_0))[0] = res;
+      //mexPrintf("Result: %d\n", res);
 
-    } else if ( cmd == "eval" ) {
+    } else if ( cmd == "evaluate" ) {
 
-        ASSERT( nrhs == 3 , "expected 3 inputs") ;
+      MEX_ASSERT( nrhs == 3 , "expected 3 inputs") ;
 
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+      mwSize size;
+      double const * sVals = getVectorPointer( arg_in_2, size, "Error in reading s" );
 
-        int size;
-        double * sVals = getArrayValues(arg_in_2,size,"Error in reading s");
+      if ( nlhs == 4 ) {
+        double * xVals     = createMatrixValue( arg_out_0, size, 1 );
+        double * yVals     = createMatrixValue( arg_out_1, size, 1 );
+        double * thetaVals = createMatrixValue( arg_out_2, size, 1 );
+        double * kappaVals = createMatrixValue( arg_out_3, size, 1 );
+        for ( mwSize i=0; i < size ; ++i )
+          ptr->eval( sVals[i], thetaVals[i], kappaVals[i], xVals[i], yVals[i] );
+      } else if ( nlhs == 2 ) {
+        double * xVals = createMatrixValue( arg_out_0, size, 1 );
+        double * yVals = createMatrixValue( arg_out_1, size, 1 );
+        for ( mwSize i=0; i < size ; ++i )
+          ptr->eval( sVals[i], xVals[i], yVals[i] );
+      } else {
+        MEX_ASSERT( false, "expected 2 or 4 outputs") ;
+      }
 
-        bool fullData = nlhs==4; // output also theta(s) and kappa(s)
+    } else if ( cmd == "eval"    || cmd == "eval_D" ||
+                cmd == "eval_DD" || cmd == "eval_DDD" ) {
 
-        double *xVals, *yVals, *thetaVals, *kappaVals;
+      MEX_ASSERT( nrhs == 3 || nrhs == 4, "expected 3 or 4 inputs") ;
+      MEX_ASSERT( nlhs == 2, "expected 2 outputs") ;
 
-        arg_out_0 = mxCreateDoubleMatrix(size, 1, mxREAL);
-        xVals = mxGetPr(arg_out_0);
-        arg_out_1 = mxCreateDoubleMatrix(size, 1, mxREAL);
-        yVals = mxGetPr(arg_out_1);
-        if (fullData) {
-            arg_out_2 = mxCreateDoubleMatrix(size, 1, mxREAL);
-            thetaVals = mxGetPr(arg_out_2);
-            arg_out_3 = mxCreateDoubleMatrix(size, 1, mxREAL);
-            kappaVals = mxGetPr(arg_out_3);
-        }
+      mwSize size;
+      double const * sVals = getVectorPointer( arg_in_2, size, "Error in reading s" );
 
-        for (int i=0; i<size; ++i) {
-            if (fullData)
-                ptr->eval(sVals[i], thetaVals[i], kappaVals[i], xVals[i], yVals[i]);
-            else
-                ptr->eval(sVals[i], xVals[i], yVals[i]);
-        }
+      double offs = 0 ;
+      if ( nrhs == 4 ) offs = getScalarValue( arg_in_3, "Error in reading offs" ) ;
+
+      double * xVals = createMatrixValue( arg_out_0, size, 1 );
+      double * yVals = createMatrixValue( arg_out_1, size, 1 );
+      if ( cmd == "eval" ) {
+        for ( mwSize i=0; i < size ; ++i )
+          ptr->eval( sVals[i], offs, xVals[i], yVals[i] );
+      } else if ( cmd == "eval_D" ) {
+        for ( mwSize i=0; i < size ; ++i )
+          ptr->eval_D( sVals[i], offs, xVals[i], yVals[i] );
+      } else if ( cmd == "eval_DD" ) {
+        for ( mwSize i=0; i < size ; ++i )
+          ptr->eval_DD( sVals[i], offs, xVals[i], yVals[i] );
+      } else {
+        for ( mwSize i=0; i < size ; ++i )
+          ptr->eval_DDD( sVals[i], offs, xVals[i], yVals[i] );
+      }
 
     } else if ( cmd == "closestPoint" ) {
 
-        ASSERT( nrhs == 5 , "expected 5 inputs") ;
-        ASSERT( nlhs == 4 , "expected 4 outputs") ;
+      MEX_ASSERT( nrhs == 5 , "expected 5 inputs") ;
+      MEX_ASSERT( nlhs == 4 , "expected 4 outputs") ;
 
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
+      Clothoid::valueType x, y, ds, X, Y, S ;
 
+      x  = getScalarValue(arg_in_2,"Error in reading x") ;
+      y  = getScalarValue(arg_in_3,"Error in reading y") ;
+      ds = getScalarValue(arg_in_4,"Error in reading ds") ;
 
-        Clothoid::valueType x, y, ds, X, Y, S, DST;
+      Clothoid::valueType DST = ptr->closestPoint( x, y, ds, X, Y, S );
 
-        x  = getScalarValue(arg_in_2,"Error in reading x") ;
-        y  = getScalarValue(arg_in_3,"Error in reading y") ;
-        ds = getScalarValue(arg_in_4,"Error in reading ds") ;
+      if ( nlhs > 0 ) setScalarValue(arg_out_0,S) ;
+      if ( nlhs > 1 ) setScalarValue(arg_out_1,X) ;
+      if ( nlhs > 2 ) setScalarValue(arg_out_2,Y) ;
+      if ( nlhs > 3 ) setScalarValue(arg_out_3,DST) ;
 
-        int size;
-        double * sVals = getArrayValues(arg_in_2,size,"Error in reading s");
+    } else if ( cmd == "getPars" ) {
 
-        bool fullData = nlhs==4; // output also theta(s) and kappa(s)
-
-        double *xVals, *yVals, *thetaVals, *kappaVals;
-
-        arg_out_0 = mxCreateDoubleMatrix(1, 1, mxREAL);
-        arg_out_1 = mxCreateDoubleMatrix(1, 1, mxREAL);
-        arg_out_2 = mxCreateDoubleMatrix(1, 1, mxREAL);
-        arg_out_3 = mxCreateDoubleMatrix(1, 1, mxREAL);
-
-        DST = ptr->closestPoint( x, y, ds, X, Y, S );
-
-        *mxGetPr(arg_out_0) = S ;
-        *mxGetPr(arg_out_1) = X ;
-        *mxGetPr(arg_out_2) = Y ;
-        *mxGetPr(arg_out_3) = DST ;
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      if ( nlhs > 0 ) setScalarValue(arg_out_0,ptr->getX0()) ;
+      if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->getY0()) ;
+      if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->getTheta0()) ;
+      if ( nlhs > 3 ) setScalarValue(arg_out_3,ptr->getKappa()) ;
+      if ( nlhs > 4 ) setScalarValue(arg_out_3,ptr->getKappa_D()) ;
+      if ( nlhs > 5 ) setScalarValue(arg_out_3,ptr->getSmin()) ;
+      if ( nlhs > 6 ) setScalarValue(arg_out_3,ptr->getSmax()) ;
 
     } else if ( cmd == "getX0" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getX0());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getX0());
 
     } else if ( cmd == "getY0" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getY0());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getY0());
 
     } else if ( cmd == "getTheta0" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getTheta0());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getTheta0());
 
     } else if ( cmd == "getKappa0" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getKappa());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getKappa());
 
     } else if ( cmd == "getKappa_D" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getKappa_D());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getKappa_D());
 
     } else if ( cmd == "getSmin" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getSmin());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getSmin());
 
     } else if ( cmd == "getSmax" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getSmax());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getSmax());
 
     } else if ( cmd == "length" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 1, "expected 1 outputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        setScalarValue(arg_out_0, ptr->getSmax()-ptr->getSmin());
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 1, "expected 1 outputs");
+      setScalarValue(arg_out_0, ptr->getSmax()-ptr->getSmin());
 
     } else if ( cmd == "trim" ) {
 
-        ASSERT(nrhs == 4, "expected 4 inputs");
+      MEX_ASSERT(nrhs == 4, "expected 4 inputs");
 
-        Clothoid::valueType smin, smax;
+      Clothoid::valueType smin, smax;
 
-        smin = getScalarValue(arg_in_2,"Error in reading smin") ;
-        smax = getScalarValue(arg_in_3,"Error in reading smax") ;
+      smin = getScalarValue(arg_in_2,"Error in reading smin") ;
+      smax = getScalarValue(arg_in_3,"Error in reading smax") ;
 
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->trim(smin, smax);
+      ptr->trim(smin, smax);
 
     } else if ( cmd == "changeOrigin" ) {
 
-        ASSERT(nrhs == 3, "expected 3 inputs");
+      MEX_ASSERT(nrhs == 3, "expected 3 inputs");
 
-        Clothoid::valueType s0;
-
-        s0 = getScalarValue(arg_in_2,"Error in reading s0") ;
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->change_origin(s0);
+      Clothoid::valueType s0 = getScalarValue(arg_in_2,"Error in reading s0") ;
+      ptr->change_origin(s0);
 
     } else if ( cmd == "rotate" ) {
 
-        ASSERT(nrhs == 5, "expected 5 inputs");
+      MEX_ASSERT(nrhs == 5, "expected 5 inputs");
 
-        Clothoid::valueType angle, cx, cy;
-
-        angle = getScalarValue(arg_in_2,"Error in reading angle") ;
-        cx    = getScalarValue(arg_in_3,"Error in reading cx") ;
-        cy    = getScalarValue(arg_in_4,"Error in reading cy") ;
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->rotate(angle, cx, cy);
+      Clothoid::valueType angle = getScalarValue( arg_in_2, "Error in reading angle" ) ;
+      Clothoid::valueType cx    = getScalarValue( arg_in_3, "Error in reading cx" ) ;
+      Clothoid::valueType cy    = getScalarValue( arg_in_4, "Error in reading cy" ) ;
+      ptr->rotate(angle, cx, cy);
 
     } else if ( cmd == "translate" ) {
 
-        ASSERT(nrhs == 4, "expected 4 inputs");
-
-        Clothoid::valueType tx, ty;
-
-        tx = getScalarValue(arg_in_2,"Error in reading tx") ;
-        ty = getScalarValue(arg_in_3,"Error in reading ty") ;
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->translate(tx, ty);
+      MEX_ASSERT(nrhs == 4, "expected 4 inputs");
+      Clothoid::valueType tx = getScalarValue( arg_in_2, "Error in reading tx" ) ;
+      Clothoid::valueType ty = getScalarValue( arg_in_3, "Error in reading ty" ) ;
+      ptr->translate(tx, ty);
 
     } else if ( cmd == "moveOrigin" ) {
 
-        ASSERT(nrhs == 4, "expected 4 inputs");
-
-        Clothoid::valueType newX0, newY0;
-
-        newX0 = getScalarValue(arg_in_2,"Error in reading newX0") ;
-        newY0 = getScalarValue(arg_in_3,"Error in reading newY0") ;
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->moveOrigin(newX0, newY0);
+      MEX_ASSERT(nrhs == 4, "expected 4 inputs");
+      Clothoid::valueType newX0 = getScalarValue( arg_in_2, "Error in reading newX0" ) ;
+      Clothoid::valueType newY0 = getScalarValue( arg_in_3, "Error in reading newY0" ) ;
+      ptr->moveOrigin(newX0, newY0);
 
     } else if ( cmd == "scale" ) {
 
-        ASSERT(nrhs == 3, "expected 3 inputs");
-
-        Clothoid::valueType s;
-
-        s = getScalarValue(arg_in_2,"Error in reading s") ;
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->scale(s);
+      MEX_ASSERT(nrhs == 3, "expected 3 inputs");
+      Clothoid::valueType s = getScalarValue( arg_in_2, "Error in reading s" ) ;
+      ptr->scale(s);
 
     } else if ( cmd == "reverse" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-
-        Clothoid::ClothoidCurve * ptr = convertMat2Ptr<Clothoid::ClothoidCurve>(arg_in_1);
-        ptr->reverse();
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      ptr->reverse();
 
     } else if ( cmd == "delete" ) {
 
-        ASSERT(nrhs == 2, "expected 2 inputs");
-        ASSERT(nlhs == 0, "expected no output");
+      MEX_ASSERT(nrhs == 2, "expected 2 inputs");
+      MEX_ASSERT(nlhs == 0, "expected no output");
 
-        // Destroy the C++ object
-        destroyObject<Clothoid::ClothoidCurve>(prhs[1]);
+      // Destroy the C++ object
+      DATA_DELETE(arg_in_1);
 
-        // Warn if other commands were ignored
+      // Warn if other commands were ignored
     } else {
-
+      MEX_ASSERT(false, "Unknown command: " << cmd );
     }
 
   } catch ( std::exception const & e ) {
