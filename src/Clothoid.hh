@@ -416,7 +416,7 @@ namespace Clothoid {
 
     // collision detection
     bool
-    approsimate_collision( valueType             offs,
+    approximate_collision( valueType             offs,
                            ClothoidCurve const & c,
                            valueType             c_offs,
                            valueType             max_angle,         //!< maximum angle variation
@@ -790,11 +790,73 @@ namespace Clothoid {
    |  \____|_|\___/ \__|_| |_|\___/|_|\__,_|_____|_|___/\__|
    |
   \*/
-  //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 con nected)
+  //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 connected)
   class ClothoidList {
+
+    std::vector<valueType>     s0 ;
     std::vector<ClothoidCurve> clotoidList ;
+
   public:
 
+    ClothoidList() ;
+    ~ClothoidList() ;
+
+    ClothoidList( ClothoidList const & s ) { copy(s) ; }
+    ClothoidList const & operator = ( ClothoidList const & s )
+    { copy(s) ; return *this ; }
+
+    void add( ClothoidCurve const & c ) ;
+    void copy( ClothoidList const & L ) ;
+
+    ClothoidCurve const & get( indexType idx ) const;
+    ClothoidCurve const & getAtS( valueType s ) const;
+
+    indexType findAtS( valueType s ) const;
+
+    valueType theta( valueType s ) const;
+    valueType theta_D( valueType s ) const;
+    valueType theta_DD( valueType ) const;
+    valueType theta_DDD( valueType ) const { return 0 ; }
+
+    valueType totalLength() const {
+      if ( s0.empty() ) return 0;
+      return s0.back() - s0.front() ;
+    }
+
+    valueType X( valueType s ) const ;
+    valueType Y( valueType s ) const ;
+
+    void
+    eval( valueType   s,
+          valueType & theta,
+          valueType & kappa,
+          valueType & x,
+          valueType & y ) const ;
+
+    void eval( valueType s, valueType & x, valueType & y ) const ;
+    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
+    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
+    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+
+    // offset curve
+    void eval( valueType s, valueType offs, valueType & x, valueType & y ) const ;
+    void eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const ;
+    void eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const ;
+    void eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const ;
+
+    valueType
+    closestPoint( valueType   x,
+                  valueType   y,
+                  valueType   ds,
+                  valueType & X,
+                  valueType & Y,
+                  valueType & S ) const ;
+
+    void rotate( valueType angle, valueType cx, valueType cy ) ;
+    void translate( valueType tx, valueType ty ) ;
+    void moveOrigin( valueType newx0, valueType newy0 ) ;
+    void scale( valueType s ) ;
+    void reverse() ;
 
   };
 }

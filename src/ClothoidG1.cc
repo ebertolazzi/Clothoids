@@ -679,7 +679,7 @@ namespace Clothoid {
   
   // collision detection
   bool
-  ClothoidCurve::approsimate_collision( valueType             offs,
+  ClothoidCurve::approximate_collision( valueType             offs,
                                         ClothoidCurve const & clot,
                                         valueType             clot_offs,
                                         valueType             max_angle,
