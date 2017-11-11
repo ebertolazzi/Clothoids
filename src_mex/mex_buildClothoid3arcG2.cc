@@ -103,6 +103,11 @@ void
 mexFunction( int nlhs, mxArray       *plhs[],
              int nrhs, mxArray const *prhs[] ) {
 
+  if ( nrhs == 0 && nlhs == 0 ) {
+    mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
+    return ;
+  }
+
   static Clothoid::G2solve3arc g2solve3arc ;
 
   Clothoid::valueType x0, y0, th0, k0, x1, y1, th1, k1, Dmax, dmax ;

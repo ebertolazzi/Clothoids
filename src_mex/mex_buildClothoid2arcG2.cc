@@ -83,6 +83,11 @@ void
 mexFunction( int nlhs, mxArray       *plhs[],
              int nrhs, mxArray const *prhs[] ) {
 
+  if ( nrhs == 0 && nlhs == 0 ) {
+    mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
+    return ;
+  }
+
   // Check for proper number of arguments, etc
   if ( nrhs != 8 ) {
 	  mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
