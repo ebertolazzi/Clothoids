@@ -422,10 +422,6 @@ namespace Clothoid {
                            valueType             max_angle,         //!< maximum angle variation
                            valueType             max_size ) const ; //!< curve offset
 
-    friend
-    std::ostream &
-    operator << ( std::ostream & stream, ClothoidCurve const & c ) ;
-
     void
     rotate( valueType angle, valueType cx, valueType cy ) ;
 
@@ -438,10 +434,14 @@ namespace Clothoid {
     { x0 = newx0 ; y0 = newy0 ; }
 
     void
-    scale( valueType s ) ;
+    scale( valueType sfactor ) ;
 
     void
     reverse() ;
+
+    friend
+    std::ostream &
+    operator << ( std::ostream & stream, ClothoidCurve const & c ) ;
 
   } ;
 
@@ -798,51 +798,91 @@ namespace Clothoid {
 
   public:
 
-    ClothoidList() ;
+    ClothoidList() {}
     ~ClothoidList() ;
 
     ClothoidList( ClothoidList const & s ) { copy(s) ; }
     ClothoidList const & operator = ( ClothoidList const & s )
     { copy(s) ; return *this ; }
 
-    void add( ClothoidCurve const & c ) ;
+    void reserve( indexType n ) { s0.reserve(n+1) ; clotoidList.reserve(n) ; }
+
     void copy( ClothoidList const & L ) ;
 
+    void add( ClothoidCurve const & c ) ;
+
     ClothoidCurve const & get( indexType idx ) const;
-    ClothoidCurve const & getAtS( valueType s ) const;
+    ClothoidCurve const & getAtS( valueType s, indexType & last_idx ) const;
 
-    indexType findAtS( valueType s ) const;
+    bool findAtS( valueType s, indexType & last_idx ) const;
 
-    valueType theta( valueType s ) const;
-    valueType theta_D( valueType s ) const;
-    valueType theta_DD( valueType ) const;
-    valueType theta_DDD( valueType ) const { return 0 ; }
+    valueType theta( valueType s, indexType & last_idx ) const;
+    valueType theta_D( valueType s, indexType & last_idx ) const;
+    valueType theta_DD( valueType s, indexType & last_idx ) const;
+    valueType theta_DDD( valueType, indexType & ) const { return 0 ; }
 
     valueType totalLength() const {
       if ( s0.empty() ) return 0;
       return s0.back() - s0.front() ;
     }
 
-    valueType X( valueType s ) const ;
-    valueType Y( valueType s ) const ;
+    valueType X( valueType s, indexType & last_idx ) const ;
+    valueType Y( valueType s, indexType & last_idx ) const ;
 
     void
     eval( valueType   s,
+          indexType & last_idx,
           valueType & theta,
           valueType & kappa,
           valueType & x,
           valueType & y ) const ;
 
-    void eval( valueType s, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+    void
+    eval( valueType   s,
+          indexType & last_idx,
+          valueType & x,
+          valueType & y ) const ;
+    void
+    eval_D( valueType   s,
+            indexType & last_idx,
+            valueType & x_D,
+            valueType & y_D ) const ;
+    void
+    eval_DD( valueType   s,
+             indexType & last_idx,
+             valueType & x_DD,
+             valueType & y_DD ) const ;
+    void
+    eval_DDD( valueType   s,
+              indexType & last_idx,
+              valueType & x_DDD,
+              valueType & y_DDD ) const ;
 
     // offset curve
-    void eval( valueType s, valueType offs, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const ;
+    void
+    eval( valueType   s,
+          indexType & last_idx,
+          valueType   offs,
+          valueType & x,
+          valueType & y ) const ;
+    void
+    eval_D( valueType   s,
+            indexType & last_idx,
+            valueType   offs,
+            valueType & x_D,
+            valueType & y_D ) const ;
+    void
+    eval_DD( valueType   s,
+             indexType & last_idx,
+             valueType   offs,
+             valueType & x_DD,
+             valueType & y_DD ) const ;
+    void
+    eval_DDD( valueType   s,
+              indexType & last_idx,
+              valueType   offs,
+              valueType & x_DDD,
+              valueType & y_DDD ) const ;
 
     valueType
     closestPoint( valueType   x,
@@ -855,7 +895,7 @@ namespace Clothoid {
     void rotate( valueType angle, valueType cx, valueType cy ) ;
     void translate( valueType tx, valueType ty ) ;
     void moveOrigin( valueType newx0, valueType newy0 ) ;
-    void scale( valueType s ) ;
+    void scale( valueType sfactor ) ;
     void reverse() ;
 
   };

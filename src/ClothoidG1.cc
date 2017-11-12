@@ -344,7 +344,6 @@ namespace Clothoid {
     y_DDD = tmp1*S+tmp2*C ;
   }
 
-
   valueType
   ClothoidCurve::closestPoint( valueType   x,
                                valueType   y,

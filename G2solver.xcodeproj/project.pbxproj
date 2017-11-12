@@ -18,6 +18,11 @@
 		D938F4EB1DD3B84E00E08A70 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D938F4ED1DD3B85200E08A70 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
 		D96E1FAE1F75513000115228 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
@@ -125,6 +130,7 @@
 		D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CubicRootsFlocke.cc; sourceTree = "<group>"; };
 		D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CubicRootsFlocke.hh; sourceTree = "<group>"; };
 		D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle2D.cc; sourceTree = "<group>"; };
+		D9614FD41FB8609F007E5770 /* ClothoidList.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidList.cc; sourceTree = "<group>"; };
 		D96E1FBD1F75513000115228 /* statistic_2arc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_2arc; sourceTree = BUILT_PRODUCTS_DIR; };
 		D971F8971F613BC2000E663E /* Biarc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Biarc.cc; sourceTree = "<group>"; };
 		D971F8981F613BC2000E663E /* Biarc.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Biarc.hh; sourceTree = "<group>"; };
@@ -219,6 +225,7 @@
 				D971F8971F613BC2000E663E /* Biarc.cc */,
 				D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */,
 				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
+				D9614FD41FB8609F007E5770 /* ClothoidList.cc */,
 				D938F4E71DD3B84A00E08A70 /* Clothoid.hh */,
 				D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */,
 				D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */,
@@ -385,6 +392,7 @@
 				D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */,
 				D9099D201F5FFB8300740ECF /* Fresnel.cc in Sources */,
 				D9099D261F600AA600740ECF /* G2lib.cc in Sources */,
+				D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D971F8991F613BC2000E663E /* Biarc.cc in Sources */,
 				D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D9099D291F600B9400740ECF /* Circle.cc in Sources */,
@@ -400,6 +408,7 @@
 			files = (
 				D9A393581FA14C5C009C1E60 /* testG2stat2arc.cc in Sources */,
 				D96E1FAE1F75513000115228 /* G2lib.cc in Sources */,
+				D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */,
 				D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */,
 				D96E1FB11F75513000115228 /* Biarc.cc in Sources */,
@@ -420,6 +429,7 @@
 				D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */,
 				D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */,
 				D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */,
+				D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */,
 				D981B3131E8D571D006C933D /* ClothoidG1.cc in Sources */,
 				D971F89A1F613BC2000E663E /* Biarc.cc in Sources */,
@@ -435,6 +445,7 @@
 			files = (
 				D9C8B9E41F7AA69400DF4205 /* G2lib.cc in Sources */,
 				D9C8B9E51F7AA69400DF4205 /* ClothoidG2.cc in Sources */,
+				D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */,
 				D9C8B9E71F7AA69400DF4205 /* Biarc.cc in Sources */,
 				D9C8B9E81F7AA69400DF4205 /* Circle.cc in Sources */,
@@ -452,6 +463,7 @@
 			files = (
 				D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */,
 				D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */,
+				D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */,
 				D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */,
 				D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */,

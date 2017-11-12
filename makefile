@@ -34,6 +34,7 @@ src/Circle.cc \
 src/ClothoidAsyPlot.cc \
 src/ClothoidG1.cc \
 src/ClothoidG2.cc \
+src/ClothoidList.cc \
 src/CubicRootsFlocke.cc \
 src/Fresnel.cc \
 src/G2lib.cc \
