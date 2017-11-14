@@ -191,7 +191,7 @@ namespace GenericContainerNamespace {
            << _numRows << " x " << _numCols
            << '\n' ;
   }
-  
+
   template class mat_type<int_type> ;
   template class mat_type<long_type> ;
   template class mat_type<real_type> ;
@@ -340,11 +340,34 @@ namespace GenericContainerNamespace {
     return *this ;
   }
 
-
   GenericContainer &
   GenericContainer::operator = ( vec_string_type const & a ) {
     set_vec_string( unsigned(a.size()) ) ;
     std::copy( a.begin(), a.end(), _data.v_s->begin() ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( mat_int_type const & a ) {
+    set_mat_int( a ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( mat_long_type const & a ) {
+    set_mat_long( a ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( mat_real_type const & a ) {
+    set_mat_real( a ) ;
+    return *this ;
+  }
+
+  GenericContainer &
+  GenericContainer::operator = ( mat_complex_type const & a ) {
+    set_mat_complex( a ) ;
     return *this ;
   }
 

@@ -43,6 +43,10 @@
 		D93669BB1D58B61600B2F03B /* GenericContainerTables.cc in Sources */ = {isa = PBXBuildFile; fileRef = D93669B41D58B61600B2F03B /* GenericContainerTables.cc */; };
 		D93669BF1D58B62B00B2F03B /* GenericContainerLuaInterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = D93669BD1D58B62B00B2F03B /* GenericContainerLuaInterface.cc */; };
 		D93669C01D58B62B00B2F03B /* GenericContainerLuaInterface.hh in Headers */ = {isa = PBXBuildFile; fileRef = D93669BE1D58B62B00B2F03B /* GenericContainerLuaInterface.hh */; };
+		D9382E211FBAFE93009C9A87 /* GenericContainerJson.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9382DF51FBAFE93009C9A87 /* GenericContainerJson.hh */; };
+		D9382E221FBAFE93009C9A87 /* GenericContainerJsonHandler.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9382DF61FBAFE93009C9A87 /* GenericContainerJsonHandler.cc */; };
+		D9382E231FBAFE93009C9A87 /* GenericContainerJsonHandler.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9382DF71FBAFE93009C9A87 /* GenericContainerJsonHandler.hh */; };
+		D9382E241FBAFE93009C9A87 /* GenericContainerJson.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9382DF81FBAFE93009C9A87 /* GenericContainerJson.cc */; };
 		D93EC12519E88F9100243ACB /* example11.cc in Sources */ = {isa = PBXBuildFile; fileRef = D93EC11719E88EE200243ACB /* example11.cc */; };
 		D9420C4717F01D4A009C2E81 /* example1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C4617F01D4A009C2E81 /* example1.cc */; };
 		D9420C9717F01E83009C2E81 /* example2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9420C9617F01E73009C2E81 /* example2.cc */; };
@@ -349,6 +353,10 @@
 		D93669B41D58B61600B2F03B /* GenericContainerTables.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainerTables.cc; sourceTree = "<group>"; };
 		D93669BD1D58B62B00B2F03B /* GenericContainerLuaInterface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainerLuaInterface.cc; sourceTree = "<group>"; };
 		D93669BE1D58B62B00B2F03B /* GenericContainerLuaInterface.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GenericContainerLuaInterface.hh; sourceTree = "<group>"; };
+		D9382DF51FBAFE93009C9A87 /* GenericContainerJson.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GenericContainerJson.hh; sourceTree = "<group>"; };
+		D9382DF61FBAFE93009C9A87 /* GenericContainerJsonHandler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainerJsonHandler.cc; sourceTree = "<group>"; };
+		D9382DF71FBAFE93009C9A87 /* GenericContainerJsonHandler.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GenericContainerJsonHandler.hh; sourceTree = "<group>"; };
+		D9382DF81FBAFE93009C9A87 /* GenericContainerJson.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GenericContainerJson.cc; sourceTree = "<group>"; };
 		D93EC11719E88EE200243ACB /* example11.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = example11.cc; path = examples/example11.cc; sourceTree = SOURCE_ROOT; };
 		D93EC12419E88EEA00243ACB /* example11 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = example11; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9420C3B17F01D25009C2E81 /* example1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = example1; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -504,6 +512,17 @@
 			path = src_lua_interface;
 			sourceTree = "<group>";
 		};
+		D9382DF41FBAFE93009C9A87 /* src_json_interface */ = {
+			isa = PBXGroup;
+			children = (
+				D9382DF51FBAFE93009C9A87 /* GenericContainerJson.hh */,
+				D9382DF61FBAFE93009C9A87 /* GenericContainerJsonHandler.cc */,
+				D9382DF71FBAFE93009C9A87 /* GenericContainerJsonHandler.hh */,
+				D9382DF81FBAFE93009C9A87 /* GenericContainerJson.cc */,
+			);
+			path = src_json_interface;
+			sourceTree = "<group>";
+		};
 		D9420C3C17F01D25009C2E81 /* examples */ = {
 			isa = PBXGroup;
 			children = (
@@ -541,6 +560,7 @@
 				D92A20A21C4B149F00BDE1D1 /* Accelerate.framework */,
 				D93669AD1D58B61600B2F03B /* src */,
 				D93669BC1D58B62B00B2F03B /* src_lua_interface */,
+				D9382DF41FBAFE93009C9A87 /* src_json_interface */,
 				D9420C3C17F01D25009C2E81 /* examples */,
 				D9D7FC5617F01B05002F07F8 /* Products */,
 			);
@@ -573,8 +593,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D93669C01D58B62B00B2F03B /* GenericContainerLuaInterface.hh in Headers */,
+				D9382E231FBAFE93009C9A87 /* GenericContainerJsonHandler.hh in Headers */,
 				D93669B71D58B61600B2F03B /* GenericContainer_doc.hh in Headers */,
 				D97341E11D79F39F00993DF7 /* GenericContainerConfig.hh in Headers */,
+				D9382E211FBAFE93009C9A87 /* GenericContainerJson.hh in Headers */,
 				D93669B61D58B61600B2F03B /* GenericContainer.hh in Headers */,
 				D93669B91D58B61600B2F03B /* GenericContainerCinterface.h in Headers */,
 			);
@@ -939,6 +961,8 @@
 				D93669BF1D58B62B00B2F03B /* GenericContainerLuaInterface.cc in Sources */,
 				D902EC111D74F2F600127551 /* GenericContainerLuaPmain.cc in Sources */,
 				D93669BA1D58B61600B2F03B /* GenericContainerSupport.cc in Sources */,
+				D9382E221FBAFE93009C9A87 /* GenericContainerJsonHandler.cc in Sources */,
+				D9382E241FBAFE93009C9A87 /* GenericContainerJson.cc in Sources */,
 				D93669B81D58B61600B2F03B /* GenericContainerCinterface.cc in Sources */,
 				D93669BB1D58B61600B2F03B /* GenericContainerTables.cc in Sources */,
 			);

@@ -28,11 +28,13 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 #pragma GCC diagnostic ignored "-Wc++98-compat"
+#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpadded"
 #pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
 #endif
 
 #include <iostream>
@@ -185,6 +187,13 @@ namespace GenericContainerNamespace {
   } ;
 
   // ---------------------------------------------------------------------------
+
+  #if defined(GENERIC_CONTAINER_USE_CXX11) && !defined(GENERIC_CONTAINER_ON_WINDOWS)
+  extern template class mat_type<int_type> ;
+  extern template class mat_type<long_type> ;
+  extern template class mat_type<real_type> ;
+  extern template class mat_type<complex_type> ;
+  #endif
 
   typedef mat_type<int_type>     mat_int_type ;
   typedef mat_type<long_type>    mat_long_type ;
@@ -1016,6 +1025,22 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( vec_string_type const & a ) ;
 
+    //! Assign a `vec_int_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( mat_int_type const & a ) ;
+
+    //! Assign a `vec_long_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( mat_long_type const & a ) ;
+
+    //! Assign a `vec_real_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( mat_real_type const & a ) ;
+
+    //! Assign a `vec_complex_type` to the generic container.
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer & operator = ( mat_complex_type const & a ) ;
+
     //! Assign a string to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( char const a[] )
@@ -1094,55 +1119,68 @@ namespace GenericContainerNamespace {
     
     //! Construct a generic container storing a boolean
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( bool const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( bool const & a )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
 
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( uint_type const & a ) { clear() ; *this = a ; }
+    GenericContainer( uint_type const & a )
+    : _data_type(GC_NOTYPE) { *this = a ; }
     
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( int_type const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( int_type const & a )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
 
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( ulong_type const & a ) { clear() ; *this = a ; }
+    GenericContainer( ulong_type const & a )
+    : _data_type(GC_NOTYPE) { *this = a ; }
     
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( long_type const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( long_type const & a )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
     
     //! Construct a generic container storing a floating point number
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( float const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( float const & a )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
 
     //! Construct a generic container storing a floating point number
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( double const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( double const & a )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
 
     //! Construct a generic container storing a complex floating point number
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( std::complex<float> const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( std::complex<float> const & a )
+     : _data_type(GC_NOTYPE) { this->operator=(a) ; }
 
     //! Construct a generic container storing a complex floating point number
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( std::complex<double> const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( std::complex<double> const & a )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
     
     //! Construct a generic container storing a string
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( char const a[] ) { clear() ; this->operator=(a) ; }
+    GenericContainer( char const a[] )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
 
     //! Construct a generic container storing a string
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( std::string const & a ) { clear() ; this->operator=(a) ; }
+    GenericContainer( std::string const & a )
+    : _data_type(GC_NOTYPE) { this->operator=(a) ; }
 
     //! Construct a generic container storing a pointer
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( pointer_type a ) { clear() ; this->set_pointer(a) ; }
+    GenericContainer( pointer_type a )
+    : _data_type(GC_NOTYPE) { this->set_pointer(a) ; }
 
     //! Construct a generic container copying container `gc`
     GENERIC_CONTAINER_API_DLL
-    GenericContainer( GenericContainer const & gc ) { this->load(gc) ; }
+    GenericContainer( GenericContainer const & gc )
+    : _data_type(GC_NOTYPE) { this->load(gc) ; }
     //@}
 
     //! \name Utilities methods
