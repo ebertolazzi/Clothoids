@@ -88,6 +88,12 @@
 #else
   #ifdef GENERIC_CONTAINER_USE_CXX11
     #include <cstdint>
+    namespace GenericContainerNamespace {
+      using std::int32_t ;
+      using std::int64_t ;
+      using std::uint32_t ;
+      using std::uint64_t ;
+    }
   #else
     #include <stdint.h>
   #endif

@@ -81,13 +81,6 @@
 
 namespace GenericContainerNamespace {
 
-  #ifdef GENERIC_CONTAINER_USE_CXX11
-  using std::int32_t ;
-  using std::int64_t ;
-  using std::uint32_t ;
-  using std::uint64_t ;
-  #endif
-
   class GenericContainer ;
 
   typedef void*                   pointer_type ; //!< generic pointer type
