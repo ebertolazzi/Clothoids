@@ -80,15 +80,13 @@ lib/libClothoid.so: $(OBJS)
 install: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include
-	cp src/Clothoid.hh         $(PREFIX)/include
-	cp src/CubicRootsFlocke.hh $(PREFIX)/include
+	cp src/*.hh                $(PREFIX)/include
 	cp lib/$(LIB_CLOTHOID)     $(PREFIX)/lib
 
 install_as_framework: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
-	cp src/Clothoid.hh         $(PREFIX)/include/$(FRAMEWORK)
-	cp src/CubicRootsFlocke.hh $(PREFIX)/include/$(FRAMEWORK)
+	cp src/*.hh                $(PREFIX)/include/$(FRAMEWORK)
 	cp lib/$(LIB_CLOTHOID)     $(PREFIX)/lib
 
 run:
