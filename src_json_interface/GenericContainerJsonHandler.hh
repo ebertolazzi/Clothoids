@@ -13,40 +13,66 @@
 #include "rapidjson/reader.h"
 
 namespace GenericContainerNamespace {
-  class GenericContainerJsonHandler :
-        public rapidjson::BaseReaderHandler< rapidjson::UTF8<>, GenericContainerJsonHandler > {
+
+  class GenericContainerJsonHandler : public rapidjson::BaseReaderHandler< rapidjson::UTF8<>, GenericContainerJsonHandler > {
+
   public:
+
     GenericContainerJsonHandler() = delete;
-    GenericContainerJsonHandler(GenericContainer & gc_output, GenericContainer const & gc_options);
-        
+
+    GenericContainerJsonHandler ( GenericContainer & gc_output, GenericContainer const & gc_options );
+
     // BaseReaderHandler implementation
     bool Null();
-    bool Bool(bool b);
-    bool Int(int i);
-    bool Uint(unsigned int u);
-    bool Int64(int64_t i);
-    bool Uint64(uint64_t u);
-    bool Double(double d);
-    bool String(const char * str, rapidjson::SizeType length, bool copy);
+
+    bool Bool ( bool b );
+
+    bool Int ( int i );
+
+    bool Uint ( unsigned int u );
+
+    bool Int64 ( int64_t i );
+
+    bool Uint64 ( uint64_t u );
+
+    bool Double ( double d );
+
+    bool String ( const char * str, rapidjson::SizeType length, bool copy );
+
     bool StartObject();
-    bool Key(const char * str, rapidjson::SizeType length, bool copy);
-    bool EndObject(rapidjson::SizeType member_count);
+
+    bool Key ( const char * str, rapidjson::SizeType length, bool copy );
+
+    bool EndObject ( rapidjson::SizeType member_count );
+
     bool StartArray();
-    bool EndArray(rapidjson::SizeType member_count);
-        
+
+    bool EndArray ( rapidjson::SizeType member_count );
+
   protected:
-        
+
     typedef std::pair<GenericContainer *, bool> stack_entry;
+
     std::vector<stack_entry> _gc_stack = {};
+
     GenericContainer * getCurrentGCPointer() const;
+
     GCJsonMatrixOrder _mat_order;
+
     std::string _im_unit;
-    void setCurrentGCPointerArrayType(bool is_array);
+
+    void setCurrentGCPointerArrayType ( bool is_array );
+
     bool isCurrentGCPointerArrayType() const;
-    void parseStringObjectToCurrentGc(std::string const & str);
+
+    void parseStringObjectToCurrentGc ( std::string const & str );
+
     void advanceCurrentGCPointer();
+
     void finalizeArrayProcess();
+
   };
+
 }
 
 #endif
