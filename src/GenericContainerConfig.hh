@@ -66,6 +66,33 @@
   #endif
 #endif
 
+// Standard types
+#ifdef GENERIC_CONTAINER_ON_WINDOWS
+  // se in windows includo PRIMA windows.h per evitare conflitti!
+  #ifndef WIN32_LEAN_AND_MEAN
+    #define WIN32_LEAN_AND_MEAN
+  #endif
+  #include <windows.h>
+  #ifdef _MSC_VER
+    #include <stdint.h>
+  #else
+    typedef          __int8  int8_t   ;
+    typedef          __int16 int16_t  ;
+    typedef          __int32 int32_t  ;
+    typedef          __int64 int64_t  ;
+    typedef unsigned __int8  uint8_t  ;
+    typedef unsigned __int16 uint16_t ;
+    typedef unsigned __int32 uint32_t ;
+    typedef unsigned __int64 uint64_t ;
+  #endif
+#else
+  #ifdef GENERIC_CONTAINER_USE_CXX11
+    #include <cstdint>
+  #else
+    #include <stdint.h>
+  #endif
+#endif
+
 #endif
 
 //

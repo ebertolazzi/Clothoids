@@ -46,12 +46,6 @@
 #include <sstream>
 #include <stdexcept>
 
-#ifdef GENERIC_CONTAINER_USE_CXX11
-#include <cstdint>
-#else
-#include <stdint.h>
-#endif
-
 #include "GenericContainerConfig.hh"
 
 #if !defined(GENERIC_CONTAINER_USE_CXX11) && defined(GENERIC_CONTAINER_USE_REGEX)
