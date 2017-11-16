@@ -4,7 +4,7 @@
 @mkdir vs2015_32
 
 @pushd vs2015_32
-@cmake -G "Visual Studio 14 2015" ..\..
+@cmake -G "Visual Studio 14 2015 Win32" ..\..
 @popd
 
 @mkdir vs2015_64
