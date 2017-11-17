@@ -5,7 +5,7 @@
 @mkdir vs2013_32
 
 @pushd vs2013_32
-@cmake -G "Visual Studio 12 2013 Win32" ..\..
+@cmake -G "Visual Studio 12 2013" ..\..
 @popd
 
 @mkdir vs2013_64
