@@ -192,11 +192,6 @@ namespace GenericContainerNamespace {
            << '\n' ;
   }
 
-  template class mat_type<int_type> ;
-  template class mat_type<long_type> ;
-  template class mat_type<real_type> ;
-  template class mat_type<complex_type> ;
-
   template <typename TYPE>
   std::ostream &
   operator << ( std::ostream & s, mat_type<TYPE> const & m ) {
@@ -4689,6 +4684,13 @@ namespace GenericContainerNamespace {
   GenericContainer::exception( char const msg[] ) {
     throw std::runtime_error(msg) ;
   }
+
+  // instantate classes
+  template class mat_type<int_type> ;
+  template class mat_type<long_type> ;
+  template class mat_type<real_type> ;
+  template class mat_type<complex_type> ;
+
 }
 
 //
