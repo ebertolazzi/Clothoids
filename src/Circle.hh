@@ -218,7 +218,7 @@ namespace Circle {
     theta( valueType s ) const { return theta0 + s*k ; }
 
     valueType
-    theta_D( valueType s ) const { return k ; }
+    theta_D( valueType ) const { return k ; }
 
     valueType
     theta_DD( valueType ) const { return 0 ; }

@@ -147,9 +147,23 @@ namespace Triangle2D {
     bool overlap( Triangle2D<T> const & ) const ;
 
   };
+  
+  // explicit instantiation declaration to suppress warnings
+  #ifdef G2LIB_USE_CXX11
+
+  #ifdef __GCC__
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
+  #endif
+  #ifdef __clang__
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
+  #endif
 
   extern template class Triangle2D<float> ;
   extern template class Triangle2D<double> ;
+  
+  #endif
 
 }
 

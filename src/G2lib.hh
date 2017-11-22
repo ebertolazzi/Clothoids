@@ -40,6 +40,53 @@
     }
 #endif
 
+// select computer architecture
+#if defined(__APPLE__) && defined(__MACH__)
+  // osx architecture
+  #define G2LIB_OS_OSX 1
+  #if defined(__i386__)
+    #define G2LIB_ARCH32 1
+  #elif defined(__x86_64__)
+    #define G2LIB_ARCH64 1
+  #endif
+#elif defined(__unix__)
+  // linux architecture
+  #define G2LIB_OS_LINUX 1
+  #if defined(__i386__)
+    #define G2LIB_ARCH32 1
+  #elif defined(__x86_64__)
+    #define G2LIB_ARCH64 1
+  #endif
+#elif defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
+  // windows architecture
+  #define G2LIB_OS_WINDOWS 1
+  #if defined(_M_X64) || defined(_M_AMD64)
+    #define G2LIB_ARCH64 1
+  #else
+    #define G2LIB_ARCH32 1
+  #endif
+  #ifndef WIN32_LEAN_AND_MEAN
+    #define WIN32_LEAN_AND_MEAN
+  #endif
+  #include <windows.h>
+#else
+  #error "unsupported OS!"
+#endif
+
+// check if compiler is C++11
+#if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
+    (defined(__cplusplus) && __cplusplus > 199711L)
+  #ifndef G2LIB_DO_NOT_USE_CXX11
+    #define G2LIB_USE_CXX11
+  #endif
+#else
+  // not C++11 compiler
+  #ifndef nullptr
+    #define nullptr NULL
+  #endif
+#endif
+
+
 //! Clothoid computations routine
 namespace G2lib {
 
