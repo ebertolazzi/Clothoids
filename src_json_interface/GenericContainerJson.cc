@@ -27,12 +27,15 @@ using namespace std;
 
 namespace GenericContainerNamespace {
 
-  void real_to_stream ( real_type number, ostream & out )
-  {
+  void
+  real_to_stream ( real_type number, ostream & out ) {
     out << std::setprecision ( std::numeric_limits<real_type>::digits10 + 1 ) << std::scientific << number;
   }
 
-  void complex_to_stream ( complex_type const & number, ostream & out, string const & im_unit )
+  void
+  complex_to_stream ( complex_type const & number,
+                      ostream            & out,
+                      string       const & im_unit )
   {
     if ( number == complex_type ( 0, 0 ) ) {
       out << "0";
@@ -101,7 +104,7 @@ namespace GenericContainerNamespace {
       for ( void * pointer : gc.get_vec_pointer() ) {
         stringstream ss;
         ss << pointer;
-        writer.String ( ss.str().c_str(), ( SizeType ) ss.str().length() );
+        writer.String ( ss.str().c_str(), SizeType(ss.str().length()) );
       }
       writer.EndArray();
       break;

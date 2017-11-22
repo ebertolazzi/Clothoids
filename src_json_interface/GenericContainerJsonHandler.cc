@@ -29,10 +29,6 @@ using namespace std;
    After such functions, the implementation of the GenericContainerJsonHandler class follows.
 */
 
-namespace GenericContainerNamespace {
-  void real_to_stream ( real_type number, ostream & out );
-  void complex_to_stream ( complex_type const & number, ostream & out, string const & im_unit );
-}
 static
 inline
 bool isZero ( real_type x )
@@ -738,7 +734,9 @@ bool GenericContainerJsonHandler::String ( const char * str, SizeType length, bo
   ASSERT_STACK_SIZE
   string stringa ( str, length );
   string stringa_lower = stringa.substr ( 0, 4 );
-  transform ( stringa_lower.begin(), stringa_lower.end(), stringa_lower.begin(),
+  transform ( stringa_lower.begin(),
+              stringa_lower.end(),
+              stringa_lower.begin(),
               [] ( unsigned char c ) -> unsigned char { return std::tolower ( c ); } );
 
   if ( ( stringa_lower.length() != stringa.length() ) || ( stringa_lower.compare ( "null" ) != 0 ) ) {

@@ -45,8 +45,11 @@ namespace GenericContainerNamespace {
    gc_options[GC_JSON_INDENT_NUM] -> int (default 4): number of indentation characters to use for
                                      the prettified output.
    */
-  std::string genericContainerToJsonString ( GenericContainer const & gc,
-      GenericContainer const & gc_options = GenericContainer() );
+  std::string
+  genericContainerToJsonString(
+    GenericContainer const & gc,
+    GenericContainer const & gc_options = GenericContainer()
+  );
 
 
   /* Converts a json string to a GenericContainer. It throws an exception if the parsing of the
@@ -54,8 +57,20 @@ namespace GenericContainerNamespace {
      strings. gc_options is used as above, but the 'prettified' and 'indentation' options does not
      bother here.
    */
-  void jsonStringToGenericContainer ( std::string const & json, GenericContainer & gc_output,
-                                      GenericContainer const & gc_options = GenericContainer() );
+  void
+  jsonStringToGenericContainer(
+    std::string      const & json,
+    GenericContainer       & gc_output,
+    GenericContainer const & gc_options = GenericContainer()
+  );
+
+  void
+  real_to_stream ( real_type number, std::ostream & out );
+  
+  void
+  complex_to_stream ( complex_type const & number,
+                      std::ostream       & out,
+                      std::string  const & im_unit );
 
 }
 
