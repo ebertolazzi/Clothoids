@@ -805,11 +805,11 @@ namespace Clothoid {
     ClothoidList const & operator = ( ClothoidList const & s )
     { copy(s) ; return *this ; }
 
-    void reserve( indexType n ) { s0.reserve(n+1) ; clotoidList.reserve(n) ; }
+    void reserve( indexType n );
 
-    void copy( ClothoidList const & L ) ;
+    void copy( ClothoidList const & L );
 
-    void add( ClothoidCurve const & c ) ;
+    void add( ClothoidCurve const & c );
 
     ClothoidCurve const & get( indexType idx ) const;
     ClothoidCurve const & getAtS( valueType s, indexType & last_idx ) const;

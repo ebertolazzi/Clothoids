@@ -49,6 +49,12 @@ namespace Clothoid {
   }
 
   void
+  ClothoidList::reserve( indexType n ) {
+    s0.reserve(size_t(n+1)) ;
+    clotoidList.reserve(size_t(n)) ;
+  }
+
+  void
   ClothoidList::add( ClothoidCurve const & c ) {
     if ( clotoidList.empty() ) {
       s0.push_back(0) ;
