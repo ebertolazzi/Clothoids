@@ -21,6 +21,7 @@
 
 #include <cmath>
 #include <cfloat>
+#include <algorithm>
 
 namespace Clothoid {
 
