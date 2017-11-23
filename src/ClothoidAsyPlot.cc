@@ -146,7 +146,7 @@ namespace Clothoid {
 
   bool
   AsyPlot::openFile() {
-    file.open(filename);
+    file.open(filename.c_str());
     return file.is_open();
   }
 
