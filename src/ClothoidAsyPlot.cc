@@ -2,6 +2,8 @@
 #include "Triangle2D.hh"
 #include "ClothoidAsyPlot.hh"
 
+#include <stdlib.h>
+
 namespace Clothoid {
 
   AsyPlot::AsyPlot( string _filename, bool _showAxes )

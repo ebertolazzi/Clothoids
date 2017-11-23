@@ -6,6 +6,8 @@
 #include <stack>
 #include <ctime>
 
+#include <stdlib.h>
+
 std::stack<clock_t> tictoc_stack;
 
 void tic() {
