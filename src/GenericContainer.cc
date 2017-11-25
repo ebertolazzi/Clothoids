@@ -2832,10 +2832,10 @@ namespace GenericContainerNamespace {
         val = real_type(_data.b ? 1 : 0) ;
         break ;
       case GC_INTEGER:
-        val = complex_type(real_type(_data.i),0) ;
+        val = complex_type(real_type( _data.i ),0) ;
         break ;
       case GC_LONG:
-        val = complex_type(real_type(_data.l),0) ;
+        val = complex_type(real_type( _data.l ),0) ;
         break ;
       case GC_REAL:
         val = complex_type(_data.r,0) ;
@@ -2844,10 +2844,10 @@ namespace GenericContainerNamespace {
         val = complex_type( real_type( (*_data.v_b)[i] ? 1 : 0), 0 ) ;
         break ;
       case GC_VEC_INTEGER:
-        val = complex_type(real_type( (*_data.v_i)[i]),0);
+        val = complex_type( real_type( (*_data.v_i)[i] ),0);
         break ;
       case GC_VEC_LONG:
-        val = complex_type(real_type( (*_data.v_l)[i]),0);
+        val = complex_type( real_type( (*_data.v_l)[i] ),0);
         break ;
       case GC_VEC_REAL:
         val = complex_type((*_data.v_r)[i],0);
@@ -2859,10 +2859,10 @@ namespace GenericContainerNamespace {
         val = (*_data.v_c)[i] ;
         break ;
       case GC_MAT_INTEGER:
-        val = complex_type(real_type( (*_data.m_i)[i] ),0);
+        val = complex_type( real_type( (*_data.m_i)[i] ),0);
         break ;
       case GC_MAT_LONG:
-        val = complex_type(real_type( (*_data.m_l)[i] ),0);
+        val = complex_type( real_type( (*_data.m_l)[i] ),0);
         break ;
       case GC_MAT_REAL:
         val = complex_type((*_data.m_r)[i],0);
@@ -3187,10 +3187,10 @@ namespace GenericContainerNamespace {
       value = complex_type(iv->second._data.b?1:0,0) ;
       break ;
     case GC_INTEGER:
-      value = complex_type(real_type(iv->second._data.i),0) ;
+      value = complex_type(real_type( iv->second._data.i),0) ;
       break ;
     case GC_LONG:
-      value = complex_type(real_type(iv->second._data.l),0) ;
+      value = complex_type(real_type( iv->second._data.l),0) ;
       break ;
     case GC_REAL:
       value = complex_type(iv->second._data.r,0) ;
@@ -3768,7 +3768,7 @@ namespace GenericContainerNamespace {
       set_complex(_data.b?1:0,0) ;
       break ;
     case GC_INTEGER:
-      set_complex(_data.i,0) ;
+      set_complex(real_type(_data.i),0) ;
       break ;
     case GC_LONG:
       set_complex(real_type(_data.l),0) ;
@@ -3807,16 +3807,21 @@ namespace GenericContainerNamespace {
     { set_vec_int(1) ; get_int_at(0) = 0 ; }
       break ;
     case GC_BOOL:
-    { int_type tmp = _data.b?1:0 ; set_vec_int(1) ; get_int_at(0) = tmp ; }
+    { int_type tmp = _data.b?1:0 ;
+      set_vec_int(1) ;
+      get_int_at(0) = tmp ; }
       break ;
     case GC_INTEGER:
-    { int_type tmp = _data.i ; set_vec_int(1) ; get_int_at(0) = tmp ; }
+    { int_type tmp = _data.i ;
+      set_vec_int(1) ;
+      get_int_at(0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_vec_int(unsigned(v_b->size())) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.v_i)[i] = ((*v_b)[i]?1:0) ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.v_i)[i] = ((*v_b)[i]?1:0) ;
         delete v_b ;
       }
       break ;
@@ -3851,19 +3856,26 @@ namespace GenericContainerNamespace {
       { set_vec_long(1) ; get_long_at(0) = 0 ; }
       break ;
     case GC_BOOL:
-      { long_type tmp = _data.b?1:0 ; set_vec_long(1) ; get_long_at(0) = tmp ; }
+      { long_type tmp = _data.b?1:0 ;
+        set_vec_long(1) ;
+        get_long_at(0) = tmp ; }
       break ;
     case GC_INTEGER:
-      { long_type tmp = long_type(_data.i) ; set_vec_long(1) ; get_long_at(0) = tmp ; }
+      { long_type tmp = long_type(_data.i) ;
+        set_vec_long(1) ;
+        get_long_at(0) = tmp ; }
       break ;
     case GC_LONG:
-      { long_type tmp = _data.l ; set_vec_long(1) ; get_long_at(0) = tmp ; }
+      { long_type tmp = _data.l ;
+        set_vec_long(1) ;
+        get_long_at(0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_vec_long(unsigned(v_b->size())) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.v_l)[i] = ((*v_b)[i]?1:0) ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.v_l)[i] = ((*v_b)[i]?1:0) ;
         delete v_b ;
       }
       break ;
@@ -3871,7 +3883,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ;
         _data_type = GC_NOTYPE ;
         set_vec_long(unsigned(v_i->size())) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.v_l)[i] = (*v_i)[i] ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.v_l)[i] = int_type( (*v_i)[i] ) ;
         delete v_i ;
       }
       break ;
@@ -3904,22 +3917,31 @@ namespace GenericContainerNamespace {
       { set_vec_real(1) ; get_real_at(0) = 0 ; }
       break ;
     case GC_BOOL:
-      { real_type tmp = _data.b?1:0 ; set_vec_real(1) ; get_real_at(0) = tmp ; }
+      { real_type tmp = _data.b?1:0 ;
+        set_vec_real(1) ;
+        get_real_at(0) = tmp ; }
       break ;
     case GC_INTEGER:
-      { real_type tmp = real_type(_data.i) ; set_vec_real(1) ; get_real_at(0) = tmp ; }
+      { real_type tmp = real_type( _data.i ) ;
+        set_vec_real(1) ;
+        get_real_at(0) = tmp ; }
       break ;
     case GC_LONG:
-      { real_type tmp = real_type(_data.l) ; set_vec_real(1) ; get_real_at(0) = tmp ; }
+      { real_type tmp = real_type( _data.l ) ;
+        set_vec_real(1) ;
+        get_real_at(0) = tmp ; }
       break ;
     case GC_REAL:
-      { real_type tmp = _data.r ; set_vec_real(1) ; get_real_at(0) = tmp ; }
+      { real_type tmp = _data.r ;
+        set_vec_real(1) ;
+        get_real_at(0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ; // salva puntatore
         _data_type = GC_NOTYPE ;
         set_vec_real(unsigned(v_b->size())) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.v_r)[i] = ((*v_b)[i]?1:0) ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.v_r)[i] = ((*v_b)[i]?1:0) ;
         delete v_b ;
       }
       break ;
@@ -3927,7 +3949,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ; // salva puntatore
         _data_type = GC_NOTYPE ;
         set_vec_real(unsigned(v_i->size())) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.v_r)[i] = (*v_i)[i] ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.v_r)[i] = real_type( (*v_i)[i] ) ;
         delete v_i ;
       }
       break ;
@@ -3935,7 +3958,8 @@ namespace GenericContainerNamespace {
       { vec_long_type * v_l = _data.v_l ; // salva puntatore
         _data_type = GC_NOTYPE ;
         set_vec_real(unsigned(v_l->size())) ;
-        for ( unsigned i = 0 ; i < v_l->size() ; ++i ) (*_data.v_r)[i] = real_type((*v_l)[i]) ;
+        for ( unsigned i = 0 ; i < v_l->size() ; ++i )
+          (*_data.v_r)[i] = real_type( (*v_l)[i] ) ;
         delete v_l ;
       }
       break ;
@@ -3966,25 +3990,36 @@ namespace GenericContainerNamespace {
       { set_vec_complex(1) ; get_complex_at(0) = 0 ; }
       break ;
     case GC_BOOL:
-      { real_type tmp = _data.b?1:0 ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
+      { real_type tmp = _data.b?1:0 ;
+        set_vec_complex(1) ;
+        get_complex_at(0) = tmp ; }
       break ;
     case GC_INTEGER:
-      { real_type tmp = real_type(_data.i) ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
+      { real_type tmp = real_type( _data.i ) ;
+        set_vec_complex(1) ;
+        get_complex_at(0) = tmp ; }
       break ;
     case GC_LONG:
-      { real_type tmp = real_type(_data.l) ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
+      { real_type tmp = real_type( _data.l ) ;
+        set_vec_complex(1) ;
+        get_complex_at(0) = tmp ; }
       break ;
     case GC_REAL:
-      { real_type tmp = _data.r ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
+      { real_type tmp = _data.r ;
+        set_vec_complex(1) ;
+        get_complex_at(0) = tmp ; }
       break ;
     case GC_COMPLEX:
-      { complex_type tmp = *_data.c ; set_vec_complex(1) ; get_complex_at(0) = tmp ; }
+      { complex_type tmp = *_data.c ;
+        set_vec_complex(1) ;
+        get_complex_at(0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_vec_complex(unsigned(v_b->size())) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.v_c)[i] = (*v_b)[i] ? 1 : 0 ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.v_c)[i] = complex_type( (*v_b)[i] ? 1: 0, 0 ) ;
         delete v_b ;
       }
       break ;
@@ -3992,7 +4027,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ;
         _data_type = GC_NOTYPE ;
         set_vec_complex(unsigned(v_i->size())) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.v_c)[i] = real_type((*v_i)[i]) ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.v_c)[i] = complex_type( real_type( (*v_i)[i] ) , 0 ) ;
         delete v_i ;
       }
       break ;
@@ -4000,7 +4036,8 @@ namespace GenericContainerNamespace {
       { vec_long_type * v_l = _data.v_l ;
         _data_type = GC_NOTYPE ;
         set_vec_complex(unsigned(v_l->size())) ;
-        for ( unsigned i = 0 ; i < v_l->size() ; ++i ) (*_data.v_c)[i] = real_type((*v_l)[i]) ;
+        for ( unsigned i = 0 ; i < v_l->size() ; ++i )
+          (*_data.v_c)[i] = complex_type( real_type( (*v_l)[i] ), 0 ) ;
         delete v_l ;
       }
       break ;
@@ -4008,7 +4045,8 @@ namespace GenericContainerNamespace {
       { vec_real_type * v_r = _data.v_r ;
         _data_type = GC_NOTYPE ;
         set_vec_complex(unsigned(v_r->size())) ;
-        for ( unsigned i = 0 ; i < v_r->size() ; ++i ) (*_data.v_c)[i] = real_type((*v_r)[i]) ;
+        for ( unsigned i = 0 ; i < v_r->size() ; ++i )
+          (*_data.v_c)[i] = complex_type( (*v_r)[i], 0 ) ;
         delete v_r ;
       }
       break ;
@@ -4037,16 +4075,21 @@ namespace GenericContainerNamespace {
       { set_mat_int(1,1) ; get_int_at(0,0) = 0 ; }
       break ;
     case GC_BOOL:
-      { int_type tmp = _data.b?1:0 ; set_mat_int(1,1) ; get_int_at(0,0) = tmp ; }
+      { int_type tmp = _data.b?1:0 ;
+        set_mat_int(1,1) ;
+        get_int_at(0,0) = tmp ; }
       break ;
     case GC_INTEGER:
-      { int_type tmp = _data.i ; set_mat_int(1,1) ; get_int_at(0,0) = tmp ; }
+      { int_type tmp = _data.i ;
+        set_mat_int(1,1) ;
+        get_int_at(0,0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_mat_int(unsigned(v_b->size()),1) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
         delete v_b ;
       }
       break ;
@@ -4054,7 +4097,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ;
         _data_type = GC_NOTYPE ;
         set_mat_int(unsigned(v_i->size()),1) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.m_r)(i,0) = (*v_i)[i] ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.m_r)(i,0) = real_type( (*v_i)[i] ) ;
         delete v_i ;
       }
       break ;
@@ -4088,16 +4132,21 @@ namespace GenericContainerNamespace {
       { set_mat_long(1,1) ; get_long_at(0,0) = 0 ; }
       break ;
     case GC_BOOL:
-      { long_type tmp = _data.b?1:0 ; set_mat_long(1,1) ; get_long_at(0,0) = tmp ; }
+      { long_type tmp = _data.b?1:0 ;
+        set_mat_long(1,1) ;
+        get_long_at(0,0) = tmp ; }
       break ;
     case GC_INTEGER:
-      { long_type tmp = _data.i ; set_mat_long(1,1) ; get_long_at(0,0) = tmp ; }
+      { long_type tmp = _data.i ;
+        set_mat_long(1,1) ;
+        get_long_at(0,0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_mat_real(unsigned(v_b->size()),1) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
         delete v_b ;
       }
       break ;
@@ -4105,7 +4154,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ;
         _data_type = GC_NOTYPE ;
         set_mat_long(unsigned(v_i->size()),1) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.m_l)(i,0) = (*v_i)[i] ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.m_l)(i,0) = long_type((*v_i)[i]) ;
         delete v_i ;
       }
       break ;
@@ -4113,7 +4163,8 @@ namespace GenericContainerNamespace {
       { vec_long_type * v_l = _data.v_l ;
         _data_type = GC_NOTYPE ;
         set_mat_long(unsigned(v_l->size()),1) ;
-        for ( unsigned i = 0 ; i < v_l->size() ; ++i ) (*_data.m_l)(i,0) = (*v_l)[i] ;
+        for ( unsigned i = 0 ; i < v_l->size() ; ++i )
+          (*_data.m_l)(i,0) = (*v_l)[i] ;
         delete v_l ;
       }
       break ;
@@ -4121,7 +4172,8 @@ namespace GenericContainerNamespace {
       { mat_int_type * m_i = _data.m_i ;
         _data_type = GC_NOTYPE ;
         set_mat_long(m_i->numRows(),m_i->numCols()) ;
-        for ( unsigned i = 0 ; i < m_i->size() ; ++i ) (*_data.m_l)[i] = (*m_i)[i] ;
+        for ( unsigned i = 0 ; i < m_i->size() ; ++i )
+          (*_data.m_l)[i] = long_type((*m_i)[i]) ;
         delete m_i ;
       }
       break ;
@@ -4153,19 +4205,26 @@ namespace GenericContainerNamespace {
       { set_mat_real(1,1) ; get_real_at(0,0) = 0 ; }
       break ;
     case GC_BOOL:
-      { real_type tmp = _data.b?1:0 ; set_mat_real(1,1) ; get_real_at(0,0) = tmp ; }
+      { real_type tmp = _data.b?1:0 ;
+        set_mat_real(1,1) ;
+        get_real_at(0,0) = tmp ; }
       break ;
     case GC_INTEGER:
-      { real_type tmp = _data.i ; set_mat_real(1,1) ; get_real_at(0,0) = tmp ; }
+      { real_type tmp = _data.i ;
+        set_mat_real(1,1) ;
+        get_real_at(0,0) = tmp ; }
       break ;
     case GC_REAL:
-      { real_type tmp = _data.r ; set_mat_real(1,1) ; get_real_at(0,0) = tmp ; }
+      { real_type tmp = _data.r ;
+        set_mat_real(1,1) ;
+        get_real_at(0,0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_mat_real(unsigned(v_b->size()),1) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
         delete v_b ;
       }
       break ;
@@ -4173,7 +4232,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ;
         _data_type = GC_NOTYPE ;
         set_mat_real(unsigned(v_i->size()),1) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.m_r)(i,0) = (*v_i)[i] ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.m_r)(i,0) = real_type( (*v_i)[i] ) ;
         delete v_i ;
       }
       break ;
@@ -4181,7 +4241,8 @@ namespace GenericContainerNamespace {
       { vec_long_type * v_l = _data.v_l ;
         _data_type = GC_NOTYPE ;
         set_mat_real(unsigned(v_l->size()),1) ;
-        for ( unsigned i = 0 ; i < v_l->size() ; ++i ) (*_data.m_r)(i,0) = (*v_l)[i] ;
+        for ( unsigned i = 0 ; i < v_l->size() ; ++i )
+          (*_data.m_r)(i,0) = real_type( (*v_l)[i] ) ;
         delete v_l ;
       }
       break ;
@@ -4189,7 +4250,8 @@ namespace GenericContainerNamespace {
       { vec_real_type * v_r = _data.v_r ;
         _data_type = GC_NOTYPE ;
         set_mat_real(unsigned(v_r->size()),1) ;
-        for ( unsigned i = 0 ; i < v_r->size() ; ++i ) (*_data.m_r)(i,0) = (*v_r)[i] ;
+        for ( unsigned i = 0 ; i < v_r->size() ; ++i )
+          (*_data.m_r)(i,0) = (*v_r)[i] ;
         delete v_r ;
       }
       break ;
@@ -4197,7 +4259,8 @@ namespace GenericContainerNamespace {
       { mat_int_type * m_i = _data.m_i ;
         _data_type = GC_NOTYPE ;
         set_mat_real(m_i->numRows(),m_i->numCols()) ;
-        for ( unsigned i = 0 ; i < m_i->size() ; ++i ) (*_data.m_r)[i] = (*m_i)[i] ;
+        for ( unsigned i = 0 ; i < m_i->size() ; ++i )
+          (*_data.m_r)[i] = real_type( (*m_i)[i] ) ;
         delete m_i ;
       }
       break ;
@@ -4205,7 +4268,8 @@ namespace GenericContainerNamespace {
       { mat_long_type * m_l = _data.m_l ;
         _data_type = GC_NOTYPE ;
         set_mat_real(m_l->numRows(),m_l->numCols()) ;
-        for ( unsigned i = 0 ; i < m_l->size() ; ++i ) (*_data.m_r)[i] = (*m_l)[i] ;
+        for ( unsigned i = 0 ; i < m_l->size() ; ++i )
+          (*_data.m_r)[i] = real_type( (*m_l)[i] ) ;
         delete m_l ;
       }
       break ;
@@ -4234,22 +4298,31 @@ namespace GenericContainerNamespace {
       { set_mat_complex(1,1) ; get_complex_at(0,0) = 0 ; }
       break ;
     case GC_BOOL:
-      { real_type tmp = _data.b?1:0 ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
+      { real_type tmp = _data.b?1:0 ;
+        set_mat_complex(1,1) ;
+        get_complex_at(0,0) = tmp ; }
       break ;
     case GC_INTEGER:
-      { real_type tmp = real_type(_data.i) ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
+      { real_type tmp = real_type( _data.i ) ;
+        set_mat_complex(1,1) ;
+        get_complex_at(0,0) = tmp ; }
       break ;
     case GC_LONG:
-      { real_type tmp = real_type(_data.l) ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
+      { real_type tmp = real_type( _data.l ) ;
+        set_mat_complex(1,1) ;
+        get_complex_at(0,0) = tmp ; }
       break ;
     case GC_REAL:
-      { real_type tmp = _data.r ; set_mat_complex(1,1) ; get_complex_at(0,0) = tmp ; }
+      { real_type tmp = _data.r ;
+        set_mat_complex(1,1) ;
+        get_complex_at(0,0) = tmp ; }
       break ;
     case GC_VEC_BOOL:
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_mat_complex(unsigned(v_b->size()),1) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.m_r)(i,0) = ((*v_b)[i]?1:0) ;
         delete v_b ;
       }
       break ;
@@ -4257,7 +4330,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ;
         _data_type = GC_NOTYPE ;
         set_mat_complex(unsigned(v_i->size()),1) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.m_r)(i,0) = real_type((*v_i)[i]) ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.m_r)(i,0) = real_type( (*v_i)[i] ) ;
         delete v_i ;
       }
       break ;
@@ -4265,7 +4339,8 @@ namespace GenericContainerNamespace {
       { vec_long_type * v_l = _data.v_l ;
         _data_type = GC_NOTYPE ;
         set_mat_complex(unsigned(v_l->size()),1) ;
-        for ( unsigned i = 0 ; i < v_l->size() ; ++i ) (*_data.m_r)(i,0) = real_type((*v_l)[i]) ;
+        for ( unsigned i = 0 ; i < v_l->size() ; ++i )
+          (*_data.m_r)(i,0) = real_type( (*v_l)[i] ) ;
         delete v_l ;
       }
       break ;
@@ -4273,7 +4348,8 @@ namespace GenericContainerNamespace {
       { vec_real_type * v_r = _data.v_r ;
         _data_type = GC_NOTYPE ;
         set_mat_complex(unsigned(v_r->size()),1) ;
-        for ( unsigned i = 0 ; i < v_r->size() ; ++i ) (*_data.m_r)(i,0) = (*v_r)[i] ;
+        for ( unsigned i = 0 ; i < v_r->size() ; ++i )
+          (*_data.m_r)(i,0) = (*v_r)[i] ;
         delete v_r ;
       }
       break ;
@@ -4281,7 +4357,8 @@ namespace GenericContainerNamespace {
       { mat_int_type * m_i = _data.m_i ;
         _data_type = GC_NOTYPE ;
         set_mat_complex(m_i->numRows(),m_i->numCols()) ;
-        for ( unsigned i = 0 ; i < m_i->size() ; ++i ) (*_data.m_c)[i] = real_type((*m_i)[i]) ;
+        for ( unsigned i = 0 ; i < m_i->size() ; ++i )
+          (*_data.m_c)[i] = complex_type( real_type( (*m_i)[i] ), 0 ) ;
         delete m_i ;
       }
       break ;
@@ -4289,7 +4366,8 @@ namespace GenericContainerNamespace {
       { mat_long_type * m_l = _data.m_l ;
         _data_type = GC_NOTYPE ;
         set_mat_complex(m_l->numRows(),m_l->numCols()) ;
-        for ( unsigned i = 0 ; i < m_l->size() ; ++i ) (*_data.m_c)[i] = real_type((*m_l)[i]) ;
+        for ( unsigned i = 0 ; i < m_l->size() ; ++i )
+          (*_data.m_c)[i] = complex_type( real_type( (*m_l)[i] ), 0 ) ;
         delete m_l ;
       }
       break ;
@@ -4297,7 +4375,8 @@ namespace GenericContainerNamespace {
       { mat_real_type * m_r = _data.m_r ;
         _data_type = GC_NOTYPE ;
         set_mat_complex(m_r->numRows(),m_r->numCols()) ;
-        for ( unsigned i = 0 ; i < m_r->size() ; ++i ) (*_data.m_c)[i] = real_type((*m_r)[i]) ;
+        for ( unsigned i = 0 ; i < m_r->size() ; ++i )
+          (*_data.m_c)[i] = complex_type((*m_r)[i],0) ;
         delete m_r ;
       }
       break ;
@@ -4348,7 +4427,8 @@ namespace GenericContainerNamespace {
       { vec_pointer_type * v_p = _data.v_p ;
         _data_type = GC_NOTYPE ;
         set_vector(unsigned(v_p->size())) ;
-        for ( unsigned i = 0 ; i < v_p->size() ; ++i ) (*_data.v)[i] = (*v_p)[i] ;
+        for ( unsigned i = 0 ; i < v_p->size() ; ++i )
+          (*_data.v)[i] = (*v_p)[i] ;
         delete v_p ;
       }
       break ;
@@ -4356,7 +4436,8 @@ namespace GenericContainerNamespace {
       { vec_bool_type * v_b = _data.v_b ;
         _data_type = GC_NOTYPE ;
         set_vector(unsigned(v_b->size())) ;
-        for ( unsigned i = 0 ; i < v_b->size() ; ++i ) (*_data.v)[i] = (*v_b)[i] ;
+        for ( unsigned i = 0 ; i < v_b->size() ; ++i )
+          (*_data.v)[i] = (*v_b)[i] ;
         delete v_b ;
       }
       break ;
@@ -4364,7 +4445,8 @@ namespace GenericContainerNamespace {
       { vec_int_type * v_i = _data.v_i ;
         _data_type = GC_NOTYPE ;
         set_vector(unsigned(v_i->size())) ;
-        for ( unsigned i = 0 ; i < v_i->size() ; ++i ) (*_data.v)[i] = (*v_i)[i] ;
+        for ( unsigned i = 0 ; i < v_i->size() ; ++i )
+          (*_data.v)[i] = (*v_i)[i] ;
         delete v_i ;
       }
       break ;
@@ -4372,7 +4454,8 @@ namespace GenericContainerNamespace {
       { vec_long_type * v_l = _data.v_l ;
         _data_type = GC_NOTYPE ;
         set_vector(unsigned(v_l->size())) ;
-        for ( unsigned i = 0 ; i < v_l->size() ; ++i ) (*_data.v)[i] = (*v_l)[i] ;
+        for ( unsigned i = 0 ; i < v_l->size() ; ++i )
+          (*_data.v)[i] = (*v_l)[i] ;
         delete v_l ;
       }
       break ;
@@ -4380,7 +4463,8 @@ namespace GenericContainerNamespace {
       { vec_real_type * v_r = _data.v_r ;
         _data_type = GC_NOTYPE ;
         set_vector(unsigned(v_r->size())) ;
-        for ( unsigned i = 0 ; i < v_r->size() ; ++i ) (*_data.v)[i] = (*v_r)[i] ;
+        for ( unsigned i = 0 ; i < v_r->size() ; ++i )
+          (*_data.v)[i] = (*v_r)[i] ;
         delete v_r ;
       }
       break ;
@@ -4388,7 +4472,8 @@ namespace GenericContainerNamespace {
       { vec_complex_type * v_c = _data.v_c ;
         _data_type = GC_NOTYPE ;
         set_vector(unsigned(v_c->size())) ;
-        for ( unsigned i = 0 ; i < v_c->size() ; ++i ) (*_data.v)[i] = (*v_c)[i] ;
+        for ( unsigned i = 0 ; i < v_c->size() ; ++i )
+          (*_data.v)[i] = (*v_c)[i] ;
         delete v_c ;
       }
       break ;
@@ -4396,7 +4481,8 @@ namespace GenericContainerNamespace {
       { vec_string_type * v_s = _data.v_s ;
         _data_type = GC_NOTYPE ;
         set_vector(unsigned(v_s->size())) ;
-        for ( unsigned i = 0 ; i < v_s->size() ; ++i ) (*_data.v)[i] = (*v_s)[i] ;
+        for ( unsigned i = 0 ; i < v_s->size() ; ++i )
+          (*_data.v)[i] = (*v_s)[i] ;
         delete v_s ;
       }
       break ;
