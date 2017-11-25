@@ -205,7 +205,7 @@ namespace Circle {
   CircleArc::toNURBS(  valueType knots[12], valueType Poly[9][3] ) const {
 
     valueType dtheta = (s_max-s_min)*k ;
-    indexType ns     = std::floor(3*std::abs(dtheta)/m_pi) ;
+    indexType ns     = indexType(std::floor(3*std::abs(dtheta)/m_pi)) ;
     if      ( ns < 1 ) ns = 1 ;
     else if ( ns > 4 ) ns = 4 ;
 
