@@ -28,13 +28,7 @@
 @IF "%BITS%" == "x64" (@set STR=%STR% Win64)
 
 @IF NOT EXIST lib\Debug\GenericContainer.lib (
-
-  @powershell -command write-host -foreground "red" -background "yellow" -nonewline "Download GenericContainer"
-  @rmdir /S GC
-  @git clone --depth 1 git@github.com:ebertolazzi/GenericContainer.git GC
-
   @SET VSDIR=vs%YEAR%_%BITS%
-
   @RMDIR /S /Q %VSDIR%
   @mkdir %VSDIR%
   @cd %VSDIR%
