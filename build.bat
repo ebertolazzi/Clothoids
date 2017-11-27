@@ -27,7 +27,7 @@
 
 @IF "%BITS%" == "x64" (@set STR=%STR% Win64)
 
-@IF NOT EXITS lib/Debug/Splines.lib (
+@IF NOT EXITS lib/Debug/GenericContainer.lib (
 
   @echo off
   @powershell -command write-host -foreground "red" -background "yellow" -nonewline "Download GenericContainer"
@@ -43,5 +43,9 @@
   @cmake --build . --config Release --target Install
   @cmake --build . --config Debug --target Install
   @cd ..
+) else (
+  @echo.
+  powershell -command write-host -foreground "red" -background "yellow" -nonewline "GenericContainer already compiled"
+  @echo.
 )
 
