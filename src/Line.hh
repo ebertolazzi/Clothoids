@@ -156,12 +156,12 @@ namespace Line {
     }
 
     void
-    eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
+    eval_DD( valueType, valueType & x_DD, valueType & y_DD ) const {
       x_DD = y_DD = 0 ;
     }
 
     void
-    eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
+    eval_DDD( valueType, valueType & x_DDD, valueType & y_DDD ) const {
       x_DDD = y_DDD = 0 ;
     }
 

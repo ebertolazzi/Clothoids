@@ -46,6 +46,7 @@ namespace Biarc {
   /*
     http://www.lucidarme.me/?p=490
   */
+  static // unused for the moment
   void
   CircleTangentPoints( valueType PA[2],
                        valueType rA,
@@ -143,13 +144,14 @@ namespace Biarc {
       PTI0[1][1] = yM1 + TxS2;
     
       // Compute second tangent
-      PTI0[0][0] = xM0 - TyS1;
-      PTI0[0][1] = yM0 + TxS1;
-      PTI0[1][0] = xM1 + TyS2;
-      PTI0[1][1] = yM1 - TxS2;
+      PTI1[0][0] = xM0 - TyS1;
+      PTI1[0][1] = yM0 + TxS1;
+      PTI1[1][0] = xM1 + TyS2;
+      PTI1[1][1] = yM1 - TxS2;
     }
   }
 
+  static // unused for the moment
   bool
   CircleLineTransition( valueType C[2],
                         valueType r,
