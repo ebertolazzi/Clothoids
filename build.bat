@@ -28,16 +28,16 @@
 @IF "%BITS%" == "x64" (@set STR=%STR% Win64)
 
 
-@IF NOT EXITS lib/Debug/Clothoids.lib (
+@IF NOT EXIST lib\Debug\Clothoid.lib (
 
   @SET VSDIR=vs%YEAR%_%BITS%
 
   @RMDIR /S /Q %VSDIR%
   @mkdir %VSDIR%
   @cd %VSDIR%
-  @cmake -G "%STR%" -D%LAPACK%=1 -DYEAR=%YEAR% -DBITS=%BITS% -DCMAKE_INSTALL_PREFIX:PATH=..\lib ..
-  @cmake --build . --config Release --target Install
-  @cmake --build . --config Debug --target Install
+  cmake -G "%STR%" -D%LAPACK%=1 -DYEAR=%YEAR% -DBITS=%BITS% -DCMAKE_INSTALL_PREFIX:PATH=..\lib ..
+  cmake --build . --config Release --target Install
+  cmake --build . --config Debug --target Install
   @cd ..
 ) else (
   @echo.
