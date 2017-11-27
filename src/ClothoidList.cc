@@ -23,6 +23,15 @@
 #include <cfloat>
 #include <algorithm>
 
+#ifdef __GCC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#endif
+
 namespace Clothoid {
 
   using namespace std ;

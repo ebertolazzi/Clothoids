@@ -11,3 +11,5 @@ Usage.pdf
 *.o
 cmake
 build
+lib
+bin

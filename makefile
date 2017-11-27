@@ -2,17 +2,17 @@
 OS=$(shell uname)
 PWD=$(shell pwd)
 
-LIB_CLOTHOID = libClothoid.a
+LIB_CLOTHOID = libClothoids.a
 
 CC   = gcc
 CXX  = g++
 INC  = -I./src -I./include
-LIBS = -L./lib -lClothoid
+LIBS = -L./lib -lClothoids
 DEFS =
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
-  LIBS     = -static -L./lib -lClothoid
+  LIBS     = -static -L./lib -lClothoids
   CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
   AR       = ar rcs
 endif
@@ -23,7 +23,7 @@ ifneq (,$(findstring Darwin, $(OS)))
   CXX      = clang++
   #CC       = gcc-7
   #CXX      = g++-7
-  LIBS     = -L./lib -lClothoid
+  LIBS     = -L./lib -lClothoids
   CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
   AR       = libtool -static -o
 endif
@@ -48,7 +48,7 @@ MKDIR = mkdir -p
 # prefix for installation, use make PREFIX=/new/prefix install
 # to override
 PREFIX    = /usr/local
-FRAMEWORK = Clothoid
+FRAMEWORK = Clothoids
 
 all: lib
 	@$(MKDIR) bin
@@ -66,17 +66,17 @@ src/%.o: src/%.cc $(DEPS)
 src/%.o: src/%.c $(DEPS)
 	$(CC) $(INC) $(CFLAGS) $(DEFS) -c -o $@ $<
 
-lib/libClothoid.a: $(OBJS)
+lib/libClothoids.a: $(OBJS)
 	@$(MKDIR) lib
-	$(AR) lib/libClothoid.a $(OBJS) 
+	$(AR) lib/libClothoids.a $(OBJS) 
 
-lib/libClothoid.dylib: $(OBJS)
+lib/libClothoids.dylib: $(OBJS)
 	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoid.dylib $(OBJS) 
+	$(CXX) -shared -o lib/libClothoids.dylib $(OBJS) 
 
-lib/libClothoid.so: $(OBJS)
+lib/libClothoids.so: $(OBJS)
 	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoid.so $(OBJS) 
+	$(CXX) -shared -o lib/libClothoids.so $(OBJS) 
 
 install: lib
 	@$(MKDIR) $(PREFIX)/lib
@@ -100,7 +100,7 @@ doc:
 	doxygen
 	
 clean:
-	rm -f lib/libClothoid.* lib/libClothoid.* src/*.o
+	rm -f lib/libClothoids.* lib/libClothoids.* src/*.o
 
 	rm -rf bin
 	

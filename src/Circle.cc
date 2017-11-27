@@ -63,10 +63,10 @@ namespace Circle {
                        valueType _x2,
                        valueType _y2 ) {
 
-    valueType dx = _x1 - _x0 ;
-    valueType dy = _y1 - _y0 ;
-    valueType theta0 = atan2( dy, dx ) + m_pi_2 ;
-    build_G1( _x0, _y0, theta0, _x2, _y2 );
+    valueType _dx = _x1 - _x0 ;
+    valueType _dy = _y1 - _y0 ;
+    valueType _theta0 = atan2( _dy, _dx ) + m_pi_2 ;
+    build_G1( _x0, _y0, _theta0, _x2, _y2 );
   }
 
   valueType
@@ -138,13 +138,13 @@ namespace Circle {
 
   //! set the origin of the clothoid to the curvilinear abscissa s0
   void
-  CircleArc::changeCurvilinearOrigin( valueType s0 ) {
-    valueType sL = s0*k - theta0 ;
-    x0     += s0 * Sinc( sL ) ;
-    y0     += s0 * Cosc( sL ) ;
-    theta0 += s0 * k ;
-    s_min -= s0 ;
-    s_max -= s0 ;
+  CircleArc::changeCurvilinearOrigin( valueType _s0 ) {
+    valueType sL = _s0*k - theta0 ;
+    x0     += _s0 * Sinc( sL ) ;
+    y0     += _s0 * Cosc( sL ) ;
+    theta0 += _s0 * k ;
+    s_min  -= _s0 ;
+    s_max  -= _s0 ;
     this->s0 = sin(theta0) ;
     this->c0 = cos(theta0) ;
   }
