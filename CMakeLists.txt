@@ -45,7 +45,12 @@ FOREACH (F ${S})
   LIST( APPEND SOURCES ${RF} )
 ENDFOREACH (F ${S})
 SET( HEADERS )
-FILE( GLOB S ./src/*.hh )
+FILE( GLOB S ./src/*.hh)
+FOREACH (F ${S})
+  FILE( RELATIVE_PATH RF ${CMAKE_CURRENT_SOURCE_DIR} "${F}" )
+  LIST( APPEND HEADERS ${RF} )
+ENDFOREACH (F ${S})
+FILE( GLOB S ./src/*.h)
 FOREACH (F ${S})
   FILE( RELATIVE_PATH RF ${CMAKE_CURRENT_SOURCE_DIR} "${F}" )
   LIST( APPEND HEADERS ${RF} )
@@ -68,7 +73,14 @@ ELSE()
   INCLUDE_DIRECTORIES( src )
 ENDIF()
 
-add_library( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+SET(LIBRARY_OUTPUT_PATH    ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+file(MAKE_DIRECTORY  ${CMAKE_CURRENT_SOURCE_DIR}/bin )
+file(MAKE_DIRECTORY  ${CMAKE_CURRENT_SOURCE_DIR}/lib )
+
+ADD_LIBRARY( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
+
+INSTALL( FILES ${HEADERS} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/include )
 
 #IF ( LUA_FOUND )
 #  TARGET_LINK_LIBRARIES( ${TARGET} ${LUA_LIBRARIES} )
@@ -81,40 +93,45 @@ add_library( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
 #set_target_properties( ${TARGET} PROPERTIES FRAMEWORK TRUE )
 #XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer" )
 
-ADD_EXECUTABLE( example1 examples/example1.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( example1 ${TARGET} )
 
-ADD_EXECUTABLE( example2 examples/example2.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( example2 ${TARGET} )
+IF( BUILD_EXECUTABLE )
 
-ADD_EXECUTABLE( example3 examples/example3.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( example3 ${TARGET} )
+  ADD_EXECUTABLE( example1 examples/example1.cc ${HEADERS} )
+  TARGET_LINK_LIBRARIES( example1 ${TARGET} )
+  
+  ADD_EXECUTABLE( example2 examples/example2.cc ${HEADERS} )
+  TARGET_LINK_LIBRARIES( example2 ${TARGET} )
+  
+  ADD_EXECUTABLE( example3 examples/example3.cc ${HEADERS} )
+  TARGET_LINK_LIBRARIES( example3 ${TARGET} )
+  
+  ADD_EXECUTABLE( example4 examples/example4.cc ${HEADERS} )
+  TARGET_LINK_LIBRARIES( example4 ${TARGET} )
+  
+  ADD_EXECUTABLE( example5 examples/example5.cc ${HEADERS} )
+  TARGET_LINK_LIBRARIES( example5 ${TARGET} )
+  
+  ADD_EXECUTABLE( example6 examples/example6.c  ${HEADERS} ) # IT'S C!
+  TARGET_LINK_LIBRARIES( example6 ${TARGET} )
+  
+  ADD_EXECUTABLE( example7 examples/example7.cc ${HEADERS} )
+  TARGET_LINK_LIBRARIES( example7 ${TARGET} )
+  
+  IF ( LUA_FOUND )
+    ADD_EXECUTABLE( example8 examples/example8.cc ${HEADERS} )
+    TARGET_LINK_LIBRARIES( example8 ${TARGET} ${LUA_LIBRARIES} )
+  
+    ADD_EXECUTABLE( example9 examples/example9.cc ${HEADERS} )
+    TARGET_LINK_LIBRARIES( example9 ${TARGET} ${LUA_LIBRARIES} )
+  
+    ADD_EXECUTABLE( example10 examples/example10.cc ${HEADERS} )
+    TARGET_LINK_LIBRARIES( example10 ${TARGET} ${LUA_LIBRARIES} )
+  ENDIF()
+  
+  ADD_EXECUTABLE( example11 examples/example11.cc ${HEADERS} )
+  TARGET_LINK_LIBRARIES( example11 ${TARGET} )
 
-ADD_EXECUTABLE( example4 examples/example4.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( example4 ${TARGET} )
-
-ADD_EXECUTABLE( example5 examples/example5.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( example5 ${TARGET} )
-
-ADD_EXECUTABLE( example6 examples/example6.c  ${HEADERS} ) # IT'S C!
-TARGET_LINK_LIBRARIES( example6 ${TARGET} )
-
-ADD_EXECUTABLE( example7 examples/example7.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( example7 ${TARGET} )
-
-IF ( LUA_FOUND )
-  ADD_EXECUTABLE( example8 examples/example8.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example8 ${TARGET} ${LUA_LIBRARIES} )
-
-  ADD_EXECUTABLE( example9 examples/example9.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example9 ${TARGET} ${LUA_LIBRARIES} )
-
-  ADD_EXECUTABLE( example10 examples/example10.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example10 ${TARGET} ${LUA_LIBRARIES} )
 ENDIF()
-
-ADD_EXECUTABLE( example11 examples/example11.cc ${HEADERS} )
-TARGET_LINK_LIBRARIES( example11 ${TARGET} )
 
 MESSAGE( STATUS "Using ${SSE_FLAGS} extensions")
 MESSAGE( STATUS "C compiler                  = ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER}" )
