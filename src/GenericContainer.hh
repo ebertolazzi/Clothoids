@@ -81,7 +81,7 @@
 
 namespace GenericContainerNamespace {
 
-  #ifdef GENERIC_CONTAINER_USE_CXX11
+  #if defined(GENERIC_CONTAINER_USE_CXX11) && !defined(_MSC_VER)
   using std::int32_t ;
   using std::int64_t ;
   using std::uint32_t ;
