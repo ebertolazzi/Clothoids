@@ -31,7 +31,6 @@
 
 @IF "%BITS%" == "x64" (@set STR=%STR% Win64)
 
-
 @SET COMPILE="YES"
 @IF EXIST lib\Debug\Clothoid.lib (
   @IF EXIST lib\Release\Clothoid.lib (
@@ -47,6 +46,7 @@
 
   @RMDIR /S /Q %VSDIR%
   @mkdir %VSDIR%
+
   @cd %VSDIR%
   @echo.
   @powershell -command write-host -foreground "red" -background "yellow" -nonewline "cmake -G \"%STR%\" -D%LAPACK%=1 -DYEAR=%YEAR% -DBITS=%BITS% -DCMAKE_INSTALL_PREFIX:PATH=..\lib .."
@@ -55,7 +55,8 @@
   @cmake --build . --config Release --target Install
   @cmake --build . --config Debug --target Install
   @cd ..
-) else (
+
+) ELSE (
   @echo.
   @powershell -command write-host -foreground "red" -background "yellow" -nonewline "Clothoids already compiled"
   @echo.
