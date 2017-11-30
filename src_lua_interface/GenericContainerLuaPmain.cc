@@ -20,23 +20,27 @@
 
 #ifdef __GCC__
 #pragma GCC diagnostic ignored "-Wc++98-compat"
+#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#pragma GCC diagnostic ignored "-Wpadded"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
 #pragma clang diagnostic ignored "-Wimplicit-fallthrough"
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wpadded"
 #endif
 
 #ifdef ENABLE_READLINE
 #define LUA_USE_READLINE
 #endif
 
-//#define lua_c
-
-#ifdef USE_MECHATRONIX_LUA
-  #include <MechatronixCore/lua/lua.hpp>
-#else
+#ifdef USE_SYSTEM_LUA
   #include <lua.hpp>
+#else
+  #include "lua/lua.hpp"
 #endif
 
 /* print a string */

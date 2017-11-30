@@ -18,6 +18,21 @@
 
 #include "GenericContainerLuaInterface.hh"
 
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#pragma GCC diagnostic ignored "-Wpadded"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma clang diagnostic ignored "-Wimplicit-fallthrough"
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
 #ifndef GC_ASSERT
   #include <sstream>
   #include <stdexcept>
@@ -44,7 +59,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <lua.hpp>
+#ifdef USE_SYSTEM_LUA
+  #include <lua.hpp>
+#else
+  #include "lua/lua.hpp"
+#endif
 
 // load string.h for strlen
 #include <string.h>

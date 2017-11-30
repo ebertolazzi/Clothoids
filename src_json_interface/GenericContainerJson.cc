@@ -8,12 +8,38 @@
 
 #include "GenericContainerJson.hh"
 #include "GenericContainerJsonHandler.hh"
+
 #include <iostream>
-#include "rapidjson/prettywriter.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/reader.h"
 #include <string>
 #include <iomanip>
+
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#pragma GCC diagnostic ignored "-Wswitch-enum"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma clang diagnostic ignored "-Wimplicit-fallthrough"
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wswitch-enum"
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#endif
+
+#ifdef USE_SYSTEM_JSON
+  #include <rapidjson/prettywriter.h>
+  #include <rapidjson/writer.h>
+  #include <rapidjson/reader.h>
+#else
+  #include "rapidjson/prettywriter.h"
+  #include "rapidjson/writer.h"
+  #include "rapidjson/reader.h"
+#endif
+
 
 using namespace GC;
 using namespace rapidjson;
@@ -27,9 +53,16 @@ using namespace std;
 
 namespace GenericContainerNamespace {
 
+  static
+  inline
+  bool isZero ( real_type x )
+  { return FP_ZERO == fpclassify ( x ) ; }
+
   void
   real_to_stream ( real_type number, ostream & out ) {
-    out << std::setprecision ( std::numeric_limits<real_type>::digits10 + 1 ) << std::scientific << number;
+    out << std::setprecision( std::numeric_limits<real_type>::digits10 + 1 )
+        << std::scientific
+        << number;
   }
 
   void
@@ -41,13 +74,13 @@ namespace GenericContainerNamespace {
       out << "0";
       return;
     }
-    if ( number.real() != 0 ) {
+    if ( !isZero(number.real()) ) {
       real_to_stream ( number.real(), out );
     }
-    if ( number.imag() == 0 ) {
+    if ( isZero(number.imag()) ) {
       return;
     }
-    if ( number.real() != 0 ) {
+    if ( !isZero(number.real()) ) {
       out << "+";
     }
     real_to_stream ( number.imag(), out );
@@ -56,8 +89,12 @@ namespace GenericContainerNamespace {
 
   // Writer and PrettyWriter do not share any virtual method, so we need to use a template
   template <typename W>
-  static void gc_to_writer ( GenericContainer const & gc, W & writer, string const & im_unit, GCJsonMatrixOrder mat_order )
-  {
+  static
+  void
+  gc_to_writer( GenericContainer const & gc,
+                W                      & writer,
+                string const           & im_unit,
+                GCJsonMatrixOrder        mat_order ) {
 
     switch ( gc.get_type() ) {
     case GC_NOTYPE: {
@@ -97,7 +134,6 @@ namespace GenericContainerNamespace {
       writer.String ( ss.str().c_str(), SizeType(ss.str().length()) );
       break;
     }
-
     //vector type
     case GC_VEC_POINTER: {
       writer.StartArray();
@@ -167,8 +203,7 @@ namespace GenericContainerNamespace {
       writer.EndArray();
       break;
     }
-
-    //map type
+    // map type
     case GC_MAP: {
       writer.StartObject();
       map_type const & m = gc.get_map();
@@ -179,7 +214,6 @@ namespace GenericContainerNamespace {
       writer.EndObject();
       break;
     }
-
     // matrix type
     case GC_MAT_INTEGER: {
       writer.StartArray();
@@ -277,13 +311,14 @@ namespace GenericContainerNamespace {
       string null = "null";
       writer.String ( null.c_str() );
     }
-    }
+    } // end swicth
   }
 
-
-
-  std::string genericContainerToJsonString ( GenericContainer const & gc, GenericContainer const & gc_options )
-  {
+  std::string
+  genericContainerToJsonString(
+    GenericContainer const & gc,
+    GenericContainer const & gc_options
+  ) {
     // check if prettify
     bool pretty = false;
     gc_options.get_if_exists ( GC_JSON_PRETTY, pretty );
@@ -330,8 +365,12 @@ namespace GenericContainerNamespace {
     return string ( buffer.GetString(), buffer.GetSize() );
   }
 
-  void jsonStringToGenericContainer ( std::string const & json, GenericContainer & gc_output, GenericContainer const & gc_options_in )
-  {
+  void
+  jsonStringToGenericContainer(
+    std::string      const & json,
+    GenericContainer       & gc_output,
+    GenericContainer const & gc_options_in
+  ) {
     // clean output
     gc_output.clear();
 

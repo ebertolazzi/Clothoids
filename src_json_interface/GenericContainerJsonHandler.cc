@@ -6,13 +6,38 @@
 //  Copyright © 2017 Nicola Dal Bianco. All rights reserved.
 //
 
+
+
+
 #include "GenericContainerJsonHandler.hh"
 #include <iostream>
-#include "rapidjson/reader.h"
 #include <iomanip>
 #include <regex>
 #include <string>
 #include <algorithm>
+
+#ifdef USE_SYSTEM_JSON
+  #include <rapidjson/reader.h>
+#else
+  #include "rapidjson/reader.h"
+#endif
+
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#pragma GCC diagnostic ignored "-Wswitch-enum"
+#pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma clang diagnostic ignored "-Wimplicit-fallthrough"
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wswitch-enum"
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#endif
 
 #define ASSERT_STACK_SIZE \
   if (_gc_stack.size()==0) \
@@ -22,11 +47,12 @@ using namespace GC;
 using namespace rapidjson;
 using namespace std;
 
-/*
-   Json objects are quite general objects that here we want to convert into a GenericContainer.
-   Due to the etherogeneus nature of Json, some 'awful' C-like functions are required for parsing:
-   these functions are written below.
-   After such functions, the implementation of the GenericContainerJsonHandler class follows.
+/*\
+  Json objects are quite general objects that here we want to convert
+  into a GenericContainer.
+  Due to the etherogeneus nature of Json, some 'awful' C-like functions
+  are required for parsing: these functions are written below.
+  After such functions, the implementation of the GenericContainerJsonHandler class follows.
 */
 
 static
@@ -44,7 +70,9 @@ inline
 bool isInteger64 ( real_type x )
 { return isZero ( x - static_cast<long_type> ( floor ( x ) ) ) ; }
 
-static vector<string> splitString ( string const & str, string const & sep )
+static
+vector<string>
+splitString( string const & str, string const & sep )
 {
   char * cstr = const_cast<char *> ( str.c_str() );
   char * current;
@@ -57,8 +85,9 @@ static vector<string> splitString ( string const & str, string const & sep )
   return arr;
 }
 
-static bool isStringARealNumber ( string const & str_input, double & number )
-{
+static
+bool
+isStringARealNumber( string const & str_input, double & number ) {
   if ( str_input.find_first_not_of ( "0123456789.e-E" ) != std::string::npos ) {
     return false;
   }
@@ -70,16 +99,19 @@ static bool isStringARealNumber ( string const & str_input, double & number )
   return false;
 }
 
-static bool isStringAnImaginaryNumber ( string const & str_input, double & imaginary_part, string const & im_unit )
-{
+static
+bool
+isStringAnImaginaryNumber(
+  string const & str_input,
+  double       & imaginary_part,
+  string const & im_unit
+) {
   if ( str_input.length() == 0 ) {
     return false;
   }
-
   if ( str_input.find ( im_unit ) == std::string::npos ) {
     return false;
   }
-
   if ( str_input.compare ( im_unit ) == 0 ) {
     imaginary_part = 1;
     return true;
@@ -88,8 +120,13 @@ static bool isStringAnImaginaryNumber ( string const & str_input, double & imagi
   return isStringARealNumber ( str, imaginary_part );
 }
 
-static bool isStringAComplexNumber ( string const & str_input, complex_type & out_number, string const & im_unit )
-{
+static
+bool
+isStringAComplexNumber(
+  string const & str_input,
+  complex_type & out_number,
+  string const & im_unit
+) {
   if ( str_input.find ( "+" ) == std::string::npos ) {
     // in this case, the + is not found, thus it is either a pure real or immaginary number
     double num;
@@ -116,12 +153,11 @@ static bool isStringAComplexNumber ( string const & str_input, complex_type & ou
   return false;
 }
 
-static TypeAllowed findMinimumCommonTypeAllowed ( TypeAllowed type1, TypeAllowed type2 )
-{
+static
+TypeAllowed
+findMinimumCommonTypeAllowed( TypeAllowed type1, TypeAllowed type2 ) {
 
-  if ( type1 == type2 ) {
-    return type1;
-  }
+  if ( type1 == type2 ) return type1;
 
   switch ( type1 ) {
   //the following types are not compatible with any other type different from them
@@ -271,18 +307,19 @@ static TypeAllowed findMinimumCommonTypeAllowed ( TypeAllowed type1, TypeAllowed
   return GC_NOTYPE;
 }
 
-static void convertGenericVectorToBoolVector ( GenericContainer & root )
-{
+static
+void
+convertGenericVectorToBoolVector ( GenericContainer & root ) {
   vector<bool> new_vec;
-
-  for ( GenericContainer const & gc : root.get_vector() ) {
+  for ( GenericContainer const & gc : root.get_vector() )
     new_vec.push_back ( gc.get_bool() );
-  }
   root.set_vec_bool ( new_vec );
 }
 
-static void convertGenericVectorToStringVector ( GenericContainer & root, string const & im_unit )
-{
+static
+void
+convertGenericVectorToStringVector( GenericContainer & root,
+                                    string     const & im_unit ) {
   vector<string> new_vec;
 
   for ( GenericContainer const & gc : root.get_vector() ) {
@@ -309,8 +346,9 @@ static void convertGenericVectorToStringVector ( GenericContainer & root, string
   root.set_vec_string ( new_vec );
 }
 
-static void convertGenericVectorToIntVector ( GenericContainer & root )
-{
+static
+void
+convertGenericVectorToIntVector ( GenericContainer & root ) {
   vector<int_type> new_vec;
   for ( GenericContainer const & gc : root.get_vector() ) {
     new_vec.push_back ( gc.get_int() );
@@ -318,10 +356,10 @@ static void convertGenericVectorToIntVector ( GenericContainer & root )
   root.set_vec_int ( new_vec );
 }
 
-static void convertGenericVectorToLongVector ( GenericContainer & root )
-{
+static
+void
+convertGenericVectorToLongVector ( GenericContainer & root ) {
   vector<long_type> new_vec;
-
   for ( GenericContainer & gc : root.get_vector() ) {
     if ( gc.get_type() != GC_LONG ) {
       gc.promote_to_long();
@@ -331,8 +369,9 @@ static void convertGenericVectorToLongVector ( GenericContainer & root )
   root.set_vec_long ( new_vec );
 }
 
-static void convertGenericVectorToRealVector ( GenericContainer & root )
-{
+static
+void
+convertGenericVectorToRealVector( GenericContainer & root ) {
   vector<real_type> new_vec;
 
   for ( GenericContainer & gc : root.get_vector() ) {
@@ -344,8 +383,9 @@ static void convertGenericVectorToRealVector ( GenericContainer & root )
   root.set_vec_real ( new_vec );
 }
 
-static void convertGenericVectorToComplexVector ( GenericContainer & root )
-{
+static
+void
+convertGenericVectorToComplexVector( GenericContainer & root ) {
   vector<complex_type> new_vec;
 
   for ( GenericContainer & gc : root.get_vector() ) {
@@ -357,18 +397,17 @@ static void convertGenericVectorToComplexVector ( GenericContainer & root )
   root.set_vec_complex ( new_vec );
 }
 
-static void convertGenericVectorToIntMat ( GenericContainer & root, GCJsonMatrixOrder order )
-{
-  if ( root.get_vector().size() == 0 ) {
-    return;
-  }
+static
+void
+convertGenericVectorToIntMat( GenericContainer & root,
+                              GCJsonMatrixOrder  order ) {
+
+  if ( root.get_vector().size() == 0 ) return;
 
   //first check if they have the same size
   unsigned num_rows = unsigned(root.get_vector() [0].get_vec_int().size());
   for ( GenericContainer const & gc : root.get_vector() ) {
-    if ( gc.get_vec_int().size() != num_rows ) {
-      return;
-    }
+    if ( gc.get_vec_int().size() != num_rows )return;
   }
 
   unsigned num_cols = unsigned(root.get_vector().size());
@@ -395,11 +434,12 @@ static void convertGenericVectorToIntMat ( GenericContainer & root, GCJsonMatrix
   root.set_mat_int ( mat );
 }
 
-static void convertGenericVectorToLongMat ( GenericContainer & root, GCJsonMatrixOrder order )
-{
-  if ( root.get_vector().size() == 0 ) {
-    return;
-  }
+static
+void
+convertGenericVectorToLongMat( GenericContainer & root,
+                               GCJsonMatrixOrder  order ) {
+
+  if ( root.get_vector().size() == 0 ) return;
 
   //first check if they have the same size
   bool started = false;
@@ -435,9 +475,7 @@ static void convertGenericVectorToLongMat ( GenericContainer & root, GCJsonMatri
 
   // now promote
   for ( GenericContainer & gc : root.get_vector() ) {
-    if ( gc.get_type() != GC_VEC_LONG ) {
-      gc.promote_to_vec_long();
-    }
+    if ( gc.get_type() != GC_VEC_LONG ) gc.promote_to_vec_long();
   }
 
   unsigned num_cols = unsigned(root.get_vector().size());
@@ -454,21 +492,19 @@ static void convertGenericVectorToLongMat ( GenericContainer & root, GCJsonMatri
   for ( unsigned i_col = 0; i_col < num_cols; i_col++ ) {
     vec_long_type vec = root.get_vector() [i_col].get_vec_long();
     for ( unsigned i_row = 0; i_row < num_rows; i_row++ ) {
-      if ( order == column_major ) {
-        mat ( i_row, i_col ) = vec[i_row];
-      } else {
-        mat ( i_col, i_row ) = vec[i_row];
-      }
+      if ( order == column_major ) mat( i_row, i_col ) = vec[i_row];
+      else                         mat( i_col, i_row ) = vec[i_row];
     }
   }
   root.set_mat_long ( mat );
 }
 
-static void convertGenericVectorToRealMat ( GenericContainer & root, GCJsonMatrixOrder order )
-{
-  if ( root.get_vector().size() == 0 ) {
-    return;
-  }
+static
+void
+convertGenericVectorToRealMat( GenericContainer & root,
+                               GCJsonMatrixOrder  order ) {
+
+  if ( root.get_vector().size() == 0 ) return;
 
   //first check if they have the same size
   bool started = false;
@@ -544,11 +580,12 @@ static void convertGenericVectorToRealMat ( GenericContainer & root, GCJsonMatri
   root.set_mat_real ( mat );
 }
 
-static void convertGenericVectorToComplexMat ( GenericContainer & root, GCJsonMatrixOrder order )
-{
-  if ( root.get_vector().size() == 0 ) {
-    return;
-  }
+static
+void
+convertGenericVectorToComplexMat( GenericContainer & root,
+                                  GCJsonMatrixOrder  order ) {
+
+  if ( root.get_vector().size() == 0 ) return;
 
   //first check if they have the same size
   bool started = false;
@@ -606,9 +643,7 @@ static void convertGenericVectorToComplexMat ( GenericContainer & root, GCJsonMa
 
   // now promote
   for ( GenericContainer & gc : root.get_vector() ) {
-    if ( gc.get_type() != GC_VEC_COMPLEX ) {
-      gc.promote_to_vec_complex();
-    }
+    if ( gc.get_type() != GC_VEC_COMPLEX ) gc.promote_to_vec_complex();
   }
 
   unsigned num_cols = unsigned(root.get_vector().size());
@@ -637,9 +672,10 @@ static void convertGenericVectorToComplexMat ( GenericContainer & root, GCJsonMa
 
 // GenericContainerJsonHandler Class Implementation
 
-GenericContainerJsonHandler::GenericContainerJsonHandler ( GenericContainer & gc_output, GenericContainer const & gc_options )
-{
-
+GenericContainerJsonHandler::GenericContainerJsonHandler(
+  GenericContainer       & gc_output,
+  GenericContainer const & gc_options
+) {
   int_type mat_order = GCJsonMatrixOrder::column_major;
   gc_options.get_if_exists ( GC_JSON_MAT_ORDER, mat_order );
   _mat_order = GCJsonMatrixOrder(mat_order);
@@ -650,47 +686,47 @@ GenericContainerJsonHandler::GenericContainerJsonHandler ( GenericContainer & gc
   _gc_stack = {stack_entry ( &gc_output, false ) };
 }
 
-GenericContainer * GenericContainerJsonHandler::getCurrentGCPointer() const
-{
+GenericContainer *
+GenericContainerJsonHandler::getCurrentGCPointer() const {
   return _gc_stack.back().first;
 }
 
-void GenericContainerJsonHandler::setCurrentGCPointerArrayType ( bool is_array )
-{
+void
+GenericContainerJsonHandler::setCurrentGCPointerArrayType( bool is_array ) {
   _gc_stack.back().second = is_array;
 }
 
-bool GenericContainerJsonHandler::isCurrentGCPointerArrayType() const
-{
+bool
+GenericContainerJsonHandler::isCurrentGCPointerArrayType() const {
   return _gc_stack.back().second;
 }
 
-bool GenericContainerJsonHandler::Null()
-{
+bool
+GenericContainerJsonHandler::Null() {
   ASSERT_STACK_SIZE
   // do nothing
   advanceCurrentGCPointer();
   return true;
 }
 
-bool GenericContainerJsonHandler::Bool ( bool b )
-{
+bool
+GenericContainerJsonHandler::Bool( bool b ) {
   ASSERT_STACK_SIZE
-  getCurrentGCPointer()->set_bool ( b );
+  getCurrentGCPointer()->set_bool( b );
   advanceCurrentGCPointer();
   return true;
 }
 
-bool GenericContainerJsonHandler::Int ( int i )
-{
+bool
+GenericContainerJsonHandler::Int( int i ) {
   ASSERT_STACK_SIZE
   getCurrentGCPointer()->set_int ( i );
   advanceCurrentGCPointer();
   return true;
 }
 
-bool GenericContainerJsonHandler::Uint ( unsigned int i )
-{
+bool
+GenericContainerJsonHandler::Uint ( unsigned int i ) {
   ASSERT_STACK_SIZE
   if ( isInteger32 ( i ) ) {
     getCurrentGCPointer()->set_int ( static_cast<int> ( i ) );
@@ -701,16 +737,16 @@ bool GenericContainerJsonHandler::Uint ( unsigned int i )
   return true;
 }
 
-bool GenericContainerJsonHandler::Int64 ( int64_t i )
-{
+bool
+GenericContainerJsonHandler::Int64 ( int64_t i ) {
   ASSERT_STACK_SIZE
   getCurrentGCPointer()->set_long ( i );
   advanceCurrentGCPointer();
   return true;
 }
 
-bool GenericContainerJsonHandler::Uint64 ( uint64_t i )
-{
+bool
+GenericContainerJsonHandler::Uint64 ( uint64_t i ) {
   ASSERT_STACK_SIZE
   if ( isInteger64 ( i ) ) {
     getCurrentGCPointer()->set_long ( static_cast<long_type> ( i ) );
@@ -721,16 +757,20 @@ bool GenericContainerJsonHandler::Uint64 ( uint64_t i )
   return true;
 }
 
-bool GenericContainerJsonHandler::Double ( double d )
-{
+bool
+GenericContainerJsonHandler::Double ( double d ) {
   ASSERT_STACK_SIZE
   getCurrentGCPointer()->set_real ( d );
   advanceCurrentGCPointer();
   return true;
 }
 
-bool GenericContainerJsonHandler::String ( const char * str, SizeType length, bool copy )
-{
+bool
+GenericContainerJsonHandler::String(
+  const char * str,
+  SizeType     length,
+  bool         copy
+) {
   ASSERT_STACK_SIZE
   string stringa ( str, length );
   string stringa_lower = stringa.substr ( 0, 4 );
@@ -743,7 +783,7 @@ bool GenericContainerJsonHandler::String ( const char * str, SizeType length, bo
     // check if it is a complex number
     complex_type complex;
     if ( isStringAComplexNumber ( stringa, complex, _im_unit ) ) {
-      if ( complex.imag() == 0 ) {
+      if ( isZero( complex.imag() ) ) {
         real_type re = complex.real();
         if ( isInteger32 ( re ) ) {
           getCurrentGCPointer()->set_int ( static_cast<int_type> ( re ) );
@@ -763,29 +803,33 @@ bool GenericContainerJsonHandler::String ( const char * str, SizeType length, bo
   return true;
 }
 
-bool GenericContainerJsonHandler::StartObject()
-{
+bool
+GenericContainerJsonHandler::StartObject() {
   ASSERT_STACK_SIZE
   getCurrentGCPointer()->set_map();
   return true;
 }
 
-bool GenericContainerJsonHandler::Key ( const char * str, SizeType length, bool copy )
-{
+bool
+GenericContainerJsonHandler::Key(
+  const char * str,
+  SizeType     length,
+  bool         copy
+) {
   string key ( str, length );
   _gc_stack.push_back ( stack_entry ( & ( getCurrentGCPointer()->operator[] ( key ) ), false ) );
   return true;
 }
 
-bool GenericContainerJsonHandler::EndObject ( SizeType member_count )
-{
+bool
+GenericContainerJsonHandler::EndObject( SizeType member_count ) {
   ASSERT_STACK_SIZE
   advanceCurrentGCPointer();
   return true;
 }
 
-bool GenericContainerJsonHandler::StartArray()
-{
+bool
+GenericContainerJsonHandler::StartArray() {
   ASSERT_STACK_SIZE
   getCurrentGCPointer()->set_vector();
   setCurrentGCPointerArrayType ( true );
@@ -795,8 +839,8 @@ bool GenericContainerJsonHandler::StartArray()
   return true;
 }
 
-bool GenericContainerJsonHandler::EndArray ( SizeType member_count )
-{
+bool
+GenericContainerJsonHandler::EndArray( SizeType member_count ) {
   ASSERT_STACK_SIZE
   // go one level up to the stack: point to the real vector being constructed
   _gc_stack.pop_back();
@@ -813,8 +857,8 @@ bool GenericContainerJsonHandler::EndArray ( SizeType member_count )
   return true;
 }
 
-void GenericContainerJsonHandler::advanceCurrentGCPointer()
-{
+void
+GenericContainerJsonHandler::advanceCurrentGCPointer() {
   ASSERT_STACK_SIZE
   _gc_stack.pop_back();
 
@@ -825,22 +869,18 @@ void GenericContainerJsonHandler::advanceCurrentGCPointer()
   }
 }
 
-void GenericContainerJsonHandler::finalizeArrayProcess()
-{
+void
+GenericContainerJsonHandler::finalizeArrayProcess() {
   vector_type & vec = getCurrentGCPointer()->get_vector();
 
-  if ( vec.size() == 0 ) {
-    return;
-  }
+  if ( vec.size() == 0 ) return;
 
   TypeAllowed minimum_common_type = vec[0].get_type();
   for ( GenericContainer const  & gc : vec ) {
     minimum_common_type = findMinimumCommonTypeAllowed ( minimum_common_type, gc.get_type() );
   }
 
-  if ( minimum_common_type == GC_NOTYPE ) {
-    return;
-  }
+  if ( minimum_common_type == GC_NOTYPE ) return;
 
   if ( minimum_common_type == GC_BOOL ) {
     convertGenericVectorToBoolVector ( *getCurrentGCPointer() );
@@ -862,9 +902,7 @@ void GenericContainerJsonHandler::finalizeArrayProcess()
     return;
   }
 
-  if ( _mat_order == GCJsonMatrixOrder::none ) {
-    return;
-  }
+  if ( _mat_order == GCJsonMatrixOrder::none ) return;
 
   if ( minimum_common_type == GC_VEC_INTEGER ) {
     convertGenericVectorToIntMat ( *getCurrentGCPointer(), _mat_order );

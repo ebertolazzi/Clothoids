@@ -9,8 +9,21 @@
 #ifndef GC_JSON_HANDLER_HH
 #define GC_JSON_HANDLER_HH
 
+
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#endif
+
 #include "GenericContainerJson.hh"
-#include "rapidjson/reader.h"
+
+#ifdef USE_SYSTEM_JSON
+  #include <rapidjson/reader.h>
+#else
+  #include "rapidjson/reader.h"
+#endif
 
 namespace GenericContainerNamespace {
 
@@ -24,29 +37,17 @@ namespace GenericContainerNamespace {
 
     // BaseReaderHandler implementation
     bool Null();
-
     bool Bool ( bool b );
-
     bool Int ( int i );
-
     bool Uint ( unsigned int u );
-
     bool Int64 ( int64_t i );
-
     bool Uint64 ( uint64_t u );
-
     bool Double ( double d );
-
     bool String ( const char * str, rapidjson::SizeType length, bool copy );
-
     bool StartObject();
-
     bool Key ( const char * str, rapidjson::SizeType length, bool copy );
-
     bool EndObject ( rapidjson::SizeType member_count );
-
     bool StartArray();
-
     bool EndArray ( rapidjson::SizeType member_count );
 
   protected:
@@ -62,13 +63,9 @@ namespace GenericContainerNamespace {
     std::string _im_unit;
 
     void setCurrentGCPointerArrayType ( bool is_array );
-
     bool isCurrentGCPointerArrayType() const;
-
     void parseStringObjectToCurrentGc ( std::string const & str );
-
     void advanceCurrentGCPointer();
-
     void finalizeArrayProcess();
 
   };
