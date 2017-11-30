@@ -24,6 +24,7 @@
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wpadded"
+#pragma GCC diagnostic ignored "-Wc++11-long-long"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"
@@ -31,6 +32,7 @@
 #pragma clang diagnostic ignored "-Wimplicit-fallthrough"
 #pragma clang diagnostic ignored "-Wold-style-cast"
 #pragma clang diagnostic ignored "-Wpadded"
+#pragma clang diagnostic ignored "-Wc++11-long-long"
 #endif
 
 #ifndef GC_ASSERT

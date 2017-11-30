@@ -3,7 +3,7 @@ OS      = $(shell uname)
 LIB_GC  = libGenericContainer.a
 CC      = gcc
 CXX     = g++
-INC     =
+INC    += -I./lib3rd/include
 LIBSGCC =
 
 # check if the OS string contains 'Linux'
