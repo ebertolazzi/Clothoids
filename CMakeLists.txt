@@ -58,7 +58,7 @@ FOREACH (F ${S})
 ENDFOREACH (F ${S})
 
 IF(EXISTS "CMakeListsUser.cmake")
-  INCLUDE("CMakeListsUser.cmake");
+  INCLUDE("CMakeListsUser.cmake")
 endif()
 
 IF ( NOT LUA_FOUND )
