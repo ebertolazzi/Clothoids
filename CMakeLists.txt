@@ -57,6 +57,10 @@ FOREACH (F ${S})
   LIST( APPEND HEADERS ${RF} )
 ENDFOREACH (F ${S})
 
+IF(EXISTS "CMakeListsUser.cmake")
+  INCLUDE("CMakeListsUser.cmake");
+endif()
+
 IF ( NOT LUA_FOUND )
   FIND_PACKAGE( Lua )
 ENDIF()
