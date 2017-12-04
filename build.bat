@@ -52,6 +52,7 @@ echo.
   @echo.
   @cmake -G "%STR%" -D%LAPACK%=1 -DYEAR=%YEAR% -DBITS=%BITS% -DCMAKE_INSTALL_PREFIX:PATH=..\lib ..
   @cmake --build . --config Release --target Install
+  @cmake -G "%STR%" -D%LAPACK%=1 -DYEAR=%YEAR% -DBITS=%BITS% -DCMAKE_INSTALL_PREFIX:PATH=..\lib_debug ..
   @cmake --build . --config Debug --target Install
   @cd ..
 ) else (
