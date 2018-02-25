@@ -27,9 +27,7 @@
 #include "G2lib.hh"
 
 //! Clothoid computations routine
-namespace Circle {
-
-  using namespace G2lib ;
+namespace G2lib {
 
   /*\
    |    ____ _          _

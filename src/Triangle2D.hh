@@ -29,7 +29,7 @@
 #include "G2lib.hh"
 
 //! Clothoid computations routine
-namespace Triangle2D {
+namespace G2lib {
 
   /*\
    |   _____     _                   _      ____  ____
@@ -52,8 +52,8 @@ namespace Triangle2D {
       int numChildren ;
       T   xmin, ymin, xmax, ymax ;
       union {
-       Triangle2D<T> const * pTriangle;
-       AABBTree      const * pChildren[2];
+        Triangle2D<T> const * pTriangle;
+        AABBTree      const * pChildren[2];
       } data ;
 
       AABBTree( typename std::vector<Triangle2D<T> const *>::iterator & begin,

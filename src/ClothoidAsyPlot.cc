@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 
-namespace Clothoid {
+namespace G2lib {
 
   AsyPlot::AsyPlot( string _filename, bool _showAxes )
   : filename(_filename)

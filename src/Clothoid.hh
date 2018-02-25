@@ -29,12 +29,11 @@
 #include <vector>
 
 //! Clothoid computations routine
-namespace Clothoid {
+namespace G2lib {
 
   using std::vector ;
-  using namespace Fresnel ;
 
-  typedef Triangle2D::Triangle2D<valueType> T2D ;
+  typedef Triangle2D<valueType> T2D ;
 
   /*\
    |    ____ _       _   _           _     _

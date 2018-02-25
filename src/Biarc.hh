@@ -28,10 +28,7 @@
 #include "Circle.hh"
 
 //! Clothoid computations routine
-namespace Biarc {
-
-  using namespace G2lib ;
-  using Circle::CircleArc ;
+namespace G2lib {
 
   /*\
    |   ____  _

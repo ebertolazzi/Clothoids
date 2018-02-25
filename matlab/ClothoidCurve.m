@@ -1,13 +1,12 @@
 classdef ClothoidCurve < handle
-  % clothoid: MATLAB class wrapper to the underlying C++ class
+  %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
     objectHandle; % Handle to the underlying C++ class instance
   end
     
   methods
-    %% Constructor - Create a new C++ class instance
     function this = ClothoidCurve( varargin )
-      % clothoid: constructor for the clothoid object.
+      %% Create a new C++ class instance for the clothoid arc object
       % Usage:
       %    ref = ClothoidCurve()
       %    ref = ClothoidCurve( x0, y0, theta0, k0, dk, L )
@@ -27,14 +26,15 @@ classdef ClothoidCurve < handle
       this.objectHandle = ClothoidCurveMexWrapper('new', varargin{:} );
     end
         
-    %% Destructor - Destroy the C++ class instance
     function delete(this)
+      %% Destroy the C++ class instance
       ClothoidCurveMexWrapper('delete', this.objectHandle );
     end
         
-    %% Build
     function build( this, varargin )
-      % build: method to build the clothoid from known parameters
+      %
+      % Build the clothoid from known parameters
+      %
       % Usage:
       %    ref.build( x0, y0, theta0, k0, dk, L )
       %    ref.build( x0, y0, theta0, k0, dk, smin, smax )
@@ -47,11 +47,13 @@ classdef ClothoidCurve < handle
       %    L :     length of curve from initial to final point
       %    smin:   initial curvilinear coordinate of the curve
       %    smax:   final curvilinear coordinate of the curve
+      %
       ClothoidCurveMexWrapper('build', this.objectHandle, varargin{:} );
     end
 
     function build_G1( this, x0, y0, theta0, x1, y1, theta1 )
-      % build_G1: method to build the interpolating G1 clothoid arc
+      % Build the interpolating G1 clothoid arc
+      %
       % Usage:
       %    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
       %
@@ -60,12 +62,13 @@ classdef ClothoidCurve < handle
       %    theta0: orientation of the clothoid at initial point
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
-            
+      %
       ClothoidCurveMexWrapper('build_G1', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
     end
         
     function res = build_forward( this, x0, y0, theta0, k0, x1, y1 )
-      % build_forward: method to build the interpolating clothoid arc
+      % Build the interpolating clothoid arc fixing initial position angle and curvature
+      %
       % Usage:
       %    res = ref.build_forward( x0, y0, theta0, k0, x1, y1 )
       %
@@ -77,13 +80,13 @@ classdef ClothoidCurve < handle
       %
       % On output:
       %    res: true iff the interpolation was successful
-      
+      %
       res = ClothoidCurveMexWrapper('build_forward', this.objectHandle, x0, y0, theta0, k0, x1, y1 );
     end
         
-    %% Eval
     function varargout = evaluate(this, s)
-      % eval: method to eval the curve at curvilinear abscissa s
+      % evaluate the curve at curvilinear abscissa `s`
+      %
       % Usage:
       %    [x,y] = ref.eval( s )
       %    [x,y,theta,kappa] = ref.eval( s )
@@ -96,10 +99,10 @@ classdef ClothoidCurve < handle
       %    x, y:  coordinates of the curve 
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
+      %
       [varargout{1:nargout}] = ClothoidCurveMexWrapper('eval', this.objectHandle, s );
     end
 
-    %% Eval
     function [x,y] = eval(this, varargin )
       [x,y] = ClothoidCurveMexWrapper('eval', this.objectHandle, varargin{:} );
     end
@@ -118,7 +121,6 @@ classdef ClothoidCurve < handle
     function [x_DDD,y_DDD] = eval_DDD(this, varargin )
       [x_DDD,y_DDD] = ClothoidCurveMexWrapper('eval_DDD', this.objectHandle, varargin{:} );
     end
-
 
     %%
     function [S,X,Y,DST] = closestPoint(this, x, y, ds)
@@ -157,9 +159,9 @@ classdef ClothoidCurve < handle
       res = ClothoidCurveMexWrapper('length', this.objectHandle );
     end
         
-    %% Update
     function trim(this, smin, smax)
-      % trim: method to trim the clothoid curve
+      % trim the clothoid curve at the corresponging curvilinear coordinates
+      %
       % Usage:
       %    ref.trim(smin, smax)
       %    
@@ -171,52 +173,56 @@ classdef ClothoidCurve < handle
     end
         
     function changeOrigin(this, s0)
-      % changeOrigin: method to change the origin of the clothoid 
-      %               curve to s0
+      % change the origin of the clothoid curve to curviliear corrdinate `s0`
       % Usage:
       %    ref.changeOrigin(s0)
       %    
       % On input:
       %    s0: curvilinear coordinate of the origin of the new curve
-            
+      %
       ClothoidCurveMexWrapper('changeOrigin', this.objectHandle, s0 );
     end
         
     function rotate(this, angle, cx, cy)
-      % rotate: method to rotate the clothoid curve
+      % rotate the clothoid curve by angle respect to the centre `(cx,cy)`
+      %
       % Usage:
       %    ref.rotate(angle, cx, cy)
       %    
       % On input:
       %    angle: the angle of rotation
       %    cx, cy: coordinates of the centre of rotation
-            
+      %
       ClothoidCurveMexWrapper('rotate', this.objectHandle, angle, cx, cy );
     end
         
     function translate(this, tx, ty)
-      % translate: method to translate the clothoid curve
+      % translate the clothoid curve by `(tx,ty)`
+      %
       % Usage:
       %    ref.translate(tx, ty)
       %    
       % On input:
       %    tx, ty: horizontal and vertical translation
-            
+      %   
       ClothoidCurveMexWrapper('translate', this.objectHandle, tx, ty );
     end
 
     function moveOrigin(this, newX0, newY0)
-      % moveOrigin: method to move the origin of the clothoid curve 
+      % move the origin of the clothoid to `(newX0, newY0)` 
+      %
       % Usage:
       %    ref.moveOrigin(newX0, newY0)
       %    
       % On input:
-      %    newX0, newY0: new coordinates of initial point     
+      %    newX0, newY0: new coordinates of initial point
+      %
       ClothoidCurveMexWrapper('moveOrigin', this.objectHandle, newX0, newY0 );
     end
         
     function scale(this, s)
-      % scale: method to scale the clothoid curve 
+      % scale clothoid by `sc` factor
+      %
       % Usage:
       %    ref.scale(newX0, newY0)
       %    
@@ -227,10 +233,10 @@ classdef ClothoidCurve < handle
     end
         
     function reverse(this)
-      % reverse: method to reverse the clothoid curve 
+      % reverse the orientation of the clothoid curve 
       % Usage:
       %    ref.reverse()
-            
+      %
       ClothoidCurveMexWrapper('reverse', this.objectHandle );
     end
 

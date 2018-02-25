@@ -1,45 +1,41 @@
-classdef CircleArc < handle
+classdef LineSegment < handle
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
     objectHandle; % Handle to the underlying C++ class instance
   end
 
   methods
-    function self = CircleArc( varargin )
-      %% Create a new C++ class instance for the circle arc object
+    function self = LineSegment( varargin )
+      %% Create a new C++ class instance for the Segment object
       %
       % Usage:
-      %    (1) ref = CircleArc()
-      %    (2) ref = CircleArc( x0, y0, theta0, k0, L )
-      %    (3) ref = CircleArc( x0, y0, theta0, k0, smin, smax )
-      %    (4) ref = CircleArc( p0, p1, p2 )
-      %    (5) ref = CircleArc( p0, theta0, p1 )
+      %    (1) ref = LineSegment()
+      %    (2) ref = LineSegment( x0, y0, theta0, L )
+      %    (3) ref = LineSegment( x0, y0, theta0, smin, smax )
+      %    (4) ref = LineSegment( p0, p1 )
       %
       % On input:
       %    x0, y0: coordinate of initial point
       %    theta0: orientation of the circle at initial point
-      %    k0:     curvature of the circle at initial point
       %    L:      length of curve from initial to final point
       %    smin:   initial curvilinear coordinate of the curve
       %    smax:   final curvilinear coordinate of the curve
       %    p0:     2D point
       %    p1:     2D point
-      %    p2:     2D point
       %
-      %    (1) empty circle
-      %    (2) circle passing from (x0,y0) at angle theta0 with curvature and length
-      %    (3) circle as in (2) with intial and final curvaturevilinear coordinate respect to (x0,y0)
-      %    (4) circle arc passing from 3 points
-      %    (5) circle passing to p0 and p1 with angle theta0 at p0
+      %    (1) empty segment
+      %    (2) line segment passing from (x0,y0) at angle theta0
+      %    (3) line segment as in (2) with intial and final curvilinear coordinate respect to (x0,y0)
+      %    (4) segment passing from 2 points
       %  On output:
       %    ref: reference handle to the object instance
       %
-      self.objectHandle = CircleArcMexWrapper('new', varargin{:} );
+      self.objectHandle = LineSegmentMexWrapper('new', varargin{:} );
     end
 
     function delete(self)
       %% Destroy the C++ class instance
-      CircleArcMexWrapper('delete', self.objectHandle );
+      LineSegmentMexWrapper('delete', self.objectHandle );
     end
         
     function build( self, varargin )
@@ -68,7 +64,7 @@ classdef CircleArc < handle
       %    (3) circle arc passing from 3 points
       %    (4) circle passing to p0 and p1 with angle theta0 at p0
       %
-      CircleArcMexWrapper('build', self.objectHandle, varargin{:} );
+      LineSegmentMexWrapper('build', self.objectHandle, varargin{:} );
     end
 
     function changeOrigin(self, x0, y0)
@@ -81,27 +77,22 @@ classdef CircleArc < handle
       %  On input:
       %     s0: curvilinear coordinate of the origin of the new curve
       %
-      CircleArcMexWrapper('changeOrigin', self.objectHandle, x0, y0 );
+      LineSegmentMexWrapper('changeOrigin', self.objectHandle, x0, y0 );
     end
 
     function translate(self, tx, ty)
       % move the object by `(tx,ty)`
-      CircleArcMexWrapper('translate', self.objectHandle, tx, ty );
+      LineSegmentMexWrapper('translate', self.objectHandle, tx, ty );
     end
 
     function changeCurvilinearOrigin(self, s0 )
       % change the origin of the circle curve to `s0`
-      CircleArcMexWrapper('changeCurvilinearOrigin', self.objectHandle, s0 );
+      LineSegmentMexWrapper('changeCurvilinearOrigin', self.objectHandle, s0 );
     end
 
     function trim(self, smin, smax)
       % trim circle curve to the corresponding curvilinear parameters
-      CircleArcMexWrapper('trim', self.objectHandle, smin, smax );
-    end
-
-    function scale(self, sc)
-      % scale circle by `sc` factor
-      CircleArcMexWrapper('scale', self.objectHandle, sc );
+      LineSegmentMexWrapper('trim', self.objectHandle, smin, smax );
     end
         
     function rotate(self, angle, cx, cy)
@@ -113,7 +104,7 @@ classdef CircleArc < handle
       %    angle: the angle of rotation
       %    cx, cy: coordinates of the centre of rotation
       %
-      CircleArcMexWrapper('rotate', self.objectHandle, angle, cx, cy );
+      LineSegmentMexWrapper('rotate', self.objectHandle, angle, cx, cy );
     end
 
     function moveOrigin(self, newX0, newY0)
@@ -124,17 +115,17 @@ classdef CircleArc < handle
       % On input:
       %    newX0, newY0: new coordinates of initial point
       %
-      CircleArcMexWrapper('moveOrigin', self.objectHandle, newX0, newY0 );
+      LineSegmentMexWrapper('moveOrigin', self.objectHandle, newX0, newY0 );
     end
 
     function [p0,p1,p2,ok] = bbTriangle(self)
       % return the bounding box triangle of the circle arc
-      [p0,p1,p2,ok] = CircleArcMexWrapper('bbTriangle', self.objectHandle);
+      [p0,p1,p2,ok] = LineSegmentMexWrapper('bbTriangle', self.objectHandle);
     end
 
     function nurbs = to_nurbs(self)
       % return a nurbs representation of the circle arc
-      nurbs = CircleArcMexWrapper('to_nurbs', self.objectHandle);
+      nurbs = LineSegmentMexWrapper('to_nurbs', self.objectHandle);
     end
 
     %% Eval
@@ -155,51 +146,47 @@ classdef CircleArc < handle
 
     function [DX,DY] = eval_D(self, s)
       % eval the circle derivative at curvilinear abscissa `s`
-      [DX,DY] = CircleArcMexWrapper('eval_D', self.objectHandle, s );
+      [DX,DY] = LineSegmentMexWrapper('eval_D', self.objectHandle, s );
     end
 
     function [DDX,DDY] = eval_DD(self, s)
       % eval the circle second derivative at curvilinear abscissa `s`
-      [DDX,DDY] = CircleArcMexWrapper('eval_DD', self.objectHandle, s );
+      [DDX,DDY] = LineSegmentMexWrapper('eval_DD', self.objectHandle, s );
     end
 
     %% Eval
     function [DDDX,DDDY] = eval_DDD(self, s)
       % eval the circle third derivative at curvilinear abscissa `s`
-      [DDDX,DDDY] = CircleArcMexWrapper('eval_DDD', self.objectHandle, s );
+      [DDDX,DDDY] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, s );
     end
 
     function th = theta(self, s)
       % eval the angle of the circle curve at curvilinear abscissa `s`
-      th = CircleArcMexWrapper('theta', self.objectHandle, s );
+      th = LineSegmentMexWrapper('theta', self.objectHandle, s );
     end
  
     function X0 = getX0(self)
-      X0 = CircleArcMexWrapper('getX0', self.objectHandle );
+      X0 = LineSegmentMexWrapper('getX0', self.objectHandle );
     end
  
     function Y0 = getY0(self)
-      Y0 = CircleArcMexWrapper('getY0', self.objectHandle );
+      Y0 = LineSegmentMexWrapper('getY0', self.objectHandle );
     end
  
     function th0 = getTheta0(self)
-      th0 = CircleArcMexWrapper('getTheta0', self.objectHandle );
+      th0 = LineSegmentMexWrapper('getTheta0', self.objectHandle );
     end
- 
-    function kappa = getKappa(self)
-      kappa = CircleArcMexWrapper('getKappa', self.objectHandle );
-    end
- 
+
     function res = getSmin(self)
-      res = CircleArcMexWrapper('getSmin', self.objectHandle );
+      res = LineSegmentMexWrapper('getSmin', self.objectHandle );
     end
  
     function res = getSmax(self)
-      res = CircleArcMexWrapper('getSmax', self.objectHandle );
+      res = LineSegmentMexWrapper('getSmax', self.objectHandle );
     end
  
     function res = length(self)
-      res = CircleArcMexWrapper('length', self.objectHandle );
+      res = LineSegmentMexWrapper('length', self.objectHandle );
     end
 
     %% Utils
@@ -219,17 +206,17 @@ classdef CircleArc < handle
       % On output:
       %    lineH: the handle to the line object 
       %           (i.e. the output of the MATLAB plot function)
-      arc = self.to_nurbs() ;
-      breaks = fnbrk(arc,'b');
+      seg = self.to_nurbs() ;
+      breaks = fnbrk(seg,'b');
       col = 'b';
       lw  = 1;
       if nargin>1 ; col = varargin{1} ; end
       if nargin>2 ; lw  = varargin{2} ; end
-      fnplt(arc,[breaks(1),breaks(end)],col,lw);
+      fnplt(seg,[breaks(1),breaks(end)],col,lw);
       hold on;
       % plot poligono
-      xx = arc.coefs(1,:)./arc.coefs(3,:);
-      yy = arc.coefs(2,:)./arc.coefs(3,:);
+      xx = seg.coefs(1,:)./seg.coefs(3,:);
+      yy = seg.coefs(2,:)./seg.coefs(3,:);
       plot(xx,yy,':ok','Color',col);
     end
   end

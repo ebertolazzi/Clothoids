@@ -19,7 +19,9 @@
 
 #include "Line.hh"
 
-namespace Line {
+namespace G2lib {
+
+  static const valueType m_pi = 3.14159265358979323846264338328  ; // pi
 
   /*\
    |   _     _
@@ -46,21 +48,43 @@ namespace Line {
     s_max  = d ;
   }
 
+  void
+  LineSegment::rotate( valueType angle, valueType cx, valueType cy ) {
+    valueType dx  = x0 - cx ;
+    valueType dy  = y0 - cy ;
+    valueType C   = cos(angle) ;
+    valueType S   = sin(angle) ;
+    valueType ndx = C*dx - S*dy ;
+    valueType ndy = C*dy + S*dx ;
+    x0      = cx + ndx ;
+    y0      = cy + ndy ;
+    theta0 += angle ;
+  }
+
+  void
+  LineSegment::reverse() {
+    x0     += c0 * s_max ;
+    y0     += s0 * s_max ;
+    c0      = -c0 ;
+    s0      = -s0 ;
+    theta0 += m_pi ;
+    if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
+    s_max   = s_max-s_min ;
+    s_min   = 0 ;
+  }
+
   int
-  LineSegment::toNURBS( valueType knots[5], valueType Poly[2][3] ) const {
+  LineSegment::toNURBS( valueType knots[4], valueType Poly[2][3] ) const {
     valueType L = s_max-s_min ;
-    knots[0] = knots[1] = knots[2] = 0 ;
-    knots[3] = knots[4] = knots[5] = 1;
+    knots[0] = knots[1] = 0 ;
+    knots[2] = knots[3] = 1 ;
     Poly[0][0] = x0 ;
     Poly[0][1] = y0 ;
     Poly[0][2] = 1  ;
-    Poly[1][0] = x0+(L/2)*c0 ;
-    Poly[1][1] = y0+(L/2)*s0 ;
+    Poly[1][0] = x0+L*c0 ;
+    Poly[1][1] = y0+L*s0 ;
     Poly[1][2] = 1  ;
-    Poly[2][0] = x0+L*c0 ;
-    Poly[2][1] = y0+L*s0 ;
-    Poly[2][2] = 1  ;
-    return 3 ;
+    return 2 ;
   }
 
   std::ostream &

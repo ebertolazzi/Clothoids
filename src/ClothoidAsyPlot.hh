@@ -29,7 +29,7 @@
 #include <cmath>
 
 //! Clothoid computations routine
-namespace Clothoid {
+namespace G2lib {
 
   using std::string;
   using std::ofstream;
@@ -40,7 +40,7 @@ namespace Clothoid {
     ~AsyPlot();
 
     void
-    drawClothoid( Clothoid::ClothoidCurve const& c,
+    drawClothoid( ClothoidCurve const& c,
                   std::string const & penna="black",
                   valueType offset = 0.) const ;
     

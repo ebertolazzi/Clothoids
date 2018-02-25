@@ -44,7 +44,7 @@
 #include <algorithm>
 #include <functional>
 
-namespace Triangle2D {
+namespace G2lib {
 
   template <typename T>
   inline

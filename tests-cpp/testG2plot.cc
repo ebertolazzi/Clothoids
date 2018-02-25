@@ -21,13 +21,13 @@ void toc() {
 	tictoc_stack.pop();
 }
 
-using Clothoid::valueType;
+using G2lib::valueType;
 
 int
 main() {
 	tic();
 
-	Clothoid::G2solve3arc  g2sol;
+	G2lib::G2solve3arc g2sol;
 	
   #if 1
 	valueType x0 = -2;
@@ -59,9 +59,9 @@ main() {
 	//int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
 	std::cout << "iter = " << iter << '\n' ;
 
-	Clothoid::ClothoidCurve const & S0 = g2sol.getS0();
-	Clothoid::ClothoidCurve const & S1 = g2sol.getS1();
-	Clothoid::ClothoidCurve const & SM = g2sol.getSM();
+	G2lib::ClothoidCurve const & S0 = g2sol.getS0();
+	G2lib::ClothoidCurve const & S1 = g2sol.getS1();
+	G2lib::ClothoidCurve const & SM = g2sol.getSM();
 
 	/*
 	std::cout << "theta = " << S0.theta(S0.getSmax()) - SM.theta(SM.getSmin()) << '\n' ;
@@ -82,7 +82,7 @@ main() {
 	//std::cout << "kappa2 = " << S1.getKappa() << '\n';
 	
 	{
-		Clothoid::AsyPlot ap("G2Interpolation.asy", false);
+		G2lib::AsyPlot ap("G2Interpolation.asy", false);
 		ap.drawClothoid(S0, "red+bp");
 		ap.drawClothoid(SM, "blue+bp");
 		ap.drawClothoid(S1, "red+bp");

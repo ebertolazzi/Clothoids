@@ -8,7 +8,7 @@
 #include <ctime>
 #include <map>
 
-using Clothoid::valueType;
+using G2lib::valueType;
 
 static const valueType m_pi = 3.14159265358979323846264338328;
 
@@ -19,8 +19,8 @@ map<int,int> stats ;
 int
 main(int argc, const char * argv[]) {
 
-  Clothoid::G2solve3arc g2solve3arc ;
-  TicToc                tictoc ;
+  G2lib::G2solve3arc g2solve3arc ;
+  TicToc             tictoc ;
 
   int NMAX = 128/8 ;
   int nkur = 64/8 ;

@@ -32,7 +32,7 @@
 #pragma clang diagnostic ignored "-Wsign-conversion"
 #endif
 
-namespace Clothoid {
+namespace G2lib {
 
   using namespace std ;
 

@@ -25,7 +25,7 @@
 #define A_THRESOLD   0.01
 #define A_SERIE_SIZE 3
 
-namespace Fresnel {
+namespace G2lib {
 
   using namespace std ;
 

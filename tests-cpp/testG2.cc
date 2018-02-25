@@ -3,13 +3,13 @@
 #include <cmath>
 #include <iostream>
 
-using Clothoid::valueType ;
+using G2lib::valueType ;
 
 int
 main() {
 
-  Clothoid::G2solve2arc   g2solve2arc ;
-  Clothoid::G2solve3arc   g2solve3arc ;
+  G2lib::G2solve2arc g2solve2arc ;
+  G2lib::G2solve3arc g2solve3arc ;
 
   valueType m_pi = 3.1415926535897932385 ;
 
@@ -40,9 +40,9 @@ main() {
   int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
   std::cout << "iter = " << iter << '\n' ;
   
-  Clothoid::ClothoidCurve const & S0 = g2solve3arc.getS0() ;
-  Clothoid::ClothoidCurve const & S1 = g2solve3arc.getS1() ;
-  Clothoid::ClothoidCurve const & SM = g2solve3arc.getSM() ;
+  G2lib::ClothoidCurve const & S0 = g2solve3arc.getS0() ;
+  G2lib::ClothoidCurve const & S1 = g2solve3arc.getS1() ;
+  G2lib::ClothoidCurve const & SM = g2solve3arc.getSM() ;
 
   std::cout << "\n\nS0 (NEW)\n" << S0 ;
   std::cout << "\n\nSM (NEW)\n" << SM ;

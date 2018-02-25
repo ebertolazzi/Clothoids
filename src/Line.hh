@@ -26,10 +26,7 @@
 
 #include "G2lib.hh"
 
-
-namespace Line {
-
-  using namespace G2lib ;
+namespace G2lib {
 
   /*\
    |   _     _
@@ -172,14 +169,24 @@ namespace Line {
     }
 
     //! set the origin of the clothoid to the curvilinear abscissa s0
-    void change_origin( valueType s0 ) ;
+    void
+    changeCurvilinearOrigin( valueType s0_new ) {
+      x0 += c0 * s0_new ;
+      y0 += s0 * s0_new ;
+    }
 
     void
     translate( valueType tx, valueType ty )
     { x0 += tx ; y0 += ty ; }
 
     void
-    moveOrigin( valueType newx0, valueType newy0 )
+    rotate( valueType angle, valueType cx, valueType cy ) ;
+
+    void
+    reverse() ;
+
+    void
+    changeOrigin( valueType newx0, valueType newy0 )
     { x0 = newx0 ; y0 = newy0 ; }
 
     /*! \brief Compute rational B-spline coefficients for a line segment

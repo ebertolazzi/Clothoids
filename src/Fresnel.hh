@@ -30,7 +30,7 @@
 #include <cmath>
 
 //! Clothoid computations routine
-namespace Fresnel {
+namespace G2lib {
 
   using namespace G2lib ;
 

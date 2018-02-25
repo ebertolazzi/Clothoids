@@ -25,7 +25,7 @@
 
 #include <limits>
 
-namespace Biarc {
+namespace G2lib {
 
   using namespace std ;
 
@@ -37,6 +37,8 @@ namespace Biarc {
    |   \____|_|_|  \___|_|\___||___/
   \*/
 
+  #if 0
+
   static
   inline
   valueType
@@ -44,8 +46,9 @@ namespace Biarc {
   { return (a+b)*(a-b); }
 
   /*
-    http://www.lucidarme.me/?p=490
+  //  http://www.lucidarme.me/?p=490
   */
+
   static // unused for the moment
   void
   CircleTangentPoints( valueType PA[2],
@@ -173,6 +176,8 @@ namespace Biarc {
     C1[1] = P[1]+s1*Ny ;
     return true ;
   }
+
+  #endif
 
   /*\
    |   ____  _

@@ -21,7 +21,7 @@ void toc() {
 	tictoc_stack.pop();
 }
 
-using Clothoid::valueType;
+using G2lib::valueType;
 
 static const valueType m_pi = 3.14159265358979323846264338328;
 
@@ -32,8 +32,8 @@ map<int,int> stats ;
 int
 main(int argc, const char * argv[]) {
 
-  Clothoid::G2solve2arc g2solve2arc ;
-  TicToc                tictoc ;
+  G2lib::G2solve2arc g2solve2arc ;
+  TicToc             tictoc ;
 
   int NMAX = 128/8 ;
   int nkur = 64/8 ;

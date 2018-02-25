@@ -24,7 +24,7 @@
 #include <cmath>
 #include <cfloat>
 
-namespace Clothoid {
+namespace G2lib {
 
   using namespace std ;
 
@@ -695,11 +695,11 @@ namespace Clothoid {
   void 
   G2solve3arc::buildSolution( valueType sM, valueType thM ) {
     // soluzione nel frame di riferimento
-   /* valueType k0 = K0
-    S0.build( -1, 0, th0, k0, dK0,   0, L0 );
-    S1.build( x1, y1, phi+th1, kappa1, dK1, -L1, 0  );
-    S1.change_origin(-L1);
-   */
+    /* valueType k0 = K0
+     S0.build( -1, 0, th0, k0, dK0,   0, L0 );
+     S1.build( x1, y1, phi+th1, kappa1, dK1, -L1, 0  );
+     S1.change_origin(-L1);
+    */
 
     // ricostruzione dati clotoidi trasformati
     valueType dsM = 1.0 / (c13+(c14+sM)*sM);

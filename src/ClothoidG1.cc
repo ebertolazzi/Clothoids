@@ -23,7 +23,7 @@
 #include <cmath>
 #include <cfloat>
 
-namespace Clothoid {
+namespace G2lib {
 
   using namespace std ;
 
