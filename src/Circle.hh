@@ -252,7 +252,7 @@ namespace G2lib {
       s_max = s_end;
     }
 
-    //! set the origin of the clothoid to the curvilinear abscissa s0
+    //! set the origin of the circle to the curvilinear abscissa s0
     void
     changeCurvilinearOrigin( valueType s0 );
 
@@ -279,12 +279,41 @@ namespace G2lib {
     translate( valueType tx, valueType ty )
     { x0 += tx ; y0 += ty ; }
 
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the circle arc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \param s param at minimum distance
+     * \param ndst number of point at minimum distance [0,1,2], 0 = [x,y] in the center of the circle
+     * \return the distance point-circle
+    \*/
+    valueType
+    distance( valueType   x,
+              valueType   y,
+              valueType   s[2],
+              indexType & ndst ) const ;
+
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the circle arc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \return the distance point-circle
+    \*/
+    valueType
+    distance( valueType x, valueType y ) const {
+      valueType ss[2] ;
+      indexType ndst ;
+      return distance( x, y, ss, ndst );
+    }
+
     /*! \brief Compute rational B-spline coefficients for a circle arc
      *
      * \param knots  knots of the B-spline
      * \param Poly   polygon of the B-spline
      * \return       3 up to 9 the number of polygon points
-     */
+    \*/
 
     indexType
     toNURBS( valueType knots[12], valueType Poly[9][3] ) const ;
@@ -302,3 +331,4 @@ namespace G2lib {
 ///
 /// eof: Circle.hh
 ///
+

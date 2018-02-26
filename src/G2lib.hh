@@ -109,6 +109,11 @@ namespace G2lib {
   valueType Cosc_DD( valueType x );
   valueType Cosc_DDD( valueType x );
 
+  /*
+  // atan(x)/x
+  */
+  valueType Atanc( valueType x );
+
   //! Add or remove multiple of \f$ 2\pi \f$ to an angle  in order to put it in the range \f$ [-\pi,\pi]\f$.
   void rangeSymm( valueType & ang ) ;
 

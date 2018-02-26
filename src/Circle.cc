@@ -179,6 +179,14 @@ namespace G2lib {
     s_min = -tmp ;
   }
 
+  valueType
+  CircleArc::distance( valueType   x,
+                       valueType   y,
+                       valueType   s[2],
+                       indexType & ndst ) const {
+
+    return 0 ;
+  }
 
   //! get the bounding box triangle (if angle variation less that pi/3)
   bool

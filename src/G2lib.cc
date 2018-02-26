@@ -32,34 +32,50 @@ namespace G2lib {
     while ( ang >  m_pi ) ang -= m_2pi ;
   }
 
+  static
+  inline
+  valueType
+  power2( valueType a )
+  { return a*a ; }
+
+  static
+  inline
+  valueType
+  power3( valueType a )
+  { return a*a*a ; }
+
   /*
   // sin(x)/x
   */
   valueType
   Sinc( valueType x ) {
-    if ( std::abs(x) < 0.002 ) return 1+x*(1/6-x*x/20);
-    else                       return sin(x)/x;
+    if ( std::abs(x) < 0.02 ) {
+      valueType x2 = x*x ;
+      return 1-(x2/6)*(1-(x2/20)*(1-x2/42));
+    } else {
+      return sin(x)/x;
+    }
   }
 
   valueType
   Sinc_D( valueType x ) {
     valueType x2 = x*x ;
-    if ( std::abs(x) < 0.02 ) return (-1.0/3.0+(1.0/30.0-(1.0/840.0)*x2)*x2)*x;
-    else                      return (cos(x)*x-sin(x))/x2 ;
+    if ( std::abs(x) < 0.04 ) return -(x/3)*(1-(x2/10)*(1-(x2/28)*(1-(x2/54)))) ;
+    else                      return (cos(x)-sin(x)/x)/x ;
   }
 
   valueType
   Sinc_DD( valueType x ) {
     valueType x2 = x*x ;
-    if ( std::abs(x) < 0.05 ) return -1.0/3.0+(1.0/10.0+(-1.0/168.0+(1.0/6480.0)*x2)*x2)*x2;
-    else                      return ((2-x2)*sin(x)/x-2*cos(x))/x2 ;
+    if ( std::abs(x) < 0.02 ) return -1./3.+x2*(0.1-x2*((1.0/168.0)-(x2/6480))) ;
+    else                      return ((2/x2-1)*sin(x)-2*cos(x)/x)/x ;
   }
 
   valueType
   Sinc_DDD( valueType x ) {
     valueType x2 = x*x ;
-    if ( std::abs(x) < 0.02 ) return (1.0/5.0+(-1.0/42.0+(1.0/1080.0)*x2)*x2)*x;
-    else                      return ((3*x2-6)*sin(x)+x*(6-x2)*cos(x))/(x2*x2) ;
+    if ( std::abs(x) < 0.009 ) return (1.0/5.0+(-1.0/42.0+(1.0/1080.0)*x2)*x2)*x;
+    else                       return ((6/x2-1)*cos(x)+(3-6/x2)*sin(x)/x)/x ;
   }
 
   /*
@@ -67,9 +83,9 @@ namespace G2lib {
   */
   valueType
   Cosc( valueType x ) {
-    valueType x2 = x*x ;
-    if ( std::abs(x) < 0.02 ) {
-      return (1.0/2.0+(-.01/24.0+(1.0/720.0)*x2)*x2)*x;
+    if ( std::abs(x) < 0.04 ) {
+      valueType x2 = x*x ;
+      return (x/2)*(1-(x2/12)*(1-(x2/30)*(1-x2/56)));
     } else {
       return (1-cos(x))/x;
     }
@@ -77,30 +93,69 @@ namespace G2lib {
 
   valueType
   Cosc_D( valueType x ) {
-    valueType x2  = x*x;
-    if ( std::abs(x) < 0.05 ) return 1.0/2.0+(-1.0/8.0+(1.0/144.0-(1.0/5760.0)*x2)*x2)*x2;
-    else                      return (sin(x)*x+cos(x)-1)/x2 ;
+    if ( std::abs(x) < 0.02 ) {
+      valueType x2  = x*x;
+      return 0.5*(1-(x2/4)*(1-(x2/18)*(1-(x2/40))));
+    } else {
+      return (sin(x)+(cos(x)-1)/x)/x ;
+    }
   }
 
   valueType
   Cosc_DD( valueType x ) {
     valueType x2  = x*x;
-    if ( std::abs(x) < 0.02 ) return (-1.0/4.0+(1.0/36.0-(1.0/960.0)*x2)*x2)*x;
-    else                      return ((2+(x2-2)*cos(x))/x-2*sin(x))/x2 ;
+    if ( std::abs(x) < 0.04 ) return -(x/4)*(1-(x2/9)*(1-((3.0/80.0)*x2)*(1-((2.0/105.0)*x2))));
+    else                      return ((1-2/x2)*cos(x)+(2/x-sin(x))/x)/x ;
   }
 
   valueType
   Cosc_DDD( valueType x ) {
     valueType x2  = x*x;
-    if ( std::abs(x) < 0.05 ) return -1.0/4.0+(1.0/12.0+(-1.0/192.0+(1.0/7200.0)*x2)*x2)*x2 ;
-    else                      return ((6-x2)*sin(x)-6+(6-3*x2)*cos(x)/x)/(x2*x) ;
+    if ( std::abs(x) < 0.02 ) return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0 ;
+    else                      return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x ;
   }
 
-  static
-  inline
+  /*
+  // atan(x)/x
+  */
   valueType
-  power2( valueType a )
-  { return a*a ; }
+  Atanc( valueType x ) {
+    if ( std::abs(x) < 0.03 ) {
+      valueType x2 = x*x ;
+      return 1-x2*((1./3.)-x2*((1./5.)-x2*((1./7.)-x2*((1./9.)-(x2/11))))) ;
+    } else {
+      return atan(x)/x;
+    }
+  }
+  valueType
+  Atanc_D( valueType x ) {
+    valueType x2 = x*x ;
+    if ( std::abs(x) < 0.03 ) {
+      return x*( -(2./3.) + x2*( (4./5.) + x2*( -(6./7.) + x2*( (8./9.) + x2*( -(10./11.) + x2*(12./13.)))))) ;
+    } else {
+      return (1/(1+x2)-atan(x)/x)/x ;
+    }
+  }
+
+  valueType
+  Atanc_DD( valueType x ) {
+    valueType x2 = x*x ;
+    if ( std::abs(x) < 0.02 ) {
+      return -2./3.+ x2*( (12./5.) + (-(30./7.) + x2 * ( (56./9.) + x2*( -(90./11.) + x2 * (132./13.))))) ;
+    } else {
+      return (2*atan(x)/x-(4*x2+2)/power2(1+x2))/x2 ;
+    }
+  }
+
+  valueType
+  Atanc_DDD( valueType x ) {
+    valueType x2 = x*x ;
+    if ( std::abs(x) < 0.02 ) {
+      return x*(24./5.+x2*(-120./7. + x2 * (112./3. + x2 * (-720./11. + x2*(1320./13. - x2*728./5.))))) ;
+    } else {
+      return ( ((18*x2+16)*x2+6)/power3(x2+1)-6*atan(x)/x )/(x2*x) ;
+    }
+  }
 
   /*\
    |   ____        _           ____       ____

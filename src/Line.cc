@@ -21,7 +21,7 @@
 
 namespace G2lib {
 
-  static const valueType m_pi = 3.14159265358979323846264338328  ; // pi
+  static const valueType m_pi = 3.14159265358979323846264338328 ; // pi
 
   /*\
    |   _     _
