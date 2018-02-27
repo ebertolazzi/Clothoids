@@ -93,6 +93,8 @@ namespace G2lib {
   typedef double valueType ;
   typedef int    indexType ;
 
+  static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
+
   /*
   // sin(x)/x
   */

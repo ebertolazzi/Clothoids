@@ -44,8 +44,7 @@ namespace G2lib {
     theta0 = atan2(dy, dx);
     c0     = dx / d ;
     s0     = dy / d ;
-    s_min  = 0 ;
-    s_max  = d ;
+    L      = 0 ;
   }
 
   void
@@ -59,23 +58,23 @@ namespace G2lib {
     x0      = cx + ndx ;
     y0      = cy + ndy ;
     theta0 += angle ;
+    c0      = cos(theta0);
+    s0      = sin(theta0);
+
   }
 
   void
   LineSegment::reverse() {
-    x0     += c0 * s_max ;
-    y0     += s0 * s_max ;
+    x0     += c0 * L ;
+    y0     += s0 * L ;
     c0      = -c0 ;
     s0      = -s0 ;
     theta0 += m_pi ;
     if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
-    s_max   = s_max-s_min ;
-    s_min   = 0 ;
   }
 
   int
   LineSegment::toNURBS( valueType knots[4], valueType Poly[2][3] ) const {
-    valueType L = s_max-s_min ;
     knots[0] = knots[1] = 0 ;
     knots[2] = knots[3] = 1 ;
     Poly[0][0] = x0 ;
@@ -92,9 +91,7 @@ namespace G2lib {
     stream <<   "x0     = " << c.x0
            << "\ny0     = " << c.y0
            << "\ntheta0 = " << c.theta0
-           << "\nL      = " << c.s_max-c.s_min
-           << "\ns_min  = " << c.s_min
-           << "\ns_max  = " << c.s_max
+           << "\nL      = " << c.L
            << "\n" ;
     return stream ;
   }

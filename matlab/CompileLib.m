@@ -24,7 +24,7 @@ LIBS = [ ...
 ] ;
 
 disp('---------------------------------------------------------');
-for k=1:3 %length(NAMES)
+for k=1:4 %length(NAMES)
   N=NAMES{k} ;
   fprintf(1,'Compiling: %s\n',N) ;
 

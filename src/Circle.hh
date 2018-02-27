@@ -75,8 +75,7 @@ namespace G2lib {
 
     valueType c0,     //!< cos(theta0)
               s0,     //!< sin(theta0)
-              s_min,  //!< initial curvilinear coordinate of the clothoid segment
-              s_max ; //!< final curvilinear coordinate of the clothoid segment
+              L ;     //!< length of the circle segment
 
   public:
 
@@ -87,8 +86,7 @@ namespace G2lib {
     , k(0)
     , c0(1)
     , s0(0)
-    , s_min(0)
-    , s_max(0)
+    , L(0)
     {}
 
     //! construct a circle curve with the standard parameters
@@ -103,24 +101,7 @@ namespace G2lib {
     , k(_k)
     , c0(cos(_theta0))
     , s0(sin(_theta0))
-    , s_min(0)
-    , s_max(_L)
-    {}
-
-    CircleArc( valueType _x0,
-               valueType _y0,
-               valueType _theta0,
-               valueType _k,
-               valueType _smin ,
-               valueType _smax )
-    : x0(_x0)
-    , y0(_y0)
-    , theta0(_theta0)
-    , k(_k)
-    , c0(cos(_theta0))
-    , s0(sin(_theta0))
-    , s_min(_smin)
-    , s_max(_smax)
+    , L(_L)
     {}
 
     void
@@ -131,8 +112,7 @@ namespace G2lib {
       c0     = c.c0 ;
       s0     = c.s0 ;
       k      = c.k ;
-      s_min  = c.s_min ;
-      s_max  = c.s_max ;
+      L      = c.L ;
     }
 
     CircleArc( CircleArc const & s ) { copy(s) ; }
@@ -146,17 +126,15 @@ namespace G2lib {
     valueType getSinTheta0() const { return s0 ; }
     valueType getCosTheta0() const { return c0 ; }
     valueType getKappa()     const { return k ; }
-    valueType getSmin()      const { return s_min ; }
-    valueType getSmax()      const { return s_max ; }
-    valueType getL()         const { return s_max-s_min ; }
+    valueType getL()         const { return L ; }
 
-    valueType Xbegin()     const { return X(s_min) ; }
-    valueType Ybegin()     const { return Y(s_min) ; }
-    valueType ThetaBegin() const { return theta(s_min) ; }
+    valueType Xbegin()     const { return x0 ; }
+    valueType Ybegin()     const { return y0 ; }
+    valueType ThetaBegin() const { return theta0 ; }
 
-    valueType Xend()     const { return X(s_max) ; }
-    valueType Yend()     const { return Y(s_max) ; }
-    valueType ThetaEnd() const { return theta(s_max) ; }
+    valueType Xend()     const { return X(L) ; }
+    valueType Yend()     const { return Y(L) ; }
+    valueType ThetaEnd() const { return theta(L) ; }
 
     //! construct a circle with the standard parameters
     void
@@ -171,25 +149,7 @@ namespace G2lib {
       c0     = cos(_theta0);
       s0     = sin(_theta0);
       k      = _k ;
-      s_min  = 0 ;
-      s_max  = _L ;
-    }
-
-    void
-    build( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _k,
-           valueType _smin,
-           valueType _smax ) {
-      x0     = _x0 ;
-      y0     = _y0 ;
-      theta0 = _theta0 ;
-      c0     = cos(_theta0);
-      s0     = sin(_theta0);
-      k      = _k ;
-      s_min  = _smin ;
-      s_max  = _smax ;
+      L      = _L ;
     }
 
     //! build a circle by solving the hermite G1 problem
@@ -210,7 +170,7 @@ namespace G2lib {
               valueType _y2 );
 
     valueType
-    delta_theta() const { return (s_max-s_min)*k ; }
+    delta_theta() const { return L*k ; }
 
     valueType
     theta( valueType s ) const { return theta0 + s*k ; }
@@ -225,11 +185,11 @@ namespace G2lib {
     theta_DDD( valueType ) const { return 0 ; }
 
     valueType
-    totalLength() const { return s_max-s_min ; }
+    totalLength() const { return L ; }
 
     valueType
     thetaTotalVariation() const
-    { return std::abs((s_max-s_min)*k) ; }
+    { return std::abs(L*k) ; }
 
     valueType
     thetaMinMax( valueType & thMin, valueType & thMax ) const ;
@@ -247,14 +207,10 @@ namespace G2lib {
     void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
 
     void
-    trim( valueType s_begin, valueType s_end ) {
-      s_min = s_begin;
-      s_max = s_end;
-    }
+    trim( valueType s_begin, valueType s_end ) ;
 
-    //! set the origin of the circle to the curvilinear abscissa s0
     void
-    changeCurvilinearOrigin( valueType s0 );
+    changeCurvilinearOrigin( valueType s0, valueType newL ) ;
 
     void
     changeOrigin( valueType newx0, valueType newy0 )
@@ -285,14 +241,12 @@ namespace G2lib {
      * \param x x-coordinate
      * \param y y-coordinate
      * \param s param at minimum distance
-     * \param ndst number of point at minimum distance [0,1,2], 0 = [x,y] in the center of the circle
      * \return the distance point-circle
     \*/
     valueType
     distance( valueType   x,
               valueType   y,
-              valueType   s[2],
-              indexType & ndst ) const ;
+              valueType & s ) const ;
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the circle arc
@@ -303,9 +257,8 @@ namespace G2lib {
     \*/
     valueType
     distance( valueType x, valueType y ) const {
-      valueType ss[2] ;
-      indexType ndst ;
-      return distance( x, y, ss, ndst );
+      valueType ss ;
+      return distance( x, y, ss );
     }
 
     /*! \brief Compute rational B-spline coefficients for a circle arc
@@ -331,4 +284,3 @@ namespace G2lib {
 ///
 /// eof: Circle.hh
 ///
-

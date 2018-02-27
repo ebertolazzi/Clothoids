@@ -20,20 +20,17 @@
 "USAGE:\n" \
 "\n" \
 "  OBJ = LineMexWrapper( 'new', x0, y0, theta0, L ) ;\n" \
-"  OBJ = LineMexWrapper( 'new', x0, y0, theta0, smin, smax ) ;\n" \
 "  OBJ = LineMexWrapper( 'new', p0, p1 ) ;\n" \
 "\n" \
 "  LineMexWrapper( 'delete', OBJ ) ;\n" \
 "\n" \
 "  LineMexWrapper( 'build', OBJ, x0, y0, theta0, L ) ;\n" \
-"  LineMexWrapper( 'build', OBJ, x0, y0, theta0, smin, smax );\n" \
 "  LineMexWrapper( 'build', OBJ, p0, p1 ) ;\n" \
 "  LineMexWrapper( 'build', OBJ, p0, theta0, L ) ;\n" \
 "\n" \
 "  LineMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;\n" \
 "  LineMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
 "  LineMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
-"  LineMexWrapper( 'changeCurvilinearOrigin', OBJ, s0 ) ;\n" \
 "  LineMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
 "  LineMexWrapper( 'reverse', OBJ ) ;\n" \
 "\n" \
@@ -112,28 +109,22 @@ namespace G2lib {
 
         indexType kk = do_new ? 0 : 1 ;
 
-        MEX_ASSERT( nlhs == 1, "expected 1 output" );
+        MEX_ASSERT( nlhs == 1, "LineSegment('build',OBJ,x0,y0,theta0,L): expected 1 output" );
 
-        if ( nrhs == 5+kk || nrhs == 6+kk ) {
+        if ( nrhs == 5+kk ) {
 
-          valueType x0     = getScalarValue( prhs[1+kk], "Line: `x0` expected to be a real scalar" );
-          valueType y0     = getScalarValue( prhs[2+kk], "Line: `y0` expected to be a real scalar" );
-          valueType theta0 = getScalarValue( prhs[3+kk], "Line: `theta0` expected to be a real scalar" );
+          valueType x0     = getScalarValue( prhs[1+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `x0` expected to be a real scalar" );
+          valueType y0     = getScalarValue( prhs[2+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `y0` expected to be a real scalar" );
+          valueType theta0 = getScalarValue( prhs[3+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `theta0` expected to be a real scalar" );
 
-          valueType smin = 0, smax = 0 ;
-          if ( nrhs == 5+kk ) {
-            smax = getScalarValue( prhs[4+kk], "Line: `L` expected to be a real scalar" );
-          } else {
-            smin = getScalarValue( prhs[4+kk], "Line: `s_min` expected to be a real scalar" );
-            smax = getScalarValue( prhs[5+kk], "Line: `s_max` expected to be a real scalar" );
-          }
+          valueType L      = getScalarValue( prhs[4+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `L` expected to be a real scalar" );
 
-          ptr->build( x0, y0, theta0, smin, smax );
+          ptr->build( x0, y0, theta0, L );
 
         } else if ( nrhs == 3+kk ) {
 
-          valueType const * p0 = getVectorPointer( prhs[1+kk], size0, "Line: `p0` expected to be a real vector" );
-          valueType const * p1 = getVectorPointer( prhs[2+kk], size1, "Line: `p1` expected to be a real vector" );
+          valueType const * p0 = getVectorPointer( prhs[1+kk], size0, "LineSegment('build',OBJ,p0,p1): `p0` expected to be a real vector" );
+          valueType const * p1 = getVectorPointer( prhs[2+kk], size1, "LineSegment('build',OBJ,p0,p1): `p1` expected to be a real vector" );
 
           MEX_ASSERT( size0 == 2 && size1 == 2,
                       "Line: bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
@@ -143,71 +134,62 @@ namespace G2lib {
         } else if ( nrhs == 1 ) {
           // nothing to do
         } else {
-          MEX_ASSERT(false, "nrhs = " << nrhs << " expected " << 2+kk << ", " << 5+kk << " or " << 6+kk << " inputs" );
+          MEX_ASSERT(false, "nrhs = " << nrhs << " expected " << 2+kk << " or " << 5+kk << " inputs" );
         }
 
         plhs[0] = convertPtr2Mat<LineSegment>(ptr);
 
       } else if ( cmd == "delete" ) {
 
-        MEX_ASSERT(nrhs == 2, "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, "expected no output");
+        MEX_ASSERT(nrhs == 2, "LineSegment('delete',OBJ): expected 2 inputs");
+        MEX_ASSERT(nlhs == 0, "LineSegment('delete',OBJ): expected no output");
         // Destroy the C++ object
         DATA_DELETE( arg_in_1 ) ;
 
       } else if ( cmd == "changeOrigin" ) {
 
-        MEX_ASSERT(nrhs == 4, "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, "expected no output");
+        MEX_ASSERT(nrhs == 4, "LineSegment('changeOrigin',OBJ,x0,y0): expected 4 inputs");
+        MEX_ASSERT(nlhs == 0, "LineSegment('changeOrigin',OBJ,x0,y0): expected no output");
 
-        valueType new_x0 = getScalarValue( arg_in_2, "Line: `x0` expected to be a real scalar" );
-        valueType new_y0 = getScalarValue( arg_in_3, "Line: `y0` expected to be a real scalar" );
+        valueType new_x0 = getScalarValue( arg_in_2, "LineSegment('changeOrigin',x0,y0): `x0` expected to be a real scalar" );
+        valueType new_y0 = getScalarValue( arg_in_3, "LineSegment('changeOrigin',x0,y0): `y0` expected to be a real scalar" );
 
         ptr->changeOrigin( new_x0, new_y0 );
 
-      } else if ( cmd == "changeCurvilinearOrigin" ) {
-
-        MEX_ASSERT(nrhs == 3, "expected 3 inputs");
-        MEX_ASSERT(nlhs == 0, "expected no output");
-
-        valueType new_s = getScalarValue( arg_in_2,  "Line: `S` expected to be a real scalar" );
-
-        ptr->changeCurvilinearOrigin( new_s );
-
       } else if ( cmd == "translate" ) {
 
-        MEX_ASSERT(nrhs == 4, "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, "expected no output");
+        MEX_ASSERT(nrhs == 4, "LineSegment('translate',OBJ,t0,t0): expected 4 inputs");
+        MEX_ASSERT(nlhs == 0, "LineSegment('translate',OBJ,t0,t0): expected no output");
 
-        valueType tx = getScalarValue( arg_in_2, "Line: `tx` expected to be a real scalar" );
-        valueType ty = getScalarValue( arg_in_3, "Line: `ty` expected to be a real scalar" );
+        valueType tx = getScalarValue( arg_in_2, "LineSegment('translate',OBJ,t0,t0): `tx` expected to be a real scalar" );
+        valueType ty = getScalarValue( arg_in_3, "LineSegment('translate',OBJ,t0,t0): `ty` expected to be a real scalar" );
 
         ptr->translate( tx, ty );
 
       } else if ( cmd == "rotate" ) {
 
-        MEX_ASSERT(nrhs == 5, "expected 5 inputs");
-        MEX_ASSERT(nlhs == 0, "expected no output");
+        MEX_ASSERT(nrhs == 5, "LineSegment('rotate',OBJ,angle,cx,cy): expected 5 inputs");
+        MEX_ASSERT(nlhs == 0, "LineSegment('rotate',OBJ,angle,cx,cy): expected no output");
 
-        valueType angle = getScalarValue( arg_in_2, "Line: `angle` expected to be a real scalar" );
-        valueType cx    = getScalarValue( arg_in_3, "Line: `cx` expected to be a real scalar" );
-        valueType cy    = getScalarValue( arg_in_4, "Line: `cy` expected to be a real scalar" );
+        valueType angle = getScalarValue( arg_in_2, "LineSegment('rotate',OBJ,angle,cx,cy): `angle` expected to be a real scalar" );
+        valueType cx    = getScalarValue( arg_in_3, "LineSegment('rotate',OBJ,angle,cx,cy): `cx` expected to be a real scalar" );
+        valueType cy    = getScalarValue( arg_in_4, "LineSegment('rotate',OBJ,angle,cx,cy): `cy` expected to be a real scalar" );
 
         ptr->rotate( angle, cx, cy );
 
       } else if ( cmd == "reverse" ) {
 
-        MEX_ASSERT(nrhs == 2, "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, "expected no output");
+        MEX_ASSERT(nrhs == 2, "LineSegment('reverse',OBJ): expected 2 inputs");
+        MEX_ASSERT(nlhs == 0, "LineSegment('reverse',OBJ): expected no output");
         ptr->reverse();
 
       } else if ( cmd == "trim" ) {
 
-        MEX_ASSERT(nrhs == 4, "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, "expected no output");
+        MEX_ASSERT(nrhs == 4, "LineSegment('trim',OBJ,s_begin,s_end): expected 4 inputs");
+        MEX_ASSERT(nlhs == 0, "LineSegment('trim',OBJ,s_begin,s_end): expected no output");
 
-        valueType s_begin = getScalarValue( arg_in_2, "Line: `s_begin` expected to be a real scalar" );
-        valueType s_end   = getScalarValue( arg_in_3, "Line: `s_end` expected to be a real scalar" );
+        valueType s_begin = getScalarValue( arg_in_2, "LineSegment('trim',OBJ,s_begin,s_end): `s_begin` expected to be a real scalar" );
+        valueType s_end   = getScalarValue( arg_in_3, "LineSegment('trim',OBJ,s_begin,s_end): `s_end` expected to be a real scalar" );
 
         ptr->trim( s_begin, s_end );
 
@@ -262,9 +244,7 @@ namespace G2lib {
           if      ( cmd == "getX0"     ) setScalarValue( arg_out_0, ptr->getX0());
           else if ( cmd == "getY0"     ) setScalarValue( arg_out_0, ptr->getY0());
           else if ( cmd == "getTheta0" ) setScalarValue( arg_out_0, ptr->getTheta0());
-          else if ( cmd == "getSmin"   ) setScalarValue( arg_out_0, ptr->getSmin());
-          else if ( cmd == "getSmax"   ) setScalarValue( arg_out_0, ptr->getSmax());
-          else if ( cmd == "length"    ) setScalarValue( arg_out_0, ptr->totalLength());
+          else if ( cmd == "length"    ) setScalarValue( arg_out_0, ptr->getL());
           else {
             MEX_ASSERT(false, "Unknown command: " << cmd );
           }

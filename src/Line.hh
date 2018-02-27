@@ -44,8 +44,7 @@ namespace G2lib {
 
     valueType c0,     //!< `cos(theta0)`
               s0,     //!< `sin(theta0)`
-              s_min,  //!< initial curvilinear coordinate of the line
-              s_max ; //!< final curvilinear coordinate of the line
+              L ;     //!< length of the segment
 
   public:
 
@@ -55,8 +54,7 @@ namespace G2lib {
     , theta0(0)
     , c0(1)
     , s0(0)
-    , s_min(0)
-    , s_max(0)
+    , L(0)
     {}
 
     //! construct a circle curve with the standard parameters
@@ -69,22 +67,7 @@ namespace G2lib {
     , theta0(_theta0)
     , c0(cos(_theta0))
     , s0(sin(_theta0))
-    , s_min(0)
-    , s_max(_L)
-    {}
-
-    LineSegment( valueType _x0,
-                 valueType _y0,
-                 valueType _theta0,
-                 valueType _smin ,
-                 valueType _smax )
-    : x0(_x0)
-    , y0(_y0)
-    , theta0(_theta0)
-    , c0(cos(_theta0))
-    , s0(sin(_theta0))
-    , s_min(_smin)
-    , s_max(_smax)
+    , L(_L)
     {}
 
     void
@@ -94,8 +77,7 @@ namespace G2lib {
       theta0 = c.theta0 ;
       c0     = c.c0 ;
       s0     = c.s0 ;
-      s_min  = c.s_min ;
-      s_max  = c.s_max ;
+      L      = c.L ;
     }
 
     LineSegment( LineSegment const & s ) { copy(s) ; }
@@ -108,23 +90,19 @@ namespace G2lib {
     valueType getTheta0()    const { return theta0 ; }
     valueType getSinTheta0() const { return s0 ; }
     valueType getCosTheta0() const { return c0 ; }
-    valueType getSmin()      const { return s_min ; }
-    valueType getSmax()      const { return s_max ; }
-    valueType getL()         const { return s_max-s_min ; }
+    valueType getL()         const { return L ; }
 
     void
     build( valueType _x0,
            valueType _y0,
            valueType _theta0,
-           valueType _smin,
-           valueType _smax ) {
+           valueType _L ) {
       x0     = _x0 ;
       y0     = _y0 ;
       theta0 = _theta0 ;
       c0     = cos(_theta0);
       s0     = sin(_theta0);
-      s_min  = _smin ;
-      s_max  = _smax ;
+      L      = _L ;
     }
 
     //! construct a clothoid with the standard parameters
@@ -133,9 +111,6 @@ namespace G2lib {
               valueType _y0,
               valueType _x1,
               valueType _y1 ) ;
-
-    valueType
-    totalLength() const { return s_max-s_min ; }
 
     valueType X( valueType s ) const { return x0 + c0 * s ; }
     valueType Y( valueType s ) const { return y0 + s0 * s ; }
@@ -164,15 +139,9 @@ namespace G2lib {
 
     void
     trim( valueType s_begin, valueType s_end ) {
-      s_min = s_begin ;
-      s_max = s_end ;
-    }
-
-    //! set the origin of the clothoid to the curvilinear abscissa s0
-    void
-    changeCurvilinearOrigin( valueType s0_new ) {
-      x0 += c0 * s0_new ;
-      y0 += s0 * s0_new ;
+      x0 += c0 * s_begin ;
+      y0 += s0 * s_begin ;
+      L   = s_end - s_begin ;
     }
 
     void

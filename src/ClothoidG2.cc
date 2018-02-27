@@ -263,9 +263,9 @@ namespace G2lib {
     valueType dk0 = -(k0+tmp)/(alpha*s0) ;
     valueType dk1 =  (k1+tmp)/(alpha*s1) ;
 
-    S0.build( x0, y0, theta0, kappa0, dk0,  0, s0 ) ;
-    S1.build( x1, y1, theta1, kappa1, dk1, -s1, 0 ) ;
-    S1.change_origin( -s1 ) ;
+    S0.build( x0, y0, theta0, kappa0, dk0, s0 ) ;
+    S1.build( x1, y1, theta1, kappa1, dk1, s1 ) ;
+    S1.changeCurvilinearOrigin( -s1, s1 ) ;
   }
 
   /*\
@@ -397,10 +397,10 @@ namespace G2lib {
 
     if ( ! ( L0 > 0 && L1 > 0 ) ) return false ;
 
-    S0.build( x0, y0, theta0, kappa0, dk0,  0 , L0 ) ;
-    S1.build( x1, y1, theta1, kappa1, dk1, -L1, 0  ) ;
-    S1.change_origin( -L1 ) ;
-    SM.build( S0.Xend(), S0.Xend(), S0.ThetaEnd(), 0, 0, 0, 2*sM*lambda ) ;
+    S0.build( x0, y0, theta0, kappa0, dk0, L0 ) ;
+    S1.build( x1, y1, theta1, kappa1, dk1, L1 ) ;
+    S1.changeCurvilinearOrigin( -L1, L1 ) ;
+    SM.build( S0.Xend(), S0.Xend(), S0.ThetaEnd(), 0, 0, 2*sM*lambda ) ;
 
     return true ;
   }
@@ -727,9 +727,9 @@ namespace G2lib {
 
     //th0 = theta0 - phi ;
     //th1 = theta1 - phi ;
-    S0.build( x0, y0, phi+th0, kappa0, dK0,   0, L0 );
-    S1.build( x1, y1, phi+th1, kappa1, dK1, -L1, 0  );
-    S1.change_origin(-L1);
+    S0.build( x0, y0, phi+th0, kappa0, dK0, L0 );
+    S1.build( x1, y1, phi+th1, kappa1, dK1, L1 );
+    S1.changeCurvilinearOrigin( -L1, L1 );
 
     // la trasformazione inversa da [-1,1] a (x0,y0)-(x1,y1)
     // g(x,y) = RotInv(phi)*(1/lambda*[X;Y] - [xbar;ybar]) = [x;y]
@@ -740,9 +740,8 @@ namespace G2lib {
     valueType dy = yM / Lscale;
     SM.build( x0 + C * dx - S * dy,
               y0 + C * dy + S * dx,
-              thM + phi, KM, dKM, -LM, LM );
-
-    SM.change_origin(-LM);
+              thM + phi, KM, dKM, 2*LM );
+    SM.changeCurvilinearOrigin( -LM, 2*LM );
   }
 
   // **************************************************************************

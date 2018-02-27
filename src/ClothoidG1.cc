@@ -225,14 +225,11 @@ namespace G2lib {
 
     G2LIB_ASSERT( std::abs(g) < 1E-8, "Newton do not converge, g = " << g << " niter = " << niter ) ;
     GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] ) ;
-    valueType L = r/intC[0] ;
+    L = r/intC[0] ;
 
     G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
     k  = (delta-A)/L ;
     dk = 2*A/L/L ;
-
-    s_min = 0 ;
-    s_max = L ;
 
     return niter ;
   }
@@ -352,8 +349,8 @@ namespace G2lib {
                                valueType & Y,
                                valueType & S ) const {
     valueType DST = 1e100;
-    valueType s = s_min;
-    while ( s <= s_max ) {
+    valueType s = 0;
+    while ( s <= L ) {
       valueType x1, y1 ;
       eval( s, x1, y1 );
       valueType dst = hypot( x-x1, y-y1 );
@@ -440,7 +437,6 @@ namespace G2lib {
     y0     = _y0 ;
     theta0 = _theta0 ;
     k      = _k ;
-    s_min  = 0 ;
 
     // Compute guess angles
     valueType len  = hypot( _y1-_y0, _x1-_x0 ) ;
@@ -473,7 +469,7 @@ namespace G2lib {
           // transform solution
           buildClothoid( x0, y0, theta0,
                          _x1, _y1, arot + th,
-                         _k, dk, s_max ) ;
+                         _k, dk, L ) ;
           return true ;
         }
       }
@@ -482,15 +478,14 @@ namespace G2lib {
   }
 
   void
-  ClothoidCurve::change_origin( valueType s0 ) {
+  ClothoidCurve::changeCurvilinearOrigin( valueType s0, valueType newL ) {
     valueType new_theta, new_kappa, new_x0, new_y0 ;
     eval( s0, new_theta, new_kappa, new_x0, new_y0 ) ;
     x0     = new_x0 ;
     y0     = new_y0 ;
     theta0 = new_theta ;
     k      = new_kappa ;
-    s_min -= s0 ;
-    s_max -= s0 ;
+    L      = newL ;
   }
 
   bool
@@ -498,17 +493,17 @@ namespace G2lib {
                              valueType p0[2],
                              valueType p1[2],
                              valueType p2[2] ) const {
-    valueType theta_max = theta( s_max ) ;
-    valueType theta_min = theta( s_min ) ;
+    valueType theta_max = theta( L ) ;
+    valueType theta_min = theta0 ;
     valueType dtheta    = std::abs( theta_max-theta_min ) ;
     if ( dtheta < m_pi_2 ) {
       valueType alpha, t0[2] ;
-      eval( s_min, offs, p0[0], p0[1] ) ;
-      eval_D( s_min, t0[0], t0[1] ) ; // no offset
+      eval( 0, offs, p0[0], p0[1] ) ;
+      eval_D( 0, t0[0], t0[1] ) ; // no offset
       if ( dtheta > 0.0001 * m_pi_2 ) {
         valueType t1[2] ;
-        eval( s_max, offs, p1[0], p1[1] ) ;
-        eval_D( s_max, t1[0], t1[1] ) ; // no offset
+        eval( L, offs, p1[0], p1[1] ) ;
+        eval_D( L, t1[0], t1[1] ) ; // no offset
         // risolvo il sistema
         // p0 + alpha * t0 = p1 + beta * t1
         // alpha * t0 - beta * t1 = p1 - p0
@@ -516,7 +511,7 @@ namespace G2lib {
         alpha = ((p1[1]-p0[1])*t1[0] - (p1[0]-p0[0])*t1[1])/det ;
       } else {
         // se angolo troppo piccolo uso approx piu rozza
-        alpha = s_max - s_min ;
+        alpha = L ;
       }
       p2[0] = p0[0] + alpha*t0[0] ;
       p2[1] = p0[1] + alpha*t0[1] ;
@@ -536,17 +531,17 @@ namespace G2lib {
   ) const {
 
     // step 0: controllo se curvatura passa per 0
-    valueType k_min = theta_D( s_min ) ;
-    valueType k_max = theta_D( s_max ) ;
+    valueType k_min = theta_D( 0 ) ;
+    valueType k_max = theta_D( L ) ;
     c.clear() ;
     t.clear() ;
     if ( k_min * k_max < 0 ) {
       // risolvo (s-s_min)*dk+k_min = 0 --> s = s_min-k_min/dk
-      valueType s_med = s_min-k_min/dk ;
+      valueType s_med = -k_min/dk ;
       ClothoidCurve tmp(*this) ;
-      tmp.trim(s_min,s_med) ;
+      tmp.trim(0,s_med) ;
       tmp.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
-      tmp.trim(s_med,s_max) ;
+      tmp.trim(s_med,L) ;
       tmp.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
     } else {
       bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
@@ -573,8 +568,8 @@ namespace G2lib {
     valueType theta_min, kappa_min, x_min, y_min,
               theta_max, kappa_max, x_max, y_max ;
 
-    eval( s_min, theta_min, kappa_min, x_min, y_min ) ;
-    eval( s_max, theta_max, kappa_max, x_max, y_max ) ;
+    eval( 0, theta_min, kappa_min, x_min, y_min ) ;
+    eval( L, theta_max, kappa_max, x_max, y_max ) ;
 
     valueType dtheta = std::abs( theta_max - theta_min ) ;
     valueType dx     = x_max - x_min ;
@@ -588,10 +583,10 @@ namespace G2lib {
       t.push_back(tt) ;
     } else {
       ClothoidCurve cc(*this) ;
-      valueType s_med = (s_min+s_max)/2 ;
-      cc.trim(s_min,s_med) ;
+      valueType s_med = L/2 ;
+      cc.trim(0,s_med) ;
       cc.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
-      cc.trim(s_med,s_max) ;
+      cc.trim(s_med,L) ;
       cc.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
     }
   }
@@ -605,19 +600,19 @@ namespace G2lib {
                                      valueType     & s2,
                                      indexType       max_iter,
                                      valueType       tolerance ) const {
-    valueType angle1a = c1.theta(c1.s_min) ;
-    valueType angle1b = c1.theta(c1.s_max) ;
-    valueType angle2a = c2.theta(c2.s_min) ;
-    valueType angle2b = c2.theta(c2.s_max) ;
+    valueType angle1a = c1.theta(0) ;
+    valueType angle1b = c1.theta(c1.L) ;
+    valueType angle2a = c2.theta(0) ;
+    valueType angle2b = c2.theta(c2.L) ;
     // cerca angoli migliori per partire
     valueType dmax = abs2pi(angle1a-angle2a) ;
     valueType dab  = abs2pi(angle1a-angle2b) ;
     valueType dba  = abs2pi(angle1b-angle2a) ;
     valueType dbb  = abs2pi(angle1b-angle2b) ;
-    s1 = c1.s_min ; s2 = c2.s_min ;
-    if ( dmax < dab ) { dmax = dab ; s2 = c2.s_max ; }
-    if ( dmax < dba ) { dmax = dba ; s1 = c1.s_min ; s2 = c2.s_min ; }
-    if ( dmax < dbb ) {              s1 = c1.s_min ; s2 = c2.s_max ; }
+    s1 = s2 = 0 ;
+    if ( dmax < dab ) { dmax = dab ; s2 = c2.L ; }
+    if ( dmax < dba ) { dmax = dba ; s1 = 0 ; s2 = 0 ; }
+    if ( dmax < dbb ) {              s1 = 0 ; s2 = c2.L ; }
     for ( indexType i = 0 ; i < max_iter ; ++i ) {
       valueType t1[2], t2[2], p1[2], p2[2] ;
       c1.eval( s1, c1_offs, p1[0], p1[1] ) ;
@@ -637,8 +632,8 @@ namespace G2lib {
       valueType py  = p2[1]-p1[1] ;
       s1 += (py*t2[0] - px*t2[1])/det ;
       s2 += (t1[0]*py - t1[1]*px)/det ;
-      if ( s1 <= c1.s_min || s1 >= c1.s_max ||
-           s2 <= c2.s_min || s2 >= c2.s_max ) break ;
+      if ( s1 <= 0 || s1 >= c1.L ||
+           s2 <= 0 || s2 >= c2.L ) break ;
       if ( std::abs(px) <= tolerance ||
            std::abs(py) <= tolerance ) return true ;
     }
@@ -655,8 +650,8 @@ namespace G2lib {
                             valueType             tolerance ) const {
     vector<ClothoidCurve> c0, c1 ;
     vector<T2D>           t0, t1 ;
-    bbSplit( m_pi/50, (s_max-s_min)/3, offs, c0, t0 ) ;
-    clot.bbSplit( m_pi/50, (clot.s_max-clot.s_min)/3, clot_offs, c1, t1 ) ;
+    bbSplit( m_pi/50, L/3, offs, c0, t0 ) ;
+    clot.bbSplit( m_pi/50, clot.L/3, clot_offs, c1, t1 ) ;
     s1.clear() ;
     s2.clear() ;
     for ( unsigned i = 0 ; i < unsigned(c0.size()) ; ++i ) {
@@ -710,33 +705,29 @@ namespace G2lib {
 
   void
   ClothoidCurve::scale( valueType s ) {
-    k     /= s ;
-    dk    /= s*s ;
-    s_min *= s ;
-    s_max *= s ;
+    k  /= s ;
+    dk /= s*s ;
+    L  *= s ;
   }
 
   void
   ClothoidCurve::reverse() {
     theta0 = theta0 + m_pi ;
     if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
-    k     = -k ;
-    valueType tmp = s_max ;
-    s_max = -s_min ;
-    s_min = -tmp ;
+    k = -k ;
   }
 
   valueType
   ClothoidCurve::thetaTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType kL  = k+dk*s_min ;
-    valueType kR  = k+dk*s_max ;
-    valueType thL = s_min*(k+dk*s_min/2) ;
-    valueType thR = s_max*(k+dk*s_max/2) ;
+    valueType kL  = k ;
+    valueType kR  = k+dk*L ;
+    valueType thL = 0 ;
+    valueType thR = L*(k+dk*L/2) ;
     if ( kL*kR < 0 ) {
       valueType root = -k/dk ;
-      if ( root > s_min && root < s_max ) {
+      if ( root > 0 && root < L ) {
         valueType thM  = root*(k+dk*root/2) ;
         return std::abs( thR - thM ) + std::abs( thM - thL ) ;
       }
@@ -748,15 +739,15 @@ namespace G2lib {
   ClothoidCurve::thetaMinMax( valueType & thMin, valueType & thMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType kL  = k+dk*s_min ;
-    valueType kR  = k+dk*s_max ;
-    valueType thL = s_min*(k+dk*s_min/2) ;
-    valueType thR = s_max*(k+dk*s_max/2) ;
+    valueType kL  = k ;
+    valueType kR  = k+dk*L ;
+    valueType thL = 0 ;
+    valueType thR = L*(k+dk*L/2) ;
     if ( thL < thR ) { thMin = thL ; thMax = thR ; }
     else             { thMin = thR ; thMax = thL ; }
     if ( kL*kR < 0 ) {
       valueType root = -k/dk ;
-      if ( root > s_min && root < s_max ) {
+      if ( root > 0 && root < L ) {
         valueType thM = root*(k+dk*root/2) ;
         if      ( thM < thMin ) thMin = thM ;
         else if ( thM > thMax ) thMax = thM ;
@@ -769,8 +760,8 @@ namespace G2lib {
   ClothoidCurve::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    kMin = k+dk*s_min ;
-    kMax = k+dk*s_max ;
+    kMin = k ;
+    kMax = k+dk*L ;
     if ( kMax < kMin ) std::swap( kMax, kMin ) ;
     return kMax - kMin ;
   }
@@ -779,59 +770,50 @@ namespace G2lib {
   ClothoidCurve::curvatureTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType km = k+s_min*dk ;
-    valueType kp = k+s_max*dk ;
+    valueType km = k ;
+    valueType kp = k+L*dk ;
     return std::abs(kp-km) ;
   }
 
   valueType
   ClothoidCurve::integralCurvature2() const {
-    return (s_max-s_min)*( k*(k+(s_max+s_min)*dk) +
-                          (s_max*s_max+s_max*s_min+s_min*s_min)*dk*dk/3 ) ;
+    return L*( k*(k+L*dk) + (L*L)*dk*dk/3 ) ;
   }
 
   valueType
   ClothoidCurve::integralJerk2() const {
-    valueType s_min2 = s_min*s_min ;
-    valueType s_min3 = s_min*s_min2 ;
-    valueType s_min4 = s_min2*s_min2 ;
-    valueType k2     = k*k ;
-    valueType k3     = k*k2 ;
-    valueType k4     = k2*k2 ;
-    valueType t1     = s_max+s_min ;
-    valueType t2     = s_max*t1+s_min2 ;
-    valueType t3     = s_max*t2+s_min3 ;
-    valueType t4     = s_max*t3+s_min4 ;
-    return ((((t4/5*dk+t3*k)*dk+(1+2*t2)*k2)*dk+2*t1*k3)*dk+k4)*(s_max-s_min) ;
+    valueType k2 = k*k ;
+    valueType k3 = k*k2 ;
+    valueType k4 = k2*k2 ;
+    valueType t1 = L ;
+    valueType t2 = L*t1 ;
+    valueType t3 = L*t2 ;
+    valueType t4 = L*t3 ;
+    return ((((t4/5*dk+t3*k)*dk+(1+2*t2)*k2)*dk+2*t1*k3)*dk+k4)*L ;
   }
 
   valueType
   ClothoidCurve::integralSnap2() const {
-    valueType s_min2 = s_min*s_min  ;
-    valueType s_min3 = s_min*s_min2 ;
-    valueType s_min4 = s_min3*s_min ;
-    valueType s_min5 = s_min4*s_min ;
-    valueType s_min6 = s_min5*s_min ;
-    valueType k2     = k*k ;
-    valueType k3     = k*k2 ;
-    valueType k4     = k2*k2 ;
-    valueType k5     = k4*k ;
-    valueType k6     = k4*k2 ;
-    valueType dk2    = dk*dk ;
-    valueType dk3    = dk*dk2 ;
-    valueType dk4    = dk2*dk2 ;
-    valueType dk5    = dk4*dk ;
-    valueType dk6    = dk4*dk2 ;
-    valueType t2     = s_max+s_min ;
-    valueType t3     = s_max*t2+s_min2 ;
-    valueType t4     = s_max*t3+s_min3 ;
-    valueType t5     = s_max*t4+s_min4 ;
-    valueType t6     = s_max*t5+s_min5 ;
-    valueType t7     = s_max*t6+s_min6 ;
+    valueType k2  = k*k ;
+    valueType k3  = k*k2 ;
+    valueType k4  = k2*k2 ;
+    valueType k5  = k4*k ;
+    valueType k6  = k4*k2 ;
+    valueType dk2 = dk*dk ;
+    valueType dk3 = dk*dk2 ;
+    valueType dk4 = dk2*dk2 ;
+    valueType dk5 = dk4*dk ;
+    valueType dk6 = dk4*dk2 ;
+    valueType t2  = L ;
+    valueType t3  = L*t2 ;
+    valueType t4  = L*t3 ;
+    valueType t5  = L*t4 ;
+    valueType t6  = L*t5 ;
+    valueType t7  = L*t6 ;
 
     return ( (t7/7)*dk6 + dk5*k*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
              5*dk2*k4*t3 + 3*dk3*t3 + 3*dk*k5*t2 + 9*dk2*k*t2 +
-             k6+9*k2*dk ) * ( s_max - s_min ) ;
+             k6+9*k2*dk ) * L ;
   }
 
   std::ostream &
@@ -841,9 +823,7 @@ namespace G2lib {
            << "\ntheta0 = " << c.theta0
            << "\nk      = " << c.k
            << "\ndk     = " << c.dk
-           << "\nL      = " << c.s_max-c.s_min
-           << "\ns_min  = " << c.s_min
-           << "\ns_max  = " << c.s_max
+           << "\nL      = " << c.L
            << "\n" ;
     return stream ;
   }

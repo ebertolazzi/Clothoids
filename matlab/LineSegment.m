@@ -85,11 +85,6 @@ classdef LineSegment < handle
       LineSegmentMexWrapper('translate', self.objectHandle, tx, ty );
     end
 
-    function changeCurvilinearOrigin(self, s0 )
-      % change the origin of the circle curve to `s0`
-      LineSegmentMexWrapper('changeCurvilinearOrigin', self.objectHandle, s0 );
-    end
-
     function trim(self, smin, smax)
       % trim circle curve to the corresponding curvilinear parameters
       LineSegmentMexWrapper('trim', self.objectHandle, smin, smax );
@@ -118,11 +113,6 @@ classdef LineSegment < handle
       LineSegmentMexWrapper('moveOrigin', self.objectHandle, newX0, newY0 );
     end
 
-    function [p0,p1,p2,ok] = bbTriangle(self)
-      % return the bounding box triangle of the circle arc
-      [p0,p1,p2,ok] = LineSegmentMexWrapper('bbTriangle', self.objectHandle);
-    end
-
     function nurbs = to_nurbs(self)
       % return a nurbs representation of the circle arc
       nurbs = LineSegmentMexWrapper('to_nurbs', self.objectHandle);
@@ -141,7 +131,7 @@ classdef LineSegment < handle
       % On output:
       %    x, y:  coordinates of the curve
       %
-      [X,Y] = ClothoidMexWrapper('eval', self.objectHandle, s );
+      [X,Y] = LineSegmentMexWrapper('eval', self.objectHandle, s );
     end
 
     function [DX,DY] = eval_D(self, s)
@@ -159,11 +149,6 @@ classdef LineSegment < handle
       % eval the circle third derivative at curvilinear abscissa `s`
       [DDDX,DDDY] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, s );
     end
-
-    function th = theta(self, s)
-      % eval the angle of the circle curve at curvilinear abscissa `s`
-      th = LineSegmentMexWrapper('theta', self.objectHandle, s );
-    end
  
     function X0 = getX0(self)
       X0 = LineSegmentMexWrapper('getX0', self.objectHandle );
@@ -175,14 +160,6 @@ classdef LineSegment < handle
  
     function th0 = getTheta0(self)
       th0 = LineSegmentMexWrapper('getTheta0', self.objectHandle );
-    end
-
-    function res = getSmin(self)
-      res = LineSegmentMexWrapper('getSmin', self.objectHandle );
-    end
- 
-    function res = getSmax(self)
-      res = LineSegmentMexWrapper('getSmax', self.objectHandle );
     end
  
     function res = length(self)

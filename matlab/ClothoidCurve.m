@@ -10,7 +10,6 @@ classdef ClothoidCurve < handle
       % Usage:
       %    ref = ClothoidCurve()
       %    ref = ClothoidCurve( x0, y0, theta0, k0, dk, L )
-      %    ref = ClothoidCurve( x0, y0, theta0, k0, dk, smin, smax )
       %
       % On input:
       %    x0, y0: coordinate of initial point
@@ -18,8 +17,6 @@ classdef ClothoidCurve < handle
       %    k0:     curvature of the clothoid at initial point
       %    dk:     derivative of curvature respect to arclength
       %    L:      length of curve from initial to final point
-      %    smin:   initial curvilinear coordinate of the curve
-      %    smax:   final curvilinear coordinate of the curve
       %
       %  On output:
       %    ref: reference handle to the object instance
@@ -37,7 +34,6 @@ classdef ClothoidCurve < handle
       %
       % Usage:
       %    ref.build( x0, y0, theta0, k0, dk, L )
-      %    ref.build( x0, y0, theta0, k0, dk, smin, smax )
       %
       % On input:
       %    x0, y0: coordinate of initial point
@@ -45,8 +41,6 @@ classdef ClothoidCurve < handle
       %    k0:     curvature of the clothoid at initial point
       %    dk:     derivative of curvature respect to arclength
       %    L :     length of curve from initial to final point
-      %    smin:   initial curvilinear coordinate of the curve
-      %    smax:   final curvilinear coordinate of the curve
       %
       ClothoidCurveMexWrapper('build', this.objectHandle, varargin{:} );
     end
@@ -172,15 +166,16 @@ classdef ClothoidCurve < handle
       ClothoidCurveMexWrapper('trim', this.objectHandle, smin, smax );
     end
         
-    function changeOrigin(this, s0)
+    function changeCurvilinearOrigin(this, s0, L )
       % change the origin of the clothoid curve to curviliear corrdinate `s0`
       % Usage:
-      %    ref.changeOrigin(s0)
+      %    ref.changeOrigin(s0,L)
       %    
       % On input:
       %    s0: curvilinear coordinate of the origin of the new curve
+      %    L:  nel length of the curve
       %
-      ClothoidCurveMexWrapper('changeOrigin', this.objectHandle, s0 );
+      ClothoidCurveMexWrapper('changeCurvilinearOrigin', this.objectHandle, s0, L );
     end
         
     function rotate(this, angle, cx, cy)
@@ -261,9 +256,9 @@ classdef ClothoidCurve < handle
       if nargin<2
         step = 0.1;
       end
-      smin  = ClothoidCurveMexWrapper('getSmin', this.objectHandle );
-      smax  = ClothoidCurveMexWrapper('getSmax', this.objectHandle );
-      [X,Y] = ClothoidCurveMexWrapper('eval', this.objectHandle, [smin:step:smax smax] );
+      L     = ClothoidCurveMexWrapper('length', this.objectHandle );
+      S     = 0:step:L ;
+      [X,Y] = ClothoidCurveMexWrapper('eval', this.objectHandle, S );
       lineH = plot(X,Y, varargin{:});
     end
   end

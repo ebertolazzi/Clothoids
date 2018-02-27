@@ -20,7 +20,11 @@
 #include "Circle.hh"
 #include "CubicRootsFlocke.hh"
 
+#include <cmath>
+
 namespace G2lib {
+
+  using namespace std ;
 
   static const valueType m_pi   = 3.14159265358979323846264338328  ; // pi
   static const valueType m_pi_2 = 1.57079632679489661923132169164  ; // pi/2
@@ -50,9 +54,8 @@ namespace G2lib {
     theta0 = _theta0 ;
     c0     = cos(_theta0);
     s0     = sin(_theta0);
-    k      = tan(th) / d ;
-    s_min  = 0;
-    s_max  = 2*d*cos(th)/Sinc(th);
+    k      = 2*sin(th)/d ;
+    L      = d/Sinc(th);
   }
 
   void
@@ -71,8 +74,8 @@ namespace G2lib {
 
   valueType
   CircleArc::thetaMinMax( valueType & thMin, valueType & thMax ) const  {
-    thMin = theta0 + s_min * k ;
-    thMax = theta0 + s_max * k ;
+    thMin = theta0 ;
+    thMax = theta0 + L * k ;
     if ( thMax < thMin ) std::swap( thMin, thMax ) ;
     return thMax-thMin ;
   }
@@ -136,17 +139,16 @@ namespace G2lib {
     y_DDD = k2*(3*(c0*C_DD+s0*S_DD)+sk*(c0*C_DDD+s0*S_DDD));
   }
 
-  //! set the origin of the clothoid to the curvilinear abscissa s0
   void
-  CircleArc::changeCurvilinearOrigin( valueType _s0 ) {
-    valueType sL = _s0*k - theta0 ;
-    x0     += _s0 * Sinc( sL ) ;
-    y0     += _s0 * Cosc( sL ) ;
-    theta0 += _s0 * k ;
-    s_min  -= _s0 ;
-    s_max  -= _s0 ;
-    this->s0 = sin(theta0) ;
-    this->c0 = cos(theta0) ;
+  CircleArc::trim( valueType s_begin, valueType s_end ) {
+    valueType x, y ;
+    eval( s_begin, x, y ) ;
+    theta0 += s_begin * k ;
+    s0 = sin(theta0);
+    c0 = cos(theta0);
+    L  = s_end - s_begin ;
+    x0 = x ;
+    y0 = y ;
   }
 
   void
@@ -160,32 +162,74 @@ namespace G2lib {
     x0      = cx + ndx ;
     y0      = cy + ndy ;
     theta0 += angle ;
+    c0      = cos(theta0) ;
+    s0      = sin(theta0) ;
   }
 
   void
   CircleArc::scale( valueType s ) {
-    k     /= s ;
-    s_min *= s ;
-    s_max *= s ;
+    k /= s ;
+    L *= s ;
   }
 
   void
   CircleArc::reverse() {
     theta0 = theta0 + m_pi ;
     if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
-    k     = -k ;
-    valueType tmp = s_max ;
-    s_max = -s_min ;
-    s_min = -tmp ;
+    c0 = cos(theta0) ;
+    s0 = sin(theta0) ;
+    k  = -k ;
   }
 
   valueType
   CircleArc::distance( valueType   x,
                        valueType   y,
-                       valueType   s[2],
-                       indexType & ndst ) const {
+                       valueType & s ) const {
 
-    return 0 ;
+    valueType dx  = x0 - x ;
+    valueType dy  = y0 - y ;
+    valueType a0  = c0 * dy - s0 * dx ;
+    valueType b0  = s0 * dy + c0 * dx ;
+    valueType tmp = a0*k ;
+
+    if ( 1+2*tmp > 0 ) {
+
+      tmp = b0/(1+tmp) ;
+      s   = -tmp*Atanc(tmp*k) ;
+
+    } else {
+
+      valueType om = atan2( b0, a0+1/k ) ;
+      if ( k < 0 ) om += m_pi ;
+      s = -om/k ;
+      valueType circ = 2*m_pi/abs(k);
+      while ( s < 0 ) s += circ;
+      while ( s > L ) s -= circ;
+
+    }
+
+    valueType xx(0), yy(0) ;
+    if ( s < 0 || s > L ) { // distanza sul bordo
+      valueType d0 = hypot( x0-x, y0-y ) ;
+      eval( L, xx, yy ); valueType d1 = hypot( x-xx,y-yy ) ;
+      if ( d0 < d1 ) { s = 0 ; return d0 ; }
+      else           { s = L ; return d1 ; }
+    }
+
+    eval( s, xx, yy );
+    return hypot(x-xx,y-yy) ;
+  }
+
+  void
+  CircleArc::changeCurvilinearOrigin( valueType s0, valueType newL ) {
+    valueType new_x0, new_y0 ;
+    eval( s0,  new_x0, new_y0 ) ;
+    x0      = new_x0 ;
+    y0      = new_y0 ;
+    theta0 += k*s0 ;
+    c0      = cos(theta0) ;
+    s0      = sin(theta0) ;
+    L       = newL ;
   }
 
   //! get the bounding box triangle (if angle variation less that pi/3)
@@ -193,11 +237,11 @@ namespace G2lib {
   CircleArc::bbTriangle( valueType p0[2],
                          valueType p1[2],
                          valueType p2[2] ) const {
-    valueType dtheta = (s_max - s_min) * k ;
+    valueType dtheta = L * k ;
     bool ok = std::abs(dtheta) <= m_pi/3 ;
     if ( ok ) {
-      eval( s_min, p0[0], p0[1] );
-      eval( s_max, p2[0], p2[1] );
+      p0[0] = x0 ; p0[1] = y0 ;
+      eval( L, p2[0], p2[1] );
       p1[0] = (p0[0]+p2[0])/2 ;
       p1[1] = (p0[1]+p2[1])/2 ;
       valueType nx = p0[1]-p2[1] ;
@@ -212,7 +256,7 @@ namespace G2lib {
   indexType
   CircleArc::toNURBS(  valueType knots[12], valueType Poly[9][3] ) const {
 
-    valueType dtheta = (s_max-s_min)*k ;
+    valueType dtheta = L*k ;
     indexType ns     = indexType(std::floor(3*std::abs(dtheta)/m_pi)) ;
     if      ( ns < 1 ) ns = 1 ;
     else if ( ns > 4 ) ns = 4 ;
@@ -222,15 +266,15 @@ namespace G2lib {
     valueType tg = tan(th)/2;
 
     valueType p0[2], p2[2] ;
-    eval( s_min, p0[0], p0[1] );
+    p0[0] = x0 ; p0[1] = y0 ;
 
     knots[0] = knots[1] = knots[2] = 0 ;
     Poly[0][0] = p0[0] ;
     Poly[0][1] = p0[1] ;
     Poly[0][2] = 1  ;
 
-    valueType s  = s_min ;
-    valueType ds = (s_max-s_min)/ns ;
+    valueType s  = 0 ;
+    valueType ds = L/ns ;
     indexType kk = 0 ;
     for ( indexType i = 0 ; i < ns ; ++i ) {
       s += ds ;
@@ -268,9 +312,7 @@ namespace G2lib {
            << "\ny0     = " << c.y0
            << "\ntheta0 = " << c.theta0
            << "\nk      = " << c.k
-           << "\nL      = " << c.s_max-c.s_min
-           << "\ns_min  = " << c.s_min
-           << "\ns_max  = " << c.s_max
+           << "\nL      = " << c.L
            << "\n" ;
     return stream ;
   }

@@ -102,8 +102,7 @@ namespace G2lib {
               k,        //!< initial curvature
               dk ;      //!< curvature derivative
 
-    valueType s_min,    //!< initial curvilinear coordinate of the clothoid segment
-              s_max ;   //!< final curvilinear coordinate of the clothoid segment
+    valueType L ;       //!< lenght of clothoid segment
 
     int
     build( valueType x1, valueType y1, valueType theta1 );
@@ -130,8 +129,7 @@ namespace G2lib {
     , theta0(0)
     , k(0)
     , dk(0)
-    , s_min(0)
-    , s_max(0)
+    , L(0)
     {}
 
     //! construct a clothoid with the standard parameters
@@ -146,24 +144,7 @@ namespace G2lib {
     , theta0(_theta0)
     , k(_k)
     , dk(_dk)
-    , s_min(0)
-    , s_max(_L)
-    {}
-
-    ClothoidCurve( valueType _x0,
-                   valueType _y0,
-                   valueType _theta0,
-                   valueType _k,
-                   valueType _dk,
-                   valueType _smin ,
-                   valueType _smax )
-    : x0(_x0)
-    , y0(_y0)
-    , theta0(_theta0)
-    , k(_k)
-    , dk(_dk)
-    , s_min(_smin)
-    , s_max(_smax)
+    , L(_L)
     {}
 
     //! construct a clothoid by solving the hermite G1 problem
@@ -174,7 +155,7 @@ namespace G2lib {
     : x0(_P0[0])
     , y0(_P0[1])
     , theta0(_theta0)
-    , s_min(0) {
+    {
       build( _P1[0], _P1[1], _theta1 ) ;
       //buildClothoid( x0, y0, theta0, _P1[0], _P1[1], _theta1, k, dk, s_max ) ;
     }
@@ -186,8 +167,7 @@ namespace G2lib {
       theta0 = c.theta0 ;
       k      = c.k ;
       dk     = c.dk ;
-      s_min  = c.s_min ;
-      s_max  = c.s_max ;
+      L      = c.L ;
     }
 
     ClothoidCurve( ClothoidCurve const & s ) { copy(s) ; }
@@ -201,14 +181,12 @@ namespace G2lib {
 
     valueType getKappa()   const { return k ; }
     valueType getKappa_D() const { return dk ; }
-    valueType getSmin()    const { return s_min ; }
-    valueType getSmax()    const { return s_max ; }
-    valueType getL()       const { return s_max-s_min ; }
+    valueType getL()       const { return L ; }
 
-    valueType getThetaBegin() const { return theta0 + s_min * ( k + s_min * dk / 2 ) ; }
-    valueType getThetaEnd()   const { return theta0 + s_max * ( k + s_max * dk / 2 ) ; }
-    valueType getKappaBegin() const { return k + s_min * dk ; }
-    valueType getKappaEnd()   const { return k + s_max * dk ; }
+    valueType getThetaBegin() const { return theta0 ; }
+    valueType getThetaEnd()   const { return theta0 + L * ( k + L * dk / 2 ) ; }
+    valueType getKappaBegin() const { return k ; }
+    valueType getKappaEnd()   const { return k + L * dk ; }
 
     //! construct a clothoid with the standard parameters
     void
@@ -223,25 +201,7 @@ namespace G2lib {
       theta0 = _theta0 ;
       k      = _k ;
       dk     = _dk ;
-      s_min  = 0 ;
-      s_max  = _L ;
-    }
-
-    void
-    build( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _k,
-           valueType _dk,
-           valueType _smin,
-           valueType _smax ) {
-      x0     = _x0 ;
-      y0     = _y0 ;
-      theta0 = _theta0 ;
-      k      = _k ;
-      dk     = _dk ;
-      s_min  = _smin ;
-      s_max  = _smax ;
+      L      = _L ;
     }
 
     /*! \brief build a clothoid by solving the hermite G1 problem
@@ -297,9 +257,6 @@ namespace G2lib {
     theta_DDD( valueType ) const { return 0 ; }
 
     valueType
-    totalLength() const { return s_max-s_min ; }
-
-    valueType
     thetaTotalVariation() const ;
 
     valueType
@@ -327,15 +284,15 @@ namespace G2lib {
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
 
-    valueType Xbegin()     const { return X(s_min) ; }
-    valueType Ybegin()     const { return Y(s_min) ; }
-    valueType KappaBegin() const { return theta_D(s_min) ; }
-    valueType ThetaBegin() const { return theta(s_min) ; }
+    valueType Xbegin()     const { return x0 ; }
+    valueType Ybegin()     const { return y0 ; }
+    valueType KappaBegin() const { return k ; }
+    valueType ThetaBegin() const { return theta0 ; }
 
-    valueType Xend()     const { return X(s_max) ; }
-    valueType Yend()     const { return Y(s_max) ; }
-    valueType KappaEnd() const { return theta_D(s_max) ; }
-    valueType ThetaEnd() const { return theta(s_max) ; }
+    valueType Xend()     const { return X(L) ; }
+    valueType Yend()     const { return Y(L) ; }
+    valueType KappaEnd() const { return theta_D(L) ; }
+    valueType ThetaEnd() const { return theta(L) ; }
 
     void
     eval( valueType   s,
@@ -365,12 +322,14 @@ namespace G2lib {
 
     void
     trim( valueType s_begin, valueType s_end ) {
-      s_min = s_begin ;
-      s_max = s_end ;
+      valueType xx, yy ;
+      eval( s_begin, xx, yy ) ;
+      k      += s_begin * dk ;
+      theta0 += s_begin * ( k + s_begin * dk/2 ) ;
+      L  = s_end - s_begin ;
+      x0 = xx ;
+      y0 = yy ;
     }
-
-    //! set the origin of the clothoid to the curvilinear abscissa s0
-    void change_origin( valueType s0 ) ;
 
     //! get the bounding box triangle (if angle variation less that pi/2)
     bool
@@ -427,6 +386,9 @@ namespace G2lib {
     void
     translate( valueType tx, valueType ty )
     { x0 += tx ; y0 += ty ; }
+
+    void
+    changeCurvilinearOrigin( valueType s0, valueType newL ) ;
 
     void
     moveOrigin( valueType newx0, valueType newy0 )
@@ -726,9 +688,7 @@ namespace G2lib {
 
     valueType
     totalLength() const {
-      return S0.totalLength() +
-             S1.totalLength() +
-             SM.totalLength() ;
+      return S0.getL() + S1.getL() + SM.getL() ;
     }
 
     valueType
