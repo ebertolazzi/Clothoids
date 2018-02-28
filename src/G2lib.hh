@@ -28,6 +28,7 @@
 #include <cmath>
 #include <sstream>
 #include <stdexcept>
+#include <limits>
 
 #ifndef G2LIB_ASSERT
   #define G2LIB_ASSERT(COND,MSG)         \
@@ -93,7 +94,12 @@ namespace G2lib {
   typedef double valueType ;
   typedef int    indexType ;
 
-  static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
+  extern valueType const machepsi    ;
+  extern valueType const m_pi        ; // pi
+  extern valueType const m_pi_2      ; // pi/2
+  extern valueType const m_2pi       ; // 2*pi
+  extern valueType const m_1_pi      ; // 1/pi
+  extern valueType const m_1_sqrt_pi ; // 1/sqrt(pi)
 
   /*
   // sin(x)/x

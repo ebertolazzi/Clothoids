@@ -23,8 +23,6 @@
 
 #include "Biarc.hh"
 
-#include <limits>
-
 namespace G2lib {
 
   using namespace std ;

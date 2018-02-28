@@ -606,11 +606,12 @@ namespace G2lib {
   // Clothoid-clothoid-clothoid with G2 continuity
   class G2solve3arc {
 
-    ClothoidCurve S0, SM, S1, SG ;
+    ClothoidCurve S0, SM, S1 ;
 
     valueType tolerance ;
     int       maxIter ;
 
+    // G2 interpolation data
     valueType x0 ;
     valueType y0 ;
     valueType theta0 ;
@@ -620,11 +621,12 @@ namespace G2lib {
     valueType theta1 ;
     valueType kappa1 ;
 
-    // standard problem
+    // standard scaled problem
     valueType phi, Lscale ;
     valueType th0, th1 ;
     valueType s0, s1 ;
 
+    // precomputed values
     valueType K0, K1, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14 ;
 
     void
@@ -681,10 +683,9 @@ namespace G2lib {
            valueType Dmax = 0,
            valueType dmax = 0 ) ;
 
-    ClothoidCurve const & getS0()    const { return S0 ; }
-    ClothoidCurve const & getS1()    const { return S1 ; }
-    ClothoidCurve const & getSM()    const { return SM ; }
-    ClothoidCurve const & getGuess() const { return SG ; }
+    ClothoidCurve const & getS0() const { return S0 ; }
+    ClothoidCurve const & getS1() const { return S1 ; }
+    ClothoidCurve const & getSM() const { return SM ; }
 
     valueType
     totalLength() const {
@@ -738,6 +739,67 @@ namespace G2lib {
 
     valueType getL0() const { return s0/Lscale; }
     valueType getL1() const { return s1/Lscale; }
+
+    valueType theta( valueType s ) const ;
+    valueType theta_D( valueType s ) const ;
+    valueType theta_DD( valueType s ) const ;
+    valueType theta_DDD( valueType s ) const ;
+    valueType X( valueType s ) const ;
+    valueType Y( valueType s ) const ;
+
+    valueType Xbegin()     const { return S0.Xbegin() ; }
+    valueType Ybegin()     const { return S0.Ybegin() ; }
+    valueType KappaBegin() const { return S0.KappaBegin() ; }
+    valueType ThetaBegin() const { return S0.ThetaBegin() ; }
+
+    valueType Xend()     const { return S1.Xend() ; }
+    valueType Yend()     const { return S1.Yend() ; }
+    valueType KappaEnd() const { return S1.KappaEnd() ; }
+    valueType ThetaEnd() const { return S1.ThetaEnd() ; }
+
+    void
+    eval( valueType   s,
+          valueType & theta,
+          valueType & kappa,
+          valueType & x,
+          valueType & y ) const ;
+
+    void eval( valueType s, valueType & x, valueType & y ) const ;
+    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
+    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
+    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+
+    // offset curve
+    void eval( valueType s, valueType offs, valueType & x, valueType & y ) const ;
+    void eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const ;
+    void eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const ;
+    void eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const ;
+
+    void
+    rotate( valueType angle, valueType cx, valueType cy ) {
+      S0.rotate( angle, cx, cy ) ;
+      S1.rotate( angle, cx, cy ) ;
+      SM.rotate( angle, cx, cy ) ;
+    }
+
+    void
+    translate( valueType tx, valueType ty ){
+      S0.translate( tx, ty ) ;
+      S1.translate( tx, ty ) ;
+      SM.translate( tx, ty ) ;
+    }
+
+    void
+    reverse() {
+      std::swap( S0, S1 ) ;
+      S0.reverse() ;
+      S1.reverse() ;
+      SM.reverse() ;
+    }
+
+    friend
+    std::ostream &
+    operator << ( std::ostream & stream, ClothoidCurve const & c ) ;
 
   } ;
 

@@ -28,10 +28,6 @@ namespace G2lib {
 
   using namespace std ;
 
-  static const valueType m_pi   = 3.14159265358979323846264338328 ; // pi
-  static const valueType m_2pi  = 6.28318530717958647692528676656 ; // 2*pi
-  static const valueType m_pi_2 = 1.57079632679489661923132169164  ; // pi/2
-
   inline
   valueType
   power2( valueType a )
@@ -474,6 +470,7 @@ namespace G2lib {
       if ( dmax > m_pi/4 ) dmax = m_pi/4 ;
 
       // compute guess G1
+      ClothoidCurve SG ;
       SG.build_G1( -1, 0, th0, 1, 0, th1 ) ;
 
       valueType kA = SG.getKappaBegin() ;
@@ -772,6 +769,200 @@ namespace G2lib {
     if ( kMin > kMin1 ) kMin = kMin1 ;
     if ( kMax < kMax1 ) kMax = kMax1 ;
     return kMax-kMin ;
+  }
+
+  valueType
+  G2solve3arc::theta( valueType s ) const {
+    if ( s < S0.getL() ) return S0.theta(s) ;
+    s -= S0.getL() ;
+    if ( s < SM.getL() ) return SM.theta(s) ;
+    s -= S0.getL() ;
+    return S1.theta(s) ;
+  }
+
+  valueType
+  G2solve3arc::theta_D( valueType s ) const {
+    if ( s < S0.getL() ) return S0.theta_D(s) ;
+    s -= S0.getL() ;
+    if ( s < SM.getL() ) return SM.theta_D(s) ;
+    s -= S0.getL() ;
+    return S1.theta_D(s) ;
+  }
+
+  valueType
+  G2solve3arc::theta_DD( valueType s ) const {
+    if ( s < S0.getL() ) return S0.theta_DD(s) ;
+    s -= S0.getL() ;
+    if ( s < SM.getL() ) return SM.theta_DD(s) ;
+    s -= S0.getL() ;
+    return S1.theta_DD(s) ;
+  }
+
+  valueType
+  G2solve3arc::theta_DDD( valueType s ) const {
+    if ( s < S0.getL() ) return S0.theta_DDD(s) ;
+    s -= S0.getL() ;
+    if ( s < SM.getL() ) return SM.theta_DDD(s) ;
+    s -= S0.getL() ;
+    return S1.theta_DDD(s) ;
+  }
+
+  valueType
+  G2solve3arc::X( valueType s ) const {
+    if ( s < S0.getL() ) return S0.X(s) ;
+    s -= S0.getL() ;
+    if ( s < SM.getL() ) return SM.X(s) ;
+    s -= S0.getL() ;
+    return S1.X(s) ;
+  }
+
+  valueType
+  G2solve3arc::Y( valueType s ) const {
+    if ( s < S0.getL() ) return S0.Y(s) ;
+    s -= S0.getL() ;
+    if ( s < SM.getL() ) return SM.Y(s) ;
+    s -= S0.getL() ;
+    return S1.Y(s) ;
+  }
+
+  void
+  G2solve3arc::eval( valueType   s,
+                     valueType & theta,
+                     valueType & kappa,
+                     valueType & x,
+                     valueType & y ) const {
+    if ( s < S0.getL() ) {
+      S0.eval(s, theta, kappa, x, y ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval(s, theta, kappa, x, y ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval(s, theta, kappa, x, y ) ;
+      }
+    }
+  }
+
+  void
+  G2solve3arc::eval( valueType s, valueType & x, valueType & y ) const {
+    if ( s < S0.getL() ) {
+      S0.eval(s, x, y ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval(s, x, y ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval(s, x, y ) ;
+      }
+    }
+  }
+
+  void
+  G2solve3arc::eval_D( valueType s, valueType & x_D, valueType & y_D ) const {
+    if ( s < S0.getL() ) {
+      S0.eval_D(s, x_D, y_D ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval_D(s, x_D, y_D ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval_D(s, x_D, y_D ) ;
+      }
+    }
+  }
+
+  void
+  G2solve3arc::eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
+    if ( s < S0.getL() ) {
+      S0.eval_DD(s, x_DD, y_DD ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval_DD(s, x_DD, y_DD ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval_DD(s, x_DD, y_DD ) ;
+      }
+    }
+  }
+
+  void
+  G2solve3arc::eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
+    if ( s < S0.getL() ) {
+      S0.eval_DDD(s, x_DDD, y_DDD ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval_DDD(s, x_DDD, y_DDD ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval_DDD(s, x_DDD, y_DDD ) ;
+      }
+    }
+  }
+
+  // offset curve
+  void
+  G2solve3arc::eval( valueType s, valueType offs, valueType & x, valueType & y ) const {
+    if ( s < S0.getL() ) {
+      S0.eval(s, offs, x, y ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval(s, offs, x, y ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval(s, offs, x, y ) ;
+      }
+    }
+  }
+
+  void
+  G2solve3arc::eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const {
+    if ( s < S0.getL() ) {
+      S0.eval_D(s, offs, x_D, y_D ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval_D(s, offs, x_D, y_D ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval_D(s, offs, x_D, y_D ) ;
+      }
+    }
+  }
+
+  void
+  G2solve3arc::eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const {
+    if ( s < S0.getL() ) {
+      S0.eval_DD(s, offs, x_DD, y_DD ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval_DD(s, offs, x_DD, y_DD ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval_DD(s, offs, x_DD, y_DD ) ;
+      }
+    }
+  }
+
+  void
+  G2solve3arc::eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const {
+    if ( s < S0.getL() ) {
+      S0.eval_DDD(s, offs, x_DDD, y_DDD ) ;
+    } else {
+      s -= S0.getL() ;
+      if ( s < SM.getL() ) {
+        SM.eval_DDD(s, offs, x_DDD, y_DDD ) ;
+      } else {
+        s -= SM.getL() ;
+        S1.eval_DDD(s, offs, x_DDD, y_DDD ) ;
+      }
+    }
   }
 
 }

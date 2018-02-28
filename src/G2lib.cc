@@ -21,9 +21,12 @@
 
 namespace G2lib {
 
-
-  static const valueType m_pi  = 3.14159265358979323846264338328 ; // pi
-  static const valueType m_2pi = 6.28318530717958647692528676656 ; // 2*pi
+  valueType const machepsi    = std::numeric_limits<valueType>::epsilon() ;
+  valueType const m_pi        = 3.14159265358979323846264338328  ; // pi
+  valueType const m_pi_2      = 1.57079632679489661923132169164  ; // pi/2
+  valueType const m_2pi       = 6.28318530717958647692528676656  ; // 2*pi
+  valueType const m_1_pi      = 0.318309886183790671537767526745 ; // 1/pi
+  valueType const m_1_sqrt_pi = 0.564189583547756286948079451561 ; // 1/sqrt(pi)
 
   void
   rangeSymm( valueType & ang ) {

@@ -98,11 +98,6 @@ namespace G2lib {
                                   0.0044099273693067311209,
                                  -0.00009070958410429993314 } ;
 
-  static const valueType m_pi        = 3.14159265358979323846264338328  ; // pi
-  static const valueType m_pi_2      = 1.57079632679489661923132169164  ; // pi/2
-  static const valueType m_1_pi      = 0.318309886183790671537767526745 ; // 1/pi
-  static const valueType m_1_sqrt_pi = 0.564189583547756286948079451561 ; // 1/sqrt(pi)
-
   //! \endcond
 
   /*
