@@ -23,13 +23,15 @@ LIBS = [ ...
   '../src/Triangle2D.cc ' ...
 ] ;
 
+[~,mexLoaded] = inmem('-completenames') ;
+
 disp('---------------------------------------------------------');
 for k=1:4 %length(NAMES)
   N=NAMES{k} ;
   fprintf(1,'Compiling: %s\n',N) ;
 
   CMD = [ 'while mislocked(''' N ''') ; munlock(''' N ''') ; end;'] ;
-  disp(CMD);
+  eval(CMD);
 
   CMD = ['mex -output ',N,' -largeArrayDims ../src_mex/mex_',N,'.cc ', LIBS] ;
   if isunix

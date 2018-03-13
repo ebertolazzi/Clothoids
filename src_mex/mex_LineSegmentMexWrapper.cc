@@ -81,8 +81,7 @@ namespace G2lib {
   static
   void
   DATA_DELETE( mxArray const * & mx_id ) {
-    LineSegment * ptr = convertMat2Ptr<LineSegment>(mx_id);
-    delete ptr ;
+    destroyObject<LineSegment>(mx_id);
   }
 
   extern "C"
@@ -103,31 +102,35 @@ namespace G2lib {
       mwSize size0, size1 ;
 
       bool do_new = cmd == "new" ;
+
       LineSegment * ptr = do_new ? DATA_NEW(arg_out_0) : DATA_GET(arg_in_1);
 
       if ( do_new || cmd == "build" ) {
 
         indexType kk = do_new ? 0 : 1 ;
 
-        MEX_ASSERT( nlhs == 1, "LineSegment('build',OBJ,x0,y0,theta0,L): expected 1 output" );
+        #define BUILD "LineSegment('build',OBJ,x0,y0,theta0,L): "
+        MEX_ASSERT( nlhs == 1, BUILD "expected 1 output" );
 
         if ( nrhs == 5+kk ) {
 
-          valueType x0     = getScalarValue( prhs[1+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `x0` expected to be a real scalar" );
-          valueType y0     = getScalarValue( prhs[2+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `y0` expected to be a real scalar" );
-          valueType theta0 = getScalarValue( prhs[3+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `theta0` expected to be a real scalar" );
-
-          valueType L      = getScalarValue( prhs[4+kk], "LineSegment('build',OBJ,x0,y0,theta0,L): `L` expected to be a real scalar" );
+          valueType x0     = getScalarValue( prhs[1+kk], BUILD "`x0` expected to be a real scalar" );
+          valueType y0     = getScalarValue( prhs[2+kk], BUILD "`y0` expected to be a real scalar" );
+          valueType theta0 = getScalarValue( prhs[3+kk], BUILD "`theta0` expected to be a real scalar" );
+          valueType L      = getScalarValue( prhs[4+kk], BUILD "`L` expected to be a real scalar" );
 
           ptr->build( x0, y0, theta0, L );
 
         } else if ( nrhs == 3+kk ) {
 
-          valueType const * p0 = getVectorPointer( prhs[1+kk], size0, "LineSegment('build',OBJ,p0,p1): `p0` expected to be a real vector" );
-          valueType const * p1 = getVectorPointer( prhs[2+kk], size1, "LineSegment('build',OBJ,p0,p1): `p1` expected to be a real vector" );
+          #undef BUILD
+          #define BUILD "LineSegment('build',OBJ,p0,p1): "
+          valueType const * p0 = getVectorPointer( prhs[1+kk], size0, BUILD "`p0` expected to be a real vector" );
+          valueType const * p1 = getVectorPointer( prhs[2+kk], size1, BUILD "`p1` expected to be a real vector" );
 
           MEX_ASSERT( size0 == 2 && size1 == 2,
-                      "Line: bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
+                      BUILD "bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
+          #undef BUILD
 
           ptr->build_2P( p0[0], p0[1], p1[0], p1[1] ) ;
 
@@ -141,57 +144,69 @@ namespace G2lib {
 
       } else if ( cmd == "delete" ) {
 
-        MEX_ASSERT(nrhs == 2, "LineSegment('delete',OBJ): expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, "LineSegment('delete',OBJ): expected no output");
+        #define CMD "LineSegment('delete',OBJ): "
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 0, CMD "expected no output");
         // Destroy the C++ object
         DATA_DELETE( arg_in_1 ) ;
+        #undef CMD
 
       } else if ( cmd == "changeOrigin" ) {
 
-        MEX_ASSERT(nrhs == 4, "LineSegment('changeOrigin',OBJ,x0,y0): expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, "LineSegment('changeOrigin',OBJ,x0,y0): expected no output");
+        #define CMD "LineSegment('changeOrigin',OBJ,x0,y0): "
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
-        valueType new_x0 = getScalarValue( arg_in_2, "LineSegment('changeOrigin',x0,y0): `x0` expected to be a real scalar" );
-        valueType new_y0 = getScalarValue( arg_in_3, "LineSegment('changeOrigin',x0,y0): `y0` expected to be a real scalar" );
+        valueType new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
+        valueType new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
 
         ptr->changeOrigin( new_x0, new_y0 );
+        #undef CMD
 
       } else if ( cmd == "translate" ) {
 
-        MEX_ASSERT(nrhs == 4, "LineSegment('translate',OBJ,t0,t0): expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, "LineSegment('translate',OBJ,t0,t0): expected no output");
+        #define CMD "LineSegment('translate',OBJ,t0,t0): "
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
-        valueType tx = getScalarValue( arg_in_2, "LineSegment('translate',OBJ,t0,t0): `tx` expected to be a real scalar" );
-        valueType ty = getScalarValue( arg_in_3, "LineSegment('translate',OBJ,t0,t0): `ty` expected to be a real scalar" );
+        valueType tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
+        valueType ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
 
         ptr->translate( tx, ty );
+        #undef CMD
 
       } else if ( cmd == "rotate" ) {
 
-        MEX_ASSERT(nrhs == 5, "LineSegment('rotate',OBJ,angle,cx,cy): expected 5 inputs");
-        MEX_ASSERT(nlhs == 0, "LineSegment('rotate',OBJ,angle,cx,cy): expected no output");
+        #define CMD "LineSegment('rotate',OBJ,angle,cx,cy): "
+        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
+        MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
-        valueType angle = getScalarValue( arg_in_2, "LineSegment('rotate',OBJ,angle,cx,cy): `angle` expected to be a real scalar" );
-        valueType cx    = getScalarValue( arg_in_3, "LineSegment('rotate',OBJ,angle,cx,cy): `cx` expected to be a real scalar" );
-        valueType cy    = getScalarValue( arg_in_4, "LineSegment('rotate',OBJ,angle,cx,cy): `cy` expected to be a real scalar" );
+        valueType angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
+        valueType cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
+        valueType cy    = getScalarValue( arg_in_4, CMD "`cy` expected to be a real scalar" );
 
         ptr->rotate( angle, cx, cy );
+        #undef CMD
 
       } else if ( cmd == "reverse" ) {
 
-        MEX_ASSERT(nrhs == 2, "LineSegment('reverse',OBJ): expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, "LineSegment('reverse',OBJ): expected no output");
+        #define CMD "LineSegment('reverse',OBJ): "
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 0, CMD "expected no output");
         ptr->reverse();
+        #undef CMD
 
       } else if ( cmd == "trim" ) {
 
-        MEX_ASSERT(nrhs == 4, "LineSegment('trim',OBJ,s_begin,s_end): expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, "LineSegment('trim',OBJ,s_begin,s_end): expected no output");
+        #define CMD "LineSegment('trim',OBJ,s_begin,s_end): "
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
-        valueType s_begin = getScalarValue( arg_in_2, "LineSegment('trim',OBJ,s_begin,s_end): `s_begin` expected to be a real scalar" );
-        valueType s_end   = getScalarValue( arg_in_3, "LineSegment('trim',OBJ,s_begin,s_end): `s_end` expected to be a real scalar" );
+        valueType s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
+        valueType s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
 
         ptr->trim( s_begin, s_end );
+        #undef CMD
 
       } else if ( cmd == "to_nurbs" ) {
 
@@ -222,7 +237,7 @@ namespace G2lib {
       } else {
         if ( nrhs == 3 ) {
           mwSize size ;
-          double const * s = getVectorPointer( arg_in_2, size,  "Line: s expected to be a real vector" ) ;
+          double const * s = getVectorPointer( arg_in_2, size, "Line: s expected to be a real vector" ) ;
           double *pX = createMatrixValue( arg_out_0, 1,size );
           double *pY = createMatrixValue( arg_out_1, 1,size );
           if ( cmd == "eval" ) {

@@ -50,4 +50,8 @@ L3.getY0()
 L3.getTheta0()
 L3.length()
 
+L1.delete()
+L2.delete()
+L3.delete()
+
 axis equal;

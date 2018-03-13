@@ -117,6 +117,18 @@ getVectorPointer( mxArray const * arg, mwSize & sz, char const msg[] ) {
   return mxGetPr(arg) ;
 }
 
+static
+inline
+double const *
+getMatrixPointer( mxArray const * arg, mwSize & nr, mwSize & nc,  char const msg[] ) {
+  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
+  MEX_ASSERT( number_of_dimensions == 2, msg ) ;
+  mwSize const * dims = mxGetDimensions(arg) ;
+  nr = dims[0] ;
+  nc = dims[1] ;
+  return mxGetPr(arg) ;
+}
+
 // -----------------------------------------------------------------------------
 
 static
@@ -148,7 +160,7 @@ inline
 double *
 createMatrixValue( mxArray * & arg, mwSize nrow, mwSize ncol ) {
   arg = mxCreateNumericMatrix( nrow, ncol, mxDOUBLE_CLASS, mxREAL );
-  return static_cast<double*>(mxGetData(arg)) ;
+  return mxGetPr(arg) ;
 }
 
 // -----------------------------------------------------------------------------

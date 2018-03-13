@@ -121,6 +121,9 @@ namespace G2lib {
   // atan(x)/x
   */
   valueType Atanc( valueType x );
+  valueType Atanc_D( valueType x );
+  valueType Atanc_DD( valueType x );
+  valueType Atanc_DDD( valueType x );
 
   //! Add or remove multiple of \f$ 2\pi \f$ to an angle  in order to put it in the range \f$ [-\pi,\pi]\f$.
   void rangeSymm( valueType & ang ) ;

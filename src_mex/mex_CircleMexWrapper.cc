@@ -91,8 +91,7 @@ namespace G2lib {
   static
   void
   DATA_DELETE( mxArray const * & mx_id ) {
-    CircleArc * ptr = convertMat2Ptr<CircleArc>(mx_id);
-    delete ptr ;
+    destroyObject<CircleArc>(mx_id);
   }
 
   extern "C"

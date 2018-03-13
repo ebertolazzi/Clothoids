@@ -90,8 +90,7 @@ namespace G2lib {
   static
   void
   DATA_DELETE( mxArray const * & mx_id ) {
-    ClothoidCurve * ptr = convertMat2Ptr<ClothoidCurve>(mx_id);
-    delete ptr ;
+    destroyObject<ClothoidCurve>(mx_id);
   }
 
   extern "C"
