@@ -339,12 +339,12 @@ namespace G2lib {
   valueType
   ClothoidCurve::closestPoint( valueType   x,
                                valueType   y,
-                               valueType   ds,
                                valueType & X,
                                valueType & Y,
                                valueType & S ) const {
     valueType DST = 1e100;
-    valueType s = 0;
+    valueType s  = 0;
+    valueType ds = L/100 ;
     while ( s <= L ) {
       valueType x1, y1 ;
       eval( s, x1, y1 );

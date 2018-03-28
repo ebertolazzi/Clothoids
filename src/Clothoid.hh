@@ -315,10 +315,21 @@ namespace G2lib {
     valueType
     closestPoint( valueType   x,
                   valueType   y,
-                  valueType   ds,
                   valueType & X,
                   valueType & Y,
                   valueType & S ) const ;
+
+    valueType
+    distance( valueType x, valueType y, valueType & S ) const {
+      valueType X, Y;
+      return closestPoint( x, y, X, Y, S );
+    }
+
+    valueType
+    distance( valueType x, valueType y ) const {
+      valueType X, Y, S ;
+      return closestPoint( x, y, X, Y, S );
+    }
 
     void
     trim( valueType s_begin, valueType s_end ) {
@@ -906,9 +917,13 @@ namespace G2lib {
               valueType & y_DDD ) const ;
 
     valueType
+    distance( valueType   x,
+              valueType   y,
+              valueType & S ) const ;
+
+    valueType
     closestPoint( valueType   x,
                   valueType   y,
-                  valueType   ds,
                   valueType & X,
                   valueType & Y,
                   valueType & S ) const ;

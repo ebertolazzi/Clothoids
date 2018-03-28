@@ -244,17 +244,16 @@ namespace G2lib {
   valueType
   ClothoidList::closestPoint( valueType   x,
                               valueType   y,
-                              valueType   ds,
                               valueType & X,
                               valueType & Y,
                               valueType & S ) const {
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::closestPoint, empty list" );
     std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
     std::vector<valueType>::const_iterator     is = s0.begin() ;
-    valueType DST = ic->closestPoint( x, y, ds, X, Y, S );
+    valueType DST = ic->closestPoint( x, y, X, Y, S );
     for ( ++ic, ++is ; ic != clotoidList.end() ; ++ic, ++is ) {
       valueType X1, Y1, S1 ;
-      valueType DST1 = ic->closestPoint( x, y, ds, X1, Y1, S1 );
+      valueType DST1 = ic->closestPoint( x, y, X1, Y1, S1 );
       if ( DST1 < DST ) {
         DST = DST1 ;
         X   = X1;
