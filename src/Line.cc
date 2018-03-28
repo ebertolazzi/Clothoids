@@ -71,6 +71,28 @@ namespace G2lib {
     if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
   }
 
+  valueType
+  LineSegment::distance( valueType   x,
+                         valueType   y,
+                         valueType & s ) const {
+
+    valueType dx  = x0 - x ;
+    valueType dy  = y0 - y ;
+    s = -(s0 * dy + c0 * dx) ;
+
+    valueType xx(0), yy(0) ;
+    if ( s < 0 || s > L ) { // distanza sul bordo
+      valueType d0 = hypot( x0-x, y0-y ) ;
+      eval( L, xx, yy );
+      valueType d1 = hypot( x-xx,y-yy ) ;
+      if ( d0 < d1 ) { s = 0 ; return d0 ; }
+      else           { s = L ; return d1 ; }
+    }
+
+    eval( s, xx, yy );
+    return hypot(x-xx,y-yy) ;
+  }
+
   int
   LineSegment::toNURBS( valueType knots[4], valueType Poly[2][3] ) const {
     knots[0] = knots[1] = 0 ;

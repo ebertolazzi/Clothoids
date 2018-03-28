@@ -158,6 +158,32 @@ namespace G2lib {
     changeOrigin( valueType newx0, valueType newy0 )
     { x0 = newx0 ; y0 = newy0 ; }
 
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the line segment
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \param s param at minimum distance
+     * \return the distance point-segment
+    \*/
+    valueType
+    distance( valueType   x,
+              valueType   y,
+              valueType & s ) const ;
+
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the line segment
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \return the distance point-segment
+    \*/
+    valueType
+    distance( valueType x, valueType y ) const {
+      valueType ss ;
+      return distance( x, y, ss );
+    }
+
     /*! \brief Compute rational B-spline coefficients for a line segment
      *
      * \param knots  knots of the B-spline

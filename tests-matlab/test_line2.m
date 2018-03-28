@@ -8,9 +8,8 @@ y1     = 3 ;
 x2     = 5 ;
 y2     = 2 ;
 theta0 = 0 ;
-L      = 10 ;
-k0     = 1/3 ;
-L1 = CircleArc( x0, y0, theta0, k0, L );
+L      = 5 ;
+L1 = LineSegment( x0, y0, theta0, L );
 %
 L1.plot() ;
 

@@ -44,6 +44,10 @@ either expressed or implied, of the FreeBSD Project.
 #define arg_in_5 prhs[5]
 #define arg_in_6 prhs[6]
 #define arg_in_7 prhs[7]
+#define arg_in_8 prhs[8]
+#define arg_in_9 prhs[9]
+#define arg_in_10 prhs[10]
+#define arg_in_11 prhs[11]
 
 #define arg_out_0 plhs[0]
 #define arg_out_1 plhs[1]
@@ -53,6 +57,8 @@ either expressed or implied, of the FreeBSD Project.
 #define arg_out_5 plhs[5]
 #define arg_out_6 plhs[6]
 #define arg_out_7 plhs[7]
+#define arg_out_8 plhs[8]
+#define arg_out_9 plhs[9]
 
 #define MEX_ASSERT(COND,MSG)              \
   if ( !(COND) ) {                        \
@@ -96,6 +102,18 @@ getInt( mxArray const * arg, char const msg[] ) {
     case mxUINT32_CLASS: res = *static_cast<uint32_t*>(ptr); break;
     case mxINT64_CLASS:  res = *static_cast<int64_t*>(ptr);  break;
     case mxUINT64_CLASS: res = *static_cast<uint64_t*>(ptr); break;
+    case mxDOUBLE_CLASS:
+      { double tmp = *static_cast<double*>(ptr) ;
+        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp ) ;
+        res = static_cast<int64_t>(tmp) ;
+      }
+      break ;
+    case mxSINGLE_CLASS:
+      { float tmp = *static_cast<float*>(ptr) ;
+        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp ) ;
+        res = static_cast<int64_t>(tmp) ;
+      }
+      break ;
     default:
       MEX_ASSERT (false, msg << " bad type scalar" ) ;
     break;

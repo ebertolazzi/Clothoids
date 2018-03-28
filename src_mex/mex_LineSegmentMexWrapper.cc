@@ -19,36 +19,38 @@
 "\n" \
 "USAGE:\n" \
 "\n" \
-"  OBJ = LineMexWrapper( 'new', x0, y0, theta0, L ) ;\n" \
-"  OBJ = LineMexWrapper( 'new', p0, p1 ) ;\n" \
+"  OBJ = LineSegmentMexWrapper( 'new', x0, y0, theta0, L ) ;\n" \
+"  OBJ = LineSegmentMexWrapper( 'new', p0, p1 ) ;\n" \
 "\n" \
-"  LineMexWrapper( 'delete', OBJ ) ;\n" \
+"  LineSegmentMexWrapper( 'delete', OBJ ) ;\n" \
 "\n" \
-"  LineMexWrapper( 'build', OBJ, x0, y0, theta0, L ) ;\n" \
-"  LineMexWrapper( 'build', OBJ, p0, p1 ) ;\n" \
-"  LineMexWrapper( 'build', OBJ, p0, theta0, L ) ;\n" \
+"  LineSegmentMexWrapper( 'build', OBJ, x0, y0, theta0, L ) ;\n" \
+"  LineSegmentMexWrapper( 'build', OBJ, p0, p1 ) ;\n" \
+"  LineSegmentMexWrapper( 'build', OBJ, p0, theta0, L ) ;\n" \
 "\n" \
-"  LineMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;\n" \
-"  LineMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
-"  LineMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
-"  LineMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
-"  LineMexWrapper( 'reverse', OBJ ) ;\n" \
+"  LineSegmentMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;\n" \
+"  LineSegmentMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
+"  LineSegmentMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
+"  LineSegmentMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
+"  LineSegmentMexWrapper( 'reverse', OBJ ) ;\n" \
 "\n" \
-"  burbs = LineMexWrapper( 'to_nurbs', OBJ ) ;\n" \
+"  burbs = LineSegmentMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
-"  res = LineMexWrapper( 'getX0', OBJ ) ;\n" \
-"  res = LineMexWrapper( 'getY0', OBJ ) ;\n" \
-"  res = LineMexWrapper( 'getTheta0', OBJ ) ;\n" \
-"  res = LineMexWrapper( 'getSmin', OBJ ) ;\n" \
-"  res = LineMexWrapper( 'getSmax', OBJ ) ;\n" \
-"  res = LineMexWrapper( 'length', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'getX0', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'getY0', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'getTheta0', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'getSmin', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'getSmax', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'length', OBJ ) ;\n" \
 "\n" \
-"  [X,Y] = LineMexWrapper( 'eval', OBJ, s ) ;\n" \
-"  [X,Y] = LineMexWrapper( 'eval_D', OBJ, s ) ;\n" \
-"  [X,Y] = LineMexWrapper( 'eval_DD', OBJ, s ) ;\n" \
-"  [X,Y] = LineMexWrapper( 'eval_DDD', OBJ, s ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval', OBJ, s ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval_D', OBJ, s ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval_DD', OBJ, s ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval_DDD', OBJ, s ) ;\n" \
 "\n" \
-"  nurbs = LineMexWrapper( 'to_nurbs', OBJ ) ;\n" \
+"  [d,s] = LineSegmentMexWrapper( 'distance', OBJ, x, y ) ;\n" \
+"\n" \
+"  nurbs = LineSegmentMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
 "%==========================================================================%\n" \
 "%                                                                          %\n" \
@@ -109,7 +111,7 @@ namespace G2lib {
 
         indexType kk = do_new ? 0 : 1 ;
 
-        #define BUILD "LineSegment('build',OBJ,x0,y0,theta0,L): "
+        #define BUILD "LineSegmentMexWrapper('build',OBJ,x0,y0,theta0,L): "
         MEX_ASSERT( nlhs == 1, BUILD "expected 1 output" );
 
         if ( nrhs == 5+kk ) {
@@ -124,7 +126,7 @@ namespace G2lib {
         } else if ( nrhs == 3+kk ) {
 
           #undef BUILD
-          #define BUILD "LineSegment('build',OBJ,p0,p1): "
+          #define BUILD "LineSegmentMexWrapper('build',OBJ,p0,p1): "
           valueType const * p0 = getVectorPointer( prhs[1+kk], size0, BUILD "`p0` expected to be a real vector" );
           valueType const * p1 = getVectorPointer( prhs[2+kk], size1, BUILD "`p1` expected to be a real vector" );
 
@@ -144,7 +146,7 @@ namespace G2lib {
 
       } else if ( cmd == "delete" ) {
 
-        #define CMD "LineSegment('delete',OBJ): "
+        #define CMD "LineSegmentMexWrapper('delete',OBJ): "
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 0, CMD "expected no output");
         // Destroy the C++ object
@@ -153,7 +155,7 @@ namespace G2lib {
 
       } else if ( cmd == "changeOrigin" ) {
 
-        #define CMD "LineSegment('changeOrigin',OBJ,x0,y0): "
+        #define CMD "LineSegmentMexWrapper('changeOrigin',OBJ,x0,y0): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
         MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
@@ -165,7 +167,7 @@ namespace G2lib {
 
       } else if ( cmd == "translate" ) {
 
-        #define CMD "LineSegment('translate',OBJ,t0,t0): "
+        #define CMD "LineSegmentMexWrapper('translate',OBJ,t0,t0): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
         MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
@@ -177,7 +179,7 @@ namespace G2lib {
 
       } else if ( cmd == "rotate" ) {
 
-        #define CMD "LineSegment('rotate',OBJ,angle,cx,cy): "
+        #define CMD "LineSegmentMexWrapper('rotate',OBJ,angle,cx,cy): "
         MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
         MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
@@ -190,7 +192,7 @@ namespace G2lib {
 
       } else if ( cmd == "reverse" ) {
 
-        #define CMD "LineSegment('reverse',OBJ): "
+        #define CMD "LineSegmentMexWrapper('reverse',OBJ): "
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 0, CMD "expected no output");
         ptr->reverse();
@@ -198,7 +200,7 @@ namespace G2lib {
 
       } else if ( cmd == "trim" ) {
 
-        #define CMD "LineSegment('trim',OBJ,s_begin,s_end): "
+        #define CMD "LineSegmentMexWrapper('trim',OBJ,s_begin,s_end): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
         MEX_ASSERT(nlhs == 0, CMD "expected no output");
 
@@ -206,6 +208,34 @@ namespace G2lib {
         valueType s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
 
         ptr->trim( s_begin, s_end );
+        #undef CMD
+
+      } else if ( cmd == "distance" ) {
+
+        #define CMD "LineSegmentMexWrapper('distance',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
+        if ( nlhs > 0 ) {
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          mwSize nrx, ncx, nry, ncy;
+          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, "`x` expected to be a real vector/matrix" ) ;
+          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, "`y` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+
+          mwSize size = nrx*ncx ;
+          if ( nlhs > 1 ) {
+            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
+          } else {
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distance( *x++, *y++ ) ;
+          }
+        }
+
         #undef CMD
 
       } else if ( cmd == "to_nurbs" ) {
@@ -234,7 +264,9 @@ namespace G2lib {
           *pr++ = Poly[i][1] ;
           *pr++ = Poly[i][2] ;
         }
+
       } else {
+
         if ( nrhs == 3 ) {
           mwSize size ;
           double const * s = getVectorPointer( arg_in_2, size, "Line: s expected to be a real vector" ) ;
@@ -255,7 +287,9 @@ namespace G2lib {
           } else {
             MEX_ASSERT(false, "Unknown command: " << cmd );
           }
+
         } else if ( nrhs == 2 ) {
+
           if      ( cmd == "getX0"     ) setScalarValue( arg_out_0, ptr->getX0());
           else if ( cmd == "getY0"     ) setScalarValue( arg_out_0, ptr->getY0());
           else if ( cmd == "getTheta0" ) setScalarValue( arg_out_0, ptr->getTheta0());
@@ -263,6 +297,7 @@ namespace G2lib {
           else {
             MEX_ASSERT(false, "Unknown command: " << cmd );
           }
+
         } else {
           MEX_ASSERT(false, "Unknown command: " << cmd );
         }

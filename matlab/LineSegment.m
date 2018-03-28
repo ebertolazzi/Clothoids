@@ -166,6 +166,10 @@ classdef LineSegment < handle
       res = LineSegmentMexWrapper('length', self.objectHandle );
     end
 
+    function [d,s] = distance( self, x, y )
+      [d,s] = LineSegmentMexWrapper('distance', self.objectHandle, x, y );
+    end
+
     %% Utils
     function lineH = plot(self,varargin)
       % plot: method to plot the clothoid curve

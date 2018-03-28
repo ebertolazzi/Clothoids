@@ -37,7 +37,6 @@
 "  CircleMexWrapper( 'reverse', OBJ ) ;\n" \
 "\n" \
 "  [d,s] = CircleMexWrapper( 'distance', OBJ, x, y ) ;\n" \
-"  [d,s] = CircleMexWrapper( 'distance', OBJ, p ) ;\n" \
 "\n" \
 "  [p0,p1,p2,ok] = CircleMexWrapper( 'bbTriangle', OBJ ) ;\n" \
 "\n" \
@@ -234,30 +233,31 @@ namespace G2lib {
         setScalarValue( arg_out_0, ptr->theta( s ) ) ;
 
       } else if ( cmd == "distance" ) {
-        valueType pnt[2] ;
-        valueType const * p = pnt ;
 
-        switch ( nrhs ) {
-        case 4:
-          pnt[0] = getScalarValue( arg_in_2, "CircleArc('distance',OBJ,x,y): `x` expected to be a real scalar" );
-          pnt[1] = getScalarValue( arg_in_3, "CircleArc('distance',OBJ,x,y): `y` expected to be a real scalar" );
-          break ;
-        case 3:
-          p = getVectorPointer( arg_in_2, size0, "CircleArc('distance',OBJ,pnt): `pnt` expected to be a real vector" );
-          break ;
+        #define CMD "CircleArc('distance',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
+        if ( nlhs > 0 ) {
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          mwSize nrx, ncx, nry, ncy;
+          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, "`x` expected to be a real vector/matrix" ) ;
+          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, "`y` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-        default:
-          MEX_ASSERT( false, "CircleArc('distance',OBJ,x,y): expected 3 or 4 inputs");
-          break ;
+          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+
+          mwSize size = nrx*ncx ;
+          if ( nlhs > 1 ) {
+            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
+          } else {
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distance( *x++, *y++ ) ;
+          }
         }
-
-        valueType ss ;
-        valueType dst = ptr->distance( p[0], p[1], ss );
-
-        MEX_ASSERT(nlhs >= 1 && nlhs <= 2, "CircleArc('distance',OBJ,pnt): expected 1,2 or 3 output");
-
-        if ( nlhs > 0 ) setScalarValue( arg_out_0, dst ) ;
-        if ( nlhs > 1 ) setScalarValue( arg_out_1, ss ) ;
+        #undef CMD
 
       } else if ( cmd == "bbTriangle" ) {
 
