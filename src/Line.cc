@@ -45,6 +45,8 @@ namespace G2lib {
     L      = 0 ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   LineSegment::rotate( valueType angle, valueType cx, valueType cy ) {
     valueType dx  = x0 - cx ;
@@ -61,6 +63,8 @@ namespace G2lib {
 
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   LineSegment::reverse() {
     x0     += c0 * L ;
@@ -71,27 +75,29 @@ namespace G2lib {
     if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
-  LineSegment::distance( valueType   x,
-                         valueType   y,
-                         valueType & s ) const {
+  LineSegment::closestPoint( valueType   x,
+                             valueType   y,
+                             valueType & X,
+                             valueType & Y,
+                             valueType & S ) const {
 
-    valueType dx  = x0 - x ;
-    valueType dy  = y0 - y ;
-    s = -(s0 * dy + c0 * dx) ;
+    S = projectPointOnLine( x0, y0, c0, s0, x, y ) ;
 
-    valueType xx(0), yy(0) ;
-    if ( s < 0 || s > L ) { // distanza sul bordo
-      valueType d0 = hypot( x0-x, y0-y ) ;
-      eval( L, xx, yy );
-      valueType d1 = hypot( x-xx,y-yy ) ;
-      if ( d0 < d1 ) { s = 0 ; return d0 ; }
-      else           { s = L ; return d1 ; }
+    if ( S <= 0 ) { // distanza sul bordo 0
+      S = 0 ;
+      X = x0 ;
+      Y = y0 ;
+    } else {
+      if ( S >= L ) S = L ;
+      eval( S, X, Y );
     }
-
-    eval( s, xx, yy );
-    return hypot(x-xx,y-yy) ;
+    return hypot( x-X, y-Y ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
   LineSegment::toNURBS( valueType knots[4], valueType Poly[2][3] ) const {
@@ -105,6 +111,8 @@ namespace G2lib {
     Poly[1][2] = 1  ;
     return 2 ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   std::ostream &
   operator << ( std::ostream & stream, LineSegment const & c ) {

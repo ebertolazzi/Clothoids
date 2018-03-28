@@ -55,6 +55,7 @@
 "    ClothoidCurveMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
 "    ClothoidCurveMexWrapper( 'scale', OBJ, scaling ) ;\n" \
 "    ClothoidCurveMexWrapper( 'reverse', OBJ ) ;\n" \
+"    [xp, yp, xm, ym] = ClothoidCurveMexWrapper( 'infinity', OBJ ) ;\n" \
 "\n" \
 "  - Distance:\n" \
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
@@ -476,6 +477,24 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         ptr->reverse();
+
+        #undef CMD
+
+      } else if ( cmd == "infinity" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('infinity',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 4, CMD "expected 4 output");
+
+        valueType xp, yp, xm, ym ;
+        ptr->Pinfinity( xp, yp, true );
+        ptr->Pinfinity( xm, ym, false );
+
+        setScalarValue(arg_out_0, xp ) ;
+        setScalarValue(arg_out_1, yp );
+        setScalarValue(arg_out_2, xm );
+        setScalarValue(arg_out_3, ym );
 
         #undef CMD
 

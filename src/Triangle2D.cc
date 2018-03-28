@@ -83,6 +83,8 @@ namespace G2lib {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   inline
   bool
@@ -100,6 +102,8 @@ namespace G2lib {
     }
     return false ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   template <typename T>
   inline
@@ -123,6 +127,8 @@ namespace G2lib {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   inline
   bool
@@ -136,6 +142,8 @@ namespace G2lib {
       else                           return tri_tri_intersection_2d(p1,q1,r1,p2,q2,r2) ;
     }
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   template <typename T>
   void
@@ -164,6 +172,8 @@ namespace G2lib {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   Triangle2D<T>::AABBTree::AABBTree( std::vector<Triangle2D<T> > & triangles ) {
     std::vector<Triangle2D<T> const * > pTriangles ;
@@ -172,6 +182,8 @@ namespace G2lib {
     for ( ; it != triangles.end() ; ++it )
       pTriangles.push_back( &*it ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   template <typename T>
   class AABBcomparatorX {
@@ -182,6 +194,8 @@ namespace G2lib {
     { return pT->baricenterX() < cutPos; }
   };
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   class AABBcomparatorY {
     T cutPos ;
@@ -191,9 +205,13 @@ namespace G2lib {
     { return pT->baricenterY() < cutPos; }
   };
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( typename std::vector<Triangle2D<T> const *>::iterator & begin,
-                                     typename std::vector<Triangle2D<T> const *>::iterator & end ) {
+  Triangle2D<T>::AABBTree::AABBTree(
+    typename std::vector<Triangle2D<T> const *>::iterator & begin,
+    typename std::vector<Triangle2D<T> const *>::iterator & end
+  ) {
     numChildren = -1 ;
     xmin = ymin = xmax = ymax = 0 ;
     data.pChildren[0] =
@@ -238,6 +256,8 @@ namespace G2lib {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   Triangle2D<T>::AABBTree::AABBTree( Triangle2D<T> const & triangle ) {
     numChildren = 0 ;
@@ -245,8 +265,13 @@ namespace G2lib {
     data.pTriangle = new Triangle2D<T>(triangle) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( AABBTree const * pTree, Triangle2D<T> const & triangle ) {
+  Triangle2D<T>::AABBTree::AABBTree(
+    AABBTree      const * pTree,
+    Triangle2D<T> const & triangle
+  ) {
     numChildren = 2 ;
     pTree->bbox( xmin, ymin, xmax, ymax ) ;
     T xmi, ymi, xma, yma ;
@@ -259,8 +284,13 @@ namespace G2lib {
     data.pChildren[1] = new AABBTree(triangle) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( AABBTree const * pTreeL, AABBTree const * pTreeR ) {
+  Triangle2D<T>::AABBTree::AABBTree(
+    AABBTree const * pTreeL,
+    AABBTree const * pTreeR
+  ) {
     numChildren = 2 ;
     pTreeL->bbox( xmin, ymin, xmax, ymax ) ;
     T xmi, ymi, xma, yma ;
@@ -272,6 +302,8 @@ namespace G2lib {
     data.pChildren[0] = pTreeL ;
     data.pChildren[1] = pTreeR ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   template <typename T>
   bool
@@ -295,6 +327,8 @@ namespace G2lib {
     return true; // unused
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   bool
   Triangle2D<T>::AABBTree::overlap( AABBTree const * pTree ) const {
@@ -317,17 +351,23 @@ namespace G2lib {
     return true; // unused
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   bool
   Triangle2D<T>::intersect( Triangle2D<T> const & t2 ) const {
     return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   bool
   Triangle2D<T>::overlap( Triangle2D<T> const & t2 ) const {
     return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   template class Triangle2D<float> ;
   template class Triangle2D<double> ;

@@ -11,6 +11,18 @@
 		D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9099D261F600AA600740ECF /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9099D291F600B9400740ECF /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9179A7C206D211E006B66E7 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
+		D9179A7D206D211E006B66E7 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D9179A80206D211E006B66E7 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
+		D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9179A82206D211E006B66E7 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
+		D9179A83206D211E006B66E7 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D9179A84206D211E006B66E7 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
+		D9179A87206D211E006B66E7 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
+		D9179A8F206D2136006B66E7 /* testDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9179A8E206D2135006B66E7 /* testDistance.cc */; };
 		D918ADA61F62C1CE009893C3 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D918ADA71F62C1CE009893C3 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
@@ -67,6 +79,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D9179A89206D211E006B66E7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		D938F4D91DD3B83000E08A70 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -122,6 +143,8 @@
 		D9099D251F600AA600740ECF /* G2lib.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G2lib.cc; sourceTree = "<group>"; };
 		D9099D271F600B9400740ECF /* Circle.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Circle.hh; sourceTree = "<group>"; };
 		D9099D281F600B9400740ECF /* Circle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Circle.cc; sourceTree = "<group>"; };
+		D9179A8D206D211E006B66E7 /* testDistance */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testDistance; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9179A8E206D2135006B66E7 /* testDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testDistance.cc; sourceTree = "<group>"; };
 		D918ADA41F62C1C9009893C3 /* Line.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Line.hh; sourceTree = "<group>"; };
 		D918ADA51F62C1CE009893C3 /* Line.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Line.cc; sourceTree = "<group>"; };
 		D938F4DB1DD3B83000E08A70 /* G2solver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = G2solver; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +172,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D9179A88206D211E006B66E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D938F4D81DD3B83000E08A70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -204,6 +234,7 @@
 				D9E74A4D1F68801C00E47B88 /* statistic */,
 				D96E1FBD1F75513000115228 /* statistic_2arc */,
 				D9C8B9F21F7AA69400DF4205 /* statistic_CLC */,
+				D9179A8D206D211E006B66E7 /* testDistance */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -244,6 +275,7 @@
 				D9A393531FA14C42009C1E60 /* TicToc.hh */,
 				D9A393541FA14C42009C1E60 /* testG2stat.cc */,
 				D9A393551FA14C42009C1E60 /* testG2.cc */,
+				D9179A8E206D2135006B66E7 /* testDistance.cc */,
 			);
 			path = "tests-cpp";
 			sourceTree = SOURCE_ROOT;
@@ -251,6 +283,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D9179A7A206D211E006B66E7 /* testDistance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9179A8A206D211E006B66E7 /* Build configuration list for PBXNativeTarget "testDistance" */;
+			buildPhases = (
+				D9179A7B206D211E006B66E7 /* Sources */,
+				D9179A88206D211E006B66E7 /* Frameworks */,
+				D9179A89206D211E006B66E7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testDistance;
+			productName = G2solver;
+			productReference = D9179A8D206D211E006B66E7 /* testDistance */;
+			productType = "com.apple.product-type.tool";
+		};
 		D938F4DA1DD3B83000E08A70 /* G2solver */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D938F4E21DD3B83000E08A70 /* Build configuration list for PBXNativeTarget "G2solver" */;
@@ -342,9 +391,12 @@
 		D938F4D31DD3B83000E08A70 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 				TargetAttributes = {
+					D9179A7A206D211E006B66E7 = {
+						DevelopmentTeam = S8X788ZA8Y;
+					};
 					D938F4DA1DD3B83000E08A70 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = S8X788ZA8Y;
@@ -378,11 +430,31 @@
 				D9E74A4C1F68801C00E47B88 /* statistic */,
 				D96E1FAC1F75513000115228 /* statistic_2arc */,
 				D9C8B9E11F7AA69400DF4205 /* statistic_CLC */,
+				D9179A7A206D211E006B66E7 /* testDistance */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D9179A7B206D211E006B66E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9179A7C206D211E006B66E7 /* Line.cc in Sources */,
+				D9179A7D206D211E006B66E7 /* Triangle2D.cc in Sources */,
+				D9179A8F206D2136006B66E7 /* testDistance.cc in Sources */,
+				D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */,
+				D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */,
+				D9179A80206D211E006B66E7 /* G2lib.cc in Sources */,
+				D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */,
+				D9179A82206D211E006B66E7 /* Biarc.cc in Sources */,
+				D9179A83206D211E006B66E7 /* ClothoidAsyPlot.cc in Sources */,
+				D9179A84206D211E006B66E7 /* Circle.cc in Sources */,
+				D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */,
+				D9179A87206D211E006B66E7 /* ClothoidG1.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D938F4D71DD3B83000E08A70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -478,6 +550,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		D9179A8B206D211E006B66E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9179A8C206D211E006B66E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D938F4E01DD3B83000E08A70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -491,6 +579,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -498,6 +587,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -545,6 +635,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -552,6 +643,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -664,6 +756,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D9179A8A206D211E006B66E7 /* Build configuration list for PBXNativeTarget "testDistance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9179A8B206D211E006B66E7 /* Debug */,
+				D9179A8C206D211E006B66E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D938F4D61DD3B83000E08A70 /* Build configuration list for PBXProject "G2solver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

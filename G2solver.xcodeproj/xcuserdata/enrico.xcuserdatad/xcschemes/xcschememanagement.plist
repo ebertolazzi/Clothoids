@@ -9,20 +9,25 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>statistic.xcscheme</key>
+		<key>statistic.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>statistic2arc.xcscheme</key>
+		<key>statistic2arc.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>statisticCLC.xcscheme</key>
+		<key>statisticCLC.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
+		</dict>
+		<key>testDistance.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>testG2plot.xcscheme_^#shared#^_</key>
 		<dict>
@@ -32,6 +37,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>D9179A7A206D211E006B66E7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D938F4DA1DD3B83000E08A70</key>
 		<dict>
 			<key>primary</key>

@@ -128,6 +128,86 @@ namespace G2lib {
   //! Add or remove multiple of \f$ 2\pi \f$ to an angle  in order to put it in the range \f$ [-\pi,\pi]\f$.
   void rangeSymm( valueType & ang ) ;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  inline
+  valueType
+  projectPointOnLine( valueType x0,
+                      valueType y0,
+                      valueType c0, //!< cos(theta0)
+                      valueType s0, //!< sin(theta0)
+                      valueType x,
+                      valueType y ) {
+    valueType dx = x - x0 ;
+    valueType dy = y - y0 ;
+    return (s0 * dy + c0 * dx) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  inline
+  valueType
+  projectPointOnCircle( valueType x0,
+                        valueType y0,
+                        valueType c0, //!< cos(theta0)
+                        valueType s0, //!< sin(theta0)
+                        valueType k,
+                        valueType L,
+                        valueType qx,
+                        valueType qy ) {
+    valueType dx  = x0 - qx ;
+    valueType dy  = y0 - qy ;
+    valueType a0  = c0 * dy - s0 * dx ;
+    valueType b0  = s0 * dy + c0 * dx ;
+    valueType tmp = a0*k ;
+
+    if ( 1+2*tmp > 0 ) {
+
+      tmp = b0/(1+tmp) ;
+      tmp *= -Atanc(tmp*k) ; // lunghezza
+
+      if ( tmp < 0 ) {
+        valueType absk = std::abs(k) ;
+        // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
+        if ( m_2pi + absk*tmp <= L*absk ) tmp += m_2pi / absk ;
+      }
+
+      return tmp ;
+
+    } else {
+
+      valueType om = atan2( b0, a0+1/k ) ;
+      if ( k < 0 ) {
+        om += m_pi ;
+        // put 0 <= omega <= 2pi
+        if      ( om <  0      ) om += m_2pi ;
+        else if ( om >= -m_2pi ) om -= m_2pi ;
+      } else {
+        // put -2pi < omega <= 0
+        if      ( om >   0     ) om -= m_2pi ;
+        else if ( om <= -m_2pi ) om += m_2pi ;
+      }
+      return -om/k ;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  inline
+  bool
+  pointInsideCircle( valueType x0,
+                     valueType y0,
+                     valueType c0, //!< cos(theta0)
+                     valueType s0, //!< sin(theta0)
+                     valueType k,
+                     valueType qx,
+                     valueType qy ) {
+    valueType cx  = x0 - s0/k ;
+    valueType cy  = y0 + c0/k ;
+    valueType dst = hypot( qx - cx, qy - cy ) ;
+    return dst*k <= 1 ;
+  }
+
   /*\
    |   ____        _           ____       ____
    |  / ___|  ___ | |_   _____|___ \__  _|___ \

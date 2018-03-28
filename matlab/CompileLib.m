@@ -33,7 +33,7 @@ for k=1:4 %length(NAMES)
   CMD = [ 'while mislocked(''' N ''') ; munlock(''' N ''') ; end;'] ;
   eval(CMD);
 
-  CMD = ['mex -output ',N,' -largeArrayDims ../src_mex/mex_',N,'.cc ', LIBS] ;
+  CMD = ['mex -output ../matlab/',N,' -largeArrayDims ../src_mex/mex_',N,'.cc ', LIBS] ;
   if isunix
     if ismac
       CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'] ;

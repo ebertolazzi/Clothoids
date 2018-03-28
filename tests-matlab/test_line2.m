@@ -19,7 +19,6 @@ y = -5:0.05:15 ;
 
 tic
 Z = L1.distance(X,Y);
-
 toc
 
 contour(X,Y,Z,100)

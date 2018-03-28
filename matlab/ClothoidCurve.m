@@ -94,7 +94,7 @@ classdef ClothoidCurve < handle
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
       %
-      [varargout{1:nargout}] = ClothoidCurveMexWrapper('eval', this.objectHandle, s );
+      [varargout{1:nargout}] = ClothoidCurveMexWrapper('evaluate', this.objectHandle, s );
     end
 
     function [x,y] = eval(this, varargin )
@@ -117,8 +117,13 @@ classdef ClothoidCurve < handle
     end
 
     %%
-    function [S,X,Y,DST] = closestPoint(this, x, y, ds)
-      [S,X,Y,DST] = ClothoidCurveMexWrapper('closestPoint', this.objectHandle, x, y, ds );
+    function [X,Y,S,DST] = closestPoint(this, x, y, ds)
+      [X,Y,S,DST] = ClothoidCurveMexWrapper('closestPoint', this.objectHandle, x, y, ds );
+    end
+
+    function [DST,S] = distance( self, varargin )
+      % eval the angle of the circle curve at curvilinear abscissa `s`
+      [DST,S] = ClothoidCurveMexWrapper('distance', self.objectHandle, varargin{:} );
     end
  
     function res = getX0(this)
@@ -226,13 +231,21 @@ classdef ClothoidCurve < handle
             
       ClothoidCurveMexWrapper('scale', this.objectHandle, s );
     end
-        
+
     function reverse(this)
       % reverse the orientation of the clothoid curve 
       % Usage:
       %    ref.reverse()
       %
       ClothoidCurveMexWrapper('reverse', this.objectHandle );
+    end
+
+    function [xp,yp,xm,ym] = infinity(this)
+      % point at infinity
+      % Usage:
+      %    ref.reverse()
+      %
+      [xp,yp,xm,ym] = ClothoidCurveMexWrapper('infinity', this.objectHandle );
     end
 
     %% Utils

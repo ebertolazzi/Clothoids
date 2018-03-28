@@ -263,11 +263,15 @@ namespace G2lib {
     return ok ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   Biarc::X( valueType s ) const {
     if ( s < C0.getL() ) return C0.X(s);
     else                 return C1.X(s-C0.getL());
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   Biarc::Y( valueType s ) const {
@@ -275,11 +279,15 @@ namespace G2lib {
     else                 return C1.Y(s-C0.getL());
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   Biarc::theta( valueType s ) const {
     if ( s < C0.getL() ) return C0.theta(s);
     else                 return C1.theta(s-C0.getL());
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   std::ostream &
   operator << ( std::ostream & stream, Biarc const & bi ) {

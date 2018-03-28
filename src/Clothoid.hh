@@ -121,6 +121,27 @@ namespace G2lib {
                         indexType max_iter,
                         valueType tolerance ) const ;
 
+    valueType
+    closestPoint2( valueType   x,
+                   valueType   y,
+                   valueType & X,
+                   valueType & Y,
+                   valueType & S ) const ;
+
+    valueType
+    closestPoint3( valueType   x,
+                   valueType   y,
+                   valueType & X,
+                   valueType & Y,
+                   valueType & S ) const ;
+
+    bool
+    closestPoint4( valueType   x,
+                   valueType   y,
+                   valueType & X,
+                   valueType & Y,
+                   valueType & S ) const ;
+
   public:
 
     ClothoidCurve()
@@ -293,6 +314,8 @@ namespace G2lib {
     valueType Yend()     const { return Y(L) ; }
     valueType KappaEnd() const { return theta_D(L) ; }
     valueType ThetaEnd() const { return theta(L) ; }
+
+    void Pinfinity( valueType & x, valueType & y, bool plus = true ) const ;
 
     void
     eval( valueType   s,

@@ -55,6 +55,8 @@ namespace G2lib {
     L      = d/Sinc(th);
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CircleArc::build_3P( valueType _x0,
                        valueType _y0,
@@ -69,6 +71,8 @@ namespace G2lib {
     build_G1( _x0, _y0, _theta0, _x2, _y2 );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   CircleArc::thetaMinMax( valueType & thMin, valueType & thMax ) const  {
     thMin = theta0 ;
@@ -76,6 +80,8 @@ namespace G2lib {
     if ( thMax < thMin ) std::swap( thMin, thMax ) ;
     return thMax-thMin ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   CircleArc::X( valueType s ) const {
@@ -85,6 +91,8 @@ namespace G2lib {
     return x0+s*(c0*S-s0*C);
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   CircleArc::Y( valueType s ) const {
     valueType sk = s*k;
@@ -92,6 +100,8 @@ namespace G2lib {
     valueType C  = Cosc(sk);
     return y0+s*(c0*C+s0*S);
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::eval( valueType s, valueType & x, valueType & y ) const {
@@ -101,6 +111,8 @@ namespace G2lib {
     x = x0+s*(c0*S-s0*C);
     y = y0+s*(c0*C+s0*S);
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::eval_D( valueType s, valueType & x_D, valueType & y_D ) const {
@@ -113,6 +125,8 @@ namespace G2lib {
     y_D = (c0*C+s0*S)+sk*(c0*C_D+s0*S_D);
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CircleArc::eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
     valueType sk   = s*k;
@@ -123,6 +137,8 @@ namespace G2lib {
     x_DD = k*(2*(c0*S_D-s0*C_D)+sk*(c0*S_DD-s0*C_DD));
     y_DD = k*(2*(c0*C_D+s0*S_D)+sk*(c0*C_DD+s0*S_DD));
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
@@ -136,6 +152,8 @@ namespace G2lib {
     y_DDD = k2*(3*(c0*C_DD+s0*S_DD)+sk*(c0*C_DDD+s0*S_DDD));
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CircleArc::trim( valueType s_begin, valueType s_end ) {
     valueType x, y ;
@@ -147,6 +165,8 @@ namespace G2lib {
     x0 = x ;
     y0 = y ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::rotate( valueType angle, valueType cx, valueType cy ) {
@@ -163,11 +183,15 @@ namespace G2lib {
     s0      = sin(theta0) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CircleArc::scale( valueType s ) {
     k /= s ;
     L *= s ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::reverse() {
@@ -178,44 +202,39 @@ namespace G2lib {
     k  = -k ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
-  CircleArc::distance( valueType   x,
-                       valueType   y,
-                       valueType & s ) const {
+  CircleArc::closestPoint( valueType   qx,
+                           valueType   qy,
+                           valueType & X,
+                           valueType & Y,
+                           valueType & S ) const {
 
-    valueType dx  = x0 - x ;
-    valueType dy  = y0 - y ;
-    valueType a0  = c0 * dy - s0 * dx ;
-    valueType b0  = s0 * dy + c0 * dx ;
-    valueType tmp = a0*k ;
+    S = projectPointOnCircle( x0, y0, c0, s0, k, L, qx, qy );
 
-    if ( 1+2*tmp > 0 ) {
-
-      tmp = b0/(1+tmp) ;
-      s   = -tmp*Atanc(tmp*k) ;
-
+    if ( S < 0 || S > L ) { // minimum distance at the border
+      eval( L, X, Y );
+      // costruisco piano
+      valueType nx = X-x0 ;
+      valueType ny = Y-y0 ;
+      valueType dx = 2*qx-(x0+X) ;
+      valueType dy = 2*qy-(y0+Y) ;
+      if ( nx*dx + ny*dy > 0 ) {
+        S = L ;
+      } else {
+        S = 0 ;
+        X = x0 ;
+        Y = y0 ;
+      }
     } else {
-
-      valueType om = atan2( b0, a0+1/k ) ;
-      if ( k < 0 ) om += m_pi ;
-      s = -om/k ;
-      valueType circ = 2*m_pi/abs(k);
-      while ( s < 0 ) s += circ;
-      while ( s > L ) s -= circ;
-
+      eval( S, X, Y );
     }
 
-    valueType xx(0), yy(0) ;
-    if ( s < 0 || s > L ) { // distanza sul bordo
-      valueType d0 = hypot( x0-x, y0-y ) ;
-      eval( L, xx, yy ); valueType d1 = hypot( x-xx,y-yy ) ;
-      if ( d0 < d1 ) { s = 0 ; return d0 ; }
-      else           { s = L ; return d1 ; }
-    }
-
-    eval( s, xx, yy );
-    return hypot(x-xx,y-yy) ;
+    return hypot(qx-X,qy-Y) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::changeCurvilinearOrigin( valueType s0, valueType newL ) {
@@ -228,6 +247,8 @@ namespace G2lib {
     s0      = sin(theta0) ;
     L       = newL ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   //! get the bounding box triangle (if angle variation less that pi/3)
   bool
@@ -249,6 +270,8 @@ namespace G2lib {
     }
     return ok ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   indexType
   CircleArc::toNURBS(  valueType knots[12], valueType Poly[9][3] ) const {
@@ -302,6 +325,8 @@ namespace G2lib {
     knots[kk+3] = ns ;
     return 1+2*ns;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   std::ostream &
   operator << ( std::ostream & stream, CircleArc const & c ) {

@@ -47,6 +47,8 @@ namespace G2lib {
   power3( valueType a )
   { return a*a*a ; }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   /*
   // sin(x)/x
   */
@@ -80,6 +82,8 @@ namespace G2lib {
     if ( std::abs(x) < 0.009 ) return (1.0/5.0+(-1.0/42.0+(1.0/1080.0)*x2)*x2)*x;
     else                       return ((6/x2-1)*cos(x)+(3-6/x2)*sin(x)/x)/x ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*
   // (1-cos(x))/x
@@ -117,6 +121,8 @@ namespace G2lib {
     if ( std::abs(x) < 0.02 ) return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0 ;
     else                      return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*
   // atan(x)/x
@@ -196,6 +202,8 @@ namespace G2lib {
     singular = std::abs( LU[1][1] ) < epsi ;
     return true ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   Solve2x2::solve( valueType const b[2], valueType x[2] ) const {

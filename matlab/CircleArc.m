@@ -193,9 +193,9 @@ classdef CircleArc < handle
       res = CircleMexWrapper('length', self.objectHandle );
     end
 
-    function varargout = distance( self, varargin )
+    function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
-      varargout{:} = CircleMexWrapper('distance', self.objectHandle, varargin{:} );
+      [DST,S] = CircleMexWrapper('distance', self.objectHandle, varargin{:} );
     end
 
     %% Utils

@@ -17,6 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+#include "Circle.hh"
 #include "Clothoid.hh"
 #include "CubicRootsFlocke.hh"
 
@@ -90,6 +91,8 @@ namespace G2lib {
     
     return niter ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
   buildClothoid( valueType   x0,
@@ -176,7 +179,8 @@ namespace G2lib {
     return niter ;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   int
   ClothoidCurve::build( valueType x1,
                         valueType y1,
@@ -229,19 +233,25 @@ namespace G2lib {
     return niter ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidCurve::X( valueType s ) const {
     valueType C, S ;
     GeneralizedFresnelCS( dk*s*s, k*s, theta0, C, S ) ;
     return x0 + s*C ;
   }
-  
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidCurve::Y( valueType s ) const {
     valueType C, S ;
     GeneralizedFresnelCS( dk*s*s, k*s, theta0, C, S ) ;
     return y0 + s*S ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidCurve::eval( valueType   s,
@@ -257,6 +267,8 @@ namespace G2lib {
     kappa = k + s*dk ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::eval( valueType s, valueType & x, valueType & y ) const {
     valueType C, S ;
@@ -265,12 +277,16 @@ namespace G2lib {
     y = y0 + s*S ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::eval_D( valueType s, valueType & x_D, valueType & y_D ) const {
     valueType theta = theta0 + s*(k+s*(dk/2)) ;
     x_D = cos(theta) ;
     y_D = sin(theta) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidCurve::eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
@@ -279,6 +295,8 @@ namespace G2lib {
     x_DD = -sin(theta)*theta_D ;
     y_DD =  cos(theta)*theta_D  ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidCurve::eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
@@ -291,7 +309,8 @@ namespace G2lib {
     y_DDD = -S*th2+C*dk  ;
   }
 
-  // offset curve
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::eval( valueType s, valueType offs, valueType & x, valueType & y ) const {
     valueType C, S ;
@@ -303,6 +322,8 @@ namespace G2lib {
     y = y0 + s*S + offs * ny ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const {
     valueType theta   = theta0 + s*(k+s*(dk/2)) ;
@@ -311,6 +332,8 @@ namespace G2lib {
     x_D = cos(theta)*scale ;
     y_D = sin(theta)*scale ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidCurve::eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const {
@@ -324,6 +347,8 @@ namespace G2lib {
     y_DD =  tmp1*C - S*tmp2 ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const {
     valueType theta   = theta0 + s*(k+s*(dk/2)) ;
@@ -336,29 +361,254 @@ namespace G2lib {
     y_DDD = tmp1*S+tmp2*C ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidCurve::Pinfinity( valueType & x, valueType & y, bool plus ) const {
+    valueType theta, tmp ;
+    eval( -k/dk, theta, tmp, x, y ) ;
+    valueType Ct = cos(theta) ;
+    valueType St = sin(theta) ;
+    tmp = 0.5*sqrt( m_pi/std::abs(dk) ) ;
+    if ( !plus ) tmp = -tmp ;
+    if ( dk > 0 ) {
+      x += tmp*(Ct-St) ;
+      y += tmp*(St+Ct) ;
+    } else {
+      x += tmp*(Ct+St) ;
+      y += tmp*(St-Ct) ;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
-  ClothoidCurve::closestPoint( valueType   x,
-                               valueType   y,
+  ClothoidCurve::closestPoint( valueType   qx,
+                               valueType   qy,
                                valueType & X,
                                valueType & Y,
                                valueType & S ) const {
-    valueType DST = 1e100;
-    valueType s  = 0;
-    valueType ds = L/100 ;
-    while ( s <= L ) {
-      valueType x1, y1 ;
-      eval( s, x1, y1 );
-      valueType dst = hypot( x-x1, y-y1 );
-      if ( dst < DST ) {
-        DST = dst ;
-        X   = x1 ;
-        Y   = y1 ;
-        S   = s ;
-      }
-      s += ds ;
+    // check if flex is inside curve, if so then split
+    if ( k*dk >= 0 ) { // flex on the left
+      return closestPoint2( qx, qy, X, Y, S );
+    } else if ( dk*(L*dk+k) <= 0 ) { // flex on the right, reverse curve
+      valueType theta1, kappa1, x1, y1;
+      eval( L, theta1, kappa1, x1, y1 );
+      ClothoidCurve C(x1,y1,theta1+m_pi,-kappa1,dk,L) ;
+      valueType d = C.closestPoint2( qx, qy, X, Y, S );
+      S = L-S ;
+      return d ;
     }
-    return DST ;
+
+    // flex inside, split clothoid
+    valueType sflex = -k/dk ;
+    valueType theta1, kappa1, x1, y1, s1 ;
+    eval( sflex, theta1, kappa1, x1, y1 );
+    ClothoidCurve C0( x1, y1, theta1,      0, dk, L-sflex ) ;
+    ClothoidCurve C1( x1, y1, theta1+m_pi, 0, dk, sflex ) ;
+    valueType d0 = C0.closestPoint2( qx, qy,  X,  Y, S  );
+    valueType d1 = C1.closestPoint2( qx, qy, x1, y1, s1 );
+
+    if ( d1 < d0 ) {
+      S = sflex - s1 ; X = x1 ; Y = y1 ;
+      return d1 ;
+    }
+    S += sflex ;
+    return d0 ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  valueType
+  ClothoidCurve::closestPoint2( valueType   qx,
+                                valueType   qy,
+                                valueType & X,
+                                valueType & Y,
+                                valueType & S ) const {
+
+    valueType theta1 = theta0 + L*(k+L*dk/2) ;
+    if ( std::abs(theta1-theta0) <= m_2pi )
+      return closestPoint3( qx, qy, X, Y, S ) ;
+
+    valueType Xi, Yi ; // point at infinity
+    Pinfinity( Xi, Yi ) ;
+    valueType di   = hypot( qx-Xi, qy-Yi ) ;
+    valueType d0   = hypot( qx-x0, qy-x0 ) ;
+    valueType pi4  = 4*m_pi ;
+    valueType adk  = std::abs(dk) ;
+    valueType pidk = pi4*adk;
+
+    if ( di >= d0 ) {
+      valueType LS = pi4/(std::abs(k)+sqrt(pidk+k*k)) ;
+      ClothoidCurve C0(x0,y0,theta0,k,dk,LS) ;
+      return C0.closestPoint3( qx, qy, X, Y, S ) ;
+    }
+
+    valueType kappa1 = k + L*dk;
+    valueType x1, y1 ;
+    eval( L, x1, y1 ) ;
+    valueType d1 = hypot( qx-x1, qy-y1 ) ;
+    if ( di <= d1 ) {
+      valueType LS  = (std::abs(kappa1)+sqrt(pidk+kappa1*kappa1))/adk ;
+      ClothoidCurve C1(x1,y1,theta1+m_pi,-kappa1,dk,LS) ;
+      valueType d = C1.closestPoint3( qx, qy, X, Y, S ) ;
+      S = L-S ;
+      return d ;
+    }
+
+    valueType ss = L/2, thetas(0), kappas(0), xs(0), ys(0) ;
+    for ( int iter = 0 ; iter < 20 ; ++iter ) {
+      eval( ss, thetas, kappas, xs, ys ) ;
+      valueType rhox = qx - Xi ;
+      valueType rhoy = qy - Yi ;
+      valueType rho  = hypot( rhox, rhoy ) ;
+      valueType f    = rho - di ;
+      if ( std::abs(f) < 1e-10 ) break ;
+      valueType phi   = std::atan2( rhoy, rhox ) ;
+      valueType drho  = std::cos(thetas - phi) ;
+      valueType t     = std::sin(thetas - phi) ;
+      valueType ddrho = t*(kappas-t/rho) ;
+      ss -= (f*drho)/((drho*drho)-f*ddrho/2) ;
+    }
+
+    valueType t = std::abs(kappas)+sqrt(pidk+kappas*kappas) ;
+    ClothoidCurve CP(xs,ys,thetas,kappas,dk,std::min(L-ss,pi4/t)) ;
+    ClothoidCurve CM(xs,ys,thetas+m_pi,-kappas,dk,std::min(ss,t/adk)) ;
+    valueType dp = CP.closestPoint3( qx, qy, X, Y, S ) ;
+    valueType dm = CM.closestPoint3( qx, qy, x1, y1, t ) ;
+    if ( dp <= dm ) { S += ss ; return dp ; }
+    X = x1 ;
+    Y = y1 ;
+    S = ss - t ;
+    return dm ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  valueType
+  ClothoidCurve::closestPoint3( valueType   qx,
+                                valueType   qy,
+                                valueType & X,
+                                valueType & Y,
+                                valueType & S ) const {
+    // S=0
+    valueType dx0   = x0-qx ;
+    valueType dy0   = y0-qy ;
+    valueType tphi0 = theta0 - atan2( dy0, dx0 ) ;
+    valueType d0, X0, Y0, S0 = 0 ;
+    bool min0 = cos(tphi0) > 0 ; // distance increasing
+    if ( !min0 ) min0 = !closestPoint4( qx, qy, X0, Y0, S0 ) ;
+    if ( min0 ) {
+      S0 = 0 ; d0 = hypot( dx0, dy0 ) ;
+    } else {
+      d0 = hypot( X0-qx, Y0-qy ) ;
+    }
+
+    // S=L
+    valueType thetaL, kappaL ;
+    eval( L, thetaL, kappaL, X, Y );
+    valueType dxL   = X-qx ;
+    valueType dyL   = Y-qy ;
+    valueType tphiL = thetaL - atan2( dyL, dxL ) ;
+    valueType dL, XL, YL, SL = L ;
+    bool minL = cos(tphiL) < 0 ; // distance increasing
+    if ( !minL ) minL = !closestPoint4( qx, qy, XL, YL, SL ) ;
+    if ( minL ) {
+      SL = L ; dL = hypot( dxL, dyL ) ;
+    } else {
+      dL = hypot( XL-qx, YL-qy ) ;
+    }
+
+    if ( min0 && minL ) {
+      S = L/2 ;
+      if ( closestPoint4( qx, qy, X, Y, S ) ) {
+        valueType dx = X-qx ;
+        valueType dy = Y-qy ;
+        valueType d  = hypot( dx, dy ) ;
+        if ( d < d0 && d < dL ) return d ;
+      }
+    }
+
+    if ( dL < d0 ) {
+      S = SL ; X = XL ; Y = YL ; return dL ;
+    } else {
+      S = S0 ; X = X0 ; Y = Y0 ; return d0 ;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidCurve::closestPoint4( valueType   qx,
+                                valueType   qy,
+                                valueType & X,
+                                valueType & Y,
+                                valueType & S ) const {
+    // S = GUESS
+    int nb = 0 ;
+    for ( int iter = 0 ; iter < 20 ; ++iter ) {
+      // approx clothoid with a circle
+      valueType theta, kappa ;
+      eval( S, theta, kappa, X, Y );
+
+      valueType CS = cos(theta) ;
+      valueType SS = sin(theta) ;
+
+      valueType dx  = X - qx ;
+      valueType dy  = Y - qy ;
+      valueType a0  = CS * dy - SS * dx ;
+      valueType b0  = SS * dy + CS * dx ;
+      valueType tmp = a0*kappa ;
+
+      valueType dS ;
+
+      if ( 1+2*tmp > 0 ) {
+
+        tmp = b0/(1+tmp) ;
+        dS = -tmp*Atanc(tmp*kappa) ;
+
+      } else {
+
+        valueType om = atan2( b0, a0+1/kappa ) ;
+        if ( kappa < 0 ) {
+          if ( om < 0 ) om += m_pi ;
+          else          om -= m_pi ;
+        }
+
+        dS = -om/kappa ;
+      }
+
+      S += dS ;
+      if ( std::abs( dS ) < 1e-12 ) {
+        if ( S < 0 || S > L ) break ;
+        eval( S, X, Y );
+        return true ;
+      }
+
+      // check divergence
+      if ( S < 0 || S > L ) ++nb ; else nb = 0 ;
+      if ( nb > 3 ) break ;
+
+    }
+    return false ;
+  }
+
+/*
++      // approx clothoid with a circle
+       valueType theta, kappa ;
+       eval( S, theta, kappa, X, Y );
+-      valueType dx   = X-x ;
+-      valueType dy   = Y-y ;
+-      valueType d    = hypot( dx, dy );
+-      valueType tphi = theta - atan2( dy, dx ) ;
+-      valueType f    = d*cos(tphi) ;
+-      valueType g    = d*sin(tphi) ;
+-      valueType df   = 1-kappa*g ;
+-      valueType ddf  = -kappa*f*(dk+kappa) ;
+-
+*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   static
   valueType
@@ -372,6 +622,8 @@ namespace G2lib {
     valueType t = d*theta0+e*theta ;
     return a*theta0+b*theta+c*(t*t*t) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   static
   valueType
@@ -418,6 +670,8 @@ namespace G2lib {
     ok = abs(theta-theta0) < m_pi ;
     return theta ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ClothoidCurve::build_forward( valueType _x0,
@@ -472,6 +726,8 @@ namespace G2lib {
     return false ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::changeCurvilinearOrigin( valueType s0, valueType newL ) {
     valueType new_theta, new_kappa, new_x0, new_y0 ;
@@ -482,6 +738,8 @@ namespace G2lib {
     k      = new_kappa ;
     L      = newL ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ClothoidCurve::bbTriangle( valueType offs,
@@ -516,6 +774,8 @@ namespace G2lib {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::bbSplit(
     valueType               split_angle,
@@ -543,6 +803,8 @@ namespace G2lib {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   static
   valueType
   abs2pi( valueType a ) {
@@ -550,6 +812,8 @@ namespace G2lib {
     while ( a > m_pi ) a -= m_2pi ;
     return std::abs(a) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidCurve::bbSplit_internal(
@@ -585,6 +849,8 @@ namespace G2lib {
       cc.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
     }
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ClothoidCurve::intersect_internal( ClothoidCurve & c1,
@@ -635,6 +901,8 @@ namespace G2lib {
     return false ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::intersect( valueType             offs,
                             ClothoidCurve const & clot,
@@ -665,7 +933,9 @@ namespace G2lib {
       }
     }
   }
-  
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   // collision detection
   bool
   ClothoidCurve::approximate_collision( valueType             offs,
@@ -685,6 +955,8 @@ namespace G2lib {
     return false ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::rotate( valueType angle, valueType cx, valueType cy ) {
     valueType dx  = x0 - cx ;
@@ -698,6 +970,8 @@ namespace G2lib {
     theta0 += angle ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::scale( valueType s ) {
     k  /= s ;
@@ -705,12 +979,16 @@ namespace G2lib {
     L  *= s ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::reverse() {
     theta0 = theta0 + m_pi ;
     if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
     k = -k ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidCurve::thetaTotalVariation() const {
@@ -729,6 +1007,8 @@ namespace G2lib {
     }
     return std::abs( thR - thL ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidCurve::thetaMinMax( valueType & thMin, valueType & thMax ) const {
@@ -751,6 +1031,8 @@ namespace G2lib {
     return thMax - thMin ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidCurve::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
     // cerco punto minimo parabola
@@ -761,6 +1043,8 @@ namespace G2lib {
     return kMax - kMin ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidCurve::curvatureTotalVariation() const {
     // cerco punto minimo parabola
@@ -770,10 +1054,14 @@ namespace G2lib {
     return std::abs(kp-km) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidCurve::integralCurvature2() const {
     return L*( k*(k+L*dk) + (L*L)*dk*dk/3 ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidCurve::integralJerk2() const {
@@ -786,6 +1074,8 @@ namespace G2lib {
     valueType t4 = L*t3 ;
     return ((((t4/5*dk+t3*k)*dk+(1+2*t2)*k2)*dk+2*t1*k3)*dk+k4)*L ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidCurve::integralSnap2() const {
@@ -810,6 +1100,8 @@ namespace G2lib {
              5*dk2*k4*t3 + 3*dk3*t3 + 3*dk*k5*t2 + 9*dk2*k*t2 +
              k6+9*k2*dk ) * L ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   std::ostream &
   operator << ( std::ostream & stream, ClothoidCurve const & c ) {

@@ -159,17 +159,37 @@ namespace G2lib {
     { x0 = newx0 ; y0 = newy0 ; }
 
     /*!
+     * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \param X x-coordinate of the closest point
+     * \param Y y-coordinate of the closest point
+     * \param S param of the closest point
+     * \return the distance point-segment
+    \*/
+    valueType
+    closestPoint( valueType   x,
+                  valueType   y,
+                  valueType & X,
+                  valueType & Y,
+                  valueType & S ) const ;
+
+    /*!
      * \brief compute the distance from a point `[x,y]` and the line segment
      *
      * \param x x-coordinate
      * \param y y-coordinate
-     * \param s param at minimum distance
+     * \param S param at minimum distance
      * \return the distance point-segment
     \*/
     valueType
     distance( valueType   x,
               valueType   y,
-              valueType & s ) const ;
+              valueType & S ) const {
+      valueType X, Y ;
+      return closestPoint( x, y, X, Y, S );
+    }
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the line segment
