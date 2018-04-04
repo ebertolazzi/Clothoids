@@ -76,6 +76,18 @@
 		D9E74A5C1F68826300E47B88 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D9FCD3362075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD3372075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD3382075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD3392075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD33A2075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD33B2075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD33D207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD33E207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD33F207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD340207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD341207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD342207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -169,6 +181,8 @@
 		D9BD861B1EFC021300C82B74 /* ClothoidAsyPlot.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClothoidAsyPlot.hh; sourceTree = "<group>"; };
 		D9C8B9F21F7AA69400DF4205 /* statistic_CLC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_CLC; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E74A4D1F68801C00E47B88 /* statistic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9FCD3352075552600553A10 /* Clothoid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clothoid.cc; sourceTree = "<group>"; };
+		D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidDistance.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,10 +268,12 @@
 				D9099D281F600B9400740ECF /* Circle.cc */,
 				D971F8981F613BC2000E663E /* Biarc.hh */,
 				D971F8971F613BC2000E663E /* Biarc.cc */,
+				D938F4E71DD3B84A00E08A70 /* Clothoid.hh */,
+				D9FCD3352075552600553A10 /* Clothoid.cc */,
+				D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */,
 				D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */,
 				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
 				D9614FD41FB8609F007E5770 /* ClothoidList.cc */,
-				D938F4E71DD3B84A00E08A70 /* Clothoid.hh */,
 				D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */,
 				D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */,
 				D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */,
@@ -445,10 +461,12 @@
 				D9179A8F206D2136006B66E7 /* testDistance.cc in Sources */,
 				D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */,
 				D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */,
+				D9FCD33B2075552700553A10 /* Clothoid.cc in Sources */,
 				D9179A80206D211E006B66E7 /* G2lib.cc in Sources */,
 				D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */,
 				D9179A82206D211E006B66E7 /* Biarc.cc in Sources */,
 				D9179A83206D211E006B66E7 /* ClothoidAsyPlot.cc in Sources */,
+				D9FCD342207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D9179A84206D211E006B66E7 /* Circle.cc in Sources */,
 				D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */,
 				D9179A87206D211E006B66E7 /* ClothoidG1.cc in Sources */,
@@ -464,10 +482,12 @@
 				D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */,
 				D9099D201F5FFB8300740ECF /* Fresnel.cc in Sources */,
 				D9099D261F600AA600740ECF /* G2lib.cc in Sources */,
+				D9FCD3362075552700553A10 /* Clothoid.cc in Sources */,
 				D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D971F8991F613BC2000E663E /* Biarc.cc in Sources */,
 				D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D9099D291F600B9400740ECF /* Circle.cc in Sources */,
+				D9FCD33D207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */,
 				D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */,
 				D938F4EB1DD3B84E00E08A70 /* ClothoidG1.cc in Sources */,
@@ -479,6 +499,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9A393581FA14C5C009C1E60 /* testG2stat2arc.cc in Sources */,
+				D9FCD340207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9FCD3392075552700553A10 /* Clothoid.cc in Sources */,
 				D96E1FAE1F75513000115228 /* G2lib.cc in Sources */,
 				D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */,
@@ -501,10 +523,12 @@
 				D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */,
 				D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */,
 				D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */,
+				D9FCD3372075552700553A10 /* Clothoid.cc in Sources */,
 				D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */,
 				D981B3131E8D571D006C933D /* ClothoidG1.cc in Sources */,
 				D971F89A1F613BC2000E663E /* Biarc.cc in Sources */,
+				D9FCD33E207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D918ADA71F62C1CE009893C3 /* Line.cc in Sources */,
 				D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */,
@@ -516,6 +540,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9C8B9E41F7AA69400DF4205 /* G2lib.cc in Sources */,
+				D9FCD341207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9FCD33A2075552700553A10 /* Clothoid.cc in Sources */,
 				D9C8B9E51F7AA69400DF4205 /* ClothoidG2.cc in Sources */,
 				D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */,
@@ -534,6 +560,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */,
+				D9FCD33F207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9FCD3382075552700553A10 /* Clothoid.cc in Sources */,
 				D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */,
 				D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */,

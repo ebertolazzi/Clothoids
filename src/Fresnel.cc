@@ -156,7 +156,7 @@ namespace G2lib {
         numterm *= t ;
         term     = numterm/(fact*denterm) ;
         sum     += term ;
-      } while ( std::abs(term) > eps*std::abs(sum) ) ;
+      } while ( abs(term) > eps*abs(sum) ) ;
 
       C = x*sum;
 
@@ -173,7 +173,7 @@ namespace G2lib {
         numterm *= t ;
         term     = numterm/(fact*denterm) ;
         sum     += term ;
-      } while ( std::abs(term) > eps*std::abs(sum) ) ;
+      } while ( abs(term) > eps*abs(sum) ) ;
 
       S = m_pi_2*sum*(x*x*x) ;
 
@@ -223,12 +223,12 @@ namespace G2lib {
         numterm += 4.0 ;
         term    *= numterm*(numterm-2.0)*t ;
         sum     += term ;
-        absterm  = std::abs(term) ;
+        absterm  = abs(term) ;
         G2LIB_ASSERT( oldterm >= absterm,
                       "In FresnelCS f not converged to eps, x = " << x <<
                       " oldterm = " << oldterm << " absterm = " << absterm ) ;
         oldterm  = absterm ;
-      } while ( absterm > eps10 * std::abs(sum) ) ;
+      } while ( absterm > eps10 * abs(sum) ) ;
 
       valueType f = sum / (m_pi*x) ;
 
@@ -242,12 +242,12 @@ namespace G2lib {
         numterm += 4.0 ;
         term    *= numterm*(numterm+2.0)*t ;
         sum     += term ;
-        absterm  = std::abs(term) ;
+        absterm  = abs(term) ;
         G2LIB_ASSERT( oldterm >= absterm,
                       "In FresnelCS g not converged to eps, x = " << x <<
                       " oldterm = " << oldterm << " absterm = " << absterm ) ;
         oldterm  = absterm ;
-      } while ( absterm > eps10 * std::abs(sum) ) ;
+      } while ( absterm > eps10 * abs(sum) ) ;
 
       valueType g = m_pi*x ; g = sum/(g*g*x) ;
 
@@ -295,7 +295,7 @@ namespace G2lib {
                 valueType & X,
                 valueType & Y ) {
     valueType s    = a > 0 ? +1 : -1 ;
-    valueType absa = std::abs(a) ;
+    valueType absa = abs(a) ;
     valueType z    = m_1_sqrt_pi*sqrt(absa) ;
     valueType ell  = s*b*m_1_sqrt_pi/sqrt(absa) ;
     valueType g    = -0.5*s*(b*b)/absa ;
@@ -327,7 +327,7 @@ namespace G2lib {
                   "In evalXYaLarge first argument nk must be in 1..3, nk " << nk ) ;
 
     valueType s    = a > 0 ? +1 : -1 ;
-    valueType absa = std::abs(a) ;
+    valueType absa = abs(a) ;
     valueType z    = m_1_sqrt_pi*sqrt(absa) ;
     valueType ell  = s*b*m_1_sqrt_pi/sqrt(absa) ;
     valueType g    = -0.5*s*(b*b)/absa ;
@@ -375,7 +375,7 @@ namespace G2lib {
     for ( indexType n = 1 ; n <= 100 ; ++n ) {
       tmp *= (-b/(2*n+mu-nu+1)) * (b/(2*n+mu+nu+1)) ;
       res += tmp ;
-      if ( std::abs(tmp) < std::abs(res) * 1e-50 ) break ;
+      if ( abs(tmp) < abs(res) * 1e-50 ) break ;
     }
     return res ;
   }
@@ -393,7 +393,7 @@ namespace G2lib {
     valueType sb = sin(b) ;
     valueType cb = cos(b) ;
     valueType b2 = b*b ;
-    if ( std::abs(b) < 1e-3 ) {
+    if ( abs(b) < 1e-3 ) {
       X[0] = 1-(b2/6)*(1-(b2/20)*(1-(b2/42))) ;
       Y[0] = (b/2)*(1-(b2/12)*(1-(b2/30))) ;
     } else {
@@ -511,8 +511,8 @@ namespace G2lib {
                         valueType & intS ) {
 
     valueType xx, yy ;
-    if ( std::abs(a) < A_THRESOLD ) evalXYaSmall( a, b, A_SERIE_SIZE, xx, yy ) ;
-    else                            evalXYaLarge( a, b, xx, yy ) ;
+    if ( abs(a) < A_THRESOLD ) evalXYaSmall( a, b, A_SERIE_SIZE, xx, yy ) ;
+    else                       evalXYaLarge( a, b, xx, yy ) ;
 
     valueType cosc = cos(c) ;
     valueType sinc = sin(c) ;
@@ -534,8 +534,8 @@ namespace G2lib {
 
     G2LIB_ASSERT( nk > 0 && nk < 4, "nk = " << nk << " must be in 1..3" ) ;
 
-    if ( std::abs(a) < A_THRESOLD ) evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS ) ;
-    else                            evalXYaLarge( nk, a, b, intC, intS ) ;
+    if ( abs(a) < A_THRESOLD ) evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS ) ;
+    else                       evalXYaLarge( nk, a, b, intC, intS ) ;
 
     valueType cosc = cos(c) ;
     valueType sinc = sin(c) ;
@@ -545,6 +545,174 @@ namespace G2lib {
       valueType yy = intS[k] ;
       intC[k] = xx * cosc - yy * sinc ;
       intS[k] = xx * sinc + yy * cosc ;
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+
+  valueType
+  ClothoidData::X( valueType s ) const {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    return x0 + s*C ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  valueType
+  ClothoidData::Y( valueType s ) const {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    return y0 + s*S ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval( valueType   s,
+                      valueType & theta,
+                      valueType & kappa,
+                      valueType & x,
+                      valueType & y ) const {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    x     = x0 + s*C ;
+    y     = y0 + s*S ;
+    theta = theta0 + s*(k0+0.5*s*dk) ;
+    kappa = k0 + s*dk ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval( valueType   s,
+                      valueType & x,
+                      valueType & y ) const {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    x = x0 + s*C ;
+    y = y0 + s*S ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval_D( valueType   s,
+                        valueType & x_D,
+                        valueType & y_D ) const {
+    valueType theta = theta0 + s*(k0+0.5*s*dk) ;
+    x_D = cos(theta) ;
+    y_D = sin(theta) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval_DD( valueType   s,
+                         valueType & x_DD,
+                         valueType & y_DD ) const {
+    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
+    valueType theta_D = k0+s*dk ;
+    x_DD = -sin(theta)*theta_D ;
+    y_DD =  cos(theta)*theta_D ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval_DDD( valueType   s,
+                          valueType & x_DDD,
+                          valueType & y_DDD ) const {
+    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
+    valueType theta_D = k0+s*dk ;
+    valueType C       = cos(theta) ;
+    valueType S       = sin(theta) ;
+    valueType th2     = theta_D*theta_D ;
+    x_DDD = -C*th2-S*dk ;
+    y_DDD = -S*th2+C*dk  ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval( valueType   s,
+                      valueType   offs,
+                      valueType & x,
+                      valueType & y ) const {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    valueType theta = theta0 + s*(k0+0.5*s*dk) ;
+    valueType nx    = -sin(theta) ;
+    valueType ny    =  cos(theta) ;
+    x = x0 + s*C + offs * nx ;
+    y = y0 + s*S + offs * ny ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval_D( valueType   s,
+                        valueType   offs,
+                        valueType & x_D,
+                        valueType & y_D ) const {
+    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
+    valueType theta_D = k0+s*dk ;
+    valueType scale   = 1-offs*theta_D ;
+    x_D = cos(theta)*scale ;
+    y_D = sin(theta)*scale ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval_DD( valueType   s,
+                         valueType   offs,
+                         valueType & x_DD,
+                         valueType & y_DD ) const {
+    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
+    valueType theta_D = k0+s*dk ;
+    valueType C       = cos(theta) ;
+    valueType S       = sin(theta) ;
+    valueType tmp1    = theta_D*(1-theta_D*offs) ;
+    valueType tmp2    = offs*dk ;
+    x_DD = -tmp1*S - C*tmp2 ;
+    y_DD =  tmp1*C - S*tmp2 ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::eval_DDD( valueType   s,
+                          valueType   offs,
+                          valueType & x_DDD,
+                          valueType & y_DDD ) const {
+    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
+    valueType theta_D = k0+s*dk ;
+    valueType C       = cos(theta) ;
+    valueType S       = sin(theta) ;
+    valueType tmp1    = theta_D*theta_D*(theta_D*offs-1) ;
+    valueType tmp2    = dk*(1-3*theta_D*offs) ;
+    x_DDD = tmp1*C-tmp2*S ;
+    y_DDD = tmp1*S+tmp2*C ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::Pinfinity( valueType & x, valueType & y, bool plus ) const {
+    valueType theta, tmp ;
+    eval( -k0/dk, theta, tmp, x, y ) ;
+    valueType Ct = cos(theta) ;
+    valueType St = sin(theta) ;
+    tmp = 0.5*sqrt( m_pi/abs(dk) ) ;
+    if ( !plus ) tmp = -tmp ;
+    if ( dk > 0 ) {
+      x += tmp*(Ct-St) ;
+      y += tmp*(St+Ct) ;
+    } else {
+      x += tmp*(Ct+St) ;
+      y += tmp*(St-Ct) ;
     }
   }
 

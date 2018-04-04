@@ -108,6 +108,84 @@ namespace G2lib {
                         valueType & intC,
                         valueType & intS ) ;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  class ClothoidData {
+  public:
+    valueType x0 ;     //!< initial x coordinate of the clothoid
+    valueType y0 ;     //!< initial y coordinate of the clothoid
+    valueType theta0 ; //!< initial angle of the clothoid
+    valueType k0 ;     //!< initial curvature
+    valueType dk ;     //!< curvature derivative
+
+    valueType deltaTheta( valueType s ) const
+    { return s*(k0 + 0.5*s*dk) ; }
+
+    valueType theta( valueType s ) const
+    { return theta0 + s*(k0 + 0.5*s*dk) ; }
+
+    valueType kappa( valueType s ) const
+    { return k0 + s*dk ; }
+
+    valueType X( valueType s ) const ;
+    valueType Y( valueType s ) const ;
+
+    void
+    eval( valueType   s,
+          valueType & theta,
+          valueType & kappa,
+          valueType & x,
+          valueType & y ) const ;
+
+    void
+    eval( valueType   s,
+          valueType & x,
+          valueType & y ) const ;
+
+    void
+    eval_D( valueType   s,
+            valueType & x_D,
+            valueType & y_D ) const ;
+
+    void
+    eval_DD( valueType   s,
+             valueType & x_DD,
+             valueType & y_DD ) const ;
+
+    void
+    eval_DDD( valueType   s,
+              valueType & x_DDD,
+              valueType & y_DDD ) const ;
+
+    void
+    eval( valueType   s,
+          valueType   offs,
+          valueType & x,
+          valueType & y ) const ;
+
+    void
+    eval_D( valueType   s,
+            valueType   offs,
+            valueType & x_D,
+            valueType & y_D ) const ;
+
+    void
+    eval_DD( valueType   s,
+             valueType   offs,
+             valueType & x_DD,
+             valueType & y_DD ) const ;
+
+    void
+    eval_DDD( valueType   s,
+              valueType   offs,
+              valueType & x_DDD,
+              valueType & y_DDD ) const ;
+
+    void
+    Pinfinity( valueType & x, valueType & y, bool plus ) const ;
+
+  } ;
+
 }
 
 #endif

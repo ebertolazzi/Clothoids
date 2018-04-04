@@ -96,13 +96,8 @@ namespace G2lib {
   //! \brief Class to manage Clothoid Curve
   class ClothoidCurve {
 
-    valueType x0,       //!< initial x coordinate of the clothoid
-              y0,       //!< initial y coordinate of the clothoid
-              theta0,   //!< initial angle of the clothoid
-              k,        //!< initial curvature
-              dk ;      //!< curvature derivative
-
-    valueType L ;       //!< lenght of clothoid segment
+    ClothoidData CD ; //!< clothoid data
+    valueType    L ;  //!< lenght of clothoid segment
 
     int
     build( valueType x1, valueType y1, valueType theta1 );
@@ -121,37 +116,17 @@ namespace G2lib {
                         indexType max_iter,
                         valueType tolerance ) const ;
 
-    valueType
-    closestPoint2( valueType   x,
-                   valueType   y,
-                   valueType & X,
-                   valueType & Y,
-                   valueType & S ) const ;
-
-    valueType
-    closestPoint3( valueType   x,
-                   valueType   y,
-                   valueType & X,
-                   valueType & Y,
-                   valueType & S ) const ;
-
-    bool
-    closestPoint4( valueType   x,
-                   valueType   y,
-                   valueType & X,
-                   valueType & Y,
-                   valueType & S ) const ;
-
   public:
 
     ClothoidCurve()
-    : x0(0)
-    , y0(0)
-    , theta0(0)
-    , k(0)
-    , dk(0)
-    , L(0)
-    {}
+    {
+      CD.x0     = 0 ;
+      CD.y0     = 0 ;
+      CD.theta0 = 0 ;
+      CD.k0     = 0 ;
+      CD.dk     = 0 ;
+      L         = 0 ;
+    }
 
     //! construct a clothoid with the standard parameters
     ClothoidCurve( valueType _x0,
@@ -160,35 +135,31 @@ namespace G2lib {
                    valueType _k,
                    valueType _dk,
                    valueType _L )
-    : x0(_x0)
-    , y0(_y0)
-    , theta0(_theta0)
-    , k(_k)
-    , dk(_dk)
-    , L(_L)
-    {}
+    {
+      CD.x0     = _x0 ;
+      CD.y0     = _y0 ;
+      CD.theta0 = _theta0 ;
+      CD.k0     = _k ;
+      CD.dk     = _dk ;
+      L         = _L ;
+    }
 
     //! construct a clothoid by solving the hermite G1 problem
     ClothoidCurve( valueType const _P0[],
                    valueType       _theta0,
                    valueType const _P1[],
                    valueType       _theta1 )
-    : x0(_P0[0])
-    , y0(_P0[1])
-    , theta0(_theta0)
     {
+      CD.x0     = _P0[0] ;
+      CD.y0     = _P0[1] ;
+      CD.theta0 = _theta0 ;
       build( _P1[0], _P1[1], _theta1 ) ;
-      //buildClothoid( x0, y0, theta0, _P1[0], _P1[1], _theta1, k, dk, s_max ) ;
     }
 
     void
     copy( ClothoidCurve const & c ) {
-      x0     = c.x0 ;
-      y0     = c.y0 ;
-      theta0 = c.theta0 ;
-      k      = c.k ;
-      dk     = c.dk ;
-      L      = c.L ;
+      CD = c.CD ;
+      L  = c.L ;
     }
 
     ClothoidCurve( ClothoidCurve const & s ) { copy(s) ; }
@@ -196,18 +167,18 @@ namespace G2lib {
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s) ; return *this ; }
 
-    valueType getX0()      const { return x0 ; }
-    valueType getY0()      const { return y0 ; }
-    valueType getTheta0()  const { return theta0 ; }
+    valueType getX0()      const { return CD.x0 ; }
+    valueType getY0()      const { return CD.y0 ; }
+    valueType getTheta0()  const { return CD.theta0 ; }
 
-    valueType getKappa()   const { return k ; }
-    valueType getKappa_D() const { return dk ; }
+    valueType getKappa()   const { return CD.k0 ; }
+    valueType getKappa_D() const { return CD.dk ; }
     valueType getL()       const { return L ; }
 
-    valueType getThetaBegin() const { return theta0 ; }
-    valueType getThetaEnd()   const { return theta0 + L * ( k + L * dk / 2 ) ; }
-    valueType getKappaBegin() const { return k ; }
-    valueType getKappaEnd()   const { return k + L * dk ; }
+    valueType getThetaBegin() const { return CD.theta0 ; }
+    valueType getThetaEnd()   const { return CD.theta0 + L * ( CD.k0 + 0.5 * L * CD.dk ) ; }
+    valueType getKappaBegin() const { return CD.k0 ; }
+    valueType getKappaEnd()   const { return CD.k0 + L * CD.dk ; }
 
     //! construct a clothoid with the standard parameters
     void
@@ -217,12 +188,12 @@ namespace G2lib {
            valueType _k,
            valueType _dk,
            valueType _L ) {
-      x0     = _x0 ;
-      y0     = _y0 ;
-      theta0 = _theta0 ;
-      k      = _k ;
-      dk     = _dk ;
-      L      = _L ;
+      CD.x0     = _x0 ;
+      CD.y0     = _y0 ;
+      CD.theta0 = _theta0 ;
+      CD.k0     = _k ;
+      CD.dk     = _dk ;
+      L         = _L ;
     }
 
     /*! \brief build a clothoid by solving the hermite G1 problem
@@ -241,9 +212,9 @@ namespace G2lib {
               valueType _x1,
               valueType _y1,
               valueType _theta1 ) {
-      x0     = _x0 ;
-      y0     = _y0 ;
-      theta0 = _theta0 ;
+      CD.x0     = _x0 ;
+      CD.y0     = _y0 ;
+      CD.theta0 = _theta0 ;
       build( _x1, _y1, _theta1 ) ;
     }
 
@@ -266,13 +237,16 @@ namespace G2lib {
                    valueType tol = 1e-8 ) ;
 
     valueType
-    theta( valueType s ) const { return theta0 + s*(k + 0.5*s*dk) ; }
+    theta( valueType s ) const
+    { return CD.theta(s) ; }
 
     valueType
-    theta_D( valueType s ) const { return k + s*dk ; }
+    theta_D( valueType s ) const
+    { return CD.kappa(s) ; }
 
     valueType
-    theta_DD( valueType ) const { return dk ; }
+    theta_DD( valueType ) const
+    { return CD.dk ; }
 
     valueType
     theta_DDD( valueType ) const { return 0 ; }
@@ -302,38 +276,91 @@ namespace G2lib {
     valueType
     integralSnap2() const ;
 
-    valueType X( valueType s ) const ;
-    valueType Y( valueType s ) const ;
+    valueType X( valueType s ) const { return CD.X(s) ; }
+    valueType Y( valueType s ) const { return CD.Y(s) ; }
 
-    valueType Xbegin()     const { return x0 ; }
-    valueType Ybegin()     const { return y0 ; }
-    valueType KappaBegin() const { return k ; }
-    valueType ThetaBegin() const { return theta0 ; }
+    valueType Xbegin()     const { return CD.x0 ; }
+    valueType Ybegin()     const { return CD.y0 ; }
+    valueType KappaBegin() const { return CD.k0 ; }
+    valueType ThetaBegin() const { return CD.theta0 ; }
 
     valueType Xend()     const { return X(L) ; }
     valueType Yend()     const { return Y(L) ; }
     valueType KappaEnd() const { return theta_D(L) ; }
     valueType ThetaEnd() const { return theta(L) ; }
 
-    void Pinfinity( valueType & x, valueType & y, bool plus = true ) const ;
+    void
+    Pinfinity( valueType & x, valueType & y, bool plus = true ) const
+    { CD.Pinfinity( x, y, plus ); }
 
     void
     eval( valueType   s,
           valueType & theta,
           valueType & kappa,
           valueType & x,
-          valueType & y ) const ;
+          valueType & y ) const
+    { CD.eval( s, theta, kappa, x, y ); }
 
-    void eval( valueType s, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+    void
+    eval( valueType   s,
+          valueType & x,
+          valueType & y ) const {
+      CD.eval( s, x, y ) ;
+    }
+
+    void
+    eval_D( valueType   s,
+            valueType & x_D,
+            valueType & y_D ) const {
+      CD.eval_D( s, x_D, y_D ) ;
+    }
+
+    void
+    eval_DD( valueType   s,
+             valueType & x_DD,
+             valueType & y_DD ) const {
+      CD.eval_DD( s, x_DD, y_DD ) ;
+    }
+
+    void
+    eval_DDD( valueType   s,
+              valueType & x_DDD,
+              valueType & y_DDD ) const {
+      CD.eval_DDD( s, x_DDD, y_DDD ) ;
+    }
 
     // offset curve
-    void eval( valueType s, valueType offs, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const ;
+    void
+    eval( valueType   s,
+          valueType   offs,
+          valueType & x,
+          valueType & y ) const {
+      CD.eval( s, offs, x, y ) ;
+    }
+
+    void
+    eval_D( valueType   s,
+            valueType   offs,
+            valueType & x_D,
+            valueType & y_D ) const {
+      CD.eval_D( s, offs, x_D, y_D ) ;
+    }
+
+    void
+    eval_DD( valueType   s,
+             valueType   offs,
+             valueType & x_DD,
+             valueType & y_DD ) const {
+      CD.eval_DD( s, offs, x_DD, y_DD ) ;
+    }
+
+    void
+    eval_DDD( valueType   s,
+              valueType   offs,
+              valueType & x_DDD,
+              valueType & y_DDD ) const {
+      CD.eval_DDD( s, offs, x_DDD, y_DDD ) ;
+    }
 
     valueType
     closestPoint( valueType   x,
@@ -358,11 +385,11 @@ namespace G2lib {
     trim( valueType s_begin, valueType s_end ) {
       valueType xx, yy ;
       eval( s_begin, xx, yy ) ;
-      k      += s_begin * dk ;
-      theta0 += s_begin * ( k + s_begin * dk/2 ) ;
-      L  = s_end - s_begin ;
-      x0 = xx ;
-      y0 = yy ;
+      CD.k0     += s_begin * CD.dk ;
+      CD.theta0 += s_begin * ( CD.k0 + 0.5*s_begin * CD.dk ) ;
+      L          = s_end - s_begin ;
+      CD.x0 = xx ;
+      CD.y0 = yy ;
     }
 
     //! get the bounding box triangle (if angle variation less that pi/2)
@@ -419,14 +446,14 @@ namespace G2lib {
 
     void
     translate( valueType tx, valueType ty )
-    { x0 += tx ; y0 += ty ; }
+    { CD.x0 += tx ; CD.y0 += ty ; }
 
     void
     changeCurvilinearOrigin( valueType s0, valueType newL ) ;
 
     void
     moveOrigin( valueType newx0, valueType newy0 )
-    { x0 = newx0 ; y0 = newy0 ; }
+    { CD.x0 = newx0 ; CD.y0 = newy0 ; }
 
     void
     scale( valueType sfactor ) ;
