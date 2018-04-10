@@ -115,17 +115,17 @@ namespace G2lib {
     valueType x0 ;     //!< initial x coordinate of the clothoid
     valueType y0 ;     //!< initial y coordinate of the clothoid
     valueType theta0 ; //!< initial angle of the clothoid
-    valueType k0 ;     //!< initial curvature
+    valueType kappa0 ;     //!< initial curvature
     valueType dk ;     //!< curvature derivative
 
     valueType deltaTheta( valueType s ) const
-    { return s*(k0 + 0.5*s*dk) ; }
+    { return s*(kappa0 + 0.5*s*dk) ; }
 
     valueType theta( valueType s ) const
-    { return theta0 + s*(k0 + 0.5*s*dk) ; }
+    { return theta0 + s*(kappa0 + 0.5*s*dk) ; }
 
     valueType kappa( valueType s ) const
-    { return k0 + s*dk ; }
+    { return kappa0 + s*dk ; }
 
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
@@ -183,6 +183,9 @@ namespace G2lib {
 
     void
     Pinfinity( valueType & x, valueType & y, bool plus ) const ;
+
+    void
+    reverse( valueType L ) ;
 
   } ;
 

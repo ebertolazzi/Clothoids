@@ -37,7 +37,7 @@ namespace G2lib {
     CD.x0     = new_x0 ;
     CD.y0     = new_y0 ;
     CD.theta0 = new_theta ;
-    CD.k0     = new_kappa ;
+    CD.kappa0 = new_kappa ;
     L         = newL ;
   }
 
@@ -60,9 +60,9 @@ namespace G2lib {
 
   void
   ClothoidCurve::scale( valueType s ) {
-    CD.k0 /= s ;
-    CD.dk /= s*s ;
-    L     *= s ;
+    CD.kappa0 /= s ;
+    CD.dk     /= s*s ;
+    L         *= s ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -71,7 +71,7 @@ namespace G2lib {
   ClothoidCurve::reverse() {
     CD.theta0 += m_pi ;
     if ( CD.theta0 > m_pi ) CD.theta0 -= 2*m_pi ;
-    CD.k0 = -CD.k0 ;
+    CD.kappa0 = -CD.kappa0 ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -80,14 +80,14 @@ namespace G2lib {
   ClothoidCurve::thetaTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType kL  = CD.k0 ;
-    valueType kR  = CD.k0+CD.dk*L ;
+    valueType kL  = CD.kappa0 ;
+    valueType kR  = CD.kappa(L) ;
     valueType thL = 0 ;
-    valueType thR = L*(CD.k0+0.5*CD.dk*L) ;
+    valueType thR = CD.deltaTheta(L) ;
     if ( kL*kR < 0 ) {
-      valueType root = -CD.k0/CD.dk ;
+      valueType root = -CD.kappa0/CD.dk ;
       if ( root > 0 && root < L ) {
-        valueType thM  = root*(CD.k0+0.5*CD.dk*root) ;
+        valueType thM  = CD.deltaTheta(root) ;
         return std::abs( thR - thM ) + std::abs( thM - thL ) ;
       }
     }
@@ -100,14 +100,14 @@ namespace G2lib {
   ClothoidCurve::thetaMinMax( valueType & thMin, valueType & thMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType kL  = CD.k0 ;
-    valueType kR  = CD.k0+CD.dk*L ;
+    valueType kL  = CD.kappa0 ;
+    valueType kR  = CD.kappa(L) ;
     valueType thL = 0 ;
-    valueType thR = L*(CD.k0+0.5*CD.dk*L) ;
+    valueType thR = CD.deltaTheta(L) ;
     if ( thL < thR ) { thMin = thL ; thMax = thR ; }
     else             { thMin = thR ; thMax = thL ; }
     if ( kL*kR < 0 ) {
-      valueType root = -CD.k0/CD.dk ;
+      valueType root = -CD.kappa0/CD.dk ;
       if ( root > 0 && root < L ) {
         valueType thM = CD.deltaTheta(root) ;
         if      ( thM < thMin ) thMin = thM ;
@@ -123,7 +123,7 @@ namespace G2lib {
   ClothoidCurve::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    kMin = CD.k0 ;
+    kMin = CD.kappa0 ;
     kMax = CD.kappa(L);
     if ( kMax < kMin ) std::swap( kMax, kMin ) ;
     return kMax - kMin ;
@@ -135,7 +135,7 @@ namespace G2lib {
   ClothoidCurve::curvatureTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType km = CD.k0 ;
+    valueType km = CD.kappa0 ;
     valueType kp = CD.kappa(L) ;
     return std::abs(kp-km) ;
   }
@@ -144,31 +144,31 @@ namespace G2lib {
 
   valueType
   ClothoidCurve::integralCurvature2() const {
-    return L*( CD.k0*(CD.k0+L*CD.dk) + (L*L)*CD.dk*CD.dk/3 ) ;
+    return L*( CD.kappa0*(CD.kappa0+L*CD.dk) + (L*L)*CD.dk*CD.dk/3 ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidCurve::integralJerk2() const {
-    valueType k2 = CD.k0*CD.k0 ;
-    valueType k3 = CD.k0*k2 ;
+    valueType k2 = CD.kappa0*CD.kappa0 ;
+    valueType k3 = CD.kappa0*k2 ;
     valueType k4 = k2*k2 ;
     valueType t1 = L ;
     valueType t2 = L*t1 ;
     valueType t3 = L*t2 ;
     valueType t4 = L*t3 ;
-    return ((((t4/5*CD.dk+t3*CD.k0)*CD.dk+(1+2*t2)*k2)*CD.dk+2*t1*k3)*CD.dk+k4)*L ;
+    return ((((t4/5*CD.dk+t3*CD.kappa0)*CD.dk+(1+2*t2)*k2)*CD.dk+2*t1*k3)*CD.dk+k4)*L ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidCurve::integralSnap2() const {
-    valueType k2  = CD.k0*CD.k0 ;
-    valueType k3  = CD.k0*k2 ;
+    valueType k2  = CD.kappa0*CD.kappa0 ;
+    valueType k3  = CD.kappa0*k2 ;
     valueType k4  = k2*k2 ;
-    valueType k5  = k4*CD.k0 ;
+    valueType k5  = k4*CD.kappa0 ;
     valueType k6  = k4*k2 ;
     valueType dk2 = CD.dk*CD.dk ;
     valueType dk3 = CD.dk*dk2 ;
@@ -182,8 +182,8 @@ namespace G2lib {
     valueType t6  = L*t5 ;
     valueType t7  = L*t6 ;
 
-    return ( (t7/7)*dk6 + dk5*CD.k0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
-             5*dk2*k4*t3 + 3*dk3*t3 + 3*CD.dk*k5*t2 + 9*dk2*CD.k0*t2 +
+    return ( (t7/7)*dk6 + dk5*CD.kappa0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
+             5*dk2*k4*t3 + 3*dk3*t3 + 3*CD.dk*k5*t2 + 9*dk2*CD.kappa0*t2 +
              k6+9*k2*CD.dk ) * L ;
   }
 
@@ -410,7 +410,7 @@ namespace G2lib {
     stream <<   "x0     = " << c.CD.x0
            << "\ny0     = " << c.CD.y0
            << "\ntheta0 = " << c.CD.theta0
-           << "\nk      = " << c.CD.k0
+           << "\nkappa0 = " << c.CD.kappa0
            << "\ndk     = " << c.CD.dk
            << "\nL      = " << c.L
            << "\n" ;

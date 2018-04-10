@@ -554,7 +554,7 @@ namespace G2lib {
   valueType
   ClothoidData::X( valueType s ) const {
     valueType C, S ;
-    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
     return x0 + s*C ;
   }
 
@@ -563,7 +563,7 @@ namespace G2lib {
   valueType
   ClothoidData::Y( valueType s ) const {
     valueType C, S ;
-    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
     return y0 + s*S ;
   }
 
@@ -576,11 +576,11 @@ namespace G2lib {
                       valueType & x,
                       valueType & y ) const {
     valueType C, S ;
-    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
     x     = x0 + s*C ;
     y     = y0 + s*S ;
-    theta = theta0 + s*(k0+0.5*s*dk) ;
-    kappa = k0 + s*dk ;
+    theta = theta0 + s*(kappa0+0.5*s*dk) ;
+    kappa = kappa0 + s*dk ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -590,7 +590,7 @@ namespace G2lib {
                       valueType & x,
                       valueType & y ) const {
     valueType C, S ;
-    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
     x = x0 + s*C ;
     y = y0 + s*S ;
   }
@@ -601,7 +601,7 @@ namespace G2lib {
   ClothoidData::eval_D( valueType   s,
                         valueType & x_D,
                         valueType & y_D ) const {
-    valueType theta = theta0 + s*(k0+0.5*s*dk) ;
+    valueType theta = theta0 + s*(kappa0+0.5*s*dk) ;
     x_D = cos(theta) ;
     y_D = sin(theta) ;
   }
@@ -612,8 +612,8 @@ namespace G2lib {
   ClothoidData::eval_DD( valueType   s,
                          valueType & x_DD,
                          valueType & y_DD ) const {
-    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
-    valueType theta_D = k0+s*dk ;
+    valueType theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    valueType theta_D = kappa0 + s*dk ;
     x_DD = -sin(theta)*theta_D ;
     y_DD =  cos(theta)*theta_D ;
   }
@@ -624,8 +624,8 @@ namespace G2lib {
   ClothoidData::eval_DDD( valueType   s,
                           valueType & x_DDD,
                           valueType & y_DDD ) const {
-    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
-    valueType theta_D = k0+s*dk ;
+    valueType theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    valueType theta_D = kappa0+s*dk ;
     valueType C       = cos(theta) ;
     valueType S       = sin(theta) ;
     valueType th2     = theta_D*theta_D ;
@@ -641,8 +641,8 @@ namespace G2lib {
                       valueType & x,
                       valueType & y ) const {
     valueType C, S ;
-    GeneralizedFresnelCS( dk*s*s, k0*s, theta0, C, S ) ;
-    valueType theta = theta0 + s*(k0+0.5*s*dk) ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
+    valueType theta = theta0 + s*(kappa0+0.5*s*dk) ;
     valueType nx    = -sin(theta) ;
     valueType ny    =  cos(theta) ;
     x = x0 + s*C + offs * nx ;
@@ -656,8 +656,8 @@ namespace G2lib {
                         valueType   offs,
                         valueType & x_D,
                         valueType & y_D ) const {
-    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
-    valueType theta_D = k0+s*dk ;
+    valueType theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    valueType theta_D = kappa0 + s*dk ;
     valueType scale   = 1-offs*theta_D ;
     x_D = cos(theta)*scale ;
     y_D = sin(theta)*scale ;
@@ -670,8 +670,8 @@ namespace G2lib {
                          valueType   offs,
                          valueType & x_DD,
                          valueType & y_DD ) const {
-    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
-    valueType theta_D = k0+s*dk ;
+    valueType theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    valueType theta_D = kappa0 + s*dk ;
     valueType C       = cos(theta) ;
     valueType S       = sin(theta) ;
     valueType tmp1    = theta_D*(1-theta_D*offs) ;
@@ -687,8 +687,8 @@ namespace G2lib {
                           valueType   offs,
                           valueType & x_DDD,
                           valueType & y_DDD ) const {
-    valueType theta   = theta0 + s*(k0+0.5*s*dk) ;
-    valueType theta_D = k0+s*dk ;
+    valueType theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    valueType theta_D = kappa0 + s*dk ;
     valueType C       = cos(theta) ;
     valueType S       = sin(theta) ;
     valueType tmp1    = theta_D*theta_D*(theta_D*offs-1) ;
@@ -702,7 +702,7 @@ namespace G2lib {
   void
   ClothoidData::Pinfinity( valueType & x, valueType & y, bool plus ) const {
     valueType theta, tmp ;
-    eval( -k0/dk, theta, tmp, x, y ) ;
+    eval( -kappa0/dk, theta, tmp, x, y ) ;
     valueType Ct = cos(theta) ;
     valueType St = sin(theta) ;
     tmp = 0.5*sqrt( m_pi/abs(dk) ) ;
@@ -714,6 +714,20 @@ namespace G2lib {
       x += tmp*(Ct+St) ;
       y += tmp*(St-Ct) ;
     }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::reverse( valueType L ) {
+    valueType C, S ;
+    GeneralizedFresnelCS( dk*L*L, kappa0*L, theta0, C, S ) ;
+    x0     += L*C ;
+    y0     += L*S ;
+    theta0 += L*(kappa0+0.5*L*dk) ;
+    kappa0 += L*dk ;
+    theta0 += m_pi ;
+    kappa0  = -kappa0 ;
   }
 
 }

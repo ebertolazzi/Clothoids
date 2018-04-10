@@ -28,7 +28,7 @@ LIBS = [ ...
 [~,mexLoaded] = inmem('-completenames') ;
 
 disp('---------------------------------------------------------');
-for k=1:4 %length(NAMES)
+for k=4:4 %length(NAMES)
   N=NAMES{k} ;
   fprintf(1,'Compiling: %s\n',N) ;
 

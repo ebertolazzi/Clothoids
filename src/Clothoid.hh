@@ -123,7 +123,7 @@ namespace G2lib {
       CD.x0     = 0 ;
       CD.y0     = 0 ;
       CD.theta0 = 0 ;
-      CD.k0     = 0 ;
+      CD.kappa0 = 0 ;
       CD.dk     = 0 ;
       L         = 0 ;
     }
@@ -139,7 +139,7 @@ namespace G2lib {
       CD.x0     = _x0 ;
       CD.y0     = _y0 ;
       CD.theta0 = _theta0 ;
-      CD.k0     = _k ;
+      CD.kappa0 = _k ;
       CD.dk     = _dk ;
       L         = _L ;
     }
@@ -171,14 +171,14 @@ namespace G2lib {
     valueType getY0()      const { return CD.y0 ; }
     valueType getTheta0()  const { return CD.theta0 ; }
 
-    valueType getKappa()   const { return CD.k0 ; }
+    valueType getKappa()   const { return CD.kappa0 ; }
     valueType getKappa_D() const { return CD.dk ; }
     valueType getL()       const { return L ; }
 
     valueType getThetaBegin() const { return CD.theta0 ; }
-    valueType getThetaEnd()   const { return CD.theta0 + L * ( CD.k0 + 0.5 * L * CD.dk ) ; }
-    valueType getKappaBegin() const { return CD.k0 ; }
-    valueType getKappaEnd()   const { return CD.k0 + L * CD.dk ; }
+    valueType getThetaEnd()   const { return CD.theta(L) ; }
+    valueType getKappaBegin() const { return CD.kappa0 ; }
+    valueType getKappaEnd()   const { return CD.kappa(L) ; }
 
     //! construct a clothoid with the standard parameters
     void
@@ -191,7 +191,7 @@ namespace G2lib {
       CD.x0     = _x0 ;
       CD.y0     = _y0 ;
       CD.theta0 = _theta0 ;
-      CD.k0     = _k ;
+      CD.kappa0 = _k ;
       CD.dk     = _dk ;
       L         = _L ;
     }
@@ -281,7 +281,7 @@ namespace G2lib {
 
     valueType Xbegin()     const { return CD.x0 ; }
     valueType Ybegin()     const { return CD.y0 ; }
-    valueType KappaBegin() const { return CD.k0 ; }
+    valueType KappaBegin() const { return CD.kappa0 ; }
     valueType ThetaBegin() const { return CD.theta0 ; }
 
     valueType Xend()     const { return X(L) ; }
@@ -384,9 +384,9 @@ namespace G2lib {
     void
     trim( valueType s_begin, valueType s_end ) {
       valueType xx, yy ;
-      eval( s_begin, xx, yy ) ;
-      CD.k0     += s_begin * CD.dk ;
-      CD.theta0 += s_begin * ( CD.k0 + 0.5*s_begin * CD.dk ) ;
+      CD.eval( s_begin, xx, yy ) ;
+      CD.kappa0 += s_begin * CD.dk ;
+      CD.theta0 += s_begin * ( CD.kappa0 + 0.5*s_begin * CD.dk ) ;
       L          = s_end - s_begin ;
       CD.x0 = xx ;
       CD.y0 = yy ;
@@ -484,6 +484,7 @@ namespace G2lib {
     valueType y0 ;
     valueType theta0 ;
     valueType kappa0 ;
+
     valueType x1 ;
     valueType y1 ;
     valueType theta1 ;
@@ -744,15 +745,31 @@ namespace G2lib {
            valueType Dmax = 0,
            valueType dmax = 0 ) ;
 
+
+    /*!
+     | \return get the first clothoid for the 3 arc G2 fitting
+    \*/
     ClothoidCurve const & getS0() const { return S0 ; }
+    /*!
+     | \return get the last clothoid for the 3 arc G2 fitting
+    \*/
     ClothoidCurve const & getS1() const { return S1 ; }
+    /*!
+     | \return get the middle clothoid for the 3 arc G2 fitting
+    \*/
     ClothoidCurve const & getSM() const { return SM ; }
 
+    /*!
+     | \return get the length of the 3 arc G2 fitting
+    \*/
     valueType
     totalLength() const {
       return S0.getL() + S1.getL() + SM.getL() ;
     }
 
+    /*!
+     | \return get the total angle variation of the 3 arc G2 fitting
+    \*/
     valueType
     thetaTotalVariation() const {
       return S0.thetaTotalVariation() +
@@ -760,6 +777,9 @@ namespace G2lib {
              SM.thetaTotalVariation() ;
     }
 
+    /*!
+     | \return get the total curvature variation of the 3 arc G2 fitting
+    \*/
     valueType
     curvatureTotalVariation() const {
       return S0.curvatureTotalVariation() +
@@ -767,6 +787,9 @@ namespace G2lib {
              SM.curvatureTotalVariation() ;
     }
 
+    /*!
+     | \return get the integral of the curvature squared of the 3 arc G2 fitting
+    \*/
     valueType
     integralCurvature2() const {
       return S0.integralCurvature2() +
@@ -774,6 +797,9 @@ namespace G2lib {
              SM.integralCurvature2() ;
     }
 
+    /*!
+     | \return get the integral of the jerk squared of the 3 arc G2 fitting
+    \*/
     valueType
     integralJerk2() const {
       return S0.integralJerk2() +
@@ -781,6 +807,9 @@ namespace G2lib {
              SM.integralJerk2() ;
     }
 
+    /*!
+     | \return get the integral of the snap squared of the 3 arc G2 fitting
+    \*/
     valueType
     integralSnap2() const {
       return S0.integralSnap2() +
@@ -788,36 +817,108 @@ namespace G2lib {
              SM.integralSnap2() ;
     }
 
+    /*!
+     | \param[out] thMin minimum angle in the 3 arc G2 fitting curve
+     | \param[out] thMax maximum angle in the 3 arc G2 fitting curve
+     | \return the difference of `thMax` and `thMin`
+    \*/
     valueType
     thetaMinMax( valueType & thMin, valueType & thMax ) const ;
 
+    /*!
+     | \return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
+    \*/
     valueType
     deltaTheta() const
     { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
 
+    /*!
+     | \param[out] kMin minimum curvature in the 3 arc G2 fitting curve
+     | \param[out] kMax maximum curvature in the 3 arc G2 fitting curve
+     | \return the difference of `kMax` and `kMin`
+    \*/
     valueType
     curvatureMinMax( valueType & kMin, valueType & kMax ) const ;
 
-    valueType getL0() const { return s0/Lscale; }
-    valueType getL1() const { return s1/Lscale; }
-
+    /*!
+     | \return angle as a function of curvilinear coordinate
+    \*/
     valueType theta( valueType s ) const ;
+
+    /*!
+     | \return angle derivative (curvature) as a function of curvilinear coordinate
+    \*/
     valueType theta_D( valueType s ) const ;
+
+    /*!
+     | \return angle second derivative (curvature derivative) as a function of curvilinear coordinate
+    \*/
     valueType theta_DD( valueType s ) const ;
+
+    /*!
+     | \return angle third derivative as a function of curvilinear coordinate
+    \*/
     valueType theta_DDD( valueType s ) const ;
+
+    /*!
+     | \return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
+    \*/
     valueType X( valueType s ) const ;
+
+    /*!
+     | \return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
+    \*/
     valueType Y( valueType s ) const ;
 
+    /*!
+     | \return initial x coordinate of the 3 arc clothoid
+    \*/
     valueType Xbegin()     const { return S0.Xbegin() ; }
+
+    /*!
+     | \return initial y coordinate of the 3 arc clothoid
+    \*/
     valueType Ybegin()     const { return S0.Ybegin() ; }
+
+    /*!
+     | \return initial curvature of the 3 arc clothoid
+    \*/
     valueType KappaBegin() const { return S0.KappaBegin() ; }
+
+    /*!
+     | \return initial angle of the 3 arc clothoid
+    \*/
     valueType ThetaBegin() const { return S0.ThetaBegin() ; }
 
+    /*!
+     | \return final x coordinate of the 3 arc clothoid
+    \*/
     valueType Xend()     const { return S1.Xend() ; }
+
+    /*!
+     | \return final y coordinate of the 3 arc clothoid
+    \*/
     valueType Yend()     const { return S1.Yend() ; }
+
+    /*!
+     | \return final curvature of the 3 arc clothoid
+    \*/
     valueType KappaEnd() const { return S1.KappaEnd() ; }
+
+    /*!
+     | \return final angle of the 3 arc clothoid
+    \*/
     valueType ThetaEnd() const { return S1.ThetaEnd() ; }
 
+    /*!
+     | Compute parameters of 3 arc clothoid at curvilinear coordinate `s`
+     |
+     | \param[in]  s     curvilinear coordinate of where curve is computed
+     | \param[out] theta the curve angle
+     | \param[out] kappa the curve curvature
+     | \param[out] x     the curve x-coordinate
+     | \param[out] y     the curve y-coordinate
+    \*/
     void
     eval( valueType   s,
           valueType & theta,

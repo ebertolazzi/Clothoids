@@ -227,8 +227,8 @@ namespace G2lib {
     L = r/intC[0] ;
 
     G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
-    CD.k0 = (delta-A)/L ;
-    CD.dk = 2*A/L/L ;
+    CD.kappa0 = (delta-A)/L ;
+    CD.dk     = 2*A/L/L ;
 
     return niter ;
   }
@@ -310,7 +310,7 @@ namespace G2lib {
     CD.x0     = _x0 ;
     CD.y0     = _y0 ;
     CD.theta0 = _theta0 ;
-    CD.k0     = _k ;
+    CD.kappa0 = _k ;
 
     // Compute guess angles
     valueType len  = hypot( _y1-_y0, _x1-_x0 ) ;
@@ -321,7 +321,7 @@ namespace G2lib {
     while ( th0 < -m_pi ) th0 += m_2pi ;
 
     // solve the problem from (0,0) to (1,0)
-    valueType k0    = CD.k0*len ;
+    valueType k0    = CD.kappa0*len ;
     valueType alpha = 2.6 ;
     valueType thmin = max(-m_pi,-CD.theta0/2-alpha) ;
     valueType thmax = min( m_pi,-CD.theta0/2+alpha) ;
@@ -334,8 +334,8 @@ namespace G2lib {
         valueType dk, L, k_1, dk_1, L_1, k_2, dk_2, L_2 ;
         buildClothoid( 0, 0, th0,
                        1, 0, th,
-                       CD.k0, CD.dk, L, k_1, dk_1, L_1, k_2, dk_2, L_2 ) ;
-        valueType f   = CD.k0 - k0 ;
+                       CD.kappa0, CD.dk, L, k_1, dk_1, L_1, k_2, dk_2, L_2 ) ;
+        valueType f   = CD.kappa0 - k0 ;
         valueType df  = k_2 ;
         valueType dth = f/df ;
         th -= dth ;

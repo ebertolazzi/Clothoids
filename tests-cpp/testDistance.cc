@@ -12,8 +12,8 @@ main() {
   valueType x0     = 0 ;
   valueType y0     = 2 ;
   valueType theta0 = 0 ;
-  valueType kappa0 = -0.6 ;
-  valueType dk     = 0.2 ;
+  valueType kappa0 = 0 ; // 2 ;
+  valueType dk     = 1 ;// 0 ;
   valueType L      = 10 ;
   C.build( x0, y0, theta0, kappa0, dk, L ) ;
 
