@@ -775,14 +775,19 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+/*
   valueType
-  ClothoidData::aminus( valueType dtheta ) const {
-    valueType tmp = 2*dtheta*dk ;
-    valueType k0  = -kappa0 ;
-    if ( k0 < 0 ) { tmp = -tmp ; k0 = -k0 ; }
-    return 2*dtheta/(k0+sqrt(tmp+k0*k0)) ;
+  ClothoidData::aplus( valueType dtheta ) const {
+    valueType k0  = std::abs(kappa0) ;
+    valueType adk = std::abs(dk) ;
+    valueType tmp = k0+sqrt(2*dtheta*adk+k0*k0) ;
+    if ( kappa0*dk < 0 ) { // curvatura decrescente
+      return tmp/adk ;
+    } else {
+      return 2*dtheta/tmp ;
+    }
   }
+*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

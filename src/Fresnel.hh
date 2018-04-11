@@ -202,9 +202,6 @@ namespace G2lib {
     valueType
     aplus( valueType dtheta ) const ;
 
-    valueType
-    aminus( valueType dtheta ) const ;
-
     void
     info( std::ostream & s ) const ;
 
