@@ -60,6 +60,7 @@
 "  - Distance:\n" \
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
 "    [dst,s] = ClothoidCurveMexWrapper( 'distance', OBJ, x, y ) ;\n" \
+"    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPointBySample', OBJ, x, y, ds ) ;\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \
@@ -306,6 +307,35 @@ namespace G2lib {
         }
         #undef CMD
 
+      } else if ( cmd == "distanceBySample" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('distance',OBJ,x,y,ds): "
+        MEX_ASSERT( nrhs == 5, CMD "expected 5 input");
+        if ( nlhs > 0 ) {
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          mwSize nrx, ncx, nry, ncy;
+          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+          valueType ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
+          MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
+
+          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+
+          mwSize size = nrx*ncx ;
+          if ( nlhs > 1 ) {
+            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distanceBySample( ds, *x++, *y++, *s++ ) ;
+          } else {
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distanceBySample( ds, *x++, *y++ ) ;
+          }
+        }
+        #undef CMD
+
       } else if ( cmd == "closestPoint" ) {
 
         #define CMD "ClothoidCurveMexWrapper('closestPoint',OBJ,x,y): "
@@ -328,6 +358,34 @@ namespace G2lib {
           mwSize size = nrx*ncx ;
           for ( mwSize i = 0 ; i < size ; ++i )
             *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ ) ;
+        }
+        #undef CMD
+
+      } else if ( cmd == "closestPointBySample" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('closestPointBySample',OBJ,x,y,ds): "
+        MEX_ASSERT( nrhs == 5, CMD "expected 5 input");
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs") ;
+        if ( nlhs > 0 ) {
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          mwSize nrx, ncx, nry, ncy;
+          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+          valueType ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
+          MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
+
+          valueType * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          valueType * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+          valueType * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
+          valueType * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+
+          mwSize size = nrx*ncx ;
+          for ( mwSize i = 0 ; i < size ; ++i )
+            *dst++ = ptr->closestPointBySample( ds, *x++, *y++, *X++, *Y++, *S++ ) ;
         }
         #undef CMD
 

@@ -117,13 +117,23 @@ classdef ClothoidCurve < handle
     end
 
     %%
-    function [X,Y,S,DST] = closestPoint(this, x, y, ds)
-      [X,Y,S,DST] = ClothoidCurveMexWrapper('closestPoint', this.objectHandle, x, y, ds );
+    function [X,Y,S,DST] = closestPoint(this, qx, qy)
+      [X,Y,S,DST] = ClothoidCurveMexWrapper('closestPoint', this.objectHandle, qx, qy );
     end
 
     function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
       [DST,S] = ClothoidCurveMexWrapper('distance', self.objectHandle, varargin{:} );
+    end
+
+    %%
+    function [X,Y,S,DST] = closestPointBySample(this, qx, qy, ds)
+      [X,Y,S,DST] = ClothoidCurveMexWrapper('closestPointBySample', this.objectHandle, qx, qy, ds );
+    end
+
+    %%
+    function [DST,S] = distanceBySample(this, qx, qy, ds)
+      [DST,S] = ClothoidCurveMexWrapper('distanceBySample', this.objectHandle, qx, qy, ds );
     end
  
     function res = getX0(this)

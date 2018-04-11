@@ -30,21 +30,18 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  static
   valueType
-  closest_by_sample( ClothoidData const & CD,
-                     valueType            L,
-                     valueType            qx,
-                     valueType            qy,
-                     valueType          & X,
-                     valueType          & Y,
-                     valueType          & S ) {
+  ClothoidCurve::closestPointBySample( valueType   ds,
+                                       valueType   qx,
+                                       valueType   qy,
+                                       valueType & X,
+                                       valueType & Y,
+                                       valueType & S ) const {
     S = 0 ;
     X = CD.x0 ;
     Y = CD.y0 ;
-    valueType DS  = std::min(0.1,L/100) ;
     valueType DST = hypot( X-qx, Y-qy ) ;
-    valueType SSS = DS ;
+    valueType SSS = ds ;
     while ( SSS <= L ) {
       valueType theta, kappa, XS, YS ;
       CD.eval( SSS, theta, kappa, XS, YS );
@@ -55,7 +52,7 @@ namespace G2lib {
         X   = XS ;
         Y   = YS ;
       }
-      SSS += DS ;
+      SSS += ds ;
     }
     return DST ;
   }
@@ -71,27 +68,20 @@ namespace G2lib {
                    valueType            qy,
                    valueType          & S ) {
 
-    //valueType X, Y ;
-    //closest_by_sample( CD, L, qx, qy, X, Y, S );
-    //return true ;
-
     // S = GUESS
     int nb = 0 ;
-    valueType theta, kappa, dS, XS, YS ;
-    valueType SS = S ;
+    valueType theta, kappa, dS, dx, dy ;
+    valueType s = S ;
     for ( int iter = 0 ; iter < 20 && nb < 2 ; ++iter ) {
-      // approx clothoid with a circle
-      CD.eval( SS, theta, kappa, XS, YS );
+      CD.eval( s, theta, kappa, dx, dy ); dx -= qx ; dy -= qy ;
 
-      valueType CSS = cos(theta) ;
-      valueType SSS = sin(theta) ;
-
-      valueType dx  = XS - qx ;
-      valueType dy  = YS - qy ;
-      valueType a0  = CSS * dy - SSS * dx ;
-      valueType b0  = SSS * dy + CSS * dx ;
+      valueType Cs  = cos(theta) ;
+      valueType Ss  = sin(theta) ;
+      valueType a0  = Cs * dy - Ss * dx ;
+      valueType b0  = Ss * dy + Cs * dx ;
       valueType tmp = a0*kappa ;
 
+      // approx clothoid with a circle
       if ( 1+2*tmp > 0 ) {
 
         tmp = b0/(1+tmp) ;
@@ -108,21 +98,17 @@ namespace G2lib {
         dS = -om/kappa ;
       }
 
-      SS += dS ;
+      s += dS ;
       if ( std::abs( dS ) < epsi ) {
-        if ( SS < -epsi || SS > L+epsi ) return false ;
-        S = SS ;
+        if ( s < -epsi || s > L+epsi ) return false ;
+        S = s ;
         return true ;
       }
 
       // check divergence
-      if ( SS < 0 ) {
-        SS = 0 ; ++nb ;
-      } else if ( SS > L ) {
-        SS = L ; ++nb ;
-      } else {
-        nb = 0 ;
-      }
+      if      ( s < 0 ) { s = 0 ; ++nb ; }
+      else if ( s > L ) { s = L ; ++nb ; }
+      else              { nb = 0 ; }
 
     }
     return false ;
@@ -159,7 +145,7 @@ namespace G2lib {
     if ( ok1 ) CD.eval( s1, x1, y1 ) ;
     valueType d1 = hypot( x1-qx, y1-qy ) ;
 
-    if ( s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
+    if ( !ok0 && !ok1 ) { // s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
       S = (s0+s1)/2 ;
       bool okm = closestPointQC2( epsi, CD, L, qx, qy, S ) ;
       if ( okm ) {
@@ -169,11 +155,8 @@ namespace G2lib {
       }
     }
 
-    if ( d0 < d1 ) {
-      S = s0 ; X = x0 ; Y = y0 ; return d0 ;
-    } else {
-      S = s1 ; X = x1 ; Y = y1 ; return d1 ;
-    }
+    if ( d0 < d1 ) { S = s0 ; X = x0 ; Y = y0 ; return d0 ; }
+    else           { S = s1 ; X = x1 ; Y = y1 ; return d1 ; }
 
   }
 
@@ -197,7 +180,8 @@ namespace G2lib {
     valueType cx = CD.c0x() ;
     valueType cy = CD.c0y() ;
 
-    if ( hypot( CD.x0 - cx, CD.y0 - cy ) <= hypot( qx - cx, qy - cy ) ) {
+    //if ( hypot( CD.x0 - cx, CD.y0 - cy ) <= hypot( qx - cx, qy - cy ) ) {
+    if ( 1 <= std::abs(CD.kappa0) * hypot( qx - cx, qy - cy ) ) {
       valueType ell = CD.aplus(m_2pi) ;
       return closestPointQC1( epsi, CD, ell, qx, qy, X, Y, S );
     }
@@ -207,9 +191,10 @@ namespace G2lib {
     cx = CD1.c0x() ;
     cy = CD1.c0y() ;
 
-    if ( hypot( CD1.x0 - cx, CD1.y0 - cy ) >= hypot( qx - cx, qy - cy ) ) {
+    //if ( hypot( CD1.x0 - cx, CD1.y0 - cy ) >= hypot( qx - cx, qy - cy ) ) {
+    if ( 1 >= std::abs(CD1.kappa0) * hypot( qx - cx, qy - cy ) ) {
       valueType ell = CD1.aplus(m_2pi) ;
-      valueType d = closestPointQC1( epsi, CD1, ell, qx, qy, X, Y, S );
+      valueType d   = closestPointQC1( epsi, CD1, ell, qx, qy, X, Y, S );
       S = L - S ;
       return d ;
     }
@@ -224,7 +209,7 @@ namespace G2lib {
 
     if ( d1 < d0 ) { S = ell+S1 ; X = X1 ; Y = Y1 ; return d1 ; }
 
-    return d0 ; // closest_by_sample( CD, L, qx, qy, X, Y, S );
+    return d0 ;
 
   }
 
@@ -240,21 +225,17 @@ namespace G2lib {
                          valueType & S ) {
     // S = GUESS
     int nb = 0 ;
-    valueType SS = S, dS ;
+    valueType s = S, dS, dx, dy ;
     for ( int iter = 0 ; iter < 20 && nb < 2 ; ++iter ) {
       // approx clothoid with a circle
-      valueType theta = m_pi_2 * (SS*SS) ;
-      valueType kappa = m_pi * SS ;
-      valueType XS, YS ;
-      FresnelCS( SS, XS, YS ) ;
+      valueType kappa = m_pi * s;
+      valueType theta = 0.5*(kappa*s) ;
+      FresnelCS( s, dx, dy ) ; dx -= qx ; dy -= qy ;
 
-      valueType CSS = cos(theta) ;
-      valueType SSS = sin(theta) ;
-
-      valueType dx  = XS - qx ;
-      valueType dy  = YS - qy ;
-      valueType a0  = CSS * dy - SSS * dx ;
-      valueType b0  = SSS * dy + CSS * dx ;
+      valueType Cs  = cos(theta) ;
+      valueType Ss  = sin(theta) ;
+      valueType a0  = Cs * dy - Ss * dx ;
+      valueType b0  = Ss * dy + Cs * dx ;
       valueType tmp = a0*kappa ;
 
       if ( 1+2*tmp > 0 ) {
@@ -273,18 +254,20 @@ namespace G2lib {
         dS = -om/kappa ;
       }
 
-      SS += dS ;
+      s += dS ;
       if ( std::abs( dS ) < epsi ) {
-        if ( SS < a-epsi|| SS > b+epsi ) break ;
-        S = SS ;
-        return false ; // failed = false
+        if ( s < a-epsi|| s > b+epsi ) break ;
+        S = s ;
+        return true ;
       }
 
       // check divergence
-      if ( SS < a || SS > b ) ++nb ; else nb = 0 ;
+      if      ( s < a ) { s = a ; ++nb ; }
+      else if ( s > b ) { s = b ; ++nb ; }
+      else              { nb = 0 ; }
 
     }
-    return true ; // failed = true
+    return false ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -298,40 +281,37 @@ namespace G2lib {
                          valueType   qy,
                          valueType & S ) {
 
-    valueType x, y ;
-    FresnelCS( a, x, y ) ;
-    valueType phia = m_pi_2 * (a*a) - atan2( y - qy, x - qx ) ;
+    valueType dx, dy ;
+    FresnelCS( a, dx, dy ) ; dx -= qx ; dy -= qy ;
+    valueType phia = m_pi_2 * (a*a) - atan2( dy, dx ) ;
     bool ok0 = cos(phia) < 0 ; // distanza decrescente
 
-    FresnelCS( b, x, y ) ;
-    valueType phib = m_pi_2 * (b*b) - atan2( y - qy, x - qx ) ;
+    FresnelCS( b, dx, dy ) ; dx -= qx ; dy -= qy ;
+    valueType phib = m_pi_2 * (b*b) - atan2( dy, dx ) ;
     bool ok1 = cos(phib) > 0 ; // distanza crescente
 
     valueType s0 = a ;
-    if ( ok0 ) closestPointStandard3( epsi, a, b, qx, qy, s0 ) ;
-    FresnelCS( s0, x, y ) ;
-    valueType d0 = hypot( x-qx, y-qy ) ;
+    if ( ok0 ) ok0 = closestPointStandard3( epsi, a, b, qx, qy, s0 ) ;
+    FresnelCS( s0, dx, dy ) ; dx -= qx ; dy -= qy ;
+    valueType d0 = hypot( dx, dy ) ;
 
     valueType s1 = b ;
-    if ( ok1 ) closestPointStandard3( epsi, a, b, qx, qy, s1 ) ;
-    FresnelCS( s1, x, y ) ;
-    valueType d1 = hypot( x-qx, y-qy ) ;
+    if ( ok1 ) ok1 = closestPointStandard3( epsi, a, b, qx, qy, s1 ) ;
+    FresnelCS( s1, dx, dy ) ; dx -= qx ; dy -= qy ;
+    valueType d1 = hypot( dx, dy ) ;
 
-    if ( s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
+    if ( !ok0 && !ok1 ) {  // s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
       S = (s0+s1)/2 ;
-      bool failm = closestPointStandard3( epsi, a, b, qx, qy, S ) ;
-      if ( !failm ) {
-        FresnelCS( S, x, y ) ;
-        valueType dm = hypot( x-qx, y-qy ) ;
+      bool ok = closestPointStandard3( epsi, a, b, qx, qy, S ) ;
+      if ( ok ) {
+        FresnelCS( S, dx, dy ) ; dx -= qx ; dy -= qy ;
+        valueType dm = hypot( dx, dy ) ;
         if ( dm < d0 && dm < d1 ) return dm ;
       }
     }
 
-    if ( d0 < d1 ) {
-      S = s0 ; return d0 ;
-    } else {
-      S = s1 ; return d1 ;
-    }
+    if ( d0 < d1 ) { S = s0 ; return d0 ; }
+    else           { S = s1 ; return d1 ; }
 
   }
 
@@ -381,7 +361,7 @@ namespace G2lib {
 
     if ( di >= da ) {
       valueType La = 4/(a+sqrt(a*a+4)) ;
-      valueType d = closestPointStandard2( epsi, a, a+La, qqx, qqy, S ) ;
+      valueType d  = closestPointStandard2( epsi, a, a+La, qqx, qqy, S ) ;
       S = sflex + S/gamma ;
       return d/gamma ;
     }
@@ -391,8 +371,7 @@ namespace G2lib {
 
     if ( di <= db ) {
       valueType Lb = 4/(b+sqrt(b*b-4)) ;
-      G2LIB_ASSERT( Lb <= b-a, " bad Lb = " << Lb ) ;
-      valueType d = closestPointStandard2( epsi, b-Lb, b, qqx, qqy, S ) ;
+      valueType d  = closestPointStandard2( epsi, b-Lb, b, qqx, qqy, S ) ;
       S = sflex + S/gamma ;
       return d/gamma ;
     }
@@ -427,13 +406,8 @@ namespace G2lib {
     valueType dp = closestPointStandard2( epsi, ss, ss+Lp, qqx, qqy, sp ) ;
     valueType dm = closestPointStandard2( epsi, ss-Lm, ss, qqx, qqy, sm ) ;
 
-    if ( dp < dm ) {
-      S = sflex + sp/gamma ;
-      return dp/gamma ;
-    } else {
-      S = sflex + sm/gamma ;
-      return dm/gamma ;
-    }
+    if ( dp < dm ) { S = sflex + sp/gamma ; return dp/gamma ; }
+    else           { S = sflex + sm/gamma ; return dm/gamma ; }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -449,7 +423,8 @@ namespace G2lib {
                  valueType          & Y,
                  valueType          & S ) {
 
-    valueType DK = sqrt(10*m_2pi*std::abs(CD.dk)) ;
+    valueType NT = 4 ; // number of turn of the clothid after wich is considered quasi-circular
+    valueType DK = sqrt(NT*m_2pi*std::abs(CD.dk)) ;
     if ( std::abs(CD.kappa0) >= DK ) {
       return closestPointQC( epsi, CD, L, qx, qy, X, Y, S );
     }

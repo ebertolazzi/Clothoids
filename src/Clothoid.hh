@@ -363,22 +363,47 @@ namespace G2lib {
     }
 
     valueType
-    closestPoint( valueType   x,
-                  valueType   y,
+    closestPoint( valueType   qx,
+                  valueType   qy,
                   valueType & X,
                   valueType & Y,
                   valueType & S ) const ;
 
     valueType
-    distance( valueType x, valueType y, valueType & S ) const {
+    distance( valueType qx, valueType qy, valueType & S ) const {
       valueType X, Y;
-      return closestPoint( x, y, X, Y, S );
+      return closestPoint( qx, qy, X, Y, S );
     }
 
     valueType
-    distance( valueType x, valueType y ) const {
+    distance( valueType qx, valueType qy ) const {
       valueType X, Y, S ;
-      return closestPoint( x, y, X, Y, S );
+      return closestPoint( qx, qy, X, Y, S );
+    }
+
+    valueType
+    closestPointBySample( valueType   ds,
+                          valueType   qx,
+                          valueType   qy,
+                          valueType & X,
+                          valueType & Y,
+                          valueType & S ) const ;
+
+    valueType
+    distanceBySample( valueType   ds,
+                      valueType   qx,
+                      valueType   qy,
+                      valueType & S ) const {
+      valueType X, Y;
+      return closestPointBySample( ds, qx, qy, X, Y, S );
+    }
+
+    valueType
+    distanceBySample( valueType ds,
+                      valueType qx,
+                      valueType qy ) const {
+      valueType X, Y, S ;
+      return closestPointBySample( ds, qx, qy, X, Y, S );
     }
 
     void
@@ -1068,13 +1093,13 @@ namespace G2lib {
               valueType & y_DDD ) const ;
 
     valueType
-    distance( valueType   x,
-              valueType   y,
+    distance( valueType   qx,
+              valueType   qy,
               valueType & S ) const ;
 
     valueType
-    closestPoint( valueType   x,
-                  valueType   y,
+    closestPoint( valueType   qx,
+                  valueType   qy,
                   valueType & X,
                   valueType & Y,
                   valueType & S ) const ;
