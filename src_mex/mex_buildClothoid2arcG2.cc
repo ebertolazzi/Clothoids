@@ -50,27 +50,6 @@ namespace G2lib {
 
   using namespace std;
 
-  static
-  CircleArc *
-  DATA_NEW( mxArray * & mx_id ) {
-    CircleArc * ptr = new CircleArc();
-    mx_id = convertPtr2Mat<CircleArc>(ptr);
-    return ptr ;
-  }
-
-  static
-  inline
-  CircleArc *
-  DATA_GET( mxArray const * & mx_id ) {
-    return convertMat2Ptr<CircleArc>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<CircleArc>(mx_id);
-  }
-
   #define arg_x0     prhs[0]
   #define arg_y0     prhs[1]
   #define arg_theta0 prhs[2]
@@ -94,7 +73,7 @@ namespace G2lib {
     mxSetFieldByNumber( plhs, 0, 2, mxCreateDoubleScalar(curve.getTheta0()) );
     mxSetFieldByNumber( plhs, 0, 3, mxCreateDoubleScalar(curve.getKappa()) );
     mxSetFieldByNumber( plhs, 0, 4, mxCreateDoubleScalar(curve.getKappa_D()) );
-    mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.getSmax()) );
+    mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.getL()) );
   }
 
   extern "C"

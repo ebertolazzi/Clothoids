@@ -66,27 +66,6 @@ namespace G2lib {
 
   using namespace std;
 
-  static
-  CircleArc *
-  DATA_NEW( mxArray * & mx_id ) {
-    CircleArc * ptr = new CircleArc();
-    mx_id = convertPtr2Mat<CircleArc>(ptr);
-    return ptr ;
-  }
-
-  static
-  inline
-  CircleArc *
-  DATA_GET( mxArray const * & mx_id ) {
-    return convertMat2Ptr<CircleArc>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<CircleArc>(mx_id);
-  }
-
   #define arg_x0     prhs[0]
   #define arg_y0     prhs[1]
   #define arg_theta0 prhs[2]
@@ -101,8 +80,7 @@ namespace G2lib {
   #define out_S0     plhs[0]
   #define out_S1     plhs[1]
   #define out_SM     plhs[2]
-  #define out_SG     plhs[3]
-  #define out_iter   plhs[4]
+  #define out_iter   plhs[3]
 
   static
   void
@@ -114,7 +92,7 @@ namespace G2lib {
     mxSetFieldByNumber( plhs, 0, 2, mxCreateDoubleScalar(curve.getTheta0()) );
     mxSetFieldByNumber( plhs, 0, 3, mxCreateDoubleScalar(curve.getKappa()) );
     mxSetFieldByNumber( plhs, 0, 4, mxCreateDoubleScalar(curve.getKappa_D()) );
-    mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.getSmax()) );
+    mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.getL()) );
   }
 
   extern "C"
@@ -145,9 +123,10 @@ namespace G2lib {
   	        mexErrMsgTxt("Input arguments must be real scalars");
       }
 
-      MEX_ASSERT( nlhs >= 4 && nlhs <= 5,
-                  "wrong number of output arguments\n"
-                  "expected 4 or 5, found " << nlhs ) ;
+      if ( nlhs < 3 || nlhs > 4 ) {
+        mexErrMsgTxt( "wrong number of output arguments\nexpected 3 or 4") ;
+        return ;
+      }
 
       int iter ;
       if ( nrhs == 10 ) {
@@ -164,12 +143,11 @@ namespace G2lib {
 
         iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1, Dmax, dmax ) ;
 
-        save_struct( g2solve3arc.getS0(),    out_S0 ) ;
-        save_struct( g2solve3arc.getS1(),    out_S1 ) ;
-        save_struct( g2solve3arc.getSM(),    out_SM ) ;
-        save_struct( g2solve3arc.getGuess(), out_SG ) ;
+        save_struct( g2solve3arc.getS0(), out_S0 ) ;
+        save_struct( g2solve3arc.getS1(), out_S1 ) ;
+        save_struct( g2solve3arc.getSM(), out_SM ) ;
 
-        if ( nlhs > 4 ) {
+        if ( nlhs > 3 ) {
           out_iter = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
           *static_cast<int *>(mxGetData(out_iter)) = iter ;
         }
@@ -185,12 +163,11 @@ namespace G2lib {
 
         iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
 
-        save_struct( g2solve3arc.getS0(),    out_S0 ) ;
-        save_struct( g2solve3arc.getS1(),    out_S1 ) ;
-        save_struct( g2solve3arc.getSM(),    out_SM ) ;
-        save_struct( g2solve3arc.getGuess(), out_SG ) ;
+        save_struct( g2solve3arc.getS0(), out_S0 ) ;
+        save_struct( g2solve3arc.getS1(), out_S1 ) ;
+        save_struct( g2solve3arc.getSM(), out_SM ) ;
 
-        if ( nlhs > 4 ) {
+        if ( nlhs > 3 ) {
           out_iter = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
           *static_cast<int *>(mxGetData(out_iter)) = iter ;
         }
