@@ -169,7 +169,7 @@ namespace G2lib {
       if ( tmp < 0 ) {
         valueType absk = std::abs(k) ;
         // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
-        if ( m_2pi + absk*tmp <= L*absk ) tmp += m_2pi / absk ;
+        if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk ;
       }
 
       return tmp ;
@@ -177,17 +177,12 @@ namespace G2lib {
     } else {
 
       valueType om = atan2( b0, a0+1/k ) ;
-      if ( k < 0 ) {
-        om += m_pi ;
-        // put 0 <= omega <= 2pi
-        if      ( om <  0      ) om += m_2pi ;
-        else if ( om >= -m_2pi ) om -= m_2pi ;
-      } else {
-        // put -2pi < omega <= 0
-        if      ( om >   0     ) om -= m_2pi ;
-        else if ( om <= -m_2pi ) om += m_2pi ;
-      }
-      return -om/k ;
+      if ( k < 0 ) om += m_pi ;
+      valueType ss = -om/k ;
+      valueType t  = m_2pi/std::abs(k);
+      if      ( ss < 0 ) ss += t ;
+      else if ( ss > t ) ss += t ;
+      return ss ;
     }
   }
 

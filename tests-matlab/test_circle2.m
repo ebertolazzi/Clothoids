@@ -1,30 +1,35 @@
 addpath('../matlab');
 
+close all ;
+clear all ;
+
 % check constructors
-x0     = 0 ;
-y0     = 2 ;
-x1     = 4 ;
-y1     = 3 ;
-x2     = 5 ;
-y2     = 2 ;
+x0     = [-5,0,0,2.5] ;
+y0     = [10,0,1,2] ;
 theta0 = 0 ;
-k0     = 1 ; %1/3 ;
-L      = 2 ;
-L1     = CircleArc( x0, y0, theta0, k0, L );
-%
-L1.plot() ;
+kappa0 = [-0.6, 0.2, 0.2, 0.5] ;
+L      = [5,30,100,30] ;
 
-x     = -10:0.05:10 ;
-y     = -5:0.05:15 ;
-[X,Y] = meshgrid(x,y);
 
-tic
-Z = L1.distance(X,Y);
+for kk=1:4
+  subplot(2,2,kk) ;
+  L1 = CircleArc( x0(kk), y0(kk), theta0, kappa0(kk), L(kk) );
+  %
+  L1.plot() ;
+  hold on;
 
-toc
+  x     = -10:0.05:10 ;
+  y     = -5:0.05:15 ;
+  [X,Y] = meshgrid(x,y);
 
-contour(X,Y,Z,100)
-%surf(X,Y,Z)
-axis equal;
-%
-L1.delete() ;
+  tic
+  Z = L1.distance(X,Y);
+  toc
+
+  contour(X,Y,Z,100)
+  %surf(X,Y,Z)
+  axis equal;
+  %
+  L1.delete() ;
+end
+

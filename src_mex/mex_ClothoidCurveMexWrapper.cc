@@ -61,12 +61,13 @@
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
 "    [dst,s] = ClothoidCurveMexWrapper( 'distance', OBJ, x, y ) ;\n" \
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPointBySample', OBJ, x, y, ds ) ;\n" \
+"    [dst,s] = ClothoidCurveMexWrapper( 'distanceBySample', OBJ, x, y, ds ) ;\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \
-"Autors: Enrico Bertolazzi^(1), Marco Frego^(2) and Paolo Bevilacqua^(2)\n" \
+"Autors: Enrico Bertolazzi^(1), Marco Frego^(2), Paolo Bevilacqua^(2)\n" \
 "  (1) Department of Industrial Engineering\n" \
-"  (2)Department of Information Engineering and Computer Science\n" \
+"  (2) Department of Information Engineering and Computer Science\n" \
 "  University of Trento\n" \
 "  enrico.bertolazzi@unitn.it\n" \
 "  m.fregox@gmail.com\n" \

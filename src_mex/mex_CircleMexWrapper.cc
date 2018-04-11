@@ -303,13 +303,16 @@ namespace G2lib {
 
         #define CMD "CircleMexWrapper('to_nurbs',OBJ): "
 
-        valueType knots[12], Poly[9][3] ;
-        indexType npts = ptr->toNURBS( knots, Poly ); // npt + 2
+        indexType npts = ptr->toNURBS( nullptr, nullptr, true );
+
+        mxArray * mx_knots, * mx_Poly ;
+        double * knots = createMatrixValue( mx_knots, 1, npts+3 );
+        double * poly  = createMatrixValue( mx_Poly,  3, npts );
+
+        ptr->toNURBS( knots, poly, false );
 
         static char const * fieldnames[] = { "form", "order", "dim", "number", "knots", "coefs" } ;
         arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);
-        mxArray * mx_knots = mxCreateDoubleMatrix(1,npts+2,mxREAL);
-        mxArray * mx_Poly  = mxCreateDoubleMatrix(3,npts,mxREAL);
 
         mxSetFieldByNumber( arg_out_0, 0, 0, mxCreateString("rB") );
         mxSetFieldByNumber( arg_out_0, 0, 1, mxCreateDoubleScalar(3) );
@@ -318,15 +321,6 @@ namespace G2lib {
         mxSetFieldByNumber( arg_out_0, 0, 4, mx_knots );
         mxSetFieldByNumber( arg_out_0, 0, 5, mx_Poly );
 
-        double *kb = mxGetPr(mx_knots) ;
-        for ( indexType i = 0 ; i < npts+2 ; ++i ) *kb++ = knots[i] ;
-
-        double *pr = mxGetPr(mx_Poly) ;
-        for ( indexType i = 0 ; i < npts ; ++i ) {
-          *pr++ = Poly[i][0] ;
-          *pr++ = Poly[i][1] ;
-          *pr++ = Poly[i][2] ;
-        }
         #undef CMD
       } else {
 

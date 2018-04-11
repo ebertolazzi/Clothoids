@@ -274,12 +274,14 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   indexType
-  CircleArc::toNURBS(  valueType knots[12], valueType Poly[9][3] ) const {
+  CircleArc::toNURBS( valueType knots[],
+                      valueType Poly[],
+                      bool      get_size ) const {
 
     valueType dtheta = L*k ;
     indexType ns     = indexType(std::floor(3*std::abs(dtheta)/m_pi)) ;
-    if      ( ns < 1 ) ns = 1 ;
-    else if ( ns > 4 ) ns = 4 ;
+    if ( ns < 1 ) ns = 1 ;
+    if ( get_size ) return 1+2*ns;
 
     valueType th = dtheta/(2*ns) ;
     valueType w  = cos(th) ;
@@ -289,9 +291,9 @@ namespace G2lib {
     p0[0] = x0 ; p0[1] = y0 ;
 
     knots[0] = knots[1] = knots[2] = 0 ;
-    Poly[0][0] = p0[0] ;
-    Poly[0][1] = p0[1] ;
-    Poly[0][2] = 1  ;
+    Poly[0] = p0[0] ;
+    Poly[1] = p0[1] ;
+    Poly[2] = 1  ;
 
     valueType s  = 0 ;
     valueType ds = L/ns ;
@@ -306,14 +308,14 @@ namespace G2lib {
       valueType ym = (p0[1]+p2[1])/2 ;
 
       ++kk;
-      Poly[kk][0] = w*(xm - nx * tg) ;
-      Poly[kk][1] = w*(ym - ny * tg) ;
-      Poly[kk][2] = w ;
+      Poly[kk*3+0] = w*(xm - nx * tg) ;
+      Poly[kk*3+1] = w*(ym - ny * tg) ;
+      Poly[kk*3+2] = w ;
 
       ++kk;
-      Poly[kk][0] = p2[0] ;
-      Poly[kk][1] = p2[1] ;
-      Poly[kk][2] = 1 ;
+      Poly[kk*3+0] = p2[0] ;
+      Poly[kk*3+1] = p2[1] ;
+      Poly[kk*3+2] = 1 ;
 
       knots[kk+1] = i+1 ;
       knots[kk+2] = i+1 ;

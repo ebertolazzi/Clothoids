@@ -289,7 +289,7 @@ namespace G2lib {
     \*/
 
     indexType
-    toNURBS( valueType knots[12], valueType Poly[9][3] ) const ;
+    toNURBS( valueType knots[], valueType Poly[], bool get_size ) const ; // Poly 3 x n matrix
 
     friend
     std::ostream &
