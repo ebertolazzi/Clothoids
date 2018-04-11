@@ -182,10 +182,31 @@ namespace G2lib {
               valueType & y_DDD ) const ;
 
     void
+    eval( valueType s, ClothoidData & C) const ;
+
+    valueType c0x() const { return x0 - (sin(theta0)/kappa0); }
+    valueType c0y() const { return y0 + (cos(theta0)/kappa0); }
+
+    void
     Pinfinity( valueType & x, valueType & y, bool plus ) const ;
 
     void
     reverse( valueType L ) ;
+
+    void
+    reverse( valueType L, ClothoidData & out) const ;
+
+    valueType
+    split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const ;
+
+    valueType
+    aplus( valueType dtheta ) const ;
+
+    valueType
+    aminus( valueType dtheta ) const ;
+
+    void
+    info( std::ostream & s ) const ;
 
   } ;
 

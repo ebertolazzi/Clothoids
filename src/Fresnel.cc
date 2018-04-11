@@ -719,6 +719,14 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  ClothoidData::eval( valueType s, ClothoidData & C ) const {
+    eval( s, C.theta0, C.kappa0, C.x0, C.y0 ) ;
+    C.dk = dk ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   ClothoidData::reverse( valueType L ) {
     valueType C, S ;
     GeneralizedFresnelCS( dk*L*L, kappa0*L, theta0, C, S ) ;
@@ -729,6 +737,66 @@ namespace G2lib {
     theta0 += m_pi ;
     kappa0  = -kappa0 ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::reverse( valueType L, ClothoidData & out ) const {
+    eval( L, out.theta0, out.kappa0, out.x0, out.y0 ) ;
+    out.theta0 += m_pi ;
+    out.kappa0 = -(out.kappa0) ;
+    out.dk     = dk ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  valueType
+  ClothoidData::split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const {
+    // flex inside, split clothoid
+    valueType sflex = -kappa0/dk ;
+    C0.theta0 = theta0 + 0.5*kappa0*sflex ;
+    eval( sflex, C0.x0, C0.y0 );
+    C1.x0     = C0.x0 ;
+    C1.y0     = C0.y0 ;
+    C1.theta0 = C0.theta0+m_pi ; // reverse curve
+    C0.kappa0 = C1.kappa0 = 0 ;
+    C0.dk     = C1.dk     = dk ;
+    return sflex ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  valueType
+  ClothoidData::aplus( valueType dtheta ) const {
+    valueType tmp = 2*dtheta*dk ;
+    valueType k0  = kappa0 ;
+    if ( k0 < 0 ) { tmp = -tmp ; k0 = -k0 ; }
+    return 2*dtheta/(k0+sqrt(tmp+k0*k0)) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  valueType
+  ClothoidData::aminus( valueType dtheta ) const {
+    valueType tmp = 2*dtheta*dk ;
+    valueType k0  = -kappa0 ;
+    if ( k0 < 0 ) { tmp = -tmp ; k0 = -k0 ; }
+    return 2*dtheta/(k0+sqrt(tmp+k0*k0)) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::info( std::ostream & s ) const {
+    s <<   "x0     = " << x0
+      << "\ny0     = " << y0
+      << "\ntheta0 = " << theta0
+      << "\nkappa0 = " << kappa0
+      << "\ndk     = " << dk
+      << '\n' ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 }
 

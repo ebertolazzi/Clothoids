@@ -63,66 +63,17 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   static
-  valueType
-  closest_by_sample_std( valueType   gamma,
-                         valueType   a,
-                         valueType   b,
-                         valueType   qx,
-                         valueType   qy,
-                         valueType & S ) {
-    valueType XS, YS ;
-    S = a ;
-    FresnelCS( a, XS, YS );
-
-    valueType DTS = std::min( gamma*0.1, (b-a) / 100 ) ;
-    valueType DST = hypot( XS-qx, YS-qy ) ;
-    valueType SSS = a + DTS ;
-    while ( SSS <= b ) {
-      FresnelCS( SSS, XS, YS );
-      valueType dst = hypot( XS-qx, YS-qy ) ;
-      if ( dst < DST ) {
-        DST = dst ;
-        S   = SSS ;
-      }
-      SSS += DTS ;
-    }
-    return DST ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  static
   bool
-  closest4( valueType            epsi,
-            ClothoidData const & CD,
-            valueType            L,
-            valueType            qx,
-            valueType            qy,
-            valueType          & X,
-            valueType          & Y,
-            valueType          & S ) {
+  closestPointQC2( valueType            epsi,
+                   ClothoidData const & CD,
+                   valueType            L,
+                   valueType            qx,
+                   valueType            qy,
+                   valueType          & S ) {
 
-#if 1
-    S = 0 ;
-    X = CD.x0 ;
-    Y = CD.y0 ;
-    valueType DS  = std::min(0.1,L/100) ;
-    valueType DST = hypot( X-qx, Y-qy ) ;
-    valueType SSS = DS ;
-    while ( SSS <= L ) {
-      valueType theta, kappa, XS, YS ;
-      CD.eval( SSS, theta, kappa, XS, YS );
-      valueType dst = hypot( XS-qx, YS-qy ) ;
-      if ( dst < DST ) {
-        DST = dst ;
-        S   = SSS ;
-        X   = XS ;
-        Y   = YS ;
-      }
-      SSS += DS ;
-    }
-    return true ;
-#endif
+    //valueType X, Y ;
+    //closest_by_sample( CD, L, qx, qy, X, Y, S );
+    //return true ;
 
     // S = GUESS
     int nb = 0 ;
@@ -159,17 +110,71 @@ namespace G2lib {
 
       SS += dS ;
       if ( std::abs( dS ) < epsi ) {
-        if ( SS < 0 || SS > L ) break ;
+        if ( SS < -epsi || SS > L+epsi ) return false ;
         S = SS ;
-        CD.eval( S, X, Y );
         return true ;
       }
 
       // check divergence
-      if ( SS < 0 || SS > L ) ++nb ; else nb = 0 ;
+      if ( SS < 0 ) {
+        SS = 0 ; ++nb ;
+      } else if ( SS > L ) {
+        SS = L ; ++nb ;
+      } else {
+        nb = 0 ;
+      }
 
     }
     return false ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  static
+  valueType
+  closestPointQC1( valueType            epsi,
+                   ClothoidData const & CD,
+                   valueType            L,
+                   valueType            qx,
+                   valueType            qy,
+                   valueType          & X,
+                   valueType          & Y,
+                   valueType          & S ) {
+
+    valueType phi0 = CD.theta0 - atan2( CD.y0 - qy, CD.x0 - qx ) ;
+    bool ok0 = cos(phi0) < 0 ; // distanza decrescente
+
+    valueType theta1, kappa1, x1, y1 ;
+    CD.eval( L, theta1, kappa1, x1, y1 ) ;
+    valueType phi1 = theta1 - atan2( y1 - qy, x1 - qx ) ;
+    bool ok1 = cos(phi1) > 0 ; // distanza crescente
+
+    valueType s0 = 0, x0 = CD.x0, y0 = CD.y0 ;
+    if ( ok0 ) ok0 = closestPointQC2( epsi, CD, L, qx, qy, s0 ) ;
+    if ( ok0 ) CD.eval( s0, x0, y0 ) ;
+    valueType d0 = hypot( x0-qx, y0-qy ) ;
+
+    valueType s1 = L ;
+    if ( ok1 ) ok1 = closestPointQC2( epsi, CD, L, qx, qy, s1 ) ;
+    if ( ok1 ) CD.eval( s1, x1, y1 ) ;
+    valueType d1 = hypot( x1-qx, y1-qy ) ;
+
+    if ( s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
+      S = (s0+s1)/2 ;
+      bool okm = closestPointQC2( epsi, CD, L, qx, qy, S ) ;
+      if ( okm ) {
+        CD.eval( S, X, Y ) ;
+        valueType dm = hypot( X-qx, Y-qy ) ;
+        if ( dm < d0 && dm < d1 ) return dm ;
+      }
+    }
+
+    if ( d0 < d1 ) {
+      S = s0 ; X = x0 ; Y = y0 ; return d0 ;
+    } else {
+      S = s1 ; X = x1 ; Y = y1 ; return d1 ;
+    }
+
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -187,53 +192,37 @@ namespace G2lib {
 
     valueType DTheta = std::abs( CD.theta(L) - CD.theta0 ) ;
     if ( DTheta <= m_2pi )
-      return closest_by_sample( CD, L, qx, qy, X, Y, S );
+      return closestPointQC1( epsi, CD, L, qx, qy, X, Y, S );
 
-    valueType cx = CD.x0 - (sin(CD.theta0)/CD.kappa0);
-    valueType cy = CD.y0 + (cos(CD.theta0)/CD.kappa0);
+    valueType cx = CD.c0x() ;
+    valueType cy = CD.c0y() ;
 
     if ( hypot( CD.x0 - cx, CD.y0 - cy ) <= hypot( qx - cx, qy - cy ) ) {
-      valueType tmp = 4*m_pi*CD.dk ;
-      valueType k0  = CD.kappa0 ;
-      if ( k0 < 0 ) { tmp = -tmp ; k0 = -k0 ; }
-      valueType ell = 4*m_pi/(k0+sqrt(tmp+k0*k0)) ;
-      return closest_by_sample( CD, ell, qx, qy, X, Y, S );
+      valueType ell = CD.aplus(m_2pi) ;
+      return closestPointQC1( epsi, CD, ell, qx, qy, X, Y, S );
     }
 
     ClothoidData CD1 ;
-    CD.eval( L, CD1.theta0, CD1.kappa0, CD1.x0, CD1.y0 );
-    CD1.kappa0  = -CD1.kappa0 ;
-    CD1.theta0 += m_pi ;
-
-    cx = CD1.x0 - (sin(CD1.theta0)/CD1.kappa0);
-    cy = CD1.y0 + (cos(CD1.theta0)/CD1.kappa0);
+    CD.reverse( L, CD1 );
+    cx = CD1.c0x() ;
+    cy = CD1.c0y() ;
 
     if ( hypot( CD1.x0 - cx, CD1.y0 - cy ) >= hypot( qx - cx, qy - cy ) ) {
-      valueType tmp = 4*m_pi*CD1.dk ;
-      valueType k0  = CD1.kappa0 ;
-      if ( k0 < 0 ) { tmp = -tmp ; k0 = -k0 ; }
-      valueType ell = 4*m_pi/(k0+sqrt(tmp+k0*k0)) ;
-      valueType d = closest_by_sample( CD1, ell, qx, qy, X, Y, S );
+      valueType ell = CD1.aplus(m_2pi) ;
+      valueType d = closestPointQC1( epsi, CD1, ell, qx, qy, X, Y, S );
       S = L - S ;
       return d ;
     }
 
-    valueType tmp = DTheta*CD1.dk ;
-    valueType k0  = CD1.kappa0 ;
-    if ( k0 < 0 ) { tmp = -tmp ; k0 = -k0 ; }
-    valueType ell = DTheta/(k0+sqrt(tmp+k0*k0)) ;
+    valueType ell = CD.aplus(DTheta/2) ;
+    valueType d0  = closestPointQC( epsi, CD, ell, qx, qy, X, Y, S );
 
-    valueType d0 = closestPointQC( epsi, CD, ell, qx, qy, X, Y, S );
-
-    CD.eval( ell, CD1.theta0, CD1.kappa0, CD1.x0, CD1.y0 );
-    CD1.kappa0  = -CD1.kappa0 ;
-    CD1.theta0 += m_pi ;
-    CD1.dk      = CD.dk ;
+    CD.eval( ell, CD1 );
 
     valueType X1, Y1, S1 ;
     valueType d1 = closestPointQC( epsi, CD1, L-ell, qx, qy, X1, Y1, S1 );
 
-    if ( d1 < d0 ) { S = S1 ; X = X1 ; Y = Y1 ; return d1 ; }
+    if ( d1 < d0 ) { S = ell+S1 ; X = X1 ; Y = Y1 ; return d1 ; }
 
     return d0 ; // closest_by_sample( CD, L, qx, qy, X, Y, S );
 
@@ -477,7 +466,7 @@ namespace G2lib {
                   " bad ell = " << ell << " L = " << L ) ;
 
     ClothoidData CDS ;
-    CD.eval( L, CDS.theta0, CDS.kappa0, CDS.x0, CDS.y0 );
+    CD.eval( ell, CDS );
 
     valueType S0 ;
     valueType d0 = closestPointStandard( epsi, CD, ell, qx, qy, S0 );
@@ -509,8 +498,8 @@ namespace G2lib {
     }
 
     if ( CD.dk*CD.kappa(L) <= 0 ) { // flex on the right, reverse curve
-      ClothoidData CD1 = CD ;
-      CD1.reverse( L ) ;
+      ClothoidData CD1 ;
+      CD.reverse( L, CD1 ) ;
       valueType d = closestPoint1( epsi, CD1, L, qx, qy, X, Y, S );
       S = L-S ;
       return d ;
@@ -518,14 +507,7 @@ namespace G2lib {
 
     // flex inside, split clothoid
     ClothoidData C0, C1 ;
-    valueType sflex = -CD.kappa0/CD.dk ;
-    C0.theta0 = CD.theta0 + 0.5*CD.kappa0*sflex ;
-    eval( sflex, C0.x0, C0.y0 );
-    C1.x0     = C0.x0 ;
-    C1.y0     = C0.y0 ;
-    C1.theta0 = C0.theta0+m_pi ; // reverse curve
-    C0.kappa0 = C1.kappa0 = 0 ;
-    C0.dk     = C1.dk     = CD.dk ;
+    valueType sflex = CD.split_at_flex( C0, C1 ) ;
 
     valueType d0 = closestPoint1( epsi, C0, L-sflex, qx, qy, X, Y, S  );
     valueType x1, y1, s1 ;
