@@ -319,7 +319,7 @@ GC_get_complex_im( ) {
 GC_EXTERN_C
 char const *
 GC_get_string( ) {
-  if ( gc_active == nullptr ) return 0 ;
+  if ( gc_active == nullptr ) return nullptr ;
   return gc_active -> top() -> get_string() . c_str() ;
 }
 
@@ -425,7 +425,7 @@ GC_get_complex_imag_at_pos( int pos ) {
 GC_EXTERN_C
 char const *
 GC_get_string_at_pos( int pos ) {
-  if ( gc_active == nullptr ) return 0 ;
+  if ( gc_active == nullptr ) return nullptr ;
   return gc_active -> top() -> get_string_at( unsigned(pos) ).c_str() ;
 }
 
