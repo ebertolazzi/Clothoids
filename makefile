@@ -31,7 +31,9 @@ endif
 SRCS = \
 src/Biarc.cc \
 src/Circle.cc \
+src/Clothoid.cc \
 src/ClothoidAsyPlot.cc \
+src/ClothoidDistance.cc \
 src/ClothoidG1.cc \
 src/ClothoidG2.cc \
 src/ClothoidList.cc \
