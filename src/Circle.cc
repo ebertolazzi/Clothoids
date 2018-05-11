@@ -237,12 +237,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::changeCurvilinearOrigin( valueType s0, valueType newL ) {
+  CircleArc::changeCurvilinearOrigin( valueType new_s0, valueType newL ) {
     valueType new_x0, new_y0 ;
-    eval( s0,  new_x0, new_y0 ) ;
+    eval( new_s0,  new_x0, new_y0 ) ;
     x0      = new_x0 ;
     y0      = new_y0 ;
-    theta0 += k*s0 ;
+    theta0 += k*new_s0 ;
     c0      = cos(theta0) ;
     s0      = sin(theta0) ;
     L       = newL ;

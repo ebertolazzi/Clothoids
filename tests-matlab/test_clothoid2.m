@@ -27,8 +27,8 @@ for kk=1:4
   
   L1 = ClothoidCurve( x0(kk), y0(kk), theta0, kappa0(kk), dk(kk), L(kk) );
   %
-  x     = -10:0.05:10 ;
-  y     = -5:0.05:15 ;
+  x     = -10:0.02:10 ;
+  y     = -5:0.02:15 ;
   [X,Y] = meshgrid(x,y);
 
   tic
