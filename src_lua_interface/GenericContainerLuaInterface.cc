@@ -335,7 +335,7 @@ namespace GenericContainerNamespace {
   LuaInterpreter::LuaInterpreter() {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
     L = luaL_newstate() ; // opens Lua
-    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::LuaInterpreter() lua_State invalid!" ) ;
+    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::LuaInterpreter() lua_State invalid!" ) ;
     luaL_openlibs(L) ;
   }
 
@@ -343,7 +343,7 @@ namespace GenericContainerNamespace {
 
   LuaInterpreter::~LuaInterpreter() {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
-    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::~LuaInterpreter() lua_State invalid!" ) ;
+    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::~LuaInterpreter() lua_State invalid!" ) ;
     lua_close(L);
   }
 
@@ -352,7 +352,7 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::do_file( char const filename[] ) {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
-    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::do_file('" << filename <<
+    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::do_file('" << filename <<
                                 "')\nlua_State invalid!" ) ;
     if ( luaL_loadfile(L, filename) || lua_pcall(L, 0, 0, 0)  ) {
       GC_ASSERT( lua_isnil(L,-1),
@@ -365,7 +365,7 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::execute( char const cmd[] ) {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
-    GC_ASSERT( L != NULL &&
+    GC_ASSERT( L != nullptr &&
                !luaL_loadbuffer(L, cmd, strlen(cmd), "line") &&
                !lua_pcall(L, 0, 0, 0),
                "In LuaInterpreter::execute('" << cmd <<
@@ -399,7 +399,7 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::global_to_GC( char const global_var[], GenericContainer & gc ) {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L)) ;
-    GC_ASSERT_DEBUG( L != NULL, "LuaInterpreter::global_to_GC(...) lua_State invalid!" ) ;
+    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::global_to_GC(...) lua_State invalid!" ) ;
       
     lua_getglobal( L, global_var ) ;
     GC_ASSERT( !lua_isnil(L,-1),
