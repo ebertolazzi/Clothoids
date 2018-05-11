@@ -1892,17 +1892,20 @@ namespace GenericContainerNamespace {
     case GC_INTEGER:
       return _data.i ;
     case GC_LONG:
-      GC_ASSERT( (std::abs(_data.l)&0x7FFFFFFF) == 0,
-                 msg << "value = " << _data.l << " can't be converted to int" ) ;
+      GC_ASSERT( (std::abs(_data.l)>>31) == 0,
+                 msg << "type: " << typeName[_data_type]
+                     << " value = " << _data.l << " can't be converted to int" ) ;
       return int_type(_data.l) ;
     case GC_REAL:
       GC_ASSERT( isInteger32(_data.r),
-                 msg << "value = " << _data.r << " can't be converted to int" ) ;
+                 msg << "type: " << typeName[_data_type]
+                     << " value = " << _data.r << " can't be converted to int" ) ;
       return int_type(_data.r) ;
     case GC_COMPLEX:
       GC_ASSERT( isInteger32(_data.c->real()) && isZero(_data.c->imag()),
-                 msg << "value = (" << _data.c->real() << "," <<  _data.c->imag() <<
-                 ") can't be converted to int" ) ;
+                 msg << "type: " << typeName[_data_type]
+                     << " value = (" << _data.c->real() << "," <<  _data.c->imag()
+                     << ") can't be converted to int" ) ;
       return int_type(_data.c->real()) ;
     }
     return 0 ;
@@ -1933,20 +1936,24 @@ namespace GenericContainerNamespace {
       return _data.b ? 1 : 0 ;
     case GC_INTEGER:
       GC_ASSERT( _data.i >= 0,
-                 msg << "value = " << _data.i << " can't be converted to uint" ) ;
+                 msg << "type: " << typeName[_data_type] <<
+                 " value = " << _data.i << " can't be converted to uint" ) ;
       return uint_type(_data.i) ;
     case GC_LONG:
-      GC_ASSERT( (std::abs(_data.l)&0x7FFFFFFF) == 0 && _data.l >= 0,
-                 msg << "value = " << _data.l << " can't be converted to uint" ) ;
+      GC_ASSERT( (std::abs(_data.l)>>32) == 0 && _data.l >= 0,
+                 msg << "type: " << typeName[_data_type] <<
+                 " value = " << _data.l << " can't be converted to uint" ) ;
       return uint_type(_data.l) ;
     case GC_REAL:
       GC_ASSERT( isUnsigned32(_data.r),
-                 msg << "value = " << _data.r << " can't be converted to uint" ) ;
+                 msg << "type: " << typeName[_data_type] << 
+                 " value = " << _data.r << " can't be converted to uint" ) ;
       return uint_type(_data.r) ;
     case GC_COMPLEX:
       GC_ASSERT( isUnsigned32(_data.c->real()) && isZero(_data.c->imag()),
-                 msg << "value = (" << _data.c->real() << "," <<  _data.c->imag() <<
-                 ") can't be converted to int" ) ;
+                 msg << "type: " << typeName[_data_type] << 
+                 "v alue = (" << _data.c->real() << "," <<  _data.c->imag() <<
+                 ") can't be converted to uint" ) ;
       return uint_type(_data.c->real()) ;
     }
     return 0 ;
