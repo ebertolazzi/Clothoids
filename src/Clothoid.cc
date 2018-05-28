@@ -189,65 +189,42 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  ClothoidCurve::bbTriangle( valueType offs,
-                             valueType p0[2],
-                             valueType p1[2],
-                             valueType p2[2] ) const {
-    valueType theta_max = CD.theta( L ) ;
-    valueType theta_min = CD.theta0 ;
-    valueType dtheta    = std::abs( theta_max-theta_min ) ;
-    if ( dtheta < m_pi_2 ) {
-      valueType alpha, t0[2] ;
-      eval( 0, offs, p0[0], p0[1] ) ;
-      eval_D( 0, t0[0], t0[1] ) ; // no offset
-      if ( dtheta > 0.0001 * m_pi_2 ) {
-        valueType t1[2] ;
-        eval( L, offs, p1[0], p1[1] ) ;
-        eval_D( L, t1[0], t1[1] ) ; // no offset
-        // risolvo il sistema
-        // p0 + alpha * t0 = p1 + beta * t1
-        // alpha * t0 - beta * t1 = p1 - p0
-        valueType det = t1[0]*t0[1]-t0[0]*t1[1] ;
-        alpha = ((p1[1]-p0[1])*t1[0] - (p1[0]-p0[0])*t1[1])/det ;
-      } else {
-        // se angolo troppo piccolo uso approx piu rozza
-        alpha = L ;
-      }
-      p2[0] = p0[0] + alpha*t0[0] ;
-      p2[1] = p0[1] + alpha*t0[1] ;
-      return true ;
-    } else {
-      return false ;
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
   ClothoidCurve::bbSplit(
-    valueType               split_angle,
-    valueType               split_size,
-    valueType               split_offs,
-    vector<ClothoidCurve> & c,
-    vector<T2D>           & t
+    valueType        split_angle,
+    valueType        split_size,
+    valueType        split_offs,
+    vector<bbData> & bb
   ) const {
 
     // step 0: controllo se curvatura passa per 0
     valueType k_min = theta_D( 0 ) ;
     valueType k_max = theta_D( L ) ;
-    c.clear() ;
-    t.clear() ;
+
+    bb.clear() ;
+
+    bbData2 data ;
+    data.split_angle = split_angle ;
+    data.split_size  = split_size  ;
+    data.split_offs  = split_offs  ;
+    data.cd          = this->CD ;
+    data.s0          = 0 ;
+
     if ( k_min * k_max < 0 ) {
       // risolvo (s-s_min)*dk+k_min = 0 --> s = s_min-k_min/dk
       valueType s_med = -k_min/CD.dk ;
-      ClothoidCurve tmp(*this) ;
-      tmp.trim(0,s_med) ;
-      tmp.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
-      tmp.trim(s_med,L) ;
-      tmp.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
+      data.L  = s_med ;
+      bbSplit_internal( data, bb ) ;
+      // trim
+      CD.eval( s_med,
+               data.cd.theta0, data.cd.kappa0,
+               data.cd.x0, data.cd.y0 ) ;
+      data.s0 = s_med ;
+      data.L  = this->L - s_med ;
+      bbSplit_internal( data, bb ) ;
     } else {
-      bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
+      data.L  = this->L ;
+      bbSplit_internal( data, bb ) ;
     }
   }
 
@@ -265,54 +242,68 @@ namespace G2lib {
 
   void
   ClothoidCurve::bbSplit_internal(
-    valueType               split_angle,
-    valueType               split_size,
-    valueType               split_offs,
-    vector<ClothoidCurve> & c,
-    vector<T2D>           & t
+    bbData2 const  & data,
+    vector<bbData> & bbV
   ) const {
 
     valueType theta_min, kappa_min, x_min, y_min,
               theta_max, kappa_max, x_max, y_max ;
 
-    eval( 0, theta_min, kappa_min, x_min, y_min ) ;
-    eval( L, theta_max, kappa_max, x_max, y_max ) ;
+    data.cd.eval( 0,      theta_min, kappa_min, x_min, y_min ) ;
+    data.cd.eval( data.L, theta_max, kappa_max, x_max, y_max ) ;
 
     valueType dtheta = std::abs( theta_max - theta_min ) ;
     valueType dx     = x_max - x_min ;
     valueType dy     = y_max - y_min ;
     valueType len    = hypot( dy, dx ) ;
     valueType dangle = abs2pi(atan2( dy, dx )-theta_min) ;
-    if ( dtheta <= split_angle && len*tan(dangle) <= split_size ) {
-      T2D tt ;
-      this->bbTriangle(split_offs,tt) ;
-      c.push_back(*this) ;
-      t.push_back(tt) ;
+    if ( dtheta          <= data.split_angle &&
+         len*tan(dangle) <= data.split_size ) {
+      bbData bb ;
+      valueType p0[2], p1[2], p2[2] ;
+      bool ok = data.cd.bbTriangle( data.L, data.split_offs, p0, p1, p2 ) ;
+      G2LIB_ASSERT( ok, "ClothoidCurve::bbSplit_internal, bad bounding box" ) ;
+      bb.t.setup( p0, p1, p2 ) ;
+      bb.s0 = data.s0 ;
+      bb.L  = data.L ;
+      bb.cd = data.cd ;
+      bbV.push_back(bb) ;
     } else {
-      ClothoidCurve cc(*this) ;
-      valueType s_med = L/2 ;
-      cc.trim(0,s_med) ;
-      cc.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
-      cc.trim(s_med,L) ;
-      cc.bbSplit_internal( split_angle, split_size, split_offs, c, t ) ;
+      bbData2 d ;
+      valueType Lh = data.L / 2 ;
+      d.split_angle = data.split_angle ;
+      d.split_size  = data.split_size ;
+      d.split_offs  = data.split_offs ;
+      d.s0          = data.s0 ;
+      d.L           = Lh ;
+      d.cd          = data.cd ;
+      bbSplit_internal( d, bbV ) ;
+
+      // trim
+      data.cd.eval( Lh,
+                    d.cd.theta0, d.cd.kappa0,
+                    d.cd.x0, d.cd.y0 ) ;
+      d.s0 = data.s0 + Lh  ;
+      d.L  = Lh ;
+      bbSplit_internal( d, bbV ) ;
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::intersect_internal( ClothoidCurve & c1,
-                                     valueType       c1_offs,
-                                     valueType     & s1,
-                                     ClothoidCurve & c2,
-                                     valueType       c2_offs,
-                                     valueType     & s2,
-                                     indexType       max_iter,
-                                     valueType       tolerance ) const {
-    valueType angle1a = c1.theta(0) ;
-    valueType angle1b = c1.theta(c1.L) ;
-    valueType angle2a = c2.theta(0) ;
-    valueType angle2b = c2.theta(c2.L) ;
+  ClothoidCurve::intersect_internal( bbData const & c1,
+                                     valueType      c1_offs,
+                                     valueType    & s1,
+                                     bbData const & c2,
+                                     valueType      c2_offs,
+                                     valueType    & s2,
+                                     indexType      max_iter,
+                                     valueType      tolerance ) const {
+    valueType angle1a = c1.cd.theta(0) ;
+    valueType angle1b = c1.cd.theta(c1.L) ;
+    valueType angle2a = c2.cd.theta(0) ;
+    valueType angle2b = c2.cd.theta(c2.L) ;
     // cerca angoli migliori per partire
     valueType dmax = abs2pi(angle1a-angle2a) ;
     valueType dab  = abs2pi(angle1a-angle2b) ;
@@ -324,10 +315,10 @@ namespace G2lib {
     if ( dmax < dbb ) {              s1 = 0 ; s2 = c2.L ; }
     for ( indexType i = 0 ; i < max_iter ; ++i ) {
       valueType t1[2], t2[2], p1[2], p2[2] ;
-      c1.eval( s1, c1_offs, p1[0], p1[1] ) ;
-      c1.eval_D( s1, c1_offs, t1[0], t1[1] ) ;
-      c2.eval( s2, c2_offs, p2[0], p2[1] ) ;
-      c2.eval_D( s2, c2_offs, t2[0], t2[1] ) ;
+      c1.cd.eval  ( s1, c1_offs, p1[0], p1[1] ) ;
+      c1.cd.eval_D( s1, c1_offs, t1[0], t1[1] ) ;
+      c2.cd.eval  ( s2, c2_offs, p2[0], p2[1] ) ;
+      c2.cd.eval_D( s2, c2_offs, t2[0], t2[1] ) ;
       /*
       // risolvo il sistema
       // p1 + alpha * t1 = p2 + beta * t2
@@ -359,23 +350,24 @@ namespace G2lib {
                             vector<valueType>   & s2,
                             indexType             max_iter,
                             valueType             tolerance ) const {
-    vector<ClothoidCurve> c0, c1 ;
-    vector<T2D>           t0, t1 ;
-    bbSplit( m_pi/50, L/3, offs, c0, t0 ) ;
-    clot.bbSplit( m_pi/50, clot.L/3, clot_offs, c1, t1 ) ;
+    vector<bbData> bbV0,  bbV1 ;
+    bbSplit( m_pi/50, L/3, offs, bbV0 ) ;
+    clot.bbSplit( m_pi/50, clot.L/3, clot_offs, bbV1 ) ;
     s1.clear() ;
     s2.clear() ;
-    for ( unsigned i = 0 ; i < unsigned(c0.size()) ; ++i ) {
-      for ( unsigned j = 0 ; j < unsigned(c1.size()) ; ++j ) {
-        if ( t0[i].overlap(t1[j]) ) {
+    for ( unsigned i = 0 ; i < unsigned(bbV0.size()) ; ++i ) {
+      bbData const & bbi = bbV0[i] ;
+      for ( unsigned j = 0 ; j < unsigned(bbV1.size()) ; ++j ) {
+        bbData const & bbj = bbV1[j] ;
+        if ( bbi.t.overlap(bbj.t) ) {
           // uso newton per cercare intersezione
           valueType tmp_s1, tmp_s2 ;
-          bool ok = intersect_internal( c0[i], offs,      tmp_s1,
-                                        c1[j], clot_offs, tmp_s2,
+          bool ok = intersect_internal( bbi, offs,      tmp_s1,
+                                        bbj, clot_offs, tmp_s2,
                                         max_iter, tolerance ) ;
           if ( ok ) {
-            s1.push_back(tmp_s1) ;
-            s2.push_back(tmp_s2) ;
+            s1.push_back(bbi.s0+tmp_s1) ;
+            s2.push_back(bbj.s0+tmp_s2) ;
           }
         }
       }
@@ -391,13 +383,14 @@ namespace G2lib {
                                         valueType             clot_offs,
                                         valueType             max_angle,
                                         valueType             max_size ) const {
-    vector<ClothoidCurve> c0, c1 ;
-    vector<T2D>           t0, t1 ;
-    bbSplit( max_angle, max_size, offs, c0, t0 ) ;
-    clot.bbSplit( max_angle, max_size, clot_offs, c1, t1 ) ;
-    for ( unsigned i = 0 ; i < unsigned(c0.size()) ; ++i ) {
-      for ( unsigned j = 0 ; j < unsigned(c1.size()) ; ++j ) {
-        if ( t0[i].overlap(t1[j]) ) return true ;
+    vector<bbData> bbV0, bbV1 ;
+    bbSplit( max_angle, max_size, offs, bbV0 ) ;
+    clot.bbSplit( max_angle, max_size, clot_offs, bbV1 ) ;
+    for ( unsigned i = 0 ; i < unsigned(bbV0.size()) ; ++i ) {
+      bbData & bbi = bbV0[i] ;
+      for ( unsigned j = 0 ; j < unsigned(bbV1.size()) ; ++j ) {
+        bbData & bbj = bbV1[j] ;
+        if ( bbi.t.overlap(bbj.t) ) return true ;
       }
     }
     return false ;

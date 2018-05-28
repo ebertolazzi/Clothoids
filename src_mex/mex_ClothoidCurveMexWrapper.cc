@@ -254,7 +254,7 @@ namespace G2lib {
         #define CMD "ClothoidCurveMexWrapper('eval*',OBJ,s[,offs]): "
 
         MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs") ;
-        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs") ;
+        MEX_ASSERT( nlhs == 1 || nlhs == 2, CMD "expected 1 or 2 outputs") ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -262,20 +262,37 @@ namespace G2lib {
         double offs = 0 ;
         if ( nrhs == 4 ) offs = getScalarValue( arg_in_3, CMD "Error in reading offs" ) ;
 
-        double * xVals = createMatrixValue( arg_out_0, size, 1 );
-        double * yVals = createMatrixValue( arg_out_1, size, 1 );
-        if ( cmd == "eval" ) {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval( sVals[i], offs, xVals[i], yVals[i] );
-        } else if ( cmd == "eval_D" ) {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval_D( sVals[i], offs, xVals[i], yVals[i] );
-        } else if ( cmd == "eval_DD" ) {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval_DD( sVals[i], offs, xVals[i], yVals[i] );
+        if ( nlhs == 1 ) {
+          double * xyVals = createMatrixValue( arg_out_0, 2, size );
+          if ( cmd == "eval" ) {
+            for ( mwSize i=0; i < size ; ++i )
+              ptr->eval( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
+          } else if ( cmd == "eval_D" ) {
+            for ( mwSize i=0; i < size ; ++i )
+              ptr->eval_D( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
+          } else if ( cmd == "eval_DD" ) {
+            for ( mwSize i=0; i < size ; ++i )
+              ptr->eval_DD( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
+          } else {
+            for ( mwSize i=0; i < size ; ++i )
+              ptr->eval_DDD( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
+          }
         } else {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval_DDD( sVals[i], offs, xVals[i], yVals[i] );
+          double * xVals = createMatrixValue( arg_out_0, size, 1 );
+          double * yVals = createMatrixValue( arg_out_1, size, 1 );
+          if ( cmd == "eval" ) {
+            for ( mwSize i=0; i < size ; ++i )
+              ptr->eval( sVals[i], offs, xVals[i], yVals[i] );
+          } else if ( cmd == "eval_D" ) {
+            for ( mwSize i=0; i < size ; ++i )
+              ptr->eval_D( sVals[i], offs, xVals[i], yVals[i] );
+         } else if ( cmd == "eval_DD" ) {
+             for ( mwSize i=0; i < size ; ++i )
+              ptr->eval_DD( sVals[i], offs, xVals[i], yVals[i] );
+          } else {
+            for ( mwSize i=0; i < size ; ++i )
+              ptr->eval_DDD( sVals[i], offs, xVals[i], yVals[i] );
+          }
         }
 
         #undef CMD

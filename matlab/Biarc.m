@@ -28,7 +28,7 @@ classdef Biarc < handle
 
     function delete(this)
       %% Destroy the C++ class instance
-      BiarcMexWrapper('delete', this.objectHandle );
+      BiarcMexWrapper( 'delete', this.objectHandle );
     end
 
     function build( this, x0, y0, theta0, x1, y1, theta1 )
@@ -43,7 +43,7 @@ classdef Biarc < handle
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
       %
-      BiarcMexWrapper('build', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      BiarcMexWrapper( 'build', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
     end
 
     function varargout = evaluate( this, s )
@@ -62,66 +62,66 @@ classdef Biarc < handle
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
       %
-      [varargout{1:nargout}] = BiarcMexWrapper('evaluate', this.objectHandle, s );
+      [varargout{1:nargout}] = BiarcMexWrapper( 'evaluate', this.objectHandle, s );
     end
 
     function [x,y] = eval( this, varargin )
-      [x,y] = BiarcMexWrapper('eval', this.objectHandle, varargin{:} );
+      [x,y] = BiarcMexWrapper( 'eval', this.objectHandle, varargin{:} );
     end
 
     %% Eval
     function [x_D,y_D] = eval_D( this, varargin )
-      [x_D,y_D] = BiarcMexWrapper('eval_D', this.objectHandle, varargin{:} );
+      [x_D,y_D] = BiarcMexWrapper( 'eval_D', this.objectHandle, varargin{:} );
     end
 
     %% Eval
     function [x_DD,y_DD] = eval_DD( this, varargin )
-      [x_DD,y_DD] = BiarcMexWrapper('eval_DD', this.objectHandle, varargin{:} );
+      [x_DD,y_DD] = BiarcMexWrapper( 'eval_DD', this.objectHandle, varargin{:} );
     end
 
     %% Eval
     function [x_DDD,y_DDD] = eval_DDD( this, varargin )
-      [x_DDD,y_DDD] = BiarcMexWrapper('eval_DDD', this.objectHandle, varargin{:} );
+      [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', this.objectHandle, varargin{:} );
     end
 
     %%
     function [X,Y,S,DST] = closestPoint( this, qx, qy )
-      [X,Y,S,DST] = BiarcMexWrapper('closestPoint', this.objectHandle, qx, qy );
+      [X,Y,S,DST] = BiarcMexWrapper( 'closestPoint', this.objectHandle, qx, qy );
     end
 
     function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
-      [DST,S] = BiarcMexWrapper('distance', self.objectHandle, varargin{:} );
+      [DST,S] = BiarcMexWrapper( 'distance', self.objectHandle, varargin{:} );
     end
 
     %%
     function [X,Y,S,DST] = closestPointBySample( this, qx, qy, ds )
-      [X,Y,S,DST] = BiarcMexWrapper('closestPointBySample', this.objectHandle, qx, qy, ds );
+      [X,Y,S,DST] = BiarcMexWrapper( 'closestPointBySample', this.objectHandle, qx, qy, ds );
     end
 
     %%
     function [DST,S] = distanceBySample( this, qx, qy, ds )
-      [DST,S] = BiarcMexWrapper('distanceBySample', this.objectHandle, qx, qy, ds );
+      [DST,S] = BiarcMexWrapper( 'distanceBySample', this.objectHandle, qx, qy, ds );
     end
 
     function res = getX0( this )
-      res = BiarcMexWrapper('getX0', this.objectHandle );
+      res = BiarcMexWrapper( 'getX0', this.objectHandle );
     end
 
     function res = getY0( this )
-      res = BiarcMexWrapper('getY0', this.objectHandle );
+      res = BiarcMexWrapper( 'getY0', this.objectHandle );
     end
 
     function res = getTheta0( this )
-      res = BiarcMexWrapper('getTheta0', this.objectHandle );
+      res = BiarcMexWrapper( 'getTheta0', this.objectHandle );
     end
 
     function res = getKappa0( this )
-      res = BiarcMexWrapper('getKappa0', this.objectHandle );
+      res = BiarcMexWrapper( 'getKappa0', this.objectHandle );
     end
 
     function res = getDkappa( this )
-      res = BiarcMexWrapper('getKappa_D', this.objectHandle );
+      res = BiarcMexWrapper( 'getKappa_D', this.objectHandle );
     end
 
     function res = getSmin( this )
@@ -129,11 +129,11 @@ classdef Biarc < handle
     end
 
     function res = getSmax( this )
-      res = BiarcMexWrapper('getSmax', this.objectHandle );
+      res = BiarcMexWrapper( 'getSmax', this.objectHandle );
     end
 
     function res = length( this )
-      res = BiarcMexWrapper('length', this.objectHandle );
+      res = BiarcMexWrapper( 'length', this.objectHandle );
     end
 
     function rotate( this, angle, cx, cy )
@@ -146,7 +146,7 @@ classdef Biarc < handle
       %    angle: the angle of rotation
       %    cx, cy: coordinates of the centre of rotation
       %
-      BiarcMexWrapper('rotate', this.objectHandle, angle, cx, cy );
+      BiarcMexWrapper( 'rotate', this.objectHandle, angle, cx, cy );
     end
 
     function translate( this, tx, ty )
@@ -158,7 +158,7 @@ classdef Biarc < handle
       % On input:
       %    tx, ty: horizontal and vertical translation
       %   
-      BiarcMexWrapper('translate', this.objectHandle, tx, ty );
+      BiarcMexWrapper( 'translate', this.objectHandle, tx, ty );
     end
 
     function changeOrigin( this, newX0, newY0 )
@@ -170,7 +170,7 @@ classdef Biarc < handle
       % On input:
       %    newX0, newY0: new coordinates of initial point
       %
-      BiarcMexWrapper('changeOrigin', this.objectHandle, newX0, newY0 );
+      BiarcMexWrapper( 'changeOrigin', this.objectHandle, newX0, newY0 );
     end
 
     function scale( this, s )
@@ -182,7 +182,7 @@ classdef Biarc < handle
       % On input:
       %    newX0, newY0: new coordinates of initial point
             
-      BiarcMexWrapper('scale', this.objectHandle, s );
+      BiarcMexWrapper( 'scale', this.objectHandle, s );
     end
 
     function reverse( this )
@@ -190,7 +190,7 @@ classdef Biarc < handle
       % Usage:
       %    ref.reverse()
       %
-      BiarcMexWrapper('reverse', this.objectHandle );
+      BiarcMexWrapper( 'reverse', this.objectHandle );
     end
 
     function [xp,yp,xm,ym] = infinity( this )
@@ -198,7 +198,14 @@ classdef Biarc < handle
       % Usage:
       %    ref.reverse()
       %
-      [xp,yp,xm,ym] = BiarcMexWrapper('infinity', this.objectHandle );
+      [xp,yp,xm,ym] = BiarcMexWrapper( 'infinity', this.objectHandle );
+    end
+
+    function [arc,arc1] = to_nurbs( this )
+      % Usage:
+      %    ref.to_nurbs()
+      %
+      [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', this.objectHandle );
     end
 
     %% Utils
@@ -221,9 +228,9 @@ classdef Biarc < handle
       if nargin<2
         step = 0.1;
       end
-      L     = BiarcMexWrapper('length', this.objectHandle );
+      L     = BiarcMexWrapper( 'length', this.objectHandle );
       S     = 0:step:L ;
-      [X,Y] = BiarcMexWrapper('eval', this.objectHandle, S );
+      [X,Y] = BiarcMexWrapper( 'eval', this.objectHandle, S );
       lineH = plot(X,Y, varargin{:});
     end
   end

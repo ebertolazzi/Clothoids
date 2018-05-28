@@ -89,7 +89,7 @@ namespace G2lib {
 
     Biarc const & operator = ( Biarc const & ba )
     { copy(ba) ; return *this ; }
-    
+
     CircleArc const & getC0() const { return C0 ; }
     CircleArc const & getC1() const { return C1 ; }
 

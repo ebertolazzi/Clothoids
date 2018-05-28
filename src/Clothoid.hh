@@ -102,17 +102,29 @@ namespace G2lib {
     int
     build( valueType x1, valueType y1, valueType theta1 );
 
+    typedef struct {
+      valueType    s0 ;
+      valueType    L  ;
+      ClothoidData cd ;
+      T2D          t  ;
+    } bbData ;
+
+    typedef struct {
+      valueType    split_angle ;
+      valueType    split_size ;
+      valueType    split_offs ;
+      valueType    s0 ;
+      valueType    L ;
+      ClothoidData cd ;
+    } bbData2 ;
+
     void
-    bbSplit_internal( valueType               split_angle,
-                      valueType               split_size,
-                      valueType               split_offs,
-                      vector<ClothoidCurve> & c,
-                      vector<T2D>           & t ) const ;
+    bbSplit_internal( bbData2 const & data, vector<bbData> & bbV ) const ;
 
     //! Use newton and bisection to intersect two small clothoid segment
     bool
-    intersect_internal( ClothoidCurve & c1, valueType c1_offs, valueType & s1,
-                        ClothoidCurve & c2, valueType c2_offs, valueType & s2,
+    intersect_internal( bbData const & c1, valueType c1_offs, valueType & s1,
+                        bbData const & c2, valueType c2_offs, valueType & s2,
                         indexType max_iter,
                         valueType tolerance ) const ;
 
@@ -236,27 +248,49 @@ namespace G2lib {
                    valueType _y1,
                    valueType tol = 1e-8 ) ;
 
+    /*! \brief get clothoid angle at curvilinear cooordinate `s`
+     *
+     * \param  s curvilinear cooordinate
+     * \return angle (radiant) at curvilinear cooordinate `s`
+     */
     valueType
     theta( valueType s ) const
     { return CD.theta(s) ; }
 
+    /*! \brief get clothoid angle derivative (=curvature) at curvilinear cooordinate `s`
+     *
+     * \param  s curvilinear cooordinate
+     * \return angle derivative (radiant/s) at curvilinear cooordinate `s`
+     */
     valueType
     theta_D( valueType s ) const
     { return CD.kappa(s) ; }
 
+    /*! \brief get clothoid angle second derivative at curvilinear cooordinate `s`
+     *
+     * \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
+     */
     valueType
     theta_DD( valueType ) const
     { return CD.dk ; }
 
+    /*! \brief get clothoid angle third derivative at curvilinear cooordinate `s`
+     *
+     * \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
+     */
     valueType
     theta_DDD( valueType ) const { return 0 ; }
 
+    /*! \return clothoid total variation
+     */
     valueType
     thetaTotalVariation() const ;
 
     valueType
     thetaMinMax( valueType & thMin, valueType & thMax ) const ;
 
+    /*! \return clothoid angle range
+     */
     valueType
     deltaTheta() const
     { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
@@ -264,6 +298,8 @@ namespace G2lib {
     valueType
     curvatureMinMax( valueType & kMin, valueType & kMax ) const ;
 
+    /*! \return clothoid total curvature variation
+     */
     valueType
     curvatureTotalVariation() const ;
 
@@ -276,7 +312,16 @@ namespace G2lib {
     valueType
     integralSnap2() const ;
 
+    /*! \brief clothoid X coordinate at curvilinear coordinate `s`
+     * \param s curvilinear coordinate
+     * \return clothoid X coordinate
+     */
     valueType X( valueType s ) const { return CD.X(s) ; }
+
+    /*! \brief clothoid Y coordinate at curvilinear coordinate `s`
+     * \param s curvilinear coordinate
+     * \return clothoid Y coordinate
+     */
     valueType Y( valueType s ) const { return CD.Y(s) ; }
 
     valueType Xbegin()     const { return CD.x0 ; }
@@ -422,22 +467,30 @@ namespace G2lib {
     bbTriangle( valueType offs,
                 valueType p0[2],
                 valueType p1[2],
-                valueType p2[2] ) const ;
+                valueType p2[2] ) const {
+      return CD.bbTriangle( L, offs, p0, p1, p2 ) ;
+    }
 
     bool
     bbTriangle( valueType offs, T2D & t ) const {
       valueType p0[2], p1[2], p2[2] ;
-      bool ok = bbTriangle( offs, p0, p1, p2 ) ;
+      bool ok = CD.bbTriangle( L, offs, p0, p1, p2 ) ;
       if ( ok ) t.setup( p0, p1, p2 ) ;
       return ok ;
     }
 
+    /*! \brief split clothois in smaller segments
+     *
+     * \param split_angle maximum angle variation
+     * \param split_size  maximum height of the triangle
+     * \param split_offs  curve offset
+     * \param bb          splitting data structures vector
+     */
     void
-    bbSplit( valueType               split_angle, //!< maximum angle variation
-             valueType               split_size,  //!< maximum height of the triangle
-             valueType               split_offs,  //!< curve offset
-             vector<ClothoidCurve> & c,           //!< clothoid segments
-             vector<T2D>           & t ) const ;  //!< clothoid bounding box
+    bbSplit( valueType        split_angle,
+             valueType        split_size,
+             valueType        split_offs,
+             vector<bbData> & bb ) const ;
 
     // intersect computation
     void

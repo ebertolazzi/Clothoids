@@ -27,6 +27,7 @@
 "\n" \
 "  - Build:\n" \
 "    BiarcMexWrapper( 'build', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
+"    [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
 "  - Eval:\n" \
 "    [x,y,theta,kappa] = BiarcMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
@@ -411,6 +412,49 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         ptr->reverse();
+
+        #undef CMD
+
+      } else if ( cmd == "to_nurbs" ) {
+
+        #define CMD "BiarcMexWrapper('to_nurbs',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs");
+
+        CircleArc const & C0 = ptr->getC0();
+        CircleArc const & C1 = ptr->getC1();
+
+        indexType npts0 = C0.toNURBS( nullptr, nullptr, true );
+        indexType npts1 = C1.toNURBS( nullptr, nullptr, true );
+
+        mxArray * mx_knots0, * mx_Poly0, * mx_knots1, * mx_Poly1 ;
+
+        double * knots0 = createMatrixValue( mx_knots0, 1, npts0+3 );
+        double * poly0  = createMatrixValue( mx_Poly0,  3, npts0   );
+        double * knots1 = createMatrixValue( mx_knots1, 1, npts1+3 );
+        double * poly1  = createMatrixValue( mx_Poly1,  3, npts1   );
+
+        C0.toNURBS( knots0, poly0, false );
+        C1.toNURBS( knots1, poly1, false );
+
+        static char const * fieldnames[] = { "form", "order", "dim", "number", "knots", "coefs" } ;
+        arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);
+        arg_out_1 = mxCreateStructMatrix(1,1,6,fieldnames);
+
+        mxSetFieldByNumber( arg_out_0, 0, 0, mxCreateString("rB") );
+        mxSetFieldByNumber( arg_out_0, 0, 1, mxCreateDoubleScalar(3) );
+        mxSetFieldByNumber( arg_out_0, 0, 2, mxCreateDoubleScalar(2) );
+        mxSetFieldByNumber( arg_out_0, 0, 3, mxCreateDoubleScalar(npts0) );
+        mxSetFieldByNumber( arg_out_0, 0, 4, mx_knots0 );
+        mxSetFieldByNumber( arg_out_0, 0, 5, mx_Poly0 );
+
+        mxSetFieldByNumber( arg_out_1, 0, 0, mxCreateString("rB") );
+        mxSetFieldByNumber( arg_out_1, 0, 1, mxCreateDoubleScalar(3) );
+        mxSetFieldByNumber( arg_out_1, 0, 2, mxCreateDoubleScalar(2) );
+        mxSetFieldByNumber( arg_out_1, 0, 3, mxCreateDoubleScalar(npts1) );
+        mxSetFieldByNumber( arg_out_1, 0, 4, mx_knots1 );
+        mxSetFieldByNumber( arg_out_1, 0, 5, mx_Poly1 );
 
         #undef CMD
 

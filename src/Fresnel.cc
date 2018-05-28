@@ -791,6 +791,42 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  ClothoidData::bbTriangle( valueType L,
+                            valueType offs,
+                            valueType p0[2],
+                            valueType p1[2],
+                            valueType p2[2] ) const {
+    valueType theta_max = theta( L ) ;
+    valueType theta_min = theta0 ;
+    valueType dtheta    = std::abs( theta_max-theta_min ) ;
+    if ( dtheta < m_pi_2 ) {
+      valueType alpha, t0[2] ;
+      eval( 0, offs, p0[0], p0[1] ) ;
+      eval_D( 0, t0[0], t0[1] ) ; // no offset
+      if ( dtheta > 0.0001 * m_pi_2 ) {
+        valueType t1[2] ;
+        eval( L, offs, p1[0], p1[1] ) ;
+        eval_D( L, t1[0], t1[1] ) ; // no offset
+        // risolvo il sistema
+        // p0 + alpha * t0 = p1 + beta * t1
+        // alpha * t0 - beta * t1 = p1 - p0
+        valueType det = t1[0]*t0[1]-t0[0]*t1[1] ;
+        alpha = ((p1[1]-p0[1])*t1[0] - (p1[0]-p0[0])*t1[1])/det ;
+      } else {
+        // se angolo troppo piccolo uso approx piu rozza
+        alpha = L ;
+      }
+      p2[0] = p0[0] + alpha*t0[0] ;
+      p2[1] = p0[1] + alpha*t0[1] ;
+      return true ;
+    } else {
+      return false ;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidData::info( std::ostream & s ) const {
     s <<   "x0     = " << x0

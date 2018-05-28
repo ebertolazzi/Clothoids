@@ -202,6 +202,13 @@ namespace G2lib {
     valueType
     aplus( valueType dtheta ) const ;
 
+    bool
+    bbTriangle( valueType L,
+                valueType offs,
+                valueType p0[2],
+                valueType p1[2],
+                valueType p2[2] ) const ;
+
     void
     info( std::ostream & s ) const ;
 
