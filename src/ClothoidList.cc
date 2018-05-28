@@ -277,10 +277,10 @@ namespace G2lib {
   }
 
   void
-  ClothoidList::moveOrigin( valueType newx0, valueType newy0 ) {
+  ClothoidList::changeOrigin( valueType newx0, valueType newy0 ) {
     std::vector<ClothoidCurve>::iterator ic = clotoidList.begin() ;
     for ( ; ic != clotoidList.end() ; ++ic ) {
-      ic->moveOrigin( newx0, newy0 ) ;
+      ic->changeOrigin( newx0, newy0 ) ;
       newx0 = ic->Xend() ;
       newy0 = ic->Yend() ;
     }
@@ -293,7 +293,7 @@ namespace G2lib {
     valueType newy0 = ic->Ybegin() ;
     for ( ; ic != clotoidList.end() ; ++ic ) {
       ic->scale( sfactor ) ;
-      ic->moveOrigin( newx0, newy0 ) ;
+      ic->changeOrigin( newx0, newy0 ) ;
       newx0 = ic->Xend() ;
       newy0 = ic->Yend() ;
     }

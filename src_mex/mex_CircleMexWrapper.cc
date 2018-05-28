@@ -168,7 +168,7 @@ namespace G2lib {
         DATA_DELETE( arg_in_1 ) ;
         #undef CMD
 
-      } else if ( cmd == "changeOrigin" ) {
+      } else if ( cmd == "e" ) {
 
         #define CMD "CircleMexWrapper('changeOrigin',OBJ,x0,y0): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");

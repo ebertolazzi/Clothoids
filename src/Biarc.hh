@@ -105,18 +105,85 @@ namespace G2lib {
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
     valueType theta( valueType s ) const ;
+    valueType kappa( valueType s ) const ;
 
     valueType Xstar()     const { return xs ; }
     valueType Ystar()     const { return ys ; }
     valueType thetaStar() const { return thetas ; }
 
+    void eval( valueType s, valueType & th, valueType & k, valueType & x, valueType & y ) const ;
     void eval( valueType s, valueType & x, valueType & y ) const ;
     void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
     void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
     void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
 
-    valueType getL() const { return C0.getL() + C1.getL() ; }
+    valueType getX0()     const { return C0.getX0(); }
+    valueType getY0()     const { return C0.getY0(); }
+    valueType getTheta0() const { return C0.getTheta0(); }
+    valueType getKappa0() const { return C0.getKappa(); }
+    valueType getL0()     const { return C0.getL(); }
+
+    valueType getX1()     const { return C1.getX0(); }
+    valueType getY1()     const { return C1.getY0(); }
+    valueType getTheta1() const { return C1.getTheta0(); }
+    valueType getKappa1() const { return C1.getKappa(); }
+    valueType getL1()     const { return C1.getL(); }
+
+    valueType getL()        const { return C0.getL() + C1.getL() ; }
     valueType delta_theta() const { return C0.delta_theta() + C1.delta_theta() ; }
+
+
+    void changeOrigin( valueType newx0, valueType newy0 );
+    void translate( valueType tx, valueType ty );
+    void rotate( valueType angle, valueType cx, valueType cy );
+    void reverse();
+    void scale( valueType s );
+
+    /*!
+     * \brief compute the point at minimum distance from a point `[x,y]` and the biarc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \param X x-coordinate of the closest point
+     * \param Y y-coordinate of the closest point
+     * \param S param of the closest point
+     * \return the distance point-circle
+    \*/
+    valueType
+    closestPoint( valueType   x,
+                  valueType   y,
+                  valueType & X,
+                  valueType & Y,
+                  valueType & S ) const ;
+
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the biarc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \param S param at minimum distance
+     * \return the distance point-circle
+    \*/
+    valueType
+    distance( valueType   x,
+              valueType   y,
+              valueType & S ) const {
+      valueType X, Y ;
+      return closestPoint( x, y, X, Y, S ) ;
+    }
+
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the biarc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \return the distance point-circle
+    \*/
+    valueType
+    distance( valueType x, valueType y ) const {
+      valueType ss ;
+      return distance( x, y, ss );
+    }
 
     friend
     std::ostream &

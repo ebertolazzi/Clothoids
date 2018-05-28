@@ -289,6 +289,139 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  valueType
+  Biarc::kappa( valueType s ) const {
+    if ( s < C0.getL() ) return C0.getKappa();
+    else                 return C1.getKappa();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval( valueType   s,
+               valueType & th,
+               valueType & k,
+               valueType & x,
+               valueType & y ) const {
+    if ( s < C0.getL() ) {
+      th = C0.theta(s) ;
+      k  = C0.getKappa() ;
+      C0.eval(s,x,y);
+    } else {
+      s -= C0.getL() ;
+      th = C1.theta(s) ;
+      k  = C1.getKappa() ;
+      C1.eval(s,x,y);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval( valueType s, valueType & x, valueType & y ) const {
+    if ( s < C0.getL() ) {
+      C0.eval(s,x,y);
+    } else {
+      s -= C0.getL() ;
+      C1.eval(s,x,y);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval_D( valueType s, valueType & x_D, valueType & y_D ) const {
+    if ( s < C0.getL() ) {
+      C0.eval_D(s,x_D,y_D);
+    } else {
+      s -= C0.getL() ;
+      C1.eval_D(s,x_D,y_D);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
+    if ( s < C0.getL() ) {
+      C0.eval_DD(s,x_DD,y_DD);
+    } else {
+      s -= C0.getL() ;
+      C1.eval_DD(s,x_DD,y_DD);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
+    if ( s < C0.getL() ) {
+      C0.eval_DDD(s,x_DDD,y_DDD);
+    } else {
+      s -= C0.getL() ;
+      C1.eval_DDD(s,x_DDD,y_DDD);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  valueType
+  Biarc::closestPoint( valueType   x,
+                       valueType   y,
+                       valueType & X,
+                       valueType & Y,
+                       valueType & S ) const {
+    valueType dst0 = C0.closestPoint( x, y, X, Y, S );
+    valueType X1, Y1, S1 ;
+    valueType dst1 = C1.closestPoint( x, y, X1, Y1, S1 );
+    if ( dst0 <= dst1 ) return dst0 ;
+    X = X1 ; Y= Y1 ; S = S1 + C0.getL() ;
+    return dst1 ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::changeOrigin( valueType newx0, valueType newy0 ) {
+    C1.translate( newx0-C0.getX0(), newy0-C0.getY0() );
+    C0.changeOrigin( newx0, newy0 );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::translate( valueType tx, valueType ty ) {
+    C0.translate( tx, ty );
+    C1.translate( tx, ty );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::rotate( valueType angle, valueType cx, valueType cy ) {
+    C0.rotate( angle, cx, cy );
+    C1.rotate( angle, cx, cy );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::reverse() {
+    CircleArc tmp = C0 ;
+    C0 = C1 ;
+    C1 = tmp ;
+    C0.reverse();
+    C1.reverse();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::scale( valueType scl ) {
+    valueType newx0 = C0.getX0() + scl*(C1.getX0()-C0.getX0()) ;
+    valueType newy0 = C0.getY0() + scl*(C1.getY0()-C0.getY0()) ;
+    C1.changeOrigin( newx0, newy0 );
+    C1.scale( scl );
+    C0.scale( scl );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   std::ostream &
   operator << ( std::ostream & stream, Biarc const & bi ) {
     stream <<   "Biarc"

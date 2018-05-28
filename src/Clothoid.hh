@@ -477,7 +477,7 @@ namespace G2lib {
     changeCurvilinearOrigin( valueType s0, valueType newL ) ;
 
     void
-    moveOrigin( valueType newx0, valueType newy0 )
+    changeOrigin( valueType newx0, valueType newy0 )
     { CD.x0 = newx0 ; CD.y0 = newy0 ; }
 
     void
@@ -1106,7 +1106,7 @@ namespace G2lib {
 
     void rotate( valueType angle, valueType cx, valueType cy ) ;
     void translate( valueType tx, valueType ty ) ;
-    void moveOrigin( valueType newx0, valueType newy0 ) ;
+    void changeOrigin( valueType newx0, valueType newy0 ) ;
     void scale( valueType sfactor ) ;
     void reverse() ;
 

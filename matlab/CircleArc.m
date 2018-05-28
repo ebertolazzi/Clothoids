@@ -70,19 +70,6 @@ classdef CircleArc < handle
       CircleMexWrapper('build', self.objectHandle, varargin{:} );
     end
 
-    function changeOrigin(self, x0, y0)
-      %
-      %  change the origin of the circlecurve to s0
-      %
-      %  Usage:
-      %    ref.changeOrigin(s0)
-      %    
-      %  On input:
-      %     s0: curvilinear coordinate of the origin of the new curve
-      %
-      CircleMexWrapper('changeOrigin', self.objectHandle, x0, y0 );
-    end
-
     function translate(self, tx, ty)
       % move the object by `(tx,ty)`
       CircleMexWrapper('translate', self.objectHandle, tx, ty );
@@ -115,15 +102,15 @@ classdef CircleArc < handle
       CircleMexWrapper('rotate', self.objectHandle, angle, cx, cy );
     end
 
-    function moveOrigin(self, newX0, newY0)
+    function changeOrigin(self, newX0, newY0)
       % move the origin of the circle to `(newX0, newY0)` 
       % Usage:
-      %    ref.moveOrigin(newX0, newY0)
+      %    ref.changeOrigin(newX0, newY0)
       %
       % On input:
       %    newX0, newY0: new coordinates of initial point
       %
-      CircleMexWrapper('moveOrigin', self.objectHandle, newX0, newY0 );
+      CircleMexWrapper('changeOrigin', self.objectHandle, newX0, newY0 );
     end
 
     function [p0,p1,p2,ok] = bbTriangle(self)

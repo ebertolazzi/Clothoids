@@ -49,8 +49,7 @@
 "\n" \
 "  - Transform:\n" \
 "    ClothoidCurveMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
-"    ClothoidCurveMexWrapper( 'changeOrigin', OBJ, s0, L ) ;\n" \
-"    ClothoidCurveMexWrapper( 'moveOrigin', OBJ, newX0, newY0 ) ;\n" \
+"    ClothoidCurveMexWrapper( 'changeOrigin', OBJ, newX0, newY0 ) ;\n" \
 "    ClothoidCurveMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
 "    ClothoidCurveMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
 "    ClothoidCurveMexWrapper( 'scale', OBJ, scaling ) ;\n" \
@@ -509,14 +508,14 @@ namespace G2lib {
 
         #undef CMD
 
-      } else if ( cmd == "moveOrigin" ) {
+      } else if ( cmd == "changeOrigin" ) {
 
-        #define CMD "ClothoidCurveMexWrapper('moveOrigin',OBJ,newX0,newY0): "
+        #define CMD "ClothoidCurveMexWrapper('changeOrigin',OBJ,newX0,newY0): "
 
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
         valueType newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
         valueType newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
-        ptr->moveOrigin(newX0, newY0);
+        ptr->changeOrigin(newX0, newY0);
 
         #undef CMD
 
