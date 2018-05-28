@@ -761,11 +761,11 @@ namespace G2lib {
   valueType
   G2solve3arc::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
     valueType kMin1, kMax1 ;
-    S0.thetaMinMax( kMin,  kMax ) ;
-    S1.thetaMinMax( kMin1, kMax1 ) ;
+    S0.curvatureMinMax( kMin,  kMax ) ;
+    S1.curvatureMinMax( kMin1, kMax1 ) ;
     if ( kMin > kMin1 ) kMin = kMin1 ;
     if ( kMax < kMax1 ) kMax = kMax1 ;
-    SM.thetaMinMax( kMin1, kMax1 ) ;
+    SM.curvatureMinMax( kMin1, kMax1 ) ;
     if ( kMin > kMin1 ) kMin = kMin1 ;
     if ( kMax < kMax1 ) kMax = kMax1 ;
     return kMax-kMin ;
