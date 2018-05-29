@@ -49,7 +49,7 @@ classdef ClothoidCurve < handle
       ClothoidCurveMexWrapper( 'build', this.objectHandle, varargin{:} );
     end
 
-    function build_G1( this, x0, y0, theta0, x1, y1, theta1 )
+    function varargout = build_G1( this, x0, y0, theta0, x1, y1, theta1 )
       % Build the interpolating G1 clothoid arc
       %
       % Usage:
@@ -61,7 +61,11 @@ classdef ClothoidCurve < handle
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
       %
-      ClothoidCurveMexWrapper( 'build_G1', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      if nargout > 0
+        [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'build_G1_D', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      else
+        ClothoidCurveMexWrapper( 'build_G1', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      end
     end
 
     function res = build_forward( this, x0, y0, theta0, k0, x1, y1 )

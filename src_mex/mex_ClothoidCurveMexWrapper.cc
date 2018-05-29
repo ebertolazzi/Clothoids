@@ -37,6 +37,7 @@
 "  - Build:\n" \
 "    ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, L ) ;\n" \
 "    ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
+"    [ L_D, k_D, dk_D ] = ClothoidCurveMexWrapper( 'build_G1_D', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'build_forward', OBJ,x0,y0,theta0,k0,x1,y1 ) ;\n" \
 "\n" \
 "  - Eval:\n" \
@@ -182,9 +183,9 @@ namespace G2lib {
 
         #undef CMD
 
-      } else if ( cmd == "build_G1" ) {
+      } else if ( cmd == "build_G1" || cmd == "build_G1_D") {
 
-        #define CMD "ClothoidCurveMexWrapper('build_G1',OBJ,x0,y0,theta0,x1,y1,theta1): "
+        #define CMD "ClothoidCurveMexWrapper('build_G1[_D]',OBJ,x0,y0,theta0,x1,y1,theta1): "
 
         MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs") ;
 
@@ -197,7 +198,16 @@ namespace G2lib {
         y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
         theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
 
-        ptr->build_G1(x0, y0, theta0, x1, y1, theta1);
+        if ( cmd == "build_G1" ) {
+          MEX_ASSERT( nlhs == 0, CMD "expected no outputs") ;
+          ptr->build_G1( x0, y0, theta0, x1, y1, theta1 );
+        } else {
+          MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs") ;
+          double * L_D  = createMatrixValue( arg_out_0, 2, 1 );
+          double * k_D  = createMatrixValue( arg_out_1, 2, 1 );
+          double * dk_D = createMatrixValue( arg_out_2, 2, 1 );
+          ptr->build_G1_D( x0, y0, theta0, x1, y1, theta1, L_D, k_D, dk_D );
+        }
 
         #undef CMD
 

@@ -212,42 +212,61 @@ namespace G2lib {
 
     /*! \brief build a clothoid by solving the hermite G1 problem
      *
-     * \param _x0     initial x position            \f$ x_0      \f$
-     * \param _y0     initial y position            \f$ y_0      \f$
-     * \param _theta0 initial angle                 \f$ \theta_0 \f$
-     * \param _x1     final x position              \f$ x_1      \f$
-     * \param _y1     final y position              \f$ y_1      \f$
-     * \param _theta1 final angle                   \f$ \theta_1 \f$
+     * \param x0     initial x position            \f$ x_0      \f$
+     * \param y0     initial y position            \f$ y_0      \f$
+     * \param theta0 initial angle                 \f$ \theta_0 \f$
+     * \param x1     final x position              \f$ x_1      \f$
+     * \param y1     final y position              \f$ y_1      \f$
+     * \param theta1 final angle                   \f$ \theta_1 \f$
+     * \return number of iteration performed
      */
-    void
-    build_G1( valueType _x0,
-              valueType _y0,
-              valueType _theta0,
-              valueType _x1,
-              valueType _y1,
-              valueType _theta1 ) {
-      CD.x0     = _x0 ;
-      CD.y0     = _y0 ;
-      CD.theta0 = _theta0 ;
-      build( _x1, _y1, _theta1 ) ;
-    }
+    int
+    build_G1( valueType x0,
+              valueType y0,
+              valueType theta0,
+              valueType x1,
+              valueType y1,
+              valueType theta1,
+              valueType tol = 1e-12 ) ;
+
+    /*! \brief build a clothoid by solving the hermite G1 problem
+     *
+     * \param x0     initial x position            \f$ x_0      \f$
+     * \param y0     initial y position            \f$ y_0      \f$
+     * \param theta0 initial angle                 \f$ \theta_0 \f$
+     * \param x1     final x position              \f$ x_1      \f$
+     * \param y1     final y position              \f$ y_1      \f$
+     * \param theta1 final angle                   \f$ \theta_1 \f$
+     * \return number of iteration performed
+     */
+    int
+    build_G1_D( valueType x0,
+                valueType y0,
+                valueType theta0,
+                valueType x1,
+                valueType y1,
+                valueType theta1,
+                valueType L_D[2],
+                valueType k_D[2],
+                valueType dk_D[2],
+                valueType tol = 1e-12 ) ;
 
     /*! \brief build a clothoid by solving the forward problem
      *
-     * \param _x0     initial x position            \f$ x_0      \f$
-     * \param _y0     initial y position            \f$ y_0      \f$
-     * \param _theta0 initial angle                 \f$ \theta_0 \f$
-     * \param _k      initial curvature             \f$ \kappa_0 \f$
-     * \param _x1     final x position              \f$ x_1      \f$
-     * \param _y1     final y position              \f$ y_1      \f$
+     * \param x0     initial x position            \f$ x_0      \f$
+     * \param y0     initial y position            \f$ y_0      \f$
+     * \param theta0 initial angle                 \f$ \theta_0 \f$
+     * \param k      initial curvature             \f$ \kappa_0 \f$
+     * \param x1     final x position              \f$ x_1      \f$
+     * \param y1     final y position              \f$ y_1      \f$
      */
     bool
-    build_forward( valueType _x0,
-                   valueType _y0,
-                   valueType _theta0,
-                   valueType _k,
-                   valueType _x1,
-                   valueType _y1,
+    build_forward( valueType x0,
+                   valueType y0,
+                   valueType theta0,
+                   valueType k,
+                   valueType x1,
+                   valueType y1,
                    valueType tol = 1e-8 ) ;
 
     /*! \brief get clothoid angle at curvilinear cooordinate `s`
