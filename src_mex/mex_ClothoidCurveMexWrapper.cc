@@ -9,6 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoid.hh"
+#include "Triangle2D.hh"
 #include "mex_utils.hh"
 
 #define MEX_ERROR_MESSAGE \
@@ -58,9 +59,13 @@
 "\n" \
 "  - Distance:\n" \
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
-"    [dst,s] = ClothoidCurveMexWrapper( 'distance', OBJ, x, y ) ;\n" \
+"    [dst,s]     = ClothoidCurveMexWrapper( 'distance', OBJ, x, y ) ;\n" \
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPointBySample', OBJ, x, y, ds ) ;\n" \
-"    [dst,s] = ClothoidCurveMexWrapper( 'distanceBySample', OBJ, x, y, ds ) ;\n" \
+"    [dst,s]     = ClothoidCurveMexWrapper( 'distanceBySample', OBJ, x, y, ds ) ;\n" \
+"\n" \
+"  - Bounding Box:\n" \
+"%   TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size ) ;%\n" \
+"%   TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size, offs ) ;%\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \
@@ -571,6 +576,31 @@ namespace G2lib {
         setScalarValue(arg_out_2, xm );
         setScalarValue(arg_out_3, ym );
 
+        #undef CMD
+
+      } else if ( cmd == "bbox" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('bbox', OBJ, max_angle, max_size [,offs]): "
+
+        MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output");
+
+        valueType max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" ) ;
+        valueType max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" ) ;
+        valueType offs      = 0 ;
+        if ( nrhs == 5 ) offs = getScalarValue( arg_in_4, CMD "Error in reading offs" ) ;
+
+        vector<ClothoidCurve::bbData> bb ;
+        ptr->bbSplit( max_angle, max_size, offs, bb ) ;
+
+        plhs[0] = mxCreateDoubleMatrix(6, bb.size(), mxREAL);
+        double * pT = mxGetPr(plhs[0]);
+        for ( int i = 0 ; i < bb.size() ; ++i ) {
+          T2D const & t = bb[i].t ;
+          *pT++ = t.x1() ; *pT++ = t.y1() ;
+          *pT++ = t.x2() ; *pT++ = t.y2() ;
+          *pT++ = t.x3() ; *pT++ = t.y3() ;
+        }
         #undef CMD
 
       } else if ( cmd == "delete" ) {

@@ -95,12 +95,7 @@ namespace G2lib {
   \*/
   //! \brief Class to manage Clothoid Curve
   class ClothoidCurve {
-
-    ClothoidData CD ; //!< clothoid data
-    valueType    L ;  //!< lenght of clothoid segment
-
-    int
-    build( valueType x1, valueType y1, valueType theta1 );
+  public:
 
     typedef struct {
       valueType    s0 ;
@@ -117,6 +112,13 @@ namespace G2lib {
       valueType    L ;
       ClothoidData cd ;
     } bbData2 ;
+
+  private:
+    ClothoidData CD ; //!< clothoid data
+    valueType    L ;  //!< lenght of clothoid segment
+
+    int
+    build( valueType x1, valueType y1, valueType theta1 );
 
     void
     bbSplit_internal( bbData2 const & data, vector<bbData> & bbV ) const ;

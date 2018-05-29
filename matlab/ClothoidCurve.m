@@ -262,6 +262,14 @@ classdef ClothoidCurve < handle
       [xp,yp,xm,ym] = ClothoidCurveMexWrapper( 'infinity', this.objectHandle );
     end
 
+    function BB = bbox( this, max_angle, max_size, varargin )
+      % point at infinity
+      % Usage:
+      %    ref.reverse()
+      %
+      BB = ClothoidCurveMexWrapper( 'bbox', this.objectHandle, max_angle, max_size, varargin{:} );
+    end
+
     %% Utils
     function lineH = plot( this, step, varargin )
       % plot: method to plot the clothoid curve
