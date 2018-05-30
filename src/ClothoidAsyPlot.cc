@@ -46,24 +46,24 @@ namespace G2lib {
   	if (offset == 0.) {
       file
         << "path pclot = clothoidPoints(("
-        << c.getX0()      << ','
-        << c.getY0()      << "),"
-        << c.getTheta0()  << ','
-        << c.getKappa()   << ','
-        << c.getKappa_D() << ','
-        << c.getL()       << ','
+        << c.xBegin()      << ','
+        << c.yBegin()      << "),"
+        << c.thetaBegin()  << ','
+        << c.kappaBegin()  << ','
+        << c.kappa_D()     << ','
+        << c.length()      << ','
         << "100,0);\n"
         << "pen penna = " << penna << ";\n"
         << "draw(pclot, penna);\n\n";
 	  } else {
       file
         << "path pclot = clothoidOffset(("
-		    << c.getX0() << ','
-        << c.getY0() << "),"
-        << c.getTheta0() << ','
-	      << c.getKappa() << ','
-        << c.getKappa_D() << ','
-        << c.getL() << ','
+		    << c.xBegin()     << ','
+        << c.yBegin()     << "),"
+        << c.thetaBegin() << ','
+	      << c.kappaBegin() << ','
+        << c.kappa_D()    << ','
+        << c.length()     << ','
         << "100,"
         << offset
         << "); \n"

@@ -42,12 +42,10 @@
 "\n" \
 "  burbs = CircleMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
-"  res = CircleMexWrapper( 'getX0', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'getY0', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'getTheta0', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'getKappa', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'getSmin', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'getSmax', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'xBegin', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'yBegin', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'thetaBegin', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'kappa', OBJ ) ;\n" \
 "  res = CircleMexWrapper( 'length', OBJ ) ;\n" \
 "\n" \
 "  [X,Y] = CircleMexWrapper( 'eval', OBJ, s ) ;\n" \
@@ -168,7 +166,7 @@ namespace G2lib {
         DATA_DELETE( arg_in_1 ) ;
         #undef CMD
 
-      } else if ( cmd == "e" ) {
+      } else if ( cmd == "changeOrigin" ) {
 
         #define CMD "CircleMexWrapper('changeOrigin',OBJ,x0,y0): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
@@ -347,11 +345,14 @@ namespace G2lib {
             MEX_ASSERT(false, "Unknown command: " << cmd );
           }
         } else if ( nrhs == 2 ) {
-          if      ( cmd == "getX0"     ) setScalarValue( arg_out_0, ptr->getX0());
-          else if ( cmd == "getY0"     ) setScalarValue( arg_out_0, ptr->getY0());
-          else if ( cmd == "getTheta0" ) setScalarValue( arg_out_0, ptr->getTheta0());
-          else if ( cmd == "getKappa"  ) setScalarValue( arg_out_0, ptr->getKappa());
-          else if ( cmd == "length"    ) setScalarValue( arg_out_0, ptr->totalLength());
+          if      ( cmd == "xBegin"      ) setScalarValue( arg_out_0, ptr->xBegin());
+          else if ( cmd == "xEnd"        ) setScalarValue( arg_out_0, ptr->xEnd());
+          else if ( cmd == "yBegin"      ) setScalarValue( arg_out_0, ptr->yBegin());
+          else if ( cmd == "yEnd"        ) setScalarValue( arg_out_0, ptr->yEnd());
+          else if ( cmd == "thetaBegin"  ) setScalarValue( arg_out_0, ptr->thetaBegin());
+          else if ( cmd == "thetaEnd"    ) setScalarValue( arg_out_0, ptr->thetaEnd());
+          else if ( cmd == "kappa"       ) setScalarValue( arg_out_0, ptr->kappa());
+          else if ( cmd == "length"      ) setScalarValue( arg_out_0, ptr->length());
           else {
             MEX_ASSERT(false, "CircleMexWrapper unknown command: " << cmd );
           }

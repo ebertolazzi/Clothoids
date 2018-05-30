@@ -135,12 +135,12 @@ classdef ClothoidSplineG2 < handle
     %
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %
-    function this = ClothoidSplineG2()
+    function self = ClothoidSplineG2()
     end
     %
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %
-    function delete( this )
+    function delete( self )
     end
     %
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

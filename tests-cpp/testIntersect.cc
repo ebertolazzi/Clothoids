@@ -31,8 +31,8 @@ main() {
 
   C0.intersect( C1, s1, s2, max_iter, tolerance );
 
-  std::cout << "L0 = " << C0.getL() << '\n' ;
-  std::cout << "L1 = " << C1.getL() << '\n' ;
+  std::cout << "L0 = " << C0.length() << '\n' ;
+  std::cout << "L1 = " << C1.length() << '\n' ;
 
   for ( int i = 0 ; i < s1.size() ; ++i )
     std::cout << "s1[ " << i << "] = " << s1[i] << '\n' ;

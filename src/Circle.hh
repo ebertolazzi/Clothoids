@@ -120,21 +120,18 @@ namespace G2lib {
     CircleArc const & operator = ( CircleArc const & s )
     { copy(s) ; return *this ; }
 
-    valueType getX0()        const { return x0 ; }
-    valueType getY0()        const { return y0 ; }
-    valueType getTheta0()    const { return theta0 ; }
-    valueType getSinTheta0() const { return s0 ; }
-    valueType getCosTheta0() const { return c0 ; }
-    valueType getKappa()     const { return k ; }
-    valueType getL()         const { return L ; }
+    valueType sinTheta0() const { return s0 ; }
+    valueType cosTheta0() const { return c0 ; }
+    valueType kappa()     const { return k ; }
+    valueType length()    const { return L ; }
 
-    valueType Xbegin()     const { return x0 ; }
-    valueType Ybegin()     const { return y0 ; }
-    valueType ThetaBegin() const { return theta0 ; }
+    valueType xBegin()     const { return x0 ; }
+    valueType yBegin()     const { return y0 ; }
+    valueType thetaBegin() const { return theta0 ; }
 
-    valueType Xend()     const { return X(L) ; }
-    valueType Yend()     const { return Y(L) ; }
-    valueType ThetaEnd() const { return theta(L) ; }
+    valueType xEnd()     const { return X(L) ; }
+    valueType yEnd()     const { return Y(L) ; }
+    valueType thetaEnd() const { return theta(L) ; }
 
     //! construct a circle with the standard parameters
     void

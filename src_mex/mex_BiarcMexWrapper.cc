@@ -38,6 +38,23 @@
 "    [x_DD,y_DD]   = BiarcMexWrapper( 'eval_DD', OBJ, ss ) ;\n" \
 "    [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', OBJ, ss ) ;\n" \
 "\n" \
+"  res = CircleMexWrapper( 'xBegin0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'xEnd0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'yBegin0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'yEnd0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'thetaBegin0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'thetaEnd0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'kappa0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'length0', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'xBegin1', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'xEnd1', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'yBegin1', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'yEnd1', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'thetaBegin1', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'thetaEnd1', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'kappa1', OBJ ) ;\n" \
+"  res = CircleMexWrapper( 'length1', OBJ ) ;\n" \
+"\n" \
 "  - Transform:\n" \
 "    BiarcMexWrapper( 'changeOrigin', OBJ, newX0, newY0 ) ;\n" \
 "    BiarcMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
@@ -239,115 +256,175 @@ namespace G2lib {
       } else if ( cmd == "getPars" ) {
 
         MEX_ASSERT(nrhs == 2, "BiarcMexWrapper('getPars',OBJ): expected 2 inputs");
-        if ( nlhs > 0 ) setScalarValue(arg_out_0,ptr->getX0()) ;
-        if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->getY0()) ;
-        if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->getTheta0()) ;
-        if ( nlhs > 3 ) setScalarValue(arg_out_3,ptr->getKappa0()) ;
-        if ( nlhs > 4 ) setScalarValue(arg_out_4,ptr->getL0()) ;
+        if ( nlhs > 0 ) setScalarValue(arg_out_0,ptr->xBegin0()) ;
+        if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->yBegin0()) ;
+        if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->thetaBegin0()) ;
+        if ( nlhs > 3 ) setScalarValue(arg_out_3,ptr->kappa0()) ;
+        if ( nlhs > 4 ) setScalarValue(arg_out_4,ptr->length0()) ;
 
-        if ( nlhs > 5 ) setScalarValue(arg_out_5,ptr->getX1()) ;
-        if ( nlhs > 6 ) setScalarValue(arg_out_6,ptr->getY1()) ;
-        if ( nlhs > 7 ) setScalarValue(arg_out_7,ptr->getTheta1()) ;
-        if ( nlhs > 8 ) setScalarValue(arg_out_8,ptr->getKappa1()) ;
-        if ( nlhs > 9 ) setScalarValue(arg_out_9,ptr->getL1()) ;
+        if ( nlhs > 5 ) setScalarValue(arg_out_5,ptr->xBegin1()) ;
+        if ( nlhs > 6 ) setScalarValue(arg_out_6,ptr->yBegin1()) ;
+        if ( nlhs > 7 ) setScalarValue(arg_out_7,ptr->thetaBegin1()) ;
+        if ( nlhs > 8 ) setScalarValue(arg_out_8,ptr->kappa1()) ;
+        if ( nlhs > 9 ) setScalarValue(arg_out_9,ptr->length1()) ;
 
-      } else if ( cmd == "getX0" ) {
+      } else if ( cmd == "xBegin0" ) {
 
-        #define CMD "BiarcMexWrapper('getX0',OBJ): "
+        #define CMD "BiarcMexWrapper('xBegin0',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getX0());
+        setScalarValue(arg_out_0, ptr->xBegin0());
 
         #undef CMD
 
-      } else if ( cmd == "getX1" ) {
+      } else if ( cmd == "xEnd0" ) {
 
-        #define CMD "BiarcMexWrapper('getX1',OBJ): "
+        #define CMD "BiarcMexWrapper('xEnd0',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getX1());
+        setScalarValue(arg_out_0, ptr->xEnd0());
 
         #undef CMD
 
-      } else if ( cmd == "getY0" ) {
+      } else if ( cmd == "xBegin1" ) {
 
-        #define CMD "BiarcMexWrapper('getY0',OBJ): "
+        #define CMD "BiarcMexWrapper('xBegin1',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getY0());
+        setScalarValue(arg_out_0, ptr->xBegin1());
 
         #undef CMD
 
-      } else if ( cmd == "getY1" ) {
+      } else if ( cmd == "xEnd1" ) {
 
-        #define CMD "BiarcMexWrapper('getY1',OBJ): "
+        #define CMD "BiarcMexWrapper('xEnd1',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getY1());
+        setScalarValue(arg_out_0, ptr->xEnd1());
 
         #undef CMD
 
-      } else if ( cmd == "getTheta0" ) {
+      } else if ( cmd == "yBegin0" ) {
 
-        #define CMD "BiarcMexWrapper('getTheta0',OBJ): "
+        #define CMD "BiarcMexWrapper('yBegin0',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getTheta0());
+        setScalarValue(arg_out_0, ptr->yBegin0());
 
         #undef CMD
 
-      } else if ( cmd == "getTheta1" ) {
+      } else if ( cmd == "yEnd0" ) {
 
-        #define CMD "BiarcMexWrapper('getTheta1',OBJ): "
+        #define CMD "BiarcMexWrapper('yEnd0',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getTheta1());
+        setScalarValue(arg_out_0, ptr->yEnd0());
 
         #undef CMD
 
-      } else if ( cmd == "getKappa0" ) {
+      } else if ( cmd == "yBegin1" ) {
 
-        #define CMD "BiarcMexWrapper('getKappa0',OBJ): "
+        #define CMD "BiarcMexWrapper('yBegin1',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getKappa0());
+        setScalarValue(arg_out_0, ptr->yBegin1());
 
         #undef CMD
 
-      } else if ( cmd == "getKappa1" ) {
+      } else if ( cmd == "yEnd1" ) {
 
-        #define CMD "BiarcMexWrapper('getKappa1',OBJ): "
+        #define CMD "BiarcMexWrapper('yEnd1',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getKappa1());
+        setScalarValue(arg_out_0, ptr->yEnd1());
 
         #undef CMD
 
-      } else if ( cmd == "getL0" ) {
+      } else if ( cmd == "thetaBegin0" ) {
 
-        #define CMD "BiarcMexWrapper('getL0',OBJ): "
+        #define CMD "BiarcMexWrapper('thetaBegin0',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getL0());
+        setScalarValue(arg_out_0, ptr->thetaBegin0());
 
         #undef CMD
 
-      } else if ( cmd == "getL1" ) {
+      } else if ( cmd == "thetaEnd0" ) {
 
-        #define CMD "BiarcMexWrapper('getL1',OBJ): "
+        #define CMD "BiarcMexWrapper('thetaEnd0',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getL1());
+        setScalarValue(arg_out_0, ptr->thetaEnd0());
+
+        #undef CMD
+
+      } else if ( cmd == "thetaBegin1" ) {
+
+        #define CMD "BiarcMexWrapper('thetaBegin1',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->thetaBegin1());
+
+        #undef CMD
+
+      } else if ( cmd == "thetaEnd1" ) {
+
+        #define CMD "BiarcMexWrapper('thetaEnd1',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->thetaEnd1());
+
+        #undef CMD
+
+      } else if ( cmd == "kappa0" ) {
+
+        #define CMD "BiarcMexWrapper('kappa0',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->kappa0());
+
+        #undef CMD
+
+      } else if ( cmd == "kappa1" ) {
+
+        #define CMD "BiarcMexWrapper('kappa1',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->kappa1());
+
+        #undef CMD
+
+      } else if ( cmd == "length0" ) {
+
+        #define CMD "BiarcMexWrapper('length0',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->length0());
+
+        #undef CMD
+
+      } else if ( cmd == "length1" ) {
+
+        #define CMD "BiarcMexWrapper('length1',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->length1());
 
         #undef CMD
 
@@ -357,7 +434,7 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getL());
+        setScalarValue(arg_out_0, ptr->length());
 
         #undef CMD
 

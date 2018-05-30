@@ -329,7 +329,7 @@ namespace G2lib {
 
   static
   valueType
-  kappa( valueType theta0, valueType theta ) {
+  kappa_fun( valueType theta0, valueType theta ) {
     valueType x = theta0*theta0 ;
     valueType a = -3.714 + x * 0.178 ;
     valueType b = -1.913 - x * 0.0753 ;
@@ -417,8 +417,8 @@ namespace G2lib {
     valueType alpha = 2.6 ;
     valueType thmin = max(-m_pi,-CD.theta0/2-alpha) ;
     valueType thmax = min( m_pi,-CD.theta0/2+alpha) ;
-    valueType Kmin  = kappa( th0, thmax ) ;
-    valueType Kmax  = kappa( th0, thmin ) ;
+    valueType Kmin  = kappa_fun( th0, thmax ) ;
+    valueType Kmax  = kappa_fun( th0, thmin ) ;
     bool ok ;
     valueType th = theta_guess( th0, max(min(k0,Kmax),Kmin), ok ) ;
     if ( ok ) {

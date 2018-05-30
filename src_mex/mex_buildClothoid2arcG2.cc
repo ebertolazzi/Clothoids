@@ -68,12 +68,12 @@ namespace G2lib {
   save_struct( ClothoidCurve const & curve, mxArray * & plhs ) {
     char const * fieldnames[] = { "x0", "y0", "theta0", "k0", "dk", "L" } ;
     plhs = mxCreateStructMatrix(1,1,6,fieldnames);
-    mxSetFieldByNumber( plhs, 0, 0, mxCreateDoubleScalar(curve.getX0()) );
-    mxSetFieldByNumber( plhs, 0, 1, mxCreateDoubleScalar(curve.getY0()) );
-    mxSetFieldByNumber( plhs, 0, 2, mxCreateDoubleScalar(curve.getTheta0()) );
-    mxSetFieldByNumber( plhs, 0, 3, mxCreateDoubleScalar(curve.getKappa()) );
-    mxSetFieldByNumber( plhs, 0, 4, mxCreateDoubleScalar(curve.getKappa_D()) );
-    mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.getL()) );
+    mxSetFieldByNumber( plhs, 0, 0, mxCreateDoubleScalar(curve.xBegin()) );
+    mxSetFieldByNumber( plhs, 0, 1, mxCreateDoubleScalar(curve.yBegin()) );
+    mxSetFieldByNumber( plhs, 0, 2, mxCreateDoubleScalar(curve.thetaBegin()) );
+    mxSetFieldByNumber( plhs, 0, 3, mxCreateDoubleScalar(curve.kappaBegin()) );
+    mxSetFieldByNumber( plhs, 0, 4, mxCreateDoubleScalar(curve.kappa_D()) );
+    mxSetFieldByNumber( plhs, 0, 5, mxCreateDoubleScalar(curve.length()) );
   }
 
   extern "C"

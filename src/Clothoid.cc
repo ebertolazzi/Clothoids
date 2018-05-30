@@ -194,14 +194,15 @@ namespace G2lib {
     valueType        split_angle,
     valueType        split_size,
     valueType        split_offs,
-    vector<bbData> & bb
+    vector<bbData> & bb,
+    bool             reset_bb
   ) const {
 
     // step 0: controllo se curvatura passa per 0
     valueType k_min = theta_D( 0 ) ;
     valueType k_max = theta_D( L ) ;
 
-    bb.clear() ;
+    if ( reset_bb ) bb.clear() ;
 
     bbData2 data ;
     data.split_angle = split_angle ;

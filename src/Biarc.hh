@@ -117,21 +117,26 @@ namespace G2lib {
     void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
     void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
 
-    valueType getX0()     const { return C0.getX0(); }
-    valueType getY0()     const { return C0.getY0(); }
-    valueType getTheta0() const { return C0.getTheta0(); }
-    valueType getKappa0() const { return C0.getKappa(); }
-    valueType getL0()     const { return C0.getL(); }
+    valueType xBegin0()     const { return C0.xBegin(); }
+    valueType xEnd0()       const { return C0.xEnd(); }
+    valueType yBegin0()     const { return C0.yBegin(); }
+    valueType yEnd0()       const { return C0.yEnd(); }
+    valueType thetaBegin0() const { return C0.thetaBegin(); }
+    valueType thetaEnd0()   const { return C0.thetaEnd(); }
+    valueType kappa0()      const { return C0.kappa(); }
+    valueType length0()     const { return C0.length(); }
 
-    valueType getX1()     const { return C1.getX0(); }
-    valueType getY1()     const { return C1.getY0(); }
-    valueType getTheta1() const { return C1.getTheta0(); }
-    valueType getKappa1() const { return C1.getKappa(); }
-    valueType getL1()     const { return C1.getL(); }
+    valueType xBegin1()     const { return C1.xBegin(); }
+    valueType xEnd1()       const { return C1.xEnd(); }
+    valueType yBegin1()     const { return C1.yBegin(); }
+    valueType yEnd1()       const { return C1.yEnd(); }
+    valueType thetaBegin1() const { return C1.thetaBegin(); }
+    valueType thetaEnd1()   const { return C1.thetaEnd(); }
+    valueType kappa1()      const { return C1.kappa(); }
+    valueType length1()     const { return C1.length(); }
 
-    valueType getL()        const { return C0.getL() + C1.getL() ; }
+    valueType length()      const { return C0.length() + C1.length() ; }
     valueType delta_theta() const { return C0.delta_theta() + C1.delta_theta() ; }
-
 
     void changeOrigin( valueType newx0, valueType newy0 );
     void translate( valueType tx, valueType ty );

@@ -49,12 +49,12 @@ main() {
   std::cout << "\n\nS1 (NEW)\n" << S1 ;
 
   std::cout
-    << "\nx  = " << S0.Xend()       << " " << SM.Xbegin()     << " err = " << S0.Xend()-SM.Xbegin()
-    << "\ny  = " << S0.Yend()       << " " << SM.Ybegin()     << " err = " << S0.Yend()-SM.Ybegin()
-    << "\nth = " << S0.ThetaEnd()   << " " << SM.ThetaBegin() << " err = " << S0.ThetaEnd()-SM.ThetaBegin()
-    << "\nx  = " << S1.Xbegin()     << " " << SM.Xend()       << " err = " << S1.Xbegin()-SM.Xend()
-    << "\ny  = " << S1.Ybegin()     << " " << SM.Yend()       << " err = " << S1.Ybegin()-SM.Yend()
-    << "\nth = " << S1.ThetaBegin() << " " << SM.ThetaEnd()   << " err = " << S1.ThetaBegin()-SM.ThetaEnd()
+    << "\nx  = " << S0.xEnd()       << " " << SM.xBegin()     << " err = " << S0.xEnd()-SM.xBegin()
+    << "\ny  = " << S0.yEnd()       << " " << SM.yBegin()     << " err = " << S0.yEnd()-SM.yBegin()
+    << "\nth = " << S0.thetaEnd()   << " " << SM.thetaBegin() << " err = " << S0.thetaEnd()-SM.thetaBegin()
+    << "\nx  = " << S1.xBegin()     << " " << SM.xEnd()       << " err = " << S1.xBegin()-SM.xEnd()
+    << "\ny  = " << S1.yBegin()     << " " << SM.yEnd()       << " err = " << S1.yBegin()-SM.yEnd()
+    << "\nth = " << S1.thetaBegin() << " " << SM.thetaEnd()   << " err = " << S1.thetaBegin()-SM.thetaEnd()
     << '\n' ;
 
   std::cout << "\n\nALL DONE FOLKS!!!\n" ;

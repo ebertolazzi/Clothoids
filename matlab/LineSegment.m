@@ -137,16 +137,16 @@ classdef LineSegment < handle
       [DDDX,DDDY] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, s );
     end
  
-    function X0 = getX0(self)
-      X0 = LineSegmentMexWrapper('getX0', self.objectHandle );
+    function X0 = xBegin(self)
+      X0 = LineSegmentMexWrapper('xBegin', self.objectHandle );
     end
  
-    function Y0 = getY0(self)
-      Y0 = LineSegmentMexWrapper('getY0', self.objectHandle );
+    function Y0 = yBegin(self)
+      Y0 = LineSegmentMexWrapper('yBegin', self.objectHandle );
     end
  
-    function th0 = getTheta0(self)
-      th0 = LineSegmentMexWrapper('getTheta0', self.objectHandle );
+    function th0 = theta(self)
+      th0 = LineSegmentMexWrapper('theta', self.objectHandle );
     end
  
     function res = length(self)

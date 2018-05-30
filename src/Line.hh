@@ -85,12 +85,12 @@ namespace G2lib {
     LineSegment const & operator = ( LineSegment const & s )
     { copy(s) ; return *this ; }
 
-    valueType getX0()        const { return x0 ; }
-    valueType getY0()        const { return y0 ; }
-    valueType getTheta0()    const { return theta0 ; }
-    valueType getSinTheta0() const { return s0 ; }
-    valueType getCosTheta0() const { return c0 ; }
-    valueType getL()         const { return L ; }
+    valueType xBegin()   const { return x0 ; }
+    valueType yBegin()   const { return y0 ; }
+    valueType theta()    const { return theta0 ; }
+    valueType sinTheta() const { return s0 ; }
+    valueType cosTheta() const { return c0 ; }
+    valueType length()   const { return L ; }
 
     void
     build( valueType _x0,

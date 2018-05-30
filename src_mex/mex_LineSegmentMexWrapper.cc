@@ -36,11 +36,11 @@
 "\n" \
 "  burbs = LineSegmentMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
-"  res = LineSegmentMexWrapper( 'getX0', OBJ ) ;\n" \
-"  res = LineSegmentMexWrapper( 'getY0', OBJ ) ;\n" \
-"  res = LineSegmentMexWrapper( 'getTheta0', OBJ ) ;\n" \
-"  res = LineSegmentMexWrapper( 'getSmin', OBJ ) ;\n" \
-"  res = LineSegmentMexWrapper( 'getSmax', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'xBegin', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'yBegin', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'theta',  OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'sMin', OBJ ) ;\n" \
+"  res = LineSegmentMexWrapper( 'sMmax', OBJ ) ;\n" \
 "  res = LineSegmentMexWrapper( 'length', OBJ ) ;\n" \
 "\n" \
 "  [X,Y] = LineSegmentMexWrapper( 'eval', OBJ, s ) ;\n" \
@@ -290,10 +290,10 @@ namespace G2lib {
 
         } else if ( nrhs == 2 ) {
 
-          if      ( cmd == "getX0"     ) setScalarValue( arg_out_0, ptr->getX0());
-          else if ( cmd == "getY0"     ) setScalarValue( arg_out_0, ptr->getY0());
-          else if ( cmd == "getTheta0" ) setScalarValue( arg_out_0, ptr->getTheta0());
-          else if ( cmd == "length"    ) setScalarValue( arg_out_0, ptr->getL());
+          if      ( cmd == "xBegin" ) setScalarValue( arg_out_0, ptr->xBegin());
+          else if ( cmd == "yBegin" ) setScalarValue( arg_out_0, ptr->yBegin());
+          else if ( cmd == "theta"  ) setScalarValue( arg_out_0, ptr->theta());
+          else if ( cmd == "length" ) setScalarValue( arg_out_0, ptr->length());
           else {
             MEX_ASSERT(false, "Unknown command: " << cmd );
           }

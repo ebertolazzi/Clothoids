@@ -57,6 +57,13 @@
 "    ClothoidCurveMexWrapper( 'scale', OBJ, scaling ) ;\n" \
 "    ClothoidCurveMexWrapper( 'reverse', OBJ ) ;\n" \
 "    [xp, yp, xm, ym] = ClothoidCurveMexWrapper( 'infinity', OBJ ) ;\n" \
+"  - Boundary:\n" \
+"    res = ClothoidCurveMexWrapper( 'xBegin', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'yBegin', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'thetaBegin', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'kappaBegin', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'kappaEnd', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'length', OBJ ) ;\n" \
 "\n" \
 "  - Distance:\n" \
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
@@ -269,7 +276,6 @@ namespace G2lib {
         #define CMD "ClothoidCurveMexWrapper('eval*',OBJ,s[,offs]): "
 
         MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs") ;
-        MEX_ASSERT( nlhs == 1 || nlhs == 2, CMD "expected 1 or 2 outputs") ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -292,7 +298,7 @@ namespace G2lib {
             for ( mwSize i=0; i < size ; ++i )
               ptr->eval_DDD( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
           }
-        } else {
+        } else if ( nlhs == 2 ) {
           double * xVals = createMatrixValue( arg_out_0, size, 1 );
           double * yVals = createMatrixValue( arg_out_1, size, 1 );
           if ( cmd == "eval" ) {
@@ -308,6 +314,8 @@ namespace G2lib {
             for ( mwSize i=0; i < size ; ++i )
               ptr->eval_DDD( sVals[i], offs, xVals[i], yVals[i] );
           }
+        } else {
+          MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs") ;
         }
 
         #undef CMD
@@ -424,60 +432,100 @@ namespace G2lib {
       } else if ( cmd == "getPars" ) {
 
         MEX_ASSERT(nrhs == 2, "ClothoidCurveMexWrapper('getPars',OBJ): expected 2 inputs");
-        if ( nlhs > 0 ) setScalarValue(arg_out_0,ptr->getX0()) ;
-        if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->getY0()) ;
-        if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->getTheta0()) ;
-        if ( nlhs > 3 ) setScalarValue(arg_out_3,ptr->getKappa()) ;
-        if ( nlhs > 4 ) setScalarValue(arg_out_4,ptr->getKappa_D()) ;
-        if ( nlhs > 5 ) setScalarValue(arg_out_5,ptr->getL()) ;
+        if ( nlhs > 0 ) setScalarValue(arg_out_0,ptr->xBegin()) ;
+        if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->yBegin()) ;
+        if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->thetaBegin()) ;
+        if ( nlhs > 3 ) setScalarValue(arg_out_3,ptr->kappaBegin()) ;
+        if ( nlhs > 4 ) setScalarValue(arg_out_4,ptr->kappa_D()) ;
+        if ( nlhs > 5 ) setScalarValue(arg_out_5,ptr->length()) ;
 
-      } else if ( cmd == "getX0" ) {
+      } else if ( cmd == "xBegin" ) {
 
-        #define CMD "ClothoidCurveMexWrapper('getX0',OBJ): "
+        #define CMD "ClothoidCurveMexWrapper('xBegin',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getX0());
+        setScalarValue(arg_out_0, ptr->xBegin());
 
         #undef CMD
 
-      } else if ( cmd == "getY0" ) {
+      } else if ( cmd == "xEnd" ) {
 
-        #define CMD "ClothoidCurveMexWrapper('getY0',OBJ): "
+        #define CMD "ClothoidCurveMexWrapper('xEnd',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getY0());
+        setScalarValue(arg_out_0, ptr->xEnd());
 
         #undef CMD
 
-      } else if ( cmd == "getTheta0" ) {
+      } else if ( cmd == "yBegin" ) {
 
-        #define CMD "ClothoidCurveMexWrapper('getTheta0',OBJ): "
+        #define CMD "ClothoidCurveMexWrapper('yBegin',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getTheta0());
+        setScalarValue(arg_out_0, ptr->yBegin());
 
         #undef CMD
 
-      } else if ( cmd == "getKappa0" ) {
+      } else if ( cmd == "yEnd" ) {
 
-        #define CMD "ClothoidCurveMexWrapper('getKappa0',OBJ): "
+        #define CMD "ClothoidCurveMexWrapper('yEnd',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getKappa());
+        setScalarValue(arg_out_0, ptr->yEnd());
 
         #undef CMD
 
-      } else if ( cmd == "getKappa_D" ) {
+      } else if ( cmd == "thetaBegin" ) {
 
-        #define CMD "ClothoidCurveMexWrapper('getKappa_D',OBJ): "
+        #define CMD "ClothoidCurveMexWrapper('thetaBegin',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getKappa_D());
+        setScalarValue(arg_out_0, ptr->thetaBegin());
+
+        #undef CMD
+
+      } else if ( cmd == "thetaEnd" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('thetaEnd',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->thetaEnd());
+
+        #undef CMD
+
+      } else if ( cmd == "kappaBegin" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('kappaBegin',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->kappaBegin());
+
+        #undef CMD
+
+      } else if ( cmd == "kappaEnd" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('kappaEnd',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->kappaEnd());
+
+        #undef CMD
+
+      } else if ( cmd == "kappa_D" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('kappa_D',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        setScalarValue(arg_out_0, ptr->kappa_D());
 
         #undef CMD
 
@@ -487,7 +535,7 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->getL());
+        setScalarValue(arg_out_0, ptr->length());
 
         #undef CMD
 

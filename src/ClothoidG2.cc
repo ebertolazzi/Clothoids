@@ -396,7 +396,7 @@ namespace G2lib {
     S0.build( x0, y0, theta0, kappa0, dk0, L0 ) ;
     S1.build( x1, y1, theta1, kappa1, dk1, L1 ) ;
     S1.changeCurvilinearOrigin( -L1, L1 ) ;
-    SM.build( S0.Xend(), S0.Xend(), S0.ThetaEnd(), 0, 0, 2*sM*lambda ) ;
+    SM.build( S0.xEnd(), S0.yEnd(), S0.thetaEnd(), 0, 0, 2*sM*lambda ) ;
 
     return true ;
   }
@@ -473,10 +473,10 @@ namespace G2lib {
       ClothoidCurve SG ;
       SG.build_G1( -1, 0, th0, 1, 0, th1 ) ;
 
-      valueType kA = SG.getKappaBegin() ;
-      valueType kB = SG.getKappaEnd() ;
-      valueType dk = std::abs(SG.getKappa_D()) ;
-      valueType L3 = SG.getL()/3 ;
+      valueType kA = SG.kappaBegin() ;
+      valueType kB = SG.kappaEnd() ;
+      valueType dk = std::abs(SG.kappa_D()) ;
+      valueType L3 = SG.length()/3 ;
 
       valueType tmp = 0.5*std::abs(K0-kA)/dmax;
       s0 = L3;
@@ -497,8 +497,8 @@ namespace G2lib {
 
       valueType L   = (3*L3-s0-s1)/2 ;
       valueType thM = SG.theta(s0+L) ;
-      th0 = SG.getThetaBegin() ;
-      th1 = SG.getThetaEnd() ;
+      th0 = SG.thetaBegin() ;
+      th1 = SG.thetaEnd() ;
 
       // setup
 
@@ -773,55 +773,55 @@ namespace G2lib {
 
   valueType
   G2solve3arc::theta( valueType s ) const {
-    if ( s < S0.getL() ) return S0.theta(s) ;
-    s -= S0.getL() ;
-    if ( s < SM.getL() ) return SM.theta(s) ;
-    s -= S0.getL() ;
+    if ( s < S0.length() ) return S0.theta(s) ;
+    s -= S0.length() ;
+    if ( s < SM.length() ) return SM.theta(s) ;
+    s -= S0.length() ;
     return S1.theta(s) ;
   }
 
   valueType
   G2solve3arc::theta_D( valueType s ) const {
-    if ( s < S0.getL() ) return S0.theta_D(s) ;
-    s -= S0.getL() ;
-    if ( s < SM.getL() ) return SM.theta_D(s) ;
-    s -= S0.getL() ;
+    if ( s < S0.length() ) return S0.theta_D(s) ;
+    s -= S0.length() ;
+    if ( s < SM.length() ) return SM.theta_D(s) ;
+    s -= S0.length() ;
     return S1.theta_D(s) ;
   }
 
   valueType
   G2solve3arc::theta_DD( valueType s ) const {
-    if ( s < S0.getL() ) return S0.theta_DD(s) ;
-    s -= S0.getL() ;
-    if ( s < SM.getL() ) return SM.theta_DD(s) ;
-    s -= S0.getL() ;
+    if ( s < S0.length() ) return S0.theta_DD(s) ;
+    s -= S0.length() ;
+    if ( s < SM.length() ) return SM.theta_DD(s) ;
+    s -= S0.length() ;
     return S1.theta_DD(s) ;
   }
 
   valueType
   G2solve3arc::theta_DDD( valueType s ) const {
-    if ( s < S0.getL() ) return S0.theta_DDD(s) ;
-    s -= S0.getL() ;
-    if ( s < SM.getL() ) return SM.theta_DDD(s) ;
-    s -= S0.getL() ;
+    if ( s < S0.length() ) return S0.theta_DDD(s) ;
+    s -= S0.length() ;
+    if ( s < SM.length() ) return SM.theta_DDD(s) ;
+    s -= S0.length() ;
     return S1.theta_DDD(s) ;
   }
 
   valueType
   G2solve3arc::X( valueType s ) const {
-    if ( s < S0.getL() ) return S0.X(s) ;
-    s -= S0.getL() ;
-    if ( s < SM.getL() ) return SM.X(s) ;
-    s -= S0.getL() ;
+    if ( s < S0.length() ) return S0.X(s) ;
+    s -= S0.length() ;
+    if ( s < SM.length() ) return SM.X(s) ;
+    s -= S0.length() ;
     return S1.X(s) ;
   }
 
   valueType
   G2solve3arc::Y( valueType s ) const {
-    if ( s < S0.getL() ) return S0.Y(s) ;
-    s -= S0.getL() ;
-    if ( s < SM.getL() ) return SM.Y(s) ;
-    s -= S0.getL() ;
+    if ( s < S0.length() ) return S0.Y(s) ;
+    s -= S0.length() ;
+    if ( s < SM.length() ) return SM.Y(s) ;
+    s -= S0.length() ;
     return S1.Y(s) ;
   }
 
@@ -831,14 +831,14 @@ namespace G2lib {
                      valueType & kappa,
                      valueType & x,
                      valueType & y ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval(s, theta, kappa, x, y ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval(s, theta, kappa, x, y ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval(s, theta, kappa, x, y ) ;
       }
     }
@@ -846,14 +846,14 @@ namespace G2lib {
 
   void
   G2solve3arc::eval( valueType s, valueType & x, valueType & y ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval(s, x, y ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval(s, x, y ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval(s, x, y ) ;
       }
     }
@@ -861,14 +861,14 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_D( valueType s, valueType & x_D, valueType & y_D ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval_D(s, x_D, y_D ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval_D(s, x_D, y_D ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval_D(s, x_D, y_D ) ;
       }
     }
@@ -876,14 +876,14 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval_DD(s, x_DD, y_DD ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval_DD(s, x_DD, y_DD ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval_DD(s, x_DD, y_DD ) ;
       }
     }
@@ -891,14 +891,14 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval_DDD(s, x_DDD, y_DDD ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval_DDD(s, x_DDD, y_DDD ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval_DDD(s, x_DDD, y_DDD ) ;
       }
     }
@@ -907,14 +907,14 @@ namespace G2lib {
   // offset curve
   void
   G2solve3arc::eval( valueType s, valueType offs, valueType & x, valueType & y ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval(s, offs, x, y ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval(s, offs, x, y ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval(s, offs, x, y ) ;
       }
     }
@@ -922,14 +922,14 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval_D(s, offs, x_D, y_D ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval_D(s, offs, x_D, y_D ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval_D(s, offs, x_D, y_D ) ;
       }
     }
@@ -937,14 +937,14 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval_DD(s, offs, x_DD, y_DD ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval_DD(s, offs, x_DD, y_DD ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval_DD(s, offs, x_DD, y_DD ) ;
       }
     }
@@ -952,14 +952,14 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const {
-    if ( s < S0.getL() ) {
+    if ( s < S0.length() ) {
       S0.eval_DDD(s, offs, x_DDD, y_DDD ) ;
     } else {
-      s -= S0.getL() ;
-      if ( s < SM.getL() ) {
+      s -= S0.length() ;
+      if ( s < SM.length() ) {
         SM.eval_DDD(s, offs, x_DDD, y_DDD ) ;
       } else {
-        s -= SM.getL() ;
+        s -= SM.length() ;
         S1.eval_DDD(s, offs, x_DDD, y_DDD ) ;
       }
     }

@@ -65,13 +65,24 @@ namespace G2lib {
   }
 
   void
-  ClothoidList::add( ClothoidCurve const & c ) {
+  ClothoidList::push_back( ClothoidCurve const & c ) {
     if ( clotoidList.empty() ) {
       s0.push_back(0) ;
-      s0.push_back(c.getL()) ;
+      s0.push_back(c.length()) ;
     } else {
-      s0.push_back(s0.back()+c.getL()) ;
+      s0.push_back(s0.back()+c.length()) ;
     }
+    clotoidList.push_back(c) ;
+  }
+
+  void
+  ClothoidList::push_back( valueType x1, valueType y1, valueType theta1) {
+    G2LIB_ASSERT( !clotoidList.empty(),
+                  "ClothoidList::push_back( x1 = " << x1 <<
+                  ", y1 = " << y1 << ", theta1 = " << theta1 ) ;
+    ClothoidCurve const & ce = clotoidList.back() ;
+    ClothoidCurve c ;
+    c.build_G1( ce.xEnd(), ce.yEnd(), ce.thetaEnd(), x1, y1, theta1 ) ;
     clotoidList.push_back(c) ;
   }
 
@@ -84,13 +95,13 @@ namespace G2lib {
   }
 
   ClothoidCurve const &
-  ClothoidList::getAtS( valueType s, indexType & last_idx ) const {
-    findAtS(s,last_idx);
+  ClothoidList::getAtS( valueType s ) const {
+    findAtS(s);
     return get(last_idx) ;
   }
 
   bool
-  ClothoidList::findAtS( valueType s, indexType & last_idx ) const {
+  ClothoidList::findAtS( valueType s ) const {
     indexType ns = indexType(clotoidList.size()) ;
     G2LIB_ASSERT( last_idx >= 0 && last_idx < ns,
                   "ClothoidList::findAtS( " << s << ", " << last_idx <<
@@ -110,88 +121,83 @@ namespace G2lib {
   }
 
   valueType
-  ClothoidList::theta( valueType s, indexType & last_idx ) const {
-    findAtS( s, last_idx );
+  ClothoidList::theta( valueType s ) const {
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.theta( s - s0[last_idx] ) ;
   }
 
   valueType
-  ClothoidList::theta_D( valueType s, indexType & last_idx ) const {
-    findAtS( s, last_idx );
+  ClothoidList::theta_D( valueType s ) const {
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.theta_D( s - s0[last_idx] ) ;
   }
 
   valueType
-  ClothoidList::theta_DD( valueType s, indexType & last_idx ) const {
-    findAtS( s, last_idx );
+  ClothoidList::theta_DD( valueType s ) const {
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.theta_DD( s - s0[last_idx] ) ;
   }
 
   valueType
-  ClothoidList::X( valueType s, indexType & last_idx ) const {
-    findAtS( s, last_idx );
+  ClothoidList::X( valueType s ) const {
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.X( s - s0[last_idx] ) ;
   }
 
   valueType
-  ClothoidList::Y( valueType s, indexType & last_idx ) const {
-    findAtS( s, last_idx );
+  ClothoidList::Y( valueType s ) const {
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.Y( s - s0[last_idx] ) ;
   }
 
   void
   ClothoidList::eval( valueType   s,
-                      indexType & last_idx,
                       valueType & theta,
                       valueType & kappa,
                       valueType & x,
                       valueType & y ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval( s - s0[last_idx], theta, kappa, x, y ) ;
   }
 
   void
   ClothoidList::eval( valueType   s,
-                      indexType & last_idx,
                       valueType & x,
                       valueType & y ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval( s - s0[last_idx], x, y ) ;
   }
 
   void
   ClothoidList::eval_D( valueType   s,
-                        indexType & last_idx,
                         valueType & x_D,
                         valueType & y_D ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_D( s - s0[last_idx], x_D, y_D ) ;
   }
 
   void
   ClothoidList::eval_DD( valueType   s,
-                         indexType & last_idx,
                          valueType & x_DD,
                          valueType & y_DD ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DD( s - s0[last_idx], x_DD, y_DD ) ;
   }
 
   void
   ClothoidList::eval_DDD( valueType   s,
-                          indexType & last_idx,
                           valueType & x_DDD,
                           valueType & y_DDD ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DDD( s - s0[last_idx], x_DDD, y_DDD ) ;
   }
@@ -199,44 +205,40 @@ namespace G2lib {
   // offset curve
   void
   ClothoidList::eval( valueType   s,
-                      indexType & last_idx,
                       valueType   offs,
                       valueType & x,
                       valueType & y ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval( s - s0[last_idx], offs, x, y ) ;
   }
 
   void
   ClothoidList::eval_D( valueType   s,
-                        indexType & last_idx,
                         valueType   offs,
                         valueType & x_D,
                         valueType & y_D ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_D( s - s0[last_idx], offs, x_D, y_D ) ;
   }
 
   void
   ClothoidList::eval_DD( valueType   s,
-                         indexType & last_idx,
                          valueType   offs,
                          valueType & x_DD,
                          valueType & y_DD ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DD( s - s0[last_idx], offs, x_DD, y_DD ) ;
   }
 
   void
   ClothoidList::eval_DDD( valueType   s,
-                          indexType & last_idx,
                           valueType   offs,
                           valueType & x_DDD,
                           valueType & y_DDD ) const {
-    findAtS( s, last_idx );
+    findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DDD( s - s0[last_idx], offs, x_DDD, y_DDD ) ;
   }
@@ -281,21 +283,21 @@ namespace G2lib {
     std::vector<ClothoidCurve>::iterator ic = clotoidList.begin() ;
     for ( ; ic != clotoidList.end() ; ++ic ) {
       ic->changeOrigin( newx0, newy0 ) ;
-      newx0 = ic->Xend() ;
-      newy0 = ic->Yend() ;
+      newx0 = ic->xEnd() ;
+      newy0 = ic->yEnd() ;
     }
   }
 
   void
   ClothoidList::scale( valueType sfactor ) {
     std::vector<ClothoidCurve>::iterator ic = clotoidList.begin() ;
-    valueType newx0 = ic->Xbegin() ;
-    valueType newy0 = ic->Ybegin() ;
+    valueType newx0 = ic->xBegin() ;
+    valueType newy0 = ic->yBegin() ;
     for ( ; ic != clotoidList.end() ; ++ic ) {
       ic->scale( sfactor ) ;
       ic->changeOrigin( newx0, newy0 ) ;
-      newx0 = ic->Xend() ;
-      newy0 = ic->Yend() ;
+      newx0 = ic->xEnd() ;
+      newy0 = ic->yEnd() ;
     }
   }
 

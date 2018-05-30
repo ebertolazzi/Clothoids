@@ -63,23 +63,10 @@ main() {
 	G2lib::ClothoidCurve const & S1 = g2sol.getS1();
 	G2lib::ClothoidCurve const & SM = g2sol.getSM();
 
-	/*
-	std::cout << "theta = " << S0.theta(S0.getSmax()) - SM.theta(SM.getSmin()) << '\n' ;
-	std::cout << "theta = " << SM.theta(SM.getSmax()) - S1.theta(S1.getSmin()) << '\n' ;
-
-	std::cout << "theta_D = " << S0.theta_D(S0.getSmax()) - SM.theta_D(SM.getSmin()) << '\n' ;
-	std::cout << "theta_D = " << SM.theta_D(SM.getSmax()) - S1.theta_D(S1.getSmin()) << '\n' ;
-
-	std::cout << "x = " << S0.X(S0.getSmax()) - SM.X(SM.getSmin()) << '\n' ;
-	std::cout << "y = " << SM.Y(SM.getSmax()) - S1.Y(S1.getSmin()) << '\n' ;
-	*/
-
 	toc();
 	std::cout << "\n\nS0 (NEW)\n" << S0;
 	std::cout << "\n\nSM (NEW)\n" << SM;
 	std::cout << "\n\nS1 (NEW)\n" << S1;
-	//std::cout << "kappa1 = " << S0.getKappa() + S0.getKappa_D()*S0.getL() << '\n';
-	//std::cout << "kappa2 = " << S1.getKappa() << '\n';
 	
 	{
 		G2lib::AsyPlot ap("G2Interpolation.asy", false);

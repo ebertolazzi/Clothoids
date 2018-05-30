@@ -267,32 +267,32 @@ namespace G2lib {
 
   valueType
   Biarc::X( valueType s ) const {
-    if ( s < C0.getL() ) return C0.X(s);
-    else                 return C1.X(s-C0.getL());
+    if ( s < C0.length() ) return C0.X(s);
+    else                   return C1.X(s-C0.length());
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   Biarc::Y( valueType s ) const {
-    if ( s < C0.getL() ) return C0.Y(s);
-    else                 return C1.Y(s-C0.getL());
+    if ( s < C0.length() ) return C0.Y(s);
+    else                   return C1.Y(s-C0.length());
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   Biarc::theta( valueType s ) const {
-    if ( s < C0.getL() ) return C0.theta(s);
-    else                 return C1.theta(s-C0.getL());
+    if ( s < C0.length() ) return C0.theta(s);
+    else                   return C1.theta(s-C0.length());
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   Biarc::kappa( valueType s ) const {
-    if ( s < C0.getL() ) return C0.getKappa();
-    else                 return C1.getKappa();
+    if ( s < C0.length() ) return C0.kappa();
+    else                   return C1.kappa();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -302,14 +302,14 @@ namespace G2lib {
                valueType & k,
                valueType & x,
                valueType & y ) const {
-    if ( s < C0.getL() ) {
+    if ( s < C0.length() ) {
       th = C0.theta(s) ;
-      k  = C0.getKappa() ;
+      k  = C0.kappa() ;
       C0.eval(s,x,y);
     } else {
-      s -= C0.getL() ;
+      s -= C0.length() ;
       th = C1.theta(s) ;
-      k  = C1.getKappa() ;
+      k  = C1.kappa() ;
       C1.eval(s,x,y);
     }
   }
@@ -317,10 +317,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   void
   Biarc::eval( valueType s, valueType & x, valueType & y ) const {
-    if ( s < C0.getL() ) {
+    if ( s < C0.length() ) {
       C0.eval(s,x,y);
     } else {
-      s -= C0.getL() ;
+      s -= C0.length() ;
       C1.eval(s,x,y);
     }
   }
@@ -328,10 +328,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   void
   Biarc::eval_D( valueType s, valueType & x_D, valueType & y_D ) const {
-    if ( s < C0.getL() ) {
+    if ( s < C0.length() ) {
       C0.eval_D(s,x_D,y_D);
     } else {
-      s -= C0.getL() ;
+      s -= C0.length() ;
       C1.eval_D(s,x_D,y_D);
     }
   }
@@ -339,10 +339,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   void
   Biarc::eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
-    if ( s < C0.getL() ) {
+    if ( s < C0.length() ) {
       C0.eval_DD(s,x_DD,y_DD);
     } else {
-      s -= C0.getL() ;
+      s -= C0.length() ;
       C1.eval_DD(s,x_DD,y_DD);
     }
   }
@@ -350,10 +350,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   void
   Biarc::eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
-    if ( s < C0.getL() ) {
+    if ( s < C0.length() ) {
       C0.eval_DDD(s,x_DDD,y_DDD);
     } else {
-      s -= C0.getL() ;
+      s -= C0.length() ;
       C1.eval_DDD(s,x_DDD,y_DDD);
     }
   }
@@ -370,7 +370,7 @@ namespace G2lib {
     valueType X1, Y1, S1 ;
     valueType dst1 = C1.closestPoint( x, y, X1, Y1, S1 );
     if ( dst0 <= dst1 ) return dst0 ;
-    X = X1 ; Y= Y1 ; S = S1 + C0.getL() ;
+    X = X1 ; Y= Y1 ; S = S1 + C0.length() ;
     return dst1 ;
   }
 
@@ -378,7 +378,7 @@ namespace G2lib {
 
   void
   Biarc::changeOrigin( valueType newx0, valueType newy0 ) {
-    C1.translate( newx0-C0.getX0(), newy0-C0.getY0() );
+    C1.translate( newx0-C0.xBegin(), newy0-C0.yBegin() );
     C0.changeOrigin( newx0, newy0 );
   }
 
@@ -413,8 +413,8 @@ namespace G2lib {
 
   void
   Biarc::scale( valueType scl ) {
-    valueType newx0 = C0.getX0() + scl*(C1.getX0()-C0.getX0()) ;
-    valueType newy0 = C0.getY0() + scl*(C1.getY0()-C0.getY0()) ;
+    valueType newx0 = C0.xBegin() + scl*(C1.xBegin()-C0.xBegin()) ;
+    valueType newy0 = C0.yBegin() + scl*(C1.yBegin()-C0.yBegin()) ;
     C1.changeOrigin( newx0, newy0 );
     C1.scale( scl );
     C0.scale( scl );

@@ -36,12 +36,12 @@ classdef CircleArc < handle
       %
       self.objectHandle = CircleMexWrapper('new', varargin{:} );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete(self)
       %% Destroy the C++ class instance
       CircleMexWrapper('delete', self.objectHandle );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
       %
       % Build the circle from known parameters
@@ -69,27 +69,27 @@ classdef CircleArc < handle
       %
       CircleMexWrapper('build', self.objectHandle, varargin{:} );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function translate(self, tx, ty)
       % move the object by `(tx,ty)`
       CircleMexWrapper('translate', self.objectHandle, tx, ty );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeCurvilinearOrigin(self, s0, L )
       % change the origin of the circle curve to `s0`
       CircleMexWrapper('changeCurvilinearOrigin', self.objectHandle, s0, L );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function trim(self, smin, smax)
       % trim circle curve to the corresponding curvilinear parameters
       CircleMexWrapper('trim', self.objectHandle, smin, smax );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function scale(self, sc)
       % scale circle by `sc` factor
       CircleMexWrapper('scale', self.objectHandle, sc );
     end
-        
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function rotate(self, angle, cx, cy)
       % rotate the circle by angle with center of rotation `(cx,cy)`
       % Usage:
@@ -101,7 +101,7 @@ classdef CircleArc < handle
       %
       CircleMexWrapper('rotate', self.objectHandle, angle, cx, cy );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeOrigin(self, newX0, newY0)
       % move the origin of the circle to `(newX0, newY0)` 
       % Usage:
@@ -112,18 +112,17 @@ classdef CircleArc < handle
       %
       CircleMexWrapper('changeOrigin', self.objectHandle, newX0, newY0 );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [p0,p1,p2,ok] = bbTriangle(self)
       % return the bounding box triangle of the circle arc
       [p0,p1,p2,ok] = CircleMexWrapper('bbTriangle', self.objectHandle);
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function nurbs = to_nurbs(self)
       % return a nurbs representation of the circle arc
       nurbs = CircleMexWrapper('to_nurbs', self.objectHandle);
     end
-
-    %% Eval
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y] = eval(self, s)
       % eval the circle at curvilinear abscissa `s`
       % Usage:
@@ -138,54 +137,64 @@ classdef CircleArc < handle
       %
       [X,Y] = CircleMexWrapper('eval', self.objectHandle, s );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DX,DY] = eval_D(self, s)
       % eval the circle derivative at curvilinear abscissa `s`
       [DX,DY] = CircleMexWrapper('eval_D', self.objectHandle, s );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DDX,DDY] = eval_DD(self, s)
       % eval the circle second derivative at curvilinear abscissa `s`
       [DDX,DDY] = CircleMexWrapper('eval_DD', self.objectHandle, s );
     end
-
-    %% Eval
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DDDX,DDDY] = eval_DDD(self, s)
       % eval the circle third derivative at curvilinear abscissa `s`
       [DDDX,DDDY] = CircleMexWrapper('eval_DDD', self.objectHandle, s );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta(self, s)
       % eval the angle of the circle curve at curvilinear abscissa `s`
       th = CircleMexWrapper('theta', self.objectHandle, s );
     end
- 
-    function X0 = getX0(self)
-      X0 = CircleMexWrapper('getX0', self.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function X0 = xBegin(self)
+      X0 = CircleMexWrapper('xBegin', self.objectHandle );
     end
- 
-    function Y0 = getY0(self)
-      Y0 = CircleMexWrapper('getY0', self.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function X1 = xEnd(self)
+      X1 = CircleMexWrapper('xEnd', self.objectHandle );
     end
- 
-    function th0 = getTheta0(self)
-      th0 = CircleMexWrapper('getTheta0', self.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function Y0 = yBegin(self)
+      Y0 = CircleMexWrapper('yBegin', self.objectHandle );
     end
- 
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function Y1 = yEnd(self)
+      Y1 = CircleMexWrapper('yEnd', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th0 = thetaBegin(self)
+      th0 = CircleMexWrapper('thetaBegin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th1 = thetaEnd(self)
+      th1 = CircleMexWrapper('thetaEnd', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function kappa = getKappa(self)
       kappa = CircleMexWrapper('getKappa', self.objectHandle );
     end
- 
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length(self)
       res = CircleMexWrapper('length', self.objectHandle );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
       [DST,S] = CircleMexWrapper('distance', self.objectHandle, varargin{:} );
     end
-
-    %% Utils
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function lineH = plot(self,varargin)
       % plot: method to plot the circle curve
       % Usage:

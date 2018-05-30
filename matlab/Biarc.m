@@ -5,7 +5,7 @@ classdef Biarc < handle
   end
     
   methods
-    function this = Biarc( varargin )
+    function self = Biarc( varargin )
       %% Create a new C++ class instance for the clothoid arc object
       % Usage:
       %    ref = Biarc()
@@ -20,18 +20,18 @@ classdef Biarc < handle
       %
       %  On output:
       %    ref: reference handle to the object instance
-      this.objectHandle = BiarcMexWrapper( 'new' );
+      self.objectHandle = BiarcMexWrapper( 'new' );
       if nargin > 0
-        BiarcMexWrapper( 'build', this.objectHandle, varargin{:} );
+        BiarcMexWrapper( 'build', self.objectHandle, varargin{:} );
       end
     end
-
-    function delete(this)
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function delete(self)
       %% Destroy the C++ class instance
-      BiarcMexWrapper( 'delete', this.objectHandle );
+      BiarcMexWrapper( 'delete', self.objectHandle );
     end
-
-    function build( this, x0, y0, theta0, x1, y1, theta1 )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function build( self, x0, y0, theta0, x1, y1, theta1 )
       % Build the interpolating G1 clothoid arc
       %
       % Usage:
@@ -43,10 +43,10 @@ classdef Biarc < handle
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
       %
-      BiarcMexWrapper( 'build', this.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      BiarcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
     end
-
-    function varargout = evaluate( this, s )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function varargout = evaluate( self, s )
       % evaluate the curve at curvilinear abscissa `s`
       %
       % Usage:
@@ -62,81 +62,111 @@ classdef Biarc < handle
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
       %
-      [varargout{1:nargout}] = BiarcMexWrapper( 'evaluate', this.objectHandle, s );
+      [varargout{1:nargout}] = BiarcMexWrapper( 'evaluate', self.objectHandle, s );
     end
-
-    function [x,y] = eval( this, varargin )
-      [x,y] = BiarcMexWrapper( 'eval', this.objectHandle, varargin{:} );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x,y] = eval( self, varargin )
+      [x,y] = BiarcMexWrapper( 'eval', self.objectHandle, varargin{:} );
     end
-
-    %% Eval
-    function [x_D,y_D] = eval_D( this, varargin )
-      [x_D,y_D] = BiarcMexWrapper( 'eval_D', this.objectHandle, varargin{:} );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x_D,y_D] = eval_D( self, varargin )
+      [x_D,y_D] = BiarcMexWrapper( 'eval_D', self.objectHandle, varargin{:} );
     end
-
-    %% Eval
-    function [x_DD,y_DD] = eval_DD( this, varargin )
-      [x_DD,y_DD] = BiarcMexWrapper( 'eval_DD', this.objectHandle, varargin{:} );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x_DD,y_DD] = eval_DD( self, varargin )
+      [x_DD,y_DD] = BiarcMexWrapper( 'eval_DD', self.objectHandle, varargin{:} );
     end
-
-    %% Eval
-    function [x_DDD,y_DDD] = eval_DDD( this, varargin )
-      [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', this.objectHandle, varargin{:} );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x_DDD,y_DDD] = eval_DDD( self, varargin )
+      [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', self.objectHandle, varargin{:} );
     end
-
-    %%
-    function [X,Y,S,DST] = closestPoint( this, qx, qy )
-      [X,Y,S,DST] = BiarcMexWrapper( 'closestPoint', this.objectHandle, qx, qy );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [X,Y,S,DST] = closestPoint( self, qx, qy )
+      [X,Y,S,DST] = BiarcMexWrapper( 'closestPoint', self.objectHandle, qx, qy );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
       [DST,S] = BiarcMexWrapper( 'distance', self.objectHandle, varargin{:} );
     end
-
-    %%
-    function [X,Y,S,DST] = closestPointBySample( this, qx, qy, ds )
-      [X,Y,S,DST] = BiarcMexWrapper( 'closestPointBySample', this.objectHandle, qx, qy, ds );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [X,Y,S,DST] = closestPointBySample( self, qx, qy, ds )
+      [X,Y,S,DST] = BiarcMexWrapper( 'closestPointBySample', self.objectHandle, qx, qy, ds );
     end
-
-    %%
-    function [DST,S] = distanceBySample( this, qx, qy, ds )
-      [DST,S] = BiarcMexWrapper( 'distanceBySample', this.objectHandle, qx, qy, ds );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [DST,S] = distanceBySample( self, qx, qy, ds )
+      [DST,S] = BiarcMexWrapper( 'distanceBySample', self.objectHandle, qx, qy, ds );
     end
-
-    function res = getX0( this )
-      res = BiarcMexWrapper( 'getX0', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = xBegin0( self )
+      res = BiarcMexWrapper( 'xBegin0', self.objectHandle );
     end
-
-    function res = getY0( this )
-      res = BiarcMexWrapper( 'getY0', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = xEnd0( self )
+      res = BiarcMexWrapper( 'xEnd0', self.objectHandle );
     end
-
-    function res = getTheta0( this )
-      res = BiarcMexWrapper( 'getTheta0', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = xBegin1( self )
+      res = BiarcMexWrapper( 'xBegin1', self.objectHandle );
     end
-
-    function res = getKappa0( this )
-      res = BiarcMexWrapper( 'getKappa0', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = xEnd1( self )
+      res = BiarcMexWrapper( 'xEnd1', self.objectHandle );
     end
-
-    function res = getDkappa( this )
-      res = BiarcMexWrapper( 'getKappa_D', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = yBegin0( self )
+      res = BiarcMexWrapper( 'yBegin0', self.objectHandle );
     end
-
-    function res = getSmin( this )
-      res = BiarcMexWrapper('getSmin', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = yEnd0( self )
+      res = BiarcMexWrapper( 'yEnd0', self.objectHandle );
     end
-
-    function res = getSmax( this )
-      res = BiarcMexWrapper( 'getSmax', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = yBegin1( self )
+      res = BiarcMexWrapper( 'yBegin1', self.objectHandle );
     end
-
-    function res = length( this )
-      res = BiarcMexWrapper( 'length', this.objectHandle );
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = yEnd1( self )
+      res = BiarcMexWrapper( 'yEnd1', self.objectHandle );
     end
-
-    function rotate( this, angle, cx, cy )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = thetaBegin0( self )
+      res = BiarcMexWrapper( 'thetaBegin0', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = thetaBegin1( self )
+      res = BiarcMexWrapper( 'thetaBegin1', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = thetaEnd0( self )
+      res = BiarcMexWrapper( 'thetaEnd0', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = thetaEnd1( self )
+      res = BiarcMexWrapper( 'thetaEnd1', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = kappa0( self )
+      res = BiarcMexWrapper( 'kappa0', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = kappa1( self )
+      res = BiarcMexWrapper( 'kappa1', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = length0( self )
+      res = BiarcMexWrapper( 'length0', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = length1( self )
+      res = BiarcMexWrapper( 'length1', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = length( self )
+      res = BiarcMexWrapper( 'length', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function rotate( self, angle, cx, cy )
       % rotate the clothoid curve by angle respect to the centre `(cx,cy)`
       %
       % Usage:
@@ -146,10 +176,10 @@ classdef Biarc < handle
       %    angle: the angle of rotation
       %    cx, cy: coordinates of the centre of rotation
       %
-      BiarcMexWrapper( 'rotate', this.objectHandle, angle, cx, cy );
+      BiarcMexWrapper( 'rotate', self.objectHandle, angle, cx, cy );
     end
-
-    function translate( this, tx, ty )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function translate( self, tx, ty )
       % translate the clothoid curve by `(tx,ty)`
       %
       % Usage:
@@ -158,10 +188,10 @@ classdef Biarc < handle
       % On input:
       %    tx, ty: horizontal and vertical translation
       %   
-      BiarcMexWrapper( 'translate', this.objectHandle, tx, ty );
+      BiarcMexWrapper( 'translate', self.objectHandle, tx, ty );
     end
-
-    function changeOrigin( this, newX0, newY0 )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function changeOrigin( self, newX0, newY0 )
       % move the origin of the clothoid to `(newX0, newY0)` 
       %
       % Usage:
@@ -170,10 +200,10 @@ classdef Biarc < handle
       % On input:
       %    newX0, newY0: new coordinates of initial point
       %
-      BiarcMexWrapper( 'changeOrigin', this.objectHandle, newX0, newY0 );
+      BiarcMexWrapper( 'changeOrigin', self.objectHandle, newX0, newY0 );
     end
-
-    function scale( this, s )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function scale( self, s )
       % scale clothoid by `sc` factor
       %
       % Usage:
@@ -182,34 +212,25 @@ classdef Biarc < handle
       % On input:
       %    newX0, newY0: new coordinates of initial point
             
-      BiarcMexWrapper( 'scale', this.objectHandle, s );
+      BiarcMexWrapper( 'scale', self.objectHandle, s );
     end
-
-    function reverse( this )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function reverse( self )
       % reverse the orientation of the clothoid curve 
       % Usage:
       %    ref.reverse()
       %
-      BiarcMexWrapper( 'reverse', this.objectHandle );
+      BiarcMexWrapper( 'reverse', self.objectHandle );
     end
-
-    function [xp,yp,xm,ym] = infinity( this )
-      % point at infinity
-      % Usage:
-      %    ref.reverse()
-      %
-      [xp,yp,xm,ym] = BiarcMexWrapper( 'infinity', this.objectHandle );
-    end
-
-    function [arc,arc1] = to_nurbs( this )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [arc,arc1] = to_nurbs( self )
       % Usage:
       %    ref.to_nurbs()
       %
-      [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', this.objectHandle );
+      [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
     end
-
-    %% Utils
-    function lineH = plot( this, step, varargin )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function lineH = plot( self, step, varargin )
       % plot: method to plot the clothoid curve
       % Usage:
       %    lineH = ref.plot()
@@ -228,9 +249,9 @@ classdef Biarc < handle
       if nargin<2
         step = 0.1;
       end
-      L     = BiarcMexWrapper( 'length', this.objectHandle );
+      L     = BiarcMexWrapper( 'length', self.objectHandle );
       S     = 0:step:L ;
-      [X,Y] = BiarcMexWrapper( 'eval', this.objectHandle, S );
+      [X,Y] = BiarcMexWrapper( 'eval', self.objectHandle, S );
       lineH = plot(X,Y, varargin{:});
     end
   end

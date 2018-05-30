@@ -181,18 +181,19 @@ namespace G2lib {
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s) ; return *this ; }
 
-    valueType getX0()      const { return CD.x0 ; }
-    valueType getY0()      const { return CD.y0 ; }
-    valueType getTheta0()  const { return CD.theta0 ; }
+    valueType kappa()      const { return CD.kappa0 ; }
+    valueType kappa_D()    const { return CD.dk ; }
+    valueType length()     const { return L ; }
 
-    valueType getKappa()   const { return CD.kappa0 ; }
-    valueType getKappa_D() const { return CD.dk ; }
-    valueType getL()       const { return L ; }
+    valueType xBegin()     const { return CD.x0; }
+    valueType yBegin()     const { return CD.y0; }
+    valueType thetaBegin() const { return CD.theta0; }
+    valueType kappaBegin() const { return CD.kappa0; }
 
-    valueType getThetaBegin() const { return CD.theta0 ; }
-    valueType getThetaEnd()   const { return CD.theta(L) ; }
-    valueType getKappaBegin() const { return CD.kappa0 ; }
-    valueType getKappaEnd()   const { return CD.kappa(L) ; }
+    valueType xEnd()       const { return CD.X(L); }
+    valueType yEnd()       const { return CD.Y(L); }
+    valueType thetaEnd()   const { return CD.theta(L); }
+    valueType kappaEnd()   const { return CD.kappa(L); }
 
     //! construct a clothoid with the standard parameters
     void
@@ -344,16 +345,6 @@ namespace G2lib {
      * \return clothoid Y coordinate
      */
     valueType Y( valueType s ) const { return CD.Y(s) ; }
-
-    valueType Xbegin()     const { return CD.x0 ; }
-    valueType Ybegin()     const { return CD.y0 ; }
-    valueType KappaBegin() const { return CD.kappa0 ; }
-    valueType ThetaBegin() const { return CD.theta0 ; }
-
-    valueType Xend()     const { return X(L) ; }
-    valueType Yend()     const { return Y(L) ; }
-    valueType KappaEnd() const { return theta_D(L) ; }
-    valueType ThetaEnd() const { return theta(L) ; }
 
     void
     Pinfinity( valueType & x, valueType & y, bool plus = true ) const
@@ -511,7 +502,8 @@ namespace G2lib {
     bbSplit( valueType        split_angle,
              valueType        split_size,
              valueType        split_offs,
-             vector<bbData> & bb ) const ;
+             vector<bbData> & bb,
+             bool             reset_bb = true ) const ;
 
     // intersect computation
     void
@@ -844,7 +836,6 @@ namespace G2lib {
            valueType Dmax = 0,
            valueType dmax = 0 ) ;
 
-
     /*!
      | \return get the first clothoid for the 3 arc G2 fitting
     \*/
@@ -863,7 +854,7 @@ namespace G2lib {
     \*/
     valueType
     totalLength() const {
-      return S0.getL() + S1.getL() + SM.getL() ;
+      return S0.length() + S1.length() + SM.length() ;
     }
 
     /*!
@@ -972,42 +963,42 @@ namespace G2lib {
     /*!
      | \return initial x coordinate of the 3 arc clothoid
     \*/
-    valueType Xbegin()     const { return S0.Xbegin() ; }
+    valueType xBegin() const { return S0.xBegin() ; }
 
     /*!
      | \return initial y coordinate of the 3 arc clothoid
     \*/
-    valueType Ybegin()     const { return S0.Ybegin() ; }
+    valueType yBegin() const { return S0.yBegin() ; }
 
     /*!
      | \return initial curvature of the 3 arc clothoid
     \*/
-    valueType KappaBegin() const { return S0.KappaBegin() ; }
+    valueType kappaBegin() const { return S0.kappaBegin() ; }
 
     /*!
      | \return initial angle of the 3 arc clothoid
     \*/
-    valueType ThetaBegin() const { return S0.ThetaBegin() ; }
+    valueType thetaBegin() const { return S0.thetaBegin() ; }
 
     /*!
      | \return final x coordinate of the 3 arc clothoid
     \*/
-    valueType Xend()     const { return S1.Xend() ; }
+    valueType xEnd()const { return S1.xEnd() ; }
 
     /*!
      | \return final y coordinate of the 3 arc clothoid
     \*/
-    valueType Yend()     const { return S1.Yend() ; }
+    valueType yEnd() const { return S1.yEnd() ; }
 
     /*!
      | \return final curvature of the 3 arc clothoid
     \*/
-    valueType KappaEnd() const { return S1.KappaEnd() ; }
+    valueType kappaEnd() const { return S1.kappaEnd() ; }
 
     /*!
      | \return final angle of the 3 arc clothoid
     \*/
-    valueType ThetaEnd() const { return S1.ThetaEnd() ; }
+    valueType thetaEnd() const { return S1.thetaEnd() ; }
 
     /*!
      | Compute parameters of 3 arc clothoid at curvilinear coordinate `s`
@@ -1077,10 +1068,11 @@ namespace G2lib {
 
     std::vector<valueType>     s0 ;
     std::vector<ClothoidCurve> clotoidList ;
+    mutable indexType          last_idx ;
 
   public:
 
-    ClothoidList() {}
+    ClothoidList() : last_idx(0) {}
     ~ClothoidList() ;
 
     ClothoidList( ClothoidList const & s ) { copy(s) ; }
@@ -1088,19 +1080,19 @@ namespace G2lib {
     { copy(s) ; return *this ; }
 
     void reserve( indexType n );
-
     void copy( ClothoidList const & L );
 
-    void add( ClothoidCurve const & c );
+    void push_back( ClothoidCurve const & c );
+    void push_back( valueType x1, valueType y1, valueType theta1 );
 
     ClothoidCurve const & get( indexType idx ) const;
-    ClothoidCurve const & getAtS( valueType s, indexType & last_idx ) const;
+    ClothoidCurve const & getAtS( valueType s ) const;
 
-    bool findAtS( valueType s, indexType & last_idx ) const;
+    bool findAtS( valueType s ) const;
 
-    valueType theta( valueType s, indexType & last_idx ) const;
-    valueType theta_D( valueType s, indexType & last_idx ) const;
-    valueType theta_DD( valueType s, indexType & last_idx ) const;
+    valueType theta( valueType s ) const;
+    valueType theta_D( valueType s ) const;
+    valueType theta_DD( valueType s ) const;
     valueType theta_DDD( valueType, indexType & ) const { return 0 ; }
 
     valueType totalLength() const {
@@ -1108,12 +1100,21 @@ namespace G2lib {
       return s0.back() - s0.front() ;
     }
 
-    valueType X( valueType s, indexType & last_idx ) const ;
-    valueType Y( valueType s, indexType & last_idx ) const ;
+    valueType X( valueType s ) const ;
+    valueType Y( valueType s ) const ;
+
+    valueType xBegin()     const { return clotoidList.front().xBegin(); }
+    valueType yBegin()     const { return clotoidList.front().yBegin(); }
+    valueType thetaBegin() const { return clotoidList.front().thetaBegin(); }
+    valueType kappaBegin() const { return clotoidList.front().kappaBegin(); }
+
+    valueType xEnd()     const { return clotoidList.back().xEnd(); }
+    valueType yEnd()     const { return clotoidList.back().yEnd(); }
+    valueType thetaEnd() const { return clotoidList.back().thetaEnd(); }
+    valueType kappaEnd() const { return clotoidList.back().kappaEnd(); }
 
     void
     eval( valueType   s,
-          indexType & last_idx,
           valueType & theta,
           valueType & kappa,
           valueType & x,
@@ -1121,55 +1122,42 @@ namespace G2lib {
 
     void
     eval( valueType   s,
-          indexType & last_idx,
           valueType & x,
           valueType & y ) const ;
     void
     eval_D( valueType   s,
-            indexType & last_idx,
             valueType & x_D,
             valueType & y_D ) const ;
     void
     eval_DD( valueType   s,
-             indexType & last_idx,
              valueType & x_DD,
              valueType & y_DD ) const ;
     void
     eval_DDD( valueType   s,
-              indexType & last_idx,
               valueType & x_DDD,
               valueType & y_DDD ) const ;
 
     // offset curve
     void
     eval( valueType   s,
-          indexType & last_idx,
           valueType   offs,
           valueType & x,
           valueType & y ) const ;
     void
     eval_D( valueType   s,
-            indexType & last_idx,
             valueType   offs,
             valueType & x_D,
             valueType & y_D ) const ;
     void
     eval_DD( valueType   s,
-             indexType & last_idx,
              valueType   offs,
              valueType & x_DD,
              valueType & y_DD ) const ;
     void
     eval_DDD( valueType   s,
-              indexType & last_idx,
               valueType   offs,
               valueType & x_DDD,
               valueType & y_DDD ) const ;
-
-    valueType
-    distance( valueType   qx,
-              valueType   qy,
-              valueType & S ) const ;
 
     valueType
     closestPoint( valueType   qx,
@@ -1178,11 +1166,37 @@ namespace G2lib {
                   valueType & Y,
                   valueType & S ) const ;
 
+    valueType
+    distance( valueType qx, valueType qy, valueType & S ) const
+    { valueType X, Y ; return closestPoint( qx, qy, X, Y, S ); }
+
+    valueType
+    distance( valueType qx, valueType qy ) const
+    { valueType S ; return distance( qx, qy, S ); }
+
     void rotate( valueType angle, valueType cx, valueType cy ) ;
     void translate( valueType tx, valueType ty ) ;
     void changeOrigin( valueType newx0, valueType newy0 ) ;
     void scale( valueType sfactor ) ;
     void reverse() ;
+
+    /*! \brief split clothois in smaller segments
+     *
+     * \param split_angle maximum angle variation
+     * \param split_size  maximum height of the triangle
+     * \param split_offs  curve offset
+     * \param bb          splitting data structures vector
+     */
+    void
+    bbSplit( valueType split_angle,
+             valueType split_size,
+             valueType split_offs,
+             vector<ClothoidCurve::bbData> & bb ) const {
+      bb.clear();
+      std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+      for ( ; ic != clotoidList.end() ; ++ic )
+        ic->bbSplit( split_angle, split_size, split_offs, bb, false ) ;
+    }
 
   };
 }
