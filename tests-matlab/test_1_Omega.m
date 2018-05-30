@@ -28,5 +28,5 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 %figure('Position',[10,10,1200,600]);
 
 S = ClothoidSplineG2() ;
-S.buildTG( X, Y ) ;
-S.plot() ;
+SPL = S.buildTG( X, Y ) ;
+SPL.plot() ;

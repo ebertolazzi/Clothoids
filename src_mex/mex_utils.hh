@@ -71,6 +71,16 @@ either expressed or implied, of the FreeBSD Project.
 
 static
 inline
+bool
+isScalar( mxArray const * arg, char const msg[] ) {
+  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
+  MEX_ASSERT( number_of_dimensions == 2, msg ) ;
+  mwSize const * dims = mxGetDimensions(arg) ;
+  return dims[0] == 1 && dims[1] == 1 ;
+}
+
+static
+inline
 double
 getScalarValue( mxArray const * arg, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
@@ -79,6 +89,14 @@ getScalarValue( mxArray const * arg, char const msg[] ) {
   MEX_ASSERT( dims[0] == 1 && dims[1] == 1,
               msg << ", found " << dims[0] << " x " << dims[1] << " matrix" ) ;
   return mxGetScalar(arg) ;
+}
+
+static
+inline
+bool
+getBool( mxArray const * arg, char const msg[] ) {
+  MEX_ASSERT( mxIsLogicalScalar(arg), msg ) ;
+  return mxIsLogicalScalarTrue(arg) ;
 }
 
 static
@@ -94,7 +112,7 @@ getInt( mxArray const * arg, char const msg[] ) {
   int64_t res = 0 ;
   void *ptr = mxGetData(arg) ;
   switch (category)  {
-    case mxINT8_CLASS:   res = *static_cast<uint32_t*>(ptr); break;
+    case mxINT8_CLASS:   res = *static_cast<uint8_t*>(ptr); break;
     case mxUINT8_CLASS:  res = *static_cast<uint8_t*>(ptr);  break;
     case mxINT16_CLASS:  res = *static_cast<int16_t*>(ptr);  break;
     case mxUINT16_CLASS: res = *static_cast<uint16_t*>(ptr); break;
@@ -152,7 +170,7 @@ getMatrixPointer( mxArray const * arg, mwSize & nr, mwSize & nc,  char const msg
 static
 inline
 void
-setScalarValue( mxArray * & arg, double const & value ) {
+setScalarValue( mxArray * & arg, double value ) {
   arg = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL) ;
   *mxGetPr(arg) = value;
 }
@@ -167,8 +185,24 @@ setScalarInt( mxArray * & arg, int64_t value ) {
 
 static
 inline
+void
+setScalarBool( mxArray * & arg, bool v ) {
+  arg = mxCreateLogicalMatrix(1, 1) ;
+  *mxGetLogicals(arg) = v;
+}
+
+static
+inline
+int32_t *
+createMatrixInt32( mxArray * & arg, mwSize nrow, mwSize ncol ) {
+  arg = mxCreateNumericMatrix( nrow, ncol, mxINT64_CLASS, mxREAL );
+  return static_cast<int32_t*>(mxGetData(arg)) ;
+}
+
+static
+inline
 int64_t *
-createMatrixInt( mxArray * & arg, mwSize nrow, mwSize ncol ) {
+createMatrixInt64( mxArray * & arg, mwSize nrow, mwSize ncol ) {
   arg = mxCreateNumericMatrix( nrow, ncol, mxINT64_CLASS, mxREAL );
   return static_cast<int64_t*>(mxGetData(arg)) ;
 }

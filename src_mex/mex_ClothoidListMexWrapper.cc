@@ -120,11 +120,19 @@ namespace G2lib {
 
       } else if ( cmd == "push_back" ) {
 
-        #define CMD "ClothoidListMexWrapper('push_back',OBJ,[x1,y1,theta1]|[CLOT]): "
+        #define CMD "ClothoidListMexWrapper('push_back',OBJ,[x0,y0,theta0,x1,y1,theta1]|[x1,y1,theta1]|[CLOT]): "
 
-        MEX_ASSERT( nrhs == 3 || nrhs == 5 , CMD "expected 3 or 5 inputs") ;
+        MEX_ASSERT( nrhs == 3 || nrhs == 5 || nrhs == 8, CMD "expected 3, 5 or 8 inputs") ;
 
-        if ( nrhs == 5 ) {
+        if ( nrhs == 8 ) {
+          valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+          valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+          valueType theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
+          valueType x1     = getScalarValue( arg_in_5, CMD "Error in reading x1" ) ;
+          valueType y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
+          valueType theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
+          ptr->push_back( x0, y0, theta0, x1, y1, theta1 );
+        } else if ( nrhs == 5 ) {
           valueType x1     = getScalarValue( arg_in_2, CMD "Error in reading x1" ) ;
           valueType y1     = getScalarValue( arg_in_3, CMD "Error in reading y1" ) ;
           valueType theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" ) ;
@@ -133,6 +141,18 @@ namespace G2lib {
           ClothoidCurve * cc = convertMat2Ptr<ClothoidCurve>(arg_in_2);
           ptr->push_back( *cc );
         }
+
+        #undef CMD
+
+      } else if ( cmd == "reserve" ) {
+
+        #define CMD "ClothoidListMexWrapper('reserve',OBJ,N): "
+
+        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs") ;
+        MEX_ASSERT( nlhs == 0 , CMD "expected no outputs") ;
+
+        int64_t N = getInt( arg_in_2, CMD "Error in reading N" );
+        ptr->reserve(N);
 
         #undef CMD
 
@@ -437,6 +457,40 @@ namespace G2lib {
           *pT++ = t.x2() ; *pT++ = t.y2() ;
           *pT++ = t.x3() ; *pT++ = t.y3() ;
         }
+        #undef CMD
+
+      } else if ( cmd == "get" ) {
+
+        #define CMD "ClothoidListMexWrapper('get', OBJ, n): "
+
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
+        MEX_ASSERT(nlhs == 6, CMD "expected 6 output");
+
+        int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
+
+        MEX_ASSERT( n > 0 && n <= ptr->numSegment(),
+                    CMD "n =  " << n << " must be >= 1 and <= " << ptr->numSegment() );
+
+        ClothoidCurve const & c = ptr->get(n-1);
+
+        setScalarValue(arg_out_0, c.xBegin());
+        setScalarValue(arg_out_1, c.yBegin());
+        setScalarValue(arg_out_2, c.thetaBegin());
+        setScalarValue(arg_out_3, c.kappaBegin());
+        setScalarValue(arg_out_4, c.kappa_D());
+        setScalarValue(arg_out_5, c.length());
+
+        #undef CMD
+
+      } else if ( cmd == "numSegment" ) {
+
+        #define CMD "ClothoidListMexWrapper('numSegment', OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output");
+
+        setScalarInt( arg_out_0, ptr->numSegment() );
+
         #undef CMD
 
       } else if ( cmd == "delete" ) {

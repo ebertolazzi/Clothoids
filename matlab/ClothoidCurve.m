@@ -284,7 +284,7 @@ classdef ClothoidCurve < handle
       BB = ClothoidCurveMexWrapper( 'bbox', self.objectHandle, max_angle, max_size, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function lineH = plot( self, step, varargin )
+    function plot( self, step, varargin )
       % plot: method to plot the clothoid curve
       % Usage:
       %    lineH = ref.plot()
@@ -307,7 +307,7 @@ classdef ClothoidCurve < handle
       L     = ClothoidCurveMexWrapper( 'length', self.objectHandle );
       S     = 0:step:L ;
       [X,Y] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S );
-      lineH = plot(X,Y, varargin{:});
+      plot(X,Y, varargin{:});
     end
   end
 end

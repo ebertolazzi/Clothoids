@@ -8,7 +8,6 @@ classdef ClothoidSplineG2 < handle
     theta_F;
     theta_min;
     theta_max;
-    clots;
   end
 
   methods (Hidden = true)
@@ -42,7 +41,7 @@ classdef ClothoidSplineG2 < handle
     %
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %
-    function k = KAPPA( self, theta0, theta )
+    function k = KAPPA( ~, theta0, theta )
       x = theta0.^2 ;
       a = -3.714 + x * 0.178 ;
       b = -1.913 - x * 0.0753 ;
@@ -54,7 +53,7 @@ classdef ClothoidSplineG2 < handle
     %
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %
-    function res = diff2pi( self, in )
+    function res = diff2pi( ~, in )
       res = in-2*pi*round(in/(2*pi)) ;
     end
     %  ___ ____   ___  ____ _____
@@ -63,17 +62,17 @@ classdef ClothoidSplineG2 < handle
     %  | ||  __/| |_| |  __/ | |
     % |___|_|    \___/|_|    |_|
     %
-    function f = TG_objective( self, theta )
+    function f = TG_objective( ~, ~ )
       f = 0 ;
     end
     %
-    function g = TG_gradient( self, theta )
+    function g = TG_gradient( ~, theta )
       N = length(theta) ;
       g = zeros(N,1) ;
     end
     %
     function F = TG_constraints( self, theta )
-      N  = length(self.theta) ;
+      N  = length(theta) ;
       k  = zeros(N-1,1) ;
       dk = zeros(N-1,1) ;
       L  = zeros(N-1,1) ;
@@ -81,8 +80,8 @@ classdef ClothoidSplineG2 < handle
       for j=1:N-1
         c.build_G1( self.x(j),   self.y(j),   theta(j), ...
                     self.x(j+1), self.y(j+1), theta(j+1) ) ;
-        k(j)  = c.getKappa0() ;
-        dk(j) = c.getDkappa() ;
+        k(j)  = c.kappaBegin() ;
+        dk(j) = c.kappa_D() ;
         L(j)  = c.length() ;
       end
       kL = k+dk.*L ;
@@ -92,7 +91,7 @@ classdef ClothoidSplineG2 < handle
     end
     % 
     function JAC = TG_jacobian( self, theta )
-      N  = length(self.theta) ;
+      N  = length(theta) ;
       L  = zeros(1,N-1) ; L_1  = zeros(1,N-1) ; L_2  = zeros(1,N-1) ;
       k  = zeros(1,N-1) ; k_1  = zeros(1,N-1) ; k_2  = zeros(1,N-1) ;
       dk = zeros(1,N-1) ; dk_1 = zeros(1,N-1) ; dk_2 = zeros(1,N-1) ;
@@ -102,8 +101,8 @@ classdef ClothoidSplineG2 < handle
       for j=1:N-1
         [L_D,k_D,dk_D] = c.build_G1( self.x(j),   self.y(j),   theta(j), ...
                                      self.x(j+1), self.y(j+1), theta(j+1) ) ;
-        k(j)    = c.getKappa0() ;
-        dk(j)   = c.getDkappa() ;
+        k(j)    = c.kappaBegin() ;
+        dk(j)   = c.kappa_D() ;
         L(j)    = c.length() ;
         L_1(j)  = L_D(1)  ; L_2(j)  = L_D(2) ; 
         k_1(j)  = k_D(1)  ; k_2(j)  = k_D(2) ; 
@@ -145,7 +144,7 @@ classdef ClothoidSplineG2 < handle
     %
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %
-    function buildTG( self, x, y )
+    function clots = buildTG( self, x, y )
       %
       % copy data
       %
@@ -195,7 +194,7 @@ classdef ClothoidSplineG2 < handle
       options.ipopt.limited_memory_update_type = 'bfgs' ; % {bfgs}, sr1 = 6; % {6}
   
       tic
-      [self.theta, info] = ipopt(self.theta,funcs,options);
+      [theta, info] = ipopt(self.theta,funcs,options);
       stats.elapsed = toc ;
 
       info;
@@ -205,13 +204,14 @@ classdef ClothoidSplineG2 < handle
       %
       % Compute spline parameters
       %
-      N  = length(self.theta) ;
-      k  = zeros(N-1,1) ;
-      dk = zeros(N-1,1) ;
-      L  = zeros(N-1,1) ;
-      %for j=1:N-1
-      %  [ k(j), dk(j), L(j) ] = clothoid(j,theta) ;
-      %end
+      clots = ClothoidList() ;
+      N     = length(theta) ;
+      clots.reserve(N-1);
+      for j=1:N-1
+        clots.push_back( x(j),   y(j),   theta(j), ...
+                         x(j+1), y(j+1), theta(j+1) ) ;
+      end
+      clots.plot(0.01);
       %stats.nevalF    = output.funcCount ;  
       %stats.iter      = output.iterations ;
       %stats.Fvalue    = sqrt(resnorm/N) ;

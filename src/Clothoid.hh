@@ -1084,9 +1084,13 @@ namespace G2lib {
 
     void push_back( ClothoidCurve const & c );
     void push_back( valueType x1, valueType y1, valueType theta1 );
+    void push_back( valueType x0, valueType y0, valueType theta0,
+                    valueType x1, valueType y1, valueType theta1 );
 
     ClothoidCurve const & get( indexType idx ) const;
     ClothoidCurve const & getAtS( valueType s ) const;
+
+    indexType numSegment() const { return indexType(clotoidList.size()) ; }
 
     bool findAtS( valueType s ) const;
 

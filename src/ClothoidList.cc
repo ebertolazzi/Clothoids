@@ -76,21 +76,31 @@ namespace G2lib {
   }
 
   void
-  ClothoidList::push_back( valueType x1, valueType y1, valueType theta1) {
+  ClothoidList::push_back( valueType x1, valueType y1, valueType theta1 ) {
     G2LIB_ASSERT( !clotoidList.empty(),
                   "ClothoidList::push_back( x1 = " << x1 <<
                   ", y1 = " << y1 << ", theta1 = " << theta1 ) ;
     ClothoidCurve const & ce = clotoidList.back() ;
     ClothoidCurve c ;
     c.build_G1( ce.xEnd(), ce.yEnd(), ce.thetaEnd(), x1, y1, theta1 ) ;
-    clotoidList.push_back(c) ;
+    push_back(c) ;
+  }
+
+  void
+  ClothoidList::push_back( valueType x0, valueType y0, valueType theta0,
+                           valueType x1, valueType y1, valueType theta1 ) {
+    ClothoidCurve c ;
+    c.build_G1( x0, y0, theta0, x1, y1, theta1 ) ;
+    push_back( c ) ;
   }
 
   ClothoidCurve const &
   ClothoidList::get( indexType idx ) const {
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::get( " << idx << " ) empty list" );
     G2LIB_ASSERT( idx >= 0 && idx < indexType(clotoidList.size()),
-                  "ClothoidList::get( " << idx << " ) bad index" );
+                  "ClothoidList::get( " << idx <<
+                  " ) bad index, must be in [0," <<
+                  clotoidList.size()-1 << "]" );
     return clotoidList[idx];
   }
 
