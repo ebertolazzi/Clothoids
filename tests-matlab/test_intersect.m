@@ -33,11 +33,11 @@ C2 = ClothoidCurve( x0, y0, theta0, k0, dk, L );
 max_angle = pi/2 ;
 max_size  = 0.5 ;
 
-step = 0.01 ;
+npts = 1000 ;
 
-C1.plot(step,'Color','red','LineWidth',3) ;
+C1.plot(npts,'Color','red','LineWidth',3) ;
 hold on ;
-C2.plot(step,'Color','black','LineWidth',3) ;
+C2.plot(npts,'Color','black','LineWidth',3) ;
 
 [s1,s2] = intersectClothoid( C1, C2 ) ;
 

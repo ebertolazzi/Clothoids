@@ -24,9 +24,26 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
      -2.582810358,-2.582810358,-2.393750358,-1.707808758,-1.707808758, ...
      -3.178123242,-3.178123242,-2.989063158,-0.915616758,0.925003242, ...
      2.953123242,0.925003242,-0.915616758,-2.989063158,-3.178123242,-3.178123242, -1.707808758 ] ;
-%close all ;
-%figure('Position',[10,10,1200,600]);
 
-S = ClothoidSplineG2() ;
-SPL = S.buildTG( X, Y ) ;
-SPL.plot() ;
+close all ;
+figure('Position',[10,10,800,800]);
+
+S  = ClothoidSplineG2() ;
+
+SPL = cell(8,1);
+
+SPL{1} = S.buildP1( X, Y ) ;
+SPL{2} = S.buildP2( X, Y ) ;
+SPL{3} = S.buildP4( X, Y ) ;
+SPL{4} = S.buildP5( X, Y ) ;
+SPL{5} = S.buildP6( X, Y ) ;
+SPL{6} = S.buildP7( X, Y ) ;
+SPL{7} = S.buildP8( X, Y ) ;
+SPL{8} = S.buildP9( X, Y ) ;
+
+for k=1:8
+  subplot(3,3,k);
+  SPL{k}.plot() ;
+  SPL{k}.plotNormal(0.25,0.25) ;
+  axis equal ;
+end

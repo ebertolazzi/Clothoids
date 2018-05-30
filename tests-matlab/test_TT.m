@@ -23,8 +23,8 @@ L         = 20 ;
 
 CLOT = ClothoidCurve( x0, y0, theta0, kappa, dkappa, L );
 
-step = 0.01;
-CLOT.plot(step,'Color','blue','LineWidth',2) ;
+npts = 1000;
+CLOT.plot(npts,'Color','blue','LineWidth',2) ;
 hold on ;
 
 max_angle = pi/2 ;

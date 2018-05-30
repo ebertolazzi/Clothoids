@@ -276,6 +276,10 @@ classdef ClothoidCurve < handle
       [xp,yp,xm,ym] = ClothoidCurveMexWrapper( 'infinity', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x0,y0,theta0,k0,dk,L] = getPars( self )
+      [x0,y0,theta0,k0,dk,L] = ClothoidCurveMexWrapper( 'getPars', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function BB = bbox( self, max_angle, max_size, varargin )
       % point at infinity
       % Usage:
@@ -284,7 +288,7 @@ classdef ClothoidCurve < handle
       BB = ClothoidCurveMexWrapper( 'bbox', self.objectHandle, max_angle, max_size, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plot( self, step, varargin )
+    function plot( self, npts, varargin )
       % plot: method to plot the clothoid curve
       % Usage:
       %    lineH = ref.plot()
@@ -300,14 +304,23 @@ classdef ClothoidCurve < handle
       % On output:
       %    lineH: the handle to the line object 
       %           (i.e. the output of the MATLAB plot function)
-
-      if nargin<2
-        step = 0.1;
+      if nargin < 2
+        npts = 1000 ; 
       end
       L     = ClothoidCurveMexWrapper( 'length', self.objectHandle );
-      S     = 0:step:L ;
+      S     = 0:L/npts:L ;
       [X,Y] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S );
       plot(X,Y, varargin{:});
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotNormal( self, step, len )
+      for s=0:step:self.length()
+        [x,y,theta,~] = self.evaluate(s) ;
+        n = [sin(theta),-cos(theta)] ;
+        A = [x,x+len*n(1)];
+        B = [y,y+len*n(2)];
+        plot(A,B);
+      end
     end
   end
 end

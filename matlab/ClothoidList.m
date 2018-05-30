@@ -202,7 +202,7 @@ classdef ClothoidList < handle
       if nargin > 1
         step = varargin{1} ;
       else
-        step = self.length()/1000 ;
+        step = 1000 ;
       end
       if nargin > 2
         fmt1 = varargin{2} ;
@@ -222,6 +222,13 @@ classdef ClothoidList < handle
           C.plot( step, fmt2{:} );
         end
         hold on ;
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotNormal( self, step, len )
+      for k=1:self.numSegment()
+        C = self.get(k);
+        C.plotNormal( step, len );
       end
     end
   end

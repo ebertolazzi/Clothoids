@@ -9,7 +9,7 @@ dk     = 0.2 ;
 L      = 10 ;
 L1     = ClothoidCurve( x0, y0, theta0, kappa0, dk, L );
 
-L1.plot(L/1000,'Color','green','LineWidth',3) ;
+L1.plot(1000,'Color','green','LineWidth',3) ;
 hold on;
 
 [xx,yy,th,kk] = L1.evaluate(-kappa0/dk);

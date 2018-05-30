@@ -20,36 +20,36 @@ L3 = ClothoidCurve() ;
 L3.build_G1( x0, y0, theta0, x2, y2, theta1 );
 
 %
-step = 0.01;
+npts = 1000;
 L1.plot() ;
 hold on ;
-L2.plot(step,'Color','red','LineWidth',3) ;
-L3.plot(step,'Color','black','LineWidth',3) ;
+L2.plot(npts,'Color','red','LineWidth',3) ;
+L3.plot(npts,'Color','black','LineWidth',3) ;
 
 L1.translate(1,1) ;
 L1.plot() ;
 
 L2.changeCurvilinearOrigin(-4,10) ;
-L2.plot(step,'Color','red','LineWidth',3) ;
+L2.plot(npts,'Color','red','LineWidth',3) ;
 
 
 L2.changeCurvilinearOrigin(1,2) ;
-L2.plot(step,'Color','red','LineWidth',3) ;
+L2.plot(npts,'Color','red','LineWidth',3) ;
 
 L3.trim(2,7) ;
-L3.plot(step,'Color','green','LineWidth',3) ;
+L3.plot(npts,'Color','green','LineWidth',3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot(step,'Color','green','LineWidth',3) ;
+L3.plot(npts,'Color','green','LineWidth',3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot(step,'Color','green','LineWidth',3) ;
+L3.plot(npts,'Color','green','LineWidth',3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot(step,'Color','green','LineWidth',3) ;
+L3.plot(npts,'Color','green','LineWidth',3) ;
 
 L3.translate(3,3) ;
-L3.plot(step,'Color','blue','LineWidth',3) ;
+L3.plot(npts,'Color','blue','LineWidth',3) ;
 
 L3.eval(1)
 L3.eval_D(1)

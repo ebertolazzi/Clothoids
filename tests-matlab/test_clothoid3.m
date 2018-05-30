@@ -16,7 +16,7 @@ for kk=1:4
   subplot(2,2,kk) ;
   L1 = ClothoidCurve( x0, y0, theta0, kappa0(kk), dk(kk), L(kk) );
   %
-  L1.plot(L/1000,'Color','green','LineWidth',3) ;
+  L1.plot(1000,'Color','green','LineWidth',3) ;
   hold on;
 
   x     = -10:0.05:10 ;
