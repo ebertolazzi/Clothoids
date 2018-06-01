@@ -282,6 +282,11 @@ classdef ClothoidSplineG2 < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [c,ceq] = con( self, theta )
+      ceq = self.constraints(theta);
+      c   = zeros(0,0) ;
+    end
+    
     function clots = build_internal( self, x, y, varargin )
       %
       % copy data
@@ -304,10 +309,6 @@ classdef ClothoidSplineG2 < handle
       %
       N = length(self.theta_guess) ;
       options = {} ;
-
-      options.ub = self.theta_max ;
-      options.lb = self.theta_min ;
-                  
       switch self.t_type
       case 'P1'
         nc = N ;
@@ -316,42 +317,58 @@ classdef ClothoidSplineG2 < handle
       otherwise
         nc = N-2 ;
       end
-
-      % The constraint functions are bounded to zero
-      options.cl = zeros(nc,1) ; %  constraints
-      options.cu = zeros(nc,1) ;
-
-      % Set the IPOPT options.
-      options.ipopt.jac_d_constant      = 'no' ;
-      options.ipopt.hessian_constant    = 'no' ;
-      options.ipopt.mu_strategy         = 'adaptive';
-      options.ipopt.max_iter            = 400 ;
-      options.ipopt.tol                 = 1e-10 ;
-      options.ipopt.derivative_test_tol = 1e-4 ;
-      options.ipopt.derivative_test     = 'first-order' ; %% default 'none'
-      options.ipopt.derivative_test_perturbation = 1e-8 ;
-
-      % The callback functions.
-      funcs.objective         = @(theta) self.objective(theta);
-      funcs.constraints       = @(theta) self.constraints(theta);
-      funcs.gradient          = @(theta) self.gradient(theta);
-      funcs.jacobian          = @(theta) self.jacobian(theta);
-      funcs.jacobianstructure = @()      self.jacobianstructure();
       
-      %options.ipopt.jacobian_approximation = 'finite-difference-values';    
-      options.ipopt.hessian_approximation  = 'limited-memory';
-      %options.ipopt.limited_memory_update_type = 'bfgs' ; % {bfgs}, sr1 = 6; % {6}
-      %options.ipopt.limited_memory_update_type = 'sr1' ;
-      options.ipopt.limited_memory_update_type = 'bfgs' ; % {bfgs}, sr1 = 6; % {6}
+      use_ipopt = false ;
+      
+      if use_ipopt
+        
+        options = {} ;
+
+        options.ub = self.theta_max ;
+        options.lb = self.theta_min ;
+
+        % The constraint functions are bounded to zero
+        options.cl = zeros(nc,1) ; %  constraints
+        options.cu = zeros(nc,1) ;
+
+        % Set the IPOPT options.
+        options.ipopt.jac_d_constant      = 'no' ;
+        options.ipopt.hessian_constant    = 'no' ;
+        options.ipopt.mu_strategy         = 'adaptive';
+        options.ipopt.max_iter            = 400 ;
+        options.ipopt.tol                 = 1e-10 ;
+        options.ipopt.derivative_test_tol = 1e-4 ;
+        %options.ipopt.derivative_test     = 'first-order' ; %% default 'none'
+        %options.ipopt.derivative_test_perturbation = 1e-8 ;
+
+        % The callback functions.
+        funcs.objective         = @(theta) self.objective(theta);
+        funcs.constraints       = @(theta) self.constraints(theta);
+        funcs.gradient          = @(theta) self.gradient(theta);
+        funcs.jacobian          = @(theta) self.jacobian(theta);
+        funcs.jacobianstructure = @()      self.jacobianstructure();
+      
+        %options.ipopt.jacobian_approximation = 'finite-difference-values';    
+        options.ipopt.hessian_approximation  = 'limited-memory';
+        %options.ipopt.limited_memory_update_type = 'bfgs' ; % {bfgs}, sr1 = 6; % {6}
+        %options.ipopt.limited_memory_update_type = 'sr1' ;
+        options.ipopt.limited_memory_update_type = 'bfgs' ; % {bfgs}, sr1 = 6; % {6}
   
-      tic
-      [theta, info] = ipopt(self.theta_guess,funcs,options);
-      stats.elapsed = toc ;
-
-      info;
-
-      %options = optimset(varargin{:});
-      %[theta,resnorm,~,~,output,~,~] = lsqnonlin( @target, theta, [], [], options ) ;
+        tic
+        [theta, info] = ipopt(self.theta_guess,funcs,options);
+        stats.elapsed = toc ;
+        info;
+      else
+        options = optimoptions('fmincon','Display','iter', ...
+                               'Algorithm','interior-point',...
+                               'OptimalityTolerance',1e-10,...
+                               'ConstraintTolerance',1e-10);
+        fun     = @(theta) self.objective(theta);
+        con     = @(theta) self.con(theta);
+        theta   = fmincon(fun,self.theta_guess,[],[],[],[],self.theta_min,self.theta_max,con,options) ;
+        %options = optimset(varargin{:});
+        %[theta,resnorm,~,~,output,~,~] = lsqnonlin( @target, theta, [], [], options ) ;
+      end
       %
       % Compute spline parameters
       %
