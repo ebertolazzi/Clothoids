@@ -139,7 +139,7 @@ namespace G2lib {
       bool do_new = cmd == "new" ;
       ClothoidCurve * ptr = do_new ? DATA_NEW(arg_out_0) : DATA_GET(arg_in_1);
 
-      if ( do_new || cmd == "build"  ) {
+      if ( do_new || cmd == "build" ) {
 
         if ( do_new ) {
           MEX_ASSERT( nlhs == 1, "ClothoidCurveMexWrapper, expected 1 output" );

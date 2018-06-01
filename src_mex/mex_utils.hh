@@ -195,7 +195,7 @@ static
 inline
 int32_t *
 createMatrixInt32( mxArray * & arg, mwSize nrow, mwSize ncol ) {
-  arg = mxCreateNumericMatrix( nrow, ncol, mxINT64_CLASS, mxREAL );
+  arg = mxCreateNumericMatrix( nrow, ncol, mxINT32_CLASS, mxREAL );
   return static_cast<int32_t*>(mxGetData(arg)) ;
 }
 
