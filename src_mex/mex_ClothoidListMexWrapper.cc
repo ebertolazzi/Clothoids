@@ -58,8 +58,14 @@
 "    [dst,s]     = ClothoidListMexWrapper( 'distance', OBJ, x, y ) ;\n" \
 "\n" \
 "  - Bounding Box:\n" \
-"%   TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size ) ;%\n" \
-"%   TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size, offs ) ;%\n" \
+"    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size ) ;%\n" \
+"    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size, offs ) ;%\n" \
+"\n" \
+"  - G2 spline:\n" \
+"    ok = ClothoidListMexWrapper( 'build3arcG2' || 'build2arcG2' || 'build3arcCLC, ...\n" \
+"                                 OBJ, ...\n" \
+"                                 x0, y0, theta0, kappa0, ...\n" \
+"                                 x1, y1, theta1, kappa1 ) ;%\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \
@@ -433,6 +439,61 @@ namespace G2lib {
         MEX_ASSERT(nlhs == 1, CMD "expected 1 output");
 
         setScalarInt( arg_out_0, ptr->numSegment() );
+
+        #undef CMD
+
+      } else if ( cmd == "build3arcG2" || cmd == "build2arcG2" || cmd == "buildCLC" ) {
+
+        #define CMD "ClothoidListMexWrapper('build[2|3]arcG2', OBJ, ...): "
+
+        MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs");
+        MEX_ASSERT(nlhs == 1,  CMD "expected 1 output");
+
+        valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+        valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+        valueType theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
+        valueType kappa0 = getScalarValue( arg_in_5, CMD "Error in reading kappa0" ) ;
+        valueType x1     = getScalarValue( arg_in_6, CMD "Error in reading x1" ) ;
+        valueType y1     = getScalarValue( arg_in_7, CMD "Error in reading y1" ) ;
+        valueType theta1 = getScalarValue( arg_in_8, CMD "Error in reading theta1" ) ;
+        valueType kappa1 = getScalarValue( arg_in_9, CMD "Error in reading kappa1" ) ;
+
+        int iter ;
+        if ( cmd == "build3arcG2" ) {
+          static G2solve3arc g2sol ;
+          iter = g2sol.build( x0, y0, theta0, kappa0,
+                              x1, y1, theta1, kappa1 ) ;
+          if ( iter > 0 ) {
+            ptr->init();
+            ptr->reserve(3);
+            ptr->push_back(g2sol.getS0());
+            ptr->push_back(g2sol.getSM());
+            ptr->push_back(g2sol.getS1());
+          }
+        } else if ( cmd == "build2arcG2" ) {
+
+          static G2solve2arc g2sol ;
+          iter = g2sol.build( x0, y0, theta0, kappa0,
+                              x1, y1, theta1, kappa1 ) ;
+          if ( iter > 0 ) {
+            ptr->init();
+            ptr->reserve(2);
+            ptr->push_back(g2sol.getS0());
+            ptr->push_back(g2sol.getS1());
+          }
+        } else {
+          static G2solveCLC g2sol ;
+          iter = g2sol.build( x0, y0, theta0, kappa0,
+                              x1, y1, theta1, kappa1 ) ;
+          if ( iter > 0 ) {
+            ptr->init();
+            ptr->reserve(3);
+            ptr->push_back(g2sol.getS0());
+            ptr->push_back(g2sol.getSM());
+            ptr->push_back(g2sol.getS1());
+          }
+        }
+        setScalarInt( arg_out_0, iter );
 
         #undef CMD
 

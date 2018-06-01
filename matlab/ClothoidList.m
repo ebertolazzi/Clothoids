@@ -13,6 +13,10 @@ classdef ClothoidList < handle
     function delete( self )
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function obj = obj_handle( self )
+      obj = self.objectHandle ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function reserve( self, N )
       ClothoidListMexWrapper( 'reserve', self.objectHandle, N );
     end
@@ -32,6 +36,24 @@ classdef ClothoidList < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function N = numSegment( self )
       N = ClothoidListMexWrapper( 'numSegment', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build3arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build3arcG2', self.objectHandle, ...
+                                   x0, y0, theta0, kappa0, ...
+                                   x1, y1, theta1, kappa1 );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build2arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build2arcG2', self.objectHandle, ...
+                                    x0, y0, theta0, kappa0, ...
+                                    x1, y1, theta1, kappa1 );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = buildCLC( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'buildCLC', self.objectHandle, ...
+                                   x0, y0, theta0, kappa0, ...
+                                   x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = evaluate( self, s )

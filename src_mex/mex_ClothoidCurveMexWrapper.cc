@@ -235,14 +235,10 @@ namespace G2lib {
 
         bool ok = ptr->build_forward(x0, y0, theta0, kappa0, x1, y1);
 
-        if ( ok ) cout << "build_forward OK!\n" ;
-        else      cout << "build_forward FAILED!\n" ;
-
         // returns the status of the interpolation
         mwSize dims[2] = {1,1} ;
         arg_out_0 = mxCreateLogicalArray(2, dims);
         ((bool*)mxGetPr(arg_out_0))[0] = ok;
-        //mexPrintf("Result: %d\n", res);
 
         #undef CMD
 

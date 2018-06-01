@@ -27,7 +27,7 @@ int
 main() {
 	tic();
 
-	G2lib::G2solve3arc g2sol;
+	G2lib::G2solve2arc g2sol;
 	
   #if 1
 	valueType x0 = -2;
@@ -61,24 +61,22 @@ main() {
 
 	G2lib::ClothoidCurve const & S0 = g2sol.getS0();
 	G2lib::ClothoidCurve const & S1 = g2sol.getS1();
-	G2lib::ClothoidCurve const & SM = g2sol.getSM();
 
 	toc();
 	std::cout << "\n\nS0 (NEW)\n" << S0;
-	std::cout << "\n\nSM (NEW)\n" << SM;
-	std::cout << "\n\nS1 (NEW)\n" << S1;
-	
-	{
-		G2lib::AsyPlot ap("G2Interpolation.asy", false);
-		ap.drawClothoid(S0, "red+bp");
-		ap.drawClothoid(SM, "blue+bp");
-		ap.drawClothoid(S1, "red+bp");
-		valueType factor = 1.1;
-		ap.displayAxes("x", "y", x0*factor, x1*factor, y0*factor, y1*factor);
-	}
-	
 
-	system("pause");
+	std::cout << "\n\nS1 (NEW)\n" << S1;
+
+  std::cout << "\n\n\n" ;
+
+  std::cout << "x1     = " << S0.xEnd()   << "\n" ;
+  std::cout << "x0     = " << S1.xBegin() << "\n\n" ;
+
+  std::cout << "y1     = " << S0.yEnd()   << "\n" ;
+  std::cout << "y0     = " << S1.yBegin() << "\n\n" ;
+
+  std::cout << "theta1 = " << S0.thetaEnd()   << "\n" ;
+  std::cout << "theta0 = " << S1.thetaBegin() << "\n\n" ;
 
 	return 0;
 }

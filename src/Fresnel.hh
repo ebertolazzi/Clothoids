@@ -223,6 +223,16 @@ namespace G2lib {
               valueType   k_D[2]        = nullptr,
               valueType   dk_D[2]       = nullptr ) ;
 
+    bool
+    build_forward( valueType   x0,
+                   valueType   y0,
+                   valueType   theta0,
+                   valueType   kappa0,
+                   valueType   x1,
+                   valueType   y1,
+                   valueType   tol,
+                   valueType & L ) ;
+
     void
     info( std::ostream & s ) const ;
 

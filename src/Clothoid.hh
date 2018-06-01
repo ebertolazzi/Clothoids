@@ -219,7 +219,7 @@ namespace G2lib {
      * \param x0     initial x position \f$ x_0      \f$
      * \param y0     initial y position \f$ y_0      \f$
      * \param theta0 initial angle      \f$ \theta_0 \f$
-     * \param k      initial curvature  \f$ \kappa_0 \f$
+     * \param kappa0 initial curvature  \f$ \kappa_0 \f$
      * \param x1     final x position   \f$ x_1      \f$
      * \param y1     final y position   \f$ y_1      \f$
      */
@@ -227,10 +227,12 @@ namespace G2lib {
     build_forward( valueType x0,
                    valueType y0,
                    valueType theta0,
-                   valueType k,
+                   valueType kappa0,
                    valueType x1,
                    valueType y1,
-                   valueType tol = 1e-12 ) ;
+                   valueType tol = 1e-12 ) {
+      return CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, L );
+    }
 
     /*! \brief get clothoid angle at curvilinear cooordinate `s`
      *
@@ -1037,6 +1039,13 @@ namespace G2lib {
     ClothoidList( ClothoidList const & s ) { copy(s) ; }
     ClothoidList const & operator = ( ClothoidList const & s )
     { copy(s) ; return *this ; }
+
+    void
+    init() {
+      s0.clear() ;
+      clotoidList.clear() ;
+      last_idx = 0 ;
+    }
 
     void reserve( indexType n );
     void copy( ClothoidList const & L );

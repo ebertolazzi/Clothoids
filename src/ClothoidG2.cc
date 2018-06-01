@@ -89,7 +89,7 @@ namespace G2lib {
     k0 = kappa0*lambda ;
     k1 = kappa1*lambda ;
 
-    DeltaK     = k1 - k0 ;
+    DeltaK     = k1  - k0 ;
     DeltaTheta = th1 - th0 ;
 
     return solve();
@@ -250,14 +250,23 @@ namespace G2lib {
   void
   G2solve2arc::buildSolution( valueType alpha, valueType L ) {
     valueType beta = 1-alpha ;
-    valueType LL   = L*lambda ;
-    valueType s0   = LL*alpha ;
-    valueType s1   = LL*beta ;
+    valueType s0   = L*alpha ;
+    valueType s1   = L*beta ;
+    valueType tmp  = 2*DeltaTheta-L*(k0+k1);
+    valueType A0   = alpha*(s0*DeltaK+tmp) ;
+    valueType A1   = beta*(s1*DeltaK-tmp) ;
 
-    valueType tmp = k0*alpha+k1*beta-2*DeltaTheta/L ;
+    valueType dk0  = A0/(s0*s0) ;
+    valueType dk1  = A1/(s1*s1) ;
 
-    valueType dk0 = -(k0+tmp)/(alpha*s0) ;
-    valueType dk1 =  (k1+tmp)/(alpha*s1) ;
+    // transform solution from (-1,0)--(1,0) to (x0,y0)--(x1,y1)
+    //S0.build( -1, 0, th0, k0, dk0, s0 ) ;
+    //S1.build(  1, 0, th1, k1, dk1, s1 ) ;
+    //S1.changeCurvilinearOrigin( -s1, s1 ) ;
+    s0  *= lambda ;
+    s1  *= lambda ;
+    dk0 /= lambda*lambda ;
+    dk1 /= lambda*lambda ;
 
     S0.build( x0, y0, theta0, kappa0, dk0, s0 ) ;
     S1.build( x1, y1, theta1, kappa1, dk1, s1 ) ;

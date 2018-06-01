@@ -33,9 +33,7 @@ SPL = cell(8,1);
 
 SPL{1} = S.buildP1( X, Y ) ;
 SPL{2} = S.buildP2( X, Y ) ;
-SPL{2}.thetaBegin()
-SPL{2}.kappaBegin()
-SPL{3} = S.buildP3( X, Y, 2.750308027336735, 1.894670928771472 ) ;
+SPL{3} = S.buildP3( X, Y, SPL{2}.thetaBegin(), SPL{2}.kappaBegin() ) ;
 SPL{4} = S.buildP4( X, Y ) ;
 SPL{5} = S.buildP5( X, Y ) ;
 SPL{6} = S.buildP6( X, Y ) ;
