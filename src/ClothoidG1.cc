@@ -31,299 +31,6 @@ namespace G2lib {
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-  static valueType const CF[] = { 2.989696028701907,  0.716228953608281,
-                                 -0.458969738821509, -0.502821153340377,
-                                  0.261062141752652, -0.045854475238709 } ;
-  int
-  buildClothoid( valueType   x0,
-                 valueType   y0,
-                 valueType   theta0,
-                 valueType   x1,
-                 valueType   y1,
-                 valueType   theta1,
-                 valueType & k,
-                 valueType & dk,
-                 valueType & L ) {
-
-    // traslazione in (0,0)
-    valueType dx  = x1 - x0 ;
-    valueType dy  = y1 - y0 ;
-    valueType r   = hypot( dx, dy ) ;
-    valueType phi = atan2( dy, dx ) ;
-
-    valueType phi0 = theta0 - phi ;
-    valueType phi1 = theta1 - phi ;
-    
-    phi0 -= m_2pi*round(phi0/m_2pi) ;
-    phi1 -= m_2pi*round(phi1/m_2pi) ;
-
-    if ( phi0 >  m_pi ) phi0 -= m_2pi ;
-    if ( phi0 < -m_pi ) phi0 += m_2pi ;
-    if ( phi1 >  m_pi ) phi1 -= m_2pi ;
-    if ( phi1 < -m_pi ) phi1 += m_2pi ;
-
-    valueType delta = phi1 - phi0 ;
-
-    // punto iniziale
-    valueType X  = phi0*m_1_pi ;
-    valueType Y  = phi1*m_1_pi ;
-    valueType xy = X*Y ;
-    Y *= Y ; X *= X ;
-    valueType A  = (phi0+phi1)*(CF[0]+xy*(CF[1]+xy*CF[2])+(CF[3]+xy*CF[4])*(X+Y)+CF[5]*(X*X+Y*Y)) ;
-
-    // newton
-    valueType g=0, dg, intC[3], intS[3] ;
-    indexType niter = 0 ;
-    do {
-      GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS ) ;
-      g   = intS[0] ;
-      dg  = intC[2] - intC[1] ;
-      A  -= g / dg ;
-    } while ( ++niter <= 10 && std::abs(g) > 1E-12 ) ;
-
-    G2LIB_ASSERT( std::abs(g) < 1E-8, "Newton do not converge, g = " << g << " niter = " << niter ) ;
-    GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] ) ;
-    L = r/intC[0] ;
-
-    G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
-    k  = (delta-A)/L ;
-    dk = 2*A/L/L ;
-    
-    return niter ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  int
-  buildClothoid( valueType   x0,
-                 valueType   y0,
-                 valueType   theta0,
-                 valueType   x1,
-                 valueType   y1,
-                 valueType   theta1,
-                 valueType & k,
-                 valueType & dk,
-                 valueType & L,
-                 valueType & k_1,
-                 valueType & dk_1,
-                 valueType & L_1,
-                 valueType & k_2,
-                 valueType & dk_2,
-                 valueType & L_2 ) {
-
-    // traslazione in (0,0)
-    valueType dx  = x1 - x0 ;
-    valueType dy  = y1 - y0 ;
-    valueType r   = hypot( dx, dy ) ;
-    valueType phi = atan2( dy, dx ) ;
-
-    valueType phi0 = theta0 - phi ;
-    valueType phi1 = theta1 - phi ;
-    
-    phi0 -= m_2pi*round(phi0/m_2pi) ;
-    phi1 -= m_2pi*round(phi1/m_2pi) ;
-
-    if ( phi0 >  m_pi ) phi0 -= m_2pi ;
-    if ( phi0 < -m_pi ) phi0 += m_2pi ;
-    if ( phi1 >  m_pi ) phi1 -= m_2pi ;
-    if ( phi1 < -m_pi ) phi1 += m_2pi ;
-
-    valueType delta = phi1 - phi0 ;
-
-    // punto iniziale
-    valueType X  = phi0*m_1_pi ;
-    valueType Y  = phi1*m_1_pi ;
-    valueType xy = X*Y ;
-    Y *= Y ; X *= X ;
-    valueType A = (phi0+phi1)*(CF[0]+xy*(CF[1]+xy*CF[2])+(CF[3]+xy*CF[4])*(X+Y)+CF[5]*(X*X+Y*Y)) ;
-
-    // newton
-    valueType g=0, dg, intC[3], intS[3] ;
-    indexType niter = 0 ;
-    do {
-      GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS ) ;
-      g   = intS[0] ;
-      dg  = intC[2] - intC[1] ;
-      A  -= g / dg ;
-    } while ( ++niter <= 10 && std::abs(g) > 1E-12 ) ;
-
-    G2LIB_ASSERT( std::abs(g) < 1E-8, "Newton do not converge, g = " << g << " niter = " << niter ) ;
-    GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS ) ;
-    L = r/intC[0] ;
-
-    G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
-    k  = (delta-A)/L ;
-    dk = 2*A/L/L ;
-
-    valueType alpha = intC[0]*intC[1] + intS[0]*intS[1] ;
-    valueType beta  = intC[0]*intC[2] + intS[0]*intS[2] ;
-    valueType gamma = intC[0]*intC[0] + intS[0]*intS[0] ;
-    valueType tx    = intC[1]-intC[2] ;
-    valueType ty    = intS[1]-intS[2] ;
-    valueType txy   = L*(intC[1]*intS[2]-intC[2]*intS[1]) ;
-    valueType omega = L*(intS[0]*tx-intC[0]*ty) - txy ;
-
-    delta = intC[0]*tx + intS[0]*ty ;
-
-    L_1  = omega/delta ;
-    L_2  = txy/delta ;
-
-    delta *= L ;
-    k_1  = (beta-gamma-k*omega)/delta ;
-    k_2  = -(beta+k*txy)/delta ;
-
-    delta *= L/2 ;
-    dk_1 = (gamma-alpha-dk*omega*L)/delta ;
-    dk_2 = (alpha-dk*txy*L)/delta ;
-
-    return niter ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  int
-  ClothoidCurve::build_G1( valueType x0,
-                           valueType y0,
-                           valueType theta0,
-                           valueType x1,
-                           valueType y1,
-                           valueType theta1,
-                           valueType tol ) {
-
-    // traslazione in (0,0)
-    valueType dx  = x1 - x0 ;
-    valueType dy  = y1 - y0 ;
-    valueType r   = hypot( dx, dy ) ;
-    valueType phi = atan2( dy, dx ) ;
-
-    valueType phi0 = theta0 - phi ;
-    valueType phi1 = theta1 - phi ;
-    
-    phi0 -= m_2pi*round(phi0/m_2pi) ;
-    phi1 -= m_2pi*round(phi1/m_2pi) ;
-
-    if ( phi0 >  m_pi ) phi0 -= m_2pi ;
-    if ( phi0 < -m_pi ) phi0 += m_2pi ;
-    if ( phi1 >  m_pi ) phi1 -= m_2pi ;
-    if ( phi1 < -m_pi ) phi1 += m_2pi ;
-
-    valueType delta = phi1 - phi0 ;
-
-    // punto iniziale
-    valueType X  = phi0*m_1_pi ;
-    valueType Y  = phi1*m_1_pi ;
-    valueType xy = X*Y ;
-    Y *= Y ; X *= X ;
-    valueType A  = (phi0+phi1)*(CF[0]+xy*(CF[1]+xy*CF[2])+(CF[3]+xy*CF[4])*(X+Y)+CF[5]*(X*X+Y*Y)) ;
-
-    // newton
-    valueType g=0, dg, intC[3], intS[3] ;
-    indexType niter = 0 ;
-    do {
-      GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS ) ;
-      g   = intS[0] ;
-      dg  = intC[2] - intC[1] ;
-      A  -= g / dg ;
-    } while ( ++niter <= 10 && std::abs(g) > tol ) ;
-
-    G2LIB_ASSERT( std::abs(g) < 1E-8, "Newton do not converge, g = " << g << " niter = " << niter ) ;
-    GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] ) ;
-    L = r/intC[0] ;
-
-    G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
-    CD.x0     = x0 ;
-    CD.y0     = y0 ;
-    CD.theta0 = theta0 ;
-    CD.kappa0 = (delta-A)/L ;
-    CD.dk     = 2*A/L/L ;
-
-    return niter ;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  int
-  ClothoidCurve::build_G1_D( valueType x0,
-                             valueType y0,
-                             valueType theta0,
-                             valueType x1,
-                             valueType y1,
-                             valueType theta1,
-                             valueType L_D[2],
-                             valueType k_D[2],
-                             valueType dk_D[2],
-                             valueType tol ) {
-
-    // traslazione in (0,0)
-    valueType dx  = x1 - x0 ;
-    valueType dy  = y1 - y0 ;
-    valueType r   = hypot( dx, dy ) ;
-    valueType phi = atan2( dy, dx ) ;
-
-    valueType phi0 = theta0 - phi ;
-    valueType phi1 = theta1 - phi ;
-
-    phi0 -= m_2pi*round(phi0/m_2pi) ;
-    phi1 -= m_2pi*round(phi1/m_2pi) ;
-
-    if ( phi0 >  m_pi ) phi0 -= m_2pi ;
-    if ( phi0 < -m_pi ) phi0 += m_2pi ;
-    if ( phi1 >  m_pi ) phi1 -= m_2pi ;
-    if ( phi1 < -m_pi ) phi1 += m_2pi ;
-
-    valueType delta = phi1 - phi0 ;
-
-    // punto iniziale
-    valueType X  = phi0*m_1_pi ;
-    valueType Y  = phi1*m_1_pi ;
-    valueType xy = X*Y ;
-    Y *= Y ; X *= X ;
-    valueType A  = (phi0+phi1)*(CF[0]+xy*(CF[1]+xy*CF[2])+(CF[3]+xy*CF[4])*(X+Y)+CF[5]*(X*X+Y*Y)) ;
-
-    // newton
-    valueType g=0, dg, intC[3], intS[3] ;
-    indexType niter = 0 ;
-    do {
-      GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS ) ;
-      g   = intS[0] ;
-      dg  = intC[2] - intC[1] ;
-      A  -= g / dg ;
-    } while ( ++niter <= 10 && std::abs(g) > tol ) ;
-
-    G2LIB_ASSERT( std::abs(g) < 1E-8, "Newton do not converge, g = " << g << " niter = " << niter ) ;
-    GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] ) ;
-    L = r/intC[0] ;
-
-    G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
-    CD.x0     = x0 ;
-    CD.y0     = y0 ;
-    CD.theta0 = theta0 ;
-    CD.kappa0 = (delta-A)/L ;
-    CD.dk     = 2*A/L/L ;
-
-    valueType alpha = intC[0]*intC[1] + intS[0]*intS[1] ;
-    valueType beta  = intC[0]*intC[2] + intS[0]*intS[2] ;
-    valueType gamma = intC[0]*intC[0] + intS[0]*intS[0] ;
-    valueType tx    = intC[1]-intC[2] ;
-    valueType ty    = intS[1]-intS[2] ;
-    valueType txy   = L*(intC[1]*intS[2]-intC[2]*intS[1]) ;
-    valueType omega = L*(intS[0]*tx-intC[0]*ty) - txy ;
-
-    delta = intC[0]*tx + intS[0]*ty ;
-
-    L_D[0] = omega/delta ;
-    L_D[1] = txy/delta ;
-
-    delta *= L ;
-    k_D[0] = (beta-gamma-CD.kappa0*omega)/delta ;
-    k_D[1] = -(beta+CD.kappa0*txy)/delta ;
-
-    delta  *= L/2 ;
-    dk_D[0] = (gamma-alpha-CD.dk*omega*L)/delta ;
-    dk_D[1] = (alpha-CD.dk*txy*L)/delta ;
-
-    return niter ;
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -391,51 +98,47 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::build_forward( valueType _x0,
-                                valueType _y0,
-                                valueType _theta0,
-                                valueType _k,
-                                valueType _x1,
-                                valueType _y1,
+  ClothoidCurve::build_forward( valueType x0,
+                                valueType y0,
+                                valueType theta0,
+                                valueType kappa0,
+                                valueType x1,
+                                valueType y1,
                                 valueType tol ) {
 
-    CD.x0     = _x0 ;
-    CD.y0     = _y0 ;
-    CD.theta0 = _theta0 ;
-    CD.kappa0 = _k ;
-
     // Compute guess angles
-    valueType len  = hypot( _y1-_y0, _x1-_x0 ) ;
-    valueType arot = atan2( _y1-_y0, _x1-_x0 ) ;
-    valueType th0  = CD.theta0 - arot ;
+    valueType dx   = x1 - x0 ;
+    valueType dy   = y1 - y0 ;
+    valueType len  = hypot( dy, dx ) ;
+    valueType arot = atan2( dy, dx ) ;
+    valueType th0  = theta0 - arot ;
     // normalize angle
     while ( th0 >  m_pi ) th0 -= m_2pi ;
     while ( th0 < -m_pi ) th0 += m_2pi ;
 
     // solve the problem from (0,0) to (1,0)
-    valueType k0    = CD.kappa0*len ;
+    valueType k0    = kappa0*len ;
     valueType alpha = 2.6 ;
-    valueType thmin = max(-m_pi,-CD.theta0/2-alpha) ;
-    valueType thmax = min( m_pi,-CD.theta0/2+alpha) ;
+    valueType thmin = max(-m_pi,-theta0/2-alpha) ;
+    valueType thmax = min( m_pi,-theta0/2+alpha) ;
     valueType Kmin  = kappa_fun( th0, thmax ) ;
     valueType Kmax  = kappa_fun( th0, thmin ) ;
     bool ok ;
     valueType th = theta_guess( th0, max(min(k0,Kmax),Kmin), ok ) ;
     if ( ok ) {
-      for ( indexType iter = 0 ; iter < 10 ; ++iter ) {
-        valueType dk, L, k_1, dk_1, L_1, k_2, dk_2, L_2 ;
-        buildClothoid( 0, 0, th0,
-                       1, 0, th,
-                       CD.kappa0, CD.dk, L, k_1, dk_1, L_1, k_2, dk_2, L_2 ) ;
+      for ( indexType iter = 0 ; iter < 20 ; ++iter ) {
+        valueType LL, L_D[2], k_D[2], dk_D[2] ;
+        CD.build_G1( 0, 0, th0,
+                     1, 0, th,
+                     tol, LL,
+                     true, L_D, k_D, dk_D ) ;
         valueType f   = CD.kappa0 - k0 ;
-        valueType df  = k_2 ;
+        valueType df  = k_D[1] ;
         valueType dth = f/df ;
         th -= dth ;
         if ( abs(dth) < tol && abs(f) < tol ) {
           // transform solution
-          buildClothoid( CD.x0, CD.y0, CD.theta0,
-                         _x1, _y1, arot + th,
-                         _k, dk, L ) ;
+          CD.build_G1( x0, y0, theta0, x1, y1, arot + th, tol, L ) ;
           return true ;
         }
       }

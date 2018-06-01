@@ -827,6 +827,100 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  int
+  ClothoidData::build_G1( valueType   x0,
+                          valueType   y0,
+                          valueType   theta0,
+                          valueType   x1,
+                          valueType   y1,
+                          valueType   theta1,
+                          valueType   tol,
+                          valueType & L,
+                          bool        compute_deriv,
+                          valueType   L_D[2],
+                          valueType   k_D[2],
+                          valueType   dk_D[2] ) {
+
+    static valueType const CF[] = { 2.989696028701907,  0.716228953608281,
+                                   -0.458969738821509, -0.502821153340377,
+                                    0.261062141752652, -0.045854475238709 } ;
+
+    this->x0     = x0 ;
+    this->y0     = y0 ;
+    this->theta0 = theta0 ;
+
+    // traslazione in (0,0)
+    valueType dx   = x1 - x0 ;
+    valueType dy   = y1 - y0 ;
+    valueType r    = hypot( dx, dy ) ;
+    valueType phi  = atan2( dy, dx ) ;
+    valueType phi0 = theta0 - phi ;
+    valueType phi1 = theta1 - phi ;
+
+    phi0 -= m_2pi*round(phi0/m_2pi) ;
+    phi1 -= m_2pi*round(phi1/m_2pi) ;
+
+    if      ( phi0 >  m_pi ) phi0 -= m_2pi ;
+    else if ( phi0 < -m_pi ) phi0 += m_2pi ;
+    if      ( phi1 >  m_pi ) phi1 -= m_2pi ;
+    else if ( phi1 < -m_pi ) phi1 += m_2pi ;
+
+    valueType delta = phi1 - phi0 ;
+
+    // punto iniziale
+    valueType X  = phi0*m_1_pi ;
+    valueType Y  = phi1*m_1_pi ;
+    valueType xy = X*Y ;
+    Y *= Y ; X *= X ;
+    valueType A = (phi0+phi1)*(CF[0]+xy*(CF[1]+xy*CF[2])+(CF[3]+xy*CF[4])*(X+Y)+CF[5]*(X*X+Y*Y)) ;
+
+    // newton
+    valueType g=0, dg, intC[3], intS[3] ;
+    indexType niter = 0 ;
+    do {
+      GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS ) ;
+      g   = intS[0] ;
+      dg  = intC[2] - intC[1] ;
+      A  -= g / dg ;
+    } while ( ++niter <= 10 && std::abs(g) > tol ) ;
+
+    G2LIB_ASSERT( std::abs(g) <= tol, "Newton do not converge, g = " << g << " niter = " << niter ) ;
+    GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] ) ;
+    L = r/intC[0] ;
+
+    G2LIB_ASSERT( L > 0, "Negative length L = " << L ) ;
+    this->kappa0 = (delta-A)/L ;
+    this->dk     = 2*A/L/L ;
+
+    if ( compute_deriv ) {
+
+      valueType alpha = intC[0]*intC[1] + intS[0]*intS[1] ;
+      valueType beta  = intC[0]*intC[2] + intS[0]*intS[2] ;
+      valueType gamma = intC[0]*intC[0] + intS[0]*intS[0] ;
+      valueType tx    = intC[1]-intC[2] ;
+      valueType ty    = intS[1]-intS[2] ;
+      valueType txy   = L*(intC[1]*intS[2]-intC[2]*intS[1]) ;
+      valueType omega = L*(intS[0]*tx-intC[0]*ty) - txy ;
+
+      delta = intC[0]*tx + intS[0]*ty ;
+
+      L_D[0] = omega/delta ;
+      L_D[1] = txy/delta ;
+
+      delta *= L ;
+      k_D[0] = (beta-gamma-kappa0*omega)/delta ;
+      k_D[1] = -(beta+kappa0*txy)/delta ;
+
+      delta  *= L/2 ;
+      dk_D[0] = (gamma-alpha-dk*omega*L)/delta ;
+      dk_D[1] = (alpha-dk*txy*L)/delta ;
+    }
+
+    return niter ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidData::info( std::ostream & s ) const {
     s <<   "x0     = " << x0

@@ -42,45 +42,6 @@ namespace G2lib {
    |  | |___| | (_) | |_| | | | (_) | | (_| |
    |   \____|_|\___/ \__|_| |_|\___/|_|\__,_|
   \*/
-  /*! \brief Compute the clothoid by Hemite data
-   *
-   * \param x0     initial x position            \f$ x_0      \f$
-   * \param y0     initial y position            \f$ y_0      \f$
-   * \param theta0 initial angle                 \f$ \theta_0 \f$
-   * \param x1     final x position              \f$ x_1      \f$
-   * \param y1     final y position              \f$ y_1      \f$
-   * \param theta1 final angle                   \f$ \theta_1 \f$
-   * \param k      computed curvature            \f$ K        \f$
-   * \param dk     computed curvature derivative \f$ K'       \f$
-   * \param L      computed length of the curve
-   */
-  indexType
-  buildClothoid( valueType   x0,
-                 valueType   y0,
-                 valueType   theta0,
-                 valueType   x1,
-                 valueType   y1,
-                 valueType   theta1,
-                 valueType & k,
-                 valueType & dk,
-                 valueType & L ) ;
-
-  indexType
-  buildClothoid( valueType   x0,
-                 valueType   y0,
-                 valueType   theta0,
-                 valueType   x1,
-                 valueType   y1,
-                 valueType   theta1,
-                 valueType & k,
-                 valueType & dk,
-                 valueType & L,
-                 valueType & k_1,
-                 valueType & dk_1,
-                 valueType & L_1,
-                 valueType & k_2,
-                 valueType & dk_2,
-                 valueType & L_2 ) ;
 
   //! Compute Lommel function
   valueType
@@ -117,8 +78,8 @@ namespace G2lib {
     ClothoidData CD ; //!< clothoid data
     valueType    L ;  //!< lenght of clothoid segment
 
-    int
-    build( valueType x1, valueType y1, valueType theta1 );
+    //int
+    //build( valueType x1, valueType y1, valueType theta1 );
 
     void
     bbSplit_internal( bbData2 const & data, vector<bbData> & bbV ) const ;
@@ -159,15 +120,12 @@ namespace G2lib {
     }
 
     //! construct a clothoid by solving the hermite G1 problem
-    ClothoidCurve( valueType const _P0[],
-                   valueType       _theta0,
-                   valueType const _P1[],
-                   valueType       _theta1 )
+    ClothoidCurve( valueType const P0[],
+                   valueType       theta0,
+                   valueType const P1[],
+                   valueType       theta1 )
     {
-      CD.x0     = _P0[0] ;
-      CD.y0     = _P0[1] ;
-      CD.theta0 = _theta0 ;
-      build( _P1[0], _P1[1], _theta1 ) ;
+      build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 ) ;
     }
 
     void
@@ -228,7 +186,9 @@ namespace G2lib {
               valueType x1,
               valueType y1,
               valueType theta1,
-              valueType tol = 1e-12 ) ;
+              valueType tol = 1e-12 ) {
+      return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L ) ;
+    }
 
     /*! \brief build a clothoid by solving the hermite G1 problem
      *
@@ -250,16 +210,18 @@ namespace G2lib {
                 valueType L_D[2],
                 valueType k_D[2],
                 valueType dk_D[2],
-                valueType tol = 1e-12 ) ;
+                valueType tol = 1e-12 ) {
+      return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L, true, L_D, k_D, dk_D ) ;
+    }
 
     /*! \brief build a clothoid by solving the forward problem
      *
-     * \param x0     initial x position            \f$ x_0      \f$
-     * \param y0     initial y position            \f$ y_0      \f$
-     * \param theta0 initial angle                 \f$ \theta_0 \f$
-     * \param k      initial curvature             \f$ \kappa_0 \f$
-     * \param x1     final x position              \f$ x_1      \f$
-     * \param y1     final y position              \f$ y_1      \f$
+     * \param x0     initial x position \f$ x_0      \f$
+     * \param y0     initial y position \f$ y_0      \f$
+     * \param theta0 initial angle      \f$ \theta_0 \f$
+     * \param k      initial curvature  \f$ \kappa_0 \f$
+     * \param x1     final x position   \f$ x_1      \f$
+     * \param y1     final y position   \f$ y_1      \f$
      */
     bool
     build_forward( valueType x0,
@@ -268,7 +230,7 @@ namespace G2lib {
                    valueType k,
                    valueType x1,
                    valueType y1,
-                   valueType tol = 1e-8 ) ;
+                   valueType tol = 1e-12 ) ;
 
     /*! \brief get clothoid angle at curvilinear cooordinate `s`
      *
@@ -276,8 +238,7 @@ namespace G2lib {
      * \return angle (radiant) at curvilinear cooordinate `s`
      */
     valueType
-    theta( valueType s ) const
-    { return CD.theta(s) ; }
+    theta( valueType s ) const { return CD.theta(s) ; }
 
     /*! \brief get clothoid angle derivative (=curvature) at curvilinear cooordinate `s`
      *
@@ -285,16 +246,14 @@ namespace G2lib {
      * \return angle derivative (radiant/s) at curvilinear cooordinate `s`
      */
     valueType
-    theta_D( valueType s ) const
-    { return CD.kappa(s) ; }
+    theta_D( valueType s ) const { return CD.kappa(s) ; }
 
     /*! \brief get clothoid angle second derivative at curvilinear cooordinate `s`
      *
      * \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
      */
     valueType
-    theta_DD( valueType ) const
-    { return CD.dk ; }
+    theta_DD( valueType ) const { return CD.dk ; }
 
     /*! \brief get clothoid angle third derivative at curvilinear cooordinate `s`
      *

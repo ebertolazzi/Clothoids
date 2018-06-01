@@ -32,14 +32,14 @@
 "\n" \
 "  - Eval:\n" \
 "    [x,y,theta,kappa] = ClothoidListMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
-"    x = ClothoidListMexWrapper( 'Xbegin', OBJ ) ;\n" \
-"    x = ClothoidListMexWrapper( 'Xend', OBJ ) ;\n" \
-"    y = ClothoidListMexWrapper( 'Ybegin', OBJ ) ;\n" \
-"    y = ClothoidListMexWrapper( 'Yend', OBJ ) ;\n" \
-"    theta = ClothoidListMexWrapper( 'ThetaBegin', OBJ ) ;\n" \
-"    theta = ClothoidListMexWrapper( 'ThetaEnd', OBJ ) ;\n" \
-"    kappa = ClothoidListMexWrapper( 'KappaBegin', OBJ ) ;\n" \
-"    kappa = ClothoidListMexWrapper( 'KappaEnd', OBJ ) ;\n" \
+"    x = ClothoidListMexWrapper( 'xBegin', OBJ ) ;\n" \
+"    x = ClothoidListMexWrapper( 'xEnd', OBJ ) ;\n" \
+"    y = ClothoidListMexWrapper( 'yBegin', OBJ ) ;\n" \
+"    y = ClothoidListMexWrapper( 'yEnd', OBJ ) ;\n" \
+"    theta = ClothoidListMexWrapper( 'thetaBegin', OBJ ) ;\n" \
+"    theta = ClothoidListMexWrapper( 'thetaEnd', OBJ ) ;\n" \
+"    kappa = ClothoidListMexWrapper( 'kappaBegin', OBJ ) ;\n" \
+"    kappa = ClothoidListMexWrapper( 'kappaEnd', OBJ ) ;\n" \
 "\n" \
 "    [x,y]         = ClothoidListMexWrapper( 'eval', OBJ, ss, offs ) ;\n" \
 "    [x_D,y_D]     = ClothoidListMexWrapper( 'eval_D', OBJ, ss, offs ) ;\n" \
@@ -284,98 +284,41 @@ namespace G2lib {
         }
         #undef CMD
 
-      } else if ( cmd == "xBegin" ) {
+      } else if ( cmd == "xBegin"     || cmd == "xEnd"     ||
+                  cmd == "yBegin"     || cmd == "yEnd"     ||
+                  cmd == "thetaBegin" || cmd == "thetaEnd" ||
+                  cmd == "kappaBegin" || cmd == "kappaEnd" ||
+                  cmd == "length" ) {
 
-        #define CMD "ClothoidListMexWrapper('xBegin',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        #define CMD "ClothoidListMexWrapper('...',OBJ[,n]): "
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->xBegin());
 
-        #undef CMD
-
-      } else if ( cmd == "xEnd" ) {
-
-        #define CMD "ClothoidListMexWrapper('xEnd',OBJ): "
-
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->xEnd());
-
-        #undef CMD
-
-      } else if ( cmd == "yBegin" ) {
-
-        #define CMD "ClothoidListMexWrapper('yBegin',OBJ): "
-
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->yBegin());
-
-        #undef CMD
-
-      } else if ( cmd == "yEnd" ) {
-
-        #define CMD "ClothoidListMexWrapper('yEnd',OBJ): "
-
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->yEnd());
-
-        #undef CMD
-
-      } else if ( cmd == "thetaBegin" ) {
-
-        #define CMD "ClothoidListMexWrapper('thetaBegin',OBJ): "
-
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->thetaBegin());
-
-        #undef CMD
-
-      } else if ( cmd == "thetaEnd" ) {
-
-        #define CMD "ClothoidListMexWrapper('thetaEnd',OBJ): "
-
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->thetaEnd());
-
-        #undef CMD
-
-      } else if ( cmd == "kappaBegin" ) {
-
-        #define CMD "ClothoidListMexWrapper('kappaBegin',OBJ): "
-
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->kappaBegin());
-
-        #undef CMD
-
-      } else if ( cmd == "kappaEnd" ) {
-
-        #define CMD "ClothoidListMexWrapper('kappaEnd',OBJ): "
-
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        setScalarValue(arg_out_0, ptr->kappaEnd());
-
-        #undef CMD
-
-      } else if ( cmd == "length" ) {
-
-        #define CMD "ClothoidListMexWrapper('length',OBJ[,k]): "
-
-        MEX_ASSERT(nrhs == 2 || nrhs == 3, CMD "expected 2 or 3 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-        if ( nrhs == 2 ) {
-          setScalarValue(arg_out_0, ptr->totalLength());
+        if ( nrhs == 3 ) {
+          int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
+          MEX_ASSERT( n > 0 && n <= ptr->numSegment(),
+                      CMD "n =  " << n << " must be >= 1 and <= " << ptr->numSegment() );
+          ClothoidCurve const & c = ptr->get(n-1);
+          if      ( cmd == "xBegin"     ) setScalarValue(arg_out_0, c.xBegin());
+          else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, c.xEnd());
+          else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, c.yBegin());
+          else if ( cmd == "yEnd"       ) setScalarValue(arg_out_0, c.yEnd());
+          else if ( cmd == "thetaBegin" ) setScalarValue(arg_out_0, c.thetaBegin());
+          else if ( cmd == "thetaEnd"   ) setScalarValue(arg_out_0, c.thetaEnd());
+          else if ( cmd == "kappaBegin" ) setScalarValue(arg_out_0, c.kappaBegin());
+          else if ( cmd == "kappaEnd"   ) setScalarValue(arg_out_0, c.kappaEnd());
+          else if ( cmd == "length"     ) setScalarValue(arg_out_0, c.length());
         } else {
-          int64_t idx = getInt( arg_in_2, CMD "Error in reading k" );
-          ClothoidCurve const & c = ptr->get(idx);
-          setScalarValue(arg_out_0, c.length());
+          MEX_ASSERT(nrhs == 2, CMD "expected 2 or 3 inputs");
+          if      ( cmd == "xBegin"     ) setScalarValue(arg_out_0, ptr->xBegin());
+          else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, ptr->xEnd());
+          else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, ptr->yBegin());
+          else if ( cmd == "yEnd"       ) setScalarValue(arg_out_0, ptr->yEnd());
+          else if ( cmd == "thetaBegin" ) setScalarValue(arg_out_0, ptr->thetaBegin());
+          else if ( cmd == "thetaEnd"   ) setScalarValue(arg_out_0, ptr->thetaEnd());
+          else if ( cmd == "kappaBegin" ) setScalarValue(arg_out_0, ptr->kappaBegin());
+          else if ( cmd == "kappaEnd"   ) setScalarValue(arg_out_0, ptr->kappaEnd());
+          else if ( cmd == "length"     ) setScalarValue(arg_out_0, ptr->totalLength());
         }
 
         #undef CMD

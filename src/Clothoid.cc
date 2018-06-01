@@ -351,7 +351,7 @@ namespace G2lib {
                             vector<valueType>   & s2,
                             indexType             max_iter,
                             valueType             tolerance ) const {
-    vector<bbData> bbV0,  bbV1 ;
+    vector<bbData> bbV0, bbV1 ;
     bbSplit( m_pi/50, L/3, offs, bbV0 ) ;
     clot.bbSplit( m_pi/50, clot.L/3, clot_offs, bbV1 ) ;
     s1.clear() ;

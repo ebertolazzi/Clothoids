@@ -86,32 +86,48 @@ classdef ClothoidList < handle
       [DST,S] = ClothoidListMexWrapper( 'distanceBySample', self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = getX0( self, k )
-      res = ClothoidListMexWrapper( 'getX0', self.objectHandle, k );
+    function res = xBegin( self, varargin )
+      res = ClothoidListMexWrapper( 'xBegin', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = getY0( self, k )
-      res = ClothoidListMexWrapper( 'getY0', self.objectHandle, k );
+    function res = xEnd( self, varargin )
+      res = ClothoidListMexWrapper( 'xEnd', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = getTheta0( self, k )
-      res = ClothoidListMexWrapper( 'getTheta0', self.objectHandle, k );
+    function res = yBegin( self, varargin )
+      res = ClothoidListMexWrapper( 'yBegin', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = getKappa0( self, k )
-      res = ClothoidListMexWrapper( 'getKappa0', self.objectHandle, k );
+    function res = yEnd( self, varargin )
+      res = ClothoidListMexWrapper( 'yEnd', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = getDkappa( self, k )
-      res = ClothoidListMexWrapper( 'getKappa_D', self.objectHandle, k );
+    function res = thetaBegin( self, varargin )
+      res = ClothoidListMexWrapper( 'thetaBegin', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = getSmin( self, varargin )
-      res = ClothoidListMexWrapper( 'getSmin', self.objectHandle, varargin{:}  );
+    function res = thetaEnd( self, varargin )
+      res = ClothoidListMexWrapper( 'thetaEnd', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = getSmax( self, varargin )
-      res = ClothoidListMexWrapper( 'getSmax', self.objectHandle, varargin{:}  );
+    function res = kappaBegin( self, varargin )
+      res = ClothoidListMexWrapper( 'kappaBegin', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = kappaEnd( self, varargin )
+      res = ClothoidListMexWrapper( 'kappaEnd', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = kappa_D( self, varargin )
+      res = ClothoidListMexWrapper( 'kappa_D', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = sMin( self, varargin )
+      res = ClothoidListMexWrapper( 'sMin', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = sMax( self, varargin )
+      res = ClothoidListMexWrapper( 'sMax', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length( self, varargin )
@@ -200,9 +216,9 @@ classdef ClothoidList < handle
       %    lineH: the handle to the line object 
       %           (i.e. the output of the MATLAB plot function)
       if nargin > 1
-        step = varargin{1} ;
+        npts = varargin{1} ;
       else
-        step = 1000 ;
+        npts = 1000 ;
       end
       if nargin > 2
         fmt1 = varargin{2} ;
@@ -217,9 +233,9 @@ classdef ClothoidList < handle
       for k=1:self.numSegment()
         C = self.get(k);
         if mod(k,2) == 0
-          C.plot( step, fmt1{:} );
+          C.plot( npts, fmt1{:} );
         else
-          C.plot( step, fmt2{:} );
+          C.plot( npts, fmt2{:} );
         end
         hold on ;
       end

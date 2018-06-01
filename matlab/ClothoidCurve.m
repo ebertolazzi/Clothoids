@@ -68,11 +68,11 @@ classdef ClothoidCurve < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = build_forward( self, x0, y0, theta0, k0, x1, y1 )
+    function ok = build_forward( self, x0, y0, theta0, k0, x1, y1 )
       % Build the interpolating clothoid arc fixing initial position angle and curvature
       %
       % Usage:
-      %    res = ref.build_forward( x0, y0, theta0, k0, x1, y1 )
+      %    ok = ref.build_forward( x0, y0, theta0, k0, x1, y1 )
       %
       % On input:
       %    x0, y0: coordinate of initial point
@@ -81,9 +81,9 @@ classdef ClothoidCurve < handle
       %    x1, y1: coordinate of final point
       %
       % On output:
-      %    res: true iff the interpolation was successful
+      %    ok: true iff the interpolation was successful
       %
-      res = ClothoidCurveMexWrapper( 'build_forward', self.objectHandle, x0, y0, theta0, k0, x1, y1 );
+      ok = ClothoidCurveMexWrapper( 'build_forward', self.objectHandle, x0, y0, theta0, k0, x1, y1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = evaluate( self, s )
@@ -184,6 +184,15 @@ classdef ClothoidCurve < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length( self )
       res = ClothoidCurveMexWrapper( 'length', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function info( self )
+      fprintf('x0     = %g\n',self.xBegin());
+      fprintf('y0     = %g\n',self.yBegin());
+      fprintf('theta0 = %g\n',self.thetaBegin());
+      fprintf('kappa0 = %g\n',self.kappaBegin());
+      fprintf('dk     = %g\n',self.kappa_D());
+      fprintf('length = %g\n',self.length());
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function trim( self, smin, smax )

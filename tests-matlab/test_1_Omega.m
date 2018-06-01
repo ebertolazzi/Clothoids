@@ -26,7 +26,6 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
      2.953123242,0.925003242,-0.915616758,-2.989063158,-3.178123242,-3.178123242, -1.707808758 ] ;
 
 close all ;
-figure('Position',[10,10,800,800]);
 
 S  = ClothoidSplineG2() ;
 
@@ -34,16 +33,44 @@ SPL = cell(8,1);
 
 SPL{1} = S.buildP1( X, Y ) ;
 SPL{2} = S.buildP2( X, Y ) ;
-SPL{3} = S.buildP4( X, Y ) ;
-SPL{4} = S.buildP5( X, Y ) ;
-SPL{5} = S.buildP6( X, Y ) ;
-SPL{6} = S.buildP7( X, Y ) ;
-SPL{7} = S.buildP8( X, Y ) ;
-SPL{8} = S.buildP9( X, Y ) ;
+SPL{2}.thetaBegin()
+SPL{2}.kappaBegin()
+SPL{3} = S.buildP3( X, Y, 2.750308027336735, 1.894670928771472 ) ;
+SPL{4} = S.buildP4( X, Y ) ;
+SPL{5} = S.buildP5( X, Y ) ;
+SPL{6} = S.buildP6( X, Y ) ;
+SPL{7} = S.buildP7( X, Y ) ;
+SPL{8} = S.buildP8( X, Y ) ;
+SPL{9} = S.buildP9( X, Y ) ;
 
-for k=1:8
-  subplot(3,3,k);
+aa = 0.04 ;
+bb = 1/3-2*aa ;
+
+figure('Position',[ 1 1 800 800]);
+
+for k=1:9
+  switch(k)
+  case 1; subplot('Position',[aa     aa     bb bb]);
+  case 2; subplot('Position',[aa+1/3 aa     bb bb]);
+  case 3; subplot('Position',[aa+2/3 aa     bb bb]);
+  case 4; subplot('Position',[aa     aa+1/3 bb bb]);
+  case 5; subplot('Position',[aa+1/3 aa+1/3 bb bb]);
+  case 6; subplot('Position',[aa+2/3 aa+1/3 bb bb]);
+  case 7; subplot('Position',[aa     aa+2/3 bb bb]);
+  case 8; subplot('Position',[aa+1/3 aa+2/3 bb bb]);
+  case 9; subplot('Position',[aa+2/3 aa+2/3 bb bb]);
+  end
+  
+  % subplot(3,3,k);
   SPL{k}.plot() ;
   SPL{k}.plotNormal(0.25,0.25) ;
+
+  if k == 3
+    hold on
+    SPL{2}.plot(1000,{'Color','red','LineWidth',1},{'Color','blue','LineWidth',1}) ;
+  end
+  
+  title(sprintf('test P%d',k)) ;
+  
   axis equal ;
 end

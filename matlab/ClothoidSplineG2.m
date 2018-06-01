@@ -381,7 +381,36 @@ classdef ClothoidSplineG2 < handle
     function clots = buildP2( self, x, y )
       self.t_type = 'P2';
       clots = self.build_internal( x, y ) ;
-    end 
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function clots = buildP3( self, x, y, theta0, kappa0 )
+      self.t_type = 'P3';
+      %
+      % Compute spline parameters
+      %
+      clots = ClothoidList() ;
+      N     = length(x) ;
+      clots.reserve(N-1);
+
+      c  = ClothoidCurve() ;
+      ok = c.build_forward( x(1), y(1), theta0, kappa0, x(2), y(2) ) ;
+      if ok
+        clots.push_back( c ) ;
+      else
+        error('buildP3 failed');
+      end
+
+      for j=3:N
+        theta0 = c.thetaEnd() ;
+        kappa0 = c.kappaEnd() ;
+        ok = c.build_forward( x(j-1), y(j-1), theta0, kappa0, x(j), y(j) ) ;
+        if ok
+          clots.push_back( c ) ;
+        else
+          error('buildP3 failed');
+        end
+      end
+    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP4( self, x, y )
       self.t_type = 'P4';

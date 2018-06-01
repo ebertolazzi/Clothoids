@@ -209,6 +209,20 @@ namespace G2lib {
                 valueType p1[2],
                 valueType p2[2] ) const ;
 
+    int
+    build_G1( valueType   x0,
+              valueType   y0,
+              valueType   theta0,
+              valueType   x1,
+              valueType   y1,
+              valueType   theta1,
+              valueType   tol,
+              valueType & L,
+              bool        compute_deriv = false,
+              valueType   L_D[2]        = nullptr,
+              valueType   k_D[2]        = nullptr,
+              valueType   dk_D[2]       = nullptr ) ;
+
     void
     info( std::ostream & s ) const ;
 
