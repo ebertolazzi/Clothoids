@@ -263,6 +263,99 @@ classdef ClothoidList < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, varargin )
+      % plot: method to plot the clothoid curve
+      % Usage:
+      %    lineH = ref.plot()
+      %    lineH = ref.plot(0.2)
+      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
+      %    
+      % On input:
+      %    step:     the distance between consecutive samples used to
+      %              draw the curve
+      %    varargin: optional arguments passed to the MATLAB plot
+      %              function
+      %
+      % On output:
+      %    lineH: the handle to the line object 
+      %           (i.e. the output of the MATLAB plot function)
+      if nargin > 1
+        npts = varargin{1} ;
+      else
+        npts = 1000 ;
+      end
+      if nargin > 2
+        fmt1 = varargin{2} ;
+      else
+        fmt1 = {'Color','red','LineWidth',3} ;
+      end
+      if nargin > 3
+        fmt2 = varargin{3} ;
+      else
+        fmt2 = {'Color','blue','LineWidth',3} ;
+      end
+      s0 = 0 ;
+      for k=1:self.numSegment()
+        C  = self.get(k);
+        ss = 0:C.length()/npts:C.length();
+        [~,~,~,kappa] = C.evaluate(ss);
+        if mod(k,2) == 0
+          plot( s0+ss, kappa, fmt1{:} );
+        else
+          plot( s0+ss, kappa, fmt2{:} );
+        end
+        s0 = s0+ss(end);
+        hold on ;
+      end
+    end
+
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotAngle( self, varargin )
+      % plot: method to plot the clothoid curve
+      % Usage:
+      %    lineH = ref.plot()
+      %    lineH = ref.plot(0.2)
+      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
+      %    
+      % On input:
+      %    step:     the distance between consecutive samples used to
+      %              draw the curve
+      %    varargin: optional arguments passed to the MATLAB plot
+      %              function
+      %
+      % On output:
+      %    lineH: the handle to the line object 
+      %           (i.e. the output of the MATLAB plot function)
+      if nargin > 1
+        npts = varargin{1} ;
+      else
+        npts = 1000 ;
+      end
+      if nargin > 2
+        fmt1 = varargin{2} ;
+      else
+        fmt1 = {'Color','red','LineWidth',3} ;
+      end
+      if nargin > 3
+        fmt2 = varargin{3} ;
+      else
+        fmt2 = {'Color','blue','LineWidth',3} ;
+      end
+      s0 = 0 ;
+      for k=1:self.numSegment()
+        C  = self.get(k);
+        ss = 0:C.length()/npts:C.length();
+        [~,~,theta,~] = C.evaluate(ss);
+        if mod(k,2) == 0
+          plot( s0+ss, theta, fmt1{:} );
+        else
+          plot( s0+ss, theta, fmt2{:} );
+        end
+        s0 = s0+ss(end);
+        hold on ;
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotNormal( self, step, len )
       for k=1:self.numSegment()
         C = self.get(k);

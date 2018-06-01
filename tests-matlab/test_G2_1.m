@@ -12,8 +12,8 @@ y1     = 2 ;
 theta1 = -pi/4;
 kappa1 = 0.5;
 
-S  = ClothoidList();
-ok = S.build3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
+S    = ClothoidList();
+iter = S.build3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
 
 figure(1);
 S.plot();

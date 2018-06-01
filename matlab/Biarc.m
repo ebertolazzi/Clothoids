@@ -31,7 +31,7 @@ classdef Biarc < handle
       BiarcMexWrapper( 'delete', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function build( self, x0, y0, theta0, x1, y1, theta1 )
+    function ok = build( self, x0, y0, theta0, x1, y1, theta1 )
       % Build the interpolating G1 clothoid arc
       %
       % Usage:
@@ -43,7 +43,7 @@ classdef Biarc < handle
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
       %
-      BiarcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      ok = BiarcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = evaluate( self, s )
@@ -230,7 +230,7 @@ classdef Biarc < handle
       [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function lineH = plot( self, step, varargin )
+    function lineH = plot( self, npts, varargin )
       % plot: method to plot the clothoid curve
       % Usage:
       %    lineH = ref.plot()
@@ -247,10 +247,10 @@ classdef Biarc < handle
       %    lineH: the handle to the line object 
       %           (i.e. the output of the MATLAB plot function)
       if nargin<2
-        step = 0.1;
+        npts = 400 ;
       end
       L     = BiarcMexWrapper( 'length', self.objectHandle );
-      S     = 0:step:L ;
+      S     = 0:L/npts:L ;
       [X,Y] = BiarcMexWrapper( 'eval', self.objectHandle, S );
       lineH = plot(X,Y, varargin{:});
     end

@@ -58,11 +58,18 @@
 "    ClothoidCurveMexWrapper( 'reverse', OBJ ) ;\n" \
 "    [xp, yp, xm, ym] = ClothoidCurveMexWrapper( 'infinity', OBJ ) ;\n" \
 "  - Boundary:\n" \
+"    pt  = ClothoidCurveMexWrapper( 'xyBegin', OBJ ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'xBegin', OBJ ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'yBegin', OBJ ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'thetaBegin', OBJ ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'kappaBegin', OBJ ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'kappaEnd', OBJ ) ;\n" \
+"    pt  = ClothoidCurveMexWrapper( 'xyEnd', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'xEnd', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'yEnd', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'thetaEnd', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'kappaEnd', OBJ ) ;\n" \
+"    res = ClothoidCurveMexWrapper( 'kappa_D', OBJ ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'length', OBJ ) ;\n" \
 "\n" \
 "  - Distance:\n" \
@@ -205,15 +212,18 @@ namespace G2lib {
         y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
         theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
 
+        int iter ;
         if ( cmd == "build_G1" ) {
-          MEX_ASSERT( nlhs == 0, CMD "expected no outputs") ;
-          ptr->build_G1( x0, y0, theta0, x1, y1, theta1 );
+          MEX_ASSERT( nlhs == 0 || nlhs == 1, CMD "expected 1 or no outputs") ;
+          iter = ptr->build_G1( x0, y0, theta0, x1, y1, theta1 );
+          if ( nlhs == 1 ) setScalarInt( arg_out_0, iter ) ;
         } else {
-          MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs") ;
+          MEX_ASSERT( nlhs == 3 || nlhs == 4, CMD "expected 3 or 4 outputs") ;
           double * L_D  = createMatrixValue( arg_out_0, 2, 1 );
           double * k_D  = createMatrixValue( arg_out_1, 2, 1 );
           double * dk_D = createMatrixValue( arg_out_2, 2, 1 );
-          ptr->build_G1_D( x0, y0, theta0, x1, y1, theta1, L_D, k_D, dk_D );
+          iter = ptr->build_G1_D( x0, y0, theta0, x1, y1, theta1, L_D, k_D, dk_D );
+          if ( nlhs == 4 ) setScalarInt( arg_out_3, iter ) ;
         }
 
         #undef CMD
@@ -437,6 +447,28 @@ namespace G2lib {
         if ( nlhs > 3 ) setScalarValue(arg_out_3,ptr->kappaBegin()) ;
         if ( nlhs > 4 ) setScalarValue(arg_out_4,ptr->kappa_D()) ;
         if ( nlhs > 5 ) setScalarValue(arg_out_5,ptr->length()) ;
+
+      } else if ( cmd == "xyBegin" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('xyBegin',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs");
+        setScalarValue(arg_out_0, ptr->xBegin());
+        setScalarValue(arg_out_1, ptr->yBegin());
+
+        #undef CMD
+
+      } else if ( cmd == "xyEnd" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('xyEnd',OBJ): "
+
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs");
+        setScalarValue(arg_out_0, ptr->xEnd());
+        setScalarValue(arg_out_1, ptr->yEnd());
+
+        #undef CMD
 
       } else if ( cmd == "xBegin" ) {
 

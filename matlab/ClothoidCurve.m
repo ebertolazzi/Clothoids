@@ -61,10 +61,10 @@ classdef ClothoidCurve < handle
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
       %
-      if nargout > 0
+      if nargout > 1
         [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'build_G1_D', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
       else
-        ClothoidCurveMexWrapper( 'build_G1', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+        [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'build_G1', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -136,6 +136,14 @@ classdef ClothoidCurve < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distanceBySample( self, qx, qy, ds )
       [DST,S] = ClothoidCurveMexWrapper( 'distanceBySample', self.objectHandle, qx, qy, ds );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x,y] = xyBegin( self )
+      [x,y]= ClothoidCurveMexWrapper( 'xyBegin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x,y] = xyEnd( self )
+      [x,y]= ClothoidCurveMexWrapper( 'xyEnd', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = xBegin( self )
@@ -320,6 +328,26 @@ classdef ClothoidCurve < handle
       S     = 0:L/npts:L ;
       [X,Y] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S );
       plot(X,Y, varargin{:});
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, npts, varargin )
+      if nargin < 2
+        npts = 1000 ; 
+      end
+      L     = ClothoidCurveMexWrapper( 'length', self.objectHandle );
+      S     = 0:L/npts:L ;
+      [~,~,~,kappa] = ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
+      plot(S,kappa,varargin{:});
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTheta( self, npts, varargin )
+      if nargin < 2
+        npts = 1000 ; 
+      end
+      L     = ClothoidCurveMexWrapper( 'length', self.objectHandle );
+      S     = 0:L/npts:L ;
+      [~,~,theta,~] = ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
+      plot(S,theta,varargin{:});
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotNormal( self, step, len )
