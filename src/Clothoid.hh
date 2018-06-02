@@ -27,6 +27,8 @@
 #include "Fresnel.hh"
 #include "Triangle2D.hh"
 #include <vector>
+#include <algorithm>
+#include <iterator>
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -1171,6 +1173,89 @@ namespace G2lib {
     }
 
   };
+
+  /*\
+   |
+   |    ___ _     _   _        _    _ ___      _ _           ___ ___
+   |   / __| |___| |_| |_  ___(_)__| / __|_ __| (_)_ _  ___ / __|_  )
+   |  | (__| / _ \  _| ' \/ _ \ / _` \__ \ '_ \ | | ' \/ -_) (_ |/ /
+   |   \___|_\___/\__|_||_\___/_\__,_|___/ .__/_|_|_||_\___|\___/___|
+   |                                     |_|
+  \*/
+
+  class ClothoidSplineG2 {
+  public:
+    typedef enum { P1 = 1, P2, P3, P4, P5, P6, P7, P8, P9 } TargetType ;
+
+  private:
+
+    std::vector<valueType> x ;
+    std::vector<valueType> y ;
+    TargetType             tt ;
+    valueType              theta_I ;
+    valueType              theta_F ;
+    indexType              npts ;
+
+    // work vector
+    mutable vector<valueType> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2 ;
+
+    valueType
+    diff2pi( valueType in ) const {
+      return in-m_2pi*round(in/m_2pi) ;
+    }
+
+  public:
+
+    ClothoidSplineG2() : tt(P1) {}
+    ~ClothoidSplineG2() {}
+
+    void
+    setP1( valueType theta0, valueType thetaN )
+    { tt = P1 ; theta_I = theta0 ; theta_F = thetaN ; }
+
+    void setP2() { tt = P2 ; }
+    void setP3() { tt = P3 ; }
+    void setP4() { tt = P4 ; }
+    void setP5() { tt = P5 ; }
+    void setP6() { tt = P6 ; }
+    void setP7() { tt = P7 ; }
+    void setP8() { tt = P8 ; }
+    void setP9() { tt = P9 ; }
+
+    void
+    setup( valueType const xvec[],
+           valueType const yvec[],
+           indexType       npts ) ;
+
+    indexType numPnts() const { return npts ; }
+    indexType numTheta() const ;
+    indexType numConstraints() const ;
+
+    void
+    guess( valueType theta_guess[],
+           valueType theta_min[],
+           valueType theta_max[] ) const ;
+
+    bool
+    objective( valueType const theta[], valueType & f ) const ;
+
+    bool
+    gradient( valueType const theta[], valueType g[] ) const ;
+
+    bool
+    constraints( valueType const theta[], valueType c[] ) const ;
+
+    indexType
+    jacobian_nnz() const ;
+
+    bool
+    jacobian_pattern( indexType i[], indexType j[] ) const ;
+
+    bool
+    jacobian( valueType const theta[], valueType vals[] ) const ;
+
+  };
+
 }
 
 #endif

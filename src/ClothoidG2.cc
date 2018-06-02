@@ -974,6 +974,409 @@ namespace G2lib {
     }
   }
 
+  /*\
+   |
+   |    ___ _     _   _        _    _ ___      _ _           ___ ___
+   |   / __| |___| |_| |_  ___(_)__| / __|_ __| (_)_ _  ___ / __|_  )
+   |  | (__| / _ \  _| ' \/ _ \ / _` \__ \ '_ \ | | ' \/ -_) (_ |/ /
+   |   \___|_\___/\__|_||_\___/_\__,_|___/ .__/_|_|_||_\___|\___/___|
+   |                                     |_|
+  \*/
+
+  void
+  ClothoidSplineG2::setup( valueType const xvec[],
+                           valueType const yvec[],
+                           indexType       npts ) {
+    x.clear() ; x.reserve( npts ) ;
+    y.clear() ; y.reserve( npts ) ;
+    std::copy_n( xvec, npts, std::back_inserter(x) ) ;
+    std::copy_n( yvec, npts, std::back_inserter(y) ) ;
+    this->npts = npts ;
+    k    . resize(npts-1) ;
+    dk   . resize(npts-1) ;
+    L    . resize(npts-1) ;
+    kL   . resize(npts-1) ;
+    L_1  . resize(npts-1) ;
+    L_2  . resize(npts-1) ;
+    k_1  . resize(npts-1) ;
+    k_2  . resize(npts-1) ;
+    dk_1 . resize(npts-1) ;
+    dk_2 . resize(npts-1) ;
+  }
+
+  indexType
+  ClothoidSplineG2::numTheta() const {
+    indexType N = indexType(x.size());
+    return N ;
+  }
+
+  indexType
+  ClothoidSplineG2::numConstraints() const {
+    indexType N = indexType(x.size());
+    switch (tt) {
+      case P1: return N ;
+      case P2: return N-1 ;
+      default: break ;
+    }
+    return N-2 ;
+  }
+
+  void
+  ClothoidSplineG2::guess( valueType theta_guess[],
+                           valueType theta_min[],
+                           valueType theta_max[] ) const {
+    //
+    // Compute guess angles
+    //
+    indexType ne  = npts-1;
+    indexType ne1 = npts-2;
+
+    vector<valueType> phi(ne), rlen(ne) ;
+    valueType dx = x[1]-x[0] ;
+    valueType dy = y[1]-y[0] ;
+    phi[0]  = atan2(dy,dx) ;
+    rlen[0] = 1/hypot(dy,dx) ;
+    for ( indexType k = 1 ; k < ne ; ++k ) {
+      dx      = x[k+1]-x[k] ;
+      dy      = y[k+1]-y[k] ;
+      phi[k]  = atan2(dy,dx) ;
+      rlen[k] = 1/hypot(dy,dx) ;
+      valueType df = phi[k]-phi[k-1] ;
+      df -= round(df/m_2pi)*m_2pi ;
+      phi[k] = phi[k-1]+df ;
+    }
+
+    valueType const dangle = 0.99 * m_pi ;
+
+    theta_guess[0] = phi[0] ;
+    theta_min[0]   = phi[0] - dangle ;
+    theta_max[0]   = phi[0] + dangle ;
+
+    theta_guess[ne] = phi[ne1] ;
+    theta_min[ne]   = phi[ne1] - dangle ;
+    theta_max[ne]   = phi[ne1] + dangle ;
+
+    valueType phi_L  = phi[0] ;
+    valueType rlen_L = rlen[0] ;
+    for ( indexType k = 1 ; k < ne ; ++k ) {
+      valueType phi_R  = phi[k] ;
+      valueType rlen_R = rlen[k] ;
+      theta_guess[k] = (phi_L*rlen_L+phi_R*rlen_R)/(rlen_L+rlen_R) ;
+      if ( phi_R > phi_L ) {
+        theta_min[k] = phi_L ;
+        theta_max[k] = phi_R ;
+      } else {
+        theta_min[k] = phi_R ;
+        theta_max[k] = phi_L ;
+      }
+      theta_min[k] -= dangle ;
+      theta_max[k] += dangle ;
+      phi_L  = phi_R ;
+      rlen_L = rlen_R ;
+    }
+  }
+
+  bool
+  ClothoidSplineG2::objective( valueType const theta[], valueType & f ) const {
+    ClothoidCurve cL, cR, c ;
+    indexType ne  = npts - 1 ;
+    indexType ne1 = npts - 2 ;
+    switch (tt) {
+    case P1:
+      f = 0 ;
+      break ;
+    case P2:
+      f = diff2pi(theta[0]-theta[npts-1]) ; f *= f ;
+      break ;
+    case P3:
+      break ;
+    case P4:
+      cL.build_G1( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1] ) ;
+      cR.build_G1( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne] ) ;
+      { valueType dk_L = cL.kappa_D() ;
+        valueType dk_R = cR.kappa_D() ;
+        f = dk_L*dk_L+dk_R*dk_R ;
+      }
+      break ;
+    case P5:
+      cL.build_G1( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1] ) ;
+      cR.build_G1( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne] ) ;
+      f = cL.length()+cR.length();
+      break ;
+    case P6:
+      f = 0 ;
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
+        f += c.length();
+      }
+      break ;
+    case P7:
+      f = 0 ;
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
+        valueType L  = c.length() ;
+        valueType k  = c.kappaBegin() ;
+        valueType dk = c.kappa_D() ;
+        f = f + L * ( L * ( dk*( (dk*L)/3 + k) ) + k*k ) ;
+      }
+      break ;
+    case P8:
+      f = 0 ;
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
+        valueType L  = c.length() ;
+        valueType dk = c.kappa_D() ;
+        f += L*dk*dk ;
+      }
+    case P9:
+      f = 0 ;
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
+        valueType L   = c.length() ;
+        valueType k   = c.kappaBegin() ;
+        valueType k2  = k*k;
+        valueType k3  = k2*k ;
+        valueType k4  = k2*k2;
+        valueType dk  = c.kappa_D() ;
+        valueType dk2 = dk*dk ;
+        valueType dk3 = dk*dk2 ;
+        f = f + (k4+dk2+(2*k3*dk+(2*k2*dk2+(dk3*(k+dk*L/5))*L)*L)*L)*L ;
+      }
+      break ;
+    }
+    return true;
+  }
+
+  bool
+  ClothoidSplineG2::gradient( valueType const theta[], valueType g[] ) const {
+    ClothoidCurve cL, cR, c ;
+    valueType     LL_D[2], kL_D[2], dkL_D[2] ;
+    valueType     LR_D[2], kR_D[2], dkR_D[2] ;
+    std::fill( g, g+npts, 0 );
+    indexType ne  = npts - 1 ;
+    indexType ne1 = npts - 2 ;
+    switch (tt) {
+    case P1:
+      break ;
+    case P2:
+      g[0]  = + 2*diff2pi(theta[0]-theta[ne]) ;
+      g[ne] = - 2*diff2pi(theta[0]-theta[ne]) ;
+      break ;
+    case P3:
+      break ;
+    case P4:
+      cL.build_G1_D( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1], LL_D, kL_D, dkL_D ) ;
+      cR.build_G1_D( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne],LR_D, kR_D, dkR_D ) ;
+      {
+        valueType dkL = cL.kappa_D() ;
+        valueType dkR = cR.kappa_D() ;
+        g[0]   = 2*dkL*dkL_D[0] ;
+        g[1]   = 2*dkL*dkL_D[1] ;
+        g[ne1] = 2*dkR*dkR_D[0] ;
+        g[ne]  = 2*dkR*dkR_D[1] ;
+      }
+      break ;
+    case P5:
+      cL.build_G1_D( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1], LL_D, kL_D, dkL_D ) ;
+      cR.build_G1_D( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne],LR_D, kR_D, dkR_D ) ;
+      g[0]   = LL_D[0] ;
+      g[1]   = LL_D[1] ;
+      g[ne1] = LR_D[0] ;
+      g[ne]  = LR_D[1] ;
+      break ;
+    case P6:
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        valueType L_D[2], k_D[2], dk_D[2] ;
+        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        g[j]   += L_D[0] ;
+        g[j+1] += L_D[1] ;
+      }
+      break ;
+    case P7:
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        valueType L_D[2], k_D[2], dk_D[2] ;
+        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        valueType L   = c.length() ;
+        valueType L2  = L*L ;
+        valueType L3  = L*L2 ;
+        valueType k   = c.kappaBegin() ;
+        valueType k2  = k*k ;
+        valueType dk  = c.kappa_D() ;
+        valueType dk2 = dk*dk ;
+        g[j]   += 2*(dk*dk_D[0]*L3)/3
+                  + (dk2*L2*L_D[0])
+                  + dk_D[0]*L2*k
+                  + 2*dk*L*L_D[0]*k
+                  + dk*L2*k_D[0]
+                  + L_D[0]*k2
+                  + 2*L*k*k_D[0] ;
+        g[j+1] += 2*(dk*dk_D[1]*L3)/3
+                  + (dk2*L2*L_D[1])
+                  + dk_D[1]*L2*k
+                  + 2*dk*L*L_D[1]*k
+                  + dk*L2*k_D[1]
+                  + L_D[1]*k2
+                  + 2*L*k*k_D[1] ;
+      }
+      break ;
+    case P8:
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        valueType L_D[2], k_D[2], dk_D[2] ;
+        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        valueType L   = c.length() ;
+        valueType dk  = c.kappa_D() ;
+        g[j]   += (2*L*dk_D[0] + L_D[0]*dk)*dk ;
+        g[j+1] += (2*L*dk_D[1] + L_D[1]*dk)*dk ;
+      }
+      break ;
+    case P9:
+      for ( indexType j = 0 ; j < ne ; ++j ) {
+        valueType L_D[2], k_D[2], dk_D[2] ;
+        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        valueType L   = c.length() ;
+        valueType L2  = L*L ;
+        valueType L3  = L*L2 ;
+        valueType L4  = L2*L2 ;
+        valueType k   = c.kappaBegin() ;
+        valueType k2  = k*k ;
+        valueType k3  = k*k2 ;
+        valueType k4  = k2*k2 ;
+        valueType dk  = c.kappa_D() ;
+        valueType dk2 = dk*dk ;
+        valueType dk3 = dk*dk2 ;
+        valueType dk4 = dk2*dk2 ;
+        valueType A = dk4*L4+4*k*dk3*L3
+                    + (6*L2*k2+1)*dk2
+                    + 4*k3*dk*L+k4 ;
+        valueType B = (4*L3*k2+2*L)*dk
+                    + 3*k*dk2*L4
+                    + (4.0/5.0)*dk3*L*L4
+                    + 2*k3*L2 ;
+        valueType C = L4*dk3
+                    + 4*L3*dk2*k
+                    + 6*L2*dk*k2
+                    + 4*L*k3 ;
+        g[j]   += A*L_D[0] + B*dk_D[0] + C*k_D[0];
+        g[j+1] += A*L_D[1] + B*dk_D[1] + C*k_D[1] ;
+      }
+      break ;
+    }
+    return true ;
+  }
+
+  bool
+  ClothoidSplineG2::constraints( valueType const theta[], valueType c[] ) const {
+    ClothoidCurve cc ;
+    indexType ne  = npts - 1 ;
+    indexType ne1 = npts - 2 ;
+
+    for ( indexType j = 0 ; j < ne ; ++j ) {
+      cc.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
+      k[j]  = cc.kappaBegin() ;
+      dk[j] = cc.kappa_D() ;
+      L[j]  = cc.length() ;
+      kL[j] = k[j]+dk[j]*L[j] ;
+    }
+
+    for ( indexType j = 0 ; j < ne1 ; ++j ) c[j] = kL[j]-k[j+1] ;
+
+    switch (tt) {
+    case P1:
+      c[ne1] = diff2pi( theta[0]  - theta_I ) ;
+      c[ne]  = diff2pi( theta[ne] - theta_F ) ;
+      break ;
+    case P2:
+      c[ne1] = kL[ne1]-k[0] ;
+      break ;
+    default:
+      break ;
+    }
+    return true ;
+  }
+
+  indexType
+  ClothoidSplineG2::jacobian_nnz() const {
+    indexType nnz = 3*(npts-2) ;
+    switch (tt) {
+    case P1: nnz += 2 ; break ;
+    case P2: nnz += 4 ; break ;
+    default:            break ;
+    }
+    return nnz ;
+  }
+
+  bool
+  ClothoidSplineG2::jacobian_pattern( indexType ii[], indexType jj[] ) const {
+    ClothoidCurve cc ;
+    indexType ne  = npts - 1 ;
+    indexType ne1 = npts - 2 ;
+
+    indexType kk = 0 ;
+    for ( indexType j = 0 ; j < ne1 ; ++j ) {
+      ii[kk] = j ; jj[kk] = j   ; ++kk ;
+      ii[kk] = j ; jj[kk] = j+1 ; ++kk ;
+      ii[kk] = j ; jj[kk] = j+2 ; ++kk ;
+    }
+
+    switch (tt) {
+    case P1:
+      ii[kk] = ne1 ; jj[kk] = 0  ; ++kk ;
+      ii[kk] = ne  ; jj[kk] = ne ; ++kk ;
+      break ;
+    case P2:
+      ii[kk] = ne1 ; jj[kk] = 0   ; ++kk ;
+      ii[kk] = ne1 ; jj[kk] = 1   ; ++kk ;
+      ii[kk] = ne1 ; jj[kk] = ne1 ; ++kk ;
+      ii[kk] = ne1 ; jj[kk] = ne  ; ++kk ;
+      break ;
+    default:
+      break ;
+    }
+
+    return true ;
+  }
+
+  bool
+  ClothoidSplineG2::jacobian( valueType const theta[], valueType vals[] ) const {
+    ClothoidCurve cc ;
+    indexType ne  = npts - 1 ;
+    indexType ne1 = npts - 2 ;
+
+    for ( indexType j = 0 ; j < ne ; ++j ) {
+      valueType L_D[2], k_D[2], dk_D[2] ;
+      cc.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+      k[j]  = cc.kappaBegin() ;
+      dk[j] = cc.kappa_D() ;
+      L[j]  = cc.length() ;
+      kL[j] = k[j]+dk[j]*L[j] ;
+      L_1[j]  = L_D[0]  ; L_2[j]  = L_D[1] ;
+      k_1[j]  = k_D[0]  ; k_2[j]  = k_D[1] ;
+      dk_1[j] = dk_D[0] ; dk_2[j] = dk_D[1] ;
+    }
+
+    indexType kk = 0 ;
+    for ( indexType j = 0 ; j < ne1 ; ++j ) {
+      vals[kk++] =  k_1[j] + dk_1[j]*L[j] + dk[j]*L_1[j] ;
+      vals[kk++] =  k_2[j] + dk_2[j]*L[j] + dk[j]*L_2[j] - k_1[j+1] ;
+      vals[kk++] = -k_2[j+1] ;
+    }
+
+    switch (tt) {
+    case P1:
+      vals[kk++] = 1 ;
+      vals[kk++] = 1 ;
+      break ;
+    case P2:
+      vals[kk++] = -k_1[0] ;
+      vals[kk++] = -k_2[0] ;
+      vals[kk++] = k_1[ne1]+L_1[ne1]*dk[ne1]+L[ne1]*dk_1[ne1] ;
+      vals[kk++] = k_2[ne1]+L_2[ne1]*dk[ne1]+L[ne1]*dk_2[ne1] ;
+      break ;
+    default:
+      break ;
+    }
+    return true ;
+  }
 }
 
 // EOF: ClothoidG2.cc

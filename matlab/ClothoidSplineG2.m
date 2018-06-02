@@ -1,6 +1,7 @@
 classdef ClothoidSplineG2 < handle
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
+    objectHandle; % Handle to the underlying C++ class instance
     t_type;
     x;
     y;
@@ -282,11 +283,18 @@ classdef ClothoidSplineG2 < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [c,ceq] = con( self, theta )
-      ceq = self.constraints(theta);
-      c   = zeros(0,0) ;
+    function [c,ceq,jac,jaceq] = con( self, theta )
+      c     = zeros(0,0) ;
+      ceq   = self.constraints(theta);
+      jac   = sparse(0,0);
+      jaceq = self.jacobian(theta).';
     end
-    
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [o,g] = obj( self, theta )
+      o = self.objective(theta);
+      g = self.gradient(theta);
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     function clots = build_internal( self, x, y, varargin )
       %
       % copy data
@@ -296,7 +304,9 @@ classdef ClothoidSplineG2 < handle
       %
       % Compute guess angles
       %
-      self.guess_angle()
+      self.setup( x, y );
+      [ self.theta_guess, self.theta_min, self.theta_max ] = self.guess() ;
+      %self.guess_angle()
       if nargin == 5
         self.theta_I = varargin{1} ;
         self.theta_F = varargin{2} ;
@@ -318,7 +328,7 @@ classdef ClothoidSplineG2 < handle
         nc = N-2 ;
       end
       
-      use_ipopt = false ;
+      use_ipopt = true ;
       
       if use_ipopt
         
@@ -338,7 +348,7 @@ classdef ClothoidSplineG2 < handle
         options.ipopt.max_iter            = 400 ;
         options.ipopt.tol                 = 1e-10 ;
         options.ipopt.derivative_test_tol = 1e-4 ;
-        %options.ipopt.derivative_test     = 'first-order' ; %% default 'none'
+        options.ipopt.derivative_test     = 'first-order' ; %% default 'none'
         %options.ipopt.derivative_test_perturbation = 1e-8 ;
 
         % The callback functions.
@@ -361,11 +371,13 @@ classdef ClothoidSplineG2 < handle
       else
         options = optimoptions('fmincon','Display','iter', ...
                                'Algorithm','interior-point',...
-                               'OptimalityTolerance',1e-10,...
-                               'ConstraintTolerance',1e-10);
-        fun     = @(theta) self.objective(theta);
+                               'SpecifyConstraintGradient',true,...
+                               'SpecifyObjectiveGradient',true,...
+                               'OptimalityTolerance',1e-12,...
+                               'ConstraintTolerance',1e-12);
+        obj     = @(theta) self.obj(theta);
         con     = @(theta) self.con(theta);
-        theta   = fmincon(fun,self.theta_guess,[],[],[],[],self.theta_min,self.theta_max,con,options) ;
+        theta   = fmincon(obj,self.theta_guess,[],[],[],[],self.theta_min,self.theta_max,con,options) ;
         %options = optimset(varargin{:});
         %[theta,resnorm,~,~,output,~,~] = lsqnonlin( @target, theta, [], [], options ) ;
       end
@@ -384,24 +396,37 @@ classdef ClothoidSplineG2 < handle
   methods
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function self = ClothoidSplineG2()
+      self.objectHandle = ClothoidSplineG2MexWrapper( 'new' );
       self.t_type = 'P1' ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function delete( ~ )
+    function delete( self )
+      ClothoidSplineG2MexWrapper( 'delete', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function clots = buildP1( self, x, y )
+    function setup( self, x, y )
+      ClothoidSplineG2MexWrapper( 'setup', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ theta, theta_min, theta_max ] = guess( self )
+      [ theta, theta_min, theta_max ] = ClothoidSplineG2MexWrapper( 'guess', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function clots = buildP1( self, x, y, theta0, theta1 )
       self.t_type = 'P1';
+      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P1', theta0, theta1 );
       clots = self.build_internal( x, y ) ;
     end 
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP2( self, x, y )
       self.t_type = 'P2';
+      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P2' );
       clots = self.build_internal( x, y ) ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP3( self, x, y, theta0, kappa0 )
       self.t_type = 'P3';
+      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P3' );
       %
       % Compute spline parameters
       %
