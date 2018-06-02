@@ -1086,7 +1086,7 @@ namespace G2lib {
       f = 0 ;
       break ;
     case P2:
-      f = diff2pi(theta[0]-theta[npts-1]) ; f *= f ;
+      f = diff2pi(theta[0]-theta[ne]) ; f *= f ;
       break ;
     case P3:
       break ;
@@ -1128,6 +1128,7 @@ namespace G2lib {
         valueType dk = c.kappa_D() ;
         f += L*dk*dk ;
       }
+      break ;
     case P9:
       f = 0 ;
       for ( indexType j = 0 ; j < ne ; ++j ) {
@@ -1234,28 +1235,15 @@ namespace G2lib {
         valueType L_D[2], k_D[2], dk_D[2] ;
         c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
         valueType L   = c.length() ;
-        valueType L2  = L*L ;
-        valueType L3  = L*L2 ;
-        valueType L4  = L2*L2 ;
         valueType k   = c.kappaBegin() ;
         valueType k2  = k*k ;
         valueType k3  = k*k2 ;
-        valueType k4  = k2*k2 ;
         valueType dk  = c.kappa_D() ;
         valueType dk2 = dk*dk ;
-        valueType dk3 = dk*dk2 ;
-        valueType dk4 = dk2*dk2 ;
-        valueType A = dk4*L4+4*k*dk3*L3
-                    + (6*L2*k2+1)*dk2
-                    + 4*k3*dk*L+k4 ;
-        valueType B = (4*L3*k2+2*L)*dk
-                    + 3*k*dk2*L4
-                    + (4.0/5.0)*dk3*L*L4
-                    + 2*k3*L2 ;
-        valueType C = L4*dk3
-                    + 4*L3*dk2*k
-                    + 6*L2*dk*k2
-                    + 4*L*k3 ;
+        valueType dkL = dk*L ;
+        valueType A = ( ( (dkL+4*k)*dkL + 6*k2)*dkL + 4*k3) * dkL + dk2 + k2*k2 ;
+        valueType B = ( ( ( ( 3*k + 0.8*dkL ) * dkL + 4*k2 ) * dkL +2*k3 ) * L + 2*dk ) * L ;
+        valueType C = ( ( ( dkL + 4*k ) * dkL + 6*k2 ) * dkL + 4*k3 ) * L ;
         g[j]   += A*L_D[0] + B*dk_D[0] + C*k_D[0];
         g[j+1] += A*L_D[1] + B*dk_D[1] + C*k_D[1] ;
       }
@@ -1336,6 +1324,36 @@ namespace G2lib {
     return true ;
   }
 
+  bool
+  ClothoidSplineG2::jacobian_pattern_matlab( valueType ii[], valueType jj[] ) const {
+    ClothoidCurve cc ;
+    indexType ne  = npts - 1 ;
+    indexType ne1 = npts - 2 ;
+
+    indexType kk = 0 ;
+    for ( indexType j = 1 ; j <= ne1 ; ++j ) {
+      ii[kk] = j ; jj[kk] = j   ; ++kk ;
+      ii[kk] = j ; jj[kk] = j+1 ; ++kk ;
+      ii[kk] = j ; jj[kk] = j+2 ; ++kk ;
+    }
+
+    switch (tt) {
+    case P1:
+      ii[kk] = ne   ; jj[kk] = 1    ; ++kk ;
+      ii[kk] = npts ; jj[kk] = npts ; ++kk ;
+      break ;
+    case P2:
+      ii[kk] = ne ; jj[kk] = 1    ; ++kk ;
+      ii[kk] = ne ; jj[kk] = 2    ; ++kk ;
+      ii[kk] = ne ; jj[kk] = ne   ; ++kk ;
+      ii[kk] = ne ; jj[kk] = npts ; ++kk ;
+      break ;
+    default:
+      break ;
+    }
+
+    return true ;
+  }
   bool
   ClothoidSplineG2::jacobian( valueType const theta[], valueType vals[] ) const {
     ClothoidCurve cc ;
