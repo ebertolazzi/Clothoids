@@ -12,6 +12,8 @@
 #include "Triangle2D.hh"
 #include "mex_utils.hh"
 
+#include <fstream>
+
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "ClothoidListMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \
@@ -28,7 +30,10 @@
 "\n" \
 "  - Build:\n" \
 "    ClothoidListMexWrapper( 'push_back', OBJ, CLOT ) ;\n" \
-"    ClothoidListMexWrapper( 'push_back', OBJ, x1, y1, theta1 ) ;\n" \
+"    ClothoidListMexWrapper( 'push_back', OBJ, kappa0, dkappa, L ) ;\n" \
+"    ClothoidListMexWrapper( 'push_back', OBJ, x0, y0, theta0, kappa0, dkappa, L ) ;\n" \
+"    ClothoidListMexWrapper( 'push_back_G1', OBJ, x1, y1, theta1 ) ;\n" \
+"    ClothoidListMexWrapper( 'push_back_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
 "\n" \
 "  - Eval:\n" \
 "    [x,y,theta,kappa] = ClothoidListMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
@@ -126,9 +131,33 @@ namespace G2lib {
 
       } else if ( cmd == "push_back" ) {
 
-        #define CMD "ClothoidListMexWrapper('push_back',OBJ,[x0,y0,theta0,x1,y1,theta1]|[x1,y1,theta1]|[CLOT]): "
+        #define CMD "ClothoidListMexWrapper('push_back',OBJ,CLOT|[kappa0,dkappa,L]|[x0,y0,theta0,kappa0,dkappa,L]): "
 
-        MEX_ASSERT( nrhs == 3 || nrhs == 5 || nrhs == 8, CMD "expected 3, 5 or 8 inputs") ;
+        if ( nrhs == 8 ) {
+          valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+          valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+          valueType theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
+          valueType kappa0 = getScalarValue( arg_in_5, CMD "Error in reading kappa0" ) ;
+          valueType dkappa = getScalarValue( arg_in_6, CMD "Error in reading dkappa" ) ;
+          valueType L      = getScalarValue( arg_in_7, CMD "Error in reading L" ) ;
+          ptr->push_back( x0, y0, theta0, kappa0, dkappa, L );
+        } else if ( nrhs == 5 ) {
+          valueType kappa0 = getScalarValue( arg_in_2, CMD "Error in reading kappa0" ) ;
+          valueType dkappa = getScalarValue( arg_in_3, CMD "Error in reading dkappa" ) ;
+          valueType L      = getScalarValue( arg_in_4, CMD "Error in reading L" ) ;
+          ptr->push_back( kappa0, dkappa, L );
+        } else if ( nrhs == 3 ) {
+          ClothoidCurve * cc = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+          ptr->push_back( *cc );
+        } else {
+          MEX_ASSERT( false, CMD "expected 3, 5 or 8 inputs") ;
+        }
+
+        #undef CMD
+
+      } else if ( cmd == "push_back_G1" ) {
+
+        #define CMD "ClothoidListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[CLOT]): "
 
         if ( nrhs == 8 ) {
           valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
@@ -137,15 +166,14 @@ namespace G2lib {
           valueType x1     = getScalarValue( arg_in_5, CMD "Error in reading x1" ) ;
           valueType y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
           valueType theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
-          ptr->push_back( x0, y0, theta0, x1, y1, theta1 );
+          ptr->push_back_G1( x0, y0, theta0, x1, y1, theta1 );
         } else if ( nrhs == 5 ) {
           valueType x1     = getScalarValue( arg_in_2, CMD "Error in reading x1" ) ;
           valueType y1     = getScalarValue( arg_in_3, CMD "Error in reading y1" ) ;
           valueType theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" ) ;
-          ptr->push_back( x1, y1, theta1 );
+          ptr->push_back_G1( x1, y1, theta1 );
         } else {
-          ClothoidCurve * cc = convertMat2Ptr<ClothoidCurve>(arg_in_2);
-          ptr->push_back( *cc );
+          MEX_ASSERT( false, CMD "expected 5 or 8 inputs") ;
         }
 
         #undef CMD
@@ -494,6 +522,27 @@ namespace G2lib {
           }
         }
         setScalarInt( arg_out_0, iter );
+
+        #undef CMD
+
+      } else if ( cmd == "export_table" || cmd == "export_ruby" ) {
+
+        #define CMD "ClothoidListMexWrapper('export_[table|ruby]', OBJ, filename ): "
+
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
+        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+
+        MEX_ASSERT( mxIsChar(arg_in_2), CMD "filename must be a string" ) ;
+        string filename = mxArrayToString(arg_in_2) ;
+
+        std::ofstream file(filename.c_str()) ;
+
+        MEX_ASSERT( file.good(), CMD " cannot open file: `" << filename << "`" );
+
+        if ( cmd == "export_table" ) ptr->export_table(file) ;
+        else                         ptr->export_ruby(file) ;
+
+        file.close() ;
 
         #undef CMD
 
