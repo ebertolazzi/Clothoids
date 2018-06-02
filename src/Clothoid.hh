@@ -1252,6 +1252,9 @@ namespace G2lib {
     jacobian_pattern( indexType i[], indexType j[] ) const ;
 
     bool
+    jacobian_pattern_matlab( valueType i[], valueType j[] ) const ;
+
+    bool
     jacobian( valueType const theta[], valueType vals[] ) const ;
 
   };

@@ -205,198 +205,114 @@ namespace G2lib {
         if ( ok ) setScalarValue( arg_out_0, f );
 
         #undef CMD
-#if 0
-      } else if ( cmd == "evaluate" ) {
 
-        #define CMD "ClothoidListMexWrapper('evaluate',OBJ,s): "
+      } else if ( cmd == "gradient" ) {
 
-        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs") ;
+        #define CMD "ClothoidSplineG2MexWrapper('gradient',OBJ,theta): "
 
-        mwSize size;
-        double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
+        MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs") ;
+        MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs") ;
 
-        if ( nlhs == 4 ) {
-          double * xVals     = createMatrixValue( arg_out_0, size, 1 );
-          double * yVals     = createMatrixValue( arg_out_1, size, 1 );
-          double * thetaVals = createMatrixValue( arg_out_2, size, 1 );
-          double * kappaVals = createMatrixValue( arg_out_3, size, 1 );
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval( sVals[i], thetaVals[i], kappaVals[i], xVals[i], yVals[i] );
-        } else if ( nlhs == 2 ) {
-          double * xVals = createMatrixValue( arg_out_0, size, 1 );
-          double * yVals = createMatrixValue( arg_out_1, size, 1 );
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval( sVals[i], xVals[i], yVals[i] );
-        } else {
-          MEX_ASSERT( false, CMD "expected 2 or 4 outputs") ;
-        }
+        mwSize ntheta;
+        valueType const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+        MEX_ASSERT( ntheta == ptr->numPnts(),
+                    CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() ) ;
+        double * g = createMatrixValue( arg_out_0, ntheta, 1 );
+        bool ok = ptr->gradient( theta, g );
+        MEX_ASSERT( ok, CMD "bad gradient computation") ;
 
         #undef CMD
 
-      } else if ( cmd == "eval"    || cmd == "eval_D" ||
-                  cmd == "eval_DD" || cmd == "eval_DDD" ) {
+      } else if ( cmd == "constraints" ) {
 
-        #define CMD "ClothoidListMexWrapper('eval*',OBJ,s[,offs]): "
+        #define CMD "ClothoidSplineG2MexWrapper('gradient',OBJ,theta): "
 
-        MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs") ;
-        MEX_ASSERT( nlhs == 1 || nlhs == 2, CMD "expected 1 or 2 outputs") ;
+        MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs") ;
+        MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs") ;
 
-        mwSize size;
-        double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
-
-        double offs = 0 ;
-        if ( nrhs == 4 ) offs = getScalarValue( arg_in_3, CMD "Error in reading offs" ) ;
-
-        if ( nlhs == 1 ) {
-          double * xyVals = createMatrixValue( arg_out_0, 2, size );
-          if ( cmd == "eval" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
-          } else if ( cmd == "eval_D" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_D( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
-          } else if ( cmd == "eval_DD" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DD( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
-          } else {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DDD( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
-          }
-        } else {
-          double * xVals = createMatrixValue( arg_out_0, size, 1 );
-          double * yVals = createMatrixValue( arg_out_1, size, 1 );
-          if ( cmd == "eval" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval( sVals[i], offs, xVals[i], yVals[i] );
-          } else if ( cmd == "eval_D" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_D( sVals[i], offs, xVals[i], yVals[i] );
-         } else if ( cmd == "eval_DD" ) {
-             for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DD( sVals[i], offs, xVals[i], yVals[i] );
-          } else {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DDD( sVals[i], offs, xVals[i], yVals[i] );
-          }
-        }
+        mwSize ntheta;
+        valueType const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+        MEX_ASSERT( ntheta == ptr->numPnts(),
+                    CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() ) ;
+        double * c = createMatrixValue( arg_out_0, ptr->numConstraints(), 1 );
+        bool ok = ptr->constraints( theta, c );
+        MEX_ASSERT( ok, CMD "bad constraints computation") ;
 
         #undef CMD
 
-      } else if ( cmd == "distance" ) {
+      } else if ( cmd == "jacobian" ) {
 
-        #define CMD "ClothoidListMexWrapper('distance',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
-          mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+        #define CMD "ClothoidSplineG2MexWrapper('jacobian',OBJ,theta): "
 
-          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs") ;
+        MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs") ;
 
-          mwSize size = nrx*ncx ;
-          if ( nlhs > 1 ) {
-            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
-            for ( mwSize i = 0 ; i < size ; ++i )
-              *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
-          } else {
-            for ( mwSize i = 0 ; i < size ; ++i )
-              *dst++ = ptr->distance( *x++, *y++ ) ;
-          }
-        }
-        #undef CMD
+        mwSize ntheta;
+        valueType const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+        MEX_ASSERT( ntheta == ptr->numPnts(),
+                    CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() ) ;
 
-      } else if ( cmd == "closestPoint" ) {
+        indexType n   = ptr->numConstraints();
+        indexType m   = ptr->numTheta();
+        indexType nnz = ptr->jacobian_nnz();
 
-        #define CMD "ClothoidListMexWrapper('closestPoint',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs") ;
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
-          mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+        mxArray *args[5] ;
 
-          valueType * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
-          valueType * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
-          valueType * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
-          valueType * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+        valueType * I = createMatrixValue( args[0], 1, nnz ) ;
+        valueType * J = createMatrixValue( args[1], 1, nnz ) ;
+        valueType * V = createMatrixValue( args[2], 1, nnz ) ;
+        setScalarValue( args[3], n ) ;
+        setScalarValue( args[4], m ) ;
 
-          mwSize size = nrx*ncx ;
-          for ( mwSize i = 0 ; i < size ; ++i )
-            *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ ) ;
-        }
-        #undef CMD
+        ptr->jacobian_pattern_matlab( I, J );
+        ptr->jacobian( theta, V );
 
-      } else if ( cmd == "xBegin"     || cmd == "xEnd"     ||
-                  cmd == "yBegin"     || cmd == "yEnd"     ||
-                  cmd == "thetaBegin" || cmd == "thetaEnd" ||
-                  cmd == "kappaBegin" || cmd == "kappaEnd" ||
-                  cmd == "length" ) {
-
-
-        #define CMD "ClothoidListMexWrapper('...',OBJ[,n]): "
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
-
-        if ( nrhs == 3 ) {
-          int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
-          MEX_ASSERT( n > 0 && n <= ptr->numSegment(),
-                      CMD "n =  " << n << " must be >= 1 and <= " << ptr->numSegment() );
-          ClothoidCurve const & c = ptr->get(n-1);
-          if      ( cmd == "xBegin"     ) setScalarValue(arg_out_0, c.xBegin());
-          else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, c.xEnd());
-          else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, c.yBegin());
-          else if ( cmd == "yEnd"       ) setScalarValue(arg_out_0, c.yEnd());
-          else if ( cmd == "thetaBegin" ) setScalarValue(arg_out_0, c.thetaBegin());
-          else if ( cmd == "thetaEnd"   ) setScalarValue(arg_out_0, c.thetaEnd());
-          else if ( cmd == "kappaBegin" ) setScalarValue(arg_out_0, c.kappaBegin());
-          else if ( cmd == "kappaEnd"   ) setScalarValue(arg_out_0, c.kappaEnd());
-          else if ( cmd == "length"     ) setScalarValue(arg_out_0, c.length());
-        } else {
-          MEX_ASSERT(nrhs == 2, CMD "expected 2 or 3 inputs");
-          if      ( cmd == "xBegin"     ) setScalarValue(arg_out_0, ptr->xBegin());
-          else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, ptr->xEnd());
-          else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, ptr->yBegin());
-          else if ( cmd == "yEnd"       ) setScalarValue(arg_out_0, ptr->yEnd());
-          else if ( cmd == "thetaBegin" ) setScalarValue(arg_out_0, ptr->thetaBegin());
-          else if ( cmd == "thetaEnd"   ) setScalarValue(arg_out_0, ptr->thetaEnd());
-          else if ( cmd == "kappaBegin" ) setScalarValue(arg_out_0, ptr->kappaBegin());
-          else if ( cmd == "kappaEnd"   ) setScalarValue(arg_out_0, ptr->kappaEnd());
-          else if ( cmd == "length"     ) setScalarValue(arg_out_0, ptr->totalLength());
-        }
+        int ok = mexCallMATLAB( nlhs, plhs, 5, args, "sparse" );
+        MEX_ASSERT( ok == 0, CMD "failed the call sparse(...)" );
 
         #undef CMD
 
-      } else if ( cmd == "rotate" ) {
+      } else if ( cmd == "jacobian_pattern" ) {
 
-        #define CMD "ClothoidListMexWrapper('rotate',OBJ,angle,cx,cy): "
+        #define CMD "ClothoidSplineG2MexWrapper('jacobian_pattern',OBJ): "
 
-        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs") ;
+        MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs") ;
 
-        valueType angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
-        valueType cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
-        valueType cy    = getScalarValue( arg_in_4, CMD "Error in reading cy" ) ;
-        ptr->rotate(angle, cx, cy);
+        indexType n   = ptr->numConstraints();
+        indexType m   = ptr->numTheta();
+        indexType nnz = ptr->jacobian_nnz();
+
+        mxArray *args[5] ;
+
+        valueType * I = createMatrixValue( args[0], 1, nnz ) ;
+        valueType * J = createMatrixValue( args[1], 1, nnz ) ;
+        valueType * V = createMatrixValue( args[2], 1, nnz ) ;
+        setScalarValue( args[3], n ) ;
+        setScalarValue( args[4], m ) ;
+
+        ptr->jacobian_pattern_matlab( I, J );
+        std::fill( V, V+nnz, 1 ) ;
+
+        int ok = mexCallMATLAB( nlhs, plhs, 5, args, "sparse" );
+        MEX_ASSERT( ok == 0, CMD "failed the call sparse(...)" );
 
         #undef CMD
 
-      } else if ( cmd == "translate" ) {
+      } else if ( cmd == "dims" ) {
 
-        #define CMD "ClothoidListMexWrapper('translate',OBJ,tx,ty): "
+        #define CMD "ClothoidSplineG2MexWrapper('dims',OBJ): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
-        valueType tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
-        valueType ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
-        ptr->translate(tx, ty);
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs") ;
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs") ;
+
+        indexType m = ptr->numTheta();
+        indexType n = ptr->numConstraints();
+
+        setScalarInt( arg_out_0, m ) ;
+        setScalarInt( arg_out_1, n ) ;
 
         #undef CMD
-#endif
 
       } else if ( cmd == "delete" ) {
 
