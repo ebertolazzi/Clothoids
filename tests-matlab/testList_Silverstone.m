@@ -1,16 +1,15 @@
 addpath('../matlab');
 
-%=============================================================================%
-%                                                                             %
-%  Autors: Enrico Bertolazzi                                                  %
-%          Department of Industrial Engineering                               %
-%          University of Trento                                               %
-%          enrico.bertolazzi@unitn.it                                         %
-%          m.fregox@gmail.com                                                 %
-%                                                                             %
-%=============================================================================%
-% Driver test program to check Clothoids lib                                  %
-%=============================================================================%
+%=========================================================================%
+%                                                                         %
+%  Autor: Enrico Bertolazzi                                               %
+%         Department of Industrial Engineering                            %
+%         University of Trento                                            %
+%         enrico.bertolazzi@unitn.it                                      %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
 
 close all ;
 

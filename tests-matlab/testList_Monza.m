@@ -1,21 +1,24 @@
 addpath('../matlab');
 
-%=============================================================================%
-%                                                                             %
-%  Autors: Enrico Bertolazzi                                                  %
-%          Department of Industrial Engineering                               %
-%          University of Trento                                               %
-%          enrico.bertolazzi@unitn.it                                         %
-%          m.fregox@gmail.com                                                 %
-%                                                                             %
-%=============================================================================%
-% Driver test program to check Clothoids lib                                  %
-%=============================================================================%
+%=========================================================================%
+%                                                                         %
+%  Autor: Enrico Bertolazzi                                               %
+%         Department of Industrial Engineering                            %
+%         University of Trento                                            %
+%         enrico.bertolazzi@unitn.it                                      %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
 
 close all ;
 
+x0     = 0 ;
+y0     = 0 ;
+theta0 = 0*1.433674+pi;
+
 S = ClothoidList() ;
-S.push_back(         0, 0, 1.433674, 0, 0, 608.632424 ) ;
+S.push_back( x0, y0, theta0, 0, 0, 608.632424 ) ;
 S.push_back( -0.073376, 0, 21.665602 ) ; 
 S.push_back(         0, 0, 13.967496 ) ; 
 S.push_back(  0.072339, 0, 26.803483 ) ; 
@@ -63,7 +66,7 @@ S.push_back(         0, 0, 4.281928 ) ;
 S.push_back( -0.005815, 0, 204.111573 ) ; 
 S.push_back(         0, 0, 172.966780 ) ;
 S.push_back( -0.000931, 0, 123.006586 ) ;
-S.push_back_G1( 0, 0, 1.433674 ) ; 
+S.push_back_G1( x0, y0, theta0 ) ; 
 %S.push_back(         0, 0, 309.601534 ) ; 
 S.plot() ;
 axis equal

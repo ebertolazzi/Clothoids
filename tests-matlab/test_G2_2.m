@@ -1,3 +1,15 @@
+%=========================================================================%
+%                                                                         %
+%  Autors: Enrico Bertolazzi                                              %
+%          Department of Industrial Engineering                           %
+%          University of Trento                                           %
+%          enrico.bertolazzi@unitn.it                                     %
+%          m.fregox@gmail.com                                             %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
+
 addpath('../matlab');
 
 close all ;
@@ -24,5 +36,3 @@ S1.plot();
 %S2.plot();
 
 axis equal;
-
-

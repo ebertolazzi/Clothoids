@@ -1,16 +1,16 @@
-addpath('../matlab');
+%=========================================================================%
+%                                                                         %
+%  Autors: Enrico Bertolazzi                                              %
+%          Department of Industrial Engineering                           %
+%          University of Trento                                           %
+%          enrico.bertolazzi@unitn.it                                     %
+%          m.fregox@gmail.com                                             %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
 
-%=============================================================================%
-%                                                                             %
-%  Autors: Enrico Bertolazzi                                                  %
-%          Department of Industrial Engineering                               %
-%          University of Trento                                               %
-%          enrico.bertolazzi@unitn.it                                         %
-%          m.fregox@gmail.com                                                 %
-%                                                                             %
-%=============================================================================%
-% Driver test program to check bounding box on clothoid                       %
-%=============================================================================%
+addpath('../matlab');
 
 % Values computed with MAPLE for comparison
 points = {...

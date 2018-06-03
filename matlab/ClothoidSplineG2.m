@@ -88,7 +88,7 @@ classdef ClothoidSplineG2 < handle
       N     = length(theta) ;
       clots.reserve(N-1);
       for j=1:N-1
-        clots.push_back( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) ) ;
+        clots.push_back_G1( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) ) ;
       end
     end
   end

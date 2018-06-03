@@ -1,3 +1,15 @@
+%=========================================================================%
+%                                                                         %
+%  Autors: Enrico Bertolazzi                                              %
+%          Department of Industrial Engineering                           %
+%          University of Trento                                           %
+%          enrico.bertolazzi@unitn.it                                     %
+%          m.fregox@gmail.com                                             %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
+
 addpath('../matlab');
 
 close all ;
@@ -18,4 +30,3 @@ iter = S.build3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
 figure(1);
 S.plot();
        
-

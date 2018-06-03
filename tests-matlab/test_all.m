@@ -1,3 +1,14 @@
+%=========================================================================%
+%                                                                         %
+%  Autor: Enrico Bertolazzi                                               %
+%         Department of Industrial Engineering                            %
+%         University of Trento                                            %
+%         enrico.bertolazzi@unitn.it                                      %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
+
 test_1_Omega();
 test_G1_1();
 test_G1_2();
