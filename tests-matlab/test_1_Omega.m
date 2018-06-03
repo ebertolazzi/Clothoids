@@ -53,7 +53,7 @@ for k=1:9
   case 2; subplot('Position',[aa+1/3 aa     bb bb]);
   case 3; subplot('Position',[aa+2/3 aa     bb bb]);
   case 4; subplot('Position',[aa     aa+1/3 bb bb]);
-  case 5; subplot('Position',   [aa+1/3 aa+1/3 bb bb]);
+  case 5; subplot('Position',[aa+1/3 aa+1/3 bb bb]);
   case 6; subplot('Position',[aa+2/3 aa+1/3 bb bb]);
   case 7; subplot('Position',[aa     aa+2/3 bb bb]);
   case 8; subplot('Position',[aa+1/3 aa+2/3 bb bb]);

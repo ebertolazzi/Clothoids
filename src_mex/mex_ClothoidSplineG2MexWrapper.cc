@@ -197,7 +197,7 @@ namespace G2lib {
 
       } else if ( cmd == "constraints" ) {
 
-        #define CMD "ClothoidSplineG2MexWrapper('constraints',OBJ,theta): "
+        #define CMD "ClothoidSplineG2MexWrapper('gradient',OBJ,theta): "
 
         MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs") ;
         MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs") ;
