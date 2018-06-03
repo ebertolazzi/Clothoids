@@ -18,54 +18,26 @@
 "\n" \
 "USAGE:\n" \
 "  - Constructors:\n" \
-"    OBJ = ClothoidListMexWrapper( 'new' ) ;\n" \
+"    OBJ = ClothoidSplineG2MexWrapper( 'new' ) ;\n" \
 "\n" \
 "  On output:\n" \
 "    OBJ = pointer to the internal object\n" \
 "n" \
 "  - Destructor:\n" \
-"    ClothoidListMexWrapper( 'delete', OBJ ) ;\n" \
+"    ClothoidSplineG2MexWrapper( 'delete', OBJ ) ;\n" \
 "\n" \
 "  - Build:\n" \
-"    ClothoidListMexWrapper( 'push_back', OBJ, CLOT ) ;\n" \
-"    ClothoidListMexWrapper( 'push_back', OBJ, x1, y1, theta1 ) ;\n" \
+"    ClothoidSplineG2MexWrapper('setup',OBJ,x,y);\n" \
+"    ClothoidSplineG2MexWrapper('target',OBJ,target[,theta0,theta1]);\n" \
 "\n" \
 "  - Eval:\n" \
-"    [x,y,theta,kappa] = ClothoidListMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
-"    x = ClothoidListMexWrapper( 'xBegin', OBJ ) ;\n" \
-"    x = ClothoidListMexWrapper( 'xEnd', OBJ ) ;\n" \
-"    y = ClothoidListMexWrapper( 'yBegin', OBJ ) ;\n" \
-"    y = ClothoidListMexWrapper( 'yEnd', OBJ ) ;\n" \
-"    theta = ClothoidListMexWrapper( 'thetaBegin', OBJ ) ;\n" \
-"    theta = ClothoidListMexWrapper( 'thetaEnd', OBJ ) ;\n" \
-"    kappa = ClothoidListMexWrapper( 'kappaBegin', OBJ ) ;\n" \
-"    kappa = ClothoidListMexWrapper( 'kappaEnd', OBJ ) ;\n" \
-"\n" \
-"    [x,y]         = ClothoidListMexWrapper( 'eval', OBJ, ss, offs ) ;\n" \
-"    [x_D,y_D]     = ClothoidListMexWrapper( 'eval_D', OBJ, ss, offs ) ;\n" \
-"    [x_DD,y_DD]   = ClothoidListMexWrapper( 'eval_DD', OBJ, ss, offs ) ;\n" \
-"    [x_DDD,y_DDD] = ClothoidListMexWrapper( 'eval_DDD', OBJ, ss, offs ) ;\n" \
-"\n" \
-"  - Transform:\n" \
-"    ClothoidListMexWrapper( 'changeOrigin', OBJ, newX0, newY0 ) ;\n" \
-"    ClothoidListMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
-"    ClothoidListMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
-"    ClothoidListMexWrapper( 'scale', OBJ, scaling ) ;\n" \
-"    ClothoidListMexWrapper( 'reverse', OBJ ) ;\n" \
-"\n" \
-"  - Distance:\n" \
-"    [X,Y,s,dst] = ClothoidListMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
-"    [dst,s]     = ClothoidListMexWrapper( 'distance', OBJ, x, y ) ;\n" \
-"\n" \
-"  - Bounding Box:\n" \
-"    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size ) ;%\n" \
-"    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size, offs ) ;%\n" \
-"\n" \
-"  - G2 spline:\n" \
-"    ok = ClothoidListMexWrapper( 'build3arcG2' || 'build2arcG2' || 'build3arcCLC, ...\n" \
-"                                 OBJ, ...\n" \
-"                                 x0, y0, theta0, kappa0, ...\n" \
-"                                 x1, y1, theta1, kappa1 ) ;%\n" \
+"    theta_guess = ClothoidSplineG2MexWrapper('guess',OBJ);\n" \
+"    obj         = ClothoidSplineG2MexWrapper('objective',OBJ,theta);\n" \
+"    g           = ClothoidSplineG2MexWrapper('gradient',OBJ,theta);\n" \
+"    c           = ClothoidSplineG2MexWrapper('constraints',OBJ,theta);\n" \
+"    jac         = ClothoidSplineG2MexWrapper('jacobian',OBJ,theta);\n" \
+"    jac_pattern = ClothoidSplineG2MexWrapper('jacobian_pattern',OBJ);\n" \
+"    [n,nc]      = ClothoidSplineG2MexWrapper('dims',OBJ);\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \

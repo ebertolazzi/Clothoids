@@ -26,14 +26,14 @@
 
 #include "Fresnel.hh"
 #include "Triangle2D.hh"
+
+#include <string>
 #include <vector>
 #include <algorithm>
 #include <iterator>
 
 //! Clothoid computations routine
 namespace G2lib {
-
-  using std::vector ;
 
   typedef Triangle2D<valueType> T2D ;
 
@@ -84,7 +84,7 @@ namespace G2lib {
     //build( valueType x1, valueType y1, valueType theta1 );
 
     void
-    bbSplit_internal( bbData2 const & data, vector<bbData> & bbV ) const ;
+    bbSplit_internal( bbData2 const & data, std::vector<bbData> & bbV ) const ;
 
     //! Use newton and bisection to intersect two small clothoid segment
     bool
@@ -462,38 +462,40 @@ namespace G2lib {
      * \param bb          splitting data structures vector
      */
     void
-    bbSplit( valueType        split_angle,
-             valueType        split_size,
-             valueType        split_offs,
-             vector<bbData> & bb,
-             bool             reset_bb = true ) const ;
+    bbSplit( valueType             split_angle,
+             valueType             split_size,
+             valueType             split_offs,
+             std::vector<bbData> & bb,
+             bool                  reset_bb = true ) const ;
 
     // intersect computation
     void
-    intersect( ClothoidCurve const & c,
-               vector<valueType>   & s1,
-               vector<valueType>   & s2,
-               indexType             max_iter,
-               valueType             tolerance ) const {
+    intersect( ClothoidCurve const    & c,
+               std::vector<valueType> & s1,
+               std::vector<valueType> & s2,
+               indexType                max_iter,
+               valueType                tolerance ) const {
       intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
     }
 
     void
-    intersect( valueType             offs,
-               ClothoidCurve const & c,
-               valueType             c_offs,
-               vector<valueType>   & s1,
-               vector<valueType>   & s2,
-               indexType             max_iter,
-               valueType             tolerance ) const ;
+    intersect( valueType                offs,
+               ClothoidCurve const &    c,
+               valueType                c_offs,
+               std::vector<valueType> & s1,
+               std::vector<valueType> & s2,
+               indexType                max_iter,
+               valueType                tolerance ) const ;
 
     // collision detection
     bool
-    approximate_collision( valueType             offs,
-                           ClothoidCurve const & c,
-                           valueType             c_offs,
-                           valueType             max_angle,         //!< maximum angle variation
-                           valueType             max_size ) const ; //!< curve offset
+    approximate_collision(
+      valueType             offs,
+      ClothoidCurve const & c,
+      valueType             c_offs,
+      valueType             max_angle, //!< maximum angle variation
+      valueType             max_size   //!< curve offset
+    ) const ;
 
     void
     rotate( valueType angle, valueType cx, valueType cy ) ;
@@ -1053,9 +1055,13 @@ namespace G2lib {
     void copy( ClothoidList const & L );
 
     void push_back( ClothoidCurve const & c );
-    void push_back( valueType x1, valueType y1, valueType theta1 );
-    void push_back( valueType x0, valueType y0, valueType theta0,
-                    valueType x1, valueType y1, valueType theta1 );
+    void push_back( valueType kappa0, valueType dkappa, valueType L );
+    void push_back( valueType x0,     valueType y0,     valueType theta0,
+                    valueType kappa0, valueType dkappa, valueType L );
+
+    void push_back_G1( valueType x1, valueType y1, valueType theta1 );
+    void push_back_G1( valueType x0, valueType y0, valueType theta0,
+                       valueType x1, valueType y1, valueType theta1 );
 
     ClothoidCurve const & get( indexType idx ) const;
     ClothoidCurve const & getAtS( valueType s ) const;
@@ -1165,12 +1171,26 @@ namespace G2lib {
     bbSplit( valueType split_angle,
              valueType split_size,
              valueType split_offs,
-             vector<ClothoidCurve::bbData> & bb ) const {
+             std::vector<ClothoidCurve::bbData> & bb ) const {
       bb.clear();
       std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
       for ( ; ic != clotoidList.end() ; ++ic )
         ic->bbSplit( split_angle, split_size, split_offs, bb, false ) ;
     }
+
+    /*! \brief Save Clothoid list to a stream
+     *
+     * \param stream stream to save
+     */
+    void
+    export_table( std::ostream & stream ) const ;
+
+    /*! \brief Save Clothoid list to a stream
+     *
+     * \param stream streamstream to save
+     */
+    void
+    export_ruby( std::ostream & stream ) const ;
 
   };
 
@@ -1197,7 +1217,7 @@ namespace G2lib {
     indexType              npts ;
 
     // work vector
-    mutable vector<valueType> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2 ;
+    mutable std::vector<valueType> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2 ;
 
     valueType
     diff2pi( valueType in ) const {

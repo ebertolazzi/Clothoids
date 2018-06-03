@@ -21,7 +21,7 @@
 
 #include <cmath>
 #include <cfloat>
-#include <algorithm>
+#include <fstream>
 
 #ifdef __GCC__
 #pragma GCC diagnostic push
@@ -50,6 +50,8 @@ namespace G2lib {
     clotoidList.clear();
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::copy( ClothoidList const & L ) {
     s0.resize( L.s0.size() ) ;
@@ -58,11 +60,15 @@ namespace G2lib {
     std::copy( L.clotoidList.begin(), L.clotoidList.end(), clotoidList.begin() ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::reserve( indexType n ) {
     s0.reserve(size_t(n+1)) ;
     clotoidList.reserve(size_t(n)) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::push_back( ClothoidCurve const & c ) {
@@ -75,24 +81,62 @@ namespace G2lib {
     clotoidList.push_back(c) ;
   }
 
-  void
-  ClothoidList::push_back( valueType x1, valueType y1, valueType theta1 ) {
-    G2LIB_ASSERT( !clotoidList.empty(),
-                  "ClothoidList::push_back( x1 = " << x1 <<
-                  ", y1 = " << y1 << ", theta1 = " << theta1 ) ;
-    ClothoidCurve const & ce = clotoidList.back() ;
-    ClothoidCurve c ;
-    c.build_G1( ce.xEnd(), ce.yEnd(), ce.thetaEnd(), x1, y1, theta1 ) ;
-    push_back(c) ;
-  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::push_back( valueType x0, valueType y0, valueType theta0,
-                           valueType x1, valueType y1, valueType theta1 ) {
+  ClothoidList::push_back(
+    valueType kappa0, valueType dkappa, valueType L
+  ) {
+    G2LIB_ASSERT( !clotoidList.empty(),
+                  "ClothoidList::push_back_G1(...) empty list!");
+    ClothoidCurve c ;
+    valueType x0     = clotoidList.back().xEnd() ;
+    valueType y0     = clotoidList.back().yEnd() ;
+    valueType theta0 = clotoidList.back().thetaEnd() ;
+    c.build( x0, y0, theta0, kappa0, dkappa, L ) ;
+    push_back( c ) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back(
+    valueType x0, valueType y0, valueType theta0,
+    valueType kappa0, valueType dkappa, valueType L
+  ) {
+    ClothoidCurve c ;
+    c.build( x0, y0, theta0, kappa0, dkappa, L ) ;
+    push_back( c ) ;
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back_G1(
+    valueType x1, valueType y1, valueType theta1
+  ) {
+    G2LIB_ASSERT( !clotoidList.empty(),
+                  "ClothoidList::push_back_G1(...) empty list!");
+    ClothoidCurve c ;
+    valueType x0     = clotoidList.back().xEnd() ;
+    valueType y0     = clotoidList.back().yEnd() ;
+    valueType theta0 = clotoidList.back().thetaEnd() ;
+    c.build_G1( x0, y0, theta0, x1, y1, theta1 ) ;
+    push_back( c ) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back_G1(
+    valueType x0, valueType y0, valueType theta0,
+    valueType x1, valueType y1, valueType theta1
+  ) {
     ClothoidCurve c ;
     c.build_G1( x0, y0, theta0, x1, y1, theta1 ) ;
     push_back( c ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ClothoidCurve const &
   ClothoidList::get( indexType idx ) const {
@@ -104,11 +148,15 @@ namespace G2lib {
     return clotoidList[idx];
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   ClothoidCurve const &
   ClothoidList::getAtS( valueType s ) const {
     findAtS(s);
     return get(last_idx) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ClothoidList::findAtS( valueType s ) const {
@@ -130,12 +178,16 @@ namespace G2lib {
     return true ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidList::theta( valueType s ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.theta( s - s0[last_idx] ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidList::theta_D( valueType s ) const {
@@ -144,12 +196,16 @@ namespace G2lib {
     return c.theta_D( s - s0[last_idx] ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidList::theta_DD( valueType s ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.theta_DD( s - s0[last_idx] ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidList::X( valueType s ) const {
@@ -158,12 +214,16 @@ namespace G2lib {
     return c.X( s - s0[last_idx] ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidList::Y( valueType s ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.Y( s - s0[last_idx] ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::eval( valueType   s,
@@ -176,6 +236,8 @@ namespace G2lib {
     return c.eval( s - s0[last_idx], theta, kappa, x, y ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::eval( valueType   s,
                       valueType & x,
@@ -184,6 +246,8 @@ namespace G2lib {
     ClothoidCurve const & c = get( last_idx );
     return c.eval( s - s0[last_idx], x, y ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::eval_D( valueType   s,
@@ -194,6 +258,8 @@ namespace G2lib {
     return c.eval_D( s - s0[last_idx], x_D, y_D ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::eval_DD( valueType   s,
                          valueType & x_DD,
@@ -203,6 +269,8 @@ namespace G2lib {
     return c.eval_DD( s - s0[last_idx], x_DD, y_DD ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::eval_DDD( valueType   s,
                           valueType & x_DDD,
@@ -211,6 +279,8 @@ namespace G2lib {
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DDD( s - s0[last_idx], x_DDD, y_DDD ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // offset curve
   void
@@ -223,6 +293,8 @@ namespace G2lib {
     return c.eval( s - s0[last_idx], offs, x, y ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::eval_D( valueType   s,
                         valueType   offs,
@@ -232,6 +304,8 @@ namespace G2lib {
     ClothoidCurve const & c = get( last_idx );
     return c.eval_D( s - s0[last_idx], offs, x_D, y_D ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::eval_DD( valueType   s,
@@ -243,6 +317,8 @@ namespace G2lib {
     return c.eval_DD( s - s0[last_idx], offs, x_DD, y_DD ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::eval_DDD( valueType   s,
                           valueType   offs,
@@ -252,6 +328,8 @@ namespace G2lib {
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DDD( s - s0[last_idx], offs, x_DDD, y_DDD ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   valueType
   ClothoidList::closestPoint( valueType   x,
@@ -276,17 +354,23 @@ namespace G2lib {
     return DST ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::rotate( valueType angle, valueType cx, valueType cy ) {
     std::vector<ClothoidCurve>::iterator ic = clotoidList.begin() ;
     for ( ; ic != clotoidList.end() ; ++ic ) ic->rotate( angle, cx, cy ) ;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::translate( valueType tx, valueType ty ) {
     std::vector<ClothoidCurve>::iterator ic = clotoidList.begin() ;
     for ( ; ic != clotoidList.end() ; ++ic ) ic->translate( tx, ty ) ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::changeOrigin( valueType newx0, valueType newy0 ) {
@@ -297,6 +381,8 @@ namespace G2lib {
       newy0 = ic->yEnd() ;
     }
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::scale( valueType sfactor ) {
@@ -311,12 +397,47 @@ namespace G2lib {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::reverse() {
     std::vector<ClothoidCurve>::iterator ic = clotoidList.begin() ;
     for ( ; ic != clotoidList.end() ; ++ic ) ic->reverse() ;
     std::reverse( clotoidList.begin(), clotoidList.end() );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::export_table( std::ostream & stream ) const {
+    stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n" ;
+    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+    for ( ; ic != clotoidList.end() ; ++ic )
+      stream << ic->xBegin()     << '\t'
+             << ic->yBegin()     << '\t'
+             << ic->thetaBegin() << '\t'
+             << ic->kappaBegin() << '\t'
+             << ic->kappa_D()    << '\t'
+             << ic->length()     << '\n' ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::export_ruby( std::ostream & stream ) const {
+    stream << "data = {\n" ;
+    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+    for ( ; ic != clotoidList.end() ; ++ic )
+      stream << ic->xBegin()     << '\t'
+             << ic->yBegin()     << '\t'
+             << ic->thetaBegin() << '\t'
+             << ic->kappaBegin() << '\t'
+             << ic->kappa_D()    << '\t'
+             << ic->length()     << '\n' ;
+    stream << "}\n" ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
 // EOF: ClothoidList.cc

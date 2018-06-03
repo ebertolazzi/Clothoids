@@ -2,23 +2,10 @@ classdef ClothoidSplineG2 < handle
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
     objectHandle; % Handle to the underlying C++ class instance
-    %t_type;
-    %x;
-    %y;
-    %theta_guess;
-    %theta_I;
-    %theta_F;
-    %theta_min;
-    %theta_max;
+    use_Ipopt;
   end
 
   methods (Hidden = true)
-    %
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %
-    function res = diff2pi( ~, in )
-      res = in-2*pi*round(in/(2*pi)) ;
-    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [c,ceq,jac,jaceq] = con( self, theta )
       c     = zeros(0,0) ;
@@ -40,9 +27,7 @@ classdef ClothoidSplineG2 < handle
       [ theta_guess, theta_min, theta_max ] = self.guess() ;
       [N,nc] = self.dims();
       
-      use_ipopt = true ;
-      
-      if use_ipopt
+      if self.use_Ipopt
 
         options = {} ;
 
@@ -81,15 +66,18 @@ classdef ClothoidSplineG2 < handle
         stats.elapsed = toc ;
         info;
       else
+        % 'interior-point'
         options = optimoptions('fmincon','Display','iter', ...
-                               'Algorithm','interior-point',...
+                               'CheckGradients',false, ...
+                               'FiniteDifferenceType','central', ...
+                               'Algorithm','sqp',...
                                'SpecifyConstraintGradient',true,...
                                'SpecifyObjectiveGradient',true,...
-                               'OptimalityTolerance',1e-12,...
-                               'ConstraintTolerance',1e-12);
+                               'OptimalityTolerance',1e-20,...
+                               'ConstraintTolerance',1e-10);
         obj     = @(theta) self.obj(theta);
         con     = @(theta) self.con(theta);
-        theta   = fmincon(obj,self.theta_guess,[],[],[],[],self.theta_min,self.theta_max,con,options) ;
+        theta   = fmincon(obj,theta_guess,[],[],[],[],theta_min,theta_max,con,options) ;
         %options = optimset(varargin{:});
         %[theta,resnorm,~,~,output,~,~] = lsqnonlin( @target, theta, [], [], options ) ;
       end
@@ -100,7 +88,7 @@ classdef ClothoidSplineG2 < handle
       N     = length(theta) ;
       clots.reserve(N-1);
       for j=1:N-1
-        clots.push_back( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) ) ;
+        clots.push_back_G1( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) ) ;
       end
     end
   end
@@ -109,6 +97,7 @@ classdef ClothoidSplineG2 < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function self = ClothoidSplineG2()
       self.objectHandle = ClothoidSplineG2MexWrapper( 'new' );
+      self.use_Ipopt    = false ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
@@ -117,6 +106,10 @@ classdef ClothoidSplineG2 < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function setup( self, x, y )
       ClothoidSplineG2MexWrapper( 'setup', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ipopt( self, yesno )
+      self.use_Ipopt = yesno ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [n,nc] = dims( self )

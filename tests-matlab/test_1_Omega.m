@@ -28,12 +28,13 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 close all ;
 
 S  = ClothoidSplineG2() ;
+S.ipopt(true) ;
 
 SPL = cell(8,1);
 
-SPL{1} = S.buildP1( X, Y, 3.141592653589793, 7.647610983392527 ) ;
+SPL{1} = S.buildP1( X, Y, -pi/2, 0 ); %3.141592653589793, 7.647610983392527 ) ;
 SPL{2} = S.buildP2( X, Y ) ;
-SPL{3} = S.buildP3( X, Y, SPL{1}.thetaBegin(), SPL{1}.kappaBegin() ) ;
+SPL{3} = S.buildP3( X, Y, SPL{2}.thetaBegin(), SPL{2}.kappaBegin() ) ;
 SPL{4} = S.buildP4( X, Y ) ;
 SPL{5} = S.buildP5( X, Y ) ;
 SPL{6} = S.buildP6( X, Y ) ;

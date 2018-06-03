@@ -29,6 +29,10 @@ classdef ClothoidList < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function push_back_G1( self, varargin )
+      ClothoidListMexWrapper( 'push_back_G1', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function C = get( self, k )
       [ x0, y0, theta0, k0, dk, L ] = ClothoidListMexWrapper( 'get', self.objectHandle, k ) ;
       C = ClothoidCurve( x0, y0, theta0, k0, dk, L );
@@ -219,6 +223,14 @@ classdef ClothoidList < handle
       %    ref.reverse()
       %
       BB = ClothoidListMexWrapper( 'bbox', self.objectHandle, max_angle, max_size, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function export_table( self, filename )
+      ClothoidListMexWrapper( 'export_table', self.objectHandle, filename );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function export_ruby( self, filename )
+      ClothoidListMexWrapper( 'export_ruby', self.objectHandle, filename );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
