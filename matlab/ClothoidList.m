@@ -38,6 +38,10 @@ classdef ClothoidList < handle
       C = ClothoidCurve( x0, y0, theta0, k0, dk, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ s, theta, kappa ] = getSTK( self )
+      [ s, theta, kappa ] = ClothoidListMexWrapper( 'getSTK', self.objectHandle ) ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function N = numSegment( self )
       N = ClothoidListMexWrapper( 'numSegment', self.objectHandle );
     end

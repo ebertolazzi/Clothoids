@@ -50,6 +50,7 @@
 "    [x_D,y_D]     = ClothoidListMexWrapper( 'eval_D', OBJ, ss, offs ) ;\n" \
 "    [x_DD,y_DD]   = ClothoidListMexWrapper( 'eval_DD', OBJ, ss, offs ) ;\n" \
 "    [x_DDD,y_DDD] = ClothoidListMexWrapper( 'eval_DDD', OBJ, ss, offs ) ;\n" \
+"    [s,theta,kappa] = ClothoidListMexWrapper( 'getSTK', OBJ ) ;\n" \
 "\n" \
 "  - Transform:\n" \
 "    ClothoidListMexWrapper( 'changeOrigin', OBJ, newX0, newY0 ) ;\n" \
@@ -266,6 +267,22 @@ namespace G2lib {
 
         #undef CMD
 
+      } else if ( cmd == "getSTK" ) {
+
+        #define CMD "ClothoidListMexWrapper('getSTK',OBJ): "
+
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs") ;
+        MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs") ;
+
+        indexType n = ptr->numSegment();
+
+        double * s     = createMatrixValue( arg_out_0, 1, n+1 );
+        double * theta = createMatrixValue( arg_out_1, 1, n+1 );
+        double * kappa = createMatrixValue( arg_out_2, 1, n+1 );
+
+        ptr->getSTK(s,theta,kappa);
+
+        #undef CMD
       } else if ( cmd == "distance" ) {
 
         #define CMD "ClothoidListMexWrapper('distance',OBJ,x,y): "

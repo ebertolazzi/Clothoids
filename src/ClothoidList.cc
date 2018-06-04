@@ -331,6 +331,29 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  ClothoidList::getSTK( valueType s[],
+                        valueType theta[],
+                        valueType kappa[] ) const {
+    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+    indexType k  = 0 ;
+    valueType ss = 0 ;
+    while ( ic != clotoidList.end() ) {
+      s[k]     = ss ;
+      theta[k] = ic->thetaBegin();
+      kappa[k] = ic->kappaBegin();
+      ss       += ic->length() ;
+      ++k ;
+      ++ic ;
+    }
+    --ic ;
+    s[k]     = ss ;
+    theta[k] = ic->thetaEnd();
+    kappa[k] = ic->kappaEnd();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   valueType
   ClothoidList::closestPoint( valueType   x,
                               valueType   y,

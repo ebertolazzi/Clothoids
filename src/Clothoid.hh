@@ -1139,6 +1139,11 @@ namespace G2lib {
               valueType & x_DDD,
               valueType & y_DDD ) const ;
 
+    void
+    getSTK( valueType s[],
+            valueType theta[],
+            valueType kappa[] ) const ;
+
     valueType
     closestPoint( valueType   qx,
                   valueType   qy,
