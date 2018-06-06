@@ -508,7 +508,7 @@ namespace G2lib {
           static G2solve3arc g2sol ;
           iter = g2sol.build( x0, y0, theta0, kappa0,
                               x1, y1, theta1, kappa1 ) ;
-          if ( iter > 0 ) {
+          if ( iter >= 0 ) {
             ptr->init();
             ptr->reserve(3);
             ptr->push_back(g2sol.getS0());
@@ -520,7 +520,7 @@ namespace G2lib {
           static G2solve2arc g2sol ;
           iter = g2sol.build( x0, y0, theta0, kappa0,
                               x1, y1, theta1, kappa1 ) ;
-          if ( iter > 0 ) {
+          if ( iter >= 0 ) {
             ptr->init();
             ptr->reserve(2);
             ptr->push_back(g2sol.getS0());
@@ -530,7 +530,7 @@ namespace G2lib {
           static G2solveCLC g2sol ;
           iter = g2sol.build( x0, y0, theta0, kappa0,
                               x1, y1, theta1, kappa1 ) ;
-          if ( iter > 0 ) {
+          if ( iter >= 0 ) {
             ptr->init();
             ptr->reserve(3);
             ptr->push_back(g2sol.getS0());

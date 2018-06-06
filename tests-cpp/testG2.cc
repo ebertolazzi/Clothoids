@@ -13,16 +13,15 @@ main() {
 
   valueType m_pi = 3.1415926535897932385 ;
 
-#if 0
-  valueType x0  = 0 ;
-  valueType y0  = 0  ;
-  valueType th0 = 2.9095201640181596 ;
-  valueType k0  = 0.10000000000000001 ;
-
+#if 1
+  valueType x0  = -1 ;
+  valueType y0  =  0 ;
+  valueType th0 = -2 ;
+  valueType k0  = 0.909297426825682 ;
   valueType x1  = 1 ;
   valueType y1  = 0 ;
-  valueType th1 = -3.1101767270538954 ;
-  valueType k1  = 1 ;
+  valueType th1 = 2 ;
+  valueType k1  = 0.909297426825682 ;
 #else
   valueType x0  = -1 ;
   valueType y0  = 0  ;

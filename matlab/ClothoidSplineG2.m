@@ -3,6 +3,7 @@ classdef ClothoidSplineG2 < handle
   properties (SetAccess = private, Hidden = true)
     objectHandle; % Handle to the underlying C++ class instance
     use_Ipopt;
+    iter_opt;
   end
 
   methods (Hidden = true)
@@ -25,7 +26,7 @@ classdef ClothoidSplineG2 < handle
       %
       self.setup( x, y );
       [ theta_guess, theta_min, theta_max ] = self.guess() ;
-      [N,nc] = self.dims();
+      [~,nc] = self.dims();
       
       if self.use_Ipopt
 
@@ -67,7 +68,7 @@ classdef ClothoidSplineG2 < handle
         info;
       else
         % 'interior-point'
-        options = optimoptions('fmincon','Display','iter', ...
+        options = optimoptions('fmincon','Display',self.iter_opt, ...
                                'CheckGradients',false, ...
                                'FiniteDifferenceType','central', ...
                                'Algorithm','sqp',...
@@ -98,6 +99,7 @@ classdef ClothoidSplineG2 < handle
     function self = ClothoidSplineG2()
       self.objectHandle = ClothoidSplineG2MexWrapper( 'new' );
       self.use_Ipopt    = false ;
+      self.iter_opt     = 'iter' ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
@@ -106,6 +108,14 @@ classdef ClothoidSplineG2 < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function setup( self, x, y )
       ClothoidSplineG2MexWrapper( 'setup', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function verbose( self, yes )
+      if yes
+        self.iter_opt = 'iter';
+      else
+        self.iter_opt = 'none';
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ipopt( self, yesno )
