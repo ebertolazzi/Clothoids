@@ -4,9 +4,15 @@ classdef ClothoidSplineG2 < handle
     objectHandle; % Handle to the underlying C++ class instance
     use_Ipopt;
     iter_opt;
+    ipopt_check_gradient;
   end
 
   methods (Hidden = true)
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ceq,jaceq] = nlsys( self, theta )
+      ceq   = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
+      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta ) ; 
+    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [c,ceq,jac,jaceq] = con( self, theta )
       c     = zeros(0,0) ;
@@ -45,8 +51,12 @@ classdef ClothoidSplineG2 < handle
         options.ipopt.mu_strategy         = 'adaptive';
         options.ipopt.max_iter            = 400 ;
         options.ipopt.tol                 = 1e-10 ;
-        options.ipopt.derivative_test_tol = 1e-4 ;
-        %optimoptions.ipopt.derivative_test     = 'first-order' ; %% default 'none'
+        options.ipopt.derivative_test_tol = 1e-5 ;
+        if self.ipopt_check_gradient
+          options.ipopt.derivative_test = 'first-order' ;
+        else
+          options.ipopt.derivative_test = 'none' ;
+        end
         %options.ipopt.derivative_test_perturbation = 1e-8 ;
 
         % The callback functions.
@@ -92,14 +102,44 @@ classdef ClothoidSplineG2 < handle
         clots.push_back_G1( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) ) ;
       end
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
+    function clots = build_internal2( self, x, y, varargin )
+      %
+      % Compute guess angles
+      %
+      self.setup( x, y );
+      [ theta_guess, ~, ~ ] = self.guess() ;
+      % 'interior-point'
+      options = optimoptions('fsolve','Display',self.iter_opt, ...
+                             'CheckGradients',false, ...
+                             'FiniteDifferenceType','central', ...
+                             'Algorithm','levenberg-marquardt',...
+                             'SpecifyObjectiveGradient',true,...
+                             'OptimalityTolerance',1e-20);
+      obj = @(theta) self.nlsys(theta);
+      [theta,~,exitflag,~] = fsolve(obj,theta_guess,options) ;
+      if exitflag <= 0
+        error('ClothoidSplineG2, fsolve failed exitflag = %d\n',exitflag) ;
+      end
+      %
+      % Compute spline parameters
+      %
+      clots = ClothoidList() ;
+      N     = length(theta) ;
+      clots.reserve(N-1);
+      for j=1:N-1
+        clots.push_back_G1( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) ) ;
+      end
+    end
   end
 
   methods
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function self = ClothoidSplineG2()
-      self.objectHandle = ClothoidSplineG2MexWrapper( 'new' );
-      self.use_Ipopt    = false ;
-      self.iter_opt     = 'iter' ;
+      self.objectHandle          = ClothoidSplineG2MexWrapper( 'new' );
+      self.use_Ipopt             = false ;
+      self.iter_opt              = 'iter' ;
+      self.ipopt_check_gradient  = false ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
@@ -122,6 +162,10 @@ classdef ClothoidSplineG2 < handle
       self.use_Ipopt = yesno ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ipopt_check( self, yesno )
+      self.ipopt_check_gradient = yesno ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [n,nc] = dims( self )
       [n,nc] = ClothoidSplineG2MexWrapper( 'dims', self.objectHandle );
     end
@@ -132,12 +176,12 @@ classdef ClothoidSplineG2 < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP1( self, x, y, theta0, theta1 )
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P1', theta0, theta1 );
-      clots = self.build_internal( x, y ) ;
+      clots = self.build_internal2( x, y ) ;
     end 
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP2( self, x, y )
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P2' );
-      clots = self.build_internal( x, y ) ;
+      clots = self.build_internal2( x, y ) ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP3( self, x, y, theta0, kappa0 )

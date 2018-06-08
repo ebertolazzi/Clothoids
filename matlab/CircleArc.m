@@ -11,26 +11,15 @@ classdef CircleArc < handle
       % Usage:
       %    (1) ref = CircleArc()
       %    (2) ref = CircleArc( x0, y0, theta0, k0, L )
-      %    (3) ref = CircleArc( x0, y0, theta0, k0, smin, smax )
-      %    (4) ref = CircleArc( p0, p1, p2 )
-      %    (5) ref = CircleArc( p0, theta0, p1 )
       %
       % On input:
       %    x0, y0: coordinate of initial point
       %    theta0: orientation of the circle at initial point
       %    k0:     curvature of the circle at initial point
       %    L:      length of curve from initial to final point
-      %    smin:   initial curvilinear coordinate of the curve
-      %    smax:   final curvilinear coordinate of the curve
-      %    p0:     2D point
-      %    p1:     2D point
-      %    p2:     2D point
       %
       %    (1) empty circle
       %    (2) circle passing from (x0,y0) at angle theta0 with curvature and length
-      %    (3) circle as in (2) with intial and final curvaturevilinear coordinate respect to (x0,y0)
-      %    (4) circle arc passing from 3 points
-      %    (5) circle passing to p0 and p1 with angle theta0 at p0
       %  On output:
       %    ref: reference handle to the object instance
       %
@@ -42,32 +31,54 @@ classdef CircleArc < handle
       CircleMexWrapper('delete', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function build( self, varargin )
+    function build( self, x0, y0, theta0, k0, L )
       %
       % Build the circle from known parameters
       %
       % Usage:
       %    (1) ref.build( x0, y0, theta0, k0, L )
-      %    (2) ref.build( p0, p1, p2 )
-      %    (3) ref.build( p0, theta0, p1 )
       %
       % On input:
       %    x0, y0: coordinate of initial point
       %    theta0: orientation of the circle at initial point
       %    k0:     curvature of the circle at initial point
       %    L:      length of curve from initial to final point
-      %    smin:   initial curvilinear coordinate of the curve
-      %    smax:   final curvilinear coordinate of the curve
-      %    p0:     2D point
-      %    p1:     2D point
-      %    p2:     2D point
       %
       %    (1) circle passing from (x0,y0) at angle theta0 with curvature and length
-      %    (2) circle as in (2) with intial and final curvaturevilinear coordinate respect to (x0,y0)
-      %    (3) circle arc passing from 3 points
-      %    (4) circle passing to p0 and p1 with angle theta0 at p0
+      CircleMexWrapper('build', self.objectHandle, x0, y0, theta0, k0, L );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build_G1( self, varargin )
       %
-      CircleMexWrapper('build', self.objectHandle, varargin{:} );
+      % Build the circle from known parameters
+      %
+      % Usage:
+      %    (1) ref.build( x0, y0, theta0, x1, y1 )
+      %    (2) ref.build( p0, theta0, p1 )
+      %
+      % On input:
+      %    x0, y0: coordinate of initial point
+      %    theta0: orientation of the circle at initial point
+      %    k0:     curvature of the circle at initial point
+      %    L:      length of curve from initial to final point
+      %    p0:     2D point
+      %    p1:     2D point
+      %
+      %    (1) circle passing to [x0,y0] and [x1,y1] with angle theta0 at [x0,y0]
+      %    (2) circle passing to p0 and p1 with angle theta0 at p0
+      %
+      ok = CircleMexWrapper('build_G1', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build_3P( self, varargin )
+      %
+      % Build the circle from known parameters
+      %
+      % Usage:
+      %    (1) ref.build( x0, y0, x1, y1, x2, y2 )
+      %    (2) ref.build( p0, p1, p2 )
+      %
+      ok = CircleMexWrapper('build_3P', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function translate(self, tx, ty)
@@ -218,11 +229,17 @@ classdef CircleArc < handle
       if nargin>1 ; col = varargin{1} ; end
       if nargin>2 ; lw  = varargin{2} ; end
       fnplt(arc,[breaks(1),breaks(end)],col,lw);
-      hold on;
-      % plot poligono
-      xx = arc.coefs(1,:)./arc.coefs(3,:);
-      yy = arc.coefs(2,:)./arc.coefs(3,:);
-      plot(xx,yy,':ok','Color',col);
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function lineH = plotPolygon(self,varargin)
+      arc = self.to_nurbs() ;
+      xx  = arc.coefs(1,:)./arc.coefs(3,:);
+      yy  = arc.coefs(2,:)./arc.coefs(3,:);
+      if nargin > 1
+        plot(xx,yy,varargin{:});
+      else
+        plot(xx,yy,':ok');
+      end
     end
   end
 end

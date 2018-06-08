@@ -12,59 +12,38 @@
 
 addpath('../matlab');
 
-% check constructors
-x0     = 0 ;
-y0     = 2 ;
-x1     = 3 ;
-y1     = 3 ;
-x2     = 5 ;
-y2     = 2 ;
-theta0 = 0 ;
-L      = 10 ;
-k0     = 1/3 ;
-L1 = CircleArc( x0, y0, theta0, k0, L );
-L2 = CircleArc( x0, y0, theta0+pi/4, 1.5*k0, L );
-L3 = CircleArc();
-L3.build_3P(x0, y0, x1, y1, x2, y2 );
-%
-L1.plot() ;
-L2.plot('red',3) ;
-L3.plot('black',3) ;
+clear all ;
+close all ;
 
-L1.translate(1,1) ;
-L1.plot() ;
+x0=[-0.1,-20,-0.1,-0.1];
+y0=[ 0,1,0,0];
+x1=[ 1/4,2+1,1/4,2];
+y1=[ 2,2,1,2];
+x2=[ 2,2,2,2];
+y2=[0,0,0,0];
 
-L2.changeCurvilinearOrigin(4,10) ;
-L2.plot('red',3) ;
+B = Biarc();
+A = CircleArc();
+for kk=1:4
+  
+  subplot(2,2,kk) ;
 
-L2.changeOrigin(1,2) ;
-L2.plot('red',3) ;
+  ok1 = B.build_3P( x0(kk), y0(kk), x1(kk), y1(kk), x2(kk), y2(kk) );
+  ok2 = A.build_3P( x0(kk), y0(kk), x1(kk), y1(kk), x2(kk), y2(kk) );
 
-L3.trim(2,7) ;
-L3.plot('green',3) ;
+  ok1
+  ok2
+  
+  B.plot(1000,'-r','LineWidth',2);
+  hold on
+  A.plot() ;
 
-L3.rotate(pi/3,0,0) ;
-L3.plot('green',3) ;
-
-L3.rotate(pi/3,0,0) ;
-L3.plot('green',3) ;
-
-L3.rotate(pi/3,0,0) ;
-L3.plot('green',3) ;
-
-L3.translate(3,3) ;
-L3.plot('blue',3) ;
-
-L3.eval(1)
-L3.eval_D(1)
-L3.eval_DD(1)
-L3.eval_DDD(1)
-L3.xBegin()
-L3.yBegin()
-L3.thetaBegin()
-L3.length()
-
-L3.distance(1,4)
-
-axis equal;
-%
+  plot( [x0(kk),x1(kk),x2(kk)],[y0(kk),y1(kk),y2(kk)], ...
+        '--gs',...
+        'LineWidth',2,...
+        'MarkerSize',10,...
+        'MarkerEdgeColor','b',...
+        'MarkerFaceColor',[0.5,0.5,0.5]) ;
+  title(sprintf('test N. %d',kk));
+  axis equal;
+end

@@ -251,16 +251,72 @@ namespace G2lib {
       valueType ca = cos(alpha);
       valueType sa = sin(alpha);
 
-      xs     = x0 + L0*(A[0][0]*ca-A[1][0]*sa);
-      ys     = y0 + L0*(A[0][0]*sa+A[1][0]*ca);
-      thetas = thstar+alpha;
-      cs     = cos(thetas);
-      ss     = sin(thetas);
+      valueType xs     = x0 + L0*(A[0][0]*ca-A[1][0]*sa);
+      valueType ys     = y0 + L0*(A[0][0]*sa+A[1][0]*ca);
+      valueType thetas = thstar+alpha;
+      //valueType cs     = cos(thetas);
+      //valueType ss     = sin(thetas);
 
       C1.build( xs, ys, thetas, kappa1, L1 );
     }
 
     return ok ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  Biarc::build_3P( valueType x0,
+                   valueType y0,
+                   valueType x1,
+                   valueType y1,
+                   valueType x2,
+                   valueType y2 ) {
+
+    valueType dxa   = x1-x0 ;
+    valueType dya   = y1-y0 ;
+    valueType dxb   = x2-x1 ;
+    valueType dyb   = y2-y1 ;
+    valueType La    = hypot(dya,dxa) ;
+    valueType Lb    = hypot(dyb,dxb) ;
+    valueType arg   = (dxa*dxb + dya * dyb)/(La*Lb) ;
+    if      ( arg >  1 ) arg = 1 ;
+    else if ( arg < -1 ) arg = -1 ;
+    valueType omega = acos(arg) ;
+
+    valueType at = (La/(La+Lb))*omega;
+    valueType bt = (Lb/(La+Lb))*omega;
+    // find solution using Halley
+    valueType Delta = 0 ;
+    bool found = false ;
+    for ( indexType iter = 0 ; iter < 10 && !found ; ++iter ) {
+      valueType ga[3], gb[3] ;
+      gfun( at+Delta, ga );
+      gfun( bt-Delta, gb );
+      valueType f   = ga[0]/La - gb[0]/Lb ;
+      valueType df  = ga[1]/La + gb[1]/Lb ;
+      valueType ddf = ga[2]/La - gb[2]/Lb ;
+      valueType h   = (df*f)/(df*df-0.5*f*ddf) ;
+      Delta -= h ;
+      found = abs(h) < 1e-10 && abs(f) < 1e-10 ;
+    }
+
+    if ( found ) {
+      at += Delta ; bt -= Delta ;
+      valueType tha = atan2(dya,dxa) ;
+      valueType thb = atan2(dyb,dxb) ;
+      if ( dxa*dyb < dya*dxb ) {
+        tha += at ;
+        thb += bt ;
+      } else {
+        tha -= at ;
+        thb -= bt ;
+      }
+      C0.build_G1( x0, y0, tha, x1, y1 );
+      C1.build_G1( x1, y1, thb, x2, y2 );
+    }
+
+    return found ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -427,9 +483,6 @@ namespace G2lib {
     stream <<   "Biarc"
            << "\nC0 = " << bi.C0
            << "\nC1 = " << bi.C1
-           << "\nxs     = " << bi.xs
-           << "\nys     = " << bi.ys
-           << "\nthetas = " << bi.thetas
            << "\n" ;
     return stream ;
   }

@@ -10,7 +10,7 @@
 %=========================================================================%
 
 addpath('../matlab');
-addpath('../Ipopt/precompiled_mex');
+addpath('../../ipopt/precompiled_mex');
 
 tol = 1e-10 ;
 
@@ -29,18 +29,22 @@ close all ;
 
 S  = ClothoidSplineG2() ;
 S.ipopt(true) ;
+S.ipopt_check(true) ;
 
 SPL = cell(8,1);
 
+SPL{1} = S.buildP1( X, Y, -pi, -pi ); %3.141592653589793, 7.647610983392527 ) ;
+SPL{3} = S.buildP3( X, Y, SPL{1}.thetaBegin(), SPL{1}.kappaBegin() ) ;
+
 SPL{1} = S.buildP1( X, Y, -pi/2, 0 ); %3.141592653589793, 7.647610983392527 ) ;
 SPL{2} = S.buildP2( X, Y ) ;
-SPL{3} = S.buildP3( X, Y, SPL{2}.thetaBegin(), SPL{2}.kappaBegin() ) ;
 SPL{4} = S.buildP4( X, Y ) ;
 SPL{5} = S.buildP5( X, Y ) ;
 SPL{6} = S.buildP6( X, Y ) ;
 SPL{7} = S.buildP7( X, Y ) ;
 SPL{8} = S.buildP8( X, Y ) ;
 SPL{9} = S.buildP9( X, Y ) ;
+
 
 aa = 0.04 ;
 bb = 1/3-2*aa ;

@@ -1063,6 +1063,23 @@ namespace G2lib {
     void push_back_G1( valueType x0, valueType y0, valueType theta0,
                        valueType x1, valueType y1, valueType theta1 );
 
+    bool
+    build_G1( indexType       n,
+              valueType const x[],
+              valueType const y[] ) ;
+
+    bool
+    build_G1( indexType       n,
+              valueType const x[],
+              valueType const y[],
+              valueType const theta[] ) ;
+
+    bool
+    build_theta( indexType       n,
+                 valueType const x[],
+                 valueType const y[],
+                 valueType       theta[] ) const ;
+
     ClothoidCurve const & get( indexType idx ) const;
     ClothoidCurve const & getAtS( valueType s ) const;
 
@@ -1143,6 +1160,12 @@ namespace G2lib {
     getSTK( valueType s[],
             valueType theta[],
             valueType kappa[] ) const ;
+
+    void
+    getDeltaTheta( valueType deltaTheta[] ) const ;
+
+    void
+    getDeltaKappa( valueType deltaKappa[] ) const ;
 
     valueType
     closestPoint( valueType   qx,

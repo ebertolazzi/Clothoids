@@ -34,7 +34,7 @@ namespace G2lib {
    |   \____|_|_|  \___|_|\___/_/   \_\_|  \___|
   \*/
 
-  void
+  bool
   CircleArc::build_G1( valueType _x0,
                        valueType _y0,
                        valueType _theta0,
@@ -44,20 +44,24 @@ namespace G2lib {
     valueType dx = _x1 - _x0 ;
     valueType dy = _y1 - _y0 ;
     valueType d  = hypot( dx, dy );
-    valueType th = atan2( dy, dx ) - _theta0 ;
 
-    x0     = _x0 ;
-    y0     = _y0 ;
-    theta0 = _theta0 ;
-    c0     = cos(_theta0);
-    s0     = sin(_theta0);
-    k      = 2*sin(th)/d ;
-    L      = d/Sinc(th);
+    if ( d > 0 ) {
+      valueType th = atan2( dy, dx ) - _theta0 ;
+      x0     = _x0 ;
+      y0     = _y0 ;
+      theta0 = _theta0 ;
+      c0     = cos(_theta0);
+      s0     = sin(_theta0);
+      k      = 2*sin(th)/d ;
+      L      = d/Sinc(th);
+      return true ;
+    }
+    return false ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
+  bool
   CircleArc::build_3P( valueType _x0,
                        valueType _y0,
                        valueType _x1,
@@ -65,10 +69,29 @@ namespace G2lib {
                        valueType _x2,
                        valueType _y2 ) {
 
-    valueType _dx = _x1 - _x0 ;
-    valueType _dy = _y1 - _y0 ;
-    valueType _theta0 = atan2( _dy, _dx ) + m_pi_2 ;
-    build_G1( _x0, _y0, _theta0, _x2, _y2 );
+    valueType dxa   = _x1 - _x0 ;
+    valueType dya   = _y1 - _y0 ;
+    valueType dxb   = _x2 - _x1 ;
+    valueType dyb   = _y2 - _y1 ;
+    valueType La    = hypot(dya,dxa) ;
+    valueType Lb    = hypot(dyb,dxb) ;
+    valueType cosom = (dxa*dxb + dya*dyb)/(La*Lb) ;
+    if      ( cosom >  1 ) cosom = 1 ;
+    else if ( cosom < -1 ) cosom = -1 ;
+    valueType omega = acos(cosom) ;
+
+    valueType alpha = omega - atan2(Lb*sin(omega),La+Lb*cos(omega)) ;
+    valueType dxc   = _x2 - _x0 ;
+    valueType dyc   = _y2 - _y0 ;
+    valueType Lc    = hypot(dyc,dxc) ;
+    valueType cosal = (dxa*dxc + dya*dyc)/(La*Lc) ;
+    if      ( cosal >  1 ) cosal = 1 ;
+    else if ( cosal < -1 ) cosal = -1 ;
+    alpha += acos(cosal) ;
+
+    if ( dxa*dyb > dya*dxb ) alpha = -alpha ;
+    valueType _theta0 = atan2( dyc, dxc ) + alpha ;
+    return build_G1( _x0, _y0, _theta0, _x2, _y2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

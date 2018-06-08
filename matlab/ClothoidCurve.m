@@ -105,20 +105,20 @@ classdef ClothoidCurve < handle
       [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval( self, s )
-      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, s );
+    function varargout = eval( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_D( self, s )
-      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval_D', self.objectHandle, s );
+    function varargout = eval_D( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval_D', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DD( self, s )
-      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval_DD', self.objectHandle, s );
+    function varargout = eval_DD( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval_DD', self.objectHandle, s, varargin{:}  );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DDD( self, s )
-      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval_DDD', self.objectHandle, s );
+    function varargout = eval_DDD( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidCurveMexWrapper( 'eval_DDD', self.objectHandle, s, varargin{:}  );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y,S,DST] = closestPoint( self, qx, qy )
@@ -306,27 +306,19 @@ classdef ClothoidCurve < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
-      % plot: method to plot the clothoid curve
-      % Usage:
-      %    lineH = ref.plot()
-      %    lineH = ref.plot(0.2)
-      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
-      %    
-      % On input:
-      %    step:     the distance between consecutive samples used to
-      %              draw the curve
-      %    varargin: optional arguments passed to the MATLAB plot
-      %              function
-      %
-      % On output:
-      %    lineH: the handle to the line object 
-      %           (i.e. the output of the MATLAB plot function)
       if nargin < 2
         npts = 1000 ; 
       end
       L     = ClothoidCurveMexWrapper( 'length', self.objectHandle );
       S     = 0:L/npts:L ;
       [X,Y] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S );
+      plot(X,Y, varargin{:});
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plot_offs( self, npts, offs, varargin )
+      L     = ClothoidCurveMexWrapper( 'length', self.objectHandle );
+      S     = 0:L/npts:L ;
+      [X,Y] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S, offs );
       plot(X,Y, varargin{:});
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

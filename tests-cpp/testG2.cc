@@ -11,8 +11,6 @@ main() {
   G2lib::G2solve2arc g2solve2arc ;
   G2lib::G2solve3arc g2solve3arc ;
 
-  valueType m_pi = 3.1415926535897932385 ;
-
 #if 1
   valueType x0  = -1 ;
   valueType y0  =  0 ;

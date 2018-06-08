@@ -38,6 +38,12 @@ classdef ClothoidList < handle
       C = ClothoidCurve( x0, y0, theta0, k0, dk, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function append( self, lst )
+      for k=1:lst.numSegment()
+        self.push_back( lst.get(k) );
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ s, theta, kappa ] = getSTK( self )
       [ s, theta, kappa ] = ClothoidListMexWrapper( 'getSTK', self.objectHandle ) ;
     end
@@ -46,22 +52,38 @@ classdef ClothoidList < handle
       N = ClothoidListMexWrapper( 'numSegment', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = build3arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
-      ok = ClothoidListMexWrapper( 'build3arcG2', self.objectHandle, ...
+    function ok = build_3arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build_3arcG2', self.objectHandle, ...
                                    x0, y0, theta0, kappa0, ...
                                    x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = build2arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
-      ok = ClothoidListMexWrapper( 'build2arcG2', self.objectHandle, ...
+    function ok = build_2arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build_2arcG2', self.objectHandle, ...
                                     x0, y0, theta0, kappa0, ...
                                     x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = buildCLC( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
-      ok = ClothoidListMexWrapper( 'buildCLC', self.objectHandle, ...
+    function ok = build_CLC( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build_CLC', self.objectHandle, ...
                                    x0, y0, theta0, kappa0, ...
                                    x1, y1, theta1, kappa1 );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build_G1( self, x, y, varargin )
+      ok = ClothoidListMexWrapper( 'build_G1', self.objectHandle, x, y, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [theta,ok] = build_theta( self, x, y )
+      [theta,ok] = ClothoidListMexWrapper( 'build_theta', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function dtheta = deltaTheta( self )
+      dtheta = ClothoidListMexWrapper( 'deltaTheta', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function dkappa = deltaKappa( self )
+      dkappa = ClothoidListMexWrapper( 'deltaKappa', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = evaluate( self, s )
@@ -83,20 +105,20 @@ classdef ClothoidList < handle
       [varargout{1:nargout}] = ClothoidListMexWrapper( 'evaluate', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval( self, s )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval', self.objectHandle, s );
+    function varargout = eval( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_D( self, s )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_D', self.objectHandle, s );
+    function varargout = eval_D( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_D', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DD( self, s )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_DD', self.objectHandle, s );
+    function varargout = eval_DD( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_DD', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DDD( self, s )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_DDD', self.objectHandle, s );
+    function varargout = eval_DDD( self, s, varargin )
+      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_DDD', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y,S,DST] = closestPoint( self, qx, qy )
@@ -238,25 +260,10 @@ classdef ClothoidList < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
-      % plot: method to plot the clothoid curve
-      % Usage:
-      %    lineH = ref.plot()
-      %    lineH = ref.plot(0.2)
-      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
-      %    
-      % On input:
-      %    step:     the distance between consecutive samples used to
-      %              draw the curve
-      %    varargin: optional arguments passed to the MATLAB plot
-      %              function
-      %
-      % On output:
-      %    lineH: the handle to the line object 
-      %           (i.e. the output of the MATLAB plot function)
       if nargin > 1
         npts = varargin{1} ;
       else
-        npts = 1000 ;
+        npts = 400 ;
       end
       if nargin > 2
         fmt1 = varargin{2} ;
@@ -279,34 +286,36 @@ classdef ClothoidList < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plotCurvature( self, varargin )
-      % plot: method to plot the clothoid curve
-      % Usage:
-      %    lineH = ref.plot()
-      %    lineH = ref.plot(0.2)
-      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
-      %    
-      % On input:
-      %    step:     the distance between consecutive samples used to
-      %              draw the curve
-      %    varargin: optional arguments passed to the MATLAB plot
-      %              function
-      %
-      % On output:
-      %    lineH: the handle to the line object 
-      %           (i.e. the output of the MATLAB plot function)
-      if nargin > 1
-        npts = varargin{1} ;
+    function plot_offs( self, npts, offs, varargin )
+      if nargin > 3
+        fmt1 = varargin{1} ;
       else
-        npts = 1000 ;
+        fmt1 = {'Color','red','LineWidth',3} ;
       end
+      if nargin > 4
+        fmt2 = varargin{2} ;
+      else
+        fmt2 = {'Color','blue','LineWidth',3} ;
+      end
+      for k=1:self.numSegment()
+        C = self.get(k);
+        if mod(k,2) == 0
+          C.plot_offs( npts, offs, fmt1{:} );
+        else
+          C.plot_offs( npts, offs, fmt2{:} );
+        end
+        hold on ;
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, npts, varargin )
       if nargin > 2
-        fmt1 = varargin{2} ;
+        fmt1 = varargin{1} ;
       else
         fmt1 = {'Color','red','LineWidth',3} ;
       end
       if nargin > 3
-        fmt2 = varargin{3} ;
+        fmt2 = varargin{2} ;
       else
         fmt2 = {'Color','blue','LineWidth',3} ;
       end
@@ -324,36 +333,15 @@ classdef ClothoidList < handle
         hold on ;
       end
     end
-
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plotAngle( self, varargin )
-      % plot: method to plot the clothoid curve
-      % Usage:
-      %    lineH = ref.plot()
-      %    lineH = ref.plot(0.2)
-      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
-      %    
-      % On input:
-      %    step:     the distance between consecutive samples used to
-      %              draw the curve
-      %    varargin: optional arguments passed to the MATLAB plot
-      %              function
-      %
-      % On output:
-      %    lineH: the handle to the line object 
-      %           (i.e. the output of the MATLAB plot function)
-      if nargin > 1
-        npts = varargin{1} ;
-      else
-        npts = 1000 ;
-      end
+    function plotAngle( self, npts, varargin )
       if nargin > 2
-        fmt1 = varargin{2} ;
+        fmt1 = varargin{1} ;
       else
         fmt1 = {'Color','red','LineWidth',3} ;
       end
       if nargin > 3
-        fmt2 = varargin{3} ;
+        fmt2 = varargin{2} ;
       else
         fmt2 = {'Color','blue','LineWidth',3} ;
       end

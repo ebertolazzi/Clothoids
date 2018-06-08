@@ -32,7 +32,7 @@ classdef Biarc < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build( self, x0, y0, theta0, x1, y1, theta1 )
-      % Build the interpolating G1 clothoid arc
+      % Build the interpolating G1 biarc
       %
       % Usage:
       %    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
@@ -44,6 +44,20 @@ classdef Biarc < handle
       %    theta1: orientation of the clothoid at final point
       %
       ok = BiarcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build_3P( self, x0, y0, x1, y1, x2, y2 )
+      % Build the interpolating biarc by 3 points
+      %
+      % Usage:
+      %    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
+      %
+      % On input:
+      %    x0, y0: coordinate of initial point
+      %    x1, y1: coordinate of middle point
+      %    x2, y2: coordinate of final point
+      %
+      ok = BiarcMexWrapper( 'build_3P', self.objectHandle, x0, y0, x1, y1, x2, y2 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = evaluate( self, s )
@@ -223,7 +237,7 @@ classdef Biarc < handle
       BiarcMexWrapper( 'reverse', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [arc,arc1] = to_nurbs( self )
+    function [arc0,arc1] = to_nurbs( self )
       % Usage:
       %    ref.to_nurbs()
       %
@@ -252,7 +266,7 @@ classdef Biarc < handle
       L     = BiarcMexWrapper( 'length', self.objectHandle );
       S     = 0:L/npts:L ;
       [X,Y] = BiarcMexWrapper( 'eval', self.objectHandle, S );
-      lineH = plot(X,Y, varargin{:});
+      lineH = plot(X,Y,varargin{:});
     end
   end
 end

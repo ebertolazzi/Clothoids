@@ -44,16 +44,28 @@ namespace G2lib {
 
   class Biarc {
     CircleArc C0, C1 ;
-    valueType xs, ys, thetas, cs, ss, alpha ;
+    valueType alpha ;
+    //valueType xs, ys, thetas, cs, ss, alpha ;
+
+    void
+    gfun( valueType omega, valueType g[3] ) const {
+      valueType so  = sin(omega) ;
+      valueType co  = cos(omega) ;
+      valueType oco = omega*co ;
+      g[0] = so + oco ;
+      g[1] = 2*co - omega*so ;
+      g[2] = -3*so - oco ;
+    }
+
   public:
   
     Biarc()
-    : xs(0)
-    , ys(0)
-    , thetas(0)
-    , cs(0)
-    , ss(0)
-    , alpha(0)
+    //: xs(0)
+    //, ys(0)
+    //, thetas(0)
+    //, cs(0)
+    //, ss(0)
+    : alpha(0)
     {}
 
     //! construct a clothoid with the standard parameters
@@ -77,11 +89,11 @@ namespace G2lib {
     copy( Biarc const & c ) {
       C0.copy(c.C0);
       C1.copy(c.C1);
-      xs     = c.xs ;
-      ys     = c.ys ;
-      thetas = c.thetas ;
-      cs     = c.cs ;
-      ss     = c.ss ;
+      //xs     = c.xs ;
+      //ys     = c.ys ;
+      //thetas = c.thetas ;
+      //cs     = c.cs ;
+      //ss     = c.ss ;
       alpha  = c.alpha ;
     }
 
@@ -93,7 +105,7 @@ namespace G2lib {
     CircleArc const & getC0() const { return C0 ; }
     CircleArc const & getC1() const { return C1 ; }
 
-    //! construct a clothoid with the standard parameters
+    //! construct a biarc with the standard parameters
     bool
     build( valueType x0,
            valueType y0,
@@ -102,14 +114,28 @@ namespace G2lib {
            valueType y1,
            valueType theta1 ) ;
 
+    /*! \brief
+    //  construct a biarc by 3 point at "minimum energy"
+    //  - Planar point set fairing and fitting by arc splines
+    //  - Xunnian Yang and Guozhao Wang
+    //  - Computer-Aided Design, vol 33, 2001
+    */
+    bool
+    build_3P( valueType x0,
+              valueType y0,
+              valueType x1,
+              valueType y1,
+              valueType x2,
+              valueType y2 ) ;
+
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
     valueType theta( valueType s ) const ;
     valueType kappa( valueType s ) const ;
 
-    valueType Xstar()     const { return xs ; }
-    valueType Ystar()     const { return ys ; }
-    valueType thetaStar() const { return thetas ; }
+    valueType Xstar()     const { return C1.xBegin() ; }
+    valueType Ystar()     const { return C1.yBegin() ; }
+    valueType thetaStar() const { return C1.thetaBegin() ; }
 
     void eval( valueType s, valueType & th, valueType & k, valueType & x, valueType & y ) const ;
     void eval( valueType s, valueType & x, valueType & y ) const ;

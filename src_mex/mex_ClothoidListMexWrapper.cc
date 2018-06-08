@@ -72,6 +72,10 @@
 "                                 OBJ, ...\n" \
 "                                 x0, y0, theta0, kappa0, ...\n" \
 "                                 x1, y1, theta1, kappa1 ) ;%\n" \
+"    ok = ClothoidListMexWrapper( 'build_G1', OBJ, x, y [,theta] ) ;%\n" \
+"    [theta,ok] = ClothoidListMexWrapper( 'build_theta', OBJ, x, y ) ;%\n" \
+"    dtheta = ClothoidListMexWrapper( 'deltaTheta', OBJ ) ;%\n" \
+"    dkappa = ClothoidListMexWrapper( 'deltaKappa', OBJ ) ;%\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \
@@ -487,9 +491,9 @@ namespace G2lib {
 
         #undef CMD
 
-      } else if ( cmd == "build3arcG2" || cmd == "build2arcG2" || cmd == "buildCLC" ) {
+      } else if ( cmd == "build_3arcG2" || cmd == "build_2arcG2" || cmd == "build_CLC" ) {
 
-        #define CMD "ClothoidListMexWrapper('build[2|3]arcG2', OBJ, ...): "
+        #define CMD "ClothoidListMexWrapper('build_[2|3]arcG2', OBJ, ...): "
 
         MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs");
         MEX_ASSERT(nlhs == 1,  CMD "expected 1 output");
@@ -504,7 +508,7 @@ namespace G2lib {
         valueType kappa1 = getScalarValue( arg_in_9, CMD "Error in reading kappa1" ) ;
 
         int iter ;
-        if ( cmd == "build3arcG2" ) {
+        if ( cmd == "build_3arcG2" ) {
           static G2solve3arc g2sol ;
           iter = g2sol.build( x0, y0, theta0, kappa0,
                               x1, y1, theta1, kappa1 ) ;
@@ -515,7 +519,7 @@ namespace G2lib {
             ptr->push_back(g2sol.getSM());
             ptr->push_back(g2sol.getS1());
           }
-        } else if ( cmd == "build2arcG2" ) {
+        } else if ( cmd == "build_2arcG2" ) {
 
           static G2solve2arc g2sol ;
           iter = g2sol.build( x0, y0, theta0, kappa0,
@@ -539,6 +543,94 @@ namespace G2lib {
           }
         }
         setScalarInt( arg_out_0, iter );
+
+        #undef CMD
+
+      } else if ( cmd == "build_G1" ) {
+
+        #define CMD "ClothoidListMexWrapper('build_G1', OBJ, x, y [, theta]): "
+
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output") ;
+
+        bool ok = true ;
+
+        if ( nrhs == 4 ) {
+          mwSize nx, ny ;
+          valueType const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
+          valueType const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
+
+          MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny ) ;
+
+          ok = ptr->build_G1( nx, x, y ) ;
+
+        } else if ( nrhs == 4  ) {
+
+          mwSize nx, ny, nt ;
+          valueType const * x     = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
+          valueType const * y     = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
+          valueType const * theta = getVectorPointer( arg_in_3, nt, CMD "Error in reading theta" ) ;
+
+          MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny ) ;
+          MEX_ASSERT( nx == nt, CMD "length(theta) = " << nt << " != length(x) = length(y) = " << ny ) ;
+
+          ok = ptr->build_G1( nx, x, y, theta ) ;
+
+        } else {
+          MEX_ASSERT( false, CMD "expected 4 or 5 input") ;
+        }
+
+        setScalarBool( arg_out_0, ok );
+
+        #undef CMD
+
+      } else if ( cmd == "build_theta" ) {
+
+        #define CMD "ClothoidListMexWrapper('build_theta', OBJ, x, y): "
+
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 output") ;
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 input") ;
+
+        bool ok = true ;
+
+        mwSize nx, ny ;
+        valueType const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
+        valueType const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
+
+        MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny ) ;
+
+        valueType * theta = createMatrixValue( arg_out_0, nx, 1 ) ;
+
+        ok = ptr->build_theta( nx, x, y, theta ) ;
+
+        setScalarBool( arg_out_1, ok );
+
+        #undef CMD
+
+      } else if ( cmd == "deltaTheta" ) {
+
+        #define CMD "ClothoidListMexWrapper('deltaTheta', OBJ): "
+
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output") ;
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 input") ;
+
+        indexType nseg = ptr->numSegment() ;
+
+        valueType * dtheta = createMatrixValue( arg_out_0, nseg-1, 1 ) ;
+        ptr->getDeltaTheta( dtheta ) ;
+
+        #undef CMD
+
+      } else if ( cmd == "deltaKappa" ) {
+
+        #define CMD "ClothoidListMexWrapper('deltaKappa', OBJ): "
+
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output") ;
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 input") ;
+
+        indexType nseg = ptr->numSegment() ;
+
+        valueType * dkappa = createMatrixValue( arg_out_0, nseg-1, 1 ) ;
+        ptr->getDeltaKappa( dkappa ) ;
 
         #undef CMD
 

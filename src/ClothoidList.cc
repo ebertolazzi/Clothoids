@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoid.hh"
+#include "Biarc.hh"
 
 #include <cmath>
 #include <cfloat>
@@ -134,6 +135,103 @@ namespace G2lib {
     ClothoidCurve c ;
     c.build_G1( x0, y0, theta0, x1, y1, theta1 ) ;
     push_back( c ) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::build_G1( indexType       n,
+                          valueType const x[],
+                          valueType const y[] ) {
+    init() ;
+    reserve( n-1 );
+    ClothoidCurve c ;
+
+    G2LIB_ASSERT( n > 1, "ClothoidList::build_G1, at least 2 points are necessary" ) ;
+
+    if ( n == 2 ) {
+      valueType theta = atan2( y[1] - y[0], x[1] - x[0] ) ;
+      c.build_G1( x[0], y[0], theta, x[1], y[1], theta ) ;
+      push_back(c);
+    } else {
+      Biarc b ;
+      bool ok, ciclic = hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10 ;
+      valueType thetaC(0) ;
+      if ( ciclic ) {
+        ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] ) ;
+        G2LIB_ASSERT( ok, "ClothoidList::build_G1, failed" ) ;
+        thetaC = b.thetaStar();
+      }
+      ok = b.build_3P( x[0], y[0], x[1], y[1], x[2], y[2] ) ;
+      G2LIB_ASSERT( ok, "ClothoidList::build_G1, failed" ) ;
+      valueType theta0 = ciclic ? thetaC : b.thetaBegin0();
+      valueType theta1 = b.thetaStar();
+      c.build_G1( x[0], y[0], theta0, x[1], y[1], theta1 ) ;
+      push_back(c);
+      for ( indexType k = 2 ; k < n-1 ; ++k ) {
+        theta0 = theta1 ;
+        ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] ) ;
+        G2LIB_ASSERT( ok, "ClothoidList::build_G1, failed" ) ;
+        theta1 = b.thetaStar();
+        c.build_G1( x[k-1], y[k-1], theta0, x[k], y[k], theta1 ) ;
+        push_back(c);
+      }
+      theta0 = theta1 ;
+      theta1 = ciclic ? thetaC : b.thetaEnd1();
+      c.build_G1( x[n-2], y[n-2], theta0, x[n-1], y[n-1], theta1 ) ;
+      push_back(c);
+    }
+    return true ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::build_G1( indexType       n,
+                          valueType const x[],
+                          valueType const y[],
+                          valueType const theta[] ) {
+
+    G2LIB_ASSERT( n > 1, "ClothoidList::build_G1, at least 2 points are necessary" ) ;
+
+    init() ;
+    reserve( n-1 );
+    ClothoidCurve c ;
+    for ( indexType k = 1 ; k < n ; ++k ) {
+      c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] ) ;
+      push_back(c);
+    }
+    return true ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::build_theta( indexType       n,
+                             valueType const x[],
+                             valueType const y[],
+                             valueType       theta[] ) const {
+    G2LIB_ASSERT( n > 1, "ClothoidList::build_theta, at least 2 points are necessary" ) ;
+
+    if ( n == 2 ) {
+      theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] ) ;
+    } else {
+      Biarc b ;
+      bool ok, ciclic = hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10 ;
+      if ( ciclic ) {
+        ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] ) ;
+        G2LIB_ASSERT( ok, "ClothoidList::build_theta, failed" ) ;
+        theta[0] = theta[n-1] = b.thetaStar();
+      }
+      for ( indexType k = 1 ; k < n-1 ; ++k ) {
+        ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] ) ;
+        G2LIB_ASSERT( ok, "ClothoidList::build_theta, failed" ) ;
+        theta[k] = b.thetaStar();
+        if ( k == 1   && !ciclic ) theta[0]   = b.thetaBegin0();
+        if ( k == n-2 && !ciclic ) theta[n-1] = b.thetaEnd1();
+      }
+    }
+    return true ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -350,6 +448,31 @@ namespace G2lib {
     s[k]     = ss ;
     theta[k] = ic->thetaEnd();
     kappa[k] = ic->kappaEnd();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::getDeltaTheta( valueType deltaTheta[] ) const {
+    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+    indexType k = 0 ;
+    for ( ++ic ; ic != clotoidList.end() ; ++ic, ++k ) {
+      valueType tmp = ic->thetaBegin()-ic[-1].thetaEnd();
+      if      ( tmp >  m_pi ) tmp -= m_2pi ;
+      else if ( tmp < -m_pi ) tmp += m_2pi ;
+      deltaTheta[k] = tmp;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::getDeltaKappa( valueType deltaKappa[] ) const {
+    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+    indexType k = 0 ;
+    for ( ++ic ; ic != clotoidList.end() ; ++ic, ++k  )
+      deltaKappa[k] = ic->kappaBegin()-ic[-1].kappaEnd();
+
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

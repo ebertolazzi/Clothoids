@@ -27,6 +27,7 @@
 "\n" \
 "  - Build:\n" \
 "    BiarcMexWrapper( 'build', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
+"    BiarcMexWrapper( 'build_3P', OBJ, x0, y0, x1, y1, x2, y2 ) ;\n" \
 "    [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
 "  - Eval:\n" \
@@ -132,21 +133,37 @@ namespace G2lib {
 
         MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs") ;
 
-        valueType x0(0), y0(0), theta0(0), x1(0), y1(0), theta1(0);
-
-        x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
-        y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
-        theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
-        x1     = getScalarValue( arg_in_5, CMD "Error in reading x1" ) ;
-        y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
-        theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
+        valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+        valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+        valueType theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
+        valueType x1     = getScalarValue( arg_in_5, CMD "Error in reading x1" ) ;
+        valueType y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
+        valueType theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
 
         bool ok = ptr->build( x0, y0, theta0, x1, y1, theta1 );
 
         // returns the status of the interpolation
-        mwSize dims[2] = {1,1} ;
-        arg_out_0 = mxCreateLogicalArray(2, dims);
-        ((bool*)mxGetPr(arg_out_0))[0] = ok;
+        setScalarBool( arg_out_0, ok );
+
+        #undef CMD
+
+      } else if ( cmd == "build_3P" ) {
+
+        #define CMD "BiarcMexWrapper('build_3P',OBJ,x0,y0,x1,y1,x2,y2): "
+
+        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs") ;
+
+        valueType x0 = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+        valueType y0 = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+        valueType x1 = getScalarValue( arg_in_4, CMD "Error in reading x1" ) ;
+        valueType y1 = getScalarValue( arg_in_5, CMD "Error in reading y1" ) ;
+        valueType x2 = getScalarValue( arg_in_6, CMD "Error in reading x2" ) ;
+        valueType y2 = getScalarValue( arg_in_7, CMD "Error in reading y2" ) ;
+
+        bool ok = ptr->build_3P( x0, y0, x1, y1, x2, y2 );
+
+        // returns the status of the interpolation
+        setScalarBool(arg_out_0,ok);
 
         #undef CMD
 

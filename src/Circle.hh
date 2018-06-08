@@ -150,7 +150,7 @@ namespace G2lib {
     }
 
     //! build a circle by solving the hermite G1 problem
-    void
+    bool
     build_G1( valueType _x0,
               valueType _y0,
               valueType _theta0,
@@ -158,7 +158,7 @@ namespace G2lib {
               valueType _y1 );
 
     //! build a circle passing by 3 points
-    void
+    bool
     build_3P( valueType _x0,
               valueType _y0,
               valueType _x1,

@@ -1014,8 +1014,8 @@ namespace G2lib {
   ClothoidSplineG2::numConstraints() const {
     indexType N = indexType(x.size());
     switch (tt) {
-      case P1: return N ;
-      case P2: return N-1 ;
+      case P1:
+      case P2: return N ;
       default: break ;
     }
     return N-2 ;
@@ -1083,12 +1083,11 @@ namespace G2lib {
     indexType ne1 = npts - 2 ;
     switch (tt) {
     case P1:
+    case P2:
       f = 0 ;
       break ;
-    case P2:
-      f = diff2pi(theta[0]-theta[ne]) ; f *= f ;
-      break ;
     case P3:
+      // forward target
       break ;
     case P4:
       cL.build_G1( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1] ) ;
@@ -1158,16 +1157,17 @@ namespace G2lib {
     indexType ne1 = npts - 2 ;
     switch (tt) {
     case P1:
-      break ;
     case P2:
-      g[0]  = + 2*diff2pi(theta[0]-theta[ne]) ;
-      g[ne] = - 2*diff2pi(theta[0]-theta[ne]) ;
       break ;
     case P3:
       break ;
     case P4:
-      cL.build_G1_D( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1], LL_D, kL_D, dkL_D ) ;
-      cR.build_G1_D( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne],LR_D, kR_D, dkR_D ) ;
+      cL.build_G1_D( x[0], y[0], theta[0],
+                     x[1], y[1], theta[1],
+                     LL_D, kL_D, dkL_D ) ;
+      cR.build_G1_D( x[ne1], y[ne1], theta[ne1],
+                     x[ne],  y[ne],  theta[ne],
+                     LR_D, kR_D, dkR_D ) ;
       {
         valueType dkL = cL.kappa_D() ;
         valueType dkR = cR.kappa_D() ;
@@ -1178,8 +1178,12 @@ namespace G2lib {
       }
       break ;
     case P5:
-      cL.build_G1_D( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1], LL_D, kL_D, dkL_D ) ;
-      cR.build_G1_D( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne],LR_D, kR_D, dkR_D ) ;
+      cL.build_G1_D( x[0], y[0], theta[0],
+                     x[1], y[1], theta[1],
+                     LL_D, kL_D, dkL_D ) ;
+      cR.build_G1_D( x[ne1], y[ne1], theta[ne1],
+                     x[ne],  y[ne],  theta[ne],
+                     LR_D, kR_D, dkR_D ) ;
       g[0]   = LL_D[0] ;
       g[1]   = LL_D[1] ;
       g[ne1] = LR_D[0] ;
@@ -1188,7 +1192,9 @@ namespace G2lib {
     case P6:
       for ( indexType j = 0 ; j < ne ; ++j ) {
         valueType L_D[2], k_D[2], dk_D[2] ;
-        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        c.build_G1_D( x[j],   y[j],   theta[j],
+                      x[j+1], y[j+1], theta[j+1],
+                      L_D, k_D, dk_D ) ;
         g[j]   += L_D[0] ;
         g[j+1] += L_D[1] ;
       }
@@ -1196,7 +1202,9 @@ namespace G2lib {
     case P7:
       for ( indexType j = 0 ; j < ne ; ++j ) {
         valueType L_D[2], k_D[2], dk_D[2] ;
-        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        c.build_G1_D( x[j],   y[j],   theta[j],
+                      x[j+1], y[j+1], theta[j+1],
+                      L_D, k_D, dk_D ) ;
         valueType L   = c.length() ;
         valueType L2  = L*L ;
         valueType L3  = L*L2 ;
@@ -1223,7 +1231,9 @@ namespace G2lib {
     case P8:
       for ( indexType j = 0 ; j < ne ; ++j ) {
         valueType L_D[2], k_D[2], dk_D[2] ;
-        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        c.build_G1_D( x[j],   y[j],   theta[j],
+                      x[j+1], y[j+1], theta[j+1],
+                      L_D, k_D, dk_D ) ;
         valueType L   = c.length() ;
         valueType dk  = c.kappa_D() ;
         g[j]   += (2*L*dk_D[0] + L_D[0]*dk)*dk ;
@@ -1233,7 +1243,9 @@ namespace G2lib {
     case P9:
       for ( indexType j = 0 ; j < ne ; ++j ) {
         valueType L_D[2], k_D[2], dk_D[2] ;
-        c.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
+        c.build_G1_D( x[j],   y[j],   theta[j],
+                      x[j+1], y[j+1], theta[j+1],
+                      L_D, k_D, dk_D ) ;
         valueType L   = c.length() ;
         valueType k   = c.kappaBegin() ;
         valueType k2  = k*k ;
@@ -1274,7 +1286,8 @@ namespace G2lib {
       c[ne]  = diff2pi( theta[ne] - theta_F ) ;
       break ;
     case P2:
-      c[ne1] = kL[ne1]-k[0] ;
+      c[ne1] = kL[ne1] - k[0] ;
+      c[ne]  = diff2pi( theta[0] - theta[ne] ) ;
       break ;
     default:
       break ;
@@ -1287,7 +1300,7 @@ namespace G2lib {
     indexType nnz = 3*(npts-2) ;
     switch (tt) {
     case P1: nnz += 2 ; break ;
-    case P2: nnz += 4 ; break ;
+    case P2: nnz += 6 ; break ;
     default:            break ;
     }
     return nnz ;
@@ -1316,6 +1329,8 @@ namespace G2lib {
       ii[kk] = ne1 ; jj[kk] = 1   ; ++kk ;
       ii[kk] = ne1 ; jj[kk] = ne1 ; ++kk ;
       ii[kk] = ne1 ; jj[kk] = ne  ; ++kk ;
+      ii[kk] = ne  ; jj[kk] = 0   ; ++kk ;
+      ii[kk] = ne  ; jj[kk] = ne  ; ++kk ;
       break ;
     default:
       break ;
@@ -1343,10 +1358,12 @@ namespace G2lib {
       ii[kk] = npts ; jj[kk] = npts ; ++kk ;
       break ;
     case P2:
-      ii[kk] = ne ; jj[kk] = 1    ; ++kk ;
-      ii[kk] = ne ; jj[kk] = 2    ; ++kk ;
-      ii[kk] = ne ; jj[kk] = ne   ; ++kk ;
-      ii[kk] = ne ; jj[kk] = npts ; ++kk ;
+      ii[kk] = ne   ; jj[kk] = 1    ; ++kk ;
+      ii[kk] = ne   ; jj[kk] = 2    ; ++kk ;
+      ii[kk] = ne   ; jj[kk] = ne   ; ++kk ;
+      ii[kk] = ne   ; jj[kk] = npts ; ++kk ;
+      ii[kk] = npts ; jj[kk] = 1    ; ++kk ;
+      ii[kk] = npts ; jj[kk] = npts ; ++kk ;
       break ;
     default:
       break ;
@@ -1354,6 +1371,7 @@ namespace G2lib {
 
     return true ;
   }
+
   bool
   ClothoidSplineG2::jacobian( valueType const theta[], valueType vals[] ) const {
     ClothoidCurve cc ;
@@ -1363,10 +1381,10 @@ namespace G2lib {
     for ( indexType j = 0 ; j < ne ; ++j ) {
       valueType L_D[2], k_D[2], dk_D[2] ;
       cc.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D ) ;
-      k[j]  = cc.kappaBegin() ;
-      dk[j] = cc.kappa_D() ;
-      L[j]  = cc.length() ;
-      kL[j] = k[j]+dk[j]*L[j] ;
+      k[j]    = cc.kappaBegin() ;
+      dk[j]   = cc.kappa_D() ;
+      L[j]    = cc.length() ;
+      kL[j]   = k[j]+dk[j]*L[j] ;
       L_1[j]  = L_D[0]  ; L_2[j]  = L_D[1] ;
       k_1[j]  = k_D[0]  ; k_2[j]  = k_D[1] ;
       dk_1[j] = dk_D[0] ; dk_2[j] = dk_D[1] ;
@@ -1389,6 +1407,8 @@ namespace G2lib {
       vals[kk++] = -k_2[0] ;
       vals[kk++] = k_1[ne1]+L_1[ne1]*dk[ne1]+L[ne1]*dk_1[ne1] ;
       vals[kk++] = k_2[ne1]+L_2[ne1]*dk[ne1]+L[ne1]*dk_2[ne1] ;
+      vals[kk++] = 1 ;
+      vals[kk++] = -1 ;
       break ;
     default:
       break ;
