@@ -112,7 +112,7 @@ namespace G2lib {
         indexType kk = do_new ? 0 : 1 ;
 
         #define BUILD "LineSegmentMexWrapper('build',OBJ,x0,y0,theta0,L): "
-        MEX_ASSERT( nlhs == 1, BUILD "expected 1 output" );
+        MEX_ASSERT( nlhs == 1, BUILD "expected 1 output, nlhs = " << nlhs  );
 
         if ( nrhs == 5+kk ) {
 
@@ -139,7 +139,7 @@ namespace G2lib {
         } else if ( nrhs == 1 ) {
           // nothing to do
         } else {
-          MEX_ASSERT(false, "nrhs = " << nrhs << " expected " << 2+kk << " or " << 5+kk << " inputs" );
+          MEX_ASSERT(false, "nrhs = " << nrhs << " expected " << 2+kk << " or " << 5+kk << " inputs, nrhs = " << nrhs  );
         }
 
         plhs[0] = convertPtr2Mat<LineSegment>(ptr);
@@ -147,8 +147,8 @@ namespace G2lib {
       } else if ( cmd == "delete" ) {
 
         #define CMD "LineSegmentMexWrapper('delete',OBJ): "
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         // Destroy the C++ object
         DATA_DELETE( arg_in_1 ) ;
         #undef CMD
@@ -156,8 +156,8 @@ namespace G2lib {
       } else if ( cmd == "changeOrigin" ) {
 
         #define CMD "LineSegmentMexWrapper('changeOrigin',OBJ,x0,y0): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
         valueType new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
@@ -168,8 +168,8 @@ namespace G2lib {
       } else if ( cmd == "translate" ) {
 
         #define CMD "LineSegmentMexWrapper('translate',OBJ,t0,t0): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
         valueType ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
@@ -180,8 +180,8 @@ namespace G2lib {
       } else if ( cmd == "rotate" ) {
 
         #define CMD "LineSegmentMexWrapper('rotate',OBJ,angle,cx,cy): "
-        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
         valueType cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
@@ -193,16 +193,16 @@ namespace G2lib {
       } else if ( cmd == "reverse" ) {
 
         #define CMD "LineSegmentMexWrapper('reverse',OBJ): "
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         ptr->reverse();
         #undef CMD
 
       } else if ( cmd == "trim" ) {
 
         #define CMD "LineSegmentMexWrapper('trim',OBJ,s_begin,s_end): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
         valueType s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
@@ -213,9 +213,9 @@ namespace G2lib {
       } else if ( cmd == "distance" ) {
 
         #define CMD "LineSegmentMexWrapper('distance',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, "`y` expected to be a real vector/matrix" ) ;

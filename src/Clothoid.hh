@@ -1162,6 +1162,9 @@ namespace G2lib {
             valueType kappa[] ) const ;
 
     void
+    getXY( valueType x[], valueType y[] ) const ;
+
+    void
     getDeltaTheta( valueType deltaTheta[] ) const ;
 
     void

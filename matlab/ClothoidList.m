@@ -48,6 +48,10 @@ classdef ClothoidList < handle
       [ s, theta, kappa ] = ClothoidListMexWrapper( 'getSTK', self.objectHandle ) ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ x, y ] = getXY( self )
+      [ x, y ] = ClothoidListMexWrapper( 'getXY', self.objectHandle ) ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function N = numSegment( self )
       N = ClothoidListMexWrapper( 'numSegment', self.objectHandle );
     end

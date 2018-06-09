@@ -150,10 +150,13 @@ namespace G2lib {
     G2LIB_ASSERT( n > 1, "ClothoidList::build_G1, at least 2 points are necessary" ) ;
 
     if ( n == 2 ) {
+
       valueType theta = atan2( y[1] - y[0], x[1] - x[0] ) ;
       c.build_G1( x[0], y[0], theta, x[1], y[1], theta ) ;
       push_back(c);
+
     } else {
+
       Biarc b ;
       bool ok, ciclic = hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10 ;
       valueType thetaC(0) ;
@@ -180,6 +183,7 @@ namespace G2lib {
       theta1 = ciclic ? thetaC : b.thetaEnd1();
       c.build_G1( x[n-2], y[n-2], theta0, x[n-1], y[n-1], theta1 ) ;
       push_back(c);
+
     }
     return true ;
   }
@@ -448,6 +452,22 @@ namespace G2lib {
     s[k]     = ss ;
     theta[k] = ic->thetaEnd();
     kappa[k] = ic->kappaEnd();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::getXY( valueType x[], valueType y[] ) const {
+    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+    indexType k  = 0 ;
+    while ( ic != clotoidList.end() ) {
+      x[k] = ic->xBegin();
+      y[k] = ic->yBegin();
+      ++k ; ++ic ;
+    }
+    --ic ;
+    x[k] = ic->xEnd();
+    y[k] = ic->yEnd();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

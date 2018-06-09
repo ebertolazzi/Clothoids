@@ -125,13 +125,13 @@ namespace G2lib {
 
       if ( do_new ) {
 
-        MEX_ASSERT( nlhs == 1, "BiarcMexWrapper, expected 1 output" );
+        MEX_ASSERT( nlhs == 1, "BiarcMexWrapper, expected 1 output, nlhs = " << nlhs );
 
       } else if ( cmd == "build" ) {
 
         #define CMD "BiarcMexWrapper('build',OBJ,x0,y0,theta0,x1,y1,theta1): "
 
-        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs") ;
+        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs, nrhs = " << nrhs ) ;
 
         valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
         valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
@@ -151,7 +151,7 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('build_3P',OBJ,x0,y0,x1,y1,x2,y2): "
 
-        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs") ;
+        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs, nrhs = " << nrhs ) ;
 
         valueType x0 = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
         valueType y0 = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
@@ -171,7 +171,7 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('evaluate',OBJ,s): "
 
-        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs") ;
+        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs, nrhs = " << nrhs ) ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -189,7 +189,7 @@ namespace G2lib {
           for ( mwSize i=0; i < size ; ++i )
             ptr->eval( sVals[i], xVals[i], yVals[i] );
         } else {
-          MEX_ASSERT( false, CMD "expected 2 or 4 outputs") ;
+          MEX_ASSERT( false, CMD "expected 2 or 4 outputs, nlhs = " << nlhs ) ;
         }
 
         #undef CMD
@@ -199,8 +199,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('eval*',OBJ,s): "
 
-        MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs") ;
-        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs") ;
+        MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs ) ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -226,9 +226,9 @@ namespace G2lib {
       } else if ( cmd == "distance" ) {
 
         #define CMD "BiarcMexWrapper('distance',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -253,10 +253,10 @@ namespace G2lib {
       } else if ( cmd == "closestPoint" ) {
 
         #define CMD "BiarcMexWrapper('closestPoint',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs") ;
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -277,7 +277,7 @@ namespace G2lib {
 
       } else if ( cmd == "getPars" ) {
 
-        MEX_ASSERT(nrhs == 2, "BiarcMexWrapper('getPars',OBJ): expected 2 inputs");
+        MEX_ASSERT(nrhs == 2, "BiarcMexWrapper('getPars',OBJ): expected 2 inputs, nrhs = " << nrhs );
         if ( nlhs > 0 ) setScalarValue(arg_out_0,ptr->xBegin0()) ;
         if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->yBegin0()) ;
         if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->thetaBegin0()) ;
@@ -294,8 +294,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('xBegin0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->xBegin0());
 
         #undef CMD
@@ -304,8 +304,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('xEnd0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->xEnd0());
 
         #undef CMD
@@ -314,8 +314,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('xBegin1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->xBegin1());
 
         #undef CMD
@@ -324,8 +324,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('xEnd1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->xEnd1());
 
         #undef CMD
@@ -334,8 +334,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('yBegin0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->yBegin0());
 
         #undef CMD
@@ -344,8 +344,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('yEnd0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->yEnd0());
 
         #undef CMD
@@ -354,8 +354,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('yBegin1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->yBegin1());
 
         #undef CMD
@@ -364,8 +364,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('yEnd1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->yEnd1());
 
         #undef CMD
@@ -374,8 +374,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('thetaBegin0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->thetaBegin0());
 
         #undef CMD
@@ -384,8 +384,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('thetaEnd0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->thetaEnd0());
 
         #undef CMD
@@ -394,8 +394,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('thetaBegin1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->thetaBegin1());
 
         #undef CMD
@@ -404,8 +404,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('thetaEnd1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->thetaEnd1());
 
         #undef CMD
@@ -414,8 +414,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('kappa0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->kappa0());
 
         #undef CMD
@@ -424,8 +424,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('kappa1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->kappa1());
 
         #undef CMD
@@ -434,8 +434,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('length0',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->length0());
 
         #undef CMD
@@ -444,8 +444,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('length1',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->length1());
 
         #undef CMD
@@ -454,8 +454,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('length',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->length());
 
         #undef CMD
@@ -464,7 +464,7 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('rotate',OBJ,angle,cx,cy): "
 
-        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
+        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
 
         valueType angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
         valueType cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
@@ -477,7 +477,7 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('translate',OBJ,tx,ty): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         valueType tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
         valueType ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
         ptr->translate(tx, ty);
@@ -488,7 +488,7 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('changeOrigin',OBJ,newX0,newY0): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         valueType newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
         valueType newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
         ptr->changeOrigin(newX0, newY0);
@@ -499,7 +499,7 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('scale',OBJ,s): "
 
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
         valueType s = getScalarValue( arg_in_2, CMD "Error in reading s" ) ;
         ptr->scale(s);
 
@@ -509,7 +509,7 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('reverse',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
         ptr->reverse();
 
         #undef CMD
@@ -518,8 +518,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('to_nurbs',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs );
 
         CircleArc const & C0 = ptr->getC0();
         CircleArc const & C1 = ptr->getC1();
@@ -561,8 +561,8 @@ namespace G2lib {
 
         #define CMD "BiarcMexWrapper('delete',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         // Destroy the C++ object
         DATA_DELETE(arg_in_1);

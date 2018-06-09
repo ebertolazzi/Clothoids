@@ -74,7 +74,7 @@ namespace G2lib {
 
     try {
 
-      MEX_ASSERT( nrhs == 2 || nrhs == 4, "ClothoidCurveMexWrapper, expected 2 or 4 input" );
+      MEX_ASSERT( nrhs == 2 || nrhs == 4, "ClothoidCurveMexWrapper, expected 2 or 4 input, nrhs = " << nrhs  );
 
       ClothoidCurve * c1 = DATA_GET(arg_clot1);
       ClothoidCurve * c2 = DATA_GET(arg_clot2);

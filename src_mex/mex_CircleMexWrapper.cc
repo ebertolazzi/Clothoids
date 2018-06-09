@@ -117,9 +117,9 @@ namespace G2lib {
         indexType kk = do_new ? 0 : 1 ;
 
         if ( do_new ) {
-          MEX_ASSERT( nlhs == 1, "CircleMexWrapper, expected 1 output" );
+          MEX_ASSERT( nlhs == 1, "CircleMexWrapper, expected 1 output, nlhs = " << nlhs  );
         } else {
-          MEX_ASSERT( nlhs == 0, "CircleMexWrapper, expected no output" );
+          MEX_ASSERT( nlhs == 0, "CircleMexWrapper, expected no output, nlhs = " << nlhs  );
         }
 
         if ( nrhs == 6+kk ) {
@@ -144,7 +144,7 @@ namespace G2lib {
 
       } else if ( cmd == "build_G1" ) {
 
-        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output" );
+        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output, nlhs = " << nlhs );
 
         valueType x0(0), y0(0), x1(0), y1(0), theta0(0);
         if ( nrhs == 5 ) {
@@ -184,7 +184,7 @@ namespace G2lib {
 
       } else if ( cmd == "build_3P" ) {
 
-        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output" );
+        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output, nlhs = " << nlhs  );
 
         valueType x0(0), y0(0), x1(0), y1(0), x2(0), y2(0);
         if ( nrhs == 5 ) {
@@ -224,8 +224,8 @@ namespace G2lib {
       } else if ( cmd == "delete" ) {
 
         #define CMD "CircleMexWrapper('delete',OBJ): "
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         // Destroy the C++ object
         DATA_DELETE( arg_in_1 ) ;
         #undef CMD
@@ -233,8 +233,8 @@ namespace G2lib {
       } else if ( cmd == "changeOrigin" ) {
 
         #define CMD "CircleMexWrapper('changeOrigin',OBJ,x0,y0): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
         valueType new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
@@ -245,8 +245,8 @@ namespace G2lib {
       } else if ( cmd == "translate" ) {
 
         #define CMD "CircleMexWrapper('translate',OBJ,tx,ty): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
         valueType ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
@@ -257,7 +257,7 @@ namespace G2lib {
       } else if ( cmd == "changeCurvilinearOrigin" ) {
 
         #define CMD "CircleMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
 
         valueType s0 = getScalarValue(arg_in_2,CMD "Error in reading s0") ;
         valueType L  = getScalarValue(arg_in_3,CMD "Error in reading L") ;
@@ -267,8 +267,8 @@ namespace G2lib {
       } else if ( cmd == "rotate" ) {
         #define CMD "CircleMexWrapper('rotate',OBJ,angle,cx,cy): "
 
-        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
         valueType cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
@@ -280,8 +280,8 @@ namespace G2lib {
       } else if ( cmd == "scale" ) {
 
         #define CMD "CircleMexWrapper('scale',OBJ,scale): "
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType sc = getScalarValue( arg_in_2, CMD "`scale` expected to be a real scalar" );
         ptr->scale( sc );
@@ -290,16 +290,16 @@ namespace G2lib {
       } else if ( cmd == "reverse" ) {
 
         #define CMD "CircleMexWrapper('reverse',OBJ): "
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         ptr->reverse();
         #undef CMD
 
       } else if ( cmd == "trim" ) {
 
         #define CMD "CircleMexWrapper('trim',OBJ,s_begin,s_end): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
         valueType s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
         valueType s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
@@ -310,8 +310,8 @@ namespace G2lib {
       } else if ( cmd == "theta" ) {
 
         #define CMD "CircleMexWrapper('theta',OBJ,s): "
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output");
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
         valueType s = getScalarValue( arg_in_2, CMD "`s` expected to be a real scalar" );
         setScalarValue( arg_out_0, ptr->theta( s ) ) ;
@@ -320,9 +320,9 @@ namespace G2lib {
       } else if ( cmd == "distance" ) {
 
         #define CMD "CircleMexWrapper('distance',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -348,8 +348,8 @@ namespace G2lib {
 
         #define CMD "CircleMexWrapper('bbTriangle',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 4, CMD "expected 4 output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 4, CMD "expected 4 output, nlhs = " << nlhs );
 
         double * p0 = createMatrixValue( arg_out_0, 1, 2 );
         double * p1 = createMatrixValue( arg_out_1, 1, 2 );

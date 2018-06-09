@@ -142,9 +142,9 @@ namespace G2lib {
       if ( do_new || cmd == "build" ) {
 
         if ( do_new ) {
-          MEX_ASSERT( nlhs == 1, "ClothoidCurveMexWrapper, expected 1 output" );
+          MEX_ASSERT( nlhs == 1, "ClothoidCurveMexWrapper, expected 1 output, nlhs = " << nlhs );
         } else {
-          MEX_ASSERT( nlhs == 0, "ClothoidCurveMexWrapper, expected no output" );
+          MEX_ASSERT( nlhs == 0, "ClothoidCurveMexWrapper, expected no output, nlhs = " << nlhs );
         }
 
         indexType kk = do_new ? 0 : 1 ;
@@ -190,7 +190,8 @@ namespace G2lib {
           dk     = getScalarValue(prhs[5+kk],CMD "Error in reading dk") ;
           L      = getScalarValue(prhs[6+kk],CMD "Error in reading L") ;
         } else {
-          MEX_ASSERT( false, CMD  << "expected " << kk+1 << " or " << kk+7 << " inputs") ;
+          MEX_ASSERT( false, CMD  << "expected " << kk+1 << " or " << kk+7 <<
+                             " inputs, nrhs = " << nrhs) ;
         }
 
         ptr->build( x0, y0, theta0, k0, dk, L );
@@ -201,7 +202,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('build_G1[_D]',OBJ,x0,y0,theta0,x1,y1,theta1): "
 
-        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs") ;
+        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs, nrhs = " << nrhs) ;
 
         valueType x0(0), y0(0), theta0(0), x1(0), y1(0), theta1(0);
 
@@ -214,11 +215,11 @@ namespace G2lib {
 
         int iter ;
         if ( cmd == "build_G1" ) {
-          MEX_ASSERT( nlhs == 0 || nlhs == 1, CMD "expected 1 or no outputs") ;
+          MEX_ASSERT( nlhs == 0 || nlhs == 1, CMD "expected 1 or no outputs, nlhs = " << nlhs ) ;
           iter = ptr->build_G1( x0, y0, theta0, x1, y1, theta1 );
           if ( nlhs == 1 ) setScalarInt( arg_out_0, iter ) ;
         } else {
-          MEX_ASSERT( nlhs == 3 || nlhs == 4, CMD "expected 3 or 4 outputs") ;
+          MEX_ASSERT( nlhs == 3 || nlhs == 4, CMD "expected 3 or 4 outputs, nlhs = " << nlhs ) ;
           double * L_D  = createMatrixValue( arg_out_0, 2, 1 );
           double * k_D  = createMatrixValue( arg_out_1, 2, 1 );
           double * dk_D = createMatrixValue( arg_out_2, 2, 1 );
@@ -232,7 +233,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('build_forward',OBJ,x0,y0,theta0,kappa0,x1,y1): "
 
-        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs") ;
+        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs, nrhs = " << nrhs) ;
 
         valueType x0(0), y0(0), theta0(0), kappa0(0), x1(0), y1(0);
 
@@ -254,7 +255,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('evaluate',OBJ,s): "
 
-        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs") ;
+        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs, nrhs = " << nrhs) ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -272,7 +273,7 @@ namespace G2lib {
           for ( mwSize i=0; i < size ; ++i )
             ptr->eval( sVals[i], xVals[i], yVals[i] );
         } else {
-          MEX_ASSERT( false, CMD "expected 2 or 4 outputs") ;
+          MEX_ASSERT( false, CMD "expected 2 or 4 outputs, nlhs = " << nlhs ) ;
         }
 
         #undef CMD
@@ -282,7 +283,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('eval*',OBJ,s[,offs]): "
 
-        MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs") ;
+        MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs, nrhs = " << nrhs) ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -322,7 +323,7 @@ namespace G2lib {
               ptr->eval_DDD( sVals[i], offs, xVals[i], yVals[i] );
           }
         } else {
-          MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs") ;
+          MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
         }
 
         #undef CMD
@@ -330,9 +331,9 @@ namespace G2lib {
       } else if ( cmd == "distance" ) {
 
         #define CMD "ClothoidCurveMexWrapper('distance',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -357,9 +358,9 @@ namespace G2lib {
       } else if ( cmd == "distanceBySample" ) {
 
         #define CMD "ClothoidCurveMexWrapper('distance',OBJ,x,y,ds): "
-        MEX_ASSERT( nrhs == 5, CMD "expected 5 input");
+        MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = " << nrhs);
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -386,10 +387,10 @@ namespace G2lib {
       } else if ( cmd == "closestPoint" ) {
 
         #define CMD "ClothoidCurveMexWrapper('closestPoint',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs") ;
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -411,10 +412,10 @@ namespace G2lib {
       } else if ( cmd == "closestPointBySample" ) {
 
         #define CMD "ClothoidCurveMexWrapper('closestPointBySample',OBJ,x,y,ds): "
-        MEX_ASSERT( nrhs == 5, CMD "expected 5 input");
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs") ;
+        MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = " << nrhs);
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -438,7 +439,7 @@ namespace G2lib {
 
       } else if ( cmd == "getPars" ) {
 
-        MEX_ASSERT(nrhs == 2, "ClothoidCurveMexWrapper('getPars',OBJ): expected 2 inputs");
+        MEX_ASSERT(nrhs == 2, "ClothoidCurveMexWrapper('getPars',OBJ): expected 2 inputs, nrhs = " << nrhs);
         if ( nlhs > 0 ) setScalarValue(arg_out_0,ptr->xBegin()) ;
         if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->yBegin()) ;
         if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->thetaBegin()) ;
@@ -450,8 +451,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('xyBegin',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->xBegin());
         setScalarValue(arg_out_1, ptr->yBegin());
 
@@ -461,8 +462,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('xyEnd',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->xEnd());
         setScalarValue(arg_out_1, ptr->yEnd());
 
@@ -472,8 +473,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('xBegin',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
         setScalarValue(arg_out_0, ptr->xBegin());
 
         #undef CMD
@@ -482,8 +483,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('xEnd',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->xEnd());
 
         #undef CMD
@@ -492,8 +493,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('yBegin',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->yBegin());
 
         #undef CMD
@@ -502,8 +503,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('yEnd',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->yEnd());
 
         #undef CMD
@@ -512,8 +513,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('thetaBegin',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->thetaBegin());
 
         #undef CMD
@@ -522,8 +523,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('thetaEnd',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->thetaEnd());
 
         #undef CMD
@@ -532,8 +533,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('kappaBegin',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->kappaBegin());
 
         #undef CMD
@@ -542,8 +543,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('kappaEnd',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->kappaEnd());
 
         #undef CMD
@@ -552,8 +553,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('kappa_D',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->kappa_D());
 
         #undef CMD
@@ -562,8 +563,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('length',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
         setScalarValue(arg_out_0, ptr->length());
 
         #undef CMD
@@ -572,7 +573,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('trim',OBJ): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
 
         valueType smin = getScalarValue(arg_in_2,CMD "Error in reading smin") ;
         valueType smax = getScalarValue(arg_in_3,CMD "Error in reading smax") ;
@@ -585,7 +586,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
 
         valueType s0 = getScalarValue(arg_in_2,CMD "Error in reading s0") ;
         valueType L  = getScalarValue(arg_in_3,CMD "Error in reading L") ;
@@ -597,7 +598,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('rotate',OBJ,angle,cx,cy): "
 
-        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
+        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs);
 
         valueType angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
         valueType cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
@@ -610,7 +611,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('translate',OBJ,tx,ty): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
         valueType tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
         valueType ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
         ptr->translate(tx, ty);
@@ -621,7 +622,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('changeOrigin',OBJ,newX0,newY0): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
         valueType newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
         valueType newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
         ptr->changeOrigin(newX0, newY0);
@@ -632,7 +633,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('scale',OBJ,s): "
 
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs);
         valueType s = getScalarValue( arg_in_2, CMD "Error in reading s" ) ;
         ptr->scale(s);
 
@@ -642,7 +643,7 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('reverse',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
         ptr->reverse();
 
         #undef CMD
@@ -651,8 +652,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('infinity',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 4, CMD "expected 4 output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 4, CMD "expected 4 output, nlhs = " << nlhs);
 
         valueType xp, yp, xm, ym ;
         ptr->Pinfinity( xp, yp, true );
@@ -669,8 +670,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('bbox', OBJ, max_angle, max_size [,offs]): "
 
-        MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output");
+        MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs);
 
         valueType max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" ) ;
         valueType max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" ) ;
@@ -694,8 +695,8 @@ namespace G2lib {
 
         #define CMD "ClothoidCurveMexWrapper('delete',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs);
 
         // Destroy the C++ object
         DATA_DELETE(arg_in_1);

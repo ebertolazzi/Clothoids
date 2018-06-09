@@ -46,11 +46,12 @@
 "    kappa = ClothoidListMexWrapper( 'kappaBegin', OBJ ) ;\n" \
 "    kappa = ClothoidListMexWrapper( 'kappaEnd', OBJ ) ;\n" \
 "\n" \
-"    [x,y]         = ClothoidListMexWrapper( 'eval', OBJ, ss, offs ) ;\n" \
-"    [x_D,y_D]     = ClothoidListMexWrapper( 'eval_D', OBJ, ss, offs ) ;\n" \
-"    [x_DD,y_DD]   = ClothoidListMexWrapper( 'eval_DD', OBJ, ss, offs ) ;\n" \
-"    [x_DDD,y_DDD] = ClothoidListMexWrapper( 'eval_DDD', OBJ, ss, offs ) ;\n" \
+"    [x,y]           = ClothoidListMexWrapper( 'eval', OBJ, ss, offs ) ;\n" \
+"    [x_D,y_D]       = ClothoidListMexWrapper( 'eval_D', OBJ, ss, offs ) ;\n" \
+"    [x_DD,y_DD]     = ClothoidListMexWrapper( 'eval_DD', OBJ, ss, offs ) ;\n" \
+"    [x_DDD,y_DDD]   = ClothoidListMexWrapper( 'eval_DDD', OBJ, ss, offs ) ;\n" \
 "    [s,theta,kappa] = ClothoidListMexWrapper( 'getSTK', OBJ ) ;\n" \
+"    [x,y]           = ClothoidListMexWrapper( 'getXY', OBJ ) ;\n" \
 "\n" \
 "  - Transform:\n" \
 "    ClothoidListMexWrapper( 'changeOrigin', OBJ, newX0, newY0 ) ;\n" \
@@ -132,7 +133,7 @@ namespace G2lib {
 
       if ( do_new ) {
 
-        MEX_ASSERT( nlhs == 1, "ClothoidListMexWrapper, expected 1 output" );
+        MEX_ASSERT( nlhs == 1, "ClothoidListMexWrapper, expected 1 output, nlhs=" << nlhs );
 
       } else if ( cmd == "push_back" ) {
 
@@ -155,7 +156,7 @@ namespace G2lib {
           ClothoidCurve * cc = convertMat2Ptr<ClothoidCurve>(arg_in_2);
           ptr->push_back( *cc );
         } else {
-          MEX_ASSERT( false, CMD "expected 3, 5 or 8 inputs") ;
+          MEX_ASSERT( false, CMD "expected 3, 5 or 8 inputs nrhs = " << nrhs ) ;
         }
 
         #undef CMD
@@ -178,7 +179,7 @@ namespace G2lib {
           valueType theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" ) ;
           ptr->push_back_G1( x1, y1, theta1 );
         } else {
-          MEX_ASSERT( false, CMD "expected 5 or 8 inputs") ;
+          MEX_ASSERT( false, CMD "expected 5 or 8 inputs, nrhs = " << nrhs ) ;
         }
 
         #undef CMD
@@ -187,11 +188,11 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('reserve',OBJ,N): "
 
-        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs") ;
-        MEX_ASSERT( nlhs == 0 , CMD "expected no outputs") ;
+        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 0 , CMD "expected no outputs, nlhs = " << nlhs ) ;
 
         int64_t N = getInt( arg_in_2, CMD "Error in reading N" );
-        ptr->reserve(N);
+        ptr->reserve( N );
 
         #undef CMD
 
@@ -199,7 +200,7 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('evaluate',OBJ,s): "
 
-        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs") ;
+        MEX_ASSERT( nrhs == 3 , CMD "expected 3 inputs, nrhs = " << nrhs ) ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -217,7 +218,7 @@ namespace G2lib {
           for ( mwSize i=0; i < size ; ++i )
             ptr->eval( sVals[i], xVals[i], yVals[i] );
         } else {
-          MEX_ASSERT( false, CMD "expected 2 or 4 outputs") ;
+          MEX_ASSERT( false, CMD "expected 2 or 4 outputs, nrhs = " << nrhs ) ;
         }
 
         #undef CMD
@@ -227,8 +228,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('eval*',OBJ,s[,offs]): "
 
-        MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs") ;
-        MEX_ASSERT( nlhs == 1 || nlhs == 2, CMD "expected 1 or 2 outputs") ;
+        MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 1 || nlhs == 2, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
 
         mwSize size;
         double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
@@ -275,8 +276,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('getSTK',OBJ): "
 
-        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs") ;
-        MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs") ;
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = " << nlhs ) ;
 
         indexType n = ptr->numSegment();
 
@@ -284,15 +285,31 @@ namespace G2lib {
         double * theta = createMatrixValue( arg_out_1, 1, n+1 );
         double * kappa = createMatrixValue( arg_out_2, 1, n+1 );
 
-        ptr->getSTK(s,theta,kappa);
+        ptr->getSTK( s, theta, kappa );
 
         #undef CMD
+
+      } else if ( cmd == "getXY" ) {
+
+        #define CMD "ClothoidListMexWrapper('getXY',OBJ): "
+
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs ) ;
+
+        indexType n = ptr->numSegment();
+        double * x = createMatrixValue( arg_out_0, 1, n+1 );
+        double * y = createMatrixValue( arg_out_1, 1, n+1 );
+
+        ptr->getXY( x, y );
+
+        #undef CMD
+
       } else if ( cmd == "distance" ) {
 
         #define CMD "ClothoidListMexWrapper('distance',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -317,10 +334,10 @@ namespace G2lib {
       } else if ( cmd == "closestPoint" ) {
 
         #define CMD "ClothoidListMexWrapper('closestPoint',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input");
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs") ;
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
         if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output");
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
           valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
           valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
@@ -347,7 +364,7 @@ namespace G2lib {
 
 
         #define CMD "ClothoidListMexWrapper('...',OBJ[,n]): "
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs");
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
 
         if ( nrhs == 3 ) {
           int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
@@ -364,7 +381,7 @@ namespace G2lib {
           else if ( cmd == "kappaEnd"   ) setScalarValue(arg_out_0, c.kappaEnd());
           else if ( cmd == "length"     ) setScalarValue(arg_out_0, c.length());
         } else {
-          MEX_ASSERT(nrhs == 2, CMD "expected 2 or 3 inputs");
+          MEX_ASSERT(nrhs == 2, CMD "expected 2 or 3 inputs, nrhs = " << nrhs );
           if      ( cmd == "xBegin"     ) setScalarValue(arg_out_0, ptr->xBegin());
           else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, ptr->xEnd());
           else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, ptr->yBegin());
@@ -382,12 +399,12 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('rotate',OBJ,angle,cx,cy): "
 
-        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs");
+        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
 
         valueType angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
         valueType cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
         valueType cy    = getScalarValue( arg_in_4, CMD "Error in reading cy" ) ;
-        ptr->rotate(angle, cx, cy);
+        ptr->rotate( angle, cx, cy );
 
         #undef CMD
 
@@ -395,10 +412,10 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('translate',OBJ,tx,ty): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         valueType tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
         valueType ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
-        ptr->translate(tx, ty);
+        ptr->translate( tx, ty );
 
         #undef CMD
 
@@ -406,10 +423,10 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('changeOrigin',OBJ,newX0,newY0): "
 
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs");
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         valueType newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
         valueType newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
-        ptr->changeOrigin(newX0, newY0);
+        ptr->changeOrigin( newX0, newY0 );
 
         #undef CMD
 
@@ -417,9 +434,9 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('scale',OBJ,s): "
 
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
         valueType s = getScalarValue( arg_in_2, CMD "Error in reading s" ) ;
-        ptr->scale(s);
+        ptr->scale( s );
 
         #undef CMD
 
@@ -427,7 +444,7 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('reverse',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
         ptr->reverse();
 
         #undef CMD
@@ -436,8 +453,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('bbox', OBJ, max_angle, max_size [,offs]): "
 
-        MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output");
+        MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlsh = " << nlhs );
 
         valueType max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" ) ;
         valueType max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" ) ;
@@ -461,8 +478,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('get', OBJ, n): "
 
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
-        MEX_ASSERT(nlhs == 6, CMD "expected 6 output");
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 6, CMD "expected 6 output, nlhs = " << nlhs );
 
         int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
@@ -484,8 +501,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('numSegment', OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs ) ;
 
         setScalarInt( arg_out_0, ptr->numSegment() );
 
@@ -495,8 +512,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('build_[2|3]arcG2', OBJ, ...): "
 
-        MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs");
-        MEX_ASSERT(nlhs == 1,  CMD "expected 1 output");
+        MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
 
         valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
         valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
@@ -550,7 +567,7 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('build_G1', OBJ, x, y [, theta]): "
 
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output") ;
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs) ;
 
         bool ok = true ;
 
@@ -563,12 +580,12 @@ namespace G2lib {
 
           ok = ptr->build_G1( nx, x, y ) ;
 
-        } else if ( nrhs == 4  ) {
+        } else if ( nrhs == 5 ) {
 
           mwSize nx, ny, nt ;
           valueType const * x     = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
           valueType const * y     = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
-          valueType const * theta = getVectorPointer( arg_in_3, nt, CMD "Error in reading theta" ) ;
+          valueType const * theta = getVectorPointer( arg_in_4, nt, CMD "Error in reading theta" ) ;
 
           MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny ) ;
           MEX_ASSERT( nx == nt, CMD "length(theta) = " << nt << " != length(x) = length(y) = " << ny ) ;
@@ -576,7 +593,7 @@ namespace G2lib {
           ok = ptr->build_G1( nx, x, y, theta ) ;
 
         } else {
-          MEX_ASSERT( false, CMD "expected 4 or 5 input") ;
+          MEX_ASSERT( false, CMD "expected 4 or 5 input, nrhs = " << nrhs) ;
         }
 
         setScalarBool( arg_out_0, ok );
@@ -587,8 +604,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('build_theta', OBJ, x, y): "
 
-        MEX_ASSERT(nlhs == 2, CMD "expected 2 output") ;
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 input") ;
+        MEX_ASSERT(nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs) ;
+        MEX_ASSERT(nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs) ;
 
         bool ok = true ;
 
@@ -610,8 +627,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('deltaTheta', OBJ): "
 
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output") ;
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 input") ;
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs) ;
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs) ;
 
         indexType nseg = ptr->numSegment() ;
 
@@ -624,8 +641,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('deltaKappa', OBJ): "
 
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output") ;
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 input") ;
+        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs) ;
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs) ;
 
         indexType nseg = ptr->numSegment() ;
 
@@ -638,8 +655,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('export_[table|ruby]', OBJ, filename ): "
 
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nlhs = " << nlhs);
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nrhs = " << nrhs);
 
         MEX_ASSERT( mxIsChar(arg_in_2), CMD "filename must be a string" ) ;
         string filename = mxArrayToString(arg_in_2) ;
@@ -659,8 +676,8 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('delete',OBJ): "
 
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs");
-        MEX_ASSERT(nlhs == 0, CMD "expected no output");
+        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs);
 
         // Destroy the C++ object
         DATA_DELETE(arg_in_1);
