@@ -214,13 +214,20 @@ namespace G2lib {
           double * kappaVals = createMatrixValue( arg_out_3, size, 1 );
           for ( mwSize i=0; i < size ; ++i )
             ptr->eval( sVals[i], thetaVals[i], kappaVals[i], xVals[i], yVals[i] );
+        } else if ( nlhs == 3 ) {
+          double * xVals     = createMatrixValue( arg_out_0, size, 1 );
+          double * yVals     = createMatrixValue( arg_out_1, size, 1 );
+          double * thetaVals = createMatrixValue( arg_out_2, size, 1 );
+          double   dummy ;
+          for ( mwSize i=0; i < size ; ++i )
+            ptr->eval( sVals[i], thetaVals[i], dummy, xVals[i], yVals[i] );
         } else if ( nlhs == 2 ) {
           double * xVals = createMatrixValue( arg_out_0, size, 1 );
           double * yVals = createMatrixValue( arg_out_1, size, 1 );
           for ( mwSize i=0; i < size ; ++i )
             ptr->eval( sVals[i], xVals[i], yVals[i] );
         } else {
-          MEX_ASSERT( false, CMD "expected 2 or 4 outputs, nrhs = " << nrhs ) ;
+          MEX_ASSERT( false, CMD "expected 2, 3 or 4 outputs, nrhs = " << nrhs ) ;
         }
 
         #undef CMD
@@ -491,9 +498,10 @@ namespace G2lib {
         int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
         MEX_ASSERT( n > 0 && n <= ptr->numSegment(),
-                    CMD "n =  " << n << " must be >= 1 and <= " << ptr->numSegment() );
+                    CMD "n = " << n << " must be >= 1 and <= " << ptr->numSegment() );
 
-        ClothoidCurve const & c = ptr->get(n-1);
+        --n ;
+        ClothoidCurve const & c = ptr->get(n);
 
         setScalarValue(arg_out_0, c.xBegin());
         setScalarValue(arg_out_1, c.yBegin());

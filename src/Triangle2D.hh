@@ -162,7 +162,14 @@ namespace G2lib {
 
   extern template class Triangle2D<float> ;
   extern template class Triangle2D<double> ;
-  
+
+  #ifdef __GCC__
+  #pragma GCC diagnostic pop
+  #endif
+  #ifdef __clang__
+  #pragma clang diagnostic pop
+  #endif
+
   #endif
 
 }
