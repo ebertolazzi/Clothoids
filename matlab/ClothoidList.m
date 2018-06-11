@@ -142,6 +142,14 @@ classdef ClothoidList < handle
       [DST,S] = ClothoidListMexWrapper( 'distanceBySample', self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = sBegin( self, varargin )
+      res = ClothoidListMexWrapper( 'sBegin', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = sEnd( self, varargin )
+      res = ClothoidListMexWrapper( 'sEnd', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = xBegin( self, varargin )
       res = ClothoidListMexWrapper( 'xBegin', self.objectHandle, varargin{:} );
     end
@@ -176,14 +184,6 @@ classdef ClothoidList < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = kappa_D( self, varargin )
       res = ClothoidListMexWrapper( 'kappa_D', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = sMin( self, varargin )
-      res = ClothoidListMexWrapper( 'sMin', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = sMax( self, varargin )
-      res = ClothoidListMexWrapper( 'sMax', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length( self, varargin )

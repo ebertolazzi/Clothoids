@@ -37,6 +37,8 @@
 "\n" \
 "  - Eval:\n" \
 "    [x,y,theta,kappa] = ClothoidListMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
+"    s = ClothoidListMexWrapper( 'sBegin', OBJ ) ;\n" \
+"    s = ClothoidListMexWrapper( 'sEnd', OBJ ) ;\n" \
 "    x = ClothoidListMexWrapper( 'xBegin', OBJ ) ;\n" \
 "    x = ClothoidListMexWrapper( 'xEnd', OBJ ) ;\n" \
 "    y = ClothoidListMexWrapper( 'yBegin', OBJ ) ;\n" \
@@ -356,7 +358,8 @@ namespace G2lib {
         }
         #undef CMD
 
-      } else if ( cmd == "xBegin"     || cmd == "xEnd"     ||
+      } else if ( cmd == "sBegin"     || cmd == "sEnd"     ||
+                  cmd == "xBegin"     || cmd == "xEnd"     ||
                   cmd == "yBegin"     || cmd == "yEnd"     ||
                   cmd == "thetaBegin" || cmd == "thetaEnd" ||
                   cmd == "kappaBegin" || cmd == "kappaEnd" ||
@@ -370,19 +373,23 @@ namespace G2lib {
           int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
           MEX_ASSERT( n > 0 && n <= ptr->numSegment(),
                       CMD "n =  " << n << " must be >= 1 and <= " << ptr->numSegment() );
-          ClothoidCurve const & c = ptr->get(n-1);
-          if      ( cmd == "xBegin"     ) setScalarValue(arg_out_0, c.xBegin());
-          else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, c.xEnd());
-          else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, c.yBegin());
-          else if ( cmd == "yEnd"       ) setScalarValue(arg_out_0, c.yEnd());
-          else if ( cmd == "thetaBegin" ) setScalarValue(arg_out_0, c.thetaBegin());
-          else if ( cmd == "thetaEnd"   ) setScalarValue(arg_out_0, c.thetaEnd());
-          else if ( cmd == "kappaBegin" ) setScalarValue(arg_out_0, c.kappaBegin());
-          else if ( cmd == "kappaEnd"   ) setScalarValue(arg_out_0, c.kappaEnd());
-          else if ( cmd == "length"     ) setScalarValue(arg_out_0, c.length());
+          --n ;
+          if      ( cmd == "sBegin"     ) setScalarValue(arg_out_0, ptr->sBegin(n));
+          else if ( cmd == "sEnd"       ) setScalarValue(arg_out_0, ptr->sEnd(n));
+          else if ( cmd == "xBegin"     ) setScalarValue(arg_out_0, ptr->xBegin(n));
+          else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, ptr->xEnd(n));
+          else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, ptr->yBegin(n));
+          else if ( cmd == "yEnd"       ) setScalarValue(arg_out_0, ptr->yEnd(n));
+          else if ( cmd == "thetaBegin" ) setScalarValue(arg_out_0, ptr->thetaBegin(n));
+          else if ( cmd == "thetaEnd"   ) setScalarValue(arg_out_0, ptr->thetaEnd(n));
+          else if ( cmd == "kappaBegin" ) setScalarValue(arg_out_0, ptr->kappaBegin(n));
+          else if ( cmd == "kappaEnd"   ) setScalarValue(arg_out_0, ptr->kappaEnd(n));
+          else if ( cmd == "length"     ) setScalarValue(arg_out_0, ptr->length(n));
         } else {
           MEX_ASSERT(nrhs == 2, CMD "expected 2 or 3 inputs, nrhs = " << nrhs );
-          if      ( cmd == "xBegin"     ) setScalarValue(arg_out_0, ptr->xBegin());
+          if      ( cmd == "sBegin"     ) setScalarValue(arg_out_0, ptr->sBegin());
+          else if ( cmd == "sEnd"       ) setScalarValue(arg_out_0, ptr->sEnd());
+          else if ( cmd == "xBegin"     ) setScalarValue(arg_out_0, ptr->xBegin());
           else if ( cmd == "xEnd"       ) setScalarValue(arg_out_0, ptr->xEnd());
           else if ( cmd == "yBegin"     ) setScalarValue(arg_out_0, ptr->yBegin());
           else if ( cmd == "yEnd"       ) setScalarValue(arg_out_0, ptr->yEnd());
@@ -632,7 +639,7 @@ namespace G2lib {
 
         indexType nseg = ptr->numSegment() ;
 
-        valueType * dtheta = createMatrixValue( arg_out_0, nseg-1, 1 ) ;
+        valueType * dtheta = createMatrixValue( arg_out_0, nseg, 1 ) ;
         ptr->getDeltaTheta( dtheta ) ;
 
         #undef CMD
@@ -646,7 +653,7 @@ namespace G2lib {
 
         indexType nseg = ptr->numSegment() ;
 
-        valueType * dkappa = createMatrixValue( arg_out_0, nseg-1, 1 ) ;
+        valueType * dkappa = createMatrixValue( arg_out_0, nseg, 1 ) ;
         ptr->getDeltaKappa( dkappa ) ;
 
         #undef CMD

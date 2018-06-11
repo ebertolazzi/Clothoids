@@ -1100,15 +1100,37 @@ namespace G2lib {
     valueType X( valueType s ) const ;
     valueType Y( valueType s ) const ;
 
-    valueType xBegin()     const { return clotoidList.front().xBegin(); }
-    valueType yBegin()     const { return clotoidList.front().yBegin(); }
-    valueType thetaBegin() const { return clotoidList.front().thetaBegin(); }
-    valueType kappaBegin() const { return clotoidList.front().kappaBegin(); }
+    valueType sBegin() const { return s0.front(); }
+    valueType sEnd()   const { return s0.back(); }
 
-    valueType xEnd()     const { return clotoidList.back().xEnd(); }
-    valueType yEnd()     const { return clotoidList.back().yEnd(); }
-    valueType thetaEnd() const { return clotoidList.back().thetaEnd(); }
-    valueType kappaEnd() const { return clotoidList.back().kappaEnd(); }
+    valueType xBegin() const { return clotoidList.front().xBegin(); }
+    valueType xEnd()   const { return clotoidList.back().xEnd(); }
+
+    valueType yBegin() const { return clotoidList.front().yBegin(); }
+    valueType yEnd()   const { return clotoidList.back().yEnd(); }
+
+    valueType thetaBegin() const { return clotoidList.front().thetaBegin(); }
+    valueType thetaEnd()   const { return clotoidList.back().thetaEnd(); }
+
+    valueType kappaBegin() const { return clotoidList.front().kappaBegin(); }
+    valueType kappaEnd()   const { return clotoidList.back().kappaEnd(); }
+
+    valueType length( indexType idx ) const { return s0[idx+1] - s0[idx]; }
+
+    valueType sBegin( indexType idx ) const { return s0[idx]; }
+    valueType sEnd( indexType idx )   const { return s0[idx+1]; }
+
+    valueType xBegin( indexType idx ) const { return clotoidList[idx].xBegin(); }
+    valueType xEnd( indexType idx )   const { return clotoidList[idx].xEnd(); }
+
+    valueType yBegin( indexType idx ) const { return clotoidList[idx].yBegin(); }
+    valueType yEnd( indexType idx )   const { return clotoidList[idx].yEnd(); }
+
+    valueType thetaBegin( indexType idx ) const { return clotoidList[idx].thetaBegin(); }
+    valueType thetaEnd( indexType idx )   const { return clotoidList[idx].thetaEnd(); }
+
+    valueType kappaBegin( indexType idx ) const { return clotoidList[idx].kappaBegin(); }
+    valueType kappaEnd( indexType idx )   const { return clotoidList[idx].kappaEnd(); }
 
     void
     eval( valueType   s,
