@@ -10,7 +10,7 @@ classdef ClothoidList < handle
       self.objectHandle = ClothoidListMexWrapper( 'new' );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function delete( self )
+    function delete( ~ )
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function obj = obj_handle( self )
@@ -370,6 +370,31 @@ classdef ClothoidList < handle
         C.plotNormal( step, len );
       end
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function save( self, filename, ds )
+      fd = fopen( filename, 'w' ) ;
+      L  = self.length();
+      n  = ceil( L / ds ) ;
+      fprintf(fd,'X\tY\tTHETA\n') ;
+      for k=1:n
+        s = (k-1)*L/(n-1) ;
+        [x,y,theta] = self.evaluate( s ) ;
+        fprintf(fd,'%20.10g\t%20.10g\t%20.10g\n',x,y,theta) ;
+      end
+      fclose(fd) ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function saveClothoids( self, filename )
+      fd = fopen( filename, 'w' ) ;
+      fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n') ;
+      for k=1:self.numSegment()
+        C = self.get(k);
+        [x0,y0,theta0,k0,dk,L] = C.getPars();
+        fprintf(fd,'%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\n',x0,y0,theta0,k0,dk,L) ;
+      end
+      fclose(fd) ;
+    end
+
   end
   
 end

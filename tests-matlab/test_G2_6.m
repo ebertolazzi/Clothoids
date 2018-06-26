@@ -36,7 +36,7 @@ for ii=1:2
   k = k+1;
   subplot(2,2,k);
   %subaxis(2,2,k, 'Spacing', 0.03, 'Padding', 0.02, 'Margin', 0.02);
-  iter = S.build3arcG2(x0,y0,theta0(ii),kappa0(ii),x1,y1,theta1(ii),kappa1(ii)) ;
+  iter = S.build_3arcG2(x0,y0,theta0(ii),kappa0(ii),x1,y1,theta1(ii),kappa1(ii)) ;
   S.plot();
   axis equal;
   
@@ -52,7 +52,7 @@ for ii=1:2
   k = k+1;
   subplot(2,2,k);
   %subaxis(2,2,k, 'Spacing', 0.03, 'Padding', 0.02, 'Margin', 0.02);
-  S.plotCurvature();
+  S.plotCurvature(1000);
   C.plotCurvature(1000,'-m','Linewidth',1);
   
   %X = [ 0, 1] ;

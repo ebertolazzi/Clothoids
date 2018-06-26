@@ -35,7 +35,7 @@ iter = C.build_G1(x0,y0,theta0,x1,y1,theta1) ;
 kappa0 = C.kappaBegin();
 kappa1 = C.kappaEnd();
 
-iter = S.build3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1);
+iter = S.build_3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1);
 
 subplot(2,1,1);
 C.plot(1000,'-m','Linewidth',2);

@@ -32,7 +32,7 @@ subplot(2,2,[1,3]);
 % compute G2 clothoid
 
 S = ClothoidList();
-iter = S.build3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
+iter = S.build_3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1) ;
 iter
 if iter > 0 
   S.plot();
@@ -53,8 +53,8 @@ C0.plot('g',3);
 C1.plot('g',3);
 
 subplot(2,2,2);
-S.plotCurvature();
+S.plotCurvature(1000);
 %%
 subplot(2,2,4);
-S.plotAngle();
+S.plotAngle(1000);
 %%

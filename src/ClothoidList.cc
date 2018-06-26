@@ -268,15 +268,27 @@ namespace G2lib {
                   " ) bad index" );
     real_type const * sL = &s0[last_idx] ;
     if ( s < sL[0] ) {
-      real_type const * sB = &s0.front() ;
-      last_idx = int_type(std::lower_bound( sB, sL, s )-sB) ;
+      if ( s > s0.front() ) {
+        real_type const * sB = &s0.front() ;
+        last_idx = int_type(std::lower_bound( sB, sL, s )-sB) ;
+      } else {
+        last_idx = 0 ;
+      }
     } else if ( s > sL[1] ) {
-      real_type const * sE = &s0[ns+1] ;
-      last_idx += int_type(std::lower_bound( sL, sE, s )-sL) ;
+      if ( s < s0.back() ) {
+        real_type const * sE = &s0[ns+1] ; // past to the last
+        last_idx += int_type(std::lower_bound( sL, sE, s )-sL) ;
+      } else {
+        last_idx = ns-1 ;
+      }
     } else {
       return true ; // vale intervallo precedente
     }
     if ( s0[last_idx] > s ) --last_idx ; // aggiustamento caso di bordo
+    G2LIB_ASSERT( last_idx >= 0 && last_idx < ns,
+                  "ClothoidList::findAtS( " << s <<
+                  ") last_idx = " << last_idx <<
+                  " range [" << s0.front() << ", " << s0.back() << "]" ) ;
     return true ;
   }
 

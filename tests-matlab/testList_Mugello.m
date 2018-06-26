@@ -127,6 +127,10 @@ addseg(265.379041347039/78.7276328958688,-78.7276328958688);
 %addseg1(543.929215677558);
 S.push_back_G1( x0, y0, theta0 ) ; % first segment
 
-
 S.plot() ;
 axis equal
+
+S.save('Mugello.txt',10);
+
+
+

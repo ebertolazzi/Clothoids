@@ -38,7 +38,7 @@ for k=1:4
   %subaxis(2,2,k, 'Spacing', 0.02, 'Padding', 0.01, 'Margin', 0.02);
   %axis tight ;
   for theta1=-pi:pi/15:pi
-    iter = S.build3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k)) ;
+    iter = S.build_3arcG2(x0,y0,theta0,kappa0(k),x1,y1,theta1,kappa1(k)) ;
     if iter < 0
       iter
     else
