@@ -145,13 +145,12 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
   void
-  Triangle2D<T>::maxmin3( T const & a,
-                          T const & b,
-                          T const & c,
-                          T       & vmin,
-                          T       & vmax) const {
+  Triangle2D::maxmin3( real_type   a,
+                       real_type   b,
+                       real_type   c,
+                       real_type & vmin,
+                       real_type & vmax) const {
     vmin = vmax = a ;
     if ( b < vmin ) vmin = b ;
     else            vmax = b ;
@@ -159,8 +158,9 @@ namespace G2lib {
     else if ( c > vmax ) vmax = c ;
   }
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::~AABBTree() {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Triangle2D::AABBTree::~AABBTree() {
     switch ( numChildren ) {
     case 0:
       if( data.pTriangle != nullptr ) delete data.pTriangle ; data.pTriangle = nullptr ;
@@ -174,43 +174,39 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( std::vector<Triangle2D<T> > & triangles ) {
-    std::vector<Triangle2D<T> const * > pTriangles ;
+  Triangle2D::AABBTree::AABBTree( std::vector<Triangle2D> & triangles ) {
+    std::vector<Triangle2D const *> pTriangles ;
     pTriangles.reserve( triangles.size() ) ;
-    typename std::vector<Triangle2D<T> >::const_iterator it = triangles.begin() ;
+    typename std::vector<Triangle2D>::const_iterator it = triangles.begin() ;
     for ( ; it != triangles.end() ; ++it )
       pTriangles.push_back( &*it ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
   class AABBcomparatorX {
-    T cutPos ;
+    real_type cutPos ;
   public:
-    AABBcomparatorX( T const & cp ) : cutPos(cp) {}
-    bool operator () ( Triangle2D<T> const * pT ) const
+    AABBcomparatorX( real_type const & cp ) : cutPos(cp) {}
+    bool operator () ( Triangle2D const * pT ) const
     { return pT->baricenterX() < cutPos; }
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
   class AABBcomparatorY {
-    T cutPos ;
+    real_type cutPos ;
   public:
-    AABBcomparatorY( T const & cp ) : cutPos(cp) {}
-    bool operator () ( Triangle2D<T> const * pT ) const
+    AABBcomparatorY( real_type const & cp ) : cutPos(cp) {}
+    bool operator () ( Triangle2D const * pT ) const
     { return pT->baricenterY() < cutPos; }
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree(
-    typename std::vector<Triangle2D<T> const *>::iterator & begin,
-    typename std::vector<Triangle2D<T> const *>::iterator & end
+  Triangle2D::AABBTree::AABBTree(
+    typename std::vector<Triangle2D const *>::iterator & begin,
+    typename std::vector<Triangle2D const *>::iterator & end
   ) {
     numChildren = -1 ;
     xmin = ymin = xmax = ymax = 0 ;
@@ -222,13 +218,13 @@ namespace G2lib {
     (*begin)->bbox(xmin,ymin,xmax,ymax) ;
     if ( end - begin == 1 ) {
       numChildren = 0 ;
-      data.pTriangle = new Triangle2D<T>(**begin) ;
+      data.pTriangle = new Triangle2D(**begin) ;
       return;
     }
 
-    typename std::vector<Triangle2D<T> const *>::iterator it = begin ;
+    typename std::vector<Triangle2D const *>::iterator it = begin ;
     for ( ++it ; it != end ; ++it ) {
-      T xmi, ymi, xma, yma ;
+      real_type xmi, ymi, xma, yma ;
       (*it)->bbox( xmi, ymi, xma, yma ) ;
       if ( xmi < xmin ) xmin = xmi ;
       if ( xma > xmax ) xmax = xma ;
@@ -238,11 +234,11 @@ namespace G2lib {
 
     if ( (ymax - ymin) > (xmax - xmin) ) {
       // cut along Y
-      AABBcomparatorY<T> comp( (ymax + ymin)/2 ) ;
+      AABBcomparatorY comp( (ymax + ymin)/2 ) ;
       it = std::partition( begin, end, comp );
     } else {
       // cut along X
-      AABBcomparatorX<T> comp( (xmax + xmin)/2 ) ;
+      AABBcomparatorX comp( (xmax + xmin)/2 ) ;
       it = std::partition( begin, end, comp );
 
     }
@@ -258,23 +254,21 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( Triangle2D<T> const & triangle ) {
+  Triangle2D::AABBTree::AABBTree( Triangle2D const & triangle ) {
     numChildren = 0 ;
     triangle.bbox( xmin, ymin, xmax, ymax ) ;
-    data.pTriangle = new Triangle2D<T>(triangle) ;
+    data.pTriangle = new Triangle2D(triangle) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree(
-    AABBTree      const * pTree,
-    Triangle2D<T> const & triangle
+  Triangle2D::AABBTree::AABBTree(
+    AABBTree   const * pTree,
+    Triangle2D const & triangle
   ) {
     numChildren = 2 ;
     pTree->bbox( xmin, ymin, xmax, ymax ) ;
-    T xmi, ymi, xma, yma ;
+    real_type xmi, ymi, xma, yma ;
     triangle.bbox( xmi, ymi, xma, yma ) ;
     if ( xmi < xmin ) xmin = xmi ;
     if ( xma > xmax ) xmax = xma ;
@@ -286,14 +280,13 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree(
+  Triangle2D::AABBTree::AABBTree(
     AABBTree const * pTreeL,
     AABBTree const * pTreeR
   ) {
     numChildren = 2 ;
     pTreeL->bbox( xmin, ymin, xmax, ymax ) ;
-    T xmi, ymi, xma, yma ;
+    real_type xmi, ymi, xma, yma ;
     pTreeR->bbox( xmi, ymi, xma, yma ) ;
     if ( xmi < xmin ) xmin = xmi ;
     if ( xma > xmax ) xmax = xma ;
@@ -305,10 +298,9 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
   bool
-  Triangle2D<T>::AABBTree::overlap( Triangle2D<T> const & triangle ) const {
-    T xmi, ymi, xma, yma ;
+  Triangle2D::AABBTree::overlap( Triangle2D const & triangle ) const {
+    real_type xmi, ymi, xma, yma ;
     triangle.bbox( xmi, ymi, xma, yma ) ;
     if ( xmax < xmi ) return false; // a is left of b
     if ( xmin > xma ) return false; // a is right of b
@@ -329,10 +321,9 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
   bool
-  Triangle2D<T>::AABBTree::overlap( AABBTree const * pTree ) const {
-    T xmi, ymi, xma, yma ;
+  Triangle2D::AABBTree::overlap( AABBTree const * pTree ) const {
+    real_type xmi, ymi, xma, yma ;
     pTree->bbox( xmi, ymi, xma, yma ) ;
     if ( xmax < xmi ) return false; // a is left of b
     if ( xmin > xma ) return false; // a is right of b
@@ -353,24 +344,60 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
   bool
-  Triangle2D<T>::intersect( Triangle2D<T> const & t2 ) const {
+  Triangle2D::intersect( Triangle2D const & t2 ) const {
     return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template <typename T>
   bool
-  Triangle2D<T>::overlap( Triangle2D<T> const & t2 ) const {
+  Triangle2D::overlap( Triangle2D const & t2 ) const {
     return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  template class Triangle2D<float> ;
-  template class Triangle2D<double> ;
+  void
+  Triangle2D::distMinMax( real_type   x,
+                          real_type   y,
+                          real_type & dmin,
+                          real_type & dmax ) const {
+
+    int_type in = isInside( x, y ) ;
+    if ( in >= 0 ) { dmin = dmax = 0 ; return ; }
+
+    real_type d1 = hypot( x-p1[0], y-p1[1] ) ;
+    real_type d2 = hypot( x-p2[0], y-p2[1] ) ;
+    real_type d3 = hypot( x-p3[0], y-p3[1] ) ;
+    real_type const * P1 = this->p1 ;
+    real_type const * P2 = this->p2 ;
+    real_type const * P3 = this->p3 ;
+    if ( d1 < d2 ) { std::swap( d1, d2 ) ; std::swap( P1, P2 ) ; }
+    if ( d2 < d3 ) { std::swap( d2, d3 ) ; std::swap( P2, P3 ) ; }
+    if ( d1 < d2 ) { std::swap( d1, d2 ) ; std::swap( P1, P2 ) ; }
+
+    dmax = d1 ;
+
+    real_type dx  = x     - P2[0] ;
+    real_type dy  = y     - P2[1] ;
+    real_type dx1 = P3[0] - P2[0] ;
+    real_type dy1 = P3[1] - P2[1] ;
+    real_type tmp = dx * dx1 + dy * dy1 ;
+    if ( tmp < 0 ) {
+      dmin = d2 ;
+    } else {
+      real_type tmp2 = hypot(dx,dy)*hypot(dx1,dy1) ;
+      if ( tmp > tmp2 ) {
+        dmin = d3 ;
+      } else {
+        real_type S = tmp/tmp2 ;
+        real_type X = P2[0] + S*dx1 ;
+        real_type Y = P2[1] + S*dy1 ;
+        dmin = hypot( x-X, y-Y ) ;
+      }
+    }
+  }
 
 }
 

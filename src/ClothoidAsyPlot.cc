@@ -42,7 +42,7 @@ namespace G2lib {
   void
   AsyPlot::drawClothoid( ClothoidCurve const & c,
                          string const & penna,
-                         valueType offset ) const {
+                         real_type offset ) const {
   	if (offset == 0.) {
       file
         << "path pclot = clothoidPoints(("
@@ -73,12 +73,12 @@ namespace G2lib {
   }
 
   void
-  AsyPlot::dot( valueType x, valueType y, string const & penna ) const {
+  AsyPlot::dot( real_type x, real_type y, string const & penna ) const {
     file << "dot((" << x << "," << y << ")," << penna << ");\n\n";
   }
 
   void
-  AsyPlot::triangle( T2D const & t, string const & penna ) const {
+  AsyPlot::triangle( Triangle2D const & t, string const & penna ) const {
     file
       << "draw((" << t.x1() << "," << t.y1() << ") -- "
       << '(' << t.x2() << ',' << t.y2() << ") -- "
@@ -87,10 +87,10 @@ namespace G2lib {
   }
 
   void
-  AsyPlot::drawRect( valueType x0, valueType y0,
-                     valueType x1, valueType y1,
-                     valueType x2, valueType y2,
-                     valueType x3, valueType y3,
+  AsyPlot::drawRect( real_type x0, real_type y0,
+                     real_type x1, real_type y1,
+                     real_type x2, real_type y2,
+                     real_type x3, real_type y3,
                      string const & penna ) const {
 	file
     << "fill((" << x0 << "," << y0 << ") -- "
@@ -110,10 +110,10 @@ namespace G2lib {
   void
   AsyPlot::displayAxes( string const & labX,
                         string const & labY,
-                        valueType xmin,
-                        valueType xmax,
-                        valueType ymin,
-                        valueType ymax ) const {
+                        real_type xmin,
+                        real_type xmax,
+                        real_type ymin,
+                        real_type ymax ) const {
 	  file
       << "xaxis(\"" << labX << "\", black+fontsize(7pt),xmin="
       << xmin << ",xmax=" << xmax
@@ -124,8 +124,8 @@ namespace G2lib {
   }
 
   void
-  AsyPlot::drawLine( valueType x0, valueType y0,
-                     valueType x1, valueType y1,
+  AsyPlot::drawLine( real_type x0, real_type y0,
+                     real_type x1, real_type y1,
                      string const & penna ) const {
     file
       << "draw((" << x0 << "," << y0 << ") -- "
@@ -134,8 +134,8 @@ namespace G2lib {
 
   void
   AsyPlot::label( string const & text,
-                  valueType      x,
-                  valueType      y,
+                  real_type      x,
+                  real_type      y,
                   string const & placement,
                   string const & penna ) const {
   	file

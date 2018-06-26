@@ -82,7 +82,7 @@ namespace G2lib {
 
       } else if ( nrhs == 4 ) {
 
-        indexType nk = getInt( arg_in_0, "FresnelCS: argument `nk` expected to be and integer" );
+        int_type nk = getInt( arg_in_0, "FresnelCS: argument `nk` expected to be and integer" );
         MEX_ASSERT( nk >= 1 && nk <= 3, "FresnelCS: argument `nk` = " << nk << " must be in [1,2,3]" );
         mwSize na, nb, nc ;
         double const * a = getVectorPointer( arg_in_1, na, "FresnelCS: argument `a` expected to be a real scalar/vector");

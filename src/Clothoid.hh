@@ -35,8 +35,6 @@
 //! Clothoid computations routine
 namespace G2lib {
 
-  typedef Triangle2D<valueType> T2D ;
-
   /*\
    |    ____ _       _   _           _     _
    |   / ___| | ___ | |_| |__   ___ (_) __| |
@@ -46,8 +44,8 @@ namespace G2lib {
   \*/
 
   //! Compute Lommel function
-  valueType
-  LommelReduced( valueType mu, valueType nu, valueType z ) ;
+  real_type
+  LommelReduced( real_type mu, real_type nu, real_type z ) ;
 
   /*\
    |    ____ _       _   _           _     _  ____
@@ -61,37 +59,34 @@ namespace G2lib {
   public:
 
     typedef struct {
-      valueType    s0 ;
-      valueType    L  ;
+      real_type    s0 ;
+      real_type    L  ;
       ClothoidData cd ;
-      T2D          t  ;
+      Triangle2D   t  ;
     } bbData ;
 
     typedef struct {
-      valueType    split_angle ;
-      valueType    split_size ;
-      valueType    split_offs ;
-      valueType    s0 ;
-      valueType    L ;
+      real_type    split_angle ;
+      real_type    split_size ;
+      real_type    split_offs ;
+      real_type    s0 ;
+      real_type    L ;
       ClothoidData cd ;
     } bbData2 ;
 
   private:
     ClothoidData CD ; //!< clothoid data
-    valueType    L ;  //!< lenght of clothoid segment
-
-    //int
-    //build( valueType x1, valueType y1, valueType theta1 );
+    real_type    L ;  //!< lenght of clothoid segment
 
     void
     bbSplit_internal( bbData2 const & data, std::vector<bbData> & bbV ) const ;
 
     //! Use newton and bisection to intersect two small clothoid segment
     bool
-    intersect_internal( bbData const & c1, valueType c1_offs, valueType & s1,
-                        bbData const & c2, valueType c2_offs, valueType & s2,
-                        indexType max_iter,
-                        valueType tolerance ) const ;
+    intersect_internal( bbData const & c1, real_type c1_offs, real_type & s1,
+                        bbData const & c2, real_type c2_offs, real_type & s2,
+                        int_type max_iter,
+                        real_type tolerance ) const ;
 
   public:
 
@@ -106,12 +101,12 @@ namespace G2lib {
     }
 
     //! construct a clothoid with the standard parameters
-    ClothoidCurve( valueType _x0,
-                   valueType _y0,
-                   valueType _theta0,
-                   valueType _k,
-                   valueType _dk,
-                   valueType _L )
+    ClothoidCurve( real_type _x0,
+                   real_type _y0,
+                   real_type _theta0,
+                   real_type _k,
+                   real_type _dk,
+                   real_type _L )
     {
       CD.x0     = _x0 ;
       CD.y0     = _y0 ;
@@ -122,10 +117,10 @@ namespace G2lib {
     }
 
     //! construct a clothoid by solving the hermite G1 problem
-    ClothoidCurve( valueType const P0[],
-                   valueType       theta0,
-                   valueType const P1[],
-                   valueType       theta1 )
+    ClothoidCurve( real_type const P0[],
+                   real_type       theta0,
+                   real_type const P1[],
+                   real_type       theta1 )
     {
       build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 ) ;
     }
@@ -141,28 +136,28 @@ namespace G2lib {
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s) ; return *this ; }
 
-    valueType kappa()      const { return CD.kappa0 ; }
-    valueType kappa_D()    const { return CD.dk ; }
-    valueType length()     const { return L ; }
+    real_type kappa()      const { return CD.kappa0 ; }
+    real_type kappa_D()    const { return CD.dk ; }
+    real_type length()     const { return L ; }
 
-    valueType xBegin()     const { return CD.x0; }
-    valueType yBegin()     const { return CD.y0; }
-    valueType thetaBegin() const { return CD.theta0; }
-    valueType kappaBegin() const { return CD.kappa0; }
+    real_type xBegin()     const { return CD.x0; }
+    real_type yBegin()     const { return CD.y0; }
+    real_type thetaBegin() const { return CD.theta0; }
+    real_type kappaBegin() const { return CD.kappa0; }
 
-    valueType xEnd()       const { return CD.X(L); }
-    valueType yEnd()       const { return CD.Y(L); }
-    valueType thetaEnd()   const { return CD.theta(L); }
-    valueType kappaEnd()   const { return CD.kappa(L); }
+    real_type xEnd()       const { return CD.X(L); }
+    real_type yEnd()       const { return CD.Y(L); }
+    real_type thetaEnd()   const { return CD.theta(L); }
+    real_type kappaEnd()   const { return CD.kappa(L); }
 
     //! construct a clothoid with the standard parameters
     void
-    build( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _k,
-           valueType _dk,
-           valueType _L ) {
+    build( real_type _x0,
+           real_type _y0,
+           real_type _theta0,
+           real_type _k,
+           real_type _dk,
+           real_type _L ) {
       CD.x0     = _x0 ;
       CD.y0     = _y0 ;
       CD.theta0 = _theta0 ;
@@ -182,13 +177,13 @@ namespace G2lib {
      * \return number of iteration performed
      */
     int
-    build_G1( valueType x0,
-              valueType y0,
-              valueType theta0,
-              valueType x1,
-              valueType y1,
-              valueType theta1,
-              valueType tol = 1e-12 ) {
+    build_G1( real_type x0,
+              real_type y0,
+              real_type theta0,
+              real_type x1,
+              real_type y1,
+              real_type theta1,
+              real_type tol = 1e-12 ) {
       return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L ) ;
     }
 
@@ -203,16 +198,16 @@ namespace G2lib {
      * \return number of iteration performed
      */
     int
-    build_G1_D( valueType x0,
-                valueType y0,
-                valueType theta0,
-                valueType x1,
-                valueType y1,
-                valueType theta1,
-                valueType L_D[2],
-                valueType k_D[2],
-                valueType dk_D[2],
-                valueType tol = 1e-12 ) {
+    build_G1_D( real_type x0,
+                real_type y0,
+                real_type theta0,
+                real_type x1,
+                real_type y1,
+                real_type theta1,
+                real_type L_D[2],
+                real_type k_D[2],
+                real_type dk_D[2],
+                real_type tol = 1e-12 ) {
       return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L, true, L_D, k_D, dk_D ) ;
     }
 
@@ -226,13 +221,13 @@ namespace G2lib {
      * \param y1     final y position   \f$ y_1      \f$
      */
     bool
-    build_forward( valueType x0,
-                   valueType y0,
-                   valueType theta0,
-                   valueType kappa0,
-                   valueType x1,
-                   valueType y1,
-                   valueType tol = 1e-12 ) {
+    build_forward( real_type x0,
+                   real_type y0,
+                   real_type theta0,
+                   real_type kappa0,
+                   real_type x1,
+                   real_type y1,
+                   real_type tol = 1e-12 ) {
       return CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, L );
     }
 
@@ -241,194 +236,194 @@ namespace G2lib {
      * \param  s curvilinear cooordinate
      * \return angle (radiant) at curvilinear cooordinate `s`
      */
-    valueType
-    theta( valueType s ) const { return CD.theta(s) ; }
+    real_type
+    theta( real_type s ) const { return CD.theta(s) ; }
 
     /*! \brief get clothoid angle derivative (=curvature) at curvilinear cooordinate `s`
      *
      * \param  s curvilinear cooordinate
      * \return angle derivative (radiant/s) at curvilinear cooordinate `s`
      */
-    valueType
-    theta_D( valueType s ) const { return CD.kappa(s) ; }
+    real_type
+    theta_D( real_type s ) const { return CD.kappa(s) ; }
 
     /*! \brief get clothoid angle second derivative at curvilinear cooordinate `s`
      *
      * \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
      */
-    valueType
-    theta_DD( valueType ) const { return CD.dk ; }
+    real_type
+    theta_DD( real_type ) const { return CD.dk ; }
 
     /*! \brief get clothoid angle third derivative at curvilinear cooordinate `s`
      *
      * \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
      */
-    valueType
-    theta_DDD( valueType ) const { return 0 ; }
+    real_type
+    theta_DDD( real_type ) const { return 0 ; }
 
     /*! \return clothoid total variation
      */
-    valueType
+    real_type
     thetaTotalVariation() const ;
 
-    valueType
-    thetaMinMax( valueType & thMin, valueType & thMax ) const ;
+    real_type
+    thetaMinMax( real_type & thMin, real_type & thMax ) const ;
 
     /*! \return clothoid angle range
      */
-    valueType
+    real_type
     deltaTheta() const
-    { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
+    { real_type thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
 
-    valueType
-    curvatureMinMax( valueType & kMin, valueType & kMax ) const ;
+    real_type
+    curvatureMinMax( real_type & kMin, real_type & kMax ) const ;
 
     /*! \return clothoid total curvature variation
      */
-    valueType
+    real_type
     curvatureTotalVariation() const ;
 
-    valueType
+    real_type
     integralCurvature2() const ;
 
-    valueType
+    real_type
     integralJerk2() const ;
 
-    valueType
+    real_type
     integralSnap2() const ;
 
     /*! \brief clothoid X coordinate at curvilinear coordinate `s`
      * \param s curvilinear coordinate
      * \return clothoid X coordinate
      */
-    valueType X( valueType s ) const { return CD.X(s) ; }
+    real_type X( real_type s ) const { return CD.X(s) ; }
 
     /*! \brief clothoid Y coordinate at curvilinear coordinate `s`
      * \param s curvilinear coordinate
      * \return clothoid Y coordinate
      */
-    valueType Y( valueType s ) const { return CD.Y(s) ; }
+    real_type Y( real_type s ) const { return CD.Y(s) ; }
 
     void
-    Pinfinity( valueType & x, valueType & y, bool plus = true ) const
+    Pinfinity( real_type & x, real_type & y, bool plus = true ) const
     { CD.Pinfinity( x, y, plus ); }
 
     void
-    eval( valueType   s,
-          valueType & theta,
-          valueType & kappa,
-          valueType & x,
-          valueType & y ) const
+    eval( real_type   s,
+          real_type & theta,
+          real_type & kappa,
+          real_type & x,
+          real_type & y ) const
     { CD.eval( s, theta, kappa, x, y ); }
 
     void
-    eval( valueType   s,
-          valueType & x,
-          valueType & y ) const {
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const {
       CD.eval( s, x, y ) ;
     }
 
     void
-    eval_D( valueType   s,
-            valueType & x_D,
-            valueType & y_D ) const {
+    eval_D( real_type   s,
+            real_type & x_D,
+            real_type & y_D ) const {
       CD.eval_D( s, x_D, y_D ) ;
     }
 
     void
-    eval_DD( valueType   s,
-             valueType & x_DD,
-             valueType & y_DD ) const {
+    eval_DD( real_type   s,
+             real_type & x_DD,
+             real_type & y_DD ) const {
       CD.eval_DD( s, x_DD, y_DD ) ;
     }
 
     void
-    eval_DDD( valueType   s,
-              valueType & x_DDD,
-              valueType & y_DDD ) const {
+    eval_DDD( real_type   s,
+              real_type & x_DDD,
+              real_type & y_DDD ) const {
       CD.eval_DDD( s, x_DDD, y_DDD ) ;
     }
 
     // offset curve
     void
-    eval( valueType   s,
-          valueType   offs,
-          valueType & x,
-          valueType & y ) const {
+    eval( real_type   s,
+          real_type   offs,
+          real_type & x,
+          real_type & y ) const {
       CD.eval( s, offs, x, y ) ;
     }
 
     void
-    eval_D( valueType   s,
-            valueType   offs,
-            valueType & x_D,
-            valueType & y_D ) const {
+    eval_D( real_type   s,
+            real_type   offs,
+            real_type & x_D,
+            real_type & y_D ) const {
       CD.eval_D( s, offs, x_D, y_D ) ;
     }
 
     void
-    eval_DD( valueType   s,
-             valueType   offs,
-             valueType & x_DD,
-             valueType & y_DD ) const {
+    eval_DD( real_type   s,
+             real_type   offs,
+             real_type & x_DD,
+             real_type & y_DD ) const {
       CD.eval_DD( s, offs, x_DD, y_DD ) ;
     }
 
     void
-    eval_DDD( valueType   s,
-              valueType   offs,
-              valueType & x_DDD,
-              valueType & y_DDD ) const {
+    eval_DDD( real_type   s,
+              real_type   offs,
+              real_type & x_DDD,
+              real_type & y_DDD ) const {
       CD.eval_DDD( s, offs, x_DDD, y_DDD ) ;
     }
 
-    valueType
-    closestPoint( valueType   qx,
-                  valueType   qy,
-                  valueType & X,
-                  valueType & Y,
-                  valueType & S ) const ;
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type & X,
+                  real_type & Y,
+                  real_type & S ) const ;
 
-    valueType
-    distance( valueType qx, valueType qy, valueType & S ) const {
-      valueType X, Y;
+    real_type
+    distance( real_type qx, real_type qy, real_type & S ) const {
+      real_type X, Y;
       return closestPoint( qx, qy, X, Y, S );
     }
 
-    valueType
-    distance( valueType qx, valueType qy ) const {
-      valueType X, Y, S ;
+    real_type
+    distance( real_type qx, real_type qy ) const {
+      real_type X, Y, S ;
       return closestPoint( qx, qy, X, Y, S );
     }
 
-    valueType
-    closestPointBySample( valueType   ds,
-                          valueType   qx,
-                          valueType   qy,
-                          valueType & X,
-                          valueType & Y,
-                          valueType & S ) const ;
+    real_type
+    closestPointBySample( real_type   ds,
+                          real_type   qx,
+                          real_type   qy,
+                          real_type & X,
+                          real_type & Y,
+                          real_type & S ) const ;
 
-    valueType
-    distanceBySample( valueType   ds,
-                      valueType   qx,
-                      valueType   qy,
-                      valueType & S ) const {
-      valueType X, Y;
+    real_type
+    distanceBySample( real_type   ds,
+                      real_type   qx,
+                      real_type   qy,
+                      real_type & S ) const {
+      real_type X, Y;
       return closestPointBySample( ds, qx, qy, X, Y, S );
     }
 
-    valueType
-    distanceBySample( valueType ds,
-                      valueType qx,
-                      valueType qy ) const {
-      valueType X, Y, S ;
+    real_type
+    distanceBySample( real_type ds,
+                      real_type qx,
+                      real_type qy ) const {
+      real_type X, Y, S ;
       return closestPointBySample( ds, qx, qy, X, Y, S );
     }
 
     void
-    trim( valueType s_begin, valueType s_end ) {
-      valueType xx, yy ;
+    trim( real_type s_begin, real_type s_end ) {
+      real_type xx, yy ;
       CD.eval( s_begin, xx, yy ) ;
       CD.kappa0 += s_begin * CD.dk ;
       CD.theta0 += s_begin * ( CD.kappa0 + 0.5*s_begin * CD.dk ) ;
@@ -439,16 +434,16 @@ namespace G2lib {
 
     //! get the bounding box triangle (if angle variation less that pi/2)
     bool
-    bbTriangle( valueType offs,
-                valueType p0[2],
-                valueType p1[2],
-                valueType p2[2] ) const {
+    bbTriangle( real_type offs,
+                real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const {
       return CD.bbTriangle( L, offs, p0, p1, p2 ) ;
     }
 
     bool
-    bbTriangle( valueType offs, T2D & t ) const {
-      valueType p0[2], p1[2], p2[2] ;
+    bbTriangle( real_type offs, Triangle2D & t ) const {
+      real_type p0[2], p1[2], p2[2] ;
       bool ok = CD.bbTriangle( L, offs, p0, p1, p2 ) ;
       if ( ok ) t.setup( p0, p1, p2 ) ;
       return ok ;
@@ -462,57 +457,57 @@ namespace G2lib {
      * \param bb          splitting data structures vector
      */
     void
-    bbSplit( valueType             split_angle,
-             valueType             split_size,
-             valueType             split_offs,
+    bbSplit( real_type             split_angle,
+             real_type             split_size,
+             real_type             split_offs,
              std::vector<bbData> & bb,
              bool                  reset_bb = true ) const ;
 
     // intersect computation
     void
     intersect( ClothoidCurve const    & c,
-               std::vector<valueType> & s1,
-               std::vector<valueType> & s2,
-               indexType                max_iter,
-               valueType                tolerance ) const {
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
       intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
     }
 
     void
-    intersect( valueType                offs,
+    intersect( real_type                offs,
                ClothoidCurve const &    c,
-               valueType                c_offs,
-               std::vector<valueType> & s1,
-               std::vector<valueType> & s2,
-               indexType                max_iter,
-               valueType                tolerance ) const ;
+               real_type                c_offs,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                  max_iter,
+               real_type                tolerance ) const ;
 
     // collision detection
     bool
     approximate_collision(
-      valueType             offs,
+      real_type             offs,
       ClothoidCurve const & c,
-      valueType             c_offs,
-      valueType             max_angle, //!< maximum angle variation
-      valueType             max_size   //!< curve offset
+      real_type             c_offs,
+      real_type             max_angle, //!< maximum angle variation
+      real_type             max_size   //!< curve offset
     ) const ;
 
     void
-    rotate( valueType angle, valueType cx, valueType cy ) ;
+    rotate( real_type angle, real_type cx, real_type cy ) ;
 
     void
-    translate( valueType tx, valueType ty )
+    translate( real_type tx, real_type ty )
     { CD.x0 += tx ; CD.y0 += ty ; }
 
     void
-    changeCurvilinearOrigin( valueType s0, valueType newL ) ;
+    changeCurvilinearOrigin( real_type s0, real_type newL ) ;
 
     void
-    changeOrigin( valueType newx0, valueType newy0 )
+    changeOrigin( real_type newx0, real_type newy0 )
     { CD.x0 = newx0 ; CD.y0 = newy0 ; }
 
     void
-    scale( valueType sfactor ) ;
+    scale( real_type sfactor ) ;
 
     void
     reverse() ;
@@ -533,66 +528,66 @@ namespace G2lib {
   // Clothoid-clothoid
   class G2solve2arc {
 
-    valueType tolerance ;
+    real_type tolerance ;
     int       maxIter ;
 
-    valueType x0 ;
-    valueType y0 ;
-    valueType theta0 ;
-    valueType kappa0 ;
+    real_type x0 ;
+    real_type y0 ;
+    real_type theta0 ;
+    real_type kappa0 ;
 
-    valueType x1 ;
-    valueType y1 ;
-    valueType theta1 ;
-    valueType kappa1 ;
+    real_type x1 ;
+    real_type y1 ;
+    real_type theta1 ;
+    real_type kappa1 ;
 
     // standard problem
-    valueType lambda, phi, xbar, ybar ;
-    valueType th0, th1 ;
-    valueType k0, k1 ;
-    valueType DeltaK ;
-    valueType DeltaTheta ;
+    real_type lambda, phi, xbar, ybar ;
+    real_type th0, th1 ;
+    real_type k0, k1 ;
+    real_type DeltaK ;
+    real_type DeltaTheta ;
 
     ClothoidCurve S0, S1 ;
 
     void
-    evalA( valueType   alpha,
-           valueType   L,
-           valueType & A ) const ;
+    evalA( real_type   alpha,
+           real_type   L,
+           real_type & A ) const ;
 
     void
-    evalA( valueType   alpha,
-           valueType   L,
-           valueType & A,
-           valueType & A_1,
-           valueType & A_2 ) const ;
+    evalA( real_type   alpha,
+           real_type   L,
+           real_type & A,
+           real_type & A_1,
+           real_type & A_2 ) const ;
 
     void
-    evalG( valueType alpha,
-           valueType L,
-           valueType th,
-           valueType k,
-           valueType G[2] ) const ;
+    evalG( real_type alpha,
+           real_type L,
+           real_type th,
+           real_type k,
+           real_type G[2] ) const ;
 
     void
-    evalG( valueType alpha,
-           valueType L,
-           valueType th,
-           valueType k,
-           valueType G[2],
-           valueType G_1[2],
-           valueType G_2[2] ) const ;
+    evalG( real_type alpha,
+           real_type L,
+           real_type th,
+           real_type k,
+           real_type G[2],
+           real_type G_1[2],
+           real_type G_2[2] ) const ;
 
     void
-    evalF( valueType const vars[2], valueType F[2] ) const ;
+    evalF( real_type const vars[2], real_type F[2] ) const ;
 
     void
-    evalFJ( valueType const vars[2],
-            valueType       F[2],
-            valueType       J[2][2] ) const ;
+    evalFJ( real_type const vars[2],
+            real_type       F[2],
+            real_type       J[2][2] ) const ;
 
     void
-    buildSolution( valueType alpha, valueType L ) ;
+    buildSolution( real_type alpha, real_type L ) ;
 
   public:
 
@@ -620,11 +615,11 @@ namespace G2lib {
     ~G2solve2arc() {}
 
     int
-    build( valueType x0, valueType y0, valueType theta0, valueType kappa0,
-           valueType x1, valueType y1, valueType theta1, valueType kappa1 ) ;
+    build( real_type x0, real_type y0, real_type theta0, real_type kappa0,
+           real_type x1, real_type y1, real_type theta1, real_type kappa1 ) ;
 
     void
-    setTolerance( valueType tol ) ;
+    setTolerance( real_type tol ) ;
 
     void
     setMaxIter( int tol ) ;
@@ -648,27 +643,27 @@ namespace G2lib {
   // Clothoid-line-clothoid
   class G2solveCLC {
 
-    valueType tolerance ;
+    real_type tolerance ;
     int       maxIter ;
 
-    valueType x0 ;
-    valueType y0 ;
-    valueType theta0 ;
-    valueType kappa0 ;
-    valueType x1 ;
-    valueType y1 ;
-    valueType theta1 ;
-    valueType kappa1 ;
+    real_type x0 ;
+    real_type y0 ;
+    real_type theta0 ;
+    real_type kappa0 ;
+    real_type x1 ;
+    real_type y1 ;
+    real_type theta1 ;
+    real_type kappa1 ;
 
     // standard problem
-    valueType lambda, phi, xbar, ybar ;
-    valueType th0, th1 ;
-    valueType k0, k1 ;
+    real_type lambda, phi, xbar, ybar ;
+    real_type th0, th1 ;
+    real_type k0, k1 ;
 
     ClothoidCurve S0, SM, S1 ;
 
     bool
-    buildSolution( valueType sM, valueType thM ) ;
+    buildSolution( real_type sM, real_type thM ) ;
 
   public:
 
@@ -696,11 +691,11 @@ namespace G2lib {
     ~G2solveCLC() {}
 
     int
-    build( valueType x0, valueType y0, valueType theta0, valueType kappa0,
-           valueType x1, valueType y1, valueType theta1, valueType kappa1 ) ;
+    build( real_type x0, real_type y0, real_type theta0, real_type kappa0,
+           real_type x1, real_type y1, real_type theta1, real_type kappa1 ) ;
 
     void
-    setTolerance( valueType tol ) ;
+    setTolerance( real_type tol ) ;
 
     void
     setMaxIter( int tol ) ;
@@ -726,40 +721,40 @@ namespace G2lib {
 
     ClothoidCurve S0, SM, S1 ;
 
-    valueType tolerance ;
+    real_type tolerance ;
     int       maxIter ;
 
     // G2 interpolation data
-    valueType x0 ;
-    valueType y0 ;
-    valueType theta0 ;
-    valueType kappa0 ;
-    valueType x1 ;
-    valueType y1 ;
-    valueType theta1 ;
-    valueType kappa1 ;
+    real_type x0 ;
+    real_type y0 ;
+    real_type theta0 ;
+    real_type kappa0 ;
+    real_type x1 ;
+    real_type y1 ;
+    real_type theta1 ;
+    real_type kappa1 ;
 
     // standard scaled problem
-    valueType phi, Lscale ;
-    valueType th0, th1 ;
-    valueType s0, s1 ;
+    real_type phi, Lscale ;
+    real_type th0, th1 ;
+    real_type s0, s1 ;
 
     // precomputed values
-    valueType K0, K1, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14 ;
+    real_type K0, K1, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14 ;
 
     void
-    evalFJ( valueType const vars[2],
-            valueType       F[2],
-            valueType       J[2][2] ) const ;
+    evalFJ( real_type const vars[2],
+            real_type       F[2],
+            real_type       J[2][2] ) const ;
 
     void
-    evalF( valueType const vars[2], valueType F[2] ) const ;
+    evalF( real_type const vars[2], real_type F[2] ) const ;
 
     void
-    buildSolution( valueType sM, valueType thM ) ;
+    buildSolution( real_type sM, real_type thM ) ;
 
     int
-    solve( valueType sM_guess, valueType thM_guess ) ;
+    solve( real_type sM_guess, real_type thM_guess ) ;
 
   public:
 
@@ -770,7 +765,7 @@ namespace G2lib {
 
     ~G2solve3arc() {}
 
-    void setTolerance( valueType tol ) ;
+    void setTolerance( real_type tol ) ;
     void setMaxIter( int miter ) ;
 
     /*!
@@ -790,16 +785,16 @@ namespace G2lib {
      |
     \*/
     int
-    build( valueType x0,
-           valueType y0,
-           valueType theta0,
-           valueType kappa0,
-           valueType x1,
-           valueType y1,
-           valueType theta1,
-           valueType kappa1,
-           valueType Dmax = 0,
-           valueType dmax = 0 ) ;
+    build( real_type x0,
+           real_type y0,
+           real_type theta0,
+           real_type kappa0,
+           real_type x1,
+           real_type y1,
+           real_type theta1,
+           real_type kappa1,
+           real_type Dmax = 0,
+           real_type dmax = 0 ) ;
 
     /*!
      | \return get the first clothoid for the 3 arc G2 fitting
@@ -817,7 +812,7 @@ namespace G2lib {
     /*!
      | \return get the length of the 3 arc G2 fitting
     \*/
-    valueType
+    real_type
     totalLength() const {
       return S0.length() + S1.length() + SM.length() ;
     }
@@ -825,7 +820,7 @@ namespace G2lib {
     /*!
      | \return get the total angle variation of the 3 arc G2 fitting
     \*/
-    valueType
+    real_type
     thetaTotalVariation() const {
       return S0.thetaTotalVariation() +
              S1.thetaTotalVariation() +
@@ -835,7 +830,7 @@ namespace G2lib {
     /*!
      | \return get the total curvature variation of the 3 arc G2 fitting
     \*/
-    valueType
+    real_type
     curvatureTotalVariation() const {
       return S0.curvatureTotalVariation() +
              S1.curvatureTotalVariation() +
@@ -845,7 +840,7 @@ namespace G2lib {
     /*!
      | \return get the integral of the curvature squared of the 3 arc G2 fitting
     \*/
-    valueType
+    real_type
     integralCurvature2() const {
       return S0.integralCurvature2() +
              S1.integralCurvature2() +
@@ -855,7 +850,7 @@ namespace G2lib {
     /*!
      | \return get the integral of the jerk squared of the 3 arc G2 fitting
     \*/
-    valueType
+    real_type
     integralJerk2() const {
       return S0.integralJerk2() +
              S1.integralJerk2() +
@@ -865,7 +860,7 @@ namespace G2lib {
     /*!
      | \return get the integral of the snap squared of the 3 arc G2 fitting
     \*/
-    valueType
+    real_type
     integralSnap2() const {
       return S0.integralSnap2() +
              S1.integralSnap2() +
@@ -877,93 +872,93 @@ namespace G2lib {
      | \param[out] thMax maximum angle in the 3 arc G2 fitting curve
      | \return the difference of `thMax` and `thMin`
     \*/
-    valueType
-    thetaMinMax( valueType & thMin, valueType & thMax ) const ;
+    real_type
+    thetaMinMax( real_type & thMin, real_type & thMax ) const ;
 
     /*!
      | \return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
     \*/
-    valueType
+    real_type
     deltaTheta() const
-    { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
+    { real_type thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
 
     /*!
      | \param[out] kMin minimum curvature in the 3 arc G2 fitting curve
      | \param[out] kMax maximum curvature in the 3 arc G2 fitting curve
      | \return the difference of `kMax` and `kMin`
     \*/
-    valueType
-    curvatureMinMax( valueType & kMin, valueType & kMax ) const ;
+    real_type
+    curvatureMinMax( real_type & kMin, real_type & kMax ) const ;
 
     /*!
      | \return angle as a function of curvilinear coordinate
     \*/
-    valueType theta( valueType s ) const ;
+    real_type theta( real_type s ) const ;
 
     /*!
      | \return angle derivative (curvature) as a function of curvilinear coordinate
     \*/
-    valueType theta_D( valueType s ) const ;
+    real_type theta_D( real_type s ) const ;
 
     /*!
      | \return angle second derivative (curvature derivative) as a function of curvilinear coordinate
     \*/
-    valueType theta_DD( valueType s ) const ;
+    real_type theta_DD( real_type s ) const ;
 
     /*!
      | \return angle third derivative as a function of curvilinear coordinate
     \*/
-    valueType theta_DDD( valueType s ) const ;
+    real_type theta_DDD( real_type s ) const ;
 
     /*!
      | \return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
     \*/
-    valueType X( valueType s ) const ;
+    real_type X( real_type s ) const ;
 
     /*!
      | \return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
     \*/
-    valueType Y( valueType s ) const ;
+    real_type Y( real_type s ) const ;
 
     /*!
      | \return initial x coordinate of the 3 arc clothoid
     \*/
-    valueType xBegin() const { return S0.xBegin() ; }
+    real_type xBegin() const { return S0.xBegin() ; }
 
     /*!
      | \return initial y coordinate of the 3 arc clothoid
     \*/
-    valueType yBegin() const { return S0.yBegin() ; }
+    real_type yBegin() const { return S0.yBegin() ; }
 
     /*!
      | \return initial curvature of the 3 arc clothoid
     \*/
-    valueType kappaBegin() const { return S0.kappaBegin() ; }
+    real_type kappaBegin() const { return S0.kappaBegin() ; }
 
     /*!
      | \return initial angle of the 3 arc clothoid
     \*/
-    valueType thetaBegin() const { return S0.thetaBegin() ; }
+    real_type thetaBegin() const { return S0.thetaBegin() ; }
 
     /*!
      | \return final x coordinate of the 3 arc clothoid
     \*/
-    valueType xEnd()const { return S1.xEnd() ; }
+    real_type xEnd()const { return S1.xEnd() ; }
 
     /*!
      | \return final y coordinate of the 3 arc clothoid
     \*/
-    valueType yEnd() const { return S1.yEnd() ; }
+    real_type yEnd() const { return S1.yEnd() ; }
 
     /*!
      | \return final curvature of the 3 arc clothoid
     \*/
-    valueType kappaEnd() const { return S1.kappaEnd() ; }
+    real_type kappaEnd() const { return S1.kappaEnd() ; }
 
     /*!
      | \return final angle of the 3 arc clothoid
     \*/
-    valueType thetaEnd() const { return S1.thetaEnd() ; }
+    real_type thetaEnd() const { return S1.thetaEnd() ; }
 
     /*!
      | Compute parameters of 3 arc clothoid at curvilinear coordinate `s`
@@ -975,32 +970,32 @@ namespace G2lib {
      | \param[out] y     the curve y-coordinate
     \*/
     void
-    eval( valueType   s,
-          valueType & theta,
-          valueType & kappa,
-          valueType & x,
-          valueType & y ) const ;
+    eval( real_type   s,
+          real_type & theta,
+          real_type & kappa,
+          real_type & x,
+          real_type & y ) const ;
 
-    void eval( valueType s, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+    void eval( real_type s, real_type & x, real_type & y ) const ;
+    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const ;
+    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const ;
+    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
 
     // offset curve
-    void eval( valueType s, valueType offs, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType offs, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType offs, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType offs, valueType & x_DDD, valueType & y_DDD ) const ;
+    void eval( real_type s, real_type offs, real_type & x, real_type & y ) const ;
+    void eval_D( real_type s, real_type offs, real_type & x_D, real_type & y_D ) const ;
+    void eval_DD( real_type s, real_type offs, real_type & x_DD, real_type & y_DD ) const ;
+    void eval_DDD( real_type s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const ;
 
     void
-    rotate( valueType angle, valueType cx, valueType cy ) {
+    rotate( real_type angle, real_type cx, real_type cy ) {
       S0.rotate( angle, cx, cy ) ;
       S1.rotate( angle, cx, cy ) ;
       SM.rotate( angle, cx, cy ) ;
     }
 
     void
-    translate( valueType tx, valueType ty ){
+    translate( real_type tx, real_type ty ){
       S0.translate( tx, ty ) ;
       S1.translate( tx, ty ) ;
       SM.translate( tx, ty ) ;
@@ -1031,9 +1026,9 @@ namespace G2lib {
   //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 connected)
   class ClothoidList {
 
-    std::vector<valueType>     s0 ;
+    std::vector<real_type>     s0 ;
     std::vector<ClothoidCurve> clotoidList ;
-    mutable indexType          last_idx ;
+    mutable int_type           last_idx ;
 
   public:
 
@@ -1051,166 +1046,166 @@ namespace G2lib {
       last_idx = 0 ;
     }
 
-    void reserve( indexType n );
+    void reserve( int_type n );
     void copy( ClothoidList const & L );
 
     void push_back( ClothoidCurve const & c );
-    void push_back( valueType kappa0, valueType dkappa, valueType L );
-    void push_back( valueType x0,     valueType y0,     valueType theta0,
-                    valueType kappa0, valueType dkappa, valueType L );
+    void push_back( real_type kappa0, real_type dkappa, real_type L );
+    void push_back( real_type x0,     real_type y0,     real_type theta0,
+                    real_type kappa0, real_type dkappa, real_type L );
 
-    void push_back_G1( valueType x1, valueType y1, valueType theta1 );
-    void push_back_G1( valueType x0, valueType y0, valueType theta0,
-                       valueType x1, valueType y1, valueType theta1 );
-
-    bool
-    build_G1( indexType       n,
-              valueType const x[],
-              valueType const y[] ) ;
+    void push_back_G1( real_type x1, real_type y1, real_type theta1 );
+    void push_back_G1( real_type x0, real_type y0, real_type theta0,
+                       real_type x1, real_type y1, real_type theta1 );
 
     bool
-    build_G1( indexType       n,
-              valueType const x[],
-              valueType const y[],
-              valueType const theta[] ) ;
+    build_G1( int_type        n,
+              real_type const x[],
+              real_type const y[] ) ;
 
     bool
-    build_theta( indexType       n,
-                 valueType const x[],
-                 valueType const y[],
-                 valueType       theta[] ) const ;
+    build_G1( int_type        n,
+              real_type const x[],
+              real_type const y[],
+              real_type const theta[] ) ;
 
-    ClothoidCurve const & get( indexType idx ) const;
-    ClothoidCurve const & getAtS( valueType s ) const;
+    bool
+    build_theta( int_type        n,
+                 real_type const x[],
+                 real_type const y[],
+                 real_type       theta[] ) const ;
 
-    indexType numSegment() const { return indexType(clotoidList.size()) ; }
+    ClothoidCurve const & get( int_type idx ) const;
+    ClothoidCurve const & getAtS( real_type s ) const;
 
-    bool findAtS( valueType s ) const;
+    int_type numSegment() const { return int_type(clotoidList.size()) ; }
 
-    valueType theta( valueType s ) const;
-    valueType theta_D( valueType s ) const;
-    valueType theta_DD( valueType s ) const;
-    valueType theta_DDD( valueType, indexType & ) const { return 0 ; }
+    bool findAtS( real_type s ) const;
 
-    valueType totalLength() const {
+    real_type theta( real_type s ) const;
+    real_type theta_D( real_type s ) const;
+    real_type theta_DD( real_type s ) const;
+    real_type theta_DDD( real_type, int_type & ) const { return 0 ; }
+
+    real_type totalLength() const {
       if ( s0.empty() ) return 0;
       return s0.back() - s0.front() ;
     }
 
-    valueType X( valueType s ) const ;
-    valueType Y( valueType s ) const ;
+    real_type X( real_type s ) const ;
+    real_type Y( real_type s ) const ;
 
-    valueType sBegin() const { return s0.front(); }
-    valueType sEnd()   const { return s0.back(); }
+    real_type sBegin() const { return s0.front(); }
+    real_type sEnd()   const { return s0.back(); }
 
-    valueType xBegin() const { return clotoidList.front().xBegin(); }
-    valueType xEnd()   const { return clotoidList.back().xEnd(); }
+    real_type xBegin() const { return clotoidList.front().xBegin(); }
+    real_type xEnd()   const { return clotoidList.back().xEnd(); }
 
-    valueType yBegin() const { return clotoidList.front().yBegin(); }
-    valueType yEnd()   const { return clotoidList.back().yEnd(); }
+    real_type yBegin() const { return clotoidList.front().yBegin(); }
+    real_type yEnd()   const { return clotoidList.back().yEnd(); }
 
-    valueType thetaBegin() const { return clotoidList.front().thetaBegin(); }
-    valueType thetaEnd()   const { return clotoidList.back().thetaEnd(); }
+    real_type thetaBegin() const { return clotoidList.front().thetaBegin(); }
+    real_type thetaEnd()   const { return clotoidList.back().thetaEnd(); }
 
-    valueType kappaBegin() const { return clotoidList.front().kappaBegin(); }
-    valueType kappaEnd()   const { return clotoidList.back().kappaEnd(); }
+    real_type kappaBegin() const { return clotoidList.front().kappaBegin(); }
+    real_type kappaEnd()   const { return clotoidList.back().kappaEnd(); }
 
-    valueType length( indexType idx ) const { return s0[idx+1] - s0[idx]; }
+    real_type length( int_type idx ) const { return s0[idx+1] - s0[idx]; }
 
-    valueType sBegin( indexType idx ) const { return s0[idx]; }
-    valueType sEnd( indexType idx )   const { return s0[idx+1]; }
+    real_type sBegin( int_type idx ) const { return s0[idx]; }
+    real_type sEnd( int_type idx )   const { return s0[idx+1]; }
 
-    valueType xBegin( indexType idx ) const { return clotoidList[idx].xBegin(); }
-    valueType xEnd( indexType idx )   const { return clotoidList[idx].xEnd(); }
+    real_type xBegin( int_type idx ) const { return clotoidList[idx].xBegin(); }
+    real_type xEnd( int_type idx )   const { return clotoidList[idx].xEnd(); }
 
-    valueType yBegin( indexType idx ) const { return clotoidList[idx].yBegin(); }
-    valueType yEnd( indexType idx )   const { return clotoidList[idx].yEnd(); }
+    real_type yBegin( int_type idx ) const { return clotoidList[idx].yBegin(); }
+    real_type yEnd( int_type idx )   const { return clotoidList[idx].yEnd(); }
 
-    valueType thetaBegin( indexType idx ) const { return clotoidList[idx].thetaBegin(); }
-    valueType thetaEnd( indexType idx )   const { return clotoidList[idx].thetaEnd(); }
+    real_type thetaBegin( int_type idx ) const { return clotoidList[idx].thetaBegin(); }
+    real_type thetaEnd( int_type idx )   const { return clotoidList[idx].thetaEnd(); }
 
-    valueType kappaBegin( indexType idx ) const { return clotoidList[idx].kappaBegin(); }
-    valueType kappaEnd( indexType idx )   const { return clotoidList[idx].kappaEnd(); }
-
-    void
-    eval( valueType   s,
-          valueType & theta,
-          valueType & kappa,
-          valueType & x,
-          valueType & y ) const ;
+    real_type kappaBegin( int_type idx ) const { return clotoidList[idx].kappaBegin(); }
+    real_type kappaEnd( int_type idx )   const { return clotoidList[idx].kappaEnd(); }
 
     void
-    eval( valueType   s,
-          valueType & x,
-          valueType & y ) const ;
+    eval( real_type   s,
+          real_type & theta,
+          real_type & kappa,
+          real_type & x,
+          real_type & y ) const ;
+
     void
-    eval_D( valueType   s,
-            valueType & x_D,
-            valueType & y_D ) const ;
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const ;
     void
-    eval_DD( valueType   s,
-             valueType & x_DD,
-             valueType & y_DD ) const ;
+    eval_D( real_type   s,
+            real_type & x_D,
+            real_type & y_D ) const ;
     void
-    eval_DDD( valueType   s,
-              valueType & x_DDD,
-              valueType & y_DDD ) const ;
+    eval_DD( real_type   s,
+             real_type & x_DD,
+             real_type & y_DD ) const ;
+    void
+    eval_DDD( real_type   s,
+              real_type & x_DDD,
+              real_type & y_DDD ) const ;
 
     // offset curve
     void
-    eval( valueType   s,
-          valueType   offs,
-          valueType & x,
-          valueType & y ) const ;
+    eval( real_type   s,
+          real_type   offs,
+          real_type & x,
+          real_type & y ) const ;
     void
-    eval_D( valueType   s,
-            valueType   offs,
-            valueType & x_D,
-            valueType & y_D ) const ;
+    eval_D( real_type   s,
+            real_type   offs,
+            real_type & x_D,
+            real_type & y_D ) const ;
     void
-    eval_DD( valueType   s,
-             valueType   offs,
-             valueType & x_DD,
-             valueType & y_DD ) const ;
+    eval_DD( real_type   s,
+             real_type   offs,
+             real_type & x_DD,
+             real_type & y_DD ) const ;
     void
-    eval_DDD( valueType   s,
-              valueType   offs,
-              valueType & x_DDD,
-              valueType & y_DDD ) const ;
-
-    void
-    getSTK( valueType s[],
-            valueType theta[],
-            valueType kappa[] ) const ;
+    eval_DDD( real_type   s,
+              real_type   offs,
+              real_type & x_DDD,
+              real_type & y_DDD ) const ;
 
     void
-    getXY( valueType x[], valueType y[] ) const ;
+    getSTK( real_type s[],
+            real_type theta[],
+            real_type kappa[] ) const ;
 
     void
-    getDeltaTheta( valueType deltaTheta[] ) const ;
+    getXY( real_type x[], real_type y[] ) const ;
 
     void
-    getDeltaKappa( valueType deltaKappa[] ) const ;
+    getDeltaTheta( real_type deltaTheta[] ) const ;
 
-    valueType
-    closestPoint( valueType   qx,
-                  valueType   qy,
-                  valueType & X,
-                  valueType & Y,
-                  valueType & S ) const ;
+    void
+    getDeltaKappa( real_type deltaKappa[] ) const ;
 
-    valueType
-    distance( valueType qx, valueType qy, valueType & S ) const
-    { valueType X, Y ; return closestPoint( qx, qy, X, Y, S ); }
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type & X,
+                  real_type & Y,
+                  real_type & S ) const ;
 
-    valueType
-    distance( valueType qx, valueType qy ) const
-    { valueType S ; return distance( qx, qy, S ); }
+    real_type
+    distance( real_type qx, real_type qy, real_type & S ) const
+    { real_type X, Y ; return closestPoint( qx, qy, X, Y, S ); }
 
-    void rotate( valueType angle, valueType cx, valueType cy ) ;
-    void translate( valueType tx, valueType ty ) ;
-    void changeOrigin( valueType newx0, valueType newy0 ) ;
-    void scale( valueType sfactor ) ;
+    real_type
+    distance( real_type qx, real_type qy ) const
+    { real_type S ; return distance( qx, qy, S ); }
+
+    void rotate( real_type angle, real_type cx, real_type cy ) ;
+    void translate( real_type tx, real_type ty ) ;
+    void changeOrigin( real_type newx0, real_type newy0 ) ;
+    void scale( real_type sfactor ) ;
     void reverse() ;
 
     /*! \brief split clothois in smaller segments
@@ -1221,9 +1216,9 @@ namespace G2lib {
      * \param bb          splitting data structures vector
      */
     void
-    bbSplit( valueType split_angle,
-             valueType split_size,
-             valueType split_offs,
+    bbSplit( real_type split_angle,
+             real_type split_size,
+             real_type split_offs,
              std::vector<ClothoidCurve::bbData> & bb ) const {
       bb.clear();
       std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
@@ -1262,18 +1257,18 @@ namespace G2lib {
 
   private:
 
-    std::vector<valueType> x ;
-    std::vector<valueType> y ;
+    std::vector<real_type> x ;
+    std::vector<real_type> y ;
     TargetType             tt ;
-    valueType              theta_I ;
-    valueType              theta_F ;
-    indexType              npts ;
+    real_type              theta_I ;
+    real_type              theta_F ;
+    int_type               npts ;
 
     // work vector
-    mutable std::vector<valueType> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2 ;
+    mutable std::vector<real_type> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2 ;
 
-    valueType
-    diff2pi( valueType in ) const {
+    real_type
+    diff2pi( real_type in ) const {
       return in-m_2pi*round(in/m_2pi) ;
     }
 
@@ -1283,7 +1278,7 @@ namespace G2lib {
     ~ClothoidSplineG2() {}
 
     void
-    setP1( valueType theta0, valueType thetaN )
+    setP1( real_type theta0, real_type thetaN )
     { tt = P1 ; theta_I = theta0 ; theta_F = thetaN ; }
 
     void setP2() { tt = P2 ; }
@@ -1296,39 +1291,39 @@ namespace G2lib {
     void setP9() { tt = P9 ; }
 
     void
-    setup( valueType const xvec[],
-           valueType const yvec[],
-           indexType       npts ) ;
+    setup( real_type const xvec[],
+           real_type const yvec[],
+           int_type        npts ) ;
 
-    indexType numPnts() const { return npts ; }
-    indexType numTheta() const ;
-    indexType numConstraints() const ;
+    int_type numPnts() const { return npts ; }
+    int_type numTheta() const ;
+    int_type numConstraints() const ;
 
     void
-    guess( valueType theta_guess[],
-           valueType theta_min[],
-           valueType theta_max[] ) const ;
+    guess( real_type theta_guess[],
+           real_type theta_min[],
+           real_type theta_max[] ) const ;
 
     bool
-    objective( valueType const theta[], valueType & f ) const ;
+    objective( real_type const theta[], real_type & f ) const ;
 
     bool
-    gradient( valueType const theta[], valueType g[] ) const ;
+    gradient( real_type const theta[], real_type g[] ) const ;
 
     bool
-    constraints( valueType const theta[], valueType c[] ) const ;
+    constraints( real_type const theta[], real_type c[] ) const ;
 
-    indexType
+    int_type
     jacobian_nnz() const ;
 
     bool
-    jacobian_pattern( indexType i[], indexType j[] ) const ;
+    jacobian_pattern( int_type i[], int_type j[] ) const ;
 
     bool
-    jacobian_pattern_matlab( valueType i[], valueType j[] ) const ;
+    jacobian_pattern_matlab( real_type i[], real_type j[] ) const ;
 
     bool
-    jacobian( valueType const theta[], valueType vals[] ) const ;
+    jacobian( real_type const theta[], real_type vals[] ) const ;
 
   };
 

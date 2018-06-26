@@ -3,31 +3,31 @@
 #include <cmath>
 #include <iostream>
 
-using G2lib::valueType ;
+using G2lib::real_type ;
 
 int
 main() {
 
   G2lib::ClothoidCurve C0, C1 ;
-  valueType x0     = 0 ;
-  valueType y0     = 0 ;
-  valueType theta0 = G2lib::m_pi*0.7 ;
-  valueType k0     = -0.1 ;
-  valueType dk0    = 0.05 ;
-  valueType L0     = 20 ;
+  real_type x0     = 0 ;
+  real_type y0     = 0 ;
+  real_type theta0 = G2lib::m_pi*0.7 ;
+  real_type k0     = -0.1 ;
+  real_type dk0    = 0.05 ;
+  real_type L0     = 20 ;
   C0.build( x0, y0, theta0, k0, dk0, L0 );
 
-  valueType x1     = -10 ;
-  valueType y1     = 0 ;
-  valueType theta1 = G2lib::m_pi/4 ;
-  valueType k1     = 0.1 ;
-  valueType dk1    = -0.05 ;
-  valueType L1     = 20 ;
+  real_type x1     = -10 ;
+  real_type y1     = 0 ;
+  real_type theta1 = G2lib::m_pi/4 ;
+  real_type k1     = 0.1 ;
+  real_type dk1    = -0.05 ;
+  real_type L1     = 20 ;
   C1.build( x1, y1, theta1, k1, dk1, L1 );
 
-  G2lib::vector<G2lib::valueType> s1, s2 ;
-  G2lib::indexType max_iter  = 10 ;
-  G2lib::valueType tolerance = 1e-8 ;
+  G2lib::vector<G2lib::real_type> s1, s2 ;
+  G2lib::int_type  max_iter  = 10 ;
+  G2lib::real_type tolerance = 1e-8 ;
 
   C0.intersect( C1, s1, s2, max_iter, tolerance );
 

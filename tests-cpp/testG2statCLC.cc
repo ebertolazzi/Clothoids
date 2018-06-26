@@ -21,9 +21,9 @@ void toc() {
 	tictoc_stack.pop();
 }
 
-using G2lib::valueType;
+using G2lib::real_type;
 
-static const valueType m_pi = 3.14159265358979323846264338328;
+static const real_type m_pi = 3.14159265358979323846264338328;
 
 using namespace std ;
 
@@ -38,20 +38,20 @@ main(int argc, const char * argv[]) {
   int NMAX = 32/8 ;
   int nkur = 32/8 ;
 
-  valueType x0 = 0 ;
-  valueType y0 = 0 ;
-  valueType x1 = 1 ;
-  valueType y1 = 0 ;
+  real_type x0 = 0 ;
+  real_type y0 = 0 ;
+  real_type x1 = 1 ;
+  real_type y1 = 0 ;
 
   // insert code here...
-  valueType thmin = -m_pi*0.99 ;
-  valueType thmax =  m_pi*0.99 ;
+  real_type thmin = -m_pi*0.99 ;
+  real_type thmax =  m_pi*0.99 ;
 
-  valueType kur[1000], kmax = 10 ;
-  valueType a = exp( 2*log(kmax)/(nkur-1) ) ;
+  real_type kur[1000], kmax = 10 ;
+  real_type a = exp( 2*log(kmax)/(nkur-1) ) ;
   nkur = 2*nkur+1 ;
   cout << "a = " << a << "\n" ;
-  valueType k0 = 1/kmax ;
+  real_type k0 = 1/kmax ;
   kur[0] = 0 ;
   for ( int ii = 1 ; ii < nkur ; ii += 2 ) {
     kur[ii]   = k0 ;
@@ -67,17 +67,17 @@ main(int argc, const char * argv[]) {
        << "\n" ;
 
 
-  // valueType kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 } ;
+  // real_type kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 } ;
   tictoc.tic();
   for ( int ii = 0 ; ii < nkur ; ++ii ) {
     cout << "ii = " << ii << '\n' ;
-    valueType k0 = kur[ii];
+    real_type k0 = kur[ii];
     for ( int jj = 0 ; jj < nkur ; ++jj ) {
-      valueType k1 = kur[jj] ;
+      real_type k1 = kur[jj] ;
       for ( int i = 0 ; i < NMAX ; ++i ) {
-        valueType th0 = thmin + ((thmax-thmin)*i)/(NMAX-1);
+        real_type th0 = thmin + ((thmax-thmin)*i)/(NMAX-1);
         for ( int j = 0 ; j < NMAX ; ++j ) {
-          valueType th1 = thmin + ((thmax-thmin)*j)/(NMAX-1);
+          real_type th1 = thmin + ((thmax-thmin)*j)/(NMAX-1);
           int iter = g2solveCLC.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
           //if ( iter < 0 ) {
           //  cout << "iter = " << iter << '\n' ;

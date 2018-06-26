@@ -44,14 +44,14 @@ namespace G2lib {
 
   class Biarc {
     CircleArc C0, C1 ;
-    valueType alpha ;
-    //valueType xs, ys, thetas, cs, ss, alpha ;
+    real_type alpha ;
+    //real_type xs, ys, thetas, cs, ss, alpha ;
 
     void
-    gfun( valueType omega, valueType g[3] ) const {
-      valueType so  = sin(omega) ;
-      valueType co  = cos(omega) ;
-      valueType oco = omega*co ;
+    gfun( real_type omega, real_type g[3] ) const {
+      real_type so  = sin(omega) ;
+      real_type co  = cos(omega) ;
+      real_type oco = omega*co ;
       g[0] = so + oco ;
       g[1] = 2*co - omega*so ;
       g[2] = -3*so - oco ;
@@ -69,12 +69,12 @@ namespace G2lib {
     {}
 
     //! construct a clothoid with the standard parameters
-    Biarc( valueType x0,
-           valueType y0,
-           valueType theta0,
-           valueType x1,
-           valueType y1,
-           valueType theta1 ) {
+    Biarc( real_type x0,
+           real_type y0,
+           real_type theta0,
+           real_type x1,
+           real_type y1,
+           real_type theta1 ) {
       bool ok = build( x0, y0, theta0, x1, y1, theta1 );
       G2LIB_ASSERT( ok, "Biarc( x0 = " << x0     <<
                         ", y0 = "      << y0     <<
@@ -107,12 +107,12 @@ namespace G2lib {
 
     //! construct a biarc with the standard parameters
     bool
-    build( valueType x0,
-           valueType y0,
-           valueType theta0,
-           valueType x1,
-           valueType y1,
-           valueType theta1 ) ;
+    build( real_type x0,
+           real_type y0,
+           real_type theta0,
+           real_type x1,
+           real_type y1,
+           real_type theta1 ) ;
 
     /*! \brief
     //  construct a biarc by 3 point at "minimum energy"
@@ -121,54 +121,54 @@ namespace G2lib {
     //  - Computer-Aided Design, vol 33, 2001
     */
     bool
-    build_3P( valueType x0,
-              valueType y0,
-              valueType x1,
-              valueType y1,
-              valueType x2,
-              valueType y2 ) ;
+    build_3P( real_type x0,
+              real_type y0,
+              real_type x1,
+              real_type y1,
+              real_type x2,
+              real_type y2 ) ;
 
-    valueType X( valueType s ) const ;
-    valueType Y( valueType s ) const ;
-    valueType theta( valueType s ) const ;
-    valueType kappa( valueType s ) const ;
+    real_type X( real_type s ) const ;
+    real_type Y( real_type s ) const ;
+    real_type theta( real_type s ) const ;
+    real_type kappa( real_type s ) const ;
 
-    valueType Xstar()     const { return C1.xBegin() ; }
-    valueType Ystar()     const { return C1.yBegin() ; }
-    valueType thetaStar() const { return C1.thetaBegin() ; }
+    real_type Xstar()     const { return C1.xBegin() ; }
+    real_type Ystar()     const { return C1.yBegin() ; }
+    real_type thetaStar() const { return C1.thetaBegin() ; }
 
-    void eval( valueType s, valueType & th, valueType & k, valueType & x, valueType & y ) const ;
-    void eval( valueType s, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+    void eval( real_type s, real_type & th, real_type & k, real_type & x, real_type & y ) const ;
+    void eval( real_type s, real_type & x, real_type & y ) const ;
+    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const ;
+    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const ;
+    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
 
-    valueType xBegin0()     const { return C0.xBegin(); }
-    valueType xEnd0()       const { return C0.xEnd(); }
-    valueType yBegin0()     const { return C0.yBegin(); }
-    valueType yEnd0()       const { return C0.yEnd(); }
-    valueType thetaBegin0() const { return C0.thetaBegin(); }
-    valueType thetaEnd0()   const { return C0.thetaEnd(); }
-    valueType kappa0()      const { return C0.kappa(); }
-    valueType length0()     const { return C0.length(); }
+    real_type xBegin0()     const { return C0.xBegin(); }
+    real_type xEnd0()       const { return C0.xEnd(); }
+    real_type yBegin0()     const { return C0.yBegin(); }
+    real_type yEnd0()       const { return C0.yEnd(); }
+    real_type thetaBegin0() const { return C0.thetaBegin(); }
+    real_type thetaEnd0()   const { return C0.thetaEnd(); }
+    real_type kappa0()      const { return C0.kappa(); }
+    real_type length0()     const { return C0.length(); }
 
-    valueType xBegin1()     const { return C1.xBegin(); }
-    valueType xEnd1()       const { return C1.xEnd(); }
-    valueType yBegin1()     const { return C1.yBegin(); }
-    valueType yEnd1()       const { return C1.yEnd(); }
-    valueType thetaBegin1() const { return C1.thetaBegin(); }
-    valueType thetaEnd1()   const { return C1.thetaEnd(); }
-    valueType kappa1()      const { return C1.kappa(); }
-    valueType length1()     const { return C1.length(); }
+    real_type xBegin1()     const { return C1.xBegin(); }
+    real_type xEnd1()       const { return C1.xEnd(); }
+    real_type yBegin1()     const { return C1.yBegin(); }
+    real_type yEnd1()       const { return C1.yEnd(); }
+    real_type thetaBegin1() const { return C1.thetaBegin(); }
+    real_type thetaEnd1()   const { return C1.thetaEnd(); }
+    real_type kappa1()      const { return C1.kappa(); }
+    real_type length1()     const { return C1.length(); }
 
-    valueType length()      const { return C0.length() + C1.length() ; }
-    valueType delta_theta() const { return C0.delta_theta() + C1.delta_theta() ; }
+    real_type length()      const { return C0.length() + C1.length() ; }
+    real_type delta_theta() const { return C0.delta_theta() + C1.delta_theta() ; }
 
-    void changeOrigin( valueType newx0, valueType newy0 );
-    void translate( valueType tx, valueType ty );
-    void rotate( valueType angle, valueType cx, valueType cy );
+    void changeOrigin( real_type newx0, real_type newy0 );
+    void translate( real_type tx, real_type ty );
+    void rotate( real_type angle, real_type cx, real_type cy );
     void reverse();
-    void scale( valueType s );
+    void scale( real_type s );
 
     /*!
      * \brief compute the point at minimum distance from a point `[x,y]` and the biarc
@@ -180,12 +180,12 @@ namespace G2lib {
      * \param S param of the closest point
      * \return the distance point-circle
     \*/
-    valueType
-    closestPoint( valueType   x,
-                  valueType   y,
-                  valueType & X,
-                  valueType & Y,
-                  valueType & S ) const ;
+    real_type
+    closestPoint( real_type   x,
+                  real_type   y,
+                  real_type & X,
+                  real_type & Y,
+                  real_type & S ) const ;
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the biarc
@@ -195,11 +195,11 @@ namespace G2lib {
      * \param S param at minimum distance
      * \return the distance point-circle
     \*/
-    valueType
-    distance( valueType   x,
-              valueType   y,
-              valueType & S ) const {
-      valueType X, Y ;
+    real_type
+    distance( real_type   x,
+              real_type   y,
+              real_type & S ) const {
+      real_type X, Y ;
       return closestPoint( x, y, X, Y, S ) ;
     }
 
@@ -210,9 +210,9 @@ namespace G2lib {
      * \param y y-coordinate
      * \return the distance point-circle
     \*/
-    valueType
-    distance( valueType x, valueType y ) const {
-      valueType ss ;
+    real_type
+    distance( real_type x, real_type y ) const {
+      real_type ss ;
       return distance( x, y, ss );
     }
 

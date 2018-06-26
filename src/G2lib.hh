@@ -91,75 +91,75 @@
 //! Clothoid computations routine
 namespace G2lib {
 
-  typedef double valueType ;
-  typedef int    indexType ;
+  typedef double real_type ;
+  typedef int    int_type ;
 
-  extern valueType const machepsi    ;
-  extern valueType const m_pi        ; // pi
-  extern valueType const m_pi_2      ; // pi/2
-  extern valueType const m_2pi       ; // 2*pi
-  extern valueType const m_1_pi      ; // 1/pi
-  extern valueType const m_1_sqrt_pi ; // 1/sqrt(pi)
+  extern real_type const machepsi    ;
+  extern real_type const m_pi        ; // pi
+  extern real_type const m_pi_2      ; // pi/2
+  extern real_type const m_2pi       ; // 2*pi
+  extern real_type const m_1_pi      ; // 1/pi
+  extern real_type const m_1_sqrt_pi ; // 1/sqrt(pi)
 
   /*
   // sin(x)/x
   */
-  valueType Sinc( valueType x );
-  valueType Sinc_D( valueType x );
-  valueType Sinc_DD( valueType x );
-  valueType Sinc_DDD( valueType x );
+  real_type Sinc( real_type x );
+  real_type Sinc_D( real_type x );
+  real_type Sinc_DD( real_type x );
+  real_type Sinc_DDD( real_type x );
 
   /*
   // (1-cos(x))/x
   */
-  valueType Cosc( valueType x );
-  valueType Cosc_D( valueType x );
-  valueType Cosc_DD( valueType x );
-  valueType Cosc_DDD( valueType x );
+  real_type Cosc( real_type x );
+  real_type Cosc_D( real_type x );
+  real_type Cosc_DD( real_type x );
+  real_type Cosc_DDD( real_type x );
 
   /*
   // atan(x)/x
   */
-  valueType Atanc( valueType x );
-  valueType Atanc_D( valueType x );
-  valueType Atanc_DD( valueType x );
-  valueType Atanc_DDD( valueType x );
+  real_type Atanc( real_type x );
+  real_type Atanc_D( real_type x );
+  real_type Atanc_DD( real_type x );
+  real_type Atanc_DDD( real_type x );
 
   //! Add or remove multiple of \f$ 2\pi \f$ to an angle  in order to put it in the range \f$ [-\pi,\pi]\f$.
-  void rangeSymm( valueType & ang ) ;
+  void rangeSymm( real_type & ang ) ;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   inline
-  valueType
-  projectPointOnLine( valueType x0,
-                      valueType y0,
-                      valueType c0, //!< cos(theta0)
-                      valueType s0, //!< sin(theta0)
-                      valueType x,
-                      valueType y ) {
-    valueType dx = x - x0 ;
-    valueType dy = y - y0 ;
+  real_type
+  projectPointOnLine( real_type x0,
+                      real_type y0,
+                      real_type c0, //!< cos(theta0)
+                      real_type s0, //!< sin(theta0)
+                      real_type x,
+                      real_type y ) {
+    real_type dx = x - x0 ;
+    real_type dy = y - y0 ;
     return (s0 * dy + c0 * dx) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   inline
-  valueType
-  projectPointOnCircle( valueType x0,
-                        valueType y0,
-                        valueType c0, //!< cos(theta0)
-                        valueType s0, //!< sin(theta0)
-                        valueType k,
-                        valueType L,
-                        valueType qx,
-                        valueType qy ) {
-    valueType dx  = x0 - qx ;
-    valueType dy  = y0 - qy ;
-    valueType a0  = c0 * dy - s0 * dx ;
-    valueType b0  = s0 * dy + c0 * dx ;
-    valueType tmp = a0*k ;
+  real_type
+  projectPointOnCircle( real_type x0,
+                        real_type y0,
+                        real_type c0, //!< cos(theta0)
+                        real_type s0, //!< sin(theta0)
+                        real_type k,
+                        real_type L,
+                        real_type qx,
+                        real_type qy ) {
+    real_type dx  = x0 - qx ;
+    real_type dy  = y0 - qy ;
+    real_type a0  = c0 * dy - s0 * dx ;
+    real_type b0  = s0 * dy + c0 * dx ;
+    real_type tmp = a0*k ;
 
     if ( 1+2*tmp > 0 ) {
 
@@ -167,7 +167,7 @@ namespace G2lib {
       tmp *= -Atanc(tmp*k) ; // lunghezza
 
       if ( tmp < 0 ) {
-        valueType absk = std::abs(k) ;
+        real_type absk = std::abs(k) ;
         // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
         if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk ;
       }
@@ -176,10 +176,10 @@ namespace G2lib {
 
     } else {
 
-      valueType om = atan2( b0, a0+1/k ) ;
+      real_type om = atan2( b0, a0+1/k ) ;
       if ( k < 0 ) om += m_pi ;
-      valueType ss = -om/k ;
-      valueType t  = m_2pi/std::abs(k);
+      real_type ss = -om/k ;
+      real_type t  = m_2pi/std::abs(k);
       if      ( ss < 0 ) ss += t ;
       else if ( ss > t ) ss += t ;
       return ss ;
@@ -190,16 +190,16 @@ namespace G2lib {
 
   inline
   bool
-  pointInsideCircle( valueType x0,
-                     valueType y0,
-                     valueType c0, //!< cos(theta0)
-                     valueType s0, //!< sin(theta0)
-                     valueType k,
-                     valueType qx,
-                     valueType qy ) {
-    valueType cx  = x0 - s0/k ;
-    valueType cy  = y0 + c0/k ;
-    valueType dst = hypot( qx - cx, qy - cy ) ;
+  pointInsideCircle( real_type x0,
+                     real_type y0,
+                     real_type c0, //!< cos(theta0)
+                     real_type s0, //!< sin(theta0)
+                     real_type k,
+                     real_type qx,
+                     real_type qy ) {
+    real_type cx  = x0 - s0/k ;
+    real_type cy  = y0 + c0/k ;
+    real_type dst = hypot( qx - cx, qy - cy ) ;
     return dst*k <= 1 ;
   }
 
@@ -212,18 +212,48 @@ namespace G2lib {
   \*/
 
   class Solve2x2 {
-    indexType i[2], j[2] ;
-    valueType LU[2][2] ;
-    valueType epsi ;
+    int_type  i[2], j[2] ;
+    real_type LU[2][2] ;
+    real_type epsi ;
     bool      singular ;
 
   public:
   
     Solve2x2() : epsi(1e-10) {}
-    bool factorize( valueType A[2][2] ) ;
-    bool solve( valueType const b[2], valueType x[2] ) const ;
+    bool factorize( real_type A[2][2] ) ;
+    bool solve( real_type const b[2], real_type x[2] ) const ;
   } ;
 
+  /*!
+  //  return +1 = CounterClockwise
+  //  return -1 = Clockwise
+  //  return  0 = flat
+  //
+  //  CounterClockwise:
+  //    the path P1->P2->P3 turns Counter-Clockwise, i.e.,
+  //    the point P3 is located "on the left" of the line P1-P2.
+  //  Clockwise:
+  //    the path turns Clockwise, i.e.,
+  //    the point P3 lies "on the right" of the line P1-P2.
+  //  flat:
+  //    the point P3 is located on the line segment [P1 P2].
+  //
+  //  Algorithm from FileExchage geom2d adapated from Sedgewick's book.
+  */
+  int_type
+  isCounterClockwise( real_type const P1[2],
+                      real_type const P2[2],
+                      real_type const P3[2] ) ;
+  /*!
+  //  return +1 = Inside
+  //  return -1 = Outsize
+  //  return  0 = on border
+  */
+  int_type
+  isPointInTriangle( real_type const pt[2],
+                     real_type const P1[2],
+                     real_type const P2[2],
+                     real_type const P3[2] ) ;
 }
 
 #endif

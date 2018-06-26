@@ -38,11 +38,11 @@ namespace G2lib {
 
   class LineSegment {
 
-    valueType x0,      //!< initial x coordinate of the line
+    real_type x0,      //!< initial x coordinate of the line
               y0,      //!< initial y coordinate of the line
               theta0 ; //!< angle of the line
 
-    valueType c0,     //!< `cos(theta0)`
+    real_type c0,     //!< `cos(theta0)`
               s0,     //!< `sin(theta0)`
               L ;     //!< length of the segment
 
@@ -58,10 +58,10 @@ namespace G2lib {
     {}
 
     //! construct a circle curve with the standard parameters
-    LineSegment( valueType _x0,
-                 valueType _y0,
-                 valueType _theta0,
-                 valueType _L )
+    LineSegment( real_type _x0,
+                 real_type _y0,
+                 real_type _theta0,
+                 real_type _L )
     : x0(_x0)
     , y0(_y0)
     , theta0(_theta0)
@@ -85,18 +85,18 @@ namespace G2lib {
     LineSegment const & operator = ( LineSegment const & s )
     { copy(s) ; return *this ; }
 
-    valueType xBegin()   const { return x0 ; }
-    valueType yBegin()   const { return y0 ; }
-    valueType theta()    const { return theta0 ; }
-    valueType sinTheta() const { return s0 ; }
-    valueType cosTheta() const { return c0 ; }
-    valueType length()   const { return L ; }
+    real_type xBegin()   const { return x0 ; }
+    real_type yBegin()   const { return y0 ; }
+    real_type theta()    const { return theta0 ; }
+    real_type sinTheta() const { return s0 ; }
+    real_type cosTheta() const { return c0 ; }
+    real_type length()   const { return L ; }
 
     void
-    build( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _L ) {
+    build( real_type _x0,
+           real_type _y0,
+           real_type _theta0,
+           real_type _L ) {
       x0     = _x0 ;
       y0     = _y0 ;
       theta0 = _theta0 ;
@@ -107,55 +107,55 @@ namespace G2lib {
 
     //! construct a clothoid with the standard parameters
     void
-    build_2P( valueType _x0,
-              valueType _y0,
-              valueType _x1,
-              valueType _y1 ) ;
+    build_2P( real_type _x0,
+              real_type _y0,
+              real_type _x1,
+              real_type _y1 ) ;
 
-    valueType X( valueType s ) const { return x0 + c0 * s ; }
-    valueType Y( valueType s ) const { return y0 + s0 * s ; }
+    real_type X( real_type s ) const { return x0 + c0 * s ; }
+    real_type Y( real_type s ) const { return y0 + s0 * s ; }
 
     void
-    eval( valueType s, valueType & x, valueType & y ) const {
+    eval( real_type s, real_type & x, real_type & y ) const {
       x = x0 + c0 * s ;
       y = y0 + s0 * s ;
     }
 
     void
-    eval_D( valueType, valueType & x_D, valueType & y_D ) const {
+    eval_D( real_type, real_type & x_D, real_type & y_D ) const {
       x_D = c0 ;
       y_D = s0 ;
     }
 
     void
-    eval_DD( valueType, valueType & x_DD, valueType & y_DD ) const {
+    eval_DD( real_type, real_type & x_DD, real_type & y_DD ) const {
       x_DD = y_DD = 0 ;
     }
 
     void
-    eval_DDD( valueType, valueType & x_DDD, valueType & y_DDD ) const {
+    eval_DDD( real_type, real_type & x_DDD, real_type & y_DDD ) const {
       x_DDD = y_DDD = 0 ;
     }
 
     void
-    trim( valueType s_begin, valueType s_end ) {
+    trim( real_type s_begin, real_type s_end ) {
       x0 += c0 * s_begin ;
       y0 += s0 * s_begin ;
       L   = s_end - s_begin ;
     }
 
     void
-    translate( valueType tx, valueType ty )
+    translate( real_type tx, real_type ty )
     { x0 += tx ; y0 += ty ; }
 
     void
-    rotate( valueType angle, valueType cx, valueType cy ) ;
+    rotate( real_type angle, real_type cx, real_type cy ) ;
 
     void
     reverse() ;
 
     void
-    changeOrigin( valueType newx0, valueType newy0 )
+    changeOrigin( real_type newx0, real_type newy0 )
     { x0 = newx0 ; y0 = newy0 ; }
 
     /*!
@@ -168,12 +168,12 @@ namespace G2lib {
      * \param S param of the closest point
      * \return the distance point-segment
     \*/
-    valueType
-    closestPoint( valueType   x,
-                  valueType   y,
-                  valueType & X,
-                  valueType & Y,
-                  valueType & S ) const ;
+    real_type
+    closestPoint( real_type   x,
+                  real_type   y,
+                  real_type & X,
+                  real_type & Y,
+                  real_type & S ) const ;
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the line segment
@@ -183,11 +183,11 @@ namespace G2lib {
      * \param S param at minimum distance
      * \return the distance point-segment
     \*/
-    valueType
-    distance( valueType   x,
-              valueType   y,
-              valueType & S ) const {
-      valueType X, Y ;
+    real_type
+    distance( real_type   x,
+              real_type   y,
+              real_type & S ) const {
+      real_type X, Y ;
       return closestPoint( x, y, X, Y, S );
     }
 
@@ -198,9 +198,9 @@ namespace G2lib {
      * \param y y-coordinate
      * \return the distance point-segment
     \*/
-    valueType
-    distance( valueType x, valueType y ) const {
-      valueType ss ;
+    real_type
+    distance( real_type x, real_type y ) const {
+      real_type ss ;
       return distance( x, y, ss );
     }
 
@@ -212,7 +212,7 @@ namespace G2lib {
      */
 
     int
-    toNURBS( valueType knots[5], valueType Poly[2][3] ) const ;
+    toNURBS( real_type knots[5], real_type Poly[2][3] ) const ;
 
     friend
     std::ostream &

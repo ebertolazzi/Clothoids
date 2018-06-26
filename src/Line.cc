@@ -30,13 +30,13 @@ namespace G2lib {
   \*/
 
   void
-  LineSegment::build_2P( valueType _x0,
-                         valueType _y0,
-                         valueType _x1,
-                         valueType _y1 ) {
-    valueType dx = _x1-_x0 ;
-    valueType dy = _y1-_y0 ;
-    valueType d  = hypot( dx, dy ) ;
+  LineSegment::build_2P( real_type _x0,
+                         real_type _y0,
+                         real_type _x1,
+                         real_type _y1 ) {
+    real_type dx = _x1-_x0 ;
+    real_type dy = _y1-_y0 ;
+    real_type d  = hypot( dx, dy ) ;
     x0     = _x0 ;
     y0     = _y0 ;
     theta0 = atan2(dy, dx);
@@ -48,13 +48,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::rotate( valueType angle, valueType cx, valueType cy ) {
-    valueType dx  = x0 - cx ;
-    valueType dy  = y0 - cy ;
-    valueType C   = cos(angle) ;
-    valueType S   = sin(angle) ;
-    valueType ndx = C*dx - S*dy ;
-    valueType ndy = C*dy + S*dx ;
+  LineSegment::rotate( real_type angle, real_type cx, real_type cy ) {
+    real_type dx  = x0 - cx ;
+    real_type dy  = y0 - cy ;
+    real_type C   = cos(angle) ;
+    real_type S   = sin(angle) ;
+    real_type ndx = C*dx - S*dy ;
+    real_type ndy = C*dy + S*dx ;
     x0      = cx + ndx ;
     y0      = cy + ndy ;
     theta0 += angle ;
@@ -77,12 +77,12 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
-  LineSegment::closestPoint( valueType   x,
-                             valueType   y,
-                             valueType & X,
-                             valueType & Y,
-                             valueType & S ) const {
+  real_type
+  LineSegment::closestPoint( real_type   x,
+                             real_type   y,
+                             real_type & X,
+                             real_type & Y,
+                             real_type & S ) const {
 
     S = projectPointOnLine( x0, y0, c0, s0, x, y ) ;
 
@@ -100,7 +100,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
-  LineSegment::toNURBS( valueType knots[4], valueType Poly[2][3] ) const {
+  LineSegment::toNURBS( real_type knots[4], real_type Poly[2][3] ) const {
     knots[0] = knots[1] = 0 ;
     knots[2] = knots[3] = 1 ;
     Poly[0][0] = x0 ;

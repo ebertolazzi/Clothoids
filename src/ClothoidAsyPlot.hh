@@ -42,36 +42,36 @@ namespace G2lib {
     void
     drawClothoid( ClothoidCurve const& c,
                   std::string const & penna="black",
-                  valueType offset = 0.) const ;
+                  real_type offset = 0.) const ;
     
-    void dot( valueType x, valueType y, string const & penna="black" ) const ;
-    void triangle(T2D const & t, string const & penna="black" ) const ;
+    void dot( real_type x, real_type y, string const & penna="black" ) const ;
+    void triangle(Triangle2D const & t, string const & penna="black" ) const ;
 
     void
-    drawRect( valueType x0, valueType y0,
-              valueType x1, valueType y1,
-              valueType x2, valueType y2,
-              valueType x3, valueType y3,
+    drawRect( real_type x0, real_type y0,
+              real_type x1, real_type y1,
+              real_type x2, real_type y2,
+              real_type x3, real_type y3,
               string const & penna="black") const ;
 
     void
-    drawLine( valueType x0, valueType y0,
-              valueType x1, valueType y1,
+    drawLine( real_type x0, real_type y0,
+              real_type x1, real_type y1,
               std::string const & penna="black" ) const ;
     void
     label( string const & text,
-           valueType      x,
-           valueType      y,
+           real_type      x,
+           real_type      y,
            string const & placement = "",
            string const & penna = "black" ) const ;
 
     void
     displayAxes( string const & labX,
                  string const & labY,
-                 valueType      xmin,
-                 valueType      xmax,
-                 valueType      ymin,
-                 valueType      ymax ) const ;
+                 real_type      xmin,
+                 real_type      xmax,
+                 real_type      ymin,
+                 real_type      ymax ) const ;
 
   private:
     mutable ofstream file;

@@ -38,24 +38,24 @@ namespace G2lib {
   \*/
 
   void
-  CircleTangentPoints( valueType PA[2],
-                       valueType rA,
-                       valueType PB[2],
-                       valueType rB,
+  CircleTangentPoints( real_type PA[2],
+                       real_type rA,
+                       real_type PB[2],
+                       real_type rB,
                        bool &    external_tangents,
-                       valueType PTE0[2][2],
-                       valueType PTE1[2][2],
+                       real_type PTE0[2][2],
+                       real_type PTE1[2][2],
                        bool &    internal_tangents,
-                       valueType PTI0[2][2],
-                       valueType PTI1[2][2] ) ;
+                       real_type PTI0[2][2],
+                       real_type PTI1[2][2] ) ;
 
   bool
-  CircleLineTransition( valueType C[2],
-                        valueType r,
-                        valueType P[2],
-                        valueType theta,
-                        valueType C0[2],
-                        valueType C1[2] ) ;
+  CircleLineTransition( real_type C[2],
+                        real_type r,
+                        real_type P[2],
+                        real_type theta,
+                        real_type C0[2],
+                        real_type C1[2] ) ;
 
   /*\
    |    ____ _          _         _
@@ -68,12 +68,12 @@ namespace G2lib {
   //! \brief Class to manage Clothoid Curve
   class CircleArc {
 
-    valueType x0,     //!< initial x coordinate of the clothoid
+    real_type x0,     //!< initial x coordinate of the clothoid
               y0,     //!< initial y coordinate of the clothoid
               theta0, //!< initial angle of the clothoid
               k ;     //!< curvature
 
-    valueType c0,     //!< cos(theta0)
+    real_type c0,     //!< cos(theta0)
               s0,     //!< sin(theta0)
               L ;     //!< length of the circle segment
 
@@ -90,11 +90,11 @@ namespace G2lib {
     {}
 
     //! construct a circle curve with the standard parameters
-    CircleArc( valueType _x0,
-               valueType _y0,
-               valueType _theta0,
-               valueType _k,
-               valueType _L )
+    CircleArc( real_type _x0,
+               real_type _y0,
+               real_type _theta0,
+               real_type _k,
+               real_type _L )
     : x0(_x0)
     , y0(_y0)
     , theta0(_theta0)
@@ -120,26 +120,26 @@ namespace G2lib {
     CircleArc const & operator = ( CircleArc const & s )
     { copy(s) ; return *this ; }
 
-    valueType sinTheta0() const { return s0 ; }
-    valueType cosTheta0() const { return c0 ; }
-    valueType kappa()     const { return k ; }
-    valueType length()    const { return L ; }
+    real_type sinTheta0() const { return s0 ; }
+    real_type cosTheta0() const { return c0 ; }
+    real_type kappa()     const { return k ; }
+    real_type length()    const { return L ; }
 
-    valueType xBegin()     const { return x0 ; }
-    valueType yBegin()     const { return y0 ; }
-    valueType thetaBegin() const { return theta0 ; }
+    real_type xBegin()     const { return x0 ; }
+    real_type yBegin()     const { return y0 ; }
+    real_type thetaBegin() const { return theta0 ; }
 
-    valueType xEnd()     const { return X(L) ; }
-    valueType yEnd()     const { return Y(L) ; }
-    valueType thetaEnd() const { return theta(L) ; }
+    real_type xEnd()     const { return X(L) ; }
+    real_type yEnd()     const { return Y(L) ; }
+    real_type thetaEnd() const { return theta(L) ; }
 
     //! construct a circle with the standard parameters
     void
-    build( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _k,
-           valueType _L ) {
+    build( real_type _x0,
+           real_type _y0,
+           real_type _theta0,
+           real_type _k,
+           real_type _L ) {
       x0     = _x0 ;
       y0     = _y0 ;
       theta0 = _theta0 ;
@@ -151,85 +151,85 @@ namespace G2lib {
 
     //! build a circle by solving the hermite G1 problem
     bool
-    build_G1( valueType _x0,
-              valueType _y0,
-              valueType _theta0,
-              valueType _x1,
-              valueType _y1 );
+    build_G1( real_type _x0,
+              real_type _y0,
+              real_type _theta0,
+              real_type _x1,
+              real_type _y1 );
 
     //! build a circle passing by 3 points
     bool
-    build_3P( valueType _x0,
-              valueType _y0,
-              valueType _x1,
-              valueType _y1,
-              valueType _x2,
-              valueType _y2 );
+    build_3P( real_type _x0,
+              real_type _y0,
+              real_type _x1,
+              real_type _y1,
+              real_type _x2,
+              real_type _y2 );
 
-    valueType
+    real_type
     delta_theta() const { return L*k ; }
 
-    valueType
-    theta( valueType s ) const { return theta0 + s*k ; }
+    real_type
+    theta( real_type s ) const { return theta0 + s*k ; }
 
-    valueType
-    theta_D( valueType ) const { return k ; }
+    real_type
+    theta_D( real_type ) const { return k ; }
 
-    valueType
-    theta_DD( valueType ) const { return 0 ; }
+    real_type
+    theta_DD( real_type ) const { return 0 ; }
 
-    valueType
-    theta_DDD( valueType ) const { return 0 ; }
+    real_type
+    theta_DDD( real_type ) const { return 0 ; }
 
-    valueType
+    real_type
     totalLength() const { return L ; }
 
-    valueType
+    real_type
     thetaTotalVariation() const
     { return std::abs(L*k) ; }
 
-    valueType
-    thetaMinMax( valueType & thMin, valueType & thMax ) const ;
+    real_type
+    thetaMinMax( real_type & thMin, real_type & thMax ) const ;
 
-    valueType
+    real_type
     deltaTheta() const
-    { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
+    { real_type thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
 
-    valueType X( valueType s ) const ;
-    valueType Y( valueType s ) const ;
+    real_type X( real_type s ) const ;
+    real_type Y( real_type s ) const ;
 
-    void eval( valueType s, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
-
-    void
-    trim( valueType s_begin, valueType s_end ) ;
+    void eval( real_type s, real_type & x, real_type & y ) const ;
+    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const ;
+    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const ;
+    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
 
     void
-    changeCurvilinearOrigin( valueType s0, valueType newL ) ;
+    trim( real_type s_begin, real_type s_end ) ;
 
     void
-    changeOrigin( valueType newx0, valueType newy0 )
+    changeCurvilinearOrigin( real_type s0, real_type newL ) ;
+
+    void
+    changeOrigin( real_type newx0, real_type newy0 )
     { x0 = newx0 ; y0 = newy0 ; }
 
     void
-    rotate( valueType angle, valueType cx, valueType cy );
+    rotate( real_type angle, real_type cx, real_type cy );
 
     void
-    scale( valueType s );
+    scale( real_type s );
 
     void
     reverse();
 
     //! get the bounding box triangle (if angle variation less that pi/3)
     bool
-    bbTriangle( valueType p0[2],
-                valueType p1[2],
-                valueType p2[2] ) const ;
+    bbTriangle( real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const ;
 
     void
-    translate( valueType tx, valueType ty )
+    translate( real_type tx, real_type ty )
     { x0 += tx ; y0 += ty ; }
 
     /*!
@@ -242,12 +242,12 @@ namespace G2lib {
      * \param S param of the closest point
      * \return the distance point-circle
     \*/
-    valueType
-    closestPoint( valueType   x,
-                  valueType   y,
-                  valueType & X,
-                  valueType & Y,
-                  valueType & S ) const ;
+    real_type
+    closestPoint( real_type   x,
+                  real_type   y,
+                  real_type & X,
+                  real_type & Y,
+                  real_type & S ) const ;
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the circle arc
@@ -257,11 +257,11 @@ namespace G2lib {
      * \param S param at minimum distance
      * \return the distance point-circle
     \*/
-    valueType
-    distance( valueType   x,
-              valueType   y,
-              valueType & S ) const {
-      valueType X, Y ;
+    real_type
+    distance( real_type   x,
+              real_type   y,
+              real_type & S ) const {
+      real_type X, Y ;
       return closestPoint( x, y, X, Y, S ) ;
     }
 
@@ -272,9 +272,9 @@ namespace G2lib {
      * \param y y-coordinate
      * \return the distance point-circle
     \*/
-    valueType
-    distance( valueType x, valueType y ) const {
-      valueType ss ;
+    real_type
+    distance( real_type x, real_type y ) const {
+      real_type ss ;
       return distance( x, y, ss );
     }
 
@@ -285,8 +285,8 @@ namespace G2lib {
      * \return       3 up to 9 the number of polygon points
     \*/
 
-    indexType
-    toNURBS( valueType knots[], valueType Poly[], bool get_size ) const ; // Poly 3 x n matrix
+    int_type
+    toNURBS( real_type knots[], real_type Poly[], bool get_size ) const ; // Poly 3 x n matrix
 
     friend
     std::ostream &

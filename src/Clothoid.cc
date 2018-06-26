@@ -31,8 +31,8 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::changeCurvilinearOrigin( valueType s0, valueType newL ) {
-    valueType new_theta, new_kappa, new_x0, new_y0 ;
+  ClothoidCurve::changeCurvilinearOrigin( real_type s0, real_type newL ) {
+    real_type new_theta, new_kappa, new_x0, new_y0 ;
     eval( s0, new_theta, new_kappa, new_x0, new_y0 ) ;
     CD.x0     = new_x0 ;
     CD.y0     = new_y0 ;
@@ -44,13 +44,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::rotate( valueType angle, valueType cx, valueType cy ) {
-    valueType dx  = CD.x0 - cx ;
-    valueType dy  = CD.y0 - cy ;
-    valueType C   = cos(angle) ;
-    valueType S   = sin(angle) ;
-    valueType ndx = C*dx - S*dy ;
-    valueType ndy = C*dy + S*dx ;
+  ClothoidCurve::rotate( real_type angle, real_type cx, real_type cy ) {
+    real_type dx  = CD.x0 - cx ;
+    real_type dy  = CD.y0 - cy ;
+    real_type C   = cos(angle) ;
+    real_type S   = sin(angle) ;
+    real_type ndx = C*dx - S*dy ;
+    real_type ndy = C*dy + S*dx ;
     CD.x0      = cx + ndx ;
     CD.y0      = cy + ndy ;
     CD.theta0 += angle ;
@@ -59,7 +59,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::scale( valueType s ) {
+  ClothoidCurve::scale( real_type s ) {
     CD.kappa0 /= s ;
     CD.dk     /= s*s ;
     L         *= s ;
@@ -76,18 +76,18 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
+  real_type
   ClothoidCurve::thetaTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType kL  = CD.kappa0 ;
-    valueType kR  = CD.kappa(L) ;
-    valueType thL = 0 ;
-    valueType thR = CD.deltaTheta(L) ;
+    real_type kL  = CD.kappa0 ;
+    real_type kR  = CD.kappa(L) ;
+    real_type thL = 0 ;
+    real_type thR = CD.deltaTheta(L) ;
     if ( kL*kR < 0 ) {
-      valueType root = -CD.kappa0/CD.dk ;
+      real_type root = -CD.kappa0/CD.dk ;
       if ( root > 0 && root < L ) {
-        valueType thM  = CD.deltaTheta(root) ;
+        real_type thM  = CD.deltaTheta(root) ;
         return std::abs( thR - thM ) + std::abs( thM - thL ) ;
       }
     }
@@ -96,20 +96,20 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
-  ClothoidCurve::thetaMinMax( valueType & thMin, valueType & thMax ) const {
+  real_type
+  ClothoidCurve::thetaMinMax( real_type & thMin, real_type & thMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType kL  = CD.kappa0 ;
-    valueType kR  = CD.kappa(L) ;
-    valueType thL = 0 ;
-    valueType thR = CD.deltaTheta(L) ;
+    real_type kL  = CD.kappa0 ;
+    real_type kR  = CD.kappa(L) ;
+    real_type thL = 0 ;
+    real_type thR = CD.deltaTheta(L) ;
     if ( thL < thR ) { thMin = thL ; thMax = thR ; }
     else             { thMin = thR ; thMax = thL ; }
     if ( kL*kR < 0 ) {
-      valueType root = -CD.kappa0/CD.dk ;
+      real_type root = -CD.kappa0/CD.dk ;
       if ( root > 0 && root < L ) {
-        valueType thM = CD.deltaTheta(root) ;
+        real_type thM = CD.deltaTheta(root) ;
         if      ( thM < thMin ) thMin = thM ;
         else if ( thM > thMax ) thMax = thM ;
       }
@@ -119,8 +119,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
-  ClothoidCurve::curvatureMinMax( valueType & kMin, valueType & kMax ) const {
+  real_type
+  ClothoidCurve::curvatureMinMax( real_type & kMin, real_type & kMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk ;
     kMin = CD.kappa0 ;
@@ -131,56 +131,56 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
+  real_type
   ClothoidCurve::curvatureTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk ;
-    valueType km = CD.kappa0 ;
-    valueType kp = CD.kappa(L) ;
+    real_type km = CD.kappa0 ;
+    real_type kp = CD.kappa(L) ;
     return std::abs(kp-km) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
+  real_type
   ClothoidCurve::integralCurvature2() const {
     return L*( CD.kappa0*(CD.kappa0+L*CD.dk) + (L*L)*CD.dk*CD.dk/3 ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
+  real_type
   ClothoidCurve::integralJerk2() const {
-    valueType k2 = CD.kappa0*CD.kappa0 ;
-    valueType k3 = CD.kappa0*k2 ;
-    valueType k4 = k2*k2 ;
-    valueType t1 = L ;
-    valueType t2 = L*t1 ;
-    valueType t3 = L*t2 ;
-    valueType t4 = L*t3 ;
+    real_type k2 = CD.kappa0*CD.kappa0 ;
+    real_type k3 = CD.kappa0*k2 ;
+    real_type k4 = k2*k2 ;
+    real_type t1 = L ;
+    real_type t2 = L*t1 ;
+    real_type t3 = L*t2 ;
+    real_type t4 = L*t3 ;
     return ((((t4/5*CD.dk+t3*CD.kappa0)*CD.dk+(1+2*t2)*k2)*CD.dk+2*t1*k3)*CD.dk+k4)*L ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  valueType
+  real_type
   ClothoidCurve::integralSnap2() const {
-    valueType k2  = CD.kappa0*CD.kappa0 ;
-    valueType k3  = CD.kappa0*k2 ;
-    valueType k4  = k2*k2 ;
-    valueType k5  = k4*CD.kappa0 ;
-    valueType k6  = k4*k2 ;
-    valueType dk2 = CD.dk*CD.dk ;
-    valueType dk3 = CD.dk*dk2 ;
-    valueType dk4 = dk2*dk2 ;
-    valueType dk5 = dk4*CD.dk ;
-    valueType dk6 = dk4*dk2 ;
-    valueType t2  = L ;
-    valueType t3  = L*t2 ;
-    valueType t4  = L*t3 ;
-    valueType t5  = L*t4 ;
-    valueType t6  = L*t5 ;
-    valueType t7  = L*t6 ;
+    real_type k2  = CD.kappa0*CD.kappa0 ;
+    real_type k3  = CD.kappa0*k2 ;
+    real_type k4  = k2*k2 ;
+    real_type k5  = k4*CD.kappa0 ;
+    real_type k6  = k4*k2 ;
+    real_type dk2 = CD.dk*CD.dk ;
+    real_type dk3 = CD.dk*dk2 ;
+    real_type dk4 = dk2*dk2 ;
+    real_type dk5 = dk4*CD.dk ;
+    real_type dk6 = dk4*dk2 ;
+    real_type t2  = L ;
+    real_type t3  = L*t2 ;
+    real_type t4  = L*t3 ;
+    real_type t5  = L*t4 ;
+    real_type t6  = L*t5 ;
+    real_type t7  = L*t6 ;
 
     return ( (t7/7)*dk6 + dk5*CD.kappa0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
              5*dk2*k4*t3 + 3*dk3*t3 + 3*CD.dk*k5*t2 + 9*dk2*CD.kappa0*t2 +
@@ -191,16 +191,16 @@ namespace G2lib {
 
   void
   ClothoidCurve::bbSplit(
-    valueType        split_angle,
-    valueType        split_size,
-    valueType        split_offs,
+    real_type        split_angle,
+    real_type        split_size,
+    real_type        split_offs,
     vector<bbData> & bb,
     bool             reset_bb
   ) const {
 
     // step 0: controllo se curvatura passa per 0
-    valueType k_min = theta_D( 0 ) ;
-    valueType k_max = theta_D( L ) ;
+    real_type k_min = theta_D( 0 ) ;
+    real_type k_max = theta_D( L ) ;
 
     if ( reset_bb ) bb.clear() ;
 
@@ -213,7 +213,7 @@ namespace G2lib {
 
     if ( k_min * k_max < 0 ) {
       // risolvo (s-s_min)*dk+k_min = 0 --> s = s_min-k_min/dk
-      valueType s_med = -k_min/CD.dk ;
+      real_type s_med = -k_min/CD.dk ;
       data.L  = s_med ;
       bbSplit_internal( data, bb ) ;
       // trim
@@ -232,8 +232,8 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   static
-  valueType
-  abs2pi( valueType a ) {
+  real_type
+  abs2pi( real_type a ) {
     a = std::abs(a) ;
     while ( a > m_pi ) a -= m_2pi ;
     return std::abs(a) ;
@@ -247,21 +247,21 @@ namespace G2lib {
     vector<bbData> & bbV
   ) const {
 
-    valueType theta_min, kappa_min, x_min, y_min,
+    real_type theta_min, kappa_min, x_min, y_min,
               theta_max, kappa_max, x_max, y_max ;
 
     data.cd.eval( 0,      theta_min, kappa_min, x_min, y_min ) ;
     data.cd.eval( data.L, theta_max, kappa_max, x_max, y_max ) ;
 
-    valueType dtheta = std::abs( theta_max - theta_min ) ;
-    valueType dx     = x_max - x_min ;
-    valueType dy     = y_max - y_min ;
-    valueType len    = hypot( dy, dx ) ;
-    valueType dangle = abs2pi(atan2( dy, dx )-theta_min) ;
+    real_type dtheta = std::abs( theta_max - theta_min ) ;
+    real_type dx     = x_max - x_min ;
+    real_type dy     = y_max - y_min ;
+    real_type len    = hypot( dy, dx ) ;
+    real_type dangle = abs2pi(atan2( dy, dx )-theta_min) ;
     if ( dtheta          <= data.split_angle &&
          len*tan(dangle) <= data.split_size ) {
       bbData bb ;
-      valueType p0[2], p1[2], p2[2] ;
+      real_type p0[2], p1[2], p2[2] ;
       bool ok = data.cd.bbTriangle( data.L, data.split_offs, p0, p1, p2 ) ;
       G2LIB_ASSERT( ok, "ClothoidCurve::bbSplit_internal, bad bounding box" ) ;
       bb.t.setup( p0, p1, p2 ) ;
@@ -271,7 +271,7 @@ namespace G2lib {
       bbV.push_back(bb) ;
     } else {
       bbData2 d ;
-      valueType Lh = data.L / 2 ;
+      real_type Lh = data.L / 2 ;
       d.split_angle = data.split_angle ;
       d.split_size  = data.split_size ;
       d.split_offs  = data.split_offs ;
@@ -294,28 +294,28 @@ namespace G2lib {
 
   bool
   ClothoidCurve::intersect_internal( bbData const & c1,
-                                     valueType      c1_offs,
-                                     valueType    & s1,
+                                     real_type      c1_offs,
+                                     real_type    & s1,
                                      bbData const & c2,
-                                     valueType      c2_offs,
-                                     valueType    & s2,
-                                     indexType      max_iter,
-                                     valueType      tolerance ) const {
-    valueType angle1a = c1.cd.theta(0) ;
-    valueType angle1b = c1.cd.theta(c1.L) ;
-    valueType angle2a = c2.cd.theta(0) ;
-    valueType angle2b = c2.cd.theta(c2.L) ;
+                                     real_type      c2_offs,
+                                     real_type    & s2,
+                                     int_type       max_iter,
+                                     real_type      tolerance ) const {
+    real_type angle1a = c1.cd.theta(0) ;
+    real_type angle1b = c1.cd.theta(c1.L) ;
+    real_type angle2a = c2.cd.theta(0) ;
+    real_type angle2b = c2.cd.theta(c2.L) ;
     // cerca angoli migliori per partire
-    valueType dmax = abs2pi(angle1a-angle2a) ;
-    valueType dab  = abs2pi(angle1a-angle2b) ;
-    valueType dba  = abs2pi(angle1b-angle2a) ;
-    valueType dbb  = abs2pi(angle1b-angle2b) ;
+    real_type dmax = abs2pi(angle1a-angle2a) ;
+    real_type dab  = abs2pi(angle1a-angle2b) ;
+    real_type dba  = abs2pi(angle1b-angle2a) ;
+    real_type dbb  = abs2pi(angle1b-angle2b) ;
     s1 = s2 = 0 ;
     if ( dmax < dab ) { dmax = dab ; s2 = c2.L ; }
     if ( dmax < dba ) { dmax = dba ; s1 = 0 ; s2 = 0 ; }
     if ( dmax < dbb ) {              s1 = 0 ; s2 = c2.L ; }
-    for ( indexType i = 0 ; i < max_iter ; ++i ) {
-      valueType t1[2], t2[2], p1[2], p2[2] ;
+    for ( int_type i = 0 ; i < max_iter ; ++i ) {
+      real_type t1[2], t2[2], p1[2], p2[2] ;
       c1.cd.eval  ( s1, c1_offs, p1[0], p1[1] ) ;
       c1.cd.eval_D( s1, c1_offs, t1[0], t1[1] ) ;
       c2.cd.eval  ( s2, c2_offs, p2[0], p2[1] ) ;
@@ -328,9 +328,9 @@ namespace G2lib {
       //  / t1[0] -t2[0] \ / alpha \ = / p2[0] - p1[0] \
       //  \ t1[1] -t2[1] / \ beta  /   \ p2[1] - p1[1] /
       */
-      valueType det = t2[0]*t1[1]-t1[0]*t2[1] ;
-      valueType px  = p2[0]-p1[0] ;
-      valueType py  = p2[1]-p1[1] ;
+      real_type det = t2[0]*t1[1]-t1[0]*t2[1] ;
+      real_type px  = p2[0]-p1[0] ;
+      real_type py  = p2[1]-p1[1] ;
       s1 += (py*t2[0] - px*t2[1])/det ;
       s2 += (t1[0]*py - t1[1]*px)/det ;
       if ( s1 <= 0 || s1 >= c1.L ||
@@ -344,13 +344,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::intersect( valueType             offs,
+  ClothoidCurve::intersect( real_type             offs,
                             ClothoidCurve const & clot,
-                            valueType             clot_offs,
-                            vector<valueType>   & s1,
-                            vector<valueType>   & s2,
-                            indexType             max_iter,
-                            valueType             tolerance ) const {
+                            real_type             clot_offs,
+                            vector<real_type>   & s1,
+                            vector<real_type>   & s2,
+                            int_type              max_iter,
+                            real_type             tolerance ) const {
     vector<bbData> bbV0, bbV1 ;
     bbSplit( m_pi/50, L/3, offs, bbV0 ) ;
     clot.bbSplit( m_pi/50, clot.L/3, clot_offs, bbV1 ) ;
@@ -362,7 +362,7 @@ namespace G2lib {
         bbData const & bbj = bbV1[j] ;
         if ( bbi.t.overlap(bbj.t) ) {
           // uso newton per cercare intersezione
-          valueType tmp_s1, tmp_s2 ;
+          real_type tmp_s1, tmp_s2 ;
           bool ok = intersect_internal( bbi, offs,      tmp_s1,
                                         bbj, clot_offs, tmp_s2,
                                         max_iter, tolerance ) ;
@@ -379,11 +379,11 @@ namespace G2lib {
 
   // collision detection
   bool
-  ClothoidCurve::approximate_collision( valueType             offs,
+  ClothoidCurve::approximate_collision( real_type             offs,
                                         ClothoidCurve const & clot,
-                                        valueType             clot_offs,
-                                        valueType             max_angle,
-                                        valueType             max_size ) const {
+                                        real_type             clot_offs,
+                                        real_type             max_angle,
+                                        real_type             max_size ) const {
     vector<bbData> bbV0, bbV1 ;
     bbSplit( max_angle, max_size, offs, bbV0 ) ;
     clot.bbSplit( max_angle, max_size, clot_offs, bbV1 ) ;

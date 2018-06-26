@@ -41,41 +41,47 @@ namespace G2lib {
   \*/
   //! \brief Class to manage Triangle for BB of clothoid curve
 
-  template <typename T>
   class Triangle2D {
-    T p1[2], p2[2], p3[2] ;
+    real_type p1[2], p2[2], p3[2] ;
 
     void
-    maxmin3( T const & a, T const & b, T const & c, T & vmin, T & vmax) const ;
+    maxmin3( real_type   a,
+             real_type   b,
+             real_type   c,
+             real_type & vmin,
+             real_type & vmax) const ;
 
     class AABBTree {
-      int numChildren ;
-      T   xmin, ymin, xmax, ymax ;
+      int       numChildren ;
+      real_type xmin, ymin, xmax, ymax ;
       union {
-        Triangle2D<T> const * pTriangle;
-        AABBTree      const * pChildren[2];
+        Triangle2D const * pTriangle;
+        AABBTree   const * pChildren[2];
       } data ;
 
-      AABBTree( typename std::vector<Triangle2D<T> const *>::iterator & begin,
-                typename std::vector<Triangle2D<T> const *>::iterator & end ) ;
+      AABBTree( typename std::vector<Triangle2D const *>::iterator & begin,
+                typename std::vector<Triangle2D const *>::iterator & end ) ;
 
     public:
 
-      AABBTree( std::vector<Triangle2D<T> > & triangles );
-      AABBTree( Triangle2D<T> const & triangle );
-      AABBTree( AABBTree const * pTree, Triangle2D<T> const & triangle );
+      AABBTree( std::vector<Triangle2D > & triangles );
+      AABBTree( Triangle2D const & triangle );
+      AABBTree( AABBTree const * pTree, Triangle2D const & triangle );
       AABBTree( AABBTree const * pTreeL, AABBTree const * pTreeR );
 
       ~AABBTree();
 
       void
-      bbox( T & _xmin, T & _ymin, T & _xmax, T & _ymax ) const
+      bbox( real_type & _xmin,
+            real_type & _ymin,
+            real_type & _xmax,
+            real_type & _ymax ) const
       { _xmin = xmin ; _ymin = ymin ; _xmax = xmax ; _ymax = ymax ; }
 
-      bool overlap( Triangle2D<T> const & triangle ) const ;
+      bool overlap( Triangle2D const & triangle ) const ;
       bool overlap( AABBTree const * pTree ) const ;
 
-      Triangle2D<T> const & getTriangle() const {
+      Triangle2D const & getTriangle() const {
         G2LIB_ASSERT( numChildren == 0,
                       "Triangle2D::AABBTree::getTriangle() not a leaf" ) ;
         return *data.pTriangle ;
@@ -84,7 +90,7 @@ namespace G2lib {
 
   public:
 
-    Triangle2D( Triangle2D<T> const & t ) {
+    Triangle2D( Triangle2D const & t ) {
       p1[0] = t.p1[0] ; p1[1] = t.p1[1] ;
       p2[0] = t.p2[0] ; p2[1] = t.p2[1] ;
       p3[0] = t.p3[0] ; p3[1] = t.p3[1] ;
@@ -96,17 +102,17 @@ namespace G2lib {
       p3[0] = p3[1] = 0 ;
     }
 
-    Triangle2D( T x1, T y1,
-                T x2, T y2,
-                T x3, T y3 ) {
+    Triangle2D( real_type x1, real_type y1,
+                real_type x2, real_type y2,
+                real_type x3, real_type y3 ) {
       p1[0] = x1; p1[1] = y1;
       p2[0] = x2; p2[1] = y2;
       p3[0] = x3; p3[1] = y3;
     }
 
-    Triangle2D( T const _p1[2],
-                T const _p2[2],
-                T const _p3[2] ) {
+    Triangle2D( real_type const _p1[2],
+                real_type const _p2[2],
+                real_type const _p3[2] ) {
       p1[0] = _p1[0] ; p1[1] = _p1[1] ;
       p2[0] = _p2[0] ; p2[1] = _p2[1] ;
       p3[0] = _p3[0] ; p3[1] = _p3[1] ;
@@ -115,55 +121,70 @@ namespace G2lib {
     ~Triangle2D() {}
     
     void
-    setup( T const _p1[2],
-           T const _p2[2],
-           T const _p3[2] ) {
+    setup( real_type const _p1[2],
+           real_type const _p2[2],
+           real_type const _p3[2] ) {
       p1[0] = _p1[0] ; p1[1] = _p1[1] ;
       p2[0] = _p2[0] ; p2[1] = _p2[1] ;
       p3[0] = _p3[0] ; p3[1] = _p3[1] ;
     }
     
-    T x1() const { return p1[0] ; }
-    T y1() const { return p1[1] ; }
-    T x2() const { return p2[0] ; }
-    T y2() const { return p2[1] ; }
-    T x3() const { return p3[0] ; }
-    T y3() const { return p3[1] ; }
+    real_type x1() const { return p1[0] ; }
+    real_type y1() const { return p1[1] ; }
+
+    real_type x2() const { return p2[0] ; }
+    real_type y2() const { return p2[1] ; }
+
+    real_type x3() const { return p3[0] ; }
+    real_type y3() const { return p3[1] ; }
 
     void
-    bbox( T & xmin, T & ymin, T & xmax, T & ymax ) const {
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const {
       maxmin3( p1[0], p2[0], p3[0], xmin, xmax ) ;
       maxmin3( p1[1], p2[1], p3[1], ymin, ymax ) ;
     }
 
-    T baricenterX() const { return (p1[0]+p2[0]+p3[0])/3 ; }
-    T baricenterY() const { return (p1[1]+p2[1]+p3[1])/3 ; }
+    real_type baricenterX() const { return (p1[0]+p2[0]+p3[0])/3 ; }
+    real_type baricenterY() const { return (p1[1]+p2[1]+p3[1])/3 ; }
 
-    T const * P1() const { return p1 ; }
-    T const * P2() const { return p2 ; }
-    T const * P3() const { return p3 ; }
+    real_type const * P1() const { return p1 ; }
+    real_type const * P2() const { return p2 ; }
+    real_type const * P3() const { return p3 ; }
 
-    bool intersect( Triangle2D<T> const & ) const ;
-    bool overlap( Triangle2D<T> const & ) const ;
+    bool intersect( Triangle2D const & ) const ;
+    bool overlap( Triangle2D const & ) const ;
+
+    /*!
+    //  return +1 = CounterClockwise
+    //  return -1 = Clockwise
+    //  return  0 = flat
+    */
+    int_type
+    isCounterClockwise() const {
+      return G2lib::isCounterClockwise( p1, p2, p3 ) ;
+    }
+
+    /*!
+    //  return +1 = inside
+    //  return -1 = outside
+    //  return  0 = on the border
+    */
+    int_type
+    isInside( real_type x, real_type y ) const {
+      real_type const pt[2] = {x,y} ;
+      return isPointInTriangle( pt, p1, p2, p3 ) ;
+    }
+
+    void
+    distMinMax( real_type x,
+                real_type y,
+                real_type & dmin,
+                real_type & dmax ) const ;
 
   };
-  
-  // explicit instantiation declaration to suppress warnings
-  #ifdef G2LIB_USE_CXX11
-
-  #ifdef __GCC__
-  #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
-  #endif
-  #ifdef __clang__
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
-  #endif
-
-  extern template class Triangle2D<float> ;
-  extern template class Triangle2D<double> ;
-  
-  #endif
 
 }
 

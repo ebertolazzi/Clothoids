@@ -114,7 +114,7 @@ namespace G2lib {
 
       if ( do_new || cmd == "build" ) {
 
-        indexType kk = do_new ? 0 : 1 ;
+        int_type kk = do_new ? 0 : 1 ;
 
         if ( do_new ) {
           MEX_ASSERT( nlhs == 1, "CircleMexWrapper, expected 1 output, nlhs = " << nlhs  );
@@ -125,11 +125,11 @@ namespace G2lib {
         if ( nrhs == 6+kk ) {
 
           #define CMD "CircleMexWrapper(x0,y0,theta0,k0,L): "
-          valueType x0     = getScalarValue( prhs[1+kk], CMD "`x0` expected to be a real scalar" );
-          valueType y0     = getScalarValue( prhs[2+kk], CMD "`y0` expected to be a real scalar" );
-          valueType theta0 = getScalarValue( prhs[3+kk], CMD "`theta0` expected to be a real scalar" );
-          valueType k0     = getScalarValue( prhs[4+kk], CMD "`k0` expected to be a real scalar" );
-          valueType L      = getScalarValue( prhs[5+kk], CMD "`L` expected to be a real scalar" );
+          real_type x0     = getScalarValue( prhs[1+kk], CMD "`x0` expected to be a real scalar" );
+          real_type y0     = getScalarValue( prhs[2+kk], CMD "`y0` expected to be a real scalar" );
+          real_type theta0 = getScalarValue( prhs[3+kk], CMD "`theta0` expected to be a real scalar" );
+          real_type k0     = getScalarValue( prhs[4+kk], CMD "`k0` expected to be a real scalar" );
+          real_type L      = getScalarValue( prhs[5+kk], CMD "`L` expected to be a real scalar" );
 
           ptr->build( x0, y0, theta0, k0, L );
           #undef CMD
@@ -146,13 +146,13 @@ namespace G2lib {
 
         MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output, nlhs = " << nlhs );
 
-        valueType x0(0), y0(0), x1(0), y1(0), theta0(0);
+        real_type x0(0), y0(0), x1(0), y1(0), theta0(0);
         if ( nrhs == 5 ) {
 
           #define CMD "CircleMexWrapper('build_G1',OBJ,p0,theta0,p1): "
-          valueType const * p0 = getVectorPointer( arg_in_2, size0, CMD "`p0` expected to be a real vector" );
+          real_type const * p0 = getVectorPointer( arg_in_2, size0, CMD "`p0` expected to be a real vector" );
           theta0 = getScalarValue( arg_in_3, CMD "`theta0` expected to be a real vector" );
-          valueType const * p1 = getVectorPointer( arg_in_4, size1, CMD "`p1` expected to be a real vector" );
+          real_type const * p1 = getVectorPointer( arg_in_4, size1, CMD "`p1` expected to be a real vector" );
 
           MEX_ASSERT( size0 == 2 && size1 == 2,
                       CMD "bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
@@ -186,13 +186,13 @@ namespace G2lib {
 
         MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output, nlhs = " << nlhs  );
 
-        valueType x0(0), y0(0), x1(0), y1(0), x2(0), y2(0);
+        real_type x0(0), y0(0), x1(0), y1(0), x2(0), y2(0);
         if ( nrhs == 5 ) {
 
           #define CMD "CircleMexWrapper('build_G1',OBJ,p0,p1,p2): "
-          valueType const * p0 = getVectorPointer( arg_in_2, size0, CMD "`p0` expected to be a real vector" );
-          valueType const * p1 = getVectorPointer( arg_in_3, size1, CMD "`p1` expected to be a real vector" );
-          valueType const * p2 = getVectorPointer( arg_in_4, size2, CMD "`p2` expected to be a real vector" );
+          real_type const * p0 = getVectorPointer( arg_in_2, size0, CMD "`p0` expected to be a real vector" );
+          real_type const * p1 = getVectorPointer( arg_in_3, size1, CMD "`p1` expected to be a real vector" );
+          real_type const * p2 = getVectorPointer( arg_in_4, size2, CMD "`p2` expected to be a real vector" );
 
           MEX_ASSERT( size0 == 2 && size1 == 2 && size2 == 2,
                       CMD "bad dimension size(p0) = " << size0 <<
@@ -236,8 +236,8 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
-        valueType new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
+        real_type new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
+        real_type new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
 
         ptr->changeOrigin( new_x0, new_y0 );
         #undef CMD
@@ -248,8 +248,8 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
-        valueType ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
+        real_type tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
+        real_type ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
 
         ptr->translate( tx, ty );
         #undef CMD
@@ -259,8 +259,8 @@ namespace G2lib {
         #define CMD "CircleMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
 
-        valueType s0 = getScalarValue(arg_in_2,CMD "Error in reading s0") ;
-        valueType L  = getScalarValue(arg_in_3,CMD "Error in reading L") ;
+        real_type s0 = getScalarValue(arg_in_2,CMD "Error in reading s0") ;
+        real_type L  = getScalarValue(arg_in_3,CMD "Error in reading L") ;
         ptr->changeCurvilinearOrigin(s0,L);
         #undef CMD
 
@@ -270,9 +270,9 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
-        valueType cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
-        valueType cy    = getScalarValue( arg_in_4, CMD "`cy` expected to be a real scalar" );
+        real_type angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
+        real_type cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
+        real_type cy    = getScalarValue( arg_in_4, CMD "`cy` expected to be a real scalar" );
 
         ptr->rotate( angle, cx, cy );
         #undef CMD
@@ -283,7 +283,7 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType sc = getScalarValue( arg_in_2, CMD "`scale` expected to be a real scalar" );
+        real_type sc = getScalarValue( arg_in_2, CMD "`scale` expected to be a real scalar" );
         ptr->scale( sc );
         #undef CMD
 
@@ -301,8 +301,8 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
-        valueType s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
+        real_type s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
+        real_type s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
 
         ptr->trim( s_begin, s_end );
         #undef CMD
@@ -313,7 +313,7 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
-        valueType s = getScalarValue( arg_in_2, CMD "`s` expected to be a real scalar" );
+        real_type s = getScalarValue( arg_in_2, CMD "`s` expected to be a real scalar" );
         setScalarValue( arg_out_0, ptr->theta( s ) ) ;
         #undef CMD
 
@@ -324,17 +324,17 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           if ( nlhs > 1 ) {
-            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
             for ( mwSize i = 0 ; i < size ; ++i )
               *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
           } else {
@@ -364,7 +364,7 @@ namespace G2lib {
 
         #define CMD "CircleMexWrapper('to_nurbs',OBJ): "
 
-        indexType npts = ptr->toNURBS( nullptr, nullptr, true );
+        int_type npts = ptr->toNURBS( nullptr, nullptr, true );
 
         mxArray * mx_knots, * mx_Poly ;
         double * knots = createMatrixValue( mx_knots, 1, npts+3 );

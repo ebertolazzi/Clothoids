@@ -79,9 +79,9 @@ namespace G2lib {
       ClothoidCurve * c1 = DATA_GET(arg_clot1);
       ClothoidCurve * c2 = DATA_GET(arg_clot2);
 
-      std::vector<valueType> s1, s2 ;
-      indexType max_iter  = 10 ;
-      valueType tolerance = 1e-8 ;
+      std::vector<real_type> s1, s2 ;
+      int_type max_iter  = 10 ;
+      real_type tolerance = 1e-8 ;
 
       try {
         c1->intersect( *c2, s1, s2, max_iter, tolerance ) ;

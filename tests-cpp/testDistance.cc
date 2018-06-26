@@ -3,27 +3,27 @@
 #include <cmath>
 #include <iostream>
 
-using G2lib::valueType ;
+using G2lib::real_type ;
 
 int
 main() {
 
   G2lib::ClothoidCurve C ;
-  valueType x0     = 0 ;
-  valueType y0     = 2 ;
-  valueType theta0 = 0 ;
-  valueType kappa0 = 10 ;
-  valueType dk     = -1 ;// 0 ;
-  valueType L      = 10 ;
+  real_type x0     = 0 ;
+  real_type y0     = 2 ;
+  real_type theta0 = 0 ;
+  real_type kappa0 = 10 ;
+  real_type dk     = -1 ;// 0 ;
+  real_type L      = 10 ;
   C.build( x0, y0, theta0, kappa0, dk, L ) ;
 
-  //valueType x = -2.75 ;
-  //valueType y = -3.2000000000000001776 ;
-  valueType x = 10 ;
-  valueType y = 15 ;
-  valueType X, Y, S ;
+  //real_type x = -2.75 ;
+  //real_type y = -3.2000000000000001776 ;
+  real_type x = 10 ;
+  real_type y = 15 ;
+  real_type X, Y, S ;
 
-  valueType d = C.closestPoint( x, y, X, Y, S );
+  real_type d = C.closestPoint( x, y, X, Y, S );
 
   std::cout << "\nd = " << d
             << "\nX = " << X

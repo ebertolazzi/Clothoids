@@ -104,8 +104,8 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs ) ;
 
         mwSize nx, ny;
-        valueType const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" );
-        valueType const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" );
+        real_type const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" );
+        real_type const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" );
 
         MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " must be equal to size(y) = " << ny ) ;
 
@@ -125,8 +125,8 @@ namespace G2lib {
 
         if ( obj == "P1" ) {
           MEX_ASSERT( nrhs == 5, CMD "expected at 5 inputs, nrhs = " << nrhs ) ;
-          valueType theta0 = getScalarValue( arg_in_3, CMD "Error in reading theta0" ) ;
-          valueType theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" ) ;
+          real_type theta0 = getScalarValue( arg_in_3, CMD "Error in reading theta0" ) ;
+          real_type theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" ) ;
           ptr->setP1( theta0, theta1 );
         } else {
           MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs ) ;
@@ -151,11 +151,11 @@ namespace G2lib {
         MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
         MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = " << nlhs ) ;
 
-        indexType N = ptr->numPnts() ;
+        int_type N = ptr->numPnts() ;
 
-        valueType * theta_guess = createMatrixValue( arg_out_0, N, 1 );
-        valueType * theta_min   = createMatrixValue( arg_out_1, N, 1 );
-        valueType * theta_max   = createMatrixValue( arg_out_2, N, 1 );
+        real_type * theta_guess = createMatrixValue( arg_out_0, N, 1 );
+        real_type * theta_min   = createMatrixValue( arg_out_1, N, 1 );
+        real_type * theta_max   = createMatrixValue( arg_out_2, N, 1 );
 
         ptr->guess( theta_guess, theta_min, theta_max );
 
@@ -169,10 +169,10 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs ) ;
 
         mwSize ntheta;
-        valueType const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+        real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
         MEX_ASSERT( ntheta == ptr->numPnts(),
                     CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() ) ;
-        valueType f ;
+        real_type f ;
         bool ok = ptr->objective( theta, f );
         if ( ok ) setScalarValue( arg_out_0, f );
 
@@ -186,7 +186,7 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs ) ;
 
         mwSize ntheta;
-        valueType const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+        real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
         MEX_ASSERT( ntheta == ptr->numPnts(),
                     CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() ) ;
         double * g = createMatrixValue( arg_out_0, ntheta, 1 );
@@ -203,7 +203,7 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs ) ;
 
         mwSize ntheta;
-        valueType const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+        real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
         MEX_ASSERT( ntheta == ptr->numPnts(),
                     CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() ) ;
         double * c = createMatrixValue( arg_out_0, ptr->numConstraints(), 1 );
@@ -220,19 +220,19 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs ) ;
 
         mwSize ntheta;
-        valueType const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+        real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
         MEX_ASSERT( ntheta == ptr->numPnts(),
                     CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() ) ;
 
-        indexType n   = ptr->numConstraints();
-        indexType m   = ptr->numTheta();
-        indexType nnz = ptr->jacobian_nnz();
+        int_type n   = ptr->numConstraints();
+        int_type m   = ptr->numTheta();
+        int_type nnz = ptr->jacobian_nnz();
 
         mxArray *args[5] ;
 
-        valueType * I = createMatrixValue( args[0], 1, nnz ) ;
-        valueType * J = createMatrixValue( args[1], 1, nnz ) ;
-        valueType * V = createMatrixValue( args[2], 1, nnz ) ;
+        real_type * I = createMatrixValue( args[0], 1, nnz ) ;
+        real_type * J = createMatrixValue( args[1], 1, nnz ) ;
+        real_type * V = createMatrixValue( args[2], 1, nnz ) ;
         setScalarValue( args[3], n ) ;
         setScalarValue( args[4], m ) ;
 
@@ -251,15 +251,15 @@ namespace G2lib {
         MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
         MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs ) ;
 
-        indexType n   = ptr->numConstraints();
-        indexType m   = ptr->numTheta();
-        indexType nnz = ptr->jacobian_nnz();
+        int_type n   = ptr->numConstraints();
+        int_type m   = ptr->numTheta();
+        int_type nnz = ptr->jacobian_nnz();
 
         mxArray *args[5] ;
 
-        valueType * I = createMatrixValue( args[0], 1, nnz ) ;
-        valueType * J = createMatrixValue( args[1], 1, nnz ) ;
-        valueType * V = createMatrixValue( args[2], 1, nnz ) ;
+        real_type * I = createMatrixValue( args[0], 1, nnz ) ;
+        real_type * J = createMatrixValue( args[1], 1, nnz ) ;
+        real_type * V = createMatrixValue( args[2], 1, nnz ) ;
         setScalarValue( args[3], n ) ;
         setScalarValue( args[4], m ) ;
 
@@ -278,8 +278,8 @@ namespace G2lib {
         MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
         MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs ) ;
 
-        indexType m = ptr->numTheta();
-        indexType n = ptr->numConstraints();
+        int_type m = ptr->numTheta();
+        int_type n = ptr->numConstraints();
 
         setScalarInt( arg_out_0, m ) ;
         setScalarInt( arg_out_1, n ) ;

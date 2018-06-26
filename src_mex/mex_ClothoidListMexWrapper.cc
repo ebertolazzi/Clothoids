@@ -142,17 +142,17 @@ namespace G2lib {
         #define CMD "ClothoidListMexWrapper('push_back',OBJ,CLOT|[kappa0,dkappa,L]|[x0,y0,theta0,kappa0,dkappa,L]): "
 
         if ( nrhs == 8 ) {
-          valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
-          valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
-          valueType theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
-          valueType kappa0 = getScalarValue( arg_in_5, CMD "Error in reading kappa0" ) ;
-          valueType dkappa = getScalarValue( arg_in_6, CMD "Error in reading dkappa" ) ;
-          valueType L      = getScalarValue( arg_in_7, CMD "Error in reading L" ) ;
+          real_type x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+          real_type y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+          real_type theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
+          real_type kappa0 = getScalarValue( arg_in_5, CMD "Error in reading kappa0" ) ;
+          real_type dkappa = getScalarValue( arg_in_6, CMD "Error in reading dkappa" ) ;
+          real_type L      = getScalarValue( arg_in_7, CMD "Error in reading L" ) ;
           ptr->push_back( x0, y0, theta0, kappa0, dkappa, L );
         } else if ( nrhs == 5 ) {
-          valueType kappa0 = getScalarValue( arg_in_2, CMD "Error in reading kappa0" ) ;
-          valueType dkappa = getScalarValue( arg_in_3, CMD "Error in reading dkappa" ) ;
-          valueType L      = getScalarValue( arg_in_4, CMD "Error in reading L" ) ;
+          real_type kappa0 = getScalarValue( arg_in_2, CMD "Error in reading kappa0" ) ;
+          real_type dkappa = getScalarValue( arg_in_3, CMD "Error in reading dkappa" ) ;
+          real_type L      = getScalarValue( arg_in_4, CMD "Error in reading L" ) ;
           ptr->push_back( kappa0, dkappa, L );
         } else if ( nrhs == 3 ) {
           ClothoidCurve * cc = convertMat2Ptr<ClothoidCurve>(arg_in_2);
@@ -168,17 +168,17 @@ namespace G2lib {
         #define CMD "ClothoidListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[CLOT]): "
 
         if ( nrhs == 8 ) {
-          valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
-          valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
-          valueType theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
-          valueType x1     = getScalarValue( arg_in_5, CMD "Error in reading x1" ) ;
-          valueType y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
-          valueType theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
+          real_type x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+          real_type y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+          real_type theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
+          real_type x1     = getScalarValue( arg_in_5, CMD "Error in reading x1" ) ;
+          real_type y1     = getScalarValue( arg_in_6, CMD "Error in reading y1" ) ;
+          real_type theta1 = getScalarValue( arg_in_7, CMD "Error in reading theta1" ) ;
           ptr->push_back_G1( x0, y0, theta0, x1, y1, theta1 );
         } else if ( nrhs == 5 ) {
-          valueType x1     = getScalarValue( arg_in_2, CMD "Error in reading x1" ) ;
-          valueType y1     = getScalarValue( arg_in_3, CMD "Error in reading y1" ) ;
-          valueType theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" ) ;
+          real_type x1     = getScalarValue( arg_in_2, CMD "Error in reading x1" ) ;
+          real_type y1     = getScalarValue( arg_in_3, CMD "Error in reading y1" ) ;
+          real_type theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" ) ;
           ptr->push_back_G1( x1, y1, theta1 );
         } else {
           MEX_ASSERT( false, CMD "expected 5 or 8 inputs, nrhs = " << nrhs ) ;
@@ -281,7 +281,7 @@ namespace G2lib {
         MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
         MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = " << nlhs ) ;
 
-        indexType n = ptr->numSegment();
+        int_type n = ptr->numSegment();
 
         double * s     = createMatrixValue( arg_out_0, 1, n+1 );
         double * theta = createMatrixValue( arg_out_1, 1, n+1 );
@@ -298,7 +298,7 @@ namespace G2lib {
         MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
         MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs ) ;
 
-        indexType n = ptr->numSegment();
+        int_type n = ptr->numSegment();
         double * x = createMatrixValue( arg_out_0, 1, n+1 );
         double * y = createMatrixValue( arg_out_1, 1, n+1 );
 
@@ -313,17 +313,17 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           if ( nlhs > 1 ) {
-            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
             for ( mwSize i = 0 ; i < size ; ++i )
               *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
           } else {
@@ -341,16 +341,16 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          valueType * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
-          valueType * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
-          valueType * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
-          valueType * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           for ( mwSize i = 0 ; i < size ; ++i )
@@ -408,9 +408,9 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
 
-        valueType angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
-        valueType cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
-        valueType cy    = getScalarValue( arg_in_4, CMD "Error in reading cy" ) ;
+        real_type angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
+        real_type cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
+        real_type cy    = getScalarValue( arg_in_4, CMD "Error in reading cy" ) ;
         ptr->rotate( angle, cx, cy );
 
         #undef CMD
@@ -420,8 +420,8 @@ namespace G2lib {
         #define CMD "ClothoidListMexWrapper('translate',OBJ,tx,ty): "
 
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
-        valueType tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
-        valueType ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
+        real_type tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
+        real_type ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
         ptr->translate( tx, ty );
 
         #undef CMD
@@ -431,8 +431,8 @@ namespace G2lib {
         #define CMD "ClothoidListMexWrapper('changeOrigin',OBJ,newX0,newY0): "
 
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
-        valueType newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
-        valueType newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
+        real_type newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
+        real_type newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
         ptr->changeOrigin( newX0, newY0 );
 
         #undef CMD
@@ -442,7 +442,7 @@ namespace G2lib {
         #define CMD "ClothoidListMexWrapper('scale',OBJ,s): "
 
         MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-        valueType s = getScalarValue( arg_in_2, CMD "Error in reading s" ) ;
+        real_type s = getScalarValue( arg_in_2, CMD "Error in reading s" ) ;
         ptr->scale( s );
 
         #undef CMD
@@ -463,9 +463,9 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlsh = " << nlhs );
 
-        valueType max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" ) ;
-        valueType max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" ) ;
-        valueType offs      = 0 ;
+        real_type max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" ) ;
+        real_type max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" ) ;
+        real_type offs      = 0 ;
         if ( nrhs == 5 ) offs = getScalarValue( arg_in_4, CMD "Error in reading offs" ) ;
 
         vector<ClothoidCurve::bbData> bb ;
@@ -474,7 +474,7 @@ namespace G2lib {
         plhs[0] = mxCreateDoubleMatrix(6, bb.size(), mxREAL);
         double * pT = mxGetPr(plhs[0]);
         for ( int i = 0 ; i < bb.size() ; ++i ) {
-          T2D const & t = bb[i].t ;
+          Triangle2D const & t = bb[i].t ;
           *pT++ = t.x1() ; *pT++ = t.y1() ;
           *pT++ = t.x2() ; *pT++ = t.y2() ;
           *pT++ = t.x3() ; *pT++ = t.y3() ;
@@ -522,14 +522,14 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
 
-        valueType x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
-        valueType y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
-        valueType theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
-        valueType kappa0 = getScalarValue( arg_in_5, CMD "Error in reading kappa0" ) ;
-        valueType x1     = getScalarValue( arg_in_6, CMD "Error in reading x1" ) ;
-        valueType y1     = getScalarValue( arg_in_7, CMD "Error in reading y1" ) ;
-        valueType theta1 = getScalarValue( arg_in_8, CMD "Error in reading theta1" ) ;
-        valueType kappa1 = getScalarValue( arg_in_9, CMD "Error in reading kappa1" ) ;
+        real_type x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+        real_type y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+        real_type theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
+        real_type kappa0 = getScalarValue( arg_in_5, CMD "Error in reading kappa0" ) ;
+        real_type x1     = getScalarValue( arg_in_6, CMD "Error in reading x1" ) ;
+        real_type y1     = getScalarValue( arg_in_7, CMD "Error in reading y1" ) ;
+        real_type theta1 = getScalarValue( arg_in_8, CMD "Error in reading theta1" ) ;
+        real_type kappa1 = getScalarValue( arg_in_9, CMD "Error in reading kappa1" ) ;
 
         int iter ;
         if ( cmd == "build_3arcG2" ) {
@@ -580,8 +580,8 @@ namespace G2lib {
 
         if ( nrhs == 4 ) {
           mwSize nx, ny ;
-          valueType const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
-          valueType const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
+          real_type const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
+          real_type const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
 
           MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny ) ;
 
@@ -590,9 +590,9 @@ namespace G2lib {
         } else if ( nrhs == 5 ) {
 
           mwSize nx, ny, nt ;
-          valueType const * x     = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
-          valueType const * y     = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
-          valueType const * theta = getVectorPointer( arg_in_4, nt, CMD "Error in reading theta" ) ;
+          real_type const * x     = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
+          real_type const * y     = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
+          real_type const * theta = getVectorPointer( arg_in_4, nt, CMD "Error in reading theta" ) ;
 
           MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny ) ;
           MEX_ASSERT( nx == nt, CMD "length(theta) = " << nt << " != length(x) = length(y) = " << ny ) ;
@@ -617,12 +617,12 @@ namespace G2lib {
         bool ok = true ;
 
         mwSize nx, ny ;
-        valueType const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
-        valueType const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
+        real_type const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" ) ;
+        real_type const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" ) ;
 
         MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny ) ;
 
-        valueType * theta = createMatrixValue( arg_out_0, nx, 1 ) ;
+        real_type * theta = createMatrixValue( arg_out_0, nx, 1 ) ;
 
         ok = ptr->build_theta( nx, x, y, theta ) ;
 
@@ -637,9 +637,9 @@ namespace G2lib {
         MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs) ;
         MEX_ASSERT(nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs) ;
 
-        indexType nseg = ptr->numSegment() ;
+        int_type nseg = ptr->numSegment() ;
 
-        valueType * dtheta = createMatrixValue( arg_out_0, nseg, 1 ) ;
+        real_type * dtheta = createMatrixValue( arg_out_0, nseg, 1 ) ;
         ptr->getDeltaTheta( dtheta ) ;
 
         #undef CMD
@@ -651,9 +651,9 @@ namespace G2lib {
         MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs) ;
         MEX_ASSERT(nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs) ;
 
-        indexType nseg = ptr->numSegment() ;
+        int_type nseg = ptr->numSegment() ;
 
-        valueType * dkappa = createMatrixValue( arg_out_0, nseg, 1 ) ;
+        real_type * dkappa = createMatrixValue( arg_out_0, nseg, 1 ) ;
         ptr->getDeltaKappa( dkappa ) ;
 
         #undef CMD

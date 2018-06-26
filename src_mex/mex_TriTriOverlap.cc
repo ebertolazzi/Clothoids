@@ -76,17 +76,17 @@ namespace G2lib {
         }
       }
 
-      valueType const * p0 = mxGetPr(arg_p0) ;
-      valueType const * p1 = mxGetPr(arg_p1) ;
-      valueType const * p2 = mxGetPr(arg_p2) ;
+      real_type const * p0 = mxGetPr(arg_p0) ;
+      real_type const * p1 = mxGetPr(arg_p1) ;
+      real_type const * p2 = mxGetPr(arg_p2) ;
 
-      valueType const * q0 = mxGetPr(arg_q0) ;
-      valueType const * q1 = mxGetPr(arg_q1) ;
-      valueType const * q2 = mxGetPr(arg_q2) ;
+      real_type const * q0 = mxGetPr(arg_q0) ;
+      real_type const * q1 = mxGetPr(arg_q1) ;
+      real_type const * q2 = mxGetPr(arg_q2) ;
 
       // costruisco bb
-      Triangle2D<valueType> T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ) ;
-      Triangle2D<valueType> T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1] ) ;
+      Triangle2D T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ) ;
+      Triangle2D T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1] ) ;
 
       if ( nlhs == 1 ) {
         bool over = T1.overlap(T2) ;

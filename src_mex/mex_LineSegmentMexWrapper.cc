@@ -109,17 +109,17 @@ namespace G2lib {
 
       if ( do_new || cmd == "build" ) {
 
-        indexType kk = do_new ? 0 : 1 ;
+        int_type kk = do_new ? 0 : 1 ;
 
         #define BUILD "LineSegmentMexWrapper('build',OBJ,x0,y0,theta0,L): "
         MEX_ASSERT( nlhs == 1, BUILD "expected 1 output, nlhs = " << nlhs  );
 
         if ( nrhs == 5+kk ) {
 
-          valueType x0     = getScalarValue( prhs[1+kk], BUILD "`x0` expected to be a real scalar" );
-          valueType y0     = getScalarValue( prhs[2+kk], BUILD "`y0` expected to be a real scalar" );
-          valueType theta0 = getScalarValue( prhs[3+kk], BUILD "`theta0` expected to be a real scalar" );
-          valueType L      = getScalarValue( prhs[4+kk], BUILD "`L` expected to be a real scalar" );
+          real_type x0     = getScalarValue( prhs[1+kk], BUILD "`x0` expected to be a real scalar" );
+          real_type y0     = getScalarValue( prhs[2+kk], BUILD "`y0` expected to be a real scalar" );
+          real_type theta0 = getScalarValue( prhs[3+kk], BUILD "`theta0` expected to be a real scalar" );
+          real_type L      = getScalarValue( prhs[4+kk], BUILD "`L` expected to be a real scalar" );
 
           ptr->build( x0, y0, theta0, L );
 
@@ -127,8 +127,8 @@ namespace G2lib {
 
           #undef BUILD
           #define BUILD "LineSegmentMexWrapper('build',OBJ,p0,p1): "
-          valueType const * p0 = getVectorPointer( prhs[1+kk], size0, BUILD "`p0` expected to be a real vector" );
-          valueType const * p1 = getVectorPointer( prhs[2+kk], size1, BUILD "`p1` expected to be a real vector" );
+          real_type const * p0 = getVectorPointer( prhs[1+kk], size0, BUILD "`p0` expected to be a real vector" );
+          real_type const * p1 = getVectorPointer( prhs[2+kk], size1, BUILD "`p1` expected to be a real vector" );
 
           MEX_ASSERT( size0 == 2 && size1 == 2,
                       BUILD "bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
@@ -159,8 +159,8 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
-        valueType new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
+        real_type new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
+        real_type new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
 
         ptr->changeOrigin( new_x0, new_y0 );
         #undef CMD
@@ -171,8 +171,8 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
-        valueType ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
+        real_type tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
+        real_type ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
 
         ptr->translate( tx, ty );
         #undef CMD
@@ -183,9 +183,9 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
-        valueType cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
-        valueType cy    = getScalarValue( arg_in_4, CMD "`cy` expected to be a real scalar" );
+        real_type angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
+        real_type cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
+        real_type cy    = getScalarValue( arg_in_4, CMD "`cy` expected to be a real scalar" );
 
         ptr->rotate( angle, cx, cy );
         #undef CMD
@@ -204,8 +204,8 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-        valueType s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
-        valueType s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
+        real_type s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
+        real_type s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
 
         ptr->trim( s_begin, s_end );
         #undef CMD
@@ -217,17 +217,17 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           if ( nlhs > 1 ) {
-            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
             for ( mwSize i = 0 ; i < size ; ++i )
               *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
           } else {
@@ -240,8 +240,8 @@ namespace G2lib {
 
       } else if ( cmd == "to_nurbs" ) {
 
-        valueType knots[12], Poly[9][3] ;
-        indexType npts = ptr->toNURBS( knots, Poly ); // npt + 2
+        real_type knots[12], Poly[9][3] ;
+        int_type  npts = ptr->toNURBS( knots, Poly ); // npt + 2
 
         static char const * fieldnames[] = { "form", "order", "dim", "number", "knots", "coefs" } ;
         arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);
@@ -256,10 +256,10 @@ namespace G2lib {
         mxSetFieldByNumber( arg_out_0, 0, 5, mx_Poly );
 
         double *kb = mxGetPr(mx_knots) ;
-        for ( indexType i = 0 ; i < npts+2 ; ++i ) *kb++ = knots[i] ;
+        for ( int_type i = 0 ; i < npts+2 ; ++i ) *kb++ = knots[i] ;
 
         double *pr = mxGetPr(mx_Poly) ;
-        for ( indexType i = 0 ; i < npts ; ++i ) {
+        for ( int_type i = 0 ; i < npts ; ++i ) {
           *pr++ = Poly[i][0] ;
           *pr++ = Poly[i][1] ;
           *pr++ = Poly[i][2] ;

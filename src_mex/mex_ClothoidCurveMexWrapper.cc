@@ -147,9 +147,9 @@ namespace G2lib {
           MEX_ASSERT( nlhs == 0, "ClothoidCurveMexWrapper, expected no output, nlhs = " << nlhs );
         }
 
-        indexType kk = do_new ? 0 : 1 ;
+        int_type kk = do_new ? 0 : 1 ;
 
-        valueType x0(0), y0(0), theta0(0), k0(0), dk(0), L(0);
+        real_type x0(0), y0(0), theta0(0), k0(0), dk(0), L(0);
 
         if ( do_new && nrhs == 1 ) {
           // nothing to do
@@ -204,7 +204,7 @@ namespace G2lib {
 
         MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs, nrhs = " << nrhs) ;
 
-        valueType x0(0), y0(0), theta0(0), x1(0), y1(0), theta1(0);
+        real_type x0(0), y0(0), theta0(0), x1(0), y1(0), theta1(0);
 
         x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
         y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
@@ -235,7 +235,7 @@ namespace G2lib {
 
         MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs, nrhs = " << nrhs) ;
 
-        valueType x0(0), y0(0), theta0(0), kappa0(0), x1(0), y1(0);
+        real_type x0(0), y0(0), theta0(0), kappa0(0), x1(0), y1(0);
 
         x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
         y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
@@ -335,17 +335,17 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           if ( nlhs > 1 ) {
-            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
             for ( mwSize i = 0 ; i < size ; ++i )
               *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
           } else {
@@ -362,19 +362,19 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
-          valueType ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
+          real_type ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
           MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
 
-          valueType * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           if ( nlhs > 1 ) {
-            valueType * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
             for ( mwSize i = 0 ; i < size ; ++i )
               *dst++ = ptr->distanceBySample( ds, *x++, *y++, *s++ ) ;
           } else {
@@ -392,16 +392,16 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          valueType * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
-          valueType * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
-          valueType * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
-          valueType * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           for ( mwSize i = 0 ; i < size ; ++i )
@@ -417,19 +417,19 @@ namespace G2lib {
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
           mwSize nrx, ncx, nry, ncy;
-          valueType const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          valueType const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
           MEX_ASSERT( nrx == nry && ncx == ncy,
                       CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                       nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          valueType ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
+          real_type ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
           MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
 
-          valueType * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
-          valueType * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
-          valueType * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
-          valueType * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
 
           mwSize size = nrx*ncx ;
           for ( mwSize i = 0 ; i < size ; ++i )
@@ -575,8 +575,8 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
 
-        valueType smin = getScalarValue(arg_in_2,CMD "Error in reading smin") ;
-        valueType smax = getScalarValue(arg_in_3,CMD "Error in reading smax") ;
+        real_type smin = getScalarValue(arg_in_2,CMD "Error in reading smin") ;
+        real_type smax = getScalarValue(arg_in_3,CMD "Error in reading smax") ;
 
         ptr->trim(smin, smax);
 
@@ -588,8 +588,8 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
 
-        valueType s0 = getScalarValue(arg_in_2,CMD "Error in reading s0") ;
-        valueType L  = getScalarValue(arg_in_3,CMD "Error in reading L") ;
+        real_type s0 = getScalarValue(arg_in_2,CMD "Error in reading s0") ;
+        real_type L  = getScalarValue(arg_in_3,CMD "Error in reading L") ;
         ptr->changeCurvilinearOrigin(s0,L);
 
         #undef CMD
@@ -600,9 +600,9 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs);
 
-        valueType angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
-        valueType cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
-        valueType cy    = getScalarValue( arg_in_4, CMD "Error in reading cy" ) ;
+        real_type angle = getScalarValue( arg_in_2, CMD "Error in reading angle" ) ;
+        real_type cx    = getScalarValue( arg_in_3, CMD "Error in reading cx" ) ;
+        real_type cy    = getScalarValue( arg_in_4, CMD "Error in reading cy" ) ;
         ptr->rotate(angle, cx, cy);
 
         #undef CMD
@@ -612,8 +612,8 @@ namespace G2lib {
         #define CMD "ClothoidCurveMexWrapper('translate',OBJ,tx,ty): "
 
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
-        valueType tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
-        valueType ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
+        real_type tx = getScalarValue( arg_in_2, CMD "Error in reading tx" ) ;
+        real_type ty = getScalarValue( arg_in_3, CMD "Error in reading ty" ) ;
         ptr->translate(tx, ty);
 
         #undef CMD
@@ -623,8 +623,8 @@ namespace G2lib {
         #define CMD "ClothoidCurveMexWrapper('changeOrigin',OBJ,newX0,newY0): "
 
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs);
-        valueType newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
-        valueType newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
+        real_type newX0 = getScalarValue( arg_in_2, CMD "Error in reading newX0" ) ;
+        real_type newY0 = getScalarValue( arg_in_3, CMD "Error in reading newY0" ) ;
         ptr->changeOrigin(newX0, newY0);
 
         #undef CMD
@@ -634,7 +634,7 @@ namespace G2lib {
         #define CMD "ClothoidCurveMexWrapper('scale',OBJ,s): "
 
         MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs);
-        valueType s = getScalarValue( arg_in_2, CMD "Error in reading s" ) ;
+        real_type s = getScalarValue( arg_in_2, CMD "Error in reading s" ) ;
         ptr->scale(s);
 
         #undef CMD
@@ -655,7 +655,7 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
         MEX_ASSERT(nlhs == 4, CMD "expected 4 output, nlhs = " << nlhs);
 
-        valueType xp, yp, xm, ym ;
+        real_type xp, yp, xm, ym ;
         ptr->Pinfinity( xp, yp, true );
         ptr->Pinfinity( xm, ym, false );
 
@@ -673,9 +673,9 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs, nrhs = " << nrhs);
         MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs);
 
-        valueType max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" ) ;
-        valueType max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" ) ;
-        valueType offs      = 0 ;
+        real_type max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" ) ;
+        real_type max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" ) ;
+        real_type offs      = 0 ;
         if ( nrhs == 5 ) offs = getScalarValue( arg_in_4, CMD "Error in reading offs" ) ;
 
         vector<ClothoidCurve::bbData> bb ;
@@ -684,7 +684,7 @@ namespace G2lib {
         plhs[0] = mxCreateDoubleMatrix(6, bb.size(), mxREAL);
         double * pT = mxGetPr(plhs[0]);
         for ( int i = 0 ; i < bb.size() ; ++i ) {
-          T2D const & t = bb[i].t ;
+          Triangle2D const & t = bb[i].t ;
           *pT++ = t.x1() ; *pT++ = t.y1() ;
           *pT++ = t.x2() ; *pT++ = t.y2() ;
           *pT++ = t.x3() ; *pT++ = t.y3() ;

@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-using G2lib::valueType ;
+using G2lib::real_type ;
 
 int
 main() {
@@ -12,24 +12,24 @@ main() {
   G2lib::G2solve3arc g2solve3arc ;
 
 #if 1
-  valueType x0  = -1 ;
-  valueType y0  =  0 ;
-  valueType th0 = -2 ;
-  valueType k0  = 0.909297426825682 ;
-  valueType x1  = 1 ;
-  valueType y1  = 0 ;
-  valueType th1 = 2 ;
-  valueType k1  = 0.909297426825682 ;
+  real_type x0  = -1 ;
+  real_type y0  =  0 ;
+  real_type th0 = -2 ;
+  real_type k0  = 0.909297426825682 ;
+  real_type x1  = 1 ;
+  real_type y1  = 0 ;
+  real_type th1 = 2 ;
+  real_type k1  = 0.909297426825682 ;
 #else
-  valueType x0  = -1 ;
-  valueType y0  = 0  ;
-  valueType th0 = m_pi*0.9;
-  valueType k0  = 0.2 + 1e-10 ;
+  real_type x0  = -1 ;
+  real_type y0  = 0  ;
+  real_type th0 = m_pi*0.9;
+  real_type k0  = 0.2 + 1e-10 ;
 
-  valueType x1  = 1 ;
-  valueType y1  = 0 ;
-  valueType th1 = -m_pi ;
-  valueType k1  = 0.2 + 0 ;
+  real_type x1  = 1 ;
+  real_type y1  = 0 ;
+  real_type th1 = -m_pi ;
+  real_type k1  = 0.2 + 0 ;
 #endif
 
   // test 3 archi

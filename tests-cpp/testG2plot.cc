@@ -21,7 +21,7 @@ void toc() {
 	tictoc_stack.pop();
 }
 
-using G2lib::valueType;
+using G2lib::real_type;
 
 int
 main() {
@@ -30,28 +30,28 @@ main() {
 	G2lib::G2solve2arc g2sol;
 	
   #if 1
-	valueType x0 = -2;
-	valueType y0 = 3;
-	valueType th0 = M_PI/3;
-	valueType k0 = 10.2;
-	valueType s0 = M_PI/2/10.2;
+	real_type x0 = -2;
+	real_type y0 = 3;
+	real_type th0 = M_PI/3;
+	real_type k0 = 10.2;
+	real_type s0 = M_PI/2/10.2;
 	s0 = 0.2;
-	valueType x1 = 3;
-	valueType y1 = 2;
-	valueType th1 = M_PI/10;
-	valueType k1 = -0.5;
-	//valueType s1 = 1;
+	real_type x1 = 3;
+	real_type y1 = 2;
+	real_type th1 = M_PI/10;
+	real_type k1 = -0.5;
+	//real_type s1 = 1;
 	#else
-	valueType x0  = -1;
-	valueType y0  = 0;
-	valueType th0 = M_PI / 2;
-	valueType k0  = -1;
-	valueType s0  = 0.2;
-	valueType x1  = 1;
-	valueType y1  = 0;
-	valueType th1 = -M_PI / 2;
-	valueType k1  = -1;
-	valueType s1  = 2;
+	real_type x0  = -1;
+	real_type y0  = 0;
+	real_type th0 = M_PI / 2;
+	real_type k0  = -1;
+	real_type s0  = 0.2;
+	real_type x1  = 1;
+	real_type y1  = 0;
+	real_type th1 = -M_PI / 2;
+	real_type k1  = -1;
+	real_type s1  = 2;
   #endif
 
 	//int iter = g2sol.build(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
