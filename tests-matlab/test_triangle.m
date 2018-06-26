@@ -17,53 +17,15 @@ x0     = 0 ;
 y0     = 2 ;
 x1     = 4 ;
 y1     = 3.5 ;
-theta0 = 0 ;
-L      = 10 ;
-L1 = LineSegment( x0, y0, theta0, L );
-L2 = LineSegment( x0, y0, theta0+pi/4, L );
-L3 = LineSegment( [x0, y0+1], [x1, y1] );
+x2     = 6;
+y2     = 1 ;
 
-L1.plot() ;
-L2.plot('Color','red','Linewidth',3) ;
-L3.plot('Color','blue','Linewidth',3) ;
+T1 = Triangle2D( x0, y0, x1, y1, x2, y2 );
+T2 = Triangle2D( [x0, y0], [x1, y1], [x2, y2] );
+T2.translate(5,6) ;
 
-L1.translate(1,1) ;
-L1.plot() ;
-
-L2.changeOrigin(1,2) ;
-L2.plot('Color','red','Linewidth',3) ;
-
-
-L3.trim(2,3) ;
-L3.plot('Color','blue','Linewidth',3) ;
-
-L3.rotate(pi/4,3,3) ;
-L3.plot('Color','green','Linewidth',3) ;
-
-L3.rotate(pi/4,3,3) ;
-L3.plot('Color','black','Linewidth',3) ;
-
-L3.rotate(pi/4,3,3) ;
-L3.plot('Color','yellow','Linewidth',3) ;
-
-L3.rotate(pi/4,3,3) ;
-L3.plot('Color','blue','Linewidth',3) ;
-
-
-L3.translate(3,3) ;
-L3.plot('Color','blue','Linewidth',3) ;
-
-L3.eval(1)
-L3.eval_D(1)
-L3.eval_DD(1)
-L3.eval_DDD(1)
-L3.xBegin()
-L3.yBegin()
-L3.theta()
-L3.length()
-
-L1.delete()
-L2.delete()
-L3.delete()
+T1.plot('red') ;
+hold on;
+T2.plot('blue','Color','red','Linewidth',3) ;
 
 axis equal;

@@ -984,7 +984,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidSplineG2::setup( real_type const xvec[],
+  ClothoidSplineG2::build( real_type const xvec[],
                            real_type const yvec[],
                            int_type        npts ) {
     x.clear() ; x.reserve( npts ) ;

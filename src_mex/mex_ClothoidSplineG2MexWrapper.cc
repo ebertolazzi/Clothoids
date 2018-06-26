@@ -27,7 +27,7 @@
 "    ClothoidSplineG2MexWrapper( 'delete', OBJ ) ;\n" \
 "\n" \
 "  - Build:\n" \
-"    ClothoidSplineG2MexWrapper('setup',OBJ,x,y);\n" \
+"    ClothoidSplineG2MexWrapper('build',OBJ,x,y);\n" \
 "    ClothoidSplineG2MexWrapper('target',OBJ,target[,theta0,theta1]);\n" \
 "\n" \
 "  - Eval:\n" \
@@ -96,9 +96,9 @@ namespace G2lib {
 
         MEX_ASSERT( nlhs == 1, "ClothoidSplineG2MexWrapper, expected 1 output, nlhs = " << nlhs  );
 
-      } else if ( cmd == "setup" ) {
+      } else if ( cmd == "build" ) {
 
-        #define CMD "ClothoidSplineG2MexWrapper('setup',OBJ,x,y): "
+        #define CMD "ClothoidSplineG2MexWrapper('build',OBJ,x,y): "
 
         MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs ) ;
         MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs ) ;
@@ -109,7 +109,7 @@ namespace G2lib {
 
         MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " must be equal to size(y) = " << ny ) ;
 
-        ptr->setup( x, y, nx ) ;
+        ptr->build( x, y, nx ) ;
 
         #undef CMD
 

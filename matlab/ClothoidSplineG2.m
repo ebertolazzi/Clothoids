@@ -30,7 +30,7 @@ classdef ClothoidSplineG2 < handle
       %
       % Compute guess angles
       %
-      self.setup( x, y );
+      self.build( x, y );
       [ theta_guess, theta_min, theta_max ] = self.guess() ;
       [~,nc] = self.dims();
       
@@ -107,7 +107,7 @@ classdef ClothoidSplineG2 < handle
       %
       % Compute guess angles
       %
-      self.setup( x, y );
+      self.build( x, y );
       [ theta_guess, ~, ~ ] = self.guess() ;
       % 'interior-point'
       options = optimoptions('fsolve','Display',self.iter_opt, ...
@@ -146,8 +146,8 @@ classdef ClothoidSplineG2 < handle
       ClothoidSplineG2MexWrapper( 'delete', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function setup( self, x, y )
-      ClothoidSplineG2MexWrapper( 'setup', self.objectHandle, x, y );
+    function build( self, x, y )
+      ClothoidSplineG2MexWrapper( 'build', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function verbose( self, yes )

@@ -445,7 +445,7 @@ namespace G2lib {
     bbTriangle( real_type offs, Triangle2D & t ) const {
       real_type p0[2], p1[2], p2[2] ;
       bool ok = CD.bbTriangle( L, offs, p0, p1, p2 ) ;
-      if ( ok ) t.setup( p0, p1, p2 ) ;
+      if ( ok ) t.build( p0, p1, p2 ) ;
       return ok ;
     }
 
@@ -1291,7 +1291,7 @@ namespace G2lib {
     void setP9() { tt = P9 ; }
 
     void
-    setup( real_type const xvec[],
+    build( real_type const xvec[],
            real_type const yvec[],
            int_type        npts ) ;
 

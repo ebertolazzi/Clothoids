@@ -112,6 +112,12 @@ namespace G2lib {
               real_type _x1,
               real_type _y1 ) ;
 
+    //! construct a clothoid with the standard parameters
+    void
+    build_2P( real_type const p0[2],
+              real_type const p1[2] )
+    { build_2P( p0[0], p0[1], p1[0], p1[1] ); }
+
     real_type X( real_type s ) const { return x0 + c0 * s ; }
     real_type Y( real_type s ) const { return y0 + s0 * s ; }
 
@@ -213,6 +219,14 @@ namespace G2lib {
 
     int
     toNURBS( real_type knots[5], real_type Poly[2][3] ) const ;
+
+    void
+    p1p2( real_type p1[2], real_type p2[2] ) const {
+      p1[0] = x0 ;
+      p1[1] = y0 ;
+      p2[0] = x0+L*c0 ;
+      p2[1] = y0+L*s0 ;
+    }
 
     friend
     std::ostream &

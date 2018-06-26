@@ -41,6 +41,8 @@
  */
 
 #include "Triangle2D.hh"
+#include "Line.hh"
+
 #include <algorithm>
 #include <functional>
 
@@ -344,6 +346,36 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  Triangle2D::rotate( real_type angle, real_type cx, real_type cy ) {
+    real_type C   = cos(angle) ;
+    real_type S   = sin(angle) ;
+
+    real_type dx  = p1[0] - cx ;
+    real_type dy  = p1[1] - cy ;
+    real_type ndx = C*dx - S*dy ;
+    real_type ndy = C*dy + S*dx ;
+    p1[0] = cx + ndx ;
+    p1[1] = cy + ndy ;
+
+    dx  = p2[0] - cx ;
+    dy  = p2[1] - cy ;
+    ndx = C*dx - S*dy ;
+    ndy = C*dy + S*dx ;
+    p2[0] = cx + ndx ;
+    p2[1] = cy + ndy ;
+
+    dx  = p3[0] - cx ;
+    dy  = p3[1] - cy ;
+    ndx = C*dx - S*dy ;
+    ndy = C*dy + S*dx ;
+    p3[0] = cx + ndx ;
+    p3[1] = cy + ndy ;
+
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
   Triangle2D::intersect( Triangle2D const & t2 ) const {
     return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
@@ -358,45 +390,71 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Triangle2D::distMinMax( real_type   x,
-                          real_type   y,
-                          real_type & dmin,
-                          real_type & dmax ) const {
-
-    int_type in = isInside( x, y ) ;
-    if ( in >= 0 ) { dmin = dmax = 0 ; return ; }
-
+  real_type
+  Triangle2D::distMax( real_type x, real_type y ) const {
     real_type d1 = hypot( x-p1[0], y-p1[1] ) ;
     real_type d2 = hypot( x-p2[0], y-p2[1] ) ;
     real_type d3 = hypot( x-p3[0], y-p3[1] ) ;
-    real_type const * P1 = this->p1 ;
-    real_type const * P2 = this->p2 ;
-    real_type const * P3 = this->p3 ;
-    if ( d1 < d2 ) { std::swap( d1, d2 ) ; std::swap( P1, P2 ) ; }
-    if ( d2 < d3 ) { std::swap( d2, d3 ) ; std::swap( P2, P3 ) ; }
-    if ( d1 < d2 ) { std::swap( d1, d2 ) ; std::swap( P1, P2 ) ; }
+    return std::max(d1,std::max(d2,d3)) ;
+  }
 
-    dmax = d1 ;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    real_type dx  = x     - P2[0] ;
-    real_type dy  = y     - P2[1] ;
-    real_type dx1 = P3[0] - P2[0] ;
-    real_type dy1 = P3[1] - P2[1] ;
+  static
+  real_type
+  distSeg( real_type       x,
+           real_type       y,
+           real_type const A[],
+           real_type const B[] ) {
+
+    real_type dx  = x    - A[0];
+    real_type dy  = y    - A[1];
+    real_type dx1 = B[0] - A[0];
+    real_type dy1 = B[1] - A[1];
+
+    // < P-A - s*(B-A), B-A> = 0
+    // <P-A, B-A> = s <B-A,B-A>
+
     real_type tmp = dx * dx1 + dy * dy1 ;
-    if ( tmp < 0 ) {
-      dmin = d2 ;
-    } else {
-      real_type tmp2 = hypot(dx,dy)*hypot(dx1,dy1) ;
-      if ( tmp > tmp2 ) {
-        dmin = d3 ;
-      } else {
-        real_type S = tmp/tmp2 ;
-        real_type X = P2[0] + S*dx1 ;
-        real_type Y = P2[1] + S*dy1 ;
-        dmin = hypot( x-X, y-Y ) ;
-      }
-    }
+
+    if ( tmp < 0 ) return hypot(dx,dy);
+
+    real_type tmp2 = dx1*dx1+dy1*dy1;
+
+    if ( tmp > tmp2 ) return hypot(x-B[0],y-B[1]);
+
+    real_type S = tmp/tmp2;
+    real_type X = A[0] + S*dx1;
+    real_type Y = A[1] + S*dy1;
+
+    return hypot( x-X, y-Y );
+  }
+
+  real_type
+  Triangle2D::distMin( real_type x, real_type y ) const {
+
+    int_type in = isInside( x, y ) ;
+    if ( in >= 0 ) return 0 ;
+
+#if 0
+    LineSegment L1, L2, L3 ;
+    L1.build_2P( p1, p2 );
+    L2.build_2P( p2, p3 );
+    L3.build_2P( p3, p1 );
+
+    real_type d1 = L1.distance( x, y ) ;
+    real_type d2 = L2.distance( x, y ) ;
+    real_type d3 = L3.distance( x, y ) ;
+#else
+    real_type d1 = distSeg( x, y, p1, p2 ) ;
+    real_type d2 = distSeg( x, y, p2, p3 ) ;
+    real_type d3 = distSeg( x, y, p3, p1 ) ;
+#endif
+
+    if ( d1 > d2 ) std::swap( d1, d2 ) ;
+    if ( d1 > d3 ) std::swap( d1, d3 ) ;
+    return d1 ;
+
   }
 
 }

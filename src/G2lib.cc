@@ -237,17 +237,14 @@ namespace G2lib {
   isCounterClockwise( real_type const P1[2],
                       real_type const P2[2],
                       real_type const P3[2] ) {
-
     real_type dx1 = P2[0] - P1[0];
     real_type dy1 = P2[1] - P1[1];
     real_type dx2 = P3[0] - P1[0];
     real_type dy2 = P3[1] - P1[1];
-
-    // check non colinear cases
     real_type tol = 10*machepsi*(hypot(dx1,dy1)*hypot(dx2,dy2));
     real_type det = dx1*dy2 - dy1*dx2 ;
-    if ( det > tol ) return 1;
-    else if ( det < -tol ) return -1 ;
+    if      ( det >  tol ) return  1;
+    else if ( det < -tol ) return -1;
     return 0 ;
   }
 
@@ -263,11 +260,11 @@ namespace G2lib {
     int_type b = isCounterClockwise(p2, p3, point);
     int_type c = isCounterClockwise(p3, p1, point);
     if ( d < 0) { a = -a ; b = -b ; c = -c ; }
-    if ( a < 0 ) return -1 ;
-    if ( b < 0 ) return -1 ;
-    if ( c < 0 ) return -1 ;
-    if ( a+b+c == 3 ) return 1 ;
-    return 0 ;
+    if ( a < 0 ) return -1;
+    if ( b < 0 ) return -1;
+    if ( c < 0 ) return -1;
+    if ( a+b+c == 3 ) return 1;
+    return 0;
   }
 }
 

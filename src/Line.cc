@@ -36,13 +36,16 @@ namespace G2lib {
                          real_type _y1 ) {
     real_type dx = _x1-_x0 ;
     real_type dy = _y1-_y0 ;
-    real_type d  = hypot( dx, dy ) ;
+    L      = hypot( dx, dy ) ;
     x0     = _x0 ;
     y0     = _y0 ;
     theta0 = atan2(dy, dx);
-    c0     = dx / d ;
-    s0     = dy / d ;
-    L      = 0 ;
+    if ( L > 0 ) {
+      c0 = dx / L ;
+      s0 = dy / L ;
+    } else {
+      c0 = s0 = 0 ;
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

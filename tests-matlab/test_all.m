@@ -9,6 +9,8 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
+test_line();
+test_line2();
 testList_Adelaide();
 testList_Adria();
 testList_Catalunya();
@@ -60,5 +62,3 @@ test_clothoid2();
 test_clothoid3();
 test_clothoid4();
 test_intersect();
-test_line();
-test_line2();

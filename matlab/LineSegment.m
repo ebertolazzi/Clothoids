@@ -32,12 +32,12 @@ classdef LineSegment < handle
       %
       self.objectHandle = LineSegmentMexWrapper('new', varargin{:} );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete(self)
       %% Destroy the C++ class instance
       LineSegmentMexWrapper('delete', self.objectHandle );
     end
-        
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
       %
       % Build the circle from known parameters
@@ -66,17 +66,17 @@ classdef LineSegment < handle
       %
       LineSegmentMexWrapper('build', self.objectHandle, varargin{:} );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function translate(self, tx, ty)
       % move the object by `(tx,ty)`
       LineSegmentMexWrapper('translate', self.objectHandle, tx, ty );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function trim(self, smin, smax)
       % trim circle curve to the corresponding curvilinear parameters
       LineSegmentMexWrapper('trim', self.objectHandle, smin, smax );
     end
-        
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function rotate(self, angle, cx, cy)
       % rotate the circle by angle with center of rotation `(cx,cy)`
       % Usage:
@@ -88,7 +88,7 @@ classdef LineSegment < handle
       %
       LineSegmentMexWrapper('rotate', self.objectHandle, angle, cx, cy );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeOrigin(self, newX0, newY0)
       % move the origin of the circle to `(newX0, newY0)` 
       % Usage:
@@ -99,13 +99,12 @@ classdef LineSegment < handle
       %
       LineSegmentMexWrapper('changeOrigin', self.objectHandle, newX0, newY0 );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function nurbs = to_nurbs(self)
       % return a nurbs representation of the circle arc
       nurbs = LineSegmentMexWrapper('to_nurbs', self.objectHandle);
     end
-
-    %% Eval
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y] = eval(self, s)
       % eval the circle at curvilinear abscissa `s`
       % Usage:
@@ -120,72 +119,49 @@ classdef LineSegment < handle
       %
       [X,Y] = LineSegmentMexWrapper('eval', self.objectHandle, s );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DX,DY] = eval_D(self, s)
       % eval the circle derivative at curvilinear abscissa `s`
       [DX,DY] = LineSegmentMexWrapper('eval_D', self.objectHandle, s );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DDX,DDY] = eval_DD(self, s)
       % eval the circle second derivative at curvilinear abscissa `s`
       [DDX,DDY] = LineSegmentMexWrapper('eval_DD', self.objectHandle, s );
     end
-
-    %% Eval
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DDDX,DDDY] = eval_DDD(self, s)
       % eval the circle third derivative at curvilinear abscissa `s`
       [DDDX,DDDY] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, s );
     end
- 
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X0 = xBegin(self)
       X0 = LineSegmentMexWrapper('xBegin', self.objectHandle );
     end
- 
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function Y0 = yBegin(self)
       Y0 = LineSegmentMexWrapper('yBegin', self.objectHandle );
     end
- 
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th0 = theta(self)
       th0 = LineSegmentMexWrapper('theta', self.objectHandle );
     end
- 
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length(self)
       res = LineSegmentMexWrapper('length', self.objectHandle );
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [p1,p2] = points( self )
+      [p1,p2] = LineSegmentMexWrapper('points', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [d,s] = distance( self, x, y )
       [d,s] = LineSegmentMexWrapper('distance', self.objectHandle, x, y );
     end
-
-    %% Utils
-    function lineH = plot(self,varargin)
-      % plot: method to plot the clothoid curve
-      % Usage:
-      %    lineH = ref.plot()
-      %    lineH = ref.plot(0.2)
-      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
-      %    
-      % On input:
-      %    step:     the distance between consecutive samples used to
-      %              draw the curve
-      %    varargin: optional arguments passed to the MATLAB plot
-      %              function
-      %
-      % On output:
-      %    lineH: the handle to the line object 
-      %           (i.e. the output of the MATLAB plot function)
-      seg = self.to_nurbs() ;
-      breaks = fnbrk(seg,'b');
-      col = 'b';
-      lw  = 1;
-      if nargin>1 ; col = varargin{1} ; end
-      if nargin>2 ; lw  = varargin{2} ; end
-      fnplt(seg,[breaks(1),breaks(end)],col,lw);
-      hold on;
-      % plot poligono
-      xx = seg.coefs(1,:)./seg.coefs(3,:);
-      yy = seg.coefs(2,:)./seg.coefs(3,:);
-      plot(xx,yy,':ok','Color',col);
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plot(self,varargin)
+      [p1,p2] = self.points() ;
+      plot([p1(1),p2(1)],[p1(2),p2(2)],varargin{:});
     end
   end
 end

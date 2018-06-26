@@ -264,7 +264,7 @@ namespace G2lib {
       real_type p0[2], p1[2], p2[2] ;
       bool ok = data.cd.bbTriangle( data.L, data.split_offs, p0, p1, p2 ) ;
       G2LIB_ASSERT( ok, "ClothoidCurve::bbSplit_internal, bad bounding box" ) ;
-      bb.t.setup( p0, p1, p2 ) ;
+      bb.t.build( p0, p1, p2 ) ;
       bb.s0 = data.s0 ;
       bb.L  = data.L ;
       bb.cd = data.cd ;

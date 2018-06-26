@@ -27,6 +27,7 @@
 "  LineSegmentMexWrapper( 'build', OBJ, x0, y0, theta0, L ) ;\n" \
 "  LineSegmentMexWrapper( 'build', OBJ, p0, p1 ) ;\n" \
 "  LineSegmentMexWrapper( 'build', OBJ, p0, theta0, L ) ;\n" \
+"  [p1,p2] = LineSegmentMexWrapper( 'points', OBJ ) ;\n" \
 "\n" \
 "  LineSegmentMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;\n" \
 "  LineSegmentMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
@@ -264,6 +265,19 @@ namespace G2lib {
           *pr++ = Poly[i][1] ;
           *pr++ = Poly[i][2] ;
         }
+
+      } else if ( cmd == "points" ) {
+
+        #define CMD "LineSegmentMexWrapper('points',OBJ): "
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+
+        real_type * p1 = createMatrixValue( arg_out_0, 2, 1 ) ;
+        real_type * p2 = createMatrixValue( arg_out_1, 2, 1 ) ;
+
+        ptr->p1p2(p1,p2);
+
+        #undef CMD
 
       } else {
 

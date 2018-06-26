@@ -119,16 +119,25 @@ namespace G2lib {
     }
 
     ~Triangle2D() {}
-    
+
     void
-    setup( real_type const _p1[2],
+    build( real_type const _p1[2],
            real_type const _p2[2],
            real_type const _p3[2] ) {
       p1[0] = _p1[0] ; p1[1] = _p1[1] ;
       p2[0] = _p2[0] ; p2[1] = _p2[1] ;
       p3[0] = _p3[0] ; p3[1] = _p3[1] ;
     }
-    
+
+    void
+    build( real_type x1, real_type y1,
+           real_type x2, real_type y2,
+           real_type x3, real_type y3 ) {
+      p1[0] = x1 ; p1[1] = y1 ;
+      p2[0] = x2 ; p2[1] = y2 ;
+      p3[0] = x3 ; p3[1] = y3 ;
+    }
+
     real_type x1() const { return p1[0] ; }
     real_type y1() const { return p1[1] ; }
 
@@ -137,6 +146,22 @@ namespace G2lib {
 
     real_type x3() const { return p3[0] ; }
     real_type y3() const { return p3[1] ; }
+
+    void
+    translate( real_type tx, real_type ty ) {
+      p1[0] += tx ; p2[0] += tx ; p3[0] += tx ;
+      p1[1] += ty ; p2[1] += ty ; p3[1] += ty ;
+    }
+
+    void
+    rotate( real_type angle, real_type cx, real_type cy ) ;
+
+    void
+    scale( real_type sc ) {
+      p1[0] *= sc ; p1[1] *= sc ;
+      p2[0] *= sc ; p2[1] *= sc ;
+      p3[0] *= sc ; p3[1] *= sc ;
+    }
 
     void
     bbox( real_type & xmin,
@@ -178,11 +203,16 @@ namespace G2lib {
       return isPointInTriangle( pt, p1, p2, p3 ) ;
     }
 
-    void
-    distMinMax( real_type x,
-                real_type y,
-                real_type & dmin,
-                real_type & dmax ) const ;
+    int_type
+    isInside( real_type const pt[2] ) const {
+      return isPointInTriangle( pt, p1, p2, p3 ) ;
+    }
+
+    real_type
+    distMin( real_type x, real_type y ) const ;
+
+    real_type
+    distMax( real_type x, real_type y ) const ;
 
   };
 

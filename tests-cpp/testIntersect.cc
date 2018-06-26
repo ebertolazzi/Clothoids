@@ -25,7 +25,7 @@ main() {
   real_type L1     = 20 ;
   C1.build( x1, y1, theta1, k1, dk1, L1 );
 
-  G2lib::vector<G2lib::real_type> s1, s2 ;
+  std::vector<G2lib::real_type> s1, s2 ;
   G2lib::int_type  max_iter  = 10 ;
   G2lib::real_type tolerance = 1e-8 ;
 
