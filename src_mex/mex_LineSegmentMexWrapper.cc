@@ -109,42 +109,81 @@ namespace G2lib {
 
       LineSegment * ptr = do_new ? DATA_NEW(arg_out_0) : DATA_GET(arg_in_1);
 
-      if ( do_new || cmd == "build" ) {
+      if ( do_new ) {
 
-        int_type kk = do_new ? 0 : 1 ;
+        MEX_ASSERT( nlhs == 1, "expected 1 output, nlhs = " << nlhs  );
 
-        #define BUILD "LineSegmentMexWrapper('build',OBJ,x0,y0,theta0,L): "
-        MEX_ASSERT( nlhs == 1, BUILD "expected 1 output, nlhs = " << nlhs  );
+        if ( nrhs == 5 ) {
 
-        if ( nrhs == 5+kk ) {
+          #define CMD "LineSegmentMexWrapper('new',x0,y0,theta0,L): "
 
-          real_type x0     = getScalarValue( prhs[1+kk], BUILD "`x0` expected to be a real scalar" );
-          real_type y0     = getScalarValue( prhs[2+kk], BUILD "`y0` expected to be a real scalar" );
-          real_type theta0 = getScalarValue( prhs[3+kk], BUILD "`theta0` expected to be a real scalar" );
-          real_type L      = getScalarValue( prhs[4+kk], BUILD "`L` expected to be a real scalar" );
+          real_type x0     = getScalarValue( arg_in_1, CMD "`x0` expected to be a real scalar" );
+          real_type y0     = getScalarValue( arg_in_2, CMD "`y0` expected to be a real scalar" );
+          real_type theta0 = getScalarValue( arg_in_3, CMD "`theta0` expected to be a real scalar" );
+          real_type L      = getScalarValue( arg_in_4, CMD "`L` expected to be a real scalar" );
 
           ptr->build( x0, y0, theta0, L );
 
-        } else if ( nrhs == 3+kk ) {
+          #undef CMD
 
-          #undef BUILD
-          #define BUILD "LineSegmentMexWrapper('build',OBJ,p0,p1): "
-          real_type const * p0 = getVectorPointer( prhs[1+kk], size0, BUILD "`p0` expected to be a real vector" );
-          real_type const * p1 = getVectorPointer( prhs[2+kk], size1, BUILD "`p1` expected to be a real vector" );
+        } else if ( nrhs == 3 ) {
+
+          #define CMD "LineSegmentMexWrapper('new',OBJ,p0,p1): "
+          real_type const * p0 = getVectorPointer( arg_in_1, size0,
+                                 CMD "`p0` expected to be a real vector" );
+          real_type const * p1 = getVectorPointer( arg_in_2, size1,
+                                 CMD "`p1` expected to be a real vector" );
 
           MEX_ASSERT( size0 == 2 && size1 == 2,
-                      BUILD "bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
-          #undef BUILD
+                      CMD "bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
+          #undef CMD
 
           ptr->build_2P( p0[0], p0[1], p1[0], p1[1] ) ;
 
         } else if ( nrhs == 1 ) {
           // nothing to do
         } else {
-          MEX_ASSERT(false, "nrhs = " << nrhs << " expected " << 2+kk << " or " << 5+kk << " inputs, nrhs = " << nrhs  );
+          MEX_ASSERT(false, "nrhs = " << nrhs << " expected 3 or 5 inputs, nrhs = " << nrhs  );
         }
 
         plhs[0] = convertPtr2Mat<LineSegment>(ptr);
+
+      } else if ( cmd == "build" ) {
+
+        MEX_ASSERT( nlhs == 0, "expected no output, nlhs = " << nlhs  );
+
+        if ( nrhs == 6 ) {
+
+          #define CMD "LineSegmentMexWrapper('build',OBJ,x0,y0,theta0,L): "
+
+          real_type x0     = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
+          real_type y0     = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
+          real_type theta0 = getScalarValue( arg_in_4, CMD "`theta0` expected to be a real scalar" );
+          real_type L      = getScalarValue( arg_in_5, CMD "`L` expected to be a real scalar" );
+
+          ptr->build( x0, y0, theta0, L );
+
+          #undef CMD
+
+        } else if ( nrhs == 4 ) {
+
+          #define CMD "LineSegmentMexWrapper('build',OBJ,p0,p1): "
+          real_type const * p0 = getVectorPointer( arg_in_2, size0,
+                                 CMD "`p0` expected to be a real vector" );
+          real_type const * p1 = getVectorPointer( arg_in_3, size1,
+                                 CMD "`p1` expected to be a real vector" );
+
+          MEX_ASSERT( size0 == 2 && size1 == 2,
+                      CMD "bad dimension size(p0) = " << size0 << ", size(p1) = " << size1 ) ;
+          #undef CMD
+
+          ptr->build_2P( p0[0], p0[1], p1[0], p1[1] ) ;
+
+        } else if ( nrhs == 1 ) {
+          // nothing to do
+        } else {
+          MEX_ASSERT(false, "nrhs = " << nrhs << " expected 4 or 6 inputs, nrhs = " << nrhs  );
+        }
 
       } else if ( cmd == "delete" ) {
 

@@ -52,29 +52,9 @@ classdef LineSegment < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
       %
-      % Build the circle from known parameters
-      %
       % Usage:
       %    (1) ref.build( x0, y0, theta0, k0, L )
-      %    (2) ref.build( x0, y0, theta0, k0, smin, smax )
-      %    (3) ref.build( p0, p1, p2 )
-      %    (4) ref.build( p0, theta0, p1 )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    theta0: orientation of the circle at initial point
-      %    k0:     curvature of the circle at initial point
-      %    L:      length of curve from initial to final point
-      %    smin:   initial curvilinear coordinate of the curve
-      %    smax:   final curvilinear coordinate of the curve
-      %    p0:     2D point
-      %    p1:     2D point
-      %    p2:     2D point
-      %
-      %    (1) circle passing from (x0,y0) at angle theta0 with curvature and length
-      %    (2) circle as in (2) with intial and final curvaturevilinear coordinate respect to (x0,y0)
-      %    (3) circle arc passing from 3 points
-      %    (4) circle passing to p0 and p1 with angle theta0 at p0
+      %    (3) ref.build( p0, p1 )
       %
       LineSegmentMexWrapper('build', self.objectHandle, varargin{:} );
     end
