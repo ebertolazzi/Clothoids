@@ -288,9 +288,22 @@ namespace G2lib {
     int_type
     toNURBS( real_type knots[], real_type Poly[], bool get_size ) const ; // Poly 3 x n matrix
 
+    void
+    info( std::ostream & s ) const {
+      s << "CircleArc"
+        << "\nx0     = " << x0
+        << "\ny0     = " << y0
+        << "\ntheta0 = " << theta0
+        << "\nk      = " << k
+        << "\nL      = " << L
+        << '\n' ;
+    }
+
     friend
     std::ostream &
     operator << ( std::ostream & stream, CircleArc const & c ) ;
+
+    friend class ClothoidCurve ;
 
   } ;
 

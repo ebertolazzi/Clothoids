@@ -228,9 +228,21 @@ namespace G2lib {
       p2[1] = y0+L*s0 ;
     }
 
+    void
+    info( std::ostream & s ) const {
+      s << "LineSegment"
+        << "\nx0     = " << x0
+        << "\ny0     = " << y0
+        << "\ntheta0 = " << theta0
+        << "\nL      = " << L
+        << '\n' ;
+    }
+
     friend
     std::ostream &
     operator << ( std::ostream & stream, LineSegment const & c ) ;
+
+    friend class ClothoidCurve ;
 
   } ;
 

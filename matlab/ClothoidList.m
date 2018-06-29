@@ -17,6 +17,14 @@ classdef ClothoidList < handle
       obj = self.objectHandle ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function str = is_type( ~ )
+      str = 'ClothoidList' ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function copy( self, C )
+      ClothoidListMexWrapper( 'copy', self.objectHandle, C.obj_handle() );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function reserve( self, N )
       ClothoidListMexWrapper( 'reserve', self.objectHandle, N );
     end
@@ -245,6 +253,21 @@ classdef ClothoidList < handle
       %    ref.reverse()
       %
       ClothoidListMexWrapper( 'reverse', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s1,s2] = intersect( self, C )
+      stype = C.is_type();
+      if strcmp(stype,'LineSegment')
+        [s1,s2] = ClothoidListMexWrapper( 'intersect_line', self.objectHandle, C.obj_handle() );
+      elseif strcmp(stype,'CircleArc')
+        [s1,s2] = ClothoidListMexWrapper( 'intersect_circle', self.objectHandle, C.obj_handle() );
+      elseif strcmp(stype,'ClothoidCurve')
+        [s1,s2] = ClothoidListMexWrapper( 'intersect_clothoid', self.objectHandle, C.obj_handle() );
+      elseif strcmp(stype,'ClothoidList')
+        [s1,s2] = ClothoidListMexWrapper( 'intersect_clothoid_list', self.objectHandle, C.obj_handle() );
+      else
+        error('ClothoidCurve::intersect, unknown type: %s\n', stype ) ;
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function BB = bbox( self, max_angle, max_size, varargin )

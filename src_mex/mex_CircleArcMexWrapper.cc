@@ -19,44 +19,45 @@
 "\n" \
 "USAGE:\n" \
 "\n" \
-"  OBJ = CircleMexWrapper( 'new' ) ;\n" \
-"  OBJ = CircleMexWrapper( 'new', x0, y0, theta0, kur, L ) ;\n" \
+"  OBJ = CircleArcMexWrapper( 'new' ) ;\n" \
+"  OBJ = CircleArcMexWrapper( 'new', x0, y0, theta0, kur, L ) ;\n" \
 "\n" \
-"  CircleMexWrapper( 'delete', OBJ ) ;\n" \
+"  CircleArcMexWrapper( 'delete', OBJ ) ;\n" \
 "\n" \
-"  CircleMexWrapper( 'build', OBJ, x0, y0, theta0, kur, L ) ;\n" \
-"  CircleMexWrapper( 'build_G1', OBJ, p0, theta0, p1 ) ;\n" \
-"  CircleMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1 ) ;\n" \
-"  CircleMexWrapper( 'build_3P', OBJ, p0, p1, p2 ) ;\n" \
-"  CircleMexWrapper( 'build_3P', OBJ, x0, y0, x1, y1, x2, y2 ) ;\n" \
+"  CircleArcMexWrapper( 'build', OBJ, x0, y0, theta0, kur, L ) ;\n" \
+"  CircleArcMexWrapper( 'build_G1', OBJ, p0, theta0, p1 ) ;\n" \
+"  CircleArcMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1 ) ;\n" \
+"  CircleArcMexWrapper( 'build_3P', OBJ, p0, p1, p2 ) ;\n" \
+"  CircleArcMexWrapper( 'build_3P', OBJ, x0, y0, x1, y1, x2, y2 ) ;\n" \
+"  CircleArcMexWrapper( 'copy', OBJ, OBJ1 ) ;\n" \
 "\n" \
-"  CircleMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;\n" \
-"  CircleMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
-"  CircleMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
-"  CircleMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
-"  CircleMexWrapper( 'scale', OBJ, scale ) ;\n" \
-"  CircleMexWrapper( 'reverse', OBJ ) ;\n" \
+"  CircleArcMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;\n" \
+"  CircleArcMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
+"  CircleArcMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
+"  CircleArcMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
+"  CircleArcMexWrapper( 'scale', OBJ, scale ) ;\n" \
+"  CircleArcMexWrapper( 'reverse', OBJ ) ;\n" \
 "\n" \
-"  [d,s] = CircleMexWrapper( 'distance', OBJ, x, y ) ;\n" \
+"  [d,s] = CircleArcMexWrapper( 'distance', OBJ, x, y ) ;\n" \
 "\n" \
-"  [p0,p1,p2,ok] = CircleMexWrapper( 'bbTriangle', OBJ ) ;\n" \
+"  [p0,p1,p2,ok] = CircleArcMexWrapper( 'bbTriangle', OBJ ) ;\n" \
 "\n" \
-"  burbs = CircleMexWrapper( 'to_nurbs', OBJ ) ;\n" \
+"  burbs = CircleArcMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
-"  res = CircleMexWrapper( 'xBegin', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'yBegin', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'thetaBegin', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'kappa', OBJ ) ;\n" \
-"  res = CircleMexWrapper( 'length', OBJ ) ;\n" \
+"  res = CircleArcMexWrapper( 'xBegin', OBJ ) ;\n" \
+"  res = CircleArcMexWrapper( 'yBegin', OBJ ) ;\n" \
+"  res = CircleArcMexWrapper( 'thetaBegin', OBJ ) ;\n" \
+"  res = CircleArcMexWrapper( 'kappa', OBJ ) ;\n" \
+"  res = CircleArcMexWrapper( 'length', OBJ ) ;\n" \
 "\n" \
-"  [X,Y] = CircleMexWrapper( 'eval', OBJ, s ) ;\n" \
-"  [X,Y] = CircleMexWrapper( 'eval_D', OBJ, s ) ;\n" \
-"  [X,Y] = CircleMexWrapper( 'eval_DD', OBJ, s ) ;\n" \
-"  [X,Y] = CircleMexWrapper( 'eval_DDD', OBJ, s ) ;\n" \
+"  [X,Y] = CircleArcMexWrapper( 'eval', OBJ, s ) ;\n" \
+"  [X,Y] = CircleArcMexWrapper( 'eval_D', OBJ, s ) ;\n" \
+"  [X,Y] = CircleArcMexWrapper( 'eval_DD', OBJ, s ) ;\n" \
+"  [X,Y] = CircleArcMexWrapper( 'eval_DDD', OBJ, s ) ;\n" \
 "\n" \
-"  [X,Y] = CircleMexWrapper( 'theta', OBJ, s ) ;\n" \
+"  [X,Y] = CircleArcMexWrapper( 'theta', OBJ, s ) ;\n" \
 "\n" \
-"  nurbs = CircleMexWrapper( 'to_nurbs', OBJ ) ;\n" \
+"  nurbs = CircleArcMexWrapper( 'to_nurbs', OBJ ) ;\n" \
 "\n" \
 "%==========================================================================%\n" \
 "%                                                                          %\n" \
@@ -105,7 +106,7 @@ namespace G2lib {
 
     try {
 
-      MEX_ASSERT( mxIsChar(arg_in_0), "CircleMexWrapper(...): First argument must be a string" ) ;
+      MEX_ASSERT( mxIsChar(arg_in_0), "CircleArcMexWrapper(...): First argument must be a string" ) ;
       string cmd = mxArrayToString(arg_in_0) ;
       mwSize size0, size1, size2 ;
 
@@ -117,14 +118,14 @@ namespace G2lib {
         int_type kk = do_new ? 0 : 1 ;
 
         if ( do_new ) {
-          MEX_ASSERT( nlhs == 1, "CircleMexWrapper, expected 1 output, nlhs = " << nlhs  );
+          MEX_ASSERT( nlhs == 1, "CircleArcMexWrapper, expected 1 output, nlhs = " << nlhs  );
         } else {
-          MEX_ASSERT( nlhs == 0, "CircleMexWrapper, expected no output, nlhs = " << nlhs  );
+          MEX_ASSERT( nlhs == 0, "CircleArcMexWrapper, expected no output, nlhs = " << nlhs  );
         }
 
         if ( nrhs == 6+kk ) {
 
-          #define CMD "CircleMexWrapper(x0,y0,theta0,k0,L): "
+          #define CMD "CircleArcMexWrapper(x0,y0,theta0,k0,L): "
           real_type x0     = getScalarValue( prhs[1+kk], CMD "`x0` expected to be a real scalar" );
           real_type y0     = getScalarValue( prhs[2+kk], CMD "`y0` expected to be a real scalar" );
           real_type theta0 = getScalarValue( prhs[3+kk], CMD "`theta0` expected to be a real scalar" );
@@ -144,12 +145,12 @@ namespace G2lib {
 
       } else if ( cmd == "build_G1" ) {
 
-        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output, nlhs = " << nlhs );
+        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleArcMexWrapper, expected 1 or no output, nlhs = " << nlhs );
 
         real_type x0(0), y0(0), x1(0), y1(0), theta0(0);
         if ( nrhs == 5 ) {
 
-          #define CMD "CircleMexWrapper('build_G1',OBJ,p0,theta0,p1): "
+          #define CMD "CircleArcMexWrapper('build_G1',OBJ,p0,theta0,p1): "
           real_type const * p0 = getVectorPointer( arg_in_2, size0, CMD "`p0` expected to be a real vector" );
           theta0 = getScalarValue( arg_in_3, CMD "`theta0` expected to be a real vector" );
           real_type const * p1 = getVectorPointer( arg_in_4, size1, CMD "`p1` expected to be a real vector" );
@@ -164,7 +165,7 @@ namespace G2lib {
 
         } else if ( nrhs == 7 ) {
 
-          #define CMD "CircleMexWrapper('build_G1',OBJ,x0,x1,theta0,x1,y1): "
+          #define CMD "CircleArcMexWrapper('build_G1',OBJ,x0,x1,theta0,x1,y1): "
           x0     = getScalarValue( arg_in_2,CMD "`x0` expected to be a scalar value" );
           y0     = getScalarValue( arg_in_3,CMD "`y0` expected to be a scalar value" );
           theta0 = getScalarValue( arg_in_4,CMD "`theta0` expected to be a scalar value" );
@@ -184,12 +185,12 @@ namespace G2lib {
 
       } else if ( cmd == "build_3P" ) {
 
-        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleMexWrapper, expected 1 or no output, nlhs = " << nlhs  );
+        MEX_ASSERT( nlhs == 0 || nlhs ==1, "CircleArcMexWrapper, expected 1 or no output, nlhs = " << nlhs  );
 
         real_type x0(0), y0(0), x1(0), y1(0), x2(0), y2(0);
         if ( nrhs == 5 ) {
 
-          #define CMD "CircleMexWrapper('build_G1',OBJ,p0,p1,p2): "
+          #define CMD "CircleArcMexWrapper('build_G1',OBJ,p0,p1,p2): "
           real_type const * p0 = getVectorPointer( arg_in_2, size0, CMD "`p0` expected to be a real vector" );
           real_type const * p1 = getVectorPointer( arg_in_3, size1, CMD "`p1` expected to be a real vector" );
           real_type const * p2 = getVectorPointer( arg_in_4, size2, CMD "`p2` expected to be a real vector" );
@@ -206,7 +207,7 @@ namespace G2lib {
 
         } else if ( nrhs == 8 ) {
 
-          #define CMD "CircleMexWrapper('build_G1',OBJ,x0,x1,x1,y1,x2,y2): "
+          #define CMD "CircleArcMexWrapper('build_G1',OBJ,x0,x1,x1,y1,x2,y2): "
           x0     = getScalarValue( arg_in_2,CMD "`x0` expected to be a scalar value" );
           y0     = getScalarValue( arg_in_3,CMD "`y0` expected to be a scalar value" );
           x1     = getScalarValue( arg_in_4,CMD "`x1` expected to be a scalar value" );
@@ -223,16 +224,27 @@ namespace G2lib {
 
       } else if ( cmd == "delete" ) {
 
-        #define CMD "CircleMexWrapper('delete',OBJ): "
+        #define CMD "CircleArcMexWrapper('delete',OBJ): "
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         // Destroy the C++ object
         DATA_DELETE( arg_in_1 ) ;
         #undef CMD
 
+      } else if ( cmd == "copy" ) {
+
+        #define CMD "CircleArcMexWrapper('copy',OBJ,OBJ1): "
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+
+        CircleArc const * CC = convertMat2Ptr<CircleArc>(arg_in_2);
+        ptr->copy(*CC) ;
+
+        #undef CMD
+
       } else if ( cmd == "changeOrigin" ) {
 
-        #define CMD "CircleMexWrapper('changeOrigin',OBJ,x0,y0): "
+        #define CMD "CircleArcMexWrapper('changeOrigin',OBJ,x0,y0): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
@@ -244,7 +256,7 @@ namespace G2lib {
 
       } else if ( cmd == "translate" ) {
 
-        #define CMD "CircleMexWrapper('translate',OBJ,tx,ty): "
+        #define CMD "CircleArcMexWrapper('translate',OBJ,tx,ty): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
@@ -256,7 +268,7 @@ namespace G2lib {
 
       } else if ( cmd == "changeCurvilinearOrigin" ) {
 
-        #define CMD "CircleMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
+        #define CMD "CircleArcMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
 
         real_type s0 = getScalarValue(arg_in_2,CMD "Error in reading s0") ;
@@ -265,7 +277,7 @@ namespace G2lib {
         #undef CMD
 
       } else if ( cmd == "rotate" ) {
-        #define CMD "CircleMexWrapper('rotate',OBJ,angle,cx,cy): "
+        #define CMD "CircleArcMexWrapper('rotate',OBJ,angle,cx,cy): "
 
         MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
@@ -279,7 +291,7 @@ namespace G2lib {
 
       } else if ( cmd == "scale" ) {
 
-        #define CMD "CircleMexWrapper('scale',OBJ,scale): "
+        #define CMD "CircleArcMexWrapper('scale',OBJ,scale): "
         MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
@@ -289,7 +301,7 @@ namespace G2lib {
 
       } else if ( cmd == "reverse" ) {
 
-        #define CMD "CircleMexWrapper('reverse',OBJ): "
+        #define CMD "CircleArcMexWrapper('reverse',OBJ): "
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         ptr->reverse();
@@ -297,7 +309,7 @@ namespace G2lib {
 
       } else if ( cmd == "trim" ) {
 
-        #define CMD "CircleMexWrapper('trim',OBJ,s_begin,s_end): "
+        #define CMD "CircleArcMexWrapper('trim',OBJ,s_begin,s_end): "
         MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
@@ -309,7 +321,7 @@ namespace G2lib {
 
       } else if ( cmd == "theta" ) {
 
-        #define CMD "CircleMexWrapper('theta',OBJ,s): "
+        #define CMD "CircleArcMexWrapper('theta',OBJ,s): "
         MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
@@ -319,7 +331,7 @@ namespace G2lib {
 
       } else if ( cmd == "distance" ) {
 
-        #define CMD "CircleMexWrapper('distance',OBJ,x,y): "
+        #define CMD "CircleArcMexWrapper('distance',OBJ,x,y): "
         MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
         if ( nlhs > 0 ) {
           MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
@@ -346,7 +358,7 @@ namespace G2lib {
 
       } else if ( cmd == "bbTriangle" ) {
 
-        #define CMD "CircleMexWrapper('bbTriangle',OBJ): "
+        #define CMD "CircleArcMexWrapper('bbTriangle',OBJ): "
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 4, CMD "expected 4 output, nlhs = " << nlhs );
@@ -362,7 +374,7 @@ namespace G2lib {
 
       } else if ( cmd == "to_nurbs" ) {
 
-        #define CMD "CircleMexWrapper('to_nurbs',OBJ): "
+        #define CMD "CircleArcMexWrapper('to_nurbs',OBJ): "
 
         int_type npts = ptr->toNURBS( nullptr, nullptr, true );
 
@@ -385,27 +397,48 @@ namespace G2lib {
         #undef CMD
       } else {
 
-        #define CMD "CircleMexWrapper('eval*'',OBJ,s): "
+        #define CMD "CircleArcMexWrapper('eval*'',OBJ,s): "
 
         if ( nrhs == 3 ) {
           mwSize size ;
           double const * s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" ) ;
-          double *pX = createMatrixValue( arg_out_0, 1,size );
-          double *pY = createMatrixValue( arg_out_1, 1,size );
-          if ( cmd == "eval" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval( *s, *pX, *pY ) ;
-          } else if ( cmd == "eval_D" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval_D( *s, *pX, *pY ) ;
-          } else if ( cmd == "eval_DD" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval_DD( *s, *pX, *pY ) ;
-          } else if ( cmd == "eval_DDD" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval_DDD( *s, *pX, *pY ) ;
+          if ( nlhs == 1 ) {
+            real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+            if ( cmd == "eval" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_D" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval_D( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval_DD( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval_DDD( *s, pXY[0], pXY[1] ) ;
+            } else {
+              MEX_ASSERT(false, "Unknown command: " << cmd );
+            }
+          } else if ( nlhs == 2 ) {
+            real_type *pX = createMatrixValue( arg_out_0, 1,size );
+            real_type *pY = createMatrixValue( arg_out_1, 1,size );
+            if ( cmd == "eval" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_D" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval_D( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval_DD( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval_DDD( *s, *pX, *pY ) ;
+            } else {
+              MEX_ASSERT(false, "Unknown command: " << cmd );
+            }
           } else {
-            MEX_ASSERT(false, "Unknown command: " << cmd );
+            MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
           }
         } else if ( nrhs == 2 ) {
           if      ( cmd == "xBegin"      ) setScalarValue( arg_out_0, ptr->xBegin());
@@ -417,10 +450,10 @@ namespace G2lib {
           else if ( cmd == "kappa"       ) setScalarValue( arg_out_0, ptr->kappa());
           else if ( cmd == "length"      ) setScalarValue( arg_out_0, ptr->length());
           else {
-            MEX_ASSERT(false, "CircleMexWrapper unknown command: " << cmd );
+            MEX_ASSERT(false, "CircleArcMexWrapper unknown command: " << cmd );
           }
         } else {
-          MEX_ASSERT(false, "CircleMexWrapper unknown command: " << cmd );
+          MEX_ASSERT(false, "CircleArcMexWrapper unknown command: " << cmd );
         }
 
         #undef CMD
@@ -430,7 +463,7 @@ namespace G2lib {
     } catch ( exception const & e ) {
     	mexErrMsgTxt(e.what()) ;
     } catch (...) {
-    	mexErrMsgTxt("CircleMexWrapper failed\n") ;
+    	mexErrMsgTxt("CircleArcMexWrapper failed\n") ;
     }
   }
 }

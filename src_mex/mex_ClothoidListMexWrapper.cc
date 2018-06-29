@@ -34,6 +34,7 @@
 "    ClothoidListMexWrapper( 'push_back', OBJ, x0, y0, theta0, kappa0, dkappa, L ) ;\n" \
 "    ClothoidListMexWrapper( 'push_back_G1', OBJ, x1, y1, theta1 ) ;\n" \
 "    ClothoidListMexWrapper( 'push_back_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
+"    ClothoidListMexWrapper( 'copy', OBJ, OBJ1 ) ;\n" \
 "\n" \
 "  - Eval:\n" \
 "    [x,y,theta,kappa] = ClothoidListMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
@@ -65,6 +66,11 @@
 "  - Distance:\n" \
 "    [X,Y,s,dst] = ClothoidListMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
 "    [dst,s]     = ClothoidListMexWrapper( 'distance', OBJ, x, y ) ;\n" \
+"  - Intersection:\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_line', OBJ, OBJ2 ) ;%\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_circle', OBJ, OBJ2 ) ;%\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid', OBJ, OBJ2 ) ;%\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid_list', OBJ, OBJ2 ) ;%\n" \
 "\n" \
 "  - Bounding Box:\n" \
 "    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size ) ;%\n" \
@@ -340,31 +346,6 @@ namespace G2lib {
         }
         #undef CMD
 
-      } else if ( cmd == "closestPoint" ) {
-
-        #define CMD "ClothoidListMexWrapper('closestPoint',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
-          mwSize nrx, ncx, nry, ncy;
-          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
-
-          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
-          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
-          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
-          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
-
-          mwSize size = nrx*ncx ;
-          for ( mwSize i = 0 ; i < size ; ++i )
-            *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ ) ;
-        }
-        #undef CMD
-
       } else if ( cmd == "sBegin"     || cmd == "sEnd"     ||
                   cmd == "xBegin"     || cmd == "xEnd"     ||
                   cmd == "yBegin"     || cmd == "yEnd"     ||
@@ -460,6 +441,66 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
         ptr->reverse();
+
+        #undef CMD
+
+      } else if ( cmd == "closestPoint" ) {
+
+        #define CMD "ClothoidListMexWrapper('closestPoint',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
+        if ( nlhs > 0 ) {
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
+          mwSize nrx, ncx, nry, ncy;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
+          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+
+          mwSize size = nrx*ncx ;
+          for ( mwSize i = 0 ; i < size ; ++i )
+            *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ ) ;
+        }
+        #undef CMD
+
+      } else if ( cmd == "intersect_line"   ||
+                  cmd == "intersect_circle" ||
+                  cmd == "intersect_clothoid" ||
+                  cmd == "intersect_clothoid_list" ) {
+
+        #define CMD "ClothoidListMexWrapper('intersect_*',OBJ,OBJ2): "
+        MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs ) ;
+
+        std::vector<real_type> s1, s2 ;
+        int_type               max_iter  = 10 ;
+        real_type              tolerance = 1e-8 ;
+
+        if ( cmd == "intersect_line" ) {
+          LineSegment const * ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
+          ptr->intersect( *ptr1, s1, s2, max_iter, tolerance );
+        } else if (  cmd == "intersect_circle" ) {
+          CircleArc const * ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
+          ptr->intersect( *ptr1, s1, s2, max_iter, tolerance );
+        } else if (  cmd == "intersect_clothoid" ) {
+          ClothoidCurve const * ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+          ptr->intersect( *ptr1, s1, s2, max_iter, tolerance );
+        } else if ( cmd == "intersect_clothoid_list" ) {
+          ClothoidList const * ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
+          ptr->intersect( *ptr1, s1, s2, max_iter, tolerance );
+        }
+
+        real_type * S1 = createMatrixValue( arg_out_0, s1.size(), 1 ) ;
+        real_type * S2 = createMatrixValue( arg_out_1, s2.size(), 1 ) ;
+
+        std::copy( s1.begin(), s1.end(), S1 ) ;
+        std::copy( s2.begin(), s2.end(), S2 ) ;
 
         #undef CMD
 
@@ -696,6 +737,17 @@ namespace G2lib {
 
         // Destroy the C++ object
         DATA_DELETE(arg_in_1);
+
+        #undef CMD
+
+      } else if ( cmd == "copy" ) {
+
+        #define CMD "ClothoidListMexWrapper('copy',OBJ,OBJ1): "
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+
+        ClothoidList const * CL = convertMat2Ptr<ClothoidList>(arg_in_2);
+        ptr->copy(*CL) ;
 
         #undef CMD
 

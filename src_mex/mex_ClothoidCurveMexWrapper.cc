@@ -39,6 +39,7 @@
 "    ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
 "    [ L_D, k_D, dk_D ] = ClothoidCurveMexWrapper( 'build_G1_D', OBJ, x0, y0, theta0, x1, y1, theta1 ) ;\n" \
 "    res = ClothoidCurveMexWrapper( 'build_forward', OBJ,x0,y0,theta0,k0,x1,y1 ) ;\n" \
+"    ClothoidCurveMexWrapper( 'copy', OBJ, OBJ1 ) ;\n" \
 "\n" \
 "  - Eval:\n" \
 "    [x,y,theta,kappa] = ClothoidCurveMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
@@ -78,9 +79,15 @@
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPointBySample', OBJ, x, y, ds ) ;\n" \
 "    [dst,s]     = ClothoidCurveMexWrapper( 'distanceBySample', OBJ, x, y, ds ) ;\n" \
 "\n" \
+"  - Intersection:\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_line', OBJ, OBJ2 ) ;%\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_circle', OBJ, OBJ2 ) ;%\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid', OBJ, OBJ2 ) ;%\n" \
+"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid_list', OBJ, OBJ2 ) ;%\n" \
+"\n" \
 "  - Bounding Box:\n" \
-"%   TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size ) ;%\n" \
-"%   TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size, offs ) ;%\n" \
+"    TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size ) ;%\n" \
+"    TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size, offs ) ;%\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \
@@ -328,115 +335,6 @@ namespace G2lib {
 
         #undef CMD
 
-      } else if ( cmd == "distance" ) {
-
-        #define CMD "ClothoidCurveMexWrapper('distance',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
-          mwSize nrx, ncx, nry, ncy;
-          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
-
-          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
-
-          mwSize size = nrx*ncx ;
-          if ( nlhs > 1 ) {
-            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
-            for ( mwSize i = 0 ; i < size ; ++i )
-              *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
-          } else {
-            for ( mwSize i = 0 ; i < size ; ++i )
-              *dst++ = ptr->distance( *x++, *y++ ) ;
-          }
-        }
-        #undef CMD
-
-      } else if ( cmd == "distanceBySample" ) {
-
-        #define CMD "ClothoidCurveMexWrapper('distance',OBJ,x,y,ds): "
-        MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = " << nrhs);
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
-          mwSize nrx, ncx, nry, ncy;
-          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
-          real_type ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
-          MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
-
-          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
-
-          mwSize size = nrx*ncx ;
-          if ( nlhs > 1 ) {
-            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
-            for ( mwSize i = 0 ; i < size ; ++i )
-              *dst++ = ptr->distanceBySample( ds, *x++, *y++, *s++ ) ;
-          } else {
-            for ( mwSize i = 0 ; i < size ; ++i )
-              *dst++ = ptr->distanceBySample( ds, *x++, *y++ ) ;
-          }
-        }
-        #undef CMD
-
-      } else if ( cmd == "closestPoint" ) {
-
-        #define CMD "ClothoidCurveMexWrapper('closestPoint',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
-          mwSize nrx, ncx, nry, ncy;
-          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
-
-          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
-          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
-          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
-          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
-
-          mwSize size = nrx*ncx ;
-          for ( mwSize i = 0 ; i < size ; ++i )
-            *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ ) ;
-        }
-        #undef CMD
-
-      } else if ( cmd == "closestPointBySample" ) {
-
-        #define CMD "ClothoidCurveMexWrapper('closestPointBySample',OBJ,x,y,ds): "
-        MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = " << nrhs);
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
-          mwSize nrx, ncx, nry, ncy;
-          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
-          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
-
-          real_type ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
-          MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
-
-          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
-          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
-          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
-          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
-
-          mwSize size = nrx*ncx ;
-          for ( mwSize i = 0 ; i < size ; ++i )
-            *dst++ = ptr->closestPointBySample( ds, *x++, *y++, *X++, *Y++, *S++ ) ;
-        }
-        #undef CMD
-
       } else if ( cmd == "getPars" ) {
 
         MEX_ASSERT(nrhs == 2, "ClothoidCurveMexWrapper('getPars',OBJ): expected 2 inputs, nrhs = " << nrhs);
@@ -666,6 +564,153 @@ namespace G2lib {
 
         #undef CMD
 
+      } else if ( cmd == "distance" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('distance',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
+        if ( nlhs > 0 ) {
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
+          mwSize nrx, ncx, nry, ncy;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+
+          mwSize size = nrx*ncx ;
+          if ( nlhs > 1 ) {
+            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distance( *x++, *y++, *s++ ) ;
+          } else {
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distance( *x++, *y++ ) ;
+          }
+        }
+        #undef CMD
+
+      } else if ( cmd == "distanceBySample" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('distance',OBJ,x,y,ds): "
+        MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = " << nrhs);
+        if ( nlhs > 0 ) {
+          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
+          mwSize nrx, ncx, nry, ncy;
+          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+          real_type ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
+          MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
+
+          real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+
+          mwSize size = nrx*ncx ;
+          if ( nlhs > 1 ) {
+            real_type * s = createMatrixValue( arg_out_1, nrx, ncx ) ;
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distanceBySample( ds, *x++, *y++, *s++ ) ;
+          } else {
+            for ( mwSize i = 0 ; i < size ; ++i )
+              *dst++ = ptr->distanceBySample( ds, *x++, *y++ ) ;
+          }
+        }
+        #undef CMD
+
+      } else if ( cmd == "closestPoint" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('closestPoint',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
+
+        mwSize nrx, ncx, nry, ncy;
+        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
+                              CMD "`x` expected to be a real vector/matrix" ) ;
+        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
+                              CMD "`y` expected to be a real vector/matrix" ) ;
+        MEX_ASSERT( nrx == nry && ncx == ncy,
+                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+        real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+        real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
+        real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+
+        mwSize size = nrx*ncx ;
+        for ( mwSize i = 0 ; i < size ; ++i )
+          *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ ) ;
+
+        #undef CMD
+
+      } else if ( cmd == "closestPointBySample" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('closestPointBySample',OBJ,x,y,ds): "
+        MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = " << nrhs);
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs ) ;
+
+        mwSize nrx, ncx, nry, ncy;
+        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
+                              CMD "`x` expected to be a real vector/matrix" ) ;
+        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
+                              CMD "`y` expected to be a real vector/matrix" ) ;
+        MEX_ASSERT( nrx == nry && ncx == ncy,
+                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+        real_type ds = getScalarValue( arg_in_4, CMD "`ds` expected to be a real scalar" );
+        MEX_ASSERT( ds > 0, CMD "`ds` = " << ds << " must be a positive number" );
+
+        real_type * X   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+        real_type * S   = createMatrixValue( arg_out_2, nrx, ncx ) ;
+        real_type * dst = createMatrixValue( arg_out_3, nrx, ncx ) ;
+
+        mwSize size = nrx*ncx ;
+        for ( mwSize i = 0 ; i < size ; ++i )
+          *dst++ = ptr->closestPointBySample( ds, *x++, *y++, *X++, *Y++, *S++ ) ;
+
+        #undef CMD
+
+      } else if ( cmd == "intersect_line"   ||
+                  cmd == "intersect_circle" ||
+                  cmd == "intersect_clothoid" ||
+                  cmd == "intersect_clothoid_list" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('intersect_*',OBJ,OBJ2): "
+        MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs ) ;
+
+        std::vector<real_type> s1, s2 ;
+        int_type               max_iter  = 10 ;
+        real_type              tolerance = 1e-8 ;
+
+        if ( cmd == "intersect_line" ) {
+          LineSegment const * ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
+          ptr->intersect( *ptr1, s1, s2, max_iter, tolerance );
+        } else if (  cmd == "intersect_circle" ) {
+          CircleArc const * ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
+          ptr->intersect( *ptr1, s1, s2, max_iter, tolerance );
+        } else if (  cmd == "intersect_clothoid" ) {
+          ClothoidCurve const * ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+          ptr->intersect( *ptr1, s1, s2, max_iter, tolerance );
+        } else if ( cmd == "intersect_clothoid_list" ) {
+          // exchange intersection
+          ClothoidList const * ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
+          ptr1->intersect( *ptr, s2, s1, max_iter, tolerance );
+        }
+
+        real_type * S1 = createMatrixValue( arg_out_0, s1.size(), 1 ) ;
+        real_type * S2 = createMatrixValue( arg_out_1, s2.size(), 1 ) ;
+
+        std::copy( s1.begin(), s1.end(), S1 ) ;
+        std::copy( s2.begin(), s2.end(), S2 ) ;
+
+        #undef CMD
+
       } else if ( cmd == "bbox" ) {
 
         #define CMD "ClothoidCurveMexWrapper('bbox', OBJ, max_angle, max_size [,offs]): "
@@ -700,6 +745,17 @@ namespace G2lib {
 
         // Destroy the C++ object
         DATA_DELETE(arg_in_1);
+
+        #undef CMD
+
+      } else if ( cmd == "copy" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('copy',OBJ,OBJ1): "
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+
+        ClothoidCurve const * C = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+        ptr->copy(*C) ;
 
         #undef CMD
 

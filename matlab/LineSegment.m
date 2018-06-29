@@ -38,6 +38,18 @@ classdef LineSegment < handle
       LineSegmentMexWrapper('delete', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function obj = obj_handle( self )
+      obj = self.objectHandle ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function str = is_type( ~ )
+      str = 'LineSegment' ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function copy( C )
+      LineSegmentMexWrapper('copy', self.objectHandle, C.obj_handle() );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
       %
       % Build the circle from known parameters
@@ -105,7 +117,7 @@ classdef LineSegment < handle
       nurbs = LineSegmentMexWrapper('to_nurbs', self.objectHandle);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [X,Y] = eval(self, s)
+    function varargout = eval(self, s)
       % eval the circle at curvilinear abscissa `s`
       % Usage:
       %    [x,y] = ref.eval( s )
@@ -117,22 +129,22 @@ classdef LineSegment < handle
       % On output:
       %    x, y:  coordinates of the curve
       %
-      [X,Y] = LineSegmentMexWrapper('eval', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [DX,DY] = eval_D(self, s)
+    function varargout = eval_D(self, s)
       % eval the circle derivative at curvilinear abscissa `s`
-      [DX,DY] = LineSegmentMexWrapper('eval_D', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_D', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [DDX,DDY] = eval_DD(self, s)
+    function varargout = eval_DD(self, s)
       % eval the circle second derivative at curvilinear abscissa `s`
-      [DDX,DDY] = LineSegmentMexWrapper('eval_DD', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_DD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [DDDX,DDDY] = eval_DDD(self, s)
+    function varargout = eval_DDD(self, s)
       % eval the circle third derivative at curvilinear abscissa `s`
-      [DDDX,DDDY] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X0 = xBegin(self)

@@ -293,14 +293,16 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::intersect_internal( bbData const & c1,
-                                     real_type      c1_offs,
-                                     real_type    & s1,
-                                     bbData const & c2,
-                                     real_type      c2_offs,
-                                     real_type    & s2,
-                                     int_type       max_iter,
-                                     real_type      tolerance ) const {
+  ClothoidCurve::intersect_internal(
+    bbData const & c1,
+    real_type      c1_offs,
+    real_type    & s1,
+    bbData const & c2,
+    real_type      c2_offs,
+    real_type    & s2,
+    int_type       max_iter,
+    real_type      tolerance
+  ) const {
     real_type angle1a = c1.cd.theta(0) ;
     real_type angle1b = c1.cd.theta(c1.L) ;
     real_type angle2a = c2.cd.theta(0) ;
@@ -314,6 +316,7 @@ namespace G2lib {
     if ( dmax < dab ) { dmax = dab ; s2 = c2.L ; }
     if ( dmax < dba ) { dmax = dba ; s1 = 0 ; s2 = 0 ; }
     if ( dmax < dbb ) {              s1 = 0 ; s2 = c2.L ; }
+    int_type nout = 0 ;
     for ( int_type i = 0 ; i < max_iter ; ++i ) {
       real_type t1[2], t2[2], p1[2], p2[2] ;
       c1.cd.eval  ( s1, c1_offs, p1[0], p1[1] ) ;
@@ -333,10 +336,18 @@ namespace G2lib {
       real_type py  = p2[1]-p1[1] ;
       s1 += (py*t2[0] - px*t2[1])/det ;
       s2 += (t1[0]*py - t1[1]*px)/det ;
-      if ( s1 <= 0 || s1 >= c1.L ||
-           s2 <= 0 || s2 >= c2.L ) break ;
-      if ( std::abs(px) <= tolerance ||
-           std::abs(py) <= tolerance ) return true ;
+      if ( ! ( isfinite(s1) && isfinite(s1) ) ) break ;
+      bool out = false ;
+      if      ( s1 <= 0    ) { out = true ; s1 = 0    ; }
+      else if ( s1 >= c1.L ) { out = true ; s1 = c1.L ; }
+      if      ( s2 <= 0    ) { out = true ; s2 = 0    ; }
+      else if ( s2 >= c2.L ) { out = true ; s2 = c2.L ; }
+      if ( out ) {
+        if ( ++nout > 3 ) break ;
+      } else {
+        if ( std::abs(px) <= tolerance &&
+             std::abs(py) <= tolerance ) return true ;
+      }
     }
     return false ;
   }
@@ -344,13 +355,15 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::intersect( real_type             offs,
-                            ClothoidCurve const & clot,
-                            real_type             clot_offs,
-                            vector<real_type>   & s1,
-                            vector<real_type>   & s2,
-                            int_type              max_iter,
-                            real_type             tolerance ) const {
+  ClothoidCurve::intersect(
+    real_type             offs,
+    ClothoidCurve const & clot,
+    real_type             clot_offs,
+    vector<real_type>   & s1,
+    vector<real_type>   & s2,
+    int_type              max_iter,
+    real_type             tolerance
+  ) const {
     vector<bbData> bbV0, bbV1 ;
     bbSplit( m_pi/50, L/3, offs, bbV0 ) ;
     clot.bbSplit( m_pi/50, clot.L/3, clot_offs, bbV1 ) ;
@@ -379,11 +392,13 @@ namespace G2lib {
 
   // collision detection
   bool
-  ClothoidCurve::approximate_collision( real_type             offs,
-                                        ClothoidCurve const & clot,
-                                        real_type             clot_offs,
-                                        real_type             max_angle,
-                                        real_type             max_size ) const {
+  ClothoidCurve::approximate_collision(
+    real_type             offs,
+    ClothoidCurve const & clot,
+    real_type             clot_offs,
+    real_type             max_angle,
+    real_type             max_size
+  ) const {
     vector<bbData> bbV0, bbV1 ;
     bbSplit( max_angle, max_size, offs, bbV0 ) ;
     clot.bbSplit( max_angle, max_size, clot_offs, bbV1 ) ;

@@ -27,6 +27,7 @@
 "  LineSegmentMexWrapper( 'build', OBJ, x0, y0, theta0, L ) ;\n" \
 "  LineSegmentMexWrapper( 'build', OBJ, p0, p1 ) ;\n" \
 "  LineSegmentMexWrapper( 'build', OBJ, p0, theta0, L ) ;\n" \
+"  LineSegmentMexWrapper( 'copy', OBJ, OBJ1 ) ;\n" \
 "  [p1,p2] = LineSegmentMexWrapper( 'points', OBJ ) ;\n" \
 "\n" \
 "  LineSegmentMexWrapper( 'changeOrigin', OBJ, x0, y0 ) ;\n" \
@@ -152,6 +153,17 @@ namespace G2lib {
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         // Destroy the C++ object
         DATA_DELETE( arg_in_1 ) ;
+        #undef CMD
+
+      } else if ( cmd == "copy" ) {
+
+        #define CMD "LineSegmentMexWrapper('copy',OBJ,OBJ1): "
+        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+
+        LineSegment const * LS = convertMat2Ptr<LineSegment>(arg_in_2);
+        ptr->copy(*LS) ;
+
         #undef CMD
 
       } else if ( cmd == "changeOrigin" ) {
@@ -282,25 +294,51 @@ namespace G2lib {
       } else {
 
         if ( nrhs == 3 ) {
+
+          #define CMD "LineSegmentMexWrapper('eval*',OBJ,s): "
+
           mwSize size ;
-          double const * s = getVectorPointer( arg_in_2, size, "Line: s expected to be a real vector" ) ;
-          double *pX = createMatrixValue( arg_out_0, 1,size );
-          double *pY = createMatrixValue( arg_out_1, 1,size );
-          if ( cmd == "eval" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval( *s, *pX, *pY ) ;
-          } else if ( cmd == "eval_D" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval_D( *s, *pX, *pY ) ;
-          } else if ( cmd == "eval_DD" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval_DD( *s, *pX, *pY ) ;
-          } else if ( cmd == "eval_DDD" ) {
-            for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-              ptr->eval_DDD( *s, *pX, *pY ) ;
+          real_type const * s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" ) ;
+          if ( nlhs == 1 ) {
+            real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+            if ( cmd == "eval" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_D" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval_D( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval_DD( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
+                ptr->eval_DDD( *s, pXY[0], pXY[1] ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else if ( nlhs == 2 ) {
+            real_type *pX = createMatrixValue( arg_out_0, 1,size );
+            real_type *pY = createMatrixValue( arg_out_1, 1,size );
+            if ( cmd == "eval" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_D" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval_D( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval_DD( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
+                ptr->eval_DDD( *s, *pX, *pY ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
           } else {
-            MEX_ASSERT(false, "Unknown command: " << cmd );
+            MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
           }
+
+          #undef CMD
 
         } else if ( nrhs == 2 ) {
 

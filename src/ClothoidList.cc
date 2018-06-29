@@ -587,6 +587,56 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  ClothoidList::intersect( real_type                offs,
+                           ClothoidCurve const &    c,
+                           real_type                c_offs,
+                           std::vector<real_type> & s1,
+                           std::vector<real_type> & s2,
+                           int_type                 max_iter,
+                           real_type                tolerance ) const {
+    s1.clear() ;
+    s2.clear() ;
+    std::vector<real_type>::const_iterator iss1, iss2;
+    for ( int_type ns = 0 ; ns < int_type(clotoidList.size()) ; ++ns ) {
+      std::vector<real_type> ss1, ss2 ;
+      clotoidList[ns].intersect( offs, c, c_offs, ss1, ss2, max_iter, tolerance ) ;
+      for ( iss1 = ss1.begin() ;iss1 != ss1.end() ; ++iss1 )
+        s1.push_back( s0[ns]+(*iss1) ) ;
+      for ( iss2 = ss2.begin() ; iss2 != ss2.end() ; ++iss2 )
+        s2.push_back( *iss2 ) ;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::intersect( real_type                offs,
+                           ClothoidList const &     CL,
+                           real_type                c_offs,
+                           std::vector<real_type> & s1,
+                           std::vector<real_type> & s2,
+                           int_type                 max_iter,
+                           real_type                tolerance ) const {
+    s1.clear() ;
+    s2.clear() ;
+    std::vector<real_type>::const_iterator iss1, iss2;
+    for ( int_type ns = 0 ; ns < int_type(clotoidList.size()) ; ++ns ) {
+      ClothoidCurve const & C = clotoidList[ns] ;
+      for ( int_type ns1 = 0 ; ns1 < CL.numSegment() ; ++ns1 ) {
+        ClothoidCurve const & C1 = CL.clotoidList[ns1] ;
+        std::vector<real_type> ss1, ss2 ;
+        C.intersect( offs, C1, c_offs, ss1, ss2, max_iter, tolerance ) ;
+        for ( iss1 = ss1.begin() ;iss1 != ss1.end() ; ++iss1 )
+          s1.push_back( s0[ns]+(*iss1) ) ;
+        for ( iss2 = ss2.begin() ; iss2 != ss2.end() ; ++iss2 )
+          s2.push_back( CL.s0[ns1]+*iss2 ) ;
+      }
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   ClothoidList::export_table( std::ostream & stream ) const {
     stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n" ;
     std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;

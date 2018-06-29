@@ -32,6 +32,14 @@ classdef ClothoidCurve < handle
       obj = self.objectHandle ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function str = is_type( ~ )
+      str = 'ClothoidCurve' ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function copy( C )
+      ClothoidCurveMexWrapper('copy', self.objectHandle, C.obj_handle() );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
       %
       % Build the clothoid from known parameters
@@ -283,6 +291,21 @@ classdef ClothoidCurve < handle
       %    ref.reverse()
       %
       ClothoidCurveMexWrapper( 'reverse', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s1,s2] = intersect( self, C )
+      stype = C.is_type();
+      if strcmp(stype,'LineSegment')
+        [s1,s2] = ClothoidCurveMexWrapper( 'intersect_line', self.objectHandle, C.obj_handle() );
+      elseif strcmp(stype,'CircleArc')
+        [s1,s2] = ClothoidCurveMexWrapper( 'intersect_circle', self.objectHandle, C.obj_handle() );
+      elseif strcmp(stype,'ClothoidCurve')
+        [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid', self.objectHandle, C.obj_handle() );
+      elseif strcmp(stype,'ClothoidList')
+        [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid_list', self.objectHandle, C.obj_handle() );
+      else
+        error('ClothoidCurve::intersect, unknown type: %s\n', stype ) ;
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [xp,yp,xm,ym] = infinity( self )

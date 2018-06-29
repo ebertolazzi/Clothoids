@@ -25,6 +25,8 @@
 #define CLOTHOID_HH
 
 #include "Fresnel.hh"
+#include "Line.hh"
+#include "Circle.hh"
 #include "Triangle2D.hh"
 
 #include <string>
@@ -133,6 +135,24 @@ namespace G2lib {
 
     ClothoidCurve( ClothoidCurve const & s ) { copy(s) ; }
 
+    ClothoidCurve( LineSegment const & LS ) {
+      CD.x0     = LS.x0 ;
+      CD.y0     = LS.y0 ;
+      CD.theta0 = LS.theta0 ;
+      CD.kappa0 = 0 ;
+      CD.dk     = 0 ;
+      L         = LS.L ;
+    }
+
+    ClothoidCurve( CircleArc const & C ) {
+      CD.x0     = C.x0 ;
+      CD.y0     = C.y0 ;
+      CD.theta0 = C.theta0 ;
+      CD.kappa0 = C.k ;
+      CD.dk     = 0 ;
+      L         = C.L ;
+    }
+
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s) ; return *this ; }
 
@@ -168,12 +188,12 @@ namespace G2lib {
 
     /*! \brief build a clothoid by solving the hermite G1 problem
      *
-     * \param x0     initial x position            \f$ x_0      \f$
-     * \param y0     initial y position            \f$ y_0      \f$
-     * \param theta0 initial angle                 \f$ \theta_0 \f$
-     * \param x1     final x position              \f$ x_1      \f$
-     * \param y1     final y position              \f$ y_1      \f$
-     * \param theta1 final angle                   \f$ \theta_1 \f$
+     * \param x0     initial x position \f$ x_0      \f$
+     * \param y0     initial y position \f$ y_0      \f$
+     * \param theta0 initial angle      \f$ \theta_0 \f$
+     * \param x1     final x position   \f$ x_1      \f$
+     * \param y1     final y position   \f$ y_1      \f$
+     * \param theta1 final angle        \f$ \theta_1 \f$
      * \return number of iteration performed
      */
     int
@@ -189,12 +209,12 @@ namespace G2lib {
 
     /*! \brief build a clothoid by solving the hermite G1 problem
      *
-     * \param x0     initial x position            \f$ x_0      \f$
-     * \param y0     initial y position            \f$ y_0      \f$
-     * \param theta0 initial angle                 \f$ \theta_0 \f$
-     * \param x1     final x position              \f$ x_1      \f$
-     * \param y1     final y position              \f$ y_1      \f$
-     * \param theta1 final angle                   \f$ \theta_1 \f$
+     * \param x0     initial x position \f$ x_0      \f$
+     * \param y0     initial y position \f$ y_0      \f$
+     * \param theta0 initial angle      \f$ \theta_0 \f$
+     * \param x1     final x position   \f$ x_1      \f$
+     * \param y1     final y position   \f$ y_1      \f$
+     * \param theta1 final angle        \f$ \theta_1 \f$
      * \return number of iteration performed
      */
     int
@@ -208,7 +228,8 @@ namespace G2lib {
                 real_type k_D[2],
                 real_type dk_D[2],
                 real_type tol = 1e-12 ) {
-      return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L, true, L_D, k_D, dk_D ) ;
+      return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L,
+                          true, L_D, k_D, dk_D ) ;
     }
 
     /*! \brief build a clothoid by solving the forward problem
@@ -229,6 +250,34 @@ namespace G2lib {
                    real_type y1,
                    real_type tol = 1e-12 ) {
       return CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, L );
+    }
+
+    /*! \brief build a clothoid from a line segment
+     *
+     * \param LS line segment object
+     */
+    void
+    build( LineSegment const & LS ) {
+      CD.x0     = LS.x0 ;
+      CD.y0     = LS.y0 ;
+      CD.theta0 = LS.theta0 ;
+      CD.kappa0 = 0 ;
+      CD.dk     = 0 ;
+      L         = LS.L ;
+    }
+
+    /*! \brief build a clothoid from a line segment
+     *
+     * \param C line segment object
+     */
+    void
+    build( CircleArc const & C ) {
+      CD.x0     = C.x0 ;
+      CD.y0     = C.y0 ;
+      CD.theta0 = C.theta0 ;
+      CD.kappa0 = C.k ;
+      CD.dk     = 0 ;
+      L         = C.L ;
     }
 
     /*! \brief get clothoid angle at curvilinear cooordinate `s`
@@ -449,7 +498,7 @@ namespace G2lib {
       return ok ;
     }
 
-    /*! \brief split clothois in smaller segments
+    /*! \brief split clothoids in smaller segments
      *
      * \param split_angle maximum angle variation
      * \param split_size  maximum height of the triangle
@@ -463,7 +512,33 @@ namespace G2lib {
              std::vector<bbData> & bb,
              bool                  reset_bb = true ) const ;
 
-    // intersect computation
+    /*! \brief intersect two clothoid arcs
+     *
+     * \param offs      offset of the first arc
+     * \param c         the second clothoid arc
+     * \param c_offs    offset of the second arc
+     * \param s1        intersection parameters of the first arc
+     * \param s2        intersection parameters of the second arc
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( real_type                offs,
+               ClothoidCurve const    & c,
+               real_type                c_offs,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const ;
+
+    /*! \brief intersect two clothoid arcs
+     *
+     * \param c         the second clothoid arc
+     * \param s1        intersection parameters of the first arc
+     * \param s2        intersection parameters of the second arc
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
     void
     intersect( ClothoidCurve const    & c,
                std::vector<real_type> & s1,
@@ -473,14 +548,85 @@ namespace G2lib {
       intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
     }
 
+    /*! \brief intersect a clothoid with a circle arc
+     *
+     * \param offs      offset of the first arc
+     * \param c_in      the circle arc
+     * \param c_offs    offset of the circle arc
+     * \param s1        intersection parameters of the first arc
+     * \param s2        intersection parameters of the second arc
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
     void
     intersect( real_type                offs,
-               ClothoidCurve const &    c,
+               CircleArc const        & c_in,
                real_type                c_offs,
                std::vector<real_type> & s1,
                std::vector<real_type> & s2,
-               int_type                  max_iter,
-               real_type                tolerance ) const ;
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect a clothoid with a circle arc
+     *
+     * \param c_in      the circle arc
+     * \param s1        intersection parameters of the first arc
+     * \param s2        intersection parameters of the second arc
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( CircleArc const        & c_in,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect a clothoid with a line segment
+     *
+     * \param offs      offset of the first arc
+     * \param c_in      the line segment
+     * \param c_offs    offset of the line segment
+     * \param s1        intersection parameters of the first arc
+     * \param s2        intersection parameters of the second arc
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( real_type                offs,
+               LineSegment const      & c_in,
+               real_type                c_offs,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect a clothoid with a line segment
+     *
+     * \param c_in      the line segment
+     * \param s1        intersection parameters of the first arc
+     * \param s2        intersection parameters of the second arc
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( LineSegment const      & c_in,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
+    }
 
     // collision detection
     bool
@@ -511,6 +657,18 @@ namespace G2lib {
 
     void
     reverse() ;
+
+    void
+    info( std::ostream & s ) const {
+      s << "Clothoid"
+        << "\nx0     = " << CD.x0
+        << "\ny0     = " << CD.y0
+        << "\ntheta0 = " << CD.theta0
+        << "\nkappa0 = " << CD.kappa0
+        << "\ndk     = " << CD.dk
+        << "\nL      = " << L
+        << '\n' ;
+    }
 
     friend
     std::ostream &
@@ -1036,6 +1194,7 @@ namespace G2lib {
     ~ClothoidList() ;
 
     ClothoidList( ClothoidList const & s ) { copy(s) ; }
+
     ClothoidList const & operator = ( ClothoidList const & s )
     { copy(s) ; return *this ; }
 
@@ -1225,6 +1384,158 @@ namespace G2lib {
       for ( ; ic != clotoidList.end() ; ++ic )
         ic->bbSplit( split_angle, split_size, split_offs, bb, false ) ;
     }
+
+    /*! \brief intersect two clothoid arcs
+     *
+     * \param offs      offset of the first arc
+     * \param c         the second clothoid arc
+     * \param c_offs    offset of the second arc
+     * \param s1        intersection parameters of the first arc
+     * \param s2        intersection parameters of the second arc
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( real_type                offs,
+               ClothoidCurve const &    c,
+               real_type                c_offs,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const ;
+
+    /*! \brief intersect two clothoid curve
+     *
+     * \param c         the clothoid arc
+     * \param s1        intersection parameters of the arc
+     * \param s2        intersection parameters of the clothoid list
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( ClothoidCurve const    & c,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect a clothoid curve to a circle arc
+     *
+     * \param c_in      the circle arc
+     * \param s1        intersection parameters of the arc
+     * \param s2        intersection parameters of the clothoid list
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( CircleArc const        & c_in,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect a clothoid curve to a circle arc
+     *
+     * \param offs      offset of the clothoid
+     * \param c_in      the circle arc
+     * \param c_offs    offset of the circle
+     * \param s1        intersection parameters of the arc
+     * \param s2        intersection parameters of the clothoid list
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( real_type                offs,
+               CircleArc const        & c_in,
+               real_type                c_offs,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect a clothoid curve to a line segment
+     *
+     * \param c_in      the line segment
+     * \param s1        intersection parameters of the arc
+     * \param s2        intersection parameters of the clothoid list
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( LineSegment const      & c_in,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( 0, c, 0, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect a clothoid curve to a line segment
+     *
+     * \param offs      offset of the clothoid
+     * \param c_in      the line segment
+     * \param c_offs    offset of the line segment
+     * \param s1        intersection parameters of the arc
+     * \param s2        intersection parameters of the clothoid list
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( real_type                offs,
+               LineSegment const      & c_in,
+               real_type                c_offs,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      ClothoidCurve c(c_in) ;
+      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect two clothoid list
+     *
+     * \param CL        the second clothoid list
+     * \param s1        intersection parameters of the first clothoid list
+     * \param s2        intersection parameters of the second clothoid list
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( ClothoidList const     & CL,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const {
+      intersect( 0, CL, 0, s1, s2, max_iter, tolerance ) ;
+    }
+
+    /*! \brief intersect two clothoid list
+     *
+     * \param offs      offset of the first clothoid list
+     * \param CL        the second clothoid list
+     * \param c_offs    offset of the second clothoid list
+     * \param s1        intersection parameters of the first clothoid list
+     * \param s2        intersection parameters of the second clothoid list
+     * \param max_iter  max allowed iteration
+     * \param tolerance admitted tolerance
+     */
+    void
+    intersect( real_type                offs,
+               ClothoidList const &     CL,
+               real_type                c_offs,
+               std::vector<real_type> & s1,
+               std::vector<real_type> & s2,
+               int_type                 max_iter,
+               real_type                tolerance ) const ;
 
     /*! \brief Save Clothoid list to a stream
      *
