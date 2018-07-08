@@ -44,28 +44,22 @@ namespace G2lib {
 
   class Biarc {
     CircleArc C0, C1 ;
-    real_type alpha ;
-    //real_type xs, ys, thetas, cs, ss, alpha ;
+    real_type omega ;
 
     void
-    gfun( real_type omega, real_type g[3] ) const {
-      real_type so  = sin(omega) ;
-      real_type co  = cos(omega) ;
-      real_type oco = omega*co ;
+    gfun( real_type alpha, real_type g[3] ) const {
+      real_type so  = sin(alpha) ;
+      real_type co  = cos(alpha) ;
+      real_type oco = alpha*co ;
       g[0] = so + oco ;
-      g[1] = 2*co - omega*so ;
+      g[1] = 2*co - alpha*so ;
       g[2] = -3*so - oco ;
     }
 
   public:
   
     Biarc()
-    //: xs(0)
-    //, ys(0)
-    //, thetas(0)
-    //, cs(0)
-    //, ss(0)
-    : alpha(0)
+    : omega(0)
     {}
 
     //! construct a clothoid with the standard parameters
@@ -89,12 +83,7 @@ namespace G2lib {
     copy( Biarc const & c ) {
       C0.copy(c.C0);
       C1.copy(c.C1);
-      //xs     = c.xs ;
-      //ys     = c.ys ;
-      //thetas = c.thetas ;
-      //cs     = c.cs ;
-      //ss     = c.ss ;
-      alpha  = c.alpha ;
+      omega = c.omega ;
     }
 
     Biarc( Biarc const & ba ) { copy(ba) ; }
@@ -215,6 +204,10 @@ namespace G2lib {
       real_type ss ;
       return distance( x, y, ss );
     }
+
+    void
+    info( std::ostream & stream ) const
+    { stream << "BiArc\n" << *this << '\n'; }
 
     friend
     std::ostream &

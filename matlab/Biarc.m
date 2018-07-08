@@ -244,7 +244,11 @@ classdef Biarc < handle
       [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function lineH = plot( self, npts, varargin )
+    function info( self )
+      BiarcMexWrapper( 'info', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plot( self, npts, varargin )
       % plot: method to plot the clothoid curve
       % Usage:
       %    lineH = ref.plot()
@@ -266,7 +270,7 @@ classdef Biarc < handle
       L     = BiarcMexWrapper( 'length', self.objectHandle );
       S     = 0:L/npts:L ;
       [X,Y] = BiarcMexWrapper( 'eval', self.objectHandle, S );
-      lineH = plot(X,Y,varargin{:});
+      plot(X,Y,varargin{:});
     end
   end
 end

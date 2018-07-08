@@ -195,72 +195,44 @@ namespace G2lib {
 
     real_type dx = x1-x0 ;
     real_type dy = y1-y0 ;
+    real_type d  = hypot(dy,dx);
 
-    alpha = atan2(dy,dx);
-    real_type d = hypot(dy,dx);
+    omega = atan2(dy,dx);
 
     // put in range
-    real_type th0 = theta0-alpha;
-    real_type th1 = theta1-alpha;
+    real_type th0 = theta0 - omega ;
+    real_type th1 = theta1 - omega ;
 
     rangeSymm(th0);
     rangeSymm(th1);
 
-    //real_type thstar = compute_thstar ? -(th0+th1)/2 : BiData.thetas + alpha ;
+    real_type thstar = - (th0+th1)/2 ;
 
-    real_type thstar = -(th0+th1)/2 ;
+    real_type dth  = th1 - th0 ;
+    real_type dth0 = thstar - th0 ;
+    real_type dth1 = thstar - th1 ;
 
-    real_type c0 = cos(th0);
-    real_type s0 = sin(th0);
-    real_type c1 = cos(th1);
-    real_type s1 = sin(th1);
+    real_type t  = d * (Sinc(dth/4) / Sinc(dth/2) ) ;
+    real_type l0 = t/(2*Sinc( dth0/2 )) ;
+    real_type l1 = t/(2*Sinc( dth1/2 )) ;
 
-    real_type thstar0 = thstar-th0;
-    real_type thstar1 = thstar-th1;
+    real_type epsi = 100*std::numeric_limits<real_type>::epsilon();
 
-    real_type Sinc0 = Sinc(thstar0);
-    real_type Cosc0 = Cosc(thstar0);
+    if ( l0 > epsi && l1 > epsi ) {
 
-    real_type Sinc1 = Sinc(thstar1);
-    real_type Cosc1 = Cosc(thstar1);
+      real_type k0 = dth0/l0;
+      real_type k1 = -dth1/l1;
 
-    real_type A[2][2] = {
-      { c0*Sinc0-s0*Cosc0, c1*Sinc1-s1*Cosc1 },
-      { s0*Sinc0+c0*Cosc0, s1*Sinc1+c1*Cosc1 }
-    };
+      C0.build( x0, y0, theta0, k0, l0 );
 
-    real_type b[2] = { 1, 0 };
+      real_type an = omega+(thstar+th0)/2 ;
+      real_type xs = x0 + (t/2)*cos(an);
+      real_type ys = y0 + (t/2)*sin(an);
 
-    Solve2x2 solver;
-    solver.factorize(A);
-    real_type st[2] ;
-    bool ok = solver.solve( b, st );
-    if ( ok ) {
-      real_type epsi = 100*std::numeric_limits<real_type>::epsilon();
-      ok = st[0] > epsi && st[1] > epsi ; // NO ZERO LENGHT SOLUTION
+      C1.build( xs, ys, omega+thstar, k1, l1 );
+      return true ;
     }
-    if ( ok ) {
-
-      real_type L0     = d*st[0];
-      real_type L1     = d*st[1];
-      real_type kappa0 = thstar0/L0;
-      real_type kappa1 = -thstar1/L1;
-
-      C0.build( x0, y0, theta0, kappa0, L0 );
-
-      real_type ca = cos(alpha);
-      real_type sa = sin(alpha);
-
-      real_type xs     = x0 + L0*(A[0][0]*ca-A[1][0]*sa);
-      real_type ys     = y0 + L0*(A[0][0]*sa+A[1][0]*ca);
-      real_type thetas = thstar+alpha;
-      //real_type cs     = cos(thetas);
-      //real_type ss     = sin(thetas);
-
-      C1.build( xs, ys, thetas, kappa1, L1 );
-    }
-
-    return ok ;
+    return false ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -480,9 +452,9 @@ namespace G2lib {
 
   std::ostream &
   operator << ( std::ostream & stream, Biarc const & bi ) {
-    stream <<   "Biarc"
-           << "\nC0 = " << bi.C0
-           << "\nC1 = " << bi.C1
+    stream << "Biarc\n"
+           << "C0\n" << bi.C0
+           << "C1\n" << bi.C1
            << "\n" ;
     return stream ;
   }

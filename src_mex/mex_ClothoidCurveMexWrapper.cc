@@ -736,6 +736,17 @@ namespace G2lib {
         }
         #undef CMD
 
+      } else if ( cmd == "info" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('info',OBJ): "
+
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs ) ;
+        
+        ptr->info(cout) ;
+
+        #undef CMD
+
       } else if ( cmd == "delete" ) {
 
         #define CMD "ClothoidCurveMexWrapper('delete',OBJ): "

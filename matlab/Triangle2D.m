@@ -66,6 +66,10 @@ classdef Triangle2D < handle
       dst = Triangle2DMexWrapper( 'distanceMax', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function info( self )
+      Triangle2DMexWrapper( 'info', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, color, varargin )
       [p1,p2,p3] = self.points() ;
       x = [p1(1),p2(1),p3(1),p1(1)] ;

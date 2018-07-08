@@ -70,6 +70,12 @@ classdef ClothoidList < handle
                                    x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build_3arcG2fixed( self, s0, x0, y0, theta0, kappa0, s1, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build_3arcG2fixed', self.objectHandle, ...
+                                   s0, x0, y0, theta0, kappa0, ...
+                                   s1, x1, y1, theta1, kappa1 );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_2arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
       ok = ClothoidListMexWrapper( 'build_2arcG2', self.objectHandle, ...
                                     x0, y0, theta0, kappa0, ...
@@ -284,6 +290,10 @@ classdef ClothoidList < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function export_ruby( self, filename )
       ClothoidListMexWrapper( 'export_ruby', self.objectHandle, filename );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function info( self )
+      ClothoidListMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )

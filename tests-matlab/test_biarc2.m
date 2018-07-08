@@ -38,5 +38,6 @@ hold off
 plot(p(1,:),p(2,:),'k');
 hold on
 L1 = Biarc(x0,y0,theta0,x1,y1,theta1);
+L1.info();
 L1.plot();
 axis equal

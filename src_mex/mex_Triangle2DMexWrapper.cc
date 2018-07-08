@@ -288,6 +288,17 @@ namespace G2lib {
 
         #undef CMD
 
+      } else if ( cmd == "info" ) {
+
+        #define CMD "Triangle2DMexWrapper('info',OBJ): "
+
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs ) ;
+        
+        ptr->info(cout) ;
+
+        #undef CMD
+
       } else {
         MEX_ASSERT(false, "Triangle2DMexWrapper unknown command: " << cmd );
       }

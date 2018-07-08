@@ -151,6 +151,10 @@ classdef LineSegment < handle
       [d,s] = LineSegmentMexWrapper('distance', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function info( self )
+      LineSegmentMexWrapper( 'info', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot(self,varargin)
       [p1,p2] = self.points() ;
       plot([p1(1),p2(1)],[p1(2),p2(2)],varargin{:});

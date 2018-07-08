@@ -17,33 +17,34 @@ x0     = 0 ;
 y0     = 2 ;
 theta0 = 0 ;
 kappa0 = -0.6 ;
-dk     = 0.2 ;
-L      = 10 ;
-L1     = ClothoidCurve( x0, y0, theta0, kappa0, dk, L );
+x1     = 3 ;
+y1     = 2 ;
+theta1 = 0 ;
+kappa1 = 0.6 ;
+s0 = 0.5 ;
+s1 = 0.5 ;
+C1     = ClothoidList();
+C2     = ClothoidList();
 
-L1.plot(1000,'Color','green','LineWidth',3) ;
+C1.build_3arcG2( x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 );
+C2.build_3arcG2fixed( s0, x0, y0, theta0, kappa0, s1, x1, y1, theta1, kappa1 )
+
+fmt1 = {'Color','green','LineWidth',3 } ;
+fmt2 = {'Color','red','LineWidth',3 } ;
+fmt3 = {'Color','blue','LineWidth',3 } ;
+
+subplot(2,1,1) ;
+C1.plot(1000,fmt1,fmt2) ;
 hold on;
-
-[xx,yy,th,kk] = L1.evaluate(-kappa0/dk);
-plot( [xx,xx+3*cos(th)],[yy,yy+3*sin(th)],'-b' ) ;
-plot( [xx,xx-3*sin(th)],[yy,yy+3*cos(th)],'-b' ) ;
-
-[xx1,yy1,th1,kk1] = L1.evaluate(0);
-plot( [xx1,xx1+3*cos(th1)],[yy1,yy1+3*sin(th1)],'-b' ) ;
-plot( [xx1,xx1-3*sin(th1)],[yy1,yy1+3*cos(th1)],'-b' ) ;
-
-XXX = -2.75 ;
-YYY = -3.2000000000000001776 ;
-
-plot([XXX,xx],[YYY,yy],'-b');
-plot([XXX,xx1],[YYY,yy1],'-r');
-
-plot(XXX,YYY,'ok');
-[xp,yp,xm,ym] = L1.infinity() ;
-
-plot(xp,yp,'or') ;
-plot(xm,ym,'ob') ;
-
+C2.plot(1000,fmt2,fmt3) ;
 axis equal;
+
+subplot(2,1,2) ;
+C1.plotCurvature(1000,fmt1,fmt2) ;
+hold on;
+C2.plotCurvature(1000,fmt2,fmt3) ;
+axis equal;
+
 %
-L1.delete() ;
+C1.delete() ;
+C2.delete() ;

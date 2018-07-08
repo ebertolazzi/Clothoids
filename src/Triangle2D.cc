@@ -457,6 +457,17 @@ namespace G2lib {
 
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  std::ostream &
+  operator << ( std::ostream & stream, Triangle2D const & t ) {
+    stream << "Triangle2D\n"
+           << "P0 = [" << t.p1[0] << ", " << t.p1[1] << "]\n"
+           << "P1 = [" << t.p2[0] << ", " << t.p2[1] << "]\n"
+           << "P2 = [" << t.p3[0] << ", " << t.p3[1] << "]\n" ;
+    return stream ;
+  }
+
 }
 
 ///

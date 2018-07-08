@@ -33,6 +33,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <iostream>
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -659,16 +660,8 @@ namespace G2lib {
     reverse() ;
 
     void
-    info( std::ostream & s ) const {
-      s << "Clothoid"
-        << "\nx0     = " << CD.x0
-        << "\ny0     = " << CD.y0
-        << "\ntheta0 = " << CD.theta0
-        << "\nkappa0 = " << CD.kappa0
-        << "\ndk     = " << CD.dk
-        << "\nL      = " << L
-        << '\n' ;
-    }
+    info( std::ostream & stream ) const
+    { stream << "Clothoid\n" << *this << '\n'; }
 
     friend
     std::ostream &
@@ -939,7 +932,7 @@ namespace G2lib {
      | \param[in] kappa1  final curvature
      | \param[in] Dmax    rough desidered maximum angle variation, if 0 computed automatically
      | \param[in] dmax    rough desidered maximum angle divergence from guess, if 0 computed automatically
-     | \return
+     | \return number of iteration, -1 if fails
      |
     \*/
     int
@@ -953,6 +946,34 @@ namespace G2lib {
            real_type kappa1,
            real_type Dmax = 0,
            real_type dmax = 0 ) ;
+
+    /*!
+     | Compute the 3 arc clothoid spline that fit the data
+     |
+     | \param[in] s0      length of the first segment
+     | \param[in] x0      initial `x` position
+     | \param[in] y0      initial `y` position
+     | \param[in] theta0  initial angle
+     | \param[in] kappa0  initial curvature
+     | \param[in] s1      length of the last segment
+     | \param[in] x1      final `x` position
+     | \param[in] y1      final `y` position
+     | \param[in] theta1  final angle
+     | \param[in] kappa1  final curvature
+     | \return number of iteration, -1 if fails
+     |
+    \*/
+    int
+    build_fixed_length( real_type s0,
+                        real_type x0,
+                        real_type y0,
+                        real_type theta0,
+                        real_type kappa0,
+                        real_type s1,
+                        real_type x1,
+                        real_type y1,
+                        real_type theta1,
+                        real_type kappa1 ) ;
 
     /*!
      | \return get the first clothoid for the 3 arc G2 fitting
@@ -1635,6 +1656,14 @@ namespace G2lib {
 
     bool
     jacobian( real_type const theta[], real_type vals[] ) const ;
+
+    void
+    info( std::ostream & stream ) const
+    { stream << "ClothoidSplineG2\n" << *this << '\n'; }
+
+    friend
+    std::ostream &
+    operator << ( std::ostream & stream, ClothoidSplineG2 const & c ) ;
 
   };
 

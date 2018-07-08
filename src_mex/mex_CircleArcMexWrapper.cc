@@ -395,6 +395,18 @@ namespace G2lib {
         mxSetFieldByNumber( arg_out_0, 0, 5, mx_Poly );
 
         #undef CMD
+
+      } else if ( cmd == "info" ) {
+
+        #define CMD "CircleArcMexWrapper('info',OBJ): "
+
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
+        MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs ) ;
+        
+        ptr->info(cout) ;
+
+        #undef CMD
+
       } else {
 
         #define CMD "CircleArcMexWrapper('eval*'',OBJ,s): "

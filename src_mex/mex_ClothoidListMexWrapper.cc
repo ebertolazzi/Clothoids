@@ -77,10 +77,13 @@
 "    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size, offs ) ;%\n" \
 "\n" \
 "  - G2 spline:\n" \
-"    ok = ClothoidListMexWrapper( 'build3arcG2' || 'build2arcG2' || 'build3arcCLC, ...\n" \
+"    ok = ClothoidListMexWrapper( 'build_3arcG2' || 'build_2arcG2' || 'build_3arcCLC, ...\n" \
 "                                 OBJ, ...\n" \
 "                                 x0, y0, theta0, kappa0, ...\n" \
 "                                 x1, y1, theta1, kappa1 ) ;%\n" \
+"    ok = ClothoidListMexWrapper( 'build_3arcG2fixed', OBJ, ...\n" \
+"                                 s0, x0, y0, theta0, kappa0, ...\n" \
+"                                 s1, x1, y1, theta1, kappa1 ) ;%\n" \
 "    ok = ClothoidListMexWrapper( 'build_G1', OBJ, x, y [,theta] ) ;%\n" \
 "    [theta,ok] = ClothoidListMexWrapper( 'build_theta', OBJ, x, y ) ;%\n" \
 "    dtheta = ClothoidListMexWrapper( 'deltaTheta', OBJ ) ;%\n" \
@@ -571,14 +574,14 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
 
-        real_type x0     = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
-        real_type y0     = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
-        real_type theta0 = getScalarValue( arg_in_4, CMD "Error in reading theta0" ) ;
-        real_type kappa0 = getScalarValue( arg_in_5, CMD "Error in reading kappa0" ) ;
-        real_type x1     = getScalarValue( arg_in_6, CMD "Error in reading x1" ) ;
-        real_type y1     = getScalarValue( arg_in_7, CMD "Error in reading y1" ) ;
-        real_type theta1 = getScalarValue( arg_in_8, CMD "Error in reading theta1" ) ;
-        real_type kappa1 = getScalarValue( arg_in_9, CMD "Error in reading kappa1" ) ;
+        real_type x0     = getScalarValue( arg_in_2, CMD "Error in reading `x0`" ) ;
+        real_type y0     = getScalarValue( arg_in_3, CMD "Error in reading `y0`" ) ;
+        real_type theta0 = getScalarValue( arg_in_4, CMD "Error in reading `theta0`" ) ;
+        real_type kappa0 = getScalarValue( arg_in_5, CMD "Error in reading `kappa0`" ) ;
+        real_type x1     = getScalarValue( arg_in_6, CMD "Error in reading `x1`" ) ;
+        real_type y1     = getScalarValue( arg_in_7, CMD "Error in reading `y1`" ) ;
+        real_type theta1 = getScalarValue( arg_in_8, CMD "Error in reading `theta1`" ) ;
+        real_type kappa1 = getScalarValue( arg_in_9, CMD "Error in reading `kappa1`" ) ;
 
         int iter ;
         if ( cmd == "build_3arcG2" ) {
@@ -615,6 +618,39 @@ namespace G2lib {
             ptr->push_back(g2sol.getS1());
           }
         }
+        setScalarInt( arg_out_0, iter );
+
+        #undef CMD
+
+      } else if ( cmd == "build_3arcG2fixed" ) {
+
+        #define CMD "ClothoidListMexWrapper('build_3arcG2fixed', OBJ, ...): "
+
+        MEX_ASSERT(nrhs == 12, CMD "expected 12 inputs, nrhs = " << nrhs );
+        MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
+
+        real_type s0     = getScalarValue( arg_in_2,  CMD "Error in reading `s0`" ) ;
+        real_type x0     = getScalarValue( arg_in_3,  CMD "Error in reading `x0`" ) ;
+        real_type y0     = getScalarValue( arg_in_4,  CMD "Error in reading `y0`" ) ;
+        real_type theta0 = getScalarValue( arg_in_5,  CMD "Error in reading `theta0`" ) ;
+        real_type kappa0 = getScalarValue( arg_in_6,  CMD "Error in reading `kappa0`" ) ;
+        real_type s1     = getScalarValue( arg_in_7,  CMD "Error in reading `s1`" ) ;
+        real_type x1     = getScalarValue( arg_in_8,  CMD "Error in reading `x1`" ) ;
+        real_type y1     = getScalarValue( arg_in_9,  CMD "Error in reading `y1`" ) ;
+        real_type theta1 = getScalarValue( arg_in_10, CMD "Error in reading `theta1`" ) ;
+        real_type kappa1 = getScalarValue( arg_in_11, CMD "Error in reading `kappa1`" ) ;
+
+        static G2solve3arc g2sol ;
+        int iter = g2sol.build_fixed_length( s0, x0, y0, theta0, kappa0,
+                                             s1, x1, y1, theta1, kappa1 ) ;
+        if ( iter >= 0 ) {
+          ptr->init();
+          ptr->reserve(3);
+          ptr->push_back(g2sol.getS0());
+          ptr->push_back(g2sol.getSM());
+          ptr->push_back(g2sol.getS1());
+        }
+
         setScalarInt( arg_out_0, iter );
 
         #undef CMD

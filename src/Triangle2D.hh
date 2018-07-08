@@ -214,6 +214,14 @@ namespace G2lib {
     real_type
     distMax( real_type x, real_type y ) const ;
 
+    void
+    info( std::ostream & stream ) const
+    { stream << "Triangle2D\n" << *this << '\n'; }
+
+    friend
+    std::ostream &
+    operator << ( std::ostream & stream, Triangle2D const & c ) ;
+
   };
 
 }

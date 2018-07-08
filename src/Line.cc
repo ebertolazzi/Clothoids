@@ -117,6 +117,19 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  int
+  LineSegment::toBS( real_type knots[4], real_type Poly[2][2] ) const {
+    knots[0] = knots[1] = 0 ;
+    knots[2] = knots[3] = 1 ;
+    Poly[0][0] = x0 ;
+    Poly[0][1] = y0 ;
+    Poly[1][0] = x0+L*c0 ;
+    Poly[1][1] = y0+L*s0 ;
+    return 2 ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   std::ostream &
   operator << ( std::ostream & stream, LineSegment const & c ) {
     stream <<   "x0     = " << c.x0

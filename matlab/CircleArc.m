@@ -219,11 +219,7 @@ classdef CircleArc < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function info( self )
-      fprintf('x0     = %g\n',self.xBegin());
-      fprintf('y0     = %g\n',self.yBegin());
-      fprintf('theta0 = %g\n',self.thetaBegin());
-      fprintf('k      = %g\n',self.kappa());
-      fprintf('length = %g\n',self.length());
+      CircleArcMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function lineH = plot(self,varargin)

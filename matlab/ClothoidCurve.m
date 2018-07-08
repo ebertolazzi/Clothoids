@@ -202,14 +202,14 @@ classdef ClothoidCurve < handle
       res = ClothoidCurveMexWrapper( 'length', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function info( self )
-      fprintf('x0     = %g\n',self.xBegin());
-      fprintf('y0     = %g\n',self.yBegin());
-      fprintf('theta0 = %g\n',self.thetaBegin());
-      fprintf('kappa0 = %g\n',self.kappaBegin());
-      fprintf('dk     = %g\n',self.kappa_D());
-      fprintf('length = %g\n',self.length());
-    end
+    %function info( self )
+    %  fprintf('x0     = %g\n',self.xBegin());
+    %  fprintf('y0     = %g\n',self.yBegin());
+    %  fprintf('theta0 = %g\n',self.thetaBegin());
+    %  fprintf('kappa0 = %g\n',self.kappaBegin());
+    %  fprintf('dk     = %g\n',self.kappa_D());
+    %  fprintf('length = %g\n',self.length());
+    %end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function trim( self, smin, smax )
       % trim the clothoid curve at the corresponging curvilinear coordinates
@@ -326,6 +326,10 @@ classdef ClothoidCurve < handle
       %    ref.reverse()
       %
       BB = ClothoidCurveMexWrapper( 'bbox', self.objectHandle, max_angle, max_size, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function info( self )
+      ClothoidCurveMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )

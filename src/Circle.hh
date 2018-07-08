@@ -284,20 +284,13 @@ namespace G2lib {
      * \param Poly   polygon of the B-spline
      * \return       3 up to 9 the number of polygon points
     \*/
-
     int_type
-    toNURBS( real_type knots[], real_type Poly[], bool get_size ) const ; // Poly 3 x n matrix
+    toNURBS( real_type knots[], real_type Poly[], bool get_size ) const ;
+    // Poly 3 x n matrix
 
     void
-    info( std::ostream & s ) const {
-      s << "CircleArc"
-        << "\nx0     = " << x0
-        << "\ny0     = " << y0
-        << "\ntheta0 = " << theta0
-        << "\nk      = " << k
-        << "\nL      = " << L
-        << '\n' ;
-    }
+    info( std::ostream & stream ) const
+    { stream << "CircleArc\n" << *this << '\n'; }
 
     friend
     std::ostream &

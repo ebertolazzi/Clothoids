@@ -241,7 +241,7 @@ classdef ClothoidSplineG2 < handle
     function clots = buildP9( self, x, y )
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P9' );
       clots = self.build_internal( x, y ) ;
-    end 
+    end
     % 
   end
 end

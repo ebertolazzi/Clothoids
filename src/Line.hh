@@ -214,11 +214,20 @@ namespace G2lib {
      *
      * \param knots  knots of the B-spline
      * \param Poly   polygon of the B-spline
-     * \return       3 the number of polygon points
+     * \return       2 the number of polygon points
      */
 
     int
     toNURBS( real_type knots[5], real_type Poly[2][3] ) const ;
+
+    /*! \brief Compute B-spline coefficients for a line segment
+     *
+     * \param knots  knots of the B-spline
+     * \param Poly   polygon of the B-spline
+     * \return       2 the number of polygon points
+     */
+    int
+    toBS( real_type knots[5], real_type Poly[2][2] ) const ;
 
     void
     p1p2( real_type p1[2], real_type p2[2] ) const {
@@ -229,14 +238,8 @@ namespace G2lib {
     }
 
     void
-    info( std::ostream & s ) const {
-      s << "LineSegment"
-        << "\nx0     = " << x0
-        << "\ny0     = " << y0
-        << "\ntheta0 = " << theta0
-        << "\nL      = " << L
-        << '\n' ;
-    }
+    info( std::ostream & stream ) const
+    { stream << "LineSegment\n" << *this << '\n'; }
 
     friend
     std::ostream &
