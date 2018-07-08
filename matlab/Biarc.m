@@ -237,6 +237,13 @@ classdef Biarc < handle
       BiarcMexWrapper( 'reverse', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [C0,C1] = getCircles( self )
+      C0 = CircleArc() ;
+      C1 = CircleArc() ;
+      C0.build( self.xBegin0(), self.yBegin0(), self.thetaBegin0(), self.kappa0(), self.length0());
+      C1.build( self.xBegin1(), self.yBegin1(), self.thetaBegin1(), self.kappa1(), self.length1());
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [arc0,arc1] = to_nurbs( self )
       % Usage:
       %    ref.to_nurbs()
@@ -249,28 +256,22 @@ classdef Biarc < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
-      % plot: method to plot the clothoid curve
-      % Usage:
-      %    lineH = ref.plot()
-      %    lineH = ref.plot(0.2)
-      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
-      %
-      % On input:
-      %    step:     the distance between consecutive samples used to
-      %              draw the curve
-      %    varargin: optional arguments passed to the MATLAB plot
-      %              function
-      %
-      % On output:
-      %    lineH: the handle to the line object 
-      %           (i.e. the output of the MATLAB plot function)
       if nargin<2
-        npts = 400 ;
+        npts = 64 ;
       end
-      L     = BiarcMexWrapper( 'length', self.objectHandle );
-      S     = 0:L/npts:L ;
-      [X,Y] = BiarcMexWrapper( 'eval', self.objectHandle, S );
-      plot(X,Y,varargin{:});
+      if nargin>2
+        fmt1 = varargin{1}
+      else
+        fmt1 = {'Color','blue','Linewidth',2} ;
+      end
+      if nargin>3
+        fmt2 = varargin{2}
+      else
+        fmt2 = {'Color','red','Linewidth',2} ;
+      end
+      [C0,C1] = self.getCircles();
+      C0.plot(npts,fmt1) ;
+      C1.plot(npts,fmt2) ;
     end
   end
 end

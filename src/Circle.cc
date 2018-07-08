@@ -108,71 +108,105 @@ namespace G2lib {
 
   real_type
   CircleArc::X( real_type s ) const {
-    real_type sk = s*k;
-    real_type S  = Sinc(sk);
-    real_type C  = Cosc(sk);
-    return x0+s*(c0*S-s0*C);
+    real_type sk = (s*k)/2 ;
+    return x0+s*Sinc(sk)*cos(theta0+sk);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   CircleArc::Y( real_type s ) const {
-    real_type sk = s*k;
-    real_type S  = Sinc(sk);
-    real_type C  = Cosc(sk);
-    return y0+s*(c0*C+s0*S);
+    real_type sk = (s*k)/2 ;
+    return x0+s*Sinc(sk)*sin(theta0+sk);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::X_D( real_type s ) const {
+    return cos(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::Y_D( real_type s ) const {
+    return sin(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::X_DD( real_type s ) const {
+    return -k*sin(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::Y_DD( real_type s ) const {
+    return k*cos(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::X_DDD( real_type s ) const {
+    return -(k*k)*cos(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::Y_DDD( real_type s ) const {
+    return -(k*k)*sin(theta0+s*k);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::eval( real_type s, real_type & x, real_type & y ) const {
-    real_type sk = s*k;
-    real_type S  = Sinc(sk);
-    real_type C  = Cosc(sk);
-    x = x0+s*(c0*S-s0*C);
-    y = y0+s*(c0*C+s0*S);
+  CircleArc::eval( real_type   s,
+                   real_type & x,
+                   real_type & y ) const {
+    real_type sk  = (s*k)/2 ;
+    real_type LS  = s*Sinc(sk);
+    real_type arg = theta0+sk ;
+    x = x0+LS*cos(arg);
+    y = y0+LS*sin(arg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::eval_D( real_type s, real_type & x_D, real_type & y_D ) const {
-    real_type sk  = s*k;
-    real_type S   = Sinc(sk);
-    real_type C   = Cosc(sk);
-    real_type S_D = Sinc_D(sk);
-    real_type C_D = Cosc_D(sk);
-    x_D = (c0*S-s0*C)+sk*(c0*S_D-s0*C_D);
-    y_D = (c0*C+s0*S)+sk*(c0*C_D+s0*S_D);
+  CircleArc::eval_D( real_type   s,
+                     real_type & x_D,
+                     real_type & y_D ) const {
+    real_type arg = theta0+s*k;
+    x_D = cos(arg);
+    y_D = sin(arg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const {
-    real_type sk   = s*k;
-    real_type S_D  = Sinc_D(sk);
-    real_type C_D  = Cosc_D(sk);
-    real_type S_DD = Sinc_DD(sk);
-    real_type C_DD = Cosc_DD(sk);
-    x_DD = k*(2*(c0*S_D-s0*C_D)+sk*(c0*S_DD-s0*C_DD));
-    y_DD = k*(2*(c0*C_D+s0*S_D)+sk*(c0*C_DD+s0*S_DD));
+  CircleArc::eval_DD( real_type   s,
+                      real_type & x_DD,
+                      real_type & y_DD ) const {
+    real_type arg = theta0+s*k;
+    x_DD = -k*sin(arg);
+    y_DD = k*cos(arg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const {
-    real_type sk    = s*k;
-    real_type k2    = k*k;
-    real_type S_DD  = Sinc_DD(sk);
-    real_type C_DD  = Cosc_DD(sk);
-    real_type S_DDD = Sinc_DDD(sk);
-    real_type C_DDD = Cosc_DDD(sk);
-    x_DDD = k2*(3*(c0*S_DD-s0*C_DD)+sk*(c0*S_DDD-s0*C_DDD));
-    y_DDD = k2*(3*(c0*C_DD+s0*S_DD)+sk*(c0*C_DDD+s0*S_DDD));
+  CircleArc::eval_DDD( real_type   s,
+                       real_type & x_DDD,
+                       real_type & y_DDD ) const {
+    real_type arg = theta0+s*k;
+    real_type k2  = k*k;
+    x_DDD = -k2*cos(arg);
+    y_DDD = -k2*sin(arg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

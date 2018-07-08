@@ -42,7 +42,6 @@ test_G2_7();
 test_TT();
 test_TT1();
 test_TT2();
-test_all();
 test_biarc0();
 test_biarc1();
 test_biarc2();

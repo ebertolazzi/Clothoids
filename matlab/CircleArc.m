@@ -222,32 +222,20 @@ classdef CircleArc < handle
       CircleArcMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function lineH = plot(self,varargin)
-      % plot: method to plot the circle curve
-      % Usage:
-      %    lineH = ref.plot()
-      %    lineH = ref.plot(0.2)
-      %    lineH = ref.plot(0.2, 'r', 'LineWidth', 3)
-      %    
-      % On input:
-      %    step:     the distance between consecutive samples used to
-      %              draw the curve
-      %    varargin: optional arguments passed to the MATLAB plot
-      %              function
-      %
-      % On output:
-      %    lineH: the handle to the line object 
-      %           (i.e. the output of the MATLAB plot function)
-      arc = self.to_nurbs() ;
-      breaks = fnbrk(arc,'b');
-      col = 'b';
-      lw  = 1;
-      if nargin>1 ; col = varargin{1} ; end
-      if nargin>2 ; lw  = varargin{2} ; end
-      fnplt(arc,[breaks(1),breaks(end)],col,lw);
+    function plot(self,npts,fmt)
+      if nargin<2
+        npts = 128 ;
+      end
+      if nargin<3
+        fmt = {'Color','blue','Linewidth',2};
+      end
+      L = self.length();
+      S = 0:L/npts:L ;
+      [X,Y] = self.eval(S);
+      plot(X,Y,fmt{:});
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function lineH = plotPolygon(self,varargin)
+    function plotPolygon(self,varargin)
       arc = self.to_nurbs() ;
       xx  = arc.coefs(1,:)./arc.coefs(3,:);
       yy  = arc.coefs(2,:)./arc.coefs(3,:);

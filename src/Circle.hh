@@ -196,7 +196,14 @@ namespace G2lib {
     { real_type thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
 
     real_type X( real_type s ) const ;
+    real_type X_D( real_type s ) const ;
+    real_type X_DD( real_type s ) const ;
+    real_type X_DDD( real_type s ) const ;
+
     real_type Y( real_type s ) const ;
+    real_type Y_D( real_type s ) const ;
+    real_type Y_DD( real_type s ) const ;
+    real_type Y_DDD( real_type s ) const ;
 
     void eval( real_type s, real_type & x, real_type & y ) const ;
     void eval_D( real_type s, real_type & x_D, real_type & y_D ) const ;
