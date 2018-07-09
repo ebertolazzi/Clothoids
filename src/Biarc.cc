@@ -254,10 +254,10 @@ namespace G2lib {
     real_type arg   = (dxa*dxb + dya * dyb)/(La*Lb) ;
     if      ( arg >  1 ) arg = 1 ;
     else if ( arg < -1 ) arg = -1 ;
-    real_type omega = acos(arg) ;
+    real_type om = acos(arg) ;
 
-    real_type at = (La/(La+Lb))*omega;
-    real_type bt = (Lb/(La+Lb))*omega;
+    real_type at = (La/(La+Lb))*om;
+    real_type bt = (Lb/(La+Lb))*om;
     // find solution using Halley
     real_type Delta = 0 ;
     bool found = false ;

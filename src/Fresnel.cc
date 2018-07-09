@@ -26,6 +26,15 @@
 #define A_THRESOLD   0.01
 #define A_SERIE_SIZE 3
 
+#ifdef __GCC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshadow"
+#endif
+
 namespace G2lib {
 
   using namespace std ;
@@ -369,6 +378,7 @@ namespace G2lib {
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
+  static
   real_type
   LommelReduced( real_type mu, real_type nu, real_type b ) {
     real_type tmp = 1/((mu+nu+1)*(mu-nu+1)) ;
@@ -829,9 +839,9 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
-  ClothoidData::build_G1( real_type   x0,
-                          real_type   y0,
-                          real_type   theta0,
+  ClothoidData::build_G1( real_type   _x0,
+                          real_type   _y0,
+                          real_type   _theta0,
                           real_type   x1,
                           real_type   y1,
                           real_type   theta1,
@@ -846,9 +856,9 @@ namespace G2lib {
                                    -0.458969738821509, -0.502821153340377,
                                     0.261062141752652, -0.045854475238709 } ;
 
-    this->x0     = x0 ;
-    this->y0     = y0 ;
-    this->theta0 = theta0 ;
+    x0     = _x0 ;
+    y0     = _y0 ;
+    theta0 = _theta0 ;
 
     // traslazione in (0,0)
     real_type dx   = x1 - x0 ;

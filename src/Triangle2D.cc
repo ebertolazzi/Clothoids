@@ -179,7 +179,7 @@ namespace G2lib {
   Triangle2D::AABBTree::AABBTree( std::vector<Triangle2D> & triangles ) {
     std::vector<Triangle2D const *> pTriangles ;
     pTriangles.reserve( triangles.size() ) ;
-    typename std::vector<Triangle2D>::const_iterator it = triangles.begin() ;
+    std::vector<Triangle2D>::const_iterator it = triangles.begin() ;
     for ( ; it != triangles.end() ; ++it )
       pTriangles.push_back( &*it ) ;
   }
@@ -207,8 +207,8 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Triangle2D::AABBTree::AABBTree(
-    typename std::vector<Triangle2D const *>::iterator & begin,
-    typename std::vector<Triangle2D const *>::iterator & end
+    std::vector<Triangle2D const *>::iterator & begin,
+    std::vector<Triangle2D const *>::iterator & end
   ) {
     numChildren = -1 ;
     xmin = ymin = xmax = ymax = 0 ;
@@ -224,7 +224,7 @@ namespace G2lib {
       return;
     }
 
-    typename std::vector<Triangle2D const *>::iterator it = begin ;
+    std::vector<Triangle2D const *>::iterator it = begin ;
     for ( ++it ; it != end ; ++it ) {
       real_type xmi, ymi, xma, yma ;
       (*it)->bbox( xmi, ymi, xma, yma ) ;

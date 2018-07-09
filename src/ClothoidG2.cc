@@ -24,6 +24,17 @@
 #include <cmath>
 #include <cfloat>
 
+#ifdef __GCC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wswitch-enum"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#pragma clang diagnostic ignored "-Wswitch-enum"
+#endif
+
 namespace G2lib {
 
   using namespace std ;
@@ -1137,22 +1148,23 @@ namespace G2lib {
   void
   ClothoidSplineG2::build( real_type const xvec[],
                            real_type const yvec[],
-                           int_type        npts ) {
-    x.clear() ; x.reserve( npts ) ;
-    y.clear() ; y.reserve( npts ) ;
-    std::copy_n( xvec, npts, std::back_inserter(x) ) ;
-    std::copy_n( yvec, npts, std::back_inserter(y) ) ;
-    this->npts = npts ;
-    k    . resize(npts-1) ;
-    dk   . resize(npts-1) ;
-    L    . resize(npts-1) ;
-    kL   . resize(npts-1) ;
-    L_1  . resize(npts-1) ;
-    L_2  . resize(npts-1) ;
-    k_1  . resize(npts-1) ;
-    k_2  . resize(npts-1) ;
-    dk_1 . resize(npts-1) ;
-    dk_2 . resize(npts-1) ;
+                           int_type        n ) {
+    x.clear() ; x.reserve( unsigned(n) ) ;
+    y.clear() ; y.reserve( unsigned(n) ) ;
+    std::copy_n( xvec, n, std::back_inserter(x) ) ;
+    std::copy_n( yvec, n, std::back_inserter(y) ) ;
+    npts = n ;
+    unsigned n1 = unsigned(n-1) ;
+    k    . resize(n1) ;
+    dk   . resize(n1) ;
+    L    . resize(n1) ;
+    kL   . resize(n1) ;
+    L_1  . resize(n1) ;
+    L_2  . resize(n1) ;
+    k_1  . resize(n1) ;
+    k_2  . resize(n1) ;
+    dk_1 . resize(n1) ;
+    dk_2 . resize(n1) ;
   }
 
   // ---------------------------------------------------------------------------
@@ -1187,19 +1199,22 @@ namespace G2lib {
     int_type ne  = npts-1;
     int_type ne1 = npts-2;
 
-    vector<real_type> phi(ne), rlen(ne) ;
+    vector<real_type> phi, rlen ;
+    phi  . resize( unsigned(ne) );
+    rlen . resize( unsigned(ne) );
+
     real_type dx = x[1]-x[0] ;
     real_type dy = y[1]-y[0] ;
     phi[0]  = atan2(dy,dx) ;
     rlen[0] = 1/hypot(dy,dx) ;
-    for ( int_type k = 1 ; k < ne ; ++k ) {
-      dx      = x[k+1]-x[k] ;
-      dy      = y[k+1]-y[k] ;
-      phi[k]  = atan2(dy,dx) ;
-      rlen[k] = 1/hypot(dy,dx) ;
-      real_type df = phi[k]-phi[k-1] ;
+    for ( int_type j = 1 ; j < ne ; ++j ) {
+      dx      = x[j+1]-x[j] ;
+      dy      = y[j+1]-y[j] ;
+      phi[j]  = atan2(dy,dx) ;
+      rlen[j] = 1/hypot(dy,dx) ;
+      real_type df = phi[j]-phi[j-1] ;
       df -= round(df/m_2pi)*m_2pi ;
-      phi[k] = phi[k-1]+df ;
+      phi[j] = phi[j-1]+df ;
     }
 
     real_type const dangle = 0.99 * m_pi ;
@@ -1214,19 +1229,19 @@ namespace G2lib {
 
     real_type phi_L  = phi[0] ;
     real_type rlen_L = rlen[0] ;
-    for ( int_type k = 1 ; k < ne ; ++k ) {
-      real_type phi_R  = phi[k] ;
-      real_type rlen_R = rlen[k] ;
-      theta_guess[k] = (phi_L*rlen_L+phi_R*rlen_R)/(rlen_L+rlen_R) ;
+    for ( int_type j = 1 ; j < ne ; ++j ) {
+      real_type phi_R  = phi[j] ;
+      real_type rlen_R = rlen[j] ;
+      theta_guess[j] = (phi_L*rlen_L+phi_R*rlen_R)/(rlen_L+rlen_R) ;
       if ( phi_R > phi_L ) {
-        theta_min[k] = phi_L ;
-        theta_max[k] = phi_R ;
+        theta_min[j] = phi_L ;
+        theta_max[j] = phi_R ;
       } else {
-        theta_min[k] = phi_R ;
-        theta_max[k] = phi_L ;
+        theta_min[j] = phi_R ;
+        theta_max[j] = phi_L ;
       }
-      theta_min[k] -= dangle ;
-      theta_max[k] += dangle ;
+      theta_min[j] -= dangle ;
+      theta_max[j] += dangle ;
       phi_L  = phi_R ;
       rlen_L = rlen_R ;
     }
@@ -1271,34 +1286,34 @@ namespace G2lib {
       f = 0 ;
       for ( int_type j = 0 ; j < ne ; ++j ) {
         c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
-        real_type L  = c.length() ;
-        real_type k  = c.kappaBegin() ;
-        real_type dk = c.kappa_D() ;
-        f = f + L * ( L * ( dk*( (dk*L)/3 + k) ) + k*k ) ;
+        real_type Len  = c.length() ;
+        real_type kur  = c.kappaBegin() ;
+        real_type dkur = c.kappa_D() ;
+        f = f + Len * ( Len * ( dkur*( (dkur*Len)/3 + kur) ) + kur*kur ) ;
       }
       break ;
     case P8:
       f = 0 ;
       for ( int_type j = 0 ; j < ne ; ++j ) {
         c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
-        real_type L  = c.length() ;
-        real_type dk = c.kappa_D() ;
-        f += L*dk*dk ;
+        real_type Len  = c.length() ;
+        real_type dkur = c.kappa_D() ;
+        f += Len*dkur*dkur ;
       }
       break ;
     case P9:
       f = 0 ;
       for ( int_type j = 0 ; j < ne ; ++j ) {
         c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] ) ;
-        real_type L   = c.length() ;
-        real_type k   = c.kappaBegin() ;
-        real_type k2  = k*k;
-        real_type k3  = k2*k ;
-        real_type k4  = k2*k2;
-        real_type dk  = c.kappa_D() ;
-        real_type dk2 = dk*dk ;
-        real_type dk3 = dk*dk2 ;
-        f = f + (k4+dk2+(2*k3*dk+(2*k2*dk2+(dk3*(k+dk*L/5))*L)*L)*L)*L ;
+        real_type Len  = c.length() ;
+        real_type kur  = c.kappaBegin() ;
+        real_type k2   = kur*kur;
+        real_type k3   = k2*kur ;
+        real_type k4   = k2*k2;
+        real_type dkur = c.kappa_D() ;
+        real_type dk2  = dkur*dkur ;
+        real_type dk3  = dkur*dk2 ;
+        f = f + (k4+dk2+(2*k3*dkur+(2*k2*dk2+(dk3*(kur+dkur*Len/5))*Len)*Len)*Len)*Len ;
       }
       break ;
     }
@@ -1365,27 +1380,27 @@ namespace G2lib {
         c.build_G1_D( x[j],   y[j],   theta[j],
                       x[j+1], y[j+1], theta[j+1],
                       L_D, k_D, dk_D ) ;
-        real_type L   = c.length() ;
-        real_type L2  = L*L ;
-        real_type L3  = L*L2 ;
-        real_type k   = c.kappaBegin() ;
-        real_type k2  = k*k ;
-        real_type dk  = c.kappa_D() ;
-        real_type dk2 = dk*dk ;
-        g[j]   += 2*(dk*dk_D[0]*L3)/3
+        real_type Len  = c.length() ;
+        real_type L2   = Len*Len ;
+        real_type L3   = Len*L2 ;
+        real_type kur  = c.kappaBegin() ;
+        real_type k2   = kur*kur ;
+        real_type dkur = c.kappa_D() ;
+        real_type dk2  = dkur*dkur ;
+        g[j]   += 2*(dkur*dk_D[0]*L3)/3
                   + (dk2*L2*L_D[0])
-                  + dk_D[0]*L2*k
-                  + 2*dk*L*L_D[0]*k
-                  + dk*L2*k_D[0]
+                  + dk_D[0]*L2*kur
+                  + 2*dkur*Len*L_D[0]*kur
+                  + dkur*L2*k_D[0]
                   + L_D[0]*k2
-                  + 2*L*k*k_D[0] ;
-        g[j+1] += 2*(dk*dk_D[1]*L3)/3
+                  + 2*Len*kur*k_D[0] ;
+        g[j+1] += 2*(dkur*dk_D[1]*L3)/3
                   + (dk2*L2*L_D[1])
-                  + dk_D[1]*L2*k
-                  + 2*dk*L*L_D[1]*k
-                  + dk*L2*k_D[1]
+                  + dk_D[1]*L2*kur
+                  + 2*dkur*Len*L_D[1]*kur
+                  + dkur*L2*k_D[1]
                   + L_D[1]*k2
-                  + 2*L*k*k_D[1] ;
+                  + 2*Len*kur*k_D[1] ;
       }
       break ;
     case P8:
@@ -1394,10 +1409,10 @@ namespace G2lib {
         c.build_G1_D( x[j],   y[j],   theta[j],
                       x[j+1], y[j+1], theta[j+1],
                       L_D, k_D, dk_D ) ;
-        real_type L   = c.length() ;
-        real_type dk  = c.kappa_D() ;
-        g[j]   += (2*L*dk_D[0] + L_D[0]*dk)*dk ;
-        g[j+1] += (2*L*dk_D[1] + L_D[1]*dk)*dk ;
+        real_type Len  = c.length() ;
+        real_type dkur = c.kappa_D() ;
+        g[j]   += (2*Len*dk_D[0] + L_D[0]*dkur)*dkur ;
+        g[j+1] += (2*Len*dk_D[1] + L_D[1]*dkur)*dkur ;
       }
       break ;
     case P9:
@@ -1406,16 +1421,16 @@ namespace G2lib {
         c.build_G1_D( x[j],   y[j],   theta[j],
                       x[j+1], y[j+1], theta[j+1],
                       L_D, k_D, dk_D ) ;
-        real_type L   = c.length() ;
-        real_type k   = c.kappaBegin() ;
-        real_type k2  = k*k ;
-        real_type k3  = k*k2 ;
-        real_type dk  = c.kappa_D() ;
-        real_type dk2 = dk*dk ;
-        real_type dkL = dk*L ;
-        real_type A = ( ( (dkL+4*k)*dkL + 6*k2)*dkL + 4*k3) * dkL + dk2 + k2*k2 ;
-        real_type B = ( ( ( ( 3*k + 0.8*dkL ) * dkL + 4*k2 ) * dkL +2*k3 ) * L + 2*dk ) * L ;
-        real_type C = ( ( ( dkL + 4*k ) * dkL + 6*k2 ) * dkL + 4*k3 ) * L ;
+        real_type Len  = c.length() ;
+        real_type kur  = c.kappaBegin() ;
+        real_type k2   = kur*kur ;
+        real_type k3   = kur*k2 ;
+        real_type dkur = c.kappa_D() ;
+        real_type dk2  = dkur*dkur ;
+        real_type dkL  = dkur*Len ;
+        real_type A = ( ( (dkL+4*kur)*dkL + 6*k2)*dkL + 4*k3) * dkL + dk2 + k2*k2 ;
+        real_type B = ( ( ( ( 3*kur + 0.8*dkL ) * dkL + 4*k2 ) * dkL +2*k3 ) * Len + 2*dkur ) * Len ;
+        real_type C = ( ( ( dkL + 4*kur ) * dkL + 6*k2 ) * dkL + 4*k3 ) * Len ;
         g[j]   += A*L_D[0] + B*dk_D[0] + C*k_D[0];
         g[j+1] += A*L_D[1] + B*dk_D[1] + C*k_D[1] ;
       }

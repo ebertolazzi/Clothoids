@@ -1290,22 +1290,22 @@ namespace G2lib {
     real_type kappaBegin() const { return clotoidList.front().kappaBegin(); }
     real_type kappaEnd()   const { return clotoidList.back().kappaEnd(); }
 
-    real_type length( int_type idx ) const { return s0[idx+1] - s0[idx]; }
+    real_type length( int_type idx ) const { return s0[unsigned(idx+1)] - s0[unsigned(idx)]; }
 
-    real_type sBegin( int_type idx ) const { return s0[idx]; }
-    real_type sEnd( int_type idx )   const { return s0[idx+1]; }
+    real_type sBegin( int_type idx ) const { return s0[unsigned(idx)]; }
+    real_type sEnd  ( int_type idx ) const { return s0[unsigned(idx+1)]; }
 
-    real_type xBegin( int_type idx ) const { return clotoidList[idx].xBegin(); }
-    real_type xEnd( int_type idx )   const { return clotoidList[idx].xEnd(); }
+    real_type xBegin( int_type idx ) const { return clotoidList[unsigned(idx)].xBegin(); }
+    real_type xEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].xEnd(); }
 
-    real_type yBegin( int_type idx ) const { return clotoidList[idx].yBegin(); }
-    real_type yEnd( int_type idx )   const { return clotoidList[idx].yEnd(); }
+    real_type yBegin( int_type idx ) const { return clotoidList[unsigned(idx)].yBegin(); }
+    real_type yEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].yEnd(); }
 
-    real_type thetaBegin( int_type idx ) const { return clotoidList[idx].thetaBegin(); }
-    real_type thetaEnd( int_type idx )   const { return clotoidList[idx].thetaEnd(); }
+    real_type thetaBegin( int_type idx ) const { return clotoidList[unsigned(idx)].thetaBegin(); }
+    real_type thetaEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].thetaEnd(); }
 
-    real_type kappaBegin( int_type idx ) const { return clotoidList[idx].kappaBegin(); }
-    real_type kappaEnd( int_type idx )   const { return clotoidList[idx].kappaEnd(); }
+    real_type kappaBegin( int_type idx ) const { return clotoidList[unsigned(idx)].kappaBegin(); }
+    real_type kappaEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].kappaEnd(); }
 
     void
     eval( real_type   s,

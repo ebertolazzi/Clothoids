@@ -59,8 +59,8 @@ namespace G2lib {
         AABBTree   const * pChildren[2];
       } data ;
 
-      AABBTree( typename std::vector<Triangle2D const *>::iterator & begin,
-                typename std::vector<Triangle2D const *>::iterator & end ) ;
+      AABBTree( std::vector<Triangle2D const *>::iterator & begin,
+                std::vector<Triangle2D const *>::iterator & end ) ;
 
     public:
 
