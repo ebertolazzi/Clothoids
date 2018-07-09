@@ -28,32 +28,37 @@ L3 = CircleArc();
 L3.build_3P(x0, y0, x1, y1, x2, y2 );
 %
 L1.plot() ;
-L2.plot('red',3) ;
-L3.plot('black',3) ;
+hold on ;
+fmt1 = {'Color','red','Linewidth',3} ;
+fmt2 = {'Color','black','Linewidth',3} ;
+fmt3 = {'Color','blue','Linewidth',3} ;
+fmt4 = {'Color','green','Linewidth',3} ;
+L2.plot(100,fmt1) ;
+L3.plot(100,fmt2) ;
 
 L1.translate(1,1) ;
 L1.plot() ;
 
 L2.changeCurvilinearOrigin(4,10) ;
-L2.plot('red',3) ;
+L2.plot(100,fmt1) ;
 
 L2.changeOrigin(1,2) ;
-L2.plot('red',3) ;
+L2.plot(100,fmt1) ;
 
 L3.trim(2,7) ;
-L3.plot('green',3) ;
+L3.plot(100,fmt3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot('green',3) ;
+L3.plot(100,fmt3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot('green',3) ;
+L3.plot(100,fmt3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot('green',3) ;
+L3.plot(100,fmt3) ;
 
 L3.translate(3,3) ;
-L3.plot('blue',3) ;
+L3.plot(100,fmt4) ;
 
 L3.eval(1)
 L3.eval_D(1)

@@ -53,7 +53,9 @@ for kk=1:4
   axis equal;
 
   hold on;
-  L1.plot(1000,'Color','white','LineWidth',3) ;
+  fmt1 = {'Color','white','LineWidth',3} ;
+  fmt2 = {'Color','yellow','LineWidth',3} ;
+  L1.plot(1000,fmt1,fmt2) ;
 
   %
   L1.delete() ;

@@ -264,17 +264,18 @@ classdef Biarc < handle
         npts = 64 ;
       end
       if nargin>2
-        fmt1 = varargin{1}
+        fmt1 = varargin{1};
       else
         fmt1 = {'Color','blue','Linewidth',2} ;
       end
       if nargin>3
-        fmt2 = varargin{2}
+        fmt2 = varargin{2};
       else
         fmt2 = {'Color','red','Linewidth',2} ;
       end
       [C0,C1] = self.getCircles();
       C0.plot(npts,fmt1) ;
+      hold on ;
       C1.plot(npts,fmt2) ;
     end
   end

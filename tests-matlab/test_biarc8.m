@@ -34,8 +34,10 @@ for kk=1:4
   ok1
   ok2
   
-  B.plot(1000,'-r','LineWidth',2);
-  hold on
+  fmt1 = {'-g','LineWidth',2};
+  fmt2 = {'-r','LineWidth',2};
+  
+  B.plot(1000);%,fmt1,fmt2);
   A.plot() ;
 
   plot( [x0(kk),x1(kk),x2(kk)],[y0(kk),y1(kk),y2(kk)], ...

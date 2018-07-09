@@ -126,7 +126,7 @@ namespace G2lib {
       if ( do_new ) {
 
         MEX_ASSERT( nlhs == 1, "BiarcMexWrapper, expected 1 output, nlhs = " << nlhs );
-        MEX_ASSERT( nrhs == 0, "BiarcMexWrapper, expected NO inputs, nrhs = " << nrhs );
+        MEX_ASSERT( nrhs == 1, "BiarcMexWrapper, expected 1 input, nrhs = " << nrhs );
 
       } else if ( cmd == "build" ) {
 
@@ -166,7 +166,7 @@ namespace G2lib {
           setScalarBool(arg_out_0,ok);
 
           #undef CMD
-        } else if ( nrhs == 5 ) {
+        } else if ( nrhs == 5 ) {
           #define CMD "BiarcMexWrapper('build_3P',OBJ,p0,p1,p2): "
 
           mwSize n ;

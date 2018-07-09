@@ -49,8 +49,8 @@ S1 = S.get(3) ;
 C0 = CircleArc( x0, y0, theta0, kappa0, S0.length() ) ;
 C1 = CircleArc( x1, y1, theta1, kappa1, -S1.length() ) ;
 
-C0.plot('g',3);
-C1.plot('g',3);
+C0.plot(100,{'Color','green','Linewidth',3});
+C1.plot(100,{'Color','green','Linewidth',3});
 
 subplot(2,2,2);
 S.plotCurvature(1000);
