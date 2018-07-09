@@ -190,14 +190,6 @@ classdef ClothoidCurve < handle
       res = ClothoidCurveMexWrapper( 'kappa_D', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = sMin( self )
-      res = ClothoidCurveMexWrapper( 'sMin', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = sMax( self )
-      res = ClothoidCurveMexWrapper( 'sMax', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length( self )
       res = ClothoidCurveMexWrapper( 'length', self.objectHandle );
     end
@@ -220,7 +212,6 @@ classdef ClothoidCurve < handle
       % On input:
       %    smin:   initial curvilinear coordinate of the curve
       %    smax:   final curvilinear coordinate of the curve
-            
       ClothoidCurveMexWrapper( 'trim', self.objectHandle, smin, smax );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -321,10 +312,6 @@ classdef ClothoidCurve < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function BB = bbox( self, max_angle, max_size, varargin )
-      % point at infinity
-      % Usage:
-      %    ref.reverse()
-      %
       BB = ClothoidCurveMexWrapper( 'bbox', self.objectHandle, max_angle, max_size, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

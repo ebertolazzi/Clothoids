@@ -50,8 +50,6 @@ namespace G2lib {
       x0     = _x0 ;
       y0     = _y0 ;
       theta0 = _theta0 ;
-      c0     = cos(_theta0);
-      s0     = sin(_theta0);
       k      = 2*sin(th)/d ;
       L      = d/Sinc(th);
       return true ;
@@ -216,8 +214,6 @@ namespace G2lib {
     real_type x, y ;
     eval( s_begin, x, y ) ;
     theta0 += s_begin * k ;
-    s0 = sin(theta0);
-    c0 = cos(theta0);
     L  = s_end - s_begin ;
     x0 = x ;
     y0 = y ;
@@ -236,8 +232,6 @@ namespace G2lib {
     x0      = cx + ndx ;
     y0      = cy + ndy ;
     theta0 += angle ;
-    c0      = cos(theta0) ;
-    s0      = sin(theta0) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -254,9 +248,7 @@ namespace G2lib {
   CircleArc::reverse() {
     theta0 = theta0 + m_pi ;
     if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
-    c0 = cos(theta0) ;
-    s0 = sin(theta0) ;
-    k  = -k ;
+    k = -k ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -268,7 +260,7 @@ namespace G2lib {
                            real_type & Y,
                            real_type & S ) const {
 
-    S = projectPointOnCircle( x0, y0, c0, s0, k, L, qx, qy );
+    S = projectPointOnCircle( x0, y0, cos(theta0), sin(theta0), k, L, qx, qy );
 
     if ( S < 0 || S > L ) { // minimum distance at the border
       eval( L, X, Y );
@@ -300,8 +292,6 @@ namespace G2lib {
     x0      = new_x0 ;
     y0      = new_y0 ;
     theta0 += k*new_s0 ;
-    c0      = cos(theta0) ;
-    s0      = sin(theta0) ;
     L       = newL ;
   }
 

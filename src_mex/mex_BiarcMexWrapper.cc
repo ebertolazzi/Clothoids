@@ -126,6 +126,7 @@ namespace G2lib {
       if ( do_new ) {
 
         MEX_ASSERT( nlhs == 1, "BiarcMexWrapper, expected 1 output, nlhs = " << nlhs );
+        MEX_ASSERT( nrhs == 0, "BiarcMexWrapper, expected NO inputs, nrhs = " << nrhs );
 
       } else if ( cmd == "build" ) {
 
@@ -149,23 +150,42 @@ namespace G2lib {
 
       } else if ( cmd == "build_3P" ) {
 
-        #define CMD "BiarcMexWrapper('build_3P',OBJ,x0,y0,x1,y1,x2,y2): "
+        if ( nrhs == 8 ) {
+          #define CMD "BiarcMexWrapper('build_3P',OBJ,x0,y0,x1,y1,x2,y2): "
 
-        MEX_ASSERT( nrhs == 8 , CMD "expected 8 inputs, nrhs = " << nrhs ) ;
+          real_type x0 = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
+          real_type y0 = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
+          real_type x1 = getScalarValue( arg_in_4, CMD "Error in reading x1" ) ;
+          real_type y1 = getScalarValue( arg_in_5, CMD "Error in reading y1" ) ;
+          real_type x2 = getScalarValue( arg_in_6, CMD "Error in reading x2" ) ;
+          real_type y2 = getScalarValue( arg_in_7, CMD "Error in reading y2" ) ;
 
-        real_type x0 = getScalarValue( arg_in_2, CMD "Error in reading x0" ) ;
-        real_type y0 = getScalarValue( arg_in_3, CMD "Error in reading y0" ) ;
-        real_type x1 = getScalarValue( arg_in_4, CMD "Error in reading x1" ) ;
-        real_type y1 = getScalarValue( arg_in_5, CMD "Error in reading y1" ) ;
-        real_type x2 = getScalarValue( arg_in_6, CMD "Error in reading x2" ) ;
-        real_type y2 = getScalarValue( arg_in_7, CMD "Error in reading y2" ) ;
+          bool ok = ptr->build_3P( x0, y0, x1, y1, x2, y2 );
 
-        bool ok = ptr->build_3P( x0, y0, x1, y1, x2, y2 );
+          // returns the status of the interpolation
+          setScalarBool(arg_out_0,ok);
 
-        // returns the status of the interpolation
-        setScalarBool(arg_out_0,ok);
+          #undef CMD
+        } else if ( nrhs == 5 ) {
+          #define CMD "BiarcMexWrapper('build_3P',OBJ,p0,p1,p2): "
 
-        #undef CMD
+          mwSize n ;
+          real_type const * p0 = getVectorPointer( arg_in_2, n, CMD "Error in reading p0" ) ;
+          MEX_ASSERT( n == 2 , CMD "Error in reading length(p0) == " << n << " expect length(p0) == 2" ) ;
+          real_type const * p1 = getVectorPointer( arg_in_3, n, CMD "Error in reading p1" ) ;
+          MEX_ASSERT( n == 2 , CMD "Error in reading length(p1) == " << n << " expect length(p1) == 2" ) ;
+          real_type const * p2 = getVectorPointer( arg_in_4, n, CMD "Error in reading p2" ) ;
+          MEX_ASSERT( n == 2 , CMD "Error in reading length(p2) == " << n << " expect length(p2) == 2" ) ;
+
+          bool ok = ptr->build_3P( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
+
+          // returns the status of the interpolation
+          setScalarBool(arg_out_0,ok);
+
+          #undef CMD
+        } else {
+          MEX_ASSERT( false, "BiarcMexWrapper('build_3P',OBJ,...) expected 5 or 8 arguments") ;
+        }
 
       } else if ( cmd == "evaluate" ) {
 
