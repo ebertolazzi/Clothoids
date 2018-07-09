@@ -28,6 +28,8 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 
 B = Biarc();
 A = CircleArc();
+fmt1 = {'-r','LineWidth',2};
+fmt2 = {'-b','LineWidth',2};
 for kk=3:length(X)
   x0 = X(kk-2) ;
   x1 = X(kk-1) ;
@@ -42,8 +44,8 @@ for kk=3:length(X)
   ok1
   ok2
 
-  subplot(2,1,1);  
-  B.plot(1000,'-r','LineWidth',2);
+  subplot(2,1,1);
+  B.plot(1000,fmt1,fmt2);
   hold on
 
   subplot(2,1,2);  

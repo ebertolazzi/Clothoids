@@ -34,25 +34,28 @@ L3.build( x0, y0, theta0, x2, y2, theta1 );
 
 %
 npts = 1000;
-L1.plot(npts,'Color','red','LineWidth',3) ;
+fmt1 = {'Color','red','LineWidth',3};
+fmt2 = {'Color','black','LineWidth',3};
+fmt3 = {'Color','green','LineWidth',3};
+L1.plot(npts,fmt1) ;
 hold on ;
-L2.plot(npts,'Color','red','LineWidth',3) ;
-L3.plot(npts,'Color','black','LineWidth',3) ;
+L2.plot(npts,fmt1) ;
+L3.plot(npts,fmt2) ;
 
 L1.translate(1,1) ;
 L1.plot() ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot(npts,'Color','green','LineWidth',3) ;
+L3.plot(npts,fmt1,fmt3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot(npts,'Color','green','LineWidth',3) ;
+L3.plot(npts,fmt1,fmt3) ;
 
 L3.rotate(pi/3,0,0) ;
-L3.plot(npts,'Color','green','LineWidth',3) ;
+L3.plot(npts,fmt1,fmt3) ;
 
 L3.translate(3,3) ;
-L3.plot(npts,'Color','blue','LineWidth',3) ;
+L3.plot(npts,fmt1,fmt3) ;
 
 L3.eval(1)
 L3.eval_D(1)

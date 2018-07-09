@@ -52,7 +52,7 @@ for kk=1:4
   %surf(X,Y,Z)
   axis equal;
   hold on;
-  L1.plot('White',3) ;
+  L1.plot(100,{'Color','White','Linewidth',3}) ;
   %
   L1.delete() ;
 end

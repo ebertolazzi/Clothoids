@@ -9,14 +9,13 @@ classdef Biarc < handle
       %% Create a new C++ class instance for the clothoid arc object
       % Usage:
       %    ref = Biarc()
-      %    ref = Biarc( x0, y0, theta0, k0, dk, L )
+      %    ref = Biarc( x0, y0, theta0, x1, y1, theta1 )
       %
       % On input:
       %    x0, y0: coordinate of initial point
       %    theta0: orientation of the clothoid at initial point
-      %    k0:     curvature of the clothoid at initial point
-      %    dk:     derivative of curvature respect to arclength
-      %    L:      length of curve from initial to final point
+      %    x1, y1: coordinate of final point
+      %    theta1: orientation of the clothoid at final point
       %
       %  On output:
       %    ref: reference handle to the object instance
@@ -46,18 +45,23 @@ classdef Biarc < handle
       ok = BiarcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = build_3P( self, x0, y0, x1, y1, x2, y2 )
+    function ok = build_3P( self, varargin )
       % Build the interpolating biarc by 3 points
       %
       % Usage:
-      %    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
+      %    ref.build_3P( x0, y0, x1, y1, x2, y2 )
+      %    ref.build_3P( [x0, y0], [x1, y1], [x2, y2] )
       %
       % On input:
       %    x0, y0: coordinate of initial point
       %    x1, y1: coordinate of middle point
       %    x2, y2: coordinate of final point
+      % alternative
+      %    p0: coordinate of initial point
+      %    p1: coordinate of middle point
+      %    p2: coordinate of final point
       %
-      ok = BiarcMexWrapper( 'build_3P', self.objectHandle, x0, y0, x1, y1, x2, y2 );
+      ok = BiarcMexWrapper( 'build_3P', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = evaluate( self, s )
@@ -260,17 +264,18 @@ classdef Biarc < handle
         npts = 64 ;
       end
       if nargin>2
-        fmt1 = varargin{1}
+        fmt1 = varargin{1};
       else
         fmt1 = {'Color','blue','Linewidth',2} ;
       end
       if nargin>3
-        fmt2 = varargin{2}
+        fmt2 = varargin{2};
       else
         fmt2 = {'Color','red','Linewidth',2} ;
       end
       [C0,C1] = self.getCircles();
       C0.plot(npts,fmt1) ;
+      hold on ;
       C1.plot(npts,fmt2) ;
     end
   end

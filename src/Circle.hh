@@ -73,9 +73,7 @@ namespace G2lib {
               theta0, //!< initial angle of the clothoid
               k ;     //!< curvature
 
-    real_type c0,     //!< cos(theta0)
-              s0,     //!< sin(theta0)
-              L ;     //!< length of the circle segment
+    real_type L ;     //!< length of the circle segment
 
   public:
 
@@ -84,8 +82,6 @@ namespace G2lib {
     , y0(0)
     , theta0(0)
     , k(0)
-    , c0(1)
-    , s0(0)
     , L(0)
     {}
 
@@ -99,8 +95,6 @@ namespace G2lib {
     , y0(_y0)
     , theta0(_theta0)
     , k(_k)
-    , c0(cos(_theta0))
-    , s0(sin(_theta0))
     , L(_L)
     {}
 
@@ -109,8 +103,6 @@ namespace G2lib {
       x0     = c.x0 ;
       y0     = c.y0 ;
       theta0 = c.theta0 ;
-      c0     = c.c0 ;
-      s0     = c.s0 ;
       k      = c.k ;
       L      = c.L ;
     }
@@ -120,8 +112,8 @@ namespace G2lib {
     CircleArc const & operator = ( CircleArc const & s )
     { copy(s) ; return *this ; }
 
-    real_type sinTheta0() const { return s0 ; }
-    real_type cosTheta0() const { return c0 ; }
+    real_type sinTheta0() const { return sin(theta0); }
+    real_type cosTheta0() const { return cos(theta0); }
     real_type kappa()     const { return k ; }
     real_type length()    const { return L ; }
 
@@ -143,8 +135,6 @@ namespace G2lib {
       x0     = _x0 ;
       y0     = _y0 ;
       theta0 = _theta0 ;
-      c0     = cos(_theta0);
-      s0     = sin(_theta0);
       k      = _k ;
       L      = _L ;
     }

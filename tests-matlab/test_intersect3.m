@@ -76,7 +76,7 @@ theta0 = 0 ;
 kappa0 = 0.01 ;
 C1 = CircleArc( x0, y0, theta0, kappa0, 600 );
 
-C1.plot('Color','blue','LineWidth',3) ;
+C1.plot(100,{'Color','blue','LineWidth',3}) ;
 
 [s1,s2] = S.intersect( L1 );
 
