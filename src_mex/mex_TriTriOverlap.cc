@@ -8,19 +8,12 @@
   See the file license.txt for more details.
 \****************************************************************************/
 
-#include "Clothoid.hh"
-#include "mex.h"
+#include "Triangle2D.hh"
+#include "mex_utils.hh"
 
 #include <vector>
 #include <sstream>
 #include <stdexcept>
-
-#define ASSERT(COND,MSG)                      \
-  if ( !(COND) ) {                            \
-    std::ostringstream ost ;                  \
-    ost << "TriTriOverlap: " << MSG << '\n' ; \
-    mexErrMsgTxt(ost.str().c_str()) ;         \
-  }
 
 #define arg_p0 prhs[0]
 #define arg_p1 prhs[1]
@@ -54,54 +47,60 @@
 "%                                                                      %\n" \
 "%======================================================================%\n"
 
-extern "C"
-void
-mexFunction( int nlhs, mxArray       *plhs[],
-             int nrhs, mxArray const *prhs[] ) {
+namespace G2lib {
 
-  try {
+  using namespace std;
 
-    // Check for proper number of arguments, etc
-    if ( nrhs != 6 ) {
-      mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
-      return ;
-    }
+  extern "C"
+  void
+  mexFunction( int nlhs, mxArray       *plhs[],
+               int nrhs, mxArray const *prhs[] ) {
 
-    for ( int kk = 0 ; kk < nrhs ; ++kk ) {
-      mwSize nDimNum = mxGetNumberOfDimensions(prhs[kk]);
-      if ( nDimNum != 2 || mxGetM(prhs[kk])*mxGetN(prhs[kk]) != 2 ) {
-        mexErrMsgTxt("Input arguments must vectors of size 2\n");
+    try {
+
+      // Check for proper number of arguments, etc
+      if ( nrhs != 6 ) {
+        mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
         return ;
       }
-      if ( mxGetClassID(prhs[kk]) != mxDOUBLE_CLASS ) {
-        mexErrMsgTxt("Input arguments must be REAL vector\n");
-        return ;
+
+      for ( int kk = 0 ; kk < nrhs ; ++kk ) {
+        mwSize nDimNum = mxGetNumberOfDimensions(prhs[kk]);
+        if ( nDimNum != 2 || mxGetM(prhs[kk])*mxGetN(prhs[kk]) != 2 ) {
+          mexErrMsgTxt("Input arguments must vectors of size 2\n");
+          return ;
+        }
+        if ( mxGetClassID(prhs[kk]) != mxDOUBLE_CLASS ) {
+          mexErrMsgTxt("Input arguments must be REAL vector\n");
+          return ;
+        }
       }
+
+      real_type const * p0 = mxGetPr(arg_p0) ;
+      real_type const * p1 = mxGetPr(arg_p1) ;
+      real_type const * p2 = mxGetPr(arg_p2) ;
+
+      real_type const * q0 = mxGetPr(arg_q0) ;
+      real_type const * q1 = mxGetPr(arg_q1) ;
+      real_type const * q2 = mxGetPr(arg_q2) ;
+
+      // costruisco bb
+      Triangle2D T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ) ;
+      Triangle2D T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1] ) ;
+
+      if ( nlhs == 1 ) {
+        bool over = T1.overlap(T2) ;
+        plhs[0] = mxCreateDoubleScalar( over ? 1.0 : 0.0 ) ;
+      } else {
+        mexErrMsgTxt("There must be an output argument\n");
+      }
+
+    } catch ( std::exception const & e ) {
+    	mexErrMsgTxt(e.what()) ;
+
+    } catch (...) {
+    	mexErrMsgTxt("TriTriOverlap failed\n") ;
     }
-
-    G2lib::valueType const * p0 = mxGetPr(arg_p0) ;
-    G2lib::valueType const * p1 = mxGetPr(arg_p1) ;
-    G2lib::valueType const * p2 = mxGetPr(arg_p2) ;
-
-    G2lib::valueType const * q0 = mxGetPr(arg_q0) ;
-    G2lib::valueType const * q1 = mxGetPr(arg_q1) ;
-    G2lib::valueType const * q2 = mxGetPr(arg_q2) ;
-
-    // costruisco bb
-    Triangle2D::Triangle2D<G2lib::valueType> T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ) ;
-    Triangle2D::Triangle2D<G2lib::valueType> T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1] ) ;
-
-    if ( nlhs == 1 ) {
-      bool over = T1.overlap(T2) ;
-      plhs[0] = mxCreateDoubleScalar( over ? 1.0 : 0.0 ) ;
-    } else {
-      mexErrMsgTxt("There must be an output argument\n");
-    }
-
-  } catch ( std::exception const & e ) {
-  	mexErrMsgTxt(e.what()) ;
-
-  } catch (...) {
-  	mexErrMsgTxt("TriTriOverlap failed\n") ;
   }
 }
+

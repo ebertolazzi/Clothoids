@@ -11,13 +11,28 @@
 		D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9099D261F600AA600740ECF /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9099D291F600B9400740ECF /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9179A7C206D211E006B66E7 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
+		D9179A7D206D211E006B66E7 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D9179A80206D211E006B66E7 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
+		D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9179A82206D211E006B66E7 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
+		D9179A83206D211E006B66E7 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D9179A84206D211E006B66E7 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
+		D9179A8F206D2136006B66E7 /* testDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9179A8E206D2135006B66E7 /* testDistance.cc */; };
 		D918ADA61F62C1CE009893C3 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D918ADA71F62C1CE009893C3 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
-		D938F4EB1DD3B84E00E08A70 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D938F4ED1DD3B85200E08A70 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
 		D96E1FAE1F75513000115228 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
@@ -26,12 +41,10 @@
 		D96E1FB31F75513000115228 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D96E1FB41F75513000115228 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D96E1FB51F75513000115228 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
-		D96E1FB71F75513000115228 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D971F8991F613BC2000E663E /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D971F89A1F613BC2000E663E /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D971F89D1F6169D2000E663E /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
-		D981B3131E8D571D006C933D /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D981B3151E8D5722006C933D /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393501FA14C42009C1E60 /* testG2plot.cc */; };
@@ -39,8 +52,47 @@
 		D9A393581FA14C5C009C1E60 /* testG2stat2arc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393521FA14C42009C1E60 /* testG2stat2arc.cc */; };
 		D9A393591FA14C61009C1E60 /* testG2stat.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393541FA14C42009C1E60 /* testG2stat.cc */; };
 		D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393551FA14C42009C1E60 /* testG2.cc */; };
+		D9AFBB5D20E28F5900C498EF /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
+		D9AFBB5E20E28F5900C498EF /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9AFBB5F20E28F5900C498EF /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D9AFBB6020E28F5900C498EF /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D9AFBB6220E28F5900C498EF /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9AFBB6320E28F5900C498EF /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
+		D9AFBB6420E28F5900C498EF /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9AFBB6520E28F5900C498EF /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
+		D9AFBB6620E28F5900C498EF /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D9AFBB6720E28F5900C498EF /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9AFBB6820E28F5900C498EF /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9AFBB6920E28F5900C498EF /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
+		D9AFBB7120E28F6900C498EF /* testTriangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9AFBB7020E28F6900C498EF /* testTriangle2D.cc */; };
 		D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
 		D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D9BFDB1420EE3C0E00612F3C /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
+		D9BFDB1520EE3C0E00612F3C /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9BFDB1620EE3C0E00612F3C /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D9BFDB1720EE3C0E00612F3C /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D9BFDB1820EE3C0E00612F3C /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
+		D9BFDB1920EE3C0E00612F3C /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9BFDB1A20EE3C0E00612F3C /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9BFDB1B20EE3C0E00612F3C /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
+		D9BFDB1C20EE3C0E00612F3C /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D9BFDB1D20EE3C0E00612F3C /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9BFDB1E20EE3C0E00612F3C /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9BFDB2020EE3C0E00612F3C /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
+		D9BFDB2820EE3C2700612F3C /* testBiarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BFDB2720EE3C2700612F3C /* testBiarc.cc */; };
+		D9C3739520BC484100715C11 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
+		D9C3739620BC484100715C11 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D9C3739820BC484100715C11 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D9C3739920BC484100715C11 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D9C3739A20BC484100715C11 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9C3739B20BC484100715C11 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
+		D9C3739C20BC484100715C11 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D9C3739D20BC484100715C11 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
+		D9C3739E20BC484100715C11 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D9C3739F20BC484100715C11 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9C373A020BC484100715C11 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9C373A120BC484100715C11 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
+		D9C373AA20BC485B00715C11 /* testIntersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C373A920BC485B00715C11 /* testIntersect.cc */; };
 		D9C8B9E41F7AA69400DF4205 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9C8B9E51F7AA69400DF4205 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
@@ -49,19 +101,38 @@
 		D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
-		D9C8B9EC1F7AA69400DF4205 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9E74A591F68825600E47B88 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
 		D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
-		D9E74A5C1F68826300E47B88 /* ClothoidG1.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */; };
 		D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D9FCD3362075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD3372075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD3382075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD3392075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD33A2075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD33B2075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D9FCD33D207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD33E207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD33F207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD340207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD341207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D9FCD342207556DD00553A10 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D9179A89206D211E006B66E7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		D938F4D91DD3B83000E08A70 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,6 +152,33 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		D981B3011E8D56AF006C933D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D9AFBB6B20E28F5900C498EF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D9BFDB2220EE3C0E00612F3C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D9C373A420BC484100715C11 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -117,14 +215,16 @@
 		D9099D251F600AA600740ECF /* G2lib.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G2lib.cc; sourceTree = "<group>"; };
 		D9099D271F600B9400740ECF /* Circle.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Circle.hh; sourceTree = "<group>"; };
 		D9099D281F600B9400740ECF /* Circle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Circle.cc; sourceTree = "<group>"; };
+		D9179A8D206D211E006B66E7 /* testDistance */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testDistance; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9179A8E206D2135006B66E7 /* testDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testDistance.cc; sourceTree = "<group>"; };
 		D918ADA41F62C1C9009893C3 /* Line.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Line.hh; sourceTree = "<group>"; };
 		D918ADA51F62C1CE009893C3 /* Line.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Line.cc; sourceTree = "<group>"; };
 		D938F4DB1DD3B83000E08A70 /* G2solver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = G2solver; sourceTree = BUILT_PRODUCTS_DIR; };
-		D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidG1.cc; sourceTree = "<group>"; };
 		D938F4E71DD3B84A00E08A70 /* Clothoid.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Clothoid.hh; sourceTree = "<group>"; };
 		D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CubicRootsFlocke.cc; sourceTree = "<group>"; };
 		D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CubicRootsFlocke.hh; sourceTree = "<group>"; };
 		D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle2D.cc; sourceTree = "<group>"; };
+		D9614FD41FB8609F007E5770 /* ClothoidList.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidList.cc; sourceTree = "<group>"; };
 		D96E1FBD1F75513000115228 /* statistic_2arc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_2arc; sourceTree = BUILT_PRODUCTS_DIR; };
 		D971F8971F613BC2000E663E /* Biarc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Biarc.cc; sourceTree = "<group>"; };
 		D971F8981F613BC2000E663E /* Biarc.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Biarc.hh; sourceTree = "<group>"; };
@@ -136,13 +236,28 @@
 		D9A393531FA14C42009C1E60 /* TicToc.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TicToc.hh; sourceTree = "<group>"; };
 		D9A393541FA14C42009C1E60 /* testG2stat.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2stat.cc; sourceTree = "<group>"; };
 		D9A393551FA14C42009C1E60 /* testG2.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2.cc; sourceTree = "<group>"; };
+		D9AFBB6F20E28F5900C498EF /* testTriangle2D */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testTriangle2D; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9AFBB7020E28F6900C498EF /* testTriangle2D.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testTriangle2D.cc; sourceTree = "<group>"; };
 		D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidAsyPlot.cc; sourceTree = "<group>"; };
 		D9BD861B1EFC021300C82B74 /* ClothoidAsyPlot.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClothoidAsyPlot.hh; sourceTree = "<group>"; };
+		D9BFDB2620EE3C0E00612F3C /* testBiarc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testBiarc; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9BFDB2720EE3C2700612F3C /* testBiarc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testBiarc.cc; sourceTree = "<group>"; };
+		D9C373A820BC484100715C11 /* testIntersect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testIntersect; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9C373A920BC485B00715C11 /* testIntersect.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testIntersect.cc; sourceTree = "<group>"; };
 		D9C8B9F21F7AA69400DF4205 /* statistic_CLC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_CLC; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E74A4D1F68801C00E47B88 /* statistic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9FCD3352075552600553A10 /* Clothoid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clothoid.cc; sourceTree = "<group>"; };
+		D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidDistance.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D9179A88206D211E006B66E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D938F4D81DD3B83000E08A70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -158,6 +273,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D981B3001E8D56AF006C933D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9AFBB6A20E28F5900C498EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9BFDB2120EE3C0E00612F3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9C373A320BC484100715C11 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -198,6 +334,10 @@
 				D9E74A4D1F68801C00E47B88 /* statistic */,
 				D96E1FBD1F75513000115228 /* statistic_2arc */,
 				D9C8B9F21F7AA69400DF4205 /* statistic_CLC */,
+				D9179A8D206D211E006B66E7 /* testDistance */,
+				D9C373A820BC484100715C11 /* testIntersect */,
+				D9AFBB6F20E28F5900C498EF /* testTriangle2D */,
+				D9BFDB2620EE3C0E00612F3C /* testBiarc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,9 +357,11 @@
 				D9099D281F600B9400740ECF /* Circle.cc */,
 				D971F8981F613BC2000E663E /* Biarc.hh */,
 				D971F8971F613BC2000E663E /* Biarc.cc */,
-				D938F4E61DD3B84A00E08A70 /* ClothoidG1.cc */,
-				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
 				D938F4E71DD3B84A00E08A70 /* Clothoid.hh */,
+				D9FCD3352075552600553A10 /* Clothoid.cc */,
+				D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */,
+				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
+				D9614FD41FB8609F007E5770 /* ClothoidList.cc */,
 				D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */,
 				D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */,
 				D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */,
@@ -237,6 +379,10 @@
 				D9A393531FA14C42009C1E60 /* TicToc.hh */,
 				D9A393541FA14C42009C1E60 /* testG2stat.cc */,
 				D9A393551FA14C42009C1E60 /* testG2.cc */,
+				D9179A8E206D2135006B66E7 /* testDistance.cc */,
+				D9C373A920BC485B00715C11 /* testIntersect.cc */,
+				D9AFBB7020E28F6900C498EF /* testTriangle2D.cc */,
+				D9BFDB2720EE3C2700612F3C /* testBiarc.cc */,
 			);
 			path = "tests-cpp";
 			sourceTree = SOURCE_ROOT;
@@ -244,6 +390,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D9179A7A206D211E006B66E7 /* testDistance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9179A8A206D211E006B66E7 /* Build configuration list for PBXNativeTarget "testDistance" */;
+			buildPhases = (
+				D9179A7B206D211E006B66E7 /* Sources */,
+				D9179A88206D211E006B66E7 /* Frameworks */,
+				D9179A89206D211E006B66E7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testDistance;
+			productName = G2solver;
+			productReference = D9179A8D206D211E006B66E7 /* testDistance */;
+			productType = "com.apple.product-type.tool";
+		};
 		D938F4DA1DD3B83000E08A70 /* G2solver */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D938F4E21DD3B83000E08A70 /* Build configuration list for PBXNativeTarget "G2solver" */;
@@ -295,6 +458,57 @@
 			productReference = D981B3031E8D56AF006C933D /* testAB */;
 			productType = "com.apple.product-type.tool";
 		};
+		D9AFBB5B20E28F5900C498EF /* testTriangle2D */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9AFBB6C20E28F5900C498EF /* Build configuration list for PBXNativeTarget "testTriangle2D" */;
+			buildPhases = (
+				D9AFBB5C20E28F5900C498EF /* Sources */,
+				D9AFBB6A20E28F5900C498EF /* Frameworks */,
+				D9AFBB6B20E28F5900C498EF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testTriangle2D;
+			productName = G2solver;
+			productReference = D9AFBB6F20E28F5900C498EF /* testTriangle2D */;
+			productType = "com.apple.product-type.tool";
+		};
+		D9BFDB1220EE3C0E00612F3C /* testBiarc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9BFDB2320EE3C0E00612F3C /* Build configuration list for PBXNativeTarget "testBiarc" */;
+			buildPhases = (
+				D9BFDB1320EE3C0E00612F3C /* Sources */,
+				D9BFDB2120EE3C0E00612F3C /* Frameworks */,
+				D9BFDB2220EE3C0E00612F3C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testBiarc;
+			productName = G2solver;
+			productReference = D9BFDB2620EE3C0E00612F3C /* testBiarc */;
+			productType = "com.apple.product-type.tool";
+		};
+		D9C3739320BC484100715C11 /* testIntersect */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9C373A520BC484100715C11 /* Build configuration list for PBXNativeTarget "testIntersect" */;
+			buildPhases = (
+				D9C3739420BC484100715C11 /* Sources */,
+				D9C373A320BC484100715C11 /* Frameworks */,
+				D9C373A420BC484100715C11 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testIntersect;
+			productName = G2solver;
+			productReference = D9C373A820BC484100715C11 /* testIntersect */;
+			productType = "com.apple.product-type.tool";
+		};
 		D9C8B9E11F7AA69400DF4205 /* statistic_CLC */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D9C8B9EF1F7AA69400DF4205 /* Build configuration list for PBXNativeTarget "statistic_CLC" */;
@@ -335,9 +549,12 @@
 		D938F4D31DD3B83000E08A70 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 				TargetAttributes = {
+					D9179A7A206D211E006B66E7 = {
+						DevelopmentTeam = S8X788ZA8Y;
+					};
 					D938F4DA1DD3B83000E08A70 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = S8X788ZA8Y;
@@ -347,6 +564,15 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = S8X788ZA8Y;
 						ProvisioningStyle = Automatic;
+					};
+					D9AFBB5B20E28F5900C498EF = {
+						DevelopmentTeam = S8X788ZA8Y;
+					};
+					D9BFDB1220EE3C0E00612F3C = {
+						DevelopmentTeam = S8X788ZA8Y;
+					};
+					D9C3739320BC484100715C11 = {
+						DevelopmentTeam = S8X788ZA8Y;
 					};
 					D9E74A4C1F68801C00E47B88 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -371,11 +597,35 @@
 				D9E74A4C1F68801C00E47B88 /* statistic */,
 				D96E1FAC1F75513000115228 /* statistic_2arc */,
 				D9C8B9E11F7AA69400DF4205 /* statistic_CLC */,
+				D9179A7A206D211E006B66E7 /* testDistance */,
+				D9C3739320BC484100715C11 /* testIntersect */,
+				D9AFBB5B20E28F5900C498EF /* testTriangle2D */,
+				D9BFDB1220EE3C0E00612F3C /* testBiarc */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D9179A7B206D211E006B66E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9179A7C206D211E006B66E7 /* Line.cc in Sources */,
+				D9179A7D206D211E006B66E7 /* Triangle2D.cc in Sources */,
+				D9179A8F206D2136006B66E7 /* testDistance.cc in Sources */,
+				D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */,
+				D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */,
+				D9FCD33B2075552700553A10 /* Clothoid.cc in Sources */,
+				D9179A80206D211E006B66E7 /* G2lib.cc in Sources */,
+				D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */,
+				D9179A82206D211E006B66E7 /* Biarc.cc in Sources */,
+				D9179A83206D211E006B66E7 /* ClothoidAsyPlot.cc in Sources */,
+				D9FCD342207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9179A84206D211E006B66E7 /* Circle.cc in Sources */,
+				D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D938F4D71DD3B83000E08A70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -385,12 +635,14 @@
 				D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */,
 				D9099D201F5FFB8300740ECF /* Fresnel.cc in Sources */,
 				D9099D261F600AA600740ECF /* G2lib.cc in Sources */,
+				D9FCD3362075552700553A10 /* Clothoid.cc in Sources */,
+				D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D971F8991F613BC2000E663E /* Biarc.cc in Sources */,
 				D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D9099D291F600B9400740ECF /* Circle.cc in Sources */,
+				D9FCD33D207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */,
 				D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */,
-				D938F4EB1DD3B84E00E08A70 /* ClothoidG1.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,7 +651,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9A393581FA14C5C009C1E60 /* testG2stat2arc.cc in Sources */,
+				D9FCD340207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9FCD3392075552700553A10 /* Clothoid.cc in Sources */,
 				D96E1FAE1F75513000115228 /* G2lib.cc in Sources */,
+				D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */,
 				D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */,
 				D96E1FB11F75513000115228 /* Biarc.cc in Sources */,
@@ -407,7 +662,6 @@
 				D96E1FB31F75513000115228 /* Triangle2D.cc in Sources */,
 				D96E1FB41F75513000115228 /* Line.cc in Sources */,
 				D96E1FB51F75513000115228 /* Fresnel.cc in Sources */,
-				D96E1FB71F75513000115228 /* ClothoidG1.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,12 +674,74 @@
 				D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */,
 				D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */,
 				D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */,
+				D9FCD3372075552700553A10 /* Clothoid.cc in Sources */,
+				D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */,
-				D981B3131E8D571D006C933D /* ClothoidG1.cc in Sources */,
 				D971F89A1F613BC2000E663E /* Biarc.cc in Sources */,
+				D9FCD33E207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D918ADA71F62C1CE009893C3 /* Line.cc in Sources */,
 				D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9AFBB5C20E28F5900C498EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9AFBB5D20E28F5900C498EF /* Line.cc in Sources */,
+				D9AFBB5E20E28F5900C498EF /* Triangle2D.cc in Sources */,
+				D9AFBB5F20E28F5900C498EF /* CubicRootsFlocke.cc in Sources */,
+				D9AFBB7120E28F6900C498EF /* testTriangle2D.cc in Sources */,
+				D9AFBB6020E28F5900C498EF /* Fresnel.cc in Sources */,
+				D9AFBB6220E28F5900C498EF /* Clothoid.cc in Sources */,
+				D9AFBB6320E28F5900C498EF /* G2lib.cc in Sources */,
+				D9AFBB6420E28F5900C498EF /* ClothoidList.cc in Sources */,
+				D9AFBB6520E28F5900C498EF /* Biarc.cc in Sources */,
+				D9AFBB6620E28F5900C498EF /* ClothoidAsyPlot.cc in Sources */,
+				D9AFBB6720E28F5900C498EF /* ClothoidDistance.cc in Sources */,
+				D9AFBB6820E28F5900C498EF /* Circle.cc in Sources */,
+				D9AFBB6920E28F5900C498EF /* ClothoidG2.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9BFDB1320EE3C0E00612F3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9BFDB1420EE3C0E00612F3C /* Line.cc in Sources */,
+				D9BFDB2820EE3C2700612F3C /* testBiarc.cc in Sources */,
+				D9BFDB1520EE3C0E00612F3C /* Triangle2D.cc in Sources */,
+				D9BFDB1620EE3C0E00612F3C /* CubicRootsFlocke.cc in Sources */,
+				D9BFDB1720EE3C0E00612F3C /* Fresnel.cc in Sources */,
+				D9BFDB1820EE3C0E00612F3C /* G2lib.cc in Sources */,
+				D9BFDB1920EE3C0E00612F3C /* Clothoid.cc in Sources */,
+				D9BFDB1A20EE3C0E00612F3C /* ClothoidList.cc in Sources */,
+				D9BFDB1B20EE3C0E00612F3C /* Biarc.cc in Sources */,
+				D9BFDB1C20EE3C0E00612F3C /* ClothoidAsyPlot.cc in Sources */,
+				D9BFDB1D20EE3C0E00612F3C /* Circle.cc in Sources */,
+				D9BFDB1E20EE3C0E00612F3C /* ClothoidDistance.cc in Sources */,
+				D9BFDB2020EE3C0E00612F3C /* ClothoidG2.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9C3739420BC484100715C11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9C3739520BC484100715C11 /* Line.cc in Sources */,
+				D9C3739620BC484100715C11 /* Triangle2D.cc in Sources */,
+				D9C3739820BC484100715C11 /* CubicRootsFlocke.cc in Sources */,
+				D9C3739920BC484100715C11 /* Fresnel.cc in Sources */,
+				D9C373AA20BC485B00715C11 /* testIntersect.cc in Sources */,
+				D9C3739A20BC484100715C11 /* Clothoid.cc in Sources */,
+				D9C3739B20BC484100715C11 /* G2lib.cc in Sources */,
+				D9C3739C20BC484100715C11 /* ClothoidList.cc in Sources */,
+				D9C3739D20BC484100715C11 /* Biarc.cc in Sources */,
+				D9C3739E20BC484100715C11 /* ClothoidAsyPlot.cc in Sources */,
+				D9C3739F20BC484100715C11 /* ClothoidDistance.cc in Sources */,
+				D9C373A020BC484100715C11 /* Circle.cc in Sources */,
+				D9C373A120BC484100715C11 /* ClothoidG2.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,7 +750,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9C8B9E41F7AA69400DF4205 /* G2lib.cc in Sources */,
+				D9FCD341207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9FCD33A2075552700553A10 /* Clothoid.cc in Sources */,
 				D9C8B9E51F7AA69400DF4205 /* ClothoidG2.cc in Sources */,
+				D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */,
 				D9C8B9E71F7AA69400DF4205 /* Biarc.cc in Sources */,
 				D9C8B9E81F7AA69400DF4205 /* Circle.cc in Sources */,
@@ -442,7 +761,6 @@
 				D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */,
 				D9A393571FA14C57009C1E60 /* testG2statCLC.cc in Sources */,
 				D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */,
-				D9C8B9EC1F7AA69400DF4205 /* ClothoidG1.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +769,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */,
+				D9FCD33F207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9FCD3382075552700553A10 /* Clothoid.cc in Sources */,
 				D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */,
+				D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */,
 				D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */,
 				D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */,
@@ -459,13 +780,28 @@
 				D9E74A591F68825600E47B88 /* Line.cc in Sources */,
 				D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */,
 				D9A393591FA14C61009C1E60 /* testG2stat.cc in Sources */,
-				D9E74A5C1F68826300E47B88 /* ClothoidG1.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		D9179A8B206D211E006B66E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9179A8C206D211E006B66E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D938F4E01DD3B83000E08A70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -479,6 +815,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -486,6 +823,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -533,6 +871,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -540,6 +879,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -617,6 +957,54 @@
 			};
 			name = Release;
 		};
+		D9AFBB6D20E28F5900C498EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9AFBB6E20E28F5900C498EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D9BFDB2420EE3C0E00612F3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9BFDB2520EE3C0E00612F3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D9C373A620BC484100715C11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9C373A720BC484100715C11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D9C8B9F01F7AA69400DF4205 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -652,6 +1040,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D9179A8A206D211E006B66E7 /* Build configuration list for PBXNativeTarget "testDistance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9179A8B206D211E006B66E7 /* Debug */,
+				D9179A8C206D211E006B66E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D938F4D61DD3B83000E08A70 /* Build configuration list for PBXProject "G2solver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -684,6 +1081,33 @@
 			buildConfigurations = (
 				D981B3071E8D56AF006C933D /* Debug */,
 				D981B3081E8D56AF006C933D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9AFBB6C20E28F5900C498EF /* Build configuration list for PBXNativeTarget "testTriangle2D" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9AFBB6D20E28F5900C498EF /* Debug */,
+				D9AFBB6E20E28F5900C498EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9BFDB2320EE3C0E00612F3C /* Build configuration list for PBXNativeTarget "testBiarc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9BFDB2420EE3C0E00612F3C /* Debug */,
+				D9BFDB2520EE3C0E00612F3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9C373A520BC484100715C11 /* Build configuration list for PBXNativeTarget "testIntersect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9C373A620BC484100715C11 /* Debug */,
+				D9C373A720BC484100715C11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

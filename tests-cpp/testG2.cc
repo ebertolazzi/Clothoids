@@ -3,36 +3,33 @@
 #include <cmath>
 #include <iostream>
 
-using Clothoid::valueType ;
+using G2lib::real_type ;
 
 int
 main() {
 
-  Clothoid::G2solve2arc   g2solve2arc ;
-  Clothoid::G2solve3arc   g2solve3arc ;
+  G2lib::G2solve2arc g2solve2arc ;
+  G2lib::G2solve3arc g2solve3arc ;
 
-  valueType m_pi = 3.1415926535897932385 ;
-
-#if 0
-  valueType x0  = 0 ;
-  valueType y0  = 0  ;
-  valueType th0 = 2.9095201640181596 ;
-  valueType k0  = 0.10000000000000001 ;
-
-  valueType x1  = 1 ;
-  valueType y1  = 0 ;
-  valueType th1 = -3.1101767270538954 ;
-  valueType k1  = 1 ;
+#if 1
+  real_type x0  = -1 ;
+  real_type y0  =  0 ;
+  real_type th0 = -2 ;
+  real_type k0  = 0.909297426825682 ;
+  real_type x1  = 1 ;
+  real_type y1  = 0 ;
+  real_type th1 = 2 ;
+  real_type k1  = 0.909297426825682 ;
 #else
-  valueType x0  = -1 ;
-  valueType y0  = 0  ;
-  valueType th0 = m_pi*0.9;
-  valueType k0  = 0.2 + 1e-10 ;
+  real_type x0  = -1 ;
+  real_type y0  = 0  ;
+  real_type th0 = m_pi*0.9;
+  real_type k0  = 0.2 + 1e-10 ;
 
-  valueType x1  = 1 ;
-  valueType y1  = 0 ;
-  valueType th1 = -m_pi ;
-  valueType k1  = 0.2 + 0 ;
+  real_type x1  = 1 ;
+  real_type y1  = 0 ;
+  real_type th1 = -m_pi ;
+  real_type k1  = 0.2 + 0 ;
 #endif
 
   // test 3 archi
@@ -40,21 +37,21 @@ main() {
   int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 ) ;
   std::cout << "iter = " << iter << '\n' ;
   
-  Clothoid::ClothoidCurve const & S0 = g2solve3arc.getS0() ;
-  Clothoid::ClothoidCurve const & S1 = g2solve3arc.getS1() ;
-  Clothoid::ClothoidCurve const & SM = g2solve3arc.getSM() ;
+  G2lib::ClothoidCurve const & S0 = g2solve3arc.getS0() ;
+  G2lib::ClothoidCurve const & S1 = g2solve3arc.getS1() ;
+  G2lib::ClothoidCurve const & SM = g2solve3arc.getSM() ;
 
   std::cout << "\n\nS0 (NEW)\n" << S0 ;
   std::cout << "\n\nSM (NEW)\n" << SM ;
   std::cout << "\n\nS1 (NEW)\n" << S1 ;
 
   std::cout
-    << "\nx  = " << S0.Xend()       << " " << SM.Xbegin()     << " err = " << S0.Xend()-SM.Xbegin()
-    << "\ny  = " << S0.Yend()       << " " << SM.Ybegin()     << " err = " << S0.Yend()-SM.Ybegin()
-    << "\nth = " << S0.ThetaEnd()   << " " << SM.ThetaBegin() << " err = " << S0.ThetaEnd()-SM.ThetaBegin()
-    << "\nx  = " << S1.Xbegin()     << " " << SM.Xend()       << " err = " << S1.Xbegin()-SM.Xend()
-    << "\ny  = " << S1.Ybegin()     << " " << SM.Yend()       << " err = " << S1.Ybegin()-SM.Yend()
-    << "\nth = " << S1.ThetaBegin() << " " << SM.ThetaEnd()   << " err = " << S1.ThetaBegin()-SM.ThetaEnd()
+    << "\nx  = " << S0.xEnd()       << " " << SM.xBegin()     << " err = " << S0.xEnd()-SM.xBegin()
+    << "\ny  = " << S0.yEnd()       << " " << SM.yBegin()     << " err = " << S0.yEnd()-SM.yBegin()
+    << "\nth = " << S0.thetaEnd()   << " " << SM.thetaBegin() << " err = " << S0.thetaEnd()-SM.thetaBegin()
+    << "\nx  = " << S1.xBegin()     << " " << SM.xEnd()       << " err = " << S1.xBegin()-SM.xEnd()
+    << "\ny  = " << S1.yBegin()     << " " << SM.yEnd()       << " err = " << S1.yBegin()-SM.yEnd()
+    << "\nth = " << S1.thetaBegin() << " " << SM.thetaEnd()   << " err = " << S1.thetaBegin()-SM.thetaEnd()
     << '\n' ;
 
   std::cout << "\n\nALL DONE FOLKS!!!\n" ;

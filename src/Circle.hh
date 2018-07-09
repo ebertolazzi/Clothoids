@@ -27,9 +27,7 @@
 #include "G2lib.hh"
 
 //! Clothoid computations routine
-namespace Circle {
-
-  using namespace G2lib ;
+namespace G2lib {
 
   /*\
    |    ____ _          _
@@ -40,24 +38,24 @@ namespace Circle {
   \*/
 
   void
-  CircleTangentPoints( valueType PA[2],
-                       valueType rA,
-                       valueType PB[2],
-                       valueType rB,
+  CircleTangentPoints( real_type PA[2],
+                       real_type rA,
+                       real_type PB[2],
+                       real_type rB,
                        bool &    external_tangents,
-                       valueType PTE0[2][2],
-                       valueType PTE1[2][2],
+                       real_type PTE0[2][2],
+                       real_type PTE1[2][2],
                        bool &    internal_tangents,
-                       valueType PTI0[2][2],
-                       valueType PTI1[2][2] ) ;
+                       real_type PTI0[2][2],
+                       real_type PTI1[2][2] ) ;
 
   bool
-  CircleLineTransition( valueType C[2],
-                        valueType r,
-                        valueType P[2],
-                        valueType theta,
-                        valueType C0[2],
-                        valueType C1[2] ) ;
+  CircleLineTransition( real_type C[2],
+                        real_type r,
+                        real_type P[2],
+                        real_type theta,
+                        real_type C0[2],
+                        real_type C1[2] ) ;
 
   /*\
    |    ____ _          _         _
@@ -70,15 +68,12 @@ namespace Circle {
   //! \brief Class to manage Clothoid Curve
   class CircleArc {
 
-    valueType x0,     //!< initial x coordinate of the clothoid
+    real_type x0,     //!< initial x coordinate of the clothoid
               y0,     //!< initial y coordinate of the clothoid
               theta0, //!< initial angle of the clothoid
               k ;     //!< curvature
 
-    valueType c0,     //!< cos(theta0)
-              s0,     //!< sin(theta0)
-              s_min,  //!< initial curvilinear coordinate of the clothoid segment
-              s_max ; //!< final curvilinear coordinate of the clothoid segment
+    real_type L ;     //!< length of the circle segment
 
   public:
 
@@ -87,42 +82,20 @@ namespace Circle {
     , y0(0)
     , theta0(0)
     , k(0)
-    , c0(1)
-    , s0(0)
-    , s_min(0)
-    , s_max(0)
+    , L(0)
     {}
 
     //! construct a circle curve with the standard parameters
-    CircleArc( valueType _x0,
-               valueType _y0,
-               valueType _theta0,
-               valueType _k,
-               valueType _L )
+    CircleArc( real_type _x0,
+               real_type _y0,
+               real_type _theta0,
+               real_type _k,
+               real_type _L )
     : x0(_x0)
     , y0(_y0)
     , theta0(_theta0)
     , k(_k)
-    , c0(cos(_theta0))
-    , s0(sin(_theta0))
-    , s_min(0)
-    , s_max(_L)
-    {}
-
-    CircleArc( valueType _x0,
-               valueType _y0,
-               valueType _theta0,
-               valueType _k,
-               valueType _smin ,
-               valueType _smax )
-    : x0(_x0)
-    , y0(_y0)
-    , theta0(_theta0)
-    , k(_k)
-    , c0(cos(_theta0))
-    , s0(sin(_theta0))
-    , s_min(_smin)
-    , s_max(_smax)
+    , L(_L)
     {}
 
     void
@@ -130,11 +103,8 @@ namespace Circle {
       x0     = c.x0 ;
       y0     = c.y0 ;
       theta0 = c.theta0 ;
-      c0     = c.c0 ;
-      s0     = c.s0 ;
       k      = c.k ;
-      s_min  = c.s_min ;
-      s_max  = c.s_max ;
+      L      = c.L ;
     }
 
     CircleArc( CircleArc const & s ) { copy(s) ; }
@@ -142,139 +112,188 @@ namespace Circle {
     CircleArc const & operator = ( CircleArc const & s )
     { copy(s) ; return *this ; }
 
-    valueType getX0()        const { return x0 ; }
-    valueType getY0()        const { return y0 ; }
-    valueType getTheta0()    const { return theta0 ; }
-    valueType getSinTheta0() const { return s0 ; }
-    valueType getCosTheta0() const { return c0 ; }
-    valueType getKappa()     const { return k ; }
-    valueType getSmin()      const { return s_min ; }
-    valueType getSmax()      const { return s_max ; }
-    valueType getL()         const { return s_max-s_min ; }
+    real_type sinTheta0() const { return sin(theta0); }
+    real_type cosTheta0() const { return cos(theta0); }
+    real_type kappa()     const { return k ; }
+    real_type length()    const { return L ; }
 
-    valueType Xbegin()     const { return X(s_min) ; }
-    valueType Ybegin()     const { return Y(s_min) ; }
-    valueType ThetaBegin() const { return theta(s_min) ; }
+    real_type xBegin()     const { return x0 ; }
+    real_type yBegin()     const { return y0 ; }
+    real_type thetaBegin() const { return theta0 ; }
 
-    valueType Xend()     const { return X(s_max) ; }
-    valueType Yend()     const { return Y(s_max) ; }
-    valueType ThetaEnd() const { return theta(s_max) ; }
+    real_type xEnd()     const { return X(L) ; }
+    real_type yEnd()     const { return Y(L) ; }
+    real_type thetaEnd() const { return theta(L) ; }
 
-    //! construct a clothoid with the standard parameters
+    //! construct a circle with the standard parameters
     void
-    build( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _k,
-           valueType _L ) {
+    build( real_type _x0,
+           real_type _y0,
+           real_type _theta0,
+           real_type _k,
+           real_type _L ) {
       x0     = _x0 ;
       y0     = _y0 ;
       theta0 = _theta0 ;
-      c0     = cos(_theta0);
-      s0     = sin(_theta0);
       k      = _k ;
-      s_min  = 0 ;
-      s_max  = _L ;
+      L      = _L ;
     }
 
-    void
-    build( valueType _x0,
-           valueType _y0,
-           valueType _theta0,
-           valueType _k,
-           valueType _smin,
-           valueType _smax ) {
-      x0     = _x0 ;
-      y0     = _y0 ;
-      theta0 = _theta0 ;
-      c0     = cos(_theta0);
-      s0     = sin(_theta0);
-      k      = _k ;
-      s_min  = _smin ;
-      s_max  = _smax ;
-    }
+    //! build a circle by solving the hermite G1 problem
+    bool
+    build_G1( real_type _x0,
+              real_type _y0,
+              real_type _theta0,
+              real_type _x1,
+              real_type _y1 );
 
-    //! build a clothoid by solving the hermite G1 problem
-    void
-    build_G1( valueType _x0,
-              valueType _y0,
-              valueType _theta0,
-              valueType _x1,
-              valueType _y1 );
+    //! build a circle passing by 3 points
+    bool
+    build_3P( real_type _x0,
+              real_type _y0,
+              real_type _x1,
+              real_type _y1,
+              real_type _x2,
+              real_type _y2 );
 
-    valueType
-    delta_theta() const { return (s_max-s_min)*k ; }
+    real_type
+    delta_theta() const { return L*k ; }
 
-    valueType
-    theta( valueType s ) const { return theta0 + s*k ; }
+    real_type
+    theta( real_type s ) const { return theta0 + s*k ; }
 
-    valueType
-    theta_D( valueType s ) const { return k ; }
+    real_type
+    theta_D( real_type ) const { return k ; }
 
-    valueType
-    theta_DD( valueType ) const { return 0 ; }
+    real_type
+    theta_DD( real_type ) const { return 0 ; }
 
-    valueType
-    theta_DDD( valueType ) const { return 0 ; }
+    real_type
+    theta_DDD( real_type ) const { return 0 ; }
 
-    valueType
-    totalLength() const { return s_max-s_min ; }
+    real_type
+    totalLength() const { return L ; }
 
-    valueType
+    real_type
     thetaTotalVariation() const
-    { return std::abs((s_max-s_min)*k) ; }
+    { return std::abs(L*k) ; }
 
-    valueType
-    thetaMinMax( valueType & thMin, valueType & thMax ) const ;
+    real_type
+    thetaMinMax( real_type & thMin, real_type & thMax ) const ;
 
-    valueType
+    real_type
     deltaTheta() const
-    { valueType thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
+    { real_type thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
 
-    valueType X( valueType s ) const ;
-    valueType Y( valueType s ) const ;
+    real_type X( real_type s ) const ;
+    real_type X_D( real_type s ) const ;
+    real_type X_DD( real_type s ) const ;
+    real_type X_DDD( real_type s ) const ;
 
-    void eval( valueType s, valueType & x, valueType & y ) const ;
-    void eval_D( valueType s, valueType & x_D, valueType & y_D ) const ;
-    void eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const ;
-    void eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const ;
+    real_type Y( real_type s ) const ;
+    real_type Y_D( real_type s ) const ;
+    real_type Y_DD( real_type s ) const ;
+    real_type Y_DDD( real_type s ) const ;
+
+    void eval( real_type s, real_type & x, real_type & y ) const ;
+    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const ;
+    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const ;
+    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
 
     void
-    trim( valueType s_begin, valueType s_end ) {
-      s_min = s_begin ;
-      s_max = s_end ;
-    }
+    trim( real_type s_begin, real_type s_end ) ;
 
-    //! set the origin of the clothoid to the curvilinear abscissa s0
-    void change_origin( valueType s0 ) ;
+    void
+    changeCurvilinearOrigin( real_type s0, real_type newL ) ;
+
+    void
+    changeOrigin( real_type newx0, real_type newy0 )
+    { x0 = newx0 ; y0 = newy0 ; }
+
+    void
+    rotate( real_type angle, real_type cx, real_type cy );
+
+    void
+    scale( real_type s );
+
+    void
+    reverse();
 
     //! get the bounding box triangle (if angle variation less that pi/3)
     bool
-    bbTriangle( valueType p0[2],
-                valueType p1[2],
-                valueType p2[2] ) const ;
+    bbTriangle( real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const ;
 
     void
-    translate( valueType tx, valueType ty )
+    translate( real_type tx, real_type ty )
     { x0 += tx ; y0 += ty ; }
 
-    void
-    moveOrigin( valueType newx0, valueType newy0 )
-    { x0 = newx0 ; y0 = newy0 ; }
+    /*!
+     * \brief compute the point at minimum distance from a point `[x,y]` and the circle arc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \param X x-coordinate of the closest point
+     * \param Y y-coordinate of the closest point
+     * \param S param of the closest point
+     * \return the distance point-circle
+    \*/
+    real_type
+    closestPoint( real_type   x,
+                  real_type   y,
+                  real_type & X,
+                  real_type & Y,
+                  real_type & S ) const ;
+
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the circle arc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \param S param at minimum distance
+     * \return the distance point-circle
+    \*/
+    real_type
+    distance( real_type   x,
+              real_type   y,
+              real_type & S ) const {
+      real_type X, Y ;
+      return closestPoint( x, y, X, Y, S ) ;
+    }
+
+    /*!
+     * \brief compute the distance from a point `[x,y]` and the circle arc
+     *
+     * \param x x-coordinate
+     * \param y y-coordinate
+     * \return the distance point-circle
+    \*/
+    real_type
+    distance( real_type x, real_type y ) const {
+      real_type ss ;
+      return distance( x, y, ss );
+    }
 
     /*! \brief Compute rational B-spline coefficients for a circle arc
      *
      * \param knots  knots of the B-spline
      * \param Poly   polygon of the B-spline
      * \return       3 up to 9 the number of polygon points
-     */
+    \*/
+    int_type
+    toNURBS( real_type knots[], real_type Poly[], bool get_size ) const ;
+    // Poly 3 x n matrix
 
-    indexType
-    toNURBS( valueType knots[12], valueType Poly[9][3] ) const ;
+    void
+    info( std::ostream & stream ) const
+    { stream << "CircleArc\n" << *this << '\n'; }
 
     friend
     std::ostream &
     operator << ( std::ostream & stream, CircleArc const & c ) ;
+
+    friend class ClothoidCurve ;
 
   } ;
 

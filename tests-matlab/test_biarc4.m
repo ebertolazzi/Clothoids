@@ -1,16 +1,16 @@
 addpath('../matlab');
 
-%=============================================================================%
-%                                                                             %
-%  Autors: Enrico Bertolazzi                                                  %
-%          Department of Industrial Engineering                               %
-%          University of Trento                                               %
-%          enrico.bertolazzi@unitn.it                                         %
-%          m.fregox@gmail.com                                                 %
-%                                                                             %
-%=============================================================================%
-% Driver test program to check bounding box on clothoid                       %
-%=============================================================================%
+%=========================================================================%
+%                                                                         %
+%  Autors: Enrico Bertolazzi                                              %
+%          Department of Industrial Engineering                           %
+%          University of Trento                                           %
+%          enrico.bertolazzi@unitn.it                                     %
+%          m.fregox@gmail.com                                             %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
 
 x0 = -1;
 y0 = 0;
@@ -33,10 +33,8 @@ for theta1=thmin:(thmax-thmin)/3:thmax
   hold on
 
   for theta0=[-pi:pi/20:pi]
-    [arc1,arc2,ok] = biarc(x0,y0,theta0,x1,y1,theta1);
-    if ok
-      biarc_plot(arc1,arc2,false);
-    end
+    L1 = Biarc(x0,y0,theta0,x1,y1,theta1);
+    L1.plot();
   end
   axis equal
 

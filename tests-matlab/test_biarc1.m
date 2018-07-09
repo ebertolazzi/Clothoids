@@ -1,16 +1,16 @@
 addpath('../matlab');
 
-%=============================================================================%
-%                                                                             %
-%  Autors: Enrico Bertolazzi                                                  %
-%          Department of Industrial Engineering                               %
-%          University of Trento                                               %
-%          enrico.bertolazzi@unitn.it                                         %
-%          m.fregox@gmail.com                                                 %
-%                                                                             %
-%=============================================================================%
-% Driver test program to check bounding box on clothoid                       %
-%=============================================================================%
+%=========================================================================%
+%                                                                         %
+%  Autors: Enrico Bertolazzi                                              %
+%          Department of Industrial Engineering                           %
+%          University of Trento                                           %
+%          enrico.bertolazzi@unitn.it                                     %
+%          m.fregox@gmail.com                                             %
+%                                                                         %
+%=========================================================================%
+% Driver test program to check Clothoids lib                              %
+%=========================================================================%
 
 subplot(2,1,1);
 hold off
@@ -43,10 +43,8 @@ for a=0:pi/3:2*pi
 
   subplot(2,1,2);
   plot(p(1,:),p(2,:),'k')
-  [arc1,arc2,ok] = biarc(x0,y0,theta0+a,x1,y1,theta1+a);
-  if ok
-    biarc_plot(arc1,arc2,true);
-  end
+  L1 = Biarc( x0, y0, theta0+a, x1, y1, theta1+a );
+  L1.plot() ;
 end
 
 

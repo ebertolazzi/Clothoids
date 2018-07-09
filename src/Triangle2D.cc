@@ -41,10 +41,12 @@
  */
 
 #include "Triangle2D.hh"
+#include "Line.hh"
+
 #include <algorithm>
 #include <functional>
 
-namespace Triangle2D {
+namespace G2lib {
 
   template <typename T>
   inline
@@ -83,6 +85,8 @@ namespace Triangle2D {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   inline
   bool
@@ -100,6 +104,8 @@ namespace Triangle2D {
     }
     return false ;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   template <typename T>
   inline
@@ -123,6 +129,8 @@ namespace Triangle2D {
     }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   template <typename T>
   inline
   bool
@@ -137,13 +145,14 @@ namespace Triangle2D {
     }
   }
 
-  template <typename T>
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  Triangle2D<T>::maxmin3( T const & a,
-                          T const & b,
-                          T const & c,
-                          T       & vmin,
-                          T       & vmax) const {
+  Triangle2D::maxmin3( real_type   a,
+                       real_type   b,
+                       real_type   c,
+                       real_type & vmin,
+                       real_type & vmax) const {
     vmin = vmax = a ;
     if ( b < vmin ) vmin = b ;
     else            vmax = b ;
@@ -151,8 +160,9 @@ namespace Triangle2D {
     else if ( c > vmax ) vmax = c ;
   }
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::~AABBTree() {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Triangle2D::AABBTree::~AABBTree() {
     switch ( numChildren ) {
     case 0:
       if( data.pTriangle != nullptr ) delete data.pTriangle ; data.pTriangle = nullptr ;
@@ -164,36 +174,42 @@ namespace Triangle2D {
     }
   }
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( std::vector<Triangle2D<T> > & triangles ) {
-    std::vector<Triangle2D<T> const * > pTriangles ;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Triangle2D::AABBTree::AABBTree( std::vector<Triangle2D> & triangles ) {
+    std::vector<Triangle2D const *> pTriangles ;
     pTriangles.reserve( triangles.size() ) ;
-    typename std::vector<Triangle2D<T> >::const_iterator it = triangles.begin() ;
+    typename std::vector<Triangle2D>::const_iterator it = triangles.begin() ;
     for ( ; it != triangles.end() ; ++it )
       pTriangles.push_back( &*it ) ;
   }
 
-  template <typename T>
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   class AABBcomparatorX {
-    T cutPos ;
+    real_type cutPos ;
   public:
-    AABBcomparatorX( T const & cp ) : cutPos(cp) {}
-    bool operator () ( Triangle2D<T> const * pT ) const
+    AABBcomparatorX( real_type const & cp ) : cutPos(cp) {}
+    bool operator () ( Triangle2D const * pT ) const
     { return pT->baricenterX() < cutPos; }
   };
 
-  template <typename T>
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   class AABBcomparatorY {
-    T cutPos ;
+    real_type cutPos ;
   public:
-    AABBcomparatorY( T const & cp ) : cutPos(cp) {}
-    bool operator () ( Triangle2D<T> const * pT ) const
+    AABBcomparatorY( real_type const & cp ) : cutPos(cp) {}
+    bool operator () ( Triangle2D const * pT ) const
     { return pT->baricenterY() < cutPos; }
   };
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( typename std::vector<Triangle2D<T> const *>::iterator & begin,
-                                     typename std::vector<Triangle2D<T> const *>::iterator & end ) {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Triangle2D::AABBTree::AABBTree(
+    typename std::vector<Triangle2D const *>::iterator & begin,
+    typename std::vector<Triangle2D const *>::iterator & end
+  ) {
     numChildren = -1 ;
     xmin = ymin = xmax = ymax = 0 ;
     data.pChildren[0] =
@@ -204,13 +220,13 @@ namespace Triangle2D {
     (*begin)->bbox(xmin,ymin,xmax,ymax) ;
     if ( end - begin == 1 ) {
       numChildren = 0 ;
-      data.pTriangle = new Triangle2D<T>(**begin) ;
+      data.pTriangle = new Triangle2D(**begin) ;
       return;
     }
 
-    typename std::vector<Triangle2D<T> const *>::iterator it = begin ;
+    typename std::vector<Triangle2D const *>::iterator it = begin ;
     for ( ++it ; it != end ; ++it ) {
-      T xmi, ymi, xma, yma ;
+      real_type xmi, ymi, xma, yma ;
       (*it)->bbox( xmi, ymi, xma, yma ) ;
       if ( xmi < xmin ) xmin = xmi ;
       if ( xma > xmax ) xmax = xma ;
@@ -220,11 +236,11 @@ namespace Triangle2D {
 
     if ( (ymax - ymin) > (xmax - xmin) ) {
       // cut along Y
-      AABBcomparatorY<T> comp( (ymax + ymin)/2 ) ;
+      AABBcomparatorY comp( (ymax + ymin)/2 ) ;
       it = std::partition( begin, end, comp );
     } else {
       // cut along X
-      AABBcomparatorX<T> comp( (xmax + xmin)/2 ) ;
+      AABBcomparatorX comp( (xmax + xmin)/2 ) ;
       it = std::partition( begin, end, comp );
 
     }
@@ -238,18 +254,23 @@ namespace Triangle2D {
     }
   }
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( Triangle2D<T> const & triangle ) {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Triangle2D::AABBTree::AABBTree( Triangle2D const & triangle ) {
     numChildren = 0 ;
     triangle.bbox( xmin, ymin, xmax, ymax ) ;
-    data.pTriangle = new Triangle2D<T>(triangle) ;
+    data.pTriangle = new Triangle2D(triangle) ;
   }
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( AABBTree const * pTree, Triangle2D<T> const & triangle ) {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Triangle2D::AABBTree::AABBTree(
+    AABBTree   const * pTree,
+    Triangle2D const & triangle
+  ) {
     numChildren = 2 ;
     pTree->bbox( xmin, ymin, xmax, ymax ) ;
-    T xmi, ymi, xma, yma ;
+    real_type xmi, ymi, xma, yma ;
     triangle.bbox( xmi, ymi, xma, yma ) ;
     if ( xmi < xmin ) xmin = xmi ;
     if ( xma > xmax ) xmax = xma ;
@@ -259,11 +280,15 @@ namespace Triangle2D {
     data.pChildren[1] = new AABBTree(triangle) ;
   }
 
-  template <typename T>
-  Triangle2D<T>::AABBTree::AABBTree( AABBTree const * pTreeL, AABBTree const * pTreeR ) {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Triangle2D::AABBTree::AABBTree(
+    AABBTree const * pTreeL,
+    AABBTree const * pTreeR
+  ) {
     numChildren = 2 ;
     pTreeL->bbox( xmin, ymin, xmax, ymax ) ;
-    T xmi, ymi, xma, yma ;
+    real_type xmi, ymi, xma, yma ;
     pTreeR->bbox( xmi, ymi, xma, yma ) ;
     if ( xmi < xmin ) xmin = xmi ;
     if ( xma > xmax ) xmax = xma ;
@@ -273,10 +298,11 @@ namespace Triangle2D {
     data.pChildren[1] = pTreeR ;
   }
 
-  template <typename T>
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
-  Triangle2D<T>::AABBTree::overlap( Triangle2D<T> const & triangle ) const {
-    T xmi, ymi, xma, yma ;
+  Triangle2D::AABBTree::overlap( Triangle2D const & triangle ) const {
+    real_type xmi, ymi, xma, yma ;
     triangle.bbox( xmi, ymi, xma, yma ) ;
     if ( xmax < xmi ) return false; // a is left of b
     if ( xmin > xma ) return false; // a is right of b
@@ -295,10 +321,11 @@ namespace Triangle2D {
     return true; // unused
   }
 
-  template <typename T>
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
-  Triangle2D<T>::AABBTree::overlap( AABBTree const * pTree ) const {
-    T xmi, ymi, xma, yma ;
+  Triangle2D::AABBTree::overlap( AABBTree const * pTree ) const {
+    real_type xmi, ymi, xma, yma ;
     pTree->bbox( xmi, ymi, xma, yma ) ;
     if ( xmax < xmi ) return false; // a is left of b
     if ( xmin > xma ) return false; // a is right of b
@@ -317,20 +344,129 @@ namespace Triangle2D {
     return true; // unused
   }
 
-  template <typename T>
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Triangle2D::rotate( real_type angle, real_type cx, real_type cy ) {
+    real_type C   = cos(angle) ;
+    real_type S   = sin(angle) ;
+
+    real_type dx  = p1[0] - cx ;
+    real_type dy  = p1[1] - cy ;
+    real_type ndx = C*dx - S*dy ;
+    real_type ndy = C*dy + S*dx ;
+    p1[0] = cx + ndx ;
+    p1[1] = cy + ndy ;
+
+    dx  = p2[0] - cx ;
+    dy  = p2[1] - cy ;
+    ndx = C*dx - S*dy ;
+    ndy = C*dy + S*dx ;
+    p2[0] = cx + ndx ;
+    p2[1] = cy + ndy ;
+
+    dx  = p3[0] - cx ;
+    dy  = p3[1] - cy ;
+    ndx = C*dx - S*dy ;
+    ndy = C*dy + S*dx ;
+    p3[0] = cx + ndx ;
+    p3[1] = cy + ndy ;
+
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
-  Triangle2D<T>::intersect( Triangle2D<T> const & t2 ) const {
+  Triangle2D::intersect( Triangle2D const & t2 ) const {
     return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
 
-  template <typename T>
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
-  Triangle2D<T>::overlap( Triangle2D<T> const & t2 ) const {
+  Triangle2D::overlap( Triangle2D const & t2 ) const {
     return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
   }
 
-  template class Triangle2D<float> ;
-  template class Triangle2D<double> ;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Triangle2D::distMax( real_type x, real_type y ) const {
+    real_type d1 = hypot( x-p1[0], y-p1[1] ) ;
+    real_type d2 = hypot( x-p2[0], y-p2[1] ) ;
+    real_type d3 = hypot( x-p3[0], y-p3[1] ) ;
+    return std::max(d1,std::max(d2,d3)) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  static
+  real_type
+  distSeg( real_type       x,
+           real_type       y,
+           real_type const A[],
+           real_type const B[] ) {
+
+    real_type dx  = x    - A[0];
+    real_type dy  = y    - A[1];
+    real_type dx1 = B[0] - A[0];
+    real_type dy1 = B[1] - A[1];
+
+    // < P-A - s*(B-A), B-A> = 0
+    // <P-A, B-A> = s <B-A,B-A>
+
+    real_type tmp = dx * dx1 + dy * dy1 ;
+
+    if ( tmp < 0 ) return hypot(dx,dy);
+
+    real_type tmp2 = dx1*dx1+dy1*dy1;
+
+    if ( tmp > tmp2 ) return hypot(x-B[0],y-B[1]);
+
+    real_type S = tmp/tmp2;
+    real_type X = A[0] + S*dx1;
+    real_type Y = A[1] + S*dy1;
+
+    return hypot( x-X, y-Y );
+  }
+
+  real_type
+  Triangle2D::distMin( real_type x, real_type y ) const {
+
+    int_type in = isInside( x, y ) ;
+    if ( in >= 0 ) return 0 ;
+
+#if 0
+    LineSegment L1, L2, L3 ;
+    L1.build_2P( p1, p2 );
+    L2.build_2P( p2, p3 );
+    L3.build_2P( p3, p1 );
+
+    real_type d1 = L1.distance( x, y ) ;
+    real_type d2 = L2.distance( x, y ) ;
+    real_type d3 = L3.distance( x, y ) ;
+#else
+    real_type d1 = distSeg( x, y, p1, p2 ) ;
+    real_type d2 = distSeg( x, y, p2, p3 ) ;
+    real_type d3 = distSeg( x, y, p3, p1 ) ;
+#endif
+
+    if ( d1 > d2 ) std::swap( d1, d2 ) ;
+    if ( d1 > d3 ) std::swap( d1, d3 ) ;
+    return d1 ;
+
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  std::ostream &
+  operator << ( std::ostream & stream, Triangle2D const & t ) {
+    stream << "Triangle2D\n"
+           << "P0 = [" << t.p1[0] << ", " << t.p1[1] << "]\n"
+           << "P1 = [" << t.p2[0] << ", " << t.p2[1] << "]\n"
+           << "P2 = [" << t.p3[0] << ", " << t.p3[1] << "]\n" ;
+    return stream ;
+  }
 
 }
 

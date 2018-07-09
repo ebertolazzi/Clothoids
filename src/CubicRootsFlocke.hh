@@ -24,16 +24,16 @@
 
 namespace PolynomialRoots {
 
-  typedef double valueType ;
-  typedef int    indexType ;
+  typedef double real_type ;
+  typedef int    int_type ;
 
   using std::abs ;
   using std::pow ;
 
-  static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
-  static valueType const third    = 1./3. ;
-  static valueType const one27th  = 1./27. ;
-  static valueType const two27th  = 2./27. ;
+  static real_type const machepsi = std::numeric_limits<real_type>::epsilon() ;
+  static real_type const third    = 1./3. ;
+  static real_type const one27th  = 1./27. ;
+  static real_type const two27th  = 2./27. ;
 
   /*\
    *  Calculate the zeros of the quadratic a*z^2 + b*z + c.
@@ -43,13 +43,13 @@ namespace PolynomialRoots {
    *  the product of the zeros c/a.
   \*/
   void
-  solveQuadratic( valueType   a,
-                  valueType   b,
-                  valueType   c,
-                  valueType & r1,
-                  valueType & r2,
-                  indexType & nr,
-                  indexType & nc ) ;
+  solveQuadratic( real_type   a,
+                  real_type   b,
+                  real_type   c,
+                  real_type & r1,
+                  real_type & r2,
+                  int_type  & nr,
+                  int_type  & nc ) ;
 
   /*\
   ... Calculate the zeros of the cubic A*z^3 + B*z^2 + C*z + D.
@@ -61,16 +61,16 @@ namespace PolynomialRoots {
   ... DOI: http://dx.doi.org/10.1145/2699468
   \*/
 
-  indexType
-  solveCubic( valueType   A,
-              valueType   B,
-              valueType   C,
-              valueType   D,
-              valueType & r1,
-              valueType & r2,
-              valueType & r3,
-              indexType & nr,
-              indexType & nc ) ;
+  int_type
+  solveCubic( real_type   A,
+              real_type   B,
+              real_type   C,
+              real_type   D,
+              real_type & r1,
+              real_type & r2,
+              real_type & r3,
+              int_type  & nr,
+              int_type  & nc ) ;
 
 }
 

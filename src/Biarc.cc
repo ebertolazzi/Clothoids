@@ -23,9 +23,7 @@
 
 #include "Biarc.hh"
 
-#include <limits>
-
-namespace Biarc {
+namespace G2lib {
 
   using namespace std ;
 
@@ -37,60 +35,64 @@ namespace Biarc {
    |   \____|_|_|  \___|_|\___||___/
   \*/
 
+  #if 0
+
   static
   inline
-  valueType
-  powersub( valueType a, valueType b)
+  real_type
+  powersub( real_type a, real_type b)
   { return (a+b)*(a-b); }
 
   /*
-    http://www.lucidarme.me/?p=490
+  //  http://www.lucidarme.me/?p=490
   */
+
+  static // unused for the moment
   void
-  CircleTangentPoints( valueType PA[2],
-                       valueType rA,
-                       valueType PB[2],
-                       valueType rB,
+  CircleTangentPoints( real_type PA[2],
+                       real_type rA,
+                       real_type PB[2],
+                       real_type rB,
                        bool &    external_tangents,
-                       valueType PTE0[2][2],
-                       valueType PTE1[2][2],
+                       real_type PTE0[2][2],
+                       real_type PTE1[2][2],
                        bool &    internal_tangents,
-                       valueType PTI0[2][2],
-                       valueType PTI1[2][2] ) {
+                       real_type PTI0[2][2],
+                       real_type PTI1[2][2] ) {
 
     // Compute distance between circle centers
-    valueType D = hypot( PB[0]-PA[0], PB[1]-PA[1] );
+    real_type D = hypot( PB[0]-PA[0], PB[1]-PA[1] );
 
     // First case : process external tangents
-    valueType disc1 = powersub(D,rB-rA) ;
+    real_type disc1 = powersub(D,rB-rA) ;
     external_tangents = disc1 >= 0 ;
 
     if ( external_tangents ) {
       // Compute the lenght of the tangents
-      valueType L = sqrt(disc1);
+      real_type L = sqrt(disc1);
 
       // Compute the parameters
-      valueType R1     = hypot(L,rB);
-      valueType Sigma1 = 0.25 * sqrt( powersub( D+rA, R1 )* powersub( R1, D-rA ) );
-      valueType R2     = hypot(L,rA);
-      valueType Sigma2 = 0.25 * sqrt( powersub( D+rB, R2 )* powersub( R2, D-rB ) );
+      real_type R1     = hypot(L,rB);
+      real_type Sigma1 = 0.25 * sqrt( powersub( D+rA, R1 )* powersub( R1, D-rA ) );
+      real_type R2     = hypot(L,rA);
+      real_type Sigma2 = 0.25 * sqrt( powersub( D+rB, R2 )* powersub( R2, D-rB ) );
 
-      valueType xM  = (PA[0]+PB[0])/2 ;
-      valueType yM  = (PA[1]+PB[1])/2 ;
-      valueType Tx  = 2*(PA[0]-PB[0])/(D*D) ;
-      valueType Ty  = 2*(PA[1]-PB[1])/(D*D) ;
-      valueType bf0 = powersub(rA,R1)/4;
-      valueType bf1 = powersub(rB,R2)/4;
+      real_type xM  = (PA[0]+PB[0])/2 ;
+      real_type yM  = (PA[1]+PB[1])/2 ;
+      real_type Tx  = 2*(PA[0]-PB[0])/(D*D) ;
+      real_type Ty  = 2*(PA[1]-PB[1])/(D*D) ;
+      real_type bf0 = powersub(rA,R1)/4;
+      real_type bf1 = powersub(rB,R2)/4;
 
-      valueType TxS1 = Tx*Sigma1 ;
-      valueType TxS2 = Tx*Sigma2 ;
-      valueType TyS1 = Ty*Sigma1 ;
-      valueType TyS2 = Ty*Sigma2 ;
+      real_type TxS1 = Tx*Sigma1 ;
+      real_type TxS2 = Tx*Sigma2 ;
+      real_type TyS1 = Ty*Sigma1 ;
+      real_type TyS2 = Ty*Sigma2 ;
 
-      valueType xM0 = xM - Tx*bf0 ;
-      valueType yM0 = yM - Ty*bf0 ;
-      valueType xM1 = xM + Tx*bf1 ;
-      valueType yM1 = yM + Ty*bf1 ;
+      real_type xM0 = xM - Tx*bf0 ;
+      real_type yM0 = yM - Ty*bf0 ;
+      real_type xM1 = xM + Tx*bf1 ;
+      real_type yM1 = yM + Ty*bf1 ;
 
       // Compute the first tangent
       PTE0[0][0] = xM0 + TyS1;
@@ -106,35 +108,35 @@ namespace Biarc {
     }
 
     // Second case : process internal tangents
-    valueType disc2 = powersub(D,rB+rA) ;
+    real_type disc2 = powersub(D,rB+rA) ;
     internal_tangents = disc2 >= 0 ;
 
     if ( internal_tangents ) {
       // Compute the lenght of the tangents
-      valueType L = sqrt(disc2);
+      real_type L = sqrt(disc2);
 
       // Compute the parameters
-      valueType R1     = hypot(L,rB);
-      valueType Sigma1 = 0.25 * sqrt ( powersub(D+rA,R1)*powersub(R1,D-rA) );
-      valueType R2     = hypot(L,rA);
-      valueType Sigma2 = 0.25 * sqrt ( powersub(D+rB,R2)*powersub(R2,D-rB) );
+      real_type R1     = hypot(L,rB);
+      real_type Sigma1 = 0.25 * sqrt ( powersub(D+rA,R1)*powersub(R1,D-rA) );
+      real_type R2     = hypot(L,rA);
+      real_type Sigma2 = 0.25 * sqrt ( powersub(D+rB,R2)*powersub(R2,D-rB) );
 
-      valueType xM  = (PA[0]+PB[0])/2 ;
-      valueType yM  = (PA[1]+PB[1])/2 ;
-      valueType Tx  = 2*(PA[0]-PB[0])/(D*D) ;
-      valueType Ty  = 2*(PA[1]-PB[1])/(D*D) ;
-      valueType bf0 = powersub(rA,R1)/4;
-      valueType bf1 = powersub(rB,R2)/4;
+      real_type xM  = (PA[0]+PB[0])/2 ;
+      real_type yM  = (PA[1]+PB[1])/2 ;
+      real_type Tx  = 2*(PA[0]-PB[0])/(D*D) ;
+      real_type Ty  = 2*(PA[1]-PB[1])/(D*D) ;
+      real_type bf0 = powersub(rA,R1)/4;
+      real_type bf1 = powersub(rB,R2)/4;
 
-      valueType TxS1 = Tx*Sigma1;
-      valueType TxS2 = Tx*Sigma2;
-      valueType TyS1 = Ty*Sigma1;
-      valueType TyS2 = Ty*Sigma2;
+      real_type TxS1 = Tx*Sigma1;
+      real_type TxS2 = Tx*Sigma2;
+      real_type TyS1 = Ty*Sigma1;
+      real_type TyS2 = Ty*Sigma2;
 
-      valueType xM0 = xM - Tx*bf0;
-      valueType yM0 = yM - Ty*bf0;
-      valueType xM1 = xM + Tx*bf1;
-      valueType yM1 = yM + Ty*bf1;
+      real_type xM0 = xM - Tx*bf0;
+      real_type yM0 = yM - Ty*bf0;
+      real_type xM1 = xM + Tx*bf1;
+      real_type yM1 = yM + Ty*bf1;
 
       // Compute the first tangent
       PTI0[0][0] = xM0 + TyS1;
@@ -143,34 +145,37 @@ namespace Biarc {
       PTI0[1][1] = yM1 + TxS2;
     
       // Compute second tangent
-      PTI0[0][0] = xM0 - TyS1;
-      PTI0[0][1] = yM0 + TxS1;
-      PTI0[1][0] = xM1 + TyS2;
-      PTI0[1][1] = yM1 - TxS2;
+      PTI1[0][0] = xM0 - TyS1;
+      PTI1[0][1] = yM0 + TxS1;
+      PTI1[1][0] = xM1 + TyS2;
+      PTI1[1][1] = yM1 - TxS2;
     }
   }
 
+  static // unused for the moment
   bool
-  CircleLineTransition( valueType C[2],
-                        valueType r,
-                        valueType P[2],
-                        valueType theta,
-                        valueType C0[2],
-                        valueType C1[2] ) {
-    valueType Nx =  sin(theta) ;
-    valueType Ny = -cos(theta) ;
-    valueType Dx = C[0] - P[0] ;
-    valueType Dy = C[1] - P[1] ;
-    valueType delta = (Dx*Dx+Dy*Dy-r*r)/2 ;
+  CircleLineTransition( real_type C[2],
+                        real_type r,
+                        real_type P[2],
+                        real_type theta,
+                        real_type C0[2],
+                        real_type C1[2] ) {
+    real_type Nx =  sin(theta) ;
+    real_type Ny = -cos(theta) ;
+    real_type Dx = C[0] - P[0] ;
+    real_type Dy = C[1] - P[1] ;
+    real_type delta = (Dx*Dx+Dy*Dy-r*r)/2 ;
     if ( delta <= 0 ) return false ;
-    valueType s0 = delta/(Dx*Nx+Dy*Ny-r) ;
+    real_type s0 = delta/(Dx*Nx+Dy*Ny-r) ;
     C0[0] = P[0]+s0*Nx ;
     C0[1] = P[1]+s0*Ny ;
-    valueType s1 = delta/(Dx*Nx+Dy*Ny+r) ;
+    real_type s1 = delta/(Dx*Nx+Dy*Ny+r) ;
     C1[0] = P[0]+s1*Nx ;
     C1[1] = P[1]+s1*Ny ;
     return true ;
   }
+
+  #endif
 
   /*\
    |   ____  _
@@ -181,109 +186,275 @@ namespace Biarc {
   \*/
 
   bool
-  Biarc::build( valueType x0,
-                valueType y0,
-                valueType theta0,
-                valueType x1,
-                valueType y1,
-                valueType theta1 ) {
+  Biarc::build( real_type x0,
+                real_type y0,
+                real_type theta0,
+                real_type x1,
+                real_type y1,
+                real_type theta1 ) {
 
-    valueType dx = x1-x0 ;
-    valueType dy = y1-y0 ;
+    real_type dx = x1-x0 ;
+    real_type dy = y1-y0 ;
+    real_type d  = hypot(dy,dx);
 
-    alpha = atan2(dy,dx);
-    valueType d = hypot(dy,dx);
+    omega = atan2(dy,dx);
 
     // put in range
-    valueType th0 = theta0-alpha;
-    valueType th1 = theta1-alpha;
+    real_type th0 = theta0 - omega ;
+    real_type th1 = theta1 - omega ;
 
     rangeSymm(th0);
     rangeSymm(th1);
 
-    //valueType thstar = compute_thstar ? -(th0+th1)/2 : BiData.thetas + alpha ;
+    real_type thstar = - (th0+th1)/2 ;
 
-    valueType thstar = -(th0+th1)/2 ;
+    real_type dth  = th1 - th0 ;
+    real_type dth0 = thstar - th0 ;
+    real_type dth1 = thstar - th1 ;
 
-    valueType c0 = cos(th0);
-    valueType s0 = sin(th0);
-    valueType c1 = cos(th1);
-    valueType s1 = sin(th1);
+    real_type t  = d * (Sinc(dth/4) / Sinc(dth/2) ) ;
+    real_type l0 = t/(2*Sinc( dth0/2 )) ;
+    real_type l1 = t/(2*Sinc( dth1/2 )) ;
 
-    valueType thstar0 = thstar-th0;
-    valueType thstar1 = thstar-th1;
+    real_type epsi = 100*std::numeric_limits<real_type>::epsilon();
 
-    valueType Sinc0 = Sinc(thstar0);
-    valueType Cosc0 = Cosc(thstar0);
+    if ( l0 > epsi && l1 > epsi ) {
 
-    valueType Sinc1 = Sinc(thstar1);
-    valueType Cosc1 = Cosc(thstar1);
+      real_type k0 = dth0/l0;
+      real_type k1 = -dth1/l1;
 
-    valueType A[2][2] = {
-      { c0*Sinc0-s0*Cosc0, c1*Sinc1-s1*Cosc1 },
-      { s0*Sinc0+c0*Cosc0, s1*Sinc1+c1*Cosc1 }
-    };
+      C0.build( x0, y0, theta0, k0, l0 );
 
-    valueType b[2] = { 1, 0 };
+      real_type an = omega+(thstar+th0)/2 ;
+      real_type xs = x0 + (t/2)*cos(an);
+      real_type ys = y0 + (t/2)*sin(an);
 
-    Solve2x2 solver;
-    solver.factorize(A);
-    valueType st[2] ;
-    bool ok = solver.solve( b, st );
-    if ( ok ) {
-      valueType epsi = 100*std::numeric_limits<valueType>::epsilon();
-      ok = st[0] > epsi && st[1] > epsi ; // NO ZERO LENGHT SOLUTION
+      C1.build( xs, ys, omega+thstar, k1, l1 );
+      return true ;
     }
-    if ( ok ) {
+    return false ;
+  }
 
-      valueType L0     = d*st[0];
-      valueType L1     = d*st[1];
-      valueType kappa0 = thstar0/L0;
-      valueType kappa1 = -thstar1/L1;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-      C0.build( x0, y0, theta0, kappa0, L0 );
+  bool
+  Biarc::build_3P( real_type x0,
+                   real_type y0,
+                   real_type x1,
+                   real_type y1,
+                   real_type x2,
+                   real_type y2 ) {
 
-      valueType ca = cos(alpha);
-      valueType sa = sin(alpha);
+    real_type dxa   = x1-x0 ;
+    real_type dya   = y1-y0 ;
+    real_type dxb   = x2-x1 ;
+    real_type dyb   = y2-y1 ;
+    real_type La    = hypot(dya,dxa) ;
+    real_type Lb    = hypot(dyb,dxb) ;
+    real_type arg   = (dxa*dxb + dya * dyb)/(La*Lb) ;
+    if      ( arg >  1 ) arg = 1 ;
+    else if ( arg < -1 ) arg = -1 ;
+    real_type omega = acos(arg) ;
 
-      xs     = x0 + L0*(A[0][0]*ca-A[1][0]*sa);
-      ys     = y0 + L0*(A[0][0]*sa+A[1][0]*ca);
-      thetas = thstar+alpha;
-      cs     = cos(thetas);
-      ss     = sin(thetas);
-
-      C1.build( xs, ys, thetas, kappa1, L1 );
+    real_type at = (La/(La+Lb))*omega;
+    real_type bt = (Lb/(La+Lb))*omega;
+    // find solution using Halley
+    real_type Delta = 0 ;
+    bool found = false ;
+    for ( int_type iter = 0 ; iter < 10 && !found ; ++iter ) {
+      real_type ga[3], gb[3] ;
+      gfun( at+Delta, ga );
+      gfun( bt-Delta, gb );
+      real_type f   = ga[0]/La - gb[0]/Lb ;
+      real_type df  = ga[1]/La + gb[1]/Lb ;
+      real_type ddf = ga[2]/La - gb[2]/Lb ;
+      real_type h   = (df*f)/(df*df-0.5*f*ddf) ;
+      Delta -= h ;
+      found = abs(h) < 1e-10 && abs(f) < 1e-10 ;
     }
 
-    return ok ;
+    if ( found ) {
+      at += Delta ; bt -= Delta ;
+      real_type tha = atan2(dya,dxa) ;
+      real_type thb = atan2(dyb,dxb) ;
+      if ( dxa*dyb < dya*dxb ) {
+        tha += at ;
+        thb += bt ;
+      } else {
+        tha -= at ;
+        thb -= bt ;
+      }
+      C0.build_G1( x0, y0, tha, x1, y1 );
+      C1.build_G1( x1, y1, thb, x2, y2 );
+    }
+
+    return found ;
   }
 
-  valueType
-  Biarc::X( valueType s ) const {
-    if ( s < C0.getL() ) return C0.X(s);
-    else                 return C1.X(s-C0.getL());
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::X( real_type s ) const {
+    if ( s < C0.length() ) return C0.X(s);
+    else                   return C1.X(s-C0.length());
   }
 
-  valueType
-  Biarc::Y( valueType s ) const {
-    if ( s < C0.getL() ) return C0.Y(s);
-    else                 return C1.Y(s-C0.getL());
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::Y( real_type s ) const {
+    if ( s < C0.length() ) return C0.Y(s);
+    else                   return C1.Y(s-C0.length());
   }
 
-  valueType
-  Biarc::theta( valueType s ) const {
-    if ( s < C0.getL() ) return C0.theta(s);
-    else                 return C1.theta(s-C0.getL());
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::theta( real_type s ) const {
+    if ( s < C0.length() ) return C0.theta(s);
+    else                   return C1.theta(s-C0.length());
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::kappa( real_type s ) const {
+    if ( s < C0.length() ) return C0.kappa();
+    else                   return C1.kappa();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval( real_type   s,
+               real_type & th,
+               real_type & k,
+               real_type & x,
+               real_type & y ) const {
+    if ( s < C0.length() ) {
+      th = C0.theta(s) ;
+      k  = C0.kappa() ;
+      C0.eval(s,x,y);
+    } else {
+      s -= C0.length() ;
+      th = C1.theta(s) ;
+      k  = C1.kappa() ;
+      C1.eval(s,x,y);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval( real_type s, real_type & x, real_type & y ) const {
+    if ( s < C0.length() ) {
+      C0.eval(s,x,y);
+    } else {
+      s -= C0.length() ;
+      C1.eval(s,x,y);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval_D( real_type s, real_type & x_D, real_type & y_D ) const {
+    if ( s < C0.length() ) {
+      C0.eval_D(s,x_D,y_D);
+    } else {
+      s -= C0.length() ;
+      C1.eval_D(s,x_D,y_D);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const {
+    if ( s < C0.length() ) {
+      C0.eval_DD(s,x_DD,y_DD);
+    } else {
+      s -= C0.length() ;
+      C1.eval_DD(s,x_DD,y_DD);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  Biarc::eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const {
+    if ( s < C0.length() ) {
+      C0.eval_DDD(s,x_DDD,y_DDD);
+    } else {
+      s -= C0.length() ;
+      C1.eval_DDD(s,x_DDD,y_DDD);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::closestPoint( real_type   x,
+                       real_type   y,
+                       real_type & X,
+                       real_type & Y,
+                       real_type & S ) const {
+    real_type dst0 = C0.closestPoint( x, y, X, Y, S );
+    real_type X1, Y1, S1 ;
+    real_type dst1 = C1.closestPoint( x, y, X1, Y1, S1 );
+    if ( dst0 <= dst1 ) return dst0 ;
+    X = X1 ; Y= Y1 ; S = S1 + C0.length() ;
+    return dst1 ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::changeOrigin( real_type newx0, real_type newy0 ) {
+    C1.translate( newx0-C0.xBegin(), newy0-C0.yBegin() );
+    C0.changeOrigin( newx0, newy0 );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::translate( real_type tx, real_type ty ) {
+    C0.translate( tx, ty );
+    C1.translate( tx, ty );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::rotate( real_type angle, real_type cx, real_type cy ) {
+    C0.rotate( angle, cx, cy );
+    C1.rotate( angle, cx, cy );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::reverse() {
+    CircleArc tmp = C0 ;
+    C0 = C1 ;
+    C1 = tmp ;
+    C0.reverse();
+    C1.reverse();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::scale( real_type scl ) {
+    real_type newx0 = C0.xBegin() + scl*(C1.xBegin()-C0.xBegin()) ;
+    real_type newy0 = C0.yBegin() + scl*(C1.yBegin()-C0.yBegin()) ;
+    C1.changeOrigin( newx0, newy0 );
+    C1.scale( scl );
+    C0.scale( scl );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   std::ostream &
   operator << ( std::ostream & stream, Biarc const & bi ) {
-    stream <<   "Biarc"
-           << "\nC0 = " << bi.C0
-           << "\nC1 = " << bi.C1
-           << "\nxs     = " << bi.xs
-           << "\nys     = " << bi.ys
-           << "\nthetas = " << bi.thetas
+    stream << "Biarc\n"
+           << "C0\n" << bi.C0
+           << "C1\n" << bi.C1
            << "\n" ;
     return stream ;
   }

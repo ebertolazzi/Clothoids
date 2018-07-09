@@ -27,18 +27,18 @@ namespace PolynomialRoots {
   static
   inline
   void
-  scaleCubicMonicPolynomial( valueType   A,
-                             valueType   B,
-                             valueType   C,
-                             valueType & AS,
-                             valueType & BS,
-                             valueType & CS,
-                             indexType & i_case,
-                             valueType & scale ) {
+  scaleCubicMonicPolynomial( real_type   A,
+                             real_type   B,
+                             real_type   C,
+                             real_type & AS,
+                             real_type & BS,
+                             real_type & CS,
+                             int_type  & i_case,
+                             real_type & scale ) {
 
-    valueType a = abs(A) ;
-    valueType b = sqrt(abs(B)) ;
-    valueType c = cbrt(abs(C)) ;
+    real_type a = abs(A) ;
+    real_type b = sqrt(abs(B)) ;
+    real_type c = cbrt(abs(C)) ;
 
     if ( a < b ) {
       if ( b < c ) i_case = 0 ; // a < b < c --> c MAX
@@ -75,17 +75,17 @@ namespace PolynomialRoots {
   // a3*x^3 + a2*x^2 + a1*x + a0 = (x-r)*(a3*x^2+b1*x+b0)
   static
   void
-  deflateCubicPolynomial( valueType   a3,
-                          valueType   a2,
-                          valueType   a1,
-                          valueType   a0,
-                          valueType   r,
-                          valueType & b1,
-                          valueType & b0 ) {
-    indexType i_cross  = 0 ;
-    valueType r2       = r*r ;
-    valueType v_cross  = abs(a0) ;
-    valueType v_cross1 = abs(a1*r) ;
+  deflateCubicPolynomial( real_type   a3,
+                          real_type   a2,
+                          real_type   a1,
+                          real_type   a0,
+                          real_type   r,
+                          real_type & b1,
+                          real_type & b0 ) {
+    int_type  i_cross  = 0 ;
+    real_type r2       = r*r ;
+    real_type v_cross  = abs(a0) ;
+    real_type v_cross1 = abs(a1*r) ;
     if ( v_cross1 > v_cross ) { v_cross = v_cross1 ; i_cross = 1 ; }
     v_cross1 = abs(a2*r2) ;
     if ( v_cross1 > v_cross ) { v_cross = v_cross1 ; i_cross = 2 ; }
@@ -102,23 +102,23 @@ namespace PolynomialRoots {
   // x^3 + a*x^2 + b*x + c
   static
   inline
-  valueType
-  evalMonicCubic( valueType x,
-                  valueType a,
-                  valueType b,
-                  valueType c ) {
+  real_type
+  evalMonicCubic( real_type x,
+                  real_type a,
+                  real_type b,
+                  real_type c ) {
     return ((x+a)*x+b)*x+c ;
   }
 
   static
   inline
   void
-  evalMonicCubic( valueType   x,
-                  valueType   a,
-                  valueType   b,
-                  valueType   c,
-                  valueType & p,
-                  valueType & dp ) {
+  evalMonicCubic( real_type   x,
+                  real_type   a,
+                  real_type   b,
+                  real_type   c,
+                  real_type & p,
+                  real_type & dp ) {
     p  = x + a ;
     dp = x + p ;
     p  = p  * x + b ;
@@ -129,22 +129,22 @@ namespace PolynomialRoots {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Translate to C from Polynomial234RootSolvers
   static
-  indexType
-  zeroCubicByNewtonBisection( valueType const a,
-                              valueType const b,
-                              valueType const c,
-                              valueType     & x ) {
+  int_type
+  zeroCubicByNewtonBisection( real_type const a,
+                              real_type const b,
+                              real_type const c,
+                              real_type     & x ) {
 
-    valueType p, dp ;
+    real_type p, dp ;
     evalMonicCubic( x, a, b, c, p, dp ) ;
-    valueType t = p ; // save p(x) for sign comparison
+    real_type t = p ; // save p(x) for sign comparison
     x -= p/dp ; // 1st improved root
 
-    indexType iter      = 1 ;
-    indexType oscillate = 0 ;
+    int_type  iter      = 1 ;
+    int_type  oscillate = 0 ;
     bool      bisection = false ;
     bool      converged = false ;
-    valueType s(0), u(0) ; // to mute warning
+    real_type s(0), u(0) ; // to mute warning
     while ( ! (converged||bisection) ) {
       ++iter ;
       evalMonicCubic( x, a, b, c, p, dp ) ;
@@ -186,13 +186,13 @@ namespace PolynomialRoots {
    *  the product of the zeros c/a.
   \*/
   void
-  solveQuadratic( valueType   a,
-                  valueType   b,
-                  valueType   c,
-                  valueType & r1,
-                  valueType & r2,
-                  indexType & nr,
-                  indexType & nc ) {
+  solveQuadratic( real_type   a,
+                  real_type   b,
+                  real_type   c,
+                  real_type & r1,
+                  real_type & r2,
+                  int_type  & nr,
+                  int_type  & nc ) {
     r1 = r2 = 0 ;
     nr = nc = 0 ;
     if ( a == 0 ) { // less than two roots b*z + c = 0
@@ -203,9 +203,9 @@ namespace PolynomialRoots {
       if ( r1 > 0 ) std::swap(r1,r2) ;
     } else { // Compute discriminant avoiding overflow.
       b /= 2 ; // b now b/2
-      valueType abs_b = abs(b) ;
-      valueType abs_c = abs(c) ;
-      valueType e, d ;
+      real_type abs_b = abs(b) ;
+      real_type abs_c = abs(c) ;
+      real_type e, d ;
       if ( abs_b < abs_c ) {
         e = c < 0 ? -a : a ;
         e = b*(b/abs_c) - e ;
@@ -234,55 +234,55 @@ namespace PolynomialRoots {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   static
   inline
-  valueType
-  guess1( valueType const a[3] ) {
-    valueType const p =  1.09574 ;
-    valueType const q = -3.239E-1 ;
-    valueType const r = -3.239E-1 ;
-    valueType const s =  9.57439E-2 ;
+  real_type
+  guess1( real_type const a[3] ) {
+    real_type const p =  1.09574 ;
+    real_type const q = -3.239E-1 ;
+    real_type const r = -3.239E-1 ;
+    real_type const s =  9.57439E-2 ;
     return p+q*a[1]+r*a[2]+s*a[1]*a[2] ;
   }
 
   static
   inline
-  valueType
-  guess2( valueType const a[3] ) {
-    valueType const p = -1.09574 ;
-    valueType const q =  3.239E-1 ;
-    valueType const r = -3.239E-1 ;
-    valueType const s =  9.57439E-2 ;
+  real_type
+  guess2( real_type const a[3] ) {
+    real_type const p = -1.09574 ;
+    real_type const q =  3.239E-1 ;
+    real_type const r = -3.239E-1 ;
+    real_type const s =  9.57439E-2 ;
     return p+q*a[1]+r*a[2]+s*a[1]*a[2] ;
   }
 
   static
   inline
-  valueType
-  guess3( valueType const a[3] ) {
-    valueType const p =  1.14413    ;
-    valueType const q = -2.75509E-1 ;
-    valueType const r = -4.45578E-1 ;
-    valueType const s = -2.59342E-2 ;
-    valueType t = a[2]/3 ;
+  real_type
+  guess3( real_type const a[3] ) {
+    real_type const p =  1.14413    ;
+    real_type const q = -2.75509E-1 ;
+    real_type const r = -4.45578E-1 ;
+    real_type const s = -2.59342E-2 ;
+    real_type t = a[2]/3 ;
     if ( a[0] < t*(2*t*t-1) ) return  p+q*a[0]+r*a[2]+s*a[0]*a[2] ;
     else                      return -p+q*a[0]+r*a[2]-s*a[0]*a[2] ;
   }
 
   static
   inline
-  valueType
-  guess4( valueType const a[3] ) {
-    valueType const q = -7.71845E-1 ;
-    valueType const s = -2.28155E-1 ;
+  real_type
+  guess4( real_type const a[3] ) {
+    real_type const q = -7.71845E-1 ;
+    real_type const s = -2.28155E-1 ;
     if ( a[0] > 0 ) return (q+s*a[2])*a[0] ;
     else            return (q-s*a[2])*a[0] ;
   }
 
   static
   inline
-  valueType
-  guess5( valueType const a[3] ) {
-    valueType p, q, r, s ;
-    valueType tmp = two27th-a[1]/3 ;
+  real_type
+  guess5( real_type const a[3] ) {
+    real_type p, q, r, s ;
+    real_type tmp = two27th-a[1]/3 ;
     if ( a[1] <= third ) {
       if ( a[0] < tmp ) {
         p =  8.78558E-1 ;
@@ -313,10 +313,10 @@ namespace PolynomialRoots {
 
   static
   inline
-  valueType
-  guess6( valueType const a[3] ) {
-    valueType p, q, r, s ;
-    valueType tmp = a[1]/3-two27th ;
+  real_type
+  guess6( real_type const a[3] ) {
+    real_type p, q, r, s ;
+    real_type tmp = a[1]/3-two27th ;
     if ( a[1] <= third ) {
       if ( a[0] > tmp ) {
         p = -8.78558E-1 ;
@@ -355,16 +355,16 @@ namespace PolynomialRoots {
   ... DOI: http://dx.doi.org/10.1145/2699468
   \*/
 
-  indexType
-  solveCubic( valueType   A,
-              valueType   B,
-              valueType   C,
-              valueType   D,
-              valueType & r1,
-              valueType & r2,
-              valueType & r3,
-              indexType & nr,
-              indexType & nc ) {
+  int_type
+  solveCubic( real_type   A,
+              real_type   B,
+              real_type   C,
+              real_type   D,
+              real_type & r1,
+              real_type & r2,
+              real_type & r3,
+              int_type  & nr,
+              int_type  & nc ) {
 
     // special cases
     if ( A == 0 ) {
@@ -384,8 +384,8 @@ namespace PolynomialRoots {
       return 0 ;
     }
 
-    valueType scale, a[3] ;
-    indexType i_case ;
+    real_type scale, a[3] ;
+    int_type  i_case ;
     scaleCubicMonicPolynomial( B/A, C/A, D/A, a[2], a[1], a[0], i_case, scale ) ;
 
     // Class1: a[0] = −1, −1 <= a[1],a[2] <= +1
@@ -394,7 +394,7 @@ namespace PolynomialRoots {
     // Class4: a[1] = +1, −1 <= a[0],a[2] <= +1
     // Class5: a[2] = −1, −1 <= a[0],a[1] <= +1
     // Class6: a[2] = +1, −1 <= a[0],a[1] <= +1
-    indexType iclass = -1 ;
+    int_type iclass = -1 ;
     switch ( i_case ) {
       case 0: iclass = a[0] > 0 ? 2 : 1 ; break ;
       case 1: iclass = a[1] > 0 ? 4 : 3 ; break ;
@@ -422,7 +422,7 @@ namespace PolynomialRoots {
         r1 = guess6(a) ;
         break ;
     }
-    indexType iter = 0 ;
+    int_type iter = 0 ;
     if ( triple_root ) {
       nr = 3 ;
       if ( iclass == 5 ) r1 = r2 = r3 = -third * scale ;
@@ -452,20 +452,20 @@ namespace PolynomialRoots {
     // scale
     r1 *= scale ;
     
-    valueType p  = ((A*r1+B)*r1+C)*r1+D ;
-    valueType dp = ((4*A*r1+3*B)*r1+2*C)*r1 ;
+    real_type p  = ((A*r1+B)*r1+C)*r1+D ;
+    real_type dp = ((4*A*r1+3*B)*r1+2*C)*r1 ;
     
     r1 -= p/dp ;
 /*
-    valueType const pp[]  = { A, B, C, D } ;
-    valueType pH = CompHorner( pp, 3, r1, true ) ;
+    real_type const pp[]  = { A, B, C, D } ;
+    real_type pH = CompHorner( pp, 3, r1, true ) ;
     std::cout << "pH = " << pH << "\n" ;
 
     // una extra correzione con Newton dopo riscalatura
-    valueType const dpp[] = { 3*A, 2*B, C } ;
+    real_type const dpp[] = { 3*A, 2*B, C } ;
     for ( int k = 0 ; k < 10 ; ++k ) {
-      valueType pH  = CompHorner( pp, 3, r1, true ) ;
-      valueType dpH = (3*A*r1+2*B)*r1+C ;
+      real_type pH  = CompHorner( pp, 3, r1, true ) ;
+      real_type dpH = (3*A*r1+2*B)*r1+C ;
       r1 -= pH/dpH ;
     }
 
@@ -473,7 +473,7 @@ namespace PolynomialRoots {
     std::cout << "pH = " << pH << "\n" ;
 */
     // deflate
-    valueType b0, b1 ;
+    real_type b0, b1 ;
     deflateCubicPolynomial( A, B, C, D, r1, b1, b0 ) ;
     solveQuadratic( A, b1, b0, r2, r3, nr, nc ) ;
     if ( nr == 2 ) { // if real roots sort it!

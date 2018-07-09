@@ -20,8 +20,11 @@
 #include "Circle.hh"
 #include "CubicRootsFlocke.hh"
 
-namespace Circle {
-  static const valueType m_pi = 3.14159265358979323846264338328  ; // pi
+#include <cmath>
+
+namespace G2lib {
+
+  using namespace std ;
 
   /*\
    |    ____ _          _         _
@@ -31,170 +34,335 @@ namespace Circle {
    |   \____|_|_|  \___|_|\___/_/   \_\_|  \___|
   \*/
 
-  void
-  CircleArc::build_G1( valueType _x0,
-                       valueType _y0,
-                       valueType _theta0,
-                       valueType _x1,
-                       valueType _y1 ) {
+  bool
+  CircleArc::build_G1( real_type _x0,
+                       real_type _y0,
+                       real_type _theta0,
+                       real_type _x1,
+                       real_type _y1 ) {
 
-    valueType dx = _x1 - _x0 ;
-    valueType dy = _y1 - _y0 ;
-    valueType d  = hypot( dx, dy );
-    valueType th = atan2( dy, dx ) - _theta0 ;
+    real_type dx = _x1 - _x0 ;
+    real_type dy = _y1 - _y0 ;
+    real_type d  = hypot( dx, dy );
 
-    x0     = _x0 ;
-    y0     = _y0 ;
-    theta0 = _theta0 ;
-    c0     = cos(_theta0);
-    s0     = sin(_theta0);
-    k      = tan(th) / d ;
-    s_min  = 0;
-    s_max  = 2*d*cos(th)/Sinc(th);
+    if ( d > 0 ) {
+      real_type th = atan2( dy, dx ) - _theta0 ;
+      x0     = _x0 ;
+      y0     = _y0 ;
+      theta0 = _theta0 ;
+      k      = 2*sin(th)/d ;
+      L      = d/Sinc(th);
+      return true ;
+    }
+    return false ;
   }
 
-  valueType
-  CircleArc::thetaMinMax( valueType & thMin, valueType & thMax ) const  {
-    thMin = theta0 + s_min * k ;
-    thMax = theta0 + s_max * k ;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  CircleArc::build_3P( real_type _x0,
+                       real_type _y0,
+                       real_type _x1,
+                       real_type _y1,
+                       real_type _x2,
+                       real_type _y2 ) {
+
+    real_type dxa   = _x1 - _x0 ;
+    real_type dya   = _y1 - _y0 ;
+    real_type dxb   = _x2 - _x1 ;
+    real_type dyb   = _y2 - _y1 ;
+    real_type La    = hypot(dya,dxa) ;
+    real_type Lb    = hypot(dyb,dxb) ;
+    real_type cosom = (dxa*dxb + dya*dyb)/(La*Lb) ;
+    if      ( cosom >  1 ) cosom = 1 ;
+    else if ( cosom < -1 ) cosom = -1 ;
+    real_type omega = acos(cosom) ;
+
+    real_type alpha = omega - atan2(Lb*sin(omega),La+Lb*cos(omega)) ;
+    real_type dxc   = _x2 - _x0 ;
+    real_type dyc   = _y2 - _y0 ;
+    real_type Lc    = hypot(dyc,dxc) ;
+    real_type cosal = (dxa*dxc + dya*dyc)/(La*Lc) ;
+    if      ( cosal >  1 ) cosal = 1 ;
+    else if ( cosal < -1 ) cosal = -1 ;
+    alpha += acos(cosal) ;
+
+    if ( dxa*dyb > dya*dxb ) alpha = -alpha ;
+    real_type _theta0 = atan2( dyc, dxc ) + alpha ;
+    return build_G1( _x0, _y0, _theta0, _x2, _y2 );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::thetaMinMax( real_type & thMin, real_type & thMax ) const  {
+    thMin = theta0 ;
+    thMax = theta0 + L * k ;
     if ( thMax < thMin ) std::swap( thMin, thMax ) ;
     return thMax-thMin ;
   }
 
-  valueType
-  CircleArc::X( valueType s ) const {
-    valueType sk = s*k;
-    valueType S  = Sinc(sk);
-    valueType C  = Cosc(sk);
-    return x0+s*(c0*S-s0*C);
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::X( real_type s ) const {
+    real_type sk = (s*k)/2 ;
+    return x0+s*Sinc(sk)*cos(theta0+sk);
   }
 
-  valueType
-  CircleArc::Y( valueType s ) const {
-    valueType sk = s*k;
-    valueType S  = Sinc(sk);
-    valueType C  = Cosc(sk);
-    return y0+s*(c0*C+s0*S);
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::Y( real_type s ) const {
+    real_type sk = (s*k)/2 ;
+    return x0+s*Sinc(sk)*sin(theta0+sk);
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::X_D( real_type s ) const {
+    return cos(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::Y_D( real_type s ) const {
+    return sin(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::X_DD( real_type s ) const {
+    return -k*sin(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::Y_DD( real_type s ) const {
+    return k*cos(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::X_DDD( real_type s ) const {
+    return -(k*k)*cos(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::Y_DDD( real_type s ) const {
+    return -(k*k)*sin(theta0+s*k);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::eval( valueType s, valueType & x, valueType & y ) const {
-    valueType sk = s*k;
-    valueType S  = Sinc(sk);
-    valueType C  = Cosc(sk);
-    x = x0+s*(c0*S-s0*C);
-    y = y0+s*(c0*C+s0*S);
+  CircleArc::eval( real_type   s,
+                   real_type & x,
+                   real_type & y ) const {
+    real_type sk  = (s*k)/2 ;
+    real_type LS  = s*Sinc(sk);
+    real_type arg = theta0+sk ;
+    x = x0+LS*cos(arg);
+    y = y0+LS*sin(arg);
   }
 
-  void
-  CircleArc::eval_D( valueType s, valueType & x_D, valueType & y_D ) const {
-    valueType sk  = s*k;
-    valueType S   = Sinc(sk);
-    valueType C   = Cosc(sk);
-    valueType S_D = Sinc_D(sk);
-    valueType C_D = Cosc_D(sk);
-    x_D = (c0*S-s0*C)+sk*(c0*S_D-s0*C_D);
-    y_D = (c0*C+s0*S)+sk*(c0*C_D+s0*S_D);
-  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::eval_DD( valueType s, valueType & x_DD, valueType & y_DD ) const {
-    valueType sk   = s*k;
-    valueType S_D  = Sinc_D(sk);
-    valueType C_D  = Cosc_D(sk);
-    valueType S_DD = Sinc_DD(sk);
-    valueType C_DD = Cosc_DD(sk);
-    x_DD = k*(2*(c0*S_D-s0*C_D)+sk*(c0*S_DD-s0*C_DD));
-    y_DD = k*(2*(c0*C_D+s0*S_D)+sk*(c0*C_DD+s0*S_DD));
+  CircleArc::eval_D( real_type   s,
+                     real_type & x_D,
+                     real_type & y_D ) const {
+    real_type arg = theta0+s*k;
+    x_D = cos(arg);
+    y_D = sin(arg);
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  CircleArc::eval_DDD( valueType s, valueType & x_DDD, valueType & y_DDD ) const {
-    valueType sk    = s*k;
-    valueType k2    = k*k;
-    valueType S_DD  = Sinc_DD(sk);
-    valueType C_DD  = Cosc_DD(sk);
-    valueType S_DDD = Sinc_DDD(sk);
-    valueType C_DDD = Cosc_DDD(sk);
-    x_DDD = k2*(3*(c0*S_DD-s0*C_DD)+sk*(c0*S_DDD-s0*C_DDD));
-    y_DDD = k2*(3*(c0*C_DD+s0*S_DD)+sk*(c0*C_DDD+s0*S_DDD));
+  CircleArc::eval_DD( real_type   s,
+                      real_type & x_DD,
+                      real_type & y_DD ) const {
+    real_type arg = theta0+s*k;
+    x_DD = -k*sin(arg);
+    y_DD = k*cos(arg);
   }
 
-  //! set the origin of the clothoid to the curvilinear abscissa s0
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  CircleArc::change_origin( valueType s0 ) {
-    valueType sL = s0*k - theta0 ;
-    x0     += s0 * Sinc( sL ) ;
-    y0     += s0 * Cosc( sL ) ;
-    theta0 += s0 * k ;
-    s_min -= s0 ;
-    s_max -= s0 ;
-    this->s0 = sin(theta0) ;
-    this->c0 = cos(theta0) ;
+  CircleArc::eval_DDD( real_type   s,
+                       real_type & x_DDD,
+                       real_type & y_DDD ) const {
+    real_type arg = theta0+s*k;
+    real_type k2  = k*k;
+    x_DDD = -k2*cos(arg);
+    y_DDD = -k2*sin(arg);
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::trim( real_type s_begin, real_type s_end ) {
+    real_type x, y ;
+    eval( s_begin, x, y ) ;
+    theta0 += s_begin * k ;
+    L  = s_end - s_begin ;
+    x0 = x ;
+    y0 = y ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::rotate( real_type angle, real_type cx, real_type cy ) {
+    real_type dx  = x0 - cx ;
+    real_type dy  = y0 - cy ;
+    real_type C   = cos(angle) ;
+    real_type S   = sin(angle) ;
+    real_type ndx = C*dx - S*dy ;
+    real_type ndy = C*dy + S*dx ;
+    x0      = cx + ndx ;
+    y0      = cy + ndy ;
+    theta0 += angle ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::scale( real_type s ) {
+    k /= s ;
+    L *= s ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::reverse() {
+    theta0 = theta0 + m_pi ;
+    if ( theta0 > m_pi ) theta0 -= 2*m_pi ;
+    k = -k ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  CircleArc::closestPoint( real_type   qx,
+                           real_type   qy,
+                           real_type & X,
+                           real_type & Y,
+                           real_type & S ) const {
+
+    S = projectPointOnCircle( x0, y0, cos(theta0), sin(theta0), k, L, qx, qy );
+
+    if ( S < 0 || S > L ) { // minimum distance at the border
+      eval( L, X, Y );
+      // costruisco piano
+      real_type nx = X-x0 ;
+      real_type ny = Y-y0 ;
+      real_type dx = 2*qx-(x0+X) ;
+      real_type dy = 2*qy-(y0+Y) ;
+      if ( nx*dx + ny*dy > 0 ) {
+        S = L ;
+      } else {
+        S = 0 ;
+        X = x0 ;
+        Y = y0 ;
+      }
+    } else {
+      eval( S, X, Y );
+    }
+
+    return hypot(qx-X,qy-Y) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::changeCurvilinearOrigin( real_type new_s0, real_type newL ) {
+    real_type new_x0, new_y0 ;
+    eval( new_s0,  new_x0, new_y0 ) ;
+    x0      = new_x0 ;
+    y0      = new_y0 ;
+    theta0 += k*new_s0 ;
+    L       = newL ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   //! get the bounding box triangle (if angle variation less that pi/3)
   bool
-  CircleArc::bbTriangle( valueType p0[2],
-                         valueType p1[2],
-                         valueType p2[2] ) const {
-    valueType dtheta = (s_max - s_min) * k ;
+  CircleArc::bbTriangle( real_type p0[2],
+                         real_type p1[2],
+                         real_type p2[2] ) const {
+    real_type dtheta = L * k ;
     bool ok = std::abs(dtheta) <= m_pi/3 ;
     if ( ok ) {
-      eval( s_min, p0[0], p0[1] );
-      eval( s_max, p2[0], p2[1] );
+      p0[0] = x0 ; p0[1] = y0 ;
+      eval( L, p2[0], p2[1] );
       p1[0] = (p0[0]+p2[0])/2 ;
       p1[1] = (p0[1]+p2[1])/2 ;
-      valueType nx = p0[1]-p2[1] ;
-      valueType ny = p2[0]-p0[0] ;
-      valueType tg = tan(dtheta/2)/2;
+      real_type nx = p0[1]-p2[1] ;
+      real_type ny = p2[0]-p0[0] ;
+      real_type tg = tan(dtheta/2)/2;
       p1[0] -= nx * tg ;
       p1[1] -= ny * tg ;
     }
     return ok ;
   }
 
-  indexType
-  CircleArc::toNURBS(  valueType knots[12], valueType Poly[9][3] ) const {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    valueType dtheta = (s_max-s_min)*k ;
-    indexType ns     = std::floor(3*std::abs(dtheta)/m_pi) ;
-    if      ( ns < 1 ) ns = 1 ;
-    else if ( ns > 4 ) ns = 4 ;
+  int_type
+  CircleArc::toNURBS( real_type knots[],
+                      real_type Poly[],
+                      bool      get_size ) const {
 
-    valueType th = dtheta/(2*ns) ;
-    valueType w  = cos(th) ;
-    valueType tg = tan(th)/2;
+    real_type dtheta = L*k ;
+    int_type  ns     = int_type(std::floor(3*std::abs(dtheta)/m_pi)) ;
+    if ( ns < 1 ) ns = 1 ;
+    if ( get_size ) return 1+2*ns;
 
-    valueType p0[2], p2[2] ;
-    eval( s_min, p0[0], p0[1] );
+    real_type th = dtheta/(2*ns) ;
+    real_type w  = cos(th) ;
+    real_type tg = tan(th)/2;
+
+    real_type p0[2], p2[2] ;
+    p0[0] = x0 ; p0[1] = y0 ;
 
     knots[0] = knots[1] = knots[2] = 0 ;
-    Poly[0][0] = p0[0] ;
-    Poly[0][1] = p0[1] ;
-    Poly[0][2] = 1  ;
+    Poly[0] = p0[0] ;
+    Poly[1] = p0[1] ;
+    Poly[2] = 1  ;
 
-    valueType s  = s_min ;
-    valueType ds = (s_max-s_min)/ns ;
-    indexType kk = 0 ;
-    for ( indexType i = 0 ; i < ns ; ++i ) {
+    real_type s  = 0 ;
+    real_type ds = L/ns ;
+    int_type  kk = 0 ;
+    for ( int_type i = 0 ; i < ns ; ++i ) {
       s += ds ;
       eval( s, p2[0], p2[1] );
 
-      valueType nx = p0[1]-p2[1] ;
-      valueType ny = p2[0]-p0[0] ;
-      valueType xm = (p0[0]+p2[0])/2 ;
-      valueType ym = (p0[1]+p2[1])/2 ;
+      real_type nx = p0[1]-p2[1] ;
+      real_type ny = p2[0]-p0[0] ;
+      real_type xm = (p0[0]+p2[0])/2 ;
+      real_type ym = (p0[1]+p2[1])/2 ;
 
       ++kk;
-      Poly[kk][0] = w*(xm - nx * tg) ;
-      Poly[kk][1] = w*(ym - ny * tg) ;
-      Poly[kk][2] = w ;
+      Poly[kk*3+0] = w*(xm - nx * tg) ;
+      Poly[kk*3+1] = w*(ym - ny * tg) ;
+      Poly[kk*3+2] = w ;
 
       ++kk;
-      Poly[kk][0] = p2[0] ;
-      Poly[kk][1] = p2[1] ;
-      Poly[kk][2] = 1 ;
+      Poly[kk*3+0] = p2[0] ;
+      Poly[kk*3+1] = p2[1] ;
+      Poly[kk*3+2] = 1 ;
 
       knots[kk+1] = i+1 ;
       knots[kk+2] = i+1 ;
@@ -205,8 +373,9 @@ namespace Circle {
     }
     knots[kk+3] = ns ;
     return 1+2*ns;
-
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   std::ostream &
   operator << ( std::ostream & stream, CircleArc const & c ) {
@@ -214,9 +383,7 @@ namespace Circle {
            << "\ny0     = " << c.y0
            << "\ntheta0 = " << c.theta0
            << "\nk      = " << c.k
-           << "\nL      = " << c.s_max-c.s_min
-           << "\ns_min  = " << c.s_min
-           << "\ns_max  = " << c.s_max
+           << "\nL      = " << c.L
            << "\n" ;
     return stream ;
   }

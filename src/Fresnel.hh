@@ -30,9 +30,11 @@
 #include <cmath>
 
 //! Clothoid computations routine
-namespace Fresnel {
+namespace G2lib {
 
   using namespace G2lib ;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _____                         _
@@ -50,9 +52,9 @@ namespace Fresnel {
    * \param C the value of \f$ C(x) \f$
    */
   void
-  FresnelCS( valueType   x,
-             valueType & C,
-             valueType & S ) ;
+  FresnelCS( real_type   x,
+             real_type & C,
+             real_type & S ) ;
 
   //! Compute Fresnel integrals and its derivatives
   /*!
@@ -63,10 +65,10 @@ namespace Fresnel {
    * \param C C[0]=\f$ C(x) \f$, C[1]=\f$ C'(x) \f$, C[2]=\f$ C''(x) \f$
    */
   void
-  FresnelCS( indexType nk,
-             valueType x,
-             valueType C[],
-             valueType S[] ) ;
+  FresnelCS( int_type  nk,
+             real_type x,
+             real_type C[],
+             real_type S[] ) ;
 
   /*! \brief Compute the Fresnel integrals
    * \f[ 
@@ -81,12 +83,12 @@ namespace Fresnel {
    * \param intS sine integrals
    */
   void
-  GeneralizedFresnelCS( indexType nk,
-                        valueType a,
-                        valueType b,
-                        valueType c,
-                        valueType intC[],
-                        valueType intS[] ) ;
+  GeneralizedFresnelCS( int_type  nk,
+                        real_type a,
+                        real_type b,
+                        real_type c,
+                        real_type intC[],
+                        real_type intS[] ) ;
 
   /*! \brief Compute the Fresnel integrals
    * \f[ 
@@ -100,11 +102,141 @@ namespace Fresnel {
    * \param intS   sine integrals
    */
   void
-  GeneralizedFresnelCS( valueType   a,
-                        valueType   b,
-                        valueType   c,
-                        valueType & intC,
-                        valueType & intS ) ;
+  GeneralizedFresnelCS( real_type   a,
+                        real_type   b,
+                        real_type   c,
+                        real_type & intC,
+                        real_type & intS ) ;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  class ClothoidData {
+  public:
+    real_type x0 ;     //!< initial x coordinate of the clothoid
+    real_type y0 ;     //!< initial y coordinate of the clothoid
+    real_type theta0 ; //!< initial angle of the clothoid
+    real_type kappa0 ;     //!< initial curvature
+    real_type dk ;     //!< curvature derivative
+
+    real_type deltaTheta( real_type s ) const
+    { return s*(kappa0 + 0.5*s*dk) ; }
+
+    real_type theta( real_type s ) const
+    { return theta0 + s*(kappa0 + 0.5*s*dk) ; }
+
+    real_type kappa( real_type s ) const
+    { return kappa0 + s*dk ; }
+
+    real_type X( real_type s ) const ;
+    real_type Y( real_type s ) const ;
+
+    void
+    eval( real_type   s,
+          real_type & theta,
+          real_type & kappa,
+          real_type & x,
+          real_type & y ) const ;
+
+    void
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const ;
+
+    void
+    eval_D( real_type   s,
+            real_type & x_D,
+            real_type & y_D ) const ;
+
+    void
+    eval_DD( real_type   s,
+             real_type & x_DD,
+             real_type & y_DD ) const ;
+
+    void
+    eval_DDD( real_type   s,
+              real_type & x_DDD,
+              real_type & y_DDD ) const ;
+
+    void
+    eval( real_type   s,
+          real_type   offs,
+          real_type & x,
+          real_type & y ) const ;
+
+    void
+    eval_D( real_type   s,
+            real_type   offs,
+            real_type & x_D,
+            real_type & y_D ) const ;
+
+    void
+    eval_DD( real_type   s,
+             real_type   offs,
+             real_type & x_DD,
+             real_type & y_DD ) const ;
+
+    void
+    eval_DDD( real_type   s,
+              real_type   offs,
+              real_type & x_DDD,
+              real_type & y_DDD ) const ;
+
+    void
+    eval( real_type s, ClothoidData & C) const ;
+
+    real_type c0x() const { return x0 - (sin(theta0)/kappa0); }
+    real_type c0y() const { return y0 + (cos(theta0)/kappa0); }
+
+    void
+    Pinfinity( real_type & x, real_type & y, bool plus ) const ;
+
+    void
+    reverse( real_type L ) ;
+
+    void
+    reverse( real_type L, ClothoidData & out) const ;
+
+    real_type
+    split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const ;
+
+    real_type
+    aplus( real_type dtheta ) const ;
+
+    bool
+    bbTriangle( real_type L,
+                real_type offs,
+                real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const ;
+
+    int
+    build_G1( real_type   x0,
+              real_type   y0,
+              real_type   theta0,
+              real_type   x1,
+              real_type   y1,
+              real_type   theta1,
+              real_type   tol,
+              real_type & L,
+              bool        compute_deriv = false,
+              real_type   L_D[2]        = nullptr,
+              real_type   k_D[2]        = nullptr,
+              real_type   dk_D[2]       = nullptr ) ;
+
+    bool
+    build_forward( real_type   x0,
+                   real_type   y0,
+                   real_type   theta0,
+                   real_type   kappa0,
+                   real_type   x1,
+                   real_type   y1,
+                   real_type   tol,
+                   real_type & L ) ;
+
+    void
+    info( std::ostream & s ) const ;
+
+  } ;
 
 }
 

@@ -10,3 +10,6 @@ Usage.pdf
 *.spl
 *.o
 cmake
+build
+lib
+bin
