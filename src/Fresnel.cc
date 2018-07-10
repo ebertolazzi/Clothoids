@@ -560,7 +560,6 @@ namespace G2lib {
   }
 
   // -------------------------------------------------------------------------
-  // -------------------------------------------------------------------------
 
   real_type
   ClothoidData::X( real_type s ) const {
@@ -576,6 +575,114 @@ namespace G2lib {
     real_type C, S ;
     GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
     return y0 + s*S ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_D( real_type s ) const
+  { return cos( theta(s) ) ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_D( real_type s ) const
+  { return sin( theta(s) ) ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_DD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    real_type theta_D = kappa0 + s*dk ;
+    return -sin(theta)*theta_D ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_DD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    real_type theta_D = kappa0 + s*dk ;
+    return cos(theta)*theta_D ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_DDD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    real_type theta_D = kappa0+s*dk ;
+    return -cos(theta)*theta_D*theta_D-sin(theta)*dk ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_DDD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk) ;
+    real_type theta_D = kappa0+s*dk ;
+    return -sin(theta)*theta_D*theta_D+cos(theta)*dk ;
+  }
+
+  // -------------------------------------------------------------------------
+
+  real_type
+  ClothoidData::X( real_type s, real_type t ) const {
+    real_type C, S ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
+    return x0 + s*C + t*nor_x(s) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y( real_type s, real_type t ) const {
+    real_type C, S ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
+    return y0 + s*S + t*nor_y(s) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::XY( real_type s, real_type & x, real_type & y ) const {
+    real_type C, S ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
+    x = x0 + s*C;
+    y = y0 + s*S;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::XY( real_type   s,
+                    real_type   t,
+                    real_type & x,
+                    real_type & y ) const {
+    real_type C, S, nx, ny ;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S ) ;
+    NOR( s, nx, ny ) ;
+    x = x0 + s*C + t*nx;
+    y = y0 + s*S + t*ny;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::TG( real_type s, real_type & tx, real_type & ty ) const {
+    real_type th = theta(s);
+    tx = cos(th);
+    ty = sin(th);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::NOR( real_type s, real_type & nx, real_type & ny ) const {
+    real_type th = theta(s);
+    nx = -sin(th);
+    ny = cos(th);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
