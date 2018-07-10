@@ -146,34 +146,24 @@ classdef CircleArc < handle
       nurbs = CircleArcMexWrapper('to_nurbs', self.objectHandle);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval(self, s)
+    function varargout = eval( self, varargin )
       % eval the circle at curvilinear abscissa `s`
-      % Usage:
-      %    [x,y] = ref.eval( s )
-      %    
-      % On input:
-      %    s: curvilinear coordinates where to evaluate the curve
-      %       (scalar or vector)
-      %
-      % On output:
-      %    x, y:  coordinates of the curve
-      %
-      [varargout{1:nargout}] = CircleArcMexWrapper('eval', self.objectHandle, s );
+      [varargout{1:nargout}] = CircleArcMexWrapper('eval', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_D(self, s)
+    function varargout = eval_D( self, varargin )
       % eval the circle derivative at curvilinear abscissa `s`
-      [DX,DY] = CircleArcMexWrapper('eval_D', self.objectHandle, s );
+      [DX,DY] = CircleArcMexWrapper('eval_D', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DD(self, s)
+    function varargout = eval_DD( self, varargin )
       % eval the circle second derivative at curvilinear abscissa `s`
-      [varargout{1:nargout}] = CircleArcMexWrapper('eval_DD', self.objectHandle, s );
+      [varargout{1:nargout}] = CircleArcMexWrapper('eval_DD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DDD(self, s)
+    function varargout = eval_DDD( self, varargin )
       % eval the circle third derivative at curvilinear abscissa `s`
-      [varargout{1:nargout}] = CircleArcMexWrapper('eval_DDD', self.objectHandle, s );
+      [varargout{1:nargout}] = CircleArcMexWrapper('eval_DDD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta(self, s)
@@ -216,6 +206,10 @@ classdef CircleArc < handle
     function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
       [DST,S] = CircleArcMexWrapper('distance', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s,t] = find_coord( self, x, y )
+      [s,t] = CircleArcMexWrapper( 'findST', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function info( self )

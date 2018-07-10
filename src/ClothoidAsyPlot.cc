@@ -50,7 +50,7 @@ namespace G2lib {
         << c.yBegin()      << "),"
         << c.thetaBegin()  << ','
         << c.kappaBegin()  << ','
-        << c.kappa_D()     << ','
+        << c.dkappa()      << ','
         << c.length()      << ','
         << "100,0);\n"
         << "pen penna = " << penna << ";\n"
@@ -62,7 +62,7 @@ namespace G2lib {
         << c.yBegin()     << "),"
         << c.thetaBegin() << ','
 	      << c.kappaBegin() << ','
-        << c.kappa_D()    << ','
+        << c.dkappa()     << ','
         << c.length()     << ','
         << "100,"
         << offset

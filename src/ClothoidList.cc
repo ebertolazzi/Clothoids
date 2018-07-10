@@ -399,48 +399,48 @@ namespace G2lib {
   // offset curve
   void
   ClothoidList::eval( real_type   s,
-                      real_type   offs,
+                      real_type   t,
                       real_type & x,
                       real_type & y ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval( s - s0[last_idx], offs, x, y ) ;
+    return c.eval( s - s0[last_idx], t, x, y ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::eval_D( real_type   s,
-                        real_type   offs,
+                        real_type   t,
                         real_type & x_D,
                         real_type & y_D ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_D( s - s0[last_idx], offs, x_D, y_D ) ;
+    return c.eval_D( s - s0[last_idx], t, x_D, y_D ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::eval_DD( real_type   s,
-                         real_type   offs,
+                         real_type   t,
                          real_type & x_DD,
                          real_type & y_DD ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_DD( s - s0[last_idx], offs, x_DD, y_DD ) ;
+    return c.eval_DD( s - s0[last_idx], t, x_DD, y_DD ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::eval_DDD( real_type   s,
-                          real_type   offs,
+                          real_type   t,
                           real_type & x_DDD,
                           real_type & y_DDD ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_DDD( s - s0[last_idx], offs, x_DDD, y_DDD ) ;
+    return c.eval_DDD( s - s0[last_idx], t, x_DDD, y_DDD ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -530,6 +530,30 @@ namespace G2lib {
       }
     }
     return DST ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::findST( real_type   x,
+                        real_type   y,
+                        real_type & s,
+                        real_type & t ) const {
+
+    G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
+    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin() ;
+    std::vector<real_type>::const_iterator     is = s0.begin() ;
+
+    s = t = 0 ;
+    real_type S, T ;
+    bool ok = ic->findST( x, y, S, T );
+    if ( ok ) { s = *is + S ; t = T ; }
+    for ( ++ic, ++is ; ic != clotoidList.end() ; ++ic, ++is ) {
+      bool ok1 = ic->findST( x, y, S, T );
+      if ( ok && ok1 ) ok1 = std::abs(T) < std::abs(t) ;
+      if ( ok1 ) { ok = true ; s = *is + S ; t = T ; }
+    }
+    return ok ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -645,7 +669,7 @@ namespace G2lib {
              << ic->yBegin()     << '\t'
              << ic->thetaBegin() << '\t'
              << ic->kappaBegin() << '\t'
-             << ic->kappa_D()    << '\t'
+             << ic->dkappa()     << '\t'
              << ic->length()     << '\n' ;
   }
 
@@ -660,7 +684,7 @@ namespace G2lib {
              << ic->yBegin()     << '\t'
              << ic->thetaBegin() << '\t'
              << ic->kappaBegin() << '\t'
-             << ic->kappa_D()    << '\t'
+             << ic->dkappa()     << '\t'
              << ic->length()     << '\n' ;
     stream << "}\n" ;
   }

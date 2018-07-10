@@ -157,8 +157,6 @@ namespace G2lib {
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s) ; return *this ; }
 
-    real_type kappa()      const { return CD.kappa0 ; }
-    real_type kappa_D()    const { return CD.dk ; }
     real_type length()     const { return L ; }
 
     real_type xBegin()     const { return CD.x0; }
@@ -170,6 +168,8 @@ namespace G2lib {
     real_type yEnd()       const { return CD.Y(L); }
     real_type thetaEnd()   const { return CD.theta(L); }
     real_type kappaEnd()   const { return CD.kappa(L); }
+
+    real_type dkappa()     const { return CD.dk; }
 
     //! construct a clothoid with the standard parameters
     void
@@ -187,7 +187,8 @@ namespace G2lib {
       L         = _L ;
     }
 
-    /*! \brief build a clothoid by solving the hermite G1 problem
+    /*!
+     * \brief build a clothoid by solving the hermite G1 problem
      *
      * \param x0     initial x position \f$ x_0      \f$
      * \param y0     initial y position \f$ y_0      \f$
@@ -208,7 +209,8 @@ namespace G2lib {
       return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L ) ;
     }
 
-    /*! \brief build a clothoid by solving the hermite G1 problem
+    /*!
+     * \brief build a clothoid by solving the hermite G1 problem
      *
      * \param x0     initial x position \f$ x_0      \f$
      * \param y0     initial y position \f$ y_0      \f$
@@ -233,7 +235,8 @@ namespace G2lib {
                           true, L_D, k_D, dk_D ) ;
     }
 
-    /*! \brief build a clothoid by solving the forward problem
+    /*!
+     * \brief build a clothoid by solving the forward problem
      *
      * \param x0     initial x position \f$ x_0      \f$
      * \param y0     initial y position \f$ y_0      \f$
@@ -253,7 +256,8 @@ namespace G2lib {
       return CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, L );
     }
 
-    /*! \brief build a clothoid from a line segment
+    /*!
+     * \brief build a clothoid from a line segment
      *
      * \param LS line segment object
      */
@@ -267,7 +271,8 @@ namespace G2lib {
       L         = LS.L ;
     }
 
-    /*! \brief build a clothoid from a line segment
+    /*!
+     * \brief build a clothoid from a line segment
      *
      * \param C line segment object
      */
@@ -281,7 +286,41 @@ namespace G2lib {
       L         = C.L ;
     }
 
-    /*! \brief get clothoid angle at curvilinear cooordinate `s`
+    /*!
+     * \brief get clothoid curvature at curvilinear cooordinate `s`
+     *
+     * \param  s curvilinear cooordinate
+     * \return curvature at curvilinear cooordinate `s`
+     */
+    real_type
+    kappa( real_type s ) const { return CD.kappa(s) ; }
+
+    /*!
+     * \brief get clothoid curvature derivative at curvilinear cooordinate `s`
+     *
+     * \return curvature derivative (radiant/s) at curvilinear cooordinate `s`
+     */
+    real_type
+    kappa_D( real_type ) const { return CD.dk ; }
+
+    /*!
+     * \brief get clothoid curvature second derivative at curvilinear cooordinate `s`
+     *
+     * \return curvature second derivative (radiant/s^2) at curvilinear cooordinate `s`
+     */
+    real_type
+    kappa_DD( real_type ) const { return 0 ; }
+
+    /*!
+     * \brief get clothoid curvature third derivative at curvilinear cooordinate `s`
+     *
+     * \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
+     */
+    real_type
+    kappa_DDD( real_type ) const { return 0 ; }
+
+    /*!
+     * \brief get clothoid angle at curvilinear cooordinate `s`
      *
      * \param  s curvilinear cooordinate
      * \return angle (radiant) at curvilinear cooordinate `s`
@@ -289,7 +328,8 @@ namespace G2lib {
     real_type
     theta( real_type s ) const { return CD.theta(s) ; }
 
-    /*! \brief get clothoid angle derivative (=curvature) at curvilinear cooordinate `s`
+    /*!
+     * \brief get clothoid angle derivative (=curvature) at curvilinear cooordinate `s`
      *
      * \param  s curvilinear cooordinate
      * \return angle derivative (radiant/s) at curvilinear cooordinate `s`
@@ -297,21 +337,24 @@ namespace G2lib {
     real_type
     theta_D( real_type s ) const { return CD.kappa(s) ; }
 
-    /*! \brief get clothoid angle second derivative at curvilinear cooordinate `s`
+    /*!
+     * \brief get clothoid angle second derivative at curvilinear cooordinate `s`
      *
      * \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
      */
     real_type
     theta_DD( real_type ) const { return CD.dk ; }
 
-    /*! \brief get clothoid angle third derivative at curvilinear cooordinate `s`
+    /*!
+     * \brief get clothoid angle third derivative at curvilinear cooordinate `s`
      *
      * \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
      */
     real_type
     theta_DDD( real_type ) const { return 0 ; }
 
-    /*! \return clothoid total variation
+    /*!
+     * \return clothoid total variation
      */
     real_type
     thetaTotalVariation() const ;
@@ -319,7 +362,8 @@ namespace G2lib {
     real_type
     thetaMinMax( real_type & thMin, real_type & thMax ) const ;
 
-    /*! \return clothoid angle range
+    /*!
+     * \return clothoid angle range
      */
     real_type
     deltaTheta() const
@@ -328,35 +372,84 @@ namespace G2lib {
     real_type
     curvatureMinMax( real_type & kMin, real_type & kMax ) const ;
 
-    /*! \return clothoid total curvature variation
+    /*!
+     * \return clothoid total curvature variation
      */
-    real_type
-    curvatureTotalVariation() const ;
+    real_type curvatureTotalVariation() const ;
 
-    real_type
-    integralCurvature2() const ;
+    real_type integralCurvature2() const ;
 
-    real_type
-    integralJerk2() const ;
+    real_type integralJerk2() const ;
 
-    real_type
-    integralSnap2() const ;
-
-    /*! \brief clothoid X coordinate at curvilinear coordinate `s`
-     * \param s curvilinear coordinate
-     * \return clothoid X coordinate
-     */
-    real_type X( real_type s ) const { return CD.X(s) ; }
-
-    /*! \brief clothoid Y coordinate at curvilinear coordinate `s`
-     * \param s curvilinear coordinate
-     * \return clothoid Y coordinate
-     */
-    real_type Y( real_type s ) const { return CD.Y(s) ; }
+    real_type integralSnap2() const ;
 
     void
     Pinfinity( real_type & x, real_type & y, bool plus = true ) const
     { CD.Pinfinity( x, y, plus ); }
+
+    /*!
+     * \brief clothoid X coordinate at curvilinear coordinate `s`
+     * \param s curvilinear coordinate
+     * \return clothoid X coordinate
+     */
+    real_type X    ( real_type s ) const { return CD.X(s); }
+    real_type X_D  ( real_type s ) const { return CD.X_D(s); }
+    real_type X_DD ( real_type s ) const { return CD.X_DD(s); }
+    real_type X_DDD( real_type s ) const { return CD.X_DDD(s); }
+
+    /*!
+     * \brief clothoid Y coordinate at curvilinear coordinate `s`
+     * \param s curvilinear coordinate
+     * \return clothoid Y coordinate
+     */
+    real_type Y    ( real_type s ) const { return CD.Y(s); }
+    real_type Y_D  ( real_type s ) const { return CD.Y_D(s); }
+    real_type Y_DD ( real_type s ) const { return CD.Y_DD(s); }
+    real_type Y_DDD( real_type s ) const { return CD.Y_DDD(s); }
+
+    /*!
+     * \brief clothoid X coordinate at curvilinear coordinate `s`
+     * \param s curvilinear coordinate
+     * \param t lateral offset
+     * \return clothoid X coordinate
+     */
+    real_type X    ( real_type s, real_type t ) const { return CD.X(s,t); }
+    real_type X_D  ( real_type s, real_type t ) const { return CD.X_D(s,t); }
+    real_type X_DD ( real_type s, real_type t ) const { return CD.X_DD(s,t); }
+    real_type X_DDD( real_type s, real_type t ) const { return CD.X_DDD(s,t); }
+
+    /*!
+     * \brief clothoid Y coordinate at curvilinear coordinate `s`
+     * \param s curvilinear coordinate
+     * \param t lateral offset
+     * \return clothoid Y coordinate
+     */
+    real_type Y    ( real_type s, real_type t ) const { return CD.Y(s,t); }
+    real_type Y_D  ( real_type s, real_type t ) const { return CD.Y_D(s,t); }
+    real_type Y_DD ( real_type s, real_type t ) const { return CD.Y_DD(s,t); }
+    real_type Y_DDD( real_type s, real_type t ) const { return CD.Y_DDD(s,t); }
+
+    real_type tg_x( real_type s ) const { return CD.tg_x(s); }
+    real_type tg_y( real_type s ) const { return CD.tg_y(s); }
+
+    real_type nor_x( real_type s ) const { return CD.nor_x(s); }
+    real_type nor_y( real_type s ) const { return CD.nor_x(s); }
+
+    void
+    XY( real_type s, real_type & x, real_type & y ) const
+    { CD.XY(s,x,y) ; }
+
+    void
+    XY( real_type s, real_type t, real_type & x, real_type & y ) const
+    { CD.XY(s,t,x,y) ; }
+
+    void
+    TG( real_type s, real_type & tx, real_type & ty ) const
+    { CD.TG(s,tx,ty) ; }
+
+    void
+    NOR( real_type s, real_type & nx, real_type & ny ) const
+    { CD.NOR(s,nx,ny) ; }
 
     void
     eval( real_type   s,
@@ -397,34 +490,34 @@ namespace G2lib {
     // offset curve
     void
     eval( real_type   s,
-          real_type   offs,
+          real_type   t,
           real_type & x,
           real_type & y ) const {
-      CD.eval( s, offs, x, y ) ;
+      CD.eval( s, t, x, y ) ;
     }
 
     void
     eval_D( real_type   s,
-            real_type   offs,
+            real_type   t,
             real_type & x_D,
             real_type & y_D ) const {
-      CD.eval_D( s, offs, x_D, y_D ) ;
+      CD.eval_D( s, t, x_D, y_D ) ;
     }
 
     void
     eval_DD( real_type   s,
-             real_type   offs,
+             real_type   t,
              real_type & x_DD,
              real_type & y_DD ) const {
-      CD.eval_DD( s, offs, x_DD, y_DD ) ;
+      CD.eval_DD( s, t, x_DD, y_DD ) ;
     }
 
     void
     eval_DDD( real_type   s,
-              real_type   offs,
+              real_type   t,
               real_type & x_DDD,
               real_type & y_DDD ) const {
-      CD.eval_DDD( s, offs, x_DDD, y_DDD ) ;
+      CD.eval_DDD( s, t, x_DDD, y_DDD ) ;
     }
 
     real_type
@@ -470,6 +563,19 @@ namespace G2lib {
       real_type X, Y, S ;
       return closestPointBySample( ds, qx, qy, X, Y, S );
     }
+
+    /*! \brief Find parametric coordinate.
+     *
+     * \param x x-coordinate point
+     * \param y y-coordinate point
+     * \param s value \f$ s \f$
+     * \param t value \f$ t \f$
+     */
+    bool
+    findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const ;
 
     void
     trim( real_type s_begin, real_type s_end ) {
@@ -1381,6 +1487,19 @@ namespace G2lib {
     real_type
     distance( real_type qx, real_type qy ) const
     { real_type S ; return distance( qx, qy, S ); }
+
+    /*! \brief Find parametric coordinate.
+     *
+     * \param x x-coordinate point
+     * \param y y-coordinate point
+     * \param s value \f$ s \f$
+     * \param t value \f$ t \f$
+     */
+    bool
+    findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const ;
 
     void rotate( real_type angle, real_type cx, real_type cy ) ;
     void translate( real_type tx, real_type ty ) ;

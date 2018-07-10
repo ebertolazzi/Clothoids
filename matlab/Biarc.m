@@ -255,6 +255,10 @@ classdef Biarc < handle
       [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s,t] = find_coord( self, x, y )
+      [s,t] = BiarcMexWrapper( 'findST', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function info( self )
       BiarcMexWrapper( 'info', self.objectHandle );
     end

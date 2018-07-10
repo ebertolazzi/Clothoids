@@ -117,20 +117,56 @@ namespace G2lib {
               real_type x2,
               real_type y2 ) ;
 
-    real_type X( real_type s ) const ;
-    real_type Y( real_type s ) const ;
-    real_type theta( real_type s ) const ;
-    real_type kappa( real_type s ) const ;
+    real_type kappa    ( real_type s ) const ;
+    real_type kappa_D  ( real_type s ) const ;
+    real_type kappa_DD ( real_type s ) const ;
+    real_type kappa_DDD( real_type s ) const ;
+
+    real_type theta    ( real_type s ) const ;
+    real_type theta_D  ( real_type s ) const ;
+    real_type theta_DD ( real_type s ) const ;
+    real_type theta_DDD( real_type s ) const ;
+
+    real_type X    ( real_type s ) const ;
+    real_type X_D  ( real_type s ) const ;
+    real_type X_DD ( real_type s ) const ;
+    real_type X_DDD( real_type s ) const ;
+
+    real_type Y    ( real_type s ) const ;
+    real_type Y_D  ( real_type s ) const ;
+    real_type Y_DD ( real_type s ) const ;
+    real_type Y_DDD( real_type s ) const ;
+
+    real_type tg_x( real_type s ) const { return cos(theta(s)); }
+    real_type tg_y( real_type s ) const { return sin(theta(s)); }
+
+    real_type nor_x( real_type s ) const { return -sin(theta(s)); }
+    real_type nor_y( real_type s ) const { return cos(theta(s)); }
+
+    void XY( real_type s, real_type & x, real_type & y ) const ;
+    void XY( real_type s, real_type t, real_type & x, real_type & y ) const ;
+    void TG( real_type s, real_type & tx, real_type & ty ) const ;
+
+    void NOR    ( real_type s, real_type & nx,     real_type & ny ) const ;
+    void NOR_D  ( real_type s, real_type & nx_D,   real_type & ny_D ) const ;
+    void NOR_DD ( real_type s, real_type & nx_DD,  real_type & ny_DD ) const ;
+    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const ;
 
     real_type Xstar()     const { return C1.xBegin() ; }
     real_type Ystar()     const { return C1.yBegin() ; }
     real_type thetaStar() const { return C1.thetaBegin() ; }
 
-    void eval( real_type s, real_type & th, real_type & k, real_type & x, real_type & y ) const ;
-    void eval( real_type s, real_type & x, real_type & y ) const ;
-    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const ;
-    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const ;
+    void eval    ( real_type s, real_type & th, real_type & k, real_type & x, real_type & y ) const ;
+
+    void eval    ( real_type s, real_type & x,     real_type & y ) const ;
+    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const ;
+    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const ;
     void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
+
+    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const ;
+    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const ;
+    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const ;
+    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const ;
 
     real_type xBegin0()     const { return C0.xBegin(); }
     real_type xEnd0()       const { return C0.xEnd(); }
@@ -204,6 +240,20 @@ namespace G2lib {
       real_type ss ;
       return distance( x, y, ss );
     }
+
+    /*!
+     * \brief Find parametric coordinate.
+     *
+     * \param x x-coordinate point
+     * \param y y-coordinate point
+     * \param s value \f$ s \f$
+     * \param t value \f$ t \f$
+     */
+    void
+    findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const ;
 
     void
     info( std::ostream & stream ) const

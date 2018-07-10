@@ -34,10 +34,10 @@
 "    [x,y,theta,kappa] = BiarcMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
 "    [x0,y0,theta0,kappa0,L0,x1,y1,theta1,kappa1,L1] = BiarcMexWrapper( 'getPars', OBJ ) ;\n" \
 "\n" \
-"    [x,y]         = BiarcMexWrapper( 'eval', OBJ, ss ) ;\n" \
-"    [x_D,y_D]     = BiarcMexWrapper( 'eval_D', OBJ, ss ) ;\n" \
-"    [x_DD,y_DD]   = BiarcMexWrapper( 'eval_DD', OBJ, ss ) ;\n" \
-"    [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', OBJ, ss ) ;\n" \
+"    [x,y]         = BiarcMexWrapper( 'eval', OBJ, s[, t] ) ;\n" \
+"    [x_D,y_D]     = BiarcMexWrapper( 'eval_D', OBJ, s[, t] ) ;\n" \
+"    [x_DD,y_DD]   = BiarcMexWrapper( 'eval_DD', OBJ, s[, t] ) ;\n" \
+"    [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', OBJ, s[, t] ) ;\n" \
 "\n" \
 "  res = CircleMexWrapper( 'xBegin0', OBJ ) ;\n" \
 "  res = CircleMexWrapper( 'xEnd0', OBJ ) ;\n" \
@@ -64,8 +64,9 @@
 "    BiarcMexWrapper( 'reverse', OBJ ) ;\n" \
 "  - Distance:\n" \
 "    [X,Y,s,dst] = BiarcMexWrapper( 'closestPoint', OBJ, x, y ) ;\n" \
-"    [dst,s] = BiarcMexWrapper( 'distance', OBJ, x, y ) ;\n" \
+"    [dst,s]     = BiarcMexWrapper( 'distance', OBJ, x, y ) ;\n" \
 "    [X,Y,s,dst] = BiarcMexWrapper( 'closestPointBySample', OBJ, x, y, ds ) ;\n" \
+"    [s,t]       = BiarcMexWrapper( 'findST', OBJ, x, y ) ;\n" \
 "\n" \
 "=====================================================================================\n" \
 "\n" \
@@ -217,28 +218,106 @@ namespace G2lib {
       } else if ( cmd == "eval"    || cmd == "eval_D" ||
                   cmd == "eval_DD" || cmd == "eval_DDD" ) {
 
-        #define CMD "BiarcMexWrapper('eval*',OBJ,s): "
+        if ( nrhs == 4 ) {
 
-        MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs ) ;
-        MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs ) ;
+          #define CMD "BiarcMexWrapper('eval*',OBJ,s,t): "
 
-        mwSize size;
-        double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
+          mwSize size, sizet ;
+          real_type const * s = getVectorPointer( arg_in_2, size,  CMD "`s` expected to be a real vector" ) ;
+          real_type const * t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" ) ;
 
-        double * xVals = createMatrixValue( arg_out_0, size, 1 );
-        double * yVals = createMatrixValue( arg_out_1, size, 1 );
-        if ( cmd == "eval" ) {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval( sVals[i], xVals[i], yVals[i] );
-        } else if ( cmd == "eval_D" ) {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval_D( sVals[i], xVals[i], yVals[i] );
-        } else if ( cmd == "eval_DD" ) {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval_DD( sVals[i], xVals[i], yVals[i] );
+          MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                      CMD " size(s) = " << size <<
+                      " must be equal to size(t) = " << sizet <<
+                      " or size(s|t) == 1" );
+
+          mwSize incs = size  == 1 ? 0 : 1 ;
+          mwSize inct = sizet == 1 ? 0 : 1 ;
+          mwSize npts = max(size,sizet) ;
+
+          #define LOOPXY1 for ( mwSize i = 0 ; i < npts ; ++i, s += incs, t += inct, pXY += 2 )
+          #define LOOPXY2 for ( mwSize i = 0 ; i < npts ; ++i, s += incs, t += inct, ++pX, ++pY )
+
+          if ( nlhs == 1 ) {
+            real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+            if ( cmd == "eval" ) {
+              LOOPXY1 ptr->eval( *s, *t, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY1 ptr->eval_D( *s, *t, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY1 ptr->eval_DD( *s, *t, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY1 ptr->eval_DDD( *s, *t, pXY[0], pXY[1] ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else if ( nlhs == 2 ) {
+            real_type *pX = createMatrixValue( arg_out_0, 1,size );
+            real_type *pY = createMatrixValue( arg_out_1, 1,size );
+            if ( cmd == "eval" ) {
+              LOOPXY2 ptr->eval( *s, *t, *pX, *pY ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY2 ptr->eval_D( *s, *t, *pX, *pY ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY2 ptr->eval_DD( *s, *t, *pX, *pY ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY2 ptr->eval_DDD( *s, *t, *pX, *pY ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else {
+            MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
+          }
+          #undef LOOPXY1
+          #undef LOOPXY2
+
+          #undef CMD
+
+        } else if ( nrhs == 3 ) {
+
+          #define CMD "BiarcMexWrapper('eval*',OBJ,s): "
+
+          mwSize npts ;
+          real_type const * s = getVectorPointer( arg_in_2, npts, CMD "`s` expected to be a real vector" ) ;
+
+          #define LOOPXY1 for ( mwSize i = 0 ; i < npts ; ++i, ++s, pXY += 2 )
+          #define LOOPXY2 for ( mwSize i = 0 ; i < npts ; ++i, ++s, ++pX, ++pY )
+
+          if ( nlhs == 1 ) {
+            real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+            if ( cmd == "eval" ) {
+              LOOPXY1 ptr->eval( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY1 ptr->eval_D( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY1 ptr->eval_DD( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY1 ptr->eval_DDD( *s, pXY[0], pXY[1] ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else if ( nlhs == 2 ) {
+            real_type *pX = createMatrixValue( arg_out_0, 1, npts );
+            real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+            if ( cmd == "eval" ) {
+              LOOPXY2 ptr->eval( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY2 ptr->eval_D( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY2 ptr->eval_DD( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY2 ptr->eval_DDD( *s, *pX, *pY ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else {
+            MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
+          }
+          #undef LOOPXY1
+          #undef LOOPXY2
+
         } else {
-          for ( mwSize i=0; i < size ; ++i )
-            ptr->eval_DDD( sVals[i], xVals[i], yVals[i] );
+          MEX_ASSERT(false, CMD " bad number of arguments nrhs = " << nrhs );
         }
 
         #undef CMD
@@ -293,6 +372,29 @@ namespace G2lib {
           for ( mwSize i = 0 ; i < size ; ++i )
             *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ ) ;
         }
+        #undef CMD
+
+      } else if ( cmd == "findST" ) {
+
+        #define CMD "BiarcMexWrapper('findST',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+        mwSize nrx, ncx, nry, ncy;
+        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
+                              CMD "`x` expected to be a real vector/matrix" ) ;
+        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
+                              CMD "`y` expected to be a real vector/matrix" ) ;
+        MEX_ASSERT( nrx == nry && ncx == ncy,
+                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+        real_type * s = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * t = createMatrixValue( arg_out_1, nrx, ncx ) ;
+
+        mwSize size = nrx*ncx ;
+        for ( mwSize i = 0 ; i < size ; ++i )
+          ptr->findST( *x++, *y++, *s++, *t++ ) ;
+
         #undef CMD
 
       } else if ( cmd == "getPars" ) {

@@ -645,6 +645,80 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  real_type
+  ClothoidData::X_D( real_type s, real_type t ) const {
+    real_type th   = theta(s);
+    real_type th_D = theta_D(s);
+    real_type nx_D = -cos(th)*th_D;
+    return cos( theta(s) ) + t * nx_D ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_D( real_type s, real_type t ) const {
+    real_type th   = theta(s);
+    real_type th_D = theta_D(s);
+    real_type ny_D = -sin(th)*th_D;
+    return sin( theta(s) ) + t * ny_D ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_DD( real_type s, real_type t ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type S     = sin(th);
+    real_type C     = cos(th);
+    real_type nx_DD =  S*th_D*th_D-C*th_DD;
+    return -S*th_D + t * nx_DD ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_DD( real_type s, real_type t ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type S     = sin(th);
+    real_type C     = cos(th);
+    real_type ny_DD = -C*th_D*th_D-S*th_DD;
+    return C*th_D + t * ny_DD ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_DDD( real_type s, real_type t ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type S     = sin(th);
+    real_type C     = cos(th);
+    real_type th_D2 = th_D*th_D;
+    real_type nx_DDD = th_D*(C*th_D2+S*th_DD*(2*th_D+1)) ;
+    return -C*th_D*th_D-S*dk + t * nx_DDD ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_DDD( real_type s, real_type t ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type S     = sin(th);
+    real_type C     = cos(th);
+    real_type th_D2 = th_D*th_D;
+    real_type ny_DDD = th_D*(S*th_D2-C*th_DD*(2*th_D-1)) ;
+    return -S*th_D*th_D+C*dk + t * ny_DDD ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidData::XY( real_type s, real_type & x, real_type & y ) const {
     real_type C, S ;
@@ -683,6 +757,42 @@ namespace G2lib {
     real_type th = theta(s);
     nx = -sin(th);
     ny = cos(th);
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const {
+    real_type th   = theta(s);
+    real_type th_D = theta_D(s);
+    nx_D = -cos(th)*th_D;
+    ny_D = -sin(th)*th_D;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type S     = sin(th);
+    real_type C     = cos(th);
+    nx_DD =  S*th_D*th_D-C*th_DD;
+    ny_DD = -C*th_D*th_D-S*th_DD;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidData::NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type S     = sin(th);
+    real_type C     = cos(th);
+    real_type th_D2 = th_D*th_D;
+    nx_DDD = th_D*(C*th_D2+S*th_DD*(2*th_D+1)) ;
+    ny_DDD = th_D*(S*th_D2-C*th_DD*(2*th_D-1)) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -891,21 +1001,6 @@ namespace G2lib {
     if ( k0 < 0 ) { tmp = -tmp ; k0 = -k0 ; }
     return 2*dtheta/(k0+sqrt(tmp+k0*k0)) ;
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-/*
-  real_type
-  ClothoidData::aplus( real_type dtheta ) const {
-    real_type k0  = std::abs(kappa0) ;
-    real_type adk = std::abs(dk) ;
-    real_type tmp = k0+sqrt(2*dtheta*adk+k0*k0) ;
-    if ( kappa0*dk < 0 ) { // curvatura decrescente
-      return tmp/adk ;
-    } else {
-      return 2*dtheta/tmp ;
-    }
-  }
-*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

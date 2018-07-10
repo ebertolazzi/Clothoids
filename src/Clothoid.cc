@@ -414,6 +414,20 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  ClothoidCurve::findST( real_type   x,
+                         real_type   y,
+                         real_type & s,
+                         real_type & t ) const {
+    real_type X, Y, nx, ny ;
+    real_type d = closestPoint( x, y, X, Y, s );
+    NOR( s, nx, ny );
+    t = nx*(x-X) + ny*(y-Y);
+    return d <= std::abs(t)*(1+100*machepsi) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   std::ostream &
   operator << ( std::ostream & stream, ClothoidCurve const & c ) {
     stream <<   "x0     = " << c.CD.x0

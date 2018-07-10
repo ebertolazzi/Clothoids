@@ -45,10 +45,10 @@
 "    [x,y,theta,kappa] = ClothoidCurveMexWrapper( 'evaluate', OBJ, ss ) ;\n" \
 "    [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'getPars', OBJ ) ;\n" \
 "\n" \
-"    [x,y]         = ClothoidCurveMexWrapper( 'eval', OBJ, ss, offs ) ;\n" \
-"    [x_D,y_D]     = ClothoidCurveMexWrapper( 'eval_D', OBJ, ss, offs ) ;\n" \
-"    [x_DD,y_DD]   = ClothoidCurveMexWrapper( 'eval_DD', OBJ, ss, offs ) ;\n" \
-"    [x_DDD,y_DDD] = ClothoidCurveMexWrapper( 'eval_DDD', OBJ, ss, offs ) ;\n" \
+"    [x,y]         = ClothoidCurveMexWrapper( 'eval', OBJ, ss[, offs] ) ;\n" \
+"    [x_D,y_D]     = ClothoidCurveMexWrapper( 'eval_D', OBJ, ss[, offs] ) ;\n" \
+"    [x_DD,y_DD]   = ClothoidCurveMexWrapper( 'eval_DD', OBJ, ss[, offs] ) ;\n" \
+"    [x_DDD,y_DDD] = ClothoidCurveMexWrapper( 'eval_DDD', OBJ, ss[, offs] ) ;\n" \
 "\n" \
 "  - Transform:\n" \
 "    ClothoidCurveMexWrapper( 'trim', OBJ, smin, smax ) ;\n" \
@@ -78,6 +78,7 @@
 "    [dst,s]     = ClothoidCurveMexWrapper( 'distance', OBJ, x, y ) ;\n" \
 "    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPointBySample', OBJ, x, y, ds ) ;\n" \
 "    [dst,s]     = ClothoidCurveMexWrapper( 'distanceBySample', OBJ, x, y, ds ) ;\n" \
+"    [s,t]       = ClothoidCurveMexWrapper( 'findST', OBJ, x, y ) ;\n" \
 "\n" \
 "  - Intersection:\n" \
 "    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_line', OBJ, OBJ2 ) ;%\n" \
@@ -288,52 +289,108 @@ namespace G2lib {
       } else if ( cmd == "eval"    || cmd == "eval_D" ||
                   cmd == "eval_DD" || cmd == "eval_DDD" ) {
 
-        #define CMD "ClothoidCurveMexWrapper('eval*',OBJ,s[,offs]): "
+        if ( nrhs == 4 ) {
 
-        MEX_ASSERT( nrhs == 3 || nrhs == 4, CMD "expected 3 or 4 inputs, nrhs = " << nrhs) ;
+          #define CMD "ClothoidCurveMexWrapper('eval*',OBJ,s,t): "
 
-        mwSize size;
-        double const * sVals = getVectorPointer( arg_in_2, size, CMD "Error in reading s" );
+          mwSize size, sizet ;
+          real_type const * s = getVectorPointer( arg_in_2, size,  CMD "`s` expected to be a real vector" ) ;
+          real_type const * t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" ) ;
 
-        double offs = 0 ;
-        if ( nrhs == 4 ) offs = getScalarValue( arg_in_3, CMD "Error in reading offs" ) ;
+          MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                      CMD " size(s) = " << size <<
+                      " must be equal to size(t) = " << sizet <<
+                      " or size(s|t) == 1" );
 
-        if ( nlhs == 1 ) {
-          double * xyVals = createMatrixValue( arg_out_0, 2, size );
-          if ( cmd == "eval" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
-          } else if ( cmd == "eval_D" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_D( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
-          } else if ( cmd == "eval_DD" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DD( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
+          mwSize incs = size  == 1 ? 0 : 1 ;
+          mwSize inct = sizet == 1 ? 0 : 1 ;
+          mwSize npts = max(size,sizet) ;
+
+          #define LOOPXY1 for ( mwSize i = 0 ; i < npts ; ++i, s += incs, t += inct, pXY += 2 )
+          #define LOOPXY2 for ( mwSize i = 0 ; i < npts ; ++i, s += incs, t += inct, ++pX, ++pY )
+
+          if ( nlhs == 1 ) {
+            real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+            if ( cmd == "eval" ) {
+              LOOPXY1 ptr->eval( *s, *t, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY1 ptr->eval_D( *s, *t, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY1 ptr->eval_DD( *s, *t, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY1 ptr->eval_DDD( *s, *t, pXY[0], pXY[1] ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else if ( nlhs == 2 ) {
+            real_type *pX = createMatrixValue( arg_out_0, 1,size );
+            real_type *pY = createMatrixValue( arg_out_1, 1,size );
+            if ( cmd == "eval" ) {
+              LOOPXY2 ptr->eval( *s, *t, *pX, *pY ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY2 ptr->eval_D( *s, *t, *pX, *pY ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY2 ptr->eval_DD( *s, *t, *pX, *pY ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY2 ptr->eval_DDD( *s, *t, *pX, *pY ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
           } else {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DDD( sVals[i], offs, xyVals[2*i], xyVals[2*i+1] );
+            MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
           }
-        } else if ( nlhs == 2 ) {
-          double * xVals = createMatrixValue( arg_out_0, size, 1 );
-          double * yVals = createMatrixValue( arg_out_1, size, 1 );
-          if ( cmd == "eval" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval( sVals[i], offs, xVals[i], yVals[i] );
-          } else if ( cmd == "eval_D" ) {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_D( sVals[i], offs, xVals[i], yVals[i] );
-         } else if ( cmd == "eval_DD" ) {
-             for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DD( sVals[i], offs, xVals[i], yVals[i] );
+
+          #undef CMD
+          #undef LOOPXY1
+          #undef LOOPXY2
+
+        } else if ( nrhs == 3 ) {
+
+          #define CMD "ClothoidCurveMexWrapper('eval*',OBJ,s): "
+
+          mwSize npts ;
+          real_type const * s = getVectorPointer( arg_in_2, npts, CMD "`s` expected to be a real vector" ) ;
+
+          #define LOOPXY1 for ( mwSize i = 0 ; i < npts ; ++i, ++s, pXY += 2 )
+          #define LOOPXY2 for ( mwSize i = 0 ; i < npts ; ++i, ++s, ++pX, ++pY )
+
+          if ( nlhs == 1 ) {
+            real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+            if ( cmd == "eval" ) {
+              LOOPXY1 ptr->eval( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY1 ptr->eval_D( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY1 ptr->eval_DD( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY1 ptr->eval_DDD( *s, pXY[0], pXY[1] ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else if ( nlhs == 2 ) {
+            real_type *pX = createMatrixValue( arg_out_0, 1, npts );
+            real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+            if ( cmd == "eval" ) {
+              LOOPXY2 ptr->eval( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY2 ptr->eval_D( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY2 ptr->eval_DD( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY2 ptr->eval_DDD( *s, *pX, *pY ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
           } else {
-            for ( mwSize i=0; i < size ; ++i )
-              ptr->eval_DDD( sVals[i], offs, xVals[i], yVals[i] );
+            MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
           }
+          #undef CMD
+          #undef LOOPXY1
+          #undef LOOPXY2
+
         } else {
-          MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
+          MEX_ASSERT(false, "ClothoidCurveMexWrapper('eval*',OBJ,...) bad number of arguments, nrhs = " << nrhs );
         }
-
-        #undef CMD
 
       } else if ( cmd == "getPars" ) {
 
@@ -342,7 +399,7 @@ namespace G2lib {
         if ( nlhs > 1 ) setScalarValue(arg_out_1,ptr->yBegin()) ;
         if ( nlhs > 2 ) setScalarValue(arg_out_2,ptr->thetaBegin()) ;
         if ( nlhs > 3 ) setScalarValue(arg_out_3,ptr->kappaBegin()) ;
-        if ( nlhs > 4 ) setScalarValue(arg_out_4,ptr->kappa_D()) ;
+        if ( nlhs > 4 ) setScalarValue(arg_out_4,ptr->dkappa()) ;
         if ( nlhs > 5 ) setScalarValue(arg_out_5,ptr->length()) ;
 
       } else if ( cmd == "xyBegin" ) {
@@ -453,7 +510,7 @@ namespace G2lib {
 
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs);
         MEX_ASSERT(nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs);
-        setScalarValue(arg_out_0, ptr->kappa_D());
+        setScalarValue(arg_out_0, ptr->dkappa());
 
         #undef CMD
 
@@ -734,6 +791,29 @@ namespace G2lib {
           *pT++ = t.x2() ; *pT++ = t.y2() ;
           *pT++ = t.x3() ; *pT++ = t.y3() ;
         }
+        #undef CMD
+
+      } else if ( cmd == "findST" ) {
+
+        #define CMD "ClothoidCurveMexWrapper('findST',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+        mwSize nrx, ncx, nry, ncy;
+        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
+                              CMD "`x` expected to be a real vector/matrix" ) ;
+        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
+                              CMD "`y` expected to be a real vector/matrix" ) ;
+        MEX_ASSERT( nrx == nry && ncx == ncy,
+                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+        real_type * s = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * t = createMatrixValue( arg_out_1, nrx, ncx ) ;
+
+        mwSize size = nrx*ncx ;
+        for ( mwSize i = 0 ; i < size ; ++i )
+          ptr->findST( *x++, *y++, *s++, *t++ ) ;
+
         #undef CMD
 
       } else if ( cmd == "info" ) {

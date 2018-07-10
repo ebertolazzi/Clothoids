@@ -195,10 +195,29 @@ namespace G2lib {
     real_type Y_DD( real_type s ) const ;
     real_type Y_DDD( real_type s ) const ;
 
-    void eval( real_type s, real_type & x, real_type & y ) const ;
-    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const ;
-    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const ;
+    real_type tg_x( real_type s ) const { return cos(theta(s)); }
+    real_type tg_y( real_type s ) const { return sin(theta(s)); }
+
+    real_type nor_x( real_type s ) const { return -sin(theta(s)); }
+    real_type nor_y( real_type s ) const { return cos(theta(s)); }
+
+    void XY( real_type s, real_type & x, real_type & y ) const ;
+    void XY( real_type s, real_type t, real_type & x, real_type & y ) const ;
+    void TG( real_type s, real_type & tx, real_type & ty ) const ;
+    void NOR( real_type s, real_type & nx, real_type & ny ) const ;
+    void NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const ;
+    void NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const ;
+    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const ;
+
+    void eval    ( real_type s, real_type & x,     real_type & y ) const ;
+    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const ;
+    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const ;
     void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
+
+    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const ;
+    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const ;
+    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const ;
+    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const ;
 
     void
     trim( real_type s_begin, real_type s_end ) ;
@@ -274,6 +293,19 @@ namespace G2lib {
       real_type ss ;
       return distance( x, y, ss );
     }
+
+    /*! \brief Find parametric coordinate.
+     *
+     * \param x x-coordinate point
+     * \param y y-coordinate point
+     * \param s value \f$ s \f$
+     * \param t value \f$ t \f$
+     */
+    void
+    findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const ;
 
     /*! \brief Compute rational B-spline coefficients for a circle arc
      *

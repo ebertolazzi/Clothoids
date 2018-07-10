@@ -294,36 +294,222 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
+  Biarc::theta( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.theta(s);
+    else          return C1.theta(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::theta_D( real_type s ) const
+  { return kappa(s) ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::theta_DD( real_type ) const
+  { return 0 ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::theta_DDD( real_type ) const
+  { return 0 ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::kappa( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.kappa();
+    else          return C1.kappa();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::kappa_D( real_type ) const
+  { return 0 ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::kappa_DD( real_type ) const
+  { return 0 ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::kappa_DDD( real_type ) const
+  { return 0 ; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
   Biarc::X( real_type s ) const {
-    if ( s < C0.length() ) return C0.X(s);
-    else                   return C1.X(s-C0.length());
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.X(s);
+    else          return C1.X(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::X_D( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.X_D(s);
+    else          return C1.X_D(s-L0);
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::X_DD( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.X_DD(s);
+    else          return C1.X_DD(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::X_DDD( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.X_DDD(s);
+    else          return C1.X_DDD(s-L0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::Y( real_type s ) const {
-    if ( s < C0.length() ) return C0.Y(s);
-    else                   return C1.Y(s-C0.length());
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.Y(s);
+    else          return C1.Y(s-L0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::theta( real_type s ) const {
-    if ( s < C0.length() ) return C0.theta(s);
-    else                   return C1.theta(s-C0.length());
+  Biarc::Y_D( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.Y_D(s);
+    else          return C1.Y_D(s-L0);
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::Y_DD( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.Y_DD(s);
+    else          return C1.Y_DD(s-L0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::kappa( real_type s ) const {
-    if ( s < C0.length() ) return C0.kappa();
-    else                   return C1.kappa();
+  Biarc::Y_DDD( real_type s ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.Y_DDD(s);
+    else          return C1.Y_DDD(s-L0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::XY( real_type s, real_type & x, real_type & y ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.XY(s,x,y);
+    else          return C1.XY(s-L0,x,y);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::XY( real_type s, real_type t, real_type & x, real_type & y ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.XY(s,t,x,y);
+    else          return C1.XY(s-L0,t,x,y);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::TG( real_type s, real_type & tx, real_type & ty ) const {
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.TG(s,tx,ty);
+    else          return C1.TG(s-L0,tx,ty);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::NOR( real_type s, real_type & nx, real_type & ny ) const{
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.NOR(s,nx,ny);
+    else          return C1.NOR(s-L0,nx,ny);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const{
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.NOR_D(s,nx_D,ny_D);
+    else          return C1.NOR_D(s-L0,nx_D,ny_D);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const{
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.NOR_DD(s,nx_DD,ny_DD);
+    else          return C1.NOR_DD(s-L0,nx_DD,ny_DD);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const{
+    real_type L0 = C0.length() ;
+    if ( s < L0 ) return C0.NOR_DDD(s,nx_DDD,ny_DDD);
+    else          return C1.NOR_DDD(s-L0,nx_DDD,ny_DDD);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::findST( real_type   x,
+                 real_type   y,
+                 real_type & s,
+                 real_type & t ) const {
+    real_type S, T ;
+    C0.findST( x, y, s, t ) ;
+    C1.findST( x, y, S, T ) ;
+    real_type L0 = C0.length() ;
+    bool ok0 = s >= 0 && s <= L0 ;
+    bool ok1 = S >= 0 && S <= C1.length() ;
+    if ( ok0 ) {
+      if ( ok1 && std::abs(t) > std::abs(T) ) {
+        s = S + L0 ;
+        t = T ;
+      }
+    } else if ( ok1 ) {
+      s = S + L0 ;
+      t = T ;
+    } else {
+      s = t = 0 ;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   Biarc::eval( real_type   s,
                real_type & th,
@@ -343,8 +529,11 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  Biarc::eval( real_type s, real_type & x, real_type & y ) const {
+  Biarc::eval( real_type   s,
+               real_type & x,
+               real_type & y ) const {
     if ( s < C0.length() ) {
       C0.eval(s,x,y);
     } else {
@@ -354,8 +543,11 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  Biarc::eval_D( real_type s, real_type & x_D, real_type & y_D ) const {
+  Biarc::eval_D( real_type   s,
+                 real_type & x_D,
+                 real_type & y_D ) const {
     if ( s < C0.length() ) {
       C0.eval_D(s,x_D,y_D);
     } else {
@@ -365,8 +557,11 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  Biarc::eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const {
+  Biarc::eval_DD( real_type   s,
+                  real_type & x_DD,
+                  real_type & y_DD ) const {
     if ( s < C0.length() ) {
       C0.eval_DD(s,x_DD,y_DD);
     } else {
@@ -376,13 +571,76 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  Biarc::eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const {
+  Biarc::eval_DDD( real_type   s,
+                   real_type & x_DDD,
+                   real_type & y_DDD ) const {
     if ( s < C0.length() ) {
       C0.eval_DDD(s,x_DDD,y_DDD);
     } else {
       s -= C0.length() ;
       C1.eval_DDD(s,x_DDD,y_DDD);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::eval( real_type   s,
+               real_type   t,
+               real_type & x,
+               real_type & y ) const {
+    if ( s < C0.length() ) {
+      C0.eval(s,t,x,y);
+    } else {
+      s -= C0.length() ;
+      C1.eval(s,t,x,y);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::eval_D( real_type   s,
+                 real_type   t,
+                 real_type & x_D,
+                 real_type & y_D ) const {
+    if ( s < C0.length() ) {
+      C0.eval_D(s,t,x_D,y_D);
+    } else {
+      s -= C0.length() ;
+      C1.eval_D(s,t,x_D,y_D);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::eval_DD( real_type   s,
+                  real_type   t,
+                  real_type & x_DD,
+                  real_type & y_DD ) const {
+    if ( s < C0.length() ) {
+      C0.eval_DD(s,t,x_DD,y_DD);
+    } else {
+      s -= C0.length() ;
+      C1.eval_DD(s,t,x_DD,y_DD);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::eval_DDD( real_type   s,
+                   real_type   t,
+                   real_type & x_DDD,
+                   real_type & y_DDD ) const {
+    if ( s < C0.length() ) {
+      C0.eval_DDD(s,t,x_DDD,y_DDD);
+    } else {
+      s -= C0.length() ;
+      C1.eval_DDD(s,t,x_DDD,y_DDD);
     }
   }
 

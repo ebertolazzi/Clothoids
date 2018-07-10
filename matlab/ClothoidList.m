@@ -296,6 +296,10 @@ classdef ClothoidList < handle
       ClothoidListMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s,t] = find_coord( self, x, y )
+      [s,t] = ClothoidListMexWrapper( 'findST', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
       if nargin > 1
         npts = varargin{1} ;

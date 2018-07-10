@@ -319,6 +319,10 @@ classdef ClothoidCurve < handle
       ClothoidCurveMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s,t] = find_coord( self, x, y )
+      [s,t] = ClothoidCurveMexWrapper( 'findST', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
       if nargin < 2
         npts = 1000 ; 

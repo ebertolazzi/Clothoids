@@ -127,31 +127,39 @@ namespace G2lib {
     , dk(0)
     {}
 
-    real_type deltaTheta( real_type s ) const
-    { return s*(kappa0 + 0.5*s*dk) ; }
+    real_type deltaTheta( real_type s ) const { return s*(kappa0 + 0.5*s*dk) ; }
 
     //! return angle at curvilinear coordinate `s`
-    real_type theta( real_type s ) const
-    { return theta0 + s*(kappa0 + 0.5*s*dk) ; }
+    real_type theta    ( real_type s ) const { return theta0 + s*(kappa0 + 0.5*s*dk) ; }
+    real_type theta_D  ( real_type s ) const { return kappa0 + s*dk ; }
+    real_type theta_DD ( real_type   ) const { return dk ; }
+    real_type theta_DDD( real_type   ) const { return 0 ; }
 
     //! return curvature at curvilinear coordinate `s`
-    real_type kappa( real_type s ) const
-    { return kappa0 + s*dk ; }
+    real_type kappa    ( real_type s ) const { return kappa0 + s*dk ; }
+    real_type kappa_D  ( real_type   ) const { return dk ; }
+    real_type kappa_DD ( real_type   ) const { return 0 ; }
+    real_type kappa_DDD( real_type   ) const { return 0 ; }
 
     real_type X( real_type s ) const ;
     real_type Y( real_type s ) const ;
+    real_type X( real_type s, real_type t ) const ;
+    real_type Y( real_type s, real_type t ) const ;
 
     real_type X_D( real_type s ) const ;
     real_type Y_D( real_type s ) const ;
+    real_type X_D( real_type s, real_type t ) const ;
+    real_type Y_D( real_type s, real_type t ) const ;
 
     real_type X_DD( real_type s ) const ;
     real_type Y_DD( real_type s ) const ;
+    real_type X_DD( real_type s, real_type t ) const ;
+    real_type Y_DD( real_type s, real_type t ) const ;
 
     real_type X_DDD( real_type s ) const ;
     real_type Y_DDD( real_type s ) const ;
-
-    real_type X( real_type s, real_type t ) const ;
-    real_type Y( real_type s, real_type t ) const ;
+    real_type X_DDD( real_type s, real_type t ) const ;
+    real_type Y_DDD( real_type s, real_type t ) const ;
 
     real_type tg_x( real_type s ) const { return cos(theta(s)); }
     real_type tg_y( real_type s ) const { return sin(theta(s)); }
@@ -163,6 +171,9 @@ namespace G2lib {
     void XY( real_type s, real_type t, real_type & x, real_type & y ) const ;
     void TG( real_type s, real_type & tx, real_type & ty ) const ;
     void NOR( real_type s, real_type & nx, real_type & ny ) const ;
+    void NOR_D( real_type s, real_type & nx, real_type & ny ) const ;
+    void NOR_DD( real_type s, real_type & nx, real_type & ny ) const ;
+    void NOR_DDD( real_type s, real_type & nx, real_type & ny ) const ;
 
     void
     eval( real_type   s,

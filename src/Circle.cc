@@ -163,6 +163,84 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  CircleArc::XY( real_type   s,
+                 real_type & x,
+                 real_type & y ) const {
+    real_type sk  = (s*k)/2 ;
+    real_type tmp = s*Sinc(sk);
+    x = x0+tmp*cos(theta0+sk);
+    y = y0+tmp*sin(theta0+sk);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::XY( real_type   s,
+                 real_type   t,
+                 real_type & x,
+                 real_type & y ) const {
+    real_type sk  = (s*k)/2 ;
+    real_type tmp = s*Sinc(sk);
+    real_type th  = theta(s);
+    real_type th0 = theta0+sk;
+    x = x0+tmp*cos(th0)-t*sin(th);
+    y = y0+tmp*sin(th0)+t*cos(th);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::TG( real_type s, real_type & tx, real_type & ty ) const {
+    real_type th = theta(s);
+    tx = cos(th);
+    ty = sin(th);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::NOR( real_type s, real_type & nx, real_type & ny ) const {
+    real_type th = theta(s);
+    nx = -sin(th);
+    ny = cos(th);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const {
+    real_type th = theta(s);
+    nx_D = -cos(th)*k;
+    ny_D = -sin(th)*k;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const {
+    real_type th = theta(s);
+    real_type k2 = k*k ;
+    real_type S  = sin(th);
+    real_type C  = cos(th);
+    nx_DD =  S*k2;
+    ny_DD = -C*k2;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const {
+    real_type th = theta(s);
+    real_type S  = sin(th);
+    real_type C  = cos(th);
+    real_type k3 = k*k*k;
+    nx_DDD = C*k3 ;
+    ny_DDD = S*k3 ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   CircleArc::eval( real_type   s,
                    real_type & x,
                    real_type & y ) const {
@@ -205,6 +283,65 @@ namespace G2lib {
     real_type k2  = k*k;
     x_DDD = -k2*cos(arg);
     y_DDD = -k2*sin(arg);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::eval( real_type   s,
+                   real_type   t,
+                   real_type & x,
+                   real_type & y ) const {
+    real_type sk  = (s*k)/2 ;
+    real_type LS  = s*Sinc(sk);
+    real_type arg = theta0+sk ;
+    real_type nx, ny ;
+    NOR( s, nx, ny );
+    x = x0 + LS*cos(arg) + nx * t ;
+    y = y0 + LS*sin(arg) + ny * t ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::eval_D( real_type   s,
+                     real_type   t,
+                     real_type & x_D,
+                     real_type & y_D ) const {
+    real_type arg = theta0+s*k;
+    real_type nx_D, ny_D ;
+    NOR_D( s, nx_D, ny_D );
+    x_D = cos(arg)+t*nx_D;
+    y_D = sin(arg)+t*ny_D;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::eval_DD( real_type   s,
+                      real_type   t,
+                      real_type & x_DD,
+                      real_type & y_DD ) const {
+    real_type arg = theta0+s*k;
+    real_type nx_DD, ny_DD ;
+    NOR_DD( s, nx_DD, ny_DD );
+    x_DD = -k*sin(arg)+t*nx_DD;
+    y_DD =  k*cos(arg)+t*ny_DD;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::eval_DDD( real_type   s,
+                       real_type   t,
+                       real_type & x_DDD,
+                       real_type & y_DDD ) const {
+    real_type arg = theta0+s*k;
+    real_type k2  = k*k;
+    real_type nx_DDD, ny_DDD ;
+    NOR_DDD( s, nx_DDD, ny_DDD );
+    x_DDD = -k2*cos(arg)+t*nx_DDD;
+    y_DDD = -k2*sin(arg)+t*ny_DDD;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -281,6 +418,20 @@ namespace G2lib {
     }
 
     return hypot(qx-X,qy-Y) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::findST( real_type   x,
+                     real_type   y,
+                     real_type & s,
+                     real_type & t ) const {
+    real_type X, Y, nx, ny ;
+    s = projectPointOnCircle( x0, y0, cos(theta0), sin(theta0), k, L, x, y );
+    eval( s, X, Y );
+    NOR( s, nx, ny );
+    t = nx*(x-X) + ny*(y-Y);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -45,14 +45,15 @@
 "  res = LineSegmentMexWrapper( 'sMmax', OBJ ) ;\n" \
 "  res = LineSegmentMexWrapper( 'length', OBJ ) ;\n" \
 "\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval', OBJ, s ) ;\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval_D', OBJ, s ) ;\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval_DD', OBJ, s ) ;\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval_DDD', OBJ, s ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval', OBJ, s [,t] ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval_D', OBJ, s [,t] ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval_DD', OBJ, s [,t] ) ;\n" \
+"  [X,Y] = LineSegmentMexWrapper( 'eval_DDD', OBJ, s [,t] ) ;\n" \
 "\n" \
 "  [d,s] = LineSegmentMexWrapper( 'distance', OBJ, x, y ) ;\n" \
 "\n" \
 "  nurbs = LineSegmentMexWrapper( 'to_nurbs', OBJ ) ;\n" \
+"  [s,t] = LineSegmentMexWrapper( 'findST', OBJ, x, y ) ;\n" \
 "\n" \
 "%==========================================================================%\n" \
 "%                                                                          %\n" \
@@ -330,6 +331,27 @@ namespace G2lib {
 
         #undef CMD
 
+      } else if ( cmd == "findST" ) {
+
+        #define CMD "LineSegmentMexWrapper('findST',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+        mwSize nrx, ncx, nry, ncy;
+        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" ) ;
+        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" ) ;
+        MEX_ASSERT( nrx == nry && ncx == ncy,
+                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+        real_type * s = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * t = createMatrixValue( arg_out_1, nrx, ncx ) ;
+
+        mwSize size = nrx*ncx ;
+        for ( mwSize i = 0 ; i < size ; ++i )
+          ptr->findST( *x++, *y++, *s++, *t++ ) ;
+
+        #undef CMD
+
       } else if ( cmd == "info" ) {
 
         #define CMD "LineSegmentMexWrapper('info',OBJ): "
@@ -343,26 +365,36 @@ namespace G2lib {
 
       } else {
 
-        if ( nrhs == 3 ) {
+        if ( nrhs == 4 ) {
 
-          #define CMD "LineSegmentMexWrapper('eval*',OBJ,s): "
+          #define CMD "LineSegmentMexWrapper('eval*',OBJ,s,t): "
 
-          mwSize size ;
-          real_type const * s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" ) ;
+          mwSize size, sizet ;
+          real_type const * s = getVectorPointer( arg_in_2, size,  CMD "`s` expected to be a real vector" ) ;
+          real_type const * t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" ) ;
+
+          MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                      CMD " size(s) = " << size <<
+                      " must be equal to size(t) = " << sizet <<
+                      " or size(s|t) == 1" );
+
+          mwSize incs = size  == 1 ? 0 : 1 ;
+          mwSize inct = sizet == 1 ? 0 : 1 ;
+          mwSize npts = max(size,sizet) ;
+
+          #define LOOPXY1 for ( mwSize i = 0 ; i < npts ; ++i, s += incs, t += inct, pXY += 2 )
+          #define LOOPXY2 for ( mwSize i = 0 ; i < npts ; ++i, s += incs, t += inct, ++pX, ++pY )
+
           if ( nlhs == 1 ) {
             real_type *pXY = createMatrixValue( arg_out_0, 2,size );
             if ( cmd == "eval" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
-                ptr->eval( *s, pXY[0], pXY[1] ) ;
+              LOOPXY1 ptr->eval( *s, *t, pXY[0], pXY[1] ) ;
             } else if ( cmd == "eval_D" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
-                ptr->eval_D( *s, pXY[0], pXY[1] ) ;
+              LOOPXY1 ptr->eval_D( *s, *t, pXY[0], pXY[1] ) ;
             } else if ( cmd == "eval_DD" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
-                ptr->eval_DD( *s, pXY[0], pXY[1] ) ;
+              LOOPXY1 ptr->eval_DD( *s, *t, pXY[0], pXY[1] ) ;
             } else if ( cmd == "eval_DDD" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, pXY += 2 )
-                ptr->eval_DDD( *s, pXY[0], pXY[1] ) ;
+              LOOPXY1 ptr->eval_DDD( *s, *t, pXY[0], pXY[1] ) ;
             } else {
               MEX_ASSERT(false, CMD "Unknown command: " << cmd );
             }
@@ -370,23 +402,66 @@ namespace G2lib {
             real_type *pX = createMatrixValue( arg_out_0, 1,size );
             real_type *pY = createMatrixValue( arg_out_1, 1,size );
             if ( cmd == "eval" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-                ptr->eval( *s, *pX, *pY ) ;
+              LOOPXY2 ptr->eval( *s, *t, *pX, *pY ) ;
             } else if ( cmd == "eval_D" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-                ptr->eval_D( *s, *pX, *pY ) ;
+              LOOPXY2 ptr->eval_D( *s, *t, *pX, *pY ) ;
             } else if ( cmd == "eval_DD" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-                ptr->eval_DD( *s, *pX, *pY ) ;
+              LOOPXY2 ptr->eval_DD( *s, *t, *pX, *pY ) ;
             } else if ( cmd == "eval_DDD" ) {
-              for ( mwSize i = 0 ; i < size ; ++i, ++s, ++pX, ++pY )
-                ptr->eval_DDD( *s, *pX, *pY ) ;
+              LOOPXY2 ptr->eval_DDD( *s, *t, *pX, *pY ) ;
             } else {
               MEX_ASSERT(false, CMD "Unknown command: " << cmd );
             }
           } else {
             MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
           }
+          #undef LOOPXY1
+          #undef LOOPXY2
+
+          #undef CMD
+
+        } else if ( nrhs == 3 ) {
+
+          #define CMD "LineSegmentMexWrapper('eval*',OBJ,s): "
+
+          mwSize npts ;
+          real_type const * s = getVectorPointer( arg_in_2, npts, CMD "`s` expected to be a real vector" ) ;
+
+          #define LOOPXY1 for ( mwSize i = 0 ; i < npts ; ++i, ++s, pXY += 2 )
+          #define LOOPXY2 for ( mwSize i = 0 ; i < npts ; ++i, ++s, ++pX, ++pY )
+
+          if ( nlhs == 1 ) {
+            real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+            if ( cmd == "eval" ) {
+              LOOPXY1 ptr->eval( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY1 ptr->eval_D( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY1 ptr->eval_DD( *s, pXY[0], pXY[1] ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY1 ptr->eval_DDD( *s, pXY[0], pXY[1] ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else if ( nlhs == 2 ) {
+            real_type *pX = createMatrixValue( arg_out_0, 1, npts );
+            real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+            if ( cmd == "eval" ) {
+              LOOPXY2 ptr->eval( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_D" ) {
+              LOOPXY2 ptr->eval_D( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DD" ) {
+              LOOPXY2 ptr->eval_DD( *s, *pX, *pY ) ;
+            } else if ( cmd == "eval_DDD" ) {
+              LOOPXY2 ptr->eval_DDD( *s, *pX, *pY ) ;
+            } else {
+              MEX_ASSERT(false, CMD "Unknown command: " << cmd );
+            }
+          } else {
+            MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs ) ;
+          }
+          #undef LOOPXY1
+          #undef LOOPXY2
 
           #undef CMD
 

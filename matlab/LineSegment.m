@@ -97,7 +97,7 @@ classdef LineSegment < handle
       nurbs = LineSegmentMexWrapper('to_nurbs', self.objectHandle);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval(self, s)
+    function varargout = eval( self, varargin )
       % eval the circle at curvilinear abscissa `s`
       % Usage:
       %    [x,y] = ref.eval( s )
@@ -109,22 +109,22 @@ classdef LineSegment < handle
       % On output:
       %    x, y:  coordinates of the curve
       %
-      [varargout{1:nargout}] = LineSegmentMexWrapper('eval', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_D(self, s)
+    function varargout = eval_D( self, varargin )
       % eval the circle derivative at curvilinear abscissa `s`
-      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_D', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_D', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DD(self, s)
+    function varargout = eval_DD( self, varargin )
       % eval the circle second derivative at curvilinear abscissa `s`
-      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_DD', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_DD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DDD(self, s)
+    function varargout = eval_DDD( self, varargin )
       % eval the circle third derivative at curvilinear abscissa `s`
-      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, s );
+      [varargout{1:nargout}] = LineSegmentMexWrapper('eval_DDD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X0 = xBegin(self)
@@ -153,6 +153,10 @@ classdef LineSegment < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function info( self )
       LineSegmentMexWrapper( 'info', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s,t] = find_coord( self, x, y )
+      [s,t] = LineSegmentMexWrapper( 'findST', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot(self,varargin)

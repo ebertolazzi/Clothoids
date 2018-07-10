@@ -143,6 +143,30 @@ namespace G2lib {
       x_DDD = y_DDD = 0 ;
     }
 
+    // ---
+
+    void
+    eval( real_type s, real_type t, real_type & x, real_type & y ) const {
+      x = x0 + c0 * s - s0 * t ;
+      y = y0 + s0 * s + c0 * t ;
+    }
+
+    void
+    eval_D( real_type, real_type, real_type & x_D, real_type & y_D ) const {
+      x_D = c0 ;
+      y_D = s0 ;
+    }
+
+    void
+    eval_DD( real_type, real_type, real_type & x_DD, real_type & y_DD ) const {
+      x_DD = y_DD = 0 ;
+    }
+
+    void
+    eval_DDD( real_type, real_type, real_type & x_DDD, real_type & y_DDD ) const {
+      x_DDD = y_DDD = 0 ;
+    }
+
     void
     trim( real_type s_begin, real_type s_end ) {
       x0 += c0 * s_begin ;
@@ -210,13 +234,38 @@ namespace G2lib {
       return distance( x, y, ss );
     }
 
+    /*! \brief Find parametric coordinate.
+     *
+     * We consider the line passing to the point \f$ P \f$
+     * with tangent \f$ T \f$ and a point \f$ Q \f$
+     * compute the coordinte \f$ s \f$ and \f$ t \f$ such that
+     * \f$ Q = P + T s + N t \f$
+     * where \f$ P + T s \f$ is the point on the line at coordinate
+     * \f$ s \f$ and \f$ N \f$ is the normal to the line obtained by
+     * rotating by `90` degree counterclockwise the tangent \f$ T \f$.
+     *
+     * \param x x-coordinate point
+     * \param y y-coordinate point
+     * \param s value \f$ s \f$
+     * \param t value \f$ t \f$
+     */
+    void
+    findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const {
+      real_type dx = x - x0;
+      real_type dy = y - y0;
+      s = c0 * dx + s0 * dy ;
+      t = c0 * dy - s0 * dx ;
+    }
+
     /*! \brief Compute rational B-spline coefficients for a line segment
      *
      * \param knots  knots of the B-spline
      * \param Poly   polygon of the B-spline
      * \return       2 the number of polygon points
      */
-
     int
     toNURBS( real_type knots[5], real_type Poly[2][3] ) const ;
 
