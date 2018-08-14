@@ -1,22 +1,22 @@
 Clothoids [![Build Status](https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master)](https://travis-ci.org/ebertolazzi/Clothoids)
 
-# Clothoids, a library for clothoids computation and more
+Clothoids, a library for clothoids computation and more
+=======================================================
+
 **by Enrico Bertolazzi and Marco Frego**
 
 
 
-##Mex files for fast computation
+Mex files for fast computation
+------------------------------
 
 In directory `src_mex` you find the C++ implementation of the proposed algorithm 
 with `mex` interface. To compile run `CompileLib` from MATLAB window.
 After compilation the compiled version of the scripts
 are available in the `matlab` directory.
 
-
-
-
-
-##LineSegment
+LineSegment
+-----------
 
 The class `LineSegment` store a straight segment.
 
@@ -104,9 +104,8 @@ XY_DDD        = L1.eval_DDD( s );
 
 
 
-
-
-##CircleArc
+CircleArc
+---------
 
 The class `CircleArc` store an arc of a circle.
 
@@ -208,9 +207,8 @@ XY_DDD        = L1.eval_DDD( s );
 
 
 
-
-
-##Biarc
+Biarc
+-----
 
 The class `Biarc` store a biarc or two arc connected with G1 continuity.
 
@@ -326,8 +324,8 @@ XY_DDD        = B.eval_DDD( s );
 ~~~~~
 
 
-
-##ClothoidCurve
+ClothoidCurve
+-------------
 
 The class `ClothoidCurve ` store a clothoid curve arc.
 A clothoid curve is curve where curvature change linearly respect to the
@@ -459,7 +457,7 @@ XY_DD       = CL.eval_DD( s );
 XY_DDD        = CL.eval_DDD( s );
 ~~~~~
 
-an offset respect to the normal of teh curve can be used
+an offset respect to the normal of the curve can be used
 
 ~~~~~
 % evaluate the clothoid curve at curvilinear coordinate `s` (may be a vector)
@@ -479,21 +477,24 @@ XY_DD       = CL.eval_DD( s, offs );
 XY_DDD        = CL.eval_DDD( s, offs );
 ~~~~~
 
-##ClothoisList
+ClothoisList
+------------
 
 Store a list of clothoids to be used as a spline
 
 documentation will be available soon, see examples in `tests-matlab` for the moments
 
 
-##ClothoisSplineG2
+ClothoisSplineG2
+----------------
 
 Implements the algorithm described in references [2] and [3].
 
 documentation will be available soon, see examples in `tests-matlab` for the moments
 
 
-##Authors
+Authors
+-------
 	
 	Enrico Bertolazzi and Marco Frego
 	Department of Industrial Engineering
@@ -501,7 +502,8 @@ documentation will be available soon, see examples in `tests-matlab` for the mom
 	enrico.bertolazzi@unitn.it
 	m.fregox@gmail.com
 
-##References
+References
+----------
 
 1. E. Bertolazzi, M. Frego,
    **G1 fitting with clothoids**,<br>
