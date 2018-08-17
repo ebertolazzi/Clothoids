@@ -5,10 +5,13 @@ LU_block     = 2 ;
 LU_arceco    = 3 ;
 LU_superLU   = 4 ;
 
-CS_use_LU           = 0 ;
-CS_use_QR           = 1 ;
-CS_use_SVD          = 2 ;
-CS_use_MINIMIZATION = 3 ;
+CS_use_LU           = 0;
+CS_use_LUPQ         = 1;
+CS_use_QR           = 2;
+CS_use_SVD          = 3;
+CS_use_LSS          = 4;
+CS_use_LSY          = 5;
+CS_use_MINIMIZATION = 6;
 
 U_QUADRATIC       = 0 ;
 U_QUADRATIC2      = 1 ;
@@ -38,7 +41,7 @@ LESS_THAN    = 1 ;
 INTERVAL     = 2 ;
 POWER        = 3 ;
 BIPOWER      = 4 ;
- 
+
 SET  = true ;
 FREE = false ;
 
@@ -50,8 +53,8 @@ data.RedirectStreamToString = false ;
 data.InfoLevel = 4 ;
 data.OutputSplines = {'s'} ;
 
-data.Solver.max_iter  = 300 ;
-data.Solver.tolerance = 1e-09 ;
+data.Solver.max_iter       = 300 ;
+data.Solver.tolerance      = 1e-09 ;
 data.Solver.min_step       = 0.001 ;
 data.Solver.reduce_factor  = 0.5 ;
 data.Solver.augment_factor = 1.5 ;
