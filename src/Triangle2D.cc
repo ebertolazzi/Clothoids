@@ -46,6 +46,14 @@
 #include <algorithm>
 #include <functional>
 
+// workaround for windows that defines max and min as macros!
+#ifdef max
+  #undef max
+#endif
+#ifdef min
+  #undef min
+#endif
+
 namespace G2lib {
 
   template <typename T>
