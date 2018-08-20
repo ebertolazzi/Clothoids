@@ -336,7 +336,7 @@ namespace G2lib {
       real_type py  = p2[1]-p1[1] ;
       s1 += (py*t2[0] - px*t2[1])/det ;
       s2 += (t1[0]*py - t1[1]*px)/det ;
-      if ( ! ( isfinite(s1) && isfinite(s1) ) ) break ;
+      if ( ! ( isfinite(s1) && isfinite(s2) ) ) break ;
       bool out = false ;
       if      ( s1 <= 0    ) { out = true ; s1 = 0    ; }
       else if ( s1 >= c1.L ) { out = true ; s1 = c1.L ; }
