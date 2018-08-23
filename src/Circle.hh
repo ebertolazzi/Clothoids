@@ -47,7 +47,7 @@ namespace G2lib {
                        real_type PTE1[2][2],
                        bool &    internal_tangents,
                        real_type PTI0[2][2],
-                       real_type PTI1[2][2] ) ;
+                       real_type PTI1[2][2] );
 
   bool
   CircleLineTransition( real_type C[2],
@@ -55,7 +55,7 @@ namespace G2lib {
                         real_type P[2],
                         real_type theta,
                         real_type C0[2],
-                        real_type C1[2] ) ;
+                        real_type C1[2] );
 
   /*\
    |    ____ _          _         _
@@ -71,9 +71,9 @@ namespace G2lib {
     real_type x0,     //!< initial x coordinate of the clothoid
               y0,     //!< initial y coordinate of the clothoid
               theta0, //!< initial angle of the clothoid
-              k ;     //!< curvature
+              k;      //!< curvature
 
-    real_type L ;     //!< length of the circle segment
+    real_type L;      //!< length of the circle segment
 
   public:
 
@@ -100,30 +100,30 @@ namespace G2lib {
 
     void
     copy( CircleArc const & c ) {
-      x0     = c.x0 ;
-      y0     = c.y0 ;
-      theta0 = c.theta0 ;
-      k      = c.k ;
-      L      = c.L ;
+      x0     = c.x0;
+      y0     = c.y0;
+      theta0 = c.theta0;
+      k      = c.k;
+      L      = c.L;
     }
 
-    CircleArc( CircleArc const & s ) { copy(s) ; }
+    CircleArc( CircleArc const & s ) { copy(s); }
 
     CircleArc const & operator = ( CircleArc const & s )
-    { copy(s) ; return *this ; }
+    { copy(s); return *this; }
 
     real_type sinTheta0() const { return sin(theta0); }
     real_type cosTheta0() const { return cos(theta0); }
-    real_type kappa()     const { return k ; }
-    real_type length()    const { return L ; }
+    real_type kappa()     const { return k; }
+    real_type length()    const { return L; }
 
-    real_type xBegin()     const { return x0 ; }
-    real_type yBegin()     const { return y0 ; }
-    real_type thetaBegin() const { return theta0 ; }
+    real_type xBegin()     const { return x0; }
+    real_type yBegin()     const { return y0; }
+    real_type thetaBegin() const { return theta0; }
 
-    real_type xEnd()     const { return X(L) ; }
-    real_type yEnd()     const { return Y(L) ; }
-    real_type thetaEnd() const { return theta(L) ; }
+    real_type xEnd()     const { return X(L); }
+    real_type yEnd()     const { return Y(L); }
+    real_type thetaEnd() const { return theta(L); }
 
     //! construct a circle with the standard parameters
     void
@@ -132,11 +132,11 @@ namespace G2lib {
            real_type _theta0,
            real_type _k,
            real_type _L ) {
-      x0     = _x0 ;
-      y0     = _y0 ;
-      theta0 = _theta0 ;
-      k      = _k ;
-      L      = _L ;
+      x0     = _x0;
+      y0     = _y0;
+      theta0 = _theta0;
+      k      = _k;
+      L      = _L;
     }
 
     //! build a circle by solving the hermite G1 problem
@@ -157,43 +157,43 @@ namespace G2lib {
               real_type _y2 );
 
     real_type
-    delta_theta() const { return L*k ; }
+    delta_theta() const { return L*k; }
 
     real_type
-    theta( real_type s ) const { return theta0 + s*k ; }
+    theta( real_type s ) const { return theta0 + s*k; }
 
     real_type
-    theta_D( real_type ) const { return k ; }
+    theta_D( real_type ) const { return k; }
 
     real_type
-    theta_DD( real_type ) const { return 0 ; }
+    theta_DD( real_type ) const { return 0; }
 
     real_type
-    theta_DDD( real_type ) const { return 0 ; }
+    theta_DDD( real_type ) const { return 0; }
 
     real_type
-    totalLength() const { return L ; }
+    totalLength() const { return L; }
 
     real_type
     thetaTotalVariation() const
-    { return std::abs(L*k) ; }
+    { return std::abs(L*k); }
 
     real_type
-    thetaMinMax( real_type & thMin, real_type & thMax ) const ;
+    thetaMinMax( real_type & thMin, real_type & thMax ) const;
 
     real_type
     deltaTheta() const
-    { real_type thMin, thMax ; return thetaMinMax( thMin, thMax ) ; }
+    { real_type thMin, thMax; return thetaMinMax( thMin, thMax ); }
 
-    real_type X( real_type s ) const ;
-    real_type X_D( real_type s ) const ;
-    real_type X_DD( real_type s ) const ;
-    real_type X_DDD( real_type s ) const ;
+    real_type X( real_type s ) const;
+    real_type X_D( real_type s ) const;
+    real_type X_DD( real_type s ) const;
+    real_type X_DDD( real_type s ) const;
 
-    real_type Y( real_type s ) const ;
-    real_type Y_D( real_type s ) const ;
-    real_type Y_DD( real_type s ) const ;
-    real_type Y_DDD( real_type s ) const ;
+    real_type Y( real_type s ) const;
+    real_type Y_D( real_type s ) const;
+    real_type Y_DD( real_type s ) const;
+    real_type Y_DDD( real_type s ) const;
 
     real_type tg_x( real_type s ) const { return cos(theta(s)); }
     real_type tg_y( real_type s ) const { return sin(theta(s)); }
@@ -201,33 +201,33 @@ namespace G2lib {
     real_type nor_x( real_type s ) const { return -sin(theta(s)); }
     real_type nor_y( real_type s ) const { return cos(theta(s)); }
 
-    void XY( real_type s, real_type & x, real_type & y ) const ;
-    void XY( real_type s, real_type t, real_type & x, real_type & y ) const ;
-    void TG( real_type s, real_type & tx, real_type & ty ) const ;
-    void NOR( real_type s, real_type & nx, real_type & ny ) const ;
-    void NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const ;
-    void NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const ;
-    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const ;
+    void XY( real_type s, real_type & x, real_type & y ) const;
+    void XY( real_type s, real_type t, real_type & x, real_type & y ) const;
+    void TG( real_type s, real_type & tx, real_type & ty ) const;
+    void NOR( real_type s, real_type & nx, real_type & ny ) const;
+    void NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const;
+    void NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const;
+    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
 
-    void eval    ( real_type s, real_type & x,     real_type & y ) const ;
-    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const ;
-    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const ;
-    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
+    void eval    ( real_type s, real_type & x,     real_type & y ) const;
+    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const;
+    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const;
+    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
 
-    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const ;
-    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const ;
-    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const ;
-    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const ;
-
-    void
-    trim( real_type s_begin, real_type s_end ) ;
+    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const;
+    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const;
+    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const;
+    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const;
 
     void
-    changeCurvilinearOrigin( real_type s0, real_type newL ) ;
+    trim( real_type s_begin, real_type s_end );
+
+    void
+    changeCurvilinearOrigin( real_type s0, real_type newL );
 
     void
     changeOrigin( real_type newx0, real_type newy0 )
-    { x0 = newx0 ; y0 = newy0 ; }
+    { x0 = newx0; y0 = newy0; }
 
     void
     rotate( real_type angle, real_type cx, real_type cy );
@@ -242,11 +242,11 @@ namespace G2lib {
     bool
     bbTriangle( real_type p0[2],
                 real_type p1[2],
-                real_type p2[2] ) const ;
+                real_type p2[2] ) const;
 
     void
     translate( real_type tx, real_type ty )
-    { x0 += tx ; y0 += ty ; }
+    { x0 += tx; y0 += ty; }
 
     /*!
      * \brief compute the point at minimum distance from a point `[x,y]` and the circle arc
@@ -263,7 +263,7 @@ namespace G2lib {
                   real_type   y,
                   real_type & X,
                   real_type & Y,
-                  real_type & S ) const ;
+                  real_type & S ) const;
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the circle arc
@@ -277,8 +277,8 @@ namespace G2lib {
     distance( real_type   x,
               real_type   y,
               real_type & S ) const {
-      real_type X, Y ;
-      return closestPoint( x, y, X, Y, S ) ;
+      real_type X, Y;
+      return closestPoint( x, y, X, Y, S );
     }
 
     /*!
@@ -290,7 +290,7 @@ namespace G2lib {
     \*/
     real_type
     distance( real_type x, real_type y ) const {
-      real_type ss ;
+      real_type ss;
       return distance( x, y, ss );
     }
 
@@ -305,7 +305,7 @@ namespace G2lib {
     findST( real_type   x,
             real_type   y,
             real_type & s,
-            real_type & t ) const ;
+            real_type & t ) const;
 
     /*! \brief Compute rational B-spline coefficients for a circle arc
      *
@@ -314,7 +314,7 @@ namespace G2lib {
      * \return       3 up to 9 the number of polygon points
     \*/
     int_type
-    toNURBS( real_type knots[], real_type Poly[], bool get_size ) const ;
+    toNURBS( real_type knots[], real_type Poly[], bool get_size ) const;
     // Poly 3 x n matrix
 
     void
@@ -323,11 +323,11 @@ namespace G2lib {
 
     friend
     std::ostream &
-    operator << ( std::ostream & stream, CircleArc const & c ) ;
+    operator << ( std::ostream & stream, CircleArc const & c );
 
-    friend class ClothoidCurve ;
+    friend class ClothoidCurve;
 
-  } ;
+  };
 
 }
 

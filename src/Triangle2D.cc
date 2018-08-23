@@ -60,7 +60,7 @@ namespace G2lib {
   inline
   T
   orient_2d( T const a[2], T const b[2], T const c[2] ) {
-    return (a[0]-c[0]) * (b[1]-c[1]) - (a[1]-c[1]) * (b[0]-c[0]) ;
+    return (a[0]-c[0]) * (b[1]-c[1]) - (a[1]-c[1]) * (b[0]-c[0]);
   }
 
   template <typename T>
@@ -71,24 +71,24 @@ namespace G2lib {
     if ( orient_2d(R2,P2,Q1) >= 0 ) {
       if ( orient_2d(R2,Q2,Q1) <= 0 ) {
         if ( orient_2d(P1,P2,Q1) > 0 ) {
-          return orient_2d(P1,Q2,Q1) <= 0 ;
+          return orient_2d(P1,Q2,Q1) <= 0;
         } else {
-          return orient_2d(P1,P2,R1) >= 0 && orient_2d(Q1,R1,P2) >= 0 ;
+          return orient_2d(P1,P2,R1) >= 0 && orient_2d(Q1,R1,P2) >= 0;
         }
       } else {
         return orient_2d(P1,Q2,Q1) <= 0 &&
                orient_2d(R2,Q2,R1) <= 0 &&
-               orient_2d(Q1,R1,Q2) >= 0 ;
+               orient_2d(Q1,R1,Q2) >= 0;
       }
     } else {
       if ( orient_2d(R2,P2,R1) >= 0 ) {
         if ( orient_2d(Q1,R1,R2) >= 0 ) {
-          return orient_2d(P1,P2,R1) >= 0 ;
+          return orient_2d(P1,P2,R1) >= 0;
         } else {
-          return orient_2d(Q1,R1,Q2) >= 0 && orient_2d(R2,R1,Q2) >= 0 ;
+          return orient_2d(Q1,R1,Q2) >= 0 && orient_2d(R2,R1,Q2) >= 0;
         }
       } else {
-        return false ;
+        return false;
       }
     }
   }
@@ -102,15 +102,15 @@ namespace G2lib {
                           T const P2[2], T const Q2[2], T const R2[2] ) {
     if ( orient_2d(R2,P2,Q1) >= 0 ) {
       if ( orient_2d(P1,P2,Q1) >= 0 ) {
-        return orient_2d(P1,Q1,R2) >= 0 ;
+        return orient_2d(P1,Q1,R2) >= 0;
       } else {
-        return orient_2d(Q1,R1,P2) >= 0 && orient_2d(R1,P1,P2) >= 0 ;
+        return orient_2d(Q1,R1,P2) >= 0 && orient_2d(R1,P1,P2) >= 0;
       }
     } else if ( orient_2d(R2,P2,R1) >= 0 ) {
       return orient_2d(P1,P2,R1) >= 0 &&
-             ( orient_2d(P1,R1,R2) >= 0 || orient_2d(Q1,R1,R2) >= 0 ) ;
+             ( orient_2d(P1,R1,R2) >= 0 || orient_2d(Q1,R1,R2) >= 0 );
     }
-    return false ;
+    return false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -122,17 +122,17 @@ namespace G2lib {
                            T const p2[2], T const q2[2], T const r2[2] ) {
     if ( orient_2d(p2,q2,p1) >= 0 ) {
       if ( orient_2d(q2,r2,p1) >= 0 ) {
-        return orient_2d(r2,p2,p1) >= 0 || intersection_test_edge(p1,q1,r1,p2,q2,r2) ;
+        return orient_2d(r2,p2,p1) >= 0 || intersection_test_edge(p1,q1,r1,p2,q2,r2);
       } else {
-        if ( orient_2d(r2,p2,p1) >= 0 ) return intersection_test_edge(p1,q1,r1,r2,p2,q2) ;
-        else                            return intersection_test_vertex(p1,q1,r1,p2,q2,r2) ;
+        if ( orient_2d(r2,p2,p1) >= 0 ) return intersection_test_edge(p1,q1,r1,r2,p2,q2);
+        else                            return intersection_test_vertex(p1,q1,r1,p2,q2,r2);
       }
     } else {
       if ( orient_2d(q2,r2,p1) >= 0 ) {
-        if ( orient_2d(r2,p2,p1) >= 0 ) return intersection_test_edge(p1,q1,r1,q2,r2,p2) ;
-        else                            return intersection_test_vertex(p1,q1,r1,q2,r2,p2) ;
+        if ( orient_2d(r2,p2,p1) >= 0 ) return intersection_test_edge(p1,q1,r1,q2,r2,p2);
+        else                            return intersection_test_vertex(p1,q1,r1,q2,r2,p2);
       } else {
-        return intersection_test_vertex(p1,q1,r1,r2,p2,q2) ;
+        return intersection_test_vertex(p1,q1,r1,r2,p2,q2);
       }
     }
   }
@@ -145,11 +145,11 @@ namespace G2lib {
   tri_tri_overlap_test_2d( T const p1[2], T const q1[2], T const r1[2],
                            T const p2[2], T const q2[2], T const r2[2] ) {
     if ( orient_2d(p1,q1,r1) < 0 ) {
-      if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,r1,q1,p2,r2,q2) ;
-      else                           return tri_tri_intersection_2d(p1,r1,q1,p2,q2,r2) ;
+      if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,r1,q1,p2,r2,q2);
+      else                           return tri_tri_intersection_2d(p1,r1,q1,p2,q2,r2);
     } else {
-      if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,q1,r1,p2,r2,q2) ;
-      else                           return tri_tri_intersection_2d(p1,q1,r1,p2,q2,r2) ;
+      if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,q1,r1,p2,r2,q2);
+      else                           return tri_tri_intersection_2d(p1,q1,r1,p2,q2,r2);
     }
   }
 
@@ -161,11 +161,11 @@ namespace G2lib {
                        real_type   c,
                        real_type & vmin,
                        real_type & vmax) const {
-    vmin = vmax = a ;
-    if ( b < vmin ) vmin = b ;
-    else            vmax = b ;
-    if ( c < vmin ) vmin = c ;
-    else if ( c > vmax ) vmax = c ;
+    vmin = vmax = a;
+    if ( b < vmin ) vmin = b;
+    else            vmax = b;
+    if ( c < vmin ) vmin = c;
+    else if ( c > vmax ) vmax = c;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -173,29 +173,29 @@ namespace G2lib {
   Triangle2D::AABBTree::~AABBTree() {
     switch ( numChildren ) {
     case 0:
-      if( data.pTriangle != nullptr ) delete data.pTriangle ; data.pTriangle = nullptr ;
-      break ;
-    case 2: if( data.pChildren[1] != nullptr ) delete data.pChildren[1] ;
-    case 1: if( data.pChildren[0] != nullptr ) delete data.pChildren[0] ;
-      data.pChildren[1] = data.pChildren[0] = nullptr ;
-      break ;
+      if( data.pTriangle != nullptr ) delete data.pTriangle; data.pTriangle = nullptr;
+      break;
+    case 2: if( data.pChildren[1] != nullptr ) delete data.pChildren[1];
+    case 1: if( data.pChildren[0] != nullptr ) delete data.pChildren[0];
+      data.pChildren[1] = data.pChildren[0] = nullptr;
+      break;
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Triangle2D::AABBTree::AABBTree( std::vector<Triangle2D> & triangles ) {
-    std::vector<Triangle2D const *> pTriangles ;
-    pTriangles.reserve( triangles.size() ) ;
-    std::vector<Triangle2D>::const_iterator it = triangles.begin() ;
-    for ( ; it != triangles.end() ; ++it )
-      pTriangles.push_back( &*it ) ;
+    std::vector<Triangle2D const *> pTriangles;
+    pTriangles.reserve( triangles.size() );
+    std::vector<Triangle2D>::const_iterator it = triangles.begin();
+    for (; it != triangles.end(); ++it )
+      pTriangles.push_back( &*it );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   class AABBcomparatorX {
-    real_type cutPos ;
+    real_type cutPos;
   public:
     AABBcomparatorX( real_type const & cp ) : cutPos(cp) {}
     bool operator () ( Triangle2D const * pT ) const
@@ -205,7 +205,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   class AABBcomparatorY {
-    real_type cutPos ;
+    real_type cutPos;
   public:
     AABBcomparatorY( real_type const & cp ) : cutPos(cp) {}
     bool operator () ( Triangle2D const * pT ) const
@@ -218,56 +218,56 @@ namespace G2lib {
     std::vector<Triangle2D const *>::iterator & begin,
     std::vector<Triangle2D const *>::iterator & end
   ) {
-    numChildren = -1 ;
-    xmin = ymin = xmax = ymax = 0 ;
+    numChildren = -1;
+    xmin = ymin = xmax = ymax = 0;
     data.pChildren[0] =
-    data.pChildren[1] = nullptr ;
+    data.pChildren[1] = nullptr;
 
     if ( begin == end ) return;
 
-    (*begin)->bbox(xmin,ymin,xmax,ymax) ;
+    (*begin)->bbox(xmin,ymin,xmax,ymax);
     if ( end - begin == 1 ) {
-      numChildren = 0 ;
-      data.pTriangle = new Triangle2D(**begin) ;
+      numChildren = 0;
+      data.pTriangle = new Triangle2D(**begin);
       return;
     }
 
-    std::vector<Triangle2D const *>::iterator it = begin ;
-    for ( ++it ; it != end ; ++it ) {
-      real_type xmi, ymi, xma, yma ;
-      (*it)->bbox( xmi, ymi, xma, yma ) ;
-      if ( xmi < xmin ) xmin = xmi ;
-      if ( xma > xmax ) xmax = xma ;
-      if ( ymi < ymin ) ymin = ymi ;
-      if ( yma > ymax ) ymax = yma ;
+    std::vector<Triangle2D const *>::iterator it = begin;
+    for ( ++it; it != end; ++it ) {
+      real_type xmi, ymi, xma, yma;
+      (*it)->bbox( xmi, ymi, xma, yma );
+      if ( xmi < xmin ) xmin = xmi;
+      if ( xma > xmax ) xmax = xma;
+      if ( ymi < ymin ) ymin = ymi;
+      if ( yma > ymax ) ymax = yma;
     }
 
     if ( (ymax - ymin) > (xmax - xmin) ) {
       // cut along Y
-      AABBcomparatorY comp( (ymax + ymin)/2 ) ;
+      AABBcomparatorY comp( (ymax + ymin)/2 );
       it = std::partition( begin, end, comp );
     } else {
       // cut along X
-      AABBcomparatorX comp( (xmax + xmin)/2 ) ;
+      AABBcomparatorX comp( (xmax + xmin)/2 );
       it = std::partition( begin, end, comp );
 
     }
     if ( it - begin > 0 ) {
       data.pChildren[0] = new AABBTree(begin, it);
-      numChildren = 1 ;
+      numChildren = 1;
     }
     if ( end - it > 0 ) {
       data.pChildren[numChildren] = new AABBTree(it, end);
-      ++numChildren ;
+      ++numChildren;
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Triangle2D::AABBTree::AABBTree( Triangle2D const & triangle ) {
-    numChildren = 0 ;
-    triangle.bbox( xmin, ymin, xmax, ymax ) ;
-    data.pTriangle = new Triangle2D(triangle) ;
+    numChildren = 0;
+    triangle.bbox( xmin, ymin, xmax, ymax );
+    data.pTriangle = new Triangle2D(triangle);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -276,16 +276,16 @@ namespace G2lib {
     AABBTree   const * pTree,
     Triangle2D const & triangle
   ) {
-    numChildren = 2 ;
-    pTree->bbox( xmin, ymin, xmax, ymax ) ;
-    real_type xmi, ymi, xma, yma ;
-    triangle.bbox( xmi, ymi, xma, yma ) ;
-    if ( xmi < xmin ) xmin = xmi ;
-    if ( xma > xmax ) xmax = xma ;
-    if ( ymi < ymin ) ymin = ymi ;
-    if ( yma > ymax ) ymax = yma ;
-    data.pChildren[0] = pTree ;
-    data.pChildren[1] = new AABBTree(triangle) ;
+    numChildren = 2;
+    pTree->bbox( xmin, ymin, xmax, ymax );
+    real_type xmi, ymi, xma, yma;
+    triangle.bbox( xmi, ymi, xma, yma );
+    if ( xmi < xmin ) xmin = xmi;
+    if ( xma > xmax ) xmax = xma;
+    if ( ymi < ymin ) ymin = ymi;
+    if ( yma > ymax ) ymax = yma;
+    data.pChildren[0] = pTree;
+    data.pChildren[1] = new AABBTree(triangle);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -294,24 +294,24 @@ namespace G2lib {
     AABBTree const * pTreeL,
     AABBTree const * pTreeR
   ) {
-    numChildren = 2 ;
-    pTreeL->bbox( xmin, ymin, xmax, ymax ) ;
-    real_type xmi, ymi, xma, yma ;
-    pTreeR->bbox( xmi, ymi, xma, yma ) ;
-    if ( xmi < xmin ) xmin = xmi ;
-    if ( xma > xmax ) xmax = xma ;
-    if ( ymi < ymin ) ymin = ymi ;
-    if ( yma > ymax ) ymax = yma ;
-    data.pChildren[0] = pTreeL ;
-    data.pChildren[1] = pTreeR ;
+    numChildren = 2;
+    pTreeL->bbox( xmin, ymin, xmax, ymax );
+    real_type xmi, ymi, xma, yma;
+    pTreeR->bbox( xmi, ymi, xma, yma );
+    if ( xmi < xmin ) xmin = xmi;
+    if ( xma > xmax ) xmax = xma;
+    if ( ymi < ymin ) ymin = ymi;
+    if ( yma > ymax ) ymax = yma;
+    data.pChildren[0] = pTreeL;
+    data.pChildren[1] = pTreeR;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   Triangle2D::AABBTree::overlap( Triangle2D const & triangle ) const {
-    real_type xmi, ymi, xma, yma ;
-    triangle.bbox( xmi, ymi, xma, yma ) ;
+    real_type xmi, ymi, xma, yma;
+    triangle.bbox( xmi, ymi, xma, yma );
     if ( xmax < xmi ) return false; // a is left of b
     if ( xmin > xma ) return false; // a is right of b
     if ( ymax < ymi ) return false; // a is above b
@@ -319,12 +319,12 @@ namespace G2lib {
     // second level check
     switch ( numChildren ) {
     case 0:
-      return data.pTriangle->overlap( triangle ) ;
+      return data.pTriangle->overlap( triangle );
     case 1:
-      return data.pChildren[0]->overlap( triangle ) ;
+      return data.pChildren[0]->overlap( triangle );
     case 2:
       return data.pChildren[0]->overlap( triangle ) ||
-             data.pChildren[1]->overlap( triangle ) ;
+             data.pChildren[1]->overlap( triangle );
     }
     return true; // unused
   }
@@ -333,8 +333,8 @@ namespace G2lib {
 
   bool
   Triangle2D::AABBTree::overlap( AABBTree const * pTree ) const {
-    real_type xmi, ymi, xma, yma ;
-    pTree->bbox( xmi, ymi, xma, yma ) ;
+    real_type xmi, ymi, xma, yma;
+    pTree->bbox( xmi, ymi, xma, yma );
     if ( xmax < xmi ) return false; // a is left of b
     if ( xmin > xma ) return false; // a is right of b
     if ( ymax < ymi ) return false; // a is above b
@@ -342,12 +342,12 @@ namespace G2lib {
     // second level check
     switch ( numChildren ) {
     case 0:
-      return pTree->overlap(*data.pTriangle) ;
+      return pTree->overlap(*data.pTriangle);
     case 1:
-      return data.pChildren[0]->overlap( pTree ) ;
+      return data.pChildren[0]->overlap( pTree );
     case 2:
       return data.pChildren[0]->overlap( pTree ) ||
-             data.pChildren[1]->overlap( pTree ) ;
+             data.pChildren[1]->overlap( pTree );
     }
     return true; // unused
   }
@@ -356,29 +356,29 @@ namespace G2lib {
 
   void
   Triangle2D::rotate( real_type angle, real_type cx, real_type cy ) {
-    real_type C   = cos(angle) ;
-    real_type S   = sin(angle) ;
+    real_type C   = cos(angle);
+    real_type S   = sin(angle);
 
-    real_type dx  = p1[0] - cx ;
-    real_type dy  = p1[1] - cy ;
-    real_type ndx = C*dx - S*dy ;
-    real_type ndy = C*dy + S*dx ;
-    p1[0] = cx + ndx ;
-    p1[1] = cy + ndy ;
+    real_type dx  = p1[0] - cx;
+    real_type dy  = p1[1] - cy;
+    real_type ndx = C*dx - S*dy;
+    real_type ndy = C*dy + S*dx;
+    p1[0] = cx + ndx;
+    p1[1] = cy + ndy;
 
-    dx  = p2[0] - cx ;
-    dy  = p2[1] - cy ;
-    ndx = C*dx - S*dy ;
-    ndy = C*dy + S*dx ;
-    p2[0] = cx + ndx ;
-    p2[1] = cy + ndy ;
+    dx  = p2[0] - cx;
+    dy  = p2[1] - cy;
+    ndx = C*dx - S*dy;
+    ndy = C*dy + S*dx;
+    p2[0] = cx + ndx;
+    p2[1] = cy + ndy;
 
-    dx  = p3[0] - cx ;
-    dy  = p3[1] - cy ;
-    ndx = C*dx - S*dy ;
-    ndy = C*dy + S*dx ;
-    p3[0] = cx + ndx ;
-    p3[1] = cy + ndy ;
+    dx  = p3[0] - cx;
+    dy  = p3[1] - cy;
+    ndx = C*dx - S*dy;
+    ndy = C*dy + S*dx;
+    p3[0] = cx + ndx;
+    p3[1] = cy + ndy;
 
   }
 
@@ -386,24 +386,24 @@ namespace G2lib {
 
   bool
   Triangle2D::intersect( Triangle2D const & t2 ) const {
-    return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
+    return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   Triangle2D::overlap( Triangle2D const & t2 ) const {
-    return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 ) ;
+    return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Triangle2D::distMax( real_type x, real_type y ) const {
-    real_type d1 = hypot( x-p1[0], y-p1[1] ) ;
-    real_type d2 = hypot( x-p2[0], y-p2[1] ) ;
-    real_type d3 = hypot( x-p3[0], y-p3[1] ) ;
-    return std::max(d1,std::max(d2,d3)) ;
+    real_type d1 = hypot( x-p1[0], y-p1[1] );
+    real_type d2 = hypot( x-p2[0], y-p2[1] );
+    real_type d3 = hypot( x-p3[0], y-p3[1] );
+    return std::max(d1,std::max(d2,d3));
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -423,7 +423,7 @@ namespace G2lib {
     // < P-A - s*(B-A), B-A> = 0
     // <P-A, B-A> = s <B-A,B-A>
 
-    real_type tmp = dx * dx1 + dy * dy1 ;
+    real_type tmp = dx * dx1 + dy * dy1;
 
     if ( tmp < 0 ) return hypot(dx,dy);
 
@@ -441,27 +441,27 @@ namespace G2lib {
   real_type
   Triangle2D::distMin( real_type x, real_type y ) const {
 
-    int_type in = isInside( x, y ) ;
-    if ( in >= 0 ) return 0 ;
+    int_type in = isInside( x, y );
+    if ( in >= 0 ) return 0;
 
 #if 0
-    LineSegment L1, L2, L3 ;
+    LineSegment L1, L2, L3;
     L1.build_2P( p1, p2 );
     L2.build_2P( p2, p3 );
     L3.build_2P( p3, p1 );
 
-    real_type d1 = L1.distance( x, y ) ;
-    real_type d2 = L2.distance( x, y ) ;
-    real_type d3 = L3.distance( x, y ) ;
+    real_type d1 = L1.distance( x, y );
+    real_type d2 = L2.distance( x, y );
+    real_type d3 = L3.distance( x, y );
 #else
-    real_type d1 = distSeg( x, y, p1, p2 ) ;
-    real_type d2 = distSeg( x, y, p2, p3 ) ;
-    real_type d3 = distSeg( x, y, p3, p1 ) ;
+    real_type d1 = distSeg( x, y, p1, p2 );
+    real_type d2 = distSeg( x, y, p2, p3 );
+    real_type d3 = distSeg( x, y, p3, p1 );
 #endif
 
-    if ( d1 > d2 ) std::swap( d1, d2 ) ;
-    if ( d1 > d3 ) std::swap( d1, d3 ) ;
-    return d1 ;
+    if ( d1 > d2 ) std::swap( d1, d2 );
+    if ( d1 > d3 ) std::swap( d1, d3 );
+    return d1;
 
   }
 
@@ -472,8 +472,8 @@ namespace G2lib {
     stream << "Triangle2D\n"
            << "P0 = [" << t.p1[0] << ", " << t.p1[1] << "]\n"
            << "P1 = [" << t.p2[0] << ", " << t.p2[1] << "]\n"
-           << "P2 = [" << t.p3[0] << ", " << t.p3[1] << "]\n" ;
-    return stream ;
+           << "P2 = [" << t.p3[0] << ", " << t.p3[1] << "]\n";
+    return stream;
   }
 
 }

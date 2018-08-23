@@ -36,7 +36,7 @@ namespace G2lib {
       << "import graph;\n"
       << "include \"clothoidLib.asylib\";\n"
       << "size(14cm,7cm);\n"
-      << "\n\n\n" ;
+      << "\n\n\n";
   }
 
   void

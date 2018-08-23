@@ -29,30 +29,30 @@
 class TicToc {
 
   #ifdef TIC_TOC_USE_HRC
-  std::chrono::high_resolution_clock::time_point start_time ;
-  std::chrono::high_resolution_clock::time_point stop_time ;
+  std::chrono::high_resolution_clock::time_point start_time;
+  std::chrono::high_resolution_clock::time_point stop_time;
   #else
-  std::chrono::system_clock::time_point start_time ;
-  std::chrono::system_clock::time_point stop_time ;
+  std::chrono::system_clock::time_point start_time;
+  std::chrono::system_clock::time_point stop_time;
   #endif
   
-  std::chrono::microseconds elapsedPartial ;
-  std::chrono::microseconds elapsedTotal ;
+  std::chrono::microseconds elapsedPartial;
+  std::chrono::microseconds elapsedTotal;
 
-  TicToc( TicToc const & ) ;
-  TicToc const & operator = ( TicToc const & ) const ;
+  TicToc( TicToc const & );
+  TicToc const & operator = ( TicToc const & ) const;
 
 public:
 
   TicToc()
   : elapsedPartial(0)
-  , elapsedTotal(0) { tic() ; }
+  , elapsedTotal(0) { tic(); }
 
   ~TicToc() {}
 
   void reset() {
-    elapsedTotal   = std::chrono::microseconds(0) ;
-    elapsedPartial = std::chrono::microseconds(0) ;
+    elapsedTotal   = std::chrono::microseconds(0);
+    elapsedPartial = std::chrono::microseconds(0);
   }
 
   void
@@ -70,15 +70,15 @@ public:
     #else
     stop_time = std::chrono::system_clock::now();
     #endif
-    elapsedPartial = std::chrono::duration_cast<std::chrono::microseconds>(stop_time - start_time) ;
-    elapsedTotal  += elapsedPartial ;
+    elapsedPartial = std::chrono::duration_cast<std::chrono::microseconds>(stop_time - start_time);
+    elapsedTotal  += elapsedPartial;
   }
 
-  double totalElapsedSeconds()      const { return 1e-6*elapsedTotal.count() ; }
-  double totalElapsedMilliseconds() const { return 1e-3*elapsedTotal.count() ; }
+  double totalElapsedSeconds()      const { return 1e-6*elapsedTotal.count(); }
+  double totalElapsedMilliseconds() const { return 1e-3*elapsedTotal.count(); }
 
-  double elapsedSeconds()      const { return 1e-6*elapsedPartial.count() ; }
-  double elapsedMilliseconds() const { return 1e-3*elapsedPartial.count() ; }
+  double elapsedSeconds()      const { return 1e-6*elapsedPartial.count(); }
+  double elapsedMilliseconds() const { return 1e-3*elapsedPartial.count(); }
   
   void sleep_for_seconds( unsigned s ) {
     std::this_thread::sleep_for(std::chrono::seconds(s));
@@ -88,6 +88,6 @@ public:
     std::this_thread::sleep_for(std::chrono::milliseconds(ms));
   }
 
-} ;
+};
 
 #endif

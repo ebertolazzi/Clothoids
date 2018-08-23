@@ -25,7 +25,7 @@
 
 namespace G2lib {
 
-  using namespace std ;
+  using namespace std;
 
   /*\
    |    ____ _          _
@@ -64,8 +64,8 @@ namespace G2lib {
     real_type D = hypot( PB[0]-PA[0], PB[1]-PA[1] );
 
     // First case : process external tangents
-    real_type disc1 = powersub(D,rB-rA) ;
-    external_tangents = disc1 >= 0 ;
+    real_type disc1 = powersub(D,rB-rA);
+    external_tangents = disc1 >= 0;
 
     if ( external_tangents ) {
       // Compute the lenght of the tangents
@@ -77,22 +77,22 @@ namespace G2lib {
       real_type R2     = hypot(L,rA);
       real_type Sigma2 = 0.25 * sqrt( powersub( D+rB, R2 )* powersub( R2, D-rB ) );
 
-      real_type xM  = (PA[0]+PB[0])/2 ;
-      real_type yM  = (PA[1]+PB[1])/2 ;
-      real_type Tx  = 2*(PA[0]-PB[0])/(D*D) ;
-      real_type Ty  = 2*(PA[1]-PB[1])/(D*D) ;
+      real_type xM  = (PA[0]+PB[0])/2;
+      real_type yM  = (PA[1]+PB[1])/2;
+      real_type Tx  = 2*(PA[0]-PB[0])/(D*D);
+      real_type Ty  = 2*(PA[1]-PB[1])/(D*D);
       real_type bf0 = powersub(rA,R1)/4;
       real_type bf1 = powersub(rB,R2)/4;
 
-      real_type TxS1 = Tx*Sigma1 ;
-      real_type TxS2 = Tx*Sigma2 ;
-      real_type TyS1 = Ty*Sigma1 ;
-      real_type TyS2 = Ty*Sigma2 ;
+      real_type TxS1 = Tx*Sigma1;
+      real_type TxS2 = Tx*Sigma2;
+      real_type TyS1 = Ty*Sigma1;
+      real_type TyS2 = Ty*Sigma2;
 
-      real_type xM0 = xM - Tx*bf0 ;
-      real_type yM0 = yM - Ty*bf0 ;
-      real_type xM1 = xM + Tx*bf1 ;
-      real_type yM1 = yM + Ty*bf1 ;
+      real_type xM0 = xM - Tx*bf0;
+      real_type yM0 = yM - Ty*bf0;
+      real_type xM1 = xM + Tx*bf1;
+      real_type yM1 = yM + Ty*bf1;
 
       // Compute the first tangent
       PTE0[0][0] = xM0 + TyS1;
@@ -108,8 +108,8 @@ namespace G2lib {
     }
 
     // Second case : process internal tangents
-    real_type disc2 = powersub(D,rB+rA) ;
-    internal_tangents = disc2 >= 0 ;
+    real_type disc2 = powersub(D,rB+rA);
+    internal_tangents = disc2 >= 0;
 
     if ( internal_tangents ) {
       // Compute the lenght of the tangents
@@ -121,10 +121,10 @@ namespace G2lib {
       real_type R2     = hypot(L,rA);
       real_type Sigma2 = 0.25 * sqrt ( powersub(D+rB,R2)*powersub(R2,D-rB) );
 
-      real_type xM  = (PA[0]+PB[0])/2 ;
-      real_type yM  = (PA[1]+PB[1])/2 ;
-      real_type Tx  = 2*(PA[0]-PB[0])/(D*D) ;
-      real_type Ty  = 2*(PA[1]-PB[1])/(D*D) ;
+      real_type xM  = (PA[0]+PB[0])/2;
+      real_type yM  = (PA[1]+PB[1])/2;
+      real_type Tx  = 2*(PA[0]-PB[0])/(D*D);
+      real_type Ty  = 2*(PA[1]-PB[1])/(D*D);
       real_type bf0 = powersub(rA,R1)/4;
       real_type bf1 = powersub(rB,R2)/4;
 
@@ -160,19 +160,19 @@ namespace G2lib {
                         real_type theta,
                         real_type C0[2],
                         real_type C1[2] ) {
-    real_type Nx =  sin(theta) ;
-    real_type Ny = -cos(theta) ;
-    real_type Dx = C[0] - P[0] ;
-    real_type Dy = C[1] - P[1] ;
-    real_type delta = (Dx*Dx+Dy*Dy-r*r)/2 ;
-    if ( delta <= 0 ) return false ;
-    real_type s0 = delta/(Dx*Nx+Dy*Ny-r) ;
-    C0[0] = P[0]+s0*Nx ;
-    C0[1] = P[1]+s0*Ny ;
-    real_type s1 = delta/(Dx*Nx+Dy*Ny+r) ;
-    C1[0] = P[0]+s1*Nx ;
-    C1[1] = P[1]+s1*Ny ;
-    return true ;
+    real_type Nx =  sin(theta);
+    real_type Ny = -cos(theta);
+    real_type Dx = C[0] - P[0];
+    real_type Dy = C[1] - P[1];
+    real_type delta = (Dx*Dx+Dy*Dy-r*r)/2;
+    if ( delta <= 0 ) return false;
+    real_type s0 = delta/(Dx*Nx+Dy*Ny-r);
+    C0[0] = P[0]+s0*Nx;
+    C0[1] = P[1]+s0*Ny;
+    real_type s1 = delta/(Dx*Nx+Dy*Ny+r);
+    C1[0] = P[0]+s1*Nx;
+    C1[1] = P[1]+s1*Ny;
+    return true;
   }
 
   #endif
@@ -193,28 +193,28 @@ namespace G2lib {
                 real_type y1,
                 real_type theta1 ) {
 
-    real_type dx = x1-x0 ;
-    real_type dy = y1-y0 ;
+    real_type dx = x1-x0;
+    real_type dy = y1-y0;
     real_type d  = hypot(dy,dx);
 
     omega = atan2(dy,dx);
 
     // put in range
-    real_type th0 = theta0 - omega ;
-    real_type th1 = theta1 - omega ;
+    real_type th0 = theta0 - omega;
+    real_type th1 = theta1 - omega;
 
     rangeSymm(th0);
     rangeSymm(th1);
 
-    real_type thstar = - (th0+th1)/2 ;
+    real_type thstar = - (th0+th1)/2;
 
-    real_type dth  = th1 - th0 ;
-    real_type dth0 = thstar - th0 ;
-    real_type dth1 = thstar - th1 ;
+    real_type dth  = th1 - th0;
+    real_type dth0 = thstar - th0;
+    real_type dth1 = thstar - th1;
 
-    real_type t  = d * (Sinc(dth/4) / Sinc(dth/2) ) ;
-    real_type l0 = t/(2*Sinc( dth0/2 )) ;
-    real_type l1 = t/(2*Sinc( dth1/2 )) ;
+    real_type t  = d * (Sinc(dth/4) / Sinc(dth/2) );
+    real_type l0 = t/(2*Sinc( dth0/2 ));
+    real_type l1 = t/(2*Sinc( dth1/2 ));
 
     real_type epsi = 100*std::numeric_limits<real_type>::epsilon();
 
@@ -225,14 +225,14 @@ namespace G2lib {
 
       C0.build( x0, y0, theta0, k0, l0 );
 
-      real_type an = omega+(thstar+th0)/2 ;
+      real_type an = omega+(thstar+th0)/2;
       real_type xs = x0 + (t/2)*cos(an);
       real_type ys = y0 + (t/2)*sin(an);
 
       C1.build( xs, ys, omega+thstar, k1, l1 );
-      return true ;
+      return true;
     }
-    return false ;
+    return false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -245,57 +245,57 @@ namespace G2lib {
                    real_type x2,
                    real_type y2 ) {
 
-    real_type dxa   = x1-x0 ;
-    real_type dya   = y1-y0 ;
-    real_type dxb   = x2-x1 ;
-    real_type dyb   = y2-y1 ;
-    real_type La    = hypot(dya,dxa) ;
-    real_type Lb    = hypot(dyb,dxb) ;
-    real_type arg   = (dxa*dxb + dya * dyb)/(La*Lb) ;
-    if      ( arg >  1 ) arg = 1 ;
-    else if ( arg < -1 ) arg = -1 ;
-    real_type om = acos(arg) ;
+    real_type dxa   = x1-x0;
+    real_type dya   = y1-y0;
+    real_type dxb   = x2-x1;
+    real_type dyb   = y2-y1;
+    real_type La    = hypot(dya,dxa);
+    real_type Lb    = hypot(dyb,dxb);
+    real_type arg   = (dxa*dxb + dya * dyb)/(La*Lb);
+    if      ( arg >  1 ) arg = 1;
+    else if ( arg < -1 ) arg = -1;
+    real_type om = acos(arg);
 
     real_type at = (La/(La+Lb))*om;
     real_type bt = (Lb/(La+Lb))*om;
     // find solution using Halley
-    real_type Delta = 0 ;
-    bool found = false ;
-    for ( int_type iter = 0 ; iter < 10 && !found ; ++iter ) {
-      real_type ga[3], gb[3] ;
+    real_type Delta = 0;
+    bool found = false;
+    for ( int_type iter = 0; iter < 10 && !found; ++iter ) {
+      real_type ga[3], gb[3];
       gfun( at+Delta, ga );
       gfun( bt-Delta, gb );
-      real_type f   = ga[0]/La - gb[0]/Lb ;
-      real_type df  = ga[1]/La + gb[1]/Lb ;
-      real_type ddf = ga[2]/La - gb[2]/Lb ;
-      real_type h   = (df*f)/(df*df-0.5*f*ddf) ;
-      Delta -= h ;
-      found = abs(h) < 1e-10 && abs(f) < 1e-10 ;
+      real_type f   = ga[0]/La - gb[0]/Lb;
+      real_type df  = ga[1]/La + gb[1]/Lb;
+      real_type ddf = ga[2]/La - gb[2]/Lb;
+      real_type h   = (df*f)/(df*df-0.5*f*ddf);
+      Delta -= h;
+      found = abs(h) < 1e-10 && abs(f) < 1e-10;
     }
 
     if ( found ) {
-      at += Delta ; bt -= Delta ;
-      real_type tha = atan2(dya,dxa) ;
-      real_type thb = atan2(dyb,dxb) ;
+      at += Delta; bt -= Delta;
+      real_type tha = atan2(dya,dxa);
+      real_type thb = atan2(dyb,dxb);
       if ( dxa*dyb < dya*dxb ) {
-        tha += at ;
-        thb += bt ;
+        tha += at;
+        thb += bt;
       } else {
-        tha -= at ;
-        thb -= bt ;
+        tha -= at;
+        thb -= bt;
       }
       C0.build_G1( x0, y0, tha, x1, y1 );
       C1.build_G1( x1, y1, thb, x2, y2 );
     }
 
-    return found ;
+    return found;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::theta( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.theta(s);
     else          return C1.theta(s-L0);
   }
@@ -304,25 +304,25 @@ namespace G2lib {
 
   real_type
   Biarc::theta_D( real_type s ) const
-  { return kappa(s) ; }
+  { return kappa(s); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::theta_DD( real_type ) const
-  { return 0 ; }
+  { return 0; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::theta_DDD( real_type ) const
-  { return 0 ; }
+  { return 0; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::kappa( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.kappa();
     else          return C1.kappa();
   }
@@ -331,25 +331,25 @@ namespace G2lib {
 
   real_type
   Biarc::kappa_D( real_type ) const
-  { return 0 ; }
+  { return 0; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::kappa_DD( real_type ) const
-  { return 0 ; }
+  { return 0; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::kappa_DDD( real_type ) const
-  { return 0 ; }
+  { return 0; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::X( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.X(s);
     else          return C1.X(s-L0);
   }
@@ -358,7 +358,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_D( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.X_D(s);
     else          return C1.X_D(s-L0);
   }
@@ -368,7 +368,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_DD( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.X_DD(s);
     else          return C1.X_DD(s-L0);
   }
@@ -377,7 +377,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_DDD( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.X_DDD(s);
     else          return C1.X_DDD(s-L0);
   }
@@ -386,7 +386,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.Y(s);
     else          return C1.Y(s-L0);
   }
@@ -395,7 +395,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_D( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.Y_D(s);
     else          return C1.Y_D(s-L0);
   }
@@ -405,7 +405,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_DD( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.Y_DD(s);
     else          return C1.Y_DD(s-L0);
   }
@@ -414,7 +414,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_DDD( real_type s ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.Y_DDD(s);
     else          return C1.Y_DDD(s-L0);
   }
@@ -423,7 +423,7 @@ namespace G2lib {
 
   void
   Biarc::XY( real_type s, real_type & x, real_type & y ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.XY(s,x,y);
     else          return C1.XY(s-L0,x,y);
   }
@@ -432,7 +432,7 @@ namespace G2lib {
 
   void
   Biarc::XY( real_type s, real_type t, real_type & x, real_type & y ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.XY(s,t,x,y);
     else          return C1.XY(s-L0,t,x,y);
   }
@@ -441,7 +441,7 @@ namespace G2lib {
 
   void
   Biarc::TG( real_type s, real_type & tx, real_type & ty ) const {
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.TG(s,tx,ty);
     else          return C1.TG(s-L0,tx,ty);
   }
@@ -450,7 +450,7 @@ namespace G2lib {
 
   void
   Biarc::NOR( real_type s, real_type & nx, real_type & ny ) const{
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.NOR(s,nx,ny);
     else          return C1.NOR(s-L0,nx,ny);
   }
@@ -459,7 +459,7 @@ namespace G2lib {
 
   void
   Biarc::NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const{
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.NOR_D(s,nx_D,ny_D);
     else          return C1.NOR_D(s-L0,nx_D,ny_D);
   }
@@ -468,7 +468,7 @@ namespace G2lib {
 
   void
   Biarc::NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const{
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.NOR_DD(s,nx_DD,ny_DD);
     else          return C1.NOR_DD(s-L0,nx_DD,ny_DD);
   }
@@ -477,7 +477,7 @@ namespace G2lib {
 
   void
   Biarc::NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const{
-    real_type L0 = C0.length() ;
+    real_type L0 = C0.length();
     if ( s < L0 ) return C0.NOR_DDD(s,nx_DDD,ny_DDD);
     else          return C1.NOR_DDD(s-L0,nx_DDD,ny_DDD);
   }
@@ -489,22 +489,22 @@ namespace G2lib {
                  real_type   y,
                  real_type & s,
                  real_type & t ) const {
-    real_type S, T ;
-    C0.findST( x, y, s, t ) ;
-    C1.findST( x, y, S, T ) ;
-    real_type L0 = C0.length() ;
-    bool ok0 = s >= 0 && s <= L0 ;
-    bool ok1 = S >= 0 && S <= C1.length() ;
+    real_type S, T;
+    C0.findST( x, y, s, t );
+    C1.findST( x, y, S, T );
+    real_type L0 = C0.length();
+    bool ok0 = s >= 0 && s <= L0;
+    bool ok1 = S >= 0 && S <= C1.length();
     if ( ok0 ) {
       if ( ok1 && std::abs(t) > std::abs(T) ) {
-        s = S + L0 ;
-        t = T ;
+        s = S + L0;
+        t = T;
       }
     } else if ( ok1 ) {
-      s = S + L0 ;
-      t = T ;
+      s = S + L0;
+      t = T;
     } else {
-      s = t = 0 ;
+      s = t = 0;
     }
   }
 
@@ -517,13 +517,13 @@ namespace G2lib {
                real_type & x,
                real_type & y ) const {
     if ( s < C0.length() ) {
-      th = C0.theta(s) ;
-      k  = C0.kappa() ;
+      th = C0.theta(s);
+      k  = C0.kappa();
       C0.eval(s,x,y);
     } else {
-      s -= C0.length() ;
-      th = C1.theta(s) ;
-      k  = C1.kappa() ;
+      s -= C0.length();
+      th = C1.theta(s);
+      k  = C1.kappa();
       C1.eval(s,x,y);
     }
   }
@@ -537,7 +537,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval(s,x,y);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval(s,x,y);
     }
   }
@@ -551,7 +551,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval_D(s,x_D,y_D);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval_D(s,x_D,y_D);
     }
   }
@@ -565,7 +565,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval_DD(s,x_DD,y_DD);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval_DD(s,x_DD,y_DD);
     }
   }
@@ -579,7 +579,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval_DDD(s,x_DDD,y_DDD);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval_DDD(s,x_DDD,y_DDD);
     }
   }
@@ -594,7 +594,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval(s,t,x,y);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval(s,t,x,y);
     }
   }
@@ -609,7 +609,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval_D(s,t,x_D,y_D);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval_D(s,t,x_D,y_D);
     }
   }
@@ -624,7 +624,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval_DD(s,t,x_DD,y_DD);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval_DD(s,t,x_DD,y_DD);
     }
   }
@@ -639,7 +639,7 @@ namespace G2lib {
     if ( s < C0.length() ) {
       C0.eval_DDD(s,t,x_DDD,y_DDD);
     } else {
-      s -= C0.length() ;
+      s -= C0.length();
       C1.eval_DDD(s,t,x_DDD,y_DDD);
     }
   }
@@ -653,11 +653,11 @@ namespace G2lib {
                        real_type & Y,
                        real_type & S ) const {
     real_type dst0 = C0.closestPoint( x, y, X, Y, S );
-    real_type X1, Y1, S1 ;
+    real_type X1, Y1, S1;
     real_type dst1 = C1.closestPoint( x, y, X1, Y1, S1 );
-    if ( dst0 <= dst1 ) return dst0 ;
-    X = X1 ; Y= Y1 ; S = S1 + C0.length() ;
-    return dst1 ;
+    if ( dst0 <= dst1 ) return dst0;
+    X = X1; Y= Y1; S = S1 + C0.length();
+    return dst1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -688,9 +688,9 @@ namespace G2lib {
 
   void
   Biarc::reverse() {
-    CircleArc tmp = C0 ;
-    C0 = C1 ;
-    C1 = tmp ;
+    CircleArc tmp = C0;
+    C0 = C1;
+    C1 = tmp;
     C0.reverse();
     C1.reverse();
   }
@@ -699,8 +699,8 @@ namespace G2lib {
 
   void
   Biarc::scale( real_type scl ) {
-    real_type newx0 = C0.xBegin() + scl*(C1.xBegin()-C0.xBegin()) ;
-    real_type newy0 = C0.yBegin() + scl*(C1.yBegin()-C0.yBegin()) ;
+    real_type newx0 = C0.xBegin() + scl*(C1.xBegin()-C0.xBegin());
+    real_type newy0 = C0.yBegin() + scl*(C1.yBegin()-C0.yBegin());
     C1.changeOrigin( newx0, newy0 );
     C1.scale( scl );
     C0.scale( scl );
@@ -713,8 +713,8 @@ namespace G2lib {
     stream << "Biarc\n"
            << "C0\n" << bi.C0
            << "C1\n" << bi.C1
-           << "\n" ;
-    return stream ;
+           << "\n";
+    return stream;
   }
 
 }

@@ -43,17 +43,17 @@ namespace G2lib {
    */
 
   class Biarc {
-    CircleArc C0, C1 ;
-    real_type omega ;
+    CircleArc C0, C1;
+    real_type omega;
 
     void
     gfun( real_type alpha, real_type g[3] ) const {
-      real_type so  = sin(alpha) ;
-      real_type co  = cos(alpha) ;
-      real_type oco = alpha*co ;
-      g[0] = so + oco ;
-      g[1] = 2*co - alpha*so ;
-      g[2] = -3*so - oco ;
+      real_type so  = sin(alpha);
+      real_type co  = cos(alpha);
+      real_type oco = alpha*co;
+      g[0] = so + oco;
+      g[1] = 2*co - alpha*so;
+      g[2] = -3*so - oco;
     }
 
   public:
@@ -76,23 +76,23 @@ namespace G2lib {
                         ", x1 = "      << x1     <<
                         ", y1 = "      << y1     <<
                         ", theta1 = "  << theta1 <<
-                        ") cannot be computed" ) ;
+                        ") cannot be computed" );
     }
 
     void
     copy( Biarc const & c ) {
       C0.copy(c.C0);
       C1.copy(c.C1);
-      omega = c.omega ;
+      omega = c.omega;
     }
 
-    Biarc( Biarc const & ba ) { copy(ba) ; }
+    Biarc( Biarc const & ba ) { copy(ba); }
 
     Biarc const & operator = ( Biarc const & ba )
-    { copy(ba) ; return *this ; }
+    { copy(ba); return *this; }
 
-    CircleArc const & getC0() const { return C0 ; }
-    CircleArc const & getC1() const { return C1 ; }
+    CircleArc const & getC0() const { return C0; }
+    CircleArc const & getC1() const { return C1; }
 
     //! construct a biarc with the standard parameters
     bool
@@ -101,7 +101,7 @@ namespace G2lib {
            real_type theta0,
            real_type x1,
            real_type y1,
-           real_type theta1 ) ;
+           real_type theta1 );
 
     /*! \brief
     //  construct a biarc by 3 point at "minimum energy"
@@ -115,27 +115,27 @@ namespace G2lib {
               real_type x1,
               real_type y1,
               real_type x2,
-              real_type y2 ) ;
+              real_type y2 );
 
-    real_type kappa    ( real_type s ) const ;
-    real_type kappa_D  ( real_type s ) const ;
-    real_type kappa_DD ( real_type s ) const ;
-    real_type kappa_DDD( real_type s ) const ;
+    real_type kappa    ( real_type s ) const;
+    real_type kappa_D  ( real_type s ) const;
+    real_type kappa_DD ( real_type s ) const;
+    real_type kappa_DDD( real_type s ) const;
 
-    real_type theta    ( real_type s ) const ;
-    real_type theta_D  ( real_type s ) const ;
-    real_type theta_DD ( real_type s ) const ;
-    real_type theta_DDD( real_type s ) const ;
+    real_type theta    ( real_type s ) const;
+    real_type theta_D  ( real_type s ) const;
+    real_type theta_DD ( real_type s ) const;
+    real_type theta_DDD( real_type s ) const;
 
-    real_type X    ( real_type s ) const ;
-    real_type X_D  ( real_type s ) const ;
-    real_type X_DD ( real_type s ) const ;
-    real_type X_DDD( real_type s ) const ;
+    real_type X    ( real_type s ) const;
+    real_type X_D  ( real_type s ) const;
+    real_type X_DD ( real_type s ) const;
+    real_type X_DDD( real_type s ) const;
 
-    real_type Y    ( real_type s ) const ;
-    real_type Y_D  ( real_type s ) const ;
-    real_type Y_DD ( real_type s ) const ;
-    real_type Y_DDD( real_type s ) const ;
+    real_type Y    ( real_type s ) const;
+    real_type Y_D  ( real_type s ) const;
+    real_type Y_DD ( real_type s ) const;
+    real_type Y_DDD( real_type s ) const;
 
     real_type tg_x( real_type s ) const { return cos(theta(s)); }
     real_type tg_y( real_type s ) const { return sin(theta(s)); }
@@ -143,30 +143,30 @@ namespace G2lib {
     real_type nor_x( real_type s ) const { return -sin(theta(s)); }
     real_type nor_y( real_type s ) const { return cos(theta(s)); }
 
-    void XY( real_type s, real_type & x, real_type & y ) const ;
-    void XY( real_type s, real_type t, real_type & x, real_type & y ) const ;
-    void TG( real_type s, real_type & tx, real_type & ty ) const ;
+    void XY( real_type s, real_type & x, real_type & y ) const;
+    void XY( real_type s, real_type t, real_type & x, real_type & y ) const;
+    void TG( real_type s, real_type & tx, real_type & ty ) const;
 
-    void NOR    ( real_type s, real_type & nx,     real_type & ny ) const ;
-    void NOR_D  ( real_type s, real_type & nx_D,   real_type & ny_D ) const ;
-    void NOR_DD ( real_type s, real_type & nx_DD,  real_type & ny_DD ) const ;
-    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const ;
+    void NOR    ( real_type s, real_type & nx,     real_type & ny ) const;
+    void NOR_D  ( real_type s, real_type & nx_D,   real_type & ny_D ) const;
+    void NOR_DD ( real_type s, real_type & nx_DD,  real_type & ny_DD ) const;
+    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
 
-    real_type Xstar()     const { return C1.xBegin() ; }
-    real_type Ystar()     const { return C1.yBegin() ; }
-    real_type thetaStar() const { return C1.thetaBegin() ; }
+    real_type Xstar()     const { return C1.xBegin(); }
+    real_type Ystar()     const { return C1.yBegin(); }
+    real_type thetaStar() const { return C1.thetaBegin(); }
 
-    void eval    ( real_type s, real_type & th, real_type & k, real_type & x, real_type & y ) const ;
+    void eval    ( real_type s, real_type & th, real_type & k, real_type & x, real_type & y ) const;
 
-    void eval    ( real_type s, real_type & x,     real_type & y ) const ;
-    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const ;
-    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const ;
-    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const ;
+    void eval    ( real_type s, real_type & x,     real_type & y ) const;
+    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const;
+    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const;
+    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
 
-    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const ;
-    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const ;
-    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const ;
-    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const ;
+    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const;
+    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const;
+    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const;
+    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const;
 
     real_type xBegin0()     const { return C0.xBegin(); }
     real_type xEnd0()       const { return C0.xEnd(); }
@@ -186,8 +186,8 @@ namespace G2lib {
     real_type kappa1()      const { return C1.kappa(); }
     real_type length1()     const { return C1.length(); }
 
-    real_type length()      const { return C0.length() + C1.length() ; }
-    real_type delta_theta() const { return C0.delta_theta() + C1.delta_theta() ; }
+    real_type length()      const { return C0.length() + C1.length(); }
+    real_type delta_theta() const { return C0.delta_theta() + C1.delta_theta(); }
 
     void changeOrigin( real_type newx0, real_type newy0 );
     void translate( real_type tx, real_type ty );
@@ -210,7 +210,7 @@ namespace G2lib {
                   real_type   y,
                   real_type & X,
                   real_type & Y,
-                  real_type & S ) const ;
+                  real_type & S ) const;
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the biarc
@@ -224,8 +224,8 @@ namespace G2lib {
     distance( real_type   x,
               real_type   y,
               real_type & S ) const {
-      real_type X, Y ;
-      return closestPoint( x, y, X, Y, S ) ;
+      real_type X, Y;
+      return closestPoint( x, y, X, Y, S );
     }
 
     /*!
@@ -237,7 +237,7 @@ namespace G2lib {
     \*/
     real_type
     distance( real_type x, real_type y ) const {
-      real_type ss ;
+      real_type ss;
       return distance( x, y, ss );
     }
 
@@ -253,7 +253,7 @@ namespace G2lib {
     findST( real_type   x,
             real_type   y,
             real_type & s,
-            real_type & t ) const ;
+            real_type & t ) const;
 
     void
     info( std::ostream & stream ) const
@@ -261,9 +261,9 @@ namespace G2lib {
 
     friend
     std::ostream &
-    operator << ( std::ostream & stream, Biarc const & bi ) ;
+    operator << ( std::ostream & stream, Biarc const & bi );
 
-  } ;
+  };
 
 }
 

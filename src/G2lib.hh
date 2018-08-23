@@ -31,13 +31,13 @@
 #include <limits>
 
 #ifndef G2LIB_ASSERT
-  #define G2LIB_ASSERT(COND,MSG)         \
-    if ( !(COND) ) {                        \
-      std::ostringstream ost ;              \
-      ost << "On line: " << __LINE__        \
-          << " file: " << __FILE__          \
-          << '\n' << MSG << '\n' ;          \
-      throw std::runtime_error(ost.str()) ; \
+  #define G2LIB_ASSERT(COND,MSG)           \
+    if ( !(COND) ) {                       \
+      std::ostringstream ost;              \
+      ost << "On line: " << __LINE__       \
+          << " file: " << __FILE__         \
+          << '\n' << MSG << '\n';          \
+      throw std::runtime_error(ost.str()); \
     }
 #endif
 
@@ -91,15 +91,15 @@
 //! Clothoid computations routine
 namespace G2lib {
 
-  typedef double real_type ;
-  typedef int    int_type ;
+  typedef double real_type;
+  typedef int    int_type;
 
-  extern real_type const machepsi    ;
-  extern real_type const m_pi        ; // pi
-  extern real_type const m_pi_2      ; // pi/2
-  extern real_type const m_2pi       ; // 2*pi
-  extern real_type const m_1_pi      ; // 1/pi
-  extern real_type const m_1_sqrt_pi ; // 1/sqrt(pi)
+  extern real_type const machepsi;
+  extern real_type const m_pi;        // pi
+  extern real_type const m_pi_2;      // pi/2
+  extern real_type const m_2pi;       // 2*pi
+  extern real_type const m_1_pi;      // 1/pi
+  extern real_type const m_1_sqrt_pi; // 1/sqrt(pi)
 
   /*
   // sin(x)/x
@@ -126,7 +126,7 @@ namespace G2lib {
   real_type Atanc_DDD( real_type x );
 
   //! Add or remove multiple of \f$ 2\pi \f$ to an angle  in order to put it in the range \f$ [-\pi,\pi]\f$.
-  void rangeSymm( real_type & ang ) ;
+  void rangeSymm( real_type & ang );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -138,9 +138,9 @@ namespace G2lib {
                       real_type s0, //!< sin(theta0)
                       real_type x,
                       real_type y ) {
-    real_type dx = x - x0 ;
-    real_type dy = y - y0 ;
-    return (s0 * dy + c0 * dx) ;
+    real_type dx = x - x0;
+    real_type dy = y - y0;
+    return (s0 * dy + c0 * dx);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -155,34 +155,34 @@ namespace G2lib {
                         real_type L,
                         real_type qx,
                         real_type qy ) {
-    real_type dx  = x0 - qx ;
-    real_type dy  = y0 - qy ;
-    real_type a0  = c0 * dy - s0 * dx ;
-    real_type b0  = s0 * dy + c0 * dx ;
-    real_type tmp = a0*k ;
+    real_type dx  = x0 - qx;
+    real_type dy  = y0 - qy;
+    real_type a0  = c0 * dy - s0 * dx;
+    real_type b0  = s0 * dy + c0 * dx;
+    real_type tmp = a0*k;
 
     if ( 1+2*tmp > 0 ) {
 
-      tmp = b0/(1+tmp) ;
-      tmp *= -Atanc(tmp*k) ; // lunghezza
+      tmp = b0/(1+tmp);
+      tmp *= -Atanc(tmp*k); // lunghezza
 
       if ( tmp < 0 ) {
-        real_type absk = std::abs(k) ;
+        real_type absk = std::abs(k);
         // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
-        if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk ;
+        if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk;
       }
 
-      return tmp ;
+      return tmp;
 
     } else {
 
-      real_type om = atan2( b0, a0+1/k ) ;
-      if ( k < 0 ) om += m_pi ;
-      real_type ss = -om/k ;
+      real_type om = atan2( b0, a0+1/k );
+      if ( k < 0 ) om += m_pi;
+      real_type ss = -om/k;
       real_type t  = m_2pi/std::abs(k);
-      if      ( ss < 0 ) ss += t ;
-      else if ( ss > t ) ss += t ;
-      return ss ;
+      if      ( ss < 0 ) ss += t;
+      else if ( ss > t ) ss += t;
+      return ss;
     }
   }
 
@@ -197,10 +197,10 @@ namespace G2lib {
                      real_type k,
                      real_type qx,
                      real_type qy ) {
-    real_type cx  = x0 - s0/k ;
-    real_type cy  = y0 + c0/k ;
-    real_type dst = hypot( qx - cx, qy - cy ) ;
-    return dst*k <= 1 ;
+    real_type cx  = x0 - s0/k;
+    real_type cy  = y0 + c0/k;
+    real_type dst = hypot( qx - cx, qy - cy );
+    return dst*k <= 1;
   }
 
   /*\
@@ -212,17 +212,17 @@ namespace G2lib {
   \*/
 
   class Solve2x2 {
-    int_type  i[2], j[2] ;
-    real_type LU[2][2] ;
-    real_type epsi ;
-    bool      singular ;
+    int_type  i[2], j[2];
+    real_type LU[2][2];
+    real_type epsi;
+    bool      singular;
 
   public:
   
     Solve2x2() : epsi(1e-10) {}
-    bool factorize( real_type A[2][2] ) ;
-    bool solve( real_type const b[2], real_type x[2] ) const ;
-  } ;
+    bool factorize( real_type A[2][2] );
+    bool solve( real_type const b[2], real_type x[2] ) const;
+  };
 
   /*!
   //  return +1 = CounterClockwise
@@ -243,7 +243,7 @@ namespace G2lib {
   int_type
   isCounterClockwise( real_type const P1[2],
                       real_type const P2[2],
-                      real_type const P3[2] ) ;
+                      real_type const P3[2] );
   /*!
   //  return +1 = Inside
   //  return -1 = Outsize
@@ -253,7 +253,7 @@ namespace G2lib {
   isPointInTriangle( real_type const pt[2],
                      real_type const P1[2],
                      real_type const P2[2],
-                     real_type const P3[2] ) ;
+                     real_type const P3[2] );
 }
 
 #endif

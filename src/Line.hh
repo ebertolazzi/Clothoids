@@ -38,13 +38,13 @@ namespace G2lib {
 
   class LineSegment {
 
-    real_type x0,      //!< initial x coordinate of the line
-              y0,      //!< initial y coordinate of the line
-              theta0 ; //!< angle of the line
+    real_type x0,     //!< initial x coordinate of the line
+              y0,     //!< initial y coordinate of the line
+              theta0; //!< angle of the line
 
     real_type c0,     //!< `cos(theta0)`
               s0,     //!< `sin(theta0)`
-              L ;     //!< length of the segment
+              L;      //!< length of the segment
 
   public:
 
@@ -72,37 +72,37 @@ namespace G2lib {
 
     void
     copy( LineSegment const & c ) {
-      x0     = c.x0 ;
-      y0     = c.y0 ;
-      theta0 = c.theta0 ;
-      c0     = c.c0 ;
-      s0     = c.s0 ;
-      L      = c.L ;
+      x0     = c.x0;
+      y0     = c.y0;
+      theta0 = c.theta0;
+      c0     = c.c0;
+      s0     = c.s0;
+      L      = c.L;
     }
 
-    LineSegment( LineSegment const & s ) { copy(s) ; }
+    LineSegment( LineSegment const & s ) { copy(s); }
 
     LineSegment const & operator = ( LineSegment const & s )
-    { copy(s) ; return *this ; }
+    { copy(s); return *this; }
 
-    real_type xBegin()   const { return x0 ; }
-    real_type yBegin()   const { return y0 ; }
-    real_type theta()    const { return theta0 ; }
-    real_type sinTheta() const { return s0 ; }
-    real_type cosTheta() const { return c0 ; }
-    real_type length()   const { return L ; }
+    real_type xBegin()   const { return x0; }
+    real_type yBegin()   const { return y0; }
+    real_type theta()    const { return theta0; }
+    real_type sinTheta() const { return s0; }
+    real_type cosTheta() const { return c0; }
+    real_type length()   const { return L; }
 
     void
     build( real_type _x0,
            real_type _y0,
            real_type _theta0,
            real_type _L ) {
-      x0     = _x0 ;
-      y0     = _y0 ;
-      theta0 = _theta0 ;
+      x0     = _x0;
+      y0     = _y0;
+      theta0 = _theta0;
       c0     = cos(_theta0);
       s0     = sin(_theta0);
-      L      = _L ;
+      L      = _L;
     }
 
     //! construct a clothoid with the standard parameters
@@ -110,7 +110,7 @@ namespace G2lib {
     build_2P( real_type _x0,
               real_type _y0,
               real_type _x1,
-              real_type _y1 ) ;
+              real_type _y1 );
 
     //! construct a clothoid with the standard parameters
     void
@@ -118,75 +118,75 @@ namespace G2lib {
               real_type const p1[2] )
     { build_2P( p0[0], p0[1], p1[0], p1[1] ); }
 
-    real_type X( real_type s ) const { return x0 + c0 * s ; }
-    real_type Y( real_type s ) const { return y0 + s0 * s ; }
+    real_type X( real_type s ) const { return x0 + c0 * s; }
+    real_type Y( real_type s ) const { return y0 + s0 * s; }
 
     void
     eval( real_type s, real_type & x, real_type & y ) const {
-      x = x0 + c0 * s ;
-      y = y0 + s0 * s ;
+      x = x0 + c0 * s;
+      y = y0 + s0 * s;
     }
 
     void
     eval_D( real_type, real_type & x_D, real_type & y_D ) const {
-      x_D = c0 ;
-      y_D = s0 ;
+      x_D = c0;
+      y_D = s0;
     }
 
     void
     eval_DD( real_type, real_type & x_DD, real_type & y_DD ) const {
-      x_DD = y_DD = 0 ;
+      x_DD = y_DD = 0;
     }
 
     void
     eval_DDD( real_type, real_type & x_DDD, real_type & y_DDD ) const {
-      x_DDD = y_DDD = 0 ;
+      x_DDD = y_DDD = 0;
     }
 
     // ---
 
     void
     eval( real_type s, real_type t, real_type & x, real_type & y ) const {
-      x = x0 + c0 * s - s0 * t ;
-      y = y0 + s0 * s + c0 * t ;
+      x = x0 + c0 * s - s0 * t;
+      y = y0 + s0 * s + c0 * t;
     }
 
     void
     eval_D( real_type, real_type, real_type & x_D, real_type & y_D ) const {
-      x_D = c0 ;
-      y_D = s0 ;
+      x_D = c0;
+      y_D = s0;
     }
 
     void
     eval_DD( real_type, real_type, real_type & x_DD, real_type & y_DD ) const {
-      x_DD = y_DD = 0 ;
+      x_DD = y_DD = 0;
     }
 
     void
     eval_DDD( real_type, real_type, real_type & x_DDD, real_type & y_DDD ) const {
-      x_DDD = y_DDD = 0 ;
+      x_DDD = y_DDD = 0;
     }
 
     void
     trim( real_type s_begin, real_type s_end ) {
-      x0 += c0 * s_begin ;
-      y0 += s0 * s_begin ;
-      L   = s_end - s_begin ;
+      x0 += c0 * s_begin;
+      y0 += s0 * s_begin;
+      L   = s_end - s_begin;
     }
 
     void
     translate( real_type tx, real_type ty )
-    { x0 += tx ; y0 += ty ; }
+    { x0 += tx; y0 += ty; }
 
     void
-    rotate( real_type angle, real_type cx, real_type cy ) ;
+    rotate( real_type angle, real_type cx, real_type cy );
 
     void
-    reverse() ;
+    reverse();
 
     void
     changeOrigin( real_type newx0, real_type newy0 )
-    { x0 = newx0 ; y0 = newy0 ; }
+    { x0 = newx0; y0 = newy0; }
 
     /*!
      * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
@@ -203,7 +203,7 @@ namespace G2lib {
                   real_type   y,
                   real_type & X,
                   real_type & Y,
-                  real_type & S ) const ;
+                  real_type & S ) const;
 
     /*!
      * \brief compute the distance from a point `[x,y]` and the line segment
@@ -217,7 +217,7 @@ namespace G2lib {
     distance( real_type   x,
               real_type   y,
               real_type & S ) const {
-      real_type X, Y ;
+      real_type X, Y;
       return closestPoint( x, y, X, Y, S );
     }
 
@@ -230,7 +230,7 @@ namespace G2lib {
     \*/
     real_type
     distance( real_type x, real_type y ) const {
-      real_type ss ;
+      real_type ss;
       return distance( x, y, ss );
     }
 
@@ -256,8 +256,8 @@ namespace G2lib {
             real_type & t ) const {
       real_type dx = x - x0;
       real_type dy = y - y0;
-      s = c0 * dx + s0 * dy ;
-      t = c0 * dy - s0 * dx ;
+      s = c0 * dx + s0 * dy;
+      t = c0 * dy - s0 * dx;
     }
 
     /*! \brief Compute rational B-spline coefficients for a line segment
@@ -267,7 +267,7 @@ namespace G2lib {
      * \return       2 the number of polygon points
      */
     int
-    toNURBS( real_type knots[5], real_type Poly[2][3] ) const ;
+    toNURBS( real_type knots[5], real_type Poly[2][3] ) const;
 
     /*! \brief Compute B-spline coefficients for a line segment
      *
@@ -276,14 +276,14 @@ namespace G2lib {
      * \return       2 the number of polygon points
      */
     int
-    toBS( real_type knots[5], real_type Poly[2][2] ) const ;
+    toBS( real_type knots[5], real_type Poly[2][2] ) const;
 
     void
     p1p2( real_type p1[2], real_type p2[2] ) const {
-      p1[0] = x0 ;
-      p1[1] = y0 ;
-      p2[0] = x0+L*c0 ;
-      p2[1] = y0+L*s0 ;
+      p1[0] = x0;
+      p1[1] = y0;
+      p2[0] = x0+L*c0;
+      p2[1] = y0+L*s0;
     }
 
     void
@@ -292,11 +292,11 @@ namespace G2lib {
 
     friend
     std::ostream &
-    operator << ( std::ostream & stream, LineSegment const & c ) ;
+    operator << ( std::ostream & stream, LineSegment const & c );
 
-    friend class ClothoidCurve ;
+    friend class ClothoidCurve;
 
-  } ;
+  };
 
 }
 

@@ -32,7 +32,7 @@
 //! Clothoid computations routine
 namespace G2lib {
 
-  using namespace G2lib ;
+  using namespace G2lib;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -54,7 +54,7 @@ namespace G2lib {
   void
   FresnelCS( real_type   x,
              real_type & C,
-             real_type & S ) ;
+             real_type & S );
 
   //! Compute Fresnel integrals and its derivatives
   /*!
@@ -68,7 +68,7 @@ namespace G2lib {
   FresnelCS( int_type  nk,
              real_type x,
              real_type C[],
-             real_type S[] ) ;
+             real_type S[] );
 
   /*! \brief Compute the Fresnel integrals
    * \f[ 
@@ -88,7 +88,7 @@ namespace G2lib {
                         real_type b,
                         real_type c,
                         real_type intC[],
-                        real_type intS[] ) ;
+                        real_type intS[] );
 
   /*! \brief Compute the Fresnel integrals
    * \f[ 
@@ -106,18 +106,18 @@ namespace G2lib {
                         real_type   b,
                         real_type   c,
                         real_type & intC,
-                        real_type & intS ) ;
+                        real_type & intS );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   class ClothoidData {
   public:
 
-    real_type x0 ;     //!< initial x coordinate of the clothoid
-    real_type y0 ;     //!< initial y coordinate of the clothoid
-    real_type theta0 ; //!< initial angle of the clothoid
-    real_type kappa0 ; //!< initial curvature
-    real_type dk ;     //!< curvature derivative
+    real_type x0;     //!< initial x coordinate of the clothoid
+    real_type y0;     //!< initial y coordinate of the clothoid
+    real_type theta0; //!< initial angle of the clothoid
+    real_type kappa0; //!< initial curvature
+    real_type dk;     //!< curvature derivative
 
     ClothoidData()
     : x0(0)
@@ -127,39 +127,39 @@ namespace G2lib {
     , dk(0)
     {}
 
-    real_type deltaTheta( real_type s ) const { return s*(kappa0 + 0.5*s*dk) ; }
+    real_type deltaTheta( real_type s ) const { return s*(kappa0 + 0.5*s*dk); }
 
     //! return angle at curvilinear coordinate `s`
-    real_type theta    ( real_type s ) const { return theta0 + s*(kappa0 + 0.5*s*dk) ; }
-    real_type theta_D  ( real_type s ) const { return kappa0 + s*dk ; }
-    real_type theta_DD ( real_type   ) const { return dk ; }
-    real_type theta_DDD( real_type   ) const { return 0 ; }
+    real_type theta    ( real_type s ) const { return theta0 + s*(kappa0 + 0.5*s*dk); }
+    real_type theta_D  ( real_type s ) const { return kappa0 + s*dk; }
+    real_type theta_DD ( real_type   ) const { return dk; }
+    real_type theta_DDD( real_type   ) const { return 0; }
 
     //! return curvature at curvilinear coordinate `s`
-    real_type kappa    ( real_type s ) const { return kappa0 + s*dk ; }
-    real_type kappa_D  ( real_type   ) const { return dk ; }
-    real_type kappa_DD ( real_type   ) const { return 0 ; }
-    real_type kappa_DDD( real_type   ) const { return 0 ; }
+    real_type kappa    ( real_type s ) const { return kappa0 + s*dk; }
+    real_type kappa_D  ( real_type   ) const { return dk; }
+    real_type kappa_DD ( real_type   ) const { return 0; }
+    real_type kappa_DDD( real_type   ) const { return 0; }
 
-    real_type X( real_type s ) const ;
-    real_type Y( real_type s ) const ;
-    real_type X( real_type s, real_type t ) const ;
-    real_type Y( real_type s, real_type t ) const ;
+    real_type X( real_type s ) const;
+    real_type Y( real_type s ) const;
+    real_type X( real_type s, real_type t ) const;
+    real_type Y( real_type s, real_type t ) const;
 
-    real_type X_D( real_type s ) const ;
-    real_type Y_D( real_type s ) const ;
-    real_type X_D( real_type s, real_type t ) const ;
-    real_type Y_D( real_type s, real_type t ) const ;
+    real_type X_D( real_type s ) const;
+    real_type Y_D( real_type s ) const;
+    real_type X_D( real_type s, real_type t ) const;
+    real_type Y_D( real_type s, real_type t ) const;
 
-    real_type X_DD( real_type s ) const ;
-    real_type Y_DD( real_type s ) const ;
-    real_type X_DD( real_type s, real_type t ) const ;
-    real_type Y_DD( real_type s, real_type t ) const ;
+    real_type X_DD( real_type s ) const;
+    real_type Y_DD( real_type s ) const;
+    real_type X_DD( real_type s, real_type t ) const;
+    real_type Y_DD( real_type s, real_type t ) const;
 
-    real_type X_DDD( real_type s ) const ;
-    real_type Y_DDD( real_type s ) const ;
-    real_type X_DDD( real_type s, real_type t ) const ;
-    real_type Y_DDD( real_type s, real_type t ) const ;
+    real_type X_DDD( real_type s ) const;
+    real_type Y_DDD( real_type s ) const;
+    real_type X_DDD( real_type s, real_type t ) const;
+    real_type Y_DDD( real_type s, real_type t ) const;
 
     real_type tg_x( real_type s ) const { return cos(theta(s)); }
     real_type tg_y( real_type s ) const { return sin(theta(s)); }
@@ -167,92 +167,92 @@ namespace G2lib {
     real_type nor_x( real_type s ) const { return -sin(theta(s)); }
     real_type nor_y( real_type s ) const { return cos(theta(s)); }
 
-    void XY( real_type s, real_type & x, real_type & y ) const ;
-    void XY( real_type s, real_type t, real_type & x, real_type & y ) const ;
-    void TG( real_type s, real_type & tx, real_type & ty ) const ;
-    void NOR( real_type s, real_type & nx, real_type & ny ) const ;
-    void NOR_D( real_type s, real_type & nx, real_type & ny ) const ;
-    void NOR_DD( real_type s, real_type & nx, real_type & ny ) const ;
-    void NOR_DDD( real_type s, real_type & nx, real_type & ny ) const ;
+    void XY( real_type s, real_type & x, real_type & y ) const;
+    void XY( real_type s, real_type t, real_type & x, real_type & y ) const;
+    void TG( real_type s, real_type & tx, real_type & ty ) const;
+    void NOR( real_type s, real_type & nx, real_type & ny ) const;
+    void NOR_D( real_type s, real_type & nx, real_type & ny ) const;
+    void NOR_DD( real_type s, real_type & nx, real_type & ny ) const;
+    void NOR_DDD( real_type s, real_type & nx, real_type & ny ) const;
 
     void
     eval( real_type   s,
           real_type & theta,
           real_type & kappa,
           real_type & x,
-          real_type & y ) const ;
+          real_type & y ) const;
 
     void
     eval( real_type   s,
           real_type & x,
-          real_type & y ) const ;
+          real_type & y ) const;
 
     void
     eval_D( real_type   s,
             real_type & x_D,
-            real_type & y_D ) const ;
+            real_type & y_D ) const;
 
     void
     eval_DD( real_type   s,
              real_type & x_DD,
-             real_type & y_DD ) const ;
+             real_type & y_DD ) const;
 
     void
     eval_DDD( real_type   s,
               real_type & x_DDD,
-              real_type & y_DDD ) const ;
+              real_type & y_DDD ) const;
 
     void
     eval( real_type   s,
           real_type   offs,
           real_type & x,
-          real_type & y ) const ;
+          real_type & y ) const;
 
     void
     eval_D( real_type   s,
             real_type   offs,
             real_type & x_D,
-            real_type & y_D ) const ;
+            real_type & y_D ) const;
 
     void
     eval_DD( real_type   s,
              real_type   offs,
              real_type & x_DD,
-             real_type & y_DD ) const ;
+             real_type & y_DD ) const;
 
     void
     eval_DDD( real_type   s,
               real_type   offs,
               real_type & x_DDD,
-              real_type & y_DDD ) const ;
+              real_type & y_DDD ) const;
 
     void
-    eval( real_type s, ClothoidData & C) const ;
+    eval( real_type s, ClothoidData & C) const;
 
     real_type c0x() const { return x0 - (sin(theta0)/kappa0); }
     real_type c0y() const { return y0 + (cos(theta0)/kappa0); }
 
     void
-    Pinfinity( real_type & x, real_type & y, bool plus ) const ;
+    Pinfinity( real_type & x, real_type & y, bool plus ) const;
 
     void
-    reverse( real_type L ) ;
+    reverse( real_type L );
 
     void
-    reverse( real_type L, ClothoidData & out) const ;
+    reverse( real_type L, ClothoidData & out) const;
 
     real_type
-    split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const ;
+    split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const;
 
     real_type
-    aplus( real_type dtheta ) const ;
+    aplus( real_type dtheta ) const;
 
     bool
     bbTriangle( real_type L,
                 real_type offs,
                 real_type p0[2],
                 real_type p1[2],
-                real_type p2[2] ) const ;
+                real_type p2[2] ) const;
 
     int
     build_G1( real_type   x0,
@@ -266,7 +266,7 @@ namespace G2lib {
               bool        compute_deriv = false,
               real_type   L_D[2]        = nullptr,
               real_type   k_D[2]        = nullptr,
-              real_type   dk_D[2]       = nullptr ) ;
+              real_type   dk_D[2]       = nullptr );
 
     bool
     build_forward( real_type   x0,
@@ -276,12 +276,12 @@ namespace G2lib {
                    real_type   x1,
                    real_type   y1,
                    real_type   tol,
-                   real_type & L ) ;
+                   real_type & L );
 
     void
-    info( std::ostream & s ) const ;
+    info( std::ostream & s ) const;
 
-  } ;
+  };
 
 }
 

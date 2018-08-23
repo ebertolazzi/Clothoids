@@ -24,16 +24,16 @@
 
 namespace PolynomialRoots {
 
-  typedef double real_type ;
-  typedef int    int_type ;
+  typedef double real_type;
+  typedef int    int_type;
 
-  using std::abs ;
-  using std::pow ;
+  using std::abs;
+  using std::pow;
 
-  static real_type const machepsi = std::numeric_limits<real_type>::epsilon() ;
-  static real_type const third    = 1./3. ;
-  static real_type const one27th  = 1./27. ;
-  static real_type const two27th  = 2./27. ;
+  static real_type const machepsi = std::numeric_limits<real_type>::epsilon();
+  static real_type const third    = 1./3.;
+  static real_type const one27th  = 1./27.;
+  static real_type const two27th  = 2./27.;
 
   /*\
    *  Calculate the zeros of the quadratic a*z^2 + b*z + c.
@@ -49,7 +49,7 @@ namespace PolynomialRoots {
                   real_type & r1,
                   real_type & r2,
                   int_type  & nr,
-                  int_type  & nc ) ;
+                  int_type  & nc );
 
   /*\
   ... Calculate the zeros of the cubic A*z^3 + B*z^2 + C*z + D.
@@ -70,7 +70,7 @@ namespace PolynomialRoots {
               real_type & r2,
               real_type & r3,
               int_type  & nr,
-              int_type  & nc ) ;
+              int_type  & nc );
 
 }
 
