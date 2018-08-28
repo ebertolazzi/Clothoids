@@ -265,7 +265,7 @@ print_version( char const *messages[] ) {
   lua_writestring(LUA_COPYRIGHT, strlen(LUA_COPYRIGHT));
   lua_writeline();
   lua_writeline();
-  for ( char const **msg = messages ; *msg != nullptr ; ++msg )
+  for ( char const **msg = messages; *msg != nullptr; ++msg )
     l_message(progname,  *msg );
   lua_writeline();
 }
@@ -477,7 +477,7 @@ doREPL( lua_State *L, char const * prompt ) {
   while ((status = loadline(L)) != -1) {
     if (status == LUA_OK)
       status = docall(L, 0, LUA_MULTRET);
-    if (status == LUA_OK) { printf("%s",prompt) ; l_print(L); }
+    if (status == LUA_OK) { printf("%s",prompt); l_print(L); }
     else report(L, status);
   }
   lua_settop(L, 0);  /* clear stack */
@@ -496,7 +496,7 @@ pushargs (lua_State *L) {
   if (lua_getglobal(L, "arg") != LUA_TTABLE)
     luaL_error(L, "'arg' is not a table");
   #else
-  lua_getglobal(L, "arg") ;
+  lua_getglobal(L, "arg");
   #endif
   n = int(luaL_len(L, -1));
   luaL_checkstack(L, n + 3, "too many arguments to script");
@@ -677,7 +677,7 @@ namespace GenericContainerNamespace {
                                char const * messages[],
                                char const * prompt ) {
     lua_State *L = luaL_newstate();  /* create state */
-    GC_ASSERT( L != nullptr, "LuaInterpreter::interactive, cannot create state: not enough memory" ) ;
+    GC_ASSERT( L != nullptr, "LuaInterpreter::interactive, cannot create state: not enough memory" );
     /* call 'pmain' in protected mode */
     lua_pushcfunction(L, &pmain);
     lua_pushinteger(L, argc);  /* 1st argument */

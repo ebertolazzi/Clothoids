@@ -6,13 +6,6 @@
 //  Copyright © 2017 Nicola Dal Bianco. All rights reserved.
 //
 
-#include "GenericContainerJson.hh"
-#include "GenericContainerJsonHandler.hh"
-
-#include <iostream>
-#include <string>
-#include <iomanip>
-
 #ifdef __GCC__
 #pragma GCC diagnostic ignored "-Wc++98-compat"
 #pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
@@ -20,6 +13,7 @@
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wswitch-enum"
 #pragma GCC diagnostic ignored "-Wcovered-switch-default"
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"
@@ -28,7 +22,15 @@
 #pragma clang diagnostic ignored "-Wold-style-cast"
 #pragma clang diagnostic ignored "-Wswitch-enum"
 #pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
+
+#include "GenericContainerJson.hh"
+#include "GenericContainerJsonHandler.hh"
+
+#include <iostream>
+#include <string>
+#include <iomanip>
 
 #ifdef USE_SYSTEM_JSON
   #include <rapidjson/prettywriter.h>
@@ -56,7 +58,7 @@ namespace GenericContainerNamespace {
   static
   inline
   bool isZero ( real_type x )
-  { return FP_ZERO == fpclassify ( x ) ; }
+  { return FP_ZERO == fpclassify( x ); }
 
   void
   real_to_stream ( real_type number, ostream & out ) {
@@ -207,7 +209,7 @@ namespace GenericContainerNamespace {
     case GC_MAP: {
       writer.StartObject();
       map_type const & m = gc.get_map();
-      for ( map_type::const_iterator it = m.begin() ; it != m.end() ; ++it ) {
+      for ( map_type::const_iterator it = m.begin(); it != m.end(); ++it ) {
         writer.Key ( it->first.c_str() );
         gc_to_writer ( it->second, writer, im_unit, mat_order );
       }

@@ -9,12 +9,13 @@
 #ifndef GC_JSON_HANDLER_HH
 #define GC_JSON_HANDLER_HH
 
-
 #ifdef __GCC__
 #pragma GCC diagnostic ignored "-Wc++98-compat"
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 
 #include "GenericContainerJson.hh"

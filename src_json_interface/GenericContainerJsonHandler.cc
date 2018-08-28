@@ -58,17 +58,17 @@ using namespace std;
 static
 inline
 bool isZero ( real_type x )
-{ return FP_ZERO == fpclassify ( x ) ; }
+{ return FP_ZERO == fpclassify( x ); }
 
 static
 inline
 bool isInteger32 ( real_type x )
-{ return isZero ( x - static_cast<int_type> ( floor ( x ) ) ) ; }
+{ return isZero ( x - static_cast<int_type> ( floor ( x ) ) ); }
 
 static
 inline
 bool isInteger64 ( real_type x )
-{ return isZero ( x - static_cast<long_type> ( floor ( x ) ) ) ; }
+{ return isZero ( x - static_cast<long_type> ( floor ( x ) ) ); }
 
 static
 vector<string>
@@ -777,7 +777,8 @@ GenericContainerJsonHandler::String(
   transform ( stringa_lower.begin(),
               stringa_lower.end(),
               stringa_lower.begin(),
-              [] ( unsigned char c ) -> unsigned char { return std::tolower ( c ); } );
+              [] ( unsigned char c ) -> unsigned char
+                   { return static_cast<unsigned char>(std::tolower( c )); } );
 
   if ( ( stringa_lower.length() != stringa.length() ) || ( stringa_lower.compare ( "null" ) != 0 ) ) {
     // check if it is a complex number

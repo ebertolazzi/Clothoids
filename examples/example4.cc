@@ -29,8 +29,8 @@
 
 #include "GenericContainer.hh"
 
-using namespace std ;
-using namespace GC ;
+using namespace std;
+using namespace GC;
 
 int
 main() {
@@ -38,52 +38,52 @@ main() {
   cout << "\n\n\n"
        << "***********************\n"
        << "      example N.4      \n"
-       << "***********************\n\n" ;
+       << "***********************\n\n";
 
   // Using complex data
   
   try {
     
-    GenericContainer gc ;
-    cout << "gc: " ; gc.info(cout) ;
+    GenericContainer gc;
+    cout << "gc: "; gc.info(cout);
     
-    gc . set_map() ;
-    cout << "gc: " ; gc.info(cout) ;
+    gc . set_map();
+    cout << "gc: "; gc.info(cout);
     
-    GC::map_type & m = gc . set_map() ;
-    cout << "gc: " ; gc.info(cout) ;
+    GC::map_type & m = gc . set_map();
+    cout << "gc: "; gc.info(cout);
 
     // access using map and vector like syntax 
-    m["a"] = 1 ;
-    m["b"] = 1.2 ;
-    m["c"] = true ;
-    m["d"] = "pippo" ;
+    m["a"] = 1;
+    m["b"] = 1.2;
+    m["c"] = true;
+    m["d"] = "pippo";
     
     // or using overloading
-    gc["e"] = 1 ;
-    gc["f"] = 1.2 ;
-    gc["g"] = true ;
-    gc["h"] = "pippo" ;
-    gc["pointer"] = &gc ;
+    gc["e"] = 1;
+    gc["f"] = 1.2;
+    gc["g"] = true;
+    gc["h"] = "pippo";
+    gc["pointer"] = &gc;
 
-    GC::vec_real_type v ;
-    v.push_back(1) ;
-    v.push_back(2) ;
-    v.push_back(3) ;
-    v.push_back(4) ;
-    gc["vec_real"] = v ;
+    GC::vec_real_type v;
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+    v.push_back(4);
+    gc["vec_real"] = v;
 
-    cout << "Print contents of gc:\n" ;
-    gc.print(cout) ;
+    cout << "Print contents of gc:\n";
+    gc.print(cout);
 
     // issue an error!
-    gc[0] = 1.2 ;
+    gc[0] = 1.2;
   }
   catch ( std::exception & exc ) {
-    cout << exc.what() << '\n'  ;
+    cout << exc.what() << '\n';
   }
   catch (...) {
-    cout << "Unknonwn error\n" ;
+    cout << "Unknonwn error\n";
   }
-  cout << "ALL DONE!\n\n\n\n" ;
+  cout << "ALL DONE!\n\n\n\n";
 }

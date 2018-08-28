@@ -27,8 +27,8 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std ;
-using namespace GC ;
+using namespace std;
+using namespace GC;
 
 int
 main() {
@@ -36,22 +36,22 @@ main() {
   cout << "\n\n\n"
        << "***********************\n"
        << "      example N.8      \n"
-       << "***********************\n\n" ;
+       << "***********************\n\n";
 
   try {
-    GenericContainer gc ;
-    LuaInterpreter   lua ;
-    lua.do_file("test.lua") ;
-    lua.global_to_GC("DATA",gc) ;
-    cout << "\n\n\n\nConverted in GenericContainer\n\n" ;
-    gc.print(cout) ;
+    GenericContainer gc;
+    LuaInterpreter   lua;
+    lua.do_file("test.lua");
+    lua.global_to_GC("DATA",gc);
+    cout << "\n\n\n\nConverted in GenericContainer\n\n";
+    gc.print(cout);
   }
   catch ( std::exception & exc ) {
-    cout << exc.what() << '\n'  ;
+    cout << exc.what() << '\n';
   }
   catch (...) {
-    cout << "Unknonwn error\n" ;
+    cout << "Unknonwn error\n";
   }
   
-  cout << "ALL DONE!\n\n\n\n" ;
+  cout << "ALL DONE!\n\n\n\n";
 }

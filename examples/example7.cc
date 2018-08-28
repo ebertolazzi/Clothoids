@@ -28,7 +28,7 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std ;
+using namespace std;
 
 int
 main() {
@@ -36,23 +36,23 @@ main() {
   cout << "\n\n\n"
        << "***********************\n"
        << "      example N.7      \n"
-       << "***********************\n\n" ;
+       << "***********************\n\n";
   
   try {
-    GC::GenericContainer gc ;
-    ifstream file("data_example.txt") ;
-    if ( file.fail() ) throw std::runtime_error("file to open file") ;
-    gc.readFormattedData( file, "#", "\t " ) ;
-    gc.print(cout) ;
-    cout << "\n\nData Read:\n" ;
-    gc.writeFormattedData( cout, '\t' ) ;
+    GC::GenericContainer gc;
+    ifstream file("data_example.txt");
+    if ( file.fail() ) throw std::runtime_error("file to open file");
+    gc.readFormattedData( file, "#", "\t " );
+    gc.print(cout);
+    cout << "\n\nData Read:\n";
+    gc.writeFormattedData( cout, '\t' );
   }
   catch ( std::exception & exc ) {
-    cout << exc.what() << '\n'  ;
+    cout << exc.what() << '\n';
   }
   catch (...) {
-    cout << "Unknonwn error\n" ;
+    cout << "Unknonwn error\n";
   }
   
-  cout << "ALL DONE!\n\n\n\n" ;
+  cout << "ALL DONE!\n\n\n\n";
 }
