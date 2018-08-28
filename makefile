@@ -2,7 +2,7 @@
 OS=$(shell uname)
 PWD=$(shell pwd)
 
-LIB_CLOTHOID = libClothoids.a
+LIB_CLOTHOID = libClothoids.so
 
 CC   = gcc
 CXX  = g++
@@ -13,7 +13,7 @@ DEFS =
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
+  CXXFLAGS = -std=c++11 -Wall -O3 -fPIC -Wno-sign-compare
   AR       = ar rcs
 endif
 
