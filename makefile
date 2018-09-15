@@ -2,19 +2,21 @@
 OS=$(shell uname)
 PWD=$(shell pwd)
 
-LIB_CLOTHOID = libClothoids.so
-
 CC   = gcc
 CXX  = g++
 INC  = -I./src -I./include
 LIBS = -L./lib -lClothoids
 DEFS =
+LDCONFIG =
+STATIC_EXT = .a
+DYNAMIC_EXT = .so
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   LIBS     = -static -L./lib -lClothoids
   CXXFLAGS = -std=c++11 -Wall -O3 -fPIC -Wno-sign-compare
   AR       = ar rcs
+  LDCONFIG = sudo ldconfig
 endif
 
 # check if the OS string contains 'Darwin'
@@ -26,7 +28,10 @@ ifneq (,$(findstring Darwin, $(OS)))
   LIBS     = -L./lib -lClothoids
   CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
   AR       = libtool -static -o
+	DYNAMIC_EXT = .dylib
 endif
+
+LIB_CLOTHOID = libClothoids
 
 SRCS = \
 src/Biarc.cc \
@@ -58,7 +63,7 @@ all: lib
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2statCLC  tests-cpp/testG2statCLC.cc $(LIBS)
 	#$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot tests-cpp/testG2plot.cc $(LIBS)
 
-lib: lib/$(LIB_CLOTHOID)
+lib: lib/$(LIB_CLOTHOID)$(STATIC_EXT) lib/$(LIB_CLOTHOID)$(DYNAMIC_EXT)
 
 include_local:
 	@rm -rf lib/include
@@ -88,7 +93,8 @@ install: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include
 	cp src/*.hh                $(PREFIX)/include
-	cp lib/$(LIB_CLOTHOID)     $(PREFIX)/lib
+	cp lib/$(LIB_CLOTHOID).*   $(PREFIX)/lib
+	@$(LDCONFIG)
 
 install_as_framework: lib
 	@$(MKDIR) $(PREFIX)/lib
@@ -107,6 +113,5 @@ doc:
 	
 clean:
 	rm -f lib/libClothoids.* lib/libClothoids.* src/*.o
-
 	rm -rf bin
 	
