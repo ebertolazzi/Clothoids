@@ -12,27 +12,32 @@
 
 addpath('../matlab');
 
+clear all;
+close all;
+
+x0     = 0;
+y0     = -1;
+theta0 = -1;
+kappa0 = 0.1;
+
+
+x1     = 0;
+y1     = 1;
+theta1 = 2;
+kappa1 = 3;
+
 close all ;
+figure('Position',[1,1,500,800]);
 
-% initial point with angle direction
-x0     = 0 ;
-y0     = 0.1 ;
-theta0 = 1.571 ;
+C = ClothoidCurve();
+S = ClothoidList();
 
-% final point with angle direction
-x1     = 0.085 ;
-y1     = 0.035 ;
-theta1 = 2.356 ;
+C.build_G1( x0, y0, theta0, ...
+            x1, y1, theta1 );
+S.build_3arcG2( x0, y0, theta0, kappa0, ...
+                x1, y1, theta1, kappa1);
 
-fprintf('Testing G1 Clothoid interpolation\n') ;
-fprintf('initial point (%g,%g) initial angle = %g\n', x0, y0, theta0) ;
-fprintf('final point (%g,%g) final angle = %g\n', x1, y1, theta1) ;
-
-% compute clothoid parameters
-C = ClothoidCurve() ;
-C.build_G1( x0, y0, theta0, x1, y1, theta1 ) ;
-
-fprintf('Computed parameters: k = %g, k'' = %g, L = %g\n', C.kappaBegin(), C.kappa_D(), C.length() ) ;
-C.plot(1000,'Linewidth',5) ;
-axis equal
-
+C.plot(1000,'-m','Linewidth',5);
+hold on;
+S.plot(1000,{'-r','Linewidth',5},{'-b','Linewidth',5});
+axis equal;

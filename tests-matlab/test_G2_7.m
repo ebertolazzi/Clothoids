@@ -38,13 +38,13 @@ kappa1 = C.kappaEnd();
 iter = S.build_3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1);
 
 subplot(2,1,1);
-C.plot(1000,'-m','Linewidth',2);
+C.plot(1000,'-m','Linewidth',5);
 hold on;
-S.plot(1000,{'--b','Linewidth',3},{'--g','Linewidth',3});
+S.plot(1000,{'--b','Linewidth',5},{'--g','Linewidth',5});
 axis equal;
 
 subplot(2,1,2);
-C.plotCurvature(1000,'-m','Linewidth',2);
+C.plotCurvature(1000,'-m','Linewidth',5);
 hold on
-S.plotCurvature(1000,{'--b','Linewidth',3},{'--g','Linewidth',3});
+S.plotCurvature(1000,{'--b','Linewidth',5},{'--g','Linewidth',5});
 

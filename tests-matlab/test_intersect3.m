@@ -62,13 +62,13 @@ S.push_back_G1( x0, y0, theta0) ; % close curve ...
 S.plot() ;
 axis equal
 
-x0 = 0 ;
+x0 = 150 ;
 y0 = -100 ;
-x1 = 100 ;
+x1 = 200 ;
 y1 = 200 ;
 L1 = LineSegment( [x0, y0], [x1, y1] );
 
-L1.plot('Color','red','LineWidth',3) ;
+L1.plot('Color',[0.930000 0.570000 0.130000],'LineWidth',3) ;
 
 x0     = 0 ;
 y0     = 0 ;
@@ -76,7 +76,7 @@ theta0 = 0 ;
 kappa0 = 0.01 ;
 C1 = CircleArc( x0, y0, theta0, kappa0, 600 );
 
-C1.plot(100,{'Color','blue','LineWidth',3}) ;
+C1.plot(100,{'Color',[0.440000 0.310000 0.220000],'LineWidth',3}) ;
 
 [s1,s2] = S.intersect( L1 );
 
@@ -84,11 +84,19 @@ XY1 = S.eval( s1 );
 XY2 = L1.eval( s2 );
 
 if length(s1) > 0
- plot( XY1(1,:), XY1(2,:), 'ob', 'LineWidth', 2 ) ;
+ plot( XY1(1,:), XY1(2,:), 'o', ...
+      'LineWidth',2,...
+      'MarkerSize',15,...
+      'MarkerEdgeColor','blue',...
+      'MarkerFaceColor',[0.9,0.9,0.9] );
 end
 
 if length(s2) > 0
-  plot( XY2(1,:), XY2(2,:), 'oc', 'LineWidth', 2 ) ;
+  plot( XY2(1,:), XY2(2,:), 's', ...
+      'LineWidth',2,...
+      'MarkerSize',5,...
+      'MarkerEdgeColor','b',...
+      'MarkerFaceColor',[0.9,0.9,0.9]) ;
 end
 
 [s1,s2] = S.intersect( C1 );
@@ -97,9 +105,19 @@ XY1 = S.eval( s1 );
 XY2 = C1.eval( s2 );
 
 if length(s1) > 0
- plot( XY1(1,:), XY1(2,:), 'ob', 'LineWidth', 2 ) ;
+ plot( XY1(1,:), XY1(2,:),  'o', ...
+      'LineWidth',2,...
+      'MarkerSize',15,...
+      'MarkerEdgeColor','blue',...
+      'MarkerFaceColor',[0.9,0.9,0.9] ) ;
 end
 
 if length(s2) > 0
-  plot( XY2(1,:), XY2(2,:), 'oc', 'LineWidth', 2 ) ;
+  plot( XY2(1,:), XY2(2,:), 's', ...
+      'LineWidth',2,...
+      'MarkerSize',5,...
+      'MarkerEdgeColor','b',...
+      'MarkerFaceColor',[0.9,0.9,0.9] ) ;
 end
+
+
