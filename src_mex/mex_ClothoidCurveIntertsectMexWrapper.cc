@@ -18,9 +18,9 @@
 "%  intersectClothoid:  Compute intersections betweed clothoids         %\n" \
 "%                                                                      %\n" \
 "%  USAGE:                                                              %\n" \
-"%    s1, s2 = ClothoidCurveIntertsectMexWrapper( clot1, clot2 ) ;      %\n" \
+"%    s1, s2 = ClothoidCurveIntertsectMexWrapper( clot1, clot2 );       %\n" \
 "%    s1, s2 = ClothoidCurveIntertsectMexWrapper( clot1, clot2,         %\n" \
-"%                                                offs1, offs2 ) ;      %\n" \
+"%                                                offs1, offs2 );       %\n" \
 "%                                                                      %\n" \
 "%  On input:                                                           %\n" \
 "%                                                                      %\n" \
@@ -68,8 +68,8 @@ namespace G2lib {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {
-      mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
-      return ;
+      mexErrMsgTxt(MEX_ERROR_MESSAGE);
+      return;
     }
 
     try {
@@ -79,33 +79,33 @@ namespace G2lib {
       ClothoidCurve * c1 = DATA_GET(arg_clot1);
       ClothoidCurve * c2 = DATA_GET(arg_clot2);
 
-      std::vector<real_type> s1, s2 ;
-      int_type max_iter  = 10 ;
-      real_type tolerance = 1e-8 ;
+      std::vector<real_type> s1, s2;
+      int_type  max_iter  = 10;
+      real_type tolerance = 1e-8;
 
       try {
-        c1->intersect( *c2, s1, s2, max_iter, tolerance ) ;
+        c1->intersect( *c2, s1, s2, max_iter, tolerance );
       }
       catch (...) {
-        mexErrMsgTxt("Intersection failed\n") ;
+        mexErrMsgTxt("Intersection failed\n");
       }
 
       if ( nlhs > 0 ) {
         arg_S1 = mxCreateNumericMatrix( s1.size(),1, mxDOUBLE_CLASS, mxREAL );
-        double * pS1 = mxGetPr(arg_S1) ;
-        for ( unsigned i = 0 ; i < s1.size() ; ++i ) *pS1++ = s1[i] ;
+        double * pS1 = mxGetPr(arg_S1);
+        for ( unsigned i = 0; i < s1.size(); ++i ) *pS1++ = s1[i];
       }
       if ( nlhs > 1 ) {
         arg_S2 = mxCreateNumericMatrix( s2.size(),1, mxDOUBLE_CLASS, mxREAL );
-        double * pS2 = mxGetPr(arg_S2) ;
-        for ( unsigned i = 0 ; i < s2.size() ; ++i ) *pS2++ = s2[i] ;
+        double * pS2 = mxGetPr(arg_S2);
+        for ( unsigned i = 0; i < s2.size(); ++i ) *pS2++ = s2[i];
       }
 
     } catch ( std::exception const & e ) {
-      mexErrMsgTxt(e.what()) ;
+      mexErrMsgTxt(e.what());
 
     } catch (...) {
-      mexErrMsgTxt("clothoid intersection failed\n") ;
+      mexErrMsgTxt("clothoid intersection failed\n");
     }
   }
 }

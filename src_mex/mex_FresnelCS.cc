@@ -18,8 +18,8 @@
 "           or Fresnel sine and cosine integrals momenta\n" \
 "\n" \
 "USAGE:\n" \
-"  [C,S] = FresnelCS(y) ;\n" \
-"  [X,Y] = FresnelCS( nk, a, b, c ) ;\n" \
+"  [C,S] = FresnelCS(y);\n" \
+"  [X,Y] = FresnelCS( nk, a, b, c );\n" \
 "\n" \
 "Fresnel integral are defined as:\n" \
 "\n" \
@@ -66,44 +66,44 @@ namespace G2lib {
                int nrhs, mxArray const *prhs[] ) {
 
     if ( nrhs == 0 && nlhs == 0 ) {
-      mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
-      return ;
+      mexErrMsgTxt(MEX_ERROR_MESSAGE);
+      return;
     }
 
     try {
 
       if ( nrhs == 1 ) {
 
-        mwSize size0 ;
+        mwSize size0;
         double const * y = getVectorPointer( arg_in_0, size0, "FresnelCS: argument `y` expected to be a real scalar/vector");
         double * C = createMatrixValue( arg_out_0, 1, size0 );
         double * S = createMatrixValue( arg_out_1, 1, size0 );
-        for ( mwSize i = 0 ; i < size0 ; ++i ) FresnelCS( *y++, *C++, *S++ ) ;
+        for ( mwSize i = 0; i < size0; ++i ) FresnelCS( *y++, *C++, *S++ );
 
       } else if ( nrhs == 4 ) {
 
         int_type nk = getInt( arg_in_0, "FresnelCS: argument `nk` expected to be and integer" );
         MEX_ASSERT( nk >= 1 && nk <= 3, "FresnelCS: argument `nk` = " << nk << " must be in [1,2,3]" );
-        mwSize na, nb, nc ;
+        mwSize na, nb, nc;
         double const * a = getVectorPointer( arg_in_1, na, "FresnelCS: argument `a` expected to be a real scalar/vector");
         double const * b = getVectorPointer( arg_in_2, nb, "FresnelCS: argument `b` expected to be a real scalar/vector");
         double const * c = getVectorPointer( arg_in_3, nc, "FresnelCS: argument `c` expected to be a real scalar/vector");
         MEX_ASSERT( na == nb && nb == nc, "FresnelCS: Second to last arguments must be vectors of the same length" );
         double * X = createMatrixValue( arg_out_0, nk, na );
         double * Y = createMatrixValue( arg_out_1, nk, na );
-        for ( mwSize k = 0 ; k < na ; ++k ) {
-          GeneralizedFresnelCS( nk, *a, *b, *c, X, Y ) ;
-          ++a ; ++b ; ++c ; X += nk ; Y += nk ;
+        for ( mwSize k = 0; k < na; ++k ) {
+          GeneralizedFresnelCS( nk, *a, *b, *c, X, Y );
+          ++a; ++b; ++c; X += nk; Y += nk;
         }
       } else {
         MEX_ASSERT( false, "FresnelCS: expected 1 or 4 airguments" );
       }
 
     } catch ( std::exception const & e ) {
-    	mexErrMsgTxt(e.what()) ;
+    	mexErrMsgTxt(e.what());
 
     } catch (...) {
-  	  mexErrMsgTxt("FresnelCS failed\n") ;
+  	  mexErrMsgTxt("FresnelCS failed\n");
     }
 
   }

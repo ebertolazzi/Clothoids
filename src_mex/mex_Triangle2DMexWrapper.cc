@@ -19,22 +19,22 @@
 "\n" \
 "USAGE:\n" \
 "\n" \
-"  OBJ = Triangle2DMexWrapper( 'new' ) ;\n" \
-"  OBJ = Triangle2DMexWrapper( 'new', x0, y0, x1, y1, x2, y2 ) ;\n" \
-"  OBJ = Triangle2DMexWrapper( 'new', p0, p1, p2 ) ;\n" \
+"  OBJ = Triangle2DMexWrapper( 'new' );\n" \
+"  OBJ = Triangle2DMexWrapper( 'new', x0, y0, x1, y1, x2, y2 );\n" \
+"  OBJ = Triangle2DMexWrapper( 'new', p0, p1, p2 );\n" \
 "\n" \
-"  Triangle2DMexWrapper( 'delete', OBJ ) ;\n" \
+"  Triangle2DMexWrapper( 'delete', OBJ );\n" \
 "\n" \
-"  Triangle2DMexWrapper( 'build', OBJ, x0, y0, x1, y1, x2, y2 ) ;\n" \
-"  Triangle2DMexWrapper( 'build', OBJ, p0, p1, p2 ) ;\n" \
-"  [p1,p2,p3] = Triangle2DMexWrapper( 'points', OBJ ) ;\n" \
+"  Triangle2DMexWrapper( 'build', OBJ, x0, y0, x1, y1, x2, y2 );\n" \
+"  Triangle2DMexWrapper( 'build', OBJ, p0, p1, p2 );\n" \
+"  [p1,p2,p3] = Triangle2DMexWrapper( 'points', OBJ );\n" \
 "\n" \
-"  Triangle2DMexWrapper( 'translate', OBJ, tx, ty ) ;\n" \
-"  Triangle2DMexWrapper( 'rotate', OBJ, angle, cx, cy ) ;\n" \
-"  Triangle2DMexWrapper( 'scale', OBJ, scale ) ;\n" \
+"  Triangle2DMexWrapper( 'translate', OBJ, tx, ty );\n" \
+"  Triangle2DMexWrapper( 'rotate', OBJ, angle, cx, cy );\n" \
+"  Triangle2DMexWrapper( 'scale', OBJ, scale );\n" \
 "\n" \
-"  [dmin,dmax] = Triangle2DMexWrapper( 'distance', OBJ, x, y ) ;\n" \
-"  [icode] = Triangle2DMexWrapper( 'isInside', OBJ, x, y ) ;\n" \
+"  [dmin,dmax] = Triangle2DMexWrapper( 'distance', OBJ, x, y );\n" \
+"  [icode] = Triangle2DMexWrapper( 'isInside', OBJ, x, y );\n" \
 "\n" \
 "%==========================================================================%\n" \
 "%                                                                          %\n" \
@@ -54,7 +54,7 @@ namespace G2lib {
   DATA_NEW( mxArray * & mx_id ) {
     Triangle2D * ptr = new Triangle2D();
     mx_id = convertPtr2Mat<Triangle2D>(ptr);
-    return ptr ;
+    return ptr;
   }
 
   static
@@ -77,16 +77,16 @@ namespace G2lib {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {
-      mexErrMsgTxt(MEX_ERROR_MESSAGE) ;
-      return ;
+      mexErrMsgTxt(MEX_ERROR_MESSAGE);
+      return;
     }
 
     try {
 
-      MEX_ASSERT( mxIsChar(arg_in_0), "Triangle2DMexWrapper(...): First argument must be a string" ) ;
-      string cmd = mxArrayToString(arg_in_0) ;
+      MEX_ASSERT( mxIsChar(arg_in_0), "Triangle2DMexWrapper(...): First argument must be a string" );
+      string cmd = mxArrayToString(arg_in_0);
 
-      bool do_new = cmd == "new" ;
+      bool do_new = cmd == "new";
       Triangle2D * ptr = do_new ? DATA_NEW(arg_out_0) : DATA_GET(arg_in_1);
 
       if ( do_new ) {
@@ -109,7 +109,7 @@ namespace G2lib {
         } else if ( nrhs == 4 ) {
 
           #define CMD "Triangle2DMexWrapper('new',p0,p1,p2): "
-          mwSize sz0, sz1, sz2 ;
+          mwSize sz0, sz1, sz2;
           real_type const * p0 = getVectorPointer( prhs[1], sz0, CMD "`p0` expected to be a real vector" );
           real_type const * p1 = getVectorPointer( prhs[2], sz1, CMD "`p1` expected to be a real vector" );
           real_type const * p2 = getVectorPointer( prhs[3], sz2, CMD "`p2` expected to be a real vector" );
@@ -143,7 +143,7 @@ namespace G2lib {
         } else if ( nrhs == 5 ) {
 
           #define CMD "Triangle2DMexWrapper('build',OBJ,p0,p1,p2): "
-          mwSize sz0, sz1, sz2 ;
+          mwSize sz0, sz1, sz2;
           real_type const * p0 = getVectorPointer( prhs[2], sz0, CMD "`p0` expected to be a real vector" );
           real_type const * p1 = getVectorPointer( prhs[3], sz1, CMD "`p1` expected to be a real vector" );
           real_type const * p2 = getVectorPointer( prhs[4], sz2, CMD "`p2` expected to be a real vector" );
@@ -163,7 +163,7 @@ namespace G2lib {
         MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
         MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
         // Destroy the C++ object
-        DATA_DELETE( arg_in_1 ) ;
+        DATA_DELETE( arg_in_1 );
         #undef CMD
 
       } else if ( cmd == "translate" ) {
@@ -209,18 +209,18 @@ namespace G2lib {
 
         mwSize nrx, ncx, nry, ncy;
         real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
-                              CMD "`x` expected to be a real vector/matrix" ) ;
+                              CMD "`x` expected to be a real vector/matrix" );
         real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
-                              CMD "`y` expected to be a real vectormatrix" ) ;
+                              CMD "`y` expected to be a real vectormatrix" );
         MEX_ASSERT( nrx == nry && ncx == ncy,
                     CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                     nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-        real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
 
-        mwSize size = nrx*ncx ;
-        for ( mwSize i = 0 ; i < size ; ++i )
-          *dst++ = ptr->distMin( *x++, *y++ ) ;
+        mwSize size = nrx*ncx;
+        for ( mwSize i = 0; i < size; ++i )
+          *dst++ = ptr->distMin( *x++, *y++ );
 
         #undef CMD
 
@@ -232,19 +232,19 @@ namespace G2lib {
 
         mwSize nrx, ncx, nry, ncy;
         real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
-                              CMD "`x` expected to be a real vector/matrix" ) ;
+                              CMD "`x` expected to be a real vector/matrix" );
         real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
-                              CMD "`y` expected to be a real vectormatrix" ) ;
+                              CMD "`y` expected to be a real vectormatrix" );
         MEX_ASSERT( nrx == nry && ncx == ncy,
                     CMD "`x` and `y` expected to be of the same size, found" <<
                     " size(x) = " << nrx << " x " << nry <<
                     " size(y) = " << nry << " x " << ncy );
 
-        real_type * dst = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
 
-        mwSize size = nrx*ncx ;
-        for ( mwSize i = 0 ; i < size ; ++i )
-          *dst++ = ptr->distMax( *x++, *y++ ) ;
+        mwSize size = nrx*ncx;
+        for ( mwSize i = 0; i < size; ++i )
+          *dst++ = ptr->distMax( *x++, *y++ );
 
         #undef CMD
 
@@ -256,19 +256,19 @@ namespace G2lib {
 
         mwSize nrx, ncx, nry, ncy;
         real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
-                              CMD "`x` expected to be a real vector/matrix" ) ;
+                              CMD "`x` expected to be a real vector/matrix" );
         real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
-                              CMD "`y` expected to be a real vectormatrix" ) ;
+                              CMD "`y` expected to be a real vectormatrix" );
         MEX_ASSERT( nrx == nry && ncx == ncy,
                     CMD "`x` and `y` expected to be of the same size, found" <<
                     " size(x) = " << nrx << " x " << ncx <<
                     " size(y) = " << nry << " x " << ncy );
 
-        int64_t * icode = createMatrixInt64( arg_out_0, nrx, ncx ) ;
+        int64_t * icode = createMatrixInt64( arg_out_0, nrx, ncx );
 
-        mwSize size = nrx*ncx ;
-        for ( mwSize i = 0 ; i < size ; ++i )
-          *icode++ = int64_t(ptr->isInside( *x++, *y++ )) ;
+        mwSize size = nrx*ncx;
+        for ( mwSize i = 0; i < size; ++i )
+          *icode++ = int64_t(ptr->isInside( *x++, *y++ ));
 
         #undef CMD
 
@@ -278,9 +278,9 @@ namespace G2lib {
         MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
         MEX_ASSERT( nlhs == 3, CMD "expected 3 output, nlhs = " << nlhs );
 
-        real_type * p1 = createMatrixValue( arg_out_0, 2, 1 ) ;
-        real_type * p2 = createMatrixValue( arg_out_1, 2, 1 ) ;
-        real_type * p3 = createMatrixValue( arg_out_2, 2, 1 ) ;
+        real_type * p1 = createMatrixValue( arg_out_0, 2, 1 );
+        real_type * p2 = createMatrixValue( arg_out_1, 2, 1 );
+        real_type * p3 = createMatrixValue( arg_out_2, 2, 1 );
 
         std::copy( ptr->P1(), ptr->P1()+2, p1 );
         std::copy( ptr->P2(), ptr->P2()+2, p2 );
@@ -292,10 +292,10 @@ namespace G2lib {
 
         #define CMD "Triangle2DMexWrapper('info',OBJ): "
 
-        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs ) ;
-        MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs ) ;
-        
-        ptr->info(cout) ;
+        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs );
+
+        ptr->info(cout);
 
         #undef CMD
 
@@ -304,9 +304,9 @@ namespace G2lib {
       }
 
     } catch ( exception const & e ) {
-    	mexErrMsgTxt(e.what()) ;
+    	mexErrMsgTxt(e.what());
     } catch (...) {
-    	mexErrMsgTxt("Triangle2DMexWrapper failed\n") ;
+    	mexErrMsgTxt("Triangle2DMexWrapper failed\n");
     }
   }
 }

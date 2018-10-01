@@ -60,11 +60,11 @@ either expressed or implied, of the FreeBSD Project.
 #define arg_out_8 plhs[8]
 #define arg_out_9 plhs[9]
 
-#define MEX_ASSERT(COND,MSG)              \
-  if ( !(COND) ) {                        \
-    std::ostringstream ost ;              \
-    ost << "Mex Error: " << MSG << '\n' ; \
-    mexErrMsgTxt(ost.str().c_str()) ;     \
+#define MEX_ASSERT(COND,MSG)             \
+  if ( !(COND) ) {                       \
+    std::ostringstream ost;              \
+    ost << "Mex Error: " << MSG << '\n'; \
+    mexErrMsgTxt(ost.str().c_str());     \
   }
 
 // -----------------------------------------------------------------------------
@@ -73,44 +73,44 @@ static
 inline
 bool
 isScalar( mxArray const * arg, char const msg[] ) {
-  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
-  MEX_ASSERT( number_of_dimensions == 2, msg ) ;
-  mwSize const * dims = mxGetDimensions(arg) ;
-  return dims[0] == 1 && dims[1] == 1 ;
+  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
+  MEX_ASSERT( number_of_dimensions == 2, msg );
+  mwSize const * dims = mxGetDimensions(arg);
+  return dims[0] == 1 && dims[1] == 1;
 }
 
 static
 inline
 double
 getScalarValue( mxArray const * arg, char const msg[] ) {
-  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
-  MEX_ASSERT( number_of_dimensions == 2, msg ) ;
-  mwSize const * dims = mxGetDimensions(arg) ;
+  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
+  MEX_ASSERT( number_of_dimensions == 2, msg );
+  mwSize const * dims = mxGetDimensions(arg);
   MEX_ASSERT( dims[0] == 1 && dims[1] == 1,
-              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" ) ;
-  return mxGetScalar(arg) ;
+              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" );
+  return mxGetScalar(arg);
 }
 
 static
 inline
 bool
 getBool( mxArray const * arg, char const msg[] ) {
-  MEX_ASSERT( mxIsLogicalScalar(arg), msg ) ;
-  return mxIsLogicalScalarTrue(arg) ;
+  MEX_ASSERT( mxIsLogicalScalar(arg), msg );
+  return mxIsLogicalScalarTrue(arg);
 }
 
 static
 inline
 int64_t
 getInt( mxArray const * arg, char const msg[] ) {
-  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
-  MEX_ASSERT( number_of_dimensions == 2, msg ) ;
-  mwSize const * dims = mxGetDimensions(arg) ;
+  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
+  MEX_ASSERT( number_of_dimensions == 2, msg );
+  mwSize const * dims = mxGetDimensions(arg);
   MEX_ASSERT( dims[0] == 1 && dims[1] == 1,
-              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" ) ;
+              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" );
   mxClassID category = mxGetClassID(arg);
-  int64_t res = 0 ;
-  void *ptr = mxGetData(arg) ;
+  int64_t res = 0;
+  void *ptr = mxGetData(arg);
   switch (category)  {
     case mxINT8_CLASS:   res = *static_cast<uint8_t*>(ptr); break;
     case mxUINT8_CLASS:  res = *static_cast<uint8_t*>(ptr);  break;
@@ -121,48 +121,48 @@ getInt( mxArray const * arg, char const msg[] ) {
     case mxINT64_CLASS:  res = *static_cast<int64_t*>(ptr);  break;
     case mxUINT64_CLASS: res = *static_cast<uint64_t*>(ptr); break;
     case mxDOUBLE_CLASS:
-      { double tmp = *static_cast<double*>(ptr) ;
-        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp ) ;
-        res = static_cast<int64_t>(tmp) ;
+      { double tmp = *static_cast<double*>(ptr);
+        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp );
+        res = static_cast<int64_t>(tmp);
       }
-      break ;
+      break;
     case mxSINGLE_CLASS:
-      { float tmp = *static_cast<float*>(ptr) ;
-        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp ) ;
-        res = static_cast<int64_t>(tmp) ;
+      { float tmp = *static_cast<float*>(ptr);
+        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp );
+        res = static_cast<int64_t>(tmp);
       }
-      break ;
+      break;
     default:
-      MEX_ASSERT (false, msg << " bad type scalar" ) ;
+      MEX_ASSERT (false, msg << " bad type scalar" );
     break;
   }
-  return res ;
+  return res;
 }
 
 static
 inline
 double const *
 getVectorPointer( mxArray const * arg, mwSize & sz, char const msg[] ) {
-  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
-  MEX_ASSERT( number_of_dimensions == 2, msg ) ;
-  mwSize const * dims = mxGetDimensions(arg) ;
+  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
+  MEX_ASSERT( number_of_dimensions == 2, msg );
+  mwSize const * dims = mxGetDimensions(arg);
   MEX_ASSERT( dims[0] == 1 || dims[1] == 1,
               msg << "\nExpect (1 x n or n x 1) matrix, found " <<
-              dims[0] << " x " << dims[1] ) ;
-  sz = dims[0]*dims[1] ;
-  return mxGetPr(arg) ;
+              dims[0] << " x " << dims[1] );
+  sz = dims[0]*dims[1];
+  return mxGetPr(arg);
 }
 
 static
 inline
 double const *
 getMatrixPointer( mxArray const * arg, mwSize & nr, mwSize & nc,  char const msg[] ) {
-  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg) ;
-  MEX_ASSERT( number_of_dimensions == 2, msg ) ;
-  mwSize const * dims = mxGetDimensions(arg) ;
-  nr = dims[0] ;
-  nc = dims[1] ;
-  return mxGetPr(arg) ;
+  mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
+  MEX_ASSERT( number_of_dimensions == 2, msg );
+  mwSize const * dims = mxGetDimensions(arg);
+  nr = dims[0];
+  nc = dims[1];
+  return mxGetPr(arg);
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ static
 inline
 void
 setScalarValue( mxArray * & arg, double value ) {
-  arg = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL) ;
+  arg = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
   *mxGetPr(arg) = value;
 }
 
@@ -180,14 +180,14 @@ inline
 void
 setScalarInt( mxArray * & arg, int64_t value ) {
   arg = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-  *static_cast<int64_t*>(mxGetData(arg)) = value ;
+  *static_cast<int64_t*>(mxGetData(arg)) = value;
 }
 
 static
 inline
 void
 setScalarBool( mxArray * & arg, bool v ) {
-  arg = mxCreateLogicalMatrix(1, 1) ;
+  arg = mxCreateLogicalMatrix(1, 1);
   *mxGetLogicals(arg) = v;
 }
 
@@ -196,7 +196,7 @@ inline
 int32_t *
 createMatrixInt32( mxArray * & arg, mwSize nrow, mwSize ncol ) {
   arg = mxCreateNumericMatrix( nrow, ncol, mxINT32_CLASS, mxREAL );
-  return static_cast<int32_t*>(mxGetData(arg)) ;
+  return static_cast<int32_t*>(mxGetData(arg));
 }
 
 static
@@ -204,7 +204,7 @@ inline
 int64_t *
 createMatrixInt64( mxArray * & arg, mwSize nrow, mwSize ncol ) {
   arg = mxCreateNumericMatrix( nrow, ncol, mxINT64_CLASS, mxREAL );
-  return static_cast<int64_t*>(mxGetData(arg)) ;
+  return static_cast<int64_t*>(mxGetData(arg));
 }
 
 static
@@ -212,7 +212,7 @@ inline
 double *
 createMatrixValue( mxArray * & arg, mwSize nrow, mwSize ncol ) {
   arg = mxCreateNumericMatrix( nrow, ncol, mxDOUBLE_CLASS, mxREAL );
-  return mxGetPr(arg) ;
+  return mxGetPr(arg);
 }
 
 // -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ inline
 void
 destroyObject(const mxArray *in) {
   if ( in != nullptr ) delete convertMat2HandlePtr<base>(in);
-  in = nullptr ;
+  in = nullptr;
   mexUnlock();
 }
 
