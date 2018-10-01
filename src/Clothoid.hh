@@ -520,6 +520,17 @@ namespace G2lib {
       CD.eval_DDD( s, t, x_DDD, y_DDD );
     }
 
+    /*!
+     | \brief Compute the point on clothoid at minimal distance from a given point
+     |
+     | \param  qx x-coordinate of the given point
+     | \param  qy y-coordinate of the given point
+     | \param  X  x-coordinate of the point on clothoid at minimal distance
+     | \param  Y  y-coordinate of the point on clothoid at minimal distance
+     | \param  S  curvilinear coordinate of the point (X,Y) on the clothoid
+     | \return the distance of the
+     |
+     */
     real_type
     closestPoint( real_type   qx,
                   real_type   qy,
@@ -1488,15 +1499,36 @@ namespace G2lib {
     distance( real_type qx, real_type qy ) const
     { real_type S; return distance( qx, qy, S ); }
 
-    /*! \brief Find parametric coordinate.
-     *
-     * \param x x-coordinate point
-     * \param y y-coordinate point
-     * \param s value \f$ s \f$
-     * \param t value \f$ t \f$
-     */
-    bool
+    /*!
+     | \brief Find parametric coordinate.
+     |
+     | \param  x    x-coordinate point
+     | \param  y    y-coordinate point
+     | \param  s    value \f$ s \f$
+     | \param  t    value \f$ t \f$
+     | \return idx  the segment with point at minimal distance, otherwise
+     |              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+     |
+    \*/
+    int_type
     findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const;
+
+    /*!
+     | \brief Find parametric coordinate.
+     |
+     | \param  iseg  segment to compute the distance
+     | \param  x     x-coordinate point
+     | \param  y     y-coordinate point
+     | \param  s     value \f$ s \f$
+     | \param  t     value \f$ t \f$
+     | \return false if (x,y) cannot be projected orthogonally on the segment
+    \*/
+    bool
+    findST( int_type    iseg,
+            real_type   x,
             real_type   y,
             real_type & s,
             real_type & t ) const;
@@ -1508,12 +1540,12 @@ namespace G2lib {
     void reverse();
 
     /*! \brief split clothois in smaller segments
-     *
-     * \param split_angle maximum angle variation
-     * \param split_size  maximum height of the triangle
-     * \param split_offs  curve offset
-     * \param bb          splitting data structures vector
-     */
+     |
+     | \param split_angle maximum angle variation
+     | \param split_size  maximum height of the triangle
+     | \param split_offs  curve offset
+     | \param bb          splitting data structures vector
+    \*/
     void
     bbSplit( real_type split_angle,
              real_type split_size,

@@ -804,9 +804,11 @@ namespace G2lib {
 
       } else if ( cmd == "findST" ) {
 
-        #define CMD "ClothoidListMexWrapper('findST',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+        #define CMD "ClothoidListMexWrapper('findST',OBJ,x,y[,nseg]): "
+        MEX_ASSERT( nrhs == 4 || nrhs == 5,
+                    CMD "expected 4 or 5 inputs, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 3,
+                    CMD "expected 3 output, nlhs = " << nlhs );
         mwSize nrx, ncx, nry, ncy;
         real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
                               CMD "`x` expected to be a real vector/matrix" ) ;
@@ -816,12 +818,27 @@ namespace G2lib {
                     CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                     nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-        real_type * s = createMatrixValue( arg_out_0, nrx, ncx ) ;
-        real_type * t = createMatrixValue( arg_out_1, nrx, ncx ) ;
+        real_type * s   = createMatrixValue( arg_out_0, nrx, ncx ) ;
+        real_type * t   = createMatrixValue( arg_out_1, nrx, ncx ) ;
+        real_type * idx = createMatrixValue( arg_out_2, nrx, ncx ) ;
 
         mwSize size = nrx*ncx ;
-        for ( mwSize i = 0 ; i < size ; ++i )
-          ptr->findST( *x++, *y++, *s++, *t++ ) ;
+        if ( nrhs == 4 ) {
+          for ( mwSize i = 0 ; i < size ; ++i )
+            *idx++ = ptr->findST( *x++, *y++, *s++, *t++ ) ;
+        } else {
+          real_type const * idx_guess = getMatrixPointer( arg_in_3, nrx, ncx,
+                                        CMD "`nseg` expected to be a real vector/matrix" ) ;
+          MEX_ASSERT( nrx == nry && ncx == ncy,
+                      CMD "`x` and `y` and `nseg` expected to be of the same size, found size(x) =  size(y) = " <<
+                      nrx << " x " << nry << " size(nseg) = " << nry << " x " << ncy );
+          for ( mwSize i = 0 ; i < size ; ++i ) {
+            int_type nseg = int_type(*idx_guess++);
+            bool ok = ptr->findST( nseg, *x++, *y++, *s++, *t++ ) ;
+            *idx = ok ? nseg : -(1+nseg);
+            ++idx; ++idx_guess;
+          }
+        }
 
         #undef CMD
       } else if ( cmd == "export_table" || cmd == "export_ruby" ) {

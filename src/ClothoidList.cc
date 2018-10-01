@@ -534,7 +534,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
+  int_type
   ClothoidList::findST( real_type   x,
                         real_type   y,
                         real_type & s,
@@ -545,14 +545,37 @@ namespace G2lib {
     std::vector<real_type>::const_iterator     is = s0.begin();
 
     s = t = 0;
+    int_type  ipos = 0;
+    int_type  iseg = 0;
     real_type S, T;
     bool ok = ic->findST( x, y, S, T );
     if ( ok ) { s = *is + S; t = T; }
-    for ( ++ic, ++is; ic != clotoidList.end(); ++ic, ++is ) {
+    for ( ++ic, ++is, ++ipos;
+          ic != clotoidList.end();
+          ++ic, ++is, ++ipos ) {
       bool ok1 = ic->findST( x, y, S, T );
       if ( ok && ok1 ) ok1 = std::abs(T) < std::abs(t);
-      if ( ok1 ) { ok = true; s = *is + S; t = T; }
+      if ( ok1 ) {
+        ok   = true;
+        s    = *is + S;
+        t    = T;
+        iseg = ipos;
+      }
     }
+    return ok ? ipos : -(1+ipos);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::findST( int_type    iseg,
+                        real_type   x,
+                        real_type   y,
+                        real_type & s,
+                        real_type & t ) const {
+    G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
+    bool ok = clotoidList[iseg].findST( x, y, s, t );
+    s += s0[iseg];
     return ok;
   }
 

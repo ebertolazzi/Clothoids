@@ -95,6 +95,8 @@ namespace G2lib {
   typedef int    int_type;
 
   extern real_type const machepsi;
+  extern real_type const machepsi10;
+  extern real_type const machepsi100;
   extern real_type const m_pi;        // pi
   extern real_type const m_pi_2;      // pi/2
   extern real_type const m_2pi;       // 2*pi

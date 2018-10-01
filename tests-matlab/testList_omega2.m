@@ -26,18 +26,41 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
      -3.178123242,-3.178123242,-2.989063158,-0.915616758,0.925003242, ...
      2.953123242,0.925003242,-0.915616758,-2.989063158,-3.178123242,-3.178123242, -1.707808758 ] ;
 
-
-S = ClothoidSplineG2() ;
+S  = ClothoidSplineG2() ;
 SL = S.buildP2( X, Y ) ;
+
+
+%DX = X(2:end)-X(1:end-1);
+%DY = Y(2:end)-Y(1:end-1);
+%T  = [0,cumsum(hypot(DX,DY))];
+[ T, ~, ~ ] = SL.getSTK();
+
+ppX = spline( T, X );
+ppY = spline( T, Y );
 
 subplot(2,1,1);
 
+
+
+TT = T(1):(T(end)-T(1))/1000:T(end);
+XX = ppval(ppX,TT);
+YY = ppval(ppY,TT);
+DXX = ppval(fnder(ppX,1),TT);
+DYY = ppval(fnder(ppY,1),TT);
+DDXX = ppval(fnder(ppX,2),TT);
+DDYY = ppval(fnder(ppY,2),TT);
+plot(8+XX,YY,'Linewidth',3);
+hold on
 SL.plot() ;
-SL.deltaTheta()
-SL.deltaKappa()
+
+
 axis equal
 
 subplot(2,1,2);
+
+KUR = (DXX.*DDYY-DYY.*DDXX)./hypot(DXX,DYY);
+plot( TT, KUR );
+hold on
 SL.plotCurvature(1000) ;
 
 

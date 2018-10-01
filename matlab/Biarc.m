@@ -3,7 +3,7 @@ classdef Biarc < handle
   properties (SetAccess = private, Hidden = true)
     objectHandle; % Handle to the underlying C++ class instance
   end
-    
+
   methods
     function self = Biarc( varargin )
       %% Create a new C++ class instance for the clothoid arc object
@@ -70,13 +70,13 @@ classdef Biarc < handle
       % Usage:
       %    [x,y] = ref.eval( s )
       %    [x,y,theta,kappa] = ref.eval( s )
-      %    
+      %
       % On input:
       %    s: curvilinear coordinates where to evaluate the curve
       %       (scalar or vector)
       %
       % On output:
-      %    x, y:  coordinates of the curve 
+      %    x, y:  coordinates of the curve
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
       %
@@ -189,7 +189,7 @@ classdef Biarc < handle
       %
       % Usage:
       %    ref.rotate(angle, cx, cy)
-      %    
+      %
       % On input:
       %    angle: the angle of rotation
       %    cx, cy: coordinates of the centre of rotation
@@ -202,19 +202,19 @@ classdef Biarc < handle
       %
       % Usage:
       %    ref.translate(tx, ty)
-      %    
+      %
       % On input:
       %    tx, ty: horizontal and vertical translation
-      %   
+      %
       BiarcMexWrapper( 'translate', self.objectHandle, tx, ty );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeOrigin( self, newX0, newY0 )
-      % move the origin of the clothoid to `(newX0, newY0)` 
+      % move the origin of the clothoid to `(newX0, newY0)`
       %
       % Usage:
       %    ref.changeOrigin(newX0, newY0)
-      %    
+      %
       % On input:
       %    newX0, newY0: new coordinates of initial point
       %
@@ -226,15 +226,15 @@ classdef Biarc < handle
       %
       % Usage:
       %    ref.scale(newX0, newY0)
-      %    
+      %
       % On input:
       %    newX0, newY0: new coordinates of initial point
-            
+
       BiarcMexWrapper( 'scale', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function reverse( self )
-      % reverse the orientation of the clothoid curve 
+      % reverse the orientation of the clothoid curve
       % Usage:
       %    ref.reverse()
       %

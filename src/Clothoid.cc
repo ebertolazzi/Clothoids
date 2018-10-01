@@ -423,7 +423,9 @@ namespace G2lib {
     real_type d = closestPoint( x, y, X, Y, s );
     NOR( s, nx, ny );
     t = nx*(x-X) + ny*(y-Y);
-    return d <= std::abs(t)*(1+100*machepsi);
+    real_type abst = std::abs(t);
+    // check if projection is ortogonal on the curve
+    return (d-abst) <= machepsi100*abst;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

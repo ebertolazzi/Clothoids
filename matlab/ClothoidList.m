@@ -110,13 +110,13 @@ classdef ClothoidList < handle
       % Usage:
       %    [x,y] = ref.eval( s )
       %    [x,y,theta,kappa] = ref.eval( s )
-      %    
+      %
       % On input:
       %    s: curvilinear coordinates where to evaluate the curve
       %       (scalar or vector)
       %
       % On output:
-      %    x, y:  coordinates of the curve 
+      %    x, y:  coordinates of the curve
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
       %
@@ -209,7 +209,7 @@ classdef ClothoidList < handle
       %
       % Usage:
       %    ref.rotate(angle, cx, cy)
-      %    
+      %
       % On input:
       %    angle: the angle of rotation
       %    cx, cy: coordinates of the centre of rotation
@@ -222,19 +222,19 @@ classdef ClothoidList < handle
       %
       % Usage:
       %    ref.translate(tx, ty)
-      %    
+      %
       % On input:
       %    tx, ty: horizontal and vertical translation
-      %   
+      %
       ClothoidListMexWrapper( 'translate', self.objectHandle, tx, ty );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeOrigin( self, newX0, newY0 )
-      % move the origin of the clothoid to `(newX0, newY0)` 
+      % move the origin of the clothoid to `(newX0, newY0)`
       %
       % Usage:
       %    ref.changeOrigin(newX0, newY0)
-      %    
+      %
       % On input:
       %    newX0, newY0: new coordinates of initial point
       %
@@ -246,15 +246,15 @@ classdef ClothoidList < handle
       %
       % Usage:
       %    ref.scale(newX0, newY0)
-      %    
+      %
       % On input:
       %    newX0, newY0: new coordinates of initial point
-            
+
       ClothoidListMexWrapper( 'scale', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function reverse( self )
-      % reverse the orientation of the clothoid curve 
+      % reverse the orientation of the clothoid curve
       % Usage:
       %    ref.reverse()
       %
@@ -296,8 +296,8 @@ classdef ClothoidList < handle
       ClothoidListMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [s,t] = find_coord( self, x, y )
-      [s,t] = ClothoidListMexWrapper( 'findST', self.objectHandle, x, y );
+    function [ s, t, ipos ] = find_coord( self, x, y, varargin )
+      [ s, t, ipos ] = ClothoidListMexWrapper( 'findST', self.objectHandle, x, y, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
@@ -433,5 +433,5 @@ classdef ClothoidList < handle
     end
 
   end
-  
+
 end

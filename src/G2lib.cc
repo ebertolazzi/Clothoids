@@ -22,6 +22,8 @@
 namespace G2lib {
 
   real_type const machepsi    = std::numeric_limits<real_type>::epsilon();
+  real_type const machepsi10  = 10*machepsi;
+  real_type const machepsi100 = 100*machepsi;
   real_type const m_pi        = 3.14159265358979323846264338328;  // pi
   real_type const m_pi_2      = 1.57079632679489661923132169164;  // pi/2
   real_type const m_2pi       = 6.28318530717958647692528676656;  // 2*pi
@@ -241,7 +243,7 @@ namespace G2lib {
     real_type dy1 = P2[1] - P1[1];
     real_type dx2 = P3[0] - P1[0];
     real_type dy2 = P3[1] - P1[1];
-    real_type tol = 10*machepsi*(hypot(dx1,dy1)*hypot(dx2,dy2));
+    real_type tol = machepsi10*(hypot(dx1,dy1)*hypot(dx2,dy2));
     real_type det = dx1*dy2 - dy1*dx2;
     if      ( det >  tol ) return  1;
     else if ( det < -tol ) return -1;
