@@ -510,25 +510,23 @@ namespace G2lib {
 
         #define CMD "ClothoidListMexWrapper('closestPoint',OBJ,x,y): "
         MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = " << nlhs );
-        if ( nlhs > 0 ) {
-          MEX_ASSERT(nlhs <= 2, CMD "expected 1 or 2 output, nlhs = " << nlhs );
-          mwSize nrx, ncx, nry, ncy;
-          real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
-          real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" );
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+        MEX_ASSERT( nlhs == 4, CMD "expected 4 output, nlhs = " << nlhs );
+        mwSize nrx, ncx, nry, ncy;
+        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
+        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" );
+        MEX_ASSERT( nrx == nry && ncx == ncy,
+                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
 
-          real_type * X   = createMatrixValue( arg_out_0, nrx, ncx );
-          real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx );
-          real_type * S   = createMatrixValue( arg_out_2, nrx, ncx );
-          real_type * dst = createMatrixValue( arg_out_3, nrx, ncx );
+        real_type * X   = createMatrixValue( arg_out_0, nrx, ncx );
+        real_type * Y   = createMatrixValue( arg_out_1, nrx, ncx );
+        real_type * S   = createMatrixValue( arg_out_2, nrx, ncx );
+        real_type * dst = createMatrixValue( arg_out_3, nrx, ncx );
 
-          mwSize size = nrx*ncx;
-          for ( mwSize i = 0; i < size; ++i )
-            *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ );
-        }
+        mwSize size = nrx*ncx;
+        for ( mwSize i = 0; i < size; ++i )
+          *dst++ = ptr->closestPoint( *x++, *y++, *X++, *Y++, *S++ );
+
         #undef CMD
 
       } else if ( cmd == "intersect_line"   ||
@@ -824,9 +822,10 @@ namespace G2lib {
 
         mwSize size = nrx*ncx;
         if ( nrhs == 4 ) {
-          for ( mwSize i = 0; i < size; ++i )
+          for ( mwSize i = 0; i < size; ++i ) {
             int_type nseg = ptr->findST( *x++, *y++, *s++, *t++ );
             *idx++ = nseg >= 0 ? nseg+1 : nseg;
+          }
         } else {
           real_type const * idx_guess = getMatrixPointer( arg_in_3, nrx, ncx,
                                         CMD "`nseg` expected to be a real vector/matrix" );
