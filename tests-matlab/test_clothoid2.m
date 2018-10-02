@@ -36,7 +36,7 @@ for kk=1:4
   case 3; subplot('Position',[aa+0.5 aa+0.5 bb bb]);
   case 4; subplot('Position',[aa aa+0.5 bb bb]);
   end
-  
+
   L1 = ClothoidCurve( x0(kk), y0(kk), theta0, kappa0(kk), dk(kk), L(kk) );
   %
   x     = -10:0.02:10 ;

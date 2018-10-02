@@ -296,8 +296,12 @@ classdef ClothoidList < handle
       ClothoidListMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ s, t, ipos ] = find_coord( self, x, y, varargin )
-      [ s, t, ipos ] = ClothoidListMexWrapper( 'findST', self.objectHandle, x, y, varargin{:} );
+    function [ s, t, ipos ] = find_coord( self, x, y )
+      [ s, t, ipos ] = ClothoidListMexWrapper( 'findST', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ s, t, ipos ] = find_coord1( self, x, y, ipos )
+      [ s, t, ipos ] = ClothoidListMexWrapper( 'findST1', self.objectHandle, x, y, ipos );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )

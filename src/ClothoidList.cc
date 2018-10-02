@@ -549,7 +549,12 @@ namespace G2lib {
     int_type  iseg = 0;
     real_type S, T;
     bool ok = ic->findST( x, y, S, T );
-    if ( ok ) { s = *is + S; t = T; }
+    if ( ok ) {
+      s = *is + S;
+      t = T;
+      iseg = 0;
+    }
+
     for ( ++ic, ++is, ++ipos;
           ic != clotoidList.end();
           ++ic, ++is, ++ipos ) {
@@ -562,7 +567,8 @@ namespace G2lib {
         iseg = ipos;
       }
     }
-    return ok ? ipos : -(1+ipos);
+
+    return ok ? iseg : -(1+iseg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -574,6 +580,8 @@ namespace G2lib {
                         real_type & s,
                         real_type & t ) const {
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
+    G2LIB_ASSERT( iseg >= 0 && iseg < clotoidList.size(),
+                  "ClothoidList::findST, iseg = " << iseg << " out of size" );
     bool ok = clotoidList[iseg].findST( x, y, s, t );
     s += s0[iseg];
     return ok;

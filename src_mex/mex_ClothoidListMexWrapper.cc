@@ -802,9 +802,9 @@ namespace G2lib {
 
       } else if ( cmd == "findST" ) {
 
-        #define CMD "ClothoidListMexWrapper('findST',OBJ,x,y[,nseg]): "
-        MEX_ASSERT( nrhs == 4 || nrhs == 5,
-                    CMD "expected 4 or 5 inputs, nrhs = " << nrhs );
+        #define CMD "ClothoidListMexWrapper('findST',OBJ,x,y): "
+        MEX_ASSERT( nrhs == 4,
+                    CMD "expected 4 inputs, nrhs = " << nrhs );
         MEX_ASSERT( nlhs == 3,
                     CMD "expected 3 output, nlhs = " << nlhs );
         mwSize nrx, ncx, nry, ncy;
@@ -821,23 +821,40 @@ namespace G2lib {
         real_type * idx = createMatrixValue( arg_out_2, nrx, ncx );
 
         mwSize size = nrx*ncx;
-        if ( nrhs == 4 ) {
-          for ( mwSize i = 0; i < size; ++i ) {
-            int_type nseg = ptr->findST( *x++, *y++, *s++, *t++ );
-            *idx++ = nseg >= 0 ? nseg+1 : nseg;
-          }
-        } else {
-          real_type const * idx_guess = getMatrixPointer( arg_in_3, nrx, ncx,
-                                        CMD "`nseg` expected to be a real vector/matrix" );
-          MEX_ASSERT( nrx == nry && ncx == ncy,
-                      CMD "`x` and `y` and `nseg` expected to be of the same size, found size(x) =  size(y) = " <<
-                      nrx << " x " << nry << " size(nseg) = " << nry << " x " << ncy );
-          for ( mwSize i = 0; i < size; ++i ) {
-            int_type nseg = int_type(*idx_guess++);
-            bool ok = ptr->findST( nseg-1, *x++, *y++, *s++, *t++ );
-            *idx = ok ? nseg+1 : -(1+nseg);
-            ++idx; ++idx_guess;
-          }
+        for ( mwSize i = 0; i < size; ++i ) {
+          int_type nseg = ptr->findST( *x++, *y++, *s++, *t++ );
+          *idx++ = nseg >= 0 ? nseg+1 : nseg;
+        }
+
+        #undef CMD
+
+      } else if ( cmd == "findST1" ) {
+
+        #define CMD "ClothoidListMexWrapper('findST1',OBJ,x,y,nseg): "
+        MEX_ASSERT( nrhs == 5,
+                    CMD "expected 5 inputs, nrhs = " << nrhs );
+        MEX_ASSERT( nlhs == 3,
+                    CMD "expected 3 output, nlhs = " << nlhs );
+        mwSize nrx, ncx, nry, ncy;
+        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
+                              CMD "`x` expected to be a real vector/matrix" );
+        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
+                              CMD "`y` expected to be a real vector/matrix" );
+        MEX_ASSERT( nrx == nry && ncx == ncy,
+                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+        real_type * s   = createMatrixValue( arg_out_0, nrx, ncx );
+        real_type * t   = createMatrixValue( arg_out_1, nrx, ncx );
+        real_type * idx = createMatrixValue( arg_out_2, nrx, ncx );
+
+        mwSize size = nrx*ncx;
+        int64_t nseg = getInt( arg_in_4,
+                               CMD "`nseg` expected to be a scalar integer" );
+        int_type n = int_type(nseg-1);
+        for ( mwSize i = 0; i < size; ++i ) {
+          bool ok = ptr->findST( n, *x++, *y++, *s++, *t++ );
+          *idx++ = ok ? real_type(nseg) : real_type(-nseg);
         }
 
         #undef CMD

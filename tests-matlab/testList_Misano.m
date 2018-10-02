@@ -11,20 +11,20 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
-x0     = 0 ;
-y0     = 0 ;
+x0     = 0;
+y0     = 0;
 theta0 = pi+pi/4;
 
-S = ClothoidList() ;
+S = ClothoidList();
 
-addseg  = @(a,r) S.push_back( -1/r, 0, abs(a*r) ) ;
-addseg1 = @(l) S.push_back( 0, 0, l ) ;
+addseg  = @(a,r) S.push_back( -1/r, 0, abs(a*r) );
+addseg1 = @(l) S.push_back( 0, 0, l );
 
 % STRAIGHT LINE      START GRID
 %% STRAIGHT LINE														      START GRID
-S.push_back( x0, y0, theta0, 0, 0, 257 ) ; % first segment
+S.push_back( x0, y0, theta0, 0, 0, 257 ); % first segment
 
 %  CORNER  (1. Variante del parco, dx)
 addseg(1.17560115144983,33.6446932777513);
@@ -44,7 +44,7 @@ addseg(1.12076347287888,56.0744887962522);
 % STRAIGHT LINE
 addseg1(177.150952012352);
 
-% CORNER (4 ,cambio direzione dx ) 
+% CORNER (4 ,cambio direzione dx )
 addseg(2.14495670467292,16.8223466388757);
 
 % STRAIGHT LINE
@@ -68,13 +68,13 @@ addseg(0.192440673730988,-123.363875351755);
 % STRAIGHT LINE
 addseg1(255.294862398743);
 
-% CORNER: (7. Quercia , sx) 
+% CORNER: (7. Quercia , sx)
 addseg(2.4598907976498,-35.8876728296014);
 
 % STRAIGHT LINE
 addseg1(83.8848390576514);
 
-% CORNER: (congiungente sx) 
+% CORNER: (congiungente sx)
 addseg(0.181868025357458,-100.934079833254);
 
 % STRAIGHT LINE
@@ -133,8 +133,8 @@ addseg(1.42844614134274,-26.915754622201);
 
 % STRAIGHT LINE
 %addseg1(283.563770397571);
-S.push_back_G1( x0, y0, theta0) ; % close curve
+S.push_back_G1( x0, y0, theta0); % close curve
 %%
 
-S.plot() ;
+S.plot();
 axis equal
