@@ -425,7 +425,13 @@ namespace G2lib {
     t = nx*(x-X) + ny*(y-Y);
     // check if projection is orthogonal on the curve
     real_type abst = std::abs(t);
-    return std::abs(d-abst) <= machepsi1000*(1+abst);
+    #if 0
+      return std::abs(d-abst) <= machepsi1000*(1+abst);
+    #else
+      eval( s, t, X, Y );
+      real_type err = hypot( x-X, y-Y );
+      return err < 1e-8*(1+abst);
+    #endif
     //return std::abs(d-abst) <= 1e-3*(1+abst);
   }
 
