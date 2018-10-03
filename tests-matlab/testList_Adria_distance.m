@@ -59,25 +59,33 @@ addseg1( 82.764839) ;           % 34
 %addseg( 59.341977, 0.003122) ;  % 35
 S.push_back_G1( x0, y0, theta0) ; % close curve ...
 
-x     = -240:5:450;
-y     = -200:5:230;
+%x     = -240:5:450;
+%y     = -200:5:230;
+x     = -150:2:50;
+y     = -100:2:100;
 [X,Y] = meshgrid(x,y);
 
 tic
 %Z = S.distance(X,Y);
+%[ s, t, ipos ] = S.find_coord( X, Y );
+%Z = t;
 Z = ones(size(X))*Inf;
-for k=1:35
+for k=35:35
   [ s, t, ipos ] = S.find_coord1( X, Y, k );
-  %[ s, t, ipos ] = S.find_coord( X, Y );
+  %idx = find( t > 0 );
   idx = find( ipos > 0 );
   Z(idx) = min(Z(idx),abs(t(idx)));
+  %Z = min(Z,abs(t));
 end
 min(min(ipos))
 max(max(ipos))
 toc
 
+%[ s, t, ipos ] = S.find_coord1( [-20,-10], [-10,-10], 35 )
+
 colormap(hsv);
 contourf(X,Y,Z,40);
+%surf(X,Y,Z);
 
 hold on;
 fmt1 = {'Color','white','LineWidth',3};
