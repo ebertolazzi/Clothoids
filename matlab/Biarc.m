@@ -42,7 +42,10 @@ classdef Biarc < handle
       %    x1, y1: coordinate of final point
       %    theta1: orientation of the clothoid at final point
       %
-      ok = BiarcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
+      ok = BiarcMexWrapper( 'build', ...
+                            self.objectHandle, ...
+                            x0, y0, theta0, ...
+                            x1, y1, theta1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_3P( self, varargin )
@@ -80,40 +83,50 @@ classdef Biarc < handle
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
       %
-      [varargout{1:nargout}] = BiarcMexWrapper( 'evaluate', self.objectHandle, s );
+      [ varargout{1:nargout} ] = ...
+        BiarcMexWrapper( 'evaluate', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [x,y] = eval( self, varargin )
-      [x,y] = BiarcMexWrapper( 'eval', self.objectHandle, varargin{:} );
+      [ x, y ] = BiarcMexWrapper( 'eval', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [x_D,y_D] = eval_D( self, varargin )
-      [x_D,y_D] = BiarcMexWrapper( 'eval_D', self.objectHandle, varargin{:} );
+      [ x_D, y_D ] = ...
+        BiarcMexWrapper( 'eval_D', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [x_DD,y_DD] = eval_DD( self, varargin )
-      [x_DD,y_DD] = BiarcMexWrapper( 'eval_DD', self.objectHandle, varargin{:} );
+      [ x_DD, y_DD ] = ...
+        BiarcMexWrapper( 'eval_DD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [x_DDD,y_DDD] = eval_DDD( self, varargin )
-      [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', self.objectHandle, varargin{:} );
+      [ x_DDD, y_DDD ] = ...
+        BiarcMexWrapper( 'eval_DDD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y,S,DST] = closestPoint( self, qx, qy )
-      [X,Y,S,DST] = BiarcMexWrapper( 'closestPoint', self.objectHandle, qx, qy );
+      [ X, Y, S, DST ] = ...
+        BiarcMexWrapper( 'closestPoint', self.objectHandle, qx, qy );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
-      [DST,S] = BiarcMexWrapper( 'distance', self.objectHandle, varargin{:} );
+      [ DST, S ] = ...
+        BiarcMexWrapper( 'distance', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y,S,DST] = closestPointBySample( self, qx, qy, ds )
-      [X,Y,S,DST] = BiarcMexWrapper( 'closestPointBySample', self.objectHandle, qx, qy, ds );
+      [ X, Y, S, DST ] = ...
+         BiarcMexWrapper( 'closestPointBySample', ...
+                          self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distanceBySample( self, qx, qy, ds )
-      [DST,S] = BiarcMexWrapper( 'distanceBySample', self.objectHandle, qx, qy, ds );
+      [ DST, S ] = ...
+        BiarcMexWrapper( 'distanceBySample', ...
+                         self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = xBegin0( self )
@@ -241,22 +254,24 @@ classdef Biarc < handle
       BiarcMexWrapper( 'reverse', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [C0,C1] = getCircles( self )
+    function [ C0, C1 ] = getCircles( self )
       C0 = CircleArc() ;
       C1 = CircleArc() ;
-      C0.build( self.xBegin0(), self.yBegin0(), self.thetaBegin0(), self.kappa0(), self.length0());
-      C1.build( self.xBegin1(), self.yBegin1(), self.thetaBegin1(), self.kappa1(), self.length1());
+      C0.build( self.xBegin0(), self.yBegin0(), ...
+                self.thetaBegin0(), self.kappa0(), self.length0());
+      C1.build( self.xBegin1(), self.yBegin1(), ...
+                self.thetaBegin1(), self.kappa1(), self.length1());
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [arc0,arc1] = to_nurbs( self )
+    function [ arc0, arc1 ] = to_nurbs( self )
       % Usage:
       %    ref.to_nurbs()
       %
-      [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
+      [ arc0, arc1 ] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [s,t] = find_coord( self, x, y )
-      [s,t] = BiarcMexWrapper( 'findST', self.objectHandle, x, y );
+    function [ s, t ] = find_coord( self, x, y )
+      [ s, t ] = BiarcMexWrapper( 'findST', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function info( self )
