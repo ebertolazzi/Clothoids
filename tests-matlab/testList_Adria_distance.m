@@ -66,19 +66,12 @@ y     = -200:5:230;
 [X,Y] = meshgrid(x,y);
 
 tic
-if true
-  Z = S.distance(X,Y);
+if false
   [ s, t, ipos ] = S.find_coord( X, Y );
   Z = t;
 else
-  Z = ones(size(X))*Inf;
-  for k=35:35
-    [ s, t, ipos ] = S.find_coord1( X, Y, k );
-    %idx = find( t > 0 );
-    idx = find( ipos > 0 );
-    Z(idx) = min(Z(idx),abs(t(idx)));
-    %Z = min(Z,abs(t));
-  end
+  [ s, t, ipos ] = S.find_coord( X, Y, 7, 10 );
+  Z = t;
 end
 toc
 

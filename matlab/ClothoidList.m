@@ -31,18 +31,23 @@ classdef ClothoidList < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function push_back( self, varargin )
       if nargin == 2
-        ClothoidListMexWrapper( 'push_back', self.objectHandle, varargin{1}.obj_handle() );
+        ClothoidListMexWrapper( 'push_back', ...
+                                self.objectHandle, ...
+                                varargin{1}.obj_handle() );
       else
-        ClothoidListMexWrapper( 'push_back', self.objectHandle, varargin{:} );
+        ClothoidListMexWrapper( 'push_back', ...
+                                self.objectHandle, varargin{:} );
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function push_back_G1( self, varargin )
-      ClothoidListMexWrapper( 'push_back_G1', self.objectHandle, varargin{:} );
+      ClothoidListMexWrapper( 'push_back_G1', ...
+                              self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function C = get( self, k )
-      [ x0, y0, theta0, k0, dk, L ] = ClothoidListMexWrapper( 'get', self.objectHandle, k ) ;
+      [ x0, y0, theta0, k0, dk, L ] = ...
+        ClothoidListMexWrapper( 'get', self.objectHandle, k );
       C = ClothoidCurve( x0, y0, theta0, k0, dk, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -53,47 +58,55 @@ classdef ClothoidList < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ s, theta, kappa ] = getSTK( self )
-      [ s, theta, kappa ] = ClothoidListMexWrapper( 'getSTK', self.objectHandle ) ;
+      [ s, theta, kappa ] = ...
+        ClothoidListMexWrapper( 'getSTK', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y ] = getXY( self )
-      [ x, y ] = ClothoidListMexWrapper( 'getXY', self.objectHandle ) ;
+      [ x, y ] = ClothoidListMexWrapper( 'getXY', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function N = numSegment( self )
       N = ClothoidListMexWrapper( 'numSegment', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = build_3arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+    function ok = build_3arcG2( self, x0, y0, theta0, kappa0, ...
+                                      x1, y1, theta1, kappa1 )
       ok = ClothoidListMexWrapper( 'build_3arcG2', self.objectHandle, ...
                                    x0, y0, theta0, kappa0, ...
                                    x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = build_3arcG2fixed( self, s0, x0, y0, theta0, kappa0, s1, x1, y1, theta1, kappa1 )
-      ok = ClothoidListMexWrapper( 'build_3arcG2fixed', self.objectHandle, ...
+    function ok = build_3arcG2fixed( self, s0, x0, y0, theta0, kappa0, ...
+                                           s1, x1, y1, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build_3arcG2fixed', ...
+                                   self.objectHandle, ...
                                    s0, x0, y0, theta0, kappa0, ...
                                    s1, x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = build_2arcG2( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+    function ok = build_2arcG2( self, x0, y0, theta0, kappa0, ...
+                                      x1, y1, theta1, kappa1 )
       ok = ClothoidListMexWrapper( 'build_2arcG2', self.objectHandle, ...
                                     x0, y0, theta0, kappa0, ...
                                     x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = build_CLC( self, x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 )
+    function ok = build_CLC( self, x0, y0, theta0, kappa0, ...
+                                   x1, y1, theta1, kappa1 )
       ok = ClothoidListMexWrapper( 'build_CLC', self.objectHandle, ...
                                    x0, y0, theta0, kappa0, ...
                                    x1, y1, theta1, kappa1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_G1( self, x, y, varargin )
-      ok = ClothoidListMexWrapper( 'build_G1', self.objectHandle, x, y, varargin{:} );
+      ok = ClothoidListMexWrapper( 'build_G1', ...
+                                   self.objectHandle, x, y, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [theta,ok] = build_theta( self, x, y )
-      [theta,ok] = ClothoidListMexWrapper( 'build_theta', self.objectHandle, x, y );
+      [theta,ok] = ...
+        ClothoidListMexWrapper( 'build_theta', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function dtheta = deltaTheta( self )
@@ -120,88 +133,111 @@ classdef ClothoidList < handle
       %    theta: orientation of the curve
       %    kappa: curvature of the curve
       %
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'evaluate', self.objectHandle, s );
+      [ varargout{1:nargout} ] = ...
+        ClothoidListMexWrapper( 'evaluate', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval( self, s, varargin )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval', self.objectHandle, s, varargin{:} );
+      [ varargout{1:nargout} ] = ...
+        ClothoidListMexWrapper( 'eval', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval_D( self, s, varargin )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_D', self.objectHandle, s, varargin{:} );
+      [ varargout{1:nargout} ] = ...
+        ClothoidListMexWrapper( 'eval_D', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval_DD( self, s, varargin )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_DD', self.objectHandle, s, varargin{:} );
+      [ varargout{1:nargout} ] = ...
+        ClothoidListMexWrapper( 'eval_DD', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval_DDD( self, s, varargin )
-      [varargout{1:nargout}] = ClothoidListMexWrapper( 'eval_DDD', self.objectHandle, s, varargin{:} );
+      [varargout{1:nargout}] = ...
+        ClothoidListMexWrapper( 'eval_DDD', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y,S,DST] = closestPoint( self, qx, qy )
-      [X,Y,S,DST] = ClothoidListMexWrapper( 'closestPoint', self.objectHandle, qx, qy );
+      [ X, Y, S, DST ] = ...
+        ClothoidListMexWrapper( 'closestPoint', self.objectHandle, qx, qy );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distance( self, varargin )
       % eval the angle of the circle curve at curvilinear abscissa `s`
-      [DST,S] = ClothoidListMexWrapper( 'distance', self.objectHandle, varargin{:} );
+      [ DST, S ] = ...
+        ClothoidListMexWrapper( 'distance', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [X,Y,S,DST] = closestPointBySample( self, qx, qy, ds )
-      [X,Y,S,DST] = ClothoidListMexWrapper( 'closestPointBySample', self.objectHandle, qx, qy, ds );
+      [ X, Y, S, DST ] = ...
+        ClothoidListMexWrapper( 'closestPointBySample', ...
+                                self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distanceBySample( self, qx, qy, ds )
-      [DST,S] = ClothoidListMexWrapper( 'distanceBySample', self.objectHandle, qx, qy, ds );
+      [ DST, S ] = ...
+        ClothoidListMexWrapper( 'distanceBySample', ...
+                                self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = sBegin( self, varargin )
-      res = ClothoidListMexWrapper( 'sBegin', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'sBegin', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = sEnd( self, varargin )
-      res = ClothoidListMexWrapper( 'sEnd', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'sEnd', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = xBegin( self, varargin )
-      res = ClothoidListMexWrapper( 'xBegin', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'xBegin', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = xEnd( self, varargin )
-      res = ClothoidListMexWrapper( 'xEnd', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'xEnd', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = yBegin( self, varargin )
-      res = ClothoidListMexWrapper( 'yBegin', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'yBegin', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = yEnd( self, varargin )
-      res = ClothoidListMexWrapper( 'yEnd', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'yEnd', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = thetaBegin( self, varargin )
-      res = ClothoidListMexWrapper( 'thetaBegin', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'thetaBegin', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = thetaEnd( self, varargin )
-      res = ClothoidListMexWrapper( 'thetaEnd', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'thetaEnd', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = kappaBegin( self, varargin )
-      res = ClothoidListMexWrapper( 'kappaBegin', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'kappaBegin', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = kappaEnd( self, varargin )
-      res = ClothoidListMexWrapper( 'kappaEnd', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'kappaEnd', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = kappa_D( self, varargin )
-      res = ClothoidListMexWrapper( 'kappa_D', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'kappa_D', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length( self, varargin )
-      res = ClothoidListMexWrapper( 'length', self.objectHandle, varargin{:} );
+      res = ClothoidListMexWrapper( 'length', ...
+                                    self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function rotate( self, angle, cx, cy )
@@ -238,7 +274,8 @@ classdef ClothoidList < handle
       % On input:
       %    newX0, newY0: new coordinates of initial point
       %
-      ClothoidListMexWrapper( 'changeOrigin', self.objectHandle, newX0, newY0 );
+      ClothoidListMexWrapper( 'changeOrigin', ...
+                              self.objectHandle, newX0, newY0 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function scale( self, s )
@@ -261,16 +298,24 @@ classdef ClothoidList < handle
       ClothoidListMexWrapper( 'reverse', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [s1,s2] = intersect( self, C )
+    function [ s1, s2 ] = intersect( self, C )
       stype = C.is_type();
       if strcmp(stype,'LineSegment')
-        [s1,s2] = ClothoidListMexWrapper( 'intersect_line', self.objectHandle, C.obj_handle() );
+        [ s1, s2 ] = ClothoidListMexWrapper( 'intersect_line', ...
+                                             self.objectHandle, ...
+                                             C.obj_handle() );
       elseif strcmp(stype,'CircleArc')
-        [s1,s2] = ClothoidListMexWrapper( 'intersect_circle', self.objectHandle, C.obj_handle() );
+        [ s1, s2 ] = ClothoidListMexWrapper( 'intersect_circle', ...
+                                             self.objectHandle, ...
+                                             C.obj_handle() );
       elseif strcmp(stype,'ClothoidCurve')
-        [s1,s2] = ClothoidListMexWrapper( 'intersect_clothoid', self.objectHandle, C.obj_handle() );
+        [ s1, s2 ] = ClothoidListMexWrapper( 'intersect_clothoid', ...
+                                             self.objectHandle, ...
+                                             C.obj_handle() );
       elseif strcmp(stype,'ClothoidList')
-        [s1,s2] = ClothoidListMexWrapper( 'intersect_clothoid_list', self.objectHandle, C.obj_handle() );
+        [ s1, s2 ] = ClothoidListMexWrapper( 'intersect_clothoid_list', ...
+                                             self.objectHandle, ...
+                                             C.obj_handle() );
       else
         error('ClothoidCurve::intersect, unknown type: %s\n', stype ) ;
       end
@@ -281,7 +326,9 @@ classdef ClothoidList < handle
       % Usage:
       %    ref.reverse()
       %
-      BB = ClothoidListMexWrapper( 'bbox', self.objectHandle, max_angle, max_size, varargin{:} );
+      BB = ClothoidListMexWrapper( 'bbox', ...
+                                   self.objectHandle, ...
+                                   max_angle, max_size, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function export_table( self, filename )
@@ -296,12 +343,17 @@ classdef ClothoidList < handle
       ClothoidListMexWrapper( 'info', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ s, t, ipos ] = find_coord( self, x, y )
-      [ s, t, ipos ] = ClothoidListMexWrapper( 'findST', self.objectHandle, x, y );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ s, t, ipos ] = find_coord1( self, x, y, ipos )
-      [ s, t, ipos ] = ClothoidListMexWrapper( 'findST1', self.objectHandle, x, y, ipos );
+    function [ s, t, ipos ] = find_coord( self, x, y, varargin )
+      if nargin > 3
+        [ s, t, ipos ] = ClothoidListMexWrapper( 'findST1', ...
+                                                 self.objectHandle, ...
+                                                 x, y, ...
+                                                 varargin{1}, ...
+                                                 varargin{2} );
+      else
+        [ s, t, ipos ] = ClothoidListMexWrapper( 'findST', ...
+                                                 self.objectHandle, x, y );
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )

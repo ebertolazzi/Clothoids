@@ -573,18 +573,36 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  ClothoidList::findST( int_type    iseg,
+  int_type
+  ClothoidList::findST( int_type    ibegin,
+                        int_type    iend,
                         real_type   x,
                         real_type   y,
                         real_type & s,
                         real_type & t ) const {
+
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
-    G2LIB_ASSERT( iseg >= 0 && iseg < clotoidList.size(),
-                  "ClothoidList::findST, iseg = " << iseg << " out of size" );
-    bool ok = clotoidList[iseg].findST( x, y, s, t );
-    s += s0[iseg];
-    return ok;
+    G2LIB_ASSERT( ibegin >= 0 && ibegin <= iend && iend < clotoidList.size(),
+                  "ClothoidList::findST( ibegin=" << ibegin <<
+                  ", iend = " << iend <<
+                  " , x, y, s, t ) bad range not in [0," << clotoidList.size()-1 <<
+                  "]" );
+    s = t = 0;
+    int_type iseg = 0;
+    bool ok = false;
+    for ( int_type k = ibegin; k <= iend; ++k ) {
+      ClothoidCurve const & ck = clotoidList[k];
+      real_type S, T;
+      bool ok1 = ck.findST( x, y, S, T );
+      if ( ok && ok1 ) ok1 = std::abs(T) < std::abs(t);
+      if ( ok1 ) {
+        ok   = true;
+        s    = s0[k] + S;
+        t    = T;
+        iseg = k;
+      }
+    }
+    return ok ? iseg : -(1+iseg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

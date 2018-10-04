@@ -1519,15 +1519,18 @@ namespace G2lib {
     /*!
      | \brief Find parametric coordinate.
      |
-     | \param  iseg  segment to compute the distance
-     | \param  x     x-coordinate point
-     | \param  y     y-coordinate point
-     | \param  s     value \f$ s \f$
-     | \param  t     value \f$ t \f$
-     | \return false if (x,y) cannot be projected orthogonally on the segment
+     | \param  ibegin initial segment to compute the distance
+     | \param  iend   final segment to compute the distance
+     | \param  x      x-coordinate point
+     | \param  y      y-coordinate point
+     | \param  s      value \f$ s \f$
+     | \param  t      value \f$ t \f$
+     | \return idx    the segment with point at minimal distance, otherwise
+     |                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     \*/
-    bool
-    findST( int_type    iseg,
+    int_type
+    findST( int_type    ibegin,
+            int_type    iend,
             real_type   x,
             real_type   y,
             real_type & s,

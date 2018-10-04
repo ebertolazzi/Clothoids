@@ -830,9 +830,9 @@ namespace G2lib {
 
       } else if ( cmd == "findST1" ) {
 
-        #define CMD "ClothoidListMexWrapper('findST1',OBJ,x,y,nseg): "
-        MEX_ASSERT( nrhs == 5,
-                    CMD "expected 5 inputs, nrhs = " << nrhs );
+        #define CMD "ClothoidListMexWrapper('findST1',OBJ,x,y,ibegin,iend): "
+        MEX_ASSERT( nrhs == 6,
+                    CMD "expected 6 inputs, nrhs = " << nrhs );
         MEX_ASSERT( nlhs == 3,
                     CMD "expected 3 output, nlhs = " << nlhs );
         mwSize nrx, ncx, nry, ncy;
@@ -849,12 +849,15 @@ namespace G2lib {
         real_type * idx = createMatrixValue( arg_out_2, nrx, ncx );
 
         mwSize size = nrx*ncx;
-        int64_t nseg = getInt( arg_in_4,
-                               CMD "`nseg` expected to be a scalar integer" );
-        int_type n = int_type(nseg-1);
-        for ( mwSize i = 0; i < size; ++i ) {
-          bool ok = ptr->findST( n, *x++, *y++, *s++, *t++ );
-          *idx++ = ok ? real_type(nseg) : real_type(-nseg);
+        int64_t ibegin = getInt( arg_in_4,
+                                 CMD "`ibegin` expected to be a scalar integer" );
+        int64_t iend   = getInt( arg_in_5,
+                                 CMD "`iend` expected to be a scalar integer" );
+        for ( mwSize i = 0; i < size; ++i, ++idx ) {
+          *idx = ptr->findST( int_type(ibegin-1),
+                              int_type(iend-1),
+                              *x++, *y++, *s++, *t++ );
+          if ( *idx >= 0) *idx += 1;
         }
 
         #undef CMD
