@@ -101,6 +101,7 @@
 		D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D9E22EE2216CB48F00C033D2 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
 		D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
@@ -245,6 +246,8 @@
 		D9C373A820BC484100715C11 /* testIntersect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testIntersect; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9C373A920BC485B00715C11 /* testIntersect.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testIntersect.cc; sourceTree = "<group>"; };
 		D9C8B9F21F7AA69400DF4205 /* statistic_CLC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_CLC; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9E22EE0216CB48F00C033D2 /* PolyLine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolyLine.cc; sourceTree = "<group>"; };
+		D9E22EE1216CB48F00C033D2 /* PolyLine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolyLine.hh; sourceTree = "<group>"; };
 		D9E74A4D1F68801C00E47B88 /* statistic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9FCD3352075552600553A10 /* Clothoid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clothoid.cc; sourceTree = "<group>"; };
 		D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidDistance.cc; sourceTree = "<group>"; };
@@ -353,6 +356,8 @@
 				D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */,
 				D918ADA41F62C1C9009893C3 /* Line.hh */,
 				D918ADA51F62C1CE009893C3 /* Line.cc */,
+				D9E22EE0216CB48F00C033D2 /* PolyLine.cc */,
+				D9E22EE1216CB48F00C033D2 /* PolyLine.hh */,
 				D9099D271F600B9400740ECF /* Circle.hh */,
 				D9099D281F600B9400740ECF /* Circle.cc */,
 				D971F8981F613BC2000E663E /* Biarc.hh */,
@@ -643,6 +648,7 @@
 				D9FCD33D207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */,
 				D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */,
+				D9E22EE2216CB48F00C033D2 /* PolyLine.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

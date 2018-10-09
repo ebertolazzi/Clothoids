@@ -109,7 +109,8 @@ namespace G2lib {
 
     CircleArc( CircleArc const & s ) { copy(s); }
 
-    CircleArc const & operator = ( CircleArc const & s )
+    CircleArc const &
+    operator = ( CircleArc const & s )
     { copy(s); return *this; }
 
     real_type sinTheta0() const { return sin(theta0); }
@@ -124,6 +125,10 @@ namespace G2lib {
     real_type xEnd()     const { return X(L); }
     real_type yEnd()     const { return Y(L); }
     real_type thetaEnd() const { return theta(L); }
+
+    // return the length of the arc that can approximated
+    // by a line segment
+    real_type lenTolerance( real_type tol ) const;
 
     //! construct a circle with the standard parameters
     void

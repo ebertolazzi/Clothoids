@@ -48,6 +48,10 @@ classdef Biarc < handle
                             x1, y1, theta1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function str = is_type( ~ )
+      str = 'BiArc' ;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_3P( self, varargin )
       % Build the interpolating biarc by 3 points
       %

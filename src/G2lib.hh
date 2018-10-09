@@ -257,6 +257,15 @@ namespace G2lib {
                      real_type const P1[2],
                      real_type const P2[2],
                      real_type const P3[2] );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  updateInterval( int_type      & lastInterval,
+                  real_type       x,
+                  real_type const Xvec[],
+                  int_type        npts );
+
 }
 
 #endif

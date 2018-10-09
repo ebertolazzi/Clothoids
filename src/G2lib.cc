@@ -269,6 +269,46 @@ namespace G2lib {
     if ( a+b+c == 3 ) return 1;
     return 0;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  updateInterval( int_type      & lastInterval,
+                  real_type       x,
+                  real_type const Xvec[],
+                  int_type        npts ) {
+
+    if ( npts <= 2 ) { lastInterval = 0; return; } // nothing to search
+
+    // optimized interval search
+    real_type const * XL = Xvec + lastInterval;
+    if ( XL[1] <= x ) { // x on the right
+      if ( x >= Xvec[npts-2] ) { // x in [X[npt-2],X[npts-1]]
+        lastInterval = npts-2; // last interval
+      } else if ( x < XL[2] ) { // x in [XL[1],XL[2])
+        ++lastInterval;
+      } else { // x >= XL[2] search the right interval
+        real_type const * XE = Xvec+npts;
+        lastInterval += int_type(std::lower_bound( XL, XE, x )-XL);
+        if ( Xvec[lastInterval] > x ) --lastInterval;
+      }
+    } else if ( x < XL[0] ) { // on the left
+      if ( x < Xvec[1] ) { // x in [X[0],X[1])
+        lastInterval = 0; // first interval
+      } else if ( XL[-1] <= x ) { // x in [XL[-1],XL[0])
+        --lastInterval;
+      } else {
+        lastInterval = int_type(std::lower_bound( Xvec, XL, x )-Xvec);
+        if ( Xvec[lastInterval] > x ) --lastInterval;
+      }
+    } else {
+      // x in the interval [XL[0],XL[1]) nothing to do
+    }
+    G2LIB_ASSERT( lastInterval >= 0 && lastInterval < npts-1,
+                  "updateInterval, lastInterval = " << lastInterval <<
+                  " out of interval [0," << npts-2 << "]" );
+  }
+
 }
 
 // EOF: G2lib.cc

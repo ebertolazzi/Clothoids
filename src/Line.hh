@@ -87,6 +87,8 @@ namespace G2lib {
 
     real_type xBegin()   const { return x0; }
     real_type yBegin()   const { return y0; }
+    real_type xEnd()     const { return x0+L*c0; }
+    real_type yEnd()     const { return y0+L*s0; }
     real_type theta()    const { return theta0; }
     real_type sinTheta() const { return s0; }
     real_type cosTheta() const { return c0; }
@@ -285,6 +287,14 @@ namespace G2lib {
       p2[0] = x0+L*c0;
       p2[1] = y0+L*s0;
     }
+
+    bool
+    intersect( LineSegment const & S,
+               real_type         & s1,
+               real_type         & s2 ) const;
+
+    bool
+    intersect( LineSegment const & S ) const;
 
     void
     info( std::ostream & stream ) const
