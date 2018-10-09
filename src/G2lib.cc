@@ -269,6 +269,43 @@ namespace G2lib {
     if ( a+b+c == 3 ) return 1;
     return 0;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  updateInterval( int_type      & lastInterval,
+                  real_type       x,
+                  real_type const X[],
+                  int_type        npts ) {
+
+    if ( npts <= 2 ) { lastInterval = 0; return; } // nothing to search
+
+    // find the interval of the support of the B-spline
+    real_type const * XL = X+lastInterval;
+    if ( XL[1] <= x ) { // x on the right
+      if ( x >= X[npts-2] ) { // x in [X[npt-2],X[npts-1]]
+        lastInterval = npts-2; // last interval
+      } else if ( x < XL[2] ) { // x in [XL[1],XL[2])
+        ++lastInterval;
+      } else { // x >= XL[2] search the right interval
+        real_type const * XE = X+npts;
+        lastInterval += int_type(std::lower_bound( XL, XE, x )-XL);
+        if ( X[lastInterval] > x ) --lastInterval;
+      }
+    } else if ( x < XL[0] ) { // on the left
+      if ( x < X[1] ) { // x in [X[0],X[1])
+        lastInterval = 0; // first interval
+      } else if ( XL[-1] <= x ) { // x in [XL[-1],XL[0])
+        --lastInterval;
+      } else {
+        lastInterval = int_type(std::lower_bound( X, XL, x )-X);
+        if ( X[lastInterval] > x ) --lastInterval;
+      }
+    } else {
+      // x in the interval [XL[0],XL[1]) nothing to do
+    }
+  }
+
 }
 
 // EOF: G2lib.cc

@@ -528,6 +528,20 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  real_type
+  CircleArc::lenTolerance( real_type tol ) const {
+    real_type absk = std::abs(k);
+    real_type tmp  = absk*tol;
+    if ( tmp > 0 ) {
+      real_type dtheta = 2*(m_pi-acos(tmp-1));
+      return dtheta/absk;
+    } else {
+      return L;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   std::ostream &
   operator << ( std::ostream & stream, CircleArc const & c ) {
     stream <<   "x0     = " << c.x0
