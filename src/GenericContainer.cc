@@ -186,7 +186,7 @@ namespace GenericContainerNamespace {
 
   template <typename TYPE>
   void
-  mat_type<TYPE>::info( std::basic_ostream<char> & stream ) const {
+  mat_type<TYPE>::info( ostream_type & stream ) const {
     stream << "Matrix of floating point number of size "
            << _numRows << " x " << _numCols
            << '\n';
@@ -3477,7 +3477,7 @@ namespace GenericContainerNamespace {
 
   //! Print to stream the kind of data stored
   GenericContainer const &
-  GenericContainer::info( std::basic_ostream<char> & stream ) const {
+  GenericContainer::info( ostream_type & stream ) const {
     switch ( _data_type ) {
     case GC_NOTYPE:
       stream << "GenericContainer: No data stored\n";
@@ -4515,9 +4515,9 @@ namespace GenericContainerNamespace {
   */
 
   void
-  GenericContainer::print( std::basic_ostream<char> & stream,
-                           std::string const        & prefix,
-                           std::string const        & indent ) const {
+  GenericContainer::print( ostream_type      & stream,
+                           std::string const & prefix,
+                           std::string const & indent ) const {
 
     switch (_data_type) {
     case GC_NOTYPE:
@@ -4678,7 +4678,8 @@ namespace GenericContainerNamespace {
   */
 
   void
-  GenericContainer::to_yaml( std::basic_ostream<char> & stream, std::string const & prefix ) const {
+  GenericContainer::to_yaml( ostream_type      & stream,
+                             std::string const & prefix ) const {
     switch (_data_type) {
     case GC_NOTYPE:
       stream << "Empty!\n";

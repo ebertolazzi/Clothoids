@@ -29,7 +29,7 @@ namespace GenericContainerNamespace {
   public:
     LuaInterpreter();
     ~LuaInterpreter();
-    void dump( std::basic_ostream<char> & stream );
+    void dump( ostream_type & stream );
     void execute( char const cmd[] );
     void call( GenericContainer const & args, GenericContainer & res );
     void do_file( char const fname[] );

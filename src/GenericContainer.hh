@@ -81,6 +81,8 @@
 
 namespace GenericContainerNamespace {
 
+  typedef std::basic_ostream<char> ostream_type;
+
   #if defined(GENERIC_CONTAINER_USE_CXX11) && !defined(_MSC_VER)
   using std::int32_t;
   using std::int64_t;
@@ -172,7 +174,7 @@ namespace GenericContainerNamespace {
 
     GENERIC_CONTAINER_API_DLL
     void
-    info( std::basic_ostream<char> & stream ) const;
+    info( ostream_type & stream ) const;
 
     #ifndef GENERIC_CONTAINER_USE_CXX11
     TYPE       * data()       { return &std::vector<TYPE>::front(); }
@@ -676,7 +678,7 @@ namespace GenericContainerNamespace {
 
     //! Print to stream the kind of data stored
     GENERIC_CONTAINER_API_DLL
-    GenericContainer const & info( std::basic_ostream<char> & stream ) const;
+    GenericContainer const & info( ostream_type & stream ) const;
 
     /*! Return the number of the elements of the first level of the generic container
     //  1 for single element, the size of vector or map, or 0
@@ -1403,13 +1405,13 @@ namespace GenericContainerNamespace {
 
     //! print the contents of the object in a human readable way
     GENERIC_CONTAINER_API_DLL
-    void print( std::basic_ostream<char> &,
+    void print( ostream_type      &,
                 std::string const & prefix = "",
                 std::string const & indent = "    " ) const;
 
     //! print the contents of the object in yaml syntax
     GENERIC_CONTAINER_API_DLL
-    void to_yaml( std::basic_ostream<char> &, std::string const & prefix = "" ) const;
+    void to_yaml( ostream_type &, std::string const & prefix = "" ) const;
 
     /*! 
       \brief write `GenericContainer` as regular formatted data
@@ -1436,7 +1438,8 @@ namespace GenericContainerNamespace {
      */
     GENERIC_CONTAINER_API_DLL
     GenericContainer const &
-    writeFormattedData( std::basic_ostream<char> & stream, char const delimiter = '\t' ) const;
+    writeFormattedData( ostream_type & stream,
+                        char const delimiter = '\t' ) const;
 
     /*! 
       \brief read regular formatted data from `stream` to `GenericContainer`.
@@ -1468,29 +1471,29 @@ namespace GenericContainerNamespace {
   // support functions
   GENERIC_CONTAINER_API_DLL
   void
-  writeTable( vec_string_type const    & headers,
-              vector_type     const    & data,
-              std::basic_ostream<char> & stream,
+  writeTable( vec_string_type const & headers,
+              vector_type     const & data,
+              ostream_type          & stream,
               char const delimiter = '\t' );
 
   GENERIC_CONTAINER_API_DLL
   void
-  writeTable( vec_string_type const    & headers,
-              mat_real_type   const    & data,
-              std::basic_ostream<char> & stream,
+  writeTable( vec_string_type const & headers,
+              mat_real_type   const & data,
+              ostream_type          & stream,
               char const delimiter = '\t' );
 
   GENERIC_CONTAINER_API_DLL
   void
-  writeTableFormatted( vec_string_type const    & headers,
-                       vector_type     const    & data,
-                       std::basic_ostream<char> & stream );
+  writeTableFormatted( vec_string_type const & headers,
+                       vector_type     const & data,
+                       ostream_type          & stream );
 
   GENERIC_CONTAINER_API_DLL
   void
-  writeTableFormatted( vec_string_type const    & headers,
-                       mat_real_type   const    & data,
-                       std::basic_ostream<char> & stream );
+  writeTableFormatted( vec_string_type const & headers,
+                       mat_real_type   const & data,
+                       ostream_type          & stream );
 
   // -------------------------------------------------------
   class GenericContainerExplorer {

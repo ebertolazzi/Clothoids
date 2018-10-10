@@ -88,7 +88,7 @@ namespace GenericContainerNamespace {
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)
   GenericContainer const &
-  GenericContainer::writeFormattedData( std::basic_ostream<char> & stream,
+  GenericContainer::writeFormattedData( ostream_type & stream,
                                         char const delimiter ) const {
     GC_ASSERT( exists("headers"),
                "writeFormattedData, missing field `headers` in container");
