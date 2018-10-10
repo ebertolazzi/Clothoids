@@ -33,6 +33,14 @@
 		D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
 		D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
 		D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D969AF6A216E4CFB00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D969AF6B216E4CFC00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D969AF6C216E4CFC00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D969AF6D216E4CFD00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D969AF6E216E4CFE00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D969AF6F216E4CFE00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D969AF70216E4CFF00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D969AF71216E4CFF00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
 		D96E1FAE1F75513000115228 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
@@ -628,6 +636,7 @@
 				D9FCD342207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D9179A84206D211E006B66E7 /* Circle.cc in Sources */,
 				D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */,
+				D969AF6E216E4CFE00CA4DD0 /* PolyLine.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +676,7 @@
 				D96E1FB21F75513000115228 /* Circle.cc in Sources */,
 				D96E1FB31F75513000115228 /* Triangle2D.cc in Sources */,
 				D96E1FB41F75513000115228 /* Line.cc in Sources */,
+				D969AF6C216E4CFC00CA4DD0 /* PolyLine.cc in Sources */,
 				D96E1FB51F75513000115228 /* Fresnel.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -688,6 +698,7 @@
 				D918ADA71F62C1CE009893C3 /* Line.cc in Sources */,
 				D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */,
+				D969AF6A216E4CFB00CA4DD0 /* PolyLine.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,6 +719,7 @@
 				D9AFBB6720E28F5900C498EF /* ClothoidDistance.cc in Sources */,
 				D9AFBB6820E28F5900C498EF /* Circle.cc in Sources */,
 				D9AFBB6920E28F5900C498EF /* ClothoidG2.cc in Sources */,
+				D969AF70216E4CFF00CA4DD0 /* PolyLine.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +740,7 @@
 				D9BFDB1D20EE3C0E00612F3C /* Circle.cc in Sources */,
 				D9BFDB1E20EE3C0E00612F3C /* ClothoidDistance.cc in Sources */,
 				D9BFDB2020EE3C0E00612F3C /* ClothoidG2.cc in Sources */,
+				D969AF71216E4CFF00CA4DD0 /* PolyLine.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,6 +761,7 @@
 				D9C3739F20BC484100715C11 /* ClothoidDistance.cc in Sources */,
 				D9C373A020BC484100715C11 /* Circle.cc in Sources */,
 				D9C373A120BC484100715C11 /* ClothoidG2.cc in Sources */,
+				D969AF6F216E4CFE00CA4DD0 /* PolyLine.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,6 +780,7 @@
 				D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */,
 				D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */,
 				D9A393571FA14C57009C1E60 /* testG2statCLC.cc in Sources */,
+				D969AF6D216E4CFD00CA4DD0 /* PolyLine.cc in Sources */,
 				D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -785,6 +800,7 @@
 				D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */,
 				D9E74A591F68825600E47B88 /* Line.cc in Sources */,
 				D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */,
+				D969AF6B216E4CFC00CA4DD0 /* PolyLine.cc in Sources */,
 				D9A393591FA14C61009C1E60 /* testG2stat.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

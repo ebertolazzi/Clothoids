@@ -42,26 +42,23 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   using std::cout;
 
-  int_type
+  void
   PolyLine::search( real_type s ) const {
-    int_type npts = int_type(s0.size());
-    G2LIB_ASSERT( npts > 1,
+
+    G2LIB_ASSERT( !s0.empty(),
                   "PolyLine::search(" << s << ") empty PolyLine" );
-    real_type sl = s0.front();
-    real_type sr = s0.back();
+
+    int_type  npts = int_type(s0.size());
+    real_type sl   = s0.front();
+    real_type sr   = s0.back();
     G2LIB_ASSERT( s >= sl && s <= sr,
                   "PolyLine::search( " << s <<
                   " ) out of range: [" << sl << ", " << sr << "]" );
 
-    for ( lastSegment = 0; lastSegment < npts-1; ++lastSegment )
-      G2LIB_ASSERT( s0[lastSegment] < s0[lastSegment+1],
-                    "bad vector s0!" ) ;
+    if      ( isegment < 0      ) isegment = 0;
+    else if ( isegment > npts-2 ) isegment = npts-2;
 
-    for ( lastSegment = 0; lastSegment < npts-1; ++lastSegment )
-      if ( s < s0[lastSegment+1] )
-        break;
-    // updateInterval( lastSegment, s, &s0.front(), npts );
-    return lastSegment;
+    updateInterval( isegment, s, &s0.front(), npts );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

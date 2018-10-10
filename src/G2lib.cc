@@ -304,9 +304,6 @@ namespace G2lib {
     } else {
       // x in the interval [XL[0],XL[1]) nothing to do
     }
-    G2LIB_ASSERT( lastInterval >= 0 && lastInterval < npts-1,
-                  "updateInterval, lastInterval = " << lastInterval <<
-                  " out of interval [0," << npts-2 << "]" );
   }
 
 }

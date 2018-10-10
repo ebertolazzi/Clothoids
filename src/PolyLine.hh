@@ -49,13 +49,13 @@ namespace G2lib {
     std::vector<real_type>   s0;
     real_type                xe, ye;
 
-    mutable int_type lastSegment;
+    mutable int_type isegment;
+    void search( real_type s ) const;
 
   public:
 
-    int_type search( real_type s ) const;
-
     PolyLine()
+    : isegment(0)
     {}
 
     void
@@ -132,30 +132,30 @@ namespace G2lib {
 
     real_type
     X( real_type s ) const {
-      int_type ns = this->search( s );
-      return lvec[ns].X( s-s0[ns] );
+      this->search( s );
+      return lvec[isegment].X( s-s0[isegment] );
     }
 
     real_type
     Y( real_type s ) const {
-      int_type ns = this->search( s );
-      return lvec[ns].Y(s-s0[ns]);
+      this->search( s );
+      return lvec[isegment].Y(s-s0[isegment]);
     }
 
     void
     eval( real_type   s,
           real_type & x,
           real_type & y ) const {
-      int_type ns = this->search( s );
-      lvec[ns].eval(s-s0[ns],x,y);
+      this->search( s );
+      lvec[isegment].eval(s-s0[isegment],x,y);
     }
 
     void
     eval_D( real_type   s,
             real_type & x_D,
             real_type & y_D ) const {
-      int_type ns = this->search( s );
-      lvec[ns].eval_D( s-s0[ns], x_D, y_D );
+      this->search( s );
+      lvec[isegment].eval_D( s-s0[isegment], x_D, y_D );
     }
 
     void
@@ -177,8 +177,8 @@ namespace G2lib {
           real_type   t,
           real_type & x,
           real_type & y ) const {
-      int_type ns = this->search( s );
-      lvec[ns].eval( s-s0[ns], t, x, y );
+      this->search( s );
+      lvec[isegment].eval( s-s0[isegment], t, x, y );
     }
 
     void
@@ -186,8 +186,8 @@ namespace G2lib {
             real_type   t,
             real_type & x_D,
             real_type & y_D ) const {
-      int_type ns = this->search( s );
-      lvec[ns].eval_D( s-s0[ns], t, x_D, y_D );
+      this->search( s );
+      lvec[isegment].eval_D( s-s0[isegment], t, x_D, y_D );
     }
 
     void
