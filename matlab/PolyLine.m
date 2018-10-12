@@ -111,7 +111,7 @@ classdef PolyLine < handle
       th0 = PolyLineMexWrapper( 'theta', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = length(self)
+    function res = length( self )
       res = PolyLineMexWrapper( 'length', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -123,7 +123,7 @@ classdef PolyLine < handle
       [ d, s ] = PolyLineMexWrapper( 'distance', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plot(self,varargin)
+    function plot( self, varargin )
       if nargin > 1
         fmt1 = varargin{1} ;
       else
@@ -141,7 +141,7 @@ classdef PolyLine < handle
         else
           plot( x(k-1:k), y(k-1:k), fmt2{:} );
         end
-        hold on ;
+        hold on;
       end
     end
   end

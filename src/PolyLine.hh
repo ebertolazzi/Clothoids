@@ -75,6 +75,17 @@ namespace G2lib {
     LineSegment const &
     getSegment( int_type n ) const;
 
+    int_type
+    numSegment() const
+    { return int_type(lvec.size()); }
+
+    int_type
+    numPoints() const
+    { return int_type(s0.size()); }
+
+    void
+    polygon( real_type x[], real_type y[]) const;
+
     void
     init( real_type x0, real_type y0 );
 
@@ -115,13 +126,6 @@ namespace G2lib {
 
     void
     build( ClothoidList const & L, real_type tol );
-
-    int_type
-    numPoints() const
-    { return int_type(s0.size()); }
-
-    void
-    polygon( real_type x[], real_type y[]) const;
 
     real_type length() const { return s0.back(); }
 
@@ -273,6 +277,14 @@ namespace G2lib {
 
     bool
     intersect( PolyLine const & pl ) const;
+
+    void
+    info( std::ostream & stream ) const
+    { stream << "PolyLine\n" << *this << '\n'; }
+
+    friend
+    std::ostream &
+    operator << ( std::ostream & stream, PolyLine const & P );
 
   };
 

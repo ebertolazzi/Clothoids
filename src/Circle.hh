@@ -314,7 +314,7 @@ namespace G2lib {
 
     /*! \brief Compute rational B-spline coefficients for a circle arc
      *
-     * \param knots  knots of the B-spline
+     * \param knots  knots of the B-spline0
      * \param Poly   polygon of the B-spline
      * \return       3 up to 9 the number of polygon points
     \*/

@@ -340,6 +340,21 @@ namespace G2lib {
     }
     return false;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  std::ostream &
+  operator << ( std::ostream & stream, PolyLine const & P ) {
+    stream <<   "nseg   = " << P.numSegment()
+           << "\nxBegin = " << P.xBegin()
+           << "\nybegin = " << P.yBegin()
+           << "\nxEnd   = " << P.xEnd()
+           << "\nyEnd   = " << P.yEnd()
+           << "\nlength = " << P.length()
+           << "\n";
+    return stream;
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 }

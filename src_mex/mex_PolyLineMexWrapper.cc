@@ -227,7 +227,6 @@ namespace G2lib {
 
         real_type * x = createMatrixValue( arg_out_0, ptr->numPoints(), 1 );
         real_type * y = createMatrixValue( arg_out_1, ptr->numPoints(), 1 );
-
         ptr->polygon( x, y );
 
         #undef CMD
