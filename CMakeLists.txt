@@ -58,26 +58,15 @@ ENDFOREACH (F ${S})
 
 INCLUDE_DIRECTORIES( src )
 
-IF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-  INCLUDE_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include" )
-  IF ( ${BITS} STREQUAL "x64" )
-    set(WINXXBITS Win64)
-    LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/intel64" )
-  ELSE()
-    set(WINXXBITS Win32)
-    LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/ia32" )
-  ENDIF()
-ENDIF()
-
 ADD_LIBRARY( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
 
-IF( BUILD_EXECUTABLE )
-  ADD_EXECUTABLE( testG2 tests-cpp/testG2.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( testG2 ${TARGET} )
-
-  ADD_EXECUTABLE( testG2stat tests-cpp/testG2stat.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( testG2stat ${TARGET} )
-ENDIF()
+#IF( BUILD_EXECUTABLE )
+  SET( EXECUTABLE testBiarc testDistance testG2 testG2plot testG2stat testG2stat2arc testG2statCLC testIntersect testPolyline testTriangle2D )
+  FOREACH ( EXE ${EXECUTABLE} )
+    ADD_EXECUTABLE( ${EXE} tests-cpp/${EXE}.cc ${HEADERS} )
+    TARGET_LINK_LIBRARIES( ${EXE} ${TARGET} )
+  ENDFOREACH ( EXE ${EXECUTABLE} )
+#ENDIF()
 
 
 INSTALL( TARGETS ${TARGET}
