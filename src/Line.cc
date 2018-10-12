@@ -20,6 +20,15 @@
 #include "Line.hh"
 #include <algorithm>
 
+// Microsoft visual studio Workaround
+#ifdef max
+  #undef max
+#endif
+
+#ifdef min
+  #undef min
+#endif
+
 namespace G2lib {
 
   using std::max;
@@ -188,7 +197,7 @@ namespace G2lib {
     real_type const q1[2] = { xEnd(),     yEnd()     };
     real_type const p2[2] = { S.xBegin(), S.yBegin() };
     real_type const q2[2] = { S.xEnd(),   S.yEnd()   };
-    real_type const epsi  = std::max(L,S.L)*machepsi100;
+    real_type const epsi  = max(L,S.L)*machepsi100;
 
     // Find the four orientations needed for general and special cases
     int_type o1 = orientation( p1, q1, p2, epsi );

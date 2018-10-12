@@ -19,6 +19,8 @@
 
 #include "G2lib.hh"
 
+#include <algorithm>
+
 namespace G2lib {
 
   real_type const machepsi     = std::numeric_limits<real_type>::epsilon();

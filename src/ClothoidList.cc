@@ -582,11 +582,11 @@ namespace G2lib {
                         real_type & t ) const {
 
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
-    G2LIB_ASSERT( ibegin >= 0 && ibegin <= iend && iend < clotoidList.size(),
-                  "ClothoidList::findST( ibegin=" << ibegin <<
-                  ", iend = " << iend <<
-                  " , x, y, s, t ) bad range not in [0," << clotoidList.size()-1 <<
-                  "]" );
+    G2LIB_ASSERT( ibegin >= 0 && ibegin <= iend &&
+                  iend < int_type(clotoidList.size()),
+                  "ClothoidList::findST( ibegin=" << ibegin << ", iend = " <<
+                  iend << " , x, y, s, t ) bad range not in [0," <<
+                  clotoidList.size()-1 << "]" );
     s = t = 0;
     int_type iseg = 0;
     bool ok = false;
