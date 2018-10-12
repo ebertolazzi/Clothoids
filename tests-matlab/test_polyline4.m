@@ -14,7 +14,7 @@ addpath('../matlab');
 close all ;
 
 C = ClothoidCurve();
-C.build_G1( 0, 0, 0, 0, 3, pi );
+C.build_G1( 0, 0, -pi, 1, 3, pi );
 
 P = PolyLine();
 P.approx( C, 0.001 );

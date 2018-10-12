@@ -32,8 +32,6 @@
 //! Clothoid computations routine
 namespace G2lib {
 
-  using namespace G2lib;
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
