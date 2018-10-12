@@ -19,12 +19,18 @@ ifneq (,$(findstring Linux, $(OS)))
   LDCONFIG = sudo ldconfig
 endif
 
+# check if the OS string contains 'Linux'
+ifneq (,$(findstring MINGW, $(OS)))
+  LIBS     = -static -L./lib -lClothoids
+  CXXFLAGS = -std=c++11 -Wall -O3 -Wno-sign-compare
+  AR       = ar rcs
+  LDCONFIG = sudo ldconfig
+endif
+
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
   CC       = clang
   CXX      = clang++
-  #CC       = gcc-7
-  #CXX      = g++-7
   LIBS     = -L./lib -lClothoids
   CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
   AR       = libtool -static -o
@@ -44,7 +50,8 @@ src/CubicRootsFlocke.cc \
 src/Fresnel.cc \
 src/G2lib.cc \
 src/Line.cc \
-src/Triangle2D.cc
+src/Triangle2D.cc \
+src/PolyLine.cc
 
 OBJS  = $(SRCS:.cc=.o)
 DEPS  = src/Clothoid.hh src/CubicRootsFlocke.hh
@@ -61,6 +68,7 @@ all: lib
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat     tests-cpp/testG2stat.cc $(LIBS)
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat2arc tests-cpp/testG2stat2arc.cc $(LIBS)
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2statCLC  tests-cpp/testG2statCLC.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testPolyline   tests-cpp/testPolyline.cc $(LIBS)
 	#$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot tests-cpp/testG2plot.cc $(LIBS)
 
 lib: lib/$(LIB_CLOTHOID)$(STATIC_EXT) lib/$(LIB_CLOTHOID)$(DYNAMIC_EXT)

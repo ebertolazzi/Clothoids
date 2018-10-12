@@ -29,6 +29,7 @@ namespace G2lib {
 
   using std::min;
   using std::max;
+  using std::abs;
 
   /*\
    |  ____       _       _     _
