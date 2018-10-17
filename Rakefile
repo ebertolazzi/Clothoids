@@ -50,9 +50,14 @@ task :build do
   FileUtils.mkdir_p "build"
   FileUtils.cd      "build"
 
+  puts "\n\nPrepare GenericContainer project".green
   sh 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib ..'
+
+  puts "\n\nBuild GenericContainer Debug".green
   sh 'cmake --build . --config Debug  --target install'
   FileUtils.cp "../lib/libGenericContainer.a", "../lib/libGenericContainer_debug.a"  
+
+  puts "\n\nBuild GenericContainer Release".green
   sh 'cmake --build . --config Release --target install'
   FileUtils.cd '..'
 
@@ -61,6 +66,8 @@ end
 desc "compile for Visual Studio [default year=2017 bits=x64]"
 task :build_win, [:year, :bits] do |t, args|
   args.with_defaults( :year => "2017", :bits => "x64" )
+
+  puts "\n\nPrepare GenericContainer project".green
 
   dir = "vs_#{args.year}_#{args.bits}"
 
@@ -91,14 +98,17 @@ task :build_win, [:year, :bits] do |t, args|
     puts "Visual Studio year #{year} not supported!\n";
   end
 
-  sh 'cmake --build . --config Release  --target install'
   FileUtils.mkdir_p "../lib"
-  FileUtils.cp "Release/GenericContainer.lib",
-               "../lib/GenericContainer_vs#{args.year}_#{args.bits}.lib"  
+  sh 'cmake --build . --config Release  --target install'
 
+  puts "\n\nBuild GenericContainer Debug".green
   sh 'cmake --build . --config Debug --target install'
   FileUtils.cp "Debug/GenericContainer.lib",
                "../lib/GenericContainer_vs#{args.year}_#{args.bits}_debug.lib"
+
+  puts "\n\nBuild GenericContainer Release".green
+  FileUtils.cp "Release/GenericContainer.lib",
+               "../lib/GenericContainer_vs#{args.year}_#{args.bits}.lib"  
 
   FileUtils.cd '..'
 
