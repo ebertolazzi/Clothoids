@@ -1,2 +1,5 @@
 language: cpp
 script: make
+os:
+  - linux
+  - osx
