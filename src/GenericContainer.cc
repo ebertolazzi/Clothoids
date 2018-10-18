@@ -76,8 +76,8 @@ namespace GenericContainerNamespace {
   bool isUnsigned64( real_type x )
   { return isInteger64(x) && x >= 0; }
 
-  std::ostream &
-  operator << ( std::ostream & s, vec_bool_type const & v ) {
+  ostream_type &
+  operator << ( ostream_type & s, vec_bool_type const & v ) {
     if ( v.size() > 0 ) {
       s << (v[0]?"[ true":"[ false");
       for ( unsigned i = 1; i < v.size(); ++i )
@@ -90,8 +90,8 @@ namespace GenericContainerNamespace {
   }
 
   template <typename TYPE>
-  std::ostream &
-  operator << ( std::ostream & s, std::vector<TYPE> const & v ) {
+  ostream_type &
+  operator << ( ostream_type & s, std::vector<TYPE> const & v ) {
     if ( v.size() > 0 ) {
       s << "[ " << v[0];
       for ( unsigned i = 1; i < v.size(); ++i ) s << " " << v[i];
@@ -103,8 +103,8 @@ namespace GenericContainerNamespace {
   }
 
   template <>
-  std::ostream &
-  operator << ( std::ostream & s, vec_complex_type const & v ) {
+  ostream_type &
+  operator << ( ostream_type & s, vec_complex_type const & v ) {
     if ( v.size() > 0 ) {
       s << "[ (" << v[0].real() << ", " << v[0].imag() << " )";
       for ( unsigned i = 1; i < v.size(); ++i )
@@ -115,10 +115,10 @@ namespace GenericContainerNamespace {
     }
     return s;
   }
-  
-  template std::ostream & operator << ( std::ostream & s, std::vector<int_type> const & v );
-  template std::ostream & operator << ( std::ostream & s, std::vector<long_type> const & v );
-  template std::ostream & operator << ( std::ostream & s, std::vector<real_type> const & v );
+
+  template ostream_type & operator << ( ostream_type & s, std::vector<int_type> const & v );
+  template ostream_type & operator << ( ostream_type & s, std::vector<long_type> const & v );
+  template ostream_type & operator << ( ostream_type & s, std::vector<real_type> const & v );
 
   template <typename TYPE>
   TYPE const &
@@ -193,8 +193,8 @@ namespace GenericContainerNamespace {
   }
 
   template <typename TYPE>
-  std::ostream &
-  operator << ( std::ostream & s, mat_type<TYPE> const & m ) {
+  ostream_type &
+  operator << ( ostream_type & s, mat_type<TYPE> const & m ) {
     for ( unsigned i = 0; i < m.numRows(); ++i ) {
       s << std::setw(8) << m(i,0);
       for ( unsigned j = 1; j < m.numCols(); ++j )
@@ -205,8 +205,8 @@ namespace GenericContainerNamespace {
   }
 
   template <>
-  std::ostream &
-  operator << ( std::ostream & s, mat_complex_type const & m ) {
+  ostream_type &
+  operator << ( ostream_type & s, mat_complex_type const & m ) {
     for ( unsigned i = 0; i < m.numRows(); ++i ) {
       for ( unsigned j = 0; j < m.numCols(); ++j )
         s << " (" << std::setw(8) << m(i,j).real() << ", "
@@ -216,16 +216,16 @@ namespace GenericContainerNamespace {
     return s;
   }
 
-  template std::ostream & operator << ( std::ostream & s, mat_type<int_type> const & m );
-  template std::ostream & operator << ( std::ostream & s, mat_type<long_type> const & m );
-  template std::ostream & operator << ( std::ostream & s, mat_type<real_type> const & m );
+  template ostream_type & operator << ( ostream_type & s, mat_type<int_type> const & m );
+  template ostream_type & operator << ( ostream_type & s, mat_type<long_type> const & m );
+  template ostream_type & operator << ( ostream_type & s, mat_type<real_type> const & m );
 
   #ifdef GENERIC_CONTAINER_USE_REGEX
 
   class GENERIC_CONTAINER_API_DLL Pcre_for_GC {
 
   private:
-  
+
     std::regex  reCompiled;
     std::smatch reMatches;
 
@@ -950,7 +950,7 @@ namespace GenericContainerNamespace {
     allocate_map();
     return *_data.m;
   }
-  
+
   /*
   //   ____            _
   //  |  _ \ _   _ ___| |__
@@ -1120,7 +1120,7 @@ namespace GenericContainerNamespace {
     }
     return nullptr;
   }
-  
+
   int_type *
   GenericContainer::get_int_pointer() {
     switch (_data_type) {
@@ -1200,7 +1200,7 @@ namespace GenericContainerNamespace {
     }
     return nullptr;
   }
-  
+
   long_type *
   GenericContainer::get_long_pointer() {
     switch (_data_type) {
@@ -1280,7 +1280,7 @@ namespace GenericContainerNamespace {
     }
     return nullptr;
   }
-  
+
   real_type *
   GenericContainer::get_real_pointer() {
     switch (_data_type) {
@@ -1946,12 +1946,12 @@ namespace GenericContainerNamespace {
       return uint_type(_data.l);
     case GC_REAL:
       GC_ASSERT( isUnsigned32(_data.r),
-                 msg << "type: " << typeName[_data_type] << 
+                 msg << "type: " << typeName[_data_type] <<
                  " value = " << _data.r << " can't be converted to uint" );
       return uint_type(_data.r);
     case GC_COMPLEX:
       GC_ASSERT( isUnsigned32(_data.c->real()) && isZero(_data.c->imag()),
-                 msg << "type: " << typeName[_data_type] << 
+                 msg << "type: " << typeName[_data_type] <<
                  "v alue = (" << _data.c->real() << "," <<  _data.c->imag() <<
                  ") can't be converted to uint" );
       return uint_type(_data.c->real());
@@ -3457,11 +3457,11 @@ namespace GenericContainerNamespace {
                msg << "\nget_string_at( " << i << " ) const, out of range" );
     return (*_data.v_s)[i];
   }
-  
+
   GenericContainer &
   GenericContainer::get_gc_at( unsigned i )
   { return (*this)[i]; }
-  
+
   GenericContainer const &
   GenericContainer::get_gc_at( unsigned i, char const msg[] ) const {
     return (*this)(i,msg);
@@ -4697,7 +4697,7 @@ namespace GenericContainerNamespace {
       stream << this -> get_real() << '\n';
       break;
     case GC_COMPLEX:
-      stream << this -> get_complex().real() << ' ' 
+      stream << this -> get_complex().real() << ' '
              << this -> get_complex().imag() << '\n';
       break;
     case GC_STRING:

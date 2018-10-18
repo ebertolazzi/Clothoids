@@ -61,7 +61,7 @@ namespace GenericContainerNamespace {
   { return FP_ZERO == fpclassify( x ); }
 
   void
-  real_to_stream ( real_type number, ostream & out ) {
+  real_to_stream ( real_type number, ostream_type & out ) {
     out << std::setprecision( std::numeric_limits<real_type>::digits10 + 1 )
         << std::scientific
         << number;
@@ -69,7 +69,7 @@ namespace GenericContainerNamespace {
 
   void
   complex_to_stream ( complex_type const & number,
-                      ostream            & out,
+                      ostream_type       & out,
                       string       const & im_unit )
   {
     if ( number == complex_type ( 0, 0 ) ) {
