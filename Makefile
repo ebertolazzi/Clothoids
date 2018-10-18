@@ -2,8 +2,8 @@
 OS=$(shell uname)
 PWD=$(shell pwd)
 
-CC   = gcc
-CXX  = g++
+# CC   = gcc
+# CXX  = g++
 INC  = -I./src -I./include
 LIBS = -L./lib -lClothoids
 DEFS =
@@ -21,8 +21,8 @@ endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  CC       = clang
-  CXX      = clang++
+  # CC       = clang
+  # CXX      = clang++
   #CC       = gcc-7
   #CXX      = g++-7
   LIBS     = -L./lib -lClothoids
@@ -55,7 +55,14 @@ MKDIR = mkdir -p
 PREFIX    = /usr/local
 FRAMEWORK = Clothoids
 
-all: lib
+all: bin
+
+ci: bin
+	@echo " --- COMPILER ---"
+	$(CXX) --version
+	@echo " --- COMPILER ---"
+
+bin: lib
 	@$(MKDIR) bin
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2         tests-cpp/testG2.cc $(LIBS)
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat     tests-cpp/testG2stat.cc $(LIBS)

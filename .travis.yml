@@ -1,5 +1,5 @@
 language: cpp
-script: make
+script: make ci
 os:
   - linux
   - osx
