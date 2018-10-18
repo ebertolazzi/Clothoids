@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -542,8 +542,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  std::ostream &
-  operator << ( std::ostream & stream, CircleArc const & c ) {
+  ostream_type &
+  operator << ( ostream_type & stream, CircleArc const & c ) {
     stream <<   "x0     = " << c.x0
            << "\ny0     = " << c.y0
            << "\ntheta0 = " << c.theta0

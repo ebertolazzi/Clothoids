@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -437,8 +437,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  std::ostream &
-  operator << ( std::ostream & stream, ClothoidCurve const & c ) {
+  ostream_type &
+  operator << ( ostream_type & stream, ClothoidCurve const & c ) {
     stream <<   "x0     = " << c.CD.x0
            << "\ny0     = " << c.CD.y0
            << "\ntheta0 = " << c.CD.theta0

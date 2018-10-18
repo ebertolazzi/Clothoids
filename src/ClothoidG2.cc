@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -1603,8 +1603,8 @@ namespace G2lib {
 
   // ---------------------------------------------------------------------------
 
-  std::ostream &
-  operator << ( std::ostream & stream, ClothoidSplineG2 const & c ) {
+  ostream_type &
+  operator << ( ostream_type & stream, ClothoidSplineG2 const & c ) {
     stream
       <<   "npts   = " << c.npts
       << "\ntarget = " << int(c.tt)

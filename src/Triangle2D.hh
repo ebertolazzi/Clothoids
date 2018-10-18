@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -215,12 +215,12 @@ namespace G2lib {
     distMax( real_type x, real_type y ) const;
 
     void
-    info( std::ostream & stream ) const
+    info( ostream_type & stream ) const
     { stream << "Triangle2D\n" << *this << '\n'; }
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, Triangle2D const & c );
+    ostream_type &
+    operator << ( ostream_type & stream, Triangle2D const & c );
 
   };
 

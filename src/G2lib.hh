@@ -91,6 +91,8 @@
 //! Clothoid computations routine
 namespace G2lib {
 
+  typedef std::basic_ostream<char> ostream_type;
+
   typedef double real_type;
   typedef int    int_type;
 

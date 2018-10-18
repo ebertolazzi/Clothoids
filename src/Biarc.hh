@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -57,7 +57,7 @@ namespace G2lib {
     }
 
   public:
-  
+
     Biarc()
     : omega(0)
     {}
@@ -256,12 +256,12 @@ namespace G2lib {
             real_type & t ) const;
 
     void
-    info( std::ostream & stream ) const
+    info( ostream_type & stream ) const
     { stream << "BiArc\n" << *this << '\n'; }
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, Biarc const & bi );
+    ostream_type &
+    operator << ( ostream_type & stream, Biarc const & bi );
 
   };
 

@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -69,7 +69,7 @@ namespace G2lib {
              real_type S[] );
 
   /*! \brief Compute the Fresnel integrals
-   * \f[ 
+   * \f[
    *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
    *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
    * \f]
@@ -89,14 +89,14 @@ namespace G2lib {
                         real_type intS[] );
 
   /*! \brief Compute the Fresnel integrals
-   * \f[ 
+   * \f[
    *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
    *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
    * \f]
    * \param a      parameter \f$ a \f$
    * \param b      parameter \f$ b \f$
    * \param c      parameter \f$ c \f$
-   * \param intC   cosine integrals, 
+   * \param intC   cosine integrals,
    * \param intS   sine integrals
    */
   void
@@ -277,7 +277,7 @@ namespace G2lib {
                    real_type & L );
 
     void
-    info( std::ostream & s ) const;
+    info( ostream_type & s ) const;
 
   };
 

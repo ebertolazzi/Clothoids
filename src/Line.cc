@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -38,7 +38,7 @@ namespace G2lib {
    |  | |   (_)_ __   ___
    |  | |   | | '_ \ / _ \
    |  | |___| | | | |  __/
-   |  |_____|_|_| |_|\___| 
+   |  |_____|_|_| |_|\___|
   \*/
 
   void
@@ -287,8 +287,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  std::ostream &
-  operator << ( std::ostream & stream, LineSegment const & c ) {
+  ostream_type &
+  operator << ( ostream_type & stream, LineSegment const & c ) {
     stream <<   "x0     = " << c.x0
            << "\ny0     = " << c.y0
            << "\ntheta0 = " << c.theta0

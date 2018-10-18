@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -42,11 +42,11 @@ namespace G2lib {
   /*
   // This function calculates the fresnel cosine and sine integrals.
   // Input:
-  // y = values for which fresnel integrals have to be evaluated  
+  // y = values for which fresnel integrals have to be evaluated
   //
   // Output:
   // FresnelC = fresnel cosine integral of y
-  // FresnelS = fresnel sine integral of y  
+  // FresnelS = fresnel sine integral of y
   //
   // Adapted from:
   // Atlas for computing mathematical functions : an illustrated guide for
@@ -111,19 +111,19 @@ namespace G2lib {
   //! \endcond
 
   /*
-  //  #######                                           
-  //  #       #####  ######  ####  #    # ###### #      
-  //  #       #    # #      #      ##   # #      #      
-  //  #####   #    # #####   ####  # #  # #####  #      
-  //  #       #####  #           # #  # # #      #      
-  //  #       #   #  #      #    # #   ## #      #      
-  //  #       #    # ######  ####  #    # ###### ###### 
+  //  #######
+  //  #       #####  ######  ####  #    # ###### #
+  //  #       #    # #      #      ##   # #      #
+  //  #####   #    # #####   ####  # #  # #####  #
+  //  #       #####  #           # #  # # #      #
+  //  #       #   #  #      #    # #   ## #      #
+  //  #       #    # ######  ####  #    # ###### ######
   */
 
   void
   FresnelCS( real_type y, real_type & C, real_type & S ) {
     /*=======================================================*\
-      Purpose: This program computes the Fresnel integrals 
+      Purpose: This program computes the Fresnel integrals
                C(x) and S(x) using subroutine FCS
       Input :  x --- Argument of C(x) and S(x)
       Output:  C --- C(x)
@@ -266,7 +266,7 @@ namespace G2lib {
       real_type CosU = cos(U);
       C = 0.5 + f*SinU - g*CosU;
       S = 0.5 - f*CosU - g*SinU;
-      
+
     }
     if ( y < 0 ) { C = -C; S = -S; }
   }
@@ -508,7 +508,7 @@ namespace G2lib {
       }
     }
   }
-  
+
   //! \endcond
 
   // -------------------------------------------------------------------------
@@ -534,7 +534,7 @@ namespace G2lib {
 
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
-  
+
   void
   GeneralizedFresnelCS( int_type  nk,
                         real_type a,
@@ -1249,7 +1249,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::info( std::ostream & s ) const {
+  ClothoidData::info( ostream_type & s ) const {
     s <<   "x0     = " << x0
       << "\ny0     = " << y0
       << "\ntheta0 = " << theta0

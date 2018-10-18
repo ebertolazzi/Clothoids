@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -279,12 +279,12 @@ namespace G2lib {
     intersect( PolyLine const & pl ) const;
 
     void
-    info( std::ostream & stream ) const
+    info( ostream_type & stream ) const
     { stream << "PolyLine\n" << *this << '\n'; }
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, PolyLine const & P );
+    ostream_type &
+    operator << ( ostream_type & stream, PolyLine const & P );
 
   };
 

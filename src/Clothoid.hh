@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -777,12 +777,12 @@ namespace G2lib {
     reverse();
 
     void
-    info( std::ostream & stream ) const
+    info( ostream_type & stream ) const
     { stream << "Clothoid\n" << *this << '\n'; }
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, ClothoidCurve const & c );
+    ostream_type &
+    operator << ( ostream_type & stream, ClothoidCurve const & c );
 
   };
 
@@ -1306,8 +1306,8 @@ namespace G2lib {
     }
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, ClothoidCurve const & c );
+    ostream_type &
+    operator << ( ostream_type & stream, ClothoidCurve const & c );
 
   };
 
@@ -1717,14 +1717,14 @@ namespace G2lib {
      * \param stream stream to save
      */
     void
-    export_table( std::ostream & stream ) const;
+    export_table( ostream_type & stream ) const;
 
     /*! \brief Save Clothoid list to a stream
      *
      * \param stream streamstream to save
      */
     void
-    export_ruby( std::ostream & stream ) const;
+    export_ruby( ostream_type & stream ) const;
 
   };
 
@@ -1812,12 +1812,12 @@ namespace G2lib {
     jacobian( real_type const theta[], real_type vals[] ) const;
 
     void
-    info( std::ostream & stream ) const
+    info( ostream_type & stream ) const
     { stream << "ClothoidSplineG2\n" << *this << '\n'; }
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, ClothoidSplineG2 const & c );
+    ostream_type &
+    operator << ( ostream_type & stream, ClothoidSplineG2 const & c );
 
   };
 

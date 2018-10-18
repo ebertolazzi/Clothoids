@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -344,8 +344,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  std::ostream &
-  operator << ( std::ostream & stream, PolyLine const & P ) {
+  ostream_type &
+  operator << ( ostream_type & stream, PolyLine const & P ) {
     stream <<   "nseg   = " << P.numSegment()
            << "\nxBegin = " << P.xBegin()
            << "\nybegin = " << P.yBegin()

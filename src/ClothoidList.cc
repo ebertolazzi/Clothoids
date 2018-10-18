@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -710,7 +710,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::export_table( std::ostream & stream ) const {
+  ClothoidList::export_table( ostream_type & stream ) const {
     stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n";
     std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic )
@@ -725,7 +725,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::export_ruby( std::ostream & stream ) const {
+  ClothoidList::export_ruby( ostream_type & stream ) const {
     stream << "data = {\n";
     std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic )

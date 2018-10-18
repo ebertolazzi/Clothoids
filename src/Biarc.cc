@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -143,7 +143,7 @@ namespace G2lib {
       PTI0[0][1] = yM0 - TxS1;
       PTI0[1][0] = xM1 - TyS2;
       PTI0[1][1] = yM1 + TxS2;
-    
+
       // Compute second tangent
       PTI1[0][0] = xM0 - TyS1;
       PTI1[0][1] = yM0 + TxS1;
@@ -708,8 +708,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  std::ostream &
-  operator << ( std::ostream & stream, Biarc const & bi ) {
+  ostream_type &
+  operator << ( ostream_type & stream, Biarc const & bi ) {
     stream << "Biarc\n"
            << "C0\n" << bi.C0
            << "C1\n" << bi.C1

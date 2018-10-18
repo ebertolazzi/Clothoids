@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -323,12 +323,12 @@ namespace G2lib {
     // Poly 3 x n matrix
 
     void
-    info( std::ostream & stream ) const
+    info( ostream_type & stream ) const
     { stream << "CircleArc\n" << *this << '\n'; }
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, CircleArc const & c );
+    ostream_type &
+    operator << ( ostream_type & stream, CircleArc const & c );
 
     friend class ClothoidCurve;
 
