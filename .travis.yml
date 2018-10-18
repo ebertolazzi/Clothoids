@@ -4,11 +4,6 @@ branches:
   only:
     - develop
 
-git:
-  quiet: true
-  submodules: false
-  depth: false
-
 script: make
 
 matrix:
@@ -51,9 +46,5 @@ matrix:
       osx_image: xcode10
       env: 
         - MATRIX_EVAL="CC=clang && CXX=clang++"
-
 before_install:
   - eval "${MATRIX_EVAL}"
-
-      
-      
