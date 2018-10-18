@@ -1,0 +1,15 @@
+version: 'Clothoids-{branch}.build.{build}'
+branches:
+  only:
+  - develop
+  - master
+image: Visual Studio 2015
+platform: x64
+environment:
+  MINGW_DIR: C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0
+before_build:
+  - set Path=%MINGW_DIR%\mingw32\bin;%Path%
+build_script:
+  - mingw32-make ci
+test: off
+deploy: off

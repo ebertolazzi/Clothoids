@@ -1,16 +1,8 @@
 language: cpp
-
-branches:
-  only:
-    - develop
-
-git:
-  quiet: true
-  submodules: false
-  depth: false
-
-script: make
-
+script: make ci
+os:
+  - linux
+  - osx
 matrix:
   include:
     - os: linux
@@ -51,9 +43,5 @@ matrix:
       osx_image: xcode10
       env: 
         - MATRIX_EVAL="CC=clang && CXX=clang++"
-
 before_install:
   - eval "${MATRIX_EVAL}"
-
-      
-      
