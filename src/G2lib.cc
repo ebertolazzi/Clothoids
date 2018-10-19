@@ -191,7 +191,7 @@ namespace G2lib {
     if ( tmp > Amax ) { ij = 2; Amax = tmp; }
     tmp = std::abs(A[1][1]);
     if ( tmp > Amax ) { ij = 3; Amax = tmp; }
-    if ( Amax == 0 ) return false;
+    if ( isZero(Amax) ) return false;
     if ( (ij&0x01) == 0x01 ) { j[0] = 1; j[1] = 0; }
     else                     { j[0] = 0; j[1] = 1; }
     if ( (ij&0x02) == 0x02 ) { i[0] = 1; i[1] = 0; }

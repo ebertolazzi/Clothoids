@@ -29,6 +29,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <limits>
+#include <cfloat>
 
 #ifndef G2LIB_ASSERT
   #define G2LIB_ASSERT(COND,MSG)           \
@@ -105,6 +106,31 @@ namespace G2lib {
   extern real_type const m_2pi;       // 2*pi
   extern real_type const m_1_pi;      // 1/pi
   extern real_type const m_1_sqrt_pi; // 1/sqrt(pi)
+
+  static
+  inline
+  bool
+  isZero( real_type x )
+  { return FP_ZERO == fpclassify(x); }
+
+  static
+  inline
+  bool
+  isInfinite( real_type x )
+  { return FP_INFINITE == fpclassify(x); }
+
+  static
+  inline
+  bool
+  isNaN( real_type x )
+  { return FP_NAN == fpclassify(x); }
+
+  static
+  inline
+  bool
+  isRegular( real_type x )
+  { return !( FP_INFINITE == fpclassify(x) ||
+              FP_NAN      == fpclassify(x) ); }
 
   /*
   // sin(x)/x

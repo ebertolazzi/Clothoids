@@ -1,4 +1,4 @@
-#define _USE_MATH_DEFINES
+//#define _USE_MATH_DEFINES
 #include "Clothoid.hh"
 #include "ClothoidAsyPlot.hh"
 #include "TicToc.hh"

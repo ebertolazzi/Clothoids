@@ -1168,7 +1168,7 @@ namespace G2lib {
 
     real_type r[3];
     int_type  nr, nc;
-    PolynomialRoots::solveCubic( A, B, C, D, r[0], r[1], r[2], nr, nc );
+    solveCubic( A, B, C, D, r[0], r[1], r[2], nr, nc );
     // cerco radice reale piu vicina
     real_type theta;
     switch ( nr ) {

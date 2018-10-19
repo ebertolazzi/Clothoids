@@ -797,7 +797,7 @@ namespace G2lib {
   class G2solve2arc {
 
     real_type tolerance;
-    int       maxIter;
+    int_type  maxIter;
 
     real_type x0;
     real_type y0;

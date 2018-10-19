@@ -38,6 +38,7 @@ namespace G2lib {
    | |_|   \___/|_|\__, |_____|_|_| |_|\___|
    |               |___/
   \*/
+
   class CircleArc;
   class Biarc;
   class ClothoidCurve;
@@ -137,13 +138,13 @@ namespace G2lib {
     real_type
     X( real_type s ) const {
       this->search( s );
-      return lvec[isegment].X( s-s0[isegment] );
+      return lvec[size_t(isegment)].X( s-s0[size_t(isegment)] );
     }
 
     real_type
     Y( real_type s ) const {
       this->search( s );
-      return lvec[isegment].Y(s-s0[isegment]);
+      return lvec[size_t(isegment)].Y(s-s0[size_t(isegment)]);
     }
 
     void
@@ -151,7 +152,7 @@ namespace G2lib {
           real_type & x,
           real_type & y ) const {
       this->search( s );
-      lvec[isegment].eval(s-s0[isegment],x,y);
+      lvec[size_t(isegment)].eval(s-s0[size_t(isegment)],x,y);
     }
 
     void
@@ -159,7 +160,7 @@ namespace G2lib {
             real_type & x_D,
             real_type & y_D ) const {
       this->search( s );
-      lvec[isegment].eval_D( s-s0[isegment], x_D, y_D );
+      lvec[size_t(isegment)].eval_D( s-s0[size_t(isegment)], x_D, y_D );
     }
 
     void
@@ -182,7 +183,7 @@ namespace G2lib {
           real_type & x,
           real_type & y ) const {
       this->search( s );
-      lvec[isegment].eval( s-s0[isegment], t, x, y );
+      lvec[size_t(isegment)].eval( s-s0[size_t(isegment)], t, x, y );
     }
 
     void
@@ -191,7 +192,7 @@ namespace G2lib {
             real_type & x_D,
             real_type & y_D ) const {
       this->search( s );
-      lvec[isegment].eval_D( s-s0[isegment], t, x_D, y_D );
+      lvec[size_t(isegment)].eval_D( s-s0[size_t(isegment)], t, x_D, y_D );
     }
 
     void

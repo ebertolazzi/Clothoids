@@ -19,7 +19,7 @@
 
 #include "CubicRootsFlocke.hh"
 
-namespace PolynomialRoots {
+namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
@@ -195,9 +195,9 @@ namespace PolynomialRoots {
                   int_type  & nc ) {
     r1 = r2 = 0;
     nr = nc = 0;
-    if ( a == 0 ) { // less than two roots b*z + c = 0
-      if ( b != 0 ) { nr = 1; r1 = -c/b; }
-    } else if ( c == 0 ) { // a*z^2 + b*z  = 0
+    if ( isZero(a) ) { // less than two roots b*z + c = 0
+      if ( !isZero(b) ) { nr = 1; r1 = -c/b; }
+    } else if ( isZero(c) ) { // a*z^2 + b*z  = 0
       nr = 2;
       r1 = -b/a;
       if ( r1 > 0 ) std::swap(r1,r2);
@@ -218,7 +218,7 @@ namespace PolynomialRoots {
       if ( real_root ) {       // complex conjugate zeros
         if ( b >= 0 ) d = -d; // real zeros
         r1 = (d-b)/a;
-        if ( r1 != 0 ) {
+        if ( !isZero(r1) ) {
           r2 = (c/r1)/a;
           if ( r1 > r2 ) std::swap(r1,r2); // order roots
         }
@@ -367,11 +367,11 @@ namespace PolynomialRoots {
               int_type  & nc ) {
 
     // special cases
-    if ( A == 0 ) {
+    if ( isZero(A) ) {
       solveQuadratic( B, C, D, r1, r2, nr, nc );
       return 0;
     }
-    if ( D == 0 ) {
+    if ( isZero(D) ) {
       r1 = 0;
       solveQuadratic( A, B, C, r2, r3, nr, nc );
       if ( nr == 1 ) { // caso degenere

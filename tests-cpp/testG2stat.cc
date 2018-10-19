@@ -1,4 +1,4 @@
-#define _USE_MATH_DEFINES
+//#define _USE_MATH_DEFINES
 #include "Clothoid.hh"
 #include "ClothoidAsyPlot.hh"
 #include "TicToc.hh"
@@ -14,10 +14,10 @@ static const real_type m_pi = 3.14159265358979323846264338328;
 
 using namespace std;
 
-map<int,int> stats;
+static map<int,int> stats;
 
 int
-main(int argc, const char * argv[]) {
+main( int argc, const char * argv[] ) {
 
   G2lib::G2solve3arc g2solve3arc;
   TicToc             tictoc;

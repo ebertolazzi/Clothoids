@@ -58,6 +58,18 @@ ENDFOREACH (F ${S})
 
 INCLUDE_DIRECTORIES( src )
 
+# Unused in this repository
+# IF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
+#   INCLUDE_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include" )
+#   IF ( ${BITS} STREQUAL "x64" )
+#     set(WINXXBITS Win64)
+#     LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/intel64" )
+#   ELSE()
+#     set(WINXXBITS Win32)
+#     LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/ia32" )
+#   ENDIF()
+# ENDIF()
+
 ADD_LIBRARY( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
 
 #IF( BUILD_EXECUTABLE )

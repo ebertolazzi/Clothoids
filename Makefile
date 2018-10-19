@@ -12,7 +12,7 @@ DYNAMIC_EXT = .so
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 -Wall -O3 -fPIC -Wno-sign-compare
+  CXXFLAGS = -std=c++11 -Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command -O3 -fPIC -Wno-sign-compare
   AR       = ar rcs
   LDCONFIG = sudo ldconfig
 endif
@@ -20,7 +20,7 @@ endif
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring MINGW, $(OS)))
   LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 -Wall -O3 -Wno-sign-compare
+  CXXFLAGS = -std=c++11 -Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command -O3 -Wno-sign-compare
   AR       = ar rcs
   LDCONFIG = sudo ldconfig
 endif
@@ -28,7 +28,7 @@ endif
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
   LIBS     = -L./lib -lClothoids
-  CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
+  CXXFLAGS = -Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command -O3 -fPIC -Wno-sign-compare
   AR       = libtool -static -o
 	DYNAMIC_EXT = .dylib
 endif
@@ -60,10 +60,7 @@ FRAMEWORK = Clothoids
 
 all: bin
 
-ci: bin
-	@echo " --- CLOUD COMPILER ---"
-	$(CXX) --version
-	@echo " --- CLOUD COMPILER ---"
+travis: bin
 
 bin: lib
 	@$(MKDIR) bin

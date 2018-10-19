@@ -71,7 +71,7 @@ namespace G2lib {
     G2LIB_ASSERT( n >= 0 && n < int_type(lvec.size()),
                   "PolyLine::getSegment( " << n <<
                   " ) out of range [0," << lvec.size()-1 << "]" );
-    return lvec[n];
+    return lvec[size_t(n)];
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -80,11 +80,11 @@ namespace G2lib {
   PolyLine::polygon( real_type x[], real_type y[]) const {
     int_type n = int_type(lvec.size());
     for ( int_type k = 0; k < n; ++k ) {
-      x[k] = lvec[k].xBegin();
-      y[k] = lvec[k].yBegin();
+      x[size_t(k)] = lvec[size_t(k)].xBegin();
+      y[size_t(k)] = lvec[size_t(k)].yBegin();
     }
-    x[n] = lvec[n-1].xEnd();
-    y[n] = lvec[n-1].yEnd();
+    x[size_t(n)] = lvec[size_t(n-1)].xEnd();
+    y[size_t(n)] = lvec[size_t(n-1)].yEnd();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -263,7 +263,7 @@ namespace G2lib {
     std::reverse(lvec.begin(),lvec.end());
     int_type k = 1;
     for ( il = lvec.begin(); il != lvec.end(); ++il, ++k )
-      s0[k] = s0[k-1] + il->length();
+      s0[size_t(k)] = s0[size_t(k-1)] + il->length();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -298,8 +298,10 @@ namespace G2lib {
   PolyLine::intersect( PolyLine const         & pl,
                        std::vector<real_type> & ss0,
                        std::vector<real_type> & ss1 ) const {
-    G2LIB_ASSERT( !lvec.empty(), "PolyLine::intersect, empty list" );
-    G2LIB_ASSERT( !pl.lvec.empty(), "PolyLine::intersect, empty secondary list" );
+    G2LIB_ASSERT( !lvec.empty(),
+                  "PolyLine::intersect, empty list" );
+    G2LIB_ASSERT( !pl.lvec.empty(),
+                  "PolyLine::intersect, empty secondary list" );
     ss0.clear();
     ss1.clear();
     std::vector<LineSegment>::const_iterator ic0 = lvec.begin();
@@ -324,8 +326,10 @@ namespace G2lib {
 
   bool
   PolyLine::intersect( PolyLine const & pl ) const {
-    G2LIB_ASSERT( !lvec.empty(), "PolyLine::intersect, empty list" );
-    G2LIB_ASSERT( !pl.lvec.empty(), "PolyLine::intersect, empty secondary list" );
+    G2LIB_ASSERT( !lvec.empty(),
+                  "PolyLine::intersect, empty list" );
+    G2LIB_ASSERT( !pl.lvec.empty(),
+                  "PolyLine::intersect, empty secondary list" );
     std::vector<LineSegment>::const_iterator ic0 = lvec.begin();
     std::vector<real_type>::const_iterator   is0 = s0.begin();
     while ( ic0 != lvec.end() ) {
