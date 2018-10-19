@@ -38,9 +38,10 @@ namespace G2lib {
    |  |____/|_|\__,_|_|  \___|
   \*/
 
-  /*! \brief Compute biarc fitting by Hemite data
+  /*!
+   * \brief Compute biarc fitting by Hemite data
    *
-   */
+  \*/
 
   class Biarc {
     CircleArc C0, C1;
@@ -103,7 +104,8 @@ namespace G2lib {
            real_type y1,
            real_type theta1 );
 
-    /*! \brief
+    /*!
+    //  \brief
     //  construct a biarc by 3 point at "minimum energy"
     //  - Planar point set fairing and fitting by arc splines
     //  - Xunnian Yang and Guozhao Wang
@@ -156,7 +158,12 @@ namespace G2lib {
     real_type Ystar()     const { return C1.yBegin(); }
     real_type thetaStar() const { return C1.thetaBegin(); }
 
-    void eval    ( real_type s, real_type & th, real_type & k, real_type & x, real_type & y ) const;
+    void
+    eval( real_type   s,
+          real_type & th,
+          real_type & k,
+          real_type & x,
+          real_type & y ) const;
 
     void eval    ( real_type s, real_type & x,     real_type & y ) const;
     void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const;
@@ -248,7 +255,7 @@ namespace G2lib {
      * \param y y-coordinate point
      * \param s value \f$ s \f$
      * \param t value \f$ t \f$
-     */
+    \*/
     void
     findST( real_type   x,
             real_type   y,
