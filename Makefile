@@ -59,10 +59,7 @@ FRAMEWORK = Clothoids
 
 all: bin
 
-ci: bin
-	@echo " --- CLOUD COMPILER ---"
-	$(CXX) --version
-	@echo " --- CLOUD COMPILER ---"
+travis: bin
 
 bin: lib
 	@$(MKDIR) bin

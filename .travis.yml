@@ -1,10 +1,8 @@
-language: cpp
-script: make ci
-os:
-  - linux
-  - osx
+language: bash
 matrix:
   include:
+    - os: linux
+      script: make travis
     - os: linux
       addons:
         apt:
@@ -14,7 +12,9 @@ matrix:
             - g++-4.9
             - gcc-4.9
       env:
-         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+         - COMPILER="CC=gcc-4.9 && CXX=g++-4.9"
+      before_install: eval "${COMPILER}"
+      script: make travis
     - os: linux
       addons:
         apt:
@@ -24,7 +24,9 @@ matrix:
             - g++-5
             - gcc-5
       env:
-        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - COMPILER="CC=gcc-5 && CXX=g++-5"
+      before_install: eval "${COMPILER}"
+      script: make travis
     - os: linux
       addons:
         apt:
@@ -34,14 +36,34 @@ matrix:
             - g++-7
             - gcc-7
       env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+         - COMPILER="CC=gcc-7 && CXX=g++-7"
+      before_install: eval "${COMPILER}"
+      script: make travis
     - os: linux
       compiler: clang
-      env: 
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
+      script: make travis
+    - os: osx
+      script: make travis
     - os: osx
       osx_image: xcode10
-      env: 
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
-before_install:
-  - eval "${MATRIX_EVAL}"
+      script: make travis
+    - os: windows
+      install: choco install mingw
+      script: mingw32-make travis
+    - os: windows
+      install: choco install mingw --version 4.9.3 --force
+      script: mingw32-make travis
+    - os: windows
+      env:
+        - CMAKE_PATH="/c/Program Files/CMake/bin"
+      script: 
+        - export PATH=$CMAKE_PATH:$PATH
+        - mkdir build && cd build
+        - cmake .. 
+        - cmake --build . 
+
+
+
+      
+      
+      
