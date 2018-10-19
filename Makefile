@@ -2,8 +2,6 @@
 OS=$(shell uname)
 PWD=$(shell pwd)
 
-CC   = gcc
-CXX  = g++
 INC  = -I./src -I./include
 LIBS = -L./lib -lClothoids
 DEFS =
@@ -19,12 +17,16 @@ ifneq (,$(findstring Linux, $(OS)))
   LDCONFIG = sudo ldconfig
 endif
 
+# check if the OS string contains 'Linux'
+ifneq (,$(findstring MINGW, $(OS)))
+  LIBS     = -static -L./lib -lClothoids
+  CXXFLAGS = -std=c++11 -Wall -O3 -Wno-sign-compare
+  AR       = ar rcs
+  LDCONFIG = sudo ldconfig
+endif
+
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  CC       = clang
-  CXX      = clang++
-  #CC       = gcc-7
-  #CXX      = g++-7
   LIBS     = -L./lib -lClothoids
   CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
   AR       = libtool -static -o
@@ -55,7 +57,14 @@ MKDIR = mkdir -p
 PREFIX    = /usr/local
 FRAMEWORK = Clothoids
 
-all: lib
+all: bin
+
+ci: bin
+	@echo " --- CLOUD COMPILER ---"
+	$(CXX) --version
+	@echo " --- CLOUD COMPILER ---"
+
+bin: lib
 	@$(MKDIR) bin
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2         tests-cpp/testG2.cc $(LIBS)
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat     tests-cpp/testG2stat.cc $(LIBS)
