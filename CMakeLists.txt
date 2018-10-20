@@ -15,6 +15,7 @@ SET( TARGET Clothoids )
 
 PROJECT( ${TARGET} CXX C )
 
+SET( BUILD_EXECUTABLE false )
 FILE( GLOB S ./CMakeLists-cflags.txt )
 IF(EXISTS ${S})
   INCLUDE( ${S} )
@@ -58,28 +59,28 @@ ENDFOREACH (F ${S})
 
 INCLUDE_DIRECTORIES( src )
 
-# Unused in this repository
-# IF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-#   INCLUDE_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include" )
-#   IF ( ${BITS} STREQUAL "x64" )
-#     set(WINXXBITS Win64)
-#     LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/intel64" )
-#   ELSE()
-#     set(WINXXBITS Win32)
-#     LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/ia32" )
-#   ENDIF()
-# ENDIF()
+IF (WIN32)
+  IF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
+    INCLUDE_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include" )
+    IF ( ${BITS} STREQUAL "x64" )
+      SET(WINXXBITS Win64)
+      LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/intel64" )
+    ELSE()
+      SET(WINXXBITS Win32)
+      LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/ia32" )
+    ENDIF()
+  ENDIF()
+ENDIF()
 
 ADD_LIBRARY( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
 
-#IF( BUILD_EXECUTABLE )
+IF( BUILD_EXECUTABLE )
   SET( EXECUTABLE testBiarc testDistance testG2 testG2plot testG2stat testG2stat2arc testG2statCLC testIntersect testPolyline testTriangle2D )
   FOREACH ( EXE ${EXECUTABLE} )
     ADD_EXECUTABLE( ${EXE} tests-cpp/${EXE}.cc ${HEADERS} )
     TARGET_LINK_LIBRARIES( ${EXE} ${TARGET} )
   ENDFOREACH ( EXE ${EXECUTABLE} )
-#ENDIF()
-
+ENDIF()
 
 INSTALL( TARGETS ${TARGET}
          RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
