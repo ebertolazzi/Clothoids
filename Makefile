@@ -1,16 +1,19 @@
 # get the type of OS currently running
-OS=$(shell uname)
+OS=$(shell uname -s)
 PWD=$(shell pwd)
 
-INC  = -I./src -I./include
-LIBS = -L./lib -lClothoids
-DEFS =
-LDCONFIG =
-STATIC_EXT = .a
+INC         = -I./src -I./include
+LIBS        = -L./lib -lClothoids
+DEFS        =
+STATIC_EXT  = .a
 DYNAMIC_EXT = .so
+AR          = ar rcs
+LDCONFIG    = sudo ldconfig
 
 WARN=-Wall -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
 #-Weverything
+
+# default values
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
@@ -20,7 +23,7 @@ ifneq (,$(findstring Linux, $(OS)))
   LDCONFIG = sudo ldconfig
 endif
 
-# check if the OS string contains 'Linux'
+# check if the OS string contains 'MINGW'
 ifneq (,$(findstring MINGW, $(OS)))
   LIBS     = -static -L./lib -lClothoids
   CXXFLAGS = -std=c++11 $(WARN) -O3 -Wno-sign-compare
@@ -30,10 +33,11 @@ endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  LIBS     = -L./lib -lClothoids
-  CXXFLAGS = $(WARN) -O3 -fPIC -Wno-sign-compare
-  AR       = libtool -static -o
-	DYNAMIC_EXT = .dylib
+  LIBS        = -L./lib -lClothoids
+  CXXFLAGS    = $(WARN) -O3 -fPIC -Wno-sign-compare
+  AR          = libtool -static -o
+  LDCONFIG    =
+  DYNAMIC_EXT = .dylib
 endif
 
 LIB_CLOTHOID = libClothoids
@@ -105,7 +109,7 @@ install: lib
 	@$(MKDIR) $(PREFIX)/include
 	cp src/*.hh                $(PREFIX)/include
 	cp lib/$(LIB_CLOTHOID).*   $(PREFIX)/lib
-	@$(LDCONFIG)
+	@$(LDCONFIG) $(PREFIX)/lib
 
 install_as_framework: lib
 	@$(MKDIR) $(PREFIX)/lib
