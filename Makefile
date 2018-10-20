@@ -10,15 +10,15 @@ DYNAMIC_EXT = .so
 AR          = ar rcs
 LDCONFIG    = sudo ldconfig
 
-WARN=-Wall -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
-#-Weverything
+WARN=-Wall -Wno-sign-compare
+#-Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
 
 # default values
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 $(WARN) -O3 -fPIC -Wno-sign-compare
+  CXXFLAGS = -std=c++11 $(WARN) -O3 -fPIC
   AR       = ar rcs
   LDCONFIG = sudo ldconfig
 endif
@@ -26,7 +26,7 @@ endif
 # check if the OS string contains 'MINGW'
 ifneq (,$(findstring MINGW, $(OS)))
   LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 $(WARN) -O3 -Wno-sign-compare
+  CXXFLAGS = -std=c++11 $(WARN) -O3
   AR       = ar rcs
   LDCONFIG = sudo ldconfig
 endif
@@ -34,7 +34,7 @@ endif
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
   LIBS        = -L./lib -lClothoids
-  CXXFLAGS    = $(WARN) -O3 -fPIC -Wno-sign-compare
+  CXXFLAGS    = $(WARN) -O3 -fPIC
   AR          = libtool -static -o
   LDCONFIG    =
   DYNAMIC_EXT = .dylib

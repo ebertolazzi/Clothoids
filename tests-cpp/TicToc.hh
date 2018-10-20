@@ -121,5 +121,6 @@
     void   sleep_for_seconds( unsigned s ) {}
     void   sleep_for_milliseconds( unsigned ms ) {}
   };
+#endif
 
 #endif
