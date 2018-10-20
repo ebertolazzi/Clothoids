@@ -71,12 +71,16 @@ travis: bin
 
 bin: lib
 	@$(MKDIR) bin
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2         tests-cpp/testG2.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat     tests-cpp/testG2stat.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat2arc tests-cpp/testG2stat2arc.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2statCLC  tests-cpp/testG2statCLC.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testPolyline   tests-cpp/testPolyline.cc $(LIBS)
-	#$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot tests-cpp/testG2plot.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testBiarc        tests-cpp/testBiarc.cc      $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testDistance     tests-cpp/testDistance.cc   $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2           tests-cpp/testG2.cc         $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot       tests-cpp/testG2plot.cc     $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat       tests-cpp/testG2stat.cc     $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat2arc   tests-cpp/testG2stat2arc.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2statCLC    tests-cpp/testG2statCLC.cc  $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testIntersect    tests-cpp/testIntersect.cc  $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testPolyline     tests-cpp/testPolyline.cc   $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testTriangle2D   tests-cpp/testTriangle2D.cc $(LIBS)
 
 lib: lib/$(LIB_CLOTHOID)$(STATIC_EXT) lib/$(LIB_CLOTHOID)$(DYNAMIC_EXT)
 
@@ -118,10 +122,16 @@ install_as_framework: lib
 	cp lib/$(LIB_CLOTHOID)     $(PREFIX)/lib
 
 run:
+	./bin/testBiarc
+	./bin/testDistance
 	./bin/testG2
+	./bin/testG2plot
 	./bin/testG2stat
 	./bin/testG2stat2arc
 	./bin/testG2statCLC
+	./bin/testIntersect
+	./bin/testPolyline
+	./bin/testTriangle2D
 
 doc:
 	doxygen
