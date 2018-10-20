@@ -1151,8 +1151,8 @@ namespace G2lib {
                            int_type        n ) {
     x.clear(); x.reserve( unsigned(n) );
     y.clear(); y.reserve( unsigned(n) );
-    std::copy_n( xvec, n, std::back_inserter(x) );
-    std::copy_n( yvec, n, std::back_inserter(y) );
+    std::copy( xvec, xvec+n, std::back_inserter(x) );
+    std::copy( yvec, yvec+n, std::back_inserter(y) );
     npts = n;
     unsigned n1 = unsigned(n-1);
     k    . resize(n1);
