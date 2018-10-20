@@ -13,6 +13,8 @@ end
 
 task :default => [:build]
 
+LIB_NAME="GenericContainer"
+
 desc "run tests"
 task :run do
 	sh "./bin/example1"
@@ -50,14 +52,14 @@ task :build do
   FileUtils.mkdir_p "build"
   FileUtils.cd      "build"
 
-  puts "\n\nPrepare GenericContainer project".green
+  puts "\n\nPrepare #{LIB_NAME} project".green
   sh 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib ..'
 
-  puts "\n\nBuild GenericContainer Debug".green
+  puts "\n\nBuild #{LIB_NAME} Debug".green
   sh 'cmake --build . --config Debug  --target install'
-  FileUtils.cp "../lib/libGenericContainer.a", "../lib/libGenericContainer_debug.a"  
+  FileUtils.cp "../lib/lib#{LIB_NAME}.a", "../lib/lib#{LIB_NAME}_debug.a"  
 
-  puts "\n\nBuild GenericContainer Release".green
+  puts "\n\nBuild #{LIB_NAME} Release".green
   sh 'cmake --build . --config Release --target install'
   FileUtils.cd '..'
 
@@ -67,7 +69,7 @@ desc "compile for Visual Studio [default year=2017 bits=x64]"
 task :build_win, [:year, :bits] do |t, args|
   args.with_defaults( :year => "2017", :bits => "x64" )
 
-  puts "\n\nPrepare GenericContainer project".green
+  puts "\n\nPrepare #{LIB_NAME} project".green
 
   dir = "vs_#{args.year}_#{args.bits}"
 
@@ -101,14 +103,14 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p "../lib"
   sh 'cmake --build . --config Release  --target install'
 
-  puts "\n\nBuild GenericContainer Debug".green
+  puts "\n\nBuild #{LIB_NAME} Debug".green
   sh 'cmake --build . --config Debug --target install'
-  FileUtils.cp "Debug/GenericContainer.lib",
-               "../lib/GenericContainer_vs#{args.year}_#{args.bits}_debug.lib"
+  FileUtils.cp "Debug/#{LIB_NAME}.lib",
+               "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}_debug.lib"
 
-  puts "\n\nBuild GenericContainer Release".green
-  FileUtils.cp "Release/GenericContainer.lib",
-               "../lib/GenericContainer_vs#{args.year}_#{args.bits}.lib"  
+  puts "\n\nBuild #{LIB_NAME} Release".green
+  FileUtils.cp "Release/#{LIB_NAME}.lib",
+               "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}.lib"  
 
   FileUtils.cd '..'
 
