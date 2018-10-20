@@ -26,10 +26,10 @@
 
 #include <iostream>
 #include <cmath>
+#include <cfloat>
 #include <sstream>
 #include <stdexcept>
 #include <limits>
-#include <cfloat>
 
 #ifndef G2LIB_ASSERT
   #define G2LIB_ASSERT(COND,MSG)           \
@@ -111,26 +111,26 @@ namespace G2lib {
   inline
   bool
   isZero( real_type x )
-  { return FP_ZERO == fpclassify(x); }
+  { return FP_ZERO == std::fpclassify(x); }
 
   static
   inline
   bool
   isInfinite( real_type x )
-  { return FP_INFINITE == fpclassify(x); }
+  { return FP_INFINITE == std::fpclassify(x); }
 
   static
   inline
   bool
   isNaN( real_type x )
-  { return FP_NAN == fpclassify(x); }
+  { return FP_NAN == std::fpclassify(x); }
 
   static
   inline
   bool
   isRegular( real_type x )
-  { return !( FP_INFINITE == fpclassify(x) ||
-              FP_NAN      == fpclassify(x) ); }
+  { return !( FP_INFINITE == std::fpclassify(x) ||
+              FP_NAN      == std::fpclassify(x) ); }
 
   /*
   // sin(x)/x
