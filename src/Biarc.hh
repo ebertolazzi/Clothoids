@@ -104,6 +104,12 @@ namespace G2lib {
            real_type y1,
            real_type theta1 );
 
+    void
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const;
+
     /*!
     //  \brief
     //  construct a biarc by 3 point at "minimum energy"
@@ -165,15 +171,49 @@ namespace G2lib {
           real_type & x,
           real_type & y ) const;
 
-    void eval    ( real_type s, real_type & x,     real_type & y ) const;
-    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const;
-    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const;
-    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
+    void
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const;
 
-    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const;
-    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const;
-    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const;
-    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const;
+    void
+    eval_D( real_type   s,
+            real_type & x_D,
+            real_type & y_D ) const;
+
+    void
+    eval_DD( real_type   s,
+             real_type & x_DD,
+             real_type & y_DD ) const;
+
+    void
+    eval_DDD( real_type   s,
+              real_type & x_DDD,
+              real_type & y_DDD ) const;
+
+    void
+    eval( real_type   s,
+          real_type   t,
+          real_type & x,
+          real_type & y ) const;
+
+    void
+    eval_D( real_type   s,
+            real_type   t,
+            real_type & x_D,
+            real_type & y_D ) const;
+
+    void
+    eval_DD( real_type   s,
+             real_type   t,
+             real_type & x_DD,
+             real_type & y_DD ) const;
+
+    void
+    eval_DDD( real_type   s,
+              real_type   t,
+              real_type & x_DDD,
+              real_type & y_DDD ) const;
 
     real_type xBegin0()     const { return C0.xBegin(); }
     real_type xEnd0()       const { return C0.xEnd(); }

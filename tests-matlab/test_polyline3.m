@@ -49,6 +49,9 @@ P.plot() ;
 
 [ s1, s2 ] = P.intersect( P1 );
 
+s1
+s2
+
 XY1 = P.eval( s2 );
 XY2 = P1.eval( s1 );
 

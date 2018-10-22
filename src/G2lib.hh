@@ -31,6 +31,9 @@
 #include <stdexcept>
 #include <limits>
 
+#include <vector>
+#include <utility>
+
 #ifndef G2LIB_ASSERT
   #define G2LIB_ASSERT(COND,MSG)           \
     if ( !(COND) ) {                       \
@@ -88,6 +91,21 @@
   #endif
 #endif
 
+#define G2LIB_PURE_VIRTUAL = 0
+#ifdef G2LIB_USE_CXX11
+  #define G2LIB_OVERRIDE override
+#else
+  #define G2LIB_OVERRIDE
+#endif
+
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wpadded"
+#pragma GCC diagnostic ignored "-Wc++98-compat"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored  "-Wpadded"
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#endif
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -162,6 +180,22 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   inline
+  void
+  minmax3( real_type   a,
+           real_type   b,
+           real_type   c,
+           real_type & vmin,
+           real_type & vmax ) {
+    vmin = vmax = a;
+    if ( b < vmin ) vmin = b;
+    else            vmax = b;
+    if ( c < vmin ) vmin = c;
+    else if ( c > vmax ) vmax = c;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  inline
   real_type
   projectPointOnLine( real_type x0,
                       real_type y0,
@@ -176,7 +210,6 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  inline
   real_type
   projectPointOnCircle( real_type x0,
                         real_type y0,
@@ -185,37 +218,7 @@ namespace G2lib {
                         real_type k,
                         real_type L,
                         real_type qx,
-                        real_type qy ) {
-    real_type dx  = x0 - qx;
-    real_type dy  = y0 - qy;
-    real_type a0  = c0 * dy - s0 * dx;
-    real_type b0  = s0 * dy + c0 * dx;
-    real_type tmp = a0*k;
-
-    if ( 1+2*tmp > 0 ) {
-
-      tmp = b0/(1+tmp);
-      tmp *= -Atanc(tmp*k); // lunghezza
-
-      if ( tmp < 0 ) {
-        real_type absk = std::abs(k);
-        // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
-        if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk;
-      }
-
-      return tmp;
-
-    } else {
-
-      real_type om = atan2( b0, a0+1/k );
-      if ( k < 0 ) om += m_pi;
-      real_type ss = -om/k;
-      real_type t  = m_2pi/std::abs(k);
-      if      ( ss < 0 ) ss += t;
-      else if ( ss > t ) ss += t;
-      return ss;
-    }
-  }
+                        real_type qy );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -294,6 +297,500 @@ namespace G2lib {
                   real_type const Xvec[],
                   int_type        npts );
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |  ____                  ____
+   | | __ )  __ _ ___  ___ / ___|   _ _ ____   _____
+   | |  _ \ / _` / __|/ _ \ |  | | | | '__\ \ / / _ \
+   | | |_) | (_| \__ \  __/ |__| |_| | |   \ V /  __/
+   | |____/ \__,_|___/\___|\____\__,_|_|    \_/ \___|
+  \*/
+
+  typedef enum {
+    G2LIB_LINE,
+    G2LIB_POLYLINE,
+    G2LIB_CIRCLE,
+    G2LIB_BIARC,
+    G2LIB_CLOTHOID,
+    G2LIB_CLOTHOID_LIST
+  } CurveType;
+
+  class BaseCurve {
+
+    // block default constructor
+    BaseCurve( BaseCurve const & );
+
+  protected:
+    CurveType _type;
+
+    typedef std::pair<real_type,real_type> Ipair;
+    typedef std::vector<Ipair>             IntersectList;
+
+  public:
+
+    BaseCurve( CurveType const & __type )
+    : _type(__type)
+    {}
+
+    virtual
+    ~BaseCurve() {}
+
+    CurveType
+    type() const
+    { return _type; }
+
+    virtual
+    void
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    bbox( real_type   offs,
+          real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    length() const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    length( real_type offs ) const G2LIB_PURE_VIRTUAL;
+
+    virtual real_type xBegin() const;
+    virtual real_type yBegin() const;
+    virtual real_type xEnd()   const;
+    virtual real_type yEnd()   const;
+
+    virtual real_type xBegin( real_type offs ) const;
+    virtual real_type yBegin( real_type offs ) const;
+    virtual real_type xEnd( real_type offs )   const;
+    virtual real_type yEnd( real_type offs )   const;
+
+    virtual real_type tx_Begin() const;
+    virtual real_type ty_Begin() const;
+    virtual real_type tx_End()   const;
+    virtual real_type ty_End()   const;
+
+    virtual real_type nx_Begin() const;
+    virtual real_type ny_Begin() const;
+    virtual real_type nx_End()   const;
+    virtual real_type ny_End()   const;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    X( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    Y( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    X_D( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    Y_D( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    X_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    Y_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    X_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    Y_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    eval_D( real_type   s,
+            real_type & x_D,
+            real_type & y_D ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    eval_DD( real_type   s,
+             real_type & x_DD,
+             real_type & y_DD ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    eval_DDD( real_type   s,
+              real_type & x_DDD,
+              real_type & y_DDD ) const G2LIB_PURE_VIRTUAL;
+
+    /*\
+     |  _____                   _   _   _
+     | |_   _|   __ _ _ __   __| | | \ | |
+     |   | |    / _` | '_ \ / _` | |  \| |
+     |   | |   | (_| | | | | (_| | | |\  |
+     |   |_|    \__,_|_| |_|\__,_| |_| \_|
+    \*/
+
+    virtual
+    real_type
+    nx( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ny( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    nx_D( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ny_D( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    nx_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ny_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    nx_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ny_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    tx( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ty( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    tx_D( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ty_D( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    tx_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ty_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    tx_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    ty_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    nor( real_type s, real_type n[2] ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    nor_D( real_type s, real_type n_D[2] ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    nor_DD( real_type s, real_type n_DD[2] ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    nor_DDD( real_type s, real_type n_DDD[2] ) const G2LIB_PURE_VIRTUAL;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    tan( real_type s, real_type t[2] ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    tan_D( real_type s, real_type t_D[2] ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    tan_DD( real_type s, real_type t_DD[2] ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    tan_DDD( real_type s, real_type t_DDD[2] ) const G2LIB_PURE_VIRTUAL;
+
+    /*\
+     |         __  __          _
+     |   ___  / _|/ _|___  ___| |_
+     |  / _ \| |_| |_/ __|/ _ \ __|
+     | | (_) |  _|  _\__ \  __/ |_
+     |  \___/|_| |_| |___/\___|\__|
+    \*/
+
+    virtual
+    real_type
+    X( real_type s, real_type offs ) const;
+
+    virtual
+    real_type
+    Y( real_type s, real_type offs ) const;
+
+    virtual
+    real_type
+    X_D( real_type s, real_type offs ) const;
+
+    virtual
+    real_type
+    Y_D( real_type s, real_type offs ) const;
+
+    virtual
+    real_type
+    X_DD( real_type s, real_type offs ) const;
+
+    virtual
+    real_type
+    Y_DD( real_type s, real_type offs ) const;
+
+    virtual
+    real_type
+    X_DDD( real_type s, real_type offs ) const;
+
+    virtual
+    real_type
+    Y_DDD( real_type s, real_type offs ) const;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    eval( real_type   s,
+          real_type   offs,
+          real_type & x,
+          real_type & y ) const;
+
+    virtual
+    void
+    eval_D( real_type   s,
+            real_type   offs,
+            real_type & x_D,
+            real_type & y_D ) const;
+
+    virtual
+    void
+    eval_DD( real_type   s,
+             real_type   offs,
+             real_type & x_DD,
+             real_type & y_DD ) const;
+
+    virtual
+    void
+    eval_DDD( real_type   s,
+              real_type   offs,
+              real_type & x_DDD,
+              real_type & y_DDD ) const;
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
+
+    virtual
+    bool
+    collision( BaseCurve const & ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    bool
+    collision( real_type         offs,
+               BaseCurve const & obj,
+               real_type         offs_obj ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    intersect( BaseCurve const & obj,
+               IntersectList   & ilist ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    intersect( real_type         offs,
+               BaseCurve const & obj,
+               real_type         offs_obj,
+               IntersectList   & ilist ) const G2LIB_PURE_VIRTUAL;
+    /*\
+     |      _ _     _
+     |   __| (_)___| |_ __ _ _ __   ___ ___
+     |  / _` | / __| __/ _` | '_ \ / __/ _ \
+     | | (_| | \__ \ || (_| | | | | (_|  __/
+     |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+    \*/
+
+    virtual
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type   offs,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    distance( real_type qx, real_type qy ) const {
+      real_type x, y, s;
+      return closestPoint( qx, qy, x, y, s );
+    }
+
+    virtual
+    real_type
+    distance( real_type qx,
+              real_type qy,
+              real_type offs ) const {
+      real_type x, y, s;
+      return closestPoint( qx, qy, offs, x, y, s );
+    }
+
+    /*!
+     | \param  qx  x-coordinate of the point
+     | \param  qy  y-coordinate of the point
+     | \param  x   x-coordinate of the projected point on the curve
+     | \param  y   y-coordinate of the projected point on the curve
+     | \param  s   parameter on the curve of the projection
+     | \return 1  = unique orthogonal projection
+     |         0  = more than one projection (first returned)
+     |         -1 = projection line not othogonal to curve
+     |         -2 = projection line not othogonal andnot unique
+    \*/
+    virtual
+    int_type
+    projection( real_type   qx,
+                real_type   qy,
+                real_type & x,
+                real_type & y,
+                real_type & s ) const G2LIB_PURE_VIRTUAL;
+
+    /*!
+     | \param  qx   x-coordinate of the point
+     | \param  qy   y-coordinate of the point
+     | \param  offs offset of the curve
+     | \param  x    x-coordinate of the projected point on the curve
+     | \param  y    y-coordinate of the projected point on the curve
+     | \param  s    parameter on teh curve of the projection
+     | \return 1  = unique orthogonal projection
+     |         0  = more than one projection (first returned)
+     |         -1 = projection line not othogonal to curve
+     |         -2 = projection line not othogonal andnot unique
+    \*/
+    virtual
+    int_type // true if projection is unique and orthogonal
+    projection( real_type   qx,
+                real_type   qy,
+                real_type   offs,
+                real_type & x,
+                real_type & y,
+                real_type & s ) const G2LIB_PURE_VIRTUAL;
+
+    /*\
+     |    __ _           _ ____ _____
+     |   / _(_)_ __   __| / ___|_   _|
+     |  | |_| | '_ \ / _` \___ \ | |
+     |  |  _| | | | | (_| |___) || |
+     |  |_| |_|_| |_|\__,_|____/ |_|
+    \*/
+
+    virtual
+    bool
+    findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const G2LIB_PURE_VIRTUAL;
+
+    /*\
+     |   _   _ _   _ ____  ____ ____
+     |  | \ | | | | |  _ \| __ ) ___|
+     |  |  \| | | | | |_) |  _ \___ \
+     |  | |\  | |_| |  _ <| |_) |__) |
+     |  |_| \_|\___/|_| \_\____/____/
+    \*/
+
+    /*!
+     | \param n_knots  the number of knots
+     | \param n_pnts   the number of polygon points
+    \*/
+
+    virtual
+    void
+    paramNURBS( int_type & n_knots,
+                int_type & n_pnts ) const G2LIB_PURE_VIRTUAL;
+
+    /*!
+     | \brief Compute rational B-spline coefficients for a line segment
+     |
+     | \param knots  knots of the B-spline
+     | \param Poly   polygon of the B-spline
+    \*/
+
+    virtual
+    void
+    toNURBS( real_type knots[],
+             real_type Poly[][3] ) const G2LIB_PURE_VIRTUAL;
+
+
+    /*!
+     | \brief Compute B-spline coefficients for a line segment
+     |
+     | \param knots  knots of the B-spline
+     | \param Poly   polygon of the B-spline
+    \*/
+
+    virtual
+    void
+    toBS( real_type knots[],
+          real_type Poly[][2] ) const G2LIB_PURE_VIRTUAL;
+
+  };
 }
 
 #endif

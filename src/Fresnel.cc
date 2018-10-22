@@ -29,10 +29,12 @@
 #ifdef __GCC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wshadow"
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshadow"
+#pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
 
 namespace G2lib {
@@ -57,7 +59,6 @@ namespace G2lib {
   // email: sivakanth.telasula@gmail.com
   // date: August 11, 2005
   */
-  //! \cond NODOC
   static const real_type fn[] = { 0.49999988085884732562,
                                   1.3511177791210715095,
                                   1.3175407836168659241,
@@ -292,8 +293,6 @@ namespace G2lib {
       }
     }
   }
-
-  //! \cond NODOC
 
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
@@ -1004,34 +1003,73 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  static real_type const one_degree = m_pi/180;
+
   bool
-  ClothoidData::bbTriangle( real_type L,
-                            real_type offs,
-                            real_type p0[2],
-                            real_type p1[2],
-                            real_type p2[2] ) const {
+  ClothoidData::bbTriangle( real_type   L,
+                            real_type & xx0,
+                            real_type & yy0,
+                            real_type & xx1,
+                            real_type & yy1,
+                            real_type & xx2,
+                            real_type & yy2 ) const {
+
     real_type theta_max = theta( L );
     real_type theta_min = theta0;
     real_type dtheta    = std::abs( theta_max-theta_min );
     if ( dtheta < m_pi_2 ) {
-      real_type alpha, t0[2];
-      eval( 0, offs, p0[0], p0[1] );
-      eval_D( 0, t0[0], t0[1] ); // no offset
-      if ( dtheta > 0.0001 * m_pi_2 ) {
-        real_type t1[2];
-        eval( L, offs, p1[0], p1[1] );
-        eval_D( L, t1[0], t1[1] ); // no offset
-        // risolvo il sistema
-        // p0 + alpha * t0 = p1 + beta * t1
-        // alpha * t0 - beta * t1 = p1 - p0
-        real_type det = t1[0]*t0[1]-t0[0]*t1[1];
-        alpha = ((p1[1]-p0[1])*t1[0] - (p1[0]-p0[0])*t1[1])/det;
+      real_type alpha, tx0, ty0;
+      eval( 0, xx0, yy0 );
+      eval_D( 0, tx0, ty0 );
+      if ( dtheta > one_degree ) {
+        real_type tx1, ty1;
+        eval( L, xx1, yy1 );
+        eval_D( L, tx1, ty1 );
+        real_type det = tx1*ty0-tx0*ty1;
+        alpha = ((yy1-yy0)*tx1 - (xx1-xx0)*ty1)/det;
       } else {
         // se angolo troppo piccolo uso approx piu rozza
         alpha = L;
       }
-      p2[0] = p0[0] + alpha*t0[0];
-      p2[1] = p0[1] + alpha*t0[1];
+      xx2 = xx0 + alpha*tx0;
+      yy2 = yy0 + alpha*ty0;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidData::bbTriangle( real_type   L,
+                            real_type   offs,
+                            real_type & xx0,
+                            real_type & yy0,
+                            real_type & xx1,
+                            real_type & yy1,
+                            real_type & xx2,
+                            real_type & yy2 ) const {
+
+    real_type theta_max = theta( L );
+    real_type theta_min = theta0;
+    real_type dtheta    = std::abs( theta_max-theta_min );
+    if ( dtheta < m_pi_2 ) {
+      real_type alpha, tx0, ty0;
+      eval( 0, offs, xx0, yy0 );
+      eval_D( 0, tx0, ty0 ); // no offset solo scalato
+      if ( dtheta > one_degree ) {
+        real_type tx1, ty1;
+        eval( L, offs, xx1, yy1 );
+        eval_D( L, tx1, ty1 ); // no offset solo scalato
+        real_type det = tx1*ty0-tx0*ty1;
+        alpha = ((yy1-yy0)*tx1 - (xx1-xx0)*ty1)/det;
+      } else {
+        // se angolo troppo piccolo uso approx piu rozza
+        alpha = L;
+      }
+      xx2 = xx0 + alpha*tx0;
+      yy2 = yy0 + alpha*ty0;
       return true;
     } else {
       return false;

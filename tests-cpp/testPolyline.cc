@@ -9,8 +9,10 @@ using G2lib::real_type;
 int
 main() {
 
-  G2lib::PolyLine      P;
-  G2lib::ClothoidCurve C;
+  G2lib::ClothoidCurve C1;
+  G2lib::ClothoidCurve C2;
+  G2lib::PolyLine      P1;
+  G2lib::PolyLine      P2;
 
   real_type x0  = 0;
   real_type y0  = 0;
@@ -19,11 +21,72 @@ main() {
   real_type y1  = 3;
   real_type th1 = G2lib::m_pi;
 
-  C.build_G1( x0, y0, th0, x1, y1, th1 );
-  C.info(std::cout);
+  C1.build_G1( x0, y0, th0, x1, y1, th1 );
+  C1.info(std::cout);
 
-  P.build( C, 0.001 );
-  P.info(std::cout);
+  C2 = C1;
+  C2.rotate(G2lib::m_pi/3,0,0);
+  C2.translate(1,-1);
+
+  std::vector<real_type> s1, s2;
+
+  C1.intersect( C2, s1, s2, 30, 1e-10 );
+
+  std::cout << "CLOTHOIDS\n";
+  std::vector<real_type>::const_iterator is;
+  for ( is = s1.begin(); is != s1.end() ; ++is )
+    std::cout << "s1[ " << is-s1.begin() << "] = "
+              << *is << '\n';
+
+  for ( is = s2.begin(); is != s2.end() ; ++is )
+    std::cout << "s2[ " << is-s2.begin() << "] = "
+              << *is << '\n';
+
+  P1.build( C1, 0.00001 );
+  P2.build( C2, 0.00001 );
+
+  std::cout << "\n\nP1\n";
+  P1.info(std::cout);
+  std::cout << "\n\nP2\n";
+  P2.info(std::cout);
+
+  s1.clear();
+  s2.clear();
+  P1.intersect( P2, s1, s2 );
+
+  std::cout << "\n\nPOLYLINE\n";
+  std::cout << "# inter = "
+            << s1.size() << " "
+            << s2.size() << '\n';
+
+  for ( is = s1.begin(); is != s1.end() ; ++is )
+    std::cout << "s1[ " << is-s1.begin() << "] = "
+              << *is << '\n';
+
+  for ( is = s2.begin(); is != s2.end() ; ++is )
+    std::cout << "s2[ " << is-s2.begin() << "] = "
+              << *is << '\n';
+
+  G2lib::AABBtree aabb1, aabb2;
+  P1.build_AABBtree( aabb1 );
+  P2.build_AABBtree( aabb2 );
+
+  //bool ok = aabb1.intersect(aabb2);
+  //std::cout << "\nintersect = " << (ok?"YES\n":"NO\n");
+
+  G2lib::AABBtree::VecPairPtrBBox intersectionList;
+  aabb1.intersect( aabb2, intersectionList );
+  std::cout << "# inter = " << intersectionList.size() << '\n';
+
+  G2lib::AABBtree::VecPairPtrBBox::const_iterator ils;
+  for ( ils = intersectionList.begin(); ils != intersectionList.end(); ++ils )
+    std::cout
+      << *(ils->first)
+      << *(ils->second)
+      << '\n';
+
+  //P1.intersect(P2,s1,s2);
+  //P2.info(std::cout);
 
   std::cout << "\n\nALL DONE FOLKS!!!\n";
 

@@ -646,18 +646,19 @@ namespace G2lib {
         CircleArc const & C0 = ptr->getC0();
         CircleArc const & C1 = ptr->getC1();
 
-        int_type npts0 = C0.toNURBS( nullptr, nullptr, true );
-        int_type npts1 = C1.toNURBS( nullptr, nullptr, true );
+        int_type npts0, nknots0, npts1, nknots1;
+        C0.paramNURBS( nknots0, npts0 );
+        C1.paramNURBS( nknots1, npts1 );
 
         mxArray * mx_knots0, * mx_Poly0, * mx_knots1, * mx_Poly1;
 
-        double * knots0 = createMatrixValue( mx_knots0, 1, npts0+3 );
+        double * knots0 = createMatrixValue( mx_knots0, 1, nknots0 );
         double * poly0  = createMatrixValue( mx_Poly0,  3, npts0   );
-        double * knots1 = createMatrixValue( mx_knots1, 1, npts1+3 );
+        double * knots1 = createMatrixValue( mx_knots1, 1, nknots1 );
         double * poly1  = createMatrixValue( mx_Poly1,  3, npts1   );
 
-        C0.toNURBS( knots0, poly0, false );
-        C1.toNURBS( knots1, poly1, false );
+        C0.toNURBS( knots0, poly0 );
+        C1.toNURBS( knots1, poly1 );
 
         static char const * fieldnames[] = { "form", "order", "dim", "number", "knots", "coefs" };
         arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);

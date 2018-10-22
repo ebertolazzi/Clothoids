@@ -390,6 +390,16 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  CircleArc::center( real_type & cx, real_type & cy ) const {
+    real_type nx = -sin(theta0);
+    real_type ny = cos(theta0);
+    cx = x0 + nx/k;
+    cy = y0 + ny/k;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   real_type
   CircleArc::closestPoint( real_type   qx,
                            real_type   qy,
@@ -450,36 +460,69 @@ namespace G2lib {
 
   //! get the bounding box triangle (if angle variation less that pi/3)
   bool
-  CircleArc::bbTriangle( real_type p0[2],
-                         real_type p1[2],
-                         real_type p2[2] ) const {
+  CircleArc::bbTriangle( real_type & xx0, real_type & yy0,
+                         real_type & xx1, real_type & yy1,
+                         real_type & xx2, real_type & yy2 ) const {
     real_type dtheta = L * k;
     bool ok = std::abs(dtheta) <= m_pi/3;
     if ( ok ) {
-      p0[0] = x0; p0[1] = y0;
-      eval( L, p2[0], p2[1] );
-      p1[0] = (p0[0]+p2[0])/2;
-      p1[1] = (p0[1]+p2[1])/2;
-      real_type nx = p0[1]-p2[1];
-      real_type ny = p2[0]-p0[0];
+      xx0 = x0; yy0 = y0;
+      eval( L, xx2, yy2 );
+      xx1 = (xx0+xx2)/2;
+      yy1 = (yy0+yy2)/2;
+      real_type nx = yy0-yy2;
+      real_type ny = xx2-xx0;
       real_type tg = tan(dtheta/2)/2;
-      p1[0] -= nx * tg;
-      p1[1] -= ny * tg;
+      xx1 -= nx * tg;
+      yy1 -= ny * tg;
     }
     return ok;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  void
+  CircleArc::bbox( real_type & xmin,
+                   real_type & ymin,
+                   real_type & xmax,
+                   real_type & ymax ) const {
+    real_type xx0, yy0, xx1, yy1, xx2, yy2;
+    bool ok = bbTriangle( xx0, yy0, xx1, yy1, xx2, yy2 );
+    if ( ok ) {
+      minmax3( xx0, xx1, xx2, xmin, xmax );
+      minmax3( yy0, yy1, yy2, ymin, ymax );
+    } else {
+      real_type cx, cy, delta;
+      center( cx, cy );
+      delta = 1/std::abs(k);
+      xmin = cx-delta;
+      xmax = cx+delta;
+      ymin = cy-delta;
+      ymax = cy+delta;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::paramNURBS( int_type & n_knots,
+                         int_type & n_pnts ) const {
+    real_type dtheta = L*k;
+    int_type  ns     = int_type(std::floor(3*std::abs(dtheta)/m_pi));
+    if ( ns < 1 ) ns = 1;
+    n_pnts  = 1+2*ns;
+    n_knots = n_pnts+3;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   CircleArc::toNURBS( real_type knots[],
-                      real_type Poly[],
-                      bool      get_size ) const {
+                      real_type Poly[] ) const {
 
     real_type dtheta = L*k;
     int_type  ns     = int_type(std::floor(3*std::abs(dtheta)/m_pi));
     if ( ns < 1 ) ns = 1;
-    if ( get_size ) return 1+2*ns;
 
     real_type th = dtheta/(2*ns);
     real_type w  = cos(th);
@@ -523,7 +566,6 @@ namespace G2lib {
 
     }
     knots[kk+3] = ns;
-    return 1+2*ns;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

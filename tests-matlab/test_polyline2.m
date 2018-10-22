@@ -56,7 +56,7 @@ for kk=1:4
   axis equal;
 
   hold on;
-  P1.plot('Color','white','LineWidth',3) ;
+  P1.plot({'Color','white','LineWidth',3},{'Color','green','LineWidth',3}) ;
  
   %
   L1.delete() ;

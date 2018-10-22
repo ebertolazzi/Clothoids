@@ -24,9 +24,8 @@
 #ifndef TRIANGLE2D_HH
 #define TRIANGLE2D_HH
 
-#include <cmath>
-#include <vector>
 #include "G2lib.hh"
+#include <vector>
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -43,50 +42,6 @@ namespace G2lib {
 
   class Triangle2D {
     real_type p1[2], p2[2], p3[2];
-
-    void
-    maxmin3( real_type   a,
-             real_type   b,
-             real_type   c,
-             real_type & vmin,
-             real_type & vmax) const;
-
-    class AABBTree {
-      int       numChildren;
-      real_type xmin, ymin, xmax, ymax;
-      union {
-        Triangle2D const * pTriangle;
-        AABBTree   const * pChildren[2];
-      } data;
-
-      AABBTree( std::vector<Triangle2D const *>::iterator & begin,
-                std::vector<Triangle2D const *>::iterator & end );
-
-    public:
-
-      AABBTree( std::vector<Triangle2D > & triangles );
-      AABBTree( Triangle2D const & triangle );
-      AABBTree( AABBTree const * pTree, Triangle2D const & triangle );
-      AABBTree( AABBTree const * pTreeL, AABBTree const * pTreeR );
-
-      ~AABBTree();
-
-      void
-      bbox( real_type & _xmin,
-            real_type & _ymin,
-            real_type & _xmax,
-            real_type & _ymax ) const
-      { _xmin = xmin; _ymin = ymin; _xmax = xmax; _ymax = ymax; }
-
-      bool overlap( Triangle2D const & triangle ) const;
-      bool overlap( AABBTree const * pTree ) const;
-
-      Triangle2D const & getTriangle() const {
-        G2LIB_ASSERT( numChildren == 0,
-                      "Triangle2D::AABBTree::getTriangle() not a leaf" );
-        return *data.pTriangle;
-      }
-    };
 
   public:
 
@@ -168,8 +123,8 @@ namespace G2lib {
           real_type & ymin,
           real_type & xmax,
           real_type & ymax ) const {
-      maxmin3( p1[0], p2[0], p3[0], xmin, xmax );
-      maxmin3( p1[1], p2[1], p3[1], ymin, ymax );
+      minmax3( p1[0], p2[0], p3[0], xmin, xmax );
+      minmax3( p1[1], p2[1], p3[1], ymin, ymax );
     }
 
     real_type baricenterX() const { return (p1[0]+p2[0]+p3[0])/3; }
@@ -185,7 +140,7 @@ namespace G2lib {
     /*!
     //  return +1 = CounterClockwise
     //  return -1 = Clockwise
-    //  return  0 = flat
+    //  return  0 = degenerate triangle
     */
     int_type
     isCounterClockwise() const {

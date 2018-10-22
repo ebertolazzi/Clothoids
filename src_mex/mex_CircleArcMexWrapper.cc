@@ -376,13 +376,14 @@ namespace G2lib {
 
         #define CMD "CircleArcMexWrapper('to_nurbs',OBJ): "
 
-        int_type npts = ptr->toNURBS( nullptr, nullptr, true );
+        int_type npts, nknots;
+        ptr->paramNURBS( nknots, npts );
 
         mxArray * mx_knots, * mx_Poly;
-        double * knots = createMatrixValue( mx_knots, 1, npts+3 );
+        double * knots = createMatrixValue( mx_knots, 1, nknots );
         double * poly  = createMatrixValue( mx_Poly,  3, npts );
 
-        ptr->toNURBS( knots, poly, false );
+        ptr->toNURBS( knots, poly );
 
         static char const * fieldnames[] = { "form", "order", "dim", "number", "knots", "coefs" };
         arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);

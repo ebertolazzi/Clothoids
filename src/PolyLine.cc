@@ -90,11 +90,64 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  PolyLine::bbox( real_type & xmin,
+                  real_type & ymin,
+                  real_type & xmax,
+                  real_type & ymax ) const {
+
+    G2LIB_ASSERT( !lvec.empty(), "PolyLine::bbox, empty list" );
+
+    if ( aabb_done ) {
+      aabb.bbox( xmin, ymin, xmax, ymax );
+    } else {
+      std::vector<LineSegment>::const_iterator ic = lvec.begin();
+      xmin = xmax = ic->xBegin();
+      ymin = ymax = ic->yBegin();
+      for ( ++ic; ic != lvec.end(); ++ic ) {
+        real_type x = ic->xBegin();
+        real_type y = ic->yBegin();
+        if      ( x < xmin ) xmin = x;
+        else if ( x > xmax ) xmax = x;
+        if      ( y < ymin ) ymin = y;
+        else if ( y > ymax ) ymax = y;
+      }
+      --ic;
+      real_type x = ic->xEnd();
+      real_type y = ic->yEnd();
+      if      ( x < xmin ) xmin = x;
+      else if ( x > xmax ) xmax = x;
+      if      ( y < ymin ) ymin = y;
+      else if ( y > ymax ) ymax = y;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  PolyLine::build_AABBtree( AABBtree & aabb ) const {
+    vector<shared_ptr<BBox const> > bboxes;
+    bboxes.reserve(lvec.size());
+    vector<LineSegment>::const_iterator it;
+    int_type ipos = 0;
+    for ( it = lvec.begin(); it != lvec.end(); ++it, ++ipos ) {
+      real_type xmin, ymin, xmax, ymax;
+      it->bbox( xmin, ymin, xmax, ymax );
+      bboxes.push_back( make_shared<BBox const>(
+        xmin, ymin, xmax, ymax, G2LIB_LINE, ipos
+      ) );
+    }
+    aabb.build(bboxes);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   PolyLine::init( real_type x0, real_type y0 ) {
     xe = x0;
     ye = y0;
     s0.clear();
     s0.push_back(0);
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -108,6 +161,7 @@ namespace G2lib {
     s0.push_back( slast );
     xe = x;
     ye = y;
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -121,6 +175,7 @@ namespace G2lib {
     s0.push_back( slast );
     xe = S.xEnd();
     ye = S.yEnd();
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,6 +193,7 @@ namespace G2lib {
     push_back( tx + C.xEnd(), ty + C.yEnd() );
     xe = tx + C.xEnd();
     ye = ty + C.yEnd();
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -166,6 +222,7 @@ namespace G2lib {
     push_back( tx + C1.xEnd(), ty + C1.yEnd() );
     xe = tx + C1.xEnd();
     ye = ty + C1.yEnd();
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -174,8 +231,8 @@ namespace G2lib {
   PolyLine::push_back( ClothoidCurve const & C, real_type tol ) {
 
     real_type L    = C.length();
-    real_type absk = max(abs(C.kappaBegin()), abs(C.kappaEnd())) ;
-    real_type tmp  = absk*tol - 1 ;
+    real_type absk = max(abs(C.kappaBegin()), abs(C.kappaEnd()));
+    real_type tmp  = absk*tol - 1;
     int_type ns = 1;
     if ( tmp > -1 ) ns = int_type( ceil( L*absk/(2*(m_pi-acos(tmp))) ) );
 
@@ -189,6 +246,7 @@ namespace G2lib {
     push_back( tx + C.xEnd(), ty + C.yEnd() );
     xe = tx + C.xEnd();
     ye = ty + C.yEnd();
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -200,6 +258,7 @@ namespace G2lib {
       ClothoidCurve const & C = L.get( idx );
       push_back( C, tol );
     }
+    // aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -264,6 +323,7 @@ namespace G2lib {
     int_type k = 1;
     for ( il = lvec.begin(); il != lvec.end(); ++il, ++k )
       s0[size_t(k)] = s0[size_t(k-1)] + il->length();
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -302,6 +362,29 @@ namespace G2lib {
                   "PolyLine::intersect, empty list" );
     G2LIB_ASSERT( !pl.lvec.empty(),
                   "PolyLine::intersect, empty secondary list" );
+
+#if 0
+    build_AABBtree();
+    pl.build_AABBtree();
+    AABBtree::VecPairPtrBBox intersectionList;
+    aabb.intersect( pl.aabb, intersectionList );
+    AABBtree::VecPairPtrBBox::const_iterator ip;
+    for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
+      int_type ipos0 = ip->first->Ipos();
+      int_type ipos1 = ip->second->Ipos();
+      G2LIB_ASSERT( ipos0 >= 0 && ipos0 < int_type(lvec.size()),
+                    "Bad ipos0 = " << ipos0 );
+      G2LIB_ASSERT( ipos1 >= 0 && ipos1 < int_type(pl.lvec.size()),
+                    "Bad ipos1 = " << ipos1 );
+      real_type sss0, sss1;
+      bool ok = lvec[ipos0].intersect(pl.lvec[ipos1],sss0,sss1);
+      if ( ok ) {
+        ss0.push_back(sss0+s0[ipos0]);
+        ss1.push_back(sss1+pl.s0[ipos1]);
+      }
+    }
+
+#else
     ss0.clear();
     ss1.clear();
     std::vector<LineSegment>::const_iterator ic0 = lvec.begin();
@@ -322,6 +405,8 @@ namespace G2lib {
       ++ic0;
       ++is0;
     }
+#endif
+
   }
 
   bool
@@ -336,7 +421,7 @@ namespace G2lib {
       std::vector<LineSegment>::const_iterator ic1 = pl.lvec.begin();
       std::vector<real_type>::const_iterator   is1 = pl.s0.begin();
       while ( ic1 != pl.lvec.end() ) {
-        if ( ic0->intersect( *ic1 ) ) return true;
+        if ( ic0->collision( *ic1 ) ) return true;
         ++ic1;
         ++is1;
       }

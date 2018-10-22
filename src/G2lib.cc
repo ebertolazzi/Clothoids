@@ -255,6 +255,48 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  real_type
+  projectPointOnCircle( real_type x0,
+                        real_type y0,
+                        real_type c0, //!< cos(theta0)
+                        real_type s0, //!< sin(theta0)
+                        real_type k,
+                        real_type L,
+                        real_type qx,
+                        real_type qy ) {
+    real_type dx  = x0 - qx;
+    real_type dy  = y0 - qy;
+    real_type a0  = c0 * dy - s0 * dx;
+    real_type b0  = s0 * dy + c0 * dx;
+    real_type tmp = a0*k;
+
+    if ( 1+2*tmp > 0 ) {
+
+      tmp = b0/(1+tmp);
+      tmp *= -Atanc(tmp*k); // lunghezza
+
+      if ( tmp < 0 ) {
+        real_type absk = std::abs(k);
+        // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
+        if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk;
+      }
+
+      return tmp;
+
+    } else {
+
+      real_type om = atan2( b0, a0+1/k );
+      if ( k < 0 ) om += m_pi;
+      real_type ss = -om/k;
+      real_type t  = m_2pi/std::abs(k);
+      if      ( ss < 0 ) ss += t;
+      else if ( ss > t ) ss += t;
+      return ss;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   int_type
   isPointInTriangle( real_type const point[2],
                      real_type const p1[2],
@@ -306,6 +348,169 @@ namespace G2lib {
     } else {
       // x in the interval [XL[0],XL[1]) nothing to do
     }
+  }
+
+  /*\
+   |  ____                  ____
+   | | __ )  __ _ ___  ___ / ___|   _ _ ____   _____
+   | |  _ \ / _` / __|/ _ \ |  | | | | '__\ \ / / _ \
+   | | |_) | (_| \__ \  __/ |__| |_| | |   \ V /  __/
+   | |____/ \__,_|___/\___|\____\__,_|_|    \_/ \___|
+  \*/
+
+
+  real_type
+  BaseCurve::xBegin() const
+  { return X(0); }
+
+  real_type
+  BaseCurve::yBegin() const
+  { return Y(0); }
+
+  real_type
+  BaseCurve::xEnd() const
+  { return X(length()); }
+
+  real_type
+  BaseCurve::yEnd() const
+  { return Y(length()); }
+
+  real_type
+  BaseCurve::xBegin( real_type offs ) const
+  { return X(0,offs); }
+
+  real_type
+  BaseCurve::yBegin( real_type offs ) const
+  { return Y(0,offs); }
+
+  real_type
+  BaseCurve::xEnd( real_type offs ) const
+  { return X(length(),offs); }
+
+  real_type
+  BaseCurve::yEnd( real_type offs ) const
+  { return Y(length(),offs); }
+
+  real_type
+  BaseCurve::tx_Begin() const
+  { return tx(0); }
+
+  real_type
+  BaseCurve::ty_Begin() const
+  { return ty(0); }
+
+  real_type
+  BaseCurve::tx_End() const
+  { return tx(length()); }
+
+  real_type
+  BaseCurve::ty_End() const
+  { return ty(length()); }
+
+  real_type
+  BaseCurve::nx_Begin() const
+  { return nx(0); }
+
+  real_type
+  BaseCurve::ny_Begin() const
+  { return ny(0); }
+
+  real_type
+  BaseCurve::nx_End() const
+  { return nx(length()); }
+
+  real_type
+  BaseCurve::ny_End() const
+  { return ny(length()); }
+
+  /*\
+   |         __  __          _
+   |   ___  / _|/ _|___  ___| |_
+   |  / _ \| |_| |_/ __|/ _ \ __|
+   | | (_) |  _|  _\__ \  __/ |_
+   |  \___/|_| |_| |___/\___|\__|
+  \*/
+
+  real_type
+  BaseCurve::X( real_type s, real_type offs ) const
+  { return X(s) + offs * nx(s); }
+
+  real_type
+  BaseCurve::Y( real_type s, real_type offs ) const
+  { return Y(s) + offs * ny(s); }
+
+  real_type
+  BaseCurve::X_D( real_type s, real_type offs ) const
+  { return X_D(s) + offs * nx_D(s); }
+
+  real_type
+  BaseCurve::Y_D( real_type s, real_type offs ) const
+  { return Y_D(s) + offs * ny_D(s); }
+
+  real_type
+  BaseCurve::X_DD( real_type s, real_type offs ) const
+  { return X_DD(s) + offs * nx_DD(s); }
+
+  real_type
+  BaseCurve::Y_DD( real_type s, real_type offs ) const
+  { return Y_DD(s) + offs * ny_DD(s); }
+
+  real_type
+  BaseCurve::X_DDD( real_type s, real_type offs ) const
+  { return X_DDD(s) + offs * nx_DDD(s); }
+
+  real_type
+  BaseCurve::Y_DDD( real_type s, real_type offs ) const
+  { return Y_DDD(s) + offs * ny_DDD(s); }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  BaseCurve::eval( real_type   s,
+                   real_type   offs,
+                   real_type & x,
+                   real_type & y ) const {
+    real_type n[2];
+    nor( s, n );
+    eval( s, x, y );
+    x += offs * n[0];
+    y += offs * n[1];
+  }
+
+  void
+  BaseCurve::eval_D( real_type   s,
+                     real_type   offs,
+                     real_type & x_D,
+                     real_type & y_D ) const {
+    real_type n_D[2];
+    nor_D( s, n_D );
+    eval_D( s, x_D, y_D );
+    x_D += offs * n_D[0];
+    y_D += offs * n_D[1];
+  }
+
+  void
+  BaseCurve::eval_DD( real_type   s,
+                      real_type   offs,
+                      real_type & x_DD,
+                      real_type & y_DD ) const {
+    real_type n_DD[2];
+    nor_D( s, n_DD );
+    eval_DD( s, x_DD, y_DD );
+    x_DD += offs * n_DD[0];
+    y_DD += offs * n_DD[1];
+  }
+
+  void
+  BaseCurve::eval_DDD( real_type   s,
+                       real_type   offs,
+                       real_type & x_DDD,
+                       real_type & y_DDD ) const {
+    real_type n_DDD[2];
+    nor_D( s, n_DDD );
+    eval_DDD( s, x_DDD, y_DDD );
+    x_DDD += offs * n_DDD[0];
+    y_DDD += offs * n_DDD[1];
   }
 
 }

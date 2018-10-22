@@ -25,8 +25,7 @@
 #define POLY_LINE_HH
 
 #include "Line.hh"
-#include <iterator>     // std::back_inserter
-#include <vector>
+#include "AABBtree.hh"
 
 namespace G2lib {
 
@@ -45,18 +44,22 @@ namespace G2lib {
   class ClothoidList;
 
   class PolyLine {
-
-    std::vector<LineSegment> lvec;
-    std::vector<real_type>   s0;
-    real_type                xe, ye;
+  private:
+    vector<LineSegment>   lvec;
+    vector<real_type>     s0;
+    real_type             xe, ye;
 
     mutable int_type isegment;
     void search( real_type s ) const;
+
+    mutable bool     aabb_done;
+    mutable AABBtree aabb;
 
   public:
 
     PolyLine()
     : isegment(0)
+    , aabb_done(false)
     {}
 
     void
@@ -66,6 +69,7 @@ namespace G2lib {
       std::copy( l.lvec.begin(),
                  l.lvec.end(),
                  back_inserter(lvec) );
+      aabb_done = false;
     }
 
     PolyLine( PolyLine const & s ) { copy(s); }
@@ -127,6 +131,12 @@ namespace G2lib {
 
     void
     build( ClothoidList const & L, real_type tol );
+
+    void
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const;
 
     real_type length() const { return s0.back(); }
 
@@ -286,6 +296,17 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, PolyLine const & P );
+
+    void
+    build_AABBtree( AABBtree & aabb ) const;
+
+    void
+    build_AABBtree() const {
+      if ( !aabb_done ) {
+        this->build_AABBtree( aabb );
+        aabb_done = true;
+      }
+    }
 
   };
 

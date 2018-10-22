@@ -293,6 +293,22 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  Biarc::bbox( real_type & xmin,
+               real_type & ymin,
+               real_type & xmax,
+               real_type & ymax ) const {
+    C0.bbox( xmin, ymin, xmax, ymax );
+    real_type xmi1, ymi1, xma1, yma1;
+    C1.bbox( xmi1, ymi1, xma1, yma1 );
+    if ( xmi1 < xmin ) xmin = xmi1;
+    if ( xma1 > xmax ) xmax = xma1;
+    if ( ymi1 < ymin ) ymin = ymi1;
+    if ( yma1 > ymax ) ymax = yma1;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   real_type
   Biarc::theta( real_type s ) const {
     real_type L0 = C0.length();

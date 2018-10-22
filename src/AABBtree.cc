@@ -1,0 +1,199 @@
+/*--------------------------------------------------------------------------*\
+ |                                                                          |
+ |  Copyright (C) 2018                                                      |
+ |                                                                          |
+ |         , __                 , __                                        |
+ |        /|/  \               /|/  \                                       |
+ |         | __/ _   ,_         | __/ _   ,_                                |
+ |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+ |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+ |                           /|                   /|                        |
+ |                           \|                   \|                        |
+ |                                                                          |
+ |      Paolo Bevilacqua and Enrico Bertolazzi                              |
+ |                                                                          |
+ |      (1) Dipartimento di Ingegneria e Scienza dell'Informazione          |
+ |      (2) Dipartimento di Ingegneria Industriale                          |
+ |                                                                          |
+ |      Universita` degli Studi di Trento                                   |
+ |      email: paolo.bevilacqua@unitn.it                                    |
+ |      email: enrico.bertolazzi@unitn.it                                   |
+ |                                                                          |
+\*--------------------------------------------------------------------------*/
+
+///
+/// file: AABBtree.hh
+///
+
+#include "AABBtree.hh"
+
+namespace G2lib {
+
+  /*\
+   |   ____  ____
+   |  | __ )| __ )  _____  __
+   |  |  _ \|  _ \ / _ \ \/ /
+   |  | |_) | |_) | (_) >  <
+   |  |____/|____/ \___/_/\_\
+  \*/
+
+  void
+  BBox::join( vector<PtrBBox> const & bboxes ) {
+    if ( bboxes.empty() ) {
+      xmin = ymin = xmax = ymax = 0;
+    } else {
+      typename vector<PtrBBox>::const_iterator it = bboxes.begin();
+
+      xmin = (*it)->xmin;
+      ymin = (*it)->ymin;
+      xmax = (*it)->xmax;
+      ymax = (*it)->ymax;
+
+      for ( ++it; it != bboxes.end(); ++it ) {
+        BBox const & currBox = **it;
+        if ( currBox.xmin < xmin ) xmin = currBox.xmin;
+        if ( currBox.ymin < ymin ) ymin = currBox.ymin;
+        if ( currBox.xmax > xmax ) xmax = currBox.xmax;
+        if ( currBox.ymax > ymax ) ymax = currBox.ymax;
+      }
+    }
+  }
+
+  /*\
+   |      _        _    ____  ____  _
+   |     / \      / \  | __ )| __ )| |_ _ __ ___  ___
+   |    / _ \    / _ \ |  _ \|  _ \| __| '__/ _ \/ _ \
+   |   / ___ \  / ___ \| |_) | |_) | |_| | |  __/  __/
+   |  /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
+  \*/
+
+  void
+  AABBtree::build( vector<PtrBBox> const & bboxes ) {
+    pBBox.reset();
+    children.clear();
+
+    if ( bboxes.empty() ) return;
+
+    size_t size = bboxes.size();
+
+    if ( size == 1 ) {
+      this -> pBBox = bboxes.front();
+      return;
+    }
+
+    pBBox = make_shared<BBox>( bboxes );
+
+    real_type xmin = pBBox -> Xmin();
+    real_type ymin = pBBox -> Ymin();
+    real_type xmax = pBBox -> Xmax();
+    real_type ymax = pBBox -> Ymax();
+
+    vector<PtrBBox> posBoxes;
+    vector<PtrBBox> negBoxes;
+
+    if ( (ymax - ymin) > (xmax - xmin) ) {
+      real_type cutPos = (ymax + ymin)/2;
+      typename vector<PtrBBox>::const_iterator it;
+      for ( it = bboxes.begin(); it != bboxes.end(); ++it ) {
+        real_type ymid = ( (*it) -> Ymin() + (*it) -> Ymax() ) / 2;
+        if ( ymid > cutPos ) posBoxes.push_back(*it);
+        else                 negBoxes.push_back(*it);
+      }
+    } else {
+      real_type cutPos = (xmax + xmin)/2;
+      typename vector<PtrBBox>::const_iterator it;
+      for ( it = bboxes.begin(); it != bboxes.end(); ++it ) {
+        real_type xmid = ( (*it) -> Xmin() + (*it) -> Xmax() ) / 2;
+        if ( xmid > cutPos ) posBoxes.push_back(*it);
+        else                 negBoxes.push_back(*it);
+      }
+    }
+
+    if ( negBoxes.empty() ) {
+      typename vector<PtrBBox>::iterator midIdx;
+      midIdx = posBoxes.begin() + posBoxes.size()/2;
+      negBoxes.insert( negBoxes.end(), midIdx, posBoxes.end() );
+      posBoxes.erase( midIdx, posBoxes.end() );
+    } else if ( posBoxes.empty() ) {
+      typename vector<PtrBBox>::iterator midIdx;
+      midIdx = negBoxes.begin() + negBoxes.size()/2;
+      posBoxes.insert( posBoxes.end(), midIdx, negBoxes.end() );
+      negBoxes.erase( midIdx, negBoxes.end() );
+    }
+
+    PtrAABB neg = make_shared<AABBtree>();
+    PtrAABB pos = make_shared<AABBtree>();
+
+    neg->build(negBoxes);
+    if (!neg->empty()) children.push_back(neg);
+
+    pos->build(posBoxes);
+    if (!pos->empty()) children.push_back(pos);
+  }
+
+  void
+  AABBtree::print( ostream_type & stream, int level ) const {
+    if ( empty() ) {
+      stream
+        << "[EMPTY AABB tree]\n";
+    } else {
+      stream
+        << "BBOX xmin = " << setw(12) << pBBox->xmin
+        << " ymin = "     << setw(12) << pBBox->ymin
+        << " xmax = "     << setw(12) << pBBox->xmax
+        << " ymax = "     << setw(12) << pBBox->ymax
+        << " level = "    << level    << "\n";
+      vector<PtrAABB>::const_iterator it;
+      for ( it = children.begin(); it != children.end(); ++it )
+        (*it)->print( stream, level+1 );
+    }
+  }
+
+  void
+  AABBtree::intersect(
+    AABBtree const & tree,
+    VecPairPtrBBox & intersectionList,
+    bool             swap_tree
+  ) const {
+
+    // check bbox with
+    if ( !tree.pBBox->intersect(*pBBox) ) return;
+
+    int icase = (children.empty() ? 0 : 1) +
+                (tree.children.empty()? 0 : 2);
+
+    switch ( icase ) {
+    case 0: // both leaf
+      if ( swap_tree )
+        intersectionList.push_back( PairPtrBBox(tree.pBBox,pBBox ) );
+      else
+        intersectionList.push_back( PairPtrBBox(pBBox,tree.pBBox ) );
+      break;
+    case 1: // first is a tree, second is a leaf
+      { typename vector<PtrAABB>::const_iterator it;
+        for ( it = children.begin(); it != children.end(); ++it )
+          tree.intersect( **it, intersectionList, !swap_tree );
+      }
+      break;
+    case 2: // first leaf, second is a tree
+      { typename vector<PtrAABB>::const_iterator it;
+        for ( it = tree.children.begin(); it != tree.children.end(); ++it )
+          this->intersect( **it, intersectionList, swap_tree );
+      }
+      break;
+    case 3: // first is a tree, second is a tree
+      { typename vector<PtrAABB>::const_iterator c1;
+        typename vector<PtrAABB>::const_iterator c2;
+        for ( c1 = children.begin(); c1 != children.end(); ++c1 )
+          for ( c2 = tree.children.begin(); c2 != tree.children.end(); ++c2 )
+            (*c1)->intersect( **c2, intersectionList, swap_tree );
+      }
+      break;
+    }
+  }
+
+}
+
+///
+/// eof: AABBtree.cc
+///

@@ -63,6 +63,35 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  LineSegment::bbox( real_type & xmin,
+                     real_type & ymin,
+                     real_type & xmax,
+                     real_type & ymax ) const {
+    xmin = x0; xmax = x0+L*c0;
+    ymin = y0; ymax = y0+L*s0;
+    if ( xmin > xmax ) std::swap( xmin, xmax );
+    if ( ymin > ymax ) std::swap( ymin, ymax );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LineSegment::bbox( real_type   offs,
+                     real_type & xmin,
+                     real_type & ymin,
+                     real_type & xmax,
+                     real_type & ymax ) const {
+    real_type dx = -offs*s0;
+    real_type dy = offs*c0;
+    xmin = x0+dx; xmax = x0+L*c0+dx;
+    ymin = y0+dy; ymax = y0+L*s0+dy;
+    if ( xmin > xmax ) std::swap( xmin, xmax );
+    if ( ymin > ymax ) std::swap( ymin, ymax );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   LineSegment::rotate( real_type angle, real_type cx, real_type cy ) {
     real_type dx  = x0 - cx;
     real_type dy  = y0 - cy;
@@ -92,30 +121,16 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  LineSegment::closestPoint( real_type   x,
-                             real_type   y,
-                             real_type & X,
-                             real_type & Y,
-                             real_type & S ) const {
-
-    S = projectPointOnLine( x0, y0, c0, s0, x, y );
-
-    if ( S <= 0 ) { // distanza sul bordo 0
-      S = 0;
-      X = x0;
-      Y = y0;
-    } else {
-      if ( S >= L ) S = L;
-      eval( S, X, Y );
-    }
-    return hypot( x-X, y-Y );
+  void
+  LineSegment::paramNURBS( int_type & n_knots, int_type & n_pnts ) const {
+    n_pnts  = 2;
+    n_knots = 4;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int
-  LineSegment::toNURBS( real_type knots[4], real_type Poly[2][3] ) const {
+  void
+  LineSegment::toNURBS( real_type knots[], real_type Poly[][3] ) const {
     knots[0] = knots[1] = 0;
     knots[2] = knots[3] = 1;
     Poly[0][0] = x0;
@@ -124,12 +139,11 @@ namespace G2lib {
     Poly[1][0] = x0+L*c0;
     Poly[1][1] = y0+L*s0;
     Poly[1][2] = 1;
-    return 2;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int
+  void
   LineSegment::toBS( real_type knots[4], real_type Poly[2][2] ) const {
     knots[0] = knots[1] = 0;
     knots[2] = knots[3] = 1;
@@ -137,7 +151,6 @@ namespace G2lib {
     Poly[0][1] = y0;
     Poly[1][0] = x0+L*c0;
     Poly[1][1] = y0+L*s0;
-    return 2;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -187,60 +200,57 @@ namespace G2lib {
     return (det > 0)? 1: 2; // clock or counterclock wise
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
-  LineSegment::intersect( LineSegment const & S,
-                          real_type         & s1,
-                          real_type         & s2 ) const {
-    // The main function that returns true if line segment 'p1q1'
-    // and 'p2q2' intersect.
-    real_type const p1[2] = { xBegin(),   yBegin()   };
-    real_type const q1[2] = { xEnd(),     yEnd()     };
-    real_type const p2[2] = { S.xBegin(), S.yBegin() };
-    real_type const q2[2] = { S.xEnd(),   S.yEnd()   };
-    real_type const epsi  = max(L,S.L)*machepsi100;
+  LineSegment::intersect( real_type        epsi,
+                          L_struct const & L1,
+                          L_struct const & L2,
+                          real_type      & s1,
+                          real_type      & s2 ) {
 
     // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( p1, q1, p2, epsi );
-    int_type o2 = orientation( p1, q1, q2, epsi );
-    int_type o3 = orientation( p2, q2, p1, epsi );
-    int_type o4 = orientation( p2, q2, q1, epsi );
+    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
 
     // General case
     if ( o1 != o2 && o3 != o4 ) {
-      real_type det = c0 * S.s0 - s0 * S.c0;
-      real_type px  = p2[0]-p1[0];
-      real_type py  = p2[1]-p1[1];
-      s1 = (px * S.s0 - py * S.c0)/ det;
-      s2 = (px * s0 - py * c0)/ det;
+      real_type det = L1.c * L2.s - L1.s * L2.c;
+      real_type px  = L2.p[0]-L1.p[0];
+      real_type py  = L2.p[1]-L1.p[1];
+      s1 = (px * L2.s - py * L2.c)/ det;
+      s2 = (px * L1.s - py * L1.c)/ det;
       return true;
     }
 
     // Special Cases
     // p1, q1 and p2 are collinear and p2 lies on segment p1q1
-    if ( o1 == 0 && onSegment( p1, p2, q1, epsi ) ) {
-      s1 = hypot( p2[0]-p1[0], p2[1]-p1[1] );
+    if ( o1 == 0 && onSegment( L1.p, L2.p, L1.q, epsi ) ) {
+      s1 = hypot( L2.p[0]-L1.p[0], L2.p[1]-L1.p[1] );
       s2 = 0;
       return true;
     }
 
     // p1, q1 and q2 are collinear and q2 lies on segment p1q1
-    if ( o2 == 0 && onSegment( p1, q2, q1, epsi ) ) {
-      s1 = hypot( q2[0]-p1[0], q2[1]-p1[1] );
-      s2 = S.L;
+    if ( o2 == 0 && onSegment( L1.p, L2.q, L1.q, epsi ) ) {
+      s1 = hypot( L2.q[0]-L1.p[0], L2.q[1]-L1.p[1] );
+      s2 = L2.L;
       return true;
     }
 
     // p2, q2 and p1 are collinear and p1 lies on segment p2q2
-    if ( o3 == 0 && onSegment( p2, p1, q2, epsi ) ) {
+    if ( o3 == 0 && onSegment( L2.p, L1.p, L2.q, epsi ) ) {
       s1 = 0;
-      s2 = hypot( p1[0]-p2[0], p1[1]-p2[1] );
+      s2 = hypot( L1.p[0]-L2.p[0], L1.p[1]-L2.p[1] );
       return true;
     }
 
     // p2, q2 and q1 are collinear and q1 lies on segment p2q2
-    if ( o4 == 0 && onSegment( p2, q1, q2, epsi ) ) {
-      s1 = L;
-      s2 = hypot( q1[0]-p2[0], q1[1]-p2[1] );
+    if ( o4 == 0 && onSegment( L2.p, L1.q, L2.q, epsi ) ) {
+      s1 = L1.L;
+      s2 = hypot( L1.q[0]-L2.p[0], L1.q[1]-L2.p[1] );
       return true;
     }
 
@@ -251,38 +261,363 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  LineSegment::intersect( LineSegment const & S ) const {
+  LineSegment::intersect( LineSegment const & S,
+                          real_type         & s1,
+                          real_type         & s2 ) const {
     // The main function that returns true if line segment 'p1q1'
     // and 'p2q2' intersect.
-    real_type const p1[2] = { xBegin(),   yBegin()   };
-    real_type const q1[2] = { xEnd(),     yEnd()     };
-    real_type const p2[2] = { S.xBegin(), S.yBegin() };
-    real_type const q2[2] = { S.xEnd(),   S.yEnd()   };
+    L_struct L1;
+    L_struct L2;
+
+    L1.p[0] = xBegin();
+    L1.p[1] = yBegin();
+    L1.q[0] = xEnd();
+    L1.q[1] = yEnd();
+    L1.c    = c0;
+    L1.s    = s0;
+    L1.L    = L;
+
+    L2.p[0] = S.xBegin();
+    L2.p[1] = S.yBegin();
+    L2.q[0] = S.xEnd();
+    L2.q[1] = S.yEnd();
+    L2.c    = S.c0;
+    L2.s    = S.s0;
+    L2.L    = S.L;
+
     real_type const epsi  = std::max(L,S.L)*machepsi100;
+    return intersect( epsi, L1, L2, s1, s2 );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  LineSegment::intersect( real_type           offs,
+                          LineSegment const & S,
+                          real_type           S_offs,
+                          real_type         & s1,
+                          real_type         & s2 ) const {
+    // The main function that returns true if line segment 'p1q1'
+    // and 'p2q2' intersect.
+    L_struct L1;
+    L_struct L2;
+
+    L1.p[0] = xBegin(offs);
+    L1.p[1] = yBegin(offs);
+    L1.q[0] = xEnd(offs);
+    L1.q[1] = yEnd(offs);
+    L1.c    = c0;
+    L1.s    = s0;
+    L1.L    = L;
+
+    L2.p[0] = S.xBegin(S_offs);
+    L2.p[1] = S.yBegin(S_offs);
+    L2.q[0] = S.xEnd(S_offs);
+    L2.q[1] = S.yEnd(S_offs);
+    L2.c    = S.c0;
+    L2.s    = S.s0;
+    L2.L    = S.L;
+
+    real_type const epsi = std::max(L,S.L)*machepsi100;
+
+    return intersect( epsi, L1, L2, s1, s2 );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  LineSegment::collision( real_type        epsi,
+                          L_struct const & L1,
+                          L_struct const & L2 ) {
 
     // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( p1, q1, p2, epsi );
-    int_type o2 = orientation( p1, q1, q2, epsi );
-    int_type o3 = orientation( p2, q2, p1, epsi );
-    int_type o4 = orientation( p2, q2, q1, epsi );
+    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
 
     // General case
     if ( o1 != o2 && o3 != o4 ) return true;
 
     // Special Cases
     // p1, q1 and p2 are collinear and p2 lies on segment p1q1
-    if ( o1 == 0 && onSegment( p1, p2, q1, epsi ) ) return true;
+    if ( o1 == 0 && onSegment( L1.p, L2.p, L1.q, epsi ) ) return true;
 
     // p1, q1 and q2 are collinear and q2 lies on segment p1q1
-    if ( o2 == 0 && onSegment( p1, q2, q1, epsi ) ) return true;
+    if ( o2 == 0 && onSegment( L1.p, L2.q, L1.q, epsi ) ) return true;
 
     // p2, q2 and p1 are collinear and p1 lies on segment p2q2
-    if ( o3 == 0 && onSegment( p2, p1, q2, epsi ) ) return true;
+    if ( o3 == 0 && onSegment( L2.p, L1.p, L2.q, epsi ) ) return true;
 
     // p2, q2 and q1 are collinear and q1 lies on segment p2q2
-    if ( o4 == 0 && onSegment( p2, q1, q2, epsi ) ) return true;
+    if ( o4 == 0 && onSegment( L2.p, L1.q, L2.q, epsi ) ) return true;
 
     return false; // Doesn't fall in any of the above cases
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  LineSegment::collision( LineSegment const & S ) const {
+    // The main function that returns true if line segment 'p1q1'
+    // and 'p2q2' intersect.
+    L_struct L1;
+    L_struct L2;
+
+    L1.p[0] = xBegin();
+    L1.p[1] = yBegin();
+    L1.q[0] = xEnd();
+    L1.q[1] = yEnd();
+    L1.c    = c0;
+    L1.s    = s0;
+    L1.L    = L;
+
+    L2.p[0] = S.xBegin();
+    L2.p[1] = S.yBegin();
+    L2.q[0] = S.xEnd();
+    L2.q[1] = S.yEnd();
+    L2.c    = S.c0;
+    L2.s    = S.s0;
+    L2.L    = S.L;
+
+    real_type const epsi = std::max(L,S.L)*machepsi100;
+
+    return collision( epsi, L1, L2 );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  LineSegment::collision( real_type           offs,
+                          LineSegment const & S,
+                          real_type           S_offs ) const {
+    // The main function that returns true if line segment 'p1q1'
+    // and 'p2q2' intersect.
+    L_struct L1;
+    L_struct L2;
+
+    L1.p[0] = xBegin(offs);
+    L1.p[1] = yBegin(offs);
+    L1.q[0] = xEnd(offs);
+    L1.q[1] = yEnd(offs);
+    L1.c    = c0;
+    L1.s    = s0;
+    L1.L    = L;
+
+    L2.p[0] = S.xBegin(S_offs);
+    L2.p[1] = S.yBegin(S_offs);
+    L2.q[0] = S.xEnd(S_offs);
+    L2.q[1] = S.yEnd(S_offs);
+    L2.c    = S.c0;
+    L2.s    = S.s0;
+    L2.L    = S.L;
+
+    real_type const epsi = std::max(L,S.L)*machepsi100;
+
+    return collision( epsi, L1, L2 );
+  }
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
+
+  bool
+  LineSegment::collision( BaseCurve const & obj ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      {
+        LineSegment const & S = *static_cast<LineSegment const*>(&obj);
+        ok = this->collision( S );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CIRCLE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  LineSegment::collision( real_type         offs,
+                          BaseCurve const & obj,
+                          real_type         obj_offs ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      {
+        LineSegment const & S = *static_cast<LineSegment const*>(&obj);
+        ok = this->collision( offs, S, obj_offs );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CIRCLE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LineSegment::intersect( BaseCurve const & obj,
+                          IntersectList   & ilist ) const {
+    bool      ok;
+    real_type s1, s2;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      {
+        LineSegment const & S = *static_cast<LineSegment const*>(&obj);
+        ok = this->intersect( S, s1, s2 );
+        Ipair ip(s1, s2);
+        if ( ok ) ilist.push_back( ip );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CIRCLE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LineSegment::intersect( real_type         offs,
+                          BaseCurve const & obj,
+                          real_type         obj_offs,
+                          IntersectList   & ilist ) const {
+    bool      ok;
+    real_type s1, s2;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      {
+        LineSegment const & S = *static_cast<LineSegment const*>(&obj);
+        ok = this->intersect( offs, S, obj_offs, s1, s2 );
+        if ( ok ) ilist.push_back( Ipair(s1, s2) );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CIRCLE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+  }
+
+  /*\
+   |      _ _     _
+   |   __| (_)___| |_ __ _ _ __   ___ ___
+   |  / _` | / __| __/ _` | '_ \ / __/ _ \
+   | | (_| | \__ \ || (_| | | | | (_|  __/
+   |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+  \*/
+
+  real_type
+  LineSegment::closestPoint( real_type   qx,
+                             real_type   qy,
+                             real_type & x,
+                             real_type & y,
+                             real_type & s ) const {
+
+    s = projectPointOnLine( x0, y0, c0, s0, qx, qy );
+
+    if ( s <= 0 ) { // distanza sul bordo 0
+      s = 0;
+      x = x0;
+      y = y0;
+    } else {
+      if ( s >= L ) s = L;
+      eval( s, x, y );
+    }
+    return hypot( qx-x, qy-y );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  LineSegment::closestPoint( real_type   qx,
+                             real_type   qy,
+                             real_type   offs,
+                             real_type & x,
+                             real_type & y,
+                             real_type & s ) const {
+    real_type xx0 = x0-offs*s0;
+    real_type yy0 = y0+offs*c0;
+    s = projectPointOnLine( xx0, yy0, c0, s0, qx, qy );
+
+    if ( s <= 0 ) { // distanza sul bordo 0
+      s = 0;
+      x = xx0;
+      y = yy0;
+    } else {
+      if ( s >= L ) s = L;
+      eval( s, offs, x, y );
+    }
+    return hypot( qx-x, qy-y );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  LineSegment::projection( real_type   qx,
+                           real_type   qy,
+                           real_type & x,
+                           real_type & y,
+                           real_type & s ) const {
+
+    s = projectPointOnLine( x0, y0, c0, s0, qx, qy );
+
+    int_type res = 1;
+    if ( s < 0 ) { // distanza sul bordo 0
+      s   = 0;
+      res = -1;
+    } if ( s > L ) {
+      s   = L;
+      res = -1;
+    }
+    eval( s, x, y );
+    return res;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type // true if projection is unique and orthogonal
+  LineSegment::projection( real_type   qx,
+                           real_type   qy,
+                           real_type   offs,
+                           real_type & x,
+                           real_type & y,
+                           real_type & s ) const {
+    real_type xx0 = x0-offs*s0;
+    real_type yy0 = y0+offs*c0;
+    s = projectPointOnLine( xx0, yy0, c0, s0, qx, qy );
+
+    int_type res = 1;
+    if ( s < 0 ) { // distanza sul bordo 0
+      s   = 0;
+      res = -1;
+    } if ( s > L ) {
+      s   = L;
+      res = -1;
+    }
+    eval( s, offs, x, y );
+    return res;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -296,6 +631,8 @@ namespace G2lib {
            << "\n";
     return stream;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 }
 

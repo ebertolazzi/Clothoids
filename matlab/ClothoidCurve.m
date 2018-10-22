@@ -36,7 +36,7 @@ classdef ClothoidCurve < handle
       str = 'ClothoidCurve' ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function copy( C )
+    function copy( self, C )
       ClothoidCurveMexWrapper('copy', self.objectHandle, C.obj_handle() );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

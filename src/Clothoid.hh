@@ -93,8 +93,7 @@ namespace G2lib {
 
   public:
 
-    ClothoidCurve()
-    {
+    ClothoidCurve() {
       CD.x0     = 0;
       CD.y0     = 0;
       CD.theta0 = 0;
@@ -109,8 +108,7 @@ namespace G2lib {
                    real_type _theta0,
                    real_type _k,
                    real_type _dk,
-                   real_type _L )
-    {
+                   real_type _L ) {
       CD.x0     = _x0;
       CD.y0     = _y0;
       CD.theta0 = _theta0;
@@ -134,7 +132,8 @@ namespace G2lib {
       L  = c.L;
     }
 
-    ClothoidCurve( ClothoidCurve const & s ) { copy(s); }
+    ClothoidCurve( ClothoidCurve const & s )
+    { copy(s); }
 
     ClothoidCurve( LineSegment const & LS ) {
       CD.x0     = LS.x0;
@@ -592,11 +591,42 @@ namespace G2lib {
     trim( real_type s_begin, real_type s_end ) {
       real_type xx, yy;
       CD.eval( s_begin, xx, yy );
-      CD.kappa0 += s_begin * CD.dk;
       CD.theta0 += s_begin * ( CD.kappa0 + 0.5*s_begin * CD.dk );
+      CD.kappa0 += s_begin * CD.dk;
       L          = s_end - s_begin;
       CD.x0 = xx;
       CD.y0 = yy;
+    }
+
+    //! get the triangle bounding box (if angle variation less that pi/2)
+    bool
+    bbTriangle( real_type & xx0, real_type & yy0,
+                real_type & xx1, real_type & yy1,
+                real_type & xx2, real_type & yy2 ) const {
+      return CD.bbTriangle( L,
+                            xx0, yy0,
+                            xx1, yy1,
+                            xx2, yy2 );
+    }
+
+    //! get the triangle bounding box (if angle variation less that pi/2)
+    bool
+    bbTriangle( real_type offs,
+                real_type & xx0, real_type & yy0,
+                real_type & xx1, real_type & yy1,
+                real_type & xx2, real_type & yy2 ) const {
+      return CD.bbTriangle( L, offs,
+                            xx0, yy0,
+                            xx1, yy1,
+                            xx2, yy2 );
+    }
+
+    //! get the triangle bounding box (if angle variation less that pi/2)
+    bool
+    bbTriangle( real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const {
+      return CD.bbTriangle( L, p0, p1, p2 );
     }
 
     //! get the bounding box triangle (if angle variation less that pi/2)
@@ -605,7 +635,10 @@ namespace G2lib {
                 real_type p0[2],
                 real_type p1[2],
                 real_type p2[2] ) const {
-      return CD.bbTriangle( L, offs, p0, p1, p2 );
+      return CD.bbTriangle( L, offs,
+                            p0[0], p0[1],
+                            p1[0], p1[1],
+                            p2[0], p2[1] );
     }
 
     bool
@@ -615,6 +648,12 @@ namespace G2lib {
       if ( ok ) t.build( p0, p1, p2 );
       return ok;
     }
+
+    void
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const;
 
     /*! \brief split clothoids in smaller segments
      *

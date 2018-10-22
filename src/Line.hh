@@ -36,7 +36,7 @@ namespace G2lib {
    |  |_____|_|_| |_|\___|
   \*/
 
-  class LineSegment {
+  class LineSegment : public BaseCurve {
 
     real_type x0,     //!< initial x coordinate of the line
               y0,     //!< initial y coordinate of the line
@@ -46,10 +46,34 @@ namespace G2lib {
               s0,     //!< `sin(theta0)`
               L;      //!< length of the segment
 
+
+    typedef struct {
+      real_type p[2];
+      real_type q[2];
+      real_type c;
+      real_type s;
+      real_type L;
+    } L_struct;
+
+    static
+    bool
+    intersect( real_type        epsi,
+               L_struct const & L1,
+               L_struct const & L2,
+               real_type      & s1,
+               real_type      & s2 );
+
+    static
+    bool
+    collision( real_type        epsi,
+               L_struct const & L1,
+               L_struct const & L2 );
+
   public:
 
     LineSegment()
-    : x0(0)
+    : BaseCurve(G2LIB_LINE)
+    , x0(0)
     , y0(0)
     , theta0(0)
     , c0(1)
@@ -62,7 +86,8 @@ namespace G2lib {
                  real_type _y0,
                  real_type _theta0,
                  real_type _L )
-    : x0(_x0)
+    : BaseCurve(G2LIB_LINE)
+    , x0(_x0)
     , y0(_y0)
     , theta0(_theta0)
     , c0(cos(_theta0))
@@ -80,19 +105,596 @@ namespace G2lib {
       L      = c.L;
     }
 
-    LineSegment( LineSegment const & s ) { copy(s); }
+    LineSegment( LineSegment const & s )
+    : BaseCurve(G2LIB_LINE)
+    { copy(s); }
 
     LineSegment const & operator = ( LineSegment const & s )
     { copy(s); return *this; }
 
-    real_type xBegin()   const { return x0; }
-    real_type yBegin()   const { return y0; }
-    real_type xEnd()     const { return x0+L*c0; }
-    real_type yEnd()     const { return y0+L*s0; }
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    bbox( real_type   offs,
+          real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    length() const G2LIB_OVERRIDE
+    { return L; }
+
+    virtual
+    real_type
+    length( real_type ) const G2LIB_OVERRIDE
+    { return L; }
+
+    virtual
+    real_type
+    xBegin() const G2LIB_OVERRIDE
+    { return x0; }
+
+    virtual
+    real_type
+    yBegin() const G2LIB_OVERRIDE
+    { return y0; }
+
+    virtual
+    real_type
+    xEnd() const G2LIB_OVERRIDE
+    { return x0+L*c0; }
+
+    virtual
+    real_type
+    yEnd() const G2LIB_OVERRIDE
+    { return y0+L*s0; }
+
+    virtual
+    real_type
+    xBegin( real_type offs ) const G2LIB_OVERRIDE
+    { return x0-offs*s0; }
+
+    virtual
+    real_type
+    yBegin( real_type offs ) const G2LIB_OVERRIDE
+    { return y0+offs*c0; }
+
+    virtual
+    real_type
+    xEnd( real_type offs ) const G2LIB_OVERRIDE
+    { return x0+L*c0-offs*s0; }
+
+    virtual
+    real_type
+    yEnd( real_type offs ) const G2LIB_OVERRIDE
+    { return y0+L*s0+offs*c0; }
+
+    virtual
+    real_type
+    tx_Begin() const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    ty_Begin() const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    tx_End() const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    ty_End()   const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    nx_Begin() const G2LIB_OVERRIDE
+    { return -s0; }
+
+    virtual
+    real_type
+    ny_Begin() const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    nx_End() const G2LIB_OVERRIDE
+    { return -s0; }
+
+    virtual
+    real_type
+    ny_End()   const G2LIB_OVERRIDE
+    { return c0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    X( real_type s ) const G2LIB_OVERRIDE
+    { return x0+s*c0; }
+
+    virtual
+    real_type
+    Y( real_type s ) const G2LIB_OVERRIDE
+    { return y0+s*s0; }
+
+    virtual
+    real_type
+    X_D( real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    Y_D( real_type ) const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    X_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    X_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const G2LIB_OVERRIDE {
+      x = x0+s*c0;
+      y = y0+s*s0;
+    }
+
+    virtual
+    void
+    eval_D( real_type,
+            real_type & x_D,
+            real_type & y_D ) const G2LIB_OVERRIDE {
+      x_D = c0;
+      y_D = s0;
+    }
+
+    virtual
+    void
+    eval_DD( real_type,
+             real_type & x_DD,
+             real_type & y_DD ) const G2LIB_OVERRIDE {
+      x_DD = 0;
+      y_DD = 0;
+    }
+
+    virtual
+    void
+    eval_DDD( real_type,
+              real_type & x_DDD,
+              real_type & y_DDD ) const G2LIB_OVERRIDE {
+      x_DDD = 0;
+      y_DDD = 0;
+    }
+
+    /*\
+     |  _____                   _   _   _
+     | |_   _|   __ _ _ __   __| | | \ | |
+     |   | |    / _` | '_ \ / _` | |  \| |
+     |   | |   | (_| | | | | (_| | | |\  |
+     |   |_|    \__,_|_| |_|\__,_| |_| \_|
+    \*/
+
+    virtual
+    real_type
+    nx( real_type ) const G2LIB_OVERRIDE
+    { return -s0; }
+
+    virtual
+    real_type
+    ny( real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    nx_D( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ny_D( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    nx_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ny_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    nx_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ny_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    tx( real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    ty( real_type ) const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    tx_D( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ty_D( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    tx_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ty_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    tx_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ty_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    nor( real_type, real_type n[2] ) const G2LIB_OVERRIDE
+    { n[0] = -s0; n[1] = c0; }
+
+    virtual
+    void
+    nor_D( real_type, real_type n_D[2] ) const G2LIB_OVERRIDE
+    { n_D[0] = n_D[1] = 0; }
+
+    virtual
+    void
+    nor_DD( real_type, real_type n_DD[2] ) const G2LIB_OVERRIDE
+    { n_DD[0] = n_DD[1] = 0; }
+
+    virtual
+    void
+    nor_DDD( real_type, real_type n_DDD[2] ) const G2LIB_OVERRIDE
+    { n_DDD[0] = n_DDD[1] = 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    tan( real_type, real_type t[2] ) const G2LIB_OVERRIDE
+    { t[0] = c0; t[1] = s0; }
+
+    virtual
+    void
+    tan_D( real_type, real_type t_D[2] ) const G2LIB_OVERRIDE
+    { t_D[0] = t_D[1] = 0; }
+
+    virtual
+    void
+    tan_DD( real_type, real_type t_DD[2] ) const G2LIB_OVERRIDE
+    { t_DD[0] = t_DD[1] = 0; }
+
+    virtual
+    void
+    tan_DDD( real_type, real_type t_DDD[2] ) const G2LIB_OVERRIDE
+    { t_DDD[0] = t_DDD[1] = 0; }
+
+    /*\
+     |         __  __          _
+     |   ___  / _|/ _|___  ___| |_
+     |  / _ \| |_| |_/ __|/ _ \ __|
+     | | (_) |  _|  _\__ \  __/ |_
+     |  \___/|_| |_| |___/\___|\__|
+    \*/
+
+    virtual
+    real_type
+    X( real_type s, real_type offs ) const G2LIB_OVERRIDE
+    { return x0 + s*c0 - offs*s0; }
+
+    virtual
+    real_type
+    Y( real_type s, real_type offs ) const G2LIB_OVERRIDE
+    { return y0 + s*s0 + offs*c0; }
+
+    virtual
+    real_type
+    X_D( real_type, real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    Y_D( real_type, real_type ) const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    X_DD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    X_DDD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DDD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    eval( real_type   s,
+          real_type   offs,
+          real_type & x,
+          real_type & y ) const G2LIB_OVERRIDE {
+      x = x0 + s*c0 - offs*s0;
+      y = y0 + s*s0 + offs*c0;
+    }
+
+    virtual
+    void
+    eval_D( real_type,
+            real_type,
+            real_type & x_D,
+            real_type & y_D ) const G2LIB_OVERRIDE {
+      x_D = c0;
+      y_D = s0;
+    }
+
+    virtual
+    void
+    eval_DD( real_type,
+             real_type,
+             real_type & x_DD,
+             real_type & y_DD ) const G2LIB_OVERRIDE {
+      x_DD = y_DD = 0;
+    }
+
+    virtual
+    void
+    eval_DDD( real_type,
+              real_type,
+              real_type & x_DDD,
+              real_type & y_DDD ) const G2LIB_OVERRIDE {
+      x_DDD = y_DDD = 0;
+    }
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
+
+    virtual
+    bool
+    collision( BaseCurve const & ) const G2LIB_OVERRIDE;
+
+    virtual
+    bool
+    collision( real_type         offs,
+               BaseCurve const & obj,
+               real_type         offs_obj ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    intersect( BaseCurve const & obj,
+               IntersectList   & ilist ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    intersect( real_type         offs,
+               BaseCurve const & obj,
+               real_type         offs_obj,
+               IntersectList   & ilist ) const G2LIB_OVERRIDE;
+    /*\
+     |      _ _     _
+     |   __| (_)___| |_ __ _ _ __   ___ ___
+     |  / _` | / __| __/ _` | '_ \ / __/ _ \
+     | | (_| | \__ \ || (_| | | | | (_|  __/
+     |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+    \*/
+
+    /*!
+     * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
+     *
+     * \param qx x-coordinate
+     * \param qy y-coordinate
+     * \param x  x-coordinate of the closest point
+     * \param y  y-coordinate of the closest point
+     * \param s  param of the closest point
+     * \return the distance point-segment
+    \*/
+
+    virtual
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type   offs,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s ) const G2LIB_OVERRIDE;
+
+    /*!
+     | \param  qx  x-coordinate of the point
+     | \param  qy  y-coordinate of the point
+     | \param  x   x-coordinate of the projected point on the curve
+     | \param  y   y-coordinate of the projected point on the curve
+     | \param  s   parameter on the curve of the projection
+     | \return 1  = unique orthogonal projection
+     |         0  = more than one projection (first returned)
+     |         -1 = projection line not othogonal to curve
+     |         -2 = projection line not othogonal andnot unique
+    \*/
+    virtual
+    int_type
+    projection( real_type   qx,
+                real_type   qy,
+                real_type & x,
+                real_type & y,
+                real_type & s ) const G2LIB_OVERRIDE;
+
+    /*!
+     | \param  qx   x-coordinate of the point
+     | \param  qy   y-coordinate of the point
+     | \param  offs offset of the curve
+     | \param  x    x-coordinate of the projected point on the curve
+     | \param  y    y-coordinate of the projected point on the curve
+     | \param  s    parameter on teh curve of the projection
+     | \return 1  = unique orthogonal projection
+     |         0  = more than one projection (first returned)
+     |         -1 = projection line not othogonal to curve
+     |         -2 = projection line not othogonal andnot unique
+    \*/
+    virtual
+    int_type // true if projection is unique and orthogonal
+    projection( real_type   qx,
+                real_type   qy,
+                real_type   offs,
+                real_type & x,
+                real_type & y,
+                real_type & s ) const G2LIB_OVERRIDE;
+
+    /*\
+     |    __ _           _ ____ _____
+     |   / _(_)_ __   __| / ___|_   _|
+     |  | |_| | '_ \ / _` \___ \ | |
+     |  |  _| | | | | (_| |___) || |
+     |  |_| |_|_| |_|\__,_|____/ |_|
+    \*/
+
+    /*! \brief Find parametric coordinate.
+     *
+     * We consider the line passing to the point \f$ P \f$
+     * with tangent \f$ T \f$ and a point \f$ Q \f$
+     * compute the coordinte \f$ s \f$ and \f$ t \f$ such that
+     * \f$ Q = P + T s + N t \f$
+     * where \f$ P + T s \f$ is the point on the line at coordinate
+     * \f$ s \f$ and \f$ N \f$ is the normal to the line obtained by
+     * rotating by `90` degree counterclockwise the tangent \f$ T \f$.
+     *
+     * \param x x-coordinate point
+     * \param y y-coordinate point
+     * \param s value \f$ s \f$
+     * \param t value \f$ t \f$
+     */
+
+    virtual
+    bool
+    findST( real_type   x,
+            real_type   y,
+            real_type & s,
+            real_type & t ) const G2LIB_OVERRIDE {
+      real_type dx = x - x0;
+      real_type dy = y - y0;
+      s = c0 * dx + s0 * dy;
+      t = c0 * dy - s0 * dx;
+      return true;
+    }
+
+    /*\
+     |   _   _ _   _ ____  ____ ____
+     |  | \ | | | | |  _ \| __ ) ___|
+     |  |  \| | | | | |_) |  _ \___ \
+     |  | |\  | |_| |  _ <| |_) |__) |
+     |  |_| \_|\___/|_| \_\____/____/
+    \*/
+
+    virtual
+    void
+    paramNURBS( int_type & n_knots,
+                int_type & n_pnts ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    toNURBS( real_type knots[],
+             real_type Poly[][3] ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    toBS( real_type knots[],
+          real_type Poly[][2] ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
     real_type theta()    const { return theta0; }
     real_type sinTheta() const { return s0; }
     real_type cosTheta() const { return c0; }
-    real_type length()   const { return L; }
 
     void
     build( real_type _x0,
@@ -120,54 +722,6 @@ namespace G2lib {
               real_type const p1[2] )
     { build_2P( p0[0], p0[1], p1[0], p1[1] ); }
 
-    real_type X( real_type s ) const { return x0 + c0 * s; }
-    real_type Y( real_type s ) const { return y0 + s0 * s; }
-
-    void
-    eval( real_type s, real_type & x, real_type & y ) const {
-      x = x0 + c0 * s;
-      y = y0 + s0 * s;
-    }
-
-    void
-    eval_D( real_type, real_type & x_D, real_type & y_D ) const {
-      x_D = c0;
-      y_D = s0;
-    }
-
-    void
-    eval_DD( real_type, real_type & x_DD, real_type & y_DD ) const {
-      x_DD = y_DD = 0;
-    }
-
-    void
-    eval_DDD( real_type, real_type & x_DDD, real_type & y_DDD ) const {
-      x_DDD = y_DDD = 0;
-    }
-
-    // ---
-
-    void
-    eval( real_type s, real_type t, real_type & x, real_type & y ) const {
-      x = x0 + c0 * s - s0 * t;
-      y = y0 + s0 * s + c0 * t;
-    }
-
-    void
-    eval_D( real_type, real_type, real_type & x_D, real_type & y_D ) const {
-      x_D = c0;
-      y_D = s0;
-    }
-
-    void
-    eval_DD( real_type, real_type, real_type & x_DD, real_type & y_DD ) const {
-      x_DD = y_DD = 0;
-    }
-
-    void
-    eval_DDD( real_type, real_type, real_type & x_DDD, real_type & y_DDD ) const {
-      x_DDD = y_DDD = 0;
-    }
 
     void
     trim( real_type s_begin, real_type s_end ) {
@@ -190,96 +744,6 @@ namespace G2lib {
     changeOrigin( real_type newx0, real_type newy0 )
     { x0 = newx0; y0 = newy0; }
 
-    /*!
-     * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
-     *
-     * \param x x-coordinate
-     * \param y y-coordinate
-     * \param X x-coordinate of the closest point
-     * \param Y y-coordinate of the closest point
-     * \param S param of the closest point
-     * \return the distance point-segment
-    \*/
-    real_type
-    closestPoint( real_type   x,
-                  real_type   y,
-                  real_type & X,
-                  real_type & Y,
-                  real_type & S ) const;
-
-    /*!
-     * \brief compute the distance from a point `[x,y]` and the line segment
-     *
-     * \param x x-coordinate
-     * \param y y-coordinate
-     * \param S param at minimum distance
-     * \return the distance point-segment
-    \*/
-    real_type
-    distance( real_type   x,
-              real_type   y,
-              real_type & S ) const {
-      real_type X, Y;
-      return closestPoint( x, y, X, Y, S );
-    }
-
-    /*!
-     * \brief compute the distance from a point `[x,y]` and the line segment
-     *
-     * \param x x-coordinate
-     * \param y y-coordinate
-     * \return the distance point-segment
-    \*/
-    real_type
-    distance( real_type x, real_type y ) const {
-      real_type ss;
-      return distance( x, y, ss );
-    }
-
-    /*! \brief Find parametric coordinate.
-     *
-     * We consider the line passing to the point \f$ P \f$
-     * with tangent \f$ T \f$ and a point \f$ Q \f$
-     * compute the coordinte \f$ s \f$ and \f$ t \f$ such that
-     * \f$ Q = P + T s + N t \f$
-     * where \f$ P + T s \f$ is the point on the line at coordinate
-     * \f$ s \f$ and \f$ N \f$ is the normal to the line obtained by
-     * rotating by `90` degree counterclockwise the tangent \f$ T \f$.
-     *
-     * \param x x-coordinate point
-     * \param y y-coordinate point
-     * \param s value \f$ s \f$
-     * \param t value \f$ t \f$
-     */
-    void
-    findST( real_type   x,
-            real_type   y,
-            real_type & s,
-            real_type & t ) const {
-      real_type dx = x - x0;
-      real_type dy = y - y0;
-      s = c0 * dx + s0 * dy;
-      t = c0 * dy - s0 * dx;
-    }
-
-    /*! \brief Compute rational B-spline coefficients for a line segment
-     *
-     * \param knots  knots of the B-spline
-     * \param Poly   polygon of the B-spline
-     * \return       2 the number of polygon points
-     */
-    int
-    toNURBS( real_type knots[5], real_type Poly[2][3] ) const;
-
-    /*! \brief Compute B-spline coefficients for a line segment
-     *
-     * \param knots  knots of the B-spline
-     * \param Poly   polygon of the B-spline
-     * \return       2 the number of polygon points
-     */
-    int
-    toBS( real_type knots[5], real_type Poly[2][2] ) const;
-
     void
     p1p2( real_type p1[2], real_type p2[2] ) const {
       p1[0] = x0;
@@ -294,7 +758,19 @@ namespace G2lib {
                real_type         & s2 ) const;
 
     bool
-    intersect( LineSegment const & S ) const;
+    intersect( real_type           offs,
+               LineSegment const & S,
+               real_type           S_offs,
+               real_type         & s1,
+               real_type         & s2 ) const;
+
+    bool
+    collision( LineSegment const & S ) const;
+
+    bool
+    collision( real_type           offs,
+               LineSegment const & S,
+               real_type           S_offs ) const;
 
     void
     info( ostream_type & stream ) const

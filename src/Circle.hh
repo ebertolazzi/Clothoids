@@ -25,6 +25,7 @@
 #define CIRCLE_HH
 
 #include "G2lib.hh"
+#include "Triangle2D.hh"
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -162,22 +163,28 @@ namespace G2lib {
               real_type _y2 );
 
     real_type
-    delta_theta() const { return L*k; }
+    delta_theta() const
+    { return L*k; }
 
     real_type
-    theta( real_type s ) const { return theta0 + s*k; }
+    theta( real_type s ) const
+    { return theta0 + s*k; }
 
     real_type
-    theta_D( real_type ) const { return k; }
+    theta_D( real_type ) const
+    { return k; }
 
     real_type
-    theta_DD( real_type ) const { return 0; }
+    theta_DD( real_type ) const
+    { return 0; }
 
     real_type
-    theta_DDD( real_type ) const { return 0; }
+    theta_DDD( real_type ) const
+    { return 0; }
 
     real_type
-    totalLength() const { return L; }
+    totalLength() const
+    { return L; }
 
     real_type
     thetaTotalVariation() const
@@ -206,23 +213,70 @@ namespace G2lib {
     real_type nor_x( real_type s ) const { return -sin(theta(s)); }
     real_type nor_y( real_type s ) const { return cos(theta(s)); }
 
-    void XY( real_type s, real_type & x, real_type & y ) const;
-    void XY( real_type s, real_type t, real_type & x, real_type & y ) const;
-    void TG( real_type s, real_type & tx, real_type & ty ) const;
-    void NOR( real_type s, real_type & nx, real_type & ny ) const;
-    void NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const;
-    void NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const;
-    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
+    void
+    XY( real_type s, real_type & x, real_type & y ) const;
 
-    void eval    ( real_type s, real_type & x,     real_type & y ) const;
-    void eval_D  ( real_type s, real_type & x_D,   real_type & y_D ) const;
-    void eval_DD ( real_type s, real_type & x_DD,  real_type & y_DD ) const;
-    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
+    void
+    XY( real_type s, real_type t, real_type & x, real_type & y ) const;
 
-    void eval    ( real_type s, real_type t, real_type & x,     real_type & y ) const;
-    void eval_D  ( real_type s, real_type t, real_type & x_D,   real_type & y_D ) const;
-    void eval_DD ( real_type s, real_type t, real_type & x_DD,  real_type & y_DD ) const;
-    void eval_DDD( real_type s, real_type t, real_type & x_DDD, real_type & y_DDD ) const;
+    void
+    TG( real_type s, real_type & tx, real_type & ty ) const;
+
+    void
+    NOR( real_type s, real_type & nx, real_type & ny ) const;
+
+    void
+    NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const;
+
+    void
+    NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const;
+
+    void
+    NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
+
+    void
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const;
+
+    void
+    eval_D( real_type   s,
+            real_type & x_D,
+            real_type & y_D ) const;
+
+    void
+    eval_DD( real_type   s,
+             real_type & x_DD,
+             real_type & y_DD ) const;
+
+    void
+    eval_DDD( real_type   s,
+              real_type & x_DDD,
+              real_type & y_DDD ) const;
+
+    void
+    eval( real_type   s,
+          real_type   t,
+          real_type & x,
+          real_type & y ) const;
+
+    void
+    eval_D( real_type   s,
+            real_type   t,
+            real_type & x_D,
+            real_type & y_D ) const;
+
+    void
+    eval_DD( real_type   s,
+             real_type   t,
+             real_type & x_DD,
+             real_type & y_DD ) const;
+
+    void
+    eval_DDD( real_type   s,
+              real_type   t,
+              real_type & x_DDD,
+              real_type & y_DDD ) const;
 
     void
     trim( real_type s_begin, real_type s_end );
@@ -243,11 +297,37 @@ namespace G2lib {
     void
     reverse();
 
+    void
+    center( real_type & cx, real_type & cy ) const;
+
+    real_type ray() const { return 1/std::abs(k); }
+
     //! get the bounding box triangle (if angle variation less that pi/3)
+    bool
+    bbTriangle( real_type & x0, real_type & y0,
+                real_type & x1, real_type & y1,
+                real_type & x2, real_type & y2 ) const;
+
     bool
     bbTriangle( real_type p0[2],
                 real_type p1[2],
-                real_type p2[2] ) const;
+                real_type p2[2] ) const {
+      return bbTriangle( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
+    }
+
+    bool
+    bbTriangle( Triangle2D & t ) const {
+      real_type p0[2], p1[2], p2[2];
+      bool ok = bbTriangle( p0, p1, p2 );
+      if ( ok ) t.build( p0, p1, p2 );
+      return ok;
+    }
+
+    void
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const;
 
     void
     translate( real_type tx, real_type ty )
@@ -312,14 +392,18 @@ namespace G2lib {
             real_type & s,
             real_type & t ) const;
 
-    /*! \brief Compute rational B-spline coefficients for a circle arc
-     *
-     * \param knots  knots of the B-spline0
-     * \param Poly   polygon of the B-spline
-     * \return       3 up to 9 the number of polygon points
+    void
+    paramNURBS( int_type & n_knots,
+                int_type & n_pnts ) const ;
+
+    /*!
+     | \brief Compute rational B-spline coefficients for a circle arc
+     |
+     | \param knots  knots of the B-spline0
+     | \param Poly   polygon of the B-spline
     \*/
-    int_type
-    toNURBS( real_type knots[], real_type Poly[], bool get_size ) const;
+    void
+    toNURBS( real_type knots[], real_type Poly[] ) const;
     // Poly 3 x n matrix
 
     void

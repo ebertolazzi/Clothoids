@@ -125,10 +125,15 @@ namespace G2lib {
     , dk(0)
     {}
 
-    real_type deltaTheta( real_type s ) const { return s*(kappa0 + 0.5*s*dk); }
+    real_type
+    deltaTheta( real_type s ) const
+    { return s*(kappa0 + 0.5*s*dk); }
 
     //! return angle at curvilinear coordinate `s`
-    real_type theta    ( real_type s ) const { return theta0 + s*(kappa0 + 0.5*s*dk); }
+    real_type theta
+    ( real_type s ) const
+    { return theta0 + s*(kappa0 + 0.5*s*dk); }
+
     real_type theta_D  ( real_type s ) const { return kappa0 + s*dk; }
     real_type theta_DD ( real_type   ) const { return dk; }
     real_type theta_DDD( real_type   ) const { return 0; }
@@ -246,11 +251,40 @@ namespace G2lib {
     aplus( real_type dtheta ) const;
 
     bool
+    bbTriangle( real_type   L,
+                real_type & xx0, real_type & yy0,
+                real_type & xx1, real_type & yy1,
+                real_type & xx2, real_type & yy2 ) const;
+
+    bool
+    bbTriangle( real_type   L,
+                real_type   offs,
+                real_type & xx0, real_type & yy0,
+                real_type & xx1, real_type & yy1,
+                real_type & xx2, real_type & yy2 ) const;
+
+    bool
+    bbTriangle( real_type L,
+                real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const {
+      return bbTriangle( L,
+                         p0[0], p0[1],
+                         p1[0], p1[1],
+                         p2[0], p2[1] );
+    }
+
+    bool
     bbTriangle( real_type L,
                 real_type offs,
                 real_type p0[2],
                 real_type p1[2],
-                real_type p2[2] ) const;
+                real_type p2[2] ) const {
+      return bbTriangle( L, offs,
+                         p0[0], p0[1],
+                         p1[0], p1[1],
+                         p2[0], p2[1] );
+    }
 
     int
     build_G1( real_type   x0,

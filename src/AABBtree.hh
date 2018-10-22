@@ -33,19 +33,19 @@
 #include "G2lib.hh"
 
 #include <vector>
-#include <memory>   // shared_ptr
+#include <memory>  // shared_ptr
 #include <iomanip>
-#include <utility>  // pair
+#include <utility> // pair
 
 namespace G2lib {
 
   using std::setw;
-  using std::shared_ptr;
+  using std::shared_ptr; // promemoria shared_ptr<Foo>(&foo, [](void*){});
   using std::vector;
   using std::pair;
   using std::make_shared;
 
-  template <typename GeomPrimitive> class AABBtree;
+  class AABBtree;
 
   /*\
    |   ____  ____
@@ -54,18 +54,16 @@ namespace G2lib {
    |  | |_) | |_) | (_) >  <
    |  |____/|____/ \___/_/\_\
   \*/
-
-  template <typename GeomPrimitive>
   class BBox {
   public:
-
-    typedef shared_ptr<BBox>          PtrBBox;
-    typedef shared_ptr<GeomPrimitive> PtrGeom;
+    typedef shared_ptr<BBox const> PtrBBox;
 
   private:
-
     real_type xmin, ymin, xmax, ymax;
-    PtrGeom   pGeom;
+    int_type  id;
+    int_type  ipos;
+    BBox();
+    BBox( BBox const & );
 
   public:
 
@@ -73,22 +71,20 @@ namespace G2lib {
           real_type _ymin = 0,
           real_type _xmax = 0,
           real_type _ymax = 0,
-          PtrGeom   _prim = PtrGeom() ){
+          int_type  _id   = 0,
+          int_type  _ipos = 0 ){
       this -> xmin  = _xmin;
       this -> ymin  = _ymin;
       this -> xmax  = _xmax;
       this -> ymax  = _ymax;
-      this -> pGeom = _prim;
+      this -> id    = _id;
+      this -> ipos  = _ipos;
     }
 
     BBox( vector<PtrBBox> const & bboxes ) {
-      this -> pGeom = PtrGeom();
+      this -> id    = 0;
+      this -> ipos  = 0;
       this -> join( bboxes );
-    }
-
-    BBox( PtrGeom _prim ) {
-      this -> pGeom = _prim;
-      _prim->bbox( xmin, ymin, xmax, ymax );
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -98,15 +94,17 @@ namespace G2lib {
     real_type Xmax() const { return xmax; }
     real_type Ymax() const { return ymax; }
 
-    PtrGeom const getPointerGeom() const { return pGeom; }
+    int_type const & Id()   const { return id; }
+    int_type const & Ipos() const { return ipos; }
 
-    BBox<GeomPrimitive> const &
-    operator = ( BBox<GeomPrimitive> const & rhs ) {
+    BBox const &
+    operator = ( BBox const & rhs ) {
       this -> xmin = rhs.xmin;
       this -> ymin = rhs.ymin;
       this -> xmax = rhs.xmax;
       this -> ymax = rhs.ymax;
-      this -> prim = rhs.prim;
+      this -> id   = rhs.id;
+      this -> ipos = rhs.ipos;
       return *this;
     }
 
@@ -119,40 +117,25 @@ namespace G2lib {
     }
 
     void
-    join( vector<PtrBBox> const & bboxes ) {
-      if ( bboxes.empty() ) {
-        xmin = ymin = xmax = ymax = 0 ;
-      } else {
-        typename vector<PtrBBox>::const_iterator it = bboxes.begin();
-        PtrBBox const box = *it;
-
-        xmin = box->xmin;
-        ymin = box->ymin;
-        xmax = box->xmax;
-        ymax = box->ymax;
-
-        for ( ++it; it != bboxes.end(); ++it ) {
-          PtrBBox const currBox = *it;
-          if ( currBox->xmin < xmin ) xmin = currBox->xmin;
-          if ( currBox->ymin < ymin ) ymin = currBox->ymin;
-          if ( currBox->xmax > xmax ) xmax = currBox->xmax;
-          if ( currBox->ymax > ymax ) ymax = currBox->ymax;
-        }
-      }
-    }
+    join( vector<PtrBBox> const & bboxes );
 
     void
     print( ostream_type & stream ) const {
       stream
-        << "BBOX xmin = " << setw(12) << xmin
-        << " ymin = "     << setw(12) << ymin
-        << " xmax = "     << setw(12) << xmax
-        << " ymax = "     << setw(12) << ymax
-        << "\n";
+        << "BBOX (xmin,ymin,xmax,ymax) = ( " << xmin
+        << ", " << ymin << ", " << xmax << ", " << ymax
+        << " )\n";
     }
 
-    friend class AABBtree<GeomPrimitive>;
+    friend class AABBtree;
   };
+
+  inline
+  ostream_type &
+  operator << ( ostream_type & stream, BBox const & bb ) {
+    bb.print(stream);
+    return stream;
+  }
 
   /*\
    |      _        _    ____  ____  _
@@ -162,20 +145,20 @@ namespace G2lib {
    |  /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
 
-  template <typename GeomPrimitive>
   class AABBtree {
   public:
-    typedef shared_ptr<GeomPrimitive>            PtrGeom;
-    typedef shared_ptr<BBox<GeomPrimitive> >     PtrBBox;
-    typedef shared_ptr<AABBtree<GeomPrimitive> > PtrAABB;
-    typedef pair<PtrBBox,PtrBBox>                PairPtrBBox;
-    typedef vector<PairPtrBBox>                  VecPairPtrBBox;
+    typedef shared_ptr<BBox const> PtrBBox;
+    typedef pair<PtrBBox,PtrBBox>  PairPtrBBox;
+    typedef vector<PairPtrBBox>    VecPairPtrBBox;
+    typedef shared_ptr<AABBtree>   PtrAABB;
 
   private:
 
     // bbox of the tree
     PtrBBox         pBBox;
     vector<PtrAABB> children;
+
+    AABBtree( AABBtree const & tree );
 
   public:
 
@@ -191,15 +174,16 @@ namespace G2lib {
     }
 
     // copy contructor (recursive)
+    /*
     AABBtree( AABBtree const & tree ) {
       this -> pBBox = tree.pBBox;
       children.reserve(tree.children.size());
-      typename PtrAABB::const_iterator t;
+      vector<PtrAABB>::const_iterator t;
       for ( t = tree.children.begin(); t != tree.children.end(); ++t )
-        children.push_back( PtrAABB( new AABBtree<GeomPrimitive>(*t) ) );
+        children.push_back( make_shared<AABBtree>( *it ) );
     }
+    */
 
-    virtual
     ~AABBtree() {
       pBBox.reset();
       children.clear();
@@ -220,97 +204,27 @@ namespace G2lib {
     }
 
     void
-    build( vector<PtrBBox> const & bboxes ) {
-
-      if ( bboxes.empty() ) return;
-
-      size_t size = bboxes.size();
-
-      if ( size == 1 ) {
-        this -> pBBox = bboxes.front();
-        return;
-      }
-
-      pBBox = make_shared<BBox<GeomPrimitive> >( bboxes );
-
-      real_type xmin = pBBox -> xmin;
-      real_type ymin = pBBox -> ymin;
-      real_type xmax = pBBox -> xmax;
-      real_type ymax = pBBox -> ymax;
-
-      vector<PtrBBox> posBoxes;
-      vector<PtrBBox> negBoxes;
-
-      if ( (ymax - ymin) > (xmax - xmin) ) {
-        real_type cutPos = (ymax + ymin)/2;
-        typename vector<PtrBBox>::const_iterator it;
-        for ( it = bboxes.begin(); it != bboxes.end(); ++it ) {
-          real_type ymid = ( (*it) -> ymin + (*it) -> ymax ) / 2;
-          if ( ymid > cutPos ) posBoxes.push_back(*it);
-          else                 negBoxes.push_back(*it);
-        }
-      } else {
-        real_type cutPos = (xmax + xmin)/2;
-        typename vector<PtrBBox>::const_iterator it;
-        for ( it = bboxes.begin(); it != bboxes.end(); ++it ) {
-          real_type xmid = ( (*it) -> xmin + (*it) -> xmax ) / 2;
-          if ( xmid > cutPos ) posBoxes.push_back(*it);
-          else                 negBoxes.push_back(*it);
-        }
-      }
-
-      if ( negBoxes.empty() ) {
-        typename vector<PtrBBox>::iterator midIdx;
-        midIdx = posBoxes.begin() + posBoxes.size()/2;
-        negBoxes.insert( negBoxes.end(), midIdx, posBoxes.end() );
-        posBoxes.erase( midIdx, posBoxes.end() );
-      } else if ( posBoxes.empty() ) {
-        typename vector<PtrBBox>::iterator midIdx;
-        midIdx = negBoxes.begin() + negBoxes.size()/2;
-        posBoxes.insert( posBoxes.end(), midIdx, negBoxes.end() );
-        negBoxes.erase( midIdx, negBoxes.end() );
-      }
-
-      PtrAABB neg = make_shared<AABBtree<GeomPrimitive> >();
-      PtrAABB pos = make_shared<AABBtree<GeomPrimitive> >();
-
-      neg->build(negBoxes);
-      if (!neg->empty()) children.push_back(neg);
-
-      pos->build(posBoxes);
-      if (!pos->empty()) children.push_back(pos);
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const {
+      xmin = pBBox->xmin;
+      ymin = pBBox->ymin;
+      xmax = pBBox->xmax;
+      ymax = pBBox->ymax;
     }
 
     void
-    build( vector<PtrGeom> const & primitives ) {
-      vector<PtrBBox> bboxes;
-      bboxes.reserve(primitives.size());
-      typename vector<PtrGeom>::const_iterator it;
-      for ( it = primitives.begin(); it != primitives.end(); ++it )
-        bboxes.push_back( make_shared<BBox<GeomPrimitive> >(*it) );
-      this->build(bboxes);
-    }
+    build( vector<PtrBBox> const & bboxes );
 
     void
-    print( ostream_type & stream, int level = 0 ) const {
-      if ( empty() ) {
-        stream
-          << "[EMPTY AABB tree]\n";
-      } else {
-        stream
-          << "BBOX xmin = " << setw(12) << pBBox->xmin
-          << " ymin = "     << setw(12) << pBBox->ymin
-          << " xmax = "     << setw(12) << pBBox->xmax
-          << " ymax = "     << setw(12) << pBBox->ymax
-          << " level = "    << level   << "\n";
-        typename vector<PtrAABB>::const_iterator it;
-        for ( it = children.begin(); it != children.end(); ++it )
-          (*it)->print( stream, level+1 );
-      }
-    }
+    print( ostream_type & stream, int level = 0 ) const;
 
+    template <typename INTERSECT_fun>
     bool
-    intersects( AABBtree<GeomPrimitive> const & tree ) const {
+    intersect( AABBtree const & tree,
+               INTERSECT_fun    ifun,
+               bool             swap_tree = false ) const {
 
       // check bbox with
       if ( !tree.pBBox->intersect(*pBBox) ) return false;
@@ -320,26 +234,30 @@ namespace G2lib {
 
       switch ( icase ) {
       case 0: // both leaf, use GeomPrimitive intersection algorithm
-        return pBBox->pGeom->intersect( *(tree.pBBox->pGeom) );
+        if ( swap_tree ) return ifun( tree.pBBox, pBBox );
+        else             return ifun( pBBox, tree.pBBox );
       case 1: // first is a tree, second is a leaf
         { typename vector<PtrAABB>::const_iterator it;
           for ( it = children.begin(); it != children.end(); ++it )
-            if ( tree.intersects(**it) )
+            if ( tree.intersect(**it, ifun) )
               return true;
         }
         break;
       case 2: // first leaf, second is a tree
         { typename vector<PtrAABB>::const_iterator it;
-          for ( it = tree.children.begin(); it != tree.children.end(); ++it )
-            if ( this->intersects(**it) )
+          for ( it = tree.children.begin();
+                it != tree.children.end(); ++it )
+            if ( this->intersect(**it, ifun) )
               return true;
         }
         break;
       case 3: // first is a tree, second is a tree
-        { typename vector<PtrAABB>::const_iterator c1, c2;
+        { typename vector<PtrAABB>::const_iterator c1;
+          typename vector<PtrAABB>::const_iterator c2;
           for ( c1 = children.begin(); c1 != children.end(); ++c1 )
-            for ( c2 = tree.children.begin(); c2 != tree.children.end(); ++c2 )
-              if ( (*c1)->intersects(**c2) )
+            for ( c2 = tree.children.begin();
+                  c2 != tree.children.end(); ++c2 )
+              if ( (*c1)->intersect(**c2, ifun) )
                 return true;
         }
         break;
@@ -348,43 +266,12 @@ namespace G2lib {
     }
 
     void
-    intersects( AABBtree<GeomPrimitive> const & tree,
-                VecPairPtrBBox                & intersectionList,
-                bool                            swap_pair = false ) const {
+    intersect(
+      AABBtree const & tree,
+      VecPairPtrBBox & intersectionList,
+      bool             swap_tree = false
+    ) const;
 
-      // check bbox with
-      if ( !tree.pBBox->intersect(*pBBox) ) return;
-
-      int icase = (children.empty() ? 0 : 1) +
-                  (tree.children.empty()? 0 : 2);
-
-      switch ( icase ) {
-      case 0: // both leaf
-        if ( swap_pair )
-          intersectionList.push_back( PairPtrBBox(tree.pBBox,pBBox) );
-        else           intersectionList.push_back( PairPtrBBox(pBBox,tree.pBBox) );
-        break;
-      case 1: // first is a tree, second is a leaf
-        { typename vector<PtrAABB>::const_iterator it;
-          for ( it = children.begin(); it != children.end(); ++it)
-            tree.intersects( **it, intersectionList, !swap_pair );
-        }
-        break;
-      case 2: // first leaf, second is a tree
-        { typename vector<PtrAABB>::const_iterator it;
-          for ( it = tree.children.begin(); it != tree.children.end(); ++it)
-            this->intersects( **it, intersectionList, swap_pair );
-        }
-        break;
-      case 3: // first is a tree, second is a tree
-        { typename vector<PtrAABB>::const_iterator c1, c2;
-          for ( c1 = children.begin(); c1 != children.end(); ++c1 )
-            for ( c2 = tree.children.begin(); c2 != tree.children.end(); ++c2 )
-              (*c1)->intersects(**c2, intersectionList, swap_pair );
-        }
-        break;
-      }
-    }
   };
 
 }

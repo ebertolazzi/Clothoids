@@ -293,12 +293,16 @@ namespace G2lib {
 
       } else if ( cmd == "to_nurbs" ) {
 
+        int_type npts, nknots;
+        ptr->paramNURBS( nknots, npts );
+
         real_type knots[12], Poly[9][3];
-        int_type  npts = ptr->toNURBS( knots, Poly ); // npt + 2
+
+        ptr->toNURBS( knots, Poly ); // npt + 2
 
         static char const * fieldnames[] = { "form", "order", "dim", "number", "knots", "coefs" };
         arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);
-        mxArray * mx_knots = mxCreateDoubleMatrix(1,npts+2,mxREAL);
+        mxArray * mx_knots = mxCreateDoubleMatrix(1,nknots,mxREAL);
         mxArray * mx_Poly  = mxCreateDoubleMatrix(3,npts,mxREAL);
 
         mxSetFieldByNumber( arg_out_0, 0, 0, mxCreateString("rB") );
@@ -309,7 +313,7 @@ namespace G2lib {
         mxSetFieldByNumber( arg_out_0, 0, 5, mx_Poly );
 
         double *kb = mxGetPr(mx_knots);
-        for ( int_type i = 0; i < npts+2; ++i ) *kb++ = knots[i];
+        for ( int_type i = 0; i < nknots; ++i ) *kb++ = knots[i];
 
         double *pr = mxGetPr(mx_Poly);
         for ( int_type i = 0; i < npts; ++i ) {
