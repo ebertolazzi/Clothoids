@@ -124,19 +124,27 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PolyLine::build_AABBtree( AABBtree & aabb ) const {
+  PolyLine::build_AABBtree( AABBtree & aabbtree ) const {
+    #ifdef G2LIB_USE_CXX11
     vector<shared_ptr<BBox const> > bboxes;
+    #else
+    vector<BBox const *> bboxes;
+    #endif
     bboxes.reserve(lvec.size());
     vector<LineSegment>::const_iterator it;
     int_type ipos = 0;
     for ( it = lvec.begin(); it != lvec.end(); ++it, ++ipos ) {
       real_type xmin, ymin, xmax, ymax;
       it->bbox( xmin, ymin, xmax, ymax );
+      #ifdef G2LIB_USE_CXX11
       bboxes.push_back( make_shared<BBox const>(
         xmin, ymin, xmax, ymax, G2LIB_LINE, ipos
       ) );
+      #else
+      bboxes.push_back( new BBox( xmin, ymin, xmax, ymax, G2LIB_LINE, ipos ) );
+      #endif
     }
-    aabb.build(bboxes);
+    aabbtree.build(bboxes);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -363,19 +371,17 @@ namespace G2lib {
     G2LIB_ASSERT( !pl.lvec.empty(),
                   "PolyLine::intersect, empty secondary list" );
 
-#if 0
+#if 1
     build_AABBtree();
     pl.build_AABBtree();
     AABBtree::VecPairPtrBBox intersectionList;
     aabb.intersect( pl.aabb, intersectionList );
     AABBtree::VecPairPtrBBox::const_iterator ip;
     for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
-      int_type ipos0 = ip->first->Ipos();
-      int_type ipos1 = ip->second->Ipos();
-      G2LIB_ASSERT( ipos0 >= 0 && ipos0 < int_type(lvec.size()),
-                    "Bad ipos0 = " << ipos0 );
-      G2LIB_ASSERT( ipos1 >= 0 && ipos1 < int_type(pl.lvec.size()),
-                    "Bad ipos1 = " << ipos1 );
+      size_t ipos0 = size_t(ip->first->Ipos());
+      size_t ipos1 = size_t(ip->second->Ipos());
+      G2LIB_ASSERT( ipos0 < lvec.size(),    "Bad ipos0 = " << ipos0 );
+      G2LIB_ASSERT( ipos1 < pl.lvec.size(), "Bad ipos1 = " << ipos1 );
       real_type sss0, sss1;
       bool ok = lvec[ipos0].intersect(pl.lvec[ipos1],sss0,sss1);
       if ( ok ) {

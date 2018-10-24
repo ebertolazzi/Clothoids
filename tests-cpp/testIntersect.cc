@@ -36,18 +36,18 @@ main() {
   std::cout << "L0 = " << C0.length() << '\n';
   std::cout << "L1 = " << C1.length() << '\n';
 
-  for ( int_type i = 0; i < int_type(s1.size()); ++i )
+  for ( size_t i = 0; i < s1.size(); ++i )
     std::cout << "s1[ " << i << "] = " << s1[i] << '\n';
 
-  for ( int_type i = 0; i < int_type(s2.size()); ++i )
+  for ( size_t i = 0; i < s2.size(); ++i )
     std::cout << "s2[ " << i << "] = " << s2[i] << '\n';
 
-  for ( int_type i = 0; i < int_type(s1.size()); ++i )
+  for ( size_t i = 0; i < s1.size(); ++i )
     std::cout << "x["  << i << "] = " << C0.X(s1[i])
               << " y[" << i << "] = " << C0.Y(s1[i])
               << '\n';
 
-  for ( int_type i = 0; i < int_type(s2.size()); ++i )
+  for ( size_t i = 0; i < s2.size(); ++i )
     std::cout << "x["  << i << "] = " << C1.X(s2[i])
               << " y[" << i << "] = " << C1.Y(s2[i])
               << '\n';

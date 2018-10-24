@@ -118,8 +118,8 @@
 
     double elapsedSeconds()      const { return 1; }
     double elapsedMilliseconds() const { return 1; }
-    void   sleep_for_seconds( unsigned s ) {}
-    void   sleep_for_milliseconds( unsigned ms ) {}
+    void   sleep_for_seconds( unsigned ) {}
+    void   sleep_for_milliseconds( unsigned ) {}
   };
 #endif
 

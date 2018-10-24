@@ -722,7 +722,6 @@ namespace G2lib {
               real_type const p1[2] )
     { build_2P( p0[0], p0[1], p1[0], p1[1] ); }
 
-
     void
     trim( real_type s_begin, real_type s_end ) {
       x0 += c0 * s_begin;

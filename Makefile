@@ -33,6 +33,7 @@ endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
+  WARN        = -Wall -Wno-sign-compare -Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
   LIBS        = -L./lib -lClothoids
   CXXFLAGS    = $(WARN) -O3 -fPIC
   AR          = libtool -static -o
@@ -43,6 +44,7 @@ endif
 LIB_CLOTHOID = libClothoids
 
 SRCS = \
+src/AABBtree.cc \
 src/Biarc.cc \
 src/Circle.cc \
 src/Clothoid.cc \

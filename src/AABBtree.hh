@@ -33,17 +33,23 @@
 #include "G2lib.hh"
 
 #include <vector>
-#include <memory>  // shared_ptr
 #include <iomanip>
 #include <utility> // pair
+
+#ifdef G2LIB_USE_CXX11
+#include <memory>  // shared_ptr
+#endif
 
 namespace G2lib {
 
   using std::setw;
-  using std::shared_ptr; // promemoria shared_ptr<Foo>(&foo, [](void*){});
   using std::vector;
   using std::pair;
+
+  #ifdef G2LIB_USE_CXX11
   using std::make_shared;
+  using std::shared_ptr; // promemoria shared_ptr<Foo>(&foo, [](void*){});
+  #endif
 
   class AABBtree;
 
@@ -56,7 +62,11 @@ namespace G2lib {
   \*/
   class BBox {
   public:
+    #ifdef G2LIB_USE_CXX11
     typedef shared_ptr<BBox const> PtrBBox;
+    #else
+    typedef BBox const * PtrBBox;
+    #endif
 
   private:
     real_type xmin, ymin, xmax, ymax;
@@ -67,23 +77,25 @@ namespace G2lib {
 
   public:
 
-    BBox( real_type _xmin = 0,
-          real_type _ymin = 0,
-          real_type _xmax = 0,
-          real_type _ymax = 0,
-          int_type  _id   = 0,
-          int_type  _ipos = 0 ){
-      this -> xmin  = _xmin;
-      this -> ymin  = _ymin;
-      this -> xmax  = _xmax;
-      this -> ymax  = _ymax;
-      this -> id    = _id;
-      this -> ipos  = _ipos;
+    BBox( real_type _xmin,
+          real_type _ymin,
+          real_type _xmax,
+          real_type _ymax,
+          int_type  _id,
+          int_type  _ipos ){
+      this -> xmin = _xmin;
+      this -> ymin = _ymin;
+      this -> xmax = _xmax;
+      this -> ymax = _ymax;
+      this -> id   = _id;
+      this -> ipos = _ipos;
     }
 
-    BBox( vector<PtrBBox> const & bboxes ) {
-      this -> id    = 0;
-      this -> ipos  = 0;
+    BBox( vector<PtrBBox> const & bboxes,
+          int_type                _id,
+          int_type                _ipos ) {
+      this -> id   = _id;
+      this -> ipos = _ipos;
       this -> join( bboxes );
     }
 
@@ -147,10 +159,18 @@ namespace G2lib {
 
   class AABBtree {
   public:
+
+  #ifdef G2LIB_USE_CXX11
     typedef shared_ptr<BBox const> PtrBBox;
     typedef pair<PtrBBox,PtrBBox>  PairPtrBBox;
     typedef vector<PairPtrBBox>    VecPairPtrBBox;
     typedef shared_ptr<AABBtree>   PtrAABB;
+  #else
+    typedef BBox const *           PtrBBox;
+    typedef pair<PtrBBox,PtrBBox>  PairPtrBBox;
+    typedef vector<PairPtrBBox>    VecPairPtrBBox;
+    typedef AABBtree *             PtrAABB;
+  #endif
 
   private:
 
@@ -162,46 +182,20 @@ namespace G2lib {
 
   public:
 
-    AABBtree() {
-      pBBox.reset();
-      children.clear();
-    }
+    AABBtree();
+    ~AABBtree();
 
     // copy contructor (recursive)
-    AABBtree( PtrBBox const & pbox ) {
-      this -> pBBox = pbox;
-      children.clear();
-    }
-
-    // copy contructor (recursive)
-    /*
-    AABBtree( AABBtree const & tree ) {
-      this -> pBBox = tree.pBBox;
-      children.reserve(tree.children.size());
-      vector<PtrAABB>::const_iterator t;
-      for ( t = tree.children.begin(); t != tree.children.end(); ++t )
-        children.push_back( make_shared<AABBtree>( *it ) );
-    }
-    */
-
-    ~AABBtree() {
-      pBBox.reset();
-      children.clear();
-    }
+    //AABBtree( PtrBBox const & pbox ) {
+    //  this -> pBBox = pbox;
+    //  children.clear();
+    //}
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    void
-    clear() {
-      // empty if an old tree present
-      pBBox.reset();
-      children.clear();
-    }
+    void clear();
 
-    bool
-    empty() const {
-      return children.empty() && !pBBox;
-    }
+    bool empty() const;
 
     void
     bbox( real_type & xmin,

@@ -42,7 +42,7 @@ namespace G2lib {
     if ( bboxes.empty() ) {
       xmin = ymin = xmax = ymax = 0;
     } else {
-      typename vector<PtrBBox>::const_iterator it = bboxes.begin();
+      vector<PtrBBox>::const_iterator it = bboxes.begin();
 
       xmin = (*it)->xmin;
       ymin = (*it)->ymin;
@@ -67,10 +67,64 @@ namespace G2lib {
    |  /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
 
-  void
-  AABBtree::build( vector<PtrBBox> const & bboxes ) {
+  #ifdef G2LIB_USE_CXX11
+
+  AABBtree::AABBtree() {
     pBBox.reset();
     children.clear();
+  }
+
+  AABBtree::~AABBtree() {
+    pBBox.reset();
+    children.clear();
+  }
+
+  void
+  AABBtree::clear() {
+    pBBox.reset();
+    children.clear();
+  }
+
+  bool
+  AABBtree::empty() const {
+    return children.empty() && !pBBox;
+  }
+
+  #else
+
+  AABBtree::AABBtree()
+  : pBBox(nullptr)
+  {
+    children.clear();
+  }
+
+  AABBtree::~AABBtree() {
+    if ( pBBox != nullptr ) {
+      delete pBBox;
+      pBBox = nullptr;
+    }
+    children.clear();
+  }
+
+  void
+  AABBtree::clear() {
+    if ( pBBox != nullptr ) {
+      delete pBBox;
+      pBBox = nullptr;
+    }
+    children.clear();
+  }
+
+  bool
+  AABBtree::empty() const {
+    return children.empty() && pBBox == nullptr;
+  }
+
+  #endif
+
+  void
+  AABBtree::build( vector<PtrBBox> const & bboxes ) {
+    clear();
 
     if ( bboxes.empty() ) return;
 
@@ -81,7 +135,13 @@ namespace G2lib {
       return;
     }
 
-    pBBox = make_shared<BBox>( bboxes );
+    ///pBBox = make_shared<BBox>( bboxes, 0, 0 );
+    #ifdef G2LIB_USE_CXX11
+    pBBox = shared_ptr<BBox>( new BBox(bboxes, 0, 0) );
+    #else
+    if ( pBBox != nullptr ) { delete pBBox; pBBox = nullptr; }
+    pBBox = new BBox( bboxes, 0, 0 );
+    #endif
 
     real_type xmin = pBBox -> Xmin();
     real_type ymin = pBBox -> Ymin();
@@ -93,7 +153,7 @@ namespace G2lib {
 
     if ( (ymax - ymin) > (xmax - xmin) ) {
       real_type cutPos = (ymax + ymin)/2;
-      typename vector<PtrBBox>::const_iterator it;
+      vector<PtrBBox>::const_iterator it;
       for ( it = bboxes.begin(); it != bboxes.end(); ++it ) {
         real_type ymid = ( (*it) -> Ymin() + (*it) -> Ymax() ) / 2;
         if ( ymid > cutPos ) posBoxes.push_back(*it);
@@ -101,7 +161,7 @@ namespace G2lib {
       }
     } else {
       real_type cutPos = (xmax + xmin)/2;
-      typename vector<PtrBBox>::const_iterator it;
+      vector<PtrBBox>::const_iterator it;
       for ( it = bboxes.begin(); it != bboxes.end(); ++it ) {
         real_type xmid = ( (*it) -> Xmin() + (*it) -> Xmax() ) / 2;
         if ( xmid > cutPos ) posBoxes.push_back(*it);
@@ -110,19 +170,24 @@ namespace G2lib {
     }
 
     if ( negBoxes.empty() ) {
-      typename vector<PtrBBox>::iterator midIdx;
+      vector<PtrBBox>::iterator midIdx;
       midIdx = posBoxes.begin() + posBoxes.size()/2;
       negBoxes.insert( negBoxes.end(), midIdx, posBoxes.end() );
       posBoxes.erase( midIdx, posBoxes.end() );
     } else if ( posBoxes.empty() ) {
-      typename vector<PtrBBox>::iterator midIdx;
+      vector<PtrBBox>::iterator midIdx;
       midIdx = negBoxes.begin() + negBoxes.size()/2;
       posBoxes.insert( posBoxes.end(), midIdx, negBoxes.end() );
       negBoxes.erase( midIdx, negBoxes.end() );
     }
 
+    #ifdef G2LIB_USE_CXX11
     PtrAABB neg = make_shared<AABBtree>();
     PtrAABB pos = make_shared<AABBtree>();
+    #else
+    PtrAABB neg = new AABBtree();
+    PtrAABB pos = new AABBtree();
+    #endif
 
     neg->build(negBoxes);
     if (!neg->empty()) children.push_back(neg);
@@ -170,20 +235,20 @@ namespace G2lib {
         intersectionList.push_back( PairPtrBBox(pBBox,tree.pBBox ) );
       break;
     case 1: // first is a tree, second is a leaf
-      { typename vector<PtrAABB>::const_iterator it;
+      { vector<PtrAABB>::const_iterator it;
         for ( it = children.begin(); it != children.end(); ++it )
           tree.intersect( **it, intersectionList, !swap_tree );
       }
       break;
     case 2: // first leaf, second is a tree
-      { typename vector<PtrAABB>::const_iterator it;
+      { vector<PtrAABB>::const_iterator it;
         for ( it = tree.children.begin(); it != tree.children.end(); ++it )
           this->intersect( **it, intersectionList, swap_tree );
       }
       break;
     case 3: // first is a tree, second is a tree
-      { typename vector<PtrAABB>::const_iterator c1;
-        typename vector<PtrAABB>::const_iterator c2;
+      { vector<PtrAABB>::const_iterator c1;
+        vector<PtrAABB>::const_iterator c2;
         for ( c1 = children.begin(); c1 != children.end(); ++c1 )
           for ( c2 = tree.children.begin(); c2 != tree.children.end(); ++c2 )
             (*c1)->intersect( **c2, intersectionList, swap_tree );
