@@ -18,8 +18,16 @@
 \*--------------------------------------------------------------------------*/
 
 #include "G2lib.hh"
+#include "CubicRootsFlocke.hh"
 
 #include <algorithm>
+
+#ifdef __GCC__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#endif
 
 namespace G2lib {
 
@@ -27,6 +35,7 @@ namespace G2lib {
   real_type const machepsi10   = 10*machepsi;
   real_type const machepsi100  = 100*machepsi;
   real_type const machepsi1000 = 1000*machepsi;
+  real_type const sqrtMachepsi = std::sqrt(machepsi);
   real_type const m_pi         = 3.14159265358979323846264338328;  // pi
   real_type const m_pi_2       = 1.57079632679489661923132169164;  // pi/2
   real_type const m_2pi        = 6.28318530717958647692528676656;  // 2*pi
@@ -170,6 +179,225 @@ namespace G2lib {
     } else {
       return ( ((18*x2+16)*x2+6)/power3(x2+1)-6*atan(x)/x )/(x2*x);
     }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  maxabs3( real_type A, real_type B, real_type C ) {
+    real_type res  = std::abs(A);
+    real_type absB = std::abs(B);
+    if ( res < absB ) res = absB;
+    real_type absC = std::abs(C);
+    if ( res < absC ) res = absC;
+    return res;
+  }
+
+  int_type
+  solveLinearQuadratic( real_type A,
+                        real_type B,
+                        real_type C,
+                        real_type a,
+                        real_type b,
+                        real_type c,
+                        real_type x[],
+                        real_type y[] ) {
+    real_type m1 = maxabs3(A,B,C);
+    real_type m2 = maxabs3(a,b,c);
+    A /= m1; B /= m1; C /= m1;
+    a /= m2; b /= m2; c /= m2;
+    real_type Ab   = A * b;
+    real_type Ba   = B * a;
+    real_type tmp  = A * Ab + B * Ba;
+    real_type disc = tmp - (C * C) * a * b;
+    real_type ACb  = Ab*C;
+    real_type BCa  = Ba*C;
+    if ( disc > machepsi100 ) {
+      // two solution
+      disc = sqrt(disc);
+      real_type Bdisc = B*disc;
+      real_type Adisc = A*disc;
+      x[0] = (ACb-Bdisc)/tmp;
+      x[1] = (ACb+Bdisc)/tmp;
+      y[0] = (BCa+Adisc)/tmp;
+      y[1] = (BCa-Adisc)/tmp;
+      return 2;
+    } if ( disc > -machepsi100 ) {
+      // one solution
+      x[0] = ACb/tmp;
+      y[0] = BCa/tmp;
+      return 1;
+    }
+    return 0; // no solution
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  solveLinearQuadratic2( real_type A,
+                         real_type B,
+                         real_type C,
+                         real_type x[],
+                         real_type y[] ) {
+    real_type m = maxabs3(A,B,C);
+    A /= m; B /= m; C /= m;
+    real_type tmp  = A*A + B*B;
+    real_type disc = tmp - (C * C);
+    real_type AC   = A*C;
+    real_type BC   = B*C;
+    if ( disc > machepsi100 ) {
+      // two solution
+      disc = sqrt(disc);
+      real_type Bdisc = B*disc;
+      real_type Adisc = A*disc;
+      x[0] = (AC-Bdisc)/tmp;
+      x[1] = (AC+Bdisc)/tmp;
+      y[0] = (BC+Adisc)/tmp;
+      y[1] = (BC-Adisc)/tmp;
+      return 2;
+    } if ( disc > -machepsi100 ) {
+      // one solution
+      x[0] = AC/tmp;
+      y[0] = BC/tmp;
+      return 1;
+    }
+    return 0; // no solution
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  intersectCircleAndParametricCircle( real_type R,
+                                      real_type x0,
+                                      real_type y0,
+                                      real_type kappa,
+                                      real_type c0,
+                                      real_type s0,
+                                      real_type angle[],
+                                      real_type s[] ) {
+    real_type xk  = x0*kappa;
+    real_type yk  = y0*kappa;
+    real_type Rk  = R*kappa;
+    real_type tmp = xk*s0-yk*c0;
+    real_type A   = tmp-1;
+    real_type B   = xk*c0+yk*s0;
+    real_type C   = 1+(xk*xk+yk*yk-Rk*Rk)-tmp;
+    real_type x[2], y[2];
+    int_type  nsol = solveLinearQuadratic2( A, B, C, x, y );
+
+    for ( int_type k=0; k < nsol; ++k ) {
+      real_type sk = atan2(y[k],x[k]);
+      if ( sk < 0 ) sk += m_2pi;
+      s[k]     = sk/kappa;
+      angle[k] = atan2(y[k],x[k]);
+    }
+    return nsol;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  static
+  int_type
+  solveNLsysCircleCircle( real_type kA,
+                          real_type T,
+                          real_type Tx,
+                          real_type Ty,
+                          real_type kB,
+                          real_type x[2],
+                          real_type y[2] ) {
+    real_type Tx2 = Tx*Tx;
+    real_type Ty2 = Ty*Ty;
+    real_type kB2 = kB*kB;
+    real_type kA2 = kA*kA;
+    real_type a   = (Tx2+Ty2)*kB2/4+Tx*kA*kB+kA2;
+    real_type b   = (Tx*kB+2*kA)*T-Ty2;
+    real_type c   = T*T;
+    real_type z[2];
+    int_type  nr, nc;
+    G2lib::solveQuadratic( a, b, c, z[0], z[1], nr, nc );
+    nc = 0;
+    for ( int_type i = 0; i < nr; ++i ) {
+      real_type tmp = z[i]*(4-kB2*z[i]);
+      if ( tmp < 0 ) continue;
+      real_type xx = kB*z[i]/2;
+      real_type yy = sqrt( tmp )/2;
+      tmp = Tx*xx+kA*z[i]+T;
+      if ( std::abs(tmp-Ty*yy) < std::abs(tmp+Ty*yy) ) yy = -yy;
+      x[nc] = xx;
+      y[nc] = yy;
+      ++nc;
+    }
+    return nc;
+  }
+
+  /*!
+   |  Solve the problem
+   |
+   |  \f[ \frac{\sin(kx)}{k} = y, \qquad \frac{1-\cos(kx)}{k} = x \f]
+   |
+   |  smoothly for any k (zero too)
+  \*/
+  static
+  real_type
+  invCoscSinc( real_type k, real_type x, real_type y ) {
+    real_type ds, s = y;
+    if ( std::abs(k) > sqrtMachepsi ) s = atan2( y*k, 1-k*x )/k;
+    int_type iter = 0;
+    do {
+      real_type sk = s*k;
+      ds = (y-Sinc(sk)*s)*cos(sk)/(1-sin(sk)*k*y);
+      s += ds ;
+    } while ( std::abs(ds) > machepsi100 && ++iter < 5 );
+    return s;
+  }
+
+  int_type
+  intersectCircleCircle( real_type x1,
+                         real_type y1,
+                         real_type theta1,
+                         real_type kappa1,
+                         real_type x2,
+                         real_type y2,
+                         real_type theta2,
+                         real_type kappa2,
+                         real_type s1[],
+                         real_type s2[] ) {
+    real_type dx    = x2 - x1;
+    real_type dy    = y2 - y1;
+    real_type L2    = dx*dx+dy*dy;
+    real_type alpha = atan2( dy, dx );
+    real_type Sa1   = sin(alpha-theta1);
+    real_type Ca1   = cos(alpha-theta1);
+    real_type Sa2   = sin(alpha-theta2);
+    real_type Ca2   = cos(alpha-theta2);
+    real_type S12   = sin(theta1-theta2);
+    real_type C12   = cos(theta1-theta2);
+    real_type T1    = L2*kappa2+2*Sa2;
+    real_type T2    = L2*kappa1-2*Sa1;
+    real_type xx1[2], yy1[2], xx2[2], yy2[3];
+    int_type nsol;
+    if ( std::abs(T1) > std::abs(T2) ) {
+      real_type Tx1 = -2*(Sa1*kappa2+C12);
+      real_type Ty1 = -2*(Ca1*kappa2+S12);
+      nsol = solveNLsysCircleCircle( kappa2, T1, Tx1, Ty1, kappa1, xx1, yy1 );
+      for ( int_type i = 0; i < nsol; ++i ) {
+        xx2[i] = C12*xx1[i]+S12*yy1[i]-Sa2;
+        yy2[i] = C12*yy1[i]-S12*xx1[i]-Ca2;
+      }
+    } else {
+      real_type Tx2 = 2*(Sa2*kappa1-C12);
+      real_type Ty2 = 2*(Ca2*kappa1+S12);
+      nsol = solveNLsysCircleCircle( kappa1, T2, Tx2, Ty2, kappa2, xx2, yy2 );
+      for ( int_type i = 0; i < nsol; ++i ) {
+        xx1[i] = C12*xx2[i]-S12*yy2[i]+Sa1;
+        yy1[i] = C12*yy2[i]+S12*xx2[i]+Ca1;
+      }
+    }
+    for ( int_type i = 0; i < nsol; ++i ) {
+      s1[i] = invCoscSinc( kappa1, xx1[i], yy1[i] );
+      s2[i] = invCoscSinc( kappa2, xx2[i], yy2[i] );
+    }
+    return nsol;
   }
 
   /*\
@@ -358,6 +586,22 @@ namespace G2lib {
    | |____/ \__,_|___/\___|\____\__,_|_|    \_/ \___|
   \*/
 
+  /*\
+   |   ____             _          _______           _
+   |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |
+   |  |  _ \ / _ \/ _` | | '_ \  / /|  _| | '_ \ / _` |
+   |  | |_) |  __/ (_| | | | | |/ / | |___| | | | (_| |
+   |  |____/ \___|\__, |_|_| |_/_/  |_____|_| |_|\__,_|
+   |              |___/
+  \*/
+
+  real_type
+  BaseCurve::thetaBegin() const
+  { return theta(0); }
+
+  real_type
+  BaseCurve::thetaEnd() const
+  { return theta(length()); }
 
   real_type
   BaseCurve::xBegin() const
@@ -422,6 +666,125 @@ namespace G2lib {
   real_type
   BaseCurve::ny_End() const
   { return ny(length()); }
+
+  /*\
+   |  _____                   _   _   _
+   | |_   _|   __ _ _ __   __| | | \ | |
+   |   | |    / _` | '_ \ / _` | |  \| |
+   |   | |   | (_| | | | | (_| | | |\  |
+   |   |_|    \__,_|_| |_|\__,_| |_| \_|
+  \*/
+
+  real_type
+  BaseCurve::tx( real_type s ) const
+  { return cos(theta(s)); }
+
+  real_type
+  BaseCurve::tx_D( real_type s ) const
+  { return -sin(theta(s))*theta_D(s); }
+
+  real_type
+  BaseCurve::tx_DD( real_type s ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type C     = cos(th);
+    real_type S     = sin(th);
+    return -(th_DD*S+(th_D*th_D)*C);
+  }
+
+  real_type
+  BaseCurve::tx_DDD( real_type s ) const {
+    real_type th     = theta(s);
+    real_type th_D   = theta_D(s);
+    real_type th_DD  = theta_DD(s);
+    real_type th_DDD = theta_DDD(s);
+    real_type C      = cos(th);
+    real_type S      = sin(th);
+    return (th_D*th_D*th_D-th_DDD)*S-3*th_DD*th_D*C;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  real_type
+  BaseCurve::ty( real_type s ) const
+  { return sin(theta(s)); }
+
+  real_type
+  BaseCurve::ty_D( real_type s ) const
+  { return cos(theta(s))*theta_D(s); }
+
+  real_type
+  BaseCurve::ty_DD( real_type s ) const {
+    real_type th    = theta(s);
+    real_type th_D  = theta_D(s);
+    real_type th_DD = theta_DD(s);
+    real_type C     = cos(th);
+    real_type S     = sin(th);
+    return th_DD*C-(th_D*th_D)*S;
+  }
+
+  real_type
+  BaseCurve::ty_DDD( real_type s ) const {
+    real_type th     = theta(s);
+    real_type th_D   = theta_D(s);
+    real_type th_DD  = theta_DD(s);
+    real_type th_DDD = theta_DDD(s);
+    real_type C      = cos(th);
+    real_type S      = sin(th);
+    return (th_DDD-th_D*th_D*th_D)*C-3*(th_DD*th_D)*S;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  BaseCurve::tg( real_type s, real_type tg[2] ) const {
+    tg[0] = tx(s);
+    tg[1] = ty(s);
+  }
+
+  void
+  BaseCurve::tg_D( real_type s, real_type tg_D[2] ) const {
+    tg_D[0] = tx_D(s);
+    tg_D[1] = ty_D(s);
+  }
+
+  void
+  BaseCurve::tg_DD( real_type s, real_type tg_DD[2] ) const {
+    tg_DD[0] = tx_DD(s);
+    tg_DD[1] = ty_DD(s);
+  }
+
+  void
+  BaseCurve::tg_DDD( real_type s, real_type tg_DDD[2] ) const {
+    tg_DDD[0] = tx_DDD(s);
+    tg_DDD[1] = ty_DDD(s);
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  void
+  BaseCurve::nor( real_type s, real_type n[2] ) const {
+    n[0] = nx(s);
+    n[1] = ny(s);
+  }
+
+  void
+  BaseCurve::nor_D( real_type s, real_type n_D[2] ) const {
+    n_D[0] = nx_D(s);
+    n_D[1] = ny_D(s);
+  }
+
+  void
+  BaseCurve::nor_DD( real_type s, real_type n_DD[2] ) const {
+    n_DD[0] = nx_DD(s);
+    n_DD[1] = ny_DD(s);
+  }
+
+  void
+  BaseCurve::nor_DDD( real_type s, real_type n_DDD[2] ) const {
+    n_DDD[0] = nx_DDD(s);
+    n_DDD[1] = ny_DDD(s);
+  }
 
   /*\
    |         __  __          _

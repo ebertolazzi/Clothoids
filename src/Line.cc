@@ -18,6 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Line.hh"
+#include "Circle.hh"
+
 #include <algorithm>
 
 // Microsoft visual studio Workaround
@@ -32,6 +34,153 @@
 namespace G2lib {
 
   using std::max;
+
+  typedef struct {
+    real_type p[2];
+    real_type q[2];
+    real_type c;
+    real_type s;
+    real_type L;
+  } L_struct;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // Given three colinear points p, q, r, the function checks if
+  // point q lies on line segment 'pr'
+  static
+  bool
+  onSegment( real_type const p[2],
+             real_type const q[2],
+             real_type const r[2],
+             real_type const epsi ) {
+
+    real_type mi_x, ma_x;
+    if ( p[0] > r[0] ) { mi_x = r[0]; ma_x = p[0]; }
+    else               { mi_x = p[0]; ma_x = r[0]; }
+
+    bool ok = q[0] <= ma_x+epsi && q[0] >= mi_x-epsi;
+    if ( ok ) {
+      real_type mi_y, ma_y;
+      if ( p[1] > r[1] ) { mi_y = r[1]; ma_y = p[1]; }
+      else               { mi_y = p[1]; ma_y = r[1]; }
+      ok = q[1] <= ma_y+epsi && q[1] >= mi_y-epsi;
+    }
+    return ok;
+  }
+
+  // To find orientation of ordered triplet (p, q, r).
+  // The function returns following values
+  // 0 --> p, q and r are collinear
+  // 1 --> Clockwise
+  // 2 --> Counterclockwise
+  static
+  int_type
+  orientation( real_type const p[2],
+               real_type const q[2],
+               real_type const r[2],
+               real_type const epsi ) {
+    // See https://www.geeksforgeeks.org/orientation-3-ordered-points/
+    // for details of below formula.
+    real_type qp_x = q[0] - p[0];
+    real_type qp_y = q[1] - p[1];
+    real_type rq_x = r[0] - q[0];
+    real_type rq_y = r[1] - q[1];
+
+    real_type det = qp_y * rq_x - qp_x * rq_y;
+    if ( abs(det) < epsi ) return 0;  // collinear
+    return (det > 0)? 1: 2; // clock or counterclock wise
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  static
+  bool
+  intersect( real_type        epsi,
+             L_struct const & L1,
+             L_struct const & L2,
+             real_type      & s1,
+             real_type      & s2 ) {
+
+    // Find the four orientations needed for general and special cases
+    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
+
+    // General case
+    if ( o1 != o2 && o3 != o4 ) {
+      real_type det = L1.c * L2.s - L1.s * L2.c;
+      real_type px  = L2.p[0]-L1.p[0];
+      real_type py  = L2.p[1]-L1.p[1];
+      s1 = (px * L2.s - py * L2.c)/ det;
+      s2 = (px * L1.s - py * L1.c)/ det;
+      return true;
+    }
+
+    // Special Cases
+    // p1, q1 and p2 are collinear and p2 lies on segment p1q1
+    if ( o1 == 0 && onSegment( L1.p, L2.p, L1.q, epsi ) ) {
+      s1 = hypot( L2.p[0]-L1.p[0], L2.p[1]-L1.p[1] );
+      s2 = 0;
+      return true;
+    }
+
+    // p1, q1 and q2 are collinear and q2 lies on segment p1q1
+    if ( o2 == 0 && onSegment( L1.p, L2.q, L1.q, epsi ) ) {
+      s1 = hypot( L2.q[0]-L1.p[0], L2.q[1]-L1.p[1] );
+      s2 = L2.L;
+      return true;
+    }
+
+    // p2, q2 and p1 are collinear and p1 lies on segment p2q2
+    if ( o3 == 0 && onSegment( L2.p, L1.p, L2.q, epsi ) ) {
+      s1 = 0;
+      s2 = hypot( L1.p[0]-L2.p[0], L1.p[1]-L2.p[1] );
+      return true;
+    }
+
+    // p2, q2 and q1 are collinear and q1 lies on segment p2q2
+    if ( o4 == 0 && onSegment( L2.p, L1.q, L2.q, epsi ) ) {
+      s1 = L1.L;
+      s2 = hypot( L1.q[0]-L2.p[0], L1.q[1]-L2.p[1] );
+      return true;
+    }
+
+    s1 = s2 = 0;
+    return false; // Doesn't fall in any of the above cases
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  static
+  bool
+  collision( real_type        epsi,
+             L_struct const & L1,
+             L_struct const & L2 ) {
+
+    // Find the four orientations needed for general and special cases
+    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
+
+    // General case
+    if ( o1 != o2 && o3 != o4 ) return true;
+
+    // Special Cases
+    // p1, q1 and p2 are collinear and p2 lies on segment p1q1
+    if ( o1 == 0 && onSegment( L1.p, L2.p, L1.q, epsi ) ) return true;
+
+    // p1, q1 and q2 are collinear and q2 lies on segment p1q1
+    if ( o2 == 0 && onSegment( L1.p, L2.q, L1.q, epsi ) ) return true;
+
+    // p2, q2 and p1 are collinear and p1 lies on segment p2q2
+    if ( o3 == 0 && onSegment( L2.p, L1.p, L2.q, epsi ) ) return true;
+
+    // p2, q2 and q1 are collinear and q1 lies on segment p2q2
+    if ( o4 == 0 && onSegment( L2.p, L1.q, L2.q, epsi ) ) return true;
+
+    return false; // Doesn't fall in any of the above cases
+  }
 
   /*\
    |   _     _
@@ -154,111 +303,6 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // Given three colinear points p, q, r, the function checks if
-  // point q lies on line segment 'pr'
-  static
-  bool
-  onSegment( real_type const p[2],
-             real_type const q[2],
-             real_type const r[2],
-             real_type const epsi ) {
-
-    real_type mi_x, ma_x;
-    if ( p[0] > r[0] ) { mi_x = r[0]; ma_x = p[0]; }
-    else               { mi_x = p[0]; ma_x = r[0]; }
-
-    bool ok = q[0] <= ma_x+epsi && q[0] >= mi_x-epsi;
-    if ( ok ) {
-      real_type mi_y, ma_y;
-      if ( p[1] > r[1] ) { mi_y = r[1]; ma_y = p[1]; }
-      else               { mi_y = p[1]; ma_y = r[1]; }
-      ok = q[1] <= ma_y+epsi && q[1] >= mi_y-epsi;
-    }
-    return ok;
-  }
-
-  // To find orientation of ordered triplet (p, q, r).
-  // The function returns following values
-  // 0 --> p, q and r are collinear
-  // 1 --> Clockwise
-  // 2 --> Counterclockwise
-  static
-  int_type
-  orientation( real_type const p[2],
-               real_type const q[2],
-               real_type const r[2],
-               real_type const epsi ) {
-    // See https://www.geeksforgeeks.org/orientation-3-ordered-points/
-    // for details of below formula.
-    real_type qp_x = q[0] - p[0];
-    real_type qp_y = q[1] - p[1];
-    real_type rq_x = r[0] - q[0];
-    real_type rq_y = r[1] - q[1];
-
-    real_type det = qp_y * rq_x - qp_x * rq_y;
-    if ( abs(det) < epsi ) return 0;  // collinear
-    return (det > 0)? 1: 2; // clock or counterclock wise
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  LineSegment::intersect( real_type        epsi,
-                          L_struct const & L1,
-                          L_struct const & L2,
-                          real_type      & s1,
-                          real_type      & s2 ) {
-
-    // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
-
-    // General case
-    if ( o1 != o2 && o3 != o4 ) {
-      real_type det = L1.c * L2.s - L1.s * L2.c;
-      real_type px  = L2.p[0]-L1.p[0];
-      real_type py  = L2.p[1]-L1.p[1];
-      s1 = (px * L2.s - py * L2.c)/ det;
-      s2 = (px * L1.s - py * L1.c)/ det;
-      return true;
-    }
-
-    // Special Cases
-    // p1, q1 and p2 are collinear and p2 lies on segment p1q1
-    if ( o1 == 0 && onSegment( L1.p, L2.p, L1.q, epsi ) ) {
-      s1 = hypot( L2.p[0]-L1.p[0], L2.p[1]-L1.p[1] );
-      s2 = 0;
-      return true;
-    }
-
-    // p1, q1 and q2 are collinear and q2 lies on segment p1q1
-    if ( o2 == 0 && onSegment( L1.p, L2.q, L1.q, epsi ) ) {
-      s1 = hypot( L2.q[0]-L1.p[0], L2.q[1]-L1.p[1] );
-      s2 = L2.L;
-      return true;
-    }
-
-    // p2, q2 and p1 are collinear and p1 lies on segment p2q2
-    if ( o3 == 0 && onSegment( L2.p, L1.p, L2.q, epsi ) ) {
-      s1 = 0;
-      s2 = hypot( L1.p[0]-L2.p[0], L1.p[1]-L2.p[1] );
-      return true;
-    }
-
-    // p2, q2 and q1 are collinear and q1 lies on segment p2q2
-    if ( o4 == 0 && onSegment( L2.p, L1.q, L2.q, epsi ) ) {
-      s1 = L1.L;
-      s2 = hypot( L1.q[0]-L2.p[0], L1.q[1]-L2.p[1] );
-      return true;
-    }
-
-    s1 = s2 = 0;
-    return false; // Doesn't fall in any of the above cases
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   LineSegment::intersect( LineSegment const & S,
@@ -285,8 +329,8 @@ namespace G2lib {
     L2.s    = S.s0;
     L2.L    = S.L;
 
-    real_type const epsi  = std::max(L,S.L)*machepsi100;
-    return intersect( epsi, L1, L2, s1, s2 );
+    real_type const epsi = std::max(L,S.L)*machepsi100;
+    return G2lib::intersect( epsi, L1, L2, s1, s2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -320,39 +364,7 @@ namespace G2lib {
 
     real_type const epsi = std::max(L,S.L)*machepsi100;
 
-    return intersect( epsi, L1, L2, s1, s2 );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  LineSegment::collision( real_type        epsi,
-                          L_struct const & L1,
-                          L_struct const & L2 ) {
-
-    // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
-
-    // General case
-    if ( o1 != o2 && o3 != o4 ) return true;
-
-    // Special Cases
-    // p1, q1 and p2 are collinear and p2 lies on segment p1q1
-    if ( o1 == 0 && onSegment( L1.p, L2.p, L1.q, epsi ) ) return true;
-
-    // p1, q1 and q2 are collinear and q2 lies on segment p1q1
-    if ( o2 == 0 && onSegment( L1.p, L2.q, L1.q, epsi ) ) return true;
-
-    // p2, q2 and p1 are collinear and p1 lies on segment p2q2
-    if ( o3 == 0 && onSegment( L2.p, L1.p, L2.q, epsi ) ) return true;
-
-    // p2, q2 and q1 are collinear and q1 lies on segment p2q2
-    if ( o4 == 0 && onSegment( L2.p, L1.q, L2.q, epsi ) ) return true;
-
-    return false; // Doesn't fall in any of the above cases
+    return G2lib::intersect( epsi, L1, L2, s1, s2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -382,7 +394,7 @@ namespace G2lib {
 
     real_type const epsi = std::max(L,S.L)*machepsi100;
 
-    return collision( epsi, L1, L2 );
+    return G2lib::collision( epsi, L1, L2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -414,7 +426,7 @@ namespace G2lib {
 
     real_type const epsi = std::max(L,S.L)*machepsi100;
 
-    return collision( epsi, L1, L2 );
+    return G2lib::collision( epsi, L1, L2 );
   }
 
   /*\
@@ -435,8 +447,13 @@ namespace G2lib {
         ok = this->collision( S );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
+        ok = C.collision( *this );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_BIARC:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
@@ -459,8 +476,13 @@ namespace G2lib {
         ok = this->collision( offs, S, obj_offs );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
+        ok = C.collision( obj_offs, *this, offs );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_BIARC:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
@@ -485,8 +507,13 @@ namespace G2lib {
         if ( ok ) ilist.push_back( ip );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
+        C.intersect( *this, ilist );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_BIARC:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
@@ -511,8 +538,13 @@ namespace G2lib {
         if ( ok ) ilist.push_back( Ipair(s1, s2) );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
+        C.intersect( obj_offs, *this, offs, ilist );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_BIARC:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:

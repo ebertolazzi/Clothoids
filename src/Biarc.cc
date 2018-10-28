@@ -438,64 +438,46 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::XY( real_type s, real_type & x, real_type & y ) const {
+  Biarc::tan( real_type s, real_type t[2] ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.XY(s,x,y);
-    else          return C1.XY(s-L0,x,y);
+    if ( s < L0 ) return C0.tg(s,t);
+    else          return C1.tg(s-L0,t);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::XY( real_type s, real_type t, real_type & x, real_type & y ) const {
+  Biarc::nor( real_type s, real_type n[2] ) const{
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.XY(s,t,x,y);
-    else          return C1.XY(s-L0,t,x,y);
+    if ( s < L0 ) return C0.nor(s,n);
+    else          return C1.nor(s-L0,n);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::TG( real_type s, real_type & tx, real_type & ty ) const {
+  Biarc::nor_D( real_type s, real_type n_D[2] ) const{
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.TG(s,tx,ty);
-    else          return C1.TG(s-L0,tx,ty);
+    if ( s < L0 ) return C0.nor_D(s,n_D);
+    else          return C1.nor_D(s-L0,n_D);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::NOR( real_type s, real_type & nx, real_type & ny ) const{
+  Biarc::nor_DD( real_type s, real_type n_DD[2] ) const{
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.NOR(s,nx,ny);
-    else          return C1.NOR(s-L0,nx,ny);
+    if ( s < L0 ) return C0.nor_DD(s,n_DD);
+    else          return C1.nor_DD(s-L0,n_DD);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const{
+  Biarc::nor_DDD( real_type s, real_type n_DDD[2] ) const{
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.NOR_D(s,nx_D,ny_D);
-    else          return C1.NOR_D(s-L0,nx_D,ny_D);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Biarc::NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const{
-    real_type L0 = C0.length();
-    if ( s < L0 ) return C0.NOR_DD(s,nx_DD,ny_DD);
-    else          return C1.NOR_DD(s-L0,nx_DD,ny_DD);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Biarc::NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const{
-    real_type L0 = C0.length();
-    if ( s < L0 ) return C0.NOR_DDD(s,nx_DDD,ny_DDD);
-    else          return C1.NOR_DDD(s-L0,nx_DDD,ny_DDD);
+    if ( s < L0 ) return C0.nor_DDD(s,n_DDD);
+    else          return C1.nor_DDD(s-L0,n_DDD);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

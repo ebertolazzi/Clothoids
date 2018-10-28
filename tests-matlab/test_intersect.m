@@ -39,7 +39,8 @@ C1.plot(npts,'Color','red','LineWidth',3) ;
 hold on ;
 C2.plot(npts,'Color','black','LineWidth',3) ;
 
-[s1,s2] = intersectClothoid( C1, C2 ) ;
+%[s1,s2] = intersectClothoid( C1, C2 ) ;
+[s1,s2] = C1.intersect( C2 ) ;
 
 XY1 = C1.eval( s1 );
 XY2 = C2.eval( s2 );

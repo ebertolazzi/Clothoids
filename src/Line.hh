@@ -38,6 +38,8 @@ namespace G2lib {
 
   class LineSegment : public BaseCurve {
 
+    friend class CircleArc;
+
     real_type x0,     //!< initial x coordinate of the line
               y0,     //!< initial y coordinate of the line
               theta0; //!< angle of the line
@@ -45,29 +47,6 @@ namespace G2lib {
     real_type c0,     //!< `cos(theta0)`
               s0,     //!< `sin(theta0)`
               L;      //!< length of the segment
-
-
-    typedef struct {
-      real_type p[2];
-      real_type q[2];
-      real_type c;
-      real_type s;
-      real_type L;
-    } L_struct;
-
-    static
-    bool
-    intersect( real_type        epsi,
-               L_struct const & L1,
-               L_struct const & L2,
-               real_type      & s1,
-               real_type      & s2 );
-
-    static
-    bool
-    collision( real_type        epsi,
-               L_struct const & L1,
-               L_struct const & L2 );
 
   public:
 
@@ -115,6 +94,24 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
+    real_type
+    length() const G2LIB_OVERRIDE
+    { return L; }
+
+    virtual
+    real_type
+    length( real_type ) const G2LIB_OVERRIDE
+    { return L; }
+
+    /*\
+     |   _     _
+     |  | |__ | |__   _____  __
+     |  | '_ \| '_ \ / _ \ \/ /
+     |  | |_) | |_) | (_) >  <
+     |  |_.__/|_.__/ \___/_/\_\
+    \*/
+
+    virtual
     void
     bbox( real_type & xmin,
           real_type & ymin,
@@ -129,17 +126,14 @@ namespace G2lib {
           real_type & xmax,
           real_type & ymax ) const G2LIB_OVERRIDE;
 
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    virtual
-    real_type
-    length() const G2LIB_OVERRIDE
-    { return L; }
-
-    virtual
-    real_type
-    length( real_type ) const G2LIB_OVERRIDE
-    { return L; }
+    /*\
+     |   ____             _          _______           _
+     |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |
+     |  |  _ \ / _ \/ _` | | '_ \  / /|  _| | '_ \ / _` |
+     |  | |_) |  __/ (_| | | | | |/ / | |___| | | | (_| |
+     |  |____/ \___|\__, |_|_| |_/_/  |_____|_| |_|\__,_|
+     |              |___/
+    \*/
 
     virtual
     real_type
@@ -221,85 +215,34 @@ namespace G2lib {
     ny_End()   const G2LIB_OVERRIDE
     { return c0; }
 
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    /*\
+     |  _   _          _
+     | | |_| |__   ___| |_ __ _
+     | | __| '_ \ / _ \ __/ _` |
+     | | |_| | | |  __/ || (_| |
+     |  \__|_| |_|\___|\__\__,_|
+    \*/
 
     virtual
     real_type
-    X( real_type s ) const G2LIB_OVERRIDE
-    { return x0+s*c0; }
+    theta( real_type ) const G2LIB_OVERRIDE
+    { return theta0; }
 
     virtual
     real_type
-    Y( real_type s ) const G2LIB_OVERRIDE
-    { return y0+s*s0; }
-
-    virtual
-    real_type
-    X_D( real_type ) const G2LIB_OVERRIDE
-    { return c0; }
-
-    virtual
-    real_type
-    Y_D( real_type ) const G2LIB_OVERRIDE
-    { return s0; }
-
-    virtual
-    real_type
-    X_DD( real_type ) const G2LIB_OVERRIDE
+    theta_D( real_type ) const G2LIB_OVERRIDE
     { return 0; }
 
     virtual
     real_type
-    Y_DD( real_type ) const G2LIB_OVERRIDE
+    theta_DD( real_type ) const G2LIB_OVERRIDE
     { return 0; }
 
     virtual
     real_type
-    X_DDD( real_type ) const G2LIB_OVERRIDE
+    theta_DDD( real_type ) const G2LIB_OVERRIDE
     { return 0; }
 
-    virtual
-    real_type
-    Y_DDD( real_type ) const G2LIB_OVERRIDE
-    { return 0; }
-
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    virtual
-    void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE {
-      x = x0+s*c0;
-      y = y0+s*s0;
-    }
-
-    virtual
-    void
-    eval_D( real_type,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE {
-      x_D = c0;
-      y_D = s0;
-    }
-
-    virtual
-    void
-    eval_DD( real_type,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE {
-      x_DD = 0;
-      y_DD = 0;
-    }
-
-    virtual
-    void
-    eval_DDD( real_type,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE {
-      x_DDD = 0;
-      y_DDD = 0;
-    }
 
     /*\
      |  _____                   _   _   _
@@ -417,23 +360,103 @@ namespace G2lib {
 
     virtual
     void
-    tan( real_type, real_type t[2] ) const G2LIB_OVERRIDE
+    tg( real_type, real_type t[2] ) const G2LIB_OVERRIDE
     { t[0] = c0; t[1] = s0; }
 
     virtual
     void
-    tan_D( real_type, real_type t_D[2] ) const G2LIB_OVERRIDE
+    tg_D( real_type, real_type t_D[2] ) const G2LIB_OVERRIDE
     { t_D[0] = t_D[1] = 0; }
 
     virtual
     void
-    tan_DD( real_type, real_type t_DD[2] ) const G2LIB_OVERRIDE
+    tg_DD( real_type, real_type t_DD[2] ) const G2LIB_OVERRIDE
     { t_DD[0] = t_DD[1] = 0; }
 
     virtual
     void
-    tan_DDD( real_type, real_type t_DDD[2] ) const G2LIB_OVERRIDE
+    tg_DDD( real_type, real_type t_DDD[2] ) const G2LIB_OVERRIDE
     { t_DDD[0] = t_DDD[1] = 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    X( real_type s ) const G2LIB_OVERRIDE
+    { return x0+s*c0; }
+
+    virtual
+    real_type
+    Y( real_type s ) const G2LIB_OVERRIDE
+    { return y0+s*s0; }
+
+    virtual
+    real_type
+    X_D( real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    Y_D( real_type ) const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    X_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    X_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    eval( real_type   s,
+          real_type & x,
+          real_type & y ) const G2LIB_OVERRIDE {
+      x = x0+s*c0;
+      y = y0+s*s0;
+    }
+
+    virtual
+    void
+    eval_D( real_type,
+            real_type & x_D,
+            real_type & y_D ) const G2LIB_OVERRIDE {
+      x_D = c0;
+      y_D = s0;
+    }
+
+    virtual
+    void
+    eval_DD( real_type,
+             real_type & x_DD,
+             real_type & y_DD ) const G2LIB_OVERRIDE {
+      x_DD = 0;
+      y_DD = 0;
+    }
+
+    virtual
+    void
+    eval_DDD( real_type,
+              real_type & x_DDD,
+              real_type & y_DDD ) const G2LIB_OVERRIDE {
+      x_DDD = 0;
+      y_DDD = 0;
+    }
 
     /*\
      |         __  __          _
@@ -665,36 +688,9 @@ namespace G2lib {
       return true;
     }
 
-    /*\
-     |   _   _ _   _ ____  ____ ____
-     |  | \ | | | | |  _ \| __ ) ___|
-     |  |  \| | | | | |_) |  _ \___ \
-     |  | |\  | |_| |  _ <| |_) |__) |
-     |  |_| \_|\___/|_| \_\____/____/
-    \*/
-
-    virtual
-    void
-    paramNURBS( int_type & n_knots,
-                int_type & n_pnts ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    toNURBS( real_type knots[],
-             real_type Poly[][3] ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    toBS( real_type knots[],
-          real_type Poly[][2] ) const G2LIB_OVERRIDE;
-
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    real_type theta()    const { return theta0; }
-    real_type sinTheta() const { return s0; }
-    real_type cosTheta() const { return c0; }
 
     void
     build( real_type _x0,
@@ -770,6 +766,27 @@ namespace G2lib {
     collision( real_type           offs,
                LineSegment const & S,
                real_type           S_offs ) const;
+
+    /*\
+     |   _   _ _   _ ____  ____ ____
+     |  | \ | | | | |  _ \| __ ) ___|
+     |  |  \| | | | | |_) |  _ \___ \
+     |  | |\  | |_| |  _ <| |_) |__) |
+     |  |_| \_|\___/|_| \_\____/____/
+    \*/
+
+    void
+    paramNURBS( int_type & n_knots,
+                int_type & n_pnts ) const;
+
+    void
+    toNURBS( real_type knots[],
+             real_type Poly[][3] ) const;
+
+    virtual
+    void
+    toBS( real_type knots[],
+          real_type Poly[][2] ) const;
 
     void
     info( ostream_type & stream ) const

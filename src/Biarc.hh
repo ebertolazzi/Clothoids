@@ -151,14 +151,12 @@ namespace G2lib {
     real_type nor_x( real_type s ) const { return -sin(theta(s)); }
     real_type nor_y( real_type s ) const { return cos(theta(s)); }
 
-    void XY( real_type s, real_type & x, real_type & y ) const;
-    void XY( real_type s, real_type t, real_type & x, real_type & y ) const;
-    void TG( real_type s, real_type & tx, real_type & ty ) const;
+    void tan( real_type s, real_type t[2] ) const;
 
-    void NOR    ( real_type s, real_type & nx,     real_type & ny ) const;
-    void NOR_D  ( real_type s, real_type & nx_D,   real_type & ny_D ) const;
-    void NOR_DD ( real_type s, real_type & nx_DD,  real_type & ny_DD ) const;
-    void NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
+    void nor    ( real_type s, real_type nx[2] ) const;
+    void nor_D  ( real_type s, real_type nx_D[2] ) const;
+    void nor_DD ( real_type s, real_type nx_DD[2] ) const;
+    void nor_DDD( real_type s, real_type nx_DDD[2] ) const;
 
     real_type Xstar()     const { return C1.xBegin(); }
     real_type Ystar()     const { return C1.yBegin(); }

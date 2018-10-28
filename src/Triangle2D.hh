@@ -134,7 +134,6 @@ namespace G2lib {
     real_type const * P2() const { return p2; }
     real_type const * P3() const { return p3; }
 
-    bool intersect( Triangle2D const & ) const;
     bool overlap( Triangle2D const & ) const;
 
     /*!

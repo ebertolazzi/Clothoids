@@ -110,43 +110,15 @@ namespace G2lib {
     return x0+s*Sinc(sk)*cos(theta0+sk);
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  CircleArc::Y( real_type s ) const {
-    real_type sk = (s*k)/2;
-    return x0+s*Sinc(sk)*sin(theta0+sk);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   real_type
   CircleArc::X_D( real_type s ) const {
     return cos(theta0+s*k);
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  CircleArc::Y_D( real_type s ) const {
-    return sin(theta0+s*k);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   real_type
   CircleArc::X_DD( real_type s ) const {
     return -k*sin(theta0+s*k);
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  CircleArc::Y_DD( real_type s ) const {
-    return k*cos(theta0+s*k);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   CircleArc::X_DDD( real_type s ) const {
@@ -156,6 +128,22 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
+  CircleArc::Y( real_type s ) const {
+    real_type sk = (s*k)/2;
+    return x0+s*Sinc(sk)*sin(theta0+sk);
+  }
+
+  real_type
+  CircleArc::Y_D( real_type s ) const {
+    return sin(theta0+s*k);
+  }
+
+  real_type
+  CircleArc::Y_DD( real_type s ) const {
+    return k*cos(theta0+s*k);
+  }
+
+  real_type
   CircleArc::Y_DDD( real_type s ) const {
     return -(k*k)*sin(theta0+s*k);
   }
@@ -163,80 +151,74 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::XY( real_type   s,
-                 real_type & x,
-                 real_type & y ) const {
-    real_type sk  = (s*k)/2;
-    real_type tmp = s*Sinc(sk);
-    x = x0+tmp*cos(theta0+sk);
-    y = y0+tmp*sin(theta0+sk);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CircleArc::XY( real_type   s,
-                 real_type   t,
-                 real_type & x,
-                 real_type & y ) const {
-    real_type sk  = (s*k)/2;
-    real_type tmp = s*Sinc(sk);
-    real_type th  = theta(s);
-    real_type th0 = theta0+sk;
-    x = x0+tmp*cos(th0)-t*sin(th);
-    y = y0+tmp*sin(th0)+t*cos(th);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CircleArc::TG( real_type s, real_type & tx, real_type & ty ) const {
+  CircleArc::tg( real_type s, real_type t[2] ) const {
     real_type th = theta(s);
-    tx = cos(th);
-    ty = sin(th);
+    t[0] = cos(th);
+    t[1] = sin(th);
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  CircleArc::NOR( real_type s, real_type & nx, real_type & ny ) const {
+  CircleArc::tg_D( real_type s, real_type t_D[2] ) const {
     real_type th = theta(s);
-    nx = -sin(th);
-    ny = cos(th);
+    t_D[0] = -sin(th)*k;
+    t_D[1] = cos(th)*k;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  CircleArc::NOR_D( real_type s, real_type & nx_D, real_type & ny_D ) const {
-    real_type th = theta(s);
-    nx_D = -cos(th)*k;
-    ny_D = -sin(th)*k;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CircleArc::NOR_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const {
+  CircleArc::tg_DD( real_type s, real_type t_DD[2] ) const {
     real_type th = theta(s);
     real_type k2 = k*k;
-    real_type S  = sin(th);
-    real_type C  = cos(th);
-    nx_DD =  S*k2;
-    ny_DD = -C*k2;
+    t_DD[0] = -cos(th)*k2;
+    t_DD[1] = -sin(th)*k2;
+  }
+
+  void
+  CircleArc::tg_DDD( real_type s, real_type t_DDD[2] ) const {
+    real_type th = theta(s);
+    real_type k3 = k*k*k;
+    t_DDD[0] = sin(th)*k3;
+    t_DDD[1] = -cos(th)*k3;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::NOR_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const {
+  CircleArc::nor( real_type s, real_type n[2] ) const {
     real_type th = theta(s);
-    real_type S  = sin(th);
-    real_type C  = cos(th);
-    real_type k3 = k*k*k;
-    nx_DDD = C*k3;
-    ny_DDD = S*k3;
+    n[0] = -sin(th);
+    n[1] = cos(th);
   }
+
+  void
+  CircleArc::nor_D( real_type s, real_type n_D[2] ) const {
+    real_type th = theta(s);
+    n_D[0] = -cos(th)*k;
+    n_D[1] = -sin(th)*k;
+  }
+
+  void
+  CircleArc::nor_DD( real_type s, real_type n_DD[2] ) const {
+    real_type th = theta(s);
+    real_type k2 = k*k;
+    n_DD[0] = -cos(th)*k2;
+    n_DD[1] = -sin(th)*k2;
+  }
+
+  void
+  CircleArc::nor_DDD( real_type s, real_type n_DDD[2] ) const {
+    real_type th = theta(s);
+    real_type k3 = k*k*k;
+    n_DDD[0] = sin(th)*k3;
+    n_DDD[1] = -cos(th)*k3;
+  }
+
+  /*\
+   |  _____                   _   _   _
+   | |_   _|   __ _ _ __   __| | | \ | |
+   |   | |    / _` | '_ \ / _` | |  \| |
+   |   | |   | (_| | | | | (_| | | |\  |
+   |   |_|    \__,_|_| |_|\__,_| |_| \_|
+  \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -283,65 +265,6 @@ namespace G2lib {
     real_type k2  = k*k;
     x_DDD = -k2*cos(arg);
     y_DDD = -k2*sin(arg);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CircleArc::eval( real_type   s,
-                   real_type   t,
-                   real_type & x,
-                   real_type & y ) const {
-    real_type sk  = (s*k)/2;
-    real_type LS  = s*Sinc(sk);
-    real_type arg = theta0+sk;
-    real_type nx, ny;
-    NOR( s, nx, ny );
-    x = x0 + LS*cos(arg) + nx * t;
-    y = y0 + LS*sin(arg) + ny * t;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CircleArc::eval_D( real_type   s,
-                     real_type   t,
-                     real_type & x_D,
-                     real_type & y_D ) const {
-    real_type arg = theta0+s*k;
-    real_type nx_D, ny_D;
-    NOR_D( s, nx_D, ny_D );
-    x_D = cos(arg)+t*nx_D;
-    y_D = sin(arg)+t*ny_D;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CircleArc::eval_DD( real_type   s,
-                      real_type   t,
-                      real_type & x_DD,
-                      real_type & y_DD ) const {
-    real_type arg = theta0+s*k;
-    real_type nx_DD, ny_DD;
-    NOR_DD( s, nx_DD, ny_DD );
-    x_DD = -k*sin(arg)+t*nx_DD;
-    y_DD =  k*cos(arg)+t*ny_DD;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  CircleArc::eval_DDD( real_type   s,
-                       real_type   t,
-                       real_type & x_DDD,
-                       real_type & y_DDD ) const {
-    real_type arg = theta0+s*k;
-    real_type k2  = k*k;
-    real_type nx_DDD, ny_DDD;
-    NOR_DDD( s, nx_DDD, ny_DDD );
-    x_DDD = -k2*cos(arg)+t*nx_DDD;
-    y_DDD = -k2*sin(arg)+t*ny_DDD;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -400,48 +323,17 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  CircleArc::closestPoint( real_type   qx,
-                           real_type   qy,
-                           real_type & X,
-                           real_type & Y,
-                           real_type & S ) const {
-
-    S = projectPointOnCircle( x0, y0, cos(theta0), sin(theta0), k, L, qx, qy );
-
-    if ( S < 0 || S > L ) { // minimum distance at the border
-      eval( L, X, Y );
-      // costruisco piano
-      real_type nx = X-x0;
-      real_type ny = Y-y0;
-      real_type dx = 2*qx-(x0+X);
-      real_type dy = 2*qy-(y0+Y);
-      if ( nx*dx + ny*dy > 0 ) {
-        S = L;
-      } else {
-        S = 0;
-        X = x0;
-        Y = y0;
-      }
-    } else {
-      eval( S, X, Y );
-    }
-
-    return hypot(qx-X,qy-Y);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
+  bool
   CircleArc::findST( real_type   x,
                      real_type   y,
                      real_type & s,
                      real_type & t ) const {
-    real_type X, Y, nx, ny;
+    real_type X, Y, n[2];
     s = projectPointOnCircle( x0, y0, cos(theta0), sin(theta0), k, L, x, y );
     eval( s, X, Y );
-    NOR( s, nx, ny );
-    t = nx*(x-X) + ny*(y-Y);
+    nor( s, n );
+    t = n[0]*(x-X) + n[1]*(y-Y);
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -472,11 +364,97 @@ namespace G2lib {
       yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
       real_type ny = xx2-xx0;
-      real_type tg = tan(dtheta/2)/2;
+      real_type tg = std::tan(dtheta/2)/2;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
     }
     return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  //! get the bounding box triangle (if angle variation less that pi/3)
+  bool
+  CircleArc::bbTriangle( real_type   offs,
+                         real_type & xx0, real_type & yy0,
+                         real_type & xx1, real_type & yy1,
+                         real_type & xx2, real_type & yy2 ) const {
+    real_type dtheta = L * k;
+    bool ok = std::abs(dtheta) <= m_pi/3;
+    if ( ok ) {
+      eval( 0, offs, xx0, yy0 );
+      eval( L, offs, xx2, yy2 );
+      xx1 = (xx0+xx2)/2;
+      yy1 = (yy0+yy2)/2;
+      real_type nx = yy0-yy2;
+      real_type ny = xx2-xx0;
+      real_type tg = std::tan(dtheta/2)/2;
+      xx1 -= nx * tg;
+      yy1 -= ny * tg;
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::bbTriangles( std::vector<Triangle2D> & tvec,
+                          real_type max_angle ) const {
+    real_type dtheta = std::abs(L * k);
+    int_type  n      = 1;
+    if ( dtheta > max_angle ) {
+      n       = int_type(std::ceil( dtheta/max_angle ));
+      dtheta /= n ;
+    }
+    tvec.reserve( n );
+    real_type xx0 = x0;
+    real_type yy0 = y0;
+    real_type ds  = L/n;
+    real_type ss  = ds;
+    for ( int_type k = 0; k < n; ++k, ss += ds ) {
+      real_type xx2, yy2;
+      eval( ss, xx2, yy2 );
+      real_type xx1 = (xx0+xx2)/2;
+      real_type yy1 = (yy0+yy2)/2;
+      real_type nx = yy0-yy2;
+      real_type ny = xx2-xx0;
+      real_type tg = std::tan(dtheta/2)/2;
+      xx1 -= nx * tg;
+      yy1 -= ny * tg;
+      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2) );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::bbTriangle( real_type offs,
+                         std::vector<Triangle2D> & tvec,
+                         real_type max_angle ) const {
+    real_type dtheta = std::abs(L * k);
+    int_type  n      = 1;
+    if ( dtheta > max_angle ) {
+      n       = int_type(std::ceil( dtheta/max_angle ));
+      dtheta /= n ;
+    }
+    tvec.reserve( n );
+    real_type ds    = L/n;
+    real_type ss    = ds;
+    real_type scale = 1-k*offs;
+    real_type xx0, yy0;
+    eval( 0, offs, xx0, yy0 );
+    for ( int_type k = 0; k < n; ++k, ss += ds ) {
+      real_type xx2, yy2;
+      eval( ss, offs, xx2, yy2 );
+      real_type xx1 = (xx0+xx2)/2;
+      real_type yy1 = (yy0+yy2)/2;
+      real_type nx = yy0-yy2;
+      real_type ny = xx2-xx0;
+      real_type tg = scale * std::tan(dtheta/2)/2;
+      xx1 -= nx * tg;
+      yy1 -= ny * tg;
+      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2) );
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -505,6 +483,320 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  CircleArc::bbox( real_type   offs,
+                   real_type & xmin,
+                   real_type & ymin,
+                   real_type & xmax,
+                   real_type & ymax ) const {
+    real_type xx0, yy0, xx1, yy1, xx2, yy2;
+    bool ok = bbTriangle( offs, xx0, yy0, xx1, yy1, xx2, yy2 );
+    if ( ok ) {
+      minmax3( xx0, xx1, xx2, xmin, xmax );
+      minmax3( yy0, yy1, yy2, ymin, ymax );
+    } else {
+      real_type cx, cy, delta;
+      center( cx, cy );
+      delta = std::abs(1/k-offs);
+      xmin = cx-delta;
+      xmax = cx+delta;
+      ymin = cy-delta;
+      ymax = cy+delta;
+    }
+  }
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
+
+  bool
+  CircleArc::collision( BaseCurve const & obj ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote
+        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        ok = this->collision( C );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        ok = this->collision( C );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  CircleArc::collision( real_type         offs,
+                        BaseCurve const & obj,
+                        real_type         offs_obj ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote to arc
+        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        ok = this->collision( offs, C, offs_obj );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        ok = this->collision( offs, C, offs_obj );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::intersect( BaseCurve const & obj,
+                        IntersectList   & ilist ) const {
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote to arc
+        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        this->intersect( C, ilist );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        this->intersect( C, ilist );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::intersect( real_type         offs,
+                        BaseCurve const & obj,
+                        real_type         offs_obj,
+                        IntersectList   & ilist ) const {
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote to arc
+        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        this->intersect( offs, C, offs_obj, ilist );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        this->intersect( offs, C, offs_obj, ilist );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+      break;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  CircleArc::collision( CircleArc const & C ) const {
+    real_type s1[2], s2[2];
+    int_type ni = intersectCircleCircle( this->x0,
+                                         this->y0,
+                                         this->theta0,
+                                         this->k,
+                                         C.x0,
+                                         C.y0,
+                                         C.theta0,
+                                         C.k,
+                                         s1, s2 );
+    real_type eps1 = machepsi100*L;
+    real_type eps2 = machepsi100*C.L;
+    for ( int_type i = 0; i < ni; ++i ) {
+      if ( s1[i] >= -eps1 && s1[i] <= L+eps1 &&
+           s2[i] >= -eps2 && s2[i] <= L+eps2 )
+        return true;
+    }
+    return false;
+  }
+
+  bool
+  CircleArc::collision( real_type         offs,
+                        CircleArc const & C,
+                        real_type         offs_C ) const {
+    real_type s1[2], s2[2];
+    real_type sc1 = 1-k*offs;
+    real_type sc2 = 1-C.k*offs_C;
+    int_type ni = intersectCircleCircle( this->X(0,offs),
+                                         this->Y(0,offs),
+                                         this->theta0,
+                                         this->k/sc2,
+                                         C.X(0,offs_C),
+                                         C.Y(0,offs_C),
+                                         C.theta0,
+                                         C.k/sc2,
+                                         s1, s2 );
+    real_type eps1 = machepsi100*L;
+    real_type eps2 = machepsi100*C.L;
+    for ( int_type i = 0; i < ni; ++i ) {
+      real_type ss1 = s1[i]/sc1;
+      real_type ss2 = s2[i]/sc2;
+      if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
+           ss2 >= -eps2 && ss2 <= L+eps2 )
+        return true;
+    }
+    return false;
+  }
+
+  void
+  CircleArc::intersect( CircleArc const & C,
+                        IntersectList   & ilist ) const {
+    real_type s1[2], s2[2];
+    int_type ni = intersectCircleCircle( this->x0,
+                                         this->y0,
+                                         this->theta0,
+                                         this->k,
+                                         C.x0,
+                                         C.y0,
+                                         C.theta0,
+                                         C.k,
+                                         s1, s2 );
+    real_type eps1 = machepsi100*L;
+    real_type eps2 = machepsi100*C.L;
+    for ( int_type i = 0; i < ni; ++i ) {
+      if ( s1[i] >= -eps1 && s1[i] <= L+eps1 &&
+           s2[i] >= -eps2 && s2[i] <= L+eps2 )
+        ilist.push_back( Ipair(s1[i],s2[i]) );
+    }
+  }
+
+  void
+  CircleArc::intersect( real_type         offs,
+                        CircleArc const & C,
+                        real_type         offs_C,
+                        IntersectList   & ilist ) const {
+    real_type s1[2], s2[2];
+    real_type sc1 = 1-k*offs;
+    real_type sc2 = 1-C.k*offs_C;
+    int_type ni = intersectCircleCircle( this->X(0,offs),
+                                         this->Y(0,offs),
+                                         this->theta0,
+                                         this->k/sc2,
+                                         C.X(0,offs_C),
+                                         C.Y(0,offs_C),
+                                         C.theta0,
+                                         C.k/sc2,
+                                         s1, s2 );
+    real_type eps1 = machepsi100*L;
+    real_type eps2 = machepsi100*C.L;
+    for ( int_type i = 0; i < ni; ++i ) {
+      real_type ss1 = s1[i]/sc1;
+      real_type ss2 = s2[i]/sc2;
+      if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
+           ss2 >= -eps2 && ss2 <= L+eps2 )
+        ilist.push_back( Ipair(ss1,ss2) );
+    }
+  }
+
+  /*\
+   |                  _           _   _
+   |  _ __  _ __ ___ (_) ___  ___| |_(_) ___  _ __
+   | | '_ \| '__/ _ \| |/ _ \/ __| __| |/ _ \| '_ \
+   | | |_) | | | (_) | |  __/ (__| |_| | (_) | | | |
+   | | .__/|_|  \___// |\___|\___|\__|_|\___/|_| |_|
+   | |_|           |__/
+  \*/
+
+  int_type
+  CircleArc::projection( real_type   qx,
+                         real_type   qy,
+                         real_type & x,
+                         real_type & y,
+                         real_type & s ) const {
+    real_type c0 = cos(theta0);
+    real_type s0 = sin(theta0);
+    s = projectPointOnCircle( x0, y0, c0, s0, k, L, qx, qy );
+    if ( s < 0 || s > L ) {
+      s = L;
+      eval( s, x, y );
+      // costruisco piano
+      real_type nx = x-x0;
+      real_type ny = y-y0;
+      real_type dx = 2*qx-(x0+x);
+      real_type dy = 2*qy-(y0+y);
+      if ( nx*dx + ny*dy <= 0 ) {
+        s = 0;
+        x = x0;
+        y = y0;
+      }
+      return 0;
+    }
+    eval( s, x, y );
+    return 1;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  CircleArc::projection( real_type   qx,
+                         real_type   qy,
+                         real_type   offs,
+                         real_type & x,
+                         real_type & y,
+                         real_type & s ) const  {
+    real_type c0  = cos(theta0);
+    real_type s0  = sin(theta0);
+    real_type xx0 = x0-offs*s0;
+    real_type yy0 = y0+offs*c0;
+    real_type ff = 1-k*offs;
+    real_type LL = L*ff;
+    s = projectPointOnCircle( xx0, yy0, c0, s0, k/ff, LL, qx, qy );
+    if ( s < 0 || s > LL ) {
+      s = L;
+      eval( s, offs, x, y );
+      // costruisco piano
+      real_type nx = x-xx0;
+      real_type ny = y-yy0;
+      real_type dx = 2*qx-(xx0+x);
+      real_type dy = 2*qy-(yy0+y);
+      if ( nx*dx + ny*dy <= 0 ) {
+        s = 0;
+        x = xx0;
+        y = yy0;
+      }
+      return 0;
+    }
+    eval( s, offs, x, y );
+    return 1;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   CircleArc::paramNURBS( int_type & n_knots,
                          int_type & n_pnts ) const {
     real_type dtheta = L*k;
@@ -518,23 +810,23 @@ namespace G2lib {
 
   void
   CircleArc::toNURBS( real_type knots[],
-                      real_type Poly[] ) const {
+                      real_type Poly[][3] ) const {
 
     real_type dtheta = L*k;
     int_type  ns     = int_type(std::floor(3*std::abs(dtheta)/m_pi));
     if ( ns < 1 ) ns = 1;
 
     real_type th = dtheta/(2*ns);
-    real_type w  = cos(th);
-    real_type tg = tan(th)/2;
+    real_type w  = std::cos(th);
+    real_type tg = std::tan(th)/2;
 
     real_type p0[2], p2[2];
     p0[0] = x0; p0[1] = y0;
 
     knots[0] = knots[1] = knots[2] = 0;
-    Poly[0] = p0[0];
-    Poly[1] = p0[1];
-    Poly[2] = 1;
+    Poly[0][0] = p0[0];
+    Poly[0][1] = p0[1];
+    Poly[0][2] = 1;
 
     real_type s  = 0;
     real_type ds = L/ns;
@@ -549,14 +841,14 @@ namespace G2lib {
       real_type ym = (p0[1]+p2[1])/2;
 
       ++kk;
-      Poly[kk*3+0] = w*(xm - nx * tg);
-      Poly[kk*3+1] = w*(ym - ny * tg);
-      Poly[kk*3+2] = w;
+      Poly[kk][0] = w*(xm - nx * tg);
+      Poly[kk][1] = w*(ym - ny * tg);
+      Poly[kk][2] = w;
 
       ++kk;
-      Poly[kk*3+0] = p2[0];
-      Poly[kk*3+1] = p2[1];
-      Poly[kk*3+2] = 1;
+      Poly[kk][0] = p2[0];
+      Poly[kk][1] = p2[1];
+      Poly[kk][2] = 1;
 
       knots[kk+1] = i+1;
       knots[kk+2] = i+1;

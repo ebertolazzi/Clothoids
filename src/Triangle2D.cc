@@ -204,13 +204,6 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  Triangle2D::intersect( Triangle2D const & t2 ) const {
-    return tri_tri_intersection_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
   Triangle2D::overlap( Triangle2D const & t2 ) const {
     return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 );
   }

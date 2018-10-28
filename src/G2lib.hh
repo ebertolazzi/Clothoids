@@ -103,7 +103,7 @@
 #pragma GCC diagnostic ignored "-Wc++98-compat"
 #endif
 #ifdef __clang__
-#pragma clang diagnostic ignored  "-Wpadded"
+#pragma clang diagnostic ignored "-Wpadded"
 #pragma clang diagnostic ignored "-Wc++98-compat"
 #endif
 
@@ -119,6 +119,7 @@ namespace G2lib {
   extern real_type const machepsi10;
   extern real_type const machepsi100;
   extern real_type const machepsi1000;
+  extern real_type const sqrtMachepsi;
   extern real_type const m_pi;        // pi
   extern real_type const m_pi_2;      // pi/2
   extern real_type const m_2pi;       // 2*pi
@@ -237,6 +238,87 @@ namespace G2lib {
     return dst*k <= 1;
   }
 
+  /*!
+   | Solve the nonlinear system
+   |
+   | \f[ A x + B y = C \f]
+   | \f[ a x^2 + b y^2 = c \f]
+   |
+   | \param A first parameter of the linear equation
+   | \param B second parameter of the linear equation
+   | \param C third parameter of the linear equation
+   | \param a first parameter of the quadratic equation
+   | \param b second parameter of the quadratic equation
+   | \param c third parameter of the quadratic equation
+   | \return the number of solution 0, 1 or 2
+   |
+  \*/
+  int_type
+  solveLinearQuadratic( real_type A,
+                        real_type B,
+                        real_type C,
+                        real_type a,
+                        real_type b,
+                        real_type c,
+                        real_type x[],
+                        real_type y[] );
+
+  /*!
+   | Solve the nonlinear system
+   |
+   | \f[ A x + B y = C \f]
+   | \f[ x^2 + y^2 = 1 \f]
+   |
+   | \param A first parameter of the linear equation
+   | \param B second parameter of the linear equation
+   | \param C third parameter of the linear equation
+   | \return the number of solution 0, 1 or 2
+   |
+  \*/
+  int_type
+  solveLinearQuadratic2( real_type A,
+                         real_type B,
+                         real_type C,
+                         real_type x[],
+                         real_type y[] );
+
+  /*!
+   | Intersect the parametric arc
+   |
+   | \f[ x = x_1+\frac{\sin(\kappa_1 s+\theta_1)-sin(\theta_1)}{\kappa_1} \f]
+   | \f[ y = y_1+\frac{\cos(\theta_1)-\cos(\kappa_1 s+\theta_1)}{\kappa_1} \f]
+   |
+   | with the parametric arc
+   | \f[ x = x_2+\frac{\sin(\kappa_2 s+\theta_2)-sin(\theta_2)}{\kappa_2} \f]
+   | \f[ y = y_2+\frac{\cos(\theta_2)-\cos(\kappa_2 s+\theta_2)}{\kappa_2} \f]
+   |
+   | \param x1     x-origin of the first arc
+   | \param y1     y-origin of the first arc
+   | \param theta1 initial angle of the first arc
+   | \param kappa1 curvature of the first arc
+   | \param x2     x-origin of the second arc
+   | \param y2     y-origin of the second arc
+   | \param theta2 initial angle of the second arc
+   | \param kappa2 curvature of the second arc
+   | \param s1     parameter2 of intersection for the first circle arc
+   | \param s2     parameter2 of intersection for the second circle arc
+   |
+   | \return the number of solution 0, 1 or 2
+   |
+  \*/
+
+  int_type
+  intersectCircleCircle( real_type x1,
+                         real_type y1,
+                         real_type theta1,
+                         real_type kappa1,
+                         real_type x2,
+                         real_type y2,
+                         real_type theta2,
+                         real_type kappa2,
+                         real_type s1[],
+                         real_type s2[] );
+
   /*\
    |   ____        _           ____       ____
    |  / ___|  ___ | |_   _____|___ \__  _|___ \
@@ -339,6 +421,24 @@ namespace G2lib {
     type() const
     { return _type; }
 
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    length() const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    length( real_type offs ) const G2LIB_PURE_VIRTUAL;
+
+    /*\
+     |   _     _
+     |  | |__ | |__   _____  __
+     |  | '_ \| '_ \ / _ \ \/ /
+     |  | |_) | |_) | (_) >  <
+     |  |_.__/|_.__/ \___/_/\_\
+    \*/
+
     virtual
     void
     bbox( real_type & xmin,
@@ -354,33 +454,179 @@ namespace G2lib {
           real_type & xmax,
           real_type & ymax ) const G2LIB_PURE_VIRTUAL;
 
-    virtual
-    real_type
-    length() const G2LIB_PURE_VIRTUAL;
+    /*\
+     |   ____             _          _______           _
+     |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |
+     |  |  _ \ / _ \/ _` | | '_ \  / /|  _| | '_ \ / _` |
+     |  | |_) |  __/ (_| | | | | |/ / | |___| | | | (_| |
+     |  |____/ \___|\__, |_|_| |_/_/  |_____|_| |_|\__,_|
+     |              |___/
+    \*/
 
-    virtual
-    real_type
-    length( real_type offs ) const G2LIB_PURE_VIRTUAL;
+    virtual real_type thetaBegin() const;
+    virtual real_type thetaEnd() const;
 
     virtual real_type xBegin() const;
     virtual real_type yBegin() const;
-    virtual real_type xEnd()   const;
-    virtual real_type yEnd()   const;
+    virtual real_type xEnd() const;
+    virtual real_type yEnd() const;
 
     virtual real_type xBegin( real_type offs ) const;
     virtual real_type yBegin( real_type offs ) const;
-    virtual real_type xEnd( real_type offs )   const;
-    virtual real_type yEnd( real_type offs )   const;
+    virtual real_type xEnd( real_type offs ) const;
+    virtual real_type yEnd( real_type offs ) const;
 
     virtual real_type tx_Begin() const;
     virtual real_type ty_Begin() const;
-    virtual real_type tx_End()   const;
-    virtual real_type ty_End()   const;
+    virtual real_type tx_End() const;
+    virtual real_type ty_End() const;
 
     virtual real_type nx_Begin() const;
     virtual real_type ny_Begin() const;
-    virtual real_type nx_End()   const;
-    virtual real_type ny_End()   const;
+    virtual real_type nx_End() const;
+    virtual real_type ny_End() const;
+
+    /*\
+     |  _   _          _
+     | | |_| |__   ___| |_ __ _
+     | | __| '_ \ / _ \ __/ _` |
+     | | |_| | | |  __/ || (_| |
+     |  \__|_| |_|\___|\__\__,_|
+    \*/
+
+    virtual
+    real_type
+    theta( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    theta_D( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    theta_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    real_type
+    theta_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    /*\
+     |  _____                   _   _   _
+     | |_   _|   __ _ _ __   __| | | \ | |
+     |   | |    / _` | '_ \ / _` | |  \| |
+     |   | |   | (_| | | | | (_| | | |\  |
+     |   |_|    \__,_|_| |_|\__,_| |_| \_|
+    \*/
+
+    virtual
+    real_type
+    tx( real_type s ) const;
+
+    virtual
+    real_type
+    ty( real_type s ) const;
+
+    virtual
+    real_type
+    tx_D( real_type s ) const;
+
+    virtual
+    real_type
+    ty_D( real_type s ) const;
+
+    virtual
+    real_type
+    tx_DD( real_type s ) const;
+
+    virtual
+    real_type
+    ty_DD( real_type s ) const;
+
+    virtual
+    real_type
+    tx_DDD( real_type s ) const;
+
+    virtual
+    real_type
+    ty_DDD( real_type s ) const;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    nx( real_type s ) const
+    { return ty(s); }
+
+    virtual
+    real_type
+    nx_D( real_type s ) const
+    { return ty_D(s); }
+
+    virtual
+    real_type
+    nx_DD( real_type s ) const
+    { return ty_DD(s); }
+
+    virtual
+    real_type
+    nx_DDD( real_type s ) const
+    { return ty_DDD(s); }
+
+    virtual
+    real_type
+    ny( real_type s ) const
+    { return -tx(s); }
+
+    virtual
+    real_type
+    ny_D( real_type s ) const
+    { return -tx_D(s); }
+
+    virtual
+    real_type
+    ny_DD( real_type s ) const
+    { return -tx_DD(s); }
+
+    virtual
+    real_type
+    ny_DDD( real_type s ) const
+    { return -tx_DDD(s); }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    tg( real_type s, real_type t[2] ) const;
+
+    virtual
+    void
+    tg_D( real_type s, real_type tg_D[2] ) const;
+
+    virtual
+    void
+    tg_DD( real_type s, real_type tg_DD[2] ) const;
+
+    virtual
+    void
+    tg_DDD( real_type s, real_type tg_DDD[2] ) const;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    nor( real_type s, real_type n[2] ) const;
+
+    virtual
+    void
+    nor_D( real_type s, real_type n_D[2] ) const;
+
+    virtual
+    void
+    nor_DD( real_type s, real_type n_DD[2] ) const;
+
+    virtual
+    void
+    nor_DDD( real_type s, real_type n_DDD[2] ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -441,116 +687,6 @@ namespace G2lib {
     eval_DDD( real_type   s,
               real_type & x_DDD,
               real_type & y_DDD ) const G2LIB_PURE_VIRTUAL;
-
-    /*\
-     |  _____                   _   _   _
-     | |_   _|   __ _ _ __   __| | | \ | |
-     |   | |    / _` | '_ \ / _` | |  \| |
-     |   | |   | (_| | | | | (_| | | |\  |
-     |   |_|    \__,_|_| |_|\__,_| |_| \_|
-    \*/
-
-    virtual
-    real_type
-    nx( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ny( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    nx_D( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ny_D( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    nx_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ny_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    nx_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ny_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    virtual
-    real_type
-    tx( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ty( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    tx_D( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ty_D( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    tx_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ty_DD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    tx_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    ty_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
-
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    virtual
-    void
-    nor( real_type s, real_type n[2] ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    void
-    nor_D( real_type s, real_type n_D[2] ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    void
-    nor_DD( real_type s, real_type n_DD[2] ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    void
-    nor_DDD( real_type s, real_type n_DDD[2] ) const G2LIB_PURE_VIRTUAL;
-
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    virtual
-    void
-    tan( real_type s, real_type t[2] ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    void
-    tan_D( real_type s, real_type t_D[2] ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    void
-    tan_DD( real_type s, real_type t_DD[2] ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    void
-    tan_DDD( real_type s, real_type t_DDD[2] ) const G2LIB_PURE_VIRTUAL;
 
     /*\
      |         __  __          _
@@ -659,39 +795,6 @@ namespace G2lib {
      |  \__,_|_|___/\__\__,_|_| |_|\___\___|
     \*/
 
-    virtual
-    real_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type   offs,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
-    distance( real_type qx, real_type qy ) const {
-      real_type x, y, s;
-      return closestPoint( qx, qy, x, y, s );
-    }
-
-    virtual
-    real_type
-    distance( real_type qx,
-              real_type qy,
-              real_type offs ) const {
-      real_type x, y, s;
-      return closestPoint( qx, qy, offs, x, y, s );
-    }
-
     /*!
      | \param  qx  x-coordinate of the point
      | \param  qy  y-coordinate of the point
@@ -732,6 +835,45 @@ namespace G2lib {
                 real_type & y,
                 real_type & s ) const G2LIB_PURE_VIRTUAL;
 
+    virtual
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s ) const {
+      projection( qx, qy, x, y, s );
+      return hypot( qx-x, qy-y);
+    }
+
+    virtual
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type   offs,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s ) const {
+      projection( qx, qy, offs, x, y, s );
+      return hypot( qx-x, qy-y );
+    }
+
+    virtual
+    real_type
+    distance( real_type qx, real_type qy ) const {
+      real_type x, y, s;
+      return closestPoint( qx, qy, x, y, s );
+    }
+
+    virtual
+    real_type
+    distance( real_type qx,
+              real_type qy,
+              real_type offs ) const {
+      real_type x, y, s;
+      return closestPoint( qx, qy, offs, x, y, s );
+    }
+
     /*\
      |    __ _           _ ____ _____
      |   / _(_)_ __   __| / ___|_   _|
@@ -746,50 +888,6 @@ namespace G2lib {
             real_type   y,
             real_type & s,
             real_type & t ) const G2LIB_PURE_VIRTUAL;
-
-    /*\
-     |   _   _ _   _ ____  ____ ____
-     |  | \ | | | | |  _ \| __ ) ___|
-     |  |  \| | | | | |_) |  _ \___ \
-     |  | |\  | |_| |  _ <| |_) |__) |
-     |  |_| \_|\___/|_| \_\____/____/
-    \*/
-
-    /*!
-     | \param n_knots  the number of knots
-     | \param n_pnts   the number of polygon points
-    \*/
-
-    virtual
-    void
-    paramNURBS( int_type & n_knots,
-                int_type & n_pnts ) const G2LIB_PURE_VIRTUAL;
-
-    /*!
-     | \brief Compute rational B-spline coefficients for a line segment
-     |
-     | \param knots  knots of the B-spline
-     | \param Poly   polygon of the B-spline
-    \*/
-
-    virtual
-    void
-    toNURBS( real_type knots[],
-             real_type Poly[][3] ) const G2LIB_PURE_VIRTUAL;
-
-
-    /*!
-     | \brief Compute B-spline coefficients for a line segment
-     |
-     | \param knots  knots of the B-spline
-     | \param Poly   polygon of the B-spline
-    \*/
-
-    virtual
-    void
-    toBS( real_type knots[],
-          real_type Poly[][2] ) const G2LIB_PURE_VIRTUAL;
-
   };
 }
 
