@@ -405,10 +405,10 @@ namespace G2lib {
   protected:
     CurveType _type;
 
+  public:
+
     typedef std::pair<real_type,real_type> Ipair;
     typedef std::vector<Ipair>             IntersectList;
-
-  public:
 
     BaseCurve( CurveType const & __type )
     : _type(__type)
@@ -757,6 +757,34 @@ namespace G2lib {
               real_type   offs,
               real_type & x_DDD,
               real_type & y_DDD ) const;
+
+    /*\
+     |  _                        __
+     | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___
+     | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \
+     | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |
+     |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
+    \*/
+
+    virtual
+    void
+    translate( real_type tx, real_type ty ) G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    rotate( real_type angle, real_type cx, real_type cy ) G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    reverse() G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    changeOrigin( real_type newx0, real_type newy0 ) G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    trim( real_type s_begin, real_type s_end ) G2LIB_PURE_VIRTUAL;
 
     /*\
      |   _       _                          _

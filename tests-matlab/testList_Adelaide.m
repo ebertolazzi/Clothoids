@@ -11,7 +11,7 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
 XY = [ ...
  144.968899755033   ,-37.8499535764433; ...
@@ -203,11 +203,11 @@ XY = [ ...
  144.968899755033   ,-37.8499535764433; ...
 ];
 
-S = ClothoidSplineG2() ;
-%S.ipopt(true) ;
+S = ClothoidSplineG2();
+%S.ipopt(true);
 
-SPL = S.buildP2( XY(:,1), XY(:,2) ) ;
-SPL.rotate(pi/4,0,0) ;
-SPL.plot() ;
+SPL = S.buildP2( XY(:,1), XY(:,2) );
+SPL.rotate(pi/4,0,0);
+SPL.plot();
 
 axis equal

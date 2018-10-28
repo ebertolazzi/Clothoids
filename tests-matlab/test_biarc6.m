@@ -12,19 +12,18 @@
 
 addpath('../matlab');
 
-close all ;
-clear all ;
+close all;
 
 % check constructors
 x0     = [-5,-5,0,2.5];
-y0     = [10,-2,10,2] ;
-theta0 = 0 ;
-x1     = [-50,-15,0.01,1.5]/4 ;
-y1     = [12,-20,30,20]/4 ;
-theta1 = pi/2 ;
+y0     = [10,-2,10,2];
+theta0 = 0;
+x1     = [-50,-15,0.01,1.5]/4;
+y1     = [12,-20,30,20]/4;
+theta1 = pi/2;
 
-aa = 0.04 ;
-bb = 0.5-2*aa ;
+aa = 0.04;
+bb = 0.5-2*aa;
 
 figure('Position',[ 1 1 800 800]);
 
@@ -39,8 +38,8 @@ for kk=1:4
   
   L1 = Biarc( x0(kk), y0(kk), theta0, x1(kk), y1(kk), theta1 );
   %
-  x     = -20:0.1:20 ;
-  y     = -20:0.1:20 ;
+  x     = -20:0.1:20;
+  y     = -20:0.1:20;
   [X,Y] = meshgrid(x,y);
 
   tic
@@ -53,10 +52,10 @@ for kk=1:4
   axis equal;
 
   hold on;
-  fmt1 = {'Color','white','LineWidth',3} ;
-  fmt2 = {'Color','yellow','LineWidth',3} ;
-  L1.plot(1000,fmt1,fmt2) ;
+  fmt1 = {'Color','white','LineWidth',3};
+  fmt2 = {'Color','yellow','LineWidth',3};
+  L1.plot(1000,fmt1,fmt2);
 
   %
-  L1.delete() ;
+  L1.delete();
 end

@@ -12,7 +12,7 @@
 
 addpath('../matlab');
 
-close all ;
+close all;
 
 % check constructors
 x0     = [-4,-4,-4,-4];
@@ -42,13 +42,13 @@ for kk=1:4
 
   be.plot(400,{'Color','blue','LineWidth',3});
   
-  N = 10 ;
+  N = 10;
 
   x         = (-10 + 20 * rand(N,1)).';
   y         = (-5  + 20 * rand(N,1)).';
-  [s,t]     = be.find_coord(x,y) ;
-  [xx,yy]   = be.eval(s,t) ;
-  [xxx,yyy] = be.eval(s) ;
+  [s,t]     = be.find_coord(x,y);
+  [xx,yy]   = be.eval(s,t);
+  [xxx,yyy] = be.eval(s);
   
 
   hold on;

@@ -11,19 +11,19 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
-x0     = 0 ;
-y0     = 0 ;
+x0     = 0;
+y0     = 0;
 theta0 = 0*1.433674+pi;
 
-S = ClothoidList() ;
-S.push_back( x0, y0, theta0, 0, 0, 674.622545489527 ) ; % first segment
+S = ClothoidList();
+S.push_back( x0, y0, theta0, 0, 0, 674.622545489527 ); % first segment
 
-addseg  = @(a,r) S.push_back( -1/r, 0, abs(a*r) ) ;
-addseg1 = @(l) S.push_back( 0, 0, l ) ;
+addseg  = @(a,r) S.push_back( -1/r, 0, abs(a*r) );
+addseg1 = @(l) S.push_back( 0, 0, l );
 
-addseg( 1.25173914202509, 17.8610071792628 ) ;
+addseg( 1.25173914202509, 17.8610071792628 );
 addseg1(35.6107679385915);
 addseg(1.99174712980114,-14.8841726493856);
 addseg1(10.3963730893385);
@@ -51,6 +51,6 @@ addseg1(908.407080041319);
 addseg(2.60409849830936,104.189208545699);
 addseg(0.521829813434639,550.714388027269);
 %addseg1(451.578651874315);
-S.push_back_G1( x0, y0, theta0 ) ; 
-S.plot() ;
+S.push_back_G1( x0, y0, theta0 ); 
+S.plot();
 axis equal

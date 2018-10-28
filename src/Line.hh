@@ -547,6 +547,40 @@ namespace G2lib {
     }
 
     /*\
+     |  _                        __
+     | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___
+     | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \
+     | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |
+     |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
+    \*/
+
+    virtual
+    void
+    translate( real_type tx, real_type ty ) G2LIB_OVERRIDE
+    { x0 += tx; y0 += ty; }
+
+    virtual
+    void
+    rotate( real_type angle, real_type cx, real_type cy ) G2LIB_OVERRIDE;
+
+    virtual
+    void
+    reverse() G2LIB_OVERRIDE;
+
+    virtual
+    void
+    changeOrigin( real_type newx0, real_type newy0 ) G2LIB_OVERRIDE
+    { x0 = newx0; y0 = newy0; }
+
+    virtual
+    void
+    trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE {
+      x0 += c0 * s_begin;
+      y0 += s0 * s_begin;
+      L   = s_end - s_begin;
+    }
+
+    /*\
      |   _       _                          _
      |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
      |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
@@ -722,27 +756,6 @@ namespace G2lib {
     build_2P( real_type const p0[2],
               real_type const p1[2] )
     { build_2P( p0[0], p0[1], p1[0], p1[1] ); }
-
-    void
-    trim( real_type s_begin, real_type s_end ) {
-      x0 += c0 * s_begin;
-      y0 += s0 * s_begin;
-      L   = s_end - s_begin;
-    }
-
-    void
-    translate( real_type tx, real_type ty )
-    { x0 += tx; y0 += ty; }
-
-    void
-    rotate( real_type angle, real_type cx, real_type cy );
-
-    void
-    reverse();
-
-    void
-    changeOrigin( real_type newx0, real_type newy0 )
-    { x0 = newx0; y0 = newy0; }
 
     void
     p1p2( real_type p1[2], real_type p2[2] ) const {

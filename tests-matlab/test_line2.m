@@ -54,7 +54,7 @@ for kk=1:4
 
   hold on;
   for i=1:kk
-    LINE{i}.plot('Color','white','Linewidth',3) ;
+    LINE{i}.plot('Color','white','Linewidth',3);
   end
   %
 end

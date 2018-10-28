@@ -26,6 +26,21 @@
 		D918ADA71F62C1CE009893C3 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D92EFA7D2186931500BF8E18 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
+		D92EFA7E2186931500BF8E18 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
+		D92EFA7F2186931500BF8E18 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D92EFA802186931500BF8E18 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
+		D92EFA822186931500BF8E18 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
+		D92EFA832186931500BF8E18 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
+		D92EFA842186931500BF8E18 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
+		D92EFA852186931500BF8E18 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
+		D92EFA862186931500BF8E18 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
+		D92EFA872186931500BF8E18 /* ClothoidDistance.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */; };
+		D92EFA882186931500BF8E18 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D92EFA892186931500BF8E18 /* AABBtree.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BA2F8D217FD93E009D45BD /* AABBtree.cc */; };
+		D92EFA8A2186931500BF8E18 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
+		D92EFA8B2186931500BF8E18 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D92EFA932186932B00BF8E18 /* testIntersect2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D92EFA922186932B00BF8E18 /* testIntersect2.cc */; };
 		D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D938F4ED1DD3B85200E08A70 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
@@ -166,6 +181,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		D92EFA8D2186931500BF8E18 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		D938F4D91DD3B83000E08A70 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,6 +285,8 @@
 		D9179A8E206D2135006B66E7 /* testDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testDistance.cc; sourceTree = "<group>"; };
 		D918ADA41F62C1C9009893C3 /* Line.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Line.hh; sourceTree = "<group>"; };
 		D918ADA51F62C1CE009893C3 /* Line.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Line.cc; sourceTree = "<group>"; };
+		D92EFA912186931500BF8E18 /* testIntersect2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testIntersect2; sourceTree = BUILT_PRODUCTS_DIR; };
+		D92EFA922186932B00BF8E18 /* testIntersect2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testIntersect2.cc; sourceTree = "<group>"; };
 		D938F4DB1DD3B83000E08A70 /* G2solver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = G2solver; sourceTree = BUILT_PRODUCTS_DIR; };
 		D938F4E71DD3B84A00E08A70 /* Clothoid.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Clothoid.hh; sourceTree = "<group>"; };
 		D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CubicRootsFlocke.cc; sourceTree = "<group>"; };
@@ -300,6 +326,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		D9179A88206D211E006B66E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D92EFA8C2186931500BF8E18 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -394,6 +427,7 @@
 				D9AFBB6F20E28F5900C498EF /* testTriangle2D */,
 				D9BFDB2620EE3C0E00612F3C /* testBiarc */,
 				D969AF8721708CC200CA4DD0 /* testPolyline */,
+				D92EFA912186931500BF8E18 /* testIntersect2 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -441,6 +475,7 @@
 				D9A393551FA14C42009C1E60 /* testG2.cc */,
 				D9179A8E206D2135006B66E7 /* testDistance.cc */,
 				D9C373A920BC485B00715C11 /* testIntersect.cc */,
+				D92EFA922186932B00BF8E18 /* testIntersect2.cc */,
 				D9AFBB7020E28F6900C498EF /* testTriangle2D.cc */,
 				D9BFDB2720EE3C2700612F3C /* testBiarc.cc */,
 				D969AF8821708CEF00CA4DD0 /* testPolyline.cc */,
@@ -466,6 +501,23 @@
 			name = testDistance;
 			productName = G2solver;
 			productReference = D9179A8D206D211E006B66E7 /* testDistance */;
+			productType = "com.apple.product-type.tool";
+		};
+		D92EFA7B2186931500BF8E18 /* testIntersect2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D92EFA8E2186931500BF8E18 /* Build configuration list for PBXNativeTarget "testIntersect2" */;
+			buildPhases = (
+				D92EFA7C2186931500BF8E18 /* Sources */,
+				D92EFA8C2186931500BF8E18 /* Frameworks */,
+				D92EFA8D2186931500BF8E18 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testIntersect2;
+			productName = G2solver;
+			productReference = D92EFA912186931500BF8E18 /* testIntersect2 */;
 			productType = "com.apple.product-type.tool";
 		};
 		D938F4DA1DD3B83000E08A70 /* G2solver */ = {
@@ -633,6 +685,9 @@
 					D9179A7A206D211E006B66E7 = {
 						DevelopmentTeam = S8X788ZA8Y;
 					};
+					D92EFA7B2186931500BF8E18 = {
+						DevelopmentTeam = S8X788ZA8Y;
+					};
 					D938F4DA1DD3B83000E08A70 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = S8X788ZA8Y;
@@ -680,6 +735,7 @@
 				D9C8B9E11F7AA69400DF4205 /* statistic_CLC */,
 				D9179A7A206D211E006B66E7 /* testDistance */,
 				D9C3739320BC484100715C11 /* testIntersect */,
+				D92EFA7B2186931500BF8E18 /* testIntersect2 */,
 				D9AFBB5B20E28F5900C498EF /* testTriangle2D */,
 				D9BFDB1220EE3C0E00612F3C /* testBiarc */,
 				D969AF7221708CC200CA4DD0 /* testPolyline */,
@@ -707,6 +763,28 @@
 				D9BA2F93217FE5AF009D45BD /* AABBtree.cc in Sources */,
 				D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */,
 				D969AF6E216E4CFE00CA4DD0 /* PolyLine.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D92EFA7C2186931500BF8E18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D92EFA7D2186931500BF8E18 /* Line.cc in Sources */,
+				D92EFA7E2186931500BF8E18 /* Triangle2D.cc in Sources */,
+				D92EFA7F2186931500BF8E18 /* CubicRootsFlocke.cc in Sources */,
+				D92EFA802186931500BF8E18 /* Fresnel.cc in Sources */,
+				D92EFA822186931500BF8E18 /* Clothoid.cc in Sources */,
+				D92EFA832186931500BF8E18 /* G2lib.cc in Sources */,
+				D92EFA842186931500BF8E18 /* ClothoidList.cc in Sources */,
+				D92EFA932186932B00BF8E18 /* testIntersect2.cc in Sources */,
+				D92EFA852186931500BF8E18 /* Biarc.cc in Sources */,
+				D92EFA862186931500BF8E18 /* ClothoidAsyPlot.cc in Sources */,
+				D92EFA872186931500BF8E18 /* ClothoidDistance.cc in Sources */,
+				D92EFA882186931500BF8E18 /* Circle.cc in Sources */,
+				D92EFA892186931500BF8E18 /* AABBtree.cc in Sources */,
+				D92EFA8A2186931500BF8E18 /* ClothoidG2.cc in Sources */,
+				D92EFA8B2186931500BF8E18 /* PolyLine.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,6 +995,22 @@
 			name = Debug;
 		};
 		D9179A8C206D211E006B66E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D92EFA8F2186931500BF8E18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = S8X788ZA8Y;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D92EFA902186931500BF8E18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
@@ -1209,6 +1303,15 @@
 			buildConfigurations = (
 				D9179A8B206D211E006B66E7 /* Debug */,
 				D9179A8C206D211E006B66E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D92EFA8E2186931500BF8E18 /* Build configuration list for PBXNativeTarget "testIntersect2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D92EFA8F2186931500BF8E18 /* Debug */,
+				D92EFA902186931500BF8E18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

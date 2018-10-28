@@ -9,6 +9,11 @@
 \****************************************************************************/
 
 #include "Line.hh"
+#include "Circle.hh"
+#include "Biarc.hh"
+#include "PolyLine.hh"
+#include "Clothoid.hh"
+
 #include "mex_utils.hh"
 
 #include <vector>
@@ -219,144 +224,13 @@ namespace G2lib {
 
   static
   void
-  do_copy( int nlhs, mxArray       *plhs[],
-           int nrhs, mxArray const *prhs[] ) {
-
-    LineSegment * ptr = DATA_GET(arg_in_1);
-
-    #define CMD "LineSegmentMexWrapper('copy',OBJ,OBJ1): "
-    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-
-    LineSegment const * LS = convertMat2Ptr<LineSegment>(arg_in_2);
-    ptr->copy(*LS);
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_change_origin( int nlhs, mxArray       *plhs[],
-                    int nrhs, mxArray const *prhs[] ) {
-
-    LineSegment * ptr = DATA_GET(arg_in_1);
-
-    #define CMD "LineSegmentMexWrapper('changeOrigin',OBJ,x0,y0): "
-    MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-
-    real_type new_x0, new_y0 ;
-    new_x0 = getScalarValue( arg_in_2,
-                             CMD "`x0` expected to be a real scalar" );
-    new_y0 = getScalarValue( arg_in_3,
-                             CMD "`y0` expected to be a real scalar" );
-
-    ptr->changeOrigin( new_x0, new_y0 );
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_translate( int nlhs, mxArray       *plhs[],
-                int nrhs, mxArray const *prhs[] ) {
-
-    LineSegment * ptr = DATA_GET(arg_in_1);
-
-    #define CMD "LineSegmentMexWrapper('translate',OBJ,t0,t0): "
-    MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-
-    real_type tx, ty;
-    tx = getScalarValue( arg_in_2,
-                         CMD "`tx` expected to be a real scalar" );
-    ty = getScalarValue( arg_in_3,
-                         CMD "`ty` expected to be a real scalar" );
-
-    ptr->translate( tx, ty );
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_rotate( int nlhs, mxArray       *plhs[],
-             int nrhs, mxArray const *prhs[] ) {
-
-    LineSegment * ptr = DATA_GET(arg_in_1);
-
-    #define CMD "LineSegmentMexWrapper('rotate',OBJ,angle,cx,cy): "
-    MEX_ASSERT( nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-
-    real_type angle, cx, cy;
-    angle = getScalarValue( arg_in_2,
-                            CMD "`angle` expected to be a real scalar" );
-    cx    = getScalarValue( arg_in_3,
-                            CMD "`cx` expected to be a real scalar" );
-    cy    = getScalarValue( arg_in_4,
-                            CMD "`cy` expected to be a real scalar" );
-
-    ptr->rotate( angle, cx, cy );
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_reverse( int nlhs, mxArray       *plhs[],
-              int nrhs, mxArray const *prhs[] ) {
-
-    LineSegment * ptr = DATA_GET(arg_in_1);
-
-    #define CMD "LineSegmentMexWrapper('reverse',OBJ): "
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-    ptr->reverse();
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_trim( int nlhs, mxArray       *plhs[],
-           int nrhs, mxArray const *prhs[] ) {
-
-    LineSegment * ptr = DATA_GET(arg_in_1);
-
-    #define CMD "LineSegmentMexWrapper('trim',OBJ,s_begin,s_end): "
-    MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-
-    real_type s_begin, s_end;
-    s_begin = getScalarValue( arg_in_2,
-                              CMD "`s_begin` expected to be a real scalar" );
-    s_end   = getScalarValue( arg_in_3,
-                              CMD "`s_end` expected to be a real scalar" );
-
-    ptr->trim( s_begin, s_end );
-    #undef CMD
-
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
   do_to_nurbs( int nlhs, mxArray       *plhs[],
                int nrhs, mxArray const *prhs[] ) {
 
     LineSegment * ptr = DATA_GET(arg_in_1);
 
     #define CMD "LineSegmentMexWrapper('to_nurbs',OBJ): "
-    MEX_ASSERT( nrhs == 4, CMD "expected 2 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
     int_type npts, nknots;
@@ -433,13 +307,6 @@ namespace G2lib {
   typedef enum {
     CMD_NEW,
     CMD_BUILD,
-    CMD_DELETE,
-    CMD_COPY,
-    CMD_CHANGE_ORIGIN,
-    CMD_TRANSLATE,
-    CMD_ROTATE,
-    CMD_REVERSE,
-    CMD_TRIM,
     CMD_TO_NURBS,
     CMD_POINTS,
     CMD_VIRTUAL_LIST
@@ -450,13 +317,6 @@ namespace G2lib {
   static map<string,unsigned> cmd_to_idx = {
     {"new",CMD_NEW},
     {"build",CMD_BUILD},
-    {"delete",CMD_DELETE},
-    {"copy",CMD_COPY},
-    {"changeOrigin",CMD_CHANGE_ORIGIN},
-    {"translate",CMD_TRANSLATE},
-    {"rotate",CMD_ROTATE},
-    {"reverse",CMD_REVERSE},
-    {"trim",CMD_TRIM},
     {"to_nurbs",CMD_TO_NURBS},
     {"points",CMD_POINTS},
     CMD_MAP_LIST
@@ -486,32 +346,6 @@ namespace G2lib {
         break;
       case CMD_BUILD:
         do_build( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_DELETE:
-        #define CMD "LineSegmentMexWrapper('delete',OBJ): "
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-        // Destroy the C++ object
-        DATA_DELETE( arg_in_1 );
-        #undef CMD
-        break;
-      case CMD_COPY:
-        do_copy( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CHANGE_ORIGIN:
-        do_change_origin( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_TRANSLATE:
-        do_translate( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_ROTATE:
-        do_rotate( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_REVERSE:
-        do_reverse( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_TRIM:
-        do_trim( nlhs, plhs, nrhs, prhs );
         break;
       case CMD_TO_NURBS:
         do_to_nurbs( nlhs, plhs, nrhs, prhs );

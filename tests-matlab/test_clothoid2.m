@@ -12,19 +12,18 @@
 
 addpath('../matlab');
 
-close all ;
-clear all ;
+close all;
 
 % check constructors
-x0     = [-5,-5,0,2.5] ;
-y0     = [10,-2,1,2] ;
-theta0 = 0 ;
-kappa0 = [-0.6, 0.025, 0.2, 2.5] ;
-dk     = [0.1, 0.025, 0.001, -0.2] ;
-L      = [15,40,100,30] ;
+x0     = [-5,-5,0,2.5];
+y0     = [10,-2,1,2];
+theta0 = 0;
+kappa0 = [-0.6, 0.025, 0.2, 2.5];
+dk     = [0.1, 0.025, 0.001, -0.2];
+L      = [15,40,100,30];
 
-aa = 0.04 ;
-bb = 0.5-2*aa ;
+aa = 0.04;
+bb = 0.5-2*aa;
 
 figure('Position',[ 1 1 800 800]);
 
@@ -39,8 +38,8 @@ for kk=1:4
 
   L1 = ClothoidCurve( x0(kk), y0(kk), theta0, kappa0(kk), dk(kk), L(kk) );
   %
-  x     = -10:0.02:10 ;
-  y     = -5:0.02:15 ;
+  x     = -10:0.02:10;
+  y     = -5:0.02:15;
   [X,Y] = meshgrid(x,y);
 
   tic
@@ -53,8 +52,8 @@ for kk=1:4
   axis equal;
 
   hold on;
-  L1.plot(1000,'Color','white','LineWidth',3) ;
+  L1.plot(1000,'Color','white','LineWidth',3);
 
   %
-  L1.delete() ;
+  L1.delete();
 end

@@ -12,11 +12,11 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-%format long ;
+%format long;
 %addpath(fullfile(pwd,'matlab2tikz','src'));
 %addpath('tools');
 
-close all ;
+close all;
 
 p=[0,1;0,0]; u=[0.5,-0.1;-0.25,0.5];
 plot(p(1,:),p(2,:),'k');
@@ -29,11 +29,11 @@ hold off
 
 title('Matlab Manual');
 
-set(gca,'DataAspectRatio',[1,1,1]) ;
-set(gca,'XTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
-set(gca,'XTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
-set(gca,'YTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]) ;
-set(gca,'YTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'}) ;
+set(gca,'DataAspectRatio',[1,1,1]);
+set(gca,'XTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]);
+set(gca,'XTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'});
+set(gca,'YTick',[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]);
+set(gca,'YTickLabel',{'$-2$','$-1.5$','$-1$','$-0.5$','$0$','$0.5$','$1$','$1.5$','$2$'});
 
 % to produce tikz figure
 if false

@@ -11,10 +11,10 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
-S = ClothoidList() ;
-S.push_back( 0, 0, 0.079964, 0, 0, 212.092029 ) ; 
+S = ClothoidList();
+S.push_back( 0, 0, 0.079964, 0, 0, 212.092029 ); 
 S.push_back( -0.012331, 0, 109.618459 ); 
 S.push_back(         0, 0, 121.126141 ); 
 S.push_back( -0.001926, 0, 129.688509 ); 
@@ -76,5 +76,5 @@ S.push_back(         0, 0, 13.793995 );
 S.push_back( -0.006581, 0, 86.067741 ); 
 %S.push_back(         0, 0, 207.629231 ); 
 S.push_back_G1( 0, 0, 0.079964 ); % close curve
-S.plot() ;
+S.plot();
 axis equal

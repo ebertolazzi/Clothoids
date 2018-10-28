@@ -43,7 +43,7 @@ classdef LineSegment < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'LineSegment' ;
+      str = 'LineSegment';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function copy( C )
@@ -174,16 +174,18 @@ classdef LineSegment < handle
                                      x, y, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ok = collision( self, OBJ )
+    function ok = collision( self, OBJ, varargin )
       [d,s] = LineSegmentMexWrapper( 'collision', ...
                                      self.objectHandle, ...
-                                     OBJ.obj_handle(), OBJ.is_type() );
+                                     OBJ.obj_handle(), OBJ.is_type(), ...
+                                     varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [s1,s2] = intersection( self, OBJ )
-      [s1,s2] = LineSegmentMexWrapper( 'intersection', ...
-                                       self.objectHandle, ...
-                                       OBJ.obj_handle(), OBJ.is_type() );
+    function [s1,s2] = intersect( self, OBJ, varargin )
+      [s1,s2] = LineSegmentMexWrapper( 'intersect', ...
+                                        self.objectHandle, ...
+                                        OBJ.obj_handle(), OBJ.is_type(), ...
+                                        varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function info( self )

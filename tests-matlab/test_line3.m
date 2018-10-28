@@ -54,7 +54,7 @@ for kk=1:4
         'MarkerSize', 15, ...
         'MarkerEdgeColor','red', ...
         'MarkerFaceColor',[0.9,0.9,0.5]);
-  plot( [x;xxx;xx], [y;yyy;yy] ) ;
+  plot( [x;xxx;xx], [y;yyy;yy] );
   axis equal;
   %
 end

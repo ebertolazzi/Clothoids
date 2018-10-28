@@ -277,6 +277,8 @@ namespace G2lib {
     L  = s_end - s_begin;
     x0 = x;
     y0 = y;
+    c0 = cos(theta0);
+    s0 = sin(theta0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -292,6 +294,8 @@ namespace G2lib {
     x0      = cx + ndx;
     y0      = cy + ndy;
     theta0 += angle;
+    c0      = cos(theta0);
+    s0      = sin(theta0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -308,7 +312,9 @@ namespace G2lib {
   CircleArc::reverse() {
     theta0 = theta0 + m_pi;
     if ( theta0 > m_pi ) theta0 -= 2*m_pi;
-    k = -k;
+    c0 = cos(theta0);
+    s0 = sin(theta0);
+    k  = -k;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
