@@ -888,6 +888,11 @@ namespace G2lib {
             real_type   y,
             real_type & s,
             real_type & t ) const G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
+    info( ostream_type & stream ) const G2LIB_PURE_VIRTUAL;
+
   };
 }
 

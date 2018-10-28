@@ -688,6 +688,11 @@ namespace G2lib {
       return true;
     }
 
+    virtual
+    void
+    info( ostream_type & stream ) const G2LIB_OVERRIDE
+    { stream << "LineSegment\n" << *this << '\n'; }
+
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -787,10 +792,6 @@ namespace G2lib {
     void
     toBS( real_type knots[],
           real_type Poly[][2] ) const;
-
-    void
-    info( ostream_type & stream ) const
-    { stream << "LineSegment\n" << *this << '\n'; }
 
     friend
     ostream_type &

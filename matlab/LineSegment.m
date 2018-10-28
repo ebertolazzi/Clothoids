@@ -33,7 +33,7 @@ classdef LineSegment < handle
       self.objectHandle = LineSegmentMexWrapper('new', varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function delete(self)
+    function delete( self )
       %% Destroy the C++ class instance
       LineSegmentMexWrapper('delete', self.objectHandle );
     end
@@ -47,7 +47,7 @@ classdef LineSegment < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function copy( C )
-      LineSegmentMexWrapper('copy', self.objectHandle, C.obj_handle() );
+      LineSegmentMexWrapper( 'copy', self.objectHandle, C.obj_handle() );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
@@ -59,17 +59,17 @@ classdef LineSegment < handle
       LineSegmentMexWrapper('build', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function translate(self, tx, ty)
+    function translate( self, tx, ty )
       % move the object by `(tx,ty)`
       LineSegmentMexWrapper('translate', self.objectHandle, tx, ty );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function trim(self, smin, smax)
+    function trim( self, smin, smax )
       % trim circle curve to the corresponding curvilinear parameters
       LineSegmentMexWrapper('trim', self.objectHandle, smin, smax );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function rotate(self, angle, cx, cy)
+    function rotate( self, angle, cx, cy )
       % rotate the circle by angle with center of rotation `(cx,cy)`
       % Usage:
       %    ref.rotate(angle, cx, cy)
@@ -81,7 +81,7 @@ classdef LineSegment < handle
       LineSegmentMexWrapper( 'rotate', self.objectHandle, angle, cx, cy );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function changeOrigin(self, newX0, newY0)
+    function changeOrigin( self, newX0, newY0 )
       % move the origin of the circle to `(newX0, newY0)`
       % Usage:
       %    ref.changeOrigin(newX0, newY0)
@@ -93,7 +93,7 @@ classdef LineSegment < handle
                              self.objectHandle, newX0, newY0 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function nurbs = to_nurbs(self)
+    function nurbs = to_nurbs( self )
       % return a nurbs representation of the circle arc
       nurbs = LineSegmentMexWrapper( 'to_nurbs', self.objectHandle );
     end
@@ -132,28 +132,58 @@ classdef LineSegment < handle
         LineSegmentMexWrapper( 'eval_DDD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function X0 = xBegin(self)
+    function X0 = xBegin( self )
       X0 = LineSegmentMexWrapper('xBegin', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function Y0 = yBegin(self)
+    function Y0 = yBegin( self )
       Y0 = LineSegmentMexWrapper('yBegin', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function th0 = theta(self)
-      th0 = LineSegmentMexWrapper('theta', self.objectHandle );
+    function th0 = thetaBegin( self )
+      th0 = LineSegmentMexWrapper('thetaBegin', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = length(self)
-      res = LineSegmentMexWrapper('length', self.objectHandle );
+    function X1 = xEnd( self )
+      X1 = LineSegmentMexWrapper('xEnd', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function Y1 = yEnd( self )
+      Y1 = LineSegmentMexWrapper('yEnd', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th1 = thetaEnd( self )
+      th1 = LineSegmentMexWrapper('thetaEnd', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = length( self, varargin )
+      res = LineSegmentMexWrapper('length', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [p1,p2] = points( self )
       [p1,p2] = LineSegmentMexWrapper('points', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [d,s] = distance( self, x, y )
-      [d,s] = LineSegmentMexWrapper('distance', self.objectHandle, x, y );
+    function [d,s] = distance( self, x, y, varargin )
+      [d,s] = LineSegmentMexWrapper( 'distance', self.objectHandle, ...
+                                     x, y, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s,idx] = projection( self, x, y, varargin )
+      [d,s] = LineSegmentMexWrapper( 'projection', self.objectHandle, ...
+                                     x, y, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = collision( self, OBJ )
+      [d,s] = LineSegmentMexWrapper( 'collision', ...
+                                     self.objectHandle, ...
+                                     OBJ.obj_handle(), OBJ.is_type() );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [s1,s2] = intersection( self, OBJ )
+      [s1,s2] = LineSegmentMexWrapper( 'intersection', ...
+                                       self.objectHandle, ...
+                                       OBJ.obj_handle(), OBJ.is_type() );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function info( self )
@@ -164,7 +194,7 @@ classdef LineSegment < handle
       [s,t] = LineSegmentMexWrapper( 'findST', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plot(self,varargin)
+    function plot( self, varargin )
       [ p1, p2 ] = self.points() ;
       plot( [ p1(1), p2(1) ], [ p1(2), p2(2) ], varargin{:} );
     end

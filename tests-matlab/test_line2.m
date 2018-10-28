@@ -13,17 +13,17 @@
 addpath('../matlab');
 
 % check constructors
-x0     = [0,2,4,-2] ;
-y0     = [2,3,-4,5] ;
-theta0 = [0,pi,pi/2,-0.3*pi] ;
-L      = [5,10,2,10] ;
+x0     = [0,2,4,-2];
+y0     = [2,3,-4,5];
+theta0 = [0,pi,pi/2,-0.3*pi];
+L      = [5,10,2,10];
 
-
-aa = 0.04 ;
-bb = 0.5-2*aa ;
+aa = 0.04;
+bb = 0.5-2*aa;
 
 figure('Position',[ 1 1 800 800]);
 
+LINE = {};
 for kk=1:4
 
   switch(kk)
@@ -35,8 +35,8 @@ for kk=1:4
 
   LINE{kk} = LineSegment( x0(kk), y0(kk), theta0(kk), L(kk) );
 
-  x = -10:0.05:10 ;
-  y = -5:0.05:15 ;
+  x = -10:0.05:10;
+  y = -5:0.05:15;
   [X,Y] = meshgrid(x,y);
 
   tic

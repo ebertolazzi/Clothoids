@@ -383,7 +383,7 @@ namespace G2lib {
         double * knots = createMatrixValue( mx_knots, 1, nknots );
         double * poly  = createMatrixValue( mx_Poly,  3, npts );
 
-        ptr->toNURBS( knots, poly );
+        ptr->toNURBS( knots, reinterpret_cast<real_type (*)[3]>(poly) );
 
         static char const * fieldnames[] = { "form", "order", "dim", "number", "knots", "coefs" };
         arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);

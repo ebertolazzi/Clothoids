@@ -491,6 +491,11 @@ namespace G2lib {
             real_type & s,
             real_type & t ) const G2LIB_OVERRIDE;
 
+    virtual
+    void
+    info( ostream_type & stream ) const G2LIB_OVERRIDE
+    { stream << "CircleArc\n" << *this << '\n'; }
+
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -645,10 +650,6 @@ namespace G2lib {
     void
     toNURBS( real_type knots[],
              real_type Poly[][3] ) const;
-
-    void
-    info( ostream_type & stream ) const
-    { stream << "CircleArc\n" << *this << '\n'; }
 
     friend
     ostream_type &

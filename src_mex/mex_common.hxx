@@ -1,0 +1,883 @@
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_length( int nlhs, mxArray       *plhs[],
+           int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('length',OBJ[,offs]): "
+  MEX_ASSERT( nrhs == 2 || nrhs == 3,
+              CMD "expected 2 or 3 inputs, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1,
+              CMD "expected 1 output, nlhs = " << nlhs );
+
+  if ( nrhs == 2 ) {
+    setScalarValue( arg_out_0, ptr->length() );
+  } else {
+    real_type offs;
+    offs = getScalarValue( arg_in_2,
+                           CMD "`offs` expected to be a real scalar" );
+    setScalarValue( arg_out_0, ptr->length( offs ) );
+  }
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_distance( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('distance',OBJ,x,y[,offs]): "
+
+  MEX_ASSERT( nrhs == 4 || nrhs == 5,
+              CMD "expected 4 or 5 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs > 0 && nlhs <= 2,
+              CMD "expected 1 or 2 output, nlhs = " << nlhs );
+
+  mwSize nrx, ncx, nry, ncy;
+  real_type const * x;
+  real_type const * y;
+  x = getMatrixPointer( arg_in_2, nrx, ncx,
+                        CMD "`x` expected to be a real vector/matrix" );
+  y = getMatrixPointer( arg_in_3, nry, ncy,
+                        CMD "`y` expected to be a real vector/matrix" );
+
+  MEX_ASSERT( nrx == nry && ncx == ncy,
+              CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+              nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+  real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
+  mwSize size = nrx*ncx;
+
+  if ( nrhs == 5 ) {
+    real_type offs = getScalarValue( arg_in_4,
+                                     CMD "`offs` expected to be a real scalar" );
+    switch ( nlhs ) {
+    case 1:
+      for ( mwSize i = 0; i < size; ++i )
+        *dst++ = ptr->distance( *x++, *y++, offs );
+      break;
+    case 2:
+      { real_type xtmp, ytmp;
+        real_type * s = createMatrixValue( arg_out_1, nrx, ncx );
+        for ( mwSize i = 0; i < size; ++i )
+          *dst++ = ptr->closestPoint( *x++, *y++, offs, xtmp, ytmp, *s++ );
+      }
+      break;
+    }
+  } else {
+    switch ( nlhs ) {
+    case 1:
+      for ( mwSize i = 0; i < size; ++i )
+        *dst++ = ptr->distance( *x++, *y++ );
+      break;
+    case 2:
+      { real_type xtmp, ytmp;
+        real_type * s = createMatrixValue( arg_out_1, nrx, ncx );
+        for ( mwSize i = 0; i < size; ++i )
+          *dst++ = ptr->closestPoint( *x++, *y++, xtmp, ytmp, *s++ );
+      }
+      break;
+    }
+  }
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_projection( int nlhs, mxArray       *plhs[],
+               int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE"('projection',OBJ,x,y[,offs]): "
+
+  MEX_ASSERT( nrhs == 4 || nrhs == 5,
+              CMD "expected 4 or 5 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs <= 2,
+              CMD "expected 2 output, nlhs = " << nlhs );
+
+  mwSize nrx, ncx, nry, ncy;
+  real_type const * x;
+  real_type const * y;
+  x = getMatrixPointer( arg_in_2, nrx, ncx,
+                        CMD "`x` expected to be a real vector/matrix" );
+  y = getMatrixPointer( arg_in_3, nry, ncy,
+                        CMD "`y` expected to be a real vector/matrix" );
+
+  MEX_ASSERT( nrx == nry && ncx == ncy,
+              CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+              nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+  real_type * s   = createMatrixValue( arg_out_0, nrx, ncx );
+  real_type * idx = createMatrixValue( arg_out_1, nrx, ncx );
+
+  mwSize size = nrx*ncx;
+  real_type xtmp, ytmp;
+
+  if ( nrhs == 5 ) {
+    real_type offs = getScalarValue( arg_in_4,
+                                    CMD "`offs` expected to be a real scalar" );
+    for ( mwSize i = 0; i < size; ++i )
+      *idx++ = ptr->projection( *x++, *y++, offs, xtmp, ytmp, *s++ );
+  } else {
+    for ( mwSize i = 0; i < size; ++i )
+      *idx++ = ptr->projection( *x++, *y++, xtmp, ytmp, *s++ );
+  }
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_collision( int nlhs, mxArray       *plhs[],
+              int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr  = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  BaseCurve   * ptr1 = convertMat2Ptr<BaseCurve>(arg_in_2);
+
+  #define CMD CMD_BASE "('collision',OBJ,OBJ1[,offs,offs1]): "
+  MEX_ASSERT( nrhs == 3 || nrhs == 5,
+              CMD "expected 3 or 5 inputs, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1,
+              CMD "expected 1 output, nlhs = " << nlhs );
+
+  if ( nrhs == 3 ) {
+    setScalarBool( arg_out_0, ptr->collision( *ptr1 ) );
+  } else {
+    real_type offs, offs_obj;
+    offs     = getScalarValue( arg_in_3,
+                              CMD "`offs` expected to be a real scalar" );
+    offs_obj = getScalarValue( arg_in_4,
+                              CMD "`offs_obj` expected to be a real scalar" );
+    setScalarBool( arg_out_0, ptr->collision( offs, *ptr1, offs_obj ) );
+  }
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_intersection( int nlhs, mxArray       *plhs[],
+                 int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr  = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  BaseCurve   * ptr1 = convertMat2Ptr<BaseCurve>(arg_in_2);
+
+  #define CMD CMD_BASE "('intersection',OBJ,OBJ1[,offs,offs1]): "
+  MEX_ASSERT( nrhs == 3 || nrhs == 5,
+              CMD "expected 3 or 5 inputs, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1,
+              CMD "expected 1 output, nlhs = " << nlhs );
+
+  if ( nrhs == 3 ) {
+    setScalarBool( arg_out_0, ptr->collision( *ptr1 ) );
+  } else {
+    real_type offs, offs_obj;
+    offs     = getScalarValue( arg_in_3,
+                              CMD "`offs` expected to be a real scalar" );
+    offs_obj = getScalarValue( arg_in_4,
+                              CMD "`offs_obj` expected to be a real scalar" );
+    setScalarBool( arg_out_0, ptr->collision( offs, *ptr1, offs_obj ) );
+  }
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_findST( int nlhs, mxArray       *plhs[],
+           int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('findST',OBJ,x,y): "
+  MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+  mwSize nrx, ncx, nry, ncy;
+  real_type const * x;
+  real_type const * y;
+  x = getMatrixPointer( arg_in_2, nrx, ncx,
+                        CMD "`x` expected to be a real vector/matrix" );
+  y = getMatrixPointer( arg_in_3, nry, ncy,
+                        CMD "`y` expected to be a real vector/matrix" );
+  MEX_ASSERT( nrx == nry && ncx == ncy,
+              CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+              nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
+  real_type * s = createMatrixValue( arg_out_0, nrx, ncx );
+  real_type * t = createMatrixValue( arg_out_1, nrx, ncx );
+
+  mwSize size = nrx*ncx;
+  for ( mwSize i = 0; i < size; ++i )
+    ptr->findST( *x++, *y++, *s++, *t++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_info( int nlhs, mxArray       *plhs[],
+         int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('info',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs );
+  ptr->info(cout);
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_eval( int nlhs, mxArray       *plhs[],
+         int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  if ( nrhs == 4 ) {
+
+    #define CMD CMD_BASE "('eval',OBJ,s,t): "
+
+    mwSize size, sizet;
+    real_type const * s;
+    real_type const * t;
+    s = getVectorPointer( arg_in_2, size,
+                          CMD "`s` expected to be a real vector" );
+    t = getVectorPointer( arg_in_3, sizet,
+                          CMD "`t` expected to be a real vector" );
+
+    MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                CMD " size(s) = " << size <<
+                " must be equal to size(t) = " << sizet <<
+                " or size(s|t) == 1" );
+
+    mwSize incs = size  == 1 ? 0 : 1;
+    mwSize inct = sizet == 1 ? 0 : 1;
+    mwSize npts = max(size,sizet);
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+      LOOPXY1 ptr->eval( *s, *t, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1,size );
+      real_type *pY = createMatrixValue( arg_out_1, 1,size );
+      LOOPXY2 ptr->eval( *s, *t, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+
+  } else if ( nrhs == 3 ) {
+
+    #define CMD CMD_BASE "('eval',OBJ,s): "
+
+    mwSize npts;
+    real_type const * s;
+    s = getVectorPointer( arg_in_2, npts,
+                          CMD "`s` expected to be a real vector" );
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, ++s, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      LOOPXY1 ptr->eval( *s, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
+      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      LOOPXY2 ptr->eval( *s, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0,
+                  CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+  }
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_eval_D( int nlhs, mxArray       *plhs[],
+           int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  if ( nrhs == 4 ) {
+
+    #define CMD CMD_BASE "('eval_D',OBJ,s,t): "
+
+    mwSize size, sizet;
+    real_type const * s;
+    real_type const * t;
+    s = getVectorPointer( arg_in_2, size,
+                          CMD "`s` expected to be a real vector" );
+    t = getVectorPointer( arg_in_3, sizet,
+                          CMD "`t` expected to be a real vector" );
+
+    MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                CMD " size(s) = " << size <<
+                " must be equal to size(t) = " << sizet <<
+                " or size(s|t) == 1" );
+
+    mwSize incs = size  == 1 ? 0 : 1;
+    mwSize inct = sizet == 1 ? 0 : 1;
+    mwSize npts = max(size,sizet);
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+      LOOPXY1 ptr->eval_D( *s, *t, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1,size );
+      real_type *pY = createMatrixValue( arg_out_1, 1,size );
+      LOOPXY2 ptr->eval_D( *s, *t, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+
+  } else if ( nrhs == 3 ) {
+
+    #define CMD CMD_BASE "('eval_D',OBJ,s): "
+
+    mwSize npts;
+    real_type const * s;
+    s = getVectorPointer( arg_in_2, npts,
+                          CMD "`s` expected to be a real vector" );
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, ++s, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      LOOPXY1 ptr->eval_D( *s, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
+      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      LOOPXY2 ptr->eval_D( *s, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0,
+                  CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+  }
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_eval_DD( int nlhs, mxArray       *plhs[],
+            int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  if ( nrhs == 4 ) {
+
+    #define CMD CMD_BASE "('eval_DD',OBJ,s,t): "
+
+    mwSize size, sizet;
+    real_type const * s;
+    real_type const * t;
+    s = getVectorPointer( arg_in_2, size,
+                          CMD "`s` expected to be a real vector" );
+    t = getVectorPointer( arg_in_3, sizet,
+                          CMD "`t` expected to be a real vector" );
+
+    MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                CMD " size(s) = " << size <<
+                " must be equal to size(t) = " << sizet <<
+                " or size(s|t) == 1" );
+
+    mwSize incs = size  == 1 ? 0 : 1;
+    mwSize inct = sizet == 1 ? 0 : 1;
+    mwSize npts = max(size,sizet);
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+      LOOPXY1 ptr->eval_DD( *s, *t, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1,size );
+      real_type *pY = createMatrixValue( arg_out_1, 1,size );
+      LOOPXY2 ptr->eval_DD( *s, *t, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+
+  } else if ( nrhs == 3 ) {
+
+    #define CMD CMD_BASE "('eval_DD',OBJ,s): "
+
+    mwSize npts;
+    real_type const * s;
+    s = getVectorPointer( arg_in_2, npts,
+                          CMD "`s` expected to be a real vector" );
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, ++s, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      LOOPXY1 ptr->eval_DD( *s, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
+      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      LOOPXY2 ptr->eval_DD( *s, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0,
+                  CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+  }
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_eval_DDD( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  if ( nrhs == 4 ) {
+
+    #define CMD CMD_BASE "('eval_DDD',OBJ,s,t): "
+
+    mwSize size, sizet;
+    real_type const * s;
+    real_type const * t;
+    s = getVectorPointer( arg_in_2, size,
+                          CMD "`s` expected to be a real vector" );
+    t = getVectorPointer( arg_in_3, sizet,
+                          CMD "`t` expected to be a real vector" );
+
+    MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                CMD " size(s) = " << size <<
+                " must be equal to size(t) = " << sizet <<
+                " or size(s|t) == 1" );
+
+    mwSize incs = size  == 1 ? 0 : 1;
+    mwSize inct = sizet == 1 ? 0 : 1;
+    mwSize npts = max(size,sizet);
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+      LOOPXY1 ptr->eval_DDD( *s, *t, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1,size );
+      real_type *pY = createMatrixValue( arg_out_1, 1,size );
+      LOOPXY2 ptr->eval_DDD( *s, *t, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+
+  } else if ( nrhs == 3 ) {
+
+    #define CMD CMD_BASE "('eval_DDD',OBJ,s): "
+
+    mwSize npts;
+    real_type const * s;
+    s = getVectorPointer( arg_in_2, npts,
+                          CMD "`s` expected to be a real vector" );
+
+    #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, ++s, pXY += 2 )
+    #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      LOOPXY1 ptr->eval_DDD( *s, pXY[0], pXY[1] );
+    } else if ( nlhs == 2 ) {
+      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
+      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      LOOPXY2 ptr->eval_DDD( *s, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0,
+                  CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+  }
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_theta( int nlhs, mxArray       *plhs[],
+          int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('theta',OBJ,s): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  mwSize size;
+  real_type const * s;
+  s = getVectorPointer( arg_in_2, size,
+                        CMD "`s` expected to be a real vector" );
+
+  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+
+  for ( mwSize i = 0; i < size; ++i )
+    *theta++ = ptr->theta( *s++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_theta_D( int nlhs, mxArray       *plhs[],
+            int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('theta_D',OBJ,s): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  mwSize size;
+  real_type const * s;
+  s = getVectorPointer( arg_in_2, size,
+                        CMD "`s` expected to be a real vector" );
+
+  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+
+  for ( mwSize i = 0; i < size; ++i )
+    *theta++ = ptr->theta_D( *s++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_theta_DD( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('theta_DD',OBJ,s): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  mwSize size;
+  real_type const * s;
+  s = getVectorPointer( arg_in_2, size,
+                        CMD "`s` expected to be a real vector" );
+
+  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+
+  for ( mwSize i = 0; i < size; ++i )
+    *theta++ = ptr->theta_DD( *s++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_theta_DDD( int nlhs, mxArray       *plhs[],
+              int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('theta_DDD',OBJ,s): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  mwSize size;
+  real_type const * s;
+  s = getVectorPointer( arg_in_2, size,
+                        CMD "`s` expected to be a real vector" );
+
+  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+
+  for ( mwSize i = 0; i < size; ++i )
+    *theta++ = ptr->theta_DDD( *s++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_x_begin( int nlhs, mxArray       *plhs[],
+            int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('xBegin',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->xBegin() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_y_begin( int nlhs, mxArray       *plhs[],
+            int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('yBegin',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->yBegin() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_theta_begin( int nlhs, mxArray       *plhs[],
+                int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('thetaBegin',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->thetaBegin() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_x_end( int nlhs, mxArray       *plhs[],
+          int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('xEnd',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->xEnd() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_y_end( int nlhs, mxArray       *plhs[],
+          int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('yEnd',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->yEnd() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_theta_end( int nlhs, mxArray       *plhs[],
+              int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('thetaEnd',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->thetaEnd() );
+
+  #undef CMD
+}
+
+#define CMD_VIRTUAL_LIST \
+CMD_LENGTH,              \
+CMD_DISTANCE,            \
+CMD_PROJECTION,          \
+CMD_COLLISION,           \
+CMD_INTERSECTION,        \
+CMD_FINDST,              \
+CMD_INFO,                \
+CMD_EVAL,                \
+CMD_EVAL_D,              \
+CMD_EVAL_DD,             \
+CMD_EVAL_DDD,            \
+CMD_THETA,               \
+CMD_THETA_D,             \
+CMD_THETA_DD,            \
+CMD_THETA_DDD,           \
+CMD_X_BEGIN,             \
+CMD_Y_BEGIN,             \
+CMD_THETA_BEGIN,         \
+CMD_X_END,               \
+CMD_Y_END,               \
+CMD_THETA_END
+
+#define CMD_MAP_LIST                \
+{"length",CMD_LENGTH},              \
+{"distance",CMD_DISTANCE},          \
+{"projection",CMD_PROJECTION},      \
+{"collision",CMD_COLLISION},        \
+{"intersection",CMD_INTERSECTION},  \
+{"findST",CMD_FINDST},              \
+{"info",CMD_INFO},                  \
+{"eval",CMD_EVAL},                  \
+{"eval_D",CMD_EVAL_D},              \
+{"eval_DD",CMD_EVAL_DD},            \
+{"eval_DDD",CMD_EVAL_DDD},          \
+{"theta",CMD_THETA},                \
+{"theta_D",CMD_THETA_D},            \
+{"theta_DD",CMD_THETA_DD},          \
+{"theta_DDD",CMD_THETA_DDD},        \
+{"xBegin",CMD_X_BEGIN},             \
+{"yBegin",CMD_Y_BEGIN},             \
+{"thetaBegin",CMD_THETA_BEGIN},     \
+{"xEnd",CMD_X_END},                 \
+{"yEnd",CMD_Y_END},                 \
+{"thetaEnd",CMD_THETA_END}
+
+#define CMD_CASE_LIST                         \
+case CMD_LENGTH:                              \
+  do_length( nlhs, plhs, nrhs, prhs );        \
+  break;                                      \
+case CMD_DISTANCE:                            \
+  do_distance( nlhs, plhs, nrhs, prhs );      \
+  break;                                      \
+case CMD_PROJECTION:                          \
+  do_projection( nlhs, plhs, nrhs, prhs );    \
+  break;                                      \
+case CMD_COLLISION:                           \
+  do_collision( nlhs, plhs, nrhs, prhs );     \
+  break;                                      \
+case CMD_INTERSECTION:                        \
+  do_intersection( nlhs, plhs, nrhs, prhs );  \
+  break;                                      \
+case CMD_FINDST:                              \
+  do_findST( nlhs, plhs, nrhs, prhs );        \
+  break;                                      \
+case CMD_INFO:                                \
+  do_info( nlhs, plhs, nrhs, prhs );          \
+  break;                                      \
+case CMD_EVAL:                                \
+  do_eval( nlhs, plhs, nrhs, prhs );          \
+  break;                                      \
+case CMD_EVAL_D:                              \
+  do_eval_D( nlhs, plhs, nrhs, prhs );        \
+  break;                                      \
+case CMD_EVAL_DD:                             \
+  do_eval_DD( nlhs, plhs, nrhs, prhs );       \
+  break;                                      \
+case CMD_EVAL_DDD:                            \
+  do_eval_DDD( nlhs, plhs, nrhs, prhs );      \
+  break;                                      \
+case CMD_THETA:                               \
+  do_theta( nlhs, plhs, nrhs, prhs );         \
+  break;                                      \
+case CMD_THETA_D:                             \
+  do_theta_D( nlhs, plhs, nrhs, prhs );       \
+  break;                                      \
+case CMD_THETA_DD:                            \
+  do_theta_DD( nlhs, plhs, nrhs, prhs );      \
+  break;                                      \
+case CMD_THETA_DDD:                           \
+  do_theta_DDD( nlhs, plhs, nrhs, prhs );     \
+  break;                                      \
+case CMD_X_BEGIN:                             \
+  do_x_begin( nlhs, plhs, nrhs, prhs );       \
+  break;                                      \
+case CMD_Y_BEGIN:                             \
+  do_y_begin( nlhs, plhs, nrhs, prhs );       \
+  break;                                      \
+case CMD_THETA_BEGIN:                         \
+  do_theta_begin( nlhs, plhs, nrhs, prhs );   \
+  break;                                      \
+case CMD_X_END:                               \
+  do_x_end( nlhs, plhs, nrhs, prhs );         \
+  break;                                      \
+case CMD_Y_END:                               \
+  do_y_end( nlhs, plhs, nrhs, prhs );         \
+  break;                                      \
+case CMD_THETA_END:                           \
+  do_theta_end( nlhs, plhs, nrhs, prhs );     \
+  break
