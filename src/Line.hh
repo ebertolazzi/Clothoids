@@ -50,6 +50,44 @@ namespace G2lib {
 
   public:
 
+    using BaseCurve::thetaBegin;
+    using BaseCurve::thetaEnd;
+
+    using BaseCurve::xBegin;
+    using BaseCurve::yBegin;
+    using BaseCurve::xEnd;
+    using BaseCurve::yEnd;
+
+    using BaseCurve::tx_Begin;
+    using BaseCurve::ty_Begin;
+    using BaseCurve::tx_End;
+    using BaseCurve::ty_End;
+
+    using BaseCurve::nx_Begin;
+    using BaseCurve::ny_Begin;
+    using BaseCurve::nx_End;
+    using BaseCurve::ny_End;
+
+    using BaseCurve::X;
+    using BaseCurve::X_D;
+    using BaseCurve::X_DD;
+    using BaseCurve::X_DDD;
+
+    using BaseCurve::Y;
+    using BaseCurve::Y_D;
+    using BaseCurve::Y_DD;
+    using BaseCurve::Y_DDD;
+
+    using BaseCurve::evaluate;
+
+    using BaseCurve::eval;
+    using BaseCurve::eval_D;
+    using BaseCurve::eval_DD;
+    using BaseCurve::eval_DDD;
+
+    using BaseCurve::closestPoint;
+    using BaseCurve::distance;
+
     LineSegment()
     : BaseCurve(G2LIB_LINE)
     , x0(0)
@@ -574,6 +612,11 @@ namespace G2lib {
 
     virtual
     void
+    scale( real_type sc ) G2LIB_OVERRIDE
+    { L *= sc; }
+
+    virtual
+    void
     trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE {
       x0 += c0 * s_begin;
       y0 += s0 * s_begin;
@@ -601,14 +644,16 @@ namespace G2lib {
     virtual
     void
     intersect( BaseCurve const & obj,
-               IntersectList   & ilist ) const G2LIB_OVERRIDE;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_OVERRIDE;
 
     virtual
     void
     intersect( real_type         offs,
                BaseCurve const & obj,
                real_type         offs_obj,
-               IntersectList   & ilist ) const G2LIB_OVERRIDE;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_OVERRIDE;
     /*\
      |      _ _     _
      |   __| (_)___| |_ __ _ _ __   ___ ___

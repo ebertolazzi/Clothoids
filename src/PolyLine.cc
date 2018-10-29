@@ -300,7 +300,7 @@ namespace G2lib {
 
   void
   PolyLine::build( Biarc const & C, real_type tol ) {
-    init( C.xBegin0(), C.yBegin0() );
+    init( C.xBegin(), C.yBegin() );
     push_back( C, tol );
   }
 

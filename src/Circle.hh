@@ -70,6 +70,8 @@ namespace G2lib {
   //! \brief Class to manage Clothoid Curve
   class CircleArc : public BaseCurve {
 
+    friend class Biarc;
+
     real_type x0,     //!< initial x coordinate of the clothoid
               y0,     //!< initial y coordinate of the clothoid
               theta0, //!< initial angle of the clothoid
@@ -108,6 +110,8 @@ namespace G2lib {
     using BaseCurve::Y_D;
     using BaseCurve::Y_DD;
     using BaseCurve::Y_DDD;
+
+    using BaseCurve::evaluate;
 
     using BaseCurve::eval;
     using BaseCurve::eval_D;
@@ -158,13 +162,13 @@ namespace G2lib {
 
     void
     copy( CircleArc const & c ) {
-      x0     = c.x0;
-      y0     = c.y0;
-      theta0 = c.theta0;
-      c0     = c.c0;
-      s0     = c.s0;
-      k      = c.k;
-      L      = c.L;
+      this->x0     = c.x0;
+      this->y0     = c.y0;
+      this->theta0 = c.theta0;
+      this->c0     = c.c0;
+      this->s0     = c.s0;
+      this->k      = c.k;
+      this->L      = c.L;
     }
 
     CircleArc( CircleArc const & s )
@@ -260,6 +264,20 @@ namespace G2lib {
     real_type
     theta_DDD( real_type ) const G2LIB_OVERRIDE
     { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    evaluate( real_type   s,
+              real_type & th,
+              real_type & kappa,
+              real_type & x,
+              real_type & y ) const G2LIB_OVERRIDE {
+      eval( s, x, y );
+      th     = this->theta0 + s*this->k ;
+      kappa  = this->k ;
+    }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -391,6 +409,10 @@ namespace G2lib {
 
     virtual
     void
+    scale( real_type s ) G2LIB_OVERRIDE;
+
+    virtual
+    void
     trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE;
 
     /*\
@@ -414,14 +436,16 @@ namespace G2lib {
     virtual
     void
     intersect( BaseCurve const & obj,
-               IntersectList   & ilist ) const G2LIB_OVERRIDE;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_OVERRIDE;
 
     virtual
     void
     intersect( real_type         offs,
                BaseCurve const & obj,
                real_type         offs_obj,
-               IntersectList   & ilist ) const G2LIB_OVERRIDE;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_OVERRIDE;
 
     bool
     collision( CircleArc const & ) const;
@@ -433,13 +457,15 @@ namespace G2lib {
 
     void
     intersect( CircleArc const & obj,
-               IntersectList   & ilist ) const;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const;
 
     void
     intersect( real_type         offs,
                CircleArc const & obj,
                real_type         offs_obj,
-               IntersectList   & ilist ) const;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const;
 
     /*\
      |                  _           _   _
@@ -585,9 +611,6 @@ namespace G2lib {
     { real_type thMin, thMax; return thetaMinMax( thMin, thMax ); }
 
     void
-    scale( real_type s );
-
-    void
     changeCurvilinearOrigin( real_type s0, real_type newL );
 
     void
@@ -644,9 +667,9 @@ namespace G2lib {
                  real_type max_angle = m_pi/18 ) const; // 10 degree
 
     void
-    bbTriangle( real_type offs,
-                std::vector<Triangle2D> & tvec,
-                real_type max_angle = m_pi/18 ) const; // 10 degree
+    bbTriangles( real_type offs,
+                 std::vector<Triangle2D> & tvec,
+                 real_type max_angle = m_pi/18 ) const; // 10 degree
 
     /*\
      |   _   _ _   _ ____  ____ ____

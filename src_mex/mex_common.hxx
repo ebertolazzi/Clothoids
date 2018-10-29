@@ -63,14 +63,22 @@ void
 do_bbox( int nlhs, mxArray       *plhs[],
          int nrhs, mxArray const *prhs[] ) {
 
+  #define CMD CMD_BASE "('bbox',OBJ[,offs]): "
+  MEX_ASSERT( nrhs == 2 || nrhs == 3,
+              CMD "expected 2 or 3 inputs, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 4,
+              CMD "expected 4 output, nlhs = " << nlhs );
+
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('bbox',OBJ): "
-  MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-  MEX_ASSERT( nlhs == 4, CMD "expected 4 output, nlhs = " << nlhs );
-
   real_type xmin, ymin, xmax, ymax;
-  ptr->bbox( xmin, ymin, xmax, ymax );
+  if ( nrhs == 3 ) {
+    real_type offs = getScalarValue( arg_in_2,
+                                     CMD "`offs` expected to be a real scalar" );
+    ptr->bbox( offs, xmin, ymin, xmax, ymax );
+  } else {
+    ptr->bbox( xmin, ymin, xmax, ymax );
+  }
 
   setScalarValue( arg_out_0, xmin );
   setScalarValue( arg_out_1, ymin );
@@ -141,14 +149,28 @@ do_rotate( int nlhs, mxArray       *plhs[],
   MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
   real_type angle, cx, cy;
-  angle = getScalarValue( arg_in_2,
-                          CMD "`angle` expected to be a real scalar" );
-  cx    = getScalarValue( arg_in_3,
-                          CMD "`cx` expected to be a real scalar" );
-  cy    = getScalarValue( arg_in_4,
-                          CMD "`cy` expected to be a real scalar" );
+  angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
+  cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
+  cy    = getScalarValue( arg_in_4, CMD "`cy` expected to be a real scalar" );
 
   ptr->rotate( angle, cx, cy );
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_scale( int nlhs, mxArray       *plhs[],
+          int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('scale',OBJ,sc): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+  real_type sc = getScalarValue( arg_in_2, CMD "`sc` expected to be a real scalar" );
+  ptr->scale(sc);
   #undef CMD
 }
 
@@ -162,7 +184,7 @@ do_reverse( int nlhs, mxArray       *plhs[],
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('reverse',OBJ): "
-  MEX_ASSERT( nrhs == 5, CMD "expected 2 inputs, nrhs = " << nrhs );
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
   MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
   ptr->reverse();
@@ -326,7 +348,7 @@ do_collision( int nlhs, mxArray       *plhs[],
 
   if      ( kind == "LineSegment"   ) ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
   else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
-  //else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
+  else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
   //else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
   //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
   //else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
@@ -370,7 +392,7 @@ do_intersect( int nlhs, mxArray       *plhs[],
 
   if      ( kind == "LineSegment"   ) ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
   else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
-  //else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
+  else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
   //else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
   //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
   //else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
@@ -380,14 +402,14 @@ do_intersect( int nlhs, mxArray       *plhs[],
 
   BaseCurve::IntersectList ilist;
   if ( nrhs == 4 ) {
-    ptr->intersect( *ptr1, ilist );
+    ptr->intersect( *ptr1, ilist, false );
   } else {
     real_type offs, offs_obj;
     offs     = getScalarValue( arg_in_4,
                                CMD "`offs` expected to be a real scalar" );
     offs_obj = getScalarValue( arg_in_5,
                                CMD "`offs_obj` expected to be a real scalar" );
-    ptr->intersect( offs, *ptr1, offs_obj, ilist );
+    ptr->intersect( offs, *ptr1, offs_obj, ilist, false );
   }
 
   double * pS1 = createMatrixValue( arg_out_0, ilist.size(),1 );
@@ -766,6 +788,95 @@ do_eval_DDD( int nlhs, mxArray       *plhs[],
 
 static
 void
+do_evaluate( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  if ( nrhs == 4 ) {
+
+    #define CMD CMD_BASE "('evaluate',OBJ,s): "
+
+    mwSize size, sizet;
+    real_type const * s;
+    real_type const * t;
+    s = getVectorPointer( arg_in_2, size,
+                          CMD "`s` expected to be a real vector" );
+    t = getVectorPointer( arg_in_3, sizet,
+                          CMD "`t` expected to be a real vector" );
+
+    MEX_ASSERT( size == sizet || size == 1 || sizet ==1,
+                CMD " size(s) = " << size <<
+                " must be equal to size(t) = " << sizet <<
+                " or size(s|t) == 1" );
+
+    mwSize incs = size  == 1 ? 0 : 1;
+    mwSize inct = sizet == 1 ? 0 : 1;
+    mwSize npts = max(size,sizet);
+
+    #define LOOPXY1 \
+      for ( mwSize i = 0; i < npts;  \
+            ++i, s += incs, t += inct, pXY += 4 )
+    #define LOOPXY2 \
+      for ( mwSize i = 0; i < npts; \
+            ++i, s += incs, t += inct, ++pTH, ++pK, ++pX, ++pY  )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 4, size );
+      LOOPXY1 ptr->evaluate( *s, *t, pXY[0], pXY[1], pXY[2], pXY[3] );
+    } else if ( nlhs == 4 ) {
+      real_type *pX  = createMatrixValue( arg_out_0, 1, size );
+      real_type *pY  = createMatrixValue( arg_out_1, 1, size );
+      real_type *pTH = createMatrixValue( arg_out_2, 1, size );
+      real_type *pK  = createMatrixValue( arg_out_3, 1, size );
+      LOOPXY2 ptr->evaluate( *s, *t, *pTH, *pK, *pX, *pY );
+    } else {
+      MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+
+  } else if ( nrhs == 3 ) {
+
+    #define CMD CMD_BASE "('eval_DDD',OBJ,s): "
+
+    mwSize npts;
+    real_type const * s;
+    s = getVectorPointer( arg_in_2, npts,
+                          CMD "`s` expected to be a real vector" );
+
+    #define LOOPXY1 \
+      for ( mwSize i = 0; i < npts;  \
+            ++i, ++s, pXY += 4 )
+    #define LOOPXY2 \
+      for ( mwSize i = 0; i < npts; \
+            ++i, ++s, ++pTH, ++pK, ++pX, ++pY )
+
+    if ( nlhs == 1 ) {
+      real_type *pXY = createMatrixValue( arg_out_0, 4, npts );
+      LOOPXY1 ptr->evaluate( *s, pXY[0], pXY[1], pXY[2], pXY[3] );
+    } else if ( nlhs == 4 ) {
+      real_type *pX  = createMatrixValue( arg_out_0, 1, npts );
+      real_type *pY  = createMatrixValue( arg_out_1, 1, npts );
+      real_type *pTH = createMatrixValue( arg_out_2, 1, npts );
+      real_type *pK  = createMatrixValue( arg_out_3, 1, npts );
+      LOOPXY2 ptr->evaluate( *s, *pTH, *pK, *pX, *pY);
+    } else {
+      MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
+    }
+
+    #undef LOOPXY1
+    #undef LOOPXY2
+
+    #undef CMD
+  }
+}
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
 do_theta( int nlhs, mxArray       *plhs[],
           int nrhs, mxArray const *prhs[] ) {
 
@@ -982,6 +1093,7 @@ CMD_BBOX,                \
 CMD_CHANGE_ORIGIN,       \
 CMD_TRANSLATE,           \
 CMD_ROTATE,              \
+CMD_SCALE,               \
 CMD_REVERSE,             \
 CMD_TRIM,                \
 CMD_DISTANCE,            \
@@ -990,6 +1102,7 @@ CMD_COLLISION,           \
 CMD_INTERSECT,           \
 CMD_FINDST,              \
 CMD_INFO,                \
+CMD_EVALUATE,            \
 CMD_EVAL,                \
 CMD_EVAL_D,              \
 CMD_EVAL_DD,             \
@@ -1013,6 +1126,7 @@ CMD_THETA_END
 {"changeOrigin",CMD_CHANGE_ORIGIN}, \
 {"translate",CMD_TRANSLATE},        \
 {"rotate",CMD_ROTATE},              \
+{"scale",CMD_SCALE},                \
 {"reverse",CMD_REVERSE},            \
 {"trim",CMD_TRIM},                  \
 {"distance",CMD_DISTANCE},          \
@@ -1021,6 +1135,7 @@ CMD_THETA_END
 {"intersect",CMD_INTERSECT},        \
 {"findST",CMD_FINDST},              \
 {"info",CMD_INFO},                  \
+{"evaluate",CMD_EVALUATE},          \
 {"eval",CMD_EVAL},                  \
 {"eval_D",CMD_EVAL_D},              \
 {"eval_DD",CMD_EVAL_DD},            \
@@ -1058,6 +1173,9 @@ case CMD_TRANSLATE:                           \
 case CMD_ROTATE:                              \
   do_rotate( nlhs, plhs, nrhs, prhs );        \
   break;                                      \
+case CMD_SCALE:                               \
+  do_scale( nlhs, plhs, nrhs, prhs );         \
+  break;                                      \
 case CMD_REVERSE:                             \
   do_reverse( nlhs, plhs, nrhs, prhs );       \
   break;                                      \
@@ -1081,6 +1199,9 @@ case CMD_FINDST:                              \
   break;                                      \
 case CMD_INFO:                                \
   do_info( nlhs, plhs, nrhs, prhs );          \
+  break;                                      \
+case CMD_EVALUATE:                            \
+  do_evaluate( nlhs, plhs, nrhs, prhs );      \
   break;                                      \
 case CMD_EVAL:                                \
   do_eval( nlhs, plhs, nrhs, prhs );          \

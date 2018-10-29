@@ -631,6 +631,36 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
+    void
+    evaluate( real_type   s,
+              real_type & th,
+              real_type & k,
+              real_type & x,
+              real_type & y ) const {
+      eval( s, x, y );
+      th = theta( s );
+      k  = theta_D( s );
+    }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    evaluate( real_type   s,
+              real_type   offs,
+              real_type & th,
+              real_type & k,
+              real_type & x,
+              real_type & y ) const {
+      eval( s, x, y );
+      th = theta( s );
+      k  = theta_D( s );
+      k /= 1-offs*k; // scale curvature
+    }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
     real_type
     X( real_type s ) const G2LIB_PURE_VIRTUAL;
 
@@ -776,6 +806,10 @@ namespace G2lib {
 
     virtual
     void
+    scale( real_type sc ) G2LIB_PURE_VIRTUAL;
+
+    virtual
+    void
     reverse() G2LIB_PURE_VIRTUAL;
 
     virtual
@@ -807,14 +841,16 @@ namespace G2lib {
     virtual
     void
     intersect( BaseCurve const & obj,
-               IntersectList   & ilist ) const G2LIB_PURE_VIRTUAL;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     void
     intersect( real_type         offs,
                BaseCurve const & obj,
                real_type         offs_obj,
-               IntersectList   & ilist ) const G2LIB_PURE_VIRTUAL;
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_PURE_VIRTUAL;
     /*\
      |      _ _     _
      |   __| (_)___| |_ __ _ _ __   ___ ___

@@ -46,7 +46,7 @@
 "  [d,s] = CircleArcMexWrapper( 'distance', OBJ, x, y );\n" \
 "  [s,t] = CircleArcMexWrapper( 'findST', OBJ, x, y );\n" \
 "\n" \
-"  [p0,p1,p2,ok] = CircleArcMexWrapper( 'bbTriangle', OBJ );\n" \
+"  [p0,p1,p2] = CircleArcMexWrapper( 'bbTriangles', OBJ );\n" \
 "\n" \
 "  burbs = CircleArcMexWrapper( 'to_nurbs', OBJ );\n" \
 "\n" \
@@ -160,7 +160,7 @@ namespace G2lib {
     MEX_ASSERT( nlhs == 0,
                 CMD "expected NO output, nlhs = " << nlhs );
 
-    CircleArc * ptr = DATA_NEW( arg_out_0 );
+    CircleArc * ptr = DATA_GET( arg_in_1 );
 
     real_type x0, y0, theta0, k0, L;
     x0     = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
@@ -308,24 +308,6 @@ namespace G2lib {
 
   static
   void
-  do_scale( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
-
-    CircleArc * ptr = DATA_GET(arg_in_1);
-
-    #define CMD "CircleArcMexWrapper('scale',OBJ,scale): "
-    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
-
-    real_type sc = getScalarValue( arg_in_2, CMD "`scale` expected to be a real scalar" );
-    ptr->scale( sc );
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
   do_to_nurbs( int nlhs, mxArray       *plhs[],
                int nrhs, mxArray const *prhs[] ) {
 
@@ -361,22 +343,43 @@ namespace G2lib {
 
   static
   void
-  do_bbTriangle( int nlhs, mxArray       *plhs[],
-                 int nrhs, mxArray const *prhs[] ) {
+  do_bbTriangles( int nlhs, mxArray       * plhs[],
+                  int nrhs, mxArray const * prhs[] ) {
 
     CircleArc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "CircleArcMexWrapper('bbTriangle',OBJ): "
+    #define CMD "CircleArcMexWrapper('bbTriangles',OBJ[,offs]): "
 
-    MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 4, CMD "expected 4 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 2 || nrhs == 3,
+                CMD "expected 2 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 3,
+                CMD "expected 3 output, nlhs = " << nlhs );
 
-    double * p0 = createMatrixValue( arg_out_0, 1, 2 );
-    double * p1 = createMatrixValue( arg_out_1, 1, 2 );
-    double * p2 = createMatrixValue( arg_out_2, 1, 2 );
+    std::vector<Triangle2D> tvec;
+    if ( nrhs == 3 ) {
+      real_type offs;
+      offs = getScalarValue( arg_in_2,
+                             CMD "`offs` expected to be a real scalar" );
+      ptr->bbTriangles( offs, tvec, m_pi/4 );
+    } else {
+      ptr->bbTriangles( tvec, m_pi/4 );
+    }
 
-    bool ok = ptr->bbTriangle( p0, p1, p2 );
-    setScalarBool( arg_out_3, ok );
+    mwSize nt = tvec.size();
+
+    double * p0 = createMatrixValue( arg_out_0, 2, nt );
+    double * p1 = createMatrixValue( arg_out_1, 2, nt );
+    double * p2 = createMatrixValue( arg_out_2, 2, nt );
+
+    for ( mwSize i = 0; i < nt; ++i ) {
+      Triangle2D const & t = tvec[i];
+      *p0++ = t.x1();
+      *p0++ = t.y1();
+      *p1++ = t.x2();
+      *p1++ = t.y2();
+      *p2++ = t.x3();
+      *p2++ = t.y3();
+    }
 
     #undef CMD
   }
@@ -397,9 +400,8 @@ namespace G2lib {
     CMD_BUILD_3P,
     CMD_BUILD_G1,
     CMD_CHANGE_CURVILINEAR_ORIGIN,
-    CMD_SCALE,
     CMD_TO_NURBS,
-    CMD_BB_TRIANGLE,
+    CMD_BB_TRIANGLES,
     CMD_VIRTUAL_LIST
   } CMD_LIST;
 
@@ -411,9 +413,8 @@ namespace G2lib {
     {"build_3P",CMD_BUILD_3P},
     {"build_G1",CMD_BUILD_G1},
     {"changeCurvilinearOrigin",CMD_CHANGE_CURVILINEAR_ORIGIN},
-    {"scale",CMD_SCALE},
     {"to_nurbs",CMD_TO_NURBS},
-    {"bbTriangle",CMD_BB_TRIANGLE},
+    {"bbTriangles",CMD_BB_TRIANGLES},
     CMD_MAP_LIST
   };
 
@@ -453,8 +454,8 @@ namespace G2lib {
       case CMD_TO_NURBS:
         do_to_nurbs( nlhs, plhs, nrhs, prhs );
         break;
-      case CMD_BB_TRIANGLE:
-        do_bbTriangle( nlhs, plhs, nrhs, prhs );
+      case CMD_BB_TRIANGLES:
+        do_bbTriangles( nlhs, plhs, nrhs, prhs );
         break;
       CMD_CASE_LIST;
       }
@@ -462,7 +463,7 @@ namespace G2lib {
     } catch ( exception const & e ) {
       mexErrMsgTxt(e.what());
     } catch (...) {
-      mexErrMsgTxt("Line failed\n");
+      mexErrMsgTxt("CircleArc failed\n");
     }
 
   }

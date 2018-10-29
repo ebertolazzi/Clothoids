@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Circle.hh"
+#include "Biarc.hh"
 #include "CubicRootsFlocke.hh"
 
 #include <cmath>
@@ -271,6 +272,9 @@ namespace G2lib {
 
   void
   CircleArc::trim( real_type s_begin, real_type s_end ) {
+    G2LIB_ASSERT( s_end > s_begin,
+                  "CircleArc::trim(begin=" << s_begin <<
+                  ", s_end=" << s_end << ") s_end must be > s_begin" );
     real_type x, y;
     eval( s_begin, x, y );
     theta0 += s_begin * k;
@@ -412,6 +416,8 @@ namespace G2lib {
       n       = int_type(std::ceil( dtheta/max_angle ));
       dtheta /= n ;
     }
+    real_type tg = std::tan(dtheta/2)/2;
+    if ( k < 0 ) tg = -tg;
     tvec.reserve( n );
     real_type xx0 = x0;
     real_type yy0 = y0;
@@ -424,19 +430,20 @@ namespace G2lib {
       real_type yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
       real_type ny = xx2-xx0;
-      real_type tg = std::tan(dtheta/2)/2;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
       tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2) );
+      xx0 = xx2;
+      yy0 = yy2;
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangle( real_type offs,
-                         std::vector<Triangle2D> & tvec,
-                         real_type max_angle ) const {
+  CircleArc::bbTriangles( real_type offs,
+                          std::vector<Triangle2D> & tvec,
+                          real_type max_angle ) const {
     real_type dtheta = std::abs(L * k);
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
@@ -447,6 +454,8 @@ namespace G2lib {
     real_type ds    = L/n;
     real_type ss    = ds;
     real_type scale = 1-k*offs;
+    real_type tg    = scale * std::tan(dtheta/2)/2;
+    if ( k < 0 ) tg = -tg;
     real_type xx0, yy0;
     eval( 0, offs, xx0, yy0 );
     for ( int_type k = 0; k < n; ++k, ss += ds ) {
@@ -456,10 +465,11 @@ namespace G2lib {
       real_type yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
       real_type ny = xx2-xx0;
-      real_type tg = scale * std::tan(dtheta/2)/2;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
       tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2) );
+      xx0 = xx2;
+      yy0 = yy2;
     }
   }
 
@@ -470,19 +480,16 @@ namespace G2lib {
                    real_type & ymin,
                    real_type & xmax,
                    real_type & ymax ) const {
-    real_type xx0, yy0, xx1, yy1, xx2, yy2;
-    bool ok = bbTriangle( xx0, yy0, xx1, yy1, xx2, yy2 );
-    if ( ok ) {
-      minmax3( xx0, xx1, xx2, xmin, xmax );
-      minmax3( yy0, yy1, yy2, ymin, ymax );
-    } else {
-      real_type cx, cy, delta;
-      center( cx, cy );
-      delta = 1/std::abs(k);
-      xmin = cx-delta;
-      xmax = cx+delta;
-      ymin = cy-delta;
-      ymax = cy+delta;
+    std::vector<Triangle2D> tvec;
+    this->bbTriangles( tvec, m_pi/4 );
+    tvec[0].bbox( xmin, ymin, xmax, ymax );
+    for ( int_type k = 1; k < int_type(tvec.size()); ++k ) {
+      real_type xmin1, ymin1, xmax1, ymax1;
+      tvec[k].bbox( xmin1, ymin1, xmax1, ymax1 );
+      if ( xmin1 < xmin ) xmin = xmin1;
+      if ( ymin1 < ymin ) ymin = ymin1;
+      if ( xmax1 > xmax ) xmax = xmax1;
+      if ( ymax1 > ymax ) ymax = ymax1;
     }
   }
 
@@ -494,19 +501,16 @@ namespace G2lib {
                    real_type & ymin,
                    real_type & xmax,
                    real_type & ymax ) const {
-    real_type xx0, yy0, xx1, yy1, xx2, yy2;
-    bool ok = bbTriangle( offs, xx0, yy0, xx1, yy1, xx2, yy2 );
-    if ( ok ) {
-      minmax3( xx0, xx1, xx2, xmin, xmax );
-      minmax3( yy0, yy1, yy2, ymin, ymax );
-    } else {
-      real_type cx, cy, delta;
-      center( cx, cy );
-      delta = std::abs(1/k-offs);
-      xmin = cx-delta;
-      xmax = cx+delta;
-      ymin = cy-delta;
-      ymax = cy+delta;
+    std::vector<Triangle2D> tvec;
+    this->bbTriangles( offs, tvec, m_pi/4 );
+    tvec[0].bbox( xmin, ymin, xmax, ymax );
+    for ( int_type k = 1; k < int_type(tvec.size()); ++k ) {
+      real_type xmin1, ymin1, xmax1, ymax1;
+      tvec[k].bbox( xmin1, ymin1, xmax1, ymax1 );
+      if ( xmin1 < xmin ) xmin = xmin1;
+      if ( ymin1 < ymin ) ymin = ymin1;
+      if ( xmax1 > xmax ) xmax = xmax1;
+      if ( ymax1 > ymax ) ymax = ymax1;
     }
   }
 
@@ -534,11 +538,16 @@ namespace G2lib {
         ok = this->collision( C );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj)) ;
+        ok = B.collision( obj );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
-      break;
+      G2LIB_ASSERT( false, "CircleArc::collision!" );
     }
     return ok;
   }
@@ -563,11 +572,16 @@ namespace G2lib {
         ok = this->collision( offs, C, offs_obj );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj)) ;
+        ok = B.collision( offs_obj, *this, offs );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
-      break;
+      G2LIB_ASSERT( false, "CircleArc::collision!" );
     }
     return ok;
   }
@@ -576,25 +590,31 @@ namespace G2lib {
 
   void
   CircleArc::intersect( BaseCurve const & obj,
-                        IntersectList   & ilist ) const {
+                        IntersectList   & ilist,
+                        bool              swap_s_vals ) const {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote to arc
         CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
-        this->intersect( C, ilist );
+        this->intersect( C, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CIRCLE:
       {
         CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
-        this->intersect( C, ilist );
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj)) ;
+        B.intersect( *this, ilist, !swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
-    case G2LIB_BIARC:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
-      break;
+      G2LIB_ASSERT( false, "CircleArc::intersect!" );
     }
   }
 
@@ -604,25 +624,31 @@ namespace G2lib {
   CircleArc::intersect( real_type         offs,
                         BaseCurve const & obj,
                         real_type         offs_obj,
-                        IntersectList   & ilist ) const {
+                        IntersectList   & ilist,
+                        bool              swap_s_vals ) const {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote to arc
         CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
-        this->intersect( offs, C, offs_obj, ilist );
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CIRCLE:
       {
         CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
-        this->intersect( offs, C, offs_obj, ilist );
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj)) ;
+        B.intersect( offs_obj, *this, offs, ilist, !swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
-    case G2LIB_BIARC:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
-      break;
+      G2LIB_ASSERT( false, "CircleArc::intersect!" );
     }
   }
 
@@ -672,7 +698,7 @@ namespace G2lib {
       real_type ss1 = s1[i]/sc1;
       real_type ss2 = s2[i]/sc2;
       if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
-           ss2 >= -eps2 && ss2 <= L+eps2 )
+           ss2 >= -eps2 && ss2 <= C.L+eps2 )
         return true;
     }
     return false;
@@ -680,7 +706,8 @@ namespace G2lib {
 
   void
   CircleArc::intersect( CircleArc const & C,
-                        IntersectList   & ilist ) const {
+                        IntersectList   & ilist,
+                        bool              swap_s_vals ) const {
     real_type s1[2], s2[2];
     int_type ni = intersectCircleCircle( this->x0,
                                          this->y0,
@@ -694,9 +721,13 @@ namespace G2lib {
     real_type eps1 = machepsi100*L;
     real_type eps2 = machepsi100*C.L;
     for ( int_type i = 0; i < ni; ++i ) {
-      if ( s1[i] >= -eps1 && s1[i] <= L+eps1 &&
-           s2[i] >= -eps2 && s2[i] <= L+eps2 )
-        ilist.push_back( Ipair(s1[i],s2[i]) );
+      real_type ss1 = s1[i];
+      real_type ss2 = s2[i];
+      if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
+           ss2 >= -eps2 && ss2 <= C.L+eps2 ) {
+        if ( swap_s_vals ) ilist.push_back( Ipair(ss2,ss1) );
+        else               ilist.push_back( Ipair(ss1,ss2) );
+      }
     }
   }
 
@@ -704,7 +735,8 @@ namespace G2lib {
   CircleArc::intersect( real_type         offs,
                         CircleArc const & C,
                         real_type         offs_C,
-                        IntersectList   & ilist ) const {
+                        IntersectList   & ilist,
+                        bool              swap_s_vals ) const {
     real_type s1[2], s2[2];
     real_type sc1 = 1-k*offs;
     real_type sc2 = 1-C.k*offs_C;
@@ -723,8 +755,10 @@ namespace G2lib {
       real_type ss1 = s1[i]/sc1;
       real_type ss2 = s2[i]/sc2;
       if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
-           ss2 >= -eps2 && ss2 <= L+eps2 )
-        ilist.push_back( Ipair(ss1,ss2) );
+           ss2 >= -eps2 && ss2 <= C.L+eps2 ) {
+        if ( swap_s_vals ) ilist.push_back( Ipair(ss2,ss1) );
+        else               ilist.push_back( Ipair(ss1,ss2) );
+      }
     }
   }
 

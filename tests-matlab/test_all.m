@@ -15,7 +15,7 @@ nFile   = length(list);
 success = false(1, nFile);
 for kkk=1:nFile
   file = list(kkk).name;
-  if ~strcmp( file, 'test_all.m' )
+  if ~strcmp( file, 'test_all.m' ) && ~strcmp( file, 'bspline_plot.m' )
     try
       fprintf('\n\ntest file: %s\n',file);
       run(fullfile(folder, file));
@@ -24,6 +24,7 @@ for kkk=1:nFile
     catch ME
       ME
       fprintf('failed: %s\n', file);
+      stop
     end
   end
 end

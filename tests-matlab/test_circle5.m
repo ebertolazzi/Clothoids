@@ -11,7 +11,8 @@
 %=========================================================================%
 
 addpath('../matlab');
-close all;
+
+close all
 
 % check constructors
 x0     = 0;
@@ -21,52 +22,36 @@ y1     = 3;
 x2     = 5;
 y2     = 2;
 theta0 = 0;
-theta1 = pi;
 L      = 10;
 k0     = 1/3;
-dk     = 0;
-
-L1 = Biarc( x0, y0, theta0, x1, y1, theta1 );
-L2 = Biarc();
-L2.build( x0, y0, theta0, x1, y1, theta1 );
-L3 = Biarc();
-L3.build( x0, y0, theta0, x2, y2, theta1 );
-
+L1 = CircleArc( x0, y0, theta0, k0, L );
+L2 = CircleArc( x0, y0, theta0+pi/4, 1.5*k0, L );
+L3 = CircleArc();
+L3.build_3P(x0, y0, x1,   y1, x2, y2 );
+L4 = LineSegment( x0+1,   y0-1, pi/3, 5 );
+L5 = LineSegment( x0+0.8, y0+0.1, pi/3, 5 );
 %
-npts = 1000;
-fmt1 = {'Color','red','LineWidth',3};
-fmt2 = {'Color','black','LineWidth',3};
-fmt3 = {'Color','green','LineWidth',3};
-L1.plot(npts,fmt1);
+fmt1 = {'Color','red','Linewidth',3};
+fmt2 = {'Color','black','Linewidth',3};
+fmt3 = {'Color','blue','Linewidth',3};
+fmt4 = {'Color','green','Linewidth',3};
+
+L1.plot(100,fmt1);
 hold on;
-L2.plot(npts,fmt1);
-L3.plot(npts,fmt2);
+L2.plot(100,fmt2);
+L3.plot(100,fmt3);
+L4.plot(fmt4{:});
+L5.plot(fmt4{:});
 
-L1.translate(1,1);
-L1.plot();
+L1.plotBBox(0,fmt1{:});
+L2.plotBBox(0,fmt2{:});
+L3.plotBBox(0,fmt3{:});
+L4.plotBBox(0,fmt4{:});
+L5.plotBBox(0,fmt4{:});
 
-L3.rotate(pi/3,0,0);
-L3.plot(npts,fmt1,fmt3);
-
-L3.rotate(pi/3,0,0);
-L3.plot(npts,fmt1,fmt3);
-
-L3.rotate(pi/3,0,0);
-L3.plot(npts,fmt1,fmt3);
-
-L3.translate(3,3);
-L3.plot(npts,fmt1,fmt3);
-
-L3.eval(1)
-L3.eval_D(1)
-L3.eval_DD(1)
-L3.eval_DDD(1)
-L3.xBegin()
-L3.yBegin()
-L3.thetaBegin()
-L3.length()
-
-%L3.distance(1,4)
+L1.plotTriangles(0,fmt1{:});
+L2.plotTriangles(0,fmt2{:});
+L3.plotTriangles(0,fmt3{:});
 
 axis equal;
 %

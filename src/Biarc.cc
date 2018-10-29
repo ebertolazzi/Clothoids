@@ -197,7 +197,7 @@ namespace G2lib {
     real_type dy = y1-y0;
     real_type d  = hypot(dy,dx);
 
-    omega = atan2(dy,dx);
+    real_type omega = atan2(dy,dx);
 
     // put in range
     real_type th0 = theta0 - omega;
@@ -309,6 +309,79 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  Biarc::bbox( real_type   offs,
+               real_type & xmin,
+               real_type & ymin,
+               real_type & xmax,
+               real_type & ymax ) const {
+    C0.bbox( offs, xmin, ymin, xmax, ymax );
+    real_type xmi1, ymi1, xma1, yma1;
+    C1.bbox( offs, xmi1, ymi1, xma1, yma1 );
+    if ( xmi1 < xmin ) xmin = xmi1;
+    if ( xma1 > xmax ) xmax = xma1;
+    if ( ymi1 < ymin ) ymin = ymi1;
+    if ( yma1 > ymax ) ymax = yma1;
+  }
+
+  /*\
+   |  _                        __
+   | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___
+   | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \
+   | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |
+   |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
+  \*/
+
+  void
+  Biarc::reverse() {
+    CircleArc TMP(C0);
+    C0 = C1;  C0.reverse();
+    C1 = TMP; C1.reverse();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::scale( real_type scl ) {
+    real_type newx0 = C0.xBegin() + scl*(C1.xBegin()-C0.xBegin());
+    real_type newy0 = C0.yBegin() + scl*(C1.yBegin()-C0.yBegin());
+    C1.changeOrigin( newx0, newy0 );
+    C1.scale( scl );
+    C0.scale( scl );
+  }
+
+  void
+  Biarc::changeOrigin( real_type newx0, real_type newy0 ) {
+    C0.changeOrigin(newx0,newy0);
+    C1.changeOrigin(C0.xEnd(),C0.yEnd());
+  }
+
+  void
+  Biarc::trim( real_type s_begin, real_type s_end ) {
+    G2LIB_ASSERT( s_end > s_begin,
+                  "Biarc::trim(begin=" << s_begin <<
+                  ", s_end=" << s_end << ") s_end must be > s_begin" );
+    real_type L0 = C0.length();
+    if ( s_end <= L0 ) {
+      C0.trim( s_begin, s_end );
+      C1 = C0;
+      real_type ss = C0.length();
+      C0.trim( 0, ss/2 );
+      C1.trim( ss/2, ss );
+    } else if ( s_begin >= L0 ) {
+      C1.trim( s_begin-L0, s_end-L0 );
+      C0 = C1;
+      real_type ss = C0.length();
+      C0.trim( 0, ss/2 );
+      C1.trim( ss/2, ss );
+    } else {
+      C0.trim( s_begin, L0 );
+      C1.trim( 0, s_end-L0 );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   real_type
   Biarc::theta( real_type s ) const {
     real_type L0 = C0.length();
@@ -319,28 +392,19 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::theta_D( real_type s ) const
-  { return kappa(s); }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::theta_DD( real_type ) const
-  { return 0; }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::theta_DDD( real_type ) const
-  { return 0; }
+  Biarc::theta_D( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.k;
+    else          return C1.k;
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::kappa( real_type s ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.kappa();
-    else          return C1.kappa();
+    if ( s < L0 ) return C0.k;
+    else          return C1.k;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -364,6 +428,79 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
+  Biarc::tx( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tx(s);
+    else          return C1.tx(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::tx_D( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tx_D(s);
+    else          return C1.tx_D(s-L0);
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::tx_DD( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tx_DD(s);
+    else          return C1.tx_DD(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::tx_DDD( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tx_DDD(s);
+    else          return C1.tx_DDD(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::ty( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.ty(s);
+    else          return C1.ty(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::ty_D( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.ty_D(s);
+    else          return C1.ty_D(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::ty_DD( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.ty_DD(s);
+    else          return C1.ty_DD(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::ty_DDD( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.ty_DDD(s);
+    else          return C1.ty_DDD(s-L0);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
   Biarc::X( real_type s ) const {
     real_type L0 = C0.length();
     if ( s < L0 ) return C0.X(s);
@@ -378,7 +515,6 @@ namespace G2lib {
     if ( s < L0 ) return C0.X_D(s);
     else          return C1.X_D(s-L0);
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -437,11 +573,112 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  real_type
+  Biarc::X( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.X(s,offs);
+    else          return C1.X(s-L0,offs);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::X_D( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.X_D(s,offs);
+    else          return C1.X_D(s-L0,offs);
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::X_DD( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.X_DD(s,offs);
+    else          return C1.X_DD(s-L0,offs);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::X_DDD( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.X_DDD(s,offs);
+    else          return C1.X_DDD(s-L0,offs);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::Y( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.Y(s,offs);
+    else          return C1.Y(s-L0,offs);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::Y_D( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.Y_D(s,offs);
+    else          return C1.Y_D(s-L0,offs);
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::Y_DD( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.Y_DD(s,offs);
+    else          return C1.Y_DD(s-L0,offs);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::Y_DDD( real_type s, real_type offs ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.Y_DDD(s,offs);
+    else          return C1.Y_DDD(s-L0,offs);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
-  Biarc::tan( real_type s, real_type t[2] ) const {
+  Biarc::tg( real_type s, real_type t[2] ) const {
     real_type L0 = C0.length();
     if ( s < L0 ) return C0.tg(s,t);
     else          return C1.tg(s-L0,t);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::tg_D( real_type s, real_type tg_D[2] ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tg_D(s,tg_D);
+    else          return C1.tg_D(s-L0,tg_D);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::tg_DD( real_type s, real_type tg_DD[2] ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tg_DD(s,tg_DD);
+    else          return C1.tg_DD(s-L0,tg_DD);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::tg_DDD( real_type s, real_type tg_DDD[2] ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tg_DDD(s,tg_DDD);
+    else          return C1.tg_DDD(s-L0,tg_DDD);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -482,7 +719,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
+  bool
   Biarc::findST( real_type   x,
                  real_type   y,
                  real_type & s,
@@ -503,17 +740,19 @@ namespace G2lib {
       t = T;
     } else {
       s = t = 0;
+      return false;
     }
+    return true;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval( real_type   s,
-               real_type & th,
-               real_type & k,
-               real_type & x,
-               real_type & y ) const {
+  Biarc::evaluate( real_type   s,
+                   real_type & th,
+                   real_type & k,
+                   real_type & x,
+                   real_type & y ) const {
     if ( s < C0.length() ) {
       th = C0.theta(s);
       k  = C0.kappa();
@@ -642,74 +881,236 @@ namespace G2lib {
     }
   }
 
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
+
+  void
+  Biarc::intersect( BaseCurve const & obj,
+                    IntersectList   & ilist,
+                    bool              swap_s_vals ) const {
+    IntersectList ilist0, ilist1;
+    C0.intersect( obj, ilist0, false );
+    C1.intersect( obj, ilist1, false );
+    real_type L = C0.length();
+    ilist.reserve( ilist.size() + ilist0.size() + ilist1.size() );
+    IntersectList::iterator it;
+    for ( it = ilist1.begin(); it != ilist1.end(); ++it ) it->first += L;
+    if ( swap_s_vals ) {
+      for ( it = ilist0.begin(); it != ilist0.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist1.begin(); it != ilist1.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+    } else {
+      for ( it = ilist0.begin(); it != ilist0.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist1.begin(); it != ilist1.end(); ++it ) ilist.push_back( *it );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::intersect( real_type         offs,
+                    BaseCurve const & obj,
+                    real_type         offs_obj,
+                    IntersectList   & ilist,
+                    bool              swap_s_vals ) const {
+    IntersectList ilist0, ilist1;
+    C0.intersect( offs, obj, offs_obj, ilist0, false );
+    C1.intersect( offs, obj, offs_obj, ilist1, false );
+    real_type L = C0.length();
+    ilist.reserve( ilist.size() + ilist0.size() + ilist1.size() );
+    IntersectList::iterator it;
+    for ( it = ilist1.begin(); it != ilist1.end(); ++it ) it->first += L;
+    if ( swap_s_vals ) {
+      for ( it = ilist0.begin(); it != ilist0.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist1.begin(); it != ilist1.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+    } else {
+      for ( it = ilist0.begin(); it != ilist0.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist1.begin(); it != ilist1.end(); ++it ) ilist.push_back( *it );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::intersect( Biarc const   & B,
+                    IntersectList & ilist,
+                    bool            swap_s_vals ) const {
+    IntersectList ilist00, ilist01, ilist10, ilist11;
+    C0.intersect( B.C0, ilist00, false );
+    C0.intersect( B.C1, ilist01, false );
+    C1.intersect( B.C0, ilist10, false );
+    C1.intersect( B.C1, ilist11, false );
+    real_type L  = C0.length();
+    real_type LB = B.C0.length();
+    IntersectList::iterator it;
+    ilist.reserve( ilist.size() +
+                   ilist00.size() +
+                   ilist01.size() +
+                   ilist10.size() +
+                   ilist11.size() );
+    for ( it = ilist01.begin(); it != ilist01.end(); ++it ) it->second += LB;
+    for ( it = ilist10.begin(); it != ilist10.end(); ++it ) it->first  += L;
+    for ( it = ilist11.begin(); it != ilist11.end(); ++it )
+      { it->first += L; it->second += LB; }
+
+    if ( swap_s_vals ) {
+      for ( it = ilist00.begin(); it != ilist00.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist01.begin(); it != ilist01.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist10.begin(); it != ilist10.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist11.begin(); it != ilist11.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+    } else {
+      for ( it = ilist00.begin(); it != ilist00.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist01.begin(); it != ilist01.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist10.begin(); it != ilist10.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist11.begin(); it != ilist11.end(); ++it ) ilist.push_back( *it );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::intersect( real_type       offs,
+                    Biarc const   & B,
+                    real_type       offs_B,
+                    IntersectList & ilist,
+                    bool            swap_s_vals  ) const {
+    IntersectList ilist00, ilist01, ilist10, ilist11;
+    C0.intersect( offs, B.C0, offs_B, ilist00, false );
+    C0.intersect( offs, B.C1, offs_B, ilist01, false );
+    C1.intersect( offs, B.C0, offs_B, ilist10, false );
+    C1.intersect( offs, B.C1, offs_B, ilist11, false );
+    real_type L  = C0.length();
+    real_type LB = B.C0.length();
+    IntersectList::iterator it;
+    ilist.reserve( ilist.size() +
+                   ilist00.size() +
+                   ilist01.size() +
+                   ilist10.size() +
+                   ilist11.size() );
+    for ( it = ilist01.begin(); it != ilist01.end(); ++it ) it->second += LB;
+    for ( it = ilist10.begin(); it != ilist10.end(); ++it ) it->first  += L;
+    for ( it = ilist11.begin(); it != ilist11.end(); ++it )
+      { it->first += L; it->second += LB; }
+
+    if ( swap_s_vals ) {
+      for ( it = ilist00.begin(); it != ilist00.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist01.begin(); it != ilist01.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist10.begin(); it != ilist10.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+      for ( it = ilist11.begin(); it != ilist11.end(); ++it )
+        ilist.push_back( Ipair(it->second,it->first) );
+    } else {
+      for ( it = ilist00.begin(); it != ilist00.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist01.begin(); it != ilist01.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist10.begin(); it != ilist10.end(); ++it ) ilist.push_back( *it );
+      for ( it = ilist11.begin(); it != ilist11.end(); ++it ) ilist.push_back( *it );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  Biarc::projection( real_type   qx,
+                     real_type   qy,
+                     real_type & x,
+                     real_type & y,
+                     real_type & s ) const {
+    real_type s0, x0, y0, s1, x1, y1;
+    int_type r0 = C0.projection( qx, qy, x0, y0, s0 );
+    int_type r1 = C1.projection( qx, qy, x1, y1, s1 );
+    if ( r0 == 1 && r1 == 1 ) {
+      real_type dst0 = hypot( x0 - qx, y0 - qy );
+      real_type dst1 = hypot( x1 - qx, y1 - qy );
+      if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; }
+      else               { x = x0; y = y0; s = s0; }
+      return 1;
+    }
+    if ( r0 == 1 ) { x = x0; y = y0; s = s0; return r0; }
+    if ( r1 == 1 ) { x = x1; y = y1; s = s1; return r1; }
+    real_type dst0 = hypot( x0 - qx, y0 - qy );
+    real_type dst1 = hypot( x1 - qx, y1 - qy );
+    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return r0; }
+    else               { x = x0; y = y0; s = s0; return r1; }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type // true if projection is unique and orthogonal
+  Biarc::projection( real_type   qx,
+                     real_type   qy,
+                     real_type   offs,
+                     real_type & x,
+                     real_type & y,
+                     real_type & s ) const {
+    real_type s0, x0, y0, s1, x1, y1;
+    int_type r0 = C0.projection( qx, qy, offs, x0, y0, s0 );
+    int_type r1 = C1.projection( qx, qy, offs, x1, y1, s1 );
+    if ( r0 == 1 && r1 == 1 ) {
+      real_type dst0 = hypot( x0 - qx, y0 - qy );
+      real_type dst1 = hypot( x1 - qx, y1 - qy );
+      if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; }
+      else               { x = x0; y = y0; s = s0; }
+      return 1;
+    }
+    if ( r0 == 1 ) { x = x0; y = y0; s = s0; return r0; }
+    if ( r1 == 1 ) { x = x1; y = y1; s = s1; return r1; }
+    real_type dst0 = hypot( x0 - qx, y0 - qy );
+    real_type dst1 = hypot( x1 - qx, y1 - qy );
+    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return r0; }
+    else               { x = x0; y = y0; s = s0; return r1; }
+
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::closestPoint( real_type   x,
-                       real_type   y,
-                       real_type & X,
-                       real_type & Y,
-                       real_type & S ) const {
-    real_type dst0 = C0.closestPoint( x, y, X, Y, S );
-    real_type X1, Y1, S1;
-    real_type dst1 = C1.closestPoint( x, y, X1, Y1, S1 );
-    if ( dst0 <= dst1 ) return dst0;
-    X = X1; Y= Y1; S = S1 + C0.length();
-    return dst1;
+  Biarc::closestPoint( real_type   qx,
+                       real_type   qy,
+                       real_type & x,
+                       real_type & y,
+                       real_type & s ) const {
+    real_type x1, y1, s1;
+    real_type dst0 = C0.closestPoint( qx, qy, x, y, s );
+    real_type dst1 = C1.closestPoint( qx, qy, x1, y1, s1 );
+    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return dst1; }
+    return dst0;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::changeOrigin( real_type newx0, real_type newy0 ) {
-    C1.translate( newx0-C0.xBegin(), newy0-C0.yBegin() );
-    C0.changeOrigin( newx0, newy0 );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Biarc::translate( real_type tx, real_type ty ) {
-    C0.translate( tx, ty );
-    C1.translate( tx, ty );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Biarc::rotate( real_type angle, real_type cx, real_type cy ) {
-    C0.rotate( angle, cx, cy );
-    C1.rotate( angle, cx, cy );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Biarc::reverse() {
-    CircleArc tmp = C0;
-    C0 = C1;
-    C1 = tmp;
-    C0.reverse();
-    C1.reverse();
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Biarc::scale( real_type scl ) {
-    real_type newx0 = C0.xBegin() + scl*(C1.xBegin()-C0.xBegin());
-    real_type newy0 = C0.yBegin() + scl*(C1.yBegin()-C0.yBegin());
-    C1.changeOrigin( newx0, newy0 );
-    C1.scale( scl );
-    C0.scale( scl );
+  real_type
+  Biarc::closestPoint( real_type   qx,
+                       real_type   qy,
+                       real_type   offs,
+                       real_type & x,
+                       real_type & y,
+                       real_type & s ) const {
+    real_type x1, y1, s1;
+    real_type dst0 = C0.closestPoint( qx, qy, offs, x, y, s );
+    real_type dst1 = C1.closestPoint( qx, qy, offs, x1, y1, s1 );
+    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return dst1; }
+    return dst0;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ostream_type &
   operator << ( ostream_type & stream, Biarc const & bi ) {
-    stream << "Biarc\n"
-           << "C0\n" << bi.C0
+    stream << "C0\n" << bi.C0
            << "C1\n" << bi.C1
            << "\n";
     return stream;

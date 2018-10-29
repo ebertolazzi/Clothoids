@@ -163,24 +163,24 @@ namespace G2lib {
       if ( ciclic ) {
         ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] );
         G2LIB_ASSERT( ok, "ClothoidList::build_G1, failed" );
-        thetaC = b.thetaStar();
+        thetaC = b.thetaMiddle();
       }
       ok = b.build_3P( x[0], y[0], x[1], y[1], x[2], y[2] );
       G2LIB_ASSERT( ok, "ClothoidList::build_G1, failed" );
-      real_type theta0 = ciclic ? thetaC : b.thetaBegin0();
-      real_type theta1 = b.thetaStar();
+      real_type theta0 = ciclic ? thetaC : b.thetaBegin();
+      real_type theta1 = b.thetaMiddle();
       c.build_G1( x[0], y[0], theta0, x[1], y[1], theta1 );
       push_back(c);
       for ( int_type k = 2; k < n-1; ++k ) {
         theta0 = theta1;
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
         G2LIB_ASSERT( ok, "ClothoidList::build_G1, failed" );
-        theta1 = b.thetaStar();
+        theta1 = b.thetaMiddle();
         c.build_G1( x[k-1], y[k-1], theta0, x[k], y[k], theta1 );
         push_back(c);
       }
       theta0 = theta1;
-      theta1 = ciclic ? thetaC : b.thetaEnd1();
+      theta1 = ciclic ? thetaC : b.thetaEnd();
       c.build_G1( x[n-2], y[n-2], theta0, x[n-1], y[n-1], theta1 );
       push_back(c);
 
@@ -225,14 +225,14 @@ namespace G2lib {
       if ( ciclic ) {
         ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] );
         G2LIB_ASSERT( ok, "ClothoidList::build_theta, failed" );
-        theta[0] = theta[n-1] = b.thetaStar();
+        theta[0] = theta[n-1] = b.thetaMiddle();
       }
       for ( int_type k = 1; k < n-1; ++k ) {
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
         G2LIB_ASSERT( ok, "ClothoidList::build_theta, failed" );
-        theta[k] = b.thetaStar();
-        if ( k == 1   && !ciclic ) theta[0]   = b.thetaBegin0();
-        if ( k == n-2 && !ciclic ) theta[n-1] = b.thetaEnd1();
+        theta[k] = b.thetaMiddle();
+        if ( k == 1   && !ciclic ) theta[0]   = b.thetaBegin();
+        if ( k == n-2 && !ciclic ) theta[n-1] = b.thetaEnd();
       }
     }
     return true;

@@ -397,9 +397,17 @@ namespace G2lib {
         yy1[i] = C12*yy2[i]+S12*xx2[i]+Ca1;
       }
     }
+    real_type len1 = m_2pi/(machepsi+std::abs(kappa1));
+    real_type len2 = m_2pi/(machepsi+std::abs(kappa1));
     for ( int_type i = 0; i < nsol; ++i ) {
-      s1[i] = invCoscSinc( kappa1, xx1[i], yy1[i] );
-      s2[i] = invCoscSinc( kappa2, xx2[i], yy2[i] );
+      real_type ss1 = invCoscSinc( kappa1, xx1[i], yy1[i] );
+      real_type ss2 = invCoscSinc( kappa2, xx2[i], yy2[i] );
+      while ( ss1 < 0    ) ss1 += len1;
+      while ( ss2 < 0    ) ss2 += len2;
+      while ( ss1 > len1 ) ss1 -= len1;
+      while ( ss2 > len2 ) ss2 -= len2;
+      s1[i] = ss1;
+      s2[i] = ss2;
     }
     return nsol;
   }
