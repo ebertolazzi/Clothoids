@@ -1,5 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "Clothoid.hh"
+#include "Circle.hh"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
@@ -44,7 +44,7 @@ main() {
 #endif
 
   G2lib::BaseCurve::IntersectList ilist;
-  C0.intersect( C1, ilist );
+  C0.intersect( C1, ilist, false );
 
   std::cout << "L0 = " << C0.length() << '\n';
   std::cout << "L1 = " << C1.length() << '\n';

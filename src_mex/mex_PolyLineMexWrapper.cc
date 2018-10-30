@@ -12,7 +12,7 @@
 #include "Line.hh"
 #include "Circle.hh"
 #include "Biarc.hh"
-#include "Clothoid.hh"
+#include "ClothoidList.hh"
 
 #include "mex_utils.hh"
 

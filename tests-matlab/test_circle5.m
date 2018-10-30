@@ -49,9 +49,9 @@ L3.plotBBox(0,fmt3{:});
 L4.plotBBox(0,fmt4{:});
 L5.plotBBox(0,fmt4{:});
 
-L1.plotTriangles(0,fmt1{:});
-L2.plotTriangles(0,fmt2{:});
-L3.plotTriangles(0,fmt3{:});
+L1.plotTriangles(fmt1{:});
+L2.plotTriangles(fmt2{:});
+L3.plotTriangles(fmt3{:});
 
 axis equal;
 %

@@ -96,6 +96,9 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
+    virtual
+    ~Biarc()
+    {}
 
     Biarc()
     : BaseCurve(G2LIB_BIARC)
@@ -374,17 +377,21 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual void nor    ( real_type s, real_type n[2]     ) const G2LIB_OVERRIDE;
-    virtual void nor_D  ( real_type s, real_type n_D[2]   ) const G2LIB_OVERRIDE;
-    virtual void nor_DD ( real_type s, real_type n_DD[2]  ) const G2LIB_OVERRIDE;
-    virtual void nor_DDD( real_type s, real_type n_DDD[2] ) const G2LIB_OVERRIDE;
+    virtual
+    void
+    tg( real_type s, real_type & tx, real_type & ty ) const G2LIB_OVERRIDE;
 
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    virtual
+    void
+    tg_D( real_type s, real_type & tx_D, real_type & ty_D ) const G2LIB_OVERRIDE;
 
-    virtual void tg    ( real_type s, real_type t[2]     ) const G2LIB_OVERRIDE;
-    virtual void tg_D  ( real_type s, real_type t_D[2]   ) const G2LIB_OVERRIDE;
-    virtual void tg_DD ( real_type s, real_type t_DD[2]  ) const G2LIB_OVERRIDE;
-    virtual void tg_DDD( real_type s, real_type t_DDD[2] ) const G2LIB_OVERRIDE;
+    virtual
+    void
+    tg_DD( real_type s, real_type & tx_DD, real_type & ty_DD ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    tg_DDD( real_type s, real_type & tx_DDD, real_type & ty_DDD ) const G2LIB_OVERRIDE;
 
     /*\
      |  _                        __
@@ -603,17 +610,19 @@ namespace G2lib {
 
     void
     bbTriangles( std::vector<Triangle2D> & tvec,
-                 real_type max_angle = m_pi/18 ) const {
-      C0.bbTriangles( tvec, max_angle );
-      C1.bbTriangles( tvec, max_angle );
+                 real_type max_angle = m_pi/18,
+                 real_type max_size  = 1e100 ) const {
+      C0.bbTriangles( tvec, max_angle, max_size );
+      C1.bbTriangles( tvec, max_angle, max_size );
     }
 
     void
     bbTriangles( real_type offs,
                  std::vector<Triangle2D> & tvec,
-                 real_type max_angle = m_pi/18 ) const {
-      C0.bbTriangles( offs, tvec, max_angle );
-      C1.bbTriangles( offs, tvec, max_angle );
+                 real_type max_angle = m_pi/18,
+                 real_type max_size  = 1e100 ) const {
+      C0.bbTriangles( offs, tvec, max_angle, max_size );
+      C1.bbTriangles( offs, tvec, max_angle, max_size );
     }
 
     void

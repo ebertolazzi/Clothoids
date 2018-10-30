@@ -429,21 +429,31 @@ namespace G2lib {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "BiarcMexWrapper('bbTriangles',OBJ[,offs]): "
+    #define CMD "BiarcMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs]): "
 
-    MEX_ASSERT( nrhs == 2 || nrhs == 3,
-                CMD "expected 2 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nrhs >= 2 && nrhs <= 5,
+                CMD "expected 2 up to 5 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 3,
                 CMD "expected 3 output, nlhs = " << nlhs );
 
-    std::vector<Triangle2D> tvec;
-    if ( nrhs == 3 ) {
-      real_type offs;
-      offs = getScalarValue( arg_in_2,
+    real_type max_angle = m_pi/18;
+    real_type max_size  = 1e100;
+    real_type offs      = 0;
+    if ( nrhs >= 3 )
+      max_angle = getScalarValue( arg_in_2,
+                                  CMD "`max_angle` expected to be a real scalar" );
+    if ( nrhs >= 4 )
+      max_size = getScalarValue( arg_in_3,
+                                 CMD "`max_size` expected to be a real scalar" );
+    if ( nrhs >= 5 )
+      offs = getScalarValue( arg_in_4,
                              CMD "`offs` expected to be a real scalar" );
-      ptr->bbTriangles( offs, tvec, m_pi/4 );
+
+    std::vector<Triangle2D> tvec;
+    if ( nrhs == 5 ) {
+      ptr->bbTriangles( offs, tvec, max_angle, max_size );
     } else {
-      ptr->bbTriangles( tvec, m_pi/4 );
+      ptr->bbTriangles( tvec, max_angle, max_size );
     }
 
     mwSize nt = tvec.size();

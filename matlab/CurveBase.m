@@ -93,6 +93,10 @@ classdef CurveBase < handle
       th = eval( self.mexName, 'theta_DDD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x,y] = xyBegin( self )
+      [x,y] = feval( self.mexName, 'xyBegin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X0 = xBegin( self )
       X0 = feval( self.mexName, 'xBegin', self.objectHandle );
     end
@@ -103,6 +107,10 @@ classdef CurveBase < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th0 = thetaBegin( self )
       th0 = feval( self.mexName, 'thetaBegin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [x,y] = xyEnd( self )
+      [x,y] = feval( self.mexName, 'xyEnd', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X1 = xEnd( self )
@@ -130,14 +138,14 @@ classdef CurveBase < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [s,idx] = projection( self, x, y, varargin )
-      [d,s] = feval( self.mexName, 'projection', self.objectHandle, x, y, varargin{:} );
+      [s,idx] = feval( self.mexName, 'projection', self.objectHandle, x, y, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = collision( self, OBJ, varargin )
-      [d,s] = feval( self.mexName, 'collision', ...
-                                   self.objectHandle, ...
-                                   OBJ.obj_handle(), OBJ.is_type(), ...
-                                   varargin{:} );
+      ok = feval( self.mexName, 'collision', ...
+                                self.objectHandle, ...
+                                OBJ.obj_handle(), OBJ.is_type(), ...
+                                varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [s1,s2] = intersect( self, OBJ, varargin )

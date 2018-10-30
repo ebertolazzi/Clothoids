@@ -17,7 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Clothoid.hh"
+#include "ClothoidList.hh"
 #include "Biarc.hh"
 
 #include <cmath>
@@ -347,7 +347,7 @@ namespace G2lib {
                       real_type & y ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval( s - s0[last_idx], theta, kappa, x, y );
+    return c.evaluate( s - s0[last_idx], theta, kappa, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

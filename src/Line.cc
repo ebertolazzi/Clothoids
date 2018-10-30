@@ -266,7 +266,7 @@ namespace G2lib {
     c0      = -c0;
     s0      = -s0;
     theta0 += m_pi;
-    if ( theta0 > m_pi ) theta0 -= 2*m_pi;
+    if ( theta0 > m_pi ) theta0 -= m_2pi;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

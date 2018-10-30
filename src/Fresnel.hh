@@ -164,26 +164,66 @@ namespace G2lib {
     real_type X_DDD( real_type s, real_type t ) const;
     real_type Y_DDD( real_type s, real_type t ) const;
 
+    real_type tg0_x() const { return cos(theta0); }
+    real_type tg0_y() const { return sin(theta0); }
+
     real_type tg_x( real_type s ) const { return cos(theta(s)); }
     real_type tg_y( real_type s ) const { return sin(theta(s)); }
 
-    real_type nor_x( real_type s ) const { return -sin(theta(s)); }
-    real_type nor_y( real_type s ) const { return cos(theta(s)); }
+    real_type tg_x_D( real_type s ) const;
+    real_type tg_y_D( real_type s ) const;
+
+    real_type tg_x_DD( real_type s ) const;
+    real_type tg_y_DD( real_type s ) const;
+
+    real_type tg_x_DDD( real_type s ) const;
+    real_type tg_y_DDD( real_type s ) const;
+
+    real_type nor0_x() const { return -tg0_y(); }
+    real_type nor0_y() const { return tg0_x(); }
+
+    real_type nor_x( real_type s ) const { return -tg_y(s); }
+    real_type nor_y( real_type s ) const { return tg_x(s); }
+
+    real_type nor_x_D( real_type s ) const { return -tg_y_D(s); }
+    real_type nor_y_D( real_type s ) const { return tg_x_D(s); }
+
+    real_type nor_x_DD( real_type s ) const { return -tg_y_DD(s); }
+    real_type nor_y_DD( real_type s ) const { return tg_x_DD(s); }
+
+    real_type nor_x_DDD( real_type s ) const { return -tg_y_DDD(s); }
+    real_type nor_y_DDD( real_type s ) const { return tg_x_DDD(s); }
 
     void XY( real_type s, real_type & x, real_type & y ) const;
     void XY( real_type s, real_type t, real_type & x, real_type & y ) const;
-    void TG( real_type s, real_type & tx, real_type & ty ) const;
-    void NOR( real_type s, real_type & nx, real_type & ny ) const;
-    void NOR_D( real_type s, real_type & nx, real_type & ny ) const;
-    void NOR_DD( real_type s, real_type & nx, real_type & ny ) const;
-    void NOR_DDD( real_type s, real_type & nx, real_type & ny ) const;
+
+    void tg( real_type s, real_type & tx, real_type & ty ) const;
+    void tg_D( real_type s, real_type & tx, real_type & ty ) const;
+    void tg_DD( real_type s, real_type & tx, real_type & ty ) const;
+    void tg_DDD( real_type s, real_type & tx, real_type & ty ) const;
 
     void
-    eval( real_type   s,
-          real_type & theta,
-          real_type & kappa,
-          real_type & x,
-          real_type & y ) const;
+    nor( real_type s, real_type & nx, real_type & ny ) const
+    { tg( s, ny, nx ); ny = -ny; }
+
+    void
+    nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const
+    { tg_D( s, ny_D, nx_D ); nx_D = -nx_D; }
+
+    void
+    nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
+    { tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD; }
+
+    void
+    nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
+    { tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD; }
+
+    void
+    evaluate( real_type   s,
+              real_type & theta,
+              real_type & kappa,
+              real_type & x,
+              real_type & y ) const;
 
     void
     eval( real_type   s,
@@ -244,6 +284,12 @@ namespace G2lib {
     void
     reverse( real_type L, ClothoidData & out) const;
 
+    void
+    rotate( real_type angle, real_type cx, real_type cy );
+
+    void
+    origin_at( real_type s_origin );
+
     real_type
     split_at_flex( ClothoidData & C0, ClothoidData & C1 ) const;
 
@@ -262,29 +308,6 @@ namespace G2lib {
                 real_type & xx0, real_type & yy0,
                 real_type & xx1, real_type & yy1,
                 real_type & xx2, real_type & yy2 ) const;
-
-    bool
-    bbTriangle( real_type L,
-                real_type p0[2],
-                real_type p1[2],
-                real_type p2[2] ) const {
-      return bbTriangle( L,
-                         p0[0], p0[1],
-                         p1[0], p1[1],
-                         p2[0], p2[1] );
-    }
-
-    bool
-    bbTriangle( real_type L,
-                real_type offs,
-                real_type p0[2],
-                real_type p1[2],
-                real_type p2[2] ) const {
-      return bbTriangle( L, offs,
-                         p0[0], p0[1],
-                         p1[0], p1[1],
-                         p2[0], p2[1] );
-    }
 
     int
     build_G1( real_type   x0,

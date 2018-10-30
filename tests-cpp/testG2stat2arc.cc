@@ -1,5 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "Clothoid.hh"
+#include "ClothoidList.hh"
 #include "ClothoidAsyPlot.hh"
 #include "TicToc.hh"
 #include <cmath>
@@ -7,23 +7,6 @@
 #include <stack>
 #include <ctime>
 #include <map>
-
-static std::stack<clock_t> tictoc_stack;
-
-static
-void
-tic() {
-	tictoc_stack.push(clock());
-}
-
-static
-void
-toc() {
-	std::cout << "Time elapsed: "
-		<< ((double)(clock() - tictoc_stack.top())) / CLOCKS_PER_SEC
-		<< std::endl;
-	tictoc_stack.pop();
-}
 
 using G2lib::real_type;
 

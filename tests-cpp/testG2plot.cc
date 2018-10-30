@@ -1,49 +1,27 @@
 //#define _USE_MATH_DEFINES
-#include "Clothoid.hh"
+#include "ClothoidList.hh"
 #include "ClothoidAsyPlot.hh"
 #include <cmath>
 #include <iostream>
 #include <stack>
 #include <ctime>
 
-#include <stdlib.h>
-
-static std::stack<clock_t> tictoc_stack;
-
-static
-void
-tic() {
-	tictoc_stack.push(clock());
-}
-
-static
-void
-toc() {
-	std::cout << "Time elapsed: "
-		<< ((double)(clock() - tictoc_stack.top())) / CLOCKS_PER_SEC
-		<< std::endl;
-	tictoc_stack.pop();
-}
-
 using G2lib::real_type;
 
 int
 main() {
-	tic();
 
 	G2lib::G2solve2arc g2sol;
 	
   #if 1
-	real_type x0 = -2;
-	real_type y0 = 3;
+	real_type x0  = -2;
+	real_type y0  = 3;
 	real_type th0 = M_PI/3;
-	real_type k0 = 10.2;
-	real_type s0 = M_PI/2/10.2;
-	s0 = 0.2;
-	real_type x1 = 3;
-	real_type y1 = 2;
+	real_type k0  = 10.2;
+	real_type x1  = 3;
+	real_type y1  = 2;
 	real_type th1 = M_PI/10;
-	real_type k1 = -0.5;
+	real_type k1  = -0.5;
 	//real_type s1 = 1;
 	#else
 	real_type x0  = -1;
@@ -66,7 +44,6 @@ main() {
 	G2lib::ClothoidCurve const & S0 = g2sol.getS0();
 	G2lib::ClothoidCurve const & S1 = g2sol.getS1();
 
-	toc();
 	std::cout << "\n\nS0 (NEW)\n" << S0;
 
 	std::cout << "\n\nS1 (NEW)\n" << S1;

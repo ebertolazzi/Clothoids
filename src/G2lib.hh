@@ -552,42 +552,34 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     real_type
     nx( real_type s ) const
     { return ty(s); }
 
-    virtual
     real_type
     nx_D( real_type s ) const
     { return ty_D(s); }
 
-    virtual
     real_type
     nx_DD( real_type s ) const
     { return ty_DD(s); }
 
-    virtual
     real_type
     nx_DDD( real_type s ) const
     { return ty_DDD(s); }
 
-    virtual
     real_type
     ny( real_type s ) const
     { return -tx(s); }
 
-    virtual
     real_type
     ny_D( real_type s ) const
     { return -tx_D(s); }
 
-    virtual
     real_type
     ny_DD( real_type s ) const
     { return -tx_DD(s); }
 
-    virtual
     real_type
     ny_DDD( real_type s ) const
     { return -tx_DDD(s); }
@@ -596,37 +588,63 @@ namespace G2lib {
 
     virtual
     void
-    tg( real_type s, real_type t[2] ) const;
+    tg( real_type   s,
+        real_type & tg_x,
+        real_type & tg_y ) const {
+      tg_x = this->tx(s);
+      tg_y = this->ty(s);
+    }
 
     virtual
     void
-    tg_D( real_type s, real_type tg_D[2] ) const;
+    tg_D( real_type   s,
+          real_type & tg_x_D,
+          real_type & tg_y_D ) const {
+      tg_x_D = this->tx_D(s);
+      tg_y_D = this->ty_D(s);
+    }
 
     virtual
     void
-    tg_DD( real_type s, real_type tg_DD[2] ) const;
+    tg_DD( real_type   s,
+           real_type & tg_x_DD,
+           real_type & tg_y_DD ) const {
+      tg_x_DD = this->tx_DD(s);
+      tg_y_DD = this->ty_DD(s);
+    }
 
     virtual
     void
-    tg_DDD( real_type s, real_type tg_DDD[2] ) const;
+    tg_DDD( real_type   s,
+            real_type & tg_x_DDD,
+            real_type & tg_y_DDD ) const {
+      tg_x_DDD = this->tx_DDD(s);
+      tg_y_DDD = this->ty_DDD(s);
+    }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
-    nor( real_type s, real_type n[2] ) const;
+    nor( real_type s, real_type & nx, real_type & ny ) const {
+      tg( s, ny, nx ); ny = -ny;
+    }
+
+    void
+    nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const {
+      tg_D( s, ny_D, nx_D ); ny_D = -ny_D;
+    }
 
     virtual
     void
-    nor_D( real_type s, real_type n_D[2] ) const;
+    nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const {
+      tg_DD( s, ny_DD, nx_DD ); ny_DD = -ny_DD;
+    }
 
     virtual
     void
-    nor_DD( real_type s, real_type n_DD[2] ) const;
-
-    virtual
-    void
-    nor_DDD( real_type s, real_type n_DDD[2] ) const;
+    nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const {
+      tg_DDD( s, ny_DDD, nx_DDD ); ny_DDD = -ny_DDD;
+    }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -905,10 +923,7 @@ namespace G2lib {
                   real_type   qy,
                   real_type & x,
                   real_type & y,
-                  real_type & s ) const {
-      projection( qx, qy, x, y, s );
-      return hypot( qx-x, qy-y);
-    }
+                  real_type & s ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     real_type
@@ -917,10 +932,7 @@ namespace G2lib {
                   real_type   offs,
                   real_type & x,
                   real_type & y,
-                  real_type & s ) const {
-      projection( qx, qy, offs, x, y, s );
-      return hypot( qx-x, qy-y );
-    }
+                  real_type & s ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     real_type

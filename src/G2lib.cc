@@ -183,6 +183,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  static
   real_type
   maxabs3( real_type A, real_type B, real_type C ) {
     real_type res  = std::abs(A);
@@ -262,36 +263,6 @@ namespace G2lib {
       return 1;
     }
     return 0; // no solution
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  int_type
-  intersectCircleAndParametricCircle( real_type R,
-                                      real_type x0,
-                                      real_type y0,
-                                      real_type kappa,
-                                      real_type c0,
-                                      real_type s0,
-                                      real_type angle[],
-                                      real_type s[] ) {
-    real_type xk  = x0*kappa;
-    real_type yk  = y0*kappa;
-    real_type Rk  = R*kappa;
-    real_type tmp = xk*s0-yk*c0;
-    real_type A   = tmp-1;
-    real_type B   = xk*c0+yk*s0;
-    real_type C   = 1+(xk*xk+yk*yk-Rk*Rk)-tmp;
-    real_type x[2], y[2];
-    int_type  nsol = solveLinearQuadratic2( A, B, C, x, y );
-
-    for ( int_type k=0; k < nsol; ++k ) {
-      real_type sk = atan2(y[k],x[k]);
-      if ( sk < 0 ) sk += m_2pi;
-      s[k]     = sk/kappa;
-      angle[k] = atan2(y[k],x[k]);
-    }
-    return nsol;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -747,57 +718,6 @@ namespace G2lib {
     return (th_DDD-th_D*th_D*th_D)*C-3*(th_DD*th_D)*S;
   }
 
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  void
-  BaseCurve::tg( real_type s, real_type tg[2] ) const {
-    tg[0] = tx(s);
-    tg[1] = ty(s);
-  }
-
-  void
-  BaseCurve::tg_D( real_type s, real_type tg_D[2] ) const {
-    tg_D[0] = tx_D(s);
-    tg_D[1] = ty_D(s);
-  }
-
-  void
-  BaseCurve::tg_DD( real_type s, real_type tg_DD[2] ) const {
-    tg_DD[0] = tx_DD(s);
-    tg_DD[1] = ty_DD(s);
-  }
-
-  void
-  BaseCurve::tg_DDD( real_type s, real_type tg_DDD[2] ) const {
-    tg_DDD[0] = tx_DDD(s);
-    tg_DDD[1] = ty_DDD(s);
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-  void
-  BaseCurve::nor( real_type s, real_type n[2] ) const {
-    n[0] = nx(s);
-    n[1] = ny(s);
-  }
-
-  void
-  BaseCurve::nor_D( real_type s, real_type n_D[2] ) const {
-    n_D[0] = nx_D(s);
-    n_D[1] = ny_D(s);
-  }
-
-  void
-  BaseCurve::nor_DD( real_type s, real_type n_DD[2] ) const {
-    n_DD[0] = nx_DD(s);
-    n_DD[1] = ny_DD(s);
-  }
-
-  void
-  BaseCurve::nor_DDD( real_type s, real_type n_DDD[2] ) const {
-    n_DDD[0] = nx_DDD(s);
-    n_DDD[1] = ny_DDD(s);
-  }
-
   /*\
    |         __  __          _
    |   ___  / _|/ _|___  ___| |_
@@ -845,11 +765,11 @@ namespace G2lib {
                    real_type   offs,
                    real_type & x,
                    real_type & y ) const {
-    real_type n[2];
-    nor( s, n );
+    real_type nx, ny;
+    nor( s, nx, ny );
     eval( s, x, y );
-    x += offs * n[0];
-    y += offs * n[1];
+    x += offs * nx;
+    y += offs * ny;
   }
 
   void
@@ -857,11 +777,11 @@ namespace G2lib {
                      real_type   offs,
                      real_type & x_D,
                      real_type & y_D ) const {
-    real_type n_D[2];
-    nor_D( s, n_D );
+    real_type nx_D, ny_D;
+    nor_D( s, nx_D, ny_D );
     eval_D( s, x_D, y_D );
-    x_D += offs * n_D[0];
-    y_D += offs * n_D[1];
+    x_D += offs * nx_D;
+    y_D += offs * ny_D;
   }
 
   void
@@ -869,11 +789,11 @@ namespace G2lib {
                       real_type   offs,
                       real_type & x_DD,
                       real_type & y_DD ) const {
-    real_type n_DD[2];
-    nor_D( s, n_DD );
+    real_type nx_DD, ny_DD;
+    nor_D( s, nx_DD, ny_DD );
     eval_DD( s, x_DD, y_DD );
-    x_DD += offs * n_DD[0];
-    y_DD += offs * n_DD[1];
+    x_DD += offs * nx_DD;
+    y_DD += offs * ny_DD;
   }
 
   void
@@ -881,11 +801,11 @@ namespace G2lib {
                        real_type   offs,
                        real_type & x_DDD,
                        real_type & y_DDD ) const {
-    real_type n_DDD[2];
-    nor_D( s, n_DDD );
+    real_type nx_DDD, ny_DDD;
+    nor_D( s, nx_DDD, ny_DDD );
     eval_DDD( s, x_DDD, y_DDD );
-    x_DDD += offs * n_DDD[0];
-    y_DDD += offs * n_DDD[1];
+    x_DDD += offs * nx_DDD;
+    y_DDD += offs * ny_DDD;
   }
 
 }

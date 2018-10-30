@@ -292,48 +292,6 @@ namespace G2lib {
 
     virtual
     real_type
-    nx( real_type ) const G2LIB_OVERRIDE
-    { return -s0; }
-
-    virtual
-    real_type
-    ny( real_type ) const G2LIB_OVERRIDE
-    { return c0; }
-
-    virtual
-    real_type
-    nx_D( real_type ) const G2LIB_OVERRIDE
-    { return 0; }
-
-    virtual
-    real_type
-    ny_D( real_type ) const G2LIB_OVERRIDE
-    { return 0; }
-
-    virtual
-    real_type
-    nx_DD( real_type ) const G2LIB_OVERRIDE
-    { return 0; }
-
-    virtual
-    real_type
-    ny_DD( real_type ) const G2LIB_OVERRIDE
-    { return 0; }
-
-    virtual
-    real_type
-    nx_DDD( real_type ) const G2LIB_OVERRIDE
-    { return 0; }
-
-    virtual
-    real_type
-    ny_DDD( real_type ) const G2LIB_OVERRIDE
-    { return 0; }
-
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    virtual
-    real_type
     tx( real_type ) const G2LIB_OVERRIDE
     { return c0; }
 
@@ -376,45 +334,23 @@ namespace G2lib {
 
     virtual
     void
-    nor( real_type, real_type n[2] ) const G2LIB_OVERRIDE
-    { n[0] = -s0; n[1] = c0; }
+    tg( real_type, real_type & tx, real_type & ty ) const G2LIB_OVERRIDE
+    { tx = c0; ty = s0; }
 
     virtual
     void
-    nor_D( real_type, real_type n_D[2] ) const G2LIB_OVERRIDE
-    { n_D[0] = n_D[1] = 0; }
+    tg_D( real_type, real_type & tx_D, real_type & ty_D ) const G2LIB_OVERRIDE
+    { tx_D = ty_D = 0; }
 
     virtual
     void
-    nor_DD( real_type, real_type n_DD[2] ) const G2LIB_OVERRIDE
-    { n_DD[0] = n_DD[1] = 0; }
+    tg_DD( real_type, real_type & tx_DD, real_type & ty_DD ) const G2LIB_OVERRIDE
+    { tx_DD = ty_DD = 0; }
 
     virtual
     void
-    nor_DDD( real_type, real_type n_DDD[2] ) const G2LIB_OVERRIDE
-    { n_DDD[0] = n_DDD[1] = 0; }
-
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    virtual
-    void
-    tg( real_type, real_type t[2] ) const G2LIB_OVERRIDE
-    { t[0] = c0; t[1] = s0; }
-
-    virtual
-    void
-    tg_D( real_type, real_type t_D[2] ) const G2LIB_OVERRIDE
-    { t_D[0] = t_D[1] = 0; }
-
-    virtual
-    void
-    tg_DD( real_type, real_type t_DD[2] ) const G2LIB_OVERRIDE
-    { t_DD[0] = t_DD[1] = 0; }
-
-    virtual
-    void
-    tg_DDD( real_type, real_type t_DDD[2] ) const G2LIB_OVERRIDE
-    { t_DDD[0] = t_DDD[1] = 0; }
+    tg_DDD( real_type, real_type & tx_DDD, real_type & ty_DDD ) const G2LIB_OVERRIDE
+    { tx_DDD = ty_DDD = 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

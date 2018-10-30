@@ -123,20 +123,12 @@ classdef CircleArc < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotTriangles( self, varargin )
-      arc = self.to_nurbs();
-      if nargin > 1
-        [p1,p2,p3] = self.bbTriangles(varargin{1});
-      else
-        [p1,p2,p3] = self.bbTriangles();
-      end
+      [p1,p2,p3] = self.bbTriangles();
       for k=1:size(p1,2)
         x = [ p1(1,k), p2(1,k), p3(1,k), p1(1,k) ];
         y = [ p1(2,k), p2(2,k), p3(2,k), p1(2,k) ];
-        if nargin > 2
-          plot( x, y, varargin{2:end});
-        else
-          plot( x, y );
-        end
+        fill( x, y, 'red','FaceAlpha', 0.5 );
+        %plot( x, y, varargin{:});
       end
     end
   end

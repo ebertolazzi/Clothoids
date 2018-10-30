@@ -313,6 +313,7 @@
 		D92EFA922186932B00BF8E18 /* testIntersect2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testIntersect2.cc; sourceTree = "<group>"; };
 		D92EFAAA2187B03600BF8E18 /* testIntersect3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testIntersect3; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92EFAAB2187B05800BF8E18 /* testIntersect3.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testIntersect3.cc; sourceTree = "<group>"; };
+		D92EFAAD2188742200BF8E18 /* ClothoidList.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClothoidList.hh; sourceTree = "<group>"; };
 		D938F4DB1DD3B83000E08A70 /* G2solver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = G2solver; sourceTree = BUILT_PRODUCTS_DIR; };
 		D938F4E71DD3B84A00E08A70 /* Clothoid.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Clothoid.hh; sourceTree = "<group>"; };
 		D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CubicRootsFlocke.cc; sourceTree = "<group>"; };
@@ -483,13 +484,14 @@
 				D9099D281F600B9400740ECF /* Circle.cc */,
 				D971F8981F613BC2000E663E /* Biarc.hh */,
 				D971F8971F613BC2000E663E /* Biarc.cc */,
-				D9E22EE1216CB48F00C033D2 /* PolyLine.hh */,
-				D9E22EE0216CB48F00C033D2 /* PolyLine.cc */,
 				D938F4E71DD3B84A00E08A70 /* Clothoid.hh */,
 				D9FCD3352075552600553A10 /* Clothoid.cc */,
-				D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */,
-				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
+				D92EFAAD2188742200BF8E18 /* ClothoidList.hh */,
 				D9614FD41FB8609F007E5770 /* ClothoidList.cc */,
+				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
+				D9E22EE1216CB48F00C033D2 /* PolyLine.hh */,
+				D9E22EE0216CB48F00C033D2 /* PolyLine.cc */,
+				D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */,
 				D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */,
 				D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */,
 				D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */,
@@ -1119,7 +1121,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1188,7 +1190,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;

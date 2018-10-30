@@ -27,13 +27,16 @@ npts = 1000;
 CLOT.plot(npts,'Color','blue','LineWidth',2);
 hold on;
 
-max_angle = pi/2;
-max_size  = 0.25;
+max_angle = pi/3;
+max_size  = 100;
 
-for offs=[-0.5,0,0.5]
-  TT = CLOT.bbox( max_angle, max_size, offs );
-  for i=1:size(TT,2)
-    fill( TT(1:2:end,i), TT(2:2:end,i), 'red');
+for offs=[-0.75,0,0.75]
+  [P1,P2,P3] = CLOT.bbTriangles( max_angle, max_size, offs );
+  
+  for i=1:size(P1,2)
+    fill( [P1(1,i),P2(1,i),P3(1,i)], ...
+          [P1(2,i),P2(2,i),P3(2,i)], ...
+          'red','FaceAlpha',0.1);
   end
 end
 %plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 2 );

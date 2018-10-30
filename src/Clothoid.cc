@@ -28,50 +28,186 @@ namespace G2lib {
 
   using namespace std;
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::changeCurvilinearOrigin( real_type s0, real_type newL ) {
-    real_type new_theta, new_kappa, new_x0, new_y0;
-    eval( s0, new_theta, new_kappa, new_x0, new_y0 );
-    CD.x0     = new_x0;
-    CD.y0     = new_y0;
-    CD.theta0 = new_theta;
-    CD.kappa0 = new_kappa;
-    L         = newL;
+  ClothoidCurve::bbox( real_type & xmin,
+                       real_type & ymin,
+                       real_type & xmax,
+                       real_type & ymax ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::bbox" ) ;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  ClothoidCurve::bbox( real_type   offs,
+                       real_type & xmin,
+                       real_type & ymin,
+                       real_type & xmax,
+                       real_type & ymax ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::bbox" ) ;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidCurve::rotate( real_type angle, real_type cx, real_type cy ) {
-    real_type dx  = CD.x0 - cx;
-    real_type dy  = CD.y0 - cy;
-    real_type C   = cos(angle);
-    real_type S   = sin(angle);
-    real_type ndx = C*dx - S*dy;
-    real_type ndy = C*dy + S*dx;
-    CD.x0      = cx + ndx;
-    CD.y0      = cy + ndy;
-    CD.theta0 += angle;
+  bool
+  ClothoidCurve::collision( BaseCurve const & obj ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::collision" );
+    return false;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidCurve::scale( real_type s ) {
-    CD.kappa0 /= s;
-    CD.dk     /= s*s;
-    L         *= s;
+  bool
+  ClothoidCurve::collision( real_type         offs,
+                            BaseCurve const & obj,
+                            real_type         offs_obj ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::collision" ) ;
+    return false;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  void
+  ClothoidCurve::intersect( BaseCurve const & obj,
+                            IntersectList   & ilist,
+                            bool              swap_s_vals ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::intersect" ) ;
+  }
 
   void
-  ClothoidCurve::reverse() {
-    CD.theta0 += m_pi;
-    if ( CD.theta0 > m_pi ) CD.theta0 -= 2*m_pi;
-    CD.kappa0 = -CD.kappa0;
+  ClothoidCurve::intersect( real_type         offs,
+                            BaseCurve const & obj,
+                            real_type         offs_obj,
+                            IntersectList   & ilist,
+                            bool              swap_s_vals ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::intersect" ) ;
+  }
+
+  int_type
+  ClothoidCurve::projection( real_type   qx,
+                             real_type   qy,
+                             real_type & x,
+                             real_type & y,
+                             real_type & s ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" ) ;
+    return 0;
+  }
+
+  int_type // true if projection is unique and orthogonal
+  ClothoidCurve::projection( real_type   qx,
+                             real_type   qy,
+                             real_type   offs,
+                             real_type & x,
+                             real_type & y,
+                             real_type & s ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" ) ;
+    return 0;
+  }
+
+  real_type
+  ClothoidCurve::closestPoint( real_type   qx,
+                               real_type   qy,
+                               real_type   offs,
+                               real_type & x,
+                               real_type & y,
+                               real_type & s ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::closestPoint" ) ;
+    return 0;
+  }
+
+  static real_type const one_degree = m_pi/180;
+  static real_type const n90_degree = 90*one_degree;
+  static int_type  const max_level  = 10;
+
+  void
+  ClothoidCurve::bbTriangles( real_type                 offs,
+                              std::vector<Triangle2D> & tvec,
+                              bbDataForSplit const    & data,
+                              real_type                 max_angle,
+                              real_type                 max_size,
+                              int_type                  level ) const {
+
+    real_type dtheta = std::abs(data.theta0 - data.theta1);
+    real_type dx     = data.x1-data.x0;
+    real_type dy     = data.y1-data.y0;
+    if ( level >= max_level || (hypot(dx,dy) <= max_size && dtheta <= max_angle) ) {
+      real_type tx0   = cos(data.theta0);
+      real_type ty0   = sin(data.theta0);
+      real_type alpha = data.s1-data.s0; // se angolo troppo piccolo uso approx piu rozza
+      if ( dtheta > one_degree && dtheta < n90_degree ) {
+        real_type tx1 = cos(data.theta1);
+        real_type ty1 = sin(data.theta1);
+        real_type det = tx1*ty0-tx0*ty1;
+        alpha = (dy*tx1 - dx*ty1)/det;
+      }
+      real_type x2 = data.x0 + alpha*tx0;
+      real_type y2 = data.y0 + alpha*ty0;
+      //real_type x2 = (data.x0 + data.x1)/2;
+      //real_type y2 = (data.y0 + data.y1)/2;
+      Triangle2D t( data.x0, data.y0,
+                    x2, y2,
+                    data.x1, data.y1 );
+      tvec.push_back( t );
+      return;
+    }
+
+    real_type sM     = (data.s0+data.s1)/2;
+    real_type thetaM = CD.theta(sM);
+    real_type xM, yM;
+    CD.eval( sM, offs, xM, yM );
+
+    bbDataForSplit dataNew;
+    dataNew.s0     = data.s0;
+    dataNew.s1     = sM;
+    dataNew.theta0 = data.theta0;
+    dataNew.theta1 = thetaM;
+    dataNew.x0     = data.x0;
+    dataNew.y0     = data.y0;
+    dataNew.x1     = xM;
+    dataNew.y1     = yM;
+    bbTriangles( offs, tvec, dataNew, max_angle, max_size, level+1 );
+
+    dataNew.s0     = sM;
+    dataNew.s1     = data.s1;
+    dataNew.theta0 = thetaM;
+    dataNew.theta1 = data.theta1;
+    dataNew.x0     = xM;
+    dataNew.y0     = yM;
+    dataNew.x1     = data.x1;
+    dataNew.y1     = data.y1;
+    bbTriangles( offs, tvec, dataNew, max_angle, max_size, level+1 );
+  }
+
+  void
+  ClothoidCurve::bbTriangles( real_type                 offs,
+                              std::vector<Triangle2D> & tvec,
+                              real_type                 max_angle,
+                              real_type                 max_size ) const {
+
+    bbDataForSplit data;
+    data.s0     = 0;
+    data.theta0 = CD.theta0;
+    CD.eval( 0, offs, data.x0, data.y0 ) ;
+
+    if ( CD.kappa0*CD.dk >= 0 || CD.dk*CD.kappa(L) <= 0 ) {
+      data.s1     = L;
+      data.theta1 = CD.theta(L);
+      CD.eval( L, offs, data.x1, data.y1 ) ;
+      bbTriangles( offs, tvec, data, max_angle, max_size, 0 );
+    } else {
+      // flex inside, split clothoid
+      real_type sflex = -CD.kappa0/CD.dk;
+      data.s1     = sflex;
+      data.theta1 = CD.theta(sflex);
+      CD.eval( sflex, offs, data.x1, data.y1 ) ;
+      bbTriangles( offs, tvec, data, max_angle, max_size, 0 );
+      data.s0     = data.s1;
+      data.theta0 = data.theta1;
+      data.x0     = data.x1;
+      data.y0     = data.y1;
+      data.s1     = L;
+      data.theta1 = CD.theta(L);
+      CD.eval( L, offs, data.x1, data.y1 ) ;
+      bbTriangles( offs, tvec, data, max_angle, max_size, 0 );
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -217,9 +353,9 @@ namespace G2lib {
       data.L  = s_med;
       bbSplit_internal( data, bb );
       // trim
-      CD.eval( s_med,
-               data.cd.theta0, data.cd.kappa0,
-               data.cd.x0, data.cd.y0 );
+      CD.evaluate( s_med,
+                   data.cd.theta0, data.cd.kappa0,
+                   data.cd.x0, data.cd.y0 );
       data.s0 = s_med;
       data.L  = this->L - s_med;
       bbSplit_internal( data, bb );
@@ -250,8 +386,8 @@ namespace G2lib {
     real_type theta_min, kappa_min, x_min, y_min,
               theta_max, kappa_max, x_max, y_max;
 
-    data.cd.eval( 0,      theta_min, kappa_min, x_min, y_min );
-    data.cd.eval( data.L, theta_max, kappa_max, x_max, y_max );
+    data.cd.evaluate( 0,      theta_min, kappa_min, x_min, y_min );
+    data.cd.evaluate( data.L, theta_max, kappa_max, x_max, y_max );
 
     real_type dtheta = std::abs( theta_max - theta_min );
     real_type dx     = x_max - x_min;
@@ -261,10 +397,11 @@ namespace G2lib {
     if ( dtheta          <= data.split_angle &&
          len*tan(dangle) <= data.split_size ) {
       bbData bb;
-      real_type p0[2], p1[2], p2[2];
-      bool ok = data.cd.bbTriangle( data.L, data.split_offs, p0, p1, p2 );
+      real_type x0, y0, x1, y1, x2, y2;
+      bool ok = data.cd.bbTriangle( data.L, data.split_offs,
+                                    x0, y0, x1, y1, x2, y2 );
       G2LIB_ASSERT( ok, "ClothoidCurve::bbSplit_internal, bad bounding box" );
-      bb.t.build( p0, p1, p2 );
+      bb.t.build( x0, y0, x1, y1, x2, y2 );
       bb.s0 = data.s0;
       bb.L  = data.L;
       bb.cd = data.cd;
@@ -281,9 +418,9 @@ namespace G2lib {
       bbSplit_internal( d, bbV );
 
       // trim
-      data.cd.eval( Lh,
-                    d.cd.theta0, d.cd.kappa0,
-                    d.cd.x0, d.cd.y0 );
+      data.cd.evaluate( Lh,
+                        d.cd.theta0, d.cd.kappa0,
+                        d.cd.x0, d.cd.y0 );
       d.s0 = data.s0 + Lh;
       d.L  = Lh;
       bbSplit_internal( d, bbV );
@@ -421,7 +558,7 @@ namespace G2lib {
                          real_type & t ) const {
     real_type X, Y, nx, ny;
     real_type d = closestPoint( x, y, X, Y, s );
-    NOR( s, nx, ny );
+    nor( s, nx, ny );
     t = nx*(x-X) + ny*(y-Y);
     // check if projection is orthogonal on the curve
     #if 0

@@ -349,7 +349,7 @@ do_collision( int nlhs, mxArray       *plhs[],
   if      ( kind == "LineSegment"   ) ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
   else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
   else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
-  //else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+  else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
   //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
   //else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
   else {
@@ -393,7 +393,7 @@ do_intersect( int nlhs, mxArray       *plhs[],
   if      ( kind == "LineSegment"   ) ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
   else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
   else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
-  //else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+  else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
   //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
   //else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
   else {
@@ -981,6 +981,25 @@ do_theta_DDD( int nlhs, mxArray       *plhs[],
 
 static
 void
+do_xy_begin( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('xyBegin',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->xBegin() );
+  setScalarValue( arg_out_1, ptr->yBegin() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
 do_x_begin( int nlhs, mxArray       *plhs[],
             int nrhs, mxArray const *prhs[] ) {
 
@@ -1027,6 +1046,25 @@ do_theta_begin( int nlhs, mxArray       *plhs[],
   MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
   setScalarValue( arg_out_0, ptr->thetaBegin() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_xy_end( int nlhs, mxArray       *plhs[],
+           int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('xyEnd',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->xEnd() );
+  setScalarValue( arg_out_1, ptr->yEnd() );
 
   #undef CMD
 }
@@ -1111,9 +1149,11 @@ CMD_THETA,               \
 CMD_THETA_D,             \
 CMD_THETA_DD,            \
 CMD_THETA_DDD,           \
+CMD_XY_BEGIN,            \
 CMD_X_BEGIN,             \
 CMD_Y_BEGIN,             \
 CMD_THETA_BEGIN,         \
+CMD_XY_END,              \
 CMD_X_END,               \
 CMD_Y_END,               \
 CMD_THETA_END
@@ -1144,9 +1184,11 @@ CMD_THETA_END
 {"theta_D",CMD_THETA_D},            \
 {"theta_DD",CMD_THETA_DD},          \
 {"theta_DDD",CMD_THETA_DDD},        \
+{"xyBegin",CMD_XY_BEGIN},           \
 {"xBegin",CMD_X_BEGIN},             \
 {"yBegin",CMD_Y_BEGIN},             \
 {"thetaBegin",CMD_THETA_BEGIN},     \
+{"xyEnd",CMD_XY_END},               \
 {"xEnd",CMD_X_END},                 \
 {"yEnd",CMD_Y_END},                 \
 {"thetaEnd",CMD_THETA_END}
@@ -1227,6 +1269,9 @@ case CMD_THETA_DD:                            \
 case CMD_THETA_DDD:                           \
   do_theta_DDD( nlhs, plhs, nrhs, prhs );     \
   break;                                      \
+case CMD_XY_BEGIN:                            \
+  do_xy_begin( nlhs, plhs, nrhs, prhs );      \
+  break;                                      \
 case CMD_X_BEGIN:                             \
   do_x_begin( nlhs, plhs, nrhs, prhs );       \
   break;                                      \
@@ -1235,6 +1280,9 @@ case CMD_Y_BEGIN:                             \
   break;                                      \
 case CMD_THETA_BEGIN:                         \
   do_theta_begin( nlhs, plhs, nrhs, prhs );   \
+  break;                                      \
+case CMD_XY_END:                              \
+  do_xy_end( nlhs, plhs, nrhs, prhs );        \
   break;                                      \
 case CMD_X_END:                               \
   do_x_end( nlhs, plhs, nrhs, prhs );         \

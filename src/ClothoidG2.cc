@@ -17,7 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Clothoid.hh"
+#include "ClothoidList.hh"
 #include "Biarc.hh"
 //#include "CubicRootsFlocke.hh"
 
@@ -979,14 +979,14 @@ namespace G2lib {
                      real_type & x,
                      real_type & y ) const {
     if ( s < S0.length() ) {
-      S0.eval(s, theta, kappa, x, y );
+      S0.evaluate( s, theta, kappa, x, y );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval(s, theta, kappa, x, y );
+        SM.evaluate( s, theta, kappa, x, y );
       } else {
         s -= SM.length();
-        S1.eval(s, theta, kappa, x, y );
+        S1.evaluate( s, theta, kappa, x, y );
       }
     }
   }

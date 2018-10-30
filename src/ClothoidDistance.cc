@@ -44,7 +44,7 @@ namespace G2lib {
     real_type SSS = ds;
     while ( SSS <= L ) {
       real_type theta, kappa, XS, YS;
-      CD.eval( SSS, theta, kappa, XS, YS );
+      CD.evaluate( SSS, theta, kappa, XS, YS );
       real_type dst = hypot( XS-qx, YS-qy );
       if ( dst < DST ) {
         DST = dst;
@@ -73,7 +73,7 @@ namespace G2lib {
     real_type theta, kappa, dS, dx, dy;
     real_type s = S;
     for ( int iter = 0; iter < 20 && nb < 2; ++iter ) {
-      CD.eval( s, theta, kappa, dx, dy ); dx -= qx; dy -= qy;
+      CD.evaluate( s, theta, kappa, dx, dy ); dx -= qx; dy -= qy;
 
       real_type Cs  = cos(theta);
       real_type Ss  = sin(theta);
@@ -131,7 +131,7 @@ namespace G2lib {
     bool ok0 = cos(phi0) < 0; // distanza decrescente
 
     real_type theta1, kappa1, x1, y1;
-    CD.eval( L, theta1, kappa1, x1, y1 );
+    CD.evaluate( L, theta1, kappa1, x1, y1 );
     real_type phi1 = theta1 - atan2( y1 - qy, x1 - qx );
     bool ok1 = cos(phi1) > 0; // distanza crescente
 
