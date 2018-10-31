@@ -56,6 +56,10 @@
 
 namespace G2lib {
 
+  using std::min;
+  using std::max;
+  using std::swap;
+
   static
   inline
   real_type
@@ -215,7 +219,7 @@ namespace G2lib {
     real_type d1 = hypot( x-p1[0], y-p1[1] );
     real_type d2 = hypot( x-p2[0], y-p2[1] );
     real_type d3 = hypot( x-p3[0], y-p3[1] );
-    return std::max(d1,std::max(d2,d3));
+    return max(d1,max(d2,d3));
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -271,8 +275,8 @@ namespace G2lib {
     real_type d3 = distSeg( x, y, p3, p1 );
 #endif
 
-    if ( d1 > d2 ) std::swap( d1, d2 );
-    if ( d1 > d3 ) std::swap( d1, d3 );
+    if ( d1 > d2 ) swap( d1, d2 );
+    if ( d1 > d3 ) swap( d1, d3 );
     return d1;
 
   }

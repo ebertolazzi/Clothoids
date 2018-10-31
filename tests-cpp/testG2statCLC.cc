@@ -4,13 +4,10 @@
 #include "TicToc.hh"
 #include <cmath>
 #include <iostream>
-#include <stack>
-#include <ctime>
 #include <map>
 
-std::stack<clock_t> tictoc_stack;
-
 using G2lib::real_type;
+using namespace std;
 
 static const real_type m_pi = 3.14159265358979323846264338328;
 

@@ -21,6 +21,9 @@
 
 namespace G2lib {
 
+  using std::abs;
+  using std::swap;
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
   // x^3 + A x^2 + B x + C
@@ -200,7 +203,7 @@ namespace G2lib {
     } else if ( isZero(c) ) { // a*z^2 + b*z  = 0
       nr = 2;
       r1 = -b/a;
-      if ( r1 > 0 ) std::swap(r1,r2);
+      if ( r1 > 0 ) swap(r1,r2);
     } else { // Compute discriminant avoiding overflow.
       b /= 2; // b now b/2
       real_type abs_b = abs(b);
@@ -220,12 +223,12 @@ namespace G2lib {
         r1 = (d-b)/a;
         if ( !isZero(r1) ) {
           r2 = (c/r1)/a;
-          if ( r1 > r2 ) std::swap(r1,r2); // order roots
+          if ( r1 > r2 ) swap(r1,r2); // order roots
         }
         nr = 2;
       } else {
         r1 = -b/a;          // real part
-        r2 = std::abs(d/a); // immaginary part
+        r2 = abs(d/a); // immaginary part
         nc = 2;
       }
     }
@@ -375,10 +378,10 @@ namespace G2lib {
       r1 = 0;
       solveQuadratic( A, B, C, r2, r3, nr, nc );
       if ( nr == 1 ) { // caso degenere
-        if ( r1 > r2 ) std::swap(r1,r2);
+        if ( r1 > r2 ) swap(r1,r2);
       } else if ( nr == 2 ) {
-        if ( r1 > r2 ) std::swap(r1,r2);
-        if ( r2 > r3 ) std::swap(r2,r3);
+        if ( r1 > r2 ) swap(r1,r2);
+        if ( r2 > r3 ) swap(r2,r3);
       }
       ++nr;
       return 0;
@@ -459,7 +462,7 @@ namespace G2lib {
 /*
     real_type const pp[]  = { A, B, C, D };
     real_type pH = CompHorner( pp, 3, r1, true );
-    std::cout << "pH = " << pH << "\n";
+    cout << "pH = " << pH << "\n";
 
     // una extra correzione con Newton dopo riscalatura
     real_type const dpp[] = { 3*A, 2*B, C };
@@ -470,15 +473,15 @@ namespace G2lib {
     }
 
     pH = CompHorner( pp, 3, r1, true );
-    std::cout << "pH = " << pH << "\n";
+    cout << "pH = " << pH << "\n";
 */
     // deflate
     real_type b0, b1;
     deflateCubicPolynomial( A, B, C, D, r1, b1, b0 );
     solveQuadratic( A, b1, b0, r2, r3, nr, nc );
     if ( nr == 2 ) { // if real roots sort it!
-      if ( r1 > r2 ) std::swap(r1,r2);
-      if ( r2 > r3 ) std::swap(r2,r3);
+      if ( r1 > r2 ) swap(r1,r2);
+      if ( r2 > r3 ) swap(r2,r3);
     }
     ++nr; // one more real root
     return iter;

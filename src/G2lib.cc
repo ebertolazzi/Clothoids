@@ -31,11 +31,17 @@
 
 namespace G2lib {
 
-  real_type const machepsi     = std::numeric_limits<real_type>::epsilon();
+  using std::numeric_limits;
+  using std::fpclassify;
+  using std::lower_bound;
+  using std::abs;
+  using std::sqrt;
+
+  real_type const machepsi     = numeric_limits<real_type>::epsilon();
   real_type const machepsi10   = 10*machepsi;
   real_type const machepsi100  = 100*machepsi;
   real_type const machepsi1000 = 1000*machepsi;
-  real_type const sqrtMachepsi = std::sqrt(machepsi);
+  real_type const sqrtMachepsi = sqrt(machepsi);
   real_type const m_pi         = 3.14159265358979323846264338328;  // pi
   real_type const m_pi_2       = 1.57079632679489661923132169164;  // pi/2
   real_type const m_2pi        = 6.28318530717958647692528676656;  // 2*pi
@@ -68,7 +74,7 @@ namespace G2lib {
   */
   real_type
   Sinc( real_type x ) {
-    if ( std::abs(x) < 0.02 ) {
+    if ( abs(x) < 0.02 ) {
       real_type x2 = x*x;
       return 1-(x2/6)*(1-(x2/20)*(1-x2/42));
     } else {
@@ -79,22 +85,22 @@ namespace G2lib {
   real_type
   Sinc_D( real_type x ) {
     real_type x2 = x*x;
-    if ( std::abs(x) < 0.04 ) return -(x/3)*(1-(x2/10)*(1-(x2/28)*(1-(x2/54))));
-    else                      return (cos(x)-sin(x)/x)/x;
+    if ( abs(x) < 0.04 ) return -(x/3)*(1-(x2/10)*(1-(x2/28)*(1-(x2/54))));
+    else                 return (cos(x)-sin(x)/x)/x;
   }
 
   real_type
   Sinc_DD( real_type x ) {
     real_type x2 = x*x;
-    if ( std::abs(x) < 0.02 ) return -1./3.+x2*(0.1-x2*((1.0/168.0)-(x2/6480)));
-    else                      return ((2/x2-1)*sin(x)-2*cos(x)/x)/x;
+    if ( abs(x) < 0.02 ) return -1./3.+x2*(0.1-x2*((1.0/168.0)-(x2/6480)));
+    else                 return ((2/x2-1)*sin(x)-2*cos(x)/x)/x;
   }
 
   real_type
   Sinc_DDD( real_type x ) {
     real_type x2 = x*x;
-    if ( std::abs(x) < 0.009 ) return (1.0/5.0+(-1.0/42.0+(1.0/1080.0)*x2)*x2)*x;
-    else                       return ((6/x2-1)*cos(x)+(3-6/x2)*sin(x)/x)/x;
+    if ( abs(x) < 0.009 ) return (1.0/5.0+(-1.0/42.0+(1.0/1080.0)*x2)*x2)*x;
+    else                  return ((6/x2-1)*cos(x)+(3-6/x2)*sin(x)/x)/x;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -104,7 +110,7 @@ namespace G2lib {
   */
   real_type
   Cosc( real_type x ) {
-    if ( std::abs(x) < 0.04 ) {
+    if ( abs(x) < 0.04 ) {
       real_type x2 = x*x;
       return (x/2)*(1-(x2/12)*(1-(x2/30)*(1-x2/56)));
     } else {
@@ -114,7 +120,7 @@ namespace G2lib {
 
   real_type
   Cosc_D( real_type x ) {
-    if ( std::abs(x) < 0.02 ) {
+    if ( abs(x) < 0.02 ) {
       real_type x2  = x*x;
       return 0.5*(1-(x2/4)*(1-(x2/18)*(1-(x2/40))));
     } else {
@@ -125,15 +131,15 @@ namespace G2lib {
   real_type
   Cosc_DD( real_type x ) {
     real_type x2  = x*x;
-    if ( std::abs(x) < 0.04 ) return -(x/4)*(1-(x2/9)*(1-((3.0/80.0)*x2)*(1-((2.0/105.0)*x2))));
-    else                      return ((1-2/x2)*cos(x)+(2/x-sin(x))/x)/x;
+    if ( abs(x) < 0.04 ) return -(x/4)*(1-(x2/9)*(1-((3.0/80.0)*x2)*(1-((2.0/105.0)*x2))));
+    else                 return ((1-2/x2)*cos(x)+(2/x-sin(x))/x)/x;
   }
 
   real_type
   Cosc_DDD( real_type x ) {
     real_type x2  = x*x;
-    if ( std::abs(x) < 0.02 ) return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0;
-    else                      return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x;
+    if ( abs(x) < 0.02 ) return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0;
+    else                 return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -143,7 +149,7 @@ namespace G2lib {
   */
   real_type
   Atanc( real_type x ) {
-    if ( std::abs(x) < 0.03 ) {
+    if ( abs(x) < 0.03 ) {
       real_type x2 = x*x;
       return 1-x2*((1./3.)-x2*((1./5.)-x2*((1./7.)-x2*((1./9.)-(x2/11)))));
     } else {
@@ -154,7 +160,7 @@ namespace G2lib {
   real_type
   Atanc_D( real_type x ) {
     real_type x2 = x*x;
-    if ( std::abs(x) < 0.03 ) {
+    if ( abs(x) < 0.03 ) {
       return x*( -(2./3.) + x2*( (4./5.) + x2*( -(6./7.) + x2*( (8./9.) + x2*( -(10./11.) + x2*(12./13.))))));
     } else {
       return (1/(1+x2)-atan(x)/x)/x;
@@ -164,7 +170,7 @@ namespace G2lib {
   real_type
   Atanc_DD( real_type x ) {
     real_type x2 = x*x;
-    if ( std::abs(x) < 0.02 ) {
+    if ( abs(x) < 0.02 ) {
       return -2./3.+ x2*( (12./5.) + (-(30./7.) + x2 * ( (56./9.) + x2*( -(90./11.) + x2 * (132./13.)))));
     } else {
       return (2*atan(x)/x-(4*x2+2)/power2(1+x2))/x2;
@@ -174,7 +180,7 @@ namespace G2lib {
   real_type
   Atanc_DDD( real_type x ) {
     real_type x2 = x*x;
-    if ( std::abs(x) < 0.02 ) {
+    if ( abs(x) < 0.02 ) {
       return x*(24./5.+x2*(-120./7. + x2 * (112./3. + x2 * (-720./11. + x2*(1320./13. - x2*728./5.)))));
     } else {
       return ( ((18*x2+16)*x2+6)/power3(x2+1)-6*atan(x)/x )/(x2*x);
@@ -186,10 +192,10 @@ namespace G2lib {
   static
   real_type
   maxabs3( real_type A, real_type B, real_type C ) {
-    real_type res  = std::abs(A);
-    real_type absB = std::abs(B);
+    real_type res  = abs(A);
+    real_type absB = abs(B);
     if ( res < absB ) res = absB;
-    real_type absC = std::abs(C);
+    real_type absC = abs(C);
     if ( res < absC ) res = absC;
     return res;
   }
@@ -293,7 +299,7 @@ namespace G2lib {
       real_type xx = kB*z[i]/2;
       real_type yy = sqrt( tmp )/2;
       tmp = Tx*xx+kA*z[i]+T;
-      if ( std::abs(tmp-Ty*yy) < std::abs(tmp+Ty*yy) ) yy = -yy;
+      if ( abs(tmp-Ty*yy) < abs(tmp+Ty*yy) ) yy = -yy;
       x[nc] = xx;
       y[nc] = yy;
       ++nc;
@@ -312,13 +318,13 @@ namespace G2lib {
   real_type
   invCoscSinc( real_type k, real_type x, real_type y ) {
     real_type ds, s = y;
-    if ( std::abs(k) > sqrtMachepsi ) s = atan2( y*k, 1-k*x )/k;
+    if ( abs(k) > sqrtMachepsi ) s = atan2( y*k, 1-k*x )/k;
     int_type iter = 0;
     do {
       real_type sk = s*k;
       ds = (y-Sinc(sk)*s)*cos(sk)/(1-sin(sk)*k*y);
       s += ds ;
-    } while ( std::abs(ds) > machepsi100 && ++iter < 5 );
+    } while ( abs(ds) > machepsi100 && ++iter < 5 );
     return s;
   }
 
@@ -351,7 +357,7 @@ namespace G2lib {
     real_type T2    = L2*kappa1-2*Sa1;
     real_type xx1[2], yy1[2], xx2[2], yy2[3];
     int_type nsol;
-    if ( std::abs(T1) > std::abs(T2) ) {
+    if ( abs(T1) > abs(T2) ) {
       real_type Tx1 = -2*(Sa1*kappa2+C12);
       real_type Ty1 = -2*(Ca1*kappa2+S12);
       nsol = solveNLsysCircleCircle( kappa2, T1, Tx1, Ty1, kappa1, xx1, yy1 );
@@ -368,8 +374,8 @@ namespace G2lib {
         yy1[i] = C12*yy2[i]+S12*xx2[i]+Ca1;
       }
     }
-    real_type len1 = m_2pi/(machepsi+std::abs(kappa1));
-    real_type len2 = m_2pi/(machepsi+std::abs(kappa1));
+    real_type len1 = m_2pi/(machepsi+abs(kappa1));
+    real_type len2 = m_2pi/(machepsi+abs(kappa1));
     for ( int_type i = 0; i < nsol; ++i ) {
       real_type ss1 = invCoscSinc( kappa1, xx1[i], yy1[i] );
       real_type ss2 = invCoscSinc( kappa2, xx2[i], yy2[i] );
@@ -394,13 +400,13 @@ namespace G2lib {
   bool
   Solve2x2::factorize( real_type A[2][2] ) {
     // full pivoting
-    real_type Amax = std::abs(A[0][0]);
-    real_type tmp  = std::abs(A[0][1]);
+    real_type Amax = abs(A[0][0]);
+    real_type tmp  = abs(A[0][1]);
     int_type ij = 0;
     if ( tmp > Amax ) { ij = 1; Amax = tmp; }
-    tmp = std::abs(A[1][0]);
+    tmp = abs(A[1][0]);
     if ( tmp > Amax ) { ij = 2; Amax = tmp; }
-    tmp = std::abs(A[1][1]);
+    tmp = abs(A[1][1]);
     if ( tmp > Amax ) { ij = 3; Amax = tmp; }
     if ( isZero(Amax) ) return false;
     if ( (ij&0x01) == 0x01 ) { j[0] = 1; j[1] = 0; }
@@ -416,7 +422,7 @@ namespace G2lib {
     LU[1][0] /= LU[0][0];
     LU[1][1] -= LU[1][0]*LU[0][1];
     // check for singularity
-    singular = std::abs( LU[1][1] ) < epsi;
+    singular = abs( LU[1][1] ) < epsi;
     return true;
   }
 
@@ -440,10 +446,10 @@ namespace G2lib {
       // U^(-1) x
       x[j[1]] /= LU[1][1];
       x[j[0]]  = (x[j[0]]-LU[0][1]*x[j[1]])/LU[0][0];
-      return FP_INFINITE != std::fpclassify(x[0]) &&
-             FP_NAN      != std::fpclassify(x[0]) &&
-             FP_INFINITE != std::fpclassify(x[1]) &&
-             FP_NAN      != std::fpclassify(x[1]);
+      return FP_INFINITE != fpclassify(x[0]) &&
+             FP_NAN      != fpclassify(x[0]) &&
+             FP_INFINITE != fpclassify(x[1]) &&
+             FP_NAN      != fpclassify(x[1]);
     }
   }
 
@@ -487,7 +493,7 @@ namespace G2lib {
       tmp *= -Atanc(tmp*k); // lunghezza
 
       if ( tmp < 0 ) {
-        real_type absk = std::abs(k);
+        real_type absk = abs(k);
         // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
         if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk;
       }
@@ -499,7 +505,7 @@ namespace G2lib {
       real_type om = atan2( b0, a0+1/k );
       if ( k < 0 ) om += m_pi;
       real_type ss = -om/k;
-      real_type t  = m_2pi/std::abs(k);
+      real_type t  = m_2pi/abs(k);
       if      ( ss < 0 ) ss += t;
       else if ( ss > t ) ss += t;
       return ss;
@@ -544,7 +550,7 @@ namespace G2lib {
         ++lastInterval;
       } else { // x >= XL[2] search the right interval
         real_type const * XE = Xvec+npts;
-        lastInterval += int_type(std::lower_bound( XL, XE, x )-XL);
+        lastInterval += int_type(lower_bound( XL, XE, x )-XL);
         if ( Xvec[lastInterval] > x ) --lastInterval;
       }
     } else if ( x < XL[0] ) { // on the left
@@ -553,7 +559,7 @@ namespace G2lib {
       } else if ( XL[-1] <= x ) { // x in [XL[-1],XL[0])
         --lastInterval;
       } else {
-        lastInterval = int_type(std::lower_bound( Xvec, XL, x )-Xvec);
+        lastInterval = int_type(lower_bound( Xvec, XL, x )-Xvec);
         if ( Xvec[lastInterval] > x ) --lastInterval;
       }
     } else {

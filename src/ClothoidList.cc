@@ -35,7 +35,9 @@
 
 namespace G2lib {
 
-  using namespace std;
+  using std::lower_bound;
+  using std::vector;
+  using std::abs;
 
   /*\
    |   ____ _       _   _           _     _ _     _     _
@@ -270,14 +272,14 @@ namespace G2lib {
     if ( s < sL[0] ) {
       if ( s > s0.front() ) {
         real_type const * sB = &s0.front();
-        last_idx = int_type(std::lower_bound( sB, sL, s )-sB);
+        last_idx = int_type(lower_bound( sB, sL, s )-sB);
       } else {
         last_idx = 0;
       }
     } else if ( s > sL[1] ) {
       if ( s < s0.back() ) {
         real_type const * sE = &s0[ns+1]; // past to the last
-        last_idx += int_type(std::lower_bound( sL, sE, s )-sL);
+        last_idx += int_type(lower_bound( sL, sE, s )-sL);
       } else {
         last_idx = ns-1;
       }
@@ -449,7 +451,7 @@ namespace G2lib {
   ClothoidList::getSTK( real_type s[],
                         real_type theta[],
                         real_type kappa[] ) const {
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     int_type  k  = 0;
     real_type ss = 0;
     while ( ic != clotoidList.end() ) {
@@ -470,7 +472,7 @@ namespace G2lib {
 
   void
   ClothoidList::getXY( real_type x[], real_type y[] ) const {
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     int_type k  = 0;
     while ( ic != clotoidList.end() ) {
       x[k] = ic->xBegin();
@@ -486,7 +488,7 @@ namespace G2lib {
 
   void
   ClothoidList::getDeltaTheta( real_type deltaTheta[] ) const {
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     int_type k = 0;
     for ( ++ic; ic != clotoidList.end(); ++ic, ++k ) {
       real_type tmp = ic->thetaBegin()-ic[-1].thetaEnd();
@@ -500,7 +502,7 @@ namespace G2lib {
 
   void
   ClothoidList::getDeltaKappa( real_type deltaKappa[] ) const {
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     int_type k = 0;
     for ( ++ic; ic != clotoidList.end(); ++ic, ++k  )
       deltaKappa[k] = ic->kappaBegin()-ic[-1].kappaEnd();
@@ -516,8 +518,8 @@ namespace G2lib {
                               real_type & Y,
                               real_type & S ) const {
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::closestPoint, empty list" );
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
-    std::vector<real_type>::const_iterator     is = s0.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<real_type>::const_iterator     is = s0.begin();
     real_type DST = ic->closestPoint( x, y, X, Y, S );
     for ( ++ic, ++is; ic != clotoidList.end(); ++ic, ++is ) {
       real_type X1, Y1, S1;
@@ -541,8 +543,8 @@ namespace G2lib {
                         real_type & t ) const {
 
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
-    std::vector<real_type>::const_iterator     is = s0.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<real_type>::const_iterator     is = s0.begin();
 
     s = t = 0;
     int_type  ipos = 0;
@@ -559,7 +561,7 @@ namespace G2lib {
           ic != clotoidList.end();
           ++ic, ++is, ++ipos ) {
       bool ok1 = ic->findST( x, y, S, T );
-      if ( ok && ok1 ) ok1 = std::abs(T) < std::abs(t);
+      if ( ok && ok1 ) ok1 = abs(T) < abs(t);
       if ( ok1 ) {
         ok   = true;
         s    = *is + S;
@@ -594,7 +596,7 @@ namespace G2lib {
       ClothoidCurve const & ck = clotoidList[k];
       real_type S, T;
       bool ok1 = ck.findST( x, y, S, T );
-      if ( ok && ok1 ) ok1 = std::abs(T) < std::abs(t);
+      if ( ok && ok1 ) ok1 = abs(T) < abs(t);
       if ( ok1 ) {
         ok   = true;
         s    = s0[k] + S;
@@ -609,7 +611,7 @@ namespace G2lib {
 
   void
   ClothoidList::rotate( real_type angle, real_type cx, real_type cy ) {
-    std::vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic ) ic->rotate( angle, cx, cy );
   }
 
@@ -617,7 +619,7 @@ namespace G2lib {
 
   void
   ClothoidList::translate( real_type tx, real_type ty ) {
-    std::vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic ) ic->translate( tx, ty );
   }
 
@@ -625,7 +627,7 @@ namespace G2lib {
 
   void
   ClothoidList::changeOrigin( real_type newx0, real_type newy0 ) {
-    std::vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic ) {
       ic->changeOrigin( newx0, newy0 );
       newx0 = ic->xEnd();
@@ -637,7 +639,7 @@ namespace G2lib {
 
   void
   ClothoidList::scale( real_type sfactor ) {
-    std::vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
     real_type newx0 = ic->xBegin();
     real_type newy0 = ic->yBegin();
     for (; ic != clotoidList.end(); ++ic ) {
@@ -652,7 +654,7 @@ namespace G2lib {
 
   void
   ClothoidList::reverse() {
-    std::vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic ) ic->reverse();
     std::reverse( clotoidList.begin(), clotoidList.end() );
   }
@@ -660,18 +662,18 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::intersect( real_type                offs,
-                           ClothoidCurve const &    c,
-                           real_type                c_offs,
-                           std::vector<real_type> & s1,
-                           std::vector<real_type> & s2,
-                           int_type                 max_iter,
-                           real_type                tolerance ) const {
+  ClothoidList::intersect( real_type             offs,
+                           ClothoidCurve const & c,
+                           real_type             c_offs,
+                           vector<real_type>   & s1,
+                           vector<real_type>   & s2,
+                           int_type              max_iter,
+                           real_type             tolerance ) const {
     s1.clear();
     s2.clear();
-    std::vector<real_type>::const_iterator iss1, iss2;
+    vector<real_type>::const_iterator iss1, iss2;
     for ( int_type ns = 0; ns < int_type(clotoidList.size()); ++ns ) {
-      std::vector<real_type> ss1, ss2;
+      vector<real_type> ss1, ss2;
       clotoidList[ns].intersect( offs, c, c_offs, ss1, ss2, max_iter, tolerance );
       for ( iss1 = ss1.begin();iss1 != ss1.end(); ++iss1 )
         s1.push_back( s0[ns]+(*iss1) );
@@ -683,21 +685,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::intersect( real_type                offs,
-                           ClothoidList const &     CL,
-                           real_type                c_offs,
-                           std::vector<real_type> & s1,
-                           std::vector<real_type> & s2,
-                           int_type                 max_iter,
-                           real_type                tolerance ) const {
+  ClothoidList::intersect( real_type            offs,
+                           ClothoidList const & CL,
+                           real_type            c_offs,
+                           vector<real_type>  & s1,
+                           vector<real_type>  & s2,
+                           int_type             max_iter,
+                           real_type            tolerance ) const {
     s1.clear();
     s2.clear();
-    std::vector<real_type>::const_iterator iss1, iss2;
+    vector<real_type>::const_iterator iss1, iss2;
     for ( int_type ns = 0; ns < int_type(clotoidList.size()); ++ns ) {
       ClothoidCurve const & C = clotoidList[ns];
       for ( int_type ns1 = 0; ns1 < CL.numSegment(); ++ns1 ) {
         ClothoidCurve const & C1 = CL.clotoidList[ns1];
-        std::vector<real_type> ss1, ss2;
+        vector<real_type> ss1, ss2;
         C.intersect( offs, C1, c_offs, ss1, ss2, max_iter, tolerance );
         for ( iss1 = ss1.begin();iss1 != ss1.end(); ++iss1 )
           s1.push_back( s0[ns]+(*iss1) );
@@ -712,7 +714,7 @@ namespace G2lib {
   void
   ClothoidList::export_table( ostream_type & stream ) const {
     stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n";
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic )
       stream << ic->xBegin()     << '\t'
              << ic->yBegin()     << '\t'
@@ -727,7 +729,7 @@ namespace G2lib {
   void
   ClothoidList::export_ruby( ostream_type & stream ) const {
     stream << "data = {\n";
-    std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic )
       stream << ic->xBegin()     << '\t'
              << ic->yBegin()     << '\t'

@@ -7,6 +7,7 @@
 #include <ctime>
 
 using G2lib::real_type;
+using namespace std;
 
 int
 main() {
@@ -39,25 +40,25 @@ main() {
 	//int iter = g2sol.build(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
 	int iter = g2sol.build(x0, y0, th0, k0, x1, y1, th1, k1 );
 	//int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
-	std::cout << "iter = " << iter << '\n';
+	cout << "iter = " << iter << '\n';
 
 	G2lib::ClothoidCurve const & S0 = g2sol.getS0();
 	G2lib::ClothoidCurve const & S1 = g2sol.getS1();
 
-	std::cout << "\n\nS0 (NEW)\n" << S0;
+	cout << "\n\nS0 (NEW)\n" << S0;
 
-	std::cout << "\n\nS1 (NEW)\n" << S1;
+	cout << "\n\nS1 (NEW)\n" << S1;
 
-  std::cout << "\n\n\n";
+  cout << "\n\n\n";
 
-  std::cout << "x1     = " << S0.xEnd()   << "\n";
-  std::cout << "x0     = " << S1.xBegin() << "\n\n";
+  cout << "x1     = " << S0.xEnd()   << "\n";
+  cout << "x0     = " << S1.xBegin() << "\n\n";
 
-  std::cout << "y1     = " << S0.yEnd()   << "\n";
-  std::cout << "y0     = " << S1.yBegin() << "\n\n";
+  cout << "y1     = " << S0.yEnd()   << "\n";
+  cout << "y0     = " << S1.yBegin() << "\n\n";
 
-  std::cout << "theta1 = " << S0.thetaEnd()   << "\n";
-  std::cout << "theta0 = " << S1.thetaBegin() << "\n\n";
+  cout << "theta1 = " << S0.thetaEnd()   << "\n";
+  cout << "theta0 = " << S1.thetaBegin() << "\n\n";
 
 	return 0;
 }

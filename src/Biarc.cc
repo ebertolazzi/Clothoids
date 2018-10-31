@@ -25,7 +25,8 @@
 
 namespace G2lib {
 
-  using namespace std;
+  using std::numeric_limits;
+  using std::abs;
 
   /*\
    |    ____ _          _
@@ -216,7 +217,7 @@ namespace G2lib {
     real_type l0 = t/(2*Sinc( dth0/2 ));
     real_type l1 = t/(2*Sinc( dth1/2 ));
 
-    real_type epsi = 100*std::numeric_limits<real_type>::epsilon();
+    real_type epsi = 100*numeric_limits<real_type>::epsilon();
 
     if ( l0 > epsi && l1 > epsi ) {
 
@@ -695,7 +696,7 @@ namespace G2lib {
     bool ok0 = s >= 0 && s <= L0;
     bool ok1 = S >= 0 && S <= C1.length();
     if ( ok0 ) {
-      if ( ok1 && std::abs(t) > std::abs(T) ) {
+      if ( ok1 && abs(t) > abs(T) ) {
         s = S + L0;
         t = T;
       }

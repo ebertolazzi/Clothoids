@@ -26,7 +26,9 @@
 
 namespace G2lib {
 
-  using namespace std;
+  using std::vector;
+  using std::abs;
+  using std::swap;
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -118,14 +120,14 @@ namespace G2lib {
   static int_type  const max_level  = 10;
 
   void
-  ClothoidCurve::bbTriangles( real_type                 offs,
-                              std::vector<Triangle2D> & tvec,
-                              bbDataForSplit const    & data,
-                              real_type                 max_angle,
-                              real_type                 max_size,
-                              int_type                  level ) const {
+  ClothoidCurve::bbTriangles( real_type              offs,
+                              vector<Triangle2D>   & tvec,
+                              bbDataForSplit const & data,
+                              real_type              max_angle,
+                              real_type              max_size,
+                              int_type               level ) const {
 
-    real_type dtheta = std::abs(data.theta0 - data.theta1);
+    real_type dtheta = abs(data.theta0 - data.theta1);
     real_type dx     = data.x1-data.x0;
     real_type dy     = data.y1-data.y0;
     if ( level >= max_level || (hypot(dx,dy) <= max_size && dtheta <= max_angle) ) {
@@ -177,10 +179,10 @@ namespace G2lib {
   }
 
   void
-  ClothoidCurve::bbTriangles( real_type                 offs,
-                              std::vector<Triangle2D> & tvec,
-                              real_type                 max_angle,
-                              real_type                 max_size ) const {
+  ClothoidCurve::bbTriangles( real_type            offs,
+                              vector<Triangle2D> & tvec,
+                              real_type            max_angle,
+                              real_type            max_size ) const {
 
     bbDataForSplit data;
     data.s0     = 0;
@@ -224,10 +226,10 @@ namespace G2lib {
       real_type root = -CD.kappa0/CD.dk;
       if ( root > 0 && root < L ) {
         real_type thM  = CD.deltaTheta(root);
-        return std::abs( thR - thM ) + std::abs( thM - thL );
+        return abs( thR - thM ) + abs( thM - thL );
       }
     }
-    return std::abs( thR - thL );
+    return abs( thR - thL );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -261,7 +263,7 @@ namespace G2lib {
     // root = -k/dk;
     kMin = CD.kappa0;
     kMax = CD.kappa(L);
-    if ( kMax < kMin ) std::swap( kMax, kMin );
+    if ( kMax < kMin ) swap( kMax, kMin );
     return kMax - kMin;
   }
 
@@ -273,7 +275,7 @@ namespace G2lib {
     // root = -k/dk;
     real_type km = CD.kappa0;
     real_type kp = CD.kappa(L);
-    return std::abs(kp-km);
+    return abs(kp-km);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -370,9 +372,9 @@ namespace G2lib {
   static
   real_type
   abs2pi( real_type a ) {
-    a = std::abs(a);
+    a = abs(a);
     while ( a > m_pi ) a -= m_2pi;
-    return std::abs(a);
+    return abs(a);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -389,7 +391,7 @@ namespace G2lib {
     data.cd.evaluate( 0,      theta_min, kappa_min, x_min, y_min );
     data.cd.evaluate( data.L, theta_max, kappa_max, x_max, y_max );
 
-    real_type dtheta = std::abs( theta_max - theta_min );
+    real_type dtheta = abs( theta_max - theta_min );
     real_type dx     = x_max - x_min;
     real_type dy     = y_max - y_min;
     real_type len    = hypot( dy, dx );
@@ -482,8 +484,8 @@ namespace G2lib {
       if ( out ) {
         if ( ++nout > 3 ) break;
       } else {
-        if ( std::abs(px) <= tolerance &&
-             std::abs(py) <= tolerance ) return true;
+        if ( abs(px) <= tolerance &&
+             abs(py) <= tolerance ) return true;
       }
     }
     return false;
@@ -562,14 +564,14 @@ namespace G2lib {
     t = nx*(x-X) + ny*(y-Y);
     // check if projection is orthogonal on the curve
     #if 0
-      real_type abst = std::abs(t);
-      return std::abs(d-abst) <= machepsi1000*(1+abst);
+      real_type abst = abs(t);
+      return abs(d-abst) <= machepsi1000*(1+abst);
     #else
       eval( s, t, X, Y );
       real_type err = hypot( x-X, y-Y );
       return err < 1e-8*(1+d);
     #endif
-    //return std::abs(d-abst) <= 1e-3*(1+abst);
+    //return abs(d-abst) <= 1e-3*(1+abst);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

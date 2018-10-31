@@ -5,6 +5,7 @@
 
 using G2lib::real_type;
 using G2lib::int_type;
+using namespace std;
 
 int
 main() {
@@ -26,33 +27,33 @@ main() {
   real_type L1     = 600;
   C1.build( x1, y1, theta1, k1, dk1, L1 );
 
-  std::vector<G2lib::real_type> s1, s2;
+  vector<G2lib::real_type> s1, s2;
   G2lib::int_type  max_iter  = 100;
   G2lib::real_type tolerance = 1e-8;
 
   C0.intersect( C1, s1, s2, max_iter, tolerance );
   //C1.intersect( C0, s2, s1, max_iter, tolerance );
 
-  std::cout << "L0 = " << C0.length() << '\n';
-  std::cout << "L1 = " << C1.length() << '\n';
+  cout << "L0 = " << C0.length() << '\n';
+  cout << "L1 = " << C1.length() << '\n';
 
   for ( size_t i = 0; i < s1.size(); ++i )
-    std::cout << "s1[ " << i << "] = " << s1[i] << '\n';
+    cout << "s1[ " << i << "] = " << s1[i] << '\n';
 
   for ( size_t i = 0; i < s2.size(); ++i )
-    std::cout << "s2[ " << i << "] = " << s2[i] << '\n';
+    cout << "s2[ " << i << "] = " << s2[i] << '\n';
 
   for ( size_t i = 0; i < s1.size(); ++i )
-    std::cout << "x["  << i << "] = " << C0.X(s1[i])
-              << " y[" << i << "] = " << C0.Y(s1[i])
-              << '\n';
+    cout << "x["  << i << "] = " << C0.X(s1[i])
+         << " y[" << i << "] = " << C0.Y(s1[i])
+         << '\n';
 
   for ( size_t i = 0; i < s2.size(); ++i )
-    std::cout << "x["  << i << "] = " << C1.X(s2[i])
-              << " y[" << i << "] = " << C1.Y(s2[i])
-              << '\n';
+    cout << "x["  << i << "] = " << C1.X(s2[i])
+         << " y[" << i << "] = " << C1.Y(s2[i])
+         << '\n';
 
-  std::cout << "\n\nALL DONE FOLKS!!!\n";
+  cout << "\n\nALL DONE FOLKS!!!\n";
 
   return 0;
 }

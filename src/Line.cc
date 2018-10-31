@@ -35,6 +35,8 @@
 namespace G2lib {
 
   using std::max;
+  using std::min;
+  using std::swap;
 
   typedef struct {
     real_type p[2];
@@ -219,8 +221,8 @@ namespace G2lib {
                      real_type & ymax ) const {
     xmin = x0; xmax = x0+L*c0;
     ymin = y0; ymax = y0+L*s0;
-    if ( xmin > xmax ) std::swap( xmin, xmax );
-    if ( ymin > ymax ) std::swap( ymin, ymax );
+    if ( xmin > xmax ) swap( xmin, xmax );
+    if ( ymin > ymax ) swap( ymin, ymax );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -235,8 +237,8 @@ namespace G2lib {
     real_type dy = offs*c0;
     xmin = x0+dx; xmax = x0+L*c0+dx;
     ymin = y0+dy; ymax = y0+L*s0+dy;
-    if ( xmin > xmax ) std::swap( xmin, xmax );
-    if ( ymin > ymax ) std::swap( ymin, ymax );
+    if ( xmin > xmax ) swap( xmin, xmax );
+    if ( ymin > ymax ) swap( ymin, ymax );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -330,7 +332,7 @@ namespace G2lib {
     L2.s    = S.s0;
     L2.L    = S.L;
 
-    real_type const epsi = std::max(L,S.L)*machepsi100;
+    real_type const epsi = max(L,S.L)*machepsi100;
     return G2lib::intersect( epsi, L1, L2, s1, s2 );
   }
 
@@ -363,7 +365,7 @@ namespace G2lib {
     L2.s    = S.s0;
     L2.L    = S.L;
 
-    real_type const epsi = std::max(L,S.L)*machepsi100;
+    real_type const epsi = max(L,S.L)*machepsi100;
 
     return G2lib::intersect( epsi, L1, L2, s1, s2 );
   }
@@ -393,7 +395,7 @@ namespace G2lib {
     L2.s    = S.s0;
     L2.L    = S.L;
 
-    real_type const epsi = std::max(L,S.L)*machepsi100;
+    real_type const epsi = max(L,S.L)*machepsi100;
 
     return G2lib::collision( epsi, L1, L2 );
   }
@@ -425,7 +427,7 @@ namespace G2lib {
     L2.s    = S.s0;
     L2.L    = S.L;
 
-    real_type const epsi = std::max(L,S.L)*machepsi100;
+    real_type const epsi = max(L,S.L)*machepsi100;
 
     return G2lib::collision( epsi, L1, L2 );
   }

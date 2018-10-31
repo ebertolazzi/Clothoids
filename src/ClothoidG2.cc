@@ -37,7 +37,12 @@
 
 namespace G2lib {
 
-  using namespace std;
+  using std::abs;
+  using std::fpclassify;
+  using std::copy;
+  using std::back_inserter;
+  using std::fill;
+  using std::vector;
 
   inline
   real_type
@@ -392,7 +397,7 @@ namespace G2lib {
                      - k0*k1*cos(thM)
                      + k1*Y0[0]-k0*Y1[0];
 
-      if ( std::abs(dF) < 1e-10 ) break;
+      if ( abs(dF) < 1e-10 ) break;
       real_type d = F/dF;
       #if 0
       thM -= d;
@@ -410,12 +415,12 @@ namespace G2lib {
         GeneralizedFresnelCS( 1, 2*D1, -2*D1, D1, X1, Y1 );
         FF = D0*k1*Y0[0]-D1*k0*Y1[0] - k0*k1*sin(thM1);
         dd = FF/dF;
-        step_found = std::abs( dd ) <= (1-tau/2)*std::abs(d) + 1e-6;
+        step_found = abs( dd ) <= (1-tau/2)*abs(d) + 1e-6;
       } while ( tau > 1e-6 && !step_found );
       if ( !step_found ) break;
       thM = thM1;
       #endif
-      converged = std::abs(d) < tolerance;
+      converged = abs(d) < tolerance;
     } while ( ++iter < maxIter && !converged );
     if ( converged ) {
       real_type D0 = thM - th0;
@@ -526,22 +531,22 @@ namespace G2lib {
 
       real_type kA = SG.kappaBegin();
       real_type kB = SG.kappaEnd();
-      real_type dk = std::abs(SG.dkappa());
+      real_type dk = abs(SG.dkappa());
       real_type L3 = SG.length()/3;
 
-      real_type tmp = 0.5*std::abs(K0-kA)/dmax;
+      real_type tmp = 0.5*abs(K0-kA)/dmax;
       s0 = L3;
       if ( tmp*s0 > 1 ) s0 = 1/tmp;
-      tmp = (std::abs(K0+kA)+s0*dk)/(2*Dmax);
+      tmp = (abs(K0+kA)+s0*dk)/(2*Dmax);
       if ( tmp*s0 > 1 ) s0 = 1/tmp;
 
-      tmp = 0.5*std::abs(K1-kB)/dmax;
+      tmp = 0.5*abs(K1-kB)/dmax;
       s1 = L3;
       if ( tmp*s1 > 1 ) s1 = 1/tmp;
-      tmp = (std::abs(K1+kB)+s1*dk)/(2*Dmax);
+      tmp = (abs(K1+kB)+s1*dk)/(2*Dmax);
       if ( tmp*s1 > 1 ) s1 = 1/tmp;
 
-      real_type dth   = std::abs(th0-th1) / m_2pi;
+      real_type dth   = abs(th0-th1) / m_2pi;
       real_type scale = power3(cos( power4(dth)*m_pi_2 ));
       s0 *= scale;
       s1 *= scale;
@@ -807,13 +812,13 @@ namespace G2lib {
 
       // re-check solution
       if ( converged )
-        converged = FP_INFINITE != std::fpclassify(X[0]) &&
-                    FP_NAN      != std::fpclassify(X[0]) &&
-                    FP_INFINITE != std::fpclassify(X[1]) &&
-                    FP_NAN      != std::fpclassify(X[1]);
+        converged = FP_INFINITE != fpclassify(X[0]) &&
+                    FP_NAN      != fpclassify(X[0]) &&
+                    FP_INFINITE != fpclassify(X[1]) &&
+                    FP_NAN      != fpclassify(X[1]);
     }
     catch (...) {
-      cout << "PASSA\n";
+      std::cerr << "G2solve3arc::solve, something go wrong\n";
       // nothing to do
     }
     if ( converged ) buildSolution(X[0], X[1]); // costruisco comunque soluzione
@@ -1151,8 +1156,8 @@ namespace G2lib {
                            int_type        n ) {
     x.clear(); x.reserve( unsigned(n) );
     y.clear(); y.reserve( unsigned(n) );
-    std::copy( xvec, xvec+n, std::back_inserter(x) );
-    std::copy( yvec, yvec+n, std::back_inserter(y) );
+    copy( xvec, xvec+n, back_inserter(x) );
+    copy( yvec, yvec+n, back_inserter(y) );
     npts = n;
     unsigned n1 = unsigned(n-1);
     k    . resize(n1);
@@ -1327,7 +1332,7 @@ namespace G2lib {
     ClothoidCurve cL, cR, c;
     real_type     LL_D[2], kL_D[2], dkL_D[2];
     real_type     LR_D[2], kR_D[2], dkR_D[2];
-    std::fill( g, g+npts, 0 );
+    fill( g, g+npts, 0 );
     int_type ne  = npts - 1;
     int_type ne1 = npts - 2;
     switch (tt) {

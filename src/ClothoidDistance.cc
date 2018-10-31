@@ -24,9 +24,23 @@
 #include <cmath>
 #include <cfloat>
 
+// Workaround for Visual Studio
+#ifdef min
+  #undex min
+#endif
+
+#ifdef max
+  #undex max
+#endif
+
 namespace G2lib {
 
-  using namespace std;
+  using std::abs;
+  using std::sqrt;
+  using std::sin;
+  using std::cos;
+  using std::max;
+  using std::min;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -99,7 +113,7 @@ namespace G2lib {
       }
 
       s += dS;
-      if ( std::abs( dS ) < epsi ) {
+      if ( abs( dS ) < epsi ) {
         if ( s < -epsi || s > L+epsi ) return false;
         S = s;
         return true;
@@ -173,7 +187,7 @@ namespace G2lib {
                   real_type          & Y,
                   real_type          & S ) {
 
-    real_type DTheta = std::abs( CD.theta(L) - CD.theta0 );
+    real_type DTheta = abs( CD.theta(L) - CD.theta0 );
     if ( DTheta <= m_2pi )
       return closestPointQC1( epsi, CD, L, qx, qy, X, Y, S );
 
@@ -181,7 +195,7 @@ namespace G2lib {
     real_type cy = CD.c0y();
 
     //if ( hypot( CD.x0 - cx, CD.y0 - cy ) <= hypot( qx - cx, qy - cy ) ) {
-    if ( 1 <= std::abs(CD.kappa0) * hypot( qx - cx, qy - cy ) ) {
+    if ( 1 <= abs(CD.kappa0) * hypot( qx - cx, qy - cy ) ) {
       real_type ell = CD.aplus(m_2pi);
       return closestPointQC1( epsi, CD, ell, qx, qy, X, Y, S );
     }
@@ -192,7 +206,7 @@ namespace G2lib {
     cy = CD1.c0y();
 
     //if ( hypot( CD1.x0 - cx, CD1.y0 - cy ) >= hypot( qx - cx, qy - cy ) ) {
-    if ( 1 >= std::abs(CD1.kappa0) * hypot( qx - cx, qy - cy ) ) {
+    if ( 1 >= abs(CD1.kappa0) * hypot( qx - cx, qy - cy ) ) {
       real_type ell = CD1.aplus(m_2pi);
       real_type d   = closestPointQC1( epsi, CD1, ell, qx, qy, X, Y, S );
       S = L - S;
@@ -255,7 +269,7 @@ namespace G2lib {
       }
 
       s += dS;
-      if ( std::abs( dS ) < epsi ) {
+      if ( abs( dS ) < epsi ) {
         if ( s < a-epsi|| s > b+epsi ) break;
         S = s;
         return true;
@@ -335,7 +349,7 @@ namespace G2lib {
     real_type thflex = CD.theta0 + 0.5*CD.kappa0*sflex;
     real_type ssf    = sin(thflex);
     real_type csf    = cos(thflex);
-    real_type gamma  = sqrt(std::abs(CD.dk)/m_pi);
+    real_type gamma  = sqrt(abs(CD.dk)/m_pi);
     real_type a      = -sflex*gamma;
     real_type b      = (L-sflex)*gamma;
     real_type xflex, yflex;
@@ -386,14 +400,14 @@ namespace G2lib {
       real_type rhoy  = yy - 0.5;
       real_type rho   = hypot( rhox, rhoy );
       real_type f     = rho - di;
-      //if ( std::abs(f) < epsi ) break;
+      //if ( abs(f) < epsi ) break;
       real_type tphi  = theta - atan2( rhoy, rhox );
       real_type df    = cos( tphi );
       real_type t     = sin( tphi );
       real_type ddf   = t*(kappa-t/rho);
       real_type ds    = (f*df)/((df*df)-f*ddf/2);
       ss -= ds;
-      converged = std::abs(ds) < epsi;
+      converged = abs(ds) < epsi;
     }
 
     G2LIB_ASSERT( converged,
@@ -424,18 +438,18 @@ namespace G2lib {
                  real_type          & S ) {
 
     real_type NT = 4; // number of turn of the clothid after wich is considered quasi-circular
-    real_type DK = sqrt(NT*m_2pi*std::abs(CD.dk));
-    if ( std::abs(CD.kappa0) >= DK ) {
+    real_type DK = sqrt(NT*m_2pi*abs(CD.dk));
+    if ( abs(CD.kappa0) >= DK ) {
       return closestPointQC( epsi, CD, L, qx, qy, X, Y, S );
     }
 
-    if ( std::abs(CD.kappa0)+std::abs(CD.dk)*L <= DK ) {
+    if ( abs(CD.kappa0)+abs(CD.dk)*L <= DK ) {
       real_type d = closestPointStandard( epsi, CD, L, qx, qy, S );
       CD.eval( S, X, Y );
       return d;
     }
 
-    real_type ell = (DK-std::abs(CD.kappa0))/std::abs(CD.dk);
+    real_type ell = (DK-abs(CD.kappa0))/abs(CD.dk);
 
     G2LIB_ASSERT( ell > 0 && ell < L,
                   " bad ell = " << ell << " L = " << L );

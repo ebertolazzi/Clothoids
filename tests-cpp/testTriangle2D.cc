@@ -6,6 +6,7 @@
 
 using G2lib::real_type;
 using G2lib::int_type;
+using namespace std;
 
 int
 main() {
@@ -24,15 +25,15 @@ main() {
 
   int_type icode = T1.isInside( T1.baricenterX(), T1.baricenterY() );
 
-  std::cout << "icode = " << icode << "\n";
+  cout << "icode = " << icode << "\n";
 
   icode = T1.isInside( T1.P1() );
 
-  std::cout << "icode = " << icode << "\n";
+  cout << "icode = " << icode << "\n";
 
   icode = T1.isInside( 10, 20 );
 
-  std::cout << "icode = " << icode << "\n";
+  cout << "icode = " << icode << "\n";
 
   {
     G2lib::ClothoidCurve C;
@@ -44,16 +45,16 @@ main() {
     real_type L      = 1;
     C.build( x0, y0, theta0, kappa0, dk, L );
 
-    std::vector<G2lib::Triangle2D> tvec;
+    vector<G2lib::Triangle2D> tvec;
     C.bbTriangles( 0, tvec );
 
     for ( int_type i = 0; i < int_type(tvec.size()); ++i )
-      std::cout << i << " " << tvec[i] << "\n\n";
+      cout << i << " " << tvec[i] << "\n\n";
 
-    std::cout << tvec.size() << '\n';
+    cout << tvec.size() << '\n';
   }
 
-  std::cout << "\n\nALL DONE FOLKS!!!\n";
+  cout << "\n\nALL DONE FOLKS!!!\n";
 
   return 0;
 }

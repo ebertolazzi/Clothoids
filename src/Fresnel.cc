@@ -37,9 +37,20 @@
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
 
+// Workaround for Visual Studio
+#ifdef min
+  #undex min
+#endif
+
+#ifdef max
+  #undex max
+#endif
+
 namespace G2lib {
 
-  using namespace std;
+  using std::abs;
+  using std::min;
+  using std::max;
 
   /*
   // This function calculates the fresnel cosine and sine integrals.
@@ -1113,7 +1124,7 @@ namespace G2lib {
 
     real_type theta_max = theta( L );
     real_type theta_min = theta0;
-    real_type dtheta    = std::abs( theta_max-theta_min );
+    real_type dtheta    = abs( theta_max-theta_min );
     if ( dtheta < m_pi_2 ) {
       real_type alpha, tx0, ty0;
       eval( 0, xx0, yy0 );
@@ -1150,7 +1161,7 @@ namespace G2lib {
 
     real_type theta_max = theta( L );
     real_type theta_min = theta0;
-    real_type dtheta    = std::abs( theta_max-theta_min );
+    real_type dtheta    = abs( theta_max-theta_min );
     if ( dtheta < m_pi_2 ) {
       real_type alpha, tx0, ty0;
       eval( 0, offs, xx0, yy0 );
@@ -1230,9 +1241,9 @@ namespace G2lib {
       g   = intS[0];
       dg  = intC[2] - intC[1];
       A  -= g / dg;
-    } while ( ++niter <= 10 && std::abs(g) > tol );
+    } while ( ++niter <= 10 && abs(g) > tol );
 
-    G2LIB_ASSERT( std::abs(g) <= tol, "Newton do not converge, g = " << g << " niter = " << niter );
+    G2LIB_ASSERT( abs(g) <= tol, "Newton do not converge, g = " << g << " niter = " << niter );
     GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] );
     L = r/intC[0];
 

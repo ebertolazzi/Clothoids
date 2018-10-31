@@ -25,11 +25,23 @@
 
 #include <algorithm>
 
+// Workaround for Visual Studio
+#ifdef min
+  #undex min
+#endif
+
+#ifdef max
+  #undex max
+#endif
+
 namespace G2lib {
 
   using std::min;
   using std::max;
   using std::abs;
+  using std::cout;
+  using std::vector;
+  using std::ceil;
 
   /*\
    |  ____       _       _     _
@@ -41,7 +53,6 @@ namespace G2lib {
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  using std::cout;
 
   void
   PolyLine::search( real_type s ) const {
@@ -100,7 +111,7 @@ namespace G2lib {
     if ( aabb_done ) {
       aabb.bbox( xmin, ymin, xmax, ymax );
     } else {
-      std::vector<LineSegment>::const_iterator ic = lvec.begin();
+      vector<LineSegment>::const_iterator ic = lvec.begin();
       xmin = xmax = ic->xBegin();
       ymin = ymax = ic->yBegin();
       for ( ++ic; ic != lvec.end(); ++ic ) {
@@ -191,7 +202,7 @@ namespace G2lib {
   void
   PolyLine::push_back( CircleArc const & C, real_type tol ) {
     real_type L  = C.length();
-    int_type  ns = int_type(std::ceil( L / C.lenTolerance( tol ) ));
+    int_type  ns = int_type(ceil( L / C.lenTolerance( tol ) ));
     real_type tx = xe - C.xBegin();
     real_type ty = ye - C.yBegin();
     for ( int_type i = 1; i < ns; ++i ) {
@@ -212,8 +223,8 @@ namespace G2lib {
     CircleArc const & C1 = B.getC1();
     real_type L0  = C0.length();
     real_type L1  = C1.length();
-    int_type  ns0 = int_type(std::ceil( L0 / C0.lenTolerance( tol ) ));
-    int_type  ns1 = int_type(std::ceil( L1 / C1.lenTolerance( tol ) ));
+    int_type  ns0 = int_type(ceil( L0 / C0.lenTolerance( tol ) ));
+    int_type  ns1 = int_type(ceil( L1 / C1.lenTolerance( tol ) ));
 
     real_type tx = xe - C0.xBegin();
     real_type ty = ye - C0.yBegin();
@@ -324,7 +335,7 @@ namespace G2lib {
 
   void
   PolyLine::reverse() {
-    std::vector<LineSegment>::iterator il;
+    vector<LineSegment>::iterator il;
     for ( il = lvec.begin(); il != lvec.end(); ++il )
       il->reverse();
     std::reverse(lvec.begin(),lvec.end());
@@ -344,8 +355,8 @@ namespace G2lib {
                           real_type & S ) const{
 
     G2LIB_ASSERT( !lvec.empty(), "PolyLine::closestPoint, empty list" );
-    std::vector<LineSegment>::const_iterator ic = lvec.begin();
-    std::vector<real_type>::const_iterator   is = s0.begin();
+    vector<LineSegment>::const_iterator ic = lvec.begin();
+    vector<real_type>::const_iterator   is = s0.begin();
     real_type DST = ic->closestPoint( x, y, X, Y, S );
     for ( ++ic, ++is; ic != lvec.end(); ++ic, ++is ) {
       real_type X1, Y1, S1;
@@ -363,9 +374,9 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PolyLine::intersect( PolyLine const         & pl,
-                       std::vector<real_type> & ss0,
-                       std::vector<real_type> & ss1 ) const {
+  PolyLine::intersect( PolyLine const    & pl,
+                       vector<real_type> & ss0,
+                       vector<real_type> & ss1 ) const {
     G2LIB_ASSERT( !lvec.empty(),
                   "PolyLine::intersect, empty list" );
     G2LIB_ASSERT( !pl.lvec.empty(),
@@ -393,11 +404,11 @@ namespace G2lib {
 #else
     ss0.clear();
     ss1.clear();
-    std::vector<LineSegment>::const_iterator ic0 = lvec.begin();
-    std::vector<real_type>::const_iterator   is0 = s0.begin();
+    vector<LineSegment>::const_iterator ic0 = lvec.begin();
+    vector<real_type>::const_iterator   is0 = s0.begin();
     while ( ic0 != lvec.end() ) {
-      std::vector<LineSegment>::const_iterator ic1 = pl.lvec.begin();
-      std::vector<real_type>::const_iterator   is1 = pl.s0.begin();
+      vector<LineSegment>::const_iterator ic1 = pl.lvec.begin();
+      vector<real_type>::const_iterator   is1 = pl.s0.begin();
       while ( ic1 != pl.lvec.end() ) {
         real_type a0, a1;
         bool ok = ic0->intersect( *ic1, a0, a1 );
@@ -421,11 +432,11 @@ namespace G2lib {
                   "PolyLine::intersect, empty list" );
     G2LIB_ASSERT( !pl.lvec.empty(),
                   "PolyLine::intersect, empty secondary list" );
-    std::vector<LineSegment>::const_iterator ic0 = lvec.begin();
-    std::vector<real_type>::const_iterator   is0 = s0.begin();
+    vector<LineSegment>::const_iterator ic0 = lvec.begin();
+    vector<real_type>::const_iterator   is0 = s0.begin();
     while ( ic0 != lvec.end() ) {
-      std::vector<LineSegment>::const_iterator ic1 = pl.lvec.begin();
-      std::vector<real_type>::const_iterator   is1 = pl.s0.begin();
+      vector<LineSegment>::const_iterator ic1 = pl.lvec.begin();
+      vector<real_type>::const_iterator   is1 = pl.s0.begin();
       while ( ic1 != pl.lvec.end() ) {
         if ( ic0->collision( *ic1 ) ) return true;
         ++ic1;

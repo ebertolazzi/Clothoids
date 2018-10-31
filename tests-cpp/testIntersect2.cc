@@ -46,23 +46,23 @@ main() {
   G2lib::BaseCurve::IntersectList ilist;
   C0.intersect( C1, ilist, false );
 
-  std::cout << "L0 = " << C0.length() << '\n';
-  std::cout << "L1 = " << C1.length() << '\n';
+  cout << "L0 = " << C0.length() << '\n';
+  cout << "L1 = " << C1.length() << '\n';
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    std::cout << "s1[ " << i << "] = " << ilist[i].first << '\n';
+    cout << "s1[ " << i << "] = " << ilist[i].first << '\n';
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    std::cout << "s2[ " << i << "] = " << ilist[i].second << '\n';
+    cout << "s2[ " << i << "] = " << ilist[i].second << '\n';
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    std::cout << "x[" << i << "] = " << setw(10) << C0.X(ilist[i].first)
-              << " y[" << i << "] = " << setw(10) << C0.Y(ilist[i].first)
-              << "\nx[" << i << "] = " << setw(10) << C1.X(ilist[i].second)
-              << " y[" << i << "] = " << setw(10) << C1.Y(ilist[i].second)
-              << "\n\n";
+    cout << "x[" << i << "] = " << setw(10) << C0.X(ilist[i].first)
+         << " y[" << i << "] = " << setw(10) << C0.Y(ilist[i].first)
+         << "\nx[" << i << "] = " << setw(10) << C1.X(ilist[i].second)
+         << " y[" << i << "] = " << setw(10) << C1.Y(ilist[i].second)
+         << "\n\n";
 
-  std::cout << "\n\nALL DONE FOLKS!!!\n";
+  cout << "\n\nALL DONE FOLKS!!!\n";
 
   return 0;
 }

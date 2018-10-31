@@ -4,6 +4,7 @@
 #include <iostream>
 
 using G2lib::real_type;
+using namespace std;
 
 int
 main() {
@@ -33,19 +34,19 @@ main() {
 #endif
 
   // test 3 archi
-  std::cout << "\n\nTry Solution with THREE arcs\n";
+  cout << "\n\nTry Solution with THREE arcs\n";
   int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
-  std::cout << "iter = " << iter << '\n';
+  cout << "iter = " << iter << '\n';
   
   G2lib::ClothoidCurve const & S0 = g2solve3arc.getS0();
   G2lib::ClothoidCurve const & S1 = g2solve3arc.getS1();
   G2lib::ClothoidCurve const & SM = g2solve3arc.getSM();
 
-  std::cout << "\n\nS0 (NEW)\n" << S0;
-  std::cout << "\n\nSM (NEW)\n" << SM;
-  std::cout << "\n\nS1 (NEW)\n" << S1;
+  cout << "\n\nS0 (NEW)\n" << S0;
+  cout << "\n\nSM (NEW)\n" << SM;
+  cout << "\n\nS1 (NEW)\n" << S1;
 
-  std::cout
+  cout
     << "\nx  = " << S0.xEnd()       << " " << SM.xBegin()     << " err = " << S0.xEnd()-SM.xBegin()
     << "\ny  = " << S0.yEnd()       << " " << SM.yBegin()     << " err = " << S0.yEnd()-SM.yBegin()
     << "\nth = " << S0.thetaEnd()   << " " << SM.thetaBegin() << " err = " << S0.thetaEnd()-SM.thetaBegin()
@@ -54,7 +55,7 @@ main() {
     << "\nth = " << S1.thetaBegin() << " " << SM.thetaEnd()   << " err = " << S1.thetaBegin()-SM.thetaEnd()
     << '\n';
 
-  std::cout << "\n\nALL DONE FOLKS!!!\n";
+  cout << "\n\nALL DONE FOLKS!!!\n";
 
   return 0;
 }

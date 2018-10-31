@@ -21,11 +21,28 @@
 #include "Biarc.hh"
 #include "CubicRootsFlocke.hh"
 
+// Workaround for Visual Studio
+#ifdef min
+  #undex min
+#endif
+
+#ifdef max
+  #undex max
+#endif
+
 #include <cmath>
 
 namespace G2lib {
 
-  using namespace std;
+  using std::min;
+  using std::max;
+  using std::abs;
+  using std::tan;
+  using std::abs;
+  using std::ceil;
+  using std::floor;
+  using std::swap;
+  using std::vector;
 
   /*\
    |    ____ _          _         _
@@ -99,7 +116,7 @@ namespace G2lib {
   CircleArc::thetaMinMax( real_type & thMin, real_type & thMax ) const  {
     thMin = theta0;
     thMax = theta0 + L * k;
-    if ( thMax < thMin ) std::swap( thMin, thMax );
+    if ( thMax < thMin ) swap( thMin, thMax );
     return thMax-thMin;
   }
 
@@ -347,7 +364,7 @@ namespace G2lib {
                          real_type & xx1, real_type & yy1,
                          real_type & xx2, real_type & yy2 ) const {
     real_type dtheta = L * k;
-    bool ok = std::abs(dtheta) <= m_pi/3;
+    bool ok = abs(dtheta) <= m_pi/3;
     if ( ok ) {
       xx0 = x0; yy0 = y0;
       eval( L, xx2, yy2 );
@@ -355,7 +372,7 @@ namespace G2lib {
       yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
       real_type ny = xx2-xx0;
-      real_type tg = std::tan(dtheta/2)/2;
+      real_type tg = tan(dtheta/2)/2;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
     }
@@ -371,7 +388,7 @@ namespace G2lib {
                          real_type & xx1, real_type & yy1,
                          real_type & xx2, real_type & yy2 ) const {
     real_type dtheta = L * k;
-    bool ok = std::abs(dtheta) <= m_pi/3;
+    bool ok = abs(dtheta) <= m_pi/3;
     if ( ok ) {
       eval( 0, offs, xx0, yy0 );
       eval( L, offs, xx2, yy2 );
@@ -379,7 +396,7 @@ namespace G2lib {
       yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
       real_type ny = xx2-xx0;
-      real_type tg = std::tan(dtheta/2)/2;
+      real_type tg = tan(dtheta/2)/2;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
     }
@@ -389,16 +406,16 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangles( std::vector<Triangle2D> & tvec,
-                          real_type                 max_angle,
-                          real_type                 max_size ) const {
-    real_type dtheta = std::abs( std::min(L,max_size) * k);
+  CircleArc::bbTriangles( vector<Triangle2D> & tvec,
+                          real_type            max_angle,
+                          real_type            max_size ) const {
+    real_type dtheta = abs( min(L,max_size) * k);
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
-      n       = int_type(std::ceil( dtheta/max_angle ));
+      n       = int_type(ceil( dtheta/max_angle ));
       dtheta /= n ;
     }
-    real_type tg = std::tan(dtheta/2)/2;
+    real_type tg = tan(dtheta/2)/2;
     if ( k < 0 ) tg = -tg;
     tvec.reserve( size_t(n) );
     real_type xx0 = x0;
@@ -423,21 +440,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangles( real_type                 offs,
-                          std::vector<Triangle2D> & tvec,
-                          real_type                 max_angle,
-                          real_type                 max_size ) const {
+  CircleArc::bbTriangles( real_type            offs,
+                          vector<Triangle2D> & tvec,
+                          real_type            max_angle,
+                          real_type            max_size ) const {
     real_type scale  = 1-k*offs;
-    real_type dtheta = std::abs( std::min(L,max_size/scale) * k );
+    real_type dtheta = abs( min(L,max_size/scale) * k );
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
-      n       = int_type(std::ceil( dtheta/max_angle ));
+      n       = int_type(ceil( dtheta/max_angle ));
       dtheta /= n ;
     }
     tvec.reserve( size_t(n) );
     real_type ds    = L/n;
     real_type ss    = ds;
-    real_type tg    = scale * std::tan(dtheta/2)/2;
+    real_type tg    = scale * tan(dtheta/2)/2;
     if ( k < 0 ) tg = -tg;
     real_type xx0, yy0;
     eval( 0, offs, xx0, yy0 );
@@ -463,7 +480,7 @@ namespace G2lib {
                    real_type & ymin,
                    real_type & xmax,
                    real_type & ymax ) const {
-    std::vector<Triangle2D> tvec;
+    vector<Triangle2D> tvec;
     this->bbTriangles( tvec, m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( int_type iter = 1; iter < int_type(tvec.size()); ++iter ) {
@@ -484,7 +501,7 @@ namespace G2lib {
                    real_type & ymin,
                    real_type & xmax,
                    real_type & ymax ) const {
-    std::vector<Triangle2D> tvec;
+    vector<Triangle2D> tvec;
     this->bbTriangles( offs, tvec, m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( int_type iter = 1; iter < int_type(tvec.size()); ++iter ) {
@@ -849,7 +866,7 @@ namespace G2lib {
   CircleArc::paramNURBS( int_type & n_knots,
                          int_type & n_pnts ) const {
     real_type dtheta = L*k;
-    int_type  ns     = int_type(std::floor(3*std::abs(dtheta)/m_pi));
+    int_type  ns     = int_type(floor(3*abs(dtheta)/m_pi));
     if ( ns < 1 ) ns = 1;
     n_pnts  = 1+2*ns;
     n_knots = n_pnts+3;
@@ -862,12 +879,12 @@ namespace G2lib {
                       real_type Poly[][3] ) const {
 
     real_type dtheta = L*k;
-    int_type  ns     = int_type(std::floor(3*std::abs(dtheta)/m_pi));
+    int_type  ns     = int_type(floor(3*abs(dtheta)/m_pi));
     if ( ns < 1 ) ns = 1;
 
     real_type th = dtheta/(2*ns);
-    real_type w  = std::cos(th);
-    real_type tg = std::tan(th)/2;
+    real_type w  = cos(th);
+    real_type tg = tan(th)/2;
 
     real_type p0[2], p2[2];
     p0[0] = x0; p0[1] = y0;
@@ -913,7 +930,7 @@ namespace G2lib {
 
   real_type
   CircleArc::lenTolerance( real_type tol ) const {
-    real_type absk = std::abs(k);
+    real_type absk = abs(k);
     real_type tmp  = absk*tol;
     if ( tmp > 0 ) {
       real_type dtheta = 2*(m_pi-acos(tmp-1));
