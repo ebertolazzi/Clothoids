@@ -26,12 +26,13 @@
 
 // Workaround for Visual Studio
 #ifdef min
-  #undex min
+  #undef min
 #endif
 
 #ifdef max
-  #undex max
+  #undef max
 #endif
+
 
 namespace G2lib {
 
