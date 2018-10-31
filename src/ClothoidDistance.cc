@@ -21,9 +21,6 @@
 #include "Clothoid.hh"
 #include "CubicRootsFlocke.hh"
 
-#include <cmath>
-#include <cfloat>
-
 // Workaround for Visual Studio
 #ifdef min
   #undef min
@@ -33,6 +30,9 @@
   #undef max
 #endif
 
+#include <cmath>
+#include <cfloat>
+#include <algorithm>
 
 namespace G2lib {
 

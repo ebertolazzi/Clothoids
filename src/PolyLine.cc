@@ -23,8 +23,6 @@
 #include "Biarc.hh"
 #include "ClothoidList.hh"
 
-#include <algorithm>
-
 // Workaround for Visual Studio
 #ifdef min
   #undef min
@@ -34,6 +32,7 @@
   #undef max
 #endif
 
+#include <algorithm>
 
 namespace G2lib {
 

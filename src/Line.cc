@@ -21,8 +21,6 @@
 #include "Circle.hh"
 #include "Biarc.hh"
 
-#include <algorithm>
-
 // Microsoft visual studio Workaround
 #ifdef max
   #undef max
@@ -31,6 +29,8 @@
 #ifdef min
   #undef min
 #endif
+
+#include <algorithm>
 
 namespace G2lib {
 

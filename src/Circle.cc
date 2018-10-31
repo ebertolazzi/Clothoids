@@ -31,6 +31,7 @@
 #endif
 
 #include <cmath>
+#include <algorithm>
 
 namespace G2lib {
 

@@ -43,9 +43,6 @@
 #include "Triangle2D.hh"
 #include "Line.hh"
 
-#include <algorithm>
-#include <functional>
-
 // workaround for windows that defines max and min as macros!
 #ifdef max
   #undef max
@@ -53,6 +50,9 @@
 #ifdef min
   #undef min
 #endif
+
+#include <functional>
+#include <algorithm>
 
 namespace G2lib {
 

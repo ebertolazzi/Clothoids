@@ -20,9 +20,6 @@
 #include "Fresnel.hh"
 #include "CubicRootsFlocke.hh"
 
-#include <cmath>
-#include <cfloat>
-
 #define A_THRESOLD   0.01
 #define A_SERIE_SIZE 3
 
@@ -45,6 +42,10 @@
 #ifdef max
   #undef max
 #endif
+
+#include <cmath>
+#include <cfloat>
+#include <algorithm>
 
 namespace G2lib {
 
