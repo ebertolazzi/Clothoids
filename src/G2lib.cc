@@ -323,7 +323,7 @@ namespace G2lib {
     do {
       real_type sk = s*k;
       ds = (y-Sinc(sk)*s)*cos(sk)/(1-sin(sk)*k*y);
-      s += ds ;
+      s += ds;
     } while ( abs(ds) > machepsi100 && ++iter < 5 );
     return s;
   }

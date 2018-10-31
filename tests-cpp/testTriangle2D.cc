@@ -45,7 +45,7 @@ main() {
     real_type L      = 1;
     C.build( x0, y0, theta0, kappa0, dk, L );
 
-    vector<G2lib::Triangle2D> tvec;
+    vector<G2lib::ClothoidCurve::T2D> tvec;
     C.bbTriangles( 0, tvec );
 
     for ( int_type i = 0; i < int_type(tvec.size()); ++i )

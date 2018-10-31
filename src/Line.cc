@@ -20,6 +20,7 @@
 #include "Line.hh"
 #include "Circle.hh"
 #include "Biarc.hh"
+#include "Clothoid.hh"
 
 // Microsoft visual studio Workaround
 #ifdef max
@@ -462,8 +463,13 @@ namespace G2lib {
         ok = B.collision( *this );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        ok = C.collision( *this );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "LineSegment::collision!" );
     }
@@ -496,8 +502,13 @@ namespace G2lib {
         ok = B.collision( obj_offs, *this, offs );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        ok = C.collision( obj_offs, *this, offs );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "LineSegment::collision!" );
     }
@@ -535,8 +546,13 @@ namespace G2lib {
         B.intersect( *this, ilist, !swap_s_vals );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        C.intersect( *this, ilist, !swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "LineSegment::intersection!" );
     }
@@ -575,8 +591,13 @@ namespace G2lib {
         B.intersect( obj_offs, *this, offs, ilist, !swap_s_vals );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        C.intersect( obj_offs, *this, offs, ilist, !swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "LineSegment::intersection!" );
     }

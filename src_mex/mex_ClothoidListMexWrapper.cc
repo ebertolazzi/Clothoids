@@ -564,31 +564,6 @@ namespace G2lib {
 
         #undef CMD
 
-      } else if ( cmd == "bbox" ) {
-
-        #define CMD "ClothoidListMexWrapper('bbox', OBJ, max_angle, max_size [,offs]): "
-
-        MEX_ASSERT(nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 inputs, nrhs = " << nrhs );
-        MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlsh = " << nlhs );
-
-        real_type max_angle = getScalarValue( arg_in_2, CMD "Error in reading max_angle" );
-        real_type max_size  = getScalarValue( arg_in_3, CMD "Error in reading max_size" );
-        real_type offs      = 0;
-        if ( nrhs == 5 ) offs = getScalarValue( arg_in_4, CMD "Error in reading offs" );
-
-        vector<ClothoidCurve::bbData> bb;
-        ptr->bbSplit( max_angle, max_size, offs, bb );
-
-        plhs[0] = mxCreateDoubleMatrix(6, bb.size(), mxREAL);
-        double * pT = mxGetPr(plhs[0]);
-        for ( int i = 0; i < bb.size(); ++i ) {
-          Triangle2D const & t = bb[i].t;
-          *pT++ = t.x1(); *pT++ = t.y1();
-          *pT++ = t.x2(); *pT++ = t.y2();
-          *pT++ = t.x3(); *pT++ = t.y3();
-        }
-        #undef CMD
-
       } else if ( cmd == "get" ) {
 
         #define CMD "ClothoidListMexWrapper('get', OBJ, n): "

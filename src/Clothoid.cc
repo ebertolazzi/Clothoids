@@ -17,31 +17,210 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+#include "Line.hh"
 #include "Circle.hh"
+#include "Biarc.hh"
 #include "Clothoid.hh"
 #include "CubicRootsFlocke.hh"
 
 #include <cmath>
 #include <cfloat>
 
+// workaround for windows that defines max and min as macros!
+#ifdef max
+  #undef max
+#endif
+#ifdef min
+  #undef min
+#endif
+
 namespace G2lib {
 
   using std::vector;
   using std::abs;
+  using std::min;
+  using std::max;
   using std::swap;
+  using std::ceil;
+  using std::floor;
   using std::isfinite;
+  using std::numeric_limits;
+
+  int_type  ClothoidCurve::max_iter  = 10;
+  real_type ClothoidCurve::tolerance = 1e-9;
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::bbox( real_type & xmin,
-                       real_type & ymin,
-                       real_type & xmax,
-                       real_type & ymax ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::bbox" ) ;
+  ClothoidCurve::optimized_sample_internal(
+    real_type           s_begin,
+    real_type           s_end,
+    real_type           offs,
+    real_type           ds,
+    real_type           max_angle,
+    vector<real_type> & s
+  ) const {
+    real_type ss  = s_begin;
+    real_type thh = theta(s_begin);
+    for ( int_type npts = 0; ss < s_end; ++npts ) {
+      G2LIB_ASSERT( npts < 1000000,
+                    "ClothoidCurve::optimized_sample_internal " <<
+                    "is generating too much points (>1000000)\n" <<
+                    "something is going wrong or parameters are not well set" );
+      // estimate angle variation and compute step accodingly
+      real_type k   = CD.kappa( ss );
+      real_type dss = ds/(1-k*offs); // scale length with offset
+      real_type sss = ss + dss;
+      if ( sss > s_end ) {
+        sss = s_end;
+        dss = s_end-ss;
+      }
+      if ( abs(k*dss) > max_angle ) {
+        dss = abs(max_angle/k);
+        sss = ss + dss;
+      }
+      // check and recompute if necessary
+      real_type thhh = theta(sss);
+      if ( abs(thh-thhh) > max_angle ) {
+        k    = CD.kappa( sss );
+        dss  = abs(max_angle/k);
+        sss  = ss + dss;
+        thhh = theta(sss);
+      }
+      ss  = sss;
+      thh = thhh;
+      s.push_back(ss);
+    }
+    s.back() = s_end;
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  ClothoidCurve::optimized_sample( real_type           offs,
+                                   int_type            npts,
+                                   real_type           max_angle,
+                                   vector<real_type> & s ) const {
+    s.clear();
+    s.reserve( size_t(npts) );
+    s.push_back(0);
+
+    real_type ds = L/npts;
+    if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
+      optimized_sample_internal( 0, L, offs, ds, max_angle, s );
+    } else {
+      // flex inside, split clothoid
+      real_type sflex = -CD.kappa0/CD.dk;
+      optimized_sample_internal( 0, sflex, offs, ds, max_angle, s );
+      optimized_sample_internal( sflex, L, offs, ds, max_angle, s );
+    }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  /*\
+   |  _    _   _____    _                _
+   | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+   | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+   | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+   |                               |___/
+  \*/
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  void
+  ClothoidCurve::bbTriangles_internal(
+    real_type     offs,
+    vector<T2D> & tvec,
+    real_type     s_begin,
+    real_type     s_end,
+    real_type     max_angle,
+    real_type     max_size
+  ) const {
+
+    static real_type const one_degree = m_pi/180;
+
+    real_type ss  = s_begin;
+    real_type thh = CD.theta(ss);
+    real_type MX  = min( L, max_size );
+    for ( int_type npts = 0; ss < s_end; ++npts ) {
+      G2LIB_ASSERT( npts < 1000000,
+                    "ClothoidCurve::bbTriangles_internal " <<
+                    "is generating too much triangles (>1000000)\n" <<
+                    "something is going wrong or parameters are not well set" );
+
+      // estimate angle variation and compute step accodingly
+      real_type k   = CD.kappa( ss );
+      real_type dss = MX/(1-k*offs); // scale length with offset
+      real_type sss = ss + dss;
+      if ( sss > s_end ) {
+        sss = s_end;
+        dss = s_end-ss;
+      }
+      if ( abs(k*dss) > max_angle ) {
+        dss = abs(max_angle/k);
+        sss = ss + dss;
+      }
+      // check and recompute if necessary
+      real_type thhh = theta(sss);
+      if ( abs(thh-thhh) > max_angle ) {
+        k    = CD.kappa( sss );
+        dss  = abs(max_angle/k);
+        sss  = ss + dss;
+        thhh = theta(sss);
+      }
+
+      real_type x0, y0, x1, y1;
+      CD.eval( ss,  offs, x0, y0 );
+      CD.eval( sss, offs, x1, y1 );
+
+      real_type tx0    = cos(thh);
+      real_type ty0    = sin(thh);
+      real_type alpha  = sss-ss; // se angolo troppo piccolo uso approx piu rozza
+      if ( abs(thh-thhh) > one_degree ) {
+        real_type tx1 = cos(thhh);
+        real_type ty1 = sin(thhh);
+        real_type det = tx1 * ty0 - tx0 * ty1;
+        real_type dx  = x1-x0;
+        real_type dy  = y1-y0;
+        alpha = (dy*tx1 - dx*ty1)/det;
+      }
+
+      real_type x2 = x0 + alpha*tx0;
+      real_type y2 = y0 + alpha*ty0;
+      T2D t( x0, y0, x2, y2, x1, y1, ss, sss );
+
+      tvec.push_back( t );
+
+      ss  = sss;
+      thh = thhh;
+    }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  ClothoidCurve::bbTriangles( real_type     offs,
+                              vector<T2D> & tvec,
+                              real_type     max_angle,
+                              real_type     max_size ) const {
+
+    if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
+      bbTriangles_internal( offs, tvec, 0, L, max_angle, max_size );
+    } else {
+      // flex inside, split clothoid
+      real_type sflex = -CD.kappa0/CD.dk;
+      bbTriangles_internal( offs, tvec, 0, sflex, max_angle, max_size );
+      bbTriangles_internal( offs, tvec, sflex, L, max_angle, max_size );
+    }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  /*\
+   |  ___ ___
+   | | _ ) _ ) _____ __
+   | | _ \ _ \/ _ \ \ /
+   | |___/___/\___/_\_\
+  \*/
 
   void
   ClothoidCurve::bbox( real_type   offs,
@@ -49,31 +228,250 @@ namespace G2lib {
                        real_type & ymin,
                        real_type & xmax,
                        real_type & ymax ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::bbox" ) ;
+    vector<T2D> tvec;
+    bbTriangles( offs, tvec, m_pi/18, 1e100 );
+    xmin = ymin = numeric_limits<real_type>::infinity();
+    xmax = ymax = -xmin;
+    vector<T2D>::const_iterator it;
+    for ( it = tvec.begin(); it != tvec.end(); ++it ) {
+      // - - - - - - - - - - - - - - - - - - - -
+      if      ( it->x1() < xmin ) xmin = it->x1();
+      else if ( it->x1() > xmax ) xmax = it->x1();
+      if      ( it->x2() < xmin ) xmin = it->x2();
+      else if ( it->x2() > xmax ) xmax = it->x2();
+      if      ( it->x3() < xmin ) xmin = it->x3();
+      else if ( it->x3() > xmax ) xmax = it->x3();
+      // - - - - - - - - - - - - - - - - - - - -
+      if      ( it->y1() < ymin ) ymin = it->y1();
+      else if ( it->y1() > ymax ) ymax = it->y1();
+      if      ( it->y2() < ymin ) ymin = it->y2();
+      else if ( it->y2() > ymax ) ymax = it->y2();
+      if      ( it->y3() < ymin ) ymin = it->y3();
+      else if ( it->y3() > ymax ) ymax = it->y3();
+    }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  /*\
+   |     _        _    ____  ____  _
+   |    / \      / \  | __ )| __ )| |_ _ __ ___  ___
+   |   / _ \    / _ \ |  _ \|  _ \| __| '__/ _ \/ _ \
+   |  / ___ \  / ___ \| |_) | |_) | |_| | |  __/  __/
+   | /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
+  \*/
+  void
+  ClothoidCurve::build_AABBtree( real_type offs,
+                                 real_type max_angle,
+                                 real_type max_size ) const {
+    if ( aabb_done &&
+         isZero( offs-aabb_offs ) &&
+         isZero( max_angle-aabb_max_angle ) &&
+         isZero( max_size-aabb_max_size ) ) return;
+
+    #ifdef G2LIB_USE_CXX11
+    vector<shared_ptr<BBox const> > bboxes;
+    #else
+    vector<BBox const *> bboxes;
+    #endif
+
+    bbTriangles( offs, aabb_tri, max_angle, max_size );
+    bboxes.reserve(aabb_tri.size());
+    vector<T2D>::const_iterator it;
+    int_type ipos = 0;
+    for ( it = aabb_tri.begin(); it != aabb_tri.end(); ++it, ++ipos ) {
+      real_type xmin, ymin, xmax, ymax;
+      it->bbox( xmin, ymin, xmax, ymax );
+      #ifdef G2LIB_USE_CXX11
+      bboxes.push_back( make_shared<BBox const>(
+        xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos
+      ) );
+      #else
+      bboxes.push_back(
+        new BBox( xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos )
+      );
+      #endif
+    }
+    aabb_tree.build(bboxes);
+    aabb_done      = true;
+    aabb_offs      = offs;
+    aabb_max_angle = max_angle;
+    aabb_max_size  = max_size;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  /*\
+   |            _ _ _     _
+   |   ___ ___ | | (_)___(_) ___  _ __
+   |  / __/ _ \| | | / __| |/ _ \| '_ \
+   | | (_| (_) | | | \__ \ | (_) | | | |
+   |  \___\___/|_|_|_|___/_|\___/|_| |_|
+  \*/
+  bool
+  ClothoidCurve::collision( BaseCurve const & obj ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote
+        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
+        ok = this->collision( C );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
+        ok = this->collision( C );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        ok = B.collision( *this );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
+        ok = this->collision( C );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CLOTHOID_LIST:
+      G2LIB_ASSERT( false, "ClothoidCurve::collision!" );
+    }
+    return ok;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::collision( BaseCurve const & obj ) const {
+  ClothoidCurve::collision( real_type         offs,
+                            BaseCurve const & obj,
+                            real_type         offs_obj ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote
+        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
+        ok = this->collision( offs, C, offs_obj );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
+        ok = this->collision( offs, C, offs_obj );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        ok = B.collision( offs_obj, *this, offs );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
+        ok = this->collision( offs, C, offs_obj );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CLOTHOID_LIST:
+      G2LIB_ASSERT( false, "ClothoidCurve::collision!" );
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidCurve::collision( ClothoidCurve const & C ) const {
     G2LIB_ASSERT( false, "DA FARE ClothoidCurve::collision" );
     return false;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
-  ClothoidCurve::collision( real_type         offs,
-                            BaseCurve const & obj,
-                            real_type         offs_obj ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::collision" ) ;
+  ClothoidCurve::collision( real_type             offs,
+                            ClothoidCurve const & C,
+                            real_type             offs_C ) const {
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::collision" );
     return false;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // collision detection
+  bool
+  ClothoidCurve::approximate_collision(
+    real_type             offs,
+    ClothoidCurve const & clot,
+    real_type             clot_offs,
+    real_type             max_angle,
+    real_type             max_size
+  ) const {
+
+  /*
+    vector<bbData> bbV0, bbV1;
+    bbSplit( max_angle, max_size, offs, bbV0 );
+    clot.bbSplit( max_angle, max_size, clot_offs, bbV1 );
+    for ( unsigned i = 0; i < unsigned(bbV0.size()); ++i ) {
+      bbData & bbi = bbV0[i];
+      for ( unsigned j = 0; j < unsigned(bbV1.size()); ++j ) {
+        bbData & bbj = bbV1[j];
+        if ( bbi.t.overlap(bbj.t) ) return true;
+      }
+    }
+    */
+    return false;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  /*\
+   |  _       _                          _
+   | (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   | | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   | | | | | | ||  __/ |  \__ \  __/ (__| |_
+   | |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
 
   void
   ClothoidCurve::intersect( BaseCurve const & obj,
                             IntersectList   & ilist,
                             bool              swap_s_vals ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::intersect" ) ;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote to clothoid
+        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        B.intersect( *this, ilist, !swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CLOTHOID_LIST:
+      G2LIB_ASSERT( false, "CircleArc::intersect!" );
+    }
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidCurve::intersect( real_type         offs,
@@ -81,16 +479,159 @@ namespace G2lib {
                             real_type         offs_obj,
                             IntersectList   & ilist,
                             bool              swap_s_vals ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::intersect" ) ;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote to clothoid
+        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        B.intersect( offs_obj, *this, offs, ilist, !swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
+    case G2LIB_CLOTHOID_LIST:
+      G2LIB_ASSERT( false, "CircleArc::intersect!" );
+    }
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidCurve::intersect( ClothoidCurve const & C,
+                            IntersectList       & ilist,
+                            bool                  swap_s_vals ) const {
+#if 0
+    vector<real_type> s1, s2;
+    this->intersect( C, s1, s2,
+                     ClothoidCurve::max_iter,
+                     ClothoidCurve::tolerance );
+    ilist.reserve( ilist.size() + s1.size() );
+    for ( size_t i = 0; i < s1.size(); ++i ) {
+      real_type ss1 = s1[i];
+      real_type ss2 = s2[i];
+      if ( swap_s_vals ) swap( ss1, ss2 );
+      ilist.push_back( Ipair( ss1, ss2 ) );
+    }
+#else
+  intersect( 0, C, 0, ilist, swap_s_vals );
+#endif
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidCurve::intersect( real_type             offs,
+                            ClothoidCurve const & C,
+                            real_type             offs_C,
+                            IntersectList       & ilist,
+                            bool                  swap_s_vals ) const {
+#if 1
+    this->build_AABBtree( offs );
+    C.build_AABBtree( offs_C );
+    AABBtree::VecPairPtrBBox intersectionList;
+    aabb_tree.intersect( C.aabb_tree, intersectionList );
+    AABBtree::VecPairPtrBBox::const_iterator ip;
+
+    for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
+      size_t ipos1 = size_t(ip->first->Ipos());
+      size_t ipos2 = size_t(ip->second->Ipos());
+
+      T2D const & T1 = aabb_tri[ipos1];
+      T2D const & T2 = C.aabb_tri[ipos2];
+
+      real_type s1_min = T1.s0;
+      real_type s1_max = T1.s1;
+      real_type ss1    = (s1_min+s1_max)/2;
+      real_type s2_min = T2.s0;
+      real_type s2_max = T2.s1;
+      real_type ss2    = (s2_min+s2_max)/2;
+      int_type  nout   = 0;
+      bool converged = false;
+
+      for ( int_type i = 0; i < max_iter && !converged; ++i ) {
+        real_type t1[2], t2[2], p1[2], p2[2];
+        CD.eval  ( ss1, offs, p1[0], p1[1] );
+        CD.eval_D( ss1, offs, t1[0], t1[1] );
+        C.CD.eval  ( ss2, offs_C, p2[0], p2[1] );
+        C.CD.eval_D( ss2, offs_C, t2[0], t2[1] );
+        /*
+        // risolvo il sistema
+        // p1 + alpha * t1 = p2 + beta * t2
+        // alpha * t1 - beta * t2 = p2 - p1
+        //
+        //  / t1[0] -t2[0] \ / alpha \ = / p2[0] - p1[0] \
+        //  \ t1[1] -t2[1] / \ beta  /   \ p2[1] - p1[1] /
+        */
+        real_type det = t2[0]*t1[1]-t1[0]*t2[1];
+        real_type px  = p2[0]-p1[0];
+        real_type py  = p2[1]-p1[1];
+        ss1 += (py*t2[0] - px*t2[1])/det;
+        ss2 += (t1[0]*py - t1[1]*px)/det;
+        if ( ! ( isfinite(ss1) && isfinite(ss1) ) ) break;
+        bool out = false;
+        if      ( ss1 <= s1_min ) { out = true; ss1 = s1_min; }
+        else if ( ss1 >= s1_max ) { out = true; ss1 = s1_max; }
+        if      ( ss2 <= s2_min ) { out = true; ss2 = s2_min; }
+        else if ( ss2 >= s2_max ) { out = true; ss2 = s2_max; }
+        if ( out ) {
+          if ( ++nout > 3 ) break;
+        } else {
+          converged = abs(px) <= tolerance && abs(py) <= tolerance;
+        }
+      }
+
+      if ( converged ) {
+        if ( swap_s_vals ) swap( ss1, ss2 );
+        ilist.push_back( Ipair( ss1, ss2 ) );
+      }
+    }
+
+#else
+    vector<real_type> s1, s2;
+    this->intersect( offs, C, offs_C, s1, s2,
+                     ClothoidCurve::max_iter,
+                     ClothoidCurve::tolerance );
+    ilist.reserve( ilist.size() + s1.size() );
+    for ( size_t i = 0; i < s1.size(); ++i ) {
+      real_type ss1 = s1[i];
+      real_type ss2 = s2[i];
+      if ( swap_s_vals ) swap( ss1, ss2 );
+      ilist.push_back( Ipair( ss1, ss2 ) );
+    }
+#endif
+  }
+
+  /*\
+   |                  _           _   _
+   |  _ __  _ __ ___ (_) ___  ___| |_(_) ___  _ __
+   | | '_ \| '__/ _ \| |/ _ \/ __| __| |/ _ \| '_ \
+   | | |_) | | | (_) | |  __/ (__| |_| | (_) | | | |
+   | | .__/|_|  \___// |\___|\___|\__|_|\___/|_| |_|
+   | |_|           |__/
+  \*/
   int_type
   ClothoidCurve::projection( real_type   qx,
                              real_type   qy,
                              real_type & x,
                              real_type & y,
                              real_type & s ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" ) ;
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" );
     return 0;
   }
 
@@ -101,7 +642,7 @@ namespace G2lib {
                              real_type & x,
                              real_type & y,
                              real_type & s ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" ) ;
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" );
     return 0;
   }
 
@@ -112,106 +653,10 @@ namespace G2lib {
                                real_type & x,
                                real_type & y,
                                real_type & s ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::closestPoint" ) ;
+    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::closestPoint" );
     return 0;
   }
 
-  static real_type const one_degree = m_pi/180;
-  static real_type const n90_degree = 90*one_degree;
-  static int_type  const max_level  = 10;
-
-  void
-  ClothoidCurve::bbTriangles( real_type              offs,
-                              vector<Triangle2D>   & tvec,
-                              bbDataForSplit const & data,
-                              real_type              max_angle,
-                              real_type              max_size,
-                              int_type               level ) const {
-
-    real_type dtheta = abs(data.theta0 - data.theta1);
-    real_type dx     = data.x1-data.x0;
-    real_type dy     = data.y1-data.y0;
-    if ( level >= max_level || (hypot(dx,dy) <= max_size && dtheta <= max_angle) ) {
-      real_type tx0   = cos(data.theta0);
-      real_type ty0   = sin(data.theta0);
-      real_type alpha = data.s1-data.s0; // se angolo troppo piccolo uso approx piu rozza
-      if ( dtheta > one_degree && dtheta < n90_degree ) {
-        real_type tx1 = cos(data.theta1);
-        real_type ty1 = sin(data.theta1);
-        real_type det = tx1*ty0-tx0*ty1;
-        alpha = (dy*tx1 - dx*ty1)/det;
-      }
-      real_type x2 = data.x0 + alpha*tx0;
-      real_type y2 = data.y0 + alpha*ty0;
-      //real_type x2 = (data.x0 + data.x1)/2;
-      //real_type y2 = (data.y0 + data.y1)/2;
-      Triangle2D t( data.x0, data.y0,
-                    x2, y2,
-                    data.x1, data.y1 );
-      tvec.push_back( t );
-      return;
-    }
-
-    real_type sM     = (data.s0+data.s1)/2;
-    real_type thetaM = CD.theta(sM);
-    real_type xM, yM;
-    CD.eval( sM, offs, xM, yM );
-
-    bbDataForSplit dataNew;
-    dataNew.s0     = data.s0;
-    dataNew.s1     = sM;
-    dataNew.theta0 = data.theta0;
-    dataNew.theta1 = thetaM;
-    dataNew.x0     = data.x0;
-    dataNew.y0     = data.y0;
-    dataNew.x1     = xM;
-    dataNew.y1     = yM;
-    bbTriangles( offs, tvec, dataNew, max_angle, max_size, level+1 );
-
-    dataNew.s0     = sM;
-    dataNew.s1     = data.s1;
-    dataNew.theta0 = thetaM;
-    dataNew.theta1 = data.theta1;
-    dataNew.x0     = xM;
-    dataNew.y0     = yM;
-    dataNew.x1     = data.x1;
-    dataNew.y1     = data.y1;
-    bbTriangles( offs, tvec, dataNew, max_angle, max_size, level+1 );
-  }
-
-  void
-  ClothoidCurve::bbTriangles( real_type            offs,
-                              vector<Triangle2D> & tvec,
-                              real_type            max_angle,
-                              real_type            max_size ) const {
-
-    bbDataForSplit data;
-    data.s0     = 0;
-    data.theta0 = CD.theta0;
-    CD.eval( 0, offs, data.x0, data.y0 ) ;
-
-    if ( CD.kappa0*CD.dk >= 0 || CD.dk*CD.kappa(L) <= 0 ) {
-      data.s1     = L;
-      data.theta1 = CD.theta(L);
-      CD.eval( L, offs, data.x1, data.y1 ) ;
-      bbTriangles( offs, tvec, data, max_angle, max_size, 0 );
-    } else {
-      // flex inside, split clothoid
-      real_type sflex = -CD.kappa0/CD.dk;
-      data.s1     = sflex;
-      data.theta1 = CD.theta(sflex);
-      CD.eval( sflex, offs, data.x1, data.y1 ) ;
-      bbTriangles( offs, tvec, data, max_angle, max_size, 0 );
-      data.s0     = data.s1;
-      data.theta0 = data.theta1;
-      data.x0     = data.x1;
-      data.y0     = data.y1;
-      data.s1     = L;
-      data.theta1 = CD.theta(L);
-      CD.eval( L, offs, data.x1, data.y1 ) ;
-      bbTriangles( offs, tvec, data, max_angle, max_size, 0 );
-    }
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -324,232 +769,6 @@ namespace G2lib {
     return ( (t7/7)*dk6 + dk5*CD.kappa0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
              5*dk2*k4*t3 + 3*dk3*t3 + 3*CD.dk*k5*t2 + 9*dk2*CD.kappa0*t2 +
              k6+9*k2*CD.dk ) * L;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidCurve::bbSplit(
-    real_type        split_angle,
-    real_type        split_size,
-    real_type        split_offs,
-    vector<bbData> & bb,
-    bool             reset_bb
-  ) const {
-
-    // step 0: controllo se curvatura passa per 0
-    real_type k_min = theta_D( 0 );
-    real_type k_max = theta_D( L );
-
-    if ( reset_bb ) bb.clear();
-
-    bbData2 data;
-    data.split_angle = split_angle;
-    data.split_size  = split_size;
-    data.split_offs  = split_offs;
-    data.cd          = this->CD;
-    data.s0          = 0;
-
-    if ( k_min * k_max < 0 ) {
-      // risolvo (s-s_min)*dk+k_min = 0 --> s = s_min-k_min/dk
-      real_type s_med = -k_min/CD.dk;
-      data.L  = s_med;
-      bbSplit_internal( data, bb );
-      // trim
-      CD.evaluate( s_med,
-                   data.cd.theta0, data.cd.kappa0,
-                   data.cd.x0, data.cd.y0 );
-      data.s0 = s_med;
-      data.L  = this->L - s_med;
-      bbSplit_internal( data, bb );
-    } else {
-      data.L  = this->L;
-      bbSplit_internal( data, bb );
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  static
-  real_type
-  abs2pi( real_type a ) {
-    a = abs(a);
-    while ( a > m_pi ) a -= m_2pi;
-    return abs(a);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidCurve::bbSplit_internal(
-    bbData2 const  & data,
-    vector<bbData> & bbV
-  ) const {
-
-    real_type theta_min, kappa_min, x_min, y_min,
-              theta_max, kappa_max, x_max, y_max;
-
-    data.cd.evaluate( 0,      theta_min, kappa_min, x_min, y_min );
-    data.cd.evaluate( data.L, theta_max, kappa_max, x_max, y_max );
-
-    real_type dtheta = abs( theta_max - theta_min );
-    real_type dx     = x_max - x_min;
-    real_type dy     = y_max - y_min;
-    real_type len    = hypot( dy, dx );
-    real_type dangle = abs2pi(atan2( dy, dx )-theta_min);
-    if ( dtheta          <= data.split_angle &&
-         len*tan(dangle) <= data.split_size ) {
-      bbData bb;
-      real_type x0, y0, x1, y1, x2, y2;
-      bool ok = data.cd.bbTriangle( data.L, data.split_offs,
-                                    x0, y0, x1, y1, x2, y2 );
-      G2LIB_ASSERT( ok, "ClothoidCurve::bbSplit_internal, bad bounding box" );
-      bb.t.build( x0, y0, x1, y1, x2, y2 );
-      bb.s0 = data.s0;
-      bb.L  = data.L;
-      bb.cd = data.cd;
-      bbV.push_back(bb);
-    } else {
-      bbData2 d;
-      real_type Lh = data.L / 2;
-      d.split_angle = data.split_angle;
-      d.split_size  = data.split_size;
-      d.split_offs  = data.split_offs;
-      d.s0          = data.s0;
-      d.L           = Lh;
-      d.cd          = data.cd;
-      bbSplit_internal( d, bbV );
-
-      // trim
-      data.cd.evaluate( Lh,
-                        d.cd.theta0, d.cd.kappa0,
-                        d.cd.x0, d.cd.y0 );
-      d.s0 = data.s0 + Lh;
-      d.L  = Lh;
-      bbSplit_internal( d, bbV );
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  ClothoidCurve::intersect_internal(
-    bbData const & c1,
-    real_type      c1_offs,
-    real_type    & s1,
-    bbData const & c2,
-    real_type      c2_offs,
-    real_type    & s2,
-    int_type       max_iter,
-    real_type      tolerance
-  ) const {
-    real_type angle1a = c1.cd.theta(0);
-    real_type angle1b = c1.cd.theta(c1.L);
-    real_type angle2a = c2.cd.theta(0);
-    real_type angle2b = c2.cd.theta(c2.L);
-    // cerca angoli migliori per partire
-    real_type dmax = abs2pi(angle1a-angle2a);
-    real_type dab  = abs2pi(angle1a-angle2b);
-    real_type dba  = abs2pi(angle1b-angle2a);
-    real_type dbb  = abs2pi(angle1b-angle2b);
-    s1 = s2 = 0;
-    if ( dmax < dab ) { dmax = dab; s2 = c2.L; }
-    if ( dmax < dba ) { dmax = dba; s1 = 0; s2 = 0; }
-    if ( dmax < dbb ) {              s1 = 0; s2 = c2.L; }
-    int_type nout = 0;
-    for ( int_type i = 0; i < max_iter; ++i ) {
-      real_type t1[2], t2[2], p1[2], p2[2];
-      c1.cd.eval  ( s1, c1_offs, p1[0], p1[1] );
-      c1.cd.eval_D( s1, c1_offs, t1[0], t1[1] );
-      c2.cd.eval  ( s2, c2_offs, p2[0], p2[1] );
-      c2.cd.eval_D( s2, c2_offs, t2[0], t2[1] );
-      /*
-      // risolvo il sistema
-      // p1 + alpha * t1 = p2 + beta * t2
-      // alpha * t1 - beta * t2 = p2 - p1
-      //
-      //  / t1[0] -t2[0] \ / alpha \ = / p2[0] - p1[0] \
-      //  \ t1[1] -t2[1] / \ beta  /   \ p2[1] - p1[1] /
-      */
-      real_type det = t2[0]*t1[1]-t1[0]*t2[1];
-      real_type px  = p2[0]-p1[0];
-      real_type py  = p2[1]-p1[1];
-      s1 += (py*t2[0] - px*t2[1])/det;
-      s2 += (t1[0]*py - t1[1]*px)/det;
-      if ( ! ( isfinite(s1) && isfinite(s1) ) ) break;
-      bool out = false;
-      if      ( s1 <= 0    ) { out = true; s1 = 0; }
-      else if ( s1 >= c1.L ) { out = true; s1 = c1.L; }
-      if      ( s2 <= 0    ) { out = true; s2 = 0; }
-      else if ( s2 >= c2.L ) { out = true; s2 = c2.L; }
-      if ( out ) {
-        if ( ++nout > 3 ) break;
-      } else {
-        if ( abs(px) <= tolerance &&
-             abs(py) <= tolerance ) return true;
-      }
-    }
-    return false;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidCurve::intersect(
-    real_type             offs,
-    ClothoidCurve const & clot,
-    real_type             clot_offs,
-    vector<real_type>   & s1,
-    vector<real_type>   & s2,
-    int_type              max_iter,
-    real_type             tolerance
-  ) const {
-    vector<bbData> bbV0, bbV1;
-    bbSplit( m_pi/50, L/3, offs, bbV0 );
-    clot.bbSplit( m_pi/50, clot.L/3, clot_offs, bbV1 );
-    s1.clear();
-    s2.clear();
-    for ( unsigned i = 0; i < unsigned(bbV0.size()); ++i ) {
-      bbData const & bbi = bbV0[i];
-      for ( unsigned j = 0; j < unsigned(bbV1.size()); ++j ) {
-        bbData const & bbj = bbV1[j];
-        if ( bbi.t.overlap(bbj.t) ) {
-          // uso newton per cercare intersezione
-          real_type tmp_s1, tmp_s2;
-          bool ok = intersect_internal( bbi, offs,      tmp_s1,
-                                        bbj, clot_offs, tmp_s2,
-                                        max_iter, tolerance );
-          if ( ok ) {
-            s1.push_back(bbi.s0+tmp_s1);
-            s2.push_back(bbj.s0+tmp_s2);
-          }
-        }
-      }
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  // collision detection
-  bool
-  ClothoidCurve::approximate_collision(
-    real_type             offs,
-    ClothoidCurve const & clot,
-    real_type             clot_offs,
-    real_type             max_angle,
-    real_type             max_size
-  ) const {
-    vector<bbData> bbV0, bbV1;
-    bbSplit( max_angle, max_size, offs, bbV0 );
-    clot.bbSplit( max_angle, max_size, clot_offs, bbV1 );
-    for ( unsigned i = 0; i < unsigned(bbV0.size()); ++i ) {
-      bbData & bbi = bbV0[i];
-      for ( unsigned j = 0; j < unsigned(bbV1.size()); ++j ) {
-        bbData & bbj = bbV1[j];
-        if ( bbi.t.overlap(bbj.t) ) return true;
-      }
-    }
-    return false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -19,6 +19,7 @@
 
 #include "Circle.hh"
 #include "Biarc.hh"
+#include "Clothoid.hh"
 #include "CubicRootsFlocke.hh"
 
 // Workaround for Visual Studio
@@ -414,7 +415,7 @@ namespace G2lib {
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
       n       = int_type(ceil( dtheta/max_angle ));
-      dtheta /= n ;
+      dtheta /= n;
     }
     real_type tg = tan(dtheta/2)/2;
     if ( k < 0 ) tg = -tg;
@@ -450,7 +451,7 @@ namespace G2lib {
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
       n       = int_type(ceil( dtheta/max_angle ));
-      dtheta /= n ;
+      dtheta /= n;
     }
     tvec.reserve( size_t(n) );
     real_type ds    = L/n;
@@ -529,24 +530,29 @@ namespace G2lib {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote
-        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        CircleArc C(*static_cast<LineSegment const*>(&obj));
         ok = this->collision( C );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
         ok = this->collision( C );
       }
       break;
     case G2LIB_BIARC:
       {
-        Biarc B(*static_cast<Biarc const*>(&obj)) ;
-        ok = B.collision( obj );
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        ok = B.collision( *this );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        ok = C.collision( *this );
       }
       break;
     case G2LIB_POLYLINE:
-    case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "CircleArc::collision!" );
     }
@@ -563,24 +569,29 @@ namespace G2lib {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote to arc
-        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        CircleArc C(*static_cast<LineSegment const*>(&obj));
         ok = this->collision( offs, C, offs_obj );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
         ok = this->collision( offs, C, offs_obj );
       }
       break;
     case G2LIB_BIARC:
       {
-        Biarc B(*static_cast<Biarc const*>(&obj)) ;
+        Biarc B(*static_cast<Biarc const*>(&obj));
         ok = B.collision( offs_obj, *this, offs );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        ok = C.collision( offs_obj, *this, offs );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "CircleArc::collision!" );
     }
@@ -596,24 +607,29 @@ namespace G2lib {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote to arc
-        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        CircleArc C(*static_cast<LineSegment const*>(&obj));
         this->intersect( C, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
         this->intersect( C, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC:
       {
-        Biarc B(*static_cast<Biarc const*>(&obj)) ;
+        Biarc B(*static_cast<Biarc const*>(&obj));
         B.intersect( *this, ilist, !swap_s_vals );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "CircleArc::intersect!" );
     }
@@ -630,24 +646,29 @@ namespace G2lib {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote to arc
-        CircleArc C(*static_cast<LineSegment const*>(&obj)) ;
+        CircleArc C(*static_cast<LineSegment const*>(&obj));
         this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj)) ;
+        CircleArc C(*static_cast<CircleArc const*>(&obj));
         this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC:
       {
-        Biarc B(*static_cast<Biarc const*>(&obj)) ;
+        Biarc B(*static_cast<Biarc const*>(&obj));
         B.intersect( offs_obj, *this, offs, ilist, !swap_s_vals );
       }
       break;
-    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID:
+      {
+        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false, "CircleArc::intersect!" );
     }

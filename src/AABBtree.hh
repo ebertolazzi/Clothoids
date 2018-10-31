@@ -121,7 +121,7 @@ namespace G2lib {
     }
 
     bool
-    intersect( BBox const & box ) const {
+    collision( BBox const & box ) const {
       return !( (box.xmin > xmax ) ||
                 (box.xmax < xmin ) ||
                 (box.ymin > ymax ) ||
@@ -214,14 +214,14 @@ namespace G2lib {
     void
     print( ostream_type & stream, int level = 0 ) const;
 
-    template <typename INTERSECT_fun>
+    template <typename COLLISION_fun>
     bool
-    intersect( AABBtree const & tree,
-               INTERSECT_fun    ifun,
+    collision( AABBtree const & tree,
+               COLLISION_fun    ifun,
                bool             swap_tree = false ) const {
 
       // check bbox with
-      if ( !tree.pBBox->intersect(*pBBox) ) return false;
+      if ( !tree.pBBox->collision(*pBBox) ) return false;
 
       int icase = (children.empty() ? 0 : 1) +
                   (tree.children.empty()? 0 : 2);
@@ -233,7 +233,7 @@ namespace G2lib {
       case 1: // first is a tree, second is a leaf
         { typename vector<PtrAABB>::const_iterator it;
           for ( it = children.begin(); it != children.end(); ++it )
-            if ( tree.intersect(**it, ifun) )
+            if ( tree.collision(**it, ifun) )
               return true;
         }
         break;
@@ -241,7 +241,7 @@ namespace G2lib {
         { typename vector<PtrAABB>::const_iterator it;
           for ( it = tree.children.begin();
                 it != tree.children.end(); ++it )
-            if ( this->intersect(**it, ifun) )
+            if ( this->collision(**it, ifun) )
               return true;
         }
         break;
@@ -251,7 +251,7 @@ namespace G2lib {
           for ( c1 = children.begin(); c1 != children.end(); ++c1 )
             for ( c2 = tree.children.begin();
                   c2 != tree.children.end(); ++c2 )
-              if ( (*c1)->intersect(**c2, ifun) )
+              if ( (*c1)->collision(**c2, ifun) )
                 return true;
         }
         break;

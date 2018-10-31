@@ -28,6 +28,7 @@
 #include "Line.hh"
 #include "Circle.hh"
 #include "Triangle2D.hh"
+#include "AABBtree.hh"
 
 #include <string>
 #include <vector>
@@ -38,17 +39,7 @@
 //! Clothoid computations routine
 namespace G2lib {
 
-  /*\
-   |    ____ _       _   _           _     _
-   |   / ___| | ___ | |_| |__   ___ (_) __| |
-   |  | |   | |/ _ \| __| '_ \ / _ \| |/ _` |
-   |  | |___| | (_) | |_| | | | (_) | | (_| |
-   |   \____|_|\___/ \__|_| |_|\___/|_|\__,_|
-  \*/
-
-  //! Compute Lommel function
-  real_type
-  LommelReduced( real_type mu, real_type nu, real_type z );
+  using std::vector;
 
   /*\
    |    ____ _       _   _           _     _  ____
@@ -60,6 +51,34 @@ namespace G2lib {
   //! \brief Class to manage Clothoid Curve
   class ClothoidCurve : public BaseCurve {
   public:
+
+    class T2D : public Triangle2D {
+      real_type s0;
+      real_type s1;
+      T2D();
+    public:
+      friend class ClothoidCurve;
+
+      T2D( real_type  x1, real_type  y1,
+           real_type  x2, real_type  y2,
+           real_type  x3, real_type  y3,
+           real_type _s0, real_type _s1 )
+      : Triangle2D( x1, y1, x2, y2, x3, y3 )
+      , s0(_s0)
+      , s1(_s1)
+      {}
+
+      T2D( T2D const & rhs )
+      { *this = rhs; }
+
+      T2D const &
+      operator = ( T2D const & rhs ) {
+        Triangle2D::operator = ( rhs );
+        this->s0 = rhs.s0;
+        this->s1 = rhs.s1;
+        return *this;
+      }
+    };
 
     typedef struct {
       real_type    s0;
@@ -78,41 +97,40 @@ namespace G2lib {
     } bbData2;
 
     typedef struct {
-      real_type s0, theta0, x0, y0;
-      real_type s1, theta1, x1, y1;
+      real_type s0, theta0, tx0, ty0, x0, y0;
+      real_type s1, theta1, tx1, ty1, x1, y1;
     } bbDataForSplit;
 
   private:
 
-    ClothoidData CD; //!< clothoid data
-    real_type    L;  //!< lenght of clothoid segment
+    ClothoidData CD;  //!< clothoid data
+    real_type    L;   //!< lenght of clothoid segment
 
     void
-    bbSplit_internal( bbData2 const & data, std::vector<bbData> & bbV ) const;
-
-    //! Use newton and bisection to intersect two small clothoid segment
-    bool
-    intersect_internal( bbData const & c1, real_type c1_offs, real_type & s1,
-                        bbData const & c2, real_type c2_offs, real_type & s2,
-                        int_type max_iter,
-                        real_type tolerance ) const;
+    optimized_sample_internal( real_type           s_begin,
+                               real_type           s_end,
+                               real_type           offs,
+                               real_type           ds,
+                               real_type           max_angle,
+                               vector<real_type> & s ) const;
 
     void
-    bbTriangles( real_type                 offs,
-                 std::vector<Triangle2D> & tvec,
-                 bbDataForSplit const    & data,
-                 real_type                 max_angle,
-                 real_type                 max_size,
-                 int_type                  level ) const;
+    bbTriangles_internal( real_type     offs,
+                          vector<T2D> & tvec,
+                          real_type     s0,
+                          real_type     s1,
+                          real_type     max_angle,
+                          real_type     max_size ) const;
 
-    void
-    bbTriangles( std::vector<Triangle2D> & tvec,
-                 bbDataForSplit const    & data,
-                 real_type                 max_angle,
-                 real_type                 max_size,
-                 int_type                  level ) const {
-      bbTriangles( 0, tvec, data, max_angle, max_size, level );
-    }
+    static int_type  max_iter;
+    static real_type tolerance;
+
+    mutable bool        aabb_done;
+    mutable AABBtree    aabb_tree;
+    mutable real_type   aabb_offs;
+    mutable real_type   aabb_max_angle;
+    mutable real_type   aabb_max_size;
+    mutable vector<T2D> aabb_tri;
 
   public:
 
@@ -156,6 +174,7 @@ namespace G2lib {
 
     ClothoidCurve()
     : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
     {
       CD.x0     = 0;
       CD.y0     = 0;
@@ -173,6 +192,7 @@ namespace G2lib {
                    real_type _dk,
                    real_type _L )
     : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
     {
       CD.x0     = _x0;
       CD.y0     = _y0;
@@ -188,6 +208,7 @@ namespace G2lib {
                    real_type const P1[],
                    real_type       theta1 )
     : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
     {
       build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 );
     }
@@ -196,14 +217,18 @@ namespace G2lib {
     copy( ClothoidCurve const & c ) {
       CD = c.CD;
       L  = c.L;
+      aabb_done = false;
+      aabb_tree.clear();
     }
 
     ClothoidCurve( ClothoidCurve const & s )
     : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
     { copy(s); }
 
     ClothoidCurve( LineSegment const & LS )
     : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
     {
       CD.x0     = LS.x0;
       CD.y0     = LS.y0;
@@ -215,6 +240,7 @@ namespace G2lib {
 
     ClothoidCurve( CircleArc const & C )
     : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
     {
       CD.x0     = C.x0;
       CD.y0     = C.y0;
@@ -247,6 +273,8 @@ namespace G2lib {
       CD.kappa0 = _k;
       CD.dk     = _dk;
       L         = _L;
+      aabb_done = false;
+      aabb_tree.clear();
     }
 
     /*!
@@ -268,6 +296,8 @@ namespace G2lib {
               real_type y1,
               real_type theta1,
               real_type tol = 1e-12 ) {
+      aabb_done = false;
+      aabb_tree.clear();
       return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L );
     }
 
@@ -293,6 +323,8 @@ namespace G2lib {
                 real_type k_D[2],
                 real_type dk_D[2],
                 real_type tol = 1e-12 ) {
+      aabb_done = false;
+      aabb_tree.clear();
       return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L,
                           true, L_D, k_D, dk_D );
     }
@@ -315,6 +347,8 @@ namespace G2lib {
                    real_type x1,
                    real_type y1,
                    real_type tol = 1e-12 ) {
+      aabb_done = false;
+      aabb_tree.clear();
       return CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, L );
     }
 
@@ -331,6 +365,8 @@ namespace G2lib {
       CD.kappa0 = 0;
       CD.dk     = 0;
       L         = LS.L;
+      aabb_done = false;
+      aabb_tree.clear();
     }
 
     /*!
@@ -346,6 +382,8 @@ namespace G2lib {
       CD.kappa0 = C.k;
       CD.dk     = 0;
       L         = C.L;
+      aabb_done = false;
+      aabb_tree.clear();
     }
 
     void
@@ -422,6 +460,19 @@ namespace G2lib {
     real_type integralJerk2() const;
 
     real_type integralSnap2() const;
+
+    /*!
+     |  Return a vector of optimized sample parameters
+     |  \param offs      offset of the sampled curve
+     |  \param npts      suggested minimum number of sampled points
+     |  \param max_angle maximum angle variation between two sampled points
+     |  \param s         vector of computed parameters
+    \*/
+    void
+    optimized_sample( real_type                offs,
+                      int_type                 npts,
+                      real_type                max_angle,
+                      std::vector<real_type> & s ) const;
 
     /*\
      |     _ _    _
@@ -513,171 +564,17 @@ namespace G2lib {
     }
 
     void
-    bbTriangles( real_type                 offs,
-                 std::vector<Triangle2D> & tvec,
-                 real_type                 max_angle = m_pi/6, // 30 degree
-                 real_type                 max_size  = 1e100 ) const;
+    bbTriangles( real_type          offs,
+                 std::vector<T2D> & tvec,
+                 real_type          max_angle = m_pi/6, // 30 degree
+                 real_type          max_size  = 1e100 ) const;
 
     void
-    bbTriangles( std::vector<Triangle2D> & tvec,
-                 real_type                 max_angle = m_pi/6, // 30 degree
-                 real_type                 max_size  = 1e100 ) const {
+    bbTriangles( std::vector<T2D> & tvec,
+                 real_type          max_angle = m_pi/6, // 30 degree
+                 real_type          max_size  = 1e100 ) const {
       bbTriangles( 0, tvec, max_angle, max_size );
     }
-
-    /*!
-     | \brief split clothoids in smaller segments
-     |
-     | \param split_angle maximum angle variation
-     | \param split_size  maximum height of the triangle
-     | \param split_offs  curve offset
-     | \param bb          splitting data structures vector
-    \*/
-    void
-    bbSplit( real_type             split_angle,
-             real_type             split_size,
-             real_type             split_offs,
-             std::vector<bbData> & bb,
-             bool                  reset_bb = true ) const;
-
-    /*\
-     |  _     _                      _
-     | (_)_ _| |_ ___ _ _ ___ ___ __| |_
-     | | | ' \  _/ -_) '_(_-</ -_) _|  _|
-     | |_|_||_\__\___|_| /__/\___\__|\__|
-     |
-    \*/
-    /*!
-     | \brief intersect two clothoid arcs
-     |
-     | \param offs      offset of the first arc
-     | \param c         the second clothoid arc
-     | \param c_offs    offset of the second arc
-     | \param s1        intersection parameters of the first arc
-     | \param s2        intersection parameters of the second arc
-     | \param max_iter  max allowed iteration
-     | \param tolerance admitted tolerance
-    \*/
-    void
-    intersect( real_type                offs,
-               ClothoidCurve const    & c,
-               real_type                c_offs,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const;
-
-    /*!
-     | \brief intersect two clothoid arcs
-     |
-     | \param c         the second clothoid arc
-     | \param s1        intersection parameters of the first arc
-     | \param s2        intersection parameters of the second arc
-     | \param max_iter  max allowed iteration
-     | \param tolerance admitted tolerance
-    \*/
-    void
-    intersect( ClothoidCurve const    & c,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
-      intersect( 0, c, 0, s1, s2, max_iter, tolerance );
-    }
-
-    /*!
-     | \brief intersect a clothoid with a circle arc
-     |
-     | \param offs      offset of the first arc
-     | \param c_in      the circle arc
-     | \param c_offs    offset of the circle arc
-     | \param s1        intersection parameters of the first arc
-     | \param s2        intersection parameters of the second arc
-     | \param max_iter  max allowed iteration
-     | \param tolerance admitted tolerance
-    \*/
-    void
-    intersect( real_type                offs,
-               CircleArc const        & c_in,
-               real_type                c_offs,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance );
-    }
-
-    /*!
-     | \brief intersect a clothoid with a circle arc
-     |
-     | \param c_in      the circle arc
-     | \param s1        intersection parameters of the first arc
-     | \param s2        intersection parameters of the second arc
-     | \param max_iter  max allowed iteration
-     | \param tolerance admitted tolerance
-    \*/
-    void
-    intersect( CircleArc const        & c_in,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( 0, c, 0, s1, s2, max_iter, tolerance );
-    }
-
-    /*!
-     | \brief intersect a clothoid with a line segment
-     |
-     | \param offs      offset of the first arc
-     | \param c_in      the line segment
-     | \param c_offs    offset of the line segment
-     | \param s1        intersection parameters of the first arc
-     | \param s2        intersection parameters of the second arc
-     | \param max_iter  max allowed iteration
-     | \param tolerance admitted tolerance
-    \*/
-    void
-    intersect( real_type                offs,
-               LineSegment const      & c_in,
-               real_type                c_offs,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance );
-    }
-
-    /*!
-     | \brief intersect a clothoid with a line segment
-     |
-     | \param c_in      the line segment
-     | \param s1        intersection parameters of the first arc
-     | \param s2        intersection parameters of the second arc
-     | \param max_iter  max allowed iteration
-     | \param tolerance admitted tolerance
-    \*/
-    void
-    intersect( LineSegment const      & c_in,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( 0, c, 0, s1, s2, max_iter, tolerance );
-    }
-
-    // collision detection
-    bool
-    approximate_collision(
-      real_type             offs,
-      ClothoidCurve const & c,
-      real_type             c_offs,
-      real_type             max_angle, //!< maximum angle variation
-      real_type             max_size   //!< curve offset
-    ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -686,7 +583,9 @@ namespace G2lib {
     bbox( real_type & xmin,
           real_type & ymin,
           real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE;
+          real_type & ymax ) const G2LIB_OVERRIDE {
+      bbox( 0, xmin, ymin, xmax, ymax );
+    }
 
     virtual
     void
@@ -1092,13 +991,12 @@ namespace G2lib {
       CD.origin_at( s0 );
       L = newL;
     }
-
     /*\
-     |   _       _                          _
-     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
-     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
-     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
-     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+     |             _ _ _     _
+     |    ___ ___ | | (_)___(_) ___  _ __
+     |   / __/ _ \| | | / __| |/ _ \| '_ \
+|    |  | (_| (_) | | | \__ \ | (_) | | | |
+     |   \___\___/|_|_|_|___/_|\___/|_| |_|
     \*/
 
     virtual
@@ -1110,6 +1008,32 @@ namespace G2lib {
     collision( real_type         offs,
                BaseCurve const & obj,
                real_type         offs_obj ) const G2LIB_OVERRIDE;
+
+    bool
+    collision( ClothoidCurve const & C ) const;
+
+    bool
+    collision( real_type             offs,
+               ClothoidCurve const & C,
+               real_type             offs_C ) const;
+
+    // collision detection
+    bool
+    approximate_collision(
+      real_type             offs,
+      ClothoidCurve const & c,
+      real_type             c_offs,
+      real_type             max_angle, //!< maximum angle variation
+      real_type             max_size   //!< curve offset
+    ) const;
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
 
     virtual
     void
@@ -1124,14 +1048,6 @@ namespace G2lib {
                real_type         offs_obj,
                IntersectList   & ilist,
                bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    bool
-    collision( ClothoidCurve const & C ) const;
-
-    bool
-    collision( real_type             offs,
-               ClothoidCurve const & C,
-               real_type             offs_C ) const;
 
     void
     intersect( ClothoidCurve const & C,
@@ -1244,6 +1160,11 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    void
+    build_AABBtree( real_type offs,
+                    real_type max_angle = m_pi/18, // 10 degree
+                    real_type max_size  = 1e100 ) const;
 
     void
     info( ostream_type & stream ) const G2LIB_OVERRIDE

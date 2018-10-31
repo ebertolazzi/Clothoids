@@ -106,7 +106,7 @@ hold on;
 plot( XY1(1,:), XY1(2,:), '-b', 'LineWidth', 1 );
 plot( XY2(1,:), XY2(2,:), '-k', 'LineWidth', 1 );
 
-[s1,s2] = intersectClothoid( CLOT1, CLOT2 );
+[s1,s2] = CLOT1.intersect(CLOT2);
 
 XY1 = CLOT1.eval( s1 );
 XY2 = CLOT2.eval( s2 );

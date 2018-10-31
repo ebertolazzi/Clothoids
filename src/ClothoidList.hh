@@ -786,23 +786,6 @@ namespace G2lib {
     void scale( real_type sfactor );
     void reverse();
 
-    /*! \brief split clothois in smaller segments
-     |
-     | \param split_angle maximum angle variation
-     | \param split_size  maximum height of the triangle
-     | \param split_offs  curve offset
-     | \param bb          splitting data structures vector
-    \*/
-    void
-    bbSplit( real_type split_angle,
-             real_type split_size,
-             real_type split_offs,
-             std::vector<ClothoidCurve::bbData> & bb ) const {
-      bb.clear();
-      std::vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
-      for (; ic != clotoidList.end(); ++ic )
-        ic->bbSplit( split_angle, split_size, split_offs, bb, false );
-    }
     /*\
      |  _     _                      _
      | (_)_ _| |_ ___ _ _ ___ ___ __| |_

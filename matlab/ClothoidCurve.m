@@ -128,27 +128,12 @@ classdef ClothoidCurve < CurveBase
                                self.objectHandle, s0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ s1, s2 ] = intersect( self, C )
-      stype = C.is_type();
-      if strcmp(stype,'LineSegment')
-        [ s1, s2 ] = ClothoidCurveMexWrapper( 'intersect_line', ...
-                                              self.objectHandle, ...
-                                              C.obj_handle() );
-      elseif strcmp(stype,'CircleArc')
-        [ s1, s2 ] = ClothoidCurveMexWrapper( 'intersect_circle', ...
-                                              self.objectHandle, ...
-                                              C.obj_handle() );
-      elseif strcmp(stype,'ClothoidCurve')
-        [ s1, s2 ] = ClothoidCurveMexWrapper( 'intersect_clothoid', ...
-                                              self.objectHandle, ...
-                                              C.obj_handle() );
-      elseif strcmp(stype,'ClothoidList')
-        [ s1, s2 ] = ClothoidCurveMexWrapper( 'intersect_clothoid_list', ...
-                                              self.objectHandle, ...
-                                              C.obj_handle() );
-      else
-        error('ClothoidCurve::intersect, unknown type: %s\n', stype ) ;
-      end
+    function [ s1, s2 ] = intersect( self, C, varargin )
+      [ s1, s2 ] = ClothoidCurveMexWrapper( 'intersect', ...
+                                            self.objectHandle, ...
+                                            C.obj_handle(), ...
+                                            C.is_type(), ...
+                                            varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [xp,yp,xm,ym] = infinity( self )
@@ -173,20 +158,24 @@ classdef ClothoidCurve < CurveBase
     function [P1,P2,P3] = bbTriangles( self, varargin )
       [P1,P2,P3] = ClothoidCurveMexWrapper( 'bbTriangles', self.objectHandle, varargin{:} );
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function s = optimized_sample( self, npts, max_angle, offs )
+      s = ClothoidCurveMexWrapper( 'optimized_sample', ...
+                                   self.objectHandle, ...
+                                   npts, max_angle, offs );
+    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
       if nargin < 2
         npts = 1000 ;
       end
-      L        = ClothoidCurveMexWrapper( 'length', self.objectHandle );
-      S        = 0:L/npts:L ;
+      S = self.optimized_sample( npts, pi/180, 0 );
       [ X, Y ] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S );
       plot( X, Y, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot_offs( self, npts, offs, varargin )
-      L        = ClothoidCurveMexWrapper( 'length', self.objectHandle );
-      S        = 0:L/npts:L ;
+      S = self.optimized_sample( npts, pi/180, offs );
       [ X, Y ] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S, offs );
       plot( X, Y, varargin{:} );
     end

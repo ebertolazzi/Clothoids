@@ -222,7 +222,7 @@ namespace G2lib {
   ) const {
 
     // check bbox with
-    if ( !tree.pBBox->intersect(*pBBox) ) return;
+    if ( !tree.pBBox->collision(*pBBox) ) return;
 
     int icase = (children.empty() ? 0 : 1) +
                 (tree.children.empty()? 0 : 2);

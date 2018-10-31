@@ -45,11 +45,8 @@ namespace G2lib {
 
   public:
 
-    Triangle2D( Triangle2D const & t ) {
-      p1[0] = t.p1[0]; p1[1] = t.p1[1];
-      p2[0] = t.p2[0]; p2[1] = t.p2[1];
-      p3[0] = t.p3[0]; p3[1] = t.p3[1];
-    }
+    Triangle2D( Triangle2D const & t )
+    { *this = t; }
 
     Triangle2D( ) {
       p1[0] = p1[1] =
@@ -74,6 +71,14 @@ namespace G2lib {
     }
 
     ~Triangle2D() {}
+
+    Triangle2D const &
+    operator = ( Triangle2D const & t ) {
+      this->p1[0] = t.p1[0]; this->p1[1] = t.p1[1];
+      this->p2[0] = t.p2[0]; this->p2[1] = t.p2[1];
+      this->p3[0] = t.p3[0]; this->p3[1] = t.p3[1];
+      return *this;
+    }
 
     void
     build( real_type const _p1[2],

@@ -97,7 +97,7 @@ namespace G2lib {
     using BaseCurve::distance;
 
     virtual
-    ~Biarc()
+    ~Biarc() G2LIB_OVERRIDE
     {}
 
     Biarc()

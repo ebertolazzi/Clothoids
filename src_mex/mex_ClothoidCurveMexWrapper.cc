@@ -595,8 +595,7 @@ namespace G2lib {
       offs = getScalarValue( arg_in_4,
                              CMD "`offs` expected to be a real scalar" );
 
-
-    std::vector<Triangle2D> tvec;
+    std::vector<ClothoidCurve::T2D> tvec;
     if ( nrhs == 5 ) {
       ptr->bbTriangles( offs, tvec, max_angle, max_size );
     } else {
@@ -618,6 +617,45 @@ namespace G2lib {
       *p2++ = t.x3();
       *p2++ = t.y3();
     }
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_optimized_sample( int nlhs, mxArray       *plhs[],
+                       int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidCurveMexWrapper('optimized_sample',OBJ,npts,max_angle,offs): "
+
+    MEX_ASSERT( nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+    ClothoidCurve * ptr = DATA_GET(arg_in_1);
+
+    int_type  npts;
+    real_type max_angle, offs;
+
+    npts = int_type(getInt(
+      arg_in_2, CMD "`max_angle` expected to be a real scalar"
+    ));
+
+    max_angle = getScalarValue(
+      arg_in_3, CMD "`max_angle` expected to be a real scalar"
+    );
+
+    offs = getScalarValue(
+      arg_in_4, CMD "`max_size` expected to be a real scalar"
+    );
+
+    std::vector<real_type> s;
+    ptr->optimized_sample( offs, npts, max_angle, s );
+
+    mwSize n = s.size();
+    real_type * ss = createMatrixValue( arg_out_0, 1, n );
+    std::copy( s.begin(), s.end(), ss );
 
     #undef CMD
   }
@@ -646,6 +684,7 @@ namespace G2lib {
     CMD_DISTANCE_BY_SAMPLE,
     CMD_CLOSEST_BY_SAMPLE,
     CMD_BB_TRIANGLES,
+    CMD_OPTIMIZED_SAMPLE,
     CMD_VIRTUAL_LIST
   } CMD_LIST;
 
@@ -665,6 +704,7 @@ namespace G2lib {
     {"distanceBySample",CMD_DISTANCE_BY_SAMPLE},
     {"closestPointBySample",CMD_CLOSEST_BY_SAMPLE},
     {"bbTriangles",CMD_BB_TRIANGLES},
+    {"optimized_sample",CMD_OPTIMIZED_SAMPLE},
     CMD_MAP_LIST
   };
 
@@ -723,6 +763,9 @@ namespace G2lib {
         break;
       case CMD_BB_TRIANGLES:
         do_bbTriangles( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_OPTIMIZED_SAMPLE:
+        do_optimized_sample( nlhs, plhs, nrhs, prhs );
         break;
       CMD_CASE_LIST;
       }

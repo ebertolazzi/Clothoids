@@ -275,8 +275,8 @@ namespace G2lib {
               real_type & x,
               real_type & y ) const G2LIB_OVERRIDE {
       eval( s, x, y );
-      th     = this->theta0 + s*this->k ;
-      kappa  = this->k ;
+      th     = this->theta0 + s*this->k;
+      kappa  = this->k;
     }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

@@ -674,7 +674,7 @@ namespace G2lib {
     vector<real_type>::const_iterator iss1, iss2;
     for ( int_type ns = 0; ns < int_type(clotoidList.size()); ++ns ) {
       vector<real_type> ss1, ss2;
-      clotoidList[ns].intersect( offs, c, c_offs, ss1, ss2, max_iter, tolerance );
+      //clotoidList[ns].intersect( offs, c, c_offs, ss1, ss2, max_iter, tolerance );
       for ( iss1 = ss1.begin();iss1 != ss1.end(); ++iss1 )
         s1.push_back( s0[ns]+(*iss1) );
       for ( iss2 = ss2.begin(); iss2 != ss2.end(); ++iss2 )
@@ -700,7 +700,7 @@ namespace G2lib {
       for ( int_type ns1 = 0; ns1 < CL.numSegment(); ++ns1 ) {
         ClothoidCurve const & C1 = CL.clotoidList[ns1];
         vector<real_type> ss1, ss2;
-        C.intersect( offs, C1, c_offs, ss1, ss2, max_iter, tolerance );
+        //C.intersect( offs, C1, c_offs, ss1, ss2, max_iter, tolerance );
         for ( iss1 = ss1.begin();iss1 != ss1.end(); ++iss1 )
           s1.push_back( s0[ns]+(*iss1) );
         for ( iss2 = ss2.begin(); iss2 != ss2.end(); ++iss2 )

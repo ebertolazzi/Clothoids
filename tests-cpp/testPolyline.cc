@@ -35,11 +35,11 @@ main() {
 
   cout << "CLOTHOIDS\n";
   vector<real_type>::const_iterator is;
-  for ( is = s1.begin(); is != s1.end() ; ++is )
+  for ( is = s1.begin(); is != s1.end(); ++is )
     cout << "s1[ " << is-s1.begin() << "] = "
          << *is << '\n';
 
-  for ( is = s2.begin(); is != s2.end() ; ++is )
+  for ( is = s2.begin(); is != s2.end(); ++is )
     cout << "s2[ " << is-s2.begin() << "] = "
          << *is << '\n';
 
@@ -60,11 +60,11 @@ main() {
        << s1.size() << " "
        << s2.size() << '\n';
 
-  for ( is = s1.begin(); is != s1.end() ; ++is )
+  for ( is = s1.begin(); is != s1.end(); ++is )
     cout << "s1[ " << is-s1.begin() << "] = "
          << *is << '\n';
 
-  for ( is = s2.begin(); is != s2.end() ; ++is )
+  for ( is = s2.begin(); is != s2.end(); ++is )
     cout << "s2[ " << is-s2.begin() << "] = "
          << *is << '\n';
 
