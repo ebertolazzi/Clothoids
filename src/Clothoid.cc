@@ -29,6 +29,7 @@ namespace G2lib {
   using std::vector;
   using std::abs;
   using std::swap;
+  using std::isfinite;
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
