@@ -29,19 +29,25 @@ main() {
   C2.rotate(G2lib::m_pi/3,0,0);
   C2.translate(1,-1);
 
-  vector<real_type> s1, s2;
-
-  C1.intersect( C2, s1, s2, 30, 1e-10 );
+  G2lib::BaseCurve::IntersectList ilist;
+  C1.intersect( C2, ilist, false );
 
   cout << "CLOTHOIDS\n";
-  vector<real_type>::const_iterator is;
-  for ( is = s1.begin(); is != s1.end(); ++is )
-    cout << "s1[ " << is-s1.begin() << "] = "
-         << *is << '\n';
 
-  for ( is = s2.begin(); is != s2.end(); ++is )
-    cout << "s2[ " << is-s2.begin() << "] = "
-         << *is << '\n';
+  for ( size_t i = 0; i < ilist.size(); ++i )
+    cout << "s1[ " << i << "] = " << ilist[i].first << '\n';
+
+  for ( size_t i = 0; i < ilist.size(); ++i )
+    cout << "s2[ " << i << "] = " << ilist[i].second << '\n';
+
+  for ( size_t i = 0; i < ilist.size(); ++i )
+    cout << "x[" << i << "] = " << setw(10) << C1.X(ilist[i].first)
+         << " y[" << i << "] = " << setw(10) << C1.Y(ilist[i].first)
+         << "\nx[" << i << "] = " << setw(10) << C2.X(ilist[i].second)
+         << " y[" << i << "] = " << setw(10) << C2.Y(ilist[i].second)
+         << "\n\n";
+
+  vector<real_type>::const_iterator is;
 
   P1.build( C1, 0.00001 );
   P2.build( C2, 0.00001 );
@@ -51,8 +57,7 @@ main() {
   cout << "\n\nP2\n";
   P2.info(cout);
 
-  s1.clear();
-  s2.clear();
+  vector<real_type> s1, s2;
   P1.intersect( P2, s1, s2 );
 
   cout << "\n\nPOLYLINE\n";

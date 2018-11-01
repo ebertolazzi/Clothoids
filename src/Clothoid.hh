@@ -59,6 +59,8 @@ namespace G2lib {
     public:
       friend class ClothoidCurve;
 
+      using Triangle2D::overlap;
+
       T2D( real_type  x1, real_type  y1,
            real_type  x2, real_type  y2,
            real_type  x3, real_type  y3,
@@ -131,6 +133,58 @@ namespace G2lib {
     mutable real_type   aabb_max_angle;
     mutable real_type   aabb_max_size;
     mutable vector<T2D> aabb_tri;
+
+    bool
+    aabb_intersect( T2D           const & T1,
+                    real_type             offs,
+                    ClothoidCurve const & C,
+                    T2D           const & T2,
+                    real_type             C_offs,
+                    real_type           & ss1,
+                    real_type           & ss2 ) const;
+
+    class T2D_approximate_collision {
+      ClothoidCurve const & C1;
+      ClothoidCurve const & C2;
+    public:
+      T2D_approximate_collision( ClothoidCurve const & _C1,
+                                 ClothoidCurve const & _C2 )
+      : C1(_C1)
+      , C2(_C2)
+      {}
+
+      bool
+      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
+        T2D const & T1 = C1.aabb_tri[size_t(ptr1->Ipos())];
+        T2D const & T2 = C2.aabb_tri[size_t(ptr2->Ipos())];
+        return T1.overlap(T2);
+      }
+    };
+
+    class T2D_collision {
+      ClothoidCurve const & C1;
+      real_type     const   offs1;
+      ClothoidCurve const & C2;
+      real_type     const   offs2;
+    public:
+      T2D_collision( ClothoidCurve const & _C1,
+                     real_type     const   _offs1,
+                     ClothoidCurve const & _C2,
+                     real_type     const   _offs2 )
+      : C1(_C1)
+      , offs1(_offs1)
+      , C2(_C2)
+      , offs2(_offs2)
+      {}
+
+      bool
+      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
+        T2D const & T1 = C1.aabb_tri[size_t(ptr1->Ipos())];
+        T2D const & T2 = C2.aabb_tri[size_t(ptr2->Ipos())];
+        real_type ss1, ss2;
+        return C1.aabb_intersect( T1, offs1, C2, T2, offs2, ss1, ss2 );
+      }
+    };
 
   public:
 
@@ -1052,7 +1106,9 @@ namespace G2lib {
     void
     intersect( ClothoidCurve const & C,
                IntersectList       & ilist,
-               bool                  swap_s_vals ) const;
+               bool                  swap_s_vals ) const {
+      intersect( 0, C, 0, ilist, swap_s_vals );
+    }
 
     void
     intersect( real_type               offs,

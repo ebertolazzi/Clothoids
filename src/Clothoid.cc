@@ -385,8 +385,10 @@ namespace G2lib {
 
   bool
   ClothoidCurve::collision( ClothoidCurve const & C ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::collision" );
-    return false;
+    this->build_AABBtree( 0 );
+    C.build_AABBtree( 0 );
+    T2D_collision fun( *this, 0, C, 0 );
+    return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -395,8 +397,10 @@ namespace G2lib {
   ClothoidCurve::collision( real_type             offs,
                             ClothoidCurve const & C,
                             real_type             offs_C ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::collision" );
-    return false;
+    this->build_AABBtree( offs );
+    C.build_AABBtree( offs_C );
+    T2D_collision fun( *this, offs, C, offs_C );
+    return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -405,25 +409,15 @@ namespace G2lib {
   bool
   ClothoidCurve::approximate_collision(
     real_type             offs,
-    ClothoidCurve const & clot,
-    real_type             clot_offs,
+    ClothoidCurve const & C,
+    real_type             offs_C,
     real_type             max_angle,
     real_type             max_size
   ) const {
-
-  /*
-    vector<bbData> bbV0, bbV1;
-    bbSplit( max_angle, max_size, offs, bbV0 );
-    clot.bbSplit( max_angle, max_size, clot_offs, bbV1 );
-    for ( unsigned i = 0; i < unsigned(bbV0.size()); ++i ) {
-      bbData & bbi = bbV0[i];
-      for ( unsigned j = 0; j < unsigned(bbV1.size()); ++j ) {
-        bbData & bbj = bbV1[j];
-        if ( bbi.t.overlap(bbj.t) ) return true;
-      }
-    }
-    */
-    return false;
+    this->build_AABBtree( offs, max_angle, max_size );
+    C.build_AABBtree( offs_C, max_angle, max_size );
+    T2D_approximate_collision fun( *this, C );
+    return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -512,109 +506,88 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidCurve::intersect( ClothoidCurve const & C,
-                            IntersectList       & ilist,
-                            bool                  swap_s_vals ) const {
-#if 0
-    vector<real_type> s1, s2;
-    this->intersect( C, s1, s2,
-                     ClothoidCurve::max_iter,
-                     ClothoidCurve::tolerance );
-    ilist.reserve( ilist.size() + s1.size() );
-    for ( size_t i = 0; i < s1.size(); ++i ) {
-      real_type ss1 = s1[i];
-      real_type ss2 = s2[i];
-      if ( swap_s_vals ) swap( ss1, ss2 );
-      ilist.push_back( Ipair( ss1, ss2 ) );
+  bool
+  ClothoidCurve::aabb_intersect(
+    T2D           const & T1,
+    real_type             offs,
+    ClothoidCurve const & C,
+    T2D           const & T2,
+    real_type             offs_C,
+    real_type           & ss1,
+    real_type           & ss2
+  ) const {
+    real_type s1_min = T1.s0;
+    real_type s1_max = T1.s1;
+    real_type s2_min = T2.s0;
+    real_type s2_max = T2.s1;
+    int_type  nout   = 0;
+    bool converged   = false;
+
+    ss1 = (s1_min+s1_max)/2;
+    ss2 = (s2_min+s2_max)/2;
+    for ( int_type i = 0; i < max_iter && !converged; ++i ) {
+      real_type t1[2], t2[2], p1[2], p2[2];
+      CD.eval  ( ss1, offs, p1[0], p1[1] );
+      CD.eval_D( ss1, offs, t1[0], t1[1] );
+      C.CD.eval  ( ss2, offs_C, p2[0], p2[1] );
+      C.CD.eval_D( ss2, offs_C, t2[0], t2[1] );
+      /*
+      // risolvo il sistema
+      // p1 + alpha * t1 = p2 + beta * t2
+      // alpha * t1 - beta * t2 = p2 - p1
+      //
+      //  / t1[0] -t2[0] \ / alpha \ = / p2[0] - p1[0] \
+      //  \ t1[1] -t2[1] / \ beta  /   \ p2[1] - p1[1] /
+      */
+      real_type det = t2[0]*t1[1]-t1[0]*t2[1];
+      real_type px  = p2[0]-p1[0];
+      real_type py  = p2[1]-p1[1];
+      ss1 += (py*t2[0] - px*t2[1])/det;
+      ss2 += (t1[0]*py - t1[1]*px)/det;
+      if ( ! ( isfinite(ss1) && isfinite(ss1) ) ) break;
+      bool out = false;
+      if      ( ss1 <= s1_min ) { out = true; ss1 = s1_min; }
+      else if ( ss1 >= s1_max ) { out = true; ss1 = s1_max; }
+      if      ( ss2 <= s2_min ) { out = true; ss2 = s2_min; }
+      else if ( ss2 >= s2_max ) { out = true; ss2 = s2_max; }
+      if ( out ) {
+        if ( ++nout > 3 ) break;
+      } else {
+        converged = abs(px) <= tolerance && abs(py) <= tolerance;
+      }
     }
-#else
-  intersect( 0, C, 0, ilist, swap_s_vals );
-#endif
+    return converged;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  ClothoidCurve::intersect( real_type             offs,
-                            ClothoidCurve const & C,
-                            real_type             offs_C,
-                            IntersectList       & ilist,
-                            bool                  swap_s_vals ) const {
-#if 1
+  ClothoidCurve::intersect(
+    real_type             offs,
+    ClothoidCurve const & C,
+    real_type             offs_C,
+    IntersectList       & ilist,
+    bool                  swap_s_vals
+  ) const {
     this->build_AABBtree( offs );
     C.build_AABBtree( offs_C );
-    AABBtree::VecPairPtrBBox intersectionList;
-    aabb_tree.intersect( C.aabb_tree, intersectionList );
+    AABBtree::VecPairPtrBBox iList;
+    aabb_tree.intersect( C.aabb_tree, iList );
     AABBtree::VecPairPtrBBox::const_iterator ip;
 
-    for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
+    for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
       size_t ipos1 = size_t(ip->first->Ipos());
       size_t ipos2 = size_t(ip->second->Ipos());
 
       T2D const & T1 = aabb_tri[ipos1];
       T2D const & T2 = C.aabb_tri[ipos2];
 
-      real_type s1_min = T1.s0;
-      real_type s1_max = T1.s1;
-      real_type ss1    = (s1_min+s1_max)/2;
-      real_type s2_min = T2.s0;
-      real_type s2_max = T2.s1;
-      real_type ss2    = (s2_min+s2_max)/2;
-      int_type  nout   = 0;
-      bool converged = false;
-
-      for ( int_type i = 0; i < max_iter && !converged; ++i ) {
-        real_type t1[2], t2[2], p1[2], p2[2];
-        CD.eval  ( ss1, offs, p1[0], p1[1] );
-        CD.eval_D( ss1, offs, t1[0], t1[1] );
-        C.CD.eval  ( ss2, offs_C, p2[0], p2[1] );
-        C.CD.eval_D( ss2, offs_C, t2[0], t2[1] );
-        /*
-        // risolvo il sistema
-        // p1 + alpha * t1 = p2 + beta * t2
-        // alpha * t1 - beta * t2 = p2 - p1
-        //
-        //  / t1[0] -t2[0] \ / alpha \ = / p2[0] - p1[0] \
-        //  \ t1[1] -t2[1] / \ beta  /   \ p2[1] - p1[1] /
-        */
-        real_type det = t2[0]*t1[1]-t1[0]*t2[1];
-        real_type px  = p2[0]-p1[0];
-        real_type py  = p2[1]-p1[1];
-        ss1 += (py*t2[0] - px*t2[1])/det;
-        ss2 += (t1[0]*py - t1[1]*px)/det;
-        if ( ! ( isfinite(ss1) && isfinite(ss1) ) ) break;
-        bool out = false;
-        if      ( ss1 <= s1_min ) { out = true; ss1 = s1_min; }
-        else if ( ss1 >= s1_max ) { out = true; ss1 = s1_max; }
-        if      ( ss2 <= s2_min ) { out = true; ss2 = s2_min; }
-        else if ( ss2 >= s2_max ) { out = true; ss2 = s2_max; }
-        if ( out ) {
-          if ( ++nout > 3 ) break;
-        } else {
-          converged = abs(px) <= tolerance && abs(py) <= tolerance;
-        }
-      }
+      real_type ss1, ss2;
+      bool converged = aabb_intersect( T1, offs, C, T2, offs_C, ss1, ss2 );
 
       if ( converged ) {
         if ( swap_s_vals ) swap( ss1, ss2 );
         ilist.push_back( Ipair( ss1, ss2 ) );
       }
     }
-
-#else
-    vector<real_type> s1, s2;
-    this->intersect( offs, C, offs_C, s1, s2,
-                     ClothoidCurve::max_iter,
-                     ClothoidCurve::tolerance );
-    ilist.reserve( ilist.size() + s1.size() );
-    for ( size_t i = 0; i < s1.size(); ++i ) {
-      real_type ss1 = s1[i];
-      real_type ss2 = s2[i];
-      if ( swap_s_vals ) swap( ss1, ss2 );
-      ilist.push_back( Ipair( ss1, ss2 ) );
-    }
-#endif
   }
 
   /*\

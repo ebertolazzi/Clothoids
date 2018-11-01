@@ -8,15 +8,12 @@
 
 using G2lib::real_type;
 using namespace std;
-
 static const real_type m_pi = 3.14159265358979323846264338328;
 
-using namespace std;
-
-map<int,int> stats;
-
 int
-main(int argc, const char * argv[]) {
+main() {
+
+  map<int,int> stats;
 
   G2lib::G2solveCLC g2solveCLC;
   TicToc            tictoc;
@@ -57,7 +54,7 @@ main(int argc, const char * argv[]) {
   tictoc.tic();
   for ( int ii = 0; ii < nkur; ++ii ) {
     cout << "ii = " << ii << '\n';
-    real_type k0 = kur[ii];
+    k0 = kur[ii];
     for ( int jj = 0; jj < nkur; ++jj ) {
       real_type k1 = kur[jj];
       for ( int i = 0; i < NMAX; ++i ) {

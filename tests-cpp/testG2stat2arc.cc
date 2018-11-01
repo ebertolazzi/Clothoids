@@ -11,13 +11,12 @@
 using G2lib::real_type;
 
 static const real_type m_pi = 3.14159265358979323846264338328;
-
 using namespace std;
 
-map<int,int> stats;
-
 int
-main(int argc, const char * argv[]) {
+main() {
+
+  map<int,int> stats;
 
   G2lib::G2solve2arc g2solve2arc;
   TicToc             tictoc;
@@ -57,7 +56,7 @@ main(int argc, const char * argv[]) {
   // real_type kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 };
   tictoc.tic();
   for ( int ii = 0; ii < nkur; ++ii ) {
-    real_type k0 = kur[ii];
+    k0 = kur[ii];
     for ( int jj = 0; jj < nkur; ++jj ) {
       real_type k1 = kur[jj];
       for ( int i = 0; i < NMAX; ++i ) {

@@ -37,18 +37,18 @@ main() {
 
   {
     G2lib::ClothoidCurve C;
-    real_type x0     = 0;
-    real_type y0     = 2;
+    real_type xx0    = 0;
+    real_type yy0    = 2;
     real_type theta0 = 0;
     real_type kappa0 = 10;
     real_type dk     = -1;// 0;
     real_type L      = 1;
-    C.build( x0, y0, theta0, kappa0, dk, L );
+    C.build( xx0, yy0, theta0, kappa0, dk, L );
 
     vector<G2lib::ClothoidCurve::T2D> tvec;
     C.bbTriangles( 0, tvec );
 
-    for ( int_type i = 0; i < int_type(tvec.size()); ++i )
+    for ( size_t i = 0; i < tvec.size(); ++i )
       cout << i << " " << tvec[i] << "\n\n";
 
     cout << tvec.size() << '\n';
