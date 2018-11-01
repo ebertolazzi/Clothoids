@@ -387,7 +387,7 @@ namespace G2lib {
   ClothoidCurve::collision( ClothoidCurve const & C ) const {
     this->build_AABBtree( 0 );
     C.build_AABBtree( 0 );
-    T2D_collision fun( *this, 0, C, 0 );
+    T2D_collision fun( this, 0, &C, 0 );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
@@ -399,7 +399,7 @@ namespace G2lib {
                             real_type             offs_C ) const {
     this->build_AABBtree( offs );
     C.build_AABBtree( offs_C );
-    T2D_collision fun( *this, offs, C, offs_C );
+    T2D_collision fun( this, offs, &C, offs_C );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
@@ -416,7 +416,7 @@ namespace G2lib {
   ) const {
     this->build_AABBtree( offs, max_angle, max_size );
     C.build_AABBtree( offs_C, max_angle, max_size );
-    T2D_approximate_collision fun( *this, C );
+    T2D_approximate_collision fun( this, &C );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
@@ -510,7 +510,7 @@ namespace G2lib {
   ClothoidCurve::aabb_intersect(
     T2D           const & T1,
     real_type             offs,
-    ClothoidCurve const & C,
+    ClothoidCurve const * pC,
     T2D           const & T2,
     real_type             offs_C,
     real_type           & ss1,
@@ -529,8 +529,8 @@ namespace G2lib {
       real_type t1[2], t2[2], p1[2], p2[2];
       CD.eval  ( ss1, offs, p1[0], p1[1] );
       CD.eval_D( ss1, offs, t1[0], t1[1] );
-      C.CD.eval  ( ss2, offs_C, p2[0], p2[1] );
-      C.CD.eval_D( ss2, offs_C, t2[0], t2[1] );
+      pC->CD.eval  ( ss2, offs_C, p2[0], p2[1] );
+      pC->CD.eval_D( ss2, offs_C, t2[0], t2[1] );
       /*
       // risolvo il sistema
       // p1 + alpha * t1 = p2 + beta * t2
@@ -581,7 +581,7 @@ namespace G2lib {
       T2D const & T2 = C.aabb_tri[ipos2];
 
       real_type ss1, ss2;
-      bool converged = aabb_intersect( T1, offs, C, T2, offs_C, ss1, ss2 );
+      bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
 
       if ( converged ) {
         if ( swap_s_vals ) swap( ss1, ss2 );

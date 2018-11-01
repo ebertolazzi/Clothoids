@@ -137,52 +137,52 @@ namespace G2lib {
     bool
     aabb_intersect( T2D           const & T1,
                     real_type             offs,
-                    ClothoidCurve const & C,
+                    ClothoidCurve const * pC,
                     T2D           const & T2,
                     real_type             C_offs,
                     real_type           & ss1,
                     real_type           & ss2 ) const;
 
     class T2D_approximate_collision {
-      ClothoidCurve const & C1;
-      ClothoidCurve const & C2;
+      ClothoidCurve const * pC1;
+      ClothoidCurve const * pC2;
     public:
-      T2D_approximate_collision( ClothoidCurve const & _C1,
-                                 ClothoidCurve const & _C2 )
-      : C1(_C1)
-      , C2(_C2)
+      T2D_approximate_collision( ClothoidCurve const * _pC1,
+                                 ClothoidCurve const * _pC2 )
+      : pC1(_pC1)
+      , pC2(_pC2)
       {}
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        T2D const & T1 = C1.aabb_tri[size_t(ptr1->Ipos())];
-        T2D const & T2 = C2.aabb_tri[size_t(ptr2->Ipos())];
+        T2D const & T1 = pC1->aabb_tri[size_t(ptr1->Ipos())];
+        T2D const & T2 = pC2->aabb_tri[size_t(ptr2->Ipos())];
         return T1.overlap(T2);
       }
     };
 
     class T2D_collision {
-      ClothoidCurve const & C1;
+      ClothoidCurve const * pC1;
       real_type     const   offs1;
-      ClothoidCurve const & C2;
+      ClothoidCurve const * pC2;
       real_type     const   offs2;
     public:
-      T2D_collision( ClothoidCurve const & _C1,
+      T2D_collision( ClothoidCurve const * _pC1,
                      real_type     const   _offs1,
-                     ClothoidCurve const & _C2,
+                     ClothoidCurve const * _pC2,
                      real_type     const   _offs2 )
-      : C1(_C1)
+      : pC1(_pC1)
       , offs1(_offs1)
-      , C2(_C2)
+      , pC2(_pC2)
       , offs2(_offs2)
       {}
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        T2D const & T1 = C1.aabb_tri[size_t(ptr1->Ipos())];
-        T2D const & T2 = C2.aabb_tri[size_t(ptr2->Ipos())];
+        T2D const & T1 = pC1->aabb_tri[size_t(ptr1->Ipos())];
+        T2D const & T2 = pC2->aabb_tri[size_t(ptr2->Ipos())];
         real_type ss1, ss2;
-        return C1.aabb_intersect( T1, offs1, C2, T2, offs2, ss1, ss2 );
+        return pC1->aabb_intersect( T1, offs1, pC2, T2, offs2, ss1, ss2 );
       }
     };
 
