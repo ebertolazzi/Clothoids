@@ -626,8 +626,39 @@ namespace G2lib {
                                real_type & x,
                                real_type & y,
                                real_type & s ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::closestPoint" );
-    return 0;
+    real_type DST = numeric_limits<real_type>::infinity();
+    this->build_AABBtree( offs );
+    #if 1
+    AABBtree::VecPtrBBox candidateList;
+    aabb_tree.min_distance( qx, qy, candidateList );
+    AABBtree::VecPtrBBox::const_iterator ic;
+    G2LIB_ASSERT( candidateList.size() > 0,
+                  "ClothoidCurve::closestPoint no candidate" );
+    for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
+      size_t ipos = (*ic)->Ipos();
+      T2D const & T = aabb_tri[ipos];
+      real_type dst = T.distMin( qx, qy );
+      if ( dst < DST ) {
+        DST = dst;
+        s   = (T.s0+T.s1)/2;
+        x   = T.baricenterX();
+        y   = T.baricenterY();
+      }
+    }
+    #else
+    vector<T2D>::const_iterator ic = aabb_tri.begin();
+    for ( size_t ipos = 0; ic != aabb_tri.end(); ++ic, ++ipos ) {
+      T2D const & T = aabb_tri[ipos];
+      real_type dst = T.distMin( qx, qy );
+      if ( dst < DST ) {
+        DST = dst;
+        s   = (T.s0+T.s1)/2;
+        x   = T.baricenterX();
+        y   = T.baricenterY();
+      }
+    }
+    #endif
+    return DST;
   }
 
 

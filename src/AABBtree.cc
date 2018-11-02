@@ -27,7 +27,21 @@
 
 #include "AABBtree.hh"
 
+// Workaround for Visual Studio
+#ifdef min
+  #undef min
+#endif
+
+#ifdef max
+  #undef max
+#endif
+
 namespace G2lib {
+
+  using std::abs;
+  using std::min;
+  using std::max;
+  using std::numeric_limits;
 
   /*\
    |   ____  ____
@@ -57,6 +71,50 @@ namespace G2lib {
         if ( currBox.ymax > ymax ) ymax = currBox.ymax;
       }
     }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  real_type
+  BBox::distance( real_type x, real_type y ) const {
+    /*\
+     |
+     |   6          7          8
+     |       +-------------+
+     |       |             |
+     |   3   |      4      |   5
+     |       |             |
+     |       +-------------+
+     |   0          1          2
+     |
+    \*/
+    int_type icase = 4;
+    if      ( x < xmin ) icase = 3;
+    else if ( x > xmax ) icase = 5;
+    if      ( y < ymin ) icase -= 3;
+    else if ( y > ymax ) icase += 3;
+    real_type dst = 0;
+    switch ( icase ) {
+      case 0: dst = hypot( x-xmin, y-ymin); break;
+      case 1: dst = ymin-y;                 break;
+      case 2: dst = hypot( x-xmax, y-ymin); break;
+      case 3: dst = xmin-x;                 break;
+      case 4:                               break;
+      case 5: dst = x-xmax;                 break;
+      case 6: dst = hypot( x-xmin, y-ymax); break;
+      case 7: dst = y-ymax;                 break;
+      case 8: dst = hypot( x-xmax, y-ymax); break;
+    }
+    return dst;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  real_type
+  BBox::maxDistance( real_type x, real_type y ) const {
+    real_type dx = max( abs(x-xmin), abs(x-xmax) );
+    real_type dy = max( abs(y-ymin), abs(y-ymax) );
+    return hypot(dx,dy);
   }
 
   /*\
@@ -121,6 +179,8 @@ namespace G2lib {
   }
 
   #endif
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
   AABBtree::build( vector<PtrBBox> const & bboxes ) {
@@ -196,6 +256,8 @@ namespace G2lib {
     if (!pos->empty()) children.push_back(pos);
   }
 
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   void
   AABBtree::print( ostream_type & stream, int level ) const {
     if ( empty() ) {
@@ -213,6 +275,8 @@ namespace G2lib {
         (*it)->print( stream, level+1 );
     }
   }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
   AABBtree::intersect(
@@ -255,6 +319,69 @@ namespace G2lib {
       }
       break;
     }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  real_type
+  AABBtree::min_maxdist( real_type        x,
+                         real_type        y,
+                         AABBtree const & tree,
+                         real_type        mmDist ) {
+
+    vector<PtrAABB> const & children = tree.children;
+
+    if ( children.empty() ) {
+      real_type dst = tree.pBBox->maxDistance( x, y );
+      return min( dst, mmDist );
+    }
+
+    real_type dmin = tree.pBBox->distance( x, y );
+    if ( dmin > mmDist ) return mmDist;
+
+    // check bbox with
+    vector<PtrAABB>::const_iterator it;
+    for ( it = children.begin(); it != children.end(); ++it )
+      mmDist = min_maxdist( x, y, **it, mmDist );
+
+    return mmDist;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  AABBtree::min_maxdist_select( real_type        x,
+                                real_type        y,
+                                real_type        mmDist,
+                                AABBtree const & tree,
+                                VecPtrBBox     & candidateList ) {
+
+    vector<PtrAABB> const & children = tree.children;
+
+    real_type dst = tree.pBBox->distance( x, y );
+    if ( dst <= mmDist ) {
+      if ( children.empty() ) {
+        candidateList.push_back( tree.pBBox );
+      } else {
+        // check bbox with
+        vector<PtrAABB>::const_iterator it;
+        for ( it = children.begin(); it != children.end(); ++it )
+          min_maxdist_select( x, y, mmDist, **it, candidateList );
+      }
+    }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  AABBtree::min_distance( real_type    x,
+                          real_type    y,
+                          VecPtrBBox & candidateList ) const {
+
+    real_type mmDist = min_maxdist(
+      x, y, *this, numeric_limits<real_type>::infinity()
+    );
+    min_maxdist_select( x, y, mmDist, *this, candidateList );
   }
 
 }

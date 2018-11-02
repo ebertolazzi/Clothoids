@@ -131,6 +131,12 @@ namespace G2lib {
     void
     join( vector<PtrBBox> const & bboxes );
 
+    real_type
+    distance( real_type x, real_type y ) const;
+
+    real_type
+    maxDistance( real_type x, real_type y ) const;
+
     void
     print( ostream_type & stream ) const {
       stream
@@ -162,15 +168,15 @@ namespace G2lib {
 
   #ifdef G2LIB_USE_CXX11
     typedef shared_ptr<BBox const> PtrBBox;
-    typedef pair<PtrBBox,PtrBBox>  PairPtrBBox;
-    typedef vector<PairPtrBBox>    VecPairPtrBBox;
     typedef shared_ptr<AABBtree>   PtrAABB;
   #else
     typedef BBox const *           PtrBBox;
-    typedef pair<PtrBBox,PtrBBox>  PairPtrBBox;
-    typedef vector<PairPtrBBox>    VecPairPtrBBox;
     typedef AABBtree *             PtrAABB;
   #endif
+
+  typedef pair<PtrBBox,PtrBBox> PairPtrBBox;
+  typedef vector<PtrBBox>       VecPtrBBox;
+  typedef vector<PairPtrBBox>   VecPairPtrBBox;
 
   private:
 
@@ -179,6 +185,28 @@ namespace G2lib {
     vector<PtrAABB> children;
 
     AABBtree( AABBtree const & tree );
+
+    /*!
+     | Compute the minimum of the maximum distance
+     | between a point
+    \*/
+    static
+    real_type
+    min_maxdist( real_type        x,
+                 real_type        y,
+                 AABBtree const & tree,
+                 real_type        mmDist );
+
+    /*!
+     | Select the candidate which bbox have distance less than mmDist
+    \*/
+    static
+    void
+    min_maxdist_select( real_type        x,
+                        real_type        y,
+                        real_type        mmDist,
+                        AABBtree const & tree,
+                        VecPtrBBox     & candidateList );
 
   public:
 
@@ -265,6 +293,11 @@ namespace G2lib {
       VecPairPtrBBox & intersectionList,
       bool             swap_tree = false
     ) const;
+
+    void
+    min_distance( real_type    x,
+                  real_type    y,
+                  VecPtrBBox & candidateList ) const;
 
   };
 
