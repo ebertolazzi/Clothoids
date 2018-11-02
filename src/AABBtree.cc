@@ -36,6 +36,8 @@
   #undef max
 #endif
 
+#include <algorithm>
+
 namespace G2lib {
 
   using std::abs;

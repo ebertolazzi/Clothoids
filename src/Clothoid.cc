@@ -23,8 +23,6 @@
 #include "Clothoid.hh"
 #include "CubicRootsFlocke.hh"
 
-#include <cmath>
-#include <cfloat>
 
 // workaround for windows that defines max and min as macros!
 #ifdef max
@@ -33,6 +31,10 @@
 #ifdef min
   #undef min
 #endif
+
+#include <cmath>
+#include <cfloat>
+#include <algorithm>
 
 namespace G2lib {
 
