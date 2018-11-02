@@ -99,10 +99,12 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::optimized_sample( real_type           offs,
-                                   int_type            npts,
-                                   real_type           max_angle,
-                                   vector<real_type> & s ) const {
+  ClothoidCurve::optimized_sample(
+    real_type           offs,
+    int_type            npts,
+    real_type           max_angle,
+    vector<real_type> & s
+  ) const {
     s.clear();
     s.reserve( size_t(npts) );
     s.push_back(0);
@@ -129,6 +131,7 @@ namespace G2lib {
   \*/
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   void
   ClothoidCurve::bbTriangles_internal(
     real_type     offs,
@@ -201,11 +204,12 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::bbTriangles( real_type     offs,
-                              vector<T2D> & tvec,
-                              real_type     max_angle,
-                              real_type     max_size ) const {
-
+  ClothoidCurve::bbTriangles(
+    real_type     offs,
+    vector<T2D> & tvec,
+    real_type     max_angle,
+    real_type     max_size
+  ) const {
     if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
       bbTriangles_internal( offs, tvec, 0, L, max_angle, max_size );
     } else {
@@ -225,11 +229,13 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidCurve::bbox( real_type   offs,
-                       real_type & xmin,
-                       real_type & ymin,
-                       real_type & xmax,
-                       real_type & ymax ) const {
+  ClothoidCurve::bbox(
+    real_type   offs,
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
     vector<T2D> tvec;
     bbTriangles( offs, tvec, m_pi/18, 1e100 );
     xmin = ymin = numeric_limits<real_type>::infinity();
@@ -262,9 +268,12 @@ namespace G2lib {
    | /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
   void
-  ClothoidCurve::build_AABBtree( real_type offs,
-                                 real_type max_angle,
-                                 real_type max_size ) const {
+  ClothoidCurve::build_AABBtree(
+    real_type offs,
+    real_type max_angle,
+    real_type max_size
+  ) const {
+
     if ( aabb_done &&
          isZero( offs-aabb_offs ) &&
          isZero( max_angle-aabb_max_angle ) &&
@@ -347,9 +356,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::collision( real_type         offs,
-                            BaseCurve const & obj,
-                            real_type         offs_obj ) const {
+  ClothoidCurve::collision(
+    real_type         offs,
+    BaseCurve const & obj,
+    real_type         offs_obj
+  ) const {
     bool ok = false;
     switch ( obj.type() ) {
     case G2LIB_LINE:
@@ -396,9 +407,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::collision( real_type             offs,
-                            ClothoidCurve const & C,
-                            real_type             offs_C ) const {
+  ClothoidCurve::collision(
+    real_type             offs,
+    ClothoidCurve const & C,
+    real_type             offs_C
+  ) const {
     this->build_AABBtree( offs );
     C.build_AABBtree( offs_C );
     T2D_collision fun( this, offs, &C, offs_C );
@@ -433,9 +446,11 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidCurve::intersect( BaseCurve const & obj,
-                            IntersectList   & ilist,
-                            bool              swap_s_vals ) const {
+  ClothoidCurve::intersect(
+    BaseCurve const & obj,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote to clothoid
@@ -470,11 +485,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::intersect( real_type         offs,
-                            BaseCurve const & obj,
-                            real_type         offs_obj,
-                            IntersectList   & ilist,
-                            bool              swap_s_vals ) const {
+  ClothoidCurve::intersect(
+    real_type         offs,
+    BaseCurve const & obj,
+    real_type         offs_obj,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
     switch ( obj.type() ) {
     case G2LIB_LINE:
       { // promote to clothoid
@@ -561,6 +578,8 @@ namespace G2lib {
     return converged;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidCurve::intersect(
     real_type             offs,
@@ -593,76 +612,113 @@ namespace G2lib {
   }
 
   /*\
-   |                  _           _   _
-   |  _ __  _ __ ___ (_) ___  ___| |_(_) ___  _ __
-   | | '_ \| '__/ _ \| |/ _ \/ __| __| |/ _ \| '_ \
-   | | |_) | | | (_) | |  __/ (__| |_| | (_) | | | |
-   | | .__/|_|  \___// |\___|\___|\__|_|\___/|_| |_|
-   | |_|           |__/
+   |        _                     _   ____       _       _
+   |    ___| | ___  ___  ___  ___| |_|  _ \ ___ (_)_ __ | |_
+   |   / __| |/ _ \/ __|/ _ \/ __| __| |_) / _ \| | '_ \| __|
+   |  | (__| | (_) \__ \  __/\__ \ |_|  __/ (_) | | | | | |_
+   |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
   \*/
-  int_type
-  ClothoidCurve::projection( real_type   qx,
-                             real_type   qy,
-                             real_type & x,
-                             real_type & y,
-                             real_type & s ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" );
-    return 0;
-  }
 
-  int_type // true if projection is unique and orthogonal
-  ClothoidCurve::projection( real_type   qx,
-                             real_type   qy,
-                             real_type   offs,
-                             real_type & x,
-                             real_type & y,
-                             real_type & s ) const {
-    G2LIB_ASSERT( false, "DA FARE ClothoidCurve::projection" );
-    return 0;
-  }
-
-  real_type
-  ClothoidCurve::closestPoint( real_type   qx,
-                               real_type   qy,
-                               real_type   offs,
-                               real_type & x,
-                               real_type & y,
-                               real_type & s ) const {
-    real_type DST = numeric_limits<real_type>::infinity();
-    this->build_AABBtree( offs );
+  void
+  ClothoidCurve::closestPoint_internal(
+    real_type   s_begin,
+    real_type   s_end,
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & dst
+  ) const {
     #if 1
+    // minimize using circle approximation
+    s = (s_begin + s_end)/2;
+    int_type nout = 0;
+    for ( int_type iter = 0; iter < max_iter; ++iter ) {
+      // osculating circle
+      CD.eval( s, offs, x, y );
+      real_type th = CD.theta( s );
+      real_type kk = CD.kappa( s );
+      real_type sc = 1-kk*offs;
+      real_type ds = projectPointOnArc( x, y, th, kk/sc, qx, qy )/sc;
+
+      s += ds;
+
+      bool out = false;
+      if      ( s <= s_begin ) { out = true; s = s_begin; }
+      else if ( s >= s_end   ) { out = true; s = s_end; }
+
+      if ( out ) {
+        if ( ++nout > 3 ) break;
+      } else {
+        if ( abs(ds) <= tolerance ) break;
+      }
+    }
+    dst = hypot( qx-x, qy-y );
+    #else
+    real_type ds = (s_end-s_begin)/10;
+    for ( int_type iter = 0; iter <= 10 ; ++iter ) {
+      real_type ss = s_begin + iter * ds;
+      real_type xx, yy;
+      CD.eval( ss, offs, xx, yy );
+      real_type dx = xx-qx;
+      real_type dy = yy-qy;
+      real_type dst1 = hypot( dx, dy );
+      if ( dst1 < dst ) {
+        s   = ss;
+        x   = xx;
+        y   = yy;
+        dst = dst1;
+      }
+    }
+    #endif
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  ClothoidCurve::closestPoint(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & DST
+  ) const {
+    DST = numeric_limits<real_type>::infinity();
+    this->build_AABBtree( offs );
+
     AABBtree::VecPtrBBox candidateList;
     aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
     G2LIB_ASSERT( candidateList.size() > 0,
                   "ClothoidCurve::closestPoint no candidate" );
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
-      size_t ipos = (*ic)->Ipos();
+      size_t ipos = size_t((*ic)->Ipos());
       T2D const & T = aabb_tri[ipos];
       real_type dst = T.distMin( qx, qy );
       if ( dst < DST ) {
-        DST = dst;
-        s   = (T.s0+T.s1)/2;
-        x   = T.baricenterX();
-        y   = T.baricenterY();
+        // refine distance
+        real_type xx, yy, ss;
+        closestPoint_internal( T.s0, T.s1, qx, qy, offs, xx, yy, ss, dst );
+        if ( dst < DST ) {
+          DST = dst;
+          s   = ss;
+          x   = xx;
+          y   = yy;
+        }
       }
     }
-    #else
-    vector<T2D>::const_iterator ic = aabb_tri.begin();
-    for ( size_t ipos = 0; ic != aabb_tri.end(); ++ic, ++ipos ) {
-      T2D const & T = aabb_tri[ipos];
-      real_type dst = T.distMin( qx, qy );
-      if ( dst < DST ) {
-        DST = dst;
-        s   = (T.s0+T.s1)/2;
-        x   = T.baricenterX();
-        y   = T.baricenterY();
-      }
-    }
-    #endif
-    return DST;
+    real_type nx, ny;
+    nor( s, nx, ny );
+    t = (qx-x) * nx + (qy-y) * ny - offs;
+    real_type err = abs( abs(t) - DST );
+    if ( err > DST*machepsi1000 ) return -1;
+    return 1;
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -775,29 +831,6 @@ namespace G2lib {
     return ( (t7/7)*dk6 + dk5*CD.kappa0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
              5*dk2*k4*t3 + 3*dk3*t3 + 3*CD.dk*k5*t2 + 9*dk2*CD.kappa0*t2 +
              k6+9*k2*CD.dk ) * L;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  ClothoidCurve::findST( real_type   x,
-                         real_type   y,
-                         real_type & s,
-                         real_type & t ) const {
-    real_type X, Y, nx, ny;
-    real_type d = closestPoint( x, y, X, Y, s );
-    nor( s, nx, ny );
-    t = nx*(x-X) + ny*(y-Y);
-    // check if projection is orthogonal on the curve
-    #if 0
-      real_type abst = abs(t);
-      return abs(d-abst) <= machepsi1000*(1+abst);
-    #else
-      eval( s, t, X, Y );
-      real_type err = hypot( x-X, y-Y );
-      return err < 1e-8*(1+d);
-    #endif
-    //return abs(d-abst) <= 1e-3*(1+abst);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

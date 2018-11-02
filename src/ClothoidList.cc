@@ -88,7 +88,9 @@ namespace G2lib {
 
   void
   ClothoidList::push_back(
-    real_type kappa0, real_type dkappa, real_type L
+    real_type kappa0,
+    real_type dkappa,
+    real_type L
   ) {
     G2LIB_ASSERT( !clotoidList.empty(),
                   "ClothoidList::push_back_G1(...) empty list!");
@@ -104,8 +106,12 @@ namespace G2lib {
 
   void
   ClothoidList::push_back(
-    real_type x0, real_type y0, real_type theta0,
-    real_type kappa0, real_type dkappa, real_type L
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type kappa0,
+    real_type dkappa,
+    real_type L
   ) {
     ClothoidCurve c;
     c.build( x0, y0, theta0, kappa0, dkappa, L );
@@ -115,7 +121,9 @@ namespace G2lib {
 
   void
   ClothoidList::push_back_G1(
-    real_type x1, real_type y1, real_type theta1
+    real_type x1,
+    real_type y1,
+    real_type theta1
   ) {
     G2LIB_ASSERT( !clotoidList.empty(),
                   "ClothoidList::push_back_G1(...) empty list!");
@@ -131,8 +139,12 @@ namespace G2lib {
 
   void
   ClothoidList::push_back_G1(
-    real_type x0, real_type y0, real_type theta0,
-    real_type x1, real_type y1, real_type theta1
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1,
+    real_type theta1
   ) {
     ClothoidCurve c;
     c.build_G1( x0, y0, theta0, x1, y1, theta1 );
@@ -142,9 +154,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidList::build_G1( int_type        n,
-                          real_type const x[],
-                          real_type const y[] ) {
+  ClothoidList::build_G1(
+    int_type        n,
+    real_type const x[],
+    real_type const y[]
+  ) {
     init();
     reserve( n-1 );
     ClothoidCurve c;
@@ -193,10 +207,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidList::build_G1( int_type        n,
-                          real_type const x[],
-                          real_type const y[],
-                          real_type const theta[] ) {
+  ClothoidList::build_G1(
+    int_type        n,
+    real_type const x[],
+    real_type const y[],
+    real_type const theta[]
+  ) {
 
     G2LIB_ASSERT( n > 1, "ClothoidList::build_G1, at least 2 points are necessary" );
 
@@ -213,10 +229,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidList::build_theta( int_type        n,
-                             real_type const x[],
-                             real_type const y[],
-                             real_type       theta[] ) const {
+  ClothoidList::build_theta(
+    int_type        n,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[]
+  ) const {
     G2LIB_ASSERT( n > 1, "ClothoidList::build_theta, at least 2 points are necessary" );
 
     if ( n == 2 ) {
@@ -244,7 +262,8 @@ namespace G2lib {
 
   ClothoidCurve const &
   ClothoidList::get( int_type idx ) const {
-    G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::get( " << idx << " ) empty list" );
+    G2LIB_ASSERT( !clotoidList.empty(),
+                  "ClothoidList::get( " << idx << " ) empty list" );
     G2LIB_ASSERT( idx >= 0 && idx < int_type(clotoidList.size()),
                   "ClothoidList::get( " << idx <<
                   " ) bad index, must be in [0," <<
@@ -342,11 +361,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval( real_type   s,
-                      real_type & theta,
-                      real_type & kappa,
-                      real_type & x,
-                      real_type & y ) const {
+  ClothoidList::eval(
+    real_type   s,
+    real_type & theta,
+    real_type & kappa,
+    real_type & x,
+    real_type & y
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.evaluate( s - s0[last_idx], theta, kappa, x, y );
@@ -355,9 +376,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval( real_type   s,
-                      real_type & x,
-                      real_type & y ) const {
+  ClothoidList::eval(
+    real_type   s,
+    real_type & x,
+    real_type & y
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval( s - s0[last_idx], x, y );
@@ -366,9 +389,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_D( real_type   s,
-                        real_type & x_D,
-                        real_type & y_D ) const {
+  ClothoidList::eval_D(
+    real_type   s,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_D( s - s0[last_idx], x_D, y_D );
@@ -377,9 +402,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_DD( real_type   s,
-                         real_type & x_DD,
-                         real_type & y_DD ) const {
+  ClothoidList::eval_DD(
+    real_type   s,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DD( s - s0[last_idx], x_DD, y_DD );
@@ -388,9 +415,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_DDD( real_type   s,
-                          real_type & x_DDD,
-                          real_type & y_DDD ) const {
+  ClothoidList::eval_DDD(
+    real_type   s,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DDD( s - s0[last_idx], x_DDD, y_DDD );
@@ -400,10 +429,12 @@ namespace G2lib {
 
   // offset curve
   void
-  ClothoidList::eval( real_type   s,
-                      real_type   t,
-                      real_type & x,
-                      real_type & y ) const {
+  ClothoidList::eval(
+    real_type   s,
+    real_type   t,
+    real_type & x,
+    real_type & y
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval( s - s0[last_idx], t, x, y );
@@ -412,10 +443,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_D( real_type   s,
-                        real_type   t,
-                        real_type & x_D,
-                        real_type & y_D ) const {
+  ClothoidList::eval_D(
+    real_type   s,
+    real_type   t,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_D( s - s0[last_idx], t, x_D, y_D );
@@ -424,10 +457,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_DD( real_type   s,
-                         real_type   t,
-                         real_type & x_DD,
-                         real_type & y_DD ) const {
+  ClothoidList::eval_DD(
+    real_type   s,
+    real_type   t,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DD( s - s0[last_idx], t, x_DD, y_DD );
@@ -436,10 +471,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_DDD( real_type   s,
-                          real_type   t,
-                          real_type & x_DDD,
-                          real_type & y_DDD ) const {
+  ClothoidList::eval_DDD(
+    real_type   s,
+    real_type   t,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.eval_DDD( s - s0[last_idx], t, x_DDD, y_DDD );
@@ -448,9 +485,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getSTK( real_type s[],
-                        real_type theta[],
-                        real_type kappa[] ) const {
+  ClothoidList::getSTK(
+    real_type s[],
+    real_type theta[],
+    real_type kappa[]
+  ) const {
     vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     int_type  k  = 0;
     real_type ss = 0;
@@ -512,18 +551,22 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::closestPoint( real_type   x,
-                              real_type   y,
-                              real_type & X,
-                              real_type & Y,
-                              real_type & S ) const {
-    G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::closestPoint, empty list" );
+  ClothoidList::closestPoint(
+    real_type   x,
+    real_type   y,
+    real_type & X,
+    real_type & Y,
+    real_type & S
+  ) const {
+    G2LIB_ASSERT( !clotoidList.empty(),
+                  "ClothoidList::closestPoint, empty list" );
     vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     vector<real_type>::const_iterator     is = s0.begin();
-    real_type DST = ic->closestPoint( x, y, X, Y, S );
+    real_type DST, T;
+    ic->closestPoint( x, y, X, Y, S, T, DST );
     for ( ++ic, ++is; ic != clotoidList.end(); ++ic, ++is ) {
-      real_type X1, Y1, S1;
-      real_type DST1 = ic->closestPoint( x, y, X1, Y1, S1 );
+      real_type X1, Y1, S1, T1, DST1;
+      ic->closestPoint( x, y, X1, Y1, S1, T1, DST1 );
       if ( DST1 < DST ) {
         DST = DST1;
         X   = X1;
@@ -537,10 +580,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::findST( real_type   x,
-                        real_type   y,
-                        real_type & s,
-                        real_type & t ) const {
+  ClothoidList::findST(
+    real_type   x,
+    real_type   y,
+    real_type & s,
+    real_type & t
+  ) const {
 
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
     vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
@@ -576,12 +621,14 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::findST( int_type    ibegin,
-                        int_type    iend,
-                        real_type   x,
-                        real_type   y,
-                        real_type & s,
-                        real_type & t ) const {
+  ClothoidList::findST(
+    int_type    ibegin,
+    int_type    iend,
+    real_type   x,
+    real_type   y,
+    real_type & s,
+    real_type & t
+  ) const {
 
     G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
     G2LIB_ASSERT( ibegin >= 0 && ibegin <= iend &&
@@ -662,13 +709,15 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::intersect( real_type             offs,
-                           ClothoidCurve const & c,
-                           real_type             c_offs,
-                           vector<real_type>   & s1,
-                           vector<real_type>   & s2,
-                           int_type              max_iter,
-                           real_type             tolerance ) const {
+  ClothoidList::intersect(
+    real_type             offs,
+    ClothoidCurve const & c,
+    real_type             c_offs,
+    vector<real_type>   & s1,
+    vector<real_type>   & s2,
+    int_type              max_iter,
+    real_type             tolerance
+  ) const {
     s1.clear();
     s2.clear();
     vector<real_type>::const_iterator iss1, iss2;
@@ -685,13 +734,15 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::intersect( real_type            offs,
-                           ClothoidList const & CL,
-                           real_type            c_offs,
-                           vector<real_type>  & s1,
-                           vector<real_type>  & s2,
-                           int_type             max_iter,
-                           real_type            tolerance ) const {
+  ClothoidList::intersect(
+    real_type            offs,
+    ClothoidList const & CL,
+    real_type            c_offs,
+    vector<real_type>  & s1,
+    vector<real_type>  & s2,
+    int_type             max_iter,
+    real_type            tolerance
+  ) const {
     s1.clear();
     s2.clear();
     vector<real_type>::const_iterator iss1, iss2;

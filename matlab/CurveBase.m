@@ -23,9 +23,10 @@ classdef CurveBase < handle
       feval( self.mexName, 'copy', self.objectHandle, C.obj_handle() );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [xmin,ymin,xmax,ymax] = bbox( self, varargin )
+    function [ xmin, ymin, xmax, ymax ] = bbox( self, varargin )
       % return the bounding box triangle of the circle arc
-      [xmin,ymin,xmax,ymax] = feval( self.mexName, 'bbox', self.objectHandle, varargin{:} );
+      [ xmin, ymin, xmax, ymax ] = ...
+        feval( self.mexName, 'bbox', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function translate( self, tx, ty )
@@ -93,8 +94,8 @@ classdef CurveBase < handle
       th = eval( self.mexName, 'theta_DDD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [x,y] = xyBegin( self )
-      [x,y] = feval( self.mexName, 'xyBegin', self.objectHandle );
+    function [ x, y ] = xyBegin( self )
+      [ x, y ] = feval( self.mexName, 'xyBegin', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X0 = xBegin( self )
@@ -109,8 +110,8 @@ classdef CurveBase < handle
       th0 = feval( self.mexName, 'thetaBegin', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [x,y] = xyEnd( self )
-      [x,y] = feval( self.mexName, 'xyEnd', self.objectHandle );
+    function [ x, y ] = xyEnd( self )
+      [ x, y ] = feval( self.mexName, 'xyEnd', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X1 = xEnd( self )
@@ -129,16 +130,17 @@ classdef CurveBase < handle
       res = feval( self.mexName, 'length', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [p1,p2] = points( self )
-      [p1,p2] = feval( self.mexName, 'points', self.objectHandle );
+    function [ p1, p2 ] = points( self )
+      [ p1, p2 ] = feval( self.mexName, 'points', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [d,s] = distance( self, x, y, varargin )
-      [d,s] = feval( self.mexName, 'distance', self.objectHandle, x, y, varargin{:} );
+    function [ x, y, s, t, iflag, dst ] = closestPoint( self, qx, qy, varargin )
+      [ x, y, s, t, iflag, dst ] = ...
+        feval( self.mexName, 'closestPoint', self.objectHandle, qx, qy, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [s,idx] = projection( self, x, y, varargin )
-      [s,idx] = feval( self.mexName, 'projection', self.objectHandle, x, y, varargin{:} );
+    function dst = distance( self, qx, qy, varargin )
+      dst = feval( self.mexName, 'distance', self.objectHandle, qx, qy, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = collision( self, OBJ, varargin )

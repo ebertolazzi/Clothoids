@@ -326,10 +326,12 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   real_type
-  AABBtree::min_maxdist( real_type        x,
-                         real_type        y,
-                         AABBtree const & tree,
-                         real_type        mmDist ) {
+  AABBtree::min_maxdist(
+    real_type        x,
+    real_type        y,
+    AABBtree const & tree,
+    real_type        mmDist
+  ) {
 
     vector<PtrAABB> const & children = tree.children;
 
@@ -352,14 +354,14 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  AABBtree::min_maxdist_select( real_type        x,
-                                real_type        y,
-                                real_type        mmDist,
-                                AABBtree const & tree,
-                                VecPtrBBox     & candidateList ) {
-
+  AABBtree::min_maxdist_select(
+    real_type        x,
+    real_type        y,
+    real_type        mmDist,
+    AABBtree const & tree,
+    VecPtrBBox     & candidateList
+  ) {
     vector<PtrAABB> const & children = tree.children;
-
     real_type dst = tree.pBBox->distance( x, y );
     if ( dst <= mmDist ) {
       if ( children.empty() ) {
@@ -376,10 +378,11 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  AABBtree::min_distance( real_type    x,
-                          real_type    y,
-                          VecPtrBBox & candidateList ) const {
-
+  AABBtree::min_distance(
+    real_type    x,
+    real_type    y,
+    VecPtrBBox & candidateList
+  ) const {
     real_type mmDist = min_maxdist(
       x, y, *this, numeric_limits<real_type>::infinity()
     );

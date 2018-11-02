@@ -197,16 +197,39 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   inline
-  real_type
-  projectPointOnLine( real_type x0,
-                      real_type y0,
-                      real_type c0, //!< cos(theta0)
-                      real_type s0, //!< sin(theta0)
-                      real_type x,
-                      real_type y ) {
+  void
+  projectPointOnLine(
+    real_type   x0,
+    real_type   y0,
+    real_type   c0, //!< cos(theta0)
+    real_type   s0, //!< sin(theta0)
+    real_type   x,
+    real_type   y,
+    real_type & s,
+    real_type & t
+  ) {
     real_type dx = x - x0;
     real_type dy = y - y0;
-    return (s0 * dy + c0 * dx);
+    s = c0 * dx + s0 * dy;
+    t = s0 * dx - c0 * dy;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  inline
+  void
+  projectPointOnLine(
+    real_type   x0,
+    real_type   y0,
+    real_type   c0, //!< cos(theta0)
+    real_type   s0, //!< sin(theta0)
+    real_type   x,
+    real_type   y,
+    real_type & s
+  ) {
+    real_type dx = x - x0;
+    real_type dy = y - y0;
+    s = c0 * dx + s0 * dy;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -220,6 +243,17 @@ namespace G2lib {
                         real_type L,
                         real_type qx,
                         real_type qy );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  projectPointOnArc(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type k,
+    real_type qx,
+    real_type qy );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -883,62 +917,52 @@ namespace G2lib {
      | \param  x   x-coordinate of the projected point on the curve
      | \param  y   y-coordinate of the projected point on the curve
      | \param  s   parameter on the curve of the projection
-     | \return 1  = unique orthogonal projection
-     |         0  = more than one projection (first returned)
-     |         -1 = projection line not othogonal to curve
-     |         -2 = projection line not othogonal andnot unique
+     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     | \param  dst distance point projected point
+     | \return 1 = point is projected orthogonal
+     |         0 = more than one projection (first returned)
+     |        -1 = minimum point is not othogonal projection to curve
     \*/
     virtual
     int_type
-    projection( real_type   qx,
-                real_type   qy,
-                real_type & x,
-                real_type & y,
-                real_type & s ) const G2LIB_PURE_VIRTUAL;
-
-    /*!
-     | \param  qx   x-coordinate of the point
-     | \param  qy   y-coordinate of the point
-     | \param  offs offset of the curve
-     | \param  x    x-coordinate of the projected point on the curve
-     | \param  y    y-coordinate of the projected point on the curve
-     | \param  s    parameter on teh curve of the projection
-     | \return 1  = unique orthogonal projection
-     |         0  = more than one projection (first returned)
-     |         -1 = projection line not othogonal to curve
-     |         -2 = projection line not othogonal andnot unique
-    \*/
-    virtual
-    int_type // true if projection is unique and orthogonal
-    projection( real_type   qx,
-                real_type   qy,
-                real_type   offs,
-                real_type & x,
-                real_type & y,
-                real_type & s ) const G2LIB_PURE_VIRTUAL;
-
-    virtual
-    real_type
     closestPoint( real_type   qx,
                   real_type   qy,
                   real_type & x,
                   real_type & y,
-                  real_type & s ) const G2LIB_PURE_VIRTUAL;
+                  real_type & s,
+                  real_type & t,
+                  real_type & dst ) const G2LIB_PURE_VIRTUAL;
 
+    /*!
+     | \param  qx  x-coordinate of the point
+     | \param  qy  y-coordinate of the point
+     | \param  offs offset of the curve
+     | \param  x   x-coordinate of the projected point on the curve
+     | \param  y   y-coordinate of the projected point on the curve
+     | \param  s   parameter on the curve of the projection
+     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     | \param  dst distance point projected point
+     | \return 1 = point is projected orthogonal
+     |         0 = more than one projection (first returned)
+     |        -1 = minimum point is not othogonal projection to curve
+    \*/
     virtual
-    real_type
+    int_type // true if projection is unique and orthogonal
     closestPoint( real_type   qx,
                   real_type   qy,
                   real_type   offs,
                   real_type & x,
                   real_type & y,
-                  real_type & s ) const G2LIB_PURE_VIRTUAL;
+                  real_type & s,
+                  real_type & t,
+                  real_type & dst ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     real_type
     distance( real_type qx, real_type qy ) const {
-      real_type x, y, s;
-      return closestPoint( qx, qy, x, y, s );
+      real_type x, y, s, t, dst;
+      closestPoint( qx, qy, x, y, s, t, dst );
+      return dst;
     }
 
     virtual
@@ -946,8 +970,9 @@ namespace G2lib {
     distance( real_type qx,
               real_type qy,
               real_type offs ) const {
-      real_type x, y, s;
-      return closestPoint( qx, qy, offs, x, y, s );
+      real_type x, y, s, t, dst;
+      closestPoint( qx, qy, offs, x, y, s, t, dst );
+      return dst;
     }
 
     /*\
@@ -958,12 +983,15 @@ namespace G2lib {
      |  |_| |_|_| |_|\__,_|____/ |_|
     \*/
 
-    virtual
     bool
     findST( real_type   x,
             real_type   y,
             real_type & s,
-            real_type & t ) const G2LIB_PURE_VIRTUAL;
+            real_type & t ) const {
+      real_type X, Y, dst;
+      int_type icode = closestPoint( x, y, X, Y, s, t, dst) ;
+      return icode >= 0;
+    }
 
     virtual
     void

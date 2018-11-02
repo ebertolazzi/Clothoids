@@ -4,6 +4,7 @@
 #include <iostream>
 
 using G2lib::real_type;
+using G2lib::int_type;
 using namespace std;
 
 int
@@ -24,12 +25,15 @@ main() {
   real_type y = 15;
   real_type X, Y, S;
 
-  real_type d = C.closestPoint( x, y, X, Y, S );
+  real_type T, d;
+  int_type info = C.closestPoint( x, y, X, Y, S, T, d );
 
   cout << "\nd = " << d
        << "\nX = " << X
        << "\nY = " << Y
        << "\nS = " << S
+       << "\nT = " << T
+       << "\ninfo = " << info
        << "\n";
 
   cout << "\n\nALL DONE FOLKS!!!\n";

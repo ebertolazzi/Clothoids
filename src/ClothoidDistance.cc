@@ -473,42 +473,50 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
+  int_type
   ClothoidCurve::closestPoint( real_type   qx,
                                real_type   qy,
                                real_type & X,
                                real_type & Y,
-                               real_type & S ) const {
+                               real_type & S,
+                               real_type & T,
+                               real_type & dst ) const {
 
     real_type epsi = 1e-10;
+
     // check if flex is inside curve, if so then split
 
     if ( CD.kappa0*CD.dk >= 0 ) { // flex on the left
-      return closestPoint1( epsi, CD, L, qx, qy, X, Y, S );
-    }
-
-    if ( CD.dk*CD.kappa(L) <= 0 ) { // flex on the right, reverse curve
+      dst = closestPoint1( epsi, CD, L, qx, qy, X, Y, S );
+    } else if ( CD.dk*CD.kappa(L) <= 0 ) { // flex on the right, reverse curve
       ClothoidData CD1;
       CD.reverse( L, CD1 );
-      real_type d = closestPoint1( epsi, CD1, L, qx, qy, X, Y, S );
-      S = L-S;
-      return d;
+      dst = closestPoint1( epsi, CD1, L, qx, qy, X, Y, S );
+      S   = L-S;
+    } else {
+      // flex inside, split clothoid
+      ClothoidData C0, C1;
+      real_type sflex = CD.split_at_flex( C0, C1 );
+
+      real_type d0 = closestPoint1( epsi, C0, L-sflex, qx, qy, X, Y, S  );
+      real_type x1, y1, s1;
+      real_type d1 = closestPoint1( epsi, C1, sflex, qx, qy, x1, y1, s1 );
+
+      if ( d1 < d0 ) {
+        S   = sflex - s1;
+        X   = x1;
+        Y   = y1;
+        dst = d1;
+      } else {
+        S  += sflex;
+        dst = d0;
+      }
     }
-
-    // flex inside, split clothoid
-    ClothoidData C0, C1;
-    real_type sflex = CD.split_at_flex( C0, C1 );
-
-    real_type d0 = closestPoint1( epsi, C0, L-sflex, qx, qy, X, Y, S  );
-    real_type x1, y1, s1;
-    real_type d1 = closestPoint1( epsi, C1, sflex, qx, qy, x1, y1, s1 );
-
-    if ( d1 < d0 ) {
-      S = sflex - s1; X = x1; Y = y1;
-      return d1;
-    }
-    S += sflex;
-    return d0;
+    real_type nx, ny;
+    nor( S, nx, ny );
+    T = (qx-X)*nx + (qy-X)*ny;
+    if ( abs(abs(T)-dst) < dst*machepsi1000 ) return 1;
+    return -1;
   }
 
 /*

@@ -218,63 +218,59 @@ do_trim( int nlhs, mxArray       *plhs[],
 
 static
 void
-do_distance( int nlhs, mxArray       *plhs[],
-             int nrhs, mxArray const *prhs[] ) {
+do_closestPoint( int nlhs, mxArray       *plhs[],
+                 int nrhs, mxArray const *prhs[] ) {
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('distance',OBJ,x,y[,offs]): "
+  #define CMD CMD_BASE "('closestPoint',OBJ,qx,qy[,offs]): "
 
   MEX_ASSERT( nrhs == 4 || nrhs == 5,
               CMD "expected 4 or 5 input, nrhs = " << nrhs );
-  MEX_ASSERT( nlhs > 0 && nlhs <= 2,
-              CMD "expected 1 or 2 output, nlhs = " << nlhs );
+  MEX_ASSERT( nlhs == 6,
+              CMD "expected 6 output, nlhs = " << nlhs );
 
   mwSize nrx, ncx, nry, ncy;
-  real_type const * x;
-  real_type const * y;
-  x = getMatrixPointer( arg_in_2, nrx, ncx,
-                        CMD "`x` expected to be a real vector/matrix" );
-  y = getMatrixPointer( arg_in_3, nry, ncy,
-                        CMD "`y` expected to be a real vector/matrix" );
+  real_type const * qx;
+  real_type const * qy;
+  qx = getMatrixPointer( arg_in_2, nrx, ncx,
+                         CMD "`qx` expected to be a real vector/matrix" );
+  qy = getMatrixPointer( arg_in_3, nry, ncy,
+                         CMD "`qy` expected to be a real vector/matrix" );
 
   MEX_ASSERT( nrx == nry && ncx == ncy,
-              CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-              nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+              CMD "`qx` and `qy` expected to be of the same size, found size(qx) = " <<
+              nrx << " x " << nry << " size(qy) = " << nry << " x " << ncy );
 
-  real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
-  mwSize size = nrx*ncx;
+  real_type * x     = createMatrixValue( arg_out_0, nrx, ncx );
+  real_type * y     = createMatrixValue( arg_out_1, nrx, ncx );
+  real_type * s     = createMatrixValue( arg_out_2, nrx, ncx );
+  real_type * t     = createMatrixValue( arg_out_3, nrx, ncx );
+  int32_t   * iflag = createMatrixInt32( arg_out_4, nrx, ncx );
+  real_type * dst   = createMatrixValue( arg_out_5, nrx, ncx );
 
+  mwSize size = nrx * ncx;
   if ( nrhs == 5 ) {
     real_type offs = getScalarValue( arg_in_4,
                                      CMD "`offs` expected to be a real scalar" );
-    switch ( nlhs ) {
-    case 1:
-      for ( mwSize i = 0; i < size; ++i )
-        *dst++ = ptr->distance( *x++, *y++, offs );
-      break;
-    case 2:
-      { real_type xtmp, ytmp;
-        real_type * s = createMatrixValue( arg_out_1, nrx, ncx );
-        for ( mwSize i = 0; i < size; ++i )
-          *dst++ = ptr->closestPoint( *x++, *y++, offs, xtmp, ytmp, *s++ );
-      }
-      break;
-    }
+    for ( mwSize i = 0; i < size; ++i )
+      *iflag++ = ptr->closestPoint( *qx++,
+                                    *qy++,
+                                    offs,
+                                    *x++,
+                                    *y++,
+                                    *s++,
+                                    *t++,
+                                    *dst++ );
   } else {
-    switch ( nlhs ) {
-    case 1:
-      for ( mwSize i = 0; i < size; ++i )
-        *dst++ = ptr->distance( *x++, *y++ );
-      break;
-    case 2:
-      { real_type xtmp, ytmp;
-        real_type * s = createMatrixValue( arg_out_1, nrx, ncx );
-        for ( mwSize i = 0; i < size; ++i )
-          *dst++ = ptr->closestPoint( *x++, *y++, xtmp, ytmp, *s++ );
-      }
-      break;
-    }
+    for ( mwSize i = 0; i < size; ++i )
+      *iflag++ = ptr->closestPoint( *qx++,
+                                    *qy++,
+                                    *x++,
+                                    *y++,
+                                    *s++,
+                                    *t++,
+                                    *dst++ );
   }
 
   #undef CMD
@@ -284,44 +280,41 @@ do_distance( int nlhs, mxArray       *plhs[],
 
 static
 void
-do_projection( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+do_distance( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE"('projection',OBJ,x,y[,offs]): "
+  #define CMD CMD_BASE "('distance',OBJ,qx,qy[,offs]): "
 
   MEX_ASSERT( nrhs == 4 || nrhs == 5,
               CMD "expected 4 or 5 input, nrhs = " << nrhs );
-  MEX_ASSERT( nlhs <= 2,
-              CMD "expected 2 output, nlhs = " << nlhs );
+  MEX_ASSERT( nlhs == 1,
+              CMD "expected 1 output, nlhs = " << nlhs );
 
   mwSize nrx, ncx, nry, ncy;
-  real_type const * x;
-  real_type const * y;
-  x = getMatrixPointer( arg_in_2, nrx, ncx,
-                        CMD "`x` expected to be a real vector/matrix" );
-  y = getMatrixPointer( arg_in_3, nry, ncy,
-                        CMD "`y` expected to be a real vector/matrix" );
+  real_type const * qx;
+  real_type const * qy;
+  qx = getMatrixPointer( arg_in_2, nrx, ncx,
+                         CMD "`qx` expected to be a real vector/matrix" );
+  qy = getMatrixPointer( arg_in_3, nry, ncy,
+                         CMD "`qy` expected to be a real vector/matrix" );
 
   MEX_ASSERT( nrx == nry && ncx == ncy,
-              CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-              nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+              CMD "`qx` and `qy` expected to be of the same size, found size(qx) = " <<
+              nrx << " x " << nry << " size(qy) = " << nry << " x " << ncy );
 
-  real_type * s   = createMatrixValue( arg_out_0, nrx, ncx );
-  real_type * idx = createMatrixValue( arg_out_1, nrx, ncx );
+  real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
 
-  mwSize size = nrx*ncx;
-  real_type xtmp, ytmp;
-
+  mwSize size = nrx * ncx;
   if ( nrhs == 5 ) {
     real_type offs = getScalarValue( arg_in_4,
-                                    CMD "`offs` expected to be a real scalar" );
+                                     CMD "`offs` expected to be a real scalar" );
     for ( mwSize i = 0; i < size; ++i )
-      *idx++ = ptr->projection( *x++, *y++, offs, xtmp, ytmp, *s++ );
+      *dst++ = ptr->distance( *qx++, *qy++, offs );
   } else {
     for ( mwSize i = 0; i < size; ++i )
-      *idx++ = ptr->projection( *x++, *y++, xtmp, ytmp, *s++ );
+      *dst++ = ptr->distance( *qx++, *qy++ );
   }
 
   #undef CMD
@@ -1135,7 +1128,7 @@ CMD_SCALE,               \
 CMD_REVERSE,             \
 CMD_TRIM,                \
 CMD_DISTANCE,            \
-CMD_PROJECTION,          \
+CMD_CLOSEST_POINT,       \
 CMD_COLLISION,           \
 CMD_INTERSECT,           \
 CMD_FINDST,              \
@@ -1170,7 +1163,7 @@ CMD_THETA_END
 {"reverse",CMD_REVERSE},            \
 {"trim",CMD_TRIM},                  \
 {"distance",CMD_DISTANCE},          \
-{"projection",CMD_PROJECTION},      \
+{"closestPoint",CMD_CLOSEST_POINT}, \
 {"collision",CMD_COLLISION},        \
 {"intersect",CMD_INTERSECT},        \
 {"findST",CMD_FINDST},              \
@@ -1227,8 +1220,8 @@ case CMD_TRIM:                                \
 case CMD_DISTANCE:                            \
   do_distance( nlhs, plhs, nrhs, prhs );      \
   break;                                      \
-case CMD_PROJECTION:                          \
-  do_projection( nlhs, plhs, nrhs, prhs );    \
+case CMD_CLOSEST_POINT:                       \
+  do_closestPoint( nlhs, plhs, nrhs, prhs );  \
   break;                                      \
 case CMD_COLLISION:                           \
   do_collision( nlhs, plhs, nrhs, prhs );     \

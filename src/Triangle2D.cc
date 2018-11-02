@@ -63,22 +63,25 @@ namespace G2lib {
   static
   inline
   real_type
-  orient_2d( real_type const a[2],
-             real_type const b[2],
-             real_type const c[2] ) {
+  orient_2d(
+    real_type const a[2],
+    real_type const b[2],
+    real_type const c[2]
+  ) {
     return (a[0]-c[0]) * (b[1]-c[1]) - (a[1]-c[1]) * (b[0]-c[0]);
   }
 
   static
   inline
   bool
-  intersection_test_vertex( real_type const P1[2],
-                            real_type const Q1[2],
-                            real_type const R1[2],
-                            real_type const P2[2],
-                            real_type const Q2[2],
-                            real_type const R2[2] ) {
-
+  intersection_test_vertex(
+    real_type const P1[2],
+    real_type const Q1[2],
+    real_type const R1[2],
+    real_type const P2[2],
+    real_type const Q2[2],
+    real_type const R2[2]
+  ) {
     if ( orient_2d(R2,P2,Q1) >= 0 ) {
       if ( orient_2d(R2,Q2,Q1) <= 0 ) {
         if ( orient_2d(P1,P2,Q1) > 0 ) {
@@ -109,11 +112,13 @@ namespace G2lib {
   static
   inline
   bool
-  intersection_test_edge( real_type const P1[2],
-                          real_type const Q1[2],
-                          real_type const R1[2],
-                          real_type const P2[2],
-                          real_type const R2[2] ) {
+  intersection_test_edge(
+    real_type const P1[2],
+    real_type const Q1[2],
+    real_type const R1[2],
+    real_type const P2[2],
+    real_type const R2[2]
+  ) {
     if ( orient_2d(R2,P2,Q1) >= 0 ) {
       if ( orient_2d(P1,P2,Q1) >= 0 ) {
         return orient_2d(P1,Q1,R2) >= 0;
@@ -132,12 +137,14 @@ namespace G2lib {
   static
   inline
   bool
-  tri_tri_intersection_2d( real_type const p1[2],
-                           real_type const q1[2],
-                           real_type const r1[2],
-                           real_type const p2[2],
-                           real_type const q2[2],
-                           real_type const r2[2] ) {
+  tri_tri_intersection_2d(
+    real_type const p1[2],
+    real_type const q1[2],
+    real_type const r1[2],
+    real_type const p2[2],
+    real_type const q2[2],
+    real_type const r2[2]
+  ) {
     if ( orient_2d(p2,q2,p1) >= 0 ) {
       if ( orient_2d(q2,r2,p1) >= 0 ) {
         return orient_2d(r2,p2,p1) >= 0 || intersection_test_edge(p1,q1,r1,p2,r2);
@@ -160,12 +167,14 @@ namespace G2lib {
   static
   inline
   bool
-  tri_tri_overlap_test_2d( real_type const p1[2],
-                           real_type const q1[2],
-                           real_type const r1[2],
-                           real_type const p2[2],
-                           real_type const q2[2],
-                           real_type const r2[2] ) {
+  tri_tri_overlap_test_2d(
+    real_type const p1[2],
+    real_type const q1[2],
+    real_type const r1[2],
+    real_type const p2[2],
+    real_type const q2[2],
+    real_type const r2[2]
+  ) {
     if ( orient_2d(p1,q1,r1) < 0 ) {
       if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,r1,q1,p2,r2,q2);
       else                           return tri_tri_intersection_2d(p1,r1,q1,p2,q2,r2);
@@ -226,11 +235,12 @@ namespace G2lib {
 
   static
   real_type
-  distSeg( real_type       x,
-           real_type       y,
-           real_type const A[],
-           real_type const B[] ) {
-
+  distSeg(
+    real_type       x,
+    real_type       y,
+    real_type const A[],
+    real_type const B[]
+  ) {
     real_type dx  = x    - A[0];
     real_type dy  = y    - A[1];
     real_type dx1 = B[0] - A[0];

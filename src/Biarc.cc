@@ -50,16 +50,18 @@ namespace G2lib {
 
   static // unused for the moment
   void
-  CircleTangentPoints( real_type PA[2],
-                       real_type rA,
-                       real_type PB[2],
-                       real_type rB,
-                       bool &    external_tangents,
-                       real_type PTE0[2][2],
-                       real_type PTE1[2][2],
-                       bool &    internal_tangents,
-                       real_type PTI0[2][2],
-                       real_type PTI1[2][2] ) {
+  CircleTangentPoints(
+    real_type PA[2],
+    real_type rA,
+    real_type PB[2],
+    real_type rB,
+    bool &    external_tangents,
+    real_type PTE0[2][2],
+    real_type PTE1[2][2],
+    bool &    internal_tangents,
+    real_type PTI0[2][2],
+    real_type PTI1[2][2]
+  ) {
 
     // Compute distance between circle centers
     real_type D = hypot( PB[0]-PA[0], PB[1]-PA[1] );
@@ -155,12 +157,14 @@ namespace G2lib {
 
   static // unused for the moment
   bool
-  CircleLineTransition( real_type C[2],
-                        real_type r,
-                        real_type P[2],
-                        real_type theta,
-                        real_type C0[2],
-                        real_type C1[2] ) {
+  CircleLineTransition(
+    real_type C[2],
+    real_type r,
+    real_type P[2],
+    real_type theta,
+    real_type C0[2],
+    real_type C1[2]
+  ) {
     real_type Nx =  sin(theta);
     real_type Ny = -cos(theta);
     real_type Dx = C[0] - P[0];
@@ -187,12 +191,14 @@ namespace G2lib {
   \*/
 
   bool
-  Biarc::build( real_type x0,
-                real_type y0,
-                real_type theta0,
-                real_type x1,
-                real_type y1,
-                real_type theta1 ) {
+  Biarc::build(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1,
+    real_type theta1
+  ) {
 
     real_type dx = x1-x0;
     real_type dy = y1-y0;
@@ -239,12 +245,14 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  Biarc::build_3P( real_type x0,
-                   real_type y0,
-                   real_type x1,
-                   real_type y1,
-                   real_type x2,
-                   real_type y2 ) {
+  Biarc::build_3P(
+    real_type x0,
+    real_type y0,
+    real_type x1,
+    real_type y1,
+    real_type x2,
+    real_type y2
+  ) {
 
     real_type dxa   = x1-x0;
     real_type dya   = y1-y0;
@@ -295,10 +303,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::bbox( real_type & xmin,
-               real_type & ymin,
-               real_type & xmax,
-               real_type & ymax ) const {
+  Biarc::bbox(
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
     C0.bbox( xmin, ymin, xmax, ymax );
     real_type xmi1, ymi1, xma1, yma1;
     C1.bbox( xmi1, ymi1, xma1, yma1 );
@@ -311,11 +321,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::bbox( real_type   offs,
-               real_type & xmin,
-               real_type & ymin,
-               real_type & xmax,
-               real_type & ymax ) const {
+  Biarc::bbox(
+    real_type   offs,
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
     C0.bbox( offs, xmin, ymin, xmax, ymax );
     real_type xmi1, ymi1, xma1, yma1;
     C1.bbox( offs, xmi1, ymi1, xma1, yma1 );
@@ -684,40 +696,14 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  Biarc::findST( real_type   x,
-                 real_type   y,
-                 real_type & s,
-                 real_type & t ) const {
-    real_type S, T;
-    C0.findST( x, y, s, t );
-    C1.findST( x, y, S, T );
-    real_type L0 = C0.length();
-    bool ok0 = s >= 0 && s <= L0;
-    bool ok1 = S >= 0 && S <= C1.length();
-    if ( ok0 ) {
-      if ( ok1 && abs(t) > abs(T) ) {
-        s = S + L0;
-        t = T;
-      }
-    } else if ( ok1 ) {
-      s = S + L0;
-      t = T;
-    } else {
-      s = t = 0;
-      return false;
-    }
-    return true;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void
-  Biarc::evaluate( real_type   s,
-                   real_type & th,
-                   real_type & k,
-                   real_type & x,
-                   real_type & y ) const {
+  Biarc::evaluate(
+    real_type   s,
+    real_type & th,
+    real_type & k,
+    real_type & x,
+    real_type & y
+  ) const {
     if ( s < C0.length() ) {
       th = C0.theta(s);
       k  = C0.kappa();
@@ -733,9 +719,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval( real_type   s,
-               real_type & x,
-               real_type & y ) const {
+  Biarc::eval(
+    real_type   s,
+    real_type & x,
+    real_type & y
+  ) const {
     if ( s < C0.length() ) {
       C0.eval(s,x,y);
     } else {
@@ -747,9 +735,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_D( real_type   s,
-                 real_type & x_D,
-                 real_type & y_D ) const {
+  Biarc::eval_D(
+    real_type   s,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
     if ( s < C0.length() ) {
       C0.eval_D(s,x_D,y_D);
     } else {
@@ -761,9 +751,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_DD( real_type   s,
-                  real_type & x_DD,
-                  real_type & y_DD ) const {
+  Biarc::eval_DD(
+    real_type   s,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
     if ( s < C0.length() ) {
       C0.eval_DD(s,x_DD,y_DD);
     } else {
@@ -775,9 +767,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_DDD( real_type   s,
-                   real_type & x_DDD,
-                   real_type & y_DDD ) const {
+  Biarc::eval_DDD(
+    real_type   s,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
     if ( s < C0.length() ) {
       C0.eval_DDD(s,x_DDD,y_DDD);
     } else {
@@ -789,10 +783,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval( real_type   s,
-               real_type   t,
-               real_type & x,
-               real_type & y ) const {
+  Biarc::eval(
+    real_type   s,
+    real_type   t,
+    real_type & x,
+    real_type & y
+  ) const {
     if ( s < C0.length() ) {
       C0.eval(s,t,x,y);
     } else {
@@ -804,10 +800,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_D( real_type   s,
-                 real_type   t,
-                 real_type & x_D,
-                 real_type & y_D ) const {
+  Biarc::eval_D(
+    real_type   s,
+    real_type   t,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
     if ( s < C0.length() ) {
       C0.eval_D(s,t,x_D,y_D);
     } else {
@@ -819,10 +817,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_DD( real_type   s,
-                  real_type   t,
-                  real_type & x_DD,
-                  real_type & y_DD ) const {
+  Biarc::eval_DD(
+    real_type   s,
+    real_type   t,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
     if ( s < C0.length() ) {
       C0.eval_DD(s,t,x_DD,y_DD);
     } else {
@@ -834,10 +834,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_DDD( real_type   s,
-                   real_type   t,
-                   real_type & x_DDD,
-                   real_type & y_DDD ) const {
+  Biarc::eval_DDD(
+    real_type   s,
+    real_type   t,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
     if ( s < C0.length() ) {
       C0.eval_DDD(s,t,x_DDD,y_DDD);
     } else {
@@ -855,9 +857,11 @@ namespace G2lib {
   \*/
 
   void
-  Biarc::intersect( BaseCurve const & obj,
-                    IntersectList   & ilist,
-                    bool              swap_s_vals ) const {
+  Biarc::intersect(
+    BaseCurve const & obj,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
     IntersectList ilist0, ilist1;
     C0.intersect( obj, ilist0, false );
     C1.intersect( obj, ilist1, false );
@@ -879,11 +883,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::intersect( real_type         offs,
-                    BaseCurve const & obj,
-                    real_type         offs_obj,
-                    IntersectList   & ilist,
-                    bool              swap_s_vals ) const {
+  Biarc::intersect(
+    real_type         offs,
+    BaseCurve const & obj,
+    real_type         offs_obj,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
     IntersectList ilist0, ilist1;
     C0.intersect( offs, obj, offs_obj, ilist0, false );
     C1.intersect( offs, obj, offs_obj, ilist1, false );
@@ -905,9 +911,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::intersect( Biarc const   & B,
-                    IntersectList & ilist,
-                    bool            swap_s_vals ) const {
+  Biarc::intersect(
+    Biarc const   & B,
+    IntersectList & ilist,
+    bool            swap_s_vals
+  ) const {
     IntersectList ilist00, ilist01, ilist10, ilist11;
     C0.intersect( B.C0, ilist00, false );
     C0.intersect( B.C1, ilist01, false );
@@ -946,11 +954,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::intersect( real_type       offs,
-                    Biarc const   & B,
-                    real_type       offs_B,
-                    IntersectList & ilist,
-                    bool            swap_s_vals  ) const {
+  Biarc::intersect(
+    real_type       offs,
+    Biarc const   & B,
+    real_type       offs_B,
+    IntersectList & ilist,
+    bool            swap_s_vals
+  ) const {
     IntersectList ilist00, ilist01, ilist10, ilist11;
     C0.intersect( offs, B.C0, offs_B, ilist00, false );
     C0.intersect( offs, B.C1, offs_B, ilist01, false );
@@ -989,86 +999,54 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  Biarc::projection( real_type   qx,
-                     real_type   qy,
-                     real_type & x,
-                     real_type & y,
-                     real_type & s ) const {
-    real_type s0, x0, y0, s1, x1, y1;
-    int_type r0 = C0.projection( qx, qy, x0, y0, s0 );
-    int_type r1 = C1.projection( qx, qy, x1, y1, s1 );
-    if ( r0 == 1 && r1 == 1 ) {
-      real_type dst0 = hypot( x0 - qx, y0 - qy );
-      real_type dst1 = hypot( x1 - qx, y1 - qy );
-      if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; }
-      else               { x = x0; y = y0; s = s0; }
-      return 1;
+  Biarc::closestPoint(
+    real_type   qx,
+    real_type   qy,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst
+  ) const {
+    real_type x1, y1, s1, t1, dst1;
+    int_type res  = C0.closestPoint( qx, qy, x,  y,  s,  t,  dst  );
+    int_type res1 = C1.closestPoint( qx, qy, x1, y1, s1, t1, dst1 );
+    if ( dst1 < dst ) {
+      x   = x1;
+      y   = y1;
+      s   = s1;
+      t   = t1;
+      dst = dst1;
+      res = res1;
     }
-    if ( r0 == 1 ) { x = x0; y = y0; s = s0; return r0; }
-    if ( r1 == 1 ) { x = x1; y = y1; s = s1; return r1; }
-    real_type dst0 = hypot( x0 - qx, y0 - qy );
-    real_type dst1 = hypot( x1 - qx, y1 - qy );
-    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return r0; }
-    else               { x = x0; y = y0; s = s0; return r1; }
+    return res;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type // true if projection is unique and orthogonal
-  Biarc::projection( real_type   qx,
-                     real_type   qy,
-                     real_type   offs,
-                     real_type & x,
-                     real_type & y,
-                     real_type & s ) const {
-    real_type s0, x0, y0, s1, x1, y1;
-    int_type r0 = C0.projection( qx, qy, offs, x0, y0, s0 );
-    int_type r1 = C1.projection( qx, qy, offs, x1, y1, s1 );
-    if ( r0 == 1 && r1 == 1 ) {
-      real_type dst0 = hypot( x0 - qx, y0 - qy );
-      real_type dst1 = hypot( x1 - qx, y1 - qy );
-      if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; }
-      else               { x = x0; y = y0; s = s0; }
-      return 1;
+  int_type
+  Biarc::closestPoint(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst
+  ) const {
+    real_type x1, y1, s1, t1, dst1;
+    int_type res  = C0.closestPoint( qx, qy, offs, x,  y,  s,  t,  dst  );
+    int_type res1 = C1.closestPoint( qx, qy, offs, x1, y1, s1, t1, dst1 );
+    if ( dst1 < dst ) {
+      x   = x1;
+      y   = y1;
+      s   = s1;
+      t   = t1;
+      dst = dst1;
+      res = res1;
     }
-    if ( r0 == 1 ) { x = x0; y = y0; s = s0; return r0; }
-    if ( r1 == 1 ) { x = x1; y = y1; s = s1; return r1; }
-    real_type dst0 = hypot( x0 - qx, y0 - qy );
-    real_type dst1 = hypot( x1 - qx, y1 - qy );
-    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return r0; }
-    else               { x = x0; y = y0; s = s0; return r1; }
-
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::closestPoint( real_type   qx,
-                       real_type   qy,
-                       real_type & x,
-                       real_type & y,
-                       real_type & s ) const {
-    real_type x1, y1, s1;
-    real_type dst0 = C0.closestPoint( qx, qy, x, y, s );
-    real_type dst1 = C1.closestPoint( qx, qy, x1, y1, s1 );
-    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return dst1; }
-    return dst0;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::closestPoint( real_type   qx,
-                       real_type   qy,
-                       real_type   offs,
-                       real_type & x,
-                       real_type & y,
-                       real_type & s ) const {
-    real_type x1, y1, s1;
-    real_type dst0 = C0.closestPoint( qx, qy, offs, x, y, s );
-    real_type dst1 = C1.closestPoint( qx, qy, offs, x1, y1, s1 );
-    if ( dst1 < dst0 ) { x = x1; y = y1; s = s1; return dst1; }
-    return dst0;
+    return res;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

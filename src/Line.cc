@@ -52,10 +52,12 @@ namespace G2lib {
   // point q lies on line segment 'pr'
   static
   bool
-  onSegment( real_type const p[2],
-             real_type const q[2],
-             real_type const r[2],
-             real_type const epsi ) {
+  onSegment(
+    real_type const p[2],
+    real_type const q[2],
+    real_type const r[2],
+    real_type const epsi
+  ) {
 
     real_type mi_x, ma_x;
     if ( p[0] > r[0] ) { mi_x = r[0]; ma_x = p[0]; }
@@ -78,10 +80,12 @@ namespace G2lib {
   // 2 --> Counterclockwise
   static
   int_type
-  orientation( real_type const p[2],
-               real_type const q[2],
-               real_type const r[2],
-               real_type const epsi ) {
+  orientation(
+    real_type const p[2],
+    real_type const q[2],
+    real_type const r[2],
+    real_type const epsi
+  ) {
     // See https://www.geeksforgeeks.org/orientation-3-ordered-points/
     // for details of below formula.
     real_type qp_x = q[0] - p[0];
@@ -98,11 +102,13 @@ namespace G2lib {
 
   static
   bool
-  intersect( real_type        epsi,
-             L_struct const & L1,
-             L_struct const & L2,
-             real_type      & s1,
-             real_type      & s2 ) {
+  intersect(
+    real_type        epsi,
+    L_struct const & L1,
+    L_struct const & L2,
+    real_type      & s1,
+    real_type      & s2
+  ) {
 
     // Find the four orientations needed for general and special cases
     int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
@@ -157,9 +163,11 @@ namespace G2lib {
 
   static
   bool
-  collision( real_type        epsi,
-             L_struct const & L1,
-             L_struct const & L2 ) {
+  collision(
+    real_type        epsi,
+    L_struct const & L1,
+    L_struct const & L2
+  ) {
 
     // Find the four orientations needed for general and special cases
     int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
@@ -195,10 +203,12 @@ namespace G2lib {
   \*/
 
   void
-  LineSegment::build_2P( real_type _x0,
-                         real_type _y0,
-                         real_type _x1,
-                         real_type _y1 ) {
+  LineSegment::build_2P(
+    real_type _x0,
+    real_type _y0,
+    real_type _x1,
+    real_type _y1
+  ) {
     real_type dx = _x1-_x0;
     real_type dy = _y1-_y0;
     L      = hypot( dx, dy );
@@ -216,10 +226,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::bbox( real_type & xmin,
-                     real_type & ymin,
-                     real_type & xmax,
-                     real_type & ymax ) const {
+  LineSegment::bbox(
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
     xmin = x0; xmax = x0+L*c0;
     ymin = y0; ymax = y0+L*s0;
     if ( xmin > xmax ) swap( xmin, xmax );
@@ -229,11 +241,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::bbox( real_type   offs,
-                     real_type & xmin,
-                     real_type & ymin,
-                     real_type & xmax,
-                     real_type & ymax ) const {
+  LineSegment::bbox(
+    real_type   offs,
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
     real_type dx = -offs*s0;
     real_type dy = offs*c0;
     xmin = x0+dx; xmax = x0+L*c0+dx;
@@ -309,9 +323,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  LineSegment::intersect( LineSegment const & S,
-                          real_type         & s1,
-                          real_type         & s2 ) const {
+  LineSegment::intersect(
+    LineSegment const & S,
+    real_type         & s1,
+    real_type         & s2
+  ) const {
     // The main function that returns true if line segment 'p1q1'
     // and 'p2q2' intersect.
     L_struct L1;
@@ -340,11 +356,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  LineSegment::intersect( real_type           offs,
-                          LineSegment const & S,
-                          real_type           S_offs,
-                          real_type         & s1,
-                          real_type         & s2 ) const {
+  LineSegment::intersect(
+    real_type           offs,
+    LineSegment const & S,
+    real_type           S_offs,
+    real_type         & s1,
+    real_type         & s2
+  ) const {
     // The main function that returns true if line segment 'p1q1'
     // and 'p2q2' intersect.
     L_struct L1;
@@ -404,9 +422,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  LineSegment::collision( real_type           offs,
-                          LineSegment const & S,
-                          real_type           S_offs ) const {
+  LineSegment::collision(
+    real_type           offs,
+    LineSegment const & S,
+    real_type           S_offs
+  ) const {
     // The main function that returns true if line segment 'p1q1'
     // and 'p2q2' intersect.
     L_struct L1;
@@ -479,9 +499,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  LineSegment::collision( real_type         offs,
-                          BaseCurve const & obj,
-                          real_type         obj_offs ) const {
+  LineSegment::collision(
+    real_type         offs,
+    BaseCurve const & obj,
+    real_type         obj_offs
+  ) const {
     bool ok = false;
     switch ( obj.type() ) {
     case G2LIB_LINE:
@@ -518,9 +540,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::intersect( BaseCurve const & obj,
-                          IntersectList   & ilist,
-                          bool              swap_s_vals ) const {
+  LineSegment::intersect(
+    BaseCurve const & obj,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
     bool      ok;
     real_type s1, s2;
     switch ( obj.type() ) {
@@ -561,11 +585,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::intersect( real_type         offs,
-                          BaseCurve const & obj,
-                          real_type         obj_offs,
-                          IntersectList   & ilist,
-                          bool              swap_s_vals ) const {
+  LineSegment::intersect(
+    real_type         offs,
+    BaseCurve const & obj,
+    real_type         obj_offs,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
     bool      ok;
     real_type s1, s2;
     switch ( obj.type() ) {
@@ -604,103 +630,75 @@ namespace G2lib {
   }
 
   /*\
-   |      _ _     _
-   |   __| (_)___| |_ __ _ _ __   ___ ___
-   |  / _` | / __| __/ _` | '_ \ / __/ _ \
-   | | (_| | \__ \ || (_| | | | | (_|  __/
-   |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+   |        _                     _   ____       _       _
+   |    ___| | ___  ___  ___  ___| |_|  _ \ ___ (_)_ __ | |_
+   |   / __| |/ _ \/ __|/ _ \/ __| __| |_) / _ \| | '_ \| __|
+   |  | (__| | (_) \__ \  __/\__ \ |_|  __/ (_) | | | | | |_
+   |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
   \*/
 
-  real_type
-  LineSegment::closestPoint( real_type   qx,
-                             real_type   qy,
-                             real_type & x,
-                             real_type & y,
-                             real_type & s ) const {
+  int_type
+  LineSegment::closestPoint(
+    real_type   qx,
+    real_type   qy,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst
+  ) const {
 
-    s = projectPointOnLine( x0, y0, c0, s0, qx, qy );
+    projectPointOnLine( x0, y0, c0, s0, qx, qy, s, t );
 
-    if ( s <= 0 ) { // distanza sul bordo 0
+    if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
       x = x0;
       y = y0;
-    } else {
-      if ( s >= L ) s = L;
+    } else if ( s > L ) {
+      s = L;
       eval( s, x, y );
-    }
-    return hypot( qx-x, qy-y );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  LineSegment::closestPoint( real_type   qx,
-                             real_type   qy,
-                             real_type   offs,
-                             real_type & x,
-                             real_type & y,
-                             real_type & s ) const {
-    real_type xx0 = x0-offs*s0;
-    real_type yy0 = y0+offs*c0;
-    s = projectPointOnLine( xx0, yy0, c0, s0, qx, qy );
-
-    if ( s <= 0 ) { // distanza sul bordo 0
-      s = 0;
-      x = xx0;
-      y = yy0;
     } else {
-      if ( s >= L ) s = L;
-      eval( s, offs, x, y );
+      dst = abs(t);
+      eval( s, x, y );
+      return 1;
     }
-    return hypot( qx-x, qy-y );
+    t   = s0 * (qx-x) - c0 * (qy-y);
+    dst = hypot( qx-x, qy-y );
+    return -1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  LineSegment::projection( real_type   qx,
-                           real_type   qy,
-                           real_type & x,
-                           real_type & y,
-                           real_type & s ) const {
-
-    s = projectPointOnLine( x0, y0, c0, s0, qx, qy );
-
-    int_type res = 1;
-    if ( s < 0 ) { // distanza sul bordo 0
-      s   = 0;
-      res = -1;
-    } if ( s > L ) {
-      s   = L;
-      res = -1;
-    }
-    eval( s, x, y );
-    return res;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  int_type // true if projection is unique and orthogonal
-  LineSegment::projection( real_type   qx,
-                           real_type   qy,
-                           real_type   offs,
-                           real_type & x,
-                           real_type & y,
-                           real_type & s ) const {
+  LineSegment::closestPoint(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst
+  ) const {
     real_type xx0 = x0-offs*s0;
     real_type yy0 = y0+offs*c0;
-    s = projectPointOnLine( xx0, yy0, c0, s0, qx, qy );
+    projectPointOnLine( xx0, yy0, c0, s0, qx, qy, s, t );
 
-    int_type res = 1;
     if ( s < 0 ) { // distanza sul bordo 0
-      s   = 0;
-      res = -1;
-    } if ( s > L ) {
-      s   = L;
-      res = -1;
+      s = 0;
+      x = xx0;
+      y = yy0;
+    } else if ( s > L ) {
+      s = L;
+      eval( s, offs, x, y );
+    } else {
+      t  += offs;
+      dst = abs(t);
+      eval( s, offs, x, y );
     }
-    eval( s, offs, x, y );
-    return res;
+    t   = s0 * (qx-x) - c0 * (qy-y) - offs;
+    dst = hypot( qx-x, qy-y );
+    return -1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

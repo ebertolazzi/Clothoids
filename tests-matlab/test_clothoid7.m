@@ -53,7 +53,7 @@ for kk=1:4
   axis equal;
 
   hold on;
-  L1.plot(1000,'Color','white','LineWidth',3);
+  L1.plot_offs( offs(kk), 1000,'Color','white','LineWidth',3 );
 
   %
   L1.delete();

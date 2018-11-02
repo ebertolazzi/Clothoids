@@ -101,10 +101,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PolyLine::bbox( real_type & xmin,
-                  real_type & ymin,
-                  real_type & xmax,
-                  real_type & ymax ) const {
+  PolyLine::bbox(
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
 
     G2LIB_ASSERT( !lvec.empty(), "PolyLine::bbox, empty list" );
 
@@ -348,19 +350,22 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  PolyLine::closestPoint( real_type   x,
-                          real_type   y,
-                          real_type & X,
-                          real_type & Y,
-                          real_type & S ) const{
+  PolyLine::closestPoint(
+    real_type   x,
+    real_type   y,
+    real_type & X,
+    real_type & Y,
+    real_type & S
+  ) const{
 
     G2LIB_ASSERT( !lvec.empty(), "PolyLine::closestPoint, empty list" );
     vector<LineSegment>::const_iterator ic = lvec.begin();
     vector<real_type>::const_iterator   is = s0.begin();
-    real_type DST = ic->closestPoint( x, y, X, Y, S );
+    real_type DST, T;
+    ic->closestPoint( x, y, X, Y, S, T, DST );
     for ( ++ic, ++is; ic != lvec.end(); ++ic, ++is ) {
-      real_type X1, Y1, S1;
-      real_type DST1 = ic->closestPoint( x, y, X1, Y1, S1 );
+      real_type X1, Y1, S1, T1, DST1;
+      ic->closestPoint( x, y, X1, Y1, S1, T1, DST1 );
       if ( DST1 < DST ) {
         DST = DST1;
         X   = X1;
@@ -374,9 +379,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PolyLine::intersect( PolyLine const    & pl,
-                       vector<real_type> & ss0,
-                       vector<real_type> & ss1 ) const {
+  PolyLine::intersect(
+    PolyLine const    & pl,
+    vector<real_type> & ss0,
+    vector<real_type> & ss1
+  ) const {
     G2LIB_ASSERT( !lvec.empty(),
                   "PolyLine::intersect, empty list" );
     G2LIB_ASSERT( !pl.lvec.empty(),

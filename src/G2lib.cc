@@ -201,14 +201,16 @@ namespace G2lib {
   }
 
   int_type
-  solveLinearQuadratic( real_type A,
-                        real_type B,
-                        real_type C,
-                        real_type a,
-                        real_type b,
-                        real_type c,
-                        real_type x[],
-                        real_type y[] ) {
+  solveLinearQuadratic(
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type x[],
+    real_type y[]
+  ) {
     real_type m1 = maxabs3(A,B,C);
     real_type m2 = maxabs3(a,b,c);
     A /= m1; B /= m1; C /= m1;
@@ -241,11 +243,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  solveLinearQuadratic2( real_type A,
-                         real_type B,
-                         real_type C,
-                         real_type x[],
-                         real_type y[] ) {
+  solveLinearQuadratic2(
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type x[],
+    real_type y[]
+  ) {
     real_type m = maxabs3(A,B,C);
     A /= m; B /= m; C /= m;
     real_type tmp  = A*A + B*B;
@@ -275,13 +279,15 @@ namespace G2lib {
 
   static
   int_type
-  solveNLsysCircleCircle( real_type kA,
-                          real_type T,
-                          real_type Tx,
-                          real_type Ty,
-                          real_type kB,
-                          real_type x[2],
-                          real_type y[2] ) {
+  solveNLsysCircleCircle(
+    real_type kA,
+    real_type T,
+    real_type Tx,
+    real_type Ty,
+    real_type kB,
+    real_type x[2],
+    real_type y[2]
+  ) {
     real_type Tx2 = Tx*Tx;
     real_type Ty2 = Ty*Ty;
     real_type kB2 = kB*kB;
@@ -329,16 +335,18 @@ namespace G2lib {
   }
 
   int_type
-  intersectCircleCircle( real_type x1,
-                         real_type y1,
-                         real_type theta1,
-                         real_type kappa1,
-                         real_type x2,
-                         real_type y2,
-                         real_type theta2,
-                         real_type kappa2,
-                         real_type s1[],
-                         real_type s2[] ) {
+  intersectCircleCircle(
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    real_type kappa1,
+    real_type x2,
+    real_type y2,
+    real_type theta2,
+    real_type kappa2,
+    real_type s1[],
+    real_type s2[]
+  ) {
     real_type dx    = x2 - x1;
     real_type dy    = y2 - y1;
     real_type L2    = dx*dx+dy*dy;
@@ -456,9 +464,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  isCounterClockwise( real_type const P1[2],
-                      real_type const P2[2],
-                      real_type const P3[2] ) {
+  isCounterClockwise(
+    real_type const P1[2],
+    real_type const P2[2],
+    real_type const P3[2]
+  ) {
     real_type dx1 = P2[0] - P1[0];
     real_type dy1 = P2[1] - P1[1];
     real_type dx2 = P3[0] - P1[0];
@@ -473,14 +483,16 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  projectPointOnCircle( real_type x0,
-                        real_type y0,
-                        real_type c0, //!< cos(theta0)
-                        real_type s0, //!< sin(theta0)
-                        real_type k,
-                        real_type L,
-                        real_type qx,
-                        real_type qy ) {
+  projectPointOnCircle(
+    real_type x0,
+    real_type y0,
+    real_type c0, //!< cos(theta0)
+    real_type s0, //!< sin(theta0)
+    real_type k,
+    real_type L,
+    real_type qx,
+    real_type qy
+  ) {
     real_type dx  = x0 - qx;
     real_type dy  = y0 - qy;
     real_type a0  = c0 * dy - s0 * dx;
@@ -507,18 +519,53 @@ namespace G2lib {
       real_type ss = -om/k;
       real_type t  = m_2pi/abs(k);
       if      ( ss < 0 ) ss += t;
-      else if ( ss > t ) ss += t;
+      else if ( ss > t ) ss -= t;
       return ss;
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  real_type
+  projectPointOnArc(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type k,
+    real_type qx,
+    real_type qy
+  ) {
+    real_type dx  = x0 - qx;
+    real_type dy  = y0 - qy;
+    real_type c0  = cos(theta0);
+    real_type s0  = sin(theta0);
+    real_type a0  = c0 * dy - s0 * dx;
+    real_type b0  = s0 * dy + c0 * dx;
+    real_type tmp = a0*k;
+
+    if ( 1+2*tmp > 0 ) {
+      tmp = b0/(1+tmp);
+      tmp *= -Atanc(tmp*k); // lunghezza
+      return tmp;
+    } else {
+      real_type om = atan2( b0, a0+1/k );
+      if ( k < 0 ) {
+        if ( om < 0 ) om += m_pi;
+        else          om -= m_pi;
+      }
+      return -om/k;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   int_type
-  isPointInTriangle( real_type const point[2],
-                     real_type const p1[2],
-                     real_type const p2[2],
-                     real_type const p3[2] ) {
+  isPointInTriangle(
+    real_type const point[2],
+    real_type const p1[2],
+    real_type const p2[2],
+    real_type const p3[2]
+  ) {
     int_type d = isCounterClockwise(p1, p2, p3);
     int_type a = isCounterClockwise(p1, p2, point);
     int_type b = isCounterClockwise(p2, p3, point);
@@ -534,10 +581,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  updateInterval( int_type      & lastInterval,
-                  real_type       x,
-                  real_type const Xvec[],
-                  int_type        npts ) {
+  updateInterval(
+    int_type      & lastInterval,
+    real_type       x,
+    real_type const Xvec[],
+    int_type        npts
+  ) {
 
     if ( npts <= 2 ) { lastInterval = 0; return; } // nothing to search
 
@@ -767,10 +816,12 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  BaseCurve::eval( real_type   s,
-                   real_type   offs,
-                   real_type & x,
-                   real_type & y ) const {
+  BaseCurve::eval(
+    real_type   s,
+    real_type   offs,
+    real_type & x,
+    real_type & y
+  ) const {
     real_type nx, ny;
     nor( s, nx, ny );
     eval( s, x, y );
@@ -779,10 +830,12 @@ namespace G2lib {
   }
 
   void
-  BaseCurve::eval_D( real_type   s,
-                     real_type   offs,
-                     real_type & x_D,
-                     real_type & y_D ) const {
+  BaseCurve::eval_D(
+    real_type   s,
+    real_type   offs,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
     real_type nx_D, ny_D;
     nor_D( s, nx_D, ny_D );
     eval_D( s, x_D, y_D );
@@ -791,10 +844,12 @@ namespace G2lib {
   }
 
   void
-  BaseCurve::eval_DD( real_type   s,
-                      real_type   offs,
-                      real_type & x_DD,
-                      real_type & y_DD ) const {
+  BaseCurve::eval_DD(
+    real_type   s,
+    real_type   offs,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
     real_type nx_DD, ny_DD;
     nor_D( s, nx_DD, ny_DD );
     eval_DD( s, x_DD, y_DD );
@@ -803,10 +858,12 @@ namespace G2lib {
   }
 
   void
-  BaseCurve::eval_DDD( real_type   s,
-                       real_type   offs,
-                       real_type & x_DDD,
-                       real_type & y_DDD ) const {
+  BaseCurve::eval_DDD(
+    real_type   s,
+    real_type   offs,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
     real_type nx_DDD, ny_DDD;
     nor_D( s, nx_DDD, ny_DDD );
     eval_DDD( s, x_DDD, y_DDD );

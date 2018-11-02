@@ -383,7 +383,7 @@ classdef ClothoidList < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plot_offs( self, npts, offs, varargin )
+    function plot_offs( self, offs, npts, varargin )
       if nargin > 3
         fmt1 = varargin{1} ;
       else
@@ -397,9 +397,9 @@ classdef ClothoidList < handle
       for k=1:self.numSegment()
         C = self.get(k);
         if mod(k,2) == 0
-          C.plot_offs( npts, offs, fmt1{:} );
+          C.plot_offs( offs, npts, fmt1{:} );
         else
-          C.plot_offs( npts, offs, fmt2{:} );
+          C.plot_offs( offs, npts, fmt2{:} );
         end
         hold on ;
       end

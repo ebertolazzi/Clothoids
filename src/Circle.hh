@@ -472,101 +472,34 @@ namespace G2lib {
                bool              swap_s_vals ) const;
 
     /*\
-     |                  _           _   _
-     |  _ __  _ __ ___ (_) ___  ___| |_(_) ___  _ __
-     | | '_ \| '__/ _ \| |/ _ \/ __| __| |/ _ \| '_ \
-     | | |_) | | | (_) | |  __/ (__| |_| | (_) | | | |
-     | | .__/|_|  \___// |\___|\___|\__|_|\___/|_| |_|
-     | |_|           |__/
+     |        _                     _   ____       _       _
+     |    ___| | ___  ___  ___  ___| |_|  _ \ ___ (_)_ __ | |_
+     |   / __| |/ _ \/ __|/ _ \/ __| __| |_) / _ \| | '_ \| __|
+     |  | (__| | (_) \__ \  __/\__ \ |_|  __/ (_) | | | | | |_
+     |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
+     |
     \*/
 
-    /*!
-     | \param  qx  x-coordinate of the point
-     | \param  qy  y-coordinate of the point
-     | \param  x   x-coordinate of the projected point on the curve
-     | \param  y   y-coordinate of the projected point on the curve
-     | \param  s   parameter on the curve of the projection
-     | \return 1  = unique orthogonal projection
-     |         0  = more than one projection (first returned)
-     |         -1 = projection line not othogonal to curve
-     |         -2 = projection line not othogonal andnot unique
-    \*/
     virtual
     int_type
-    projection( real_type   qx,
-                real_type   qy,
-                real_type & x,
-                real_type & y,
-                real_type & s ) const G2LIB_OVERRIDE;
-
-    /*!
-     | \param  qx   x-coordinate of the point
-     | \param  qy   y-coordinate of the point
-     | \param  offs offset of the curve
-     | \param  x    x-coordinate of the projected point on the curve
-     | \param  y    y-coordinate of the projected point on the curve
-     | \param  s    parameter on teh curve of the projection
-     | \return 1  = unique orthogonal projection
-     |         0  = more than one projection (first returned)
-     |         -1 = projection line not othogonal to curve
-     |         -2 = projection line not othogonal andnot unique
-    \*/
-    virtual
-    int_type // true if projection is unique and orthogonal
-    projection( real_type   qx,
-                real_type   qy,
-                real_type   offs,
-                real_type & x,
-                real_type & y,
-                real_type & s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
     closestPoint( real_type   qx,
                   real_type   qy,
                   real_type & x,
                   real_type & y,
-                  real_type & s ) const G2LIB_OVERRIDE;
+                  real_type & s,
+                  real_type & t,
+                  real_type & dst ) const G2LIB_OVERRIDE;
 
     virtual
-    real_type
+    int_type
     closestPoint( real_type   qx,
                   real_type   qy,
                   real_type   offs,
                   real_type & x,
                   real_type & y,
-                  real_type & s ) const G2LIB_OVERRIDE;
-
-    /*\
-     |    __ _           _ ____ _____
-     |   / _(_)_ __   __| / ___|_   _|
-     |  | |_| | '_ \ / _` \___ \ | |
-     |  |  _| | | | | (_| |___) || |
-     |  |_| |_|_| |_|\__,_|____/ |_|
-    \*/
-
-    /*! \brief Find parametric coordinate.
-     *
-     * We consider the line passing to the point \f$ P \f$
-     * with tangent \f$ T \f$ and a point \f$ Q \f$
-     * compute the coordinte \f$ s \f$ and \f$ t \f$ such that
-     * \f$ Q = P + T s + N t \f$
-     * where \f$ P + T s \f$ is the point on the line at coordinate
-     * \f$ s \f$ and \f$ N \f$ is the normal to the line obtained by
-     * rotating by `90` degree counterclockwise the tangent \f$ T \f$.
-     *
-     * \param x x-coordinate point
-     * \param y y-coordinate point
-     * \param s value \f$ s \f$
-     * \param t value \f$ t \f$
-     */
-
-    virtual
-    bool
-    findST( real_type   x,
-            real_type   y,
-            real_type & s,
-            real_type & t ) const G2LIB_OVERRIDE;
+                  real_type & s,
+                  real_type & t,
+                  real_type & dst ) const G2LIB_OVERRIDE;
 
     virtual
     void
