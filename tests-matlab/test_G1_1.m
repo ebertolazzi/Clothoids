@@ -32,7 +32,7 @@ fprintf('final point (%g,%g) final angle = %g\n', x1, y1, theta1);
 C = ClothoidCurve();
 C.build_G1( x0, y0, theta0, x1, y1, theta1 );
 
-fprintf('Computed parameters: k = %g, k'' = %g, L = %g\n', C.kappaBegin(), C.kappa_D(), C.length() );
+fprintf('Computed parameters: k = %g, k'' = %g, L = %g\n', C.kappaBegin(), C.dkappa(), C.length() );
 
 C.plot();
 axis equal

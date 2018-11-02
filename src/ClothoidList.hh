@@ -25,9 +25,12 @@
 #define CLOTHOID_LIST_HH
 
 #include "Clothoid.hh"
+#include "Biarc.hh"
 
 //! Clothoid computations routine
 namespace G2lib {
+
+  using std::vector;
 
   /*\
    |    ____ ____            _           ____
@@ -564,21 +567,83 @@ namespace G2lib {
    |
   \*/
   //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 connected)
-  class ClothoidList {
+  class ClothoidList : public BaseCurve {
 
-    std::vector<real_type>     s0;
-    std::vector<ClothoidCurve> clotoidList;
-    mutable int_type           last_idx;
+    typedef ClothoidCurve::T2D T2D;
+
+    vector<real_type>     s0;
+    vector<ClothoidCurve> clotoidList;
+    mutable int_type      last_idx;
+
+    mutable bool        aabb_done;
+    mutable AABBtree    aabb_tree;
+    mutable real_type   aabb_offs;
+    mutable real_type   aabb_max_angle;
+    mutable real_type   aabb_max_size;
+    mutable vector<T2D> aabb_tri;
 
   public:
 
-    ClothoidList() : last_idx(0) {}
-    ~ClothoidList();
+    using BaseCurve::thetaBegin;
+    using BaseCurve::thetaEnd;
 
-    ClothoidList( ClothoidList const & s ) { copy(s); }
+    using BaseCurve::xBegin;
+    using BaseCurve::yBegin;
+    using BaseCurve::xEnd;
+    using BaseCurve::yEnd;
+
+    using BaseCurve::tx_Begin;
+    using BaseCurve::ty_Begin;
+    using BaseCurve::tx_End;
+    using BaseCurve::ty_End;
+
+    using BaseCurve::nx_Begin;
+    using BaseCurve::ny_Begin;
+    using BaseCurve::nx_End;
+    using BaseCurve::ny_End;
+
+    using BaseCurve::X;
+    using BaseCurve::X_D;
+    using BaseCurve::X_DD;
+    using BaseCurve::X_DDD;
+
+    using BaseCurve::Y;
+    using BaseCurve::Y_D;
+    using BaseCurve::Y_DD;
+    using BaseCurve::Y_DDD;
+
+    using BaseCurve::evaluate;
+
+    using BaseCurve::eval;
+    using BaseCurve::eval_D;
+    using BaseCurve::eval_DD;
+    using BaseCurve::eval_DDD;
+
+    using BaseCurve::closestPoint;
+    using BaseCurve::distance;
+
+    ClothoidList()
+    : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , last_idx(0)
+    , aabb_done(false)
+    {}
+
+    virtual
+    ~ClothoidList() G2LIB_OVERRIDE;
+
+    ClothoidList( ClothoidList const & s )
+    : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , last_idx(0)
+    , aabb_done(false)
+    { copy(s); }
 
     ClothoidList const & operator = ( ClothoidList const & s )
     { copy(s); return *this; }
+
+    ClothoidList( LineSegment const & LS );
+    ClothoidList( CircleArc const & C );
+    ClothoidList( Biarc const & B );
+    ClothoidList( ClothoidCurve const & c );
 
     void
     init() {
@@ -623,96 +688,552 @@ namespace G2lib {
 
     bool findAtS( real_type s ) const;
 
-    real_type theta( real_type s ) const;
-    real_type theta_D( real_type s ) const;
-    real_type theta_DD( real_type s ) const;
-    real_type theta_DDD( real_type, int_type & ) const { return 0; }
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type totalLength() const {
-      if ( s0.empty() ) return 0;
-      return s0.back() - s0.front();
+    virtual
+    real_type
+    length() const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    length( real_type offs ) const G2LIB_OVERRIDE;
+
+    real_type
+    segment_length( int_type nseg ) const;
+
+    real_type
+    segment_length( int_type nseg, real_type offs ) const;
+
+    /*\
+     |  _    _   _____    _                _
+     | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+     | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+     | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+     |                               |___/
+    \*/
+
+    void
+    bbTriangles( real_type          offs,
+                 std::vector<T2D> & tvec,
+                 real_type          max_angle = m_pi/6, // 30 degree
+                 real_type          max_size  = 1e100 ) const;
+
+    void
+    bbTriangles( std::vector<T2D> & tvec,
+                 real_type          max_angle = m_pi/6, // 30 degree
+                 real_type          max_size  = 1e100 ) const {
+      bbTriangles( 0, tvec, max_angle, max_size );
     }
 
-    real_type X( real_type s ) const;
-    real_type Y( real_type s ) const;
+    /*\
+     |   _     _
+     |  | |__ | |__   _____  __
+     |  | '_ \| '_ \ / _ \ \/ /
+     |  | |_) | |_) | (_) >  <
+     |  |_.__/|_.__/ \___/_/\_\
+    \*/
 
-    real_type sBegin() const { return s0.front(); }
-    real_type sEnd()   const { return s0.back(); }
+    virtual
+    void
+    bbox( real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const G2LIB_OVERRIDE {
+      bbox( 0, xmin, ymin, xmax, ymax );
+    }
 
-    real_type xBegin() const { return clotoidList.front().xBegin(); }
-    real_type xEnd()   const { return clotoidList.back().xEnd(); }
+    virtual
+    void
+    bbox( real_type   offs,
+          real_type & xmin,
+          real_type & ymin,
+          real_type & xmax,
+          real_type & ymax ) const G2LIB_OVERRIDE;
 
-    real_type yBegin() const { return clotoidList.front().yBegin(); }
-    real_type yEnd()   const { return clotoidList.back().yEnd(); }
+    /*\
+     |   ____             _          _______           _
+     |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |
+     |  |  _ \ / _ \/ _` | | '_ \  / /|  _| | '_ \ / _` |
+     |  | |_) |  __/ (_| | | | | |/ / | |___| | | | (_| |
+     |  |____/ \___|\__, |_|_| |_/_/  |_____|_| |_|\__,_|
+     |              |___/
+    \*/
 
-    real_type thetaBegin() const { return clotoidList.front().thetaBegin(); }
-    real_type thetaEnd()   const { return clotoidList.back().thetaEnd(); }
+    virtual
+    real_type
+    thetaBegin() const G2LIB_OVERRIDE
+    { return clotoidList.front().thetaBegin(); }
 
-    real_type kappaBegin() const { return clotoidList.front().kappaBegin(); }
-    real_type kappaEnd()   const { return clotoidList.back().kappaEnd(); }
+    virtual
+    real_type
+    thetaEnd() const G2LIB_OVERRIDE
+    { return clotoidList.back().thetaEnd(); }
 
-    real_type length( int_type idx ) const { return s0[unsigned(idx+1)] - s0[unsigned(idx)]; }
+    virtual
+    real_type
+    xBegin() const G2LIB_OVERRIDE
+    { return clotoidList.front().xBegin(); }
 
-    real_type sBegin( int_type idx ) const { return s0[unsigned(idx)]; }
-    real_type sEnd  ( int_type idx ) const { return s0[unsigned(idx+1)]; }
+    virtual
+    real_type
+    yBegin() const G2LIB_OVERRIDE
+    { return clotoidList.front().yBegin(); }
 
-    real_type xBegin( int_type idx ) const { return clotoidList[unsigned(idx)].xBegin(); }
-    real_type xEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].xEnd(); }
+    virtual
+    real_type
+    xEnd() const G2LIB_OVERRIDE
+    { return clotoidList.back().xEnd(); }
 
-    real_type yBegin( int_type idx ) const { return clotoidList[unsigned(idx)].yBegin(); }
-    real_type yEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].yEnd(); }
+    virtual
+    real_type
+    yEnd() const G2LIB_OVERRIDE
+    { return clotoidList.back().yEnd(); }
 
-    real_type thetaBegin( int_type idx ) const { return clotoidList[unsigned(idx)].thetaBegin(); }
-    real_type thetaEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].thetaEnd(); }
+    virtual
+    real_type
+    xBegin( real_type offs ) const G2LIB_OVERRIDE
+    { return clotoidList.front().xBegin( offs ); }
 
-    real_type kappaBegin( int_type idx ) const { return clotoidList[unsigned(idx)].kappaBegin(); }
-    real_type kappaEnd  ( int_type idx ) const { return clotoidList[unsigned(idx)].kappaEnd(); }
+    virtual
+    real_type
+    yBegin( real_type offs ) const G2LIB_OVERRIDE
+    { return clotoidList.front().yBegin( offs ); }
 
+    virtual
+    real_type xEnd( real_type offs ) const G2LIB_OVERRIDE
+    { return clotoidList.back().xEnd( offs ); }
+
+    virtual
+    real_type
+    yEnd( real_type offs ) const G2LIB_OVERRIDE
+    { return clotoidList.back().yEnd( offs ); }
+
+    virtual
+    real_type tx_Begin() const G2LIB_OVERRIDE
+    { return clotoidList.front().tx_Begin(); }
+
+    virtual
+    real_type
+    ty_Begin() const G2LIB_OVERRIDE
+    { return clotoidList.front().ty_Begin(); }
+
+    virtual
+    real_type
+    tx_End() const G2LIB_OVERRIDE
+    { return clotoidList.back().tx_End(); }
+
+    virtual
+    real_type
+    ty_End() const G2LIB_OVERRIDE
+    { return clotoidList.back().ty_End(); }
+
+    virtual
+    real_type
+    nx_Begin() const G2LIB_OVERRIDE
+    { return clotoidList.front().nx_Begin(); }
+
+    virtual
+    real_type
+    ny_Begin() const G2LIB_OVERRIDE
+    { return clotoidList.front().ny_Begin(); }
+
+    virtual
+    real_type
+    nx_End() const G2LIB_OVERRIDE
+    { return clotoidList.back().nx_End(); }
+
+    virtual
+    real_type
+    ny_End() const G2LIB_OVERRIDE
+    { return clotoidList.back().ny_End(); }
+
+    /*\
+     |  _   _          _
+     | | |_| |__   ___| |_ __ _
+     | | __| '_ \ / _ \ __/ _` |
+     | | |_| | | |  __/ || (_| |
+     |  \__|_| |_|\___|\__\__,_|
+    \*/
+
+    virtual
+    real_type
+    theta( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    theta_D( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    theta_DD( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    theta_DDD( real_type s ) const G2LIB_OVERRIDE;
+
+    /*\
+     |  _____                   _   _   _
+     | |_   _|   __ _ _ __   __| | | \ | |
+     |   | |    / _` | '_ \ / _` | |  \| |
+     |   | |   | (_| | | | | (_| | | |\  |
+     |   |_|    \__,_|_| |_|\__,_| |_| \_|
+    \*/
+
+    virtual
+    real_type
+    tx( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    ty( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    tx_D( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    ty_D( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    tx_DD( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    ty_DD( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    tx_DDD( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    ty_DDD( real_type s ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    tg( real_type   s,
+        real_type & tg_x,
+        real_type & tg_y ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    tg_D( real_type   s,
+          real_type & tg_x_D,
+          real_type & tg_y_D ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    tg_DD( real_type   s,
+           real_type & tg_x_DD,
+           real_type & tg_y_DD ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    tg_DDD( real_type   s,
+            real_type & tg_x_DDD,
+            real_type & tg_y_DDD ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    evaluate( real_type   s,
+              real_type & th,
+              real_type & k,
+              real_type & x,
+              real_type & y ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    evaluate( real_type   s,
+              real_type   offs,
+              real_type & th,
+              real_type & k,
+              real_type & x,
+              real_type & y ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    X( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    X_D( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y_D( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    X_DD( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y_DD( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    X_DDD( real_type s ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y_DDD( real_type s ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
     void
     eval( real_type   s,
-          real_type & theta,
-          real_type & kappa,
           real_type & x,
-          real_type & y ) const;
+          real_type & y ) const G2LIB_OVERRIDE;
 
-    void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const;
+    virtual
     void
     eval_D( real_type   s,
             real_type & x_D,
-            real_type & y_D ) const;
+            real_type & y_D ) const G2LIB_OVERRIDE;
+
+    virtual
     void
     eval_DD( real_type   s,
              real_type & x_DD,
-             real_type & y_DD ) const;
+             real_type & y_DD ) const G2LIB_OVERRIDE;
+
+    virtual
     void
     eval_DDD( real_type   s,
               real_type & x_DDD,
-              real_type & y_DDD ) const;
+              real_type & y_DDD ) const G2LIB_OVERRIDE;
 
-    // offset curve
+    /*\
+     |         __  __          _
+     |   ___  / _|/ _|___  ___| |_
+     |  / _ \| |_| |_/ __|/ _ \ __|
+     | | (_) |  _|  _\__ \  __/ |_
+     |  \___/|_| |_| |___/\___|\__|
+    \*/
+
+    virtual
+    real_type
+    X( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    X_D( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y_D( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    X_DD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y_DD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    X_DDD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    virtual
+    real_type
+    Y_DDD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
     void
     eval( real_type   s,
           real_type   offs,
           real_type & x,
-          real_type & y ) const;
+          real_type & y ) const G2LIB_OVERRIDE;
+
+    virtual
     void
     eval_D( real_type   s,
             real_type   offs,
             real_type & x_D,
-            real_type & y_D ) const;
+            real_type & y_D ) const G2LIB_OVERRIDE;
+
+    virtual
     void
     eval_DD( real_type   s,
              real_type   offs,
              real_type & x_DD,
-             real_type & y_DD ) const;
+             real_type & y_DD ) const G2LIB_OVERRIDE;
+
+    virtual
     void
     eval_DDD( real_type   s,
               real_type   offs,
               real_type & x_DDD,
-              real_type & y_DDD ) const;
+              real_type & y_DDD ) const G2LIB_OVERRIDE;
+
+    /*\
+     |  _                        __
+     | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___
+     | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \
+     | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |
+     |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
+    \*/
+
+    virtual
+    void
+    translate( real_type tx, real_type ty ) G2LIB_OVERRIDE;
+
+    virtual
+    void
+    rotate( real_type angle, real_type cx, real_type cy ) G2LIB_OVERRIDE;
+
+    virtual
+    void
+    scale( real_type sc ) G2LIB_OVERRIDE;
+
+    virtual
+    void
+    reverse() G2LIB_OVERRIDE;
+
+    virtual
+    void
+    changeOrigin( real_type newx0, real_type newy0 ) G2LIB_OVERRIDE;
+
+    virtual
+    void
+    trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE;
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
+
+    virtual
+    bool
+    collision( BaseCurve const & ) const G2LIB_OVERRIDE;
+
+    bool
+    collision( ClothoidList const & C ) const;
+
+    virtual
+    bool
+    collision( real_type         offs,
+               BaseCurve const & obj,
+               real_type         offs_obj ) const G2LIB_OVERRIDE;
+
+    bool
+    collision( real_type            offs,
+               ClothoidList const & CL,
+               real_type            offs_C ) const;
+
+
+    virtual
+    void
+    intersect( BaseCurve const & obj,
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_OVERRIDE;
+
+    void
+    intersect( ClothoidList const & CL,
+               IntersectList      & ilist,
+               bool                 swap_s_vals ) const;
+
+    virtual
+    void
+    intersect( real_type         offs,
+               BaseCurve const & obj,
+               real_type         offs_obj,
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const G2LIB_OVERRIDE;
+
+    void
+    intersect( real_type            offs,
+               ClothoidList const & CL,
+               real_type            offs_obj,
+               IntersectList      & ilist,
+               bool                 swap_s_vals ) const;
+    /*\
+     |      _ _     _
+     |   __| (_)___| |_ __ _ _ __   ___ ___
+     |  / _` | / __| __/ _` | '_ \ / __/ _ \
+     | | (_| | \__ \ || (_| | | | | (_|  __/
+     |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+    \*/
+
+    /*!
+     | \param  qx  x-coordinate of the point
+     | \param  qy  y-coordinate of the point
+     | \param  x   x-coordinate of the projected point on the curve
+     | \param  y   y-coordinate of the projected point on the curve
+     | \param  s   parameter on the curve of the projection
+     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     | \param  dst distance point projected point
+     | \return 1 = point is projected orthogonal
+     |         0 = more than one projection (first returned)
+     |        -1 = minimum point is not othogonal projection to curve
+    \*/
+    virtual
+    int_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s,
+                  real_type & t,
+                  real_type & dst ) const G2LIB_OVERRIDE;
+
+    /*!
+     | \param  qx  x-coordinate of the point
+     | \param  qy  y-coordinate of the point
+     | \param  offs offset of the curve
+     | \param  x   x-coordinate of the projected point on the curve
+     | \param  y   y-coordinate of the projected point on the curve
+     | \param  s   parameter on the curve of the projection
+     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     | \param  dst distance point projected point
+     | \return 1 = point is projected orthogonal
+     |         0 = more than one projection (first returned)
+     |        -1 = minimum point is not othogonal projection to curve
+    \*/
+    virtual
+    int_type // true if projection is unique and orthogonal
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type   offs,
+                  real_type & x,
+                  real_type & y,
+                  real_type & s,
+                  real_type & t,
+                  real_type & dst ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    info( ostream_type & stream ) const G2LIB_OVERRIDE
+    { stream << "ClothoidList\n" << *this << '\n'; }
+
+    friend
+    ostream_type &
+    operator << ( ostream_type & stream, ClothoidList const & CL );
 
     void
     getSTK( real_type s[],
@@ -728,21 +1249,6 @@ namespace G2lib {
     void
     getDeltaKappa( real_type deltaKappa[] ) const;
 
-    real_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & X,
-                  real_type & Y,
-                  real_type & S ) const;
-
-    real_type
-    distance( real_type qx, real_type qy, real_type & S ) const
-    { real_type X, Y; return closestPoint( qx, qy, X, Y, S ); }
-
-    real_type
-    distance( real_type qx, real_type qy ) const
-    { real_type S; return distance( qx, qy, S ); }
-
     /*!
      | \brief Find parametric coordinate.
      |
@@ -755,10 +1261,10 @@ namespace G2lib {
      |
     \*/
     int_type
-    findST( real_type   x,
-            real_type   y,
-            real_type & s,
-            real_type & t ) const;
+    findST1( real_type   x,
+             real_type   y,
+             real_type & s,
+             real_type & t ) const;
 
     /*!
      | \brief Find parametric coordinate.
@@ -773,18 +1279,29 @@ namespace G2lib {
      |                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     \*/
     int_type
-    findST( int_type    ibegin,
-            int_type    iend,
-            real_type   x,
-            real_type   y,
-            real_type & s,
-            real_type & t ) const;
+    findST1( int_type    ibegin,
+             int_type    iend,
+             real_type   x,
+             real_type   y,
+             real_type & s,
+             real_type & t ) const;
 
-    void rotate( real_type angle, real_type cx, real_type cy );
-    void translate( real_type tx, real_type ty );
-    void changeOrigin( real_type newx0, real_type newy0 );
-    void scale( real_type sfactor );
-    void reverse();
+#if 0
+
+    real_type
+    closestPoint( real_type   qx,
+                  real_type   qy,
+                  real_type & X,
+                  real_type & Y,
+                  real_type & S ) const;
+
+    real_type
+    distance( real_type qx, real_type qy, real_type & S ) const
+    { real_type X, Y; return closestPoint( qx, qy, X, Y, S ); }
+
+    real_type
+    distance( real_type qx, real_type qy ) const
+    { real_type S; return distance( qx, qy, S ); }
 
     /*\
      |  _     _                      _
@@ -804,13 +1321,13 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( real_type                offs,
-               ClothoidCurve const &    c,
-               real_type                c_offs,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const;
+    intersect( real_type             offs,
+               ClothoidCurve const & c,
+               real_type             c_offs,
+               vector<real_type>   & s1,
+               vector<real_type>   & s2,
+               int_type              max_iter,
+               real_type             tolerance ) const;
 
     /*! \brief intersect two clothoid curve
      *
@@ -821,11 +1338,11 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( ClothoidCurve const    & c,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
+    intersect( ClothoidCurve const & c,
+               vector<real_type>   & s1,
+               vector<real_type>   & s2,
+               int_type              max_iter,
+               real_type             tolerance ) const {
       intersect( 0, c, 0, s1, s2, max_iter, tolerance );
     }
 
@@ -838,11 +1355,11 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( CircleArc const        & c_in,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
+    intersect( CircleArc const   & c_in,
+               vector<real_type> & s1,
+               vector<real_type> & s2,
+               int_type            max_iter,
+               real_type           tolerance ) const {
       ClothoidCurve c(c_in);
       intersect( 0, c, 0, s1, s2, max_iter, tolerance );
     }
@@ -858,13 +1375,13 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( real_type                offs,
-               CircleArc const        & c_in,
-               real_type                c_offs,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
+    intersect( real_type           offs,
+               CircleArc const   & c_in,
+               real_type           c_offs,
+               vector<real_type> & s1,
+               vector<real_type> & s2,
+               int_type            max_iter,
+               real_type           tolerance ) const {
       ClothoidCurve c(c_in);
       intersect( offs, c, c_offs, s1, s2, max_iter, tolerance );
     }
@@ -878,11 +1395,11 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( LineSegment const      & c_in,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
+    intersect( LineSegment const & c_in,
+               vector<real_type> & s1,
+               vector<real_type> & s2,
+               int_type            max_iter,
+               real_type           tolerance ) const {
       ClothoidCurve c(c_in);
       intersect( 0, c, 0, s1, s2, max_iter, tolerance );
     }
@@ -898,13 +1415,13 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( real_type                offs,
-               LineSegment const      & c_in,
-               real_type                c_offs,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
+    intersect( real_type           offs,
+               LineSegment const & c_in,
+               real_type           c_offs,
+               vector<real_type> & s1,
+               vector<real_type> & s2,
+               int_type            max_iter,
+               real_type           tolerance ) const {
       ClothoidCurve c(c_in);
       intersect( offs, c, c_offs, s1, s2, max_iter, tolerance );
     }
@@ -918,11 +1435,11 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( ClothoidList const     & CL,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const {
+    intersect( ClothoidList const & CL,
+               vector<real_type>  & s1,
+               vector<real_type>  & s2,
+               int_type             max_iter,
+               real_type            tolerance ) const {
       intersect( 0, CL, 0, s1, s2, max_iter, tolerance );
     }
 
@@ -937,13 +1454,15 @@ namespace G2lib {
      * \param tolerance admitted tolerance
      */
     void
-    intersect( real_type                offs,
-               ClothoidList const &     CL,
-               real_type                c_offs,
-               std::vector<real_type> & s1,
-               std::vector<real_type> & s2,
-               int_type                 max_iter,
-               real_type                tolerance ) const;
+    intersect( real_type            offs,
+               ClothoidList const & CL,
+               real_type            c_offs,
+               vector<real_type>  & s1,
+               vector<real_type>  & s2,
+               int_type             max_iter,
+               real_type            tolerance ) const;
+
+#endif
 
     /*! \brief Save Clothoid list to a stream
      *
@@ -976,15 +1495,15 @@ namespace G2lib {
 
   private:
 
-    std::vector<real_type> x;
-    std::vector<real_type> y;
-    TargetType             tt;
-    real_type              theta_I;
-    real_type              theta_F;
-    int_type               npts;
+    vector<real_type> x;
+    vector<real_type> y;
+    TargetType        tt;
+    real_type         theta_I;
+    real_type         theta_F;
+    int_type          npts;
 
     // work vector
-    mutable std::vector<real_type> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2;
+    mutable vector<real_type> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2;
 
     real_type
     diff2pi( real_type in ) const {

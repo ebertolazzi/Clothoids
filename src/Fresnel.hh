@@ -146,23 +146,44 @@ namespace G2lib {
 
     real_type X( real_type s ) const;
     real_type Y( real_type s ) const;
-    real_type X( real_type s, real_type t ) const;
-    real_type Y( real_type s, real_type t ) const;
-
     real_type X_D( real_type s ) const;
     real_type Y_D( real_type s ) const;
-    real_type X_D( real_type s, real_type t ) const;
-    real_type Y_D( real_type s, real_type t ) const;
-
     real_type X_DD( real_type s ) const;
     real_type Y_DD( real_type s ) const;
-    real_type X_DD( real_type s, real_type t ) const;
-    real_type Y_DD( real_type s, real_type t ) const;
-
     real_type X_DDD( real_type s ) const;
     real_type Y_DDD( real_type s ) const;
-    real_type X_DDD( real_type s, real_type t ) const;
-    real_type Y_DDD( real_type s, real_type t ) const;
+
+    real_type
+    X( real_type s, real_type t ) const
+    { return X(s) + t * nor_x(s); }
+
+    real_type
+    Y( real_type s, real_type t ) const
+    { return Y(s) + t * nor_y(s); }
+
+    real_type
+    X_D( real_type s, real_type t ) const
+    { return X_D(s) + t * nor_x_D(s); }
+
+    real_type
+    Y_D( real_type s, real_type t ) const
+    { return Y_D(s) + t * nor_y_D(s); }
+
+    real_type
+    X_DD( real_type s, real_type t ) const
+    { return X_DD(s) + t * nor_x_DD(s); }
+
+    real_type
+    Y_DD( real_type s, real_type t ) const
+    { return Y_DD(s) + t * nor_y_DD(s); }
+
+    real_type
+    X_DDD( real_type s, real_type t ) const
+    { return X_DDD(s) + t * nor_x_DDD(s); }
+
+    real_type
+    Y_DDD( real_type s, real_type t ) const
+    { return Y_DDD(s) + t * nor_y_DDD(s); }
 
     real_type tg0_x() const { return cos(theta0); }
     real_type tg0_y() const { return sin(theta0); }
@@ -193,9 +214,6 @@ namespace G2lib {
 
     real_type nor_x_DDD( real_type s ) const { return -tg_y_DDD(s); }
     real_type nor_y_DDD( real_type s ) const { return tg_x_DDD(s); }
-
-    void XY( real_type s, real_type & x, real_type & y ) const;
-    void XY( real_type s, real_type t, real_type & x, real_type & y ) const;
 
     void tg( real_type s, real_type & tx, real_type & ty ) const;
     void tg_D( real_type s, real_type & tx, real_type & ty ) const;

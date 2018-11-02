@@ -343,8 +343,8 @@ do_collision( int nlhs, mxArray       *plhs[],
   else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
   else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
   else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+  else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
   //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
-  //else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
   else {
     MEX_ASSERT( false, CMD "'type '" << "' unsupported" );
   }
@@ -387,8 +387,8 @@ do_intersect( int nlhs, mxArray       *plhs[],
   else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
   else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
   else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
+  else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
   //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
-  //else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
   else {
     MEX_ASSERT( false, CMD "'type '" << "' unsupported" );
   }
@@ -866,6 +866,7 @@ do_evaluate( int nlhs, mxArray       *plhs[],
     #undef CMD
   }
 }
+
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 static
@@ -974,6 +975,84 @@ do_theta_DDD( int nlhs, mxArray       *plhs[],
 
 static
 void
+do_kappa( int nlhs, mxArray       *plhs[],
+          int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('kappa',OBJ,s): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  mwSize size;
+  real_type const * s;
+  s = getVectorPointer( arg_in_2, size,
+                        CMD "`s` expected to be a real vector" );
+
+  real_type *kappa = createMatrixValue( arg_out_0, 1, size );
+
+  for ( mwSize i = 0; i < size; ++i )
+    *kappa++ = ptr->kappa( *s++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_kappa_D( int nlhs, mxArray       *plhs[],
+            int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('kappa_D',OBJ,s): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  mwSize size;
+  real_type const * s;
+  s = getVectorPointer( arg_in_2, size,
+                        CMD "`s` expected to be a real vector" );
+
+  real_type *kappa_D = createMatrixValue( arg_out_0, 1, size );
+
+  for ( mwSize i = 0; i < size; ++i )
+    *kappa_D++ = ptr->kappa_D( *s++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_kappa_DD( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('kappa_DD',OBJ,s): "
+  MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  mwSize size;
+  real_type const * s;
+  s = getVectorPointer( arg_in_2, size,
+                        CMD "`s` expected to be a real vector" );
+
+  real_type *kappa_DD = createMatrixValue( arg_out_0, 1, size );
+
+  for ( mwSize i = 0; i < size; ++i )
+    *kappa_DD++ = ptr->kappa_DD( *s++ );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
 do_xy_begin( int nlhs, mxArray       *plhs[],
              int nrhs, mxArray const *prhs[] ) {
 
@@ -1039,6 +1118,24 @@ do_theta_begin( int nlhs, mxArray       *plhs[],
   MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
   setScalarValue( arg_out_0, ptr->thetaBegin() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_kappa_begin( int nlhs, mxArray       *plhs[],
+                int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('kappaBegin',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->kappaBegin() );
 
   #undef CMD
 }
@@ -1116,6 +1213,26 @@ do_theta_end( int nlhs, mxArray       *plhs[],
   #undef CMD
 }
 
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_kappa_end( int nlhs, mxArray       *plhs[],
+              int nrhs, mxArray const *prhs[] ) {
+
+  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+
+  #define CMD CMD_BASE "('kappaEnd',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+  setScalarValue( arg_out_0, ptr->kappaEnd() );
+
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 #define CMD_VIRTUAL_LIST \
 CMD_LENGTH,              \
 CMD_DELETE,              \
@@ -1142,14 +1259,19 @@ CMD_THETA,               \
 CMD_THETA_D,             \
 CMD_THETA_DD,            \
 CMD_THETA_DDD,           \
+CMD_KAPPA,               \
+CMD_KAPPA_D,             \
+CMD_KAPPA_DD,            \
 CMD_XY_BEGIN,            \
 CMD_X_BEGIN,             \
 CMD_Y_BEGIN,             \
 CMD_THETA_BEGIN,         \
+CMD_KAPPA_BEGIN,         \
 CMD_XY_END,              \
 CMD_X_END,               \
 CMD_Y_END,               \
-CMD_THETA_END
+CMD_THETA_END,           \
+CMD_KAPPA_END
 
 #define CMD_MAP_LIST                \
 {"length",CMD_LENGTH},              \
@@ -1177,14 +1299,19 @@ CMD_THETA_END
 {"theta_D",CMD_THETA_D},            \
 {"theta_DD",CMD_THETA_DD},          \
 {"theta_DDD",CMD_THETA_DDD},        \
+{"kappa",CMD_KAPPA},                \
+{"kappa_D",CMD_KAPPA_D},            \
+{"kappa_DD",CMD_KAPPA_DD},          \
 {"xyBegin",CMD_XY_BEGIN},           \
 {"xBegin",CMD_X_BEGIN},             \
 {"yBegin",CMD_Y_BEGIN},             \
 {"thetaBegin",CMD_THETA_BEGIN},     \
+{"kappaBegin",CMD_KAPPA_BEGIN},     \
 {"xyEnd",CMD_XY_END},               \
 {"xEnd",CMD_X_END},                 \
 {"yEnd",CMD_Y_END},                 \
-{"thetaEnd",CMD_THETA_END}
+{"thetaEnd",CMD_THETA_END},         \
+{"kappaEnd",CMD_KAPPA_END}
 
 #define CMD_CASE_LIST                         \
 case CMD_LENGTH:                              \
@@ -1262,6 +1389,15 @@ case CMD_THETA_DD:                            \
 case CMD_THETA_DDD:                           \
   do_theta_DDD( nlhs, plhs, nrhs, prhs );     \
   break;                                      \
+case CMD_KAPPA:                               \
+  do_kappa( nlhs, plhs, nrhs, prhs );         \
+  break;                                      \
+case CMD_KAPPA_D:                             \
+  do_kappa_D( nlhs, plhs, nrhs, prhs );       \
+  break;                                      \
+case CMD_KAPPA_DD:                            \
+  do_kappa_DD( nlhs, plhs, nrhs, prhs );      \
+  break;                                      \
 case CMD_XY_BEGIN:                            \
   do_xy_begin( nlhs, plhs, nrhs, prhs );      \
   break;                                      \
@@ -1274,6 +1410,9 @@ case CMD_Y_BEGIN:                             \
 case CMD_THETA_BEGIN:                         \
   do_theta_begin( nlhs, plhs, nrhs, prhs );   \
   break;                                      \
+case CMD_KAPPA_BEGIN:                         \
+  do_kappa_begin( nlhs, plhs, nrhs, prhs );   \
+  break;                                      \
 case CMD_XY_END:                              \
   do_xy_end( nlhs, plhs, nrhs, prhs );        \
   break;                                      \
@@ -1285,4 +1424,7 @@ case CMD_Y_END:                               \
   break;                                      \
 case CMD_THETA_END:                           \
   do_theta_end( nlhs, plhs, nrhs, prhs );     \
+  break;                                      \
+case CMD_KAPPA_END:                           \
+  do_kappa_end( nlhs, plhs, nrhs, prhs );     \
   break

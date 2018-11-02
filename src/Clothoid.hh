@@ -434,43 +434,6 @@ namespace G2lib {
     Pinfinity( real_type & x, real_type & y, bool plus = true ) const
     { CD.Pinfinity( x, y, plus ); }
 
-    /*!
-     | \brief get clothoid curvature at curvilinear cooordinate `s`
-     |
-     | \param  s curvilinear cooordinate
-     | \return curvature at curvilinear cooordinate `s`
-    \*/
-    real_type
-    kappa( real_type s ) const
-    { return CD.kappa(s); }
-
-    /*!
-     | \brief get clothoid curvature derivative at curvilinear cooordinate `s`
-     |
-     | \return curvature derivative (radiant/s) at curvilinear cooordinate `s`
-    \*/
-    real_type
-    kappa_D( real_type ) const
-    { return CD.dk; }
-
-    /*!
-     | \brief get clothoid curvature second derivative at curvilinear cooordinate `s`
-     |
-     | \return curvature second derivative (radiant/s^2) at curvilinear cooordinate `s`
-    \*/
-    real_type
-    kappa_DD( real_type ) const
-    { return 0; }
-
-    /*!
-     | \brief get clothoid curvature third derivative at curvilinear cooordinate `s`
-     |
-     | \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
-    \*/
-    real_type
-    kappa_DDD( real_type ) const
-    { return 0; }
-
     real_type
     dkappa() const
     { return CD.dk; }
@@ -652,9 +615,6 @@ namespace G2lib {
       G2LIB_ASSERT( false, "Offset length not available for Clothoids" );
       return 0;
     }
-
-    real_type kappaBegin() const { return CD.kappa0; }
-    real_type kappaEnd()   const { return CD.kappa(L); }
 
     virtual
     real_type

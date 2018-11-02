@@ -19,7 +19,7 @@ classdef CurveBase < handle
       obj = self.objectHandle ;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function copy( C )
+    function copy( self, C )
       feval( self.mexName, 'copy', self.objectHandle, C.obj_handle() );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -94,6 +94,18 @@ classdef CurveBase < handle
       th = eval( self.mexName, 'theta_DDD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th = kappa(self, s)
+      th = eval( self.mexName, 'kappa', self.objectHandle, s );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th = kappa_D(self, s)
+      th = eval( self.mexName, 'kappa_D', self.objectHandle, s );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th = kappa_DD(self, s)
+      th = eval( self.mexName, 'kappa_DD', self.objectHandle, s );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y ] = xyBegin( self )
       [ x, y ] = feval( self.mexName, 'xyBegin', self.objectHandle );
     end
@@ -110,6 +122,10 @@ classdef CurveBase < handle
       th0 = feval( self.mexName, 'thetaBegin', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th0 = kappaBegin( self )
+      th0 = feval( self.mexName, 'kappaBegin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y ] = xyEnd( self )
       [ x, y ] = feval( self.mexName, 'xyEnd', self.objectHandle );
     end
@@ -124,6 +140,10 @@ classdef CurveBase < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th1 = thetaEnd( self )
       th1 = feval( self.mexName, 'thetaEnd', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function th1 = kappaEnd( self )
+      th1 = feval( self.mexName, 'kappaEnd', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = length( self, varargin )

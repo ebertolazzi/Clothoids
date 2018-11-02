@@ -385,62 +385,6 @@ namespace G2lib {
 
   static
   void
-  do_k_begin( int nlhs, mxArray       *plhs[],
-              int nrhs, mxArray const *prhs[] ) {
-
-    #define CMD "ClothoidCurveMexWrapper('kappaBegin',OBJ): "
-
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
-
-    ClothoidCurve * ptr = DATA_GET(arg_in_1);
-
-    setScalarValue(arg_out_0, ptr->kappaBegin());
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_k_end( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
-
-    #define CMD "ClothoidCurveMexWrapper('kappaEnd',OBJ): "
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
-
-    ClothoidCurve * ptr = DATA_GET(arg_in_1);
-
-    setScalarValue(arg_out_0, ptr->kappaEnd());
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_k_D( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
-
-    #define CMD "ClothoidCurveMexWrapper('kappa_D',OBJ): "
-
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
-
-    ClothoidCurve * ptr = DATA_GET(arg_in_1);
-
-    setScalarValue(arg_out_0, ptr->dkappa());
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
   do_change_curvilinear_origin( int nlhs, mxArray       *plhs[],
                                 int nrhs, mxArray const *prhs[] ) {
 
@@ -662,6 +606,23 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  static
+  void
+  do_dkappa( int nlhs, mxArray       *plhs[],
+             int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidCurveMexWrapper('dkappa',OBJ): "
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+    ClothoidCurve * ptr = DATA_GET(arg_in_1);
+    setScalarValue( arg_out_0, ptr->dkappa() );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   #define CMD_BASE "ClothoidCurveMexWrapper"
   #define G2LIB_CLASS ClothoidCurve
   #include "mex_common.hxx"
@@ -676,10 +637,8 @@ namespace G2lib {
     CMD_BUILD_G1,
     CMD_BUILD_G1_D,
     CMD_BUILD_FORWARD,
-    CMD_KAPPA_BEGIN,
-    CMD_KAPPA_END,
-    CMD_KAPPA_D,
     CMD_CHANGE_CURVILINEAR_ORIGIN,
+    CMD_DKAPPA,
     CMD_INFINITY,
     CMD_DISTANCE_BY_SAMPLE,
     CMD_CLOSEST_BY_SAMPLE,
@@ -695,11 +654,9 @@ namespace G2lib {
     {"build",CMD_BUILD},
     {"build_G1",CMD_BUILD_G1},
     {"build_G1_D",CMD_BUILD_G1_D},
-    {"kappaBegin",CMD_KAPPA_BEGIN},
-    {"kappaEnd",CMD_KAPPA_END},
-    {"kappa_D",CMD_KAPPA_D},
     {"build_forward",CMD_BUILD_FORWARD},
     {"changeCurvilinearOrigin",CMD_CHANGE_CURVILINEAR_ORIGIN},
+    {"dkappa",CMD_DKAPPA},
     {"infinity",CMD_INFINITY},
     {"distanceBySample",CMD_DISTANCE_BY_SAMPLE},
     {"closestPointBySample",CMD_CLOSEST_BY_SAMPLE},
@@ -740,17 +697,11 @@ namespace G2lib {
       case CMD_BUILD_FORWARD:
         do_build_forward( nlhs, plhs, nrhs, prhs );
         break;
-      case CMD_KAPPA_BEGIN:
-        do_k_begin( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_KAPPA_END:
-        do_k_end( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_KAPPA_D:
-        do_k_D( nlhs, plhs, nrhs, prhs );
-        break;
       case CMD_CHANGE_CURVILINEAR_ORIGIN:
         do_change_curvilinear_origin( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_DKAPPA:
+        do_dkappa( nlhs, plhs, nrhs, prhs );
         break;
       case CMD_INFINITY:
         do_infinity( nlhs, plhs, nrhs, prhs );

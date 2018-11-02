@@ -27,8 +27,6 @@ bb = 0.5-2*aa;
 
 figure('Position',[ 1 1 800 800]);
 
-be = Biarc();
-
 for kk=1:4
 
   switch(kk)
@@ -47,7 +45,9 @@ for kk=1:4
 
   x         = (-10 + 20 * rand(N,1)).';
   y         = (-5  + 20 * rand(N,1)).';
-  [s,t]     = S.find_coord(x,y);
+  
+  [s,t]     = S.find_coord(x,y)
+
   [xx,yy]   = S.eval(s,t);
   [xxx,yyy] = S.eval(s);
   

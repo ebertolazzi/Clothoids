@@ -456,7 +456,7 @@ namespace G2lib {
 
     bool
     collision( real_type         offs,
-               CircleArc const & obj,
+               CircleArc const & C,
                real_type         offs_obj ) const;
 
     void
@@ -466,7 +466,7 @@ namespace G2lib {
 
     void
     intersect( real_type         offs,
-               CircleArc const & obj,
+               CircleArc const & C,
                real_type         offs_obj,
                IntersectList   & ilist,
                bool              swap_s_vals ) const;
@@ -510,9 +510,9 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type sinTheta0()  const { return sin(theta0); }
-    real_type cosTheta0()  const { return cos(theta0); }
-    real_type kappa()      const { return k; }
+    real_type sinTheta0() const { return sin(theta0); }
+    real_type cosTheta0() const { return cos(theta0); }
+    real_type curvature() const { return k; }
 
     // return the length of the arc that can approximated
     // by a line segment

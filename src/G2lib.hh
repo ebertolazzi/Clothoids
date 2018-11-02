@@ -196,44 +196,6 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  inline
-  void
-  projectPointOnLine(
-    real_type   x0,
-    real_type   y0,
-    real_type   c0, //!< cos(theta0)
-    real_type   s0, //!< sin(theta0)
-    real_type   x,
-    real_type   y,
-    real_type & s,
-    real_type & t
-  ) {
-    real_type dx = x - x0;
-    real_type dy = y - y0;
-    s = c0 * dx + s0 * dy;
-    t = s0 * dx - c0 * dy;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  inline
-  void
-  projectPointOnLine(
-    real_type   x0,
-    real_type   y0,
-    real_type   c0, //!< cos(theta0)
-    real_type   s0, //!< sin(theta0)
-    real_type   x,
-    real_type   y,
-    real_type & s
-  ) {
-    real_type dx = x - x0;
-    real_type dy = y - y0;
-    s = c0 * dx + s0 * dy;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   real_type
   projectPointOnCircle( real_type x0,
                         real_type y0,
@@ -500,6 +462,9 @@ namespace G2lib {
     virtual real_type thetaBegin() const;
     virtual real_type thetaEnd() const;
 
+    virtual real_type kappaBegin() const;
+    virtual real_type kappaEnd() const;
+
     virtual real_type xBegin() const;
     virtual real_type yBegin() const;
     virtual real_type xEnd() const;
@@ -543,6 +508,27 @@ namespace G2lib {
     virtual
     real_type
     theta_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+
+    /*\
+     |   _
+     |  | | ____ _ _ __  _ __   __ _
+     |  | |/ / _` | '_ \| '_ \ / _` |
+     |  |   < (_| | |_) | |_) | (_| |
+     |  |_|\_\__,_| .__/| .__/ \__,_|
+     |            |_|   |_|
+    \*/
+
+    real_type
+    kappa( real_type s ) const
+    { return theta_D(s); }
+
+    real_type
+    kappa_D( real_type s ) const
+    { return theta_DD(s); }
+
+    real_type
+    kappa_DD( real_type s ) const
+    { return theta_DDD(s); }
 
     /*\
      |  _____                   _   _   _
@@ -989,7 +975,7 @@ namespace G2lib {
             real_type & s,
             real_type & t ) const {
       real_type X, Y, dst;
-      int_type icode = closestPoint( x, y, X, Y, s, t, dst) ;
+      int_type icode = closestPoint( x, y, X, Y, s, t, dst ) ;
       return icode >= 0;
     }
 

@@ -21,6 +21,8 @@
 #include "Circle.hh"
 #include "Biarc.hh"
 #include "Clothoid.hh"
+#include "ClothoidList.hh"
+#include "PolyLine.hh"
 
 // Microsoft visual studio Workaround
 #ifdef max
@@ -473,8 +475,9 @@ namespace G2lib {
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj));
-        ok = C.collision( *this );
+        CircleArc C1(*this);
+        CircleArc const & C2 = *static_cast<CircleArc const*>(&obj);
+        ok = C1.collision( C2 );
       }
       break;
     case G2LIB_BIARC:
@@ -485,13 +488,25 @@ namespace G2lib {
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
-        ok = C.collision( *this );
+        ClothoidCurve C1(*this); // promote
+        ClothoidCurve const & C2 = *static_cast<ClothoidCurve const*>(&obj);
+        ok = C1.collision( C2 );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList C1(*this); // promote
+        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
+        ok = C1.collision( C2 );
       }
       break;
     case G2LIB_POLYLINE:
-    case G2LIB_CLOTHOID_LIST:
+      {
+        //PolyLine PL(*static_cast<PolyLine const*>(&obj));
+        //ok = PL.collision( *this );
+      }
       G2LIB_ASSERT( false, "LineSegment::collision!" );
+      //break;
     }
     return ok;
   }
@@ -514,8 +529,9 @@ namespace G2lib {
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj));
-        ok = C.collision( obj_offs, *this, offs );
+        CircleArc C1(*this);
+        CircleArc const & C2 = *static_cast<CircleArc const*>(&obj);
+        ok = C1.collision( offs, C2, obj_offs );
       }
       break;
     case G2LIB_BIARC:
@@ -526,13 +542,25 @@ namespace G2lib {
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
-        ok = C.collision( obj_offs, *this, offs );
+        ClothoidCurve C1(*this);
+        ClothoidCurve const & C2 = *static_cast<ClothoidCurve const*>(&obj);
+        ok = C1.collision( offs, C2, obj_offs );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList C1(*this);
+        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
+        ok = C1.collision( obj_offs, C2, offs );
       }
       break;
     case G2LIB_POLYLINE:
-    case G2LIB_CLOTHOID_LIST:
+      {
+        //PolyLine PL(*static_cast<PolyLine const*>(&obj));
+        //ok = PL.collision( obj_offs, *this, offs );
+      }
       G2LIB_ASSERT( false, "LineSegment::collision!" );
+      //break;
     }
     return ok;
   }
@@ -560,8 +588,9 @@ namespace G2lib {
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj));
-        C.intersect( *this, ilist, !swap_s_vals );
+        CircleArc C1(*this);
+        CircleArc const & C2 = *static_cast<CircleArc const*>(&obj);
+        C1.intersect( C2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC:
@@ -572,13 +601,25 @@ namespace G2lib {
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
-        C.intersect( *this, ilist, !swap_s_vals );
+        ClothoidCurve C1(*this);
+        ClothoidCurve const & C2 = *static_cast<ClothoidCurve const*>(&obj);
+        C1.intersect( C2, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList C1(*this);
+        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
+        C1.intersect( C2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
-    case G2LIB_CLOTHOID_LIST:
+      {
+        //PolyLine PL(*static_cast<PolyLine const*>(&obj));
+        //PL.intersect( *this, ilist, !swap_s_vals );
+      }
       G2LIB_ASSERT( false, "LineSegment::intersection!" );
+      //break;
     }
   }
 
@@ -607,8 +648,9 @@ namespace G2lib {
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C(*static_cast<CircleArc const*>(&obj));
-        C.intersect( obj_offs, *this, offs, ilist, !swap_s_vals );
+        CircleArc C1(*this);
+        CircleArc const & C2 = *static_cast<CircleArc const*>(&obj);
+        C1.intersect( offs, C2, obj_offs, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC:
@@ -619,13 +661,25 @@ namespace G2lib {
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C(*static_cast<ClothoidCurve const*>(&obj));
-        C.intersect( obj_offs, *this, offs, ilist, !swap_s_vals );
+        ClothoidCurve C1(*this);
+        ClothoidCurve const & C2 = *static_cast<ClothoidCurve const*>(&obj);
+        C1.intersect( offs, C2, obj_offs, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList C1(*this);
+        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
+        C1.intersect( offs, C2, obj_offs, ilist, swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
-    case G2LIB_CLOTHOID_LIST:
+      {
+        //PolyLine PL(*static_cast<PolyLine const*>(&obj));
+        //PL.intersect( obj_offs, *this, offs, ilist, !swap_s_vals );
+      }
       G2LIB_ASSERT( false, "LineSegment::intersection!" );
+      //break;
     }
   }
 
@@ -648,7 +702,10 @@ namespace G2lib {
     real_type & dst
   ) const {
 
-    projectPointOnLine( x0, y0, c0, s0, qx, qy, s, t );
+    real_type dx = qx - x0;
+    real_type dy = qy - y0;
+    s = dx * tx_Begin() + dy * ty_Begin();
+    t = dx * nx_Begin() + dy * ny_Begin();
 
     if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
@@ -662,8 +719,11 @@ namespace G2lib {
       eval( s, x, y );
       return 1;
     }
-    t   = s0 * (qx-x) - c0 * (qy-y);
-    dst = hypot( qx-x, qy-y );
+
+    dx  = qx-x;
+    dy  = qy-y;
+    t   = dx * nx_Begin() + dy * ny_Begin();
+    dst = hypot( dx, dy );
     return -1;
   }
 
@@ -680,9 +740,13 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    real_type xx0 = x0-offs*s0;
-    real_type yy0 = y0+offs*c0;
-    projectPointOnLine( xx0, yy0, c0, s0, qx, qy, s, t );
+    real_type xx0 = x0+offs*nx_Begin();
+    real_type yy0 = y0+offs*ny_Begin();
+
+    real_type dx = qx - xx0;
+    real_type dy = qy - yy0;
+    s = dx * tx_Begin() + dy * ty_Begin();
+    t = dx * nx_Begin() + dy * ny_Begin();
 
     if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
@@ -696,8 +760,11 @@ namespace G2lib {
       dst = abs(t);
       eval( s, offs, x, y );
     }
-    t   = s0 * (qx-x) - c0 * (qy-y) - offs;
-    dst = hypot( qx-x, qy-y );
+
+    dx  = qx-x;
+    dy  = qy-y;
+    t   = dx * nx_Begin() + dy * ny_Begin() + offs;
+    dst = hypot( dx, dy );
     return -1;
   }
 

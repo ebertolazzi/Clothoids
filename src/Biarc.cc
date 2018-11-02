@@ -706,12 +706,12 @@ namespace G2lib {
   ) const {
     if ( s < C0.length() ) {
       th = C0.theta(s);
-      k  = C0.kappa();
+      k  = C0.curvature();
       C0.eval(s,x,y);
     } else {
       s -= C0.length();
       th = C1.theta(s);
-      k  = C1.kappa();
+      k  = C1.curvature();
       C1.eval(s,x,y);
     }
   }

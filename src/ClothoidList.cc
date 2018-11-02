@@ -23,6 +23,7 @@
 #include <cmath>
 #include <cfloat>
 #include <fstream>
+#include <limits>
 
 #ifdef __GCC__
 #pragma GCC diagnostic push
@@ -35,6 +36,7 @@
 
 namespace G2lib {
 
+  using std::numeric_limits;
   using std::lower_bound;
   using std::vector;
   using std::abs;
@@ -47,6 +49,51 @@ namespace G2lib {
    |  \____|_|\___/ \__|_| |_|\___/|_|\__,_|_____|_|___/\__|
    |
   \*/
+
+  ClothoidList::ClothoidList( LineSegment const & LS )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( LS );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ClothoidList::ClothoidList( CircleArc const & C )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( C );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ClothoidList::ClothoidList( Biarc const & C )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( C.getC0() );
+    push_back( C.getC1() );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ClothoidList::ClothoidList( ClothoidCurve const & c )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( c );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ClothoidList::~ClothoidList() {
     s0.clear();
@@ -163,7 +210,8 @@ namespace G2lib {
     reserve( n-1 );
     ClothoidCurve c;
 
-    G2LIB_ASSERT( n > 1, "ClothoidList::build_G1, at least 2 points are necessary" );
+    G2LIB_ASSERT( n > 1,
+                  "ClothoidList::build_G1, at least 2 points are necessary" );
 
     if ( n == 2 ) {
 
@@ -214,7 +262,8 @@ namespace G2lib {
     real_type const theta[]
   ) {
 
-    G2LIB_ASSERT( n > 1, "ClothoidList::build_G1, at least 2 points are necessary" );
+    G2LIB_ASSERT( n > 1,
+                  "ClothoidList::build_G1, at least 2 points are necessary" );
 
     init();
     reserve( n-1 );
@@ -312,8 +361,108 @@ namespace G2lib {
                   " range [" << s0.front() << ", " << s0.back() << "]" );
     return true;
   }
+  /*\
+   |   _                  _   _
+   |  | | ___ _ __   __ _| |_| |__
+   |  | |/ _ \ '_ \ / _` | __| '_ \
+   |  | |  __/ | | | (_| | |_| | | |
+   |  |_|\___|_| |_|\__, |\__|_| |_|
+   |                |___/
+  \*/
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  real_type
+  ClothoidList::length() const {
+    return s0.back() - s0.front();
+  }
+
+  real_type
+  ClothoidList::length( real_type offs ) const {
+    real_type L = 0;
+    vector<ClothoidCurve>::const_iterator is = clotoidList.begin();
+    for ( ; is != clotoidList.end(); ++is ) L += is->length( offs );
+    return L;
+  }
+
+  real_type
+  ClothoidList::segment_length( int_type nseg ) const {
+    ClothoidCurve const & c = get( nseg );
+    return c.length();
+  }
+
+  real_type
+  ClothoidList::segment_length( int_type nseg, real_type offs ) const {
+    ClothoidCurve const & c = get( nseg );
+    return c.length( offs );
+  }
+
+  /*\
+   |  _    _   _____    _                _
+   | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+   | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+   | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+   |                               |___/
+  \*/
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  ClothoidList::bbTriangles(
+    real_type     offs,
+    vector<T2D> & tvec,
+    real_type     max_angle,
+    real_type     max_size
+  ) const {
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    for ( ; ic != clotoidList.end(); ++ic )
+      ic->bbTriangles( offs, tvec, max_angle, max_size );
+  }
+
+  /*\
+   |   _     _
+   |  | |__ | |__   _____  __
+   |  | '_ \| '_ \ / _ \ \/ /
+   |  | |_) | |_) | (_) >  <
+   |  |_.__/|_.__/ \___/_/\_\
+  \*/
+
+  void
+  ClothoidList::bbox(
+    real_type   offs,
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
+    vector<T2D> tvec;
+    bbTriangles( offs, tvec, m_pi/18, 1e100 );
+    xmin = ymin = numeric_limits<real_type>::infinity();
+    xmax = ymax = -xmin;
+    vector<T2D>::const_iterator it;
+    for ( it = tvec.begin(); it != tvec.end(); ++it ) {
+      // - - - - - - - - - - - - - - - - - - - -
+      if      ( it->x1() < xmin ) xmin = it->x1();
+      else if ( it->x1() > xmax ) xmax = it->x1();
+      if      ( it->x2() < xmin ) xmin = it->x2();
+      else if ( it->x2() > xmax ) xmax = it->x2();
+      if      ( it->x3() < xmin ) xmin = it->x3();
+      else if ( it->x3() > xmax ) xmax = it->x3();
+      // - - - - - - - - - - - - - - - - - - - -
+      if      ( it->y1() < ymin ) ymin = it->y1();
+      else if ( it->y1() > ymax ) ymax = it->y1();
+      if      ( it->y2() < ymin ) ymin = it->y2();
+      else if ( it->y2() > ymax ) ymax = it->y2();
+      if      ( it->y3() < ymin ) ymin = it->y3();
+      else if ( it->y3() > ymax ) ymax = it->y3();
+    }
+  }
+
+  /*\
+   |  _   _          _
+   | | |_| |__   ___| |_ __ _
+   | | __| '_ \ / _ \ __/ _` |
+   | | |_| | | |  __/ || (_| |
+   |  \__|_| |_|\___|\__\__,_|
+  \*/
 
   real_type
   ClothoidList::theta( real_type s ) const {
@@ -334,10 +483,180 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::theta_DD( real_type s ) const {
+  ClothoidList::theta_DD( real_type s ) const  {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.theta_DD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::theta_DDD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.theta_DDD( s - s0[last_idx] );
+  }
+
+  /*\
+   |  _____                   _   _   _
+   | |_   _|   __ _ _ __   __| | | \ | |
+   |   | |    / _` | '_ \ / _` | |  \| |
+   |   | |   | (_| | | | | (_| | | |\  |
+   |   |_|    \__,_|_| |_|\__,_| |_| \_|
+  \*/
+
+  real_type
+  ClothoidList::tx( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tx( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::ty( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.ty( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::tx_D( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tx_D( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::ty_D( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.ty_D( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::tx_DD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tx_DD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::ty_DD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.ty_DD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::tx_DDD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tx_DDD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::ty_DDD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.ty_DDD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::tg(
+    real_type   s,
+    real_type & tg_x,
+    real_type & tg_y
+  ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tg( s - s0[last_idx], tg_x, tg_y );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::tg_D(
+    real_type   s,
+    real_type & tg_x_D,
+    real_type & tg_y_D
+  ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tg_D( s - s0[last_idx], tg_x_D, tg_y_D );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::tg_DD(
+    real_type   s,
+    real_type & tg_x_DD,
+    real_type & tg_y_DD
+  ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tg_DD( s - s0[last_idx], tg_x_DD, tg_y_DD );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::tg_DDD(
+    real_type   s,
+    real_type & tg_x_DDD,
+    real_type & tg_y_DDD
+  ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.tg_DDD( s - s0[last_idx], tg_x_DDD, tg_y_DDD );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::evaluate(
+    real_type   s,
+    real_type & th,
+    real_type & k,
+    real_type & x,
+    real_type & y
+  ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    c.evaluate( s - s0[last_idx], th, k, x, y );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::evaluate(
+    real_type   s,
+    real_type   offs,
+    real_type & th,
+    real_type & k,
+    real_type & x,
+    real_type & y
+  ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    c.evaluate( s - s0[last_idx], offs, th, k, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -352,7 +671,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::Y( real_type s ) const {
+  ClothoidList::Y( real_type s ) const  {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
     return c.Y( s - s0[last_idx] );
@@ -360,17 +679,56 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidList::eval(
-    real_type   s,
-    real_type & theta,
-    real_type & kappa,
-    real_type & x,
-    real_type & y
-  ) const {
+  real_type
+  ClothoidList::X_D( real_type s ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.evaluate( s - s0[last_idx], theta, kappa, x, y );
+    return c.X_D( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::Y_D( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.Y_D( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::X_DD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.X_DD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::Y_DD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.Y_DD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::X_DDD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.X_DDD( s - s0[last_idx] );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::Y_DDD( real_type s ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.Y_DDD( s - s0[last_idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -425,19 +783,96 @@ namespace G2lib {
     return c.eval_DDD( s - s0[last_idx], x_DDD, y_DDD );
   }
 
+  /*\
+   |         __  __          _
+   |   ___  / _|/ _|___  ___| |_
+   |  / _ \| |_| |_/ __|/ _ \ __|
+   | | (_) |  _|  _\__ \  __/ |_
+   |  \___/|_| |_| |___/\___|\__|
+  \*/
+
+  real_type
+  ClothoidList::X( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.X( s - s0[last_idx], offs );
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  // offset curve
+  real_type
+  ClothoidList::Y( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.Y( s - s0[last_idx], offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::X_D( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.X_D( s - s0[last_idx], offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::Y_D( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.Y_D( s - s0[last_idx], offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::X_DD( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.X_DD( s - s0[last_idx], offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::Y_DD( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.Y_DD( s - s0[last_idx], offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::X_DDD( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.X_DDD( s - s0[last_idx], offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidList::Y_DDD( real_type s, real_type offs ) const {
+    findAtS( s );
+    ClothoidCurve const & c = get( last_idx );
+    return c.Y_DDD( s - s0[last_idx], offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::eval(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x,
     real_type & y
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval( s - s0[last_idx], t, x, y );
+    return c.eval( s - s0[last_idx], offs, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -445,13 +880,13 @@ namespace G2lib {
   void
   ClothoidList::eval_D(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x_D,
     real_type & y_D
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_D( s - s0[last_idx], t, x_D, y_D );
+    return c.eval_D( s - s0[last_idx], offs, x_D, y_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -459,13 +894,13 @@ namespace G2lib {
   void
   ClothoidList::eval_DD(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x_DD,
     real_type & y_DD
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_DD( s - s0[last_idx], t, x_DD, y_DD );
+    return c.eval_DD( s - s0[last_idx], offs, x_DD, y_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -473,15 +908,460 @@ namespace G2lib {
   void
   ClothoidList::eval_DDD(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_DDD( s - s0[last_idx], t, x_DDD, y_DDD );
+    return c.eval_DDD( s - s0[last_idx], offs, x_DDD, y_DDD );
   }
 
+  /*\
+   |  _                        __
+   | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___
+   | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \
+   | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |
+   |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
+  \*/
+
+  void
+  ClothoidList::translate( real_type tx, real_type ty ) {
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    for (; ic != clotoidList.end(); ++ic ) ic->translate( tx, ty );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::rotate( real_type angle, real_type cx, real_type cy ) {
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    for (; ic != clotoidList.end(); ++ic ) ic->rotate( angle, cx, cy );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::scale( real_type sfactor ) {
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    real_type newx0 = ic->xBegin();
+    real_type newy0 = ic->yBegin();
+    for (; ic != clotoidList.end(); ++ic ) {
+      ic->scale( sfactor );
+      ic->changeOrigin( newx0, newy0 );
+      newx0 = ic->xEnd();
+      newy0 = ic->yEnd();
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::reverse() {
+    std::reverse( clotoidList.begin(), clotoidList.end() );
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    ic->reverse();
+    real_type newx0 = ic->xEnd();
+    real_type newy0 = ic->yEnd();
+    s0[0] = 0;
+    s0[1] = ic->length();
+    size_t k = 1;
+    for ( ++ic ; ic != clotoidList.end(); ++ic, ++k ) {
+      ic->reverse();
+      ic->changeOrigin( newx0, newy0 );
+      newx0   = ic->xEnd();
+      newy0   = ic->yEnd();
+      s0[k+1] = s0[k] + ic->length();
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::changeOrigin( real_type newx0, real_type newy0 ) {
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    for (; ic != clotoidList.end(); ++ic ) {
+      ic->changeOrigin( newx0, newy0 );
+      newx0 = ic->xEnd();
+      newy0 = ic->yEnd();
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::trim( real_type s_begin, real_type s_end ) {
+    G2LIB_ASSERT( s_begin > s0.front() &&
+                  s_end < s0.back() &&
+                  s_end > s_begin,
+                  "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" <<
+                  s_end << ") bad range, must be in [ " << s0.front() <<
+                  ", " << s0.back() << " ]" );
+
+    findAtS( s_begin ); size_t i_begin = size_t(last_idx);
+    findAtS( s_end );   size_t i_end   = size_t(last_idx);
+    clotoidList[i_begin].trim( s_begin-s0[i_begin], s0[i_begin+1] );
+    clotoidList[i_end].trim( s0[i_end], s_end-s0[i_end] );
+    clotoidList.erase( clotoidList.begin()+i_end+1, clotoidList.end() );
+    clotoidList.erase( clotoidList.begin(), clotoidList.begin()+i_begin );
+    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    s0[0] = 0;
+    size_t k = 0;
+    for ( ++ic ; ic != clotoidList.end(); ++ic, ++k )
+      s0[k+1] = s0[k] + ic->length();
+    last_idx = 0;
+  }
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
+
+  bool
+  ClothoidList::collision( BaseCurve const & obj ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote
+        ClothoidList CL(*static_cast<LineSegment const*>(&obj));
+        ok = this->collision( CL );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidList CL(*static_cast<CircleArc const*>(&obj));
+        ok = this->collision( CL );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        ok = B.collision( *this );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidList const & CL = *static_cast<ClothoidCurve const*>(&obj);
+        ok = this->collision( CL );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList const & CL = *static_cast<ClothoidList const*>(&obj);
+        ok = this->collision( CL );
+      }
+      break;
+    case G2LIB_POLYLINE:
+      G2LIB_ASSERT( false, "ClothoidCurve::collision!" );
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::collision(
+    real_type         offs,
+    BaseCurve const & obj,
+    real_type         offs_obj
+  ) const {
+    bool ok = false;
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote
+        ClothoidList CL(*static_cast<LineSegment const*>(&obj));
+        ok = this->collision( offs, CL, offs_obj );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidList CL(*static_cast<CircleArc const*>(&obj));
+        ok = this->collision( offs, CL, offs_obj );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        ok = B.collision( offs_obj, *this, offs );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidList const & CL = *static_cast<ClothoidCurve const*>(&obj);
+        ok = this->collision( offs, CL, offs_obj );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList const & CL = *static_cast<ClothoidList const*>(&obj);
+        ok = this->collision( offs, CL, offs_obj );
+      }
+      break;
+    case G2LIB_POLYLINE:
+      {
+        //PolyLine const & PL = *static_cast<PolyLine const*>(&obj);
+        //ok = this->collision( offs, CL, offs_obj );
+      }
+      G2LIB_ASSERT( false, "ClothoidCurve::collision!" );
+      //break;
+    }
+    return ok;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::collision( ClothoidList const & C ) const {
+    G2LIB_ASSERT( false, "ClothoidList::collision not implemented" );
+    //this->build_AABBtree( 0 );
+    //C.build_AABBtree( 0 );
+    //T2D_collision fun( this, 0, &C, 0 );
+    //return aabb_tree.collision( C.aabb_tree, fun, false );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::collision(
+    real_type            offs,
+    ClothoidList const & C,
+    real_type            offs_C
+  ) const {
+    G2LIB_ASSERT( false, "ClothoidList::collision not implemented" );
+    //this->build_AABBtree( offs );
+    //C.build_AABBtree( offs_C );
+    //T2D_collision fun( this, offs, &C, offs_C );
+    //return aabb_tree.collision( C.aabb_tree, fun, false );
+  }
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+   |
+  \*/
+
+  void
+  ClothoidList::intersect(
+    BaseCurve const & obj,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote to clothoid
+        ClothoidList C(*static_cast<LineSegment const*>(&obj));
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidList C(*static_cast<CircleArc const*>(&obj));
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        B.intersect( *this, ilist, !swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidList const & C = *static_cast<ClothoidCurve const*>(&obj);
+        this->intersect( C, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList const & CL = *static_cast<ClothoidList const*>(&obj);
+        this->intersect( CL, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
+      {
+        //PolyLine const & PL = *static_cast<PolyLine const*>(&obj);
+        //PL.intersect( *this, ilist, !swap_s_vals );
+      }
+      G2LIB_ASSERT( false, "ClothoidList::intersect!" );
+      //break;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::intersect(
+    real_type         offs,
+    BaseCurve const & obj,
+    real_type         offs_obj,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) const {
+    switch ( obj.type() ) {
+    case G2LIB_LINE:
+      { // promote to clothoid
+        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        ClothoidList C(*static_cast<CircleArc const*>(&obj));
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC:
+      {
+        Biarc B(*static_cast<Biarc const*>(&obj));
+        B.intersect( offs_obj, *this, offs, ilist, !swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID:
+      {
+        ClothoidList C(*static_cast<ClothoidCurve const*>(&obj));
+        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      {
+        ClothoidList const & CL = *static_cast<ClothoidList const*>(&obj);
+        this->intersect( offs, CL, offs_obj, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_POLYLINE:
+      {
+        //PolyLine const & PL = *static_cast<PolyLine const*>(&obj);
+        //PL.intersect( offs_obj, *this, offs, ilist, !swap_s_vals );
+      }
+      G2LIB_ASSERT( false, "ClothoidList::intersect!" );
+      //break;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::intersect( ClothoidList const & CL,
+                           IntersectList      & ilist,
+                           bool                 swap_s_vals ) const {
+    IntersectList ilistIJ;
+    for ( size_t i = 0; i < clotoidList.size(); ++i ) {
+      ClothoidCurve const & Ci = clotoidList[i];
+      for ( size_t j = 0; j < CL.clotoidList.size(); ++j ) {
+        ClothoidCurve const & Cj = CL.clotoidList[j];
+        ilistIJ.clear();
+        Ci.intersect(Cj,ilistIJ,false);
+        for ( IntersectList::const_iterator it = ilistIJ.begin();
+              it != ilistIJ.end(); ++it ) {
+          real_type s1 = it->first + s0[i];
+          real_type s2 = it->second + CL.s0[j];
+          if ( swap_s_vals ) ilist.push_back( Ipair( s2, s1 ) );
+          else               ilist.push_back( Ipair( s1, s2 ) );
+        }
+      }
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::intersect( real_type            offs,
+                           ClothoidList const & CL,
+                           real_type            offs_obj,
+                           IntersectList      & ilist,
+                           bool                 swap_s_vals ) const {
+    IntersectList ilistIJ;
+    for ( size_t i = 0; i < clotoidList.size(); ++i ) {
+      ClothoidCurve const & Ci = clotoidList[i];
+      for ( size_t j = 0; j < CL.clotoidList.size(); ++j ) {
+        ClothoidCurve const & Cj = CL.clotoidList[j];
+        ilistIJ.clear();
+        Ci.intersect(offs,Cj,offs_obj,ilistIJ,false);
+        for ( IntersectList::const_iterator it = ilistIJ.begin();
+              it != ilistIJ.end(); ++it ) {
+          real_type s1 = it->first + s0[i];
+          real_type s2 = it->second + CL.s0[j];
+          if ( swap_s_vals ) ilist.push_back( Ipair( s2, s1 ) );
+          else               ilist.push_back( Ipair( s1, s2 ) );
+        }
+      }
+    }
+  }
+
+  /*\
+   |      _ _     _
+   |   __| (_)___| |_ __ _ _ __   ___ ___
+   |  / _` | / __| __/ _` | '_ \ / __/ _ \
+   | | (_| | \__ \ || (_| | | | | (_|  __/
+   |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+  \*/
+
+  int_type
+  ClothoidList::closestPoint( real_type   qx,
+                              real_type   qy,
+                              real_type & x,
+                              real_type & y,
+                              real_type & s,
+                              real_type & t,
+                              real_type & dst ) const {
+    vector<ClothoidCurve>::const_iterator is = clotoidList.begin();
+    dst = numeric_limits<real_type>::infinity();
+    size_t k = 0;
+    int_type ires = 0 ;
+    for ( ; is != clotoidList.end(); ++is, ++k ) {
+      real_type X, Y, S, T, DST;
+      int_type icode = is->closestPoint( qx, qy, X, Y, S, T, DST );
+      if ( DST < dst ) {
+        dst  = DST;
+        x    = X;
+        y    = Y;
+        s    = S+s0[k];
+        t    = T;
+        ires = icode;
+      }
+    }
+    return ires;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  ClothoidList::closestPoint( real_type   qx,
+                              real_type   qy,
+                              real_type   offs,
+                              real_type & x,
+                              real_type & y,
+                              real_type & s,
+                              real_type & t,
+                              real_type & dst ) const {
+    vector<ClothoidCurve>::const_iterator is = clotoidList.begin();
+    dst = numeric_limits<real_type>::infinity();
+    size_t k = 0;
+    int_type ires = 0 ;
+    for ( ; is != clotoidList.end(); ++is, ++k ) {
+      real_type X, Y, S, T, DST;
+      int_type icode = is->closestPoint( qx, qy, offs, X, Y, S, T, DST );
+      if ( DST < dst ) {
+        dst  = DST;
+        x    = X;
+        y    = Y;
+        s    = S+s0[k];
+        t    = T;
+        ires = icode;
+      }
+    }
+    return ires;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -550,37 +1430,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidList::closestPoint(
-    real_type   x,
-    real_type   y,
-    real_type & X,
-    real_type & Y,
-    real_type & S
-  ) const {
-    G2LIB_ASSERT( !clotoidList.empty(),
-                  "ClothoidList::closestPoint, empty list" );
-    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
-    vector<real_type>::const_iterator     is = s0.begin();
-    real_type DST, T;
-    ic->closestPoint( x, y, X, Y, S, T, DST );
-    for ( ++ic, ++is; ic != clotoidList.end(); ++ic, ++is ) {
-      real_type X1, Y1, S1, T1, DST1;
-      ic->closestPoint( x, y, X1, Y1, S1, T1, DST1 );
-      if ( DST1 < DST ) {
-        DST = DST1;
-        X   = X1;
-        Y   = Y1;
-        S   = *is + S1;
-      }
-    }
-    return DST;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   int_type
-  ClothoidList::findST(
+  ClothoidList::findST1(
     real_type   x,
     real_type   y,
     real_type & s,
@@ -597,8 +1448,8 @@ namespace G2lib {
     real_type S, T;
     bool ok = ic->findST( x, y, S, T );
     if ( ok ) {
-      s = *is + S;
-      t = T;
+      s    = *is + S;
+      t    = T;
       iseg = 0;
     }
 
@@ -621,7 +1472,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::findST(
+  ClothoidList::findST1(
     int_type    ibegin,
     int_type    iend,
     real_type   x,
@@ -656,54 +1507,32 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  ClothoidList::rotate( real_type angle, real_type cx, real_type cy ) {
-    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
-    for (; ic != clotoidList.end(); ++ic ) ic->rotate( angle, cx, cy );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidList::translate( real_type tx, real_type ty ) {
-    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
-    for (; ic != clotoidList.end(); ++ic ) ic->translate( tx, ty );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidList::changeOrigin( real_type newx0, real_type newy0 ) {
-    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
-    for (; ic != clotoidList.end(); ++ic ) {
-      ic->changeOrigin( newx0, newy0 );
-      newx0 = ic->xEnd();
-      newy0 = ic->yEnd();
+#if 0
+  real_type
+  ClothoidList::closestPoint(
+    real_type   x,
+    real_type   y,
+    real_type & X,
+    real_type & Y,
+    real_type & S
+  ) const {
+    G2LIB_ASSERT( !clotoidList.empty(),
+                  "ClothoidList::closestPoint, empty list" );
+    vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
+    vector<real_type>::const_iterator     is = s0.begin();
+    real_type DST, T;
+    ic->closestPoint( x, y, X, Y, S, T, DST );
+    for ( ++ic, ++is; ic != clotoidList.end(); ++ic, ++is ) {
+      real_type X1, Y1, S1, T1, DST1;
+      ic->closestPoint( x, y, X1, Y1, S1, T1, DST1 );
+      if ( DST1 < DST ) {
+        DST = DST1;
+        X   = X1;
+        Y   = Y1;
+        S   = *is + S1;
+      }
     }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidList::scale( real_type sfactor ) {
-    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
-    real_type newx0 = ic->xBegin();
-    real_type newy0 = ic->yBegin();
-    for (; ic != clotoidList.end(); ++ic ) {
-      ic->scale( sfactor );
-      ic->changeOrigin( newx0, newy0 );
-      newx0 = ic->xEnd();
-      newy0 = ic->yEnd();
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidList::reverse() {
-    vector<ClothoidCurve>::iterator ic = clotoidList.begin();
-    for (; ic != clotoidList.end(); ++ic ) ic->reverse();
-    std::reverse( clotoidList.begin(), clotoidList.end() );
+    return DST;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -759,6 +1588,12 @@ namespace G2lib {
       }
     }
   }
+#endif
+
+
+
+
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -789,6 +1624,16 @@ namespace G2lib {
              << ic->dkappa()     << '\t'
              << ic->length()     << '\n';
     stream << "}\n";
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ostream_type &
+  operator << ( ostream_type & stream, ClothoidList const & CL ) {
+    vector<ClothoidCurve>::const_iterator ic = CL.clotoidList.begin();
+    for ( ; ic != CL.clotoidList.end(); ++ic )
+      stream << *ic << '\n' ;
+    return stream;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

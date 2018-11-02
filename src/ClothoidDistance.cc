@@ -514,7 +514,9 @@ namespace G2lib {
     }
     real_type nx, ny;
     nor( S, nx, ny );
-    T = (qx-X)*nx + (qy-X)*ny;
+    real_type dx = qx-X;
+    real_type dy = qy-Y;
+    T = dx * nx + dy * ny;
     if ( abs(abs(T)-dst) < dst*machepsi1000 ) return 1;
     return -1;
   }

@@ -13,6 +13,7 @@
 #include "Biarc.hh"
 #include "PolyLine.hh"
 #include "Clothoid.hh"
+#include "ClothoidList.hh"
 
 #include "mex_utils.hh"
 

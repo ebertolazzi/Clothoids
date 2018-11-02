@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Biarc.hh"
+#include "ClothoidList.hh"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
@@ -10,6 +11,12 @@ using G2lib::int_type;
 
 int
 main() {
+
+  G2lib::LineSegment L0;
+  real_type x00     = 0;
+  real_type y00     = 0;
+  real_type theta00 = 3.14*0.9;
+  L0.build( x00, y00, theta00, 10);
 
   G2lib::Biarc C0, C1;
   real_type x0     = 0;
@@ -28,10 +35,15 @@ main() {
   theta1 = 3.14*0.1;
   C1.build( x0, y0, theta0, x1, y1, theta1 );
 
+  G2lib::ClothoidList CL0(C0);
+  G2lib::ClothoidList CL1(C1);
+
   G2lib::BaseCurve::IntersectList ilist;
 
-  G2lib::BaseCurve *pC0 = &C0;
-  G2lib::BaseCurve *pC1 = &C1;
+  //G2lib::BaseCurve *pC0 = &L0;
+  //G2lib::BaseCurve *pC1 = &C1;
+  G2lib::BaseCurve *pC0 = &CL1;
+  G2lib::BaseCurve *pC1 = &L0;
 
   pC0->intersect( *pC1, ilist, false );
   //C0.intersect( C1, ilist );

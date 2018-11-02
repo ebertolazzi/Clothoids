@@ -642,6 +642,14 @@ namespace G2lib {
   { return theta(length()); }
 
   real_type
+  BaseCurve::kappaBegin() const
+  { return kappa(0); }
+
+  real_type
+  BaseCurve::kappaEnd() const
+  { return kappa(length()); }
+
+  real_type
   BaseCurve::xBegin() const
   { return X(0); }
 

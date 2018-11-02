@@ -533,9 +533,9 @@ namespace G2lib {
     real_type xMiddle()     const { return C1.xBegin(); }
     real_type yMiddle()     const { return C1.yBegin(); }
     real_type thetaMiddle() const { return C1.thetaBegin(); }
-    real_type kappa0()      const { return C0.kappa(); }
+    real_type kappa0()      const { return C0.curvature(); }
     real_type length0()     const { return C0.length(); }
-    real_type kappa1()      const { return C1.kappa(); }
+    real_type kappa1()      const { return C1.curvature(); }
     real_type length1()     const { return C1.length(); }
 
     real_type delta_theta() const { return C0.delta_theta() + C1.delta_theta(); }

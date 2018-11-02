@@ -70,7 +70,7 @@ if false
   [ s, t, ipos ] = S.find_coord( X, Y );
   Z = t;
 else
-  [ s, t, ipos ] = S.find_coord( X, Y, 7, 10 );
+  [ s, t, ipos ] = S.find_coord1( X, Y, 7, 10 );
   Z = t;
 end
 toc

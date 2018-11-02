@@ -103,16 +103,8 @@ classdef ClothoidCurve < CurveBase
                                  self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = kappaBegin( self )
-      res = ClothoidCurveMexWrapper( 'kappaBegin', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = kappaEnd( self )
-      res = ClothoidCurveMexWrapper( 'kappaEnd', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = kappa_D( self )
-      res = ClothoidCurveMexWrapper( 'kappa_D', self.objectHandle );
+    function res = dkappa( self )
+      res = ClothoidCurveMexWrapper( 'dkappa', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeCurvilinearOrigin( self, s0, L )
