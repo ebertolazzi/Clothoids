@@ -100,10 +100,15 @@ namespace G2lib {
     ~Biarc() G2LIB_OVERRIDE
     {}
 
-    explicit
+    //explicit
     Biarc()
     : BaseCurve(G2LIB_BIARC)
     {}
+
+    //explicit
+    Biarc( Biarc const & ba )
+    : BaseCurve(G2LIB_BIARC)
+    { copy(ba); }
 
     //! construct a clothoid with the standard parameters
     explicit
@@ -124,11 +129,6 @@ namespace G2lib {
                         ", theta1 = "  << theta1 <<
                         ") cannot be computed" );
     }
-
-    explicit
-    Biarc( Biarc const & ba )
-    : BaseCurve(G2LIB_BIARC)
-    { copy(ba); }
 
     explicit
     Biarc( BaseCurve const & C );

@@ -121,6 +121,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
+    //explicit
     CircleArc()
     : BaseCurve(G2LIB_CIRCLE)
     , x0(0)
@@ -132,7 +133,13 @@ namespace G2lib {
     , L(0)
     {}
 
+    //explicit
+    CircleArc( CircleArc const & s )
+    : BaseCurve(G2LIB_CIRCLE)
+    { copy(s); }
+
     //! construct a circle curve with the standard parameters
+    explicit
     CircleArc( real_type _x0,
                real_type _y0,
                real_type _theta0,
@@ -171,11 +178,6 @@ namespace G2lib {
       this->k      = c.k;
       this->L      = c.L;
     }
-
-    explicit
-    CircleArc( CircleArc const & s )
-    : BaseCurve(G2LIB_CIRCLE)
-    { copy(s); }
 
     explicit
     CircleArc( BaseCurve const & C );

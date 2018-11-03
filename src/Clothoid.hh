@@ -225,7 +225,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
-    explicit
+    //explicit
     ClothoidCurve()
     : BaseCurve(G2LIB_CLOTHOID)
     , aabb_done(false)
@@ -237,6 +237,12 @@ namespace G2lib {
       CD.dk     = 0;
       L         = 0;
     }
+
+    //explicit
+    ClothoidCurve( ClothoidCurve const & s )
+    : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
+    { copy(s); }
 
     //! construct a clothoid with the standard parameters
     explicit
@@ -302,12 +308,6 @@ namespace G2lib {
       CD.dk     = 0;
       L         = C.L;
     }
-
-    explicit
-    ClothoidCurve( ClothoidCurve const & s )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , aabb_done(false)
-    { copy(s); }
 
     explicit
     ClothoidCurve( BaseCurve const & C );

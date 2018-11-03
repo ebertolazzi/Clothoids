@@ -57,7 +57,7 @@ namespace G2lib {
 
   public:
 
-    explicit
+    //explicit
     PolyLine()
     : BaseCurve(G2LIB_POLYLINE)
     , isegment(0)
@@ -74,7 +74,7 @@ namespace G2lib {
       aabb_done = false;
     }
 
-    explicit
+    //explicit
     PolyLine( PolyLine const & PL )
     : BaseCurve(G2LIB_POLYLINE)
     { copy(PL); }

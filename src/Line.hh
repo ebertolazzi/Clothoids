@@ -89,7 +89,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
-    explicit
+    //explicit
     LineSegment()
     : BaseCurve(G2LIB_LINE)
     , x0(0)
@@ -100,7 +100,7 @@ namespace G2lib {
     , L(0)
     {}
 
-    explicit
+    //explicit
     LineSegment( LineSegment const & s )
     : BaseCurve(G2LIB_LINE)
     { copy(s); }

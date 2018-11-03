@@ -649,7 +649,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
-    explicit
+    //explicit
     ClothoidList()
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , last_idx(0)
@@ -663,7 +663,7 @@ namespace G2lib {
       aabb_tri.clear();
     }
 
-    explicit
+    //explicit
     ClothoidList( ClothoidList const & s )
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , last_idx(0)
