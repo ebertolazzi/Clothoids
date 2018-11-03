@@ -385,13 +385,52 @@ namespace G2lib {
   \*/
 
   typedef enum {
-    G2LIB_LINE,
+    G2LIB_LINE=0,
     G2LIB_POLYLINE,
     G2LIB_CIRCLE,
     G2LIB_BIARC,
     G2LIB_CLOTHOID,
     G2LIB_CLOTHOID_LIST
   } CurveType;
+
+  extern char const *CurveType_name[];
+
+  typedef std::pair<real_type,real_type> Ipair;
+  typedef std::vector<Ipair>             IntersectList;
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
+
+  class BaseCurve;
+
+  bool
+  collision( BaseCurve const & C1,
+             BaseCurve const & C2 );
+
+  bool
+  collision( BaseCurve const & C1,
+             real_type         offs_C1,
+             BaseCurve const & C2,
+             real_type         offs_C2 );
+
+  void
+  intersect( BaseCurve const & C1,
+             BaseCurve const & C2,
+             IntersectList   & ilist,
+             bool              swap_s_vals );
+
+  void
+  intersect( BaseCurve const & C1,
+             real_type         offs_C1,
+             BaseCurve const & C2,
+             real_type         offs_C2,
+             IntersectList   & ilist,
+             bool              swap_s_vals );
 
   class BaseCurve {
 
@@ -402,9 +441,6 @@ namespace G2lib {
     CurveType _type;
 
   public:
-
-    typedef std::pair<real_type,real_type> Ipair;
-    typedef std::vector<Ipair>             IntersectList;
 
     BaseCurve( CurveType const & __type )
     : _type(__type)
@@ -866,29 +902,30 @@ namespace G2lib {
      |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
     \*/
 
-    virtual
     bool
-    collision( BaseCurve const & ) const G2LIB_PURE_VIRTUAL;
+    collision( BaseCurve const & C ) const
+    { return G2lib::collision( *this, C ); }
 
-    virtual
     bool
     collision( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj ) const G2LIB_PURE_VIRTUAL;
+               BaseCurve const & C,
+               real_type         offs_C ) const
+    { return G2lib::collision( *this, offs, C, offs_C ); }
 
-    virtual
     void
-    intersect( BaseCurve const & obj,
+    intersect( BaseCurve const & C,
                IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_PURE_VIRTUAL;
+               bool              swap_s_vals ) const
+    { G2lib::intersect( *this, C, ilist, swap_s_vals ); }
 
-    virtual
     void
     intersect( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj,
+               BaseCurve const & C,
+               real_type         offs_C,
                IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_PURE_VIRTUAL;
+               bool              swap_s_vals ) const
+    { G2lib::intersect( *this, offs, C, offs_C, ilist, swap_s_vals ); }
+
     /*\
      |      _ _     _
      |   __| (_)___| |_ __ _ _ __   ___ ___
@@ -984,6 +1021,7 @@ namespace G2lib {
     info( ostream_type & stream ) const G2LIB_PURE_VIRTUAL;
 
   };
+
 }
 
 #endif

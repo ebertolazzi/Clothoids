@@ -55,6 +55,31 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  ClothoidCurve::ClothoidCurve( BaseCurve const & C )
+  : BaseCurve(G2LIB_CLOTHOID)
+  , aabb_done(false)
+  {
+    switch ( C.type() ) {
+    case G2LIB_LINE:
+      build( *static_cast<LineSegment const *>(&C) );
+      break;
+    case G2LIB_CIRCLE:
+      build( *static_cast<CircleArc const *>(&C) );
+      break;
+    case G2LIB_CLOTHOID:
+      copy( *static_cast<ClothoidCurve const *>(&C) );
+      break;
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID_LIST:
+    case G2LIB_POLYLINE:
+      G2LIB_ASSERT( false,
+                    "ClothoidList constructor cannot convert from: " <<
+                    CurveType_name[C.type()] );
+    }
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   void
   ClothoidCurve::optimized_sample_internal(
     real_type           s_begin,
@@ -141,7 +166,8 @@ namespace G2lib {
     real_type     s_begin,
     real_type     s_end,
     real_type     max_angle,
-    real_type     max_size
+    real_type     max_size,
+    int_type      icurve
   ) const {
 
     static real_type const one_degree = m_pi/180;
@@ -194,7 +220,7 @@ namespace G2lib {
 
       real_type x2 = x0 + alpha*tx0;
       real_type y2 = y0 + alpha*ty0;
-      T2D t( x0, y0, x2, y2, x1, y1, ss, sss );
+      T2D t( x0, y0, x2, y2, x1, y1, ss, sss, icurve );
 
       tvec.push_back( t );
 
@@ -210,15 +236,16 @@ namespace G2lib {
     real_type     offs,
     vector<T2D> & tvec,
     real_type     max_angle,
-    real_type     max_size
+    real_type     max_size,
+    int_type      icurve
   ) const {
     if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
-      bbTriangles_internal( offs, tvec, 0, L, max_angle, max_size );
+      bbTriangles_internal( offs, tvec, 0, L, max_angle, max_size, icurve );
     } else {
       // flex inside, split clothoid
       real_type sflex = -CD.kappa0/CD.dk;
-      bbTriangles_internal( offs, tvec, 0, sflex, max_angle, max_size );
-      bbTriangles_internal( offs, tvec, sflex, L, max_angle, max_size );
+      bbTriangles_internal( offs, tvec, 0, sflex, max_angle, max_size, icurve );
+      bbTriangles_internal( offs, tvec, sflex, L, max_angle, max_size, icurve );
     }
   }
 
@@ -320,105 +347,6 @@ namespace G2lib {
    | | (_| (_) | | | \__ \ | (_) | | | |
    |  \___\___/|_|_|_|___/_|\___/|_| |_|
   \*/
-  bool
-  ClothoidCurve::collision( BaseCurve const & obj ) const {
-    bool ok = false;
-    switch ( obj.type() ) {
-    case G2LIB_LINE:
-      { // promote
-        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
-        ok = this->collision( C );
-      }
-      break;
-    case G2LIB_CIRCLE:
-      {
-        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
-        ok = this->collision( C );
-      }
-      break;
-    case G2LIB_BIARC:
-      {
-        Biarc B(*static_cast<Biarc const*>(&obj));
-        ok = B.collision( *this );
-      }
-      break;
-    case G2LIB_CLOTHOID:
-      {
-        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
-        ok = this->collision( C );
-      }
-      break;
-    case G2LIB_CLOTHOID_LIST:
-      {
-        ClothoidList C1(*this);
-        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
-        ok = C1.collision( C2 );
-      }
-      break;
-    case G2LIB_POLYLINE:
-      {
-        //PolyLine const & PL = *static_cast<PolyLine const*>(&obj);
-        //ok = PL.collision( *this );
-      }
-      G2LIB_ASSERT( false, "ClothoidCurve::collision!" );
-      //break;
-    }
-    return ok;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  ClothoidCurve::collision(
-    real_type         offs,
-    BaseCurve const & obj,
-    real_type         offs_obj
-  ) const {
-    bool ok = false;
-    switch ( obj.type() ) {
-    case G2LIB_LINE:
-      { // promote
-        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
-        ok = this->collision( offs, C, offs_obj );
-      }
-      break;
-    case G2LIB_CIRCLE:
-      {
-        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
-        ok = this->collision( offs, C, offs_obj );
-      }
-      break;
-    case G2LIB_BIARC:
-      {
-        Biarc B(*static_cast<Biarc const*>(&obj));
-        ok = B.collision( offs_obj, *this, offs );
-      }
-      break;
-    case G2LIB_CLOTHOID:
-      {
-        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
-        ok = this->collision( offs, C, offs_obj );
-      }
-      break;
-    case G2LIB_CLOTHOID_LIST:
-      {
-        ClothoidList C1(*this);
-        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
-        ok = C1.collision( offs, C2, offs_obj );
-      }
-      break;
-    case G2LIB_POLYLINE:
-      {
-        //PolyLine const & PL = *static_cast<PolyLine const*>(&obj);
-        //ok = PL.collision( offs_obj, *this, offs );
-      }
-      G2LIB_ASSERT( false, "ClothoidCurve::collision!" );
-      //break;
-    }
-    return ok;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ClothoidCurve::collision( ClothoidCurve const & C ) const {
@@ -469,108 +397,6 @@ namespace G2lib {
    | |_|_| |_|\__\___|_|  |___/\___|\___|\__|
   \*/
 
-  void
-  ClothoidCurve::intersect(
-    BaseCurve const & obj,
-    IntersectList   & ilist,
-    bool              swap_s_vals
-  ) const {
-    switch ( obj.type() ) {
-    case G2LIB_LINE:
-      { // promote to clothoid
-        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
-        this->intersect( C, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_CIRCLE:
-      {
-        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
-        this->intersect( C, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_BIARC:
-      {
-        Biarc B(*static_cast<Biarc const*>(&obj));
-        B.intersect( *this, ilist, !swap_s_vals );
-      }
-      break;
-    case G2LIB_CLOTHOID:
-      {
-        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
-        this->intersect( C, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_CLOTHOID_LIST:
-      {
-        ClothoidList C1(*this);
-        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
-        C1.intersect( C2, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_POLYLINE:
-      {
-        //PolyLine const & PL = *static_cast<PolyLine const*>(&obj);
-        //PL.intersect( *this, ilist, !swap_s_vals );
-      }
-      G2LIB_ASSERT( false, "ClothoidList::intersect!" );
-      //break;
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidCurve::intersect(
-    real_type         offs,
-    BaseCurve const & obj,
-    real_type         offs_obj,
-    IntersectList   & ilist,
-    bool              swap_s_vals
-  ) const {
-    switch ( obj.type() ) {
-    case G2LIB_LINE:
-      { // promote to clothoid
-        ClothoidCurve C(*static_cast<LineSegment const*>(&obj));
-        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_CIRCLE:
-      {
-        ClothoidCurve C(*static_cast<CircleArc const*>(&obj));
-        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_BIARC:
-      {
-        Biarc B(*static_cast<Biarc const*>(&obj));
-        B.intersect( offs_obj, *this, offs, ilist, !swap_s_vals );
-      }
-      break;
-    case G2LIB_CLOTHOID:
-      {
-        ClothoidCurve const & C = *static_cast<ClothoidCurve const*>(&obj);
-        this->intersect( offs, C, offs_obj, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_CLOTHOID_LIST:
-      {
-        ClothoidList C1(*this);
-        ClothoidList const & C2 = *static_cast<ClothoidList const*>(&obj);
-        C1.intersect( offs, C2, offs_obj, ilist, swap_s_vals );
-      }
-      break;
-    case G2LIB_POLYLINE:
-      {
-        //PolyLine const & PL = *static_cast<PolyLine const*>(&obj);
-        //PL.intersect( offs_obj, *this, offs, ilist, !swap_s_vals );
-      }
-      G2LIB_ASSERT( false, "ClothoidList::intersect!" );
-      //break;
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   bool
   ClothoidCurve::aabb_intersect(
     T2D           const & T1,
@@ -581,10 +407,12 @@ namespace G2lib {
     real_type           & ss1,
     real_type           & ss2
   ) const {
-    real_type s1_min = T1.s0;
-    real_type s1_max = T1.s1;
-    real_type s2_min = T2.s0;
-    real_type s2_max = T2.s1;
+    real_type eps1   = machepsi1000*L;
+    real_type eps2   = machepsi1000*pC->L;
+    real_type s1_min = T1.S0()-eps1;
+    real_type s1_max = T1.S1()+eps1;
+    real_type s2_min = T2.S0()-eps2;
+    real_type s2_max = T2.S1()+eps2;
     int_type  nout   = 0;
     bool converged   = false;
 
@@ -611,15 +439,21 @@ namespace G2lib {
       ss2 += (t1[0]*py - t1[1]*px)/det;
       if ( ! ( isfinite(ss1) && isfinite(ss1) ) ) break;
       bool out = false;
-      if      ( ss1 <= s1_min ) { out = true; ss1 = s1_min; }
-      else if ( ss1 >= s1_max ) { out = true; ss1 = s1_max; }
-      if      ( ss2 <= s2_min ) { out = true; ss2 = s2_min; }
-      else if ( ss2 >= s2_max ) { out = true; ss2 = s2_max; }
+      if      ( ss1 < s1_min ) { out = true; ss1 = s1_min; }
+      else if ( ss1 > s1_max ) { out = true; ss1 = s1_max; }
+      if      ( ss2 < s2_min ) { out = true; ss2 = s2_min; }
+      else if ( ss2 > s2_max ) { out = true; ss2 = s2_max; }
       if ( out ) {
         if ( ++nout > 3 ) break;
       } else {
         converged = abs(px) <= tolerance && abs(py) <= tolerance;
       }
+    }
+    if ( converged ) {
+      if      ( ss1 < T1.S0() ) ss1 = T1.S0();
+      else if ( ss1 > T1.S1() ) ss1 = T1.S1();
+      if      ( ss2 < T2.S0() ) ss2 = T2.S0();
+      else if ( ss2 > T2.S1() ) ss2 = T2.S1();
     }
     return converged;
   }
@@ -749,7 +583,9 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        closestPoint_internal( T.s0, T.s1, qx, qy, offs, xx, yy, ss, dst );
+        closestPoint_internal(
+          T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
+        );
         if ( dst < DST ) {
           DST = dst;
           s   = ss;

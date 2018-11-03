@@ -40,7 +40,7 @@ hold on;
 C2.plot(npts,'Color','black','LineWidth',3);
 
 tic
-[s1,s2]     = C1.intersect( C2 );
+[s1,s2] = C1.intersect( C2 );
 toc
 
 size(s1)

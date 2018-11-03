@@ -190,6 +190,24 @@ namespace G2lib {
    |  |____/|_|\__,_|_|  \___|
   \*/
 
+  Biarc::Biarc( BaseCurve const & C )
+  : BaseCurve(G2LIB_BIARC)
+  {
+    switch ( C.type() ) {
+    case G2LIB_BIARC:
+      *this = *static_cast<Biarc const *>(&C);
+      break;
+    case G2LIB_LINE:
+    case G2LIB_CIRCLE:
+    case G2LIB_CLOTHOID:
+    case G2LIB_CLOTHOID_LIST:
+    case G2LIB_POLYLINE:
+      G2LIB_ASSERT( false,
+                    "Biarc constructor cannot convert from: " <<
+                    CurveType_name[C.type()] );
+    }
+  }
+
   bool
   Biarc::build(
     real_type x0,
@@ -412,7 +430,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+/*
   real_type
   Biarc::kappa( real_type s ) const {
     real_type L0 = C0.length();
@@ -437,6 +455,16 @@ namespace G2lib {
   real_type
   Biarc::kappa_DDD( real_type ) const
   { return 0; }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Biarc::tx( real_type s ) const {
+    real_type L0 = C0.length();
+    if ( s < L0 ) return C0.tx(s);
+    else          return C1.tx(s-L0);
+  }
+*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -855,58 +883,6 @@ namespace G2lib {
    |  | | | | | ||  __/ |  \__ \  __/ (__| |_
    |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
   \*/
-
-  void
-  Biarc::intersect(
-    BaseCurve const & obj,
-    IntersectList   & ilist,
-    bool              swap_s_vals
-  ) const {
-    IntersectList ilist0, ilist1;
-    C0.intersect( obj, ilist0, false );
-    C1.intersect( obj, ilist1, false );
-    real_type L = C0.length();
-    ilist.reserve( ilist.size() + ilist0.size() + ilist1.size() );
-    IntersectList::iterator it;
-    for ( it = ilist1.begin(); it != ilist1.end(); ++it ) it->first += L;
-    if ( swap_s_vals ) {
-      for ( it = ilist0.begin(); it != ilist0.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist1.begin(); it != ilist1.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-    } else {
-      for ( it = ilist0.begin(); it != ilist0.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist1.begin(); it != ilist1.end(); ++it ) ilist.push_back( *it );
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Biarc::intersect(
-    real_type         offs,
-    BaseCurve const & obj,
-    real_type         offs_obj,
-    IntersectList   & ilist,
-    bool              swap_s_vals
-  ) const {
-    IntersectList ilist0, ilist1;
-    C0.intersect( offs, obj, offs_obj, ilist0, false );
-    C1.intersect( offs, obj, offs_obj, ilist1, false );
-    real_type L = C0.length();
-    ilist.reserve( ilist.size() + ilist0.size() + ilist1.size() );
-    IntersectList::iterator it;
-    for ( it = ilist1.begin(); it != ilist1.end(); ++it ) it->first += L;
-    if ( swap_s_vals ) {
-      for ( it = ilist0.begin(); it != ilist0.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist1.begin(); it != ilist1.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-    } else {
-      for ( it = ilist0.begin(); it != ilist0.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist1.begin(); it != ilist1.end(); ++it ) ilist.push_back( *it );
-    }
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

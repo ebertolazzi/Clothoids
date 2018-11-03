@@ -164,6 +164,18 @@
 		D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9E22EE2216CB48F00C033D2 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
+		D9E4310A218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E4310B218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E4310C218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E4310D218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E4310E218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E4310F218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E43110218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E43111218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E43112218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E43113218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E43114218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
+		D9E43115218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */; };
 		D9E74A561F68824E00E47B88 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
@@ -346,6 +358,7 @@
 		D9C8B9F21F7AA69400DF4205 /* statistic_CLC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic_CLC; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9E22EE0216CB48F00C033D2 /* PolyLine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolyLine.cc; sourceTree = "<group>"; };
 		D9E22EE1216CB48F00C033D2 /* PolyLine.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolyLine.hh; sourceTree = "<group>"; };
+		D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G2lib_intersect.cc; sourceTree = "<group>"; };
 		D9E74A4D1F68801C00E47B88 /* statistic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = statistic; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9FCD3352075552600553A10 /* Clothoid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clothoid.cc; sourceTree = "<group>"; };
 		D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidDistance.cc; sourceTree = "<group>"; };
@@ -474,6 +487,7 @@
 				D9BA2F8D217FD93E009D45BD /* AABBtree.cc */,
 				D9099D241F6009AC00740ECF /* G2lib.hh */,
 				D9099D251F600AA600740ECF /* G2lib.cc */,
+				D9E43109218DBB10006CC6F3 /* G2lib_intersect.cc */,
 				D9099D1E1F5FFB6C00740ECF /* Fresnel.hh */,
 				D9099D1F1F5FFB8300740ECF /* Fresnel.cc */,
 				D9099D211F5FFC8700740ECF /* Triangle2D.hh */,
@@ -812,6 +826,7 @@
 				D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */,
 				D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */,
 				D9FCD33B2075552700553A10 /* Clothoid.cc in Sources */,
+				D9E4310F218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9179A80206D211E006B66E7 /* G2lib.cc in Sources */,
 				D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */,
 				D9179A82206D211E006B66E7 /* Biarc.cc in Sources */,
@@ -834,6 +849,7 @@
 				D92EFA802186931500BF8E18 /* Fresnel.cc in Sources */,
 				D92EFA822186931500BF8E18 /* Clothoid.cc in Sources */,
 				D92EFA832186931500BF8E18 /* G2lib.cc in Sources */,
+				D9E43111218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D92EFA842186931500BF8E18 /* ClothoidList.cc in Sources */,
 				D92EFA932186932B00BF8E18 /* testIntersect2.cc in Sources */,
 				D92EFA852186931500BF8E18 /* Biarc.cc in Sources */,
@@ -856,6 +872,7 @@
 				D92EFA992187B03600BF8E18 /* Fresnel.cc in Sources */,
 				D92EFA9A2187B03600BF8E18 /* Clothoid.cc in Sources */,
 				D92EFA9B2187B03600BF8E18 /* G2lib.cc in Sources */,
+				D9E43112218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D92EFA9C2187B03600BF8E18 /* ClothoidList.cc in Sources */,
 				D92EFA9E2187B03600BF8E18 /* Biarc.cc in Sources */,
 				D92EFAAC2187B05800BF8E18 /* testIntersect3.cc in Sources */,
@@ -878,6 +895,7 @@
 				D9099D201F5FFB8300740ECF /* Fresnel.cc in Sources */,
 				D9099D261F600AA600740ECF /* G2lib.cc in Sources */,
 				D9FCD3362075552700553A10 /* Clothoid.cc in Sources */,
+				D9E4310A218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D971F8991F613BC2000E663E /* Biarc.cc in Sources */,
 				D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
@@ -900,6 +918,7 @@
 				D969AF7821708CC200CA4DD0 /* Fresnel.cc in Sources */,
 				D969AF7921708CC200CA4DD0 /* G2lib.cc in Sources */,
 				D969AF8921708CEF00CA4DD0 /* testPolyline.cc in Sources */,
+				D9E43115218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D969AF7A21708CC200CA4DD0 /* Clothoid.cc in Sources */,
 				D969AF7B21708CC200CA4DD0 /* ClothoidList.cc in Sources */,
 				D969AF7C21708CC200CA4DD0 /* Biarc.cc in Sources */,
@@ -923,6 +942,7 @@
 				D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9BA2F91217FE5AE009D45BD /* AABBtree.cc in Sources */,
 				D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */,
+				D9E4310D218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */,
 				D96E1FB11F75513000115228 /* Biarc.cc in Sources */,
 				D96E1FB21F75513000115228 /* Circle.cc in Sources */,
@@ -943,6 +963,7 @@
 				D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */,
 				D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */,
 				D9FCD3372075552700553A10 /* Clothoid.cc in Sources */,
+				D9E4310B218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */,
 				D971F89A1F613BC2000E663E /* Biarc.cc in Sources */,
@@ -965,6 +986,7 @@
 				D9AFBB7120E28F6900C498EF /* testTriangle2D.cc in Sources */,
 				D9AFBB6020E28F5900C498EF /* Fresnel.cc in Sources */,
 				D9AFBB6220E28F5900C498EF /* Clothoid.cc in Sources */,
+				D9E43113218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9AFBB6320E28F5900C498EF /* G2lib.cc in Sources */,
 				D9AFBB6420E28F5900C498EF /* ClothoidList.cc in Sources */,
 				D9AFBB6520E28F5900C498EF /* Biarc.cc in Sources */,
@@ -987,6 +1009,7 @@
 				D9BFDB1620EE3C0E00612F3C /* CubicRootsFlocke.cc in Sources */,
 				D9BFDB1720EE3C0E00612F3C /* Fresnel.cc in Sources */,
 				D9BFDB1820EE3C0E00612F3C /* G2lib.cc in Sources */,
+				D9E43114218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9BFDB1920EE3C0E00612F3C /* Clothoid.cc in Sources */,
 				D9BFDB1A20EE3C0E00612F3C /* ClothoidList.cc in Sources */,
 				D9BFDB1B20EE3C0E00612F3C /* Biarc.cc in Sources */,
@@ -1009,6 +1032,7 @@
 				D9C3739920BC484100715C11 /* Fresnel.cc in Sources */,
 				D9C373AA20BC485B00715C11 /* testIntersect.cc in Sources */,
 				D9C3739A20BC484100715C11 /* Clothoid.cc in Sources */,
+				D9E43110218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9C3739B20BC484100715C11 /* G2lib.cc in Sources */,
 				D9C3739C20BC484100715C11 /* ClothoidList.cc in Sources */,
 				D9C3739D20BC484100715C11 /* Biarc.cc in Sources */,
@@ -1032,6 +1056,7 @@
 				D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9BA2F92217FE5AF009D45BD /* AABBtree.cc in Sources */,
 				D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */,
+				D9E4310E218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9C8B9E71F7AA69400DF4205 /* Biarc.cc in Sources */,
 				D9C8B9E81F7AA69400DF4205 /* Circle.cc in Sources */,
 				D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */,
@@ -1053,6 +1078,7 @@
 				D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9BA2F90217FE5AE009D45BD /* AABBtree.cc in Sources */,
 				D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */,
+				D9E4310C218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */,
 				D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */,
 				D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */,

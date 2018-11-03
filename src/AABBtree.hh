@@ -261,7 +261,7 @@ namespace G2lib {
       case 1: // first is a tree, second is a leaf
         { typename vector<PtrAABB>::const_iterator it;
           for ( it = children.begin(); it != children.end(); ++it )
-            if ( tree.collision(**it, ifun) )
+            if ( tree.collision( **it, ifun, !swap_tree ) )
               return true;
         }
         break;
@@ -269,7 +269,7 @@ namespace G2lib {
         { typename vector<PtrAABB>::const_iterator it;
           for ( it = tree.children.begin();
                 it != tree.children.end(); ++it )
-            if ( this->collision(**it, ifun) )
+            if ( this->collision( **it, ifun, swap_tree ) )
               return true;
         }
         break;
@@ -279,7 +279,7 @@ namespace G2lib {
           for ( c1 = children.begin(); c1 != children.end(); ++c1 )
             for ( c2 = tree.children.begin();
                   c2 != tree.children.end(); ++c2 )
-              if ( (*c1)->collision(**c2, ifun) )
+              if ( (*c1)->collision( **c2, ifun, swap_tree ) )
                 return true;
         }
         break;

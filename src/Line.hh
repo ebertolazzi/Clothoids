@@ -88,6 +88,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
+    explicit
     LineSegment()
     : BaseCurve(G2LIB_LINE)
     , x0(0)
@@ -98,7 +99,16 @@ namespace G2lib {
     , L(0)
     {}
 
+    explicit
+    LineSegment( LineSegment const & s )
+    : BaseCurve(G2LIB_LINE)
+    { copy(s); }
+
+    explicit
+    LineSegment( BaseCurve const & C );
+
     //! construct a circle curve with the standard parameters
+    explicit
     LineSegment( real_type _x0,
                  real_type _y0,
                  real_type _theta0,
@@ -121,10 +131,6 @@ namespace G2lib {
       s0     = c.s0;
       L      = c.L;
     }
-
-    LineSegment( LineSegment const & s )
-    : BaseCurve(G2LIB_LINE)
-    { copy(s); }
 
     LineSegment const & operator = ( LineSegment const & s )
     { copy(s); return *this; }
@@ -560,37 +566,6 @@ namespace G2lib {
     }
 
     /*\
-     |   _       _                          _
-     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
-     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
-     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
-     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
-    \*/
-
-    virtual
-    bool
-    collision( BaseCurve const & ) const G2LIB_OVERRIDE;
-
-    virtual
-    bool
-    collision( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    intersect( BaseCurve const & obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    intersect( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-    /*\
      |      _ _     _
      |   __| (_)___| |_ __ _ _ __   ___ ___
      |  / _` | / __| __/ _` | '_ \ / __/ _ \
@@ -684,6 +659,32 @@ namespace G2lib {
                real_type           S_offs,
                real_type         & s1,
                real_type         & s2 ) const;
+
+    void
+    intersect( LineSegment const & LS,
+               IntersectList     & ilist,
+               bool                swap_s_vals ) const {
+      real_type s1, s2;
+      bool ok = this->intersect( LS, s1, s2 );
+      if ( ok ) {
+        if ( swap_s_vals ) ilist.push_back( Ipair(s2, s1) );
+        else               ilist.push_back( Ipair(s1, s2) );
+      }
+    }
+
+    void
+    intersect( real_type           offs,
+               LineSegment const & LS,
+               real_type           offs_LS,
+               IntersectList     & ilist,
+               bool                swap_s_vals ) const {
+      real_type s1, s2;
+      bool ok = this->intersect( offs, LS, offs_LS, s1, s2 );
+      if ( ok ) {
+        if ( swap_s_vals ) ilist.push_back( Ipair(s2, s1) );
+        else               ilist.push_back( Ipair(s1, s2) );
+      }
+    }
 
     bool
     collision( LineSegment const & S ) const;

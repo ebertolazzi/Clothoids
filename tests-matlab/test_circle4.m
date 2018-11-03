@@ -43,6 +43,8 @@ L3.plot(100,fmt3);
 L4.plot(fmt4{:});
 L5.plot(fmt4{:});
 
+if true
+
 [s1,s2] = L1.intersect(L2);
 
 XY1 = L1.eval( s1 );
@@ -58,6 +60,10 @@ plot( XY2(1,:), XY2(2,:), 's', ...
       'MarkerSize',15,...
       'MarkerEdgeColor','blue',...
       'MarkerFaceColor',[0.9,0.9,0.9] );
+  
+end
+
+if true
 
 [s1,s3] = L1.intersect(L3);
 
@@ -75,7 +81,12 @@ plot( XY3(1,:), XY3(2,:), 's', ...
       'MarkerEdgeColor','blue',...
       'MarkerFaceColor',[0.9,0.9,0.9] );
 
-[s1,s4] = L1.intersect(L4);
+end
+
+if true
+
+%[s1,s4] = L1.intersect(L4);
+[s4,s1] = L4.intersect(L1);
 
 XY1 = L1.eval( s1 );
 XY4 = L4.eval( s4 );
@@ -90,8 +101,11 @@ plot( XY4(1,:), XY4(2,:), 's', ...
       'MarkerSize',15,...
       'MarkerEdgeColor','blue',...
       'MarkerFaceColor',[0.9,0.9,0.9] );
+end
 
-[s1,s5] = L5.intersect(L1);
+if true
+    
+[s1,s5] = L1.intersect(L5);
 
 XY5 = L5.eval( s5 );
 XY1 = L1.eval( s1 );
@@ -106,6 +120,7 @@ plot( XY1(1,:), XY1(2,:), 's', ...
       'MarkerSize',5,...
       'MarkerEdgeColor','b',...
       'MarkerFaceColor',[0.9,0.9,0.9] );
+end
 
 axis equal;
 %

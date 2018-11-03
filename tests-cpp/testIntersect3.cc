@@ -38,7 +38,7 @@ main() {
   G2lib::ClothoidList CL0(C0);
   G2lib::ClothoidList CL1(C1);
 
-  G2lib::BaseCurve::IntersectList ilist;
+  G2lib::IntersectList ilist;
 
   //G2lib::BaseCurve *pC0 = &L0;
   //G2lib::BaseCurve *pC1 = &C1;
@@ -46,6 +46,8 @@ main() {
   G2lib::BaseCurve *pC1 = &L0;
 
   pC0->intersect( *pC1, ilist, false );
+
+  cout << collision( *pC0, *pC1 ) << '\n' ;
   //C0.intersect( C1, ilist );
 
   cout << "L0 = " << C0.length() << '\n';

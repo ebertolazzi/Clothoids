@@ -149,6 +149,7 @@ namespace G2lib {
     {}
 
     //! construct a circle curve with the standard parameters
+    explicit
     CircleArc( LineSegment const & LS )
     : BaseCurve(G2LIB_CIRCLE)
     , x0(LS.xBegin())
@@ -171,13 +172,105 @@ namespace G2lib {
       this->L      = c.L;
     }
 
+    explicit
     CircleArc( CircleArc const & s )
     : BaseCurve(G2LIB_CIRCLE)
     { copy(s); }
 
+    explicit
+    CircleArc( BaseCurve const & C );
+
     CircleArc const &
     operator = ( CircleArc const & s )
     { copy(s); return *this; }
+
+    //! construct a circle with the standard parameters
+    void
+    build( real_type _x0,
+           real_type _y0,
+           real_type _theta0,
+           real_type _k,
+           real_type _L ) {
+      x0     = _x0;
+      y0     = _y0;
+      theta0 = _theta0;
+      k      = _k;
+      L      = _L;
+    }
+
+    //! build a circle by solving the hermite G1 problem
+    bool
+    build_G1( real_type _x0,
+              real_type _y0,
+              real_type _theta0,
+              real_type _x1,
+              real_type _y1 );
+
+    //! build a circle passing by 3 points
+    bool
+    build_3P( real_type _x0,
+              real_type _y0,
+              real_type _x1,
+              real_type _y1,
+              real_type _x2,
+              real_type _y2 );
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    //! get the bounding box triangle (if angle variation less that pi/3)
+    bool
+    bbTriangle( real_type & x0, real_type & y0,
+                real_type & x1, real_type & y1,
+                real_type & x2, real_type & y2 ) const;
+
+    //! get the bounding box triangle (if angle variation less that pi/3)
+    bool
+    bbTriangle( real_type   offs,
+                real_type & x0, real_type & y0,
+                real_type & x1, real_type & y1,
+                real_type & x2, real_type & y2 ) const;
+
+    bool
+    bbTriangle( real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const {
+      return bbTriangle( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
+    }
+
+    bool
+    bbTriangle( real_type offs,
+                real_type p0[2],
+                real_type p1[2],
+                real_type p2[2] ) const {
+      return bbTriangle( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
+    }
+
+    bool
+    bbTriangle( Triangle2D & t ) const {
+      real_type p0[2], p1[2], p2[2];
+      bool ok = bbTriangle( p0, p1, p2 );
+      if ( ok ) t.build( p0, p1, p2 );
+      return ok;
+    }
+
+    bool
+    bbTriangle( real_type offs, Triangle2D & t ) const {
+      real_type p0[2], p1[2], p2[2];
+      bool ok = bbTriangle( offs, p0, p1, p2 );
+      if ( ok ) t.build( p0, p1, p2 );
+      return ok;
+    }
+
+    void
+    bbTriangles( std::vector<Triangle2D> & tvec,
+                 real_type max_angle = m_pi/18,
+                 real_type max_size  = 1e100 ) const; // 10 degree
+
+    void
+    bbTriangles( real_type offs,
+                 std::vector<Triangle2D> & tvec,
+                 real_type max_angle = m_pi/18,
+                 real_type max_size  = 1e100  ) const; // 10 degree
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -420,58 +513,6 @@ namespace G2lib {
     trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE;
 
     /*\
-     |   _       _                          _
-     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
-     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
-     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
-     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
-    \*/
-
-    virtual
-    bool
-    collision( BaseCurve const & ) const G2LIB_OVERRIDE;
-
-    virtual
-    bool
-    collision( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    intersect( BaseCurve const & obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    intersect( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    bool
-    collision( CircleArc const & ) const;
-
-    bool
-    collision( real_type         offs,
-               CircleArc const & C,
-               real_type         offs_obj ) const;
-
-    void
-    intersect( CircleArc const & obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const;
-
-    void
-    intersect( real_type         offs,
-               CircleArc const & C,
-               real_type         offs_obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const;
-
-    /*\
      |        _                     _   ____       _       _
      |    ___| | ___  ___  ___  ___| |_|  _ \ ___ (_)_ __ | |_
      |   / __| |/ _ \/ __|/ _ \/ __| __| |_) / _ \| | '_ \| __|
@@ -510,6 +551,42 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+    /*\
+     |             _ _ _     _
+     |    ___ ___ | | (_)___(_) ___  _ __
+     |   / __/ _ \| | | / __| |/ _ \| '_ \
+     |  | (_| (_) | | | \__ \ | (_) | | | |
+     |   \___\___/|_|_|_|___/_|\___/|_| |_|
+    \*/
+
+    bool
+    collision( CircleArc const & ) const;
+
+    bool
+    collision( real_type         offs,
+               CircleArc const & C,
+               real_type         offs_obj ) const;
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
+
+    void
+    intersect( CircleArc const & obj,
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const;
+
+    void
+    intersect( real_type         offs,
+               CircleArc const & C,
+               real_type         offs_obj,
+               IntersectList   & ilist,
+               bool              swap_s_vals ) const;
+
     real_type sinTheta0() const { return sin(theta0); }
     real_type cosTheta0() const { return cos(theta0); }
     real_type curvature() const { return k; }
@@ -517,37 +594,6 @@ namespace G2lib {
     // return the length of the arc that can approximated
     // by a line segment
     real_type lenTolerance( real_type tol ) const;
-
-    //! construct a circle with the standard parameters
-    void
-    build( real_type _x0,
-           real_type _y0,
-           real_type _theta0,
-           real_type _k,
-           real_type _L ) {
-      x0     = _x0;
-      y0     = _y0;
-      theta0 = _theta0;
-      k      = _k;
-      L      = _L;
-    }
-
-    //! build a circle by solving the hermite G1 problem
-    bool
-    build_G1( real_type _x0,
-              real_type _y0,
-              real_type _theta0,
-              real_type _x1,
-              real_type _y1 );
-
-    //! build a circle passing by 3 points
-    bool
-    build_3P( real_type _x0,
-              real_type _y0,
-              real_type _x1,
-              real_type _y1,
-              real_type _x2,
-              real_type _y2 );
 
     real_type
     delta_theta() const
@@ -571,61 +617,6 @@ namespace G2lib {
     center( real_type & cx, real_type & cy ) const;
 
     real_type ray() const { return 1/std::abs(k); }
-
-    //! get the bounding box triangle (if angle variation less that pi/3)
-    bool
-    bbTriangle( real_type & x0, real_type & y0,
-                real_type & x1, real_type & y1,
-                real_type & x2, real_type & y2 ) const;
-
-    //! get the bounding box triangle (if angle variation less that pi/3)
-    bool
-    bbTriangle( real_type   offs,
-                real_type & x0, real_type & y0,
-                real_type & x1, real_type & y1,
-                real_type & x2, real_type & y2 ) const;
-
-    bool
-    bbTriangle( real_type p0[2],
-                real_type p1[2],
-                real_type p2[2] ) const {
-      return bbTriangle( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
-    }
-
-    bool
-    bbTriangle( real_type offs,
-                real_type p0[2],
-                real_type p1[2],
-                real_type p2[2] ) const {
-      return bbTriangle( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
-    }
-
-    bool
-    bbTriangle( Triangle2D & t ) const {
-      real_type p0[2], p1[2], p2[2];
-      bool ok = bbTriangle( p0, p1, p2 );
-      if ( ok ) t.build( p0, p1, p2 );
-      return ok;
-    }
-
-    bool
-    bbTriangle( real_type offs, Triangle2D & t ) const {
-      real_type p0[2], p1[2], p2[2];
-      bool ok = bbTriangle( offs, p0, p1, p2 );
-      if ( ok ) t.build( p0, p1, p2 );
-      return ok;
-    }
-
-    void
-    bbTriangles( std::vector<Triangle2D> & tvec,
-                 real_type max_angle = m_pi/18,
-                 real_type max_size  = 1e100 ) const; // 10 degree
-
-    void
-    bbTriangles( real_type offs,
-                 std::vector<Triangle2D> & tvec,
-                 real_type max_angle = m_pi/18,
-                 real_type max_size  = 1e100  ) const; // 10 degree
 
     /*\
      |   _   _ _   _ ____  ____ ____

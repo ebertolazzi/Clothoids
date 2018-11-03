@@ -59,20 +59,21 @@ addseg1( 82.764839);           % 34
 %addseg( 59.341977, 0.003122);  % 35
 S.push_back_G1( x0, y0, theta0); % close curve ...
 
-x     = -240:5:450;
-y     = -200:5:230;
+x     = -240:2:450;
+y     = -200:2:230;
 %x     = -150:2:50;
 %y     = -100:2:100;
 [X,Y] = meshgrid(x,y);
 
 tic
-if false
-  [ s, t, ipos ] = S.find_coord( X, Y );
-  Z = t;
-else
-  [ s, t, ipos ] = S.find_coord1( X, Y, 7, 10 );
-  Z = t;
-end
+% if false
+%   [ s, t, ipos ] = S.find_coord( X, Y );
+%   Z = t;
+% else
+%   [ s, t, ipos ] = S.find_coord1( X, Y, 7, 10 );
+%   Z = t;
+% end
+Z = S.distance( X, Y );
 toc
 
 %[ s, t, ipos ] = S.find_coord1( [-20,-10], [-10,-10], 35 )

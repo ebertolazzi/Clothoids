@@ -350,14 +350,14 @@ do_collision( int nlhs, mxArray       *plhs[],
   }
 
   if ( nrhs == 4 ) {
-    setScalarBool( arg_out_0, ptr->collision( *ptr1 ) );
+    setScalarBool( arg_out_0, collision( *ptr, *ptr1 ) );
   } else {
     real_type offs, offs_obj;
     offs     = getScalarValue( arg_in_4,
                                CMD "`offs` expected to be a real scalar" );
     offs_obj = getScalarValue( arg_in_5,
                                CMD "`offs_obj` expected to be a real scalar" );
-    setScalarBool( arg_out_0, ptr->collision( offs, *ptr1, offs_obj ) );
+    setScalarBool( arg_out_0, collision( *ptr, offs, *ptr1, offs_obj ) );
   }
 
   #undef CMD
@@ -369,7 +369,6 @@ static
 void
 do_intersect( int nlhs, mxArray       *plhs[],
               int nrhs, mxArray const *prhs[] ) {
-
 
   #define CMD CMD_BASE "('intersect',OBJ,OBJ1,type,[,offs,offs1]): "
   MEX_ASSERT( nrhs == 4 || nrhs == 6,
@@ -393,22 +392,22 @@ do_intersect( int nlhs, mxArray       *plhs[],
     MEX_ASSERT( false, CMD "'type '" << "' unsupported" );
   }
 
-  BaseCurve::IntersectList ilist;
+  IntersectList ilist;
   if ( nrhs == 4 ) {
-    ptr->intersect( *ptr1, ilist, false );
+    intersect( *ptr, *ptr1, ilist, false );
   } else {
     real_type offs, offs_obj;
     offs     = getScalarValue( arg_in_4,
                                CMD "`offs` expected to be a real scalar" );
     offs_obj = getScalarValue( arg_in_5,
                                CMD "`offs_obj` expected to be a real scalar" );
-    ptr->intersect( offs, *ptr1, offs_obj, ilist, false );
+    intersect( *ptr, offs, *ptr1, offs_obj, ilist, false );
   }
 
-  double * pS1 = createMatrixValue( arg_out_0, ilist.size(),1 );
-  double * pS2 = createMatrixValue( arg_out_1, ilist.size(),1 );
+  double * pS1 = createMatrixValue( arg_out_0, ilist.size(), 1 );
+  double * pS2 = createMatrixValue( arg_out_1, ilist.size(), 1 );
   for ( mwSize i=0; i < ilist.size(); ++i ) {
-    BaseCurve::Ipair const & ip = ilist[i];
+    Ipair const & ip = ilist[i];
     *pS1++ = ip.first;
     *pS2++ = ip.second;
   }

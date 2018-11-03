@@ -100,11 +100,13 @@ namespace G2lib {
     ~Biarc() G2LIB_OVERRIDE
     {}
 
+    explicit
     Biarc()
     : BaseCurve(G2LIB_BIARC)
     {}
 
     //! construct a clothoid with the standard parameters
+    explicit
     Biarc( real_type x0,
            real_type y0,
            real_type theta0,
@@ -123,9 +125,13 @@ namespace G2lib {
                         ") cannot be computed" );
     }
 
+    explicit
     Biarc( Biarc const & ba )
     : BaseCurve(G2LIB_BIARC)
     { copy(ba); }
+
+    explicit
+    Biarc( BaseCurve const & C );
 
     void
     copy( Biarc const & c ) {
@@ -428,72 +434,6 @@ namespace G2lib {
     scale( real_type s ) G2LIB_OVERRIDE;
 
     /*\
-     |   _       _                          _
-     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
-     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
-     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
-     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
-    \*/
-
-    virtual
-    bool
-    collision( BaseCurve const & obj ) const G2LIB_OVERRIDE {
-      return C0.collision(obj) || C1.collision(obj);
-    }
-
-    virtual
-    bool
-    collision( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj ) const G2LIB_OVERRIDE {
-      return C0.collision(offs,obj,offs_obj) ||
-             C1.collision(offs,obj,offs_obj);
-    }
-
-    virtual
-    void
-    intersect( BaseCurve const & obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    intersect( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    bool
-    collision( Biarc const & B ) const {
-      return C0.collision( B.C0 ) || C0.collision( B.C1 ) ||
-             C1.collision( B.C0 ) || C1.collision( B.C1 );
-    }
-
-
-    bool
-    collision( real_type     offs,
-               Biarc const & B,
-               real_type     offs_B ) const {
-      return C0.collision( offs, B.C0, offs_B ) ||
-             C0.collision( offs, B.C1, offs_B ) ||
-             C1.collision( offs, B.C0, offs_B ) ||
-             C1.collision( offs, B.C1, offs_B );
-    }
-
-    void
-    intersect( Biarc const   & B,
-               IntersectList & ilist,
-               bool            swap_s_vals ) const;
-
-    void
-    intersect( real_type       offs,
-               Biarc const   & B,
-               real_type       offs_B,
-               IntersectList & ilist,
-               bool            swap_s_vals ) const;
-
-    /*\
      |        _                     _   ____       _       _
      |    ___| | ___  ___  ___  ___| |_|  _ \ ___ (_)_ __ | |_
      |   / __| |/ _ \/ __|/ _ \/ __| __| |_) / _ \| | '_ \| __|
@@ -525,11 +465,6 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type kappa    ( real_type s ) const;
-    real_type kappa_D  ( real_type s ) const;
-    real_type kappa_DD ( real_type s ) const;
-    real_type kappa_DDD( real_type s ) const;
-
     real_type xMiddle()     const { return C1.xBegin(); }
     real_type yMiddle()     const { return C1.yBegin(); }
     real_type thetaMiddle() const { return C1.thetaBegin(); }
@@ -556,6 +491,50 @@ namespace G2lib {
       C0.bbTriangles( offs, tvec, max_angle, max_size );
       C1.bbTriangles( offs, tvec, max_angle, max_size );
     }
+
+    /*\
+     |             _ _ _     _
+     |    ___ ___ | | (_)___(_) ___  _ __
+     |   / __/ _ \| | | / __| |/ _ \| '_ \
+     |  | (_| (_) | | | \__ \ | (_) | | | |
+     |   \___\___/|_|_|_|___/_|\___/|_| |_|
+    \*/
+
+    bool
+    collision( Biarc const & B ) const {
+      return C0.collision( B.C0 ) || C0.collision( B.C1 ) ||
+             C1.collision( B.C0 ) || C1.collision( B.C1 );
+    }
+
+    bool
+    collision( real_type     offs,
+               Biarc const & B,
+               real_type     offs_B ) const {
+      return C0.collision( offs, B.C0, offs_B ) ||
+             C0.collision( offs, B.C1, offs_B ) ||
+             C1.collision( offs, B.C0, offs_B ) ||
+             C1.collision( offs, B.C1, offs_B );
+    }
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
+
+    void
+    intersect( Biarc const   & B,
+               IntersectList & ilist,
+               bool            swap_s_vals ) const;
+
+    void
+    intersect( real_type       offs,
+               Biarc const   & B,
+               real_type       offs_B,
+               IntersectList & ilist,
+               bool            swap_s_vals ) const;
 
     void
     info( ostream_type & stream ) const G2LIB_OVERRIDE

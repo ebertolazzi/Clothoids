@@ -48,6 +48,15 @@ namespace G2lib {
   real_type const m_1_pi       = 0.318309886183790671537767526745; // 1/pi
   real_type const m_1_sqrt_pi  = 0.564189583547756286948079451561; // 1/sqrt(pi)
 
+  char const *CurveType_name[] = {
+    "LINE",
+    "POLYLINE",
+    "CIRCLE",
+    "BIARC",
+    "CLOTHOID",
+    "CLOTHOID_LIST"
+  };
+
   void
   rangeSymm( real_type & ang ) {
     ang = fmod( ang, m_2pi );

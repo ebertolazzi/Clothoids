@@ -52,6 +52,29 @@ namespace G2lib {
    |               |___/
   \*/
 
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  PolyLine::PolyLine( BaseCurve const & C )
+  //: BaseCurve(G2LIB_CLOTHOID)
+  : aabb_done(false)
+  {
+    switch ( C.type() ) {
+    case G2LIB_LINE:
+      build( *static_cast<LineSegment const *>(&C) );
+      break;
+    case G2LIB_POLYLINE:
+      //copy( *static_cast<PolyLine const *>(&C) );
+      //break;
+    case G2LIB_CIRCLE:
+    case G2LIB_CLOTHOID:
+    case G2LIB_BIARC:
+    case G2LIB_CLOTHOID_LIST:
+      G2LIB_ASSERT( false,
+                    "PolyLine constructor cannot convert from: " <<
+                    CurveType_name[C.type()] );
+    }
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void

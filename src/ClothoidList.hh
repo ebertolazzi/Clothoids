@@ -582,6 +582,33 @@ namespace G2lib {
     mutable real_type   aabb_max_size;
     mutable vector<T2D> aabb_tri;
 
+    class T2D_collision_list {
+      ClothoidList const * pList1;
+      real_type    const   offs1;
+      ClothoidList const * pList2;
+      real_type    const   offs2;
+    public:
+      T2D_collision_list( ClothoidList const * _pList1,
+                          real_type    const   _offs1,
+                          ClothoidList const * _pList2,
+                          real_type    const   _offs2 )
+      : pList1(_pList1)
+      , offs1(_offs1)
+      , pList2(_pList2)
+      , offs2(_offs2)
+      {}
+
+      bool
+      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
+        T2D const & T1 = pList1->aabb_tri[size_t(ptr1->Ipos())];
+        T2D const & T2 = pList2->aabb_tri[size_t(ptr2->Ipos())];
+        ClothoidCurve const & C1 = pList1->get(T1.Icurve());
+        ClothoidCurve const & C2 = pList2->get(T2.Icurve());
+        real_type ss1, ss2;
+        return C1.aabb_intersect( T1, offs1, &C2, T2, offs2, ss1, ss2 );
+      }
+    };
+
   public:
 
     using BaseCurve::thetaBegin;
@@ -622,6 +649,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
+    explicit
     ClothoidList()
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , last_idx(0)
@@ -629,33 +657,76 @@ namespace G2lib {
     {}
 
     virtual
-    ~ClothoidList() G2LIB_OVERRIDE;
+    ~ClothoidList() G2LIB_OVERRIDE {
+      s0.clear();
+      clotoidList.clear();
+      aabb_tri.clear();
+    }
 
+    explicit
     ClothoidList( ClothoidList const & s )
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , last_idx(0)
     , aabb_done(false)
     { copy(s); }
 
-    ClothoidList const & operator = ( ClothoidList const & s )
-    { copy(s); return *this; }
-
-    ClothoidList( LineSegment const & LS );
-    ClothoidList( CircleArc const & C );
-    ClothoidList( Biarc const & B );
-    ClothoidList( ClothoidCurve const & c );
-
-    void
-    init() {
-      s0.clear();
-      clotoidList.clear();
-      last_idx = 0;
-    }
-
+    void init();
     void reserve( int_type n );
     void copy( ClothoidList const & L );
 
+    ClothoidList const & operator = ( ClothoidList const & s )
+    { copy(s); return *this; }
+
+    explicit
+    ClothoidList( LineSegment const & LS )
+    : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , last_idx(0)
+    , aabb_done(false)
+    {
+      init();
+      push_back( LS );
+    }
+
+    explicit
+    ClothoidList( CircleArc const & C )
+    : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , last_idx(0)
+    , aabb_done(false)
+    {
+      init();
+      push_back( C );
+    }
+
+    explicit
+    ClothoidList( Biarc const & C )
+    : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , last_idx(0)
+    , aabb_done(false)
+    {
+      init();
+      push_back( C.getC0() );
+      push_back( C.getC1() );
+    }
+
+    explicit
+    ClothoidList( ClothoidCurve const & c )
+    : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , last_idx(0)
+    , aabb_done(false)
+    {
+      init();
+      push_back( c );
+    }
+
+    explicit
+    ClothoidList( BaseCurve const & C );
+
+    void push_back( LineSegment const & c );
+    void push_back( CircleArc const & c );
+    void push_back( Biarc const & c );
     void push_back( ClothoidCurve const & c );
+
+
     void push_back( real_type kappa0, real_type dkappa, real_type L );
     void push_back( real_type x0,     real_type y0,     real_type theta0,
                     real_type kappa0, real_type dkappa, real_type L );
@@ -724,6 +795,11 @@ namespace G2lib {
                  real_type          max_size  = 1e100 ) const {
       bbTriangles( 0, tvec, max_angle, max_size );
     }
+
+    void
+    build_AABBtree( real_type offs,
+                    real_type max_angle = m_pi/6, // 30 degree
+                    real_type max_size  = 1e100 ) const;
 
     /*\
      |   _     _
@@ -1121,58 +1197,6 @@ namespace G2lib {
     trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE;
 
     /*\
-     |   _       _                          _
-     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
-     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
-     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
-     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
-    \*/
-
-    virtual
-    bool
-    collision( BaseCurve const & ) const G2LIB_OVERRIDE;
-
-    bool
-    collision( ClothoidList const & C ) const;
-
-    virtual
-    bool
-    collision( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj ) const G2LIB_OVERRIDE;
-
-    bool
-    collision( real_type            offs,
-               ClothoidList const & CL,
-               real_type            offs_C ) const;
-
-
-    virtual
-    void
-    intersect( BaseCurve const & obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    void
-    intersect( ClothoidList const & CL,
-               IntersectList      & ilist,
-               bool                 swap_s_vals ) const;
-
-    virtual
-    void
-    intersect( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    void
-    intersect( real_type            offs,
-               ClothoidList const & CL,
-               real_type            offs_obj,
-               IntersectList      & ilist,
-               bool                 swap_s_vals ) const;
-    /*\
      |      _ _     _
      |   __| (_)___| |_ __ _ _ __   ___ ___
      |  / _` | / __| __/ _` | '_ \ / __/ _ \
@@ -1286,183 +1310,41 @@ namespace G2lib {
              real_type & s,
              real_type & t ) const;
 
-#if 0
+    /*\
+     |             _ _ _     _
+     |    ___ ___ | | (_)___(_) ___  _ __
+     |   / __/ _ \| | | / __| |/ _ \| '_ \
+     |  | (_| (_) | | | \__ \ | (_) | | | |
+     |   \___\___/|_|_|_|___/_|\___/|_| |_|
+    \*/
 
-    real_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & X,
-                  real_type & Y,
-                  real_type & S ) const;
+    bool
+    collision( ClothoidList const & C ) const;
 
-    real_type
-    distance( real_type qx, real_type qy, real_type & S ) const
-    { real_type X, Y; return closestPoint( qx, qy, X, Y, S ); }
-
-    real_type
-    distance( real_type qx, real_type qy ) const
-    { real_type S; return distance( qx, qy, S ); }
+    bool
+    collision( real_type            offs,
+               ClothoidList const & CL,
+               real_type            offs_C ) const;
 
     /*\
-     |  _     _                      _
-     | (_)_ _| |_ ___ _ _ ___ ___ __| |_
-     | | | ' \  _/ -_) '_(_-</ -_) _|  _|
-     | |_|_||_\__\___|_| /__/\___\__|\__|
-     |
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
     \*/
-    /*! \brief intersect two clothoid arcs
-     *
-     * \param offs      offset of the first arc
-     * \param c         the second clothoid arc
-     * \param c_offs    offset of the second arc
-     * \param s1        intersection parameters of the first arc
-     * \param s2        intersection parameters of the second arc
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
-    void
-    intersect( real_type             offs,
-               ClothoidCurve const & c,
-               real_type             c_offs,
-               vector<real_type>   & s1,
-               vector<real_type>   & s2,
-               int_type              max_iter,
-               real_type             tolerance ) const;
 
-    /*! \brief intersect two clothoid curve
-     *
-     * \param c         the clothoid arc
-     * \param s1        intersection parameters of the arc
-     * \param s2        intersection parameters of the clothoid list
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
-    void
-    intersect( ClothoidCurve const & c,
-               vector<real_type>   & s1,
-               vector<real_type>   & s2,
-               int_type              max_iter,
-               real_type             tolerance ) const {
-      intersect( 0, c, 0, s1, s2, max_iter, tolerance );
-    }
-
-    /*! \brief intersect a clothoid curve to a circle arc
-     *
-     * \param c_in      the circle arc
-     * \param s1        intersection parameters of the arc
-     * \param s2        intersection parameters of the clothoid list
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
-    void
-    intersect( CircleArc const   & c_in,
-               vector<real_type> & s1,
-               vector<real_type> & s2,
-               int_type            max_iter,
-               real_type           tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( 0, c, 0, s1, s2, max_iter, tolerance );
-    }
-
-    /*! \brief intersect a clothoid curve to a circle arc
-     *
-     * \param offs      offset of the clothoid
-     * \param c_in      the circle arc
-     * \param c_offs    offset of the circle
-     * \param s1        intersection parameters of the arc
-     * \param s2        intersection parameters of the clothoid list
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
-    void
-    intersect( real_type           offs,
-               CircleArc const   & c_in,
-               real_type           c_offs,
-               vector<real_type> & s1,
-               vector<real_type> & s2,
-               int_type            max_iter,
-               real_type           tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance );
-    }
-
-    /*! \brief intersect a clothoid curve to a line segment
-     *
-     * \param c_in      the line segment
-     * \param s1        intersection parameters of the arc
-     * \param s2        intersection parameters of the clothoid list
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
-    void
-    intersect( LineSegment const & c_in,
-               vector<real_type> & s1,
-               vector<real_type> & s2,
-               int_type            max_iter,
-               real_type           tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( 0, c, 0, s1, s2, max_iter, tolerance );
-    }
-
-    /*! \brief intersect a clothoid curve to a line segment
-     *
-     * \param offs      offset of the clothoid
-     * \param c_in      the line segment
-     * \param c_offs    offset of the line segment
-     * \param s1        intersection parameters of the arc
-     * \param s2        intersection parameters of the clothoid list
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
-    void
-    intersect( real_type           offs,
-               LineSegment const & c_in,
-               real_type           c_offs,
-               vector<real_type> & s1,
-               vector<real_type> & s2,
-               int_type            max_iter,
-               real_type           tolerance ) const {
-      ClothoidCurve c(c_in);
-      intersect( offs, c, c_offs, s1, s2, max_iter, tolerance );
-    }
-
-    /*! \brief intersect two clothoid list
-     *
-     * \param CL        the second clothoid list
-     * \param s1        intersection parameters of the first clothoid list
-     * \param s2        intersection parameters of the second clothoid list
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
     void
     intersect( ClothoidList const & CL,
-               vector<real_type>  & s1,
-               vector<real_type>  & s2,
-               int_type             max_iter,
-               real_type            tolerance ) const {
-      intersect( 0, CL, 0, s1, s2, max_iter, tolerance );
-    }
+               IntersectList      & ilist,
+               bool                 swap_s_vals ) const;
 
-    /*! \brief intersect two clothoid list
-     *
-     * \param offs      offset of the first clothoid list
-     * \param CL        the second clothoid list
-     * \param c_offs    offset of the second clothoid list
-     * \param s1        intersection parameters of the first clothoid list
-     * \param s2        intersection parameters of the second clothoid list
-     * \param max_iter  max allowed iteration
-     * \param tolerance admitted tolerance
-     */
     void
     intersect( real_type            offs,
                ClothoidList const & CL,
-               real_type            c_offs,
-               vector<real_type>  & s1,
-               vector<real_type>  & s2,
-               int_type             max_iter,
-               real_type            tolerance ) const;
-
-#endif
+               real_type            offs_obj,
+               IntersectList      & ilist,
+               bool                 swap_s_vals ) const;
 
     /*! \brief Save Clothoid list to a stream
      *

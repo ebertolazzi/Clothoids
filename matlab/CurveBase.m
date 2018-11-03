@@ -43,6 +43,10 @@ classdef CurveBase < handle
       feval( self.mexName, 'rotate', self.objectHandle, angle, cx, cy );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function reverse( self )
+      feval( self.mexName, 'reverse', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function scale( self, sc )
       feval( self.mexName, 'scale', self.objectHandle, sc );
     end

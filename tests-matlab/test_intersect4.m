@@ -68,7 +68,9 @@ S1.plot();
 hold on;
 S.plot();
 
+tic
 [s1,s2] = S.intersect( S1 );  
+toc
 
 XY1 = S.eval( s1 );
 XY2 = S1.eval( s2 );

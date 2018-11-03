@@ -33,7 +33,7 @@ main() {
   //C0.intersect( C1, s1, s2, max_iter, tolerance );
   //C1.intersect( C0, s2, s1, max_iter, tolerance );
 
-  G2lib::BaseCurve::IntersectList ilist;
+  G2lib::IntersectList ilist;
 
   C0.intersect( C1, ilist, false );
 

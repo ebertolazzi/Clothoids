@@ -50,24 +50,27 @@ namespace G2lib {
   \*/
   //! \brief Class to manage Clothoid Curve
   class ClothoidCurve : public BaseCurve {
+    friend class ClothoidList;
   public:
 
     class T2D : public Triangle2D {
       real_type s0;
       real_type s1;
+      int_type  icurve;
       T2D();
     public:
-      friend class ClothoidCurve;
 
       using Triangle2D::overlap;
 
       T2D( real_type  x1, real_type  y1,
            real_type  x2, real_type  y2,
            real_type  x3, real_type  y3,
-           real_type _s0, real_type _s1 )
+           real_type _s0, real_type _s1,
+           int_type  _icurve )
       : Triangle2D( x1, y1, x2, y2, x3, y3 )
       , s0(_s0)
       , s1(_s1)
+      , icurve(_icurve)
       {}
 
       T2D( T2D const & rhs )
@@ -76,10 +79,15 @@ namespace G2lib {
       T2D const &
       operator = ( T2D const & rhs ) {
         Triangle2D::operator = ( rhs );
-        this->s0 = rhs.s0;
-        this->s1 = rhs.s1;
+        this->s0     = rhs.s0;
+        this->s1     = rhs.s1;
+        this->icurve = rhs.icurve;
         return *this;
       }
+
+      real_type S0()     const { return s0; }
+      real_type S1()     const { return s1; }
+      int_type  Icurve() const { return icurve; }
     };
 
   private:
@@ -101,7 +109,8 @@ namespace G2lib {
                           real_type     s0,
                           real_type     s1,
                           real_type     max_angle,
-                          real_type     max_size ) const;
+                          real_type     max_size,
+                          int_type      icurve ) const;
 
     void
     closestPoint_internal( real_type   s_begin,
@@ -216,6 +225,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
+    explicit
     ClothoidCurve()
     : BaseCurve(G2LIB_CLOTHOID)
     , aabb_done(false)
@@ -229,6 +239,7 @@ namespace G2lib {
     }
 
     //! construct a clothoid with the standard parameters
+    explicit
     ClothoidCurve( real_type _x0,
                    real_type _y0,
                    real_type _theta0,
@@ -247,6 +258,7 @@ namespace G2lib {
     }
 
     //! construct a clothoid by solving the hermite G1 problem
+    explicit
     ClothoidCurve( real_type const P0[],
                    real_type       theta0,
                    real_type const P1[],
@@ -265,11 +277,7 @@ namespace G2lib {
       aabb_tree.clear();
     }
 
-    ClothoidCurve( ClothoidCurve const & s )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , aabb_done(false)
-    { copy(s); }
-
+    explicit
     ClothoidCurve( LineSegment const & LS )
     : BaseCurve(G2LIB_CLOTHOID)
     , aabb_done(false)
@@ -282,6 +290,7 @@ namespace G2lib {
       L         = LS.L;
     }
 
+    explicit
     ClothoidCurve( CircleArc const & C )
     : BaseCurve(G2LIB_CLOTHOID)
     , aabb_done(false)
@@ -293,6 +302,15 @@ namespace G2lib {
       CD.dk     = 0;
       L         = C.L;
     }
+
+    explicit
+    ClothoidCurve( ClothoidCurve const & s )
+    : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
+    { copy(s); }
+
+    explicit
+    ClothoidCurve( BaseCurve const & C );
 
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s); return *this; }
@@ -574,13 +592,15 @@ namespace G2lib {
     bbTriangles( real_type          offs,
                  std::vector<T2D> & tvec,
                  real_type          max_angle = m_pi/6, // 30 degree
-                 real_type          max_size  = 1e100 ) const;
+                 real_type          max_size  = 1e100,
+                 int_type           icurve    = 0 ) const;
 
     void
     bbTriangles( std::vector<T2D> & tvec,
                  real_type          max_angle = m_pi/6, // 30 degree
-                 real_type          max_size  = 1e100 ) const {
-      bbTriangles( 0, tvec, max_angle, max_size );
+                 real_type          max_size  = 1e100,
+                 int_type           icurve    = 0 ) const {
+      bbTriangles( 0, tvec, max_angle, max_size, icurve );
     }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -995,77 +1015,6 @@ namespace G2lib {
       CD.origin_at( s0 );
       L = newL;
     }
-    /*\
-     |             _ _ _     _
-     |    ___ ___ | | (_)___(_) ___  _ __
-     |   / __/ _ \| | | / __| |/ _ \| '_ \
-|    |  | (_| (_) | | | \__ \ | (_) | | | |
-     |   \___\___/|_|_|_|___/_|\___/|_| |_|
-    \*/
-
-    virtual
-    bool
-    collision( BaseCurve const & obj ) const G2LIB_OVERRIDE;
-
-    virtual
-    bool
-    collision( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj ) const G2LIB_OVERRIDE;
-
-    bool
-    collision( ClothoidCurve const & C ) const;
-
-    bool
-    collision( real_type             offs,
-               ClothoidCurve const & C,
-               real_type             offs_C ) const;
-
-    // collision detection
-    bool
-    approximate_collision(
-      real_type             offs,
-      ClothoidCurve const & c,
-      real_type             c_offs,
-      real_type             max_angle, //!< maximum angle variation
-      real_type             max_size   //!< curve offset
-    ) const;
-
-    /*\
-     |   _       _                          _
-     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
-     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
-     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
-     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
-    \*/
-
-    virtual
-    void
-    intersect( BaseCurve const & obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    virtual
-    void
-    intersect( real_type         offs,
-               BaseCurve const & obj,
-               real_type         offs_obj,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const G2LIB_OVERRIDE;
-
-    void
-    intersect( ClothoidCurve const & C,
-               IntersectList       & ilist,
-               bool                  swap_s_vals ) const {
-      intersect( 0, C, 0, ilist, swap_s_vals );
-    }
-
-    void
-    intersect( real_type               offs,
-               ClothoidCurve const   & C,
-               real_type               offs_C,
-               IntersectList         & ilist,
-               bool                    swap_s_vals ) const;
 
     /*\
      |        _                     _   ____       _       _
@@ -1099,10 +1048,58 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+    /*\
+     |             _ _ _     _
+     |    ___ ___ | | (_)___(_) ___  _ __
+     |   / __/ _ \| | | / __| |/ _ \| '_ \
+     |  | (_| (_) | | | \__ \ | (_) | | | |
+     |   \___\___/|_|_|_|___/_|\___/|_| |_|
+    \*/
+
     void
     build_AABBtree( real_type offs,
                     real_type max_angle = m_pi/18, // 10 degree
                     real_type max_size  = 1e100 ) const;
+
+    // collision detection
+    bool
+    approximate_collision(
+      real_type             offs,
+      ClothoidCurve const & c,
+      real_type             c_offs,
+      real_type             max_angle, //!< maximum angle variation
+      real_type             max_size   //!< curve offset
+    ) const;
+
+    bool
+    collision( ClothoidCurve const & C ) const;
+
+    bool
+    collision( real_type             offs,
+               ClothoidCurve const & C,
+               real_type             offs_C ) const;
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
+
+    void
+    intersect( ClothoidCurve const & C,
+               IntersectList       & ilist,
+               bool                  swap_s_vals ) const {
+      intersect( 0, C, 0, ilist, swap_s_vals );
+    }
+
+    void
+    intersect( real_type               offs,
+               ClothoidCurve const   & C,
+               real_type               offs_C,
+               IntersectList         & ilist,
+               bool                    swap_s_vals ) const;
 
     void
     info( ostream_type & stream ) const G2LIB_OVERRIDE

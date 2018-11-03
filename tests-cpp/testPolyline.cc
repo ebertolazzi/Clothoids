@@ -29,7 +29,7 @@ main() {
   C2.rotate(G2lib::m_pi/3,0,0);
   C2.translate(1,-1);
 
-  G2lib::BaseCurve::IntersectList ilist;
+  G2lib::IntersectList ilist;
   C1.intersect( C2, ilist, false );
 
   cout << "CLOTHOIDS\n";
