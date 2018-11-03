@@ -51,45 +51,6 @@ namespace G2lib {
   //! \brief Class to manage Clothoid Curve
   class ClothoidCurve : public BaseCurve {
     friend class ClothoidList;
-  public:
-
-    class T2D : public Triangle2D {
-      real_type s0;
-      real_type s1;
-      int_type  icurve;
-      T2D();
-    public:
-
-      using Triangle2D::overlap;
-
-      T2D( real_type  x1, real_type  y1,
-           real_type  x2, real_type  y2,
-           real_type  x3, real_type  y3,
-           real_type _s0, real_type _s1,
-           int_type  _icurve )
-      : Triangle2D( x1, y1, x2, y2, x3, y3 )
-      , s0(_s0)
-      , s1(_s1)
-      , icurve(_icurve)
-      {}
-
-      T2D( T2D const & rhs )
-      { *this = rhs; }
-
-      T2D const &
-      operator = ( T2D const & rhs ) {
-        Triangle2D::operator = ( rhs );
-        this->s0     = rhs.s0;
-        this->s1     = rhs.s1;
-        this->icurve = rhs.icurve;
-        return *this;
-      }
-
-      real_type S0()     const { return s0; }
-      real_type S1()     const { return s1; }
-      int_type  Icurve() const { return icurve; }
-    };
-
   private:
 
     ClothoidData CD;  //!< clothoid data
@@ -225,7 +186,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
-    explicit
+    //explicit
     ClothoidCurve()
     : BaseCurve(G2LIB_CLOTHOID)
     , aabb_done(false)
@@ -237,6 +198,12 @@ namespace G2lib {
       CD.dk     = 0;
       L         = 0;
     }
+
+    //explicit
+    ClothoidCurve( ClothoidCurve const & s )
+    : BaseCurve(G2LIB_CLOTHOID)
+    , aabb_done(false)
+    { copy(s); }
 
     //! construct a clothoid with the standard parameters
     explicit
@@ -302,12 +269,6 @@ namespace G2lib {
       CD.dk     = 0;
       L         = C.L;
     }
-
-    explicit
-    ClothoidCurve( ClothoidCurve const & s )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , aabb_done(false)
-    { copy(s); }
 
     explicit
     ClothoidCurve( BaseCurve const & C );

@@ -25,6 +25,7 @@
 #define CLOTHOID_LIST_HH
 
 #include "Clothoid.hh"
+#include "PolyLine.hh"
 #include "Biarc.hh"
 
 //! Clothoid computations routine
@@ -569,8 +570,6 @@ namespace G2lib {
   //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 connected)
   class ClothoidList : public BaseCurve {
 
-    typedef ClothoidCurve::T2D T2D;
-
     vector<real_type>     s0;
     vector<ClothoidCurve> clotoidList;
     mutable int_type      last_idx;
@@ -649,7 +648,7 @@ namespace G2lib {
     using BaseCurve::closestPoint;
     using BaseCurve::distance;
 
-    explicit
+    //explicit
     ClothoidList()
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , last_idx(0)
@@ -663,7 +662,7 @@ namespace G2lib {
       aabb_tri.clear();
     }
 
-    explicit
+    //explicit
     ClothoidList( ClothoidList const & s )
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , last_idx(0)
@@ -719,12 +718,23 @@ namespace G2lib {
     }
 
     explicit
+    ClothoidList( PolyLine const & pl )
+    : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , last_idx(0)
+    , aabb_done(false)
+    {
+      init();
+      push_back( pl );
+    }
+
+    explicit
     ClothoidList( BaseCurve const & C );
 
     void push_back( LineSegment const & c );
     void push_back( CircleArc const & c );
     void push_back( Biarc const & c );
     void push_back( ClothoidCurve const & c );
+    void push_back( PolyLine const & c );
 
 
     void push_back( real_type kappa0, real_type dkappa, real_type L );

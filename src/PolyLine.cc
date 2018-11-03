@@ -55,7 +55,8 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   PolyLine::PolyLine( BaseCurve const & C )
-  : BaseCurve(G2LIB_CLOTHOID)
+  : BaseCurve(G2LIB_POLYLINE)
+  , isegment(0)
   , aabb_done(false)
   {
     switch ( C.type() ) {
@@ -73,6 +74,80 @@ namespace G2lib {
                     "PolyLine constructor cannot convert from: " <<
                     CurveType_name[C.type()] );
     }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  PolyLine::PolyLine( LineSegment const & LS )
+  : BaseCurve(G2LIB_POLYLINE)
+  , isegment(0)
+  , aabb_done(false)
+  {
+    init( LS.xBegin(), LS.xBegin() );
+    push_back( LS );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  PolyLine::PolyLine( CircleArc const & C, real_type tol )
+  : BaseCurve(G2LIB_POLYLINE)
+  , isegment(0)
+  , aabb_done(false)
+  {
+    init( C.xBegin(), C.xBegin() );
+    push_back( C, tol );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  PolyLine::PolyLine( Biarc const & B, real_type tol )
+  : BaseCurve(G2LIB_POLYLINE)
+  , isegment(0)
+  , aabb_done(false)
+  {
+    init( B.xBegin(), B.xBegin() );
+    push_back( B, tol );
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  PolyLine::PolyLine( ClothoidCurve const & C, real_type tol )
+  : BaseCurve(G2LIB_POLYLINE)
+  , isegment(0)
+  , aabb_done(false)
+  {
+    init( C.xBegin(), C.xBegin() );
+    push_back( C, tol );
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  PolyLine::PolyLine( ClothoidList const & PL, real_type tol )
+  : BaseCurve(G2LIB_POLYLINE)
+  , isegment(0)
+  , aabb_done(false)
+  {
+    init( PL.xBegin(), PL.xBegin() );
+    push_back( PL, tol );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  PolyLine::copy( PolyLine const & PL ) {
+    polylineList.clear();
+    polylineList.reserve( PL.polylineList.size() );
+    std::copy( PL.polylineList.begin(),
+               PL.polylineList.end(),
+               back_inserter(polylineList) );
+    s0.clear();
+    s0.reserve( PL.s0.size() );
+    std::copy( PL.s0.begin(),
+               PL.s0.end(),
+               back_inserter(s0) );
+    aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -134,7 +209,7 @@ namespace G2lib {
     G2LIB_ASSERT( !polylineList.empty(), "PolyLine::bbox, empty list" );
 
     if ( aabb_done ) {
-      aabb.bbox( xmin, ymin, xmax, ymax );
+      aabb_tree.bbox( xmin, ymin, xmax, ymax );
     } else {
       vector<LineSegment>::const_iterator ic = polylineList.begin();
       xmin = xmax = ic->xBegin();
@@ -502,7 +577,29 @@ namespace G2lib {
     return 1;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |             _ _ _     _
+   |    ___ ___ | | (_)___(_) ___  _ __
+   |   / __/ _ \| | | / __| |/ _ \| '_ \
+   |  | (_| (_) | | | \__ \ | (_) | | | |
+   |   \___\___/|_|_|_|___/_|\___/|_| |_|
+  \*/
+
+  bool
+  PolyLine::collision( PolyLine const & C ) const {
+    this->build_AABBtree();
+    C.build_AABBtree();
+    Collision_list fun( this, &C );
+    return aabb_tree.collision( C.aabb_tree, fun, false );
+  }
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
 
   void
   PolyLine::intersect(
@@ -519,7 +616,7 @@ namespace G2lib {
     build_AABBtree();
     pl.build_AABBtree();
     AABBtree::VecPairPtrBBox intersectionList;
-    aabb.intersect( pl.aabb, intersectionList );
+    aabb_tree.intersect( pl.aabb_tree, intersectionList );
     AABBtree::VecPairPtrBBox::const_iterator ip;
     for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
       size_t ipos0 = size_t(ip->first->Ipos());
@@ -559,26 +656,19 @@ namespace G2lib {
 
   }
 
-  bool
-  PolyLine::intersect( PolyLine const & pl ) const {
-    G2LIB_ASSERT( !polylineList.empty(),
-                  "PolyLine::intersect, empty list" );
-    G2LIB_ASSERT( !pl.polylineList.empty(),
-                  "PolyLine::intersect, empty secondary list" );
-    vector<LineSegment>::const_iterator ic0 = polylineList.begin();
-    vector<real_type>::const_iterator   is0 = s0.begin();
-    while ( ic0 != polylineList.end() ) {
-      vector<LineSegment>::const_iterator ic1 = pl.polylineList.begin();
-      vector<real_type>::const_iterator   is1 = pl.s0.begin();
-      while ( ic1 != pl.polylineList.end() ) {
-        if ( ic0->collision( *ic1 ) ) return true;
-        ++ic1;
-        ++is1;
-      }
-      ++ic0;
-      ++is0;
+  void
+  PolyLine::intersect( PolyLine const & pl,
+                       IntersectList  & ilist,
+                       bool             swap_s_vals ) const {
+    std::vector<real_type> s1, s2;
+    this->intersect( pl, s1, s2 );
+    ilist.reserve( ilist.size() + s1.size() );
+    for ( size_t i=0; i < s1.size(); ++i ) {
+      real_type ss1 = s1[i];
+      real_type ss2 = s2[i];
+      if ( swap_s_vals ) std::swap( ss1, ss2 );
+      ilist.push_back( Ipair(ss1,ss2) );
     }
-    return false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

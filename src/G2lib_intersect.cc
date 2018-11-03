@@ -36,6 +36,8 @@
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
+#define DEBUG
+
 namespace G2lib {
 
   using std::map;
@@ -98,7 +100,7 @@ namespace G2lib {
     {Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_POLYLINE, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST}
+    {Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ),      G2LIB_POLYLINE}
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,6 +108,13 @@ namespace G2lib {
   bool
   collision( BaseCurve const & obj1,
              BaseCurve const & obj2 ) {
+    #ifdef DEBUG
+    std::cout << "collision " << CurveType_name[obj1.type()]
+              << " with " << CurveType_name[obj2.type()]
+              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+              << '\n';
+    #endif
+
     bool ok = false;
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
@@ -161,6 +170,13 @@ namespace G2lib {
              real_type         offs1,
              BaseCurve const & obj2,
              real_type         offs2 ) {
+    #ifdef DEBUG
+    std::cout << "collision (offs) " << CurveType_name[obj1.type()]
+              << " with " << CurveType_name[obj2.type()]
+              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+              << '\n';
+    #endif
+
     bool ok = false;
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
@@ -216,9 +232,12 @@ namespace G2lib {
              IntersectList   & ilist,
              bool              swap_s_vals ) {
 
-    //std::cout << "intersect " << CurveType_name[obj1.type()]
-    //          << " with "     << CurveType_name[obj2.type()]
-    //          << '\n';
+    #ifdef DEBUG
+    std::cout << "intersect " << CurveType_name[obj1.type()]
+              << " with " << CurveType_name[obj2.type()]
+              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+              << '\n';
+    #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
@@ -276,9 +295,12 @@ namespace G2lib {
              IntersectList   & ilist,
              bool              swap_s_vals ) {
 
-    //std::cout << "intersect2 " << CurveType_name[obj1.type()]
-    //          << " with "      << CurveType_name[obj2.type()]
-    //          << '\n';
+    #ifdef DEBUG
+    std::cout << "intersect (offs) " << CurveType_name[obj1.type()]
+              << " with " << CurveType_name[obj2.type()]
+              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+              << '\n';
+    #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:

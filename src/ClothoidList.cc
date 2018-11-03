@@ -75,9 +75,8 @@ namespace G2lib {
       copy( *static_cast<ClothoidList const *>(&C) );
       break;
     case G2LIB_POLYLINE:
-      G2LIB_ASSERT( false,
-                    "ClothoidList constructor cannot convert from: " <<
-                    CurveType_name[C.type()] );
+      push_back( *static_cast<PolyLine const *>(&C) );
+      break;
     }
   }
 
@@ -94,10 +93,16 @@ namespace G2lib {
 
   void
   ClothoidList::copy( ClothoidList const & L ) {
-    s0.resize( L.s0.size() );
-    std::copy( L.s0.begin(), L.s0.end(), s0.begin() );
-    clotoidList.resize( L.clotoidList.size() );
-    std::copy( L.clotoidList.begin(), L.clotoidList.end(), clotoidList.begin() );
+    clotoidList.clear();
+    clotoidList.reserve(L.clotoidList.size());
+    std::copy( L.clotoidList.begin(),
+               L.clotoidList.end(),
+               back_inserter(clotoidList) );
+    s0.clear();
+    s0.reserve(L.s0.size());
+    std::copy( L.s0.begin(),
+               L.s0.end(),
+               back_inserter(s0) );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -160,6 +165,20 @@ namespace G2lib {
       s0.push_back(s0.back()+c.length());
     }
     clotoidList.push_back(c);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back( PolyLine const & c ) {
+    s0.reserve( s0.size() + c.polylineList.size() + 1);
+    clotoidList.reserve( clotoidList.size() + c.polylineList.size() );
+    if ( clotoidList.empty() ) s0.push_back(0);
+
+    vector<LineSegment>::const_iterator ip = c.polylineList.begin();
+    for (; ip != c.polylineList.end(); ++ip ) {
+      clotoidList.push_back(ClothoidCurve(*ip));
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

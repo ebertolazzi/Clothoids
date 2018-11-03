@@ -44,6 +44,7 @@ namespace G2lib {
   class ClothoidList;
 
   class PolyLine : public BaseCurve {
+    friend class ClothoidList;
   private:
     vector<LineSegment> polylineList;
     vector<real_type>   s0;
@@ -53,11 +54,28 @@ namespace G2lib {
     void search( real_type s ) const;
 
     mutable bool     aabb_done;
-    mutable AABBtree aabb;
+    mutable AABBtree aabb_tree;
 
+    class Collision_list {
+      PolyLine const * pPL1;
+      PolyLine const * pPL2;
+    public:
+      Collision_list( PolyLine const * _pPL1,
+                      PolyLine const * _pPL2 )
+      : pPL1(_pPL1)
+      , pPL2(_pPL2)
+      {}
+
+      bool
+      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
+        LineSegment const & LS1 = pPL1->polylineList[size_t(ptr1->Ipos())];
+        LineSegment const & LS2 = pPL2->polylineList[size_t(ptr2->Ipos())];
+        return LS1.collision( LS2 );
+      }
+    };
   public:
 
-    explicit
+    //explicit
     PolyLine()
     : BaseCurve(G2LIB_POLYLINE)
     , isegment(0)
@@ -65,19 +83,29 @@ namespace G2lib {
     {}
 
     void
-    copy( PolyLine const & l ) {
-      polylineList.clear();
-      polylineList.reserve(l.polylineList.size());
-      std::copy( l.polylineList.begin(),
-                 l.polylineList.end(),
-                 back_inserter(polylineList) );
-      aabb_done = false;
-    }
+    copy( PolyLine const & l );
 
-    explicit
+    //explicit
     PolyLine( PolyLine const & PL )
     : BaseCurve(G2LIB_POLYLINE)
+    , isegment(0)
+    , aabb_done(false)
     { copy(PL); }
+
+    explicit
+    PolyLine( LineSegment const & LS );
+
+    explicit
+    PolyLine( CircleArc const & C, real_type tol );
+
+    explicit
+    PolyLine( Biarc const & B, real_type tol );
+
+    explicit
+    PolyLine( ClothoidCurve const & B, real_type tol );
+
+    explicit
+    PolyLine( ClothoidList const & B, real_type tol );
 
     explicit
     PolyLine( BaseCurve const & C );
@@ -132,13 +160,13 @@ namespace G2lib {
     build( CircleArc const & C, real_type tol );
 
     void
-    build( Biarc const & C, real_type tol );
+    build( Biarc const & B, real_type tol );
 
     void
     build( ClothoidCurve const & C, real_type tol );
 
     void
-    build( ClothoidList const & L, real_type tol );
+    build( ClothoidList const & CL, real_type tol );
 
     virtual
     void
@@ -398,36 +426,53 @@ namespace G2lib {
       G2LIB_ASSERT( false, "PolyLine::closestPoint( ... offs ... ) not available!");
     }
 
+    /*\
+     |             _ _ _     _
+     |    ___ ___ | | (_)___(_) ___  _ __
+     |   / __/ _ \| | | / __| |/ _ \| '_ \
+     |  | (_| (_) | | | \__ \ | (_) | | | |
+     |   \___\___/|_|_|_|___/_|\___/|_| |_|
+    \*/
+
+    bool
+    collision( PolyLine const & C ) const;
+
+    bool
+    collision( real_type        offs,
+               PolyLine const & CL,
+               real_type        offs_CL ) const {
+      G2LIB_ASSERT( isZero(offs) && isZero(offs_CL),
+                    "PolyLine::collision( offs ... ) not available!");
+      return this->collision( CL );
+    }
+
+    /*\
+     |   _       _                          _
+     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+     |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    \*/
+
     void
     intersect( PolyLine const         & pl,
                std::vector<real_type> & s1,
                std::vector<real_type> & s2 ) const;
 
-    bool
-    intersect( PolyLine const & pl ) const;
-
     void
     intersect( PolyLine const & pl,
                IntersectList  & ilist,
-               bool             swap_s_vals ) {
-      std::vector<real_type> s1, s2;
-      this->intersect( pl, s1, s2 );
-      ilist.reserve( ilist.size() + s1.size() );
-      for ( size_t i=0; i < s1.size(); ++i ) {
-        real_type ss1 = s1[i];
-        real_type ss2 = s2[i];
-        if ( swap_s_vals ) std::swap( ss1, ss2 );
-        ilist.push_back( Ipair(ss1,ss2) );
-      }
-    }
+               bool             swap_s_vals ) const;
 
     void
-    intersect( real_type        /* offs        */,
-               PolyLine const & /* pl          */,
-               real_type        /* offs_pl     */,
-               IntersectList  & /* ilist       */,
-               bool             /* swap_s_vals */ ) {
-      G2LIB_ASSERT( false, "PolyLine::intersect( offs ... ) not available!");
+    intersect( real_type        offs,
+               PolyLine const & pl,
+               real_type        offs_pl,
+               IntersectList  & ilist,
+               bool             swap_s_vals) {
+      G2LIB_ASSERT( isZero(offs) && isZero(offs_pl),
+                    "PolyLine::intersect( offs ... ) not available!");
+      this->intersect( pl, ilist, swap_s_vals );
     }
 
     virtual
@@ -445,7 +490,7 @@ namespace G2lib {
     void
     build_AABBtree() const {
       if ( !aabb_done ) {
-        this->build_AABBtree( aabb );
+        this->build_AABBtree( aabb_tree );
         aabb_done = true;
       }
     }

@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Biarc.hh"
+#include "PolyLine.hh"
 #include "ClothoidList.hh"
 #include <cmath>
 #include <iostream>
@@ -38,14 +39,18 @@ main() {
   G2lib::ClothoidList CL0(C0);
   G2lib::ClothoidList CL1(C1);
 
+  G2lib::PolyLine PL0(C0,1e-8);
+  G2lib::PolyLine PL1(C1,1e-4);
+
   G2lib::IntersectList ilist;
 
-  //G2lib::BaseCurve *pC0 = &L0;
-  //G2lib::BaseCurve *pC1 = &C1;
-  G2lib::BaseCurve *pC0 = &CL1;
-  G2lib::BaseCurve *pC1 = &L0;
+  G2lib::BaseCurve *pC0 = &PL0;
+  G2lib::BaseCurve *pC1 = &PL1;
+  //G2lib::BaseCurve *pC0 = &CL1;
+  //G2lib::BaseCurve *pC1 = &L0;
 
   pC0->intersect( *pC1, ilist, false );
+  pC0->intersect( CL1, ilist, false );
 
   cout << collision( *pC0, *pC1 ) << '\n' ;
   //C0.intersect( C1, ilist );
