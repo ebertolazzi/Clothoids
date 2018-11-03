@@ -110,47 +110,46 @@ namespace G2lib {
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
       {
-        LineSegment L1(obj1);
-        LineSegment L2(obj2);
-        ok = L1.collision(L2);
+        LineSegment L1( obj1 );
+        LineSegment L2( obj2 );
+        ok = L1.collision( L2 );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C1(obj1);
-        CircleArc C2(obj2);
-        ok = C1.collision(C2);
+        CircleArc C1( obj1 );
+        CircleArc C2( obj2 );
+        ok = C1.collision( C2 );
       }
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C1(obj1);
-        ClothoidCurve C2(obj2);
-        ok = C1.collision(C2);
+        ClothoidCurve C1( obj1 );
+        ClothoidCurve C2( obj2 );
+        ok = C1.collision( C2 );
       }
       break;
     case G2LIB_BIARC:
       {
         Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
         Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
-        ok = B1.collision(B2);
+        ok = B1.collision( B2 );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1(obj1);
-        ClothoidList C2(obj2);
+        ClothoidList C1( obj1 );
+        ClothoidList C2( obj2 );
         ok = C1.collision(C2);
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1(obj1);
-        PolyLine C2(obj2);
-        G2LIB_ASSERT( false, "collision PolyLine DA FARE" );
-        //ok = C1.collision(C2);
+        PolyLine C1( obj1 );
+        PolyLine C2( obj2 );
+        ok = C1.collision( C2 );
       }
-      //break;
+      break;
     }
     return ok;
   }
@@ -166,47 +165,45 @@ namespace G2lib {
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
       {
-        LineSegment L1(obj1);
-        LineSegment L2(obj2);
-        ok = L1.collision(offs1,L2,offs2);
+        LineSegment L1( obj1 );
+        LineSegment L2( obj2 );
+        ok = L1.collision( offs1, L2, offs2 );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C1(obj1);
-        CircleArc C2(obj2);
-        ok = C1.collision(offs1,C2,offs2);
+        CircleArc C1( obj1 );
+        CircleArc C2( obj2 );
+        ok = C1.collision( offs1, C2, offs2 );
       }
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C1(obj1);
-        ClothoidCurve C2(obj2);
-        ok = C1.collision(offs1,C2,offs2);
+        ClothoidCurve C1( obj1 );
+        ClothoidCurve C2( obj2 );
+        ok = C1.collision( offs1, C2, offs2 );
       }
       break;
     case G2LIB_BIARC:
       {
         Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
         Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
-        ok = B1.collision(offs1,B2,offs2);
+        ok = B1.collision( offs1, B2, offs2 );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1(obj1);
-        ClothoidList C2(obj2);
-        ok = C1.collision(offs1,C2,offs2);
+        ClothoidList C1( obj1 );
+        ClothoidList C2( obj2 );
+        ok = C1.collision( offs1, C2, offs2 );
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1(obj1);
-        PolyLine C2(obj2);
-        G2LIB_ASSERT( false, "collision PolyLine DA FARE" );
-        //ok = C1.collision(offs1,C2,offs2);
+        PolyLine C1( obj1 );
+        PolyLine C2( obj2 );
+        ok = C1.collision( offs1, C2, offs2 );
       }
-      //break;
     }
     return ok;
   }
@@ -226,47 +223,46 @@ namespace G2lib {
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
       {
-        LineSegment L1(obj1);
-        LineSegment L2(obj2);
-        L1.intersect(L2,ilist,swap_s_vals);
+        LineSegment L1( obj1 );
+        LineSegment L2( obj2 );
+        L1.intersect( L2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C1(obj1);
-        CircleArc C2(obj2);
-        C1.intersect(C2,ilist,swap_s_vals);
+        CircleArc C1( obj1 );
+        CircleArc C2( obj2 );
+        C1.intersect( C2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C1(obj1);
-        ClothoidCurve C2(obj2);
-        C1.intersect(C2,ilist,swap_s_vals);
+        ClothoidCurve C1( obj1 );
+        ClothoidCurve C2( obj2 );
+        C1.intersect( C2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC:
       {
         Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
         Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
-        B1.intersect(B2,ilist,swap_s_vals);
+        B1.intersect( B2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1(obj1);
-        ClothoidList C2(obj2);
-        C1.intersect(C2,ilist,swap_s_vals);
+        ClothoidList C1( obj1 );
+        ClothoidList C2( obj2 );
+        C1.intersect( C2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1(obj1);
-        PolyLine C2(obj2);
-        G2LIB_ASSERT( false, "collision PolyLine DA FARE" );
-        //ok = C1.collision(C2);
+        PolyLine C1( obj1 );
+        PolyLine C2( obj2 );
+        C1.intersect( C2, ilist, swap_s_vals );
       }
-      //break;
+      break;
     }
   }
 
@@ -287,47 +283,46 @@ namespace G2lib {
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
       {
-        LineSegment L1(obj1);
-        LineSegment L2(obj2);
-        L1.intersect(offs1,L2,offs2,ilist,swap_s_vals);
+        LineSegment L1( obj1 );
+        LineSegment L2( obj2 );
+        L1.intersect( offs1, L2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CIRCLE:
       {
-        CircleArc C1(obj1);
-        CircleArc C2(obj2);
-        C1.intersect(offs1,C2,offs2,ilist,swap_s_vals);
+        CircleArc C1( obj1 );
+        CircleArc C2( obj2 );
+        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID:
       {
-        ClothoidCurve C1(obj1);
-        ClothoidCurve C2(obj2);
-        C1.intersect(offs1,C2,offs2,ilist,swap_s_vals);
+        ClothoidCurve C1( obj1 );
+        ClothoidCurve C2( obj2 );
+        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC:
       {
         Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
         Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
-        B1.intersect(offs1,B2,offs2,ilist,swap_s_vals);
+        B1.intersect( offs1, B2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1(obj1);
-        ClothoidList C2(obj2);
-        C1.intersect(offs1,C2,offs2,ilist,swap_s_vals);
+        ClothoidList C1( obj1 );
+        ClothoidList C2( obj2 );
+        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1(obj1);
-        PolyLine C2(obj2);
-        G2LIB_ASSERT( false, "collision PolyLine DA FARE" );
-        //ok = C1.collision(C2);
+        PolyLine C1( obj1 );
+        PolyLine C2( obj2 );
+        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
       }
-      //break;
+      break;
     }
   }
 }

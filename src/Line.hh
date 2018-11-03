@@ -39,6 +39,7 @@ namespace G2lib {
   class LineSegment : public BaseCurve {
 
     friend class CircleArc;
+    friend class PolyLine;
 
     real_type x0,     //!< initial x coordinate of the line
               y0,     //!< initial y coordinate of the line

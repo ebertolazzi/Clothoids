@@ -546,7 +546,7 @@ namespace G2lib {
 
     void
     reverse() {
-      std::swap( S0, S1 );
+      ClothoidCurve tmp(S0); S1 = S0; S0 = tmp;
       S0.reverse();
       S1.reverse();
       SM.reverse();

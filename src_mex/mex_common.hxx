@@ -344,7 +344,7 @@ do_collision( int nlhs, mxArray       *plhs[],
   else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
   else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
   else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
-  //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
+  else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
   else {
     MEX_ASSERT( false, CMD "'type '" << "' unsupported" );
   }
@@ -387,7 +387,7 @@ do_intersect( int nlhs, mxArray       *plhs[],
   else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
   else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
   else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
-  //else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
+  else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
   else {
     MEX_ASSERT( false, CMD "'type '" << "' unsupported" );
   }
