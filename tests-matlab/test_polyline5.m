@@ -40,19 +40,18 @@ S1.rotate(pi/2,0,0);
 P1 = PolyLine();
 P  = PolyLine();
 
-P1.approx( S1, 0.0000001 );
-P.approx( S, 0.0000001 );
+P1.approx( S1, 0.1 );
+P.approx( S, 0.1 );
 
-S1.plot();
+if false
+
+P1.plot();
 hold on;
-S.plot();
+P.plot();
 
 tic
 [ s1, s2 ] = P.intersect( P1 );
 toc
-
-s1
-s2
 
 XY1 = P.eval( s2 );
 XY2 = P1.eval( s1 );
@@ -63,6 +62,29 @@ end
 
 if ~isempty(s2)
   plot( XY2(1,:), XY2(2,:), 'oc', 'LineWidth', 2, 'Markersize', 8 );
+end
+
+else  
+    
+P1.plot();
+hold on;
+S.plot();
+
+tic
+[ s3, s4 ] = S.intersect( P1 );
+toc
+
+XY3 = S.eval( s3 );
+XY4 = P1.eval( s4 );
+
+if ~isempty(s3)
+  plot( XY3(1,:), XY3(2,:), 'ob', 'LineWidth', 2, 'Markersize', 10 );
+end
+
+if ~isempty(s4)
+  plot( XY4(1,:), XY4(2,:), 'oc', 'LineWidth', 2, 'Markersize', 8 );
+end
+
 end
 
 axis equal

@@ -52,6 +52,52 @@ namespace G2lib {
    |
   \*/
 
+  ClothoidList::ClothoidList( LineSegment const & LS )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( LS );
+  }
+
+  ClothoidList::ClothoidList( CircleArc const & C )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( C );
+  }
+
+  ClothoidList::ClothoidList( Biarc const & C )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( C.getC0() );
+    push_back( C.getC1() );
+  }
+
+  ClothoidList::ClothoidList( ClothoidCurve const & c )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( c );
+  }
+
+  ClothoidList::ClothoidList( PolyLine const & pl )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( pl );
+  }
+
   ClothoidList::ClothoidList( BaseCurve const & C )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
   , last_idx(0)
@@ -171,12 +217,14 @@ namespace G2lib {
 
   void
   ClothoidList::push_back( PolyLine const & c ) {
-    s0.reserve( s0.size() + c.polylineList.size() + 1);
+    s0.reserve( s0.size() + c.polylineList.size() + 1 );
     clotoidList.reserve( clotoidList.size() + c.polylineList.size() );
-    if ( clotoidList.empty() ) s0.push_back(0);
+
+    if ( s0.empty() ) s0.push_back(0);
 
     vector<LineSegment>::const_iterator ip = c.polylineList.begin();
     for (; ip != c.polylineList.end(); ++ip ) {
+      s0.push_back(s0.back()+ip->length());
       clotoidList.push_back(ClothoidCurve(*ip));
     }
   }

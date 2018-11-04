@@ -677,55 +677,19 @@ namespace G2lib {
     { copy(s); return *this; }
 
     explicit
-    ClothoidList( LineSegment const & LS )
-    : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , last_idx(0)
-    , aabb_done(false)
-    {
-      init();
-      push_back( LS );
-    }
+    ClothoidList( LineSegment const & LS );
 
     explicit
-    ClothoidList( CircleArc const & C )
-    : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , last_idx(0)
-    , aabb_done(false)
-    {
-      init();
-      push_back( C );
-    }
+    ClothoidList( CircleArc const & C );
 
     explicit
-    ClothoidList( Biarc const & C )
-    : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , last_idx(0)
-    , aabb_done(false)
-    {
-      init();
-      push_back( C.getC0() );
-      push_back( C.getC1() );
-    }
+    ClothoidList( Biarc const & C );
 
     explicit
-    ClothoidList( ClothoidCurve const & c )
-    : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , last_idx(0)
-    , aabb_done(false)
-    {
-      init();
-      push_back( c );
-    }
+    ClothoidList( ClothoidCurve const & c );
 
     explicit
-    ClothoidList( PolyLine const & pl )
-    : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , last_idx(0)
-    , aabb_done(false)
-    {
-      init();
-      push_back( pl );
-    }
+    ClothoidList( PolyLine const & pl );
 
     explicit
     ClothoidList( BaseCurve const & C );
