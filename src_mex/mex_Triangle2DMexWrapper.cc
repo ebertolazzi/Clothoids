@@ -10,6 +10,7 @@
 
 #include "Triangle2D.hh"
 #include "mex_utils.hh"
+#include "mex_info.hxx"
 
 #include <vector>
 
@@ -36,14 +37,7 @@
 "  [dmin,dmax] = Triangle2DMexWrapper( 'distance', OBJ, x, y );\n" \
 "  [icode] = Triangle2DMexWrapper( 'isInside', OBJ, x, y );\n" \
 "\n" \
-"%==========================================================================%\n" \
-"%                                                                          %\n" \
-"%  Autor: Enrico Bertolazzi                                                %\n" \
-"%         Department of Industrial Engineering                             %\n" \
-"%         University of Trento                                             %\n" \
-"%         enrico.bertolazzi@unitn.it                                       %\n" \
-"%                                                                          %\n" \
-"%==========================================================================%\n"
+MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 

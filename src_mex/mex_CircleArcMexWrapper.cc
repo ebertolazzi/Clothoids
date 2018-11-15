@@ -16,6 +16,7 @@
 #include "ClothoidList.hh"
 
 #include "mex_utils.hh"
+#include "mex_info.hxx"
 
 #include <vector>
 
@@ -28,52 +29,18 @@
 "  OBJ = CircleArcMexWrapper( 'new' );\n" \
 "  OBJ = CircleArcMexWrapper( 'new', x0, y0, theta0, kur, L );\n" \
 "\n" \
-"  CircleArcMexWrapper( 'delete', OBJ );\n" \
-"\n" \
 "  CircleArcMexWrapper( 'build', OBJ, x0, y0, theta0, kur, L );\n" \
 "  CircleArcMexWrapper( 'build_G1', OBJ, p0, theta0, p1 );\n" \
 "  CircleArcMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1 );\n" \
 "  CircleArcMexWrapper( 'build_3P', OBJ, p0, p1, p2 );\n" \
 "  CircleArcMexWrapper( 'build_3P', OBJ, x0, y0, x1, y1, x2, y2 );\n" \
-"  CircleArcMexWrapper( 'copy', OBJ, OBJ1 );\n" \
-"\n" \
-"  CircleArcMexWrapper( 'changeOrigin', OBJ, x0, y0 );\n" \
-"  CircleArcMexWrapper( 'translate', OBJ, tx, ty );\n" \
-"  CircleArcMexWrapper( 'trim', OBJ, smin, smax );\n" \
-"  CircleArcMexWrapper( 'rotate', OBJ, angle, cx, cy );\n" \
-"  CircleArcMexWrapper( 'scale', OBJ, scale );\n" \
-"  CircleArcMexWrapper( 'reverse', OBJ );\n" \
-"\n" \
-"  [d,s] = CircleArcMexWrapper( 'distance', OBJ, x, y );\n" \
-"  [s,t] = CircleArcMexWrapper( 'findST', OBJ, x, y );\n" \
 "\n" \
 "  [p0,p1,p2] = CircleArcMexWrapper( 'bbTriangles', OBJ );\n" \
 "\n" \
 "  burbs = CircleArcMexWrapper( 'to_nurbs', OBJ );\n" \
 "\n" \
-"  res = CircleArcMexWrapper( 'xBegin', OBJ );\n" \
-"  res = CircleArcMexWrapper( 'yBegin', OBJ );\n" \
-"  res = CircleArcMexWrapper( 'thetaBegin', OBJ );\n" \
-"  res = CircleArcMexWrapper( 'kappa', OBJ );\n" \
-"  res = CircleArcMexWrapper( 'length', OBJ );\n" \
-"\n" \
-"  [X,Y] = CircleArcMexWrapper( 'eval', OBJ, s [,t] );\n" \
-"  [X,Y] = CircleArcMexWrapper( 'eval_D', OBJ, s [,t] );\n" \
-"  [X,Y] = CircleArcMexWrapper( 'eval_DD', OBJ, s [,t] );\n" \
-"  [X,Y] = CircleArcMexWrapper( 'eval_DDD', OBJ, s [,t] );\n" \
-"\n" \
-"  [X,Y] = CircleArcMexWrapper( 'theta', OBJ, s );\n" \
-"\n" \
-"  nurbs = CircleArcMexWrapper( 'to_nurbs', OBJ );\n" \
-"\n" \
-"%==========================================================================%\n" \
-"%                                                                          %\n" \
-"%  Autor: Enrico Bertolazzi                                                %\n" \
-"%         Department of Industrial Engineering                             %\n" \
-"%         University of Trento                                             %\n" \
-"%         enrico.bertolazzi@unitn.it                                       %\n" \
-"%                                                                          %\n" \
-"%==========================================================================%\n"
+MEX_INFO_MESSAGE("CircleArcMexWrapper") \
+MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
@@ -101,12 +68,6 @@ namespace G2lib {
   CircleArc *
   DATA_GET( mxArray const * & mx_id ) {
     return convertMat2Ptr<CircleArc>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<CircleArc>(mx_id);
   }
 
   /*\

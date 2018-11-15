@@ -16,6 +16,7 @@
 #include "ClothoidList.hh"
 
 #include "mex_utils.hh"
+#include "mex_info.hxx"
 
 #include <vector>
 
@@ -33,42 +34,13 @@
 "  LineSegmentMexWrapper( 'build', OBJ, x0, y0, theta0, L );\n" \
 "  LineSegmentMexWrapper( 'build', OBJ, p0, p1 );\n" \
 "  LineSegmentMexWrapper( 'build', OBJ, p0, theta0, L );\n" \
-"  LineSegmentMexWrapper( 'copy', OBJ, OBJ1 );\n" \
 "  [p1,p2] = LineSegmentMexWrapper( 'points', OBJ );\n" \
 "\n" \
-"  LineSegmentMexWrapper( 'changeOrigin', OBJ, x0, y0 );\n" \
-"  LineSegmentMexWrapper( 'translate', OBJ, tx, ty );\n" \
-"  LineSegmentMexWrapper( 'trim', OBJ, smin, smax );\n" \
-"  LineSegmentMexWrapper( 'rotate', OBJ, angle, cx, cy );\n" \
-"  LineSegmentMexWrapper( 'reverse', OBJ );\n" \
-"\n" \
-"  burbs = LineSegmentMexWrapper( 'to_nurbs', OBJ );\n" \
-"\n" \
-"  res = LineSegmentMexWrapper( 'xBegin', OBJ );\n" \
-"  res = LineSegmentMexWrapper( 'yBegin', OBJ );\n" \
-"  res = LineSegmentMexWrapper( 'theta',  OBJ );\n" \
-"  res = LineSegmentMexWrapper( 'sMin', OBJ );\n" \
-"  res = LineSegmentMexWrapper( 'sMmax', OBJ );\n" \
-"  res = LineSegmentMexWrapper( 'length', OBJ );\n" \
-"\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval', OBJ, s [,t] );\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval_D', OBJ, s [,t] );\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval_DD', OBJ, s [,t] );\n" \
-"  [X,Y] = LineSegmentMexWrapper( 'eval_DDD', OBJ, s [,t] );\n" \
-"\n" \
-"  [d,s] = LineSegmentMexWrapper( 'distance', OBJ, x, y );\n" \
-"\n" \
 "  nurbs = LineSegmentMexWrapper( 'to_nurbs', OBJ );\n" \
-"  [s,t] = LineSegmentMexWrapper( 'findST', OBJ, x, y );\n" \
 "\n" \
-"%==========================================================================%\n" \
-"%                                                                          %\n" \
-"%  Autor: Enrico Bertolazzi                                                %\n" \
-"%         Department of Industrial Engineering                             %\n" \
-"%         University of Trento                                             %\n" \
-"%         enrico.bertolazzi@unitn.it                                       %\n" \
-"%                                                                          %\n" \
-"%==========================================================================%\n"
+MEX_INFO_MESSAGE("LineSegmentMexWrapper") \
+MEX_INFO_MESSAGE_END
+
 
 namespace G2lib {
 
@@ -96,12 +68,6 @@ namespace G2lib {
   LineSegment *
   DATA_GET( mxArray const * & mx_id ) {
     return convertMat2Ptr<LineSegment>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<LineSegment>(mx_id);
   }
 
   /*\

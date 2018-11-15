@@ -16,6 +16,7 @@
 #include "Triangle2D.hh"
 
 #include "mex_utils.hh"
+#include "mex_info.hxx"
 
 #include <vector>
 
@@ -36,35 +37,11 @@
 "  PolyLineMexWrapper( 'copy', OBJ, OBJ1 );\n" \
 "  [p1,p2] = PolyLineMexWrapper( 'points', OBJ );\n" \
 "\n" \
-"  PolyLineMexWrapper( 'translate', OBJ, tx, ty );\n" \
-"  PolyLineMexWrapper( 'rotate', OBJ, angle, cx, cy );\n" \
-"  PolyLineMexWrapper( 'reverse', OBJ );\n" \
-"\n" \
 "  burbs = PolyLineMexWrapper( 'to_nurbs', OBJ );\n" \
 "\n" \
-"  res = PolyLineMexWrapper( 'xBegin', OBJ );\n" \
-"  res = PolyLineMexWrapper( 'yBegin', OBJ );\n" \
-"  res = PolyLineMexWrapper( 'xEnd', OBJ );\n" \
-"  res = PolyLineMexWrapper( 'yEnd', OBJ );\n" \
-"  res = PolyLineMexWrapper( 'length', OBJ );\n" \
-"\n" \
-"  [X,Y] = PolyLineMexWrapper( 'eval', OBJ, s [,t] );\n" \
-"  [X,Y] = PolyLineMexWrapper( 'eval_D', OBJ, s [,t] );\n" \
-"  [X,Y] = PolyLineMexWrapper( 'eval_DD', OBJ, s [,t] );\n" \
-"  [X,Y] = PolyLineMexWrapper( 'eval_DDD', OBJ, s [,t] );\n" \
-"\n" \
-"  [s0,s1] = PolyLineMexWrapper( 'intersect', OBJ, OBJ1 );\n" \
-"  [d,s]   = PolyLineMexWrapper( 'distance', OBJ, x, y );\n" \
-"\n" \
-"\n" \
-"%==========================================================================%\n" \
-"%                                                                          %\n" \
-"%  Autor: Enrico Bertolazzi                                                %\n" \
-"%         Department of Industrial Engineering                             %\n" \
-"%         University of Trento                                             %\n" \
-"%         enrico.bertolazzi@unitn.it                                       %\n" \
-"%                                                                          %\n" \
-"%==========================================================================%\n"
+MEX_INFO_MESSAGE("PolyLineMexWrapper") \
+MEX_INFO_MESSAGE_END
+
 
 namespace G2lib {
 
@@ -92,12 +69,6 @@ namespace G2lib {
   PolyLine *
   DATA_GET( mxArray const * & mx_id ) {
     return convertMat2Ptr<PolyLine>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<PolyLine>(mx_id);
   }
 
   /*\

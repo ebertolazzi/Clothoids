@@ -726,6 +726,26 @@ namespace G2lib {
                  real_type const y[],
                  real_type       theta[] ) const;
 
+    bool
+    build( real_type x0,
+           real_type y0,
+           real_type theta0,
+           int_type        n,
+           real_type const s[],
+           real_type const kappa[] );
+
+    bool
+    build( real_type x0,
+           real_type y0,
+           real_type theta0,
+           vector<real_type> const & s,
+           vector<real_type> const & kappa ) {
+      if ( s.size() != kappa.size() ) return false;
+      return build( x0, y0, theta0,
+                    int_type(s.size()),
+                    &s.front(), &kappa.front() );
+    }
+
     ClothoidCurve const & get( int_type idx ) const;
     ClothoidCurve const & getAtS( real_type s ) const;
 

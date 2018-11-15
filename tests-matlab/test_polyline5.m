@@ -43,7 +43,7 @@ P  = PolyLine();
 P1.approx( S1, 0.1 );
 P.approx( S, 0.1 );
 
-if false
+if true
 
 P1.plot();
 hold on;

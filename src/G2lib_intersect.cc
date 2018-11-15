@@ -36,8 +36,6 @@
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-#define DEBUG
-
 namespace G2lib {
 
   using std::map;

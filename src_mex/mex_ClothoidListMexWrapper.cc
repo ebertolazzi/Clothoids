@@ -16,6 +16,7 @@
 #include "Triangle2D.hh"
 
 #include "mex_utils.hh"
+#include "mex_info.hxx"
 
 #include <fstream>
 
@@ -29,9 +30,6 @@
 "\n" \
 "  On output:\n" \
 "    OBJ = pointer to the internal object\n" \
-"n" \
-"  - Destructor:\n" \
-"    ClothoidListMexWrapper( 'delete', OBJ );\n" \
 "\n" \
 "  - Build:\n" \
 "    ClothoidListMexWrapper( 'push_back', OBJ, CLOT );\n" \
@@ -41,41 +39,8 @@
 "    ClothoidListMexWrapper( 'push_back_G1', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
 "    ClothoidListMexWrapper( 'copy', OBJ, OBJ1 );\n" \
 "\n" \
-"  - Eval:\n" \
-"    [x,y,theta,kappa] = ClothoidListMexWrapper( 'evaluate', OBJ, ss );\n" \
-"    s = ClothoidListMexWrapper( 'sBegin', OBJ );\n" \
-"    s = ClothoidListMexWrapper( 'sEnd',   OBJ );\n" \
-"    x = ClothoidListMexWrapper( 'xBegin', OBJ );\n" \
-"    x = ClothoidListMexWrapper( 'xEnd',   OBJ );\n" \
-"    y = ClothoidListMexWrapper( 'yBegin', OBJ );\n" \
-"    y = ClothoidListMexWrapper( 'yEnd',   OBJ );\n" \
-"    theta = ClothoidListMexWrapper( 'thetaBegin', OBJ );\n" \
-"    theta = ClothoidListMexWrapper( 'thetaEnd', OBJ );\n" \
-"    kappa = ClothoidListMexWrapper( 'kappaBegin', OBJ );\n" \
-"    kappa = ClothoidListMexWrapper( 'kappaEnd', OBJ );\n" \
-"\n" \
-"    [x,y]           = ClothoidListMexWrapper( 'eval', OBJ, s[, t] );\n" \
-"    [x_D,y_D]       = ClothoidListMexWrapper( 'eval_D', OBJ, s[, t] );\n" \
-"    [x_DD,y_DD]     = ClothoidListMexWrapper( 'eval_DD', OBJ, s[, t] );\n" \
-"    [x_DDD,y_DDD]   = ClothoidListMexWrapper( 'eval_DDD', OBJ, s[, t] );\n" \
 "    [s,theta,kappa] = ClothoidListMexWrapper( 'getSTK', OBJ );\n" \
 "    [x,y]           = ClothoidListMexWrapper( 'getXY', OBJ );\n" \
-"\n" \
-"  - Transform:\n" \
-"    ClothoidListMexWrapper( 'changeOrigin', OBJ, newX0, newY0 );\n" \
-"    ClothoidListMexWrapper( 'rotate', OBJ, angle, cx, cy );\n" \
-"    ClothoidListMexWrapper( 'translate', OBJ, tx, ty );\n" \
-"    ClothoidListMexWrapper( 'scale', OBJ, scaling );\n" \
-"    ClothoidListMexWrapper( 'reverse', OBJ );\n" \
-"\n" \
-"  - Distance:\n" \
-"    [X,Y,s,dst] = ClothoidListMexWrapper( 'closestPoint', OBJ, x, y );\n" \
-"    [dst,s]     = ClothoidListMexWrapper( 'distance', OBJ, x, y );\n" \
-"  - Intersection:\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_line', OBJ, OBJ2 );%\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_circle', OBJ, OBJ2 );%\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid', OBJ, OBJ2 );%\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid_list', OBJ, OBJ2 );%\n" \
 "\n" \
 "  - Bounding Box:\n" \
 "    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size );%\n" \
@@ -94,14 +59,10 @@
 "    dtheta = ClothoidListMexWrapper( 'deltaTheta', OBJ );%\n" \
 "    dkappa = ClothoidListMexWrapper( 'deltaKappa', OBJ );%\n" \
 "\n" \
-"=====================================================================================\n" \
-"\n" \
-"Autor: Enrico Bertolazzi\n" \
-"  Department of Industrial Engineering\n" \
-"  University of Trento\n" \
-"  enrico.bertolazzi@unitn.it\n" \
-"\n" \
-"=====================================================================================\n"
+MEX_INFO_MESSAGE("ClothoidListMexWrapper") \
+MEX_INFO_MESSAGE_END
+
+
 
 namespace G2lib {
 
@@ -129,12 +90,6 @@ namespace G2lib {
   ClothoidList *
   DATA_GET( mxArray const * & mx_id ) {
     return convertMat2Ptr<ClothoidList>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<ClothoidList>(mx_id);
   }
 
   /*\
@@ -506,6 +461,39 @@ namespace G2lib {
 
   static
   void
+  do_build( int nlhs, mxArray       *plhs[],
+            int nrhs, mxArray const *prhs[] ) {
+    #define CMD "ClothoidListMexWrapper('build',OBJ,x0,y0,theta0,s,kappa): "
+
+    MEX_ASSERT(nrhs == 7, CMD "expected 7 inputs, nrhs = " << nrhs );
+    MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    real_type x0, y0, theta0;
+    real_type const * s;
+    real_type const * kappa;
+    mwSize ns, nk;
+
+    x0     = getScalarValue( arg_in_2, CMD "Error in reading `x0`" );
+    y0     = getScalarValue( arg_in_3, CMD "Error in reading `y0`" );
+    theta0 = getScalarValue( arg_in_4, CMD "Error in reading `theta0`" );
+    s      = getVectorPointer( arg_in_5, ns, CMD "Error in reading `s1`" );
+    kappa  = getVectorPointer( arg_in_6, nk, CMD "Error in reading `x1`" );
+
+    MEX_ASSERT( ns == nk, CMD "length(s) = " << ns << " != length(kappa) = " << nk );
+
+    bool ok = ptr->build( x0, y0, theta0, ns, s, kappa );
+
+    setScalarBool( arg_out_0, ok );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
   do_build_theta( int nlhs, mxArray       *plhs[],
                   int nrhs, mxArray const *prhs[] ) {
 
@@ -697,11 +685,14 @@ namespace G2lib {
 
     x = getMatrixPointer( arg_in_2, nrx, ncx,
                           CMD "`x` expected to be a real vector/matrix" );
+
     y = getMatrixPointer( arg_in_3, nry, ncy,
                           CMD "`y` expected to be a real vector/matrix" );
+
     MEX_ASSERT( nrx == nry && ncx == ncy,
                 CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
                 nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+
     int64_t ibegin = 0;
     int64_t iend   = ptr->numSegment()-1;
     if ( nrhs == 6 ) {
@@ -744,6 +735,7 @@ namespace G2lib {
     CMD_2_ARC_G2,
     CMD_3_ARC_CLC,
     CMD_3_ARC_G2_FIXED,
+    CMD_BUILD,
     CMD_BUILD_THETA,
     CMD_GET,
     CMD_NUM_SEGMENT,
@@ -773,6 +765,7 @@ namespace G2lib {
     {"build_2arcG2",CMD_2_ARC_G2},
     {"build_CLC",CMD_3_ARC_CLC},
     {"build_3arcG2fixed",CMD_3_ARC_G2_FIXED},
+    {"build",CMD_BUILD},
     {"build_theta",CMD_BUILD_THETA},
     {"get",CMD_GET},
     {"numSegment",CMD_NUM_SEGMENT},
@@ -837,6 +830,9 @@ namespace G2lib {
         break;
       case CMD_3_ARC_G2_FIXED:
         do_build_3arcG2fixed( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_BUILD:
+        do_build( nlhs, plhs, nrhs, prhs );
         break;
       case CMD_BUILD_THETA:
         do_build_theta( nlhs, plhs, nrhs, prhs );

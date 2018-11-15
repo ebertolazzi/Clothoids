@@ -16,6 +16,7 @@
 #include "Triangle2D.hh"
 
 #include "mex_utils.hh"
+#include "mex_info.hxx"
 
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
@@ -33,12 +34,9 @@
 "      dk     = derivative of curvature respect to arclength\n" \
 "      L      = length of the clothoid curve from initial to final point\n" \
 "\n" \
-"     On output:\n" \
-"       OBJ   = pointer to the internal object\n" \
+"    On output:\n" \
+"    OBJ = pointer to the internal object\n" \
 "n" \
-"  - Destructor:\n" \
-"    ClothoidCurveMexWrapper( 'delete', OBJ );\n" \
-"\n" \
 "  - Build:\n" \
 "    ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, L );\n" \
 "    ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
@@ -47,65 +45,16 @@
 "    ClothoidCurveMexWrapper( 'copy', OBJ, OBJ1 );\n" \
 "\n" \
 "  - Eval:\n" \
-"    [x,y,theta,kappa] = ClothoidCurveMexWrapper( 'evaluate', OBJ, ss );\n" \
 "    [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'getPars', OBJ );\n" \
 "\n" \
-"    [x,y]         = ClothoidCurveMexWrapper( 'eval', OBJ, ss[, offs] );\n" \
-"    [x_D,y_D]     = ClothoidCurveMexWrapper( 'eval_D', OBJ, ss[, offs] );\n" \
-"    [x_DD,y_DD]   = ClothoidCurveMexWrapper( 'eval_DD', OBJ, ss[, offs] );\n" \
-"    [x_DDD,y_DDD] = ClothoidCurveMexWrapper( 'eval_DDD', OBJ, ss[, offs] );\n" \
-"\n" \
-"  - Transform:\n" \
-"    ClothoidCurveMexWrapper( 'trim', OBJ, smin, smax );\n" \
-"    ClothoidCurveMexWrapper( 'changeOrigin', OBJ, newX0, newY0 );\n" \
-"    ClothoidCurveMexWrapper( 'rotate', OBJ, angle, cx, cy );\n" \
-"    ClothoidCurveMexWrapper( 'translate', OBJ, tx, ty );\n" \
-"    ClothoidCurveMexWrapper( 'scale', OBJ, scaling );\n" \
-"    ClothoidCurveMexWrapper( 'reverse', OBJ );\n" \
 "    [xp, yp, xm, ym] = ClothoidCurveMexWrapper( 'infinity', OBJ );\n" \
-"  - Boundary:\n" \
-"    pt  = ClothoidCurveMexWrapper( 'xyBegin', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'xBegin', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'yBegin', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'thetaBegin', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'kappaBegin', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'kappaEnd', OBJ );\n" \
-"    pt  = ClothoidCurveMexWrapper( 'xyEnd', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'xEnd', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'yEnd', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'thetaEnd', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'kappaEnd', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'kappa_D', OBJ );\n" \
-"    res = ClothoidCurveMexWrapper( 'length', OBJ );\n" \
-"\n" \
-"  - Distance:\n" \
-"    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPoint', OBJ, x, y );\n" \
-"    [dst,s]     = ClothoidCurveMexWrapper( 'distance', OBJ, x, y );\n" \
-"    [X,Y,s,dst] = ClothoidCurveMexWrapper( 'closestPointBySample', OBJ, x, y, ds );\n" \
-"    [dst,s]     = ClothoidCurveMexWrapper( 'distanceBySample', OBJ, x, y, ds );\n" \
-"    [s,t]       = ClothoidCurveMexWrapper( 'findST', OBJ, x, y );\n" \
-"\n" \
-"  - Intersection:\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_line', OBJ, OBJ2 );%\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_circle', OBJ, OBJ2 );%\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid', OBJ, OBJ2 );%\n" \
-"    [s1,s2] = ClothoidCurveMexWrapper( 'intersect_clothoid_list', OBJ, OBJ2 );%\n" \
 "\n" \
 "  - Bounding Box:\n" \
 "    TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size );%\n" \
 "    TT = ClothoidCurveMexWrapper( 'bbox', OBJ, max_angle, max_size, offs );%\n" \
 "\n" \
-"=====================================================================================\n" \
-"\n" \
-"Autors: Enrico Bertolazzi^(1), Marco Frego^(2), Paolo Bevilacqua^(2)\n" \
-"  (1) Department of Industrial Engineering\n" \
-"  (2) Department of Information Engineering and Computer Science\n" \
-"  University of Trento\n" \
-"  enrico.bertolazzi@unitn.it\n" \
-"  m.fregox@gmail.com\n" \
-"  paolo.bevilacqua@unitn.it\n" \
-"\n" \
-"=====================================================================================\n"
+MEX_INFO_MESSAGE("ClothoidCurveMexWrapper") \
+MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
@@ -133,12 +82,6 @@ namespace G2lib {
   ClothoidCurve *
   DATA_GET( mxArray const * & mx_id ) {
     return convertMat2Ptr<ClothoidCurve>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<ClothoidCurve>(mx_id);
   }
 
   /*\

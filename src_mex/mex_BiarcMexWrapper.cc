@@ -16,6 +16,7 @@
 #include "ClothoidList.hh"
 
 #include "mex_utils.hh"
+#include "mex_info.hxx"
 
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
@@ -26,10 +27,7 @@
 "    OBJ = BiarcMexWrapper( 'new' );\n" \
 "\n" \
 "    On output:\n" \
-"       OBJ   = pointer to the internal object\n" \
-"n" \
-"  - Destructor:\n" \
-"    BiarcMexWrapper( 'delete', OBJ );\n" \
+"    OBJ = pointer to the internal object\n" \
 "\n" \
 "  - Build:\n" \
 "    BiarcMexWrapper( 'build', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
@@ -37,53 +35,10 @@
 "    [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', OBJ );\n" \
 "\n" \
 "  - Eval:\n" \
-"    [x,y,theta,kappa] = BiarcMexWrapper( 'evaluate', OBJ, ss );\n" \
 "    [x0,y0,theta0,kappa0,L0,x1,y1,theta1,kappa1,L1] = BiarcMexWrapper( 'getPars', OBJ );\n" \
 "\n" \
-"    [x,y]         = BiarcMexWrapper( 'eval', OBJ, s[, t] );\n" \
-"    [x_D,y_D]     = BiarcMexWrapper( 'eval_D', OBJ, s[, t] );\n" \
-"    [x_DD,y_DD]   = BiarcMexWrapper( 'eval_DD', OBJ, s[, t] );\n" \
-"    [x_DDD,y_DDD] = BiarcMexWrapper( 'eval_DDD', OBJ, s[, t] );\n" \
-"\n" \
-"  res = CircleMexWrapper( 'xBegin0', OBJ );\n" \
-"  res = CircleMexWrapper( 'xEnd0', OBJ );\n" \
-"  res = CircleMexWrapper( 'yBegin0', OBJ );\n" \
-"  res = CircleMexWrapper( 'yEnd0', OBJ );\n" \
-"  res = CircleMexWrapper( 'thetaBegin0', OBJ );\n" \
-"  res = CircleMexWrapper( 'thetaEnd0', OBJ );\n" \
-"  res = CircleMexWrapper( 'kappa0', OBJ );\n" \
-"  res = CircleMexWrapper( 'length0', OBJ );\n" \
-"  res = CircleMexWrapper( 'xBegin1', OBJ );\n" \
-"  res = CircleMexWrapper( 'xEnd1', OBJ );\n" \
-"  res = CircleMexWrapper( 'yBegin1', OBJ );\n" \
-"  res = CircleMexWrapper( 'yEnd1', OBJ );\n" \
-"  res = CircleMexWrapper( 'thetaBegin1', OBJ );\n" \
-"  res = CircleMexWrapper( 'thetaEnd1', OBJ );\n" \
-"  res = CircleMexWrapper( 'kappa1', OBJ );\n" \
-"  res = CircleMexWrapper( 'length1', OBJ );\n" \
-"\n" \
-"  - Transform:\n" \
-"    BiarcMexWrapper( 'changeOrigin', OBJ, newX0, newY0 );\n" \
-"    BiarcMexWrapper( 'rotate', OBJ, angle, cx, cy );\n" \
-"    BiarcMexWrapper( 'translate', OBJ, tx, ty );\n" \
-"    BiarcMexWrapper( 'scale', OBJ, scaling );\n" \
-"    BiarcMexWrapper( 'reverse', OBJ );\n" \
-"  - Distance:\n" \
-"    [X,Y,s,dst] = BiarcMexWrapper( 'closestPoint', OBJ, x, y );\n" \
-"    [dst,s]     = BiarcMexWrapper( 'distance', OBJ, x, y );\n" \
-"    [X,Y,s,dst] = BiarcMexWrapper( 'closestPointBySample', OBJ, x, y, ds );\n" \
-"    [s,t]       = BiarcMexWrapper( 'findST', OBJ, x, y );\n" \
-"\n" \
-"=====================================================================================\n" \
-"\n" \
-"Autors: Enrico Bertolazzi^(1), Marco Frego^(2)\n" \
-"  (1) Department of Industrial Engineering\n" \
-"  (2) Department of Information Engineering and Computer Science\n" \
-"  University of Trento\n" \
-"  enrico.bertolazzi@unitn.it\n" \
-"  m.fregox@gmail.com\n" \
-"\n" \
-"=====================================================================================\n"
+MEX_INFO_MESSAGE("BiarcMexWrapper") \
+MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
@@ -111,12 +66,6 @@ namespace G2lib {
   Biarc *
   DATA_GET( mxArray const * & mx_id ) {
     return convertMat2Ptr<Biarc>(mx_id);
-  }
-
-  static
-  void
-  DATA_DELETE( mxArray const * & mx_id ) {
-    destroyObject<Biarc>(mx_id);
   }
 
   /*\

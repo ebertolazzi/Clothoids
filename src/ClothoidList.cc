@@ -407,6 +407,33 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  ClothoidList::build(
+    real_type       x0,
+    real_type       y0,
+    real_type       theta0,
+    int_type        n,
+    real_type const s[],
+    real_type const kappa[]
+  ) {
+    if ( n < 2 ) return false;
+    init();
+    real_type k  = kappa[0];
+    real_type L  = s[1]-s[0];
+    real_type dk = (kappa[1]-k)/L;
+
+    push_back( x0, y0, theta0, k, dk, L );
+    for ( int_type i = 2; i < n; ++i ) {
+      k  = kappa[i-1];
+      L  = s[i]-s[i-1];
+      dk = (kappa[i]-k)/L;
+      push_back( k, dk, L );
+    }
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   ClothoidCurve const &
   ClothoidList::get( int_type idx ) const {
     G2LIB_ASSERT( !clotoidList.empty(),
@@ -459,6 +486,7 @@ namespace G2lib {
                   " range [" << s0.front() << ", " << s0.back() << "]" );
     return true;
   }
+
   /*\
    |   _                  _   _
    |  | | ___ _ __   __ _| |_| |__
@@ -1204,9 +1232,11 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidList::intersect( ClothoidList const & CL,
-                           IntersectList      & ilist,
-                           bool                 swap_s_vals ) const {
+  ClothoidList::intersect(
+    ClothoidList const & CL,
+    IntersectList      & ilist,
+    bool                 swap_s_vals
+  ) const {
     real_type offs   = 0;
     real_type offs_C = 0;
     this->build_AABBtree( offs );
@@ -1240,11 +1270,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::intersect( real_type            offs,
-                           ClothoidList const & CL,
-                           real_type            offs_C,
-                           IntersectList      & ilist,
-                           bool                 swap_s_vals ) const {
+  ClothoidList::intersect(
+    real_type            offs,
+    ClothoidList const & CL,
+    real_type            offs_C,
+    IntersectList      & ilist,
+    bool                 swap_s_vals
+  ) const {
     this->build_AABBtree( offs );
     CL.build_AABBtree( offs_C );
     AABBtree::VecPairPtrBBox iList;
@@ -1282,14 +1314,16 @@ namespace G2lib {
   \*/
 
   int_type
-  ClothoidList::closestPoint( real_type   qx,
-                              real_type   qy,
-                              real_type   offs,
-                              real_type & x,
-                              real_type & y,
-                              real_type & s,
-                              real_type & t,
-                              real_type & DST ) const {
+  ClothoidList::closestPoint(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & DST
+  ) const {
 
     this->build_AABBtree( offs );
 
@@ -1312,7 +1346,7 @@ namespace G2lib {
         );
         if ( dst < DST ) {
           DST    = dst;
-          s      = ss;
+          s      = ss + s0[T.Icurve()];
           x      = xx;
           y      = yy;
           icurve = T.Icurve();
@@ -1331,13 +1365,15 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::closestPoint( real_type   qx,
-                              real_type   qy,
-                              real_type & x,
-                              real_type & y,
-                              real_type & s,
-                              real_type & t,
-                              real_type & dst ) const {
+  ClothoidList::closestPoint(
+    real_type   qx,
+    real_type   qy,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst
+  ) const {
     return closestPoint( qx, qy, 0, x, y, s, t, dst );
   }
 
@@ -1359,7 +1395,7 @@ namespace G2lib {
       s[k]     = ss;
       theta[k] = ic->thetaBegin();
       kappa[k] = ic->kappaBegin();
-      ss       += ic->length();
+      ss        += ic->length();
       ++k;
       ++ic;
     }

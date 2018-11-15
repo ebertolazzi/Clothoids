@@ -86,8 +86,13 @@ classdef ClothoidList < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_G1( self, x, y, varargin )
-      ok = ClothoidListMexWrapper( 'build_G1', ...
-                                   self.objectHandle, x, y, varargin{:} );
+      ok = ClothoidListMexWrapper( 'build_G1', self.objectHandle, ...
+                                   x, y, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = build( self, x0, y0, theta0, s, kappa )
+      ok = ClothoidListMexWrapper( 'build', self.objectHandle,...
+                                   x0, y0, theta0, s, kappa );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [theta,ok] = build_theta( self, x, y )
