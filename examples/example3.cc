@@ -67,7 +67,7 @@ main() {
     gc[6] = true;
     gc[7] = "pippo";
     cout << "Print contents of gc:\n";
-    gc.print(cout);
+    gc.dump(cout);
 
     // issue an error!
     gc[15] = 1.2;

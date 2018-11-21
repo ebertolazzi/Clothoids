@@ -139,7 +139,7 @@ main() {
 
   CK( GC_pop_head() );
 
-  GC_print();
+  GC_dump();
 
   printf("ALL DONE!\n\n\n\n");
   

@@ -80,7 +80,11 @@ int GENERIC_CONTAINER_API_DLL GC_pop_head( void);
 int GENERIC_CONTAINER_API_DLL GC_reset_head( void );
 
 /*! Print the actual `GenericContainer` */
-int GENERIC_CONTAINER_API_DLL GC_print( void );
+int GENERIC_CONTAINER_API_DLL GC_dump( void );
+
+/*! Print the actual `GenericContainer` */
+int GENERIC_CONTAINER_API_DLL GC_print_content_types( void );
+
 
 /*! Get type of actual pointed element of `GenericContainer` */
 int GENERIC_CONTAINER_API_DLL GC_get_type( void );

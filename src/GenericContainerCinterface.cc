@@ -189,9 +189,17 @@ GC_reset_head() {
 
 GC_EXTERN_C
 int
-GC_print() {
+GC_print_content_types() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
-  GC_TRY( gc_active -> top() -> print(cout) );
+  GC_TRY( gc_active -> top() -> print_content_types(cout) );
+  return GENERIC_CONTAINER_OK;
+}
+
+GC_EXTERN_C
+int
+GC_dump() {
+  if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
+  GC_TRY( gc_active -> top() -> dump(cout) );
   return GENERIC_CONTAINER_OK;
 }
 

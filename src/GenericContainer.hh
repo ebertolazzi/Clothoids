@@ -1403,11 +1403,26 @@ namespace GenericContainerNamespace {
     //! \name I/O for `GenericContainer` objects
     //@{
 
-    //! print the contents of the object in a human readable way
+    //! print the contents of the object in a human readable way (without data)
     GENERIC_CONTAINER_API_DLL
-    void print( ostream_type      &,
-                std::string const & prefix = "",
-                std::string const & indent = "    " ) const;
+    void
+    print_content_types( ostream_type      & stream,
+                         std::string const & prefix = "",
+                         std::string const & indent = "    " ) const;
+
+    //! dump the contents of the object in a human readable way
+    GENERIC_CONTAINER_API_DLL
+    void
+    dump( ostream_type      & stream,
+          std::string const & prefix = "",
+          std::string const & indent = "    " ) const;
+
+    GENERIC_CONTAINER_API_DLL
+    void
+    print( ostream_type      & stream,
+           std::string const & prefix = "",
+           std::string const & indent = "    " ) const
+    { dump( stream, prefix, indent ); }
 
     //! print the contents of the object in yaml syntax
     GENERIC_CONTAINER_API_DLL

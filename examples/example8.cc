@@ -44,7 +44,7 @@ main() {
     lua.do_file("test.lua");
     lua.global_to_GC("DATA",gc);
     cout << "\n\n\n\nConverted in GenericContainer\n\n";
-    gc.print(cout);
+    gc.dump(cout);
   }
   catch ( std::exception & exc ) {
     cout << exc.what() << '\n';

@@ -79,18 +79,18 @@ main() {
     vg[2] = "nonna papera";
   
     cout << "\n\n\nPrint gc:\n";
-    gc.print(cout);
+    gc.dump(cout);
     //gc.to_yaml(cout);
     
     GenericContainer gc1 = gc; // save a copy
     gc.clear();
 
     cout << "\n\n\nPrint gc:\n";
-    gc.print(cout);
+    gc.dump(cout);
     //gc.to_yaml(cout);
 
     cout << "\n\n\nPrint gc1:\n";
-    gc1.print(cout);
+    gc1.dump(cout);
     //gc1.to_yaml(cout);
   
   }

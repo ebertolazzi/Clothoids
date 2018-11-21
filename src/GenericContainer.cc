@@ -4517,7 +4517,7 @@ namespace GenericContainerNamespace {
   */
 
   void
-  GenericContainer::print( ostream_type      & stream,
+  GenericContainer::dump( ostream_type      & stream,
                            std::string const & prefix,
                            std::string const & indent ) const {
 
@@ -4541,7 +4541,8 @@ namespace GenericContainerNamespace {
       stream << prefix.c_str() << this -> get_real() << '\n';
       break;
     case GC_COMPLEX:
-      stream << prefix.c_str() << "( " << this -> get_complex().real() << ", " << this -> get_complex().imag() << " )\n";
+      stream << prefix.c_str() << "( " << this -> get_complex().real()
+             << ", " << this -> get_complex().imag() << " )\n";
       break;
     case GC_STRING:
       stream << prefix.c_str() << "\"" << this -> get_string().c_str() << "\"\n";
@@ -4603,10 +4604,10 @@ namespace GenericContainerNamespace {
           if ( vi.simple_data() ||
                ( vi.simple_vec_data() && vi.get_num_elements() <= 10 ) ) {
             stream << prefix.c_str() << i << ": ";
-            vi.print(stream,"");
+            vi.dump(stream,"");
           } else {
             stream << prefix.c_str() << i << ":\n";
-            vi.print(stream,prefix+indent);
+            vi.dump(stream,prefix+indent);
           }
         }
       }
@@ -4619,10 +4620,10 @@ namespace GenericContainerNamespace {
           if ( im->second.simple_data() ||
                ( im->second.simple_vec_data() && im->second.get_num_elements() <= 10 ) ) {
             stream << prefix.c_str() << im->first.c_str() << ": ";
-            im->second.print(stream,"");
+            im->second.dump(stream,"");
           } else {
             stream << prefix.c_str() << im->first.c_str() << ":\n";
-            im->second.print(stream,prefix+indent);
+            im->second.dump(stream,prefix+indent);
           }
           #else
           // num+"@"+"underline character"
@@ -4634,7 +4635,7 @@ namespace GenericContainerNamespace {
             // found formatting
             if ( im->second.simple_data() ) {
               stream << prefix.c_str() << header << ": ";
-              im->second.print(stream,"");
+              im->second.dump(stream,"");
             } else {
               if ( matches[1].length() > 1 ) stream << '\n'; // double ## --> add nel line
               stream << prefix.c_str() << header.c_str();
@@ -4647,16 +4648,168 @@ namespace GenericContainerNamespace {
                 stream << ':';
               }
               stream << '\n';
-              im->second.print(stream,prefix+indent);
+              im->second.dump(stream,prefix+indent);
             }
           } else {
             std::string header = pcreExecRet == 3 ? matches[3] : im->first;
             if ( im->second.simple_data() ) {
               stream << prefix.c_str() << header.c_str() << ": ";
-              im->second.print(stream,"");
+              im->second.dump(stream,"");
             } else {
               stream << prefix.c_str() << header.c_str() << ":\n";
-              im->second.print(stream,prefix+indent);
+              im->second.dump(stream,prefix+indent);
+            }
+          }
+          #endif
+        }
+      }
+      break;
+
+    //default:
+    //  GC_DO_ERROR( "Error, print(...) unknown type!\n");
+    //  break;
+    }
+  }
+
+
+  void
+  GenericContainer::print_content_types(
+    ostream_type      & stream,
+    std::string const & prefix,
+    std::string const & indent
+  ) const {
+
+    switch (_data_type) {
+    case GC_NOTYPE:
+      stream << prefix.c_str() << "Empty!\n";
+      break;
+    case GC_POINTER:
+      stream << prefix.c_str() << "(*void)\n";
+      break;
+    case GC_BOOL:
+      stream << prefix.c_str() << "bool\n";
+      break;
+    case GC_INTEGER:
+      stream << prefix.c_str() << "int\n";
+      break;
+    case GC_LONG:
+      stream << prefix.c_str() << "long int\n";
+      break;
+    case GC_REAL:
+      stream << prefix.c_str() << "double\n";
+      break;
+    case GC_COMPLEX:
+      stream << prefix.c_str() << "complex\n";
+      break;
+    case GC_STRING:
+      stream << prefix.c_str() << "string\"\n";
+      break;
+    case GC_VEC_POINTER:
+      { vec_pointer_type const & v = this -> get_vec_pointer();
+        stream << "vector of pointer[" << v.size() << "]\n"; }
+      break;
+    case GC_VEC_BOOL:
+      { vec_bool_type const & v = this -> get_vec_bool();
+        stream << "vector of bool[" << v.size() << "]\n"; }
+      break;
+    case GC_VEC_INTEGER:
+      { vec_int_type const & v = this -> get_vec_int();
+        stream << "vector of int[" << v.size() << "]\n"; }
+      break;
+    case GC_VEC_LONG:
+      { vec_long_type const & v = this -> get_vec_long();
+        stream << "vector of long[" << v.size() << "]\n"; }
+      break;
+    case GC_VEC_REAL:
+      { vec_real_type const & v = this -> get_vec_real();
+        stream << "vector of double[" << v.size() << "]\n"; }
+      break;
+    case GC_VEC_COMPLEX:
+      { vec_complex_type const & v = this -> get_vec_complex();
+        stream << "vector of complex[" << v.size() << "]\n"; }
+      break;
+    case GC_MAT_INTEGER:
+      { mat_int_type const & m = this -> get_mat_int();
+        stream << "matrix of int[" << m.numRows() << "," << m.numCols() << "]\n"; }
+      break;
+    case GC_MAT_LONG:
+      { mat_long_type const & m = this -> get_mat_long();
+        stream << "matrix of long[" << m.numRows() << "," << m.numCols() << "]\n"; }
+      break;
+    case GC_MAT_REAL:
+      { mat_real_type const & m = this -> get_mat_real();
+        stream << "matrix of double[" << m.numRows() << "," << m.numCols() << "]\n"; }
+      break;
+    case GC_MAT_COMPLEX:
+      { mat_complex_type const & m = this -> get_mat_complex();
+        stream << "matrix of complex[" << m.numRows() << "," << m.numCols() << "]\n"; }
+      break;
+    case GC_VEC_STRING:
+      { vec_string_type const & v = this -> get_vec_string();
+        stream << "vector of string[" << v.size() << "]\n"; }
+      break;
+
+    case GC_VECTOR:
+      { vector_type const & v = this -> get_vector();
+        for ( vector_type::size_type i = 0; i < v.size(); ++i ) {
+          GenericContainer const & vi = v[i];
+          if ( vi.simple_data() ||
+               ( vi.simple_vec_data() && vi.get_num_elements() <= 10 ) ) {
+            stream << prefix.c_str() << i << ": ";
+            vi.print_content_types(stream,"");
+          } else {
+            stream << prefix.c_str() << i << ":\n";
+            vi.print_content_types(stream,prefix+indent);
+          }
+        }
+      }
+      break;
+    case GC_MAP:
+      { map_type const & m = this -> get_map();
+        for ( map_type::const_iterator im = m.begin(); im != m.end(); ++im ) {
+          // check formatting using pcre
+          #ifndef GENERIC_CONTAINER_USE_REGEX
+          if ( im->second.simple_data() ||
+               ( im->second.simple_vec_data() && im->second.get_num_elements() <= 10 ) ) {
+            stream << prefix.c_str() << im->first.c_str() << ": ";
+            im->second.print_content_types(stream,"");
+          } else {
+            stream << prefix.c_str() << im->first.c_str() << ":\n";
+            im->second.print_content_types(stream,prefix+indent);
+          }
+          #else
+          // num+"@"+"underline character"
+          // Try to find the regex in aLineToMatch, and report results.
+          std::string matches[4];
+          int pcreExecRet = pcre_for_GC.exec( im->first, matches );
+          if ( pcreExecRet == 4 ) {
+            std::string header = matches[3]; // header
+            // found formatting
+            if ( im->second.simple_data() ) {
+              stream << prefix.c_str() << header << ": ";
+              im->second.print_content_types(stream,"");
+            } else {
+              if ( matches[1].length() > 1 ) stream << '\n'; // double ## --> add nel line
+              stream << prefix.c_str() << header.c_str();
+              if ( matches[2].length() > 0 ) {
+                stream << '\n' << prefix;
+                char fmt = matches[2][0]; // underline char
+                std::size_t m3 = header.length();
+                while ( m3-- > 0 ) stream << fmt; // underline header
+              } else {
+                stream << ':';
+              }
+              stream << '\n';
+              im->second.print_content_types(stream,prefix+indent);
+            }
+          } else {
+            std::string header = pcreExecRet == 3 ? matches[3] : im->first;
+            if ( im->second.simple_data() ) {
+              stream << prefix.c_str() << header.c_str() << ": ";
+              im->second.print_content_types(stream,"");
+            } else {
+              stream << prefix.c_str() << header.c_str() << ":\n";
+              im->second.print_content_types(stream,prefix+indent);
             }
           }
           #endif

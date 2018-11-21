@@ -55,10 +55,10 @@ main() {
     vec1[0] = 12.3;
     vec1[1] = "a string";
     vec1[2] = 1;
-    //gc.print(cout);
+    //dump(cout);
     lua.call( gc, gc_res );
     cout << "Result:\n";
-    gc_res.print(cout);
+    gc_res.dump(cout);
   }
   catch ( std::exception & exc ) {
     cout << exc.what() << '\n';

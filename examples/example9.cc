@@ -100,7 +100,7 @@ main() {
 
     gc.clear();
     gc_set( gc );
-    gc.print(cout);
+    gc.dump(cout);
 
     gc(7)(3).info(cout);
 

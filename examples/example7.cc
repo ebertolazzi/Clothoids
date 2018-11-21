@@ -43,7 +43,7 @@ main() {
     ifstream file("data_example.txt");
     if ( file.fail() ) throw std::runtime_error("file to open file");
     gc.readFormattedData( file, "#", "\t " );
-    gc.print(cout);
+    gc.dump(cout);
     cout << "\n\nData Read:\n";
     gc.writeFormattedData( cout, '\t' );
   }

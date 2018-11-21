@@ -74,7 +74,7 @@ main() {
     gc["vec_real"] = v;
 
     cout << "Print contents of gc:\n";
-    gc.print(cout);
+    gc.dump(cout);
 
     // issue an error!
     gc[0] = 1.2;
