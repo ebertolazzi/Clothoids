@@ -1463,6 +1463,12 @@ namespace GenericContainerNamespace {
                        char const commentChars[] = "#%",
                        char const delimiters[] = " \t" );
 
+    GENERIC_CONTAINER_API_DLL
+    GenericContainer &
+    readFormattedData( char const fname[],
+                       char const commentChars[] = "#%",
+                       char const delimiters[] = " \t" );
+
     GENERIC_CONTAINER_API_DLL static void exception( char const msg[] ) GC_NO_RETURN;
 
   };

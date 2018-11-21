@@ -45,6 +45,8 @@
   #include <regex>
 #endif
 
+#include <fstream>
+
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
 namespace GenericContainerNamespace {
@@ -4772,6 +4774,16 @@ namespace GenericContainerNamespace {
       { /* DA FARE */ }
       break;
     }
+  }
+
+  GenericContainer &
+  GenericContainer::readFormattedData( char const fname[],
+                                       char const commentChars[],
+                                       char const delimiters[] ) {
+    std::ifstream file( fname );
+    GC_ASSERT( file.good(),
+               "readFormattedData, failed to open file: ``" << fname << "''");
+    return readFormattedData( file, commentChars, delimiters );
   }
 
   void

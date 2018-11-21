@@ -114,8 +114,6 @@ namespace GenericContainerNamespace {
 
     this -> set_map();
     GenericContainer & tmp = (*this)["headers"];
-    
-    std::cout << tmp.get_type_name() << '\n';
     vec_string_type & headers = tmp.set_vec_string();
 
     // reading header line
