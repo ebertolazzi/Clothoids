@@ -1130,13 +1130,15 @@ namespace G2lib {
     findAtS( s_end );   size_t i_end   = size_t(last_idx);
     if ( i_begin == i_end ) {
       clotoidList[i_begin].trim( s_begin-s0[i_begin], s_end-s0[i_begin] );
-    } else {
+    } else {
       clotoidList[i_begin].trim( s_begin-s0[i_begin], s0[i_begin+1]-s0[i_begin] );
       clotoidList[i_end].trim( 0, s_end-s0[i_end] );
     }
     clotoidList.erase( clotoidList.begin()+i_end+1, clotoidList.end() );
     clotoidList.erase( clotoidList.begin(), clotoidList.begin()+i_begin );
+    if ( clotoidList.back().L <= machepsi100 ) clotoidList.pop_back();
     vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    s0.resize( clotoidList.size() + 1 );
     s0[0] = 0;
     size_t k = 0;
     for ( ++ic ; ic != clotoidList.end(); ++ic, ++k )
