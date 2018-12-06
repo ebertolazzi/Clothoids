@@ -35,5 +35,5 @@ function pippo(a)
       map = { a = 1, b = 2, c = 3 }
     },
   }
-  return res ;
+  return res;
 end

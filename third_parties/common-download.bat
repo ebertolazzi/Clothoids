@@ -6,5 +6,5 @@ SET FILE=%2
   powershell -command write-host -foreground "red" -background "yellow" -nonewline "%FILE% already downloaded"
   @echo.
 ) else (
-  PowerShell -NonInteractive -Command "Import-Module BitsTransfer ; Start-BitsTransfer -Source \"%URL%\" -Destination %FILE%"
+  PowerShell -NonInteractive -Command "Import-Module BitsTransfer; Start-BitsTransfer -Source \"%URL%\" -Destination %FILE%"
 )

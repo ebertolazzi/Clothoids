@@ -150,19 +150,19 @@ install_as_framework: lib/$(LIB_GC)
 	cp lib/$(LIB_GC) $(PREFIX)/lib
 
 run:
-	cd bin ; ./example1
-	cd bin ; ./example2
-	cd bin ; ./example3
-	cd bin ; ./example4
-	cd bin ; ./example5
-	cd bin ; ./example6
-	cd bin ; ./example7
+	cd bin; ./example1
+	cd bin; ./example2
+	cd bin; ./example3
+	cd bin; ./example4
+	cd bin; ./example5
+	cd bin; ./example6
+	cd bin; ./example7
 ifneq (,$(findstring lua, $(HASLUA)))
-	cd bin ; ./example8
-	cd bin ; ./example9
-	cd bin ; ./example10
+	cd bin; ./example8
+	cd bin; ./example9
+	cd bin; ./example10
 endif
-	cd bin ; ./example11
+	cd bin; ./example11
 
 doc:
 	doxygen

@@ -23,17 +23,17 @@ module GenericContainer
   
   extend FFI::Library
 
-  @GENERIC_CONTAINER_OK        = 0 ;
-  @GENERIC_CONTAINER_BAD_TYPE  = 1 ;
-  @GENERIC_CONTAINER_NO_DATA   = 2 ;
-  @GENERIC_CONTAINER_NOT_EMPTY = 3 ;
-  @GENERIC_CONTAINER_BAD_HEAD  = 4 ;
+  @GENERIC_CONTAINER_OK        = 0;
+  @GENERIC_CONTAINER_BAD_TYPE  = 1;
+  @GENERIC_CONTAINER_NO_DATA   = 2;
+  @GENERIC_CONTAINER_NOT_EMPTY = 3;
+  @GENERIC_CONTAINER_BAD_HEAD  = 4;
 
   @error_messages = [ "Generic Container, ok",
                       "Generic Container, bad type",
                       "Generic Container, no data",
                       "Generic Container, not empty",
-                      "Generic Container, bad head" ] ;
+                      "Generic Container, bad head" ];
 
   if @libGenericContainer then
     ffi_lib @libGenericContainer
@@ -43,11 +43,11 @@ module GenericContainer
     @ext     = ".noextension"
     case HOST_OS
     when /mac|darwin/
-      @ext = ".dylib" ;
+      @ext = ".dylib";
     when /linux|cygwin|bsd/
-      @ext = ".so" ;
+      @ext = ".so";
     when /mswin|win|mingw/
-      @ext = ".dll" ;
+      @ext = ".dll";
     end
     ffi_lib [ @libname+@ext,
               "./lib/"+@libname+@ext,
@@ -306,7 +306,7 @@ module GenericContainer
       raise RuntimeError, @error_messages[ok] unless ok == 0
     else
       self.fromVector vec
-      return ;
+      return;
     end
     # add elements
     vec.each { |var|
@@ -330,7 +330,7 @@ module GenericContainer
         raise RuntimeError, @error_messages[ok] unless ok == 0
       else
         self.fromVector vec
-        return ;
+        return;
       end
     }
   end
@@ -391,7 +391,7 @@ module GenericContainer
     elsif var.respond_to? :[] then
       self.fromMixedHash var
     else
-      puts "Found MRB_TT_OBJECT: " ;
+      puts "Found MRB_TT_OBJECT: ";
     end
   end
 

@@ -35,23 +35,23 @@ The usage is simple, for example it
 can be used as an associative array with eterogenous data
 
 ~~~~~~~~~~~~~
-GenericContainer gc ;
-gc["one"]  = 1       ; // store integer
-gc["two"]  = true    ; // store a boolean
-gc["3"]    = 1.4     ; // store floating point number
-gc["four"] = "pippo" ; // store a string
-gc["five"].set_vec_int(10) ; // store a vector of integer of 10 elements
+GenericContainer gc;
+gc["one"]  = 1;             // store integer
+gc["two"]  = true;          // store a boolean
+gc["3"]    = 1.4;           // store floating point number
+gc["four"] = "pippo";       // store a string
+gc["five"].set_vec_int(10); // store a vector of integer of 10 elements
 ~~~~~~~~~~~~~
 
 and to retrieve elements
 
 ~~~~~~~~~~~~~
-cout << gc["one"].get_int()     << '\n' ;
-cout << gc["two"].get_bool()    << '\n' ;
-cout << gc["3"].get_real()      << '\n' ;
-cout << gc["four"].get_string() << '\n' ;
+cout << gc["one"].get_int()     << '\n';
+cout << gc["two"].get_bool()    << '\n';
+cout << gc["3"].get_real()      << '\n';
+cout << gc["four"].get_string() << '\n';
 GenericContainer::vec_int_type & v = gc["five"].get_vec_int();
-cout << v[1] << '\n' ;
+cout << v[1] << '\n';
 ~~~~~~~~~~~~~
 
 For more complex emxamples and recursive data see example test files

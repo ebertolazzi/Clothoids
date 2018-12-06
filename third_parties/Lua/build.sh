@@ -13,4 +13,4 @@ mv $DIR lua
 
 cp -f CMakeLists.txt lua/CMakeLists.txt
 mkdir -p lua/build
-cd lua/build ; cmake .. ; make ; make install ; cd ../..
+cd lua/build; cmake ..; make; make install; cd ../..
