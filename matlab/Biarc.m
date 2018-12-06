@@ -45,7 +45,7 @@ classdef Biarc < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'BiArc' ;
+      str = 'BiArc';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_3P( self, varargin )
@@ -123,22 +123,22 @@ classdef Biarc < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
       if nargin<2
-        npts = 64 ;
+        npts = 64;
       end
       if nargin>2
         fmt1 = varargin{1};
       else
-        fmt1 = {'Color','blue','Linewidth',2} ;
+        fmt1 = {'Color','blue','Linewidth',2};
       end
       if nargin>3
         fmt2 = varargin{2};
       else
-        fmt2 = {'Color','red','Linewidth',2} ;
+        fmt2 = {'Color','red','Linewidth',2};
       end
       [C0,C1] = self.getCircles();
-      C0.plot(npts,fmt1) ;
-      hold on ;
-      C1.plot(npts,fmt2) ;
+      C0.plot(npts,fmt1);
+      hold on;
+      C1.plot(npts,fmt2);
     end
   end
 end

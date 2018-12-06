@@ -53,7 +53,7 @@ classdef LineSegment < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
-      [ p1, p2 ] = self.points() ;
+      [ p1, p2 ] = self.points();
       plot( [ p1(1), p2(1) ], [ p1(2), p2(2) ], varargin{:} );
     end
   end

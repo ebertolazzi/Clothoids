@@ -39,7 +39,7 @@ classdef LineSegment < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function obj = obj_handle( self )
-      obj = self.objectHandle ;
+      obj = self.objectHandle;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
@@ -197,7 +197,7 @@ classdef LineSegment < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
-      [ p1, p2 ] = self.points() ;
+      [ p1, p2 ] = self.points();
       plot( [ p1(1), p2(1) ], [ p1(2), p2(2) ], varargin{:} );
     end
   end

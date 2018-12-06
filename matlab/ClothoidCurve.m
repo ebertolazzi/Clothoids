@@ -20,7 +20,7 @@ classdef ClothoidCurve < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'ClothoidCurve' ;
+      str = 'ClothoidCurve';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
@@ -159,7 +159,7 @@ classdef ClothoidCurve < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
       if nargin < 2
-        npts = 1000 ;
+        npts = 1000;
       end
       S = self.optimized_sample( npts, pi/180, 0 );
       [ X, Y ] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S );
@@ -174,10 +174,10 @@ classdef ClothoidCurve < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotCurvature( self, npts, varargin )
       if nargin < 2
-        npts = 1000 ;
+        npts = 1000;
       end
       L = ClothoidCurveMexWrapper( 'length', self.objectHandle );
-      S = 0:L/npts:L ;
+      S = 0:L/npts:L;
       [ ~, ~, ~, kappa ] = ClothoidCurveMexWrapper( 'evaluate', ...
                                                     self.objectHandle, S );
       plot( S, kappa, varargin{:} );
@@ -185,10 +185,10 @@ classdef ClothoidCurve < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotTheta( self, npts, varargin )
       if nargin < 2
-        npts = 1000 ;
+        npts = 1000;
       end
       L = ClothoidCurveMexWrapper( 'length', self.objectHandle );
-      S = 0:L/npts:L ;
+      S = 0:L/npts:L;
       [ ~, ~, theta, ~ ] = ClothoidCurveMexWrapper( 'evaluate', ...
                                                     self.objectHandle, S );
       plot( S, theta, varargin{:} );
@@ -196,8 +196,8 @@ classdef ClothoidCurve < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotNormal( self, step, len )
       for s=0:step:self.length()
-        [ x, y, theta, ~ ] = self.evaluate(s) ;
-        n = [sin(theta),-cos(theta)] ;
+        [ x, y, theta, ~ ] = self.evaluate(s);
+        n = [sin(theta),-cos(theta)];
         A = [x,x+len*n(1)];
         B = [y,y+len*n(2)];
         plot(A,B);

@@ -538,7 +538,7 @@ namespace G2lib {
     dst = hypot( qx-x, qy-y );
     #else
     real_type ds = (s_end-s_begin)/10;
-    for ( int_type iter = 0; iter <= 10 ; ++iter ) {
+    for ( int_type iter = 0; iter <= 10; ++iter ) {
       real_type ss = s_begin + iter * ds;
       real_type xx, yy;
       CD.eval( ss, offs, xx, yy );

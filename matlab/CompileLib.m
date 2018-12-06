@@ -12,7 +12,7 @@ NAMES = { ...
   'ClothoidCurveMexWrapper', ...
   'ClothoidListMexWrapper', ...
   'TriTriOverlap'
-} ;
+};
 
 LIB_NAMES = { ...
   'G2lib', ...
@@ -41,40 +41,40 @@ for k=1:length(LIB_NAMES)
   end  
 end
 
-[~,mexLoaded] = inmem('-completenames') ;
+[~,mexLoaded] = inmem('-completenames');
 
 disp('---------------------------------------------------------');
 
-CMD = 'mex -c -largeArrayDims -I../src ' ;
+CMD = 'mex -c -largeArrayDims -I../src ';
 if isunix
   if ismac
-    CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0" '] ;
+    CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0" '];
   else
-    CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0" '] ;
+    CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0" '];
   end
 elseif ispc
 end
-CMD = [ CMD, LIB_SRCS ] ;
+CMD = [ CMD, LIB_SRCS ];
 
 disp(CMD);
 eval(CMD);
 
 for k=1:length(NAMES)
-  N=NAMES{k} ;
+  N=NAMES{k};
   disp('---------------------------------------------------------');
-  fprintf(1,'Compiling: %s\n',N) ;
+  fprintf(1,'Compiling: %s\n',N);
 
-  CMD = [ 'while mislocked(''' N ''') ; munlock(''' N ''') ; end;'] ;
+  CMD = [ 'while mislocked(''' N '''); munlock(''' N '''); end;'];
   eval(CMD);
 
-  CMD = [ 'mex -I../src -output ../matlab/', N ] ;
-  CMD = [ CMD, ' -largeArrayDims ../src_mex/mex_', N ] ;
-  CMD = [ CMD, '.cc ', LIB_OBJS ] ;
+  CMD = [ 'mex -I../src -output ../matlab/', N ];
+  CMD = [ CMD, ' -largeArrayDims ../src_mex/mex_', N ];
+  CMD = [ CMD, '.cc ', LIB_OBJS ];
   if isunix
     if ismac
-      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'] ;
+      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'];
     else
-      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'] ;
+      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'];
     end
   elseif ispc
   end

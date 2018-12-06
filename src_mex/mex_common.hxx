@@ -101,7 +101,7 @@ do_change_origin( int nlhs, mxArray       *plhs[],
   MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
   MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-  real_type new_x0, new_y0 ;
+  real_type new_x0, new_y0;
   new_x0 = getScalarValue( arg_in_2,
                            CMD "`x0` expected to be a real scalar" );
   new_y0 = getScalarValue( arg_in_3,

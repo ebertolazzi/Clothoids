@@ -8,7 +8,7 @@ classdef ClothoidList < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'ClothoidList' ;
+      str = 'ClothoidList';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function reserve( self, N )
@@ -140,19 +140,19 @@ classdef ClothoidList < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
       if nargin > 1
-        npts = varargin{1} ;
+        npts = varargin{1};
       else
-        npts = 400 ;
+        npts = 400;
       end
       if nargin > 2
-        fmt1 = varargin{2} ;
+        fmt1 = varargin{2};
       else
-        fmt1 = {'Color','red','LineWidth',3} ;
+        fmt1 = {'Color','red','LineWidth',3};
       end
       if nargin > 3
-        fmt2 = varargin{3} ;
+        fmt2 = varargin{3};
       else
-        fmt2 = {'Color','blue','LineWidth',3} ;
+        fmt2 = {'Color','blue','LineWidth',3};
       end
       for k=1:self.numSegment()
         C = self.get(k);
@@ -161,20 +161,20 @@ classdef ClothoidList < CurveBase
         else
           C.plot( npts, fmt2{:} );
         end
-        hold on ;
+        hold on;
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot_offs( self, offs, npts, varargin )
       if nargin > 3
-        fmt1 = varargin{1} ;
+        fmt1 = varargin{1};
       else
-        fmt1 = {'Color','red','LineWidth',3} ;
+        fmt1 = {'Color','red','LineWidth',3};
       end
       if nargin > 4
-        fmt2 = varargin{2} ;
+        fmt2 = varargin{2};
       else
-        fmt2 = {'Color','blue','LineWidth',3} ;
+        fmt2 = {'Color','blue','LineWidth',3};
       end
       for k=1:self.numSegment()
         C = self.get(k);
@@ -183,22 +183,22 @@ classdef ClothoidList < CurveBase
         else
           C.plot_offs( offs, npts, fmt2{:} );
         end
-        hold on ;
+        hold on;
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotCurvature( self, npts, varargin )
       if nargin > 2
-        fmt1 = varargin{1} ;
+        fmt1 = varargin{1};
       else
-        fmt1 = {'Color','red','LineWidth',3} ;
+        fmt1 = {'Color','red','LineWidth',3};
       end
       if nargin > 3
-        fmt2 = varargin{2} ;
+        fmt2 = varargin{2};
       else
-        fmt2 = {'Color','blue','LineWidth',3} ;
+        fmt2 = {'Color','blue','LineWidth',3};
       end
-      s0 = 0 ;
+      s0 = 0;
       for k=1:self.numSegment()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
@@ -209,22 +209,22 @@ classdef ClothoidList < CurveBase
           plot( s0+ss, kappa, fmt2{:} );
         end
         s0 = s0+ss(end);
-        hold on ;
+        hold on;
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotAngle( self, npts, varargin )
       if nargin > 2
-        fmt1 = varargin{1} ;
+        fmt1 = varargin{1};
       else
-        fmt1 = {'Color','red','LineWidth',3} ;
+        fmt1 = {'Color','red','LineWidth',3};
       end
       if nargin > 3
-        fmt2 = varargin{2} ;
+        fmt2 = varargin{2};
       else
-        fmt2 = {'Color','blue','LineWidth',3} ;
+        fmt2 = {'Color','blue','LineWidth',3};
       end
-      s0 = 0 ;
+      s0 = 0;
       for k=1:self.numSegment()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
@@ -235,7 +235,7 @@ classdef ClothoidList < CurveBase
           plot( s0+ss, theta, fmt2{:} );
         end
         s0 = s0+ss(end);
-        hold on ;
+        hold on;
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -247,27 +247,27 @@ classdef ClothoidList < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function save( self, filename, ds )
-      fd = fopen( filename, 'w' ) ;
+      fd = fopen( filename, 'w' );
       L  = self.length();
-      n  = ceil( L / ds ) ;
-      fprintf(fd,'X\tY\tTHETA\n') ;
+      n  = ceil( L / ds );
+      fprintf(fd,'X\tY\tTHETA\n');
       for k=1:n
-        s = (k-1)*L/(n-1) ;
-        [x,y,theta] = self.evaluate( s ) ;
-        fprintf(fd,'%20.10g\t%20.10g\t%20.10g\n',x,y,theta) ;
+        s = (k-1)*L/(n-1);
+        [x,y,theta] = self.evaluate( s );
+        fprintf(fd,'%20.10g\t%20.10g\t%20.10g\n',x,y,theta);
       end
-      fclose(fd) ;
+      fclose(fd);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function saveClothoids( self, filename )
-      fd = fopen( filename, 'w' ) ;
-      fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n') ;
+      fd = fopen( filename, 'w' );
+      fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n');
       for k=1:self.numSegment()
         C = self.get(k);
         [x0,y0,theta0,k0,dk,L] = C.getPars();
-        fprintf(fd,'%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\n',x0,y0,theta0,k0,dk,L) ;
+        fprintf(fd,'%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\n',x0,y0,theta0,k0,dk,L);
       end
-      fclose(fd) ;
+      fclose(fd);
     end
 
   end

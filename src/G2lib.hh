@@ -1012,7 +1012,7 @@ namespace G2lib {
             real_type & s,
             real_type & t ) const {
       real_type X, Y, dst;
-      int_type icode = closestPoint( x, y, X, Y, s, t, dst ) ;
+      int_type icode = closestPoint( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
 

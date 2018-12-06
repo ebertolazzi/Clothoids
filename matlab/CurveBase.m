@@ -16,7 +16,7 @@ classdef CurveBase < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function obj = obj_handle( self )
-      obj = self.objectHandle ;
+      obj = self.objectHandle;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function copy( self, C )

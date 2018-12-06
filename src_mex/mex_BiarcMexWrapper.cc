@@ -194,7 +194,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('xMiddle',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->xMiddle()) ;
+    setScalarValue( arg_out_0, ptr->xMiddle());
     #undef CMD
   }
 
@@ -210,7 +210,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('yMiddle',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->yMiddle()) ;
+    setScalarValue( arg_out_0, ptr->yMiddle());
     #undef CMD
   }
 
@@ -226,7 +226,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('thetaMiddle',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->thetaMiddle()) ;
+    setScalarValue( arg_out_0, ptr->thetaMiddle());
     #undef CMD
   }
 
@@ -242,7 +242,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('sMiddle',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->length0()) ;
+    setScalarValue( arg_out_0, ptr->length0());
     #undef CMD
   }
 
@@ -258,7 +258,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('kappa0',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->kappa0()) ;
+    setScalarValue( arg_out_0, ptr->kappa0());
     #undef CMD
   }
 
@@ -274,7 +274,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('kappa1',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->kappa1()) ;
+    setScalarValue( arg_out_0, ptr->kappa1());
     #undef CMD
   }
 
@@ -290,7 +290,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('length0',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->length0()) ;
+    setScalarValue( arg_out_0, ptr->length0());
     #undef CMD
   }
 
@@ -306,7 +306,7 @@ namespace G2lib {
     #define CMD "BiarcMexWrapper('length1',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    setScalarValue( arg_out_0, ptr->length1()) ;
+    setScalarValue( arg_out_0, ptr->length1());;
     #undef CMD
   }
 

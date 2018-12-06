@@ -33,34 +33,34 @@ getEllipse(real[] v) {
   real delta1 = b^2-4*a*c;
 
   // check is an ellipse
-  real [] res0 = {0} ;
+  real [] res0 = {0};
   if (delta1 >= 0) {
     write("Input parameters do not represent an ellipse ",delta1);
-    return res0 ;
+    return res0;
   }
   
   // check is non degenerate ellipse
-  real det = b*e-c*d ;
-  real ae2 = a*e^2 ;
-  real disc = c*f*delta1 + (det-ae2) ;
+  real det = b*e-c*d;
+  real ae2 = a*e^2;
+  real disc = c*f*delta1 + (det-ae2);
   if ( disc >=0 ) {
-    write( "Input parameters represent a degenerate ellipse ", 4*disc) ;
-    return res0 ;
+    write( "Input parameters represent a degenerate ellipse ", 4*disc);
+    return res0;
   }
  
   // the ellipse is admissible, compute parameters;
  
-  real delta2 = det + ae2 + delta1*f ;
+  real delta2 = det + ae2 + delta1*f;
   real delta3 = sqrt((a-c)^2+b^2);
  
   real A = -sqrt( 2*delta2*(a+c+delta3) ) / delta1;
   real B = -sqrt( 2*delta2*(a+c-delta3) ) / delta1;
   
-  real x0 = (2*c*d-b*e)/delta1 ;
-  real y0 = (2*a*e-b*d)/delta1 ;
+  real x0 = (2*c*d-b*e)/delta1;
+  real y0 = (2*a*e-b*d)/delta1;
 
   real alpha = atan2( (c-a-delta3), b );
-  real [] res = {x0,y0,alpha,A,B} ;
+  real [] res = {x0,y0,alpha,A,B};
   return res;
 }
 
@@ -76,18 +76,18 @@ getEllipsePoints( real[] pars,
   real B     = pars[4];
   if ( tmin > tmax ) tmax += 2*pi;
   real h =  (tmax-tmin)/(Npts-1);
-  real AC = A*cos(alpha) ;
-  real AS = A*sin(alpha) ;
-  real BC = B*cos(alpha) ;
-  real BS = B*sin(alpha) ;
+  real AC = A*cos(alpha);
+  real AS = A*sin(alpha);
+  real BC = B*cos(alpha);
+  real BS = B*sin(alpha);
   path res;
-  for ( int i = 0 ; i < Npts ; ++i ) {
-    real t = tmin+h*i ;
-    real Ct = cos(t) ;
-    real St = sin(t) ;
-    res = res -- (x0+AC*Ct - BS*St, y0+AS*Ct + BC*St ) ;
+  for ( int i = 0; i < Npts; ++i ) {
+    real t = tmin+h*i;
+    real Ct = cos(t);
+    real St = sin(t);
+    res = res -- (x0+AC*Ct - BS*St, y0+AS*Ct + BC*St );
   }
-  return res ;
+  return res;
 }
 
 path
@@ -97,14 +97,14 @@ plotEllipseAxisMajor( real[] pars) {
   real alpha = pars[2];
   real A     = pars[3];
   real B     = pars[4];
-  real AC    = A*cos(alpha) ;
-  real AS    = A*sin(alpha) ;
-  //real BC    = B*cos(alpha) ;
-  //real BS    = B*sin(alpha) ;
+  real AC    = A*cos(alpha);
+  real AS    = A*sin(alpha);
+  //real BC    = B*cos(alpha);
+  //real BS    = B*sin(alpha);
 
   //return (x0+AC*cos(0)  - BS*sin(0),  y0+AS*cos(0)  + BC*sin(0)  )--
-  //       (x0+AC*cos(pi) - BS*sin(pi), y0+AS*cos(pi) + BC*sin(pi) ) ;
-  return (x0+AC, y0+AS )-- (x0-AC, y0-AS ) ;
+  //       (x0+AC*cos(pi) - BS*sin(pi), y0+AS*cos(pi) + BC*sin(pi) );
+  return (x0+AC, y0+AS )-- (x0-AC, y0-AS );
 }
 
 path
@@ -114,13 +114,13 @@ plotEllipseAxisMinor(real[] pars) {
   real alpha = pars[2];
   real A     = pars[3];
   real B     = pars[4];
-  //real AC    = A*cos(alpha) ;
-  //real AS    = A*sin(alpha) ;
-  real BC    = B*cos(alpha) ;
-  real BS    = B*sin(alpha) ;
+  //real AC    = A*cos(alpha);
+  //real AS    = A*sin(alpha);
+  real BC    = B*cos(alpha);
+  real BS    = B*sin(alpha);
   //res = (x0+A*cos(pi/2)*cos(alpha) - B*sin(pi/2)*sin(alpha), y0+A*cos(pi/2)*sin(alpha) + B*sin(pi/2)*cos(alpha) )--
-  //      (x0+A*cos(pi*3/2)*cos(alpha) - B*sin(pi*3/2)*sin(alpha), y0+A*cos(pi*3/2)*sin(alpha) + B*sin(pi*3/2)*cos(alpha) ) ;
-  return (x0-BS, y0+BC )-- (x0+BS, y0-BC ) ;
+  //      (x0+A*cos(pi*3/2)*cos(alpha) - B*sin(pi*3/2)*sin(alpha), y0+A*cos(pi*3/2)*sin(alpha) + B*sin(pi*3/2)*cos(alpha) );
+  return (x0-BS, y0+BC )-- (x0+BS, y0-BC );
 }
 
 pair
@@ -136,11 +136,11 @@ getAngleInterval( real a,
   real alpha = pars[2];
   real A     = pars[3];
   real B     = pars[4];
-  pair PtA   = clothoidPoint( p0, th0, k, a, L) ;
-  pair PtB   = clothoidPoint( p0, th0, k, b, L) ;
+  pair PtA   = clothoidPoint( p0, th0, k, a, L);
+  pair PtB   = clothoidPoint( p0, th0, k, b, L);
   
-  real Ca = cos(alpha) ;
-  real Sa = sin(alpha) ;
+  real Ca = cos(alpha);
+  real Sa = sin(alpha);
 
   real angA = atan2( ( (PtA.y-y0)*Ca - (PtA.x-x0)*Sa )/B, 
                      ( (PtA.x-x0)*Ca + (PtA.y-y0)*Sa )/A );
@@ -159,7 +159,7 @@ computeFrontN( real a,
                real L,
                int  Npts = 20 ) {
   pair[] cfront;
-  for ( int i = 0 ; i <= Npts ; ++i ) {
+  for ( int i = 0; i <= Npts; ++i ) {
     real h = a+(b-a)/Npts*i;
     cfront[i] = clothoidPoint( p0, th0, k, h, L);  
   }
@@ -177,9 +177,9 @@ fitEllipse( real dkmin,
 
   pair[] cfront = computeFrontN( dkmin, dkmax, p0, th0, k, L, N );
   //write(cfront);
-  N = N + 1 ;
+  N = N + 1;
   real[] xvec,yvec;
-  for(int i = 0; i<N ; ++i) {
+  for(int i = 0; i<N; ++i) {
     xvec[i] = cfront[i].x;
     yvec[i] = cfront[i].y;
   }
@@ -223,8 +223,8 @@ real
 bisectionForFront(real a, real b, real k, real L, real tol, int maxiter){
 int N = 1;
 real c,X2b,X2a;
-pair[] ICSa = intCS( a, k, -1/2*L*(a*L+2*k), L ) ;
-pair[] ICSb = intCS( b, k, -1/2*L*(b*L+2*k), L ) ;  
+pair[] ICSa = intCS( a, k, -1/2*L*(a*L+2*k), L );
+pair[] ICSb = intCS( b, k, -1/2*L*(b*L+2*k), L );  
 if (ICSa[2].x * ICSb[2].x > 0) {
   write("ERROR: the bisection extrema does not have opposite sign");
   if (a==0) { return b;}
@@ -233,9 +233,9 @@ if (ICSa[2].x * ICSb[2].x > 0) {
 
 while (N <= maxiter) { // limit iterations to prevent infinite loop
   c =  (a+b)*0.5; // new midpoint
-  pair[] iCSb = intCS( c, k, -1/2*L*(c*L+2*k), L ) ;  
+  pair[] iCSb = intCS( c, k, -1/2*L*(c*L+2*k), L );  
   X2b = iCSb[2].x;
-  pair[] iCSa = intCS( a, k, -1/2*L*(a*L+2*k), L ) ;  
+  pair[] iCSa = intCS( a, k, -1/2*L*(a*L+2*k), L );  
   X2a = iCSa[2].x;
   if ( (b-a)*0.5 < tol) { // solution found
     write("Solution found by bisection and iterations ", c, N);
@@ -269,7 +269,7 @@ newtonX2(real k, real L, real dkguess, real tol, int maxiter){
   real dk = dkguess;
   real Y4v, tol, X2;
   for (int i = 0; i<maxiter; ++i){
-      pair[] iCS = intCS( dk, k, -1/2*L*(dk*L+2*k), L ) ;  
+      pair[] iCS = intCS( dk, k, -1/2*L*(dk*L+2*k), L );  
       X2 = iCS[2].x;
       if (abs(X2)<tol) {
          write("Solution found with Newton with iterations ", i);
@@ -299,12 +299,12 @@ computeFrontExtrema(real k, real L, int flag=1) {
   real alpha = 3/2*pi;
   real beta = 3/2*pi;
   real omega = 2*pi; //era 2pi
-  real dka, dkaguess ;
-  real dkb, dkbguess ;
+  real dka, dkaguess;
+  real dkb, dkbguess;
    
    
   if (k>=0) {
-    dkaguess =  -(k*L+(beta*(2*L*k+beta))^(0.5)+beta)/L^2 ; //andava bene
+    dkaguess =  -(k*L+(beta*(2*L*k+beta))^(0.5)+beta)/L^2; //andava bene
     
     write("Computing for A - dkaguess is ", dkaguess);
     dka =  newtonX2( k, L, dkaguess, tol, maxiter);
@@ -338,8 +338,8 @@ computeFrontExtrema(real k, real L, int flag=1) {
     }
     //dka = min(dka,dkaguess);
     //========================================================
-    dkbguess = -(k*L-(beta*(-2*L*k+beta))^(0.5)-beta)/L^2 ;
-    //dkbguess = k^2/(k*L+beta-(beta*(2*L*k+beta))^(0.5)) ;
+    dkbguess = -(k*L-(beta*(-2*L*k+beta))^(0.5)-beta)/L^2;
+    //dkbguess = k^2/(k*L+beta-(beta*(2*L*k+beta))^(0.5));
     write("Computing for B - dkbguess is ", dkbguess);
     dkb =  newtonX2( k, L, dkbguess, tol, maxiter);
     if (dkb > dkbguess || flag==1) {
@@ -362,7 +362,7 @@ computeFrontExtrema(real k, real L, int flag=1) {
 
 path
 computeFront(real a, real b, pair p0, real th0, real k, real L, int Npts=200) {
-  real h ;
+  real h;
   path cfront;
   for (int i = 0; i<=Npts; ++i){
     h = a+(b-a)/Npts*i;

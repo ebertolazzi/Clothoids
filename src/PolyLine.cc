@@ -274,7 +274,7 @@ namespace G2lib {
     real_type newx0 = ic->xBegin();
     real_type newy0 = ic->yBegin();
     s0[0] = 0;
-    for ( size_t k=0 ; ic != polylineList.end(); ++ic, ++k ) {
+    for ( size_t k=0; ic != polylineList.end(); ++ic, ++k ) {
       ic->scale( sfactor );
       ic->changeOrigin( newx0, newy0 );
       newx0 = ic->xEnd();
@@ -295,7 +295,7 @@ namespace G2lib {
     s0[0] = 0;
     s0[1] = ic->length();
     size_t k = 1;
-    for ( ++ic ; ic != polylineList.end(); ++ic, ++k ) {
+    for ( ++ic; ic != polylineList.end(); ++ic, ++k ) {
       ic->reverse();
       ic->changeOrigin( newx0, newy0 );
       newx0   = ic->xEnd();
@@ -336,7 +336,7 @@ namespace G2lib {
     vector<LineSegment>::iterator ic = polylineList.begin();
     s0[0] = 0;
     size_t k = 0;
-    for ( ++ic ; ic != polylineList.end(); ++ic, ++k )
+    for ( ++ic; ic != polylineList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
     isegment = 0;
   }
