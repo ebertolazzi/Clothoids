@@ -578,12 +578,32 @@ SPL2.plot();
 hold on;
 SPL1.plot();
 
+fprintf('test intersection\n');
 tic
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
+[s1,s2] = SPL1.intersect( SPL2 );
 [s1,s2] = SPL1.intersect( SPL2 );
 toc
 
+fprintf('test collision\n');
 tic
-ok = SPL1.collision( SPL2 )
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
+ok = SPL1.collision( SPL2 );
 toc
 
 size(s1)

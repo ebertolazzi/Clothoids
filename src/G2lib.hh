@@ -125,6 +125,19 @@ namespace G2lib {
   extern real_type const m_2pi;       // 2*pi
   extern real_type const m_1_pi;      // 1/pi
   extern real_type const m_1_sqrt_pi; // 1/sqrt(pi)
+  extern bool            intersect_with_AABBtree;
+
+  static
+  inline
+  void
+  noAABBtree()
+  { intersect_with_AABBtree = false; }
+
+  static
+  inline
+  void
+  yesAABBtree()
+  { intersect_with_AABBtree = true; }
 
   static
   inline

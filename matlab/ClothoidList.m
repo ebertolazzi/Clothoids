@@ -11,6 +11,14 @@ classdef ClothoidList < CurveBase
       str = 'ClothoidList';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function aabb_true( self )
+      ClothoidListMexWrapper( 'aabb_true', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function aabb_false( self )
+      ClothoidListMexWrapper( 'aabb_false', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function reserve( self, N )
       ClothoidListMexWrapper( 'reserve', self.objectHandle, N );
     end
@@ -136,6 +144,11 @@ classdef ClothoidList < CurveBase
       [ s, t, ipos ] = ClothoidListMexWrapper( 'findST1', ...
                                                 self.objectHandle, ...
                                                 x, y, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [P1,P2,P3] = bbTriangles( self, varargin )
+      % bbTriangles( max_angle, max_size, offs );
+      [P1,P2,P3] = ClothoidListMexWrapper( 'bbTriangles', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )

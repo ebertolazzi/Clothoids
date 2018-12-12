@@ -566,6 +566,34 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  static
+  void
+  do_aabb_true( int nlhs, mxArray       *plhs[],
+                int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidCurveMexWrapper('aabb_true',OBJ): "
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
+    G2lib::yesAABBtree();
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_aabb_false( int nlhs, mxArray       *plhs[],
+                 int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidCurveMexWrapper('aabb_false',OBJ): "
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
+    G2lib::noAABBtree();
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   #define CMD_BASE "ClothoidCurveMexWrapper"
   #define G2LIB_CLASS ClothoidCurve
   #include "mex_common.hxx"
@@ -587,7 +615,9 @@ namespace G2lib {
     CMD_CLOSEST_BY_SAMPLE,
     CMD_BB_TRIANGLES,
     CMD_OPTIMIZED_SAMPLE,
-    CMD_VIRTUAL_LIST
+    CMD_VIRTUAL_LIST,
+    CMD_AABB_TRUE,
+    CMD_AABB_FALSE
   } CMD_LIST;
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -605,6 +635,8 @@ namespace G2lib {
     {"closestPointBySample",CMD_CLOSEST_BY_SAMPLE},
     {"bbTriangles",CMD_BB_TRIANGLES},
     {"optimized_sample",CMD_OPTIMIZED_SAMPLE},
+    {"aabb_true",CMD_AABB_TRUE},
+    {"aabb_false",CMD_AABB_FALSE},
     CMD_MAP_LIST
   };
 
@@ -660,6 +692,12 @@ namespace G2lib {
         break;
       case CMD_OPTIMIZED_SAMPLE:
         do_optimized_sample( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_AABB_TRUE:
+        do_aabb_true( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_AABB_FALSE:
+        do_aabb_false( nlhs, plhs, nrhs, prhs );
         break;
       CMD_CASE_LIST;
       }

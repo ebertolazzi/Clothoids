@@ -715,6 +715,89 @@ namespace G2lib {
     #undef CMD
   }
 
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_bbTriangles( int nlhs, mxArray       *plhs[],
+                  int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidListMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs]): "
+
+    MEX_ASSERT( nrhs >= 2 && nrhs <= 5,
+                CMD "expected 2 up to 5 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 3,
+                CMD "expected 3 output, nlhs = " << nlhs );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    real_type max_angle = m_pi/18;
+    real_type max_size  = 1e100;
+    real_type offs      = 0;
+    if ( nrhs >= 3 )
+      max_angle = getScalarValue( arg_in_2,
+                                  CMD "`max_angle` expected to be a real scalar" );
+    if ( nrhs >= 4 )
+      max_size = getScalarValue( arg_in_3,
+                                 CMD "`max_size` expected to be a real scalar" );
+    if ( nrhs >= 5 )
+      offs = getScalarValue( arg_in_4,
+                             CMD "`offs` expected to be a real scalar" );
+
+    std::vector<T2D> tvec;
+    if ( nrhs == 5 ) {
+      ptr->bbTriangles( offs, tvec, max_angle, max_size );
+    } else {
+      ptr->bbTriangles( tvec, max_angle, max_size );
+    }
+
+    mwSize nt = tvec.size();
+
+    real_type * p0 = createMatrixValue( arg_out_0, 2, nt );
+    real_type * p1 = createMatrixValue( arg_out_1, 2, nt );
+    real_type * p2 = createMatrixValue( arg_out_2, 2, nt );
+
+    for ( mwSize i = 0; i < nt; ++i ) {
+      Triangle2D const & t = tvec[i];
+      *p0++ = t.x1();
+      *p0++ = t.y1();
+      *p1++ = t.x2();
+      *p1++ = t.y2();
+      *p2++ = t.x3();
+      *p2++ = t.y3();
+    }
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_aabb_true( int nlhs, mxArray       *plhs[],
+                int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidListMexWrapper('aabb_true',OBJ): "
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
+    G2lib::yesAABBtree();
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_aabb_false( int nlhs, mxArray       *plhs[],
+                 int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidListMexWrapper('aabb_false',OBJ): "
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
+    G2lib::noAABBtree();
+    #undef CMD
+  }
+
   #define CMD_BASE "ClothoidListMexWrapper"
   #define G2LIB_CLASS ClothoidList
   #include "mex_common.hxx"
@@ -744,6 +827,9 @@ namespace G2lib {
     CMD_EXPORT_TABLE,
     CMD_EXPORT_RUBY,
     CMD_FIND_ST1,
+    CMD_BB_TRIANGLES,
+    CMD_AABB_TRUE,
+    CMD_AABB_FALSE,
     //CMD_DISTANCE_BY_SAMPLE,
     //CMD_CLOSEST_BY_SAMPLE,
     //CMD_BB_TRIANGLES,
@@ -774,6 +860,9 @@ namespace G2lib {
     {"export_table",CMD_EXPORT_TABLE},
     {"export_ruby",CMD_EXPORT_RUBY},
     {"findST1",CMD_FIND_ST1},
+    {"bbTriangles",CMD_BB_TRIANGLES},
+    {"aabb_true",CMD_AABB_TRUE},
+    {"aabb_false",CMD_AABB_FALSE},
     //{"distanceBySample",CMD_DISTANCE_BY_SAMPLE},
     //{"closestPointBySample",CMD_CLOSEST_BY_SAMPLE},
     //{"bbTriangles",CMD_BB_TRIANGLES},
@@ -858,6 +947,15 @@ namespace G2lib {
       case CMD_FIND_ST1:
         do_findST1( nlhs, plhs, nrhs, prhs );
         break;
+      case CMD_BB_TRIANGLES:
+        do_bbTriangles( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_AABB_TRUE:
+        do_aabb_true( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_AABB_FALSE:
+        do_aabb_false( nlhs, plhs, nrhs, prhs );
+        break;
       /*
       case CMD_DISTANCE_BY_SAMPLE:
         do_distance_by_sample( nlhs, plhs, nrhs, prhs );
@@ -878,7 +976,7 @@ namespace G2lib {
     } catch ( exception const & e ) {
       mexErrMsgTxt(e.what());
     } catch (...) {
-      mexErrMsgTxt("ClothoidCurve failed\n");
+      mexErrMsgTxt("ClothoidList failed\n");
     }
   }
 }

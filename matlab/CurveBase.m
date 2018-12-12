@@ -12,7 +12,10 @@ classdef CurveBase < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
       %% Destroy the C++ class instance
-      feval( self.mexName, 'delete', self.objectHandle );
+      if self.objectHandle ~= 0
+        feval( self.mexName, 'delete', self.objectHandle );
+      end
+      self.objectHandle = 0; % avoid double destruction of object
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function obj = obj_handle( self )
@@ -187,6 +190,16 @@ classdef CurveBase < handle
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [s,t] = find_coord( self, x, y )
       [s,t] = feval( self.mexName, 'findST', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTBox( self, P1, P2, P3, varargin )
+      for k=1:size(P1,2)
+        pp1 = P1(:,k);
+        pp2 = P2(:,k);
+        pp3 = P3(:,k);
+        plot( [pp1(1),pp2(1),pp3(1),pp1(1)], ...
+              [pp1(2),pp2(2),pp3(2),pp1(2)], varargin{:} );
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotBBox( self, varargin )

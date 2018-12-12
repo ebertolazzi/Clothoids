@@ -85,6 +85,14 @@ classdef ClothoidCurve < CurveBase
                                     x0, y0, theta0, k0, x1, y1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function aabb_true( self )
+      ClothoidCurveMexWrapper( 'aabb_true', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function aabb_false( self )
+      ClothoidCurveMexWrapper( 'aabb_false', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ X, Y, S, DST ] = closestPoint( self, qx, qy )
       [ X, Y, S, DST ] = ...
         ClothoidCurveMexWrapper( 'closestPoint', ...
@@ -148,6 +156,7 @@ classdef ClothoidCurve < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [P1,P2,P3] = bbTriangles( self, varargin )
+      % bbTriangles( max_angle, max_size, offs );
       [P1,P2,P3] = ClothoidCurveMexWrapper( 'bbTriangles', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -397,6 +397,8 @@ namespace G2lib {
    | |_|_| |_|\__\___|_|  |___/\___|\___|\__|
   \*/
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   bool
   ClothoidCurve::aabb_intersect(
     T2D           const & T1,
@@ -468,25 +470,46 @@ namespace G2lib {
     IntersectList       & ilist,
     bool                  swap_s_vals
   ) const {
-    this->build_AABBtree( offs );
-    C.build_AABBtree( offs_C );
-    AABBtree::VecPairPtrBBox iList;
-    aabb_tree.intersect( C.aabb_tree, iList );
-    AABBtree::VecPairPtrBBox::const_iterator ip;
+    if ( intersect_with_AABBtree ) {
+      this->build_AABBtree( offs );
+      C.build_AABBtree( offs_C );
+      AABBtree::VecPairPtrBBox iList;
+      aabb_tree.intersect( C.aabb_tree, iList );
+      AABBtree::VecPairPtrBBox::const_iterator ip;
 
-    for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-      size_t ipos1 = size_t(ip->first->Ipos());
-      size_t ipos2 = size_t(ip->second->Ipos());
+      for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
+        size_t ipos1 = size_t(ip->first->Ipos());
+        size_t ipos2 = size_t(ip->second->Ipos());
 
-      T2D const & T1 = aabb_tri[ipos1];
-      T2D const & T2 = C.aabb_tri[ipos2];
+        T2D const & T1 = aabb_tri[ipos1];
+        T2D const & T2 = C.aabb_tri[ipos2];
 
-      real_type ss1, ss2;
-      bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
+        real_type ss1, ss2;
+        bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
 
-      if ( converged ) {
-        if ( swap_s_vals ) swap( ss1, ss2 );
-        ilist.push_back( Ipair( ss1, ss2 ) );
+        if ( converged ) {
+          if ( swap_s_vals ) swap( ss1, ss2 );
+          ilist.push_back( Ipair( ss1, ss2 ) );
+        }
+      }
+    } else {
+      bbTriangles( offs, aabb_tri, m_pi/18, 1e100 );
+      C.bbTriangles( offs_C, C.aabb_tri, m_pi/18, 1e100 );
+      for ( vector<T2D>::const_iterator i1 = aabb_tri.begin();
+            i1 != aabb_tri.end(); ++i1 ) {
+        for ( vector<T2D>::const_iterator i2 = C.aabb_tri.begin();
+              i2 != C.aabb_tri.end(); ++i2 ) {
+          T2D const & T1 = *i1;
+          T2D const & T2 = *i2;
+
+          real_type ss1, ss2;
+          bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
+
+          if ( converged ) {
+            if ( swap_s_vals ) swap( ss1, ss2 );
+            ilist.push_back( Ipair( ss1, ss2 ) );
+          }
+        }
       }
     }
   }

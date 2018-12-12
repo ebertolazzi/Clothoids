@@ -10,7 +10,7 @@
 %=========================================================================%
 
 addpath('../matlab');
-addpath('../../ipopt/precompiled_mex');
+%addpath('../../ipopt/precompiled_mex');
 
 tol = 1e-10;
 
@@ -28,7 +28,7 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 close all;
 
 S  = ClothoidSplineG2();
-%S.ipopt(true);
+S.ipopt(true);
 %S.ipopt_check(true);
 
 SPL = cell(8,1);

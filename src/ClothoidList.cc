@@ -1239,75 +1239,64 @@ namespace G2lib {
 
   void
   ClothoidList::intersect(
-    ClothoidList const & CL,
-    IntersectList      & ilist,
-    bool                 swap_s_vals
-  ) const {
-    real_type offs   = 0;
-    real_type offs_C = 0;
-    this->build_AABBtree( offs );
-    CL.build_AABBtree( offs_C );
-    AABBtree::VecPairPtrBBox iList;
-    aabb_tree.intersect( CL.aabb_tree, iList );
-
-    AABBtree::VecPairPtrBBox::const_iterator ip;
-    for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-      size_t ipos1 = size_t(ip->first->Ipos());
-      size_t ipos2 = size_t(ip->second->Ipos());
-
-      T2D const & T1 = aabb_tri[ipos1];
-      T2D const & T2 = CL.aabb_tri[ipos2];
-
-      ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
-      ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
-
-      real_type ss1, ss2;
-      bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_C, ss1, ss2 );
-
-      if ( converged ) {
-        ss1 += s0[T1.Icurve()];
-        ss2 += CL.s0[T2.Icurve()];
-        if ( swap_s_vals ) swap( ss1, ss2 );
-        ilist.push_back( Ipair( ss1, ss2 ) );
-      }
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidList::intersect(
     real_type            offs,
     ClothoidList const & CL,
-    real_type            offs_C,
+    real_type            offs_CL,
     IntersectList      & ilist,
     bool                 swap_s_vals
   ) const {
-    this->build_AABBtree( offs );
-    CL.build_AABBtree( offs_C );
-    AABBtree::VecPairPtrBBox iList;
-    aabb_tree.intersect( CL.aabb_tree, iList );
+    if ( intersect_with_AABBtree ) {
+      this->build_AABBtree( offs );
+      CL.build_AABBtree( offs_CL );
+      AABBtree::VecPairPtrBBox iList;
+      aabb_tree.intersect( CL.aabb_tree, iList );
 
-    AABBtree::VecPairPtrBBox::const_iterator ip;
-    for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-      size_t ipos1 = size_t(ip->first->Ipos());
-      size_t ipos2 = size_t(ip->second->Ipos());
+      AABBtree::VecPairPtrBBox::const_iterator ip;
+      for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
+        size_t ipos1 = size_t(ip->first->Ipos());
+        size_t ipos2 = size_t(ip->second->Ipos());
 
-      T2D const & T1 = aabb_tri[ipos1];
-      T2D const & T2 = CL.aabb_tri[ipos2];
+        T2D const & T1 = aabb_tri[ipos1];
+        T2D const & T2 = CL.aabb_tri[ipos2];
 
-      ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
-      ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
+        ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
+        ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
 
-      real_type ss1, ss2;
-      bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_C, ss1, ss2 );
+        real_type ss1, ss2;
+        bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
 
-      if ( converged ) {
-        ss1 += s0[T1.Icurve()];
-        ss2 += CL.s0[T2.Icurve()];
-        if ( swap_s_vals ) swap( ss1, ss2 );
-        ilist.push_back( Ipair( ss1, ss2 ) );
+        if ( converged ) {
+          ss1 += s0[T1.Icurve()];
+          ss2 += CL.s0[T2.Icurve()];
+          if ( swap_s_vals ) swap( ss1, ss2 );
+          ilist.push_back( Ipair( ss1, ss2 ) );
+        }
       }
+    } else {
+      bbTriangles( offs, aabb_tri, m_pi/18, 1e100 );
+      CL.bbTriangles( offs_CL, CL.aabb_tri, m_pi/18, 1e100 );
+      for ( vector<T2D>::const_iterator i1 = aabb_tri.begin();
+            i1 != aabb_tri.end(); ++i1 ) {
+        for ( vector<T2D>::const_iterator i2 = CL.aabb_tri.begin();
+              i2 != CL.aabb_tri.end(); ++i2 ) {
+          T2D const & T1 = *i1;
+          T2D const & T2 = *i2;
+
+          ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
+          ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
+
+          real_type ss1, ss2;
+          bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
+
+          if ( converged ) {
+            ss1 += s0[T1.Icurve()];
+            ss2 += CL.s0[T2.Icurve()];
+            if ( swap_s_vals ) swap( ss1, ss2 );
+            ilist.push_back( Ipair( ss1, ss2 ) );
+          }
+        }
+      }
+
     }
   }
 

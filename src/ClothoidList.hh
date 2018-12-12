@@ -1331,7 +1331,9 @@ namespace G2lib {
     void
     intersect( ClothoidList const & CL,
                IntersectList      & ilist,
-               bool                 swap_s_vals ) const;
+               bool                 swap_s_vals ) const {
+      intersect( 0, CL, 0, ilist, swap_s_vals );
+    }
 
     void
     intersect( real_type            offs,

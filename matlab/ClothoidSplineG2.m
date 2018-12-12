@@ -5,6 +5,7 @@ classdef ClothoidSplineG2 < handle
     use_Ipopt;
     iter_opt;
     ipopt_check_gradient;
+    isOctave;
   end
 
   methods (Hidden = true)
@@ -82,17 +83,24 @@ classdef ClothoidSplineG2 < handle
         info;
       else
         % 'interior-point'
-        options = optimoptions('fmincon','Display',self.iter_opt, ...
-                               'CheckGradients',false, ...
-                               'FiniteDifferenceType','central', ...
-                               'Algorithm','sqp',...
-                               'SpecifyConstraintGradient',true,...
-                               'SpecifyObjectiveGradient',true,...
-                               'OptimalityTolerance',1e-20,...
-                               'ConstraintTolerance',1e-10);
-        obj     = @(theta) self.obj(theta);
-        con     = @(theta) self.con(theta);
-        theta   = fmincon(obj,theta_guess,[],[],[],[],theta_min,theta_max,con,options);
+        if self.isOctave
+          options.TolX   = 1e-10;
+          options.TolFun = 1e-20;
+        else
+          options = optimoptions(...
+            'fmincon','Display',self.iter_opt, ...
+            'CheckGradients',false, ...
+            'FiniteDifferenceType','central', ...
+            'Algorithm','sqp',...
+            'SpecifyConstraintGradient',true,...
+            'SpecifyObjectiveGradient',true,...
+            'OptimalityTolerance',1e-20,...
+            'ConstraintTolerance',1e-10 ...
+          );
+        end
+        obj   = @(theta) self.obj(theta);
+        con   = @(theta) self.con(theta);
+        theta = fmincon(obj,theta_guess,[],[],[],[],theta_min,theta_max,con,options);
         %options = optimset(varargin{:});
         %[theta,resnorm,~,~,output,~,~] = lsqnonlin( @target, theta, [], [], options );
       end
@@ -114,12 +122,16 @@ classdef ClothoidSplineG2 < handle
       self.build( x, y );
       [ theta_guess, ~, ~ ] = self.guess();
       % 'interior-point'
-      options = optimoptions('fsolve','Display',self.iter_opt, ...
-                             'CheckGradients',false, ...
-                             'FiniteDifferenceType','central', ...
-                             'Algorithm','levenberg-marquardt',...
-                             'SpecifyObjectiveGradient',true,...
-                             'OptimalityTolerance',1e-20);
+      if self.isOctave
+        options.TolX = 1e-20;
+      else
+        options = optimoptions('fsolve','Display',self.iter_opt, ...
+                               'CheckGradients',false, ...
+                               'FiniteDifferenceType','central', ...
+                               'Algorithm','levenberg-marquardt',...
+                               'SpecifyObjectiveGradient',true,...
+                               'OptimalityTolerance',1e-20);
+      end
       obj = @(theta) self.nlsys(theta);
       [theta,~,exitflag,~] = fsolve(obj,theta_guess,options);
       if exitflag <= 0
@@ -144,6 +156,7 @@ classdef ClothoidSplineG2 < handle
       self.use_Ipopt             = false;
       self.iter_opt              = 'iter';
       self.ipopt_check_gradient  = false;
+      self.isOctave              = exist('OCTAVE_VERSION', 'builtin') ~= 0;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
@@ -205,7 +218,7 @@ classdef ClothoidSplineG2 < handle
       if ok
         clots.push_back( c );
       else
-        error('buildP3 failed');
+        warning('buildP3 failed');
       end
 
       for j=3:N
@@ -215,7 +228,7 @@ classdef ClothoidSplineG2 < handle
         if ok
           clots.push_back( c );
         else
-          error('buildP3 failed');
+          warning('buildP3 failed');
         end
       end
     end
