@@ -31,7 +31,7 @@ LIB_NAMES = { ...
   'Triangle2D', ...
 };
 
-MEX = 'mkoctfile --mex -c -I../src';
+MEX = 'mkoctfile --mex';
 
 LIB_SRCS = '';
 LIB_OBJS = '';
@@ -51,7 +51,7 @@ if isunix
 elseif ispc
   CMD = MEX
 end
-CMD = [ CMD, LIB_SRCS ];
+CMD = [ CMD, ' -c -I../src', LIB_SRCS ];
 
 disp(CMD);
 eval(CMD);
@@ -60,7 +60,7 @@ for k=1:length(NAMES)
   N=NAMES{k};
   disp('---------------------------------------------------------');
   fprintf(1,'Compiling: %s\n',N);
-  CMD = [ MEX ' -output ../matlab/', N, ' ../src_mex/mex_', N, '.cc ', LIB_OBJS ];
+  CMD = [ MEX ' -output ../matlab/', N, ' -I../src ../src_mex/mex_', N, '.cc ', LIB_OBJS ];
   if isunix
     CMD = [CMD, ' -lstdc++ -O2'];
   elseif ispc
