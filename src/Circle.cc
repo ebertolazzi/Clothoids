@@ -186,7 +186,7 @@ namespace G2lib {
   real_type
   CircleArc::Y( real_type s ) const {
     real_type sk = (s*k)/2;
-    return x0+s*Sinc(sk)*sin(theta0+sk);
+    return y0+s*Sinc(sk)*sin(theta0+sk);
   }
 
   real_type
