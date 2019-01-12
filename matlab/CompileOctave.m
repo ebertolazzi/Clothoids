@@ -71,10 +71,10 @@ end
 
 for k=1:length(LIB_NAMES)
   if isunix
-    delete([ LIB_NAMES{k}, '.o' ]);  
+    delete([ LIB_NAMES{k}, '.o' ]);
   elseif ispc
     delete([ LIB_NAMES{k}, '.obj' ]);
-  end  
+  end
 end
 
 pkg install -forge struct
