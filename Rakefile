@@ -13,7 +13,7 @@ end
 
 require "rake/clean"
 
-CLEAN.include   ["./**/*.o", "./**/*.obj", "./bin/**/example*"]
+CLEAN.include   ["./**/*.o", "./**/*.obj", "./bin/**/example*", "./build"]
 CLOBBER.include []
 CLEAN.exclude('**/[cC][oO][rR][eE]')
 
@@ -80,8 +80,8 @@ task :build, [:executable] do |t, args|
 end
 
 desc "compile for Visual Studio [default year=2017 bits=x64]"
-task :build_win, [:year, :bits] do |t, args|
-  args.with_defaults( :year => "2017", :bits => "x64" )
+task :build_win, [:year, :bits, :executable] do |t, args|
+  args.with_defaults( :year => "2017", :bits => "x64", :executable => "no" )
 
   puts "\n\nPrepare #{LIB_NAME} project".green
 
@@ -91,7 +91,13 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  tmp = " -DBITS=#{args.bits} -DYEAR=#{args.year} " + ' -DCMAKE_INSTALL_PREFIX:PATH=..\lib ..'
+  tmp = " -DBITS=#{args.bits} -DYEAR=#{args.year} "
+
+  if args.executable.to_s == "yes" then
+    tmp += ' -DBUILD_EXECUTABLE=true'
+  end
+
+  tmp += ' -DCMAKE_INSTALL_PREFIX:PATH=..\lib ..'
 
   win32_64 = ''
   case args.bits

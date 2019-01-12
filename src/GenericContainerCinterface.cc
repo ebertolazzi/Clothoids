@@ -288,7 +288,7 @@ GC_EXTERN_C
 long
 GC_get_long() {
   if ( gc_active == nullptr ) return 0;
-  return gc_active -> top() -> get_long();
+  return long(gc_active -> top() -> get_long());
 }
 
 GC_EXTERN_C
