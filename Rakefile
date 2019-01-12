@@ -11,6 +11,14 @@
   end
 end
 
+require "rake/clean"
+
+CLEAN.include   ["./**/*.o", "./**/*.obj", "./bin/**/example*"]
+CLOBBER.include []
+CLEAN.exclude('**/[cC][oO][rR][eE]')
+
+verbose(false)
+
 task :default => [:build]
 
 LIB_NAME="GenericContainer"
@@ -45,15 +53,21 @@ task :run_win do
 	sh "./bin/Release/example11"
 end
 
-desc "compile for Visual Studio [default year=2017 bits=x64]"
-task :build do
+desc "compile for UNIX/OSX"
+task :build, [:executable] do |t, args|
+  args.with_defaults(:executable => "no" )
 
   FileUtils.rm_rf   "build"
   FileUtils.mkdir_p "build"
   FileUtils.cd      "build"
 
   puts "\n\nPrepare #{LIB_NAME} project".green
-  sh 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib ..'
+
+  if args.executable.to_s == "yes" then
+    sh 'cmake -DBUILD_EXECUTABLE=true -DCMAKE_INSTALL_PREFIX:PATH=../lib  ..'
+  else
+    sh 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib ..'
+  end
 
   puts "\n\nBuild #{LIB_NAME} Debug".green
   sh 'cmake --build . --config Debug  --target install'
@@ -97,20 +111,20 @@ task :build_win, [:year, :bits] do |t, args|
   when "2017"
     sh 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
   else
-    puts "Visual Studio year #{year} not supported!\n";
+    puts "Visual Studio year ``#{year}'' not supported!\n";
   end
 
   FileUtils.mkdir_p "../lib"
-  sh 'cmake --build . --config Release  --target install'
+  sh 'cmake --build . --config Release --target install'
+
+  libname = "#{LIB_NAME}_vs#{args.year}_#{args.bits}"
 
   puts "\n\nBuild #{LIB_NAME} Debug".green
   sh 'cmake --build . --config Debug --target install'
-  FileUtils.cp "Debug/#{LIB_NAME}.lib",
-               "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}_debug.lib"
+  FileUtils.cp "Debug/#{LIB_NAME}.lib", "../lib/#{libname}_debug.lib"
 
   puts "\n\nBuild #{LIB_NAME} Release".green
-  FileUtils.cp "Release/#{LIB_NAME}.lib",
-               "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}.lib"  
+  FileUtils.cp "Release/#{LIB_NAME}.lib", "../lib/#{libname}.lib"
 
   FileUtils.cd '..'
 
