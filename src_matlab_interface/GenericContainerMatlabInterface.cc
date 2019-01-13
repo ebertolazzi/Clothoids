@@ -13,7 +13,6 @@
 \****************************************************************************/
 
 #include "GenericContainerMatlabInterface.hh"
-#include "matrix.h"
 
 #include <iostream>
 #include <cstdint>
@@ -248,10 +247,10 @@ namespace GenericContainerNamespace {
   void
   mxSparse_to_GenericContainer( mxArray const * mx, GenericContainer & gc ) {
 
-    size_t const * irs = mxGetIr(mx);
-    size_t const * jcs = mxGetJc(mx);
-    int            nc  = mxGetN(mx);
-    int            nnz = jcs[nc];
+    mwIndex const * irs = mxGetIr(mx);
+    mwIndex const * jcs = mxGetJc(mx);
+    size_t          nc  = mxGetN(mx);
+    mwIndex         nnz = jcs[nc];
 
     vec_int_type & jc = gc["jc"].set_vec_int( nc+1 );
     vec_int_type & ir = gc["ir"].set_vec_int( nnz );
