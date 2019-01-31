@@ -23,7 +23,7 @@
 #define A_THRESOLD   0.01
 #define A_SERIE_SIZE 3
 
-#ifdef __GCC__
+#if defined(__GCC__) || defined(__GNUC__) 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wshadow"
 #pragma GCC diagnostic ignored "-Wglobal-constructors"

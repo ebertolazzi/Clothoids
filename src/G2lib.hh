@@ -98,7 +98,7 @@
   #define G2LIB_OVERRIDE
 #endif
 
-#ifdef __GCC__
+#if defined(__GCC__) || defined(__GNUC__) 
 #pragma GCC diagnostic ignored "-Wpadded"
 #pragma GCC diagnostic ignored "-Wc++98-compat"
 #endif

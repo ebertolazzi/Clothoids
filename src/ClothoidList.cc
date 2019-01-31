@@ -26,7 +26,7 @@
 #include <limits>
 #include <algorithm>
 
-#ifdef __GCC__
+#if defined(__GCC__) || defined(__GNUC__) 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
