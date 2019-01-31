@@ -6,7 +6,7 @@
 //  Copyright © 2017 Nicola Dal Bianco. All rights reserved.
 //
 
-#ifdef __GCC__
+#if defined(__GCC__) || defined(__GNUC__) 
 #pragma GCC diagnostic ignored "-Wc++98-compat"
 #pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"

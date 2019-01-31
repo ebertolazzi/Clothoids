@@ -9,7 +9,7 @@
 #ifndef GC_JSON_HANDLER_HH
 #define GC_JSON_HANDLER_HH
 
-#ifdef __GCC__
+#if defined(__GCC__) || defined(__GNUC__) 
 #pragma GCC diagnostic ignored "-Wc++98-compat"
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
