@@ -24,12 +24,6 @@
 #ifndef GENERIC_CONTAINER_HH
 #define GENERIC_CONTAINER_HH
 
-#if defined(__GCC__) || defined(__GNUC__) 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpadded"
-#pragma GCC diagnostic ignored "-Wc++98-compat"
-#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
-#endif
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpadded"
@@ -1644,9 +1638,6 @@ namespace GenericContainerNamespace {
 namespace GC = GenericContainerNamespace;
 #endif
 
-#if defined(__GCC__) || defined(__GNUC__) 
-#pragma GCC diagnostic pop
-#endif
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
