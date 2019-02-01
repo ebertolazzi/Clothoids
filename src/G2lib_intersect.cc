@@ -27,10 +27,6 @@
 #include <map>
 #include <algorithm>
 
-#if defined(__GCC__) || defined(__GNUC__) 
-#pragma GCC diagnostic ignored "-Wglobal-constructors"
-#pragma GCC diagnostic ignored "-Wexit-time-destructors"
-#endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"

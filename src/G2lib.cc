@@ -22,9 +22,6 @@
 
 #include <algorithm>
 
-#if defined(__GCC__) || defined(__GNUC__) 
-#pragma GCC diagnostic ignored "-Wglobal-constructors"
-#endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif

@@ -24,7 +24,7 @@
 #include <cmath>
 #include <cfloat>
 
-#if defined(__GCC__) || defined(__GNUC__) 
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wswitch-enum"
