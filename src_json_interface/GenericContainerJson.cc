@@ -10,7 +10,6 @@
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wswitch-enum"
-#pragma GCC diagnostic ignored "-Wcovered-switch-default"
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #ifdef __clang__
