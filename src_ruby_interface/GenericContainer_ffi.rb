@@ -20,7 +20,7 @@
 require 'ffi'
 
 module GenericContainer
-  
+
   extend FFI::Library
 
   @GENERIC_CONTAINER_OK        = 0;
@@ -72,7 +72,7 @@ module GenericContainer
 
   attach_function :GC_get_type,                   [], :int
   attach_function :GC_get_type_name,              [], :string
-  attach_function :GC_print,                      [], :int
+  attach_function :GC_dump,                       [], :int
   attach_function :GC_mem_ptr,                    [ :string ], :pointer
 
   # set
@@ -90,7 +90,7 @@ module GenericContainer
   attach_function :GC_get_complex_re,             [], :double
   attach_function :GC_get_complex_im,             [], :double
   attach_function :GC_get_string,                 [], :string
-  
+
   # push
   attach_function :GC_push_bool,                  [ :int ], :int
   attach_function :GC_push_int,                   [ :int ], :int
@@ -138,11 +138,11 @@ module GenericContainer
   attach_function :GC_init_map_key,               [], :int
   attach_function :GC_get_next_key,               [], :string
   attach_function :GC_push_map_position,          [ :string ], :int
-  
+
   #
-  #   ____  ____    _           _               _     
-  #  / ___|/ ___|  | |_ ___    | |__   __ _ ___| |__  
-  # | |  _| |      | __/ _ \   | '_ \ / _` / __| '_ \ 
+  #   ____  ____    _           _               _
+  #  / ___|/ ___|  | |_ ___    | |__   __ _ ___| |__
+  # | |  _| |      | __/ _ \   | '_ \ / _` / __| '_ \
   # | |_| | |___   | || (_) |  | | | | (_| \__ \ | | |
   #  \____|\____|___\__\___/___|_| |_|\__,_|___/_| |_|
   #            |_____|    |_____|
@@ -397,7 +397,7 @@ module GenericContainer
 
   class GenericContainer
     attr_reader :id
- 
+
     def initialize
       @id = self.__id__.to_s
       ::GenericContainer.GC_new @id
@@ -414,7 +414,7 @@ module GenericContainer
       raise RuntimeError, @error_messages[ok] unless ok == 0
       ::GenericContainer.GC_from_hash data
     end
-    
+
     def get_pointer
       return ::GenericContainer.GC_mem_ptr @id
     end
@@ -425,11 +425,13 @@ module GenericContainer
       return ::GenericContainer.GC_to_hash
     end
 
-    def print
+    def dump
       ok = ::GenericContainer.GC_select @id
       raise RuntimeError, @error_messages[ok] unless ok == 0
-      ::GenericContainer.GC_print
+      ::GenericContainer.GC_dump
     end
+
+    alias print dump
 
   end
 
