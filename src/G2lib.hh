@@ -342,7 +342,7 @@ namespace G2lib {
     bool      singular;
 
   public:
-  
+
     Solve2x2() : epsi(1e-10) {}
     bool factorize( real_type A[2][2] );
     bool solve( real_type const b[2], real_type x[2] ) const;
