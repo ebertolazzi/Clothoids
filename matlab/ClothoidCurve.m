@@ -150,9 +150,7 @@ classdef ClothoidCurve < CurveBase
       theta0 = self.thetaBegin();
       k      = self.kappaBegin();
       dk     = self.kappa_D();
-      x0 = self.xBegin();
-      [ x0, y0, theta0, k0, dk, L ] = ...
-        ClothoidCurveMexWrapper( 'getPars', self.objectHandle );
+      L      = ClothoidCurveMexWrapper( 'length', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [P1,P2,P3] = bbTriangles( self, varargin )
