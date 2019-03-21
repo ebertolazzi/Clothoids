@@ -55,8 +55,8 @@ classdef CurveBase < handle
       feval( self.mexName, 'changeOrigin', self.objectHandle, newX0, newY0 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ theta, kappa, x, y ] = evaluate( self, s, varargin )
-      [ theta, kappa, x, y ] = feval( self.mexName, 'evaluate', self.objectHandle, s, varargin{:} );
+    function [ x, y, theta, kappa ] = evaluate( self, s, varargin )
+      [ x, y, theta, kappa ] = feval( self.mexName, 'evaluate', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval( self, varargin )
