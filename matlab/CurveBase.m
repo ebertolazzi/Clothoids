@@ -58,8 +58,8 @@ classdef CurveBase < handle
       feval( self.mexName, 'changeOrigin', self.objectHandle, newX0, newY0 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ theta, kappa, x, y ] = evaluate( self, s, varargin )
-      [ theta, kappa, x, y ] = feval( self.mexName, 'evaluate', self.objectHandle, s, varargin{:} );
+    function [ x, y, theta, kappa ] = evaluate( self, s, varargin )
+      [ x, y, theta, kappa ] = feval( self.mexName, 'evaluate', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval( self, varargin )
@@ -86,31 +86,31 @@ classdef CurveBase < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta(self, s)
-      th = eval( self.mexName, 'theta', self.objectHandle, s );
+      th = feval( self.mexName, 'theta', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta_D(self, s)
-      th = eval( self.mexName, 'theta_D', self.objectHandle, s );
+      th = feval( self.mexName, 'theta_D', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta_DD(self, s)
-      th = eval( self.mexName, 'theta_DD', self.objectHandle, s );
+      th = feval( self.mexName, 'theta_DD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta_DDD(self, s)
-      th = eval( self.mexName, 'theta_DDD', self.objectHandle, s );
+      th = feval( self.mexName, 'theta_DDD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = kappa(self, s)
-      th = eval( self.mexName, 'kappa', self.objectHandle, s );
+      th = feval( self.mexName, 'kappa', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = kappa_D(self, s)
-      th = eval( self.mexName, 'kappa_D', self.objectHandle, s );
+      th = feval( self.mexName, 'kappa_D', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = kappa_DD(self, s)
-      th = eval( self.mexName, 'kappa_DD', self.objectHandle, s );
+      th = feval( self.mexName, 'kappa_DD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y ] = xyBegin( self )
