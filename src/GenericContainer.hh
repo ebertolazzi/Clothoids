@@ -92,7 +92,7 @@ namespace GenericContainerNamespace {
   typedef int64_t                 long_type;    //!< long integer type data
   typedef double                  real_type;    //!< floating point type data
   typedef std::complex<real_type> complex_type; //!< complex floating point type data
-  typedef std::string             string_type;   //!< string type data
+  typedef std::string             string_type;  //!< string type data
 
   typedef std::vector<pointer_type> vec_pointer_type; //!< vector of generic pointer
   typedef std::vector<bool_type>    vec_bool_type;    //!< vector of boolean
@@ -102,8 +102,8 @@ namespace GenericContainerNamespace {
   typedef std::vector<complex_type> vec_complex_type; //!< vector of complex floating point
   typedef std::vector<string_type>  vec_string_type;  //!< vector of strings
 
-  typedef std::vector<GenericContainer> vector_type; //!< vector of `GenericContainer`
-  typedef std::map<string_type,GenericContainer> map_type; //!< associative array of `GenericContainer`
+  typedef std::vector<GenericContainer>          vector_type; //!< vector of `GenericContainer`
+  typedef std::map<string_type,GenericContainer> map_type;    //!< associative array of `GenericContainer`
 
   // ---------------------------------------------------------------------------
 
@@ -412,179 +412,179 @@ namespace GenericContainerNamespace {
     //! \name Initialize vector data
     //@{
     /*! \brief
-        Set data to `vec_pointer_type`, allocate and initialize.
-        Return a reference to vector of pointer.
-        If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vec_pointer_type`, allocate and initialize.
+    :|: Return a reference to vector of pointer.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_pointer_type & set_vec_pointer( unsigned sz = 0 );
 
     /*! \brief
-     Set data to `vec_pointer_type`, allocate and initialize.
-     Return a reference to vector of pointer.
-     Copy the data from vector `v`.
-     */
+    :|: Set data to `vec_pointer_type`, allocate and initialize.
+    :|: Return a reference to vector of pointer.
+    :|: Copy the data from vector `v`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_pointer_type & set_vec_pointer( vec_pointer_type const & v );
 
     /*! \brief
-        Set data to `vec_bool_type`, allocate and initialize.
-        Return a reference to vector of booleans.
-        If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vec_bool_type`, allocate and initialize.
+    :|: Return a reference to vector of booleans.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_bool_type & set_vec_bool( unsigned sz = 0 );
 
     /*! \brief
-     Set data to `vec_bool_type`, allocate and initialize.
-     Return a reference to vector of `bool`.
-     Copy the data from vector `v`.
-     */
+    :|: Set data to `vec_bool_type`, allocate and initialize.
+    :|: Return a reference to vector of `bool`.
+    :|: Copy the data from vector `v`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_bool_type & set_vec_bool( vec_bool_type const & v );
 
     /*! \brief
-        Set data to `vec_int_type`, allocate and initialize.
-        Return a reference to vector of integers.
-        If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vec_int_type`, allocate and initialize.
+    :|: Return a reference to vector of integers.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_int_type & set_vec_int( unsigned sz = 0 );
 
     /*! \brief
-     Set data to `vec_int_type`, allocate and initialize.
-     Return a reference to vector of integer.
-     Copy the data from vector `v`.
-     */
+    :|: Set data to `vec_int_type`, allocate and initialize.
+    :|: Return a reference to vector of integer.
+    :|: Copy the data from vector `v`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_int_type & set_vec_int( vec_int_type const & v );
 
     /*! \brief
-        Set data to `vec_int_type`, allocate and initialize.
-        Return a reference to vector of integers.
-        If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vec_int_type`, allocate and initialize.
+    :|: Return a reference to vector of integers.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_long_type & set_vec_long( unsigned sz = 0 );
 
     /*! \brief
-     Set data to `vec_int_type`, allocate and initialize.
-     Return a reference to vector of integer.
-     Copy the data from vector `v`.
-     */
+    :|: Set data to `vec_int_type`, allocate and initialize.
+    :|: Return a reference to vector of integer.
+    :|: Copy the data from vector `v`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_long_type & set_vec_long( vec_long_type const & v );
 
     /*! \brief
-        Set data to `vec_real_type`, allocate and initialize.
-        Return a reference to vector of floating point numbers.
-     If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vec_real_type`, allocate and initialize.
+    :|: Return a reference to vector of floating point numbers.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_real_type & set_vec_real( unsigned sz = 0 );
 
     /*! \brief
-     Set data to `vec_real_type`, allocate and initialize.
-     Return a reference to vector of floating point number.
-     Copy the data from vector `v`.
-     */
+    :|: Set data to `vec_real_type`, allocate and initialize.
+    :|: Return a reference to vector of floating point number.
+    :|: Copy the data from vector `v`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_real_type & set_vec_real( vec_real_type const & v );
 
 
     /*! \brief
-        Set data to `vec_complex_type`, allocate and initialize.
-        Return a reference to vector of complex floating point numbers.
-     If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vec_complex_type`, allocate and initialize.
+    :|: Return a reference to vector of complex floating point numbers.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_complex_type & set_vec_complex( unsigned sz = 0 );
 
     /*! \brief
-     Set data to `vec_complex_type`, allocate and initialize.
-     Return a reference to vector of complex floating point number.
-     Copy the data from vector `v`.
-     */
+    :|: Set data to `vec_complex_type`, allocate and initialize.
+    :|: Return a reference to vector of complex floating point number.
+    :|: Copy the data from vector `v`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_complex_type & set_vec_complex( vec_complex_type const & v );
 
     /*! \brief
-        Set data to `vec_string_type`, allocate and initialize.
-        Return a reference to vector of strings.
-        If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vec_string_type`, allocate and initialize.
+    :|: Return a reference to vector of strings.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_string_type & set_vec_string( unsigned sz = 0 );
 
     /*! \brief
-     Set data to `vec_string_type`, allocate and initialize.
-     Return a reference to vector of strings.
-     Copy the data from vector `v`.
-     */
+    :|: Set data to `vec_string_type`, allocate and initialize.
+    :|: Return a reference to vector of strings.
+    :|: Copy the data from vector `v`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vec_string_type & set_vec_string( vec_string_type const & v );
 
     /*! \brief
-        Set data to `mat_int_type`, allocate and initialize.
-        Return a reference to a matrix of floating point numbers.
-     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-     */
+    :|: Set data to `mat_int_type`, allocate and initialize.
+    :|: Return a reference to a matrix of floating point numbers.
+    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_int_type & set_mat_int( unsigned nr = 0, unsigned nc = 0 );
 
     /*! \brief
-     Set data to `mat_int_type`, allocate and initialize.
-     Return a reference to a matrix of floating point number.
-     Copy the data from matrix `m`.
-     */
+    :|: Set data to `mat_int_type`, allocate and initialize.
+    :|: Return a reference to a matrix of floating point number.
+    :|: Copy the data from matrix `m`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_int_type & set_mat_int( mat_int_type const & m );
 
     /*! \brief
-        Set data to `mat_long_type`, allocate and initialize.
-        Return a reference to a matrix of floating point numbers.
-     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-     */
+    :|: Set data to `mat_long_type`, allocate and initialize.
+    :|: Return a reference to a matrix of floating point numbers.
+    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_long_type & set_mat_long( unsigned nr = 0, unsigned nc = 0 );
 
     /*! \brief
-     Set data to `mat_long_type`, allocate and initialize.
-     Return a reference to a matrix of floating point number.
-     Copy the data from matrix `m`.
-     */
+    :|: Set data to `mat_long_type`, allocate and initialize.
+    :|: Return a reference to a matrix of floating point number.
+    :|: Copy the data from matrix `m`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_long_type & set_mat_long( mat_long_type const & m );
 
     /*! \brief
-        Set data to `mat_real_type`, allocate and initialize.
-        Return a reference to a matrix of floating point numbers.
-     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-     */
+    :|: Set data to `mat_real_type`, allocate and initialize.
+    :|: Return a reference to a matrix of floating point numbers.
+    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_real_type & set_mat_real( unsigned nr = 0, unsigned nc = 0 );
 
     /*! \brief
-     Set data to `mat_real_type`, allocate and initialize.
-     Return a reference to a matrix of floating point number.
-     Copy the data from matrix `m`.
-     */
+    :|: Set data to `mat_real_type`, allocate and initialize.
+    :|: Return a reference to a matrix of floating point number.
+    :|: Copy the data from matrix `m`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_real_type & set_mat_real( mat_real_type const & m );
 
     /*! \brief
-        Set data to `mat_complex_type`, allocate and initialize.
-        Return a reference to a matrix of complex floating point numbers.
-     If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-     */
+    :|: Set data to `mat_complex_type`, allocate and initialize.
+    :|: Return a reference to a matrix of complex floating point numbers.
+    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_complex_type & set_mat_complex( unsigned nr = 0, unsigned nc = 0 );
 
     /*! \brief
-     Set data to `mat_complex_type`, allocate and initialize.
-     Return a reference to a matrix of floating point number.
-     Copy the data from matrix `m`.
-     */
+    :|: Set data to `mat_complex_type`, allocate and initialize.
+    :|: Return a reference to a matrix of floating point number.
+    :|: Copy the data from matrix `m`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     mat_complex_type & set_mat_complex( mat_complex_type const & m );
 
@@ -621,9 +621,9 @@ namespace GenericContainerNamespace {
     //! \name Initialize generic data
     //@{
     /*! \brief
-        Set data to `vector_type`, allocate an empty generic vector and return a reference to it.
-        If `sz` > 0 then the vector is allocated to size `sz`.
-     */
+    :|: Set data to `vector_type`, allocate an empty generic vector and return a reference to it.
+    :|: If `sz` > 0 then the vector is allocated to size `sz`.
+    \*/
     GENERIC_CONTAINER_API_DLL
     vector_type & set_vector( unsigned sz = 0 );
 
@@ -637,32 +637,31 @@ namespace GenericContainerNamespace {
 
     //! Return an integer representing the type of data stored
     /*!
-       Integer to data type map
-       ------------------------
-
-         -   No data stored (return 0)
-         1.  `pointer_type`
-         2.  `bool_type`
-         3.  `int_type`
-         4.  `long_type`
-         5.  `real_type`
-         6.  `complex_type`
-         7.  `string_data`
-         8.  `vec_pointer_type`
-         9.  `vec_bool_type`
-         10. `vec_int_type`
-         11. `vec_long_type`
-         12. `vec_real_type`
-         13. `vec_complex_type`
-         14. `vec_string_type`
-         15. `mat_int_type`
-         16. `mat_long_type`
-         17. `mat_real_type`
-         18. `mat_complex_type`
-         19. `vector_type`
-         20. `map_type`
-
-    */
+    :|:  Integer to data type map
+    :|:  ------------------------
+    :|:
+    :|:   -   No data stored (return 0)
+    :|:   1.  `pointer_type`
+    :|:   2.  `bool_type`
+    :|:   3.  `int_type`
+    :|:   4.  `long_type`
+    :|:   5.  `real_type`
+    :|:   6.  `complex_type`
+    :|:   7.  `string_data`
+    :|:   8.  `vec_pointer_type`
+    :|:   9.  `vec_bool_type`
+    :|:   10. `vec_int_type`
+    :|:   11. `vec_long_type`
+    :|:   12. `vec_real_type`
+    :|:   13. `vec_complex_type`
+    :|:   14. `vec_string_type`
+    :|:   15. `mat_int_type`
+    :|:   16. `mat_long_type`
+    :|:   17. `mat_real_type`
+    :|:   18. `mat_complex_type`
+    :|:   19. `vector_type`
+    :|:   20. `map_type`
+    \*/
     GENERIC_CONTAINER_API_DLL
     TypeAllowed get_type() const { return _data_type; }
 
@@ -1032,9 +1031,9 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL
     GenericContainer const & operator [] ( unsigned i ) const;
     /*! \brief
-        Overload of the `[]` operator to access the `i`-th element of a stored generic vector.
-        Run time bound check.
-     */
+    :|: Overload of the `[]` operator to access the `i`-th element of a stored generic vector.
+    :|: Run time bound check.
+    \*/
 
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator [] ( std::string const & s );
@@ -1042,9 +1041,9 @@ namespace GenericContainerNamespace {
     GENERIC_CONTAINER_API_DLL
     GenericContainer const & operator [] ( std::string const & s ) const;
     /*! \brief
-       Overload of the `[]` operator to access the `s`-th element of a stored generic map.
-       If the element do not exists it is created.
-    */
+    :|: Overload of the `[]` operator to access the `s`-th element of a stored generic map.
+    :|: If the element do not exists it is created.
+    \*/
 
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator () ( unsigned i, char const msg[] = nullptr );
@@ -1053,9 +1052,9 @@ namespace GenericContainerNamespace {
     GenericContainer const & operator () ( unsigned i, char const msg[] = nullptr ) const;
 
     /*! \brief
-     Overload of the `()` operator to access the `i`-th element of a stored generic vector.
-     NO run time bound check.
-     */
+    :|: Overload of the `()` operator to access the `i`-th element of a stored generic vector.
+    :|: NO run time bound check.
+    \*/
 
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator () ( std::string const & s, char const msg[] = nullptr );
@@ -1063,9 +1062,9 @@ namespace GenericContainerNamespace {
     GenericContainer const & operator () ( std::string const & s, char const msg[] = nullptr ) const;
 
     /*! \brief
-       Overload of the `()` operator to access the `s`-th element of a stored generic map.
-       If the element do not exists an error is issued.
-     */
+    :|: Overload of the `()` operator to access the `s`-th element of a stored generic map.
+    :|: If the element do not exists an error is issued.
+    \*/
 
     //@}
 
@@ -1400,72 +1399,79 @@ namespace GenericContainerNamespace {
     //! print the contents of the object in a human readable way (without data)
     GENERIC_CONTAINER_API_DLL
     void
-    print_content_types( ostream_type      & stream,
-                         std::string const & prefix = "",
-                         std::string const & indent = "    " ) const;
+    print_content_types(
+      ostream_type      & stream,
+      std::string const & prefix = "",
+      std::string const & indent = "    "
+    ) const;
 
     //! dump the contents of the object in a human readable way
     GENERIC_CONTAINER_API_DLL
     void
-    dump( ostream_type      & stream,
-          std::string const & prefix = "",
-          std::string const & indent = "    " ) const;
+    dump(
+      ostream_type      & stream,
+      std::string const & prefix = "",
+      std::string const & indent = "    "
+    ) const;
 
     GENERIC_CONTAINER_API_DLL
     void
-    print( ostream_type      & stream,
-           std::string const & prefix = "",
-           std::string const & indent = "    " ) const
-    { dump( stream, prefix, indent ); }
+    print(
+      ostream_type      & stream,
+      std::string const & prefix = "",
+      std::string const & indent = "    "
+    ) const {
+      this->dump( stream, prefix, indent );
+    }
 
     //! print the contents of the object in yaml syntax
     GENERIC_CONTAINER_API_DLL
     void to_yaml( ostream_type &, std::string const & prefix = "" ) const;
 
     /*!
-      \brief write `GenericContainer` as regular formatted data
-
-      Write the contents of the `GenericContainer` object to stream.
-
-      `GenericContainer` must be a map which contains the fields:
-
-      - "headers" this element must be a `vec_string_type` which contains
-                  the strings of the headers of the columns of the data
-
-      - "data"    this element must be a `vector_type` which contais the
-                  vectors which are the columns of the data to be saved.
-                  Each column can be of type
-
-                  1. `vec_bool_type`
-                  2. `vec_int_type`
-                  3. `vec_real_type`
-
-                  all the vector must have the same size.
-
-       \param stream     stream to write the output
-       \param delimiter  desired delimiter (optional). Default is tab.
-     */
+    :|:  \brief write `GenericContainer` as regular formatted data
+    :|:
+    :|:  Write the contents of the `GenericContainer` object to stream.
+    :|:
+    :|:  `GenericContainer` must be a map which contains the fields:
+    :|:
+    :|:  - "headers" this element must be a `vec_string_type` which contains
+    :|:              the strings of the headers of the columns of the data
+    :|:
+    :|:  - "data"    this element must be a `vector_type` which contais the
+    :|:              vectors which are the columns of the data to be saved.
+    :|:              Each column can be of type
+    :|:
+    :|:              1. `vec_bool_type`
+    :|:              2. `vec_int_type`
+    :|:              3. `vec_real_type`
+    :|:
+    :|:              all the vector must have the same size.
+    :|:
+    :|:   \param stream     stream to write the output
+    :|:   \param delimiter  desired delimiter (optional). Default is tab.
+    \*/
     GENERIC_CONTAINER_API_DLL
     GenericContainer const &
     writeFormattedData( ostream_type & stream,
                         char const delimiter = '\t' ) const;
 
     /*!
-      \brief read regular formatted data from `stream` to `GenericContainer`.
-
-      After successful read `GenericContainer` will be a map which contains the fields:
-
-      - "headers"  a `vec_string_type` which contains
-                   the strings of the headers of the columns of the data
-
-      - "data"     a `vector_type` which contais the vectors which are the
-                   columns of the data readed of type `vec_real_type`.
-
-       \param stream       stream to write the output
-       \param commentChars lines beginnig with one of this chars are treated as comments.
-                           Default are `#` and `%`
-       \param delimiters   caracters used as delimiter for headers
-     */
+    :|:  \brief read regular formatted data from `stream` to `GenericContainer`.
+    :|:
+    :|:  After successful read `GenericContainer` will be a map which contains the fields:
+    :|:
+    :|:  - "headers"  a `vec_string_type` which contains
+    :|:               the strings of the headers of the columns of the data
+    :|:
+    :|:  - "data"     a `vector_type` which contais the vectors which are the
+    :|:               columns of the data readed of type `vec_real_type`.
+    :|:
+    :|:   \param stream       stream to write the output
+    :|:   \param commentChars lines beginnig with one of this chars are treated as comments.
+    :|:                       Default are `#` and `%`
+    :|:   \param delimiters   caracters used as delimiter for headers
+    \*/
     GENERIC_CONTAINER_API_DLL
     GenericContainer &
     readFormattedData( std::istream & stream,
