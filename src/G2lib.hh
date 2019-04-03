@@ -738,7 +738,7 @@ namespace G2lib {
               real_type & k,
               real_type & x,
               real_type & y ) const {
-      eval( s, x, y );
+      eval( s, offs, x, y );
       th = theta( s );
       k  = theta_D( s );
       k /= 1-offs*k; // scale curvature
