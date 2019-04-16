@@ -35,10 +35,10 @@ LIB_OBJS = '';
 for k=1:length(LIB_NAMES)
   LIB_SRCS = [ LIB_SRCS, ' ../src/', LIB_NAMES{k}, '.cc' ];
   if isunix
-    LIB_OBJS = [ LIB_OBJS, LIB_NAMES{k}, '.o ' ];  
+    LIB_OBJS = [ LIB_OBJS, LIB_NAMES{k}, '.o ' ];
   elseif ispc
-    LIB_OBJS = [ LIB_OBJS, LIB_NAMES{k}, '.obj ' ];  
-  end  
+    LIB_OBJS = [ LIB_OBJS, LIB_NAMES{k}, '.obj ' ];
+  end
 end
 
 [~,mexLoaded] = inmem('-completenames');
@@ -84,10 +84,10 @@ end
 
 for k=1:length(LIB_NAMES)
   if isunix
-    delete([ LIB_NAMES{k}, '.o' ]);  
+    delete([ LIB_NAMES{k}, '.o' ]);
   elseif ispc
     delete([ LIB_NAMES{k}, '.obj' ]);
-  end  
+  end
 end
 
 disp('----------------------- DONE ----------------------------');

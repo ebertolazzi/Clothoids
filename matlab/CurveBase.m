@@ -192,12 +192,12 @@ classdef CurveBase < handle
       [s,t] = feval( self.mexName, 'findST', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function yesAABBTree( self )
-      feval( self.mexName, 'yesAABBTree', self.objectHandle );
+    function yesAABBtree( self )
+      feval( self.mexName, 'yesAABBtree', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function noAABBTree( self )
-      feval( self.mexName, 'noAABBTree', self.objectHandle );
+    function noAABBtree( self )
+      feval( self.mexName, 'noAABBtree', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotTBox( self, P1, P2, P3, varargin )
