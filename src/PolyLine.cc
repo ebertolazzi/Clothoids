@@ -274,7 +274,7 @@ namespace G2lib {
     real_type newx0 = ic->xBegin();
     real_type newy0 = ic->yBegin();
     s0[0] = 0;
-    for ( size_t k=0 ; ic != polylineList.end(); ++ic, ++k ) {
+    for ( size_t k=0; ic != polylineList.end(); ++ic, ++k ) {
       ic->scale( sfactor );
       ic->changeOrigin( newx0, newy0 );
       newx0 = ic->xEnd();
@@ -295,7 +295,7 @@ namespace G2lib {
     s0[0] = 0;
     s0[1] = ic->length();
     size_t k = 1;
-    for ( ++ic ; ic != polylineList.end(); ++ic, ++k ) {
+    for ( ++ic; ic != polylineList.end(); ++ic, ++k ) {
       ic->reverse();
       ic->changeOrigin( newx0, newy0 );
       newx0   = ic->xEnd();
@@ -320,8 +320,8 @@ namespace G2lib {
 
   void
   PolyLine::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT( s_begin > s0.front() &&
-                  s_end < s0.back() &&
+    G2LIB_ASSERT( s_begin >= s0.front() &&
+                  s_end <= s0.back() &&
                   s_end > s_begin,
                   "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" <<
                   s_end << ") bad range, must be in [ " << s0.front() <<
@@ -336,7 +336,7 @@ namespace G2lib {
     vector<LineSegment>::iterator ic = polylineList.begin();
     s0[0] = 0;
     size_t k = 0;
-    for ( ++ic ; ic != polylineList.end(); ++ic, ++k )
+    for ( ++ic; ic != polylineList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
     isegment = 0;
   }
@@ -373,6 +373,7 @@ namespace G2lib {
   PolyLine::init( real_type x0, real_type y0 ) {
     xe = x0;
     ye = y0;
+    polylineList.clear();
     s0.clear();
     s0.push_back(0);
     aabb_done = false;
