@@ -37,7 +37,7 @@ classdef LineSegment < CurveBase
     function build( self, varargin )
       %
       % Usage:
-      %    (1) ref.build( x0, y0, theta0, k0, L )
+      %    (1) ref.build( x0, y0, theta0, L )
       %    (3) ref.build( p0, p1 )
       %
       LineSegmentMexWrapper( 'build', self.objectHandle, varargin{:} );

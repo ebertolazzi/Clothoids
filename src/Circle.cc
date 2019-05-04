@@ -319,9 +319,11 @@ namespace G2lib {
 
   void
   CircleArc::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT( s_end > s_begin,
-                  "CircleArc::trim(begin=" << s_begin <<
-                  ", s_end=" << s_end << ") s_end must be > s_begin" );
+    G2LIB_ASSERT(
+      s_end > s_begin,
+      "CircleArc::trim(begin=" << s_begin <<
+      ", s_end=" << s_end << ") s_end must be > s_begin"
+    );
     real_type x, y;
     eval( s_begin, x, y );
     theta0 += s_begin * k;
@@ -879,12 +881,13 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, CircleArc const & c ) {
-    stream <<   "x0     = " << c.x0
-           << "\ny0     = " << c.y0
-           << "\ntheta0 = " << c.theta0
-           << "\nk      = " << c.k
-           << "\nL      = " << c.L
-           << "\n";
+    stream
+      <<   "x0     = " << c.x0
+      << "\ny0     = " << c.y0
+      << "\ntheta0 = " << c.theta0
+      << "\nk      = " << c.k
+      << "\nL      = " << c.L
+      << "\n";
     return stream;
   }
 

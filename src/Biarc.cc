@@ -29,160 +29,6 @@ namespace G2lib {
   using std::abs;
 
   /*\
-   |    ____ _          _
-   |   / ___(_)_ __ ___| | ___  ___
-   |  | |   | | '__/ __| |/ _ \/ __|
-   |  | |___| | | | (__| |  __/\__ \
-   |   \____|_|_|  \___|_|\___||___/
-  \*/
-
-  #if 0
-
-  static
-  inline
-  real_type
-  powersub( real_type a, real_type b)
-  { return (a+b)*(a-b); }
-
-  /*
-  //  http://www.lucidarme.me/?p=490
-  */
-
-  static // unused for the moment
-  void
-  CircleTangentPoints(
-    real_type PA[2],
-    real_type rA,
-    real_type PB[2],
-    real_type rB,
-    bool &    external_tangents,
-    real_type PTE0[2][2],
-    real_type PTE1[2][2],
-    bool &    internal_tangents,
-    real_type PTI0[2][2],
-    real_type PTI1[2][2]
-  ) {
-
-    // Compute distance between circle centers
-    real_type D = hypot( PB[0]-PA[0], PB[1]-PA[1] );
-
-    // First case : process external tangents
-    real_type disc1 = powersub(D,rB-rA);
-    external_tangents = disc1 >= 0;
-
-    if ( external_tangents ) {
-      // Compute the lenght of the tangents
-      real_type L = sqrt(disc1);
-
-      // Compute the parameters
-      real_type R1     = hypot(L,rB);
-      real_type Sigma1 = 0.25 * sqrt( powersub( D+rA, R1 )* powersub( R1, D-rA ) );
-      real_type R2     = hypot(L,rA);
-      real_type Sigma2 = 0.25 * sqrt( powersub( D+rB, R2 )* powersub( R2, D-rB ) );
-
-      real_type xM  = (PA[0]+PB[0])/2;
-      real_type yM  = (PA[1]+PB[1])/2;
-      real_type Tx  = 2*(PA[0]-PB[0])/(D*D);
-      real_type Ty  = 2*(PA[1]-PB[1])/(D*D);
-      real_type bf0 = powersub(rA,R1)/4;
-      real_type bf1 = powersub(rB,R2)/4;
-
-      real_type TxS1 = Tx*Sigma1;
-      real_type TxS2 = Tx*Sigma2;
-      real_type TyS1 = Ty*Sigma1;
-      real_type TyS2 = Ty*Sigma2;
-
-      real_type xM0 = xM - Tx*bf0;
-      real_type yM0 = yM - Ty*bf0;
-      real_type xM1 = xM + Tx*bf1;
-      real_type yM1 = yM + Ty*bf1;
-
-      // Compute the first tangent
-      PTE0[0][0] = xM0 + TyS1;
-      PTE0[0][1] = yM0 - TxS1;
-      PTE0[1][0] = xM1 + TyS2;
-      PTE0[1][1] = yM1 - TxS2;
-
-      // Compute second tangent
-      PTE1[0][0] = xM0 - TyS1;
-      PTE1[0][1] = yM0 + TxS1;
-      PTE1[1][0] = xM1 - TyS2;
-      PTE1[1][1] = yM1 + TxS2;
-    }
-
-    // Second case : process internal tangents
-    real_type disc2 = powersub(D,rB+rA);
-    internal_tangents = disc2 >= 0;
-
-    if ( internal_tangents ) {
-      // Compute the lenght of the tangents
-      real_type L = sqrt(disc2);
-
-      // Compute the parameters
-      real_type R1     = hypot(L,rB);
-      real_type Sigma1 = 0.25 * sqrt ( powersub(D+rA,R1)*powersub(R1,D-rA) );
-      real_type R2     = hypot(L,rA);
-      real_type Sigma2 = 0.25 * sqrt ( powersub(D+rB,R2)*powersub(R2,D-rB) );
-
-      real_type xM  = (PA[0]+PB[0])/2;
-      real_type yM  = (PA[1]+PB[1])/2;
-      real_type Tx  = 2*(PA[0]-PB[0])/(D*D);
-      real_type Ty  = 2*(PA[1]-PB[1])/(D*D);
-      real_type bf0 = powersub(rA,R1)/4;
-      real_type bf1 = powersub(rB,R2)/4;
-
-      real_type TxS1 = Tx*Sigma1;
-      real_type TxS2 = Tx*Sigma2;
-      real_type TyS1 = Ty*Sigma1;
-      real_type TyS2 = Ty*Sigma2;
-
-      real_type xM0 = xM - Tx*bf0;
-      real_type yM0 = yM - Ty*bf0;
-      real_type xM1 = xM + Tx*bf1;
-      real_type yM1 = yM + Ty*bf1;
-
-      // Compute the first tangent
-      PTI0[0][0] = xM0 + TyS1;
-      PTI0[0][1] = yM0 - TxS1;
-      PTI0[1][0] = xM1 - TyS2;
-      PTI0[1][1] = yM1 + TxS2;
-
-      // Compute second tangent
-      PTI1[0][0] = xM0 - TyS1;
-      PTI1[0][1] = yM0 + TxS1;
-      PTI1[1][0] = xM1 + TyS2;
-      PTI1[1][1] = yM1 - TxS2;
-    }
-  }
-
-  static // unused for the moment
-  bool
-  CircleLineTransition(
-    real_type C[2],
-    real_type r,
-    real_type P[2],
-    real_type theta,
-    real_type C0[2],
-    real_type C1[2]
-  ) {
-    real_type Nx =  sin(theta);
-    real_type Ny = -cos(theta);
-    real_type Dx = C[0] - P[0];
-    real_type Dy = C[1] - P[1];
-    real_type delta = (Dx*Dx+Dy*Dy-r*r)/2;
-    if ( delta <= 0 ) return false;
-    real_type s0 = delta/(Dx*Nx+Dy*Ny-r);
-    C0[0] = P[0]+s0*Nx;
-    C0[1] = P[1]+s0*Ny;
-    real_type s1 = delta/(Dx*Nx+Dy*Ny+r);
-    C1[0] = P[0]+s1*Nx;
-    C1[1] = P[1]+s1*Ny;
-    return true;
-  }
-
-  #endif
-
-  /*\
    |   ____  _
    |  | __ )(_) __ _ _ __ ___
    |  |  _ \| |/ _` | '__/ __|
@@ -194,17 +40,45 @@ namespace G2lib {
   : BaseCurve(G2LIB_BIARC)
   {
     switch ( C.type() ) {
+    case G2LIB_LINE:
+      {
+        LineSegment const & LS = *static_cast<LineSegment const *>(&C);
+        bool ok = this->build(
+          LS.xBegin(), LS.yBegin(), LS.thetaBegin(),
+          LS.xEnd(),   LS.yEnd(),   LS.thetaEnd()
+        );
+        G2LIB_ASSERT(
+          ok,
+          "Biarc constructor failed convert from: " <<
+          CurveType_name[C.type()]
+        );
+      }
+      break;
+    case G2LIB_CIRCLE:
+      {
+        CircleArc const & LS = *static_cast<CircleArc const *>(&C);
+        bool ok = this->build(
+          LS.xBegin(), LS.yBegin(), LS.thetaBegin(),
+          LS.xEnd(),   LS.yEnd(),   LS.thetaEnd()
+        );
+        G2LIB_ASSERT(
+          ok,
+          "Biarc constructor failed convert from: " <<
+          CurveType_name[C.type()]
+        );
+      }
+      break;
     case G2LIB_BIARC:
       *this = *static_cast<Biarc const *>(&C);
       break;
-    case G2LIB_LINE:
-    case G2LIB_CIRCLE:
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_ASSERT( false,
-                    "Biarc constructor cannot convert from: " <<
-                    CurveType_name[C.type()] );
+      G2LIB_ASSERT(
+        false,
+        "Biarc constructor cannot convert from: " <<
+        CurveType_name[C.type()]
+      );
     }
   }
 
@@ -233,26 +107,24 @@ namespace G2lib {
 
     real_type thstar = - (th0+th1)/2;
 
-    real_type dth  = th1 - th0;
-    real_type dth0 = thstar - th0;
-    real_type dth1 = thstar - th1;
+    real_type dth  = (th1 - th0)/4;
+    real_type dth0 = (thstar - th0)/2;
+    real_type dth1 = (thstar - th1)/2;
 
-    real_type t  = d * (Sinc(dth/4) / Sinc(dth/2) );
-    real_type l0 = t/(2*Sinc( dth0/2 ));
-    real_type l1 = t/(2*Sinc( dth1/2 ));
+    real_type t  = 2 * cos( dth ) / d;
+    real_type l0 = 1/(t*Sinc( dth0 ));
+    real_type l1 = 1/(t*Sinc( dth1 ));
+    real_type k0 = 2*t*sin( dth0 );
+    real_type k1 = -2*t*sin( dth1 );
 
-    real_type epsi = 100*numeric_limits<real_type>::epsilon();
-
+    real_type epsi = 100*d*numeric_limits<real_type>::epsilon();
     if ( l0 > epsi && l1 > epsi ) {
-
-      real_type k0 = dth0/l0;
-      real_type k1 = -dth1/l1;
 
       C0.build( x0, y0, theta0, k0, l0 );
 
       real_type an = omega+(thstar+th0)/2;
-      real_type xs = x0 + (t/2)*cos(an);
-      real_type ys = y0 + (t/2)*sin(an);
+      real_type xs = x0 + cos(an)/t;
+      real_type ys = y0 + sin(an)/t;
 
       C1.build( xs, ys, omega+thstar, k1, l1 );
       return true;
@@ -389,9 +261,11 @@ namespace G2lib {
 
   void
   Biarc::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT( s_end > s_begin,
-                  "Biarc::trim(begin=" << s_begin <<
-                  ", s_end=" << s_end << ") s_end must be > s_begin" );
+    G2LIB_ASSERT(
+      s_end > s_begin,
+      "Biarc::trim(begin=" << s_begin <<
+      ", s_end=" << s_end << ") s_end must be > s_begin"
+    );
     real_type L0 = C0.length();
     if ( s_end <= L0 ) {
       C0.trim( s_begin, s_end );

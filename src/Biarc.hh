@@ -112,22 +112,27 @@ namespace G2lib {
 
     //! construct a clothoid with the standard parameters
     explicit
-    Biarc( real_type x0,
-           real_type y0,
-           real_type theta0,
-           real_type x1,
-           real_type y1,
-           real_type theta1 )
+    Biarc(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type x1,
+      real_type y1,
+      real_type theta1
+    )
     : BaseCurve(G2LIB_BIARC)
     {
       bool ok = build( x0, y0, theta0, x1, y1, theta1 );
-      G2LIB_ASSERT( ok, "Biarc( x0 = " << x0     <<
-                        ", y0 = "      << y0     <<
-                        ", theta0 = "  << theta0 <<
-                        ", x1 = "      << x1     <<
-                        ", y1 = "      << y1     <<
-                        ", theta1 = "  << theta1 <<
-                        ") cannot be computed" );
+      G2LIB_ASSERT(
+        ok,
+        "Biarc( x0 = " << x0     <<
+        ", y0 = "      << y0     <<
+        ", theta0 = "  << theta0 <<
+        ", x1 = "      << x1     <<
+        ", y1 = "      << y1     <<
+        ", theta1 = "  << theta1 <<
+        ") cannot be computed"
+      );
     }
 
     explicit
@@ -147,12 +152,14 @@ namespace G2lib {
 
     //! construct a biarc with the standard parameters
     bool
-    build( real_type x0,
-           real_type y0,
-           real_type theta0,
-           real_type x1,
-           real_type y1,
-           real_type theta1 );
+    build(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type x1,
+      real_type y1,
+      real_type theta1
+    );
 
     /*!
     //  \brief
@@ -162,29 +169,35 @@ namespace G2lib {
     //  - Computer-Aided Design, vol 33, 2001
     */
     bool
-    build_3P( real_type x0,
-              real_type y0,
-              real_type x1,
-              real_type y1,
-              real_type x2,
-              real_type y2 );
+    build_3P(
+      real_type x0,
+      real_type y0,
+      real_type x1,
+      real_type y1,
+      real_type x2,
+      real_type y2
+    );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     void
-    bbox( real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE;
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    bbox( real_type   offs,
-          real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE;
+    bbox(
+      real_type   offs,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -255,11 +268,13 @@ namespace G2lib {
 
     virtual
     void
-    evaluate( real_type   s,
-              real_type & th,
-              real_type & k,
-              real_type & x,
-              real_type & y ) const G2LIB_OVERRIDE;
+    evaluate(
+      real_type   s,
+      real_type & th,
+      real_type & k,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -291,55 +306,71 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE;
+    eval(
+      real_type   s,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE;
+    eval_D(
+      real_type   s,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE;
+    eval_DD(
+      real_type   s,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE;
+    eval_DDD(
+      real_type   s,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval( real_type   s,
-          real_type   offs,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE;
+    eval(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type   offs,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE;
+    eval_D(
+      real_type   s,
+      real_type   offs,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type   offs,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE;
+    eval_DD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type   offs,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE;
+    eval_DDD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE;
 
     /*\
      |  _____                   _   _   _
@@ -443,24 +474,28 @@ namespace G2lib {
 
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type   offs,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -476,18 +511,22 @@ namespace G2lib {
     real_type delta_theta() const { return C0.delta_theta() + C1.delta_theta(); }
 
     void
-    bbTriangles( std::vector<Triangle2D> & tvec,
-                 real_type max_angle = m_pi/18,
-                 real_type max_size  = 1e100 ) const {
+    bbTriangles(
+      std::vector<Triangle2D> & tvec,
+      real_type max_angle = m_pi/18,
+      real_type max_size  = 1e100
+    ) const {
       C0.bbTriangles( tvec, max_angle, max_size );
       C1.bbTriangles( tvec, max_angle, max_size );
     }
 
     void
-    bbTriangles( real_type offs,
-                 std::vector<Triangle2D> & tvec,
-                 real_type max_angle = m_pi/18,
-                 real_type max_size  = 1e100 ) const {
+    bbTriangles(
+      real_type offs,
+      std::vector<Triangle2D> & tvec,
+      real_type max_angle = m_pi/18,
+      real_type max_size  = 1e100
+    ) const {
       C0.bbTriangles( offs, tvec, max_angle, max_size );
       C1.bbTriangles( offs, tvec, max_angle, max_size );
     }
@@ -507,9 +546,11 @@ namespace G2lib {
     }
 
     bool
-    collision( real_type     offs,
-               Biarc const & B,
-               real_type     offs_B ) const {
+    collision(
+      real_type     offs,
+      Biarc const & B,
+      real_type     offs_B
+    ) const {
       return C0.collision( offs, B.C0, offs_B ) ||
              C0.collision( offs, B.C1, offs_B ) ||
              C1.collision( offs, B.C0, offs_B ) ||
@@ -525,16 +566,20 @@ namespace G2lib {
     \*/
 
     void
-    intersect( Biarc const   & B,
-               IntersectList & ilist,
-               bool            swap_s_vals ) const;
+    intersect(
+      Biarc const   & B,
+      IntersectList & ilist,
+      bool            swap_s_vals
+    ) const;
 
     void
-    intersect( real_type       offs,
-               Biarc const   & B,
-               real_type       offs_B,
-               IntersectList & ilist,
-               bool            swap_s_vals ) const;
+    intersect(
+      real_type       offs,
+      Biarc const   & B,
+      real_type       offs_B,
+      IntersectList & ilist,
+      bool            swap_s_vals
+    ) const;
 
     void
     info( ostream_type & stream ) const G2LIB_OVERRIDE
