@@ -416,19 +416,35 @@ namespace G2lib {
 
     virtual
     void
-    tg( real_type s, real_type & tx, real_type & ty ) const G2LIB_OVERRIDE;
+    tg(
+      real_type   s,
+      real_type & tx,
+      real_type & ty
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    tg_D( real_type s, real_type & tx_D, real_type & ty_D ) const G2LIB_OVERRIDE;
+    tg_D(
+      real_type   s,
+      real_type & tx_D,
+      real_type & ty_D
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    tg_DD( real_type s, real_type & tx_DD, real_type & ty_DD ) const G2LIB_OVERRIDE;
+    tg_DD(
+      real_type   s,
+      real_type & tx_DD,
+      real_type & ty_DD
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    tg_DDD( real_type s, real_type & tx_DDD, real_type & ty_DDD ) const G2LIB_OVERRIDE;
+    tg_DDD(
+      real_type   s,
+      real_type & tx_DDD,
+      real_type & ty_DDD
+    ) const G2LIB_OVERRIDE;
 
     /*\
      |  _                        __
@@ -513,22 +529,24 @@ namespace G2lib {
     void
     bbTriangles(
       std::vector<Triangle2D> & tvec,
-      real_type max_angle = m_pi/18,
-      real_type max_size  = 1e100
+      real_type                 max_angle = m_pi/18,
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
     ) const {
-      C0.bbTriangles( tvec, max_angle, max_size );
-      C1.bbTriangles( tvec, max_angle, max_size );
+      C0.bbTriangles( tvec, max_angle, max_size, icurve );
+      C1.bbTriangles( tvec, max_angle, max_size, icurve );
     }
 
     void
     bbTriangles(
-      real_type offs,
+      real_type                 offs,
       std::vector<Triangle2D> & tvec,
-      real_type max_angle = m_pi/18,
-      real_type max_size  = 1e100
+      real_type                 max_angle = m_pi/18,
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
     ) const {
-      C0.bbTriangles( offs, tvec, max_angle, max_size );
-      C1.bbTriangles( offs, tvec, max_angle, max_size );
+      C0.bbTriangles( offs, tvec, max_angle, max_size, icurve );
+      C1.bbTriangles( offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\
@@ -590,6 +608,16 @@ namespace G2lib {
     operator << ( ostream_type & stream, Biarc const & bi );
 
   };
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  build_guess_theta(
+    int_type        n,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[]
+  );
 
 }
 

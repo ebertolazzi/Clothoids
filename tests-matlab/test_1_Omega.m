@@ -28,7 +28,7 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 close all;
 
 S  = ClothoidSplineG2();
-S.ipopt(true);
+%S.ipopt(true);
 %S.ipopt_check(true);
 
 SPL = cell(8,1);
@@ -72,8 +72,8 @@ for k=1:9
     hold on
     SPL{2}.plot(1000,{'Color','red','LineWidth',1},{'Color','blue','LineWidth',1});
   end
-  
+
   title(sprintf('test P%d',k));
-  
+
   axis equal;
 end

@@ -97,7 +97,7 @@ namespace G2lib {
           real_type x2 = getScalarValue( prhs[5], CMD "`x2` expected to be a real scalar" );
           real_type y2 = getScalarValue( prhs[6], CMD "`y2` expected to be a real scalar" );
 
-          ptr->build( x0, y0, x1, y1, x2, y2 );
+          ptr->build( x0, y0, x1, y1, x2, y2, 0, 0, 0 );
           #undef CMD
 
         } else if ( nrhs == 4 ) {
@@ -111,7 +111,7 @@ namespace G2lib {
           MEX_ASSERT( sz1 == 2, "Triangle2D, expected a vector of 2 elements for `p1`" );
           MEX_ASSERT( sz2 == 2, "Triangle2D, expected a vector of 2 elements for `p2`" );
 
-          ptr->build( p0, p1, p2 );
+          ptr->build( p0, p1, p2, 0, 0, 0  );
           #undef CMD
         } else {
           MEX_ASSERT(false, "Triangle2D, expected 4 or 7 inputs, nrhs = " << nrhs );
@@ -131,7 +131,7 @@ namespace G2lib {
           real_type x2 = getScalarValue( prhs[6], CMD "`x2` expected to be a real scalar" );
           real_type y2 = getScalarValue( prhs[7], CMD "`y2` expected to be a real scalar" );
 
-          ptr->build( x0, y0, x1, y1, x2, y2 );
+          ptr->build( x0, y0, x1, y1, x2, y2, 0, 0, 0  );
           #undef CMD
 
         } else if ( nrhs == 5 ) {
@@ -145,7 +145,7 @@ namespace G2lib {
           MEX_ASSERT( sz1 == 2, "Triangle2D, expected a vector of 2 elements for `p1`" );
           MEX_ASSERT( sz2 == 2, "Triangle2D, expected a vector of 2 elements for `p2`" );
 
-          ptr->build( p0, p1, p2 );
+          ptr->build( p0, p1, p2, 0, 0, 0  );
           #undef CMD
         } else {
           MEX_ASSERT(false, "Triangle2D, expected 5 or 8 inputs, nrhs = " << nrhs );

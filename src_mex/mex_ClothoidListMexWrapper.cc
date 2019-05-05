@@ -502,10 +502,6 @@ namespace G2lib {
     MEX_ASSERT(nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs);
     MEX_ASSERT(nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
 
-    ClothoidList * ptr = DATA_GET(arg_in_1);
-
-    bool ok = true;
-
     mwSize nx, ny;
     real_type const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" );
     real_type const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" );
@@ -514,7 +510,7 @@ namespace G2lib {
 
     real_type * theta = createMatrixValue( arg_out_0, nx, 1 );
 
-    ok = ptr->build_theta( nx, x, y, theta );
+    bool ok = build_guess_theta( nx, x, y, theta );
 
     setScalarBool( arg_out_1, ok );
 
@@ -744,7 +740,7 @@ namespace G2lib {
       offs = getScalarValue( arg_in_4,
                              CMD "`offs` expected to be a real scalar" );
 
-    std::vector<T2D> tvec;
+    std::vector<Triangle2D> tvec;
     if ( nrhs == 5 ) {
       ptr->bbTriangles( offs, tvec, max_angle, max_size );
     } else {
@@ -830,10 +826,6 @@ namespace G2lib {
     CMD_BB_TRIANGLES,
     CMD_AABB_TRUE,
     CMD_AABB_FALSE,
-    //CMD_DISTANCE_BY_SAMPLE,
-    //CMD_CLOSEST_BY_SAMPLE,
-    //CMD_BB_TRIANGLES,
-    //CMD_OPTIMIZED_SAMPLE,
     CMD_VIRTUAL_LIST
   } CMD_LIST;
 
@@ -863,10 +855,6 @@ namespace G2lib {
     {"bbTriangles",CMD_BB_TRIANGLES},
     {"aabb_true",CMD_AABB_TRUE},
     {"aabb_false",CMD_AABB_FALSE},
-    //{"distanceBySample",CMD_DISTANCE_BY_SAMPLE},
-    //{"closestPointBySample",CMD_CLOSEST_BY_SAMPLE},
-    //{"bbTriangles",CMD_BB_TRIANGLES},
-    //{"optimized_sample",CMD_OPTIMIZED_SAMPLE},
     CMD_MAP_LIST
   };
 
@@ -956,20 +944,6 @@ namespace G2lib {
       case CMD_AABB_FALSE:
         do_aabb_false( nlhs, plhs, nrhs, prhs );
         break;
-      /*
-      case CMD_DISTANCE_BY_SAMPLE:
-        do_distance_by_sample( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CLOSEST_BY_SAMPLE:
-        do_closest_by_sample( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BB_TRIANGLES:
-        do_bbTriangles( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_OPTIMIZED_SAMPLE:
-        do_optimized_sample( nlhs, plhs, nrhs, prhs );
-        break;
-      */
       CMD_CASE_LIST;
       }
 

@@ -69,6 +69,7 @@ namespace G2lib {
     case G2LIB_CIRCLE:
     case G2LIB_CLOTHOID:
     case G2LIB_BIARC:
+    case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
       G2LIB_ASSERT( false,
                     "PolyLine constructor cannot convert from: " <<

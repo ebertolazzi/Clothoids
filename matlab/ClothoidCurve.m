@@ -185,8 +185,8 @@ classdef ClothoidCurve < CurveBase
       end
       L = ClothoidCurveMexWrapper( 'length', self.objectHandle );
       S = 0:L/npts:L;
-      [ ~, ~, ~, kappa ] = ClothoidCurveMexWrapper( 'evaluate', ...
-                                                    self.objectHandle, S );
+      [ ~, ~, ~, kappa ] = ...
+        ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
       plot( S, kappa, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -196,8 +196,8 @@ classdef ClothoidCurve < CurveBase
       end
       L = ClothoidCurveMexWrapper( 'length', self.objectHandle );
       S = 0:L/npts:L;
-      [ ~, ~, theta, ~ ] = ClothoidCurveMexWrapper( 'evaluate', ...
-                                                    self.objectHandle, S );
+      [ ~, ~, theta, ~ ] = ...
+        ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
       plot( S, theta, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

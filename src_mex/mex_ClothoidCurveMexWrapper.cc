@@ -482,7 +482,7 @@ namespace G2lib {
       offs = getScalarValue( arg_in_4,
                              CMD "`offs` expected to be a real scalar" );
 
-    std::vector<T2D> tvec;
+    std::vector<Triangle2D> tvec;
     if ( nrhs == 5 ) {
       ptr->bbTriangles( offs, tvec, max_angle, max_size );
     } else {

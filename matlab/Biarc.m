@@ -140,5 +140,35 @@ classdef Biarc < CurveBase
       hold on;
       C1.plot(npts,fmt2);
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, npts, varargin )
+      if nargin < 2
+        npts = 1000;
+      end
+      L = BiarcMexWrapper( 'length', self.objectHandle );
+      S = 0:L/npts:L;
+      [ ~, ~, ~, kappa ] = BiarcMexWrapper( 'evaluate', self.objectHandle, S );
+      plot( S, kappa, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTheta( self, npts, varargin )
+      if nargin < 2
+        npts = 1000;
+      end
+      L = BiarcMexWrapper( 'length', self.objectHandle );
+      S = 0:L/npts:L;
+      [ ~, ~, theta, ~ ] = BiarcMexWrapper( 'evaluate', self.objectHandle, S );
+      plot( S, theta, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotNormal( self, step, len )
+      for s=0:step:self.length()
+        [ x, y, theta, ~ ] = self.evaluate(s);
+        n = [sin(theta),-cos(theta)];
+        A = [x,x+len*n(1)];
+        B = [y,y+len*n(2)];
+        plot(A,B);
+      end
+    end
   end
 end

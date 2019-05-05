@@ -24,9 +24,11 @@
 #ifndef CLOTHOID_LIST_HH
 #define CLOTHOID_LIST_HH
 
+#include "G2lib.hh"
 #include "Clothoid.hh"
 #include "PolyLine.hh"
 #include "Biarc.hh"
+#include "BiarcList.hh"
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -67,40 +69,50 @@ namespace G2lib {
     ClothoidCurve S0, S1;
 
     void
-    evalA( real_type   alpha,
-           real_type   L,
-           real_type & A ) const;
+    evalA(
+      real_type   alpha,
+      real_type   L,
+      real_type & A
+    ) const;
 
     void
-    evalA( real_type   alpha,
-           real_type   L,
-           real_type & A,
-           real_type & A_1,
-           real_type & A_2 ) const;
+    evalA(
+      real_type   alpha,
+      real_type   L,
+      real_type & A,
+      real_type & A_1,
+      real_type & A_2
+    ) const;
 
     void
-    evalG( real_type alpha,
-           real_type L,
-           real_type th,
-           real_type k,
-           real_type G[2] ) const;
+    evalG(
+      real_type alpha,
+      real_type L,
+      real_type th,
+      real_type k,
+      real_type G[2]
+    ) const;
 
     void
-    evalG( real_type alpha,
-           real_type L,
-           real_type th,
-           real_type k,
-           real_type G[2],
-           real_type G_1[2],
-           real_type G_2[2] ) const;
+    evalG(
+      real_type alpha,
+      real_type L,
+      real_type th,
+      real_type k,
+      real_type G[2],
+      real_type G_1[2],
+      real_type G_2[2]
+    ) const;
 
     void
     evalF( real_type const vars[2], real_type F[2] ) const;
 
     void
-    evalFJ( real_type const vars[2],
-            real_type       F[2],
-            real_type       J[2][2] ) const;
+    evalFJ(
+      real_type const vars[2],
+      real_type       F[2],
+      real_type       J[2][2]
+    ) const;
 
     void
     buildSolution( real_type alpha, real_type L );
@@ -131,8 +143,10 @@ namespace G2lib {
     ~G2solve2arc() {}
 
     int
-    build( real_type x0, real_type y0, real_type theta0, real_type kappa0,
-           real_type x1, real_type y1, real_type theta1, real_type kappa1 );
+    build(
+      real_type x0, real_type y0, real_type theta0, real_type kappa0,
+      real_type x1, real_type y1, real_type theta1, real_type kappa1
+    );
 
     void
     setTolerance( real_type tol );
@@ -207,8 +221,10 @@ namespace G2lib {
     ~G2solveCLC() {}
 
     int
-    build( real_type x0, real_type y0, real_type theta0, real_type kappa0,
-           real_type x1, real_type y1, real_type theta1, real_type kappa1 );
+    build(
+      real_type x0, real_type y0, real_type theta0, real_type kappa0,
+      real_type x1, real_type y1, real_type theta1, real_type kappa1
+    );
 
     void
     setTolerance( real_type tol );
@@ -259,9 +275,11 @@ namespace G2lib {
     real_type K0, K1, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14;
 
     void
-    evalFJ( real_type const vars[2],
-            real_type       F[2],
-            real_type       J[2][2] ) const;
+    evalFJ(
+      real_type const vars[2],
+      real_type       F[2],
+      real_type       J[2][2]
+    ) const;
 
     void
     evalF( real_type const vars[2], real_type F[2] ) const;
@@ -301,16 +319,18 @@ namespace G2lib {
      |
     \*/
     int
-    build( real_type x0,
-           real_type y0,
-           real_type theta0,
-           real_type kappa0,
-           real_type x1,
-           real_type y1,
-           real_type theta1,
-           real_type kappa1,
-           real_type Dmax = 0,
-           real_type dmax = 0 );
+    build(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type kappa0,
+      real_type x1,
+      real_type y1,
+      real_type theta1,
+      real_type kappa1,
+      real_type Dmax = 0,
+      real_type dmax = 0
+    );
 
     /*!
      | Compute the 3 arc clothoid spline that fit the data
@@ -329,16 +349,18 @@ namespace G2lib {
      |
     \*/
     int
-    build_fixed_length( real_type s0,
-                        real_type x0,
-                        real_type y0,
-                        real_type theta0,
-                        real_type kappa0,
-                        real_type s1,
-                        real_type x1,
-                        real_type y1,
-                        real_type theta1,
-                        real_type kappa1 );
+    build_fixed_length(
+      real_type s0,
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type kappa0,
+      real_type s1,
+      real_type x1,
+      real_type y1,
+      real_type theta1,
+      real_type kappa1
+    );
 
     /*!
      | \return get the first clothoid for the 3 arc G2 fitting
@@ -514,11 +536,13 @@ namespace G2lib {
      | \param[out] y     the curve y-coordinate
     \*/
     void
-    eval( real_type   s,
-          real_type & theta,
-          real_type & kappa,
-          real_type & x,
-          real_type & y ) const;
+    eval(
+      real_type   s,
+      real_type & theta,
+      real_type & kappa,
+      real_type & x,
+      real_type & y
+    ) const;
 
     void eval( real_type s, real_type & x, real_type & y ) const;
     void eval_D( real_type s, real_type & x_D, real_type & y_D ) const;
@@ -574,12 +598,12 @@ namespace G2lib {
     vector<ClothoidCurve> clotoidList;
     mutable int_type      last_idx;
 
-    mutable bool        aabb_done;
-    mutable AABBtree    aabb_tree;
-    mutable real_type   aabb_offs;
-    mutable real_type   aabb_max_angle;
-    mutable real_type   aabb_max_size;
-    mutable vector<T2D> aabb_tri;
+    mutable bool               aabb_done;
+    mutable AABBtree           aabb_tree;
+    mutable real_type          aabb_offs;
+    mutable real_type          aabb_max_angle;
+    mutable real_type          aabb_max_size;
+    mutable vector<Triangle2D> aabb_tri;
 
     class T2D_collision_list {
       ClothoidList const * pList1;
@@ -587,10 +611,12 @@ namespace G2lib {
       ClothoidList const * pList2;
       real_type    const   offs2;
     public:
-      T2D_collision_list( ClothoidList const * _pList1,
-                          real_type    const   _offs1,
-                          ClothoidList const * _pList2,
-                          real_type    const   _offs2 )
+      T2D_collision_list(
+        ClothoidList const * _pList1,
+        real_type    const   _offs1,
+        ClothoidList const * _pList2,
+        real_type    const   _offs2
+      )
       : pList1(_pList1)
       , offs1(_offs1)
       , pList2(_pList2)
@@ -599,8 +625,8 @@ namespace G2lib {
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        T2D const & T1 = pList1->aabb_tri[size_t(ptr1->Ipos())];
-        T2D const & T2 = pList2->aabb_tri[size_t(ptr2->Ipos())];
+        Triangle2D    const & T1 = pList1->aabb_tri[size_t(ptr1->Ipos())];
+        Triangle2D    const & T2 = pList2->aabb_tri[size_t(ptr2->Ipos())];
         ClothoidCurve const & C1 = pList1->get(T1.Icurve());
         ClothoidCurve const & C2 = pList2->get(T2.Icurve());
         real_type ss1, ss2;
@@ -683,22 +709,26 @@ namespace G2lib {
     ClothoidList( CircleArc const & C );
 
     explicit
-    ClothoidList( Biarc const & C );
+    ClothoidList( Biarc const & B );
 
     explicit
-    ClothoidList( ClothoidCurve const & c );
+    ClothoidList( BiarcList const & BL );
 
     explicit
-    ClothoidList( PolyLine const & pl );
+    ClothoidList( ClothoidCurve const & CL );
+
+    explicit
+    ClothoidList( PolyLine const & PL );
 
     explicit
     ClothoidList( BaseCurve const & C );
 
-    void push_back( LineSegment const & c );
-    void push_back( CircleArc const & c );
-    void push_back( Biarc const & c );
+    void push_back( LineSegment   const & c );
+    void push_back( CircleArc     const & c );
+    void push_back( Biarc         const & c );
+    void push_back( BiarcList     const & c );
     void push_back( ClothoidCurve const & c );
-    void push_back( PolyLine const & c );
+    void push_back( PolyLine      const & c );
 
 
     void push_back( real_type kappa0, real_type dkappa, real_type L );
@@ -710,36 +740,38 @@ namespace G2lib {
                        real_type x1, real_type y1, real_type theta1 );
 
     bool
-    build_G1( int_type        n,
-              real_type const x[],
-              real_type const y[] );
+    build_G1(
+      int_type        n,
+      real_type const x[],
+      real_type const y[]
+    );
 
     bool
-    build_G1( int_type        n,
-              real_type const x[],
-              real_type const y[],
-              real_type const theta[] );
+    build_G1(
+      int_type        n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta[]
+    );
 
     bool
-    build_theta( int_type        n,
-                 real_type const x[],
-                 real_type const y[],
-                 real_type       theta[] ) const;
+    build(
+      real_type       x0,
+      real_type       y0,
+      real_type       theta0,
+      int_type        n,
+      real_type const s[],
+      real_type const kappa[]
+    );
 
     bool
-    build( real_type x0,
-           real_type y0,
-           real_type theta0,
-           int_type        n,
-           real_type const s[],
-           real_type const kappa[] );
-
-    bool
-    build( real_type x0,
-           real_type y0,
-           real_type theta0,
-           vector<real_type> const & s,
-           vector<real_type> const & kappa ) {
+    build(
+      real_type                 x0,
+      real_type                 y0,
+      real_type                 theta0,
+      vector<real_type> const & s,
+      vector<real_type> const & kappa
+    ) {
       if ( s.size() != kappa.size() ) return false;
       return build( x0, y0, theta0,
                     int_type(s.size()),
@@ -778,22 +810,28 @@ namespace G2lib {
     \*/
 
     void
-    bbTriangles( real_type          offs,
-                 std::vector<T2D> & tvec,
-                 real_type          max_angle = m_pi/6, // 30 degree
-                 real_type          max_size  = 1e100 ) const;
+    bbTriangles(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100
+    ) const;
 
     void
-    bbTriangles( std::vector<T2D> & tvec,
-                 real_type          max_angle = m_pi/6, // 30 degree
-                 real_type          max_size  = 1e100 ) const {
+    bbTriangles(
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100
+    ) const {
       bbTriangles( 0, tvec, max_angle, max_size );
     }
 
     void
-    build_AABBtree( real_type offs,
-                    real_type max_angle = m_pi/6, // 30 degree
-                    real_type max_size  = 1e100 ) const;
+    build_AABBtree(
+      real_type offs,
+      real_type max_angle = m_pi/6, // 30 degree
+      real_type max_size  = 1e100
+    ) const;
 
     /*\
      |   _     _
@@ -805,20 +843,24 @@ namespace G2lib {
 
     virtual
     void
-    bbox( real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE {
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE {
       bbox( 0, xmin, ymin, xmax, ymax );
     }
 
     virtual
     void
-    bbox( real_type   offs,
-          real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE;
+    bbox(
+      real_type   offs,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
 
     /*\
      |   ____             _          _______           _
@@ -985,48 +1027,60 @@ namespace G2lib {
 
     virtual
     void
-    tg( real_type   s,
-        real_type & tg_x,
-        real_type & tg_y ) const G2LIB_OVERRIDE;
+    tg(
+      real_type   s,
+      real_type & tg_x,
+      real_type & tg_y
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    tg_D( real_type   s,
-          real_type & tg_x_D,
-          real_type & tg_y_D ) const G2LIB_OVERRIDE;
+    tg_D(
+      real_type   s,
+      real_type & tg_x_D,
+      real_type & tg_y_D
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    tg_DD( real_type   s,
-           real_type & tg_x_DD,
-           real_type & tg_y_DD ) const G2LIB_OVERRIDE;
+    tg_DD(
+      real_type   s,
+      real_type & tg_x_DD,
+      real_type & tg_y_DD
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    tg_DDD( real_type   s,
-            real_type & tg_x_DDD,
-            real_type & tg_y_DDD ) const G2LIB_OVERRIDE;
+    tg_DDD(
+      real_type   s,
+      real_type & tg_x_DDD,
+      real_type & tg_y_DDD
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     void
-    evaluate( real_type   s,
-              real_type & th,
-              real_type & k,
-              real_type & x,
-              real_type & y ) const G2LIB_OVERRIDE;
+    evaluate(
+      real_type   s,
+      real_type & th,
+      real_type & k,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     void
-    evaluate( real_type   s,
-              real_type   offs,
-              real_type & th,
-              real_type & k,
-              real_type & x,
-              real_type & y ) const G2LIB_OVERRIDE;
+    evaluate(
+      real_type   s,
+      real_type   offs,
+      real_type & th,
+      real_type & k,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1066,27 +1120,35 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE;
+    eval(
+      real_type   s,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE;
+    eval_D(
+      real_type   s,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE;
+    eval_DD(
+      real_type   s,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE;
+    eval_DDD(
+      real_type   s,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE;
 
     /*\
      |         __  __          _
@@ -1132,31 +1194,39 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type   offs,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE;
+    eval(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type   offs,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE;
+    eval_D(
+      real_type   s,
+      real_type   offs,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type   offs,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE;
+    eval_DD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type   offs,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE;
+    eval_DDD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE;
 
     /*\
      |  _                        __
@@ -1212,13 +1282,15 @@ namespace G2lib {
     \*/
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     /*!
      | \param  qx  x-coordinate of the point
@@ -1235,14 +1307,16 @@ namespace G2lib {
     \*/
     virtual
     int_type // true if projection is unique and orthogonal
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type   offs,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
@@ -1254,9 +1328,11 @@ namespace G2lib {
     operator << ( ostream_type & stream, ClothoidList const & CL );
 
     void
-    getSTK( real_type s[],
-            real_type theta[],
-            real_type kappa[] ) const;
+    getSTK(
+      real_type s[],
+      real_type theta[],
+      real_type kappa[]
+    ) const;
 
     void
     getXY( real_type x[], real_type y[] ) const;
@@ -1279,10 +1355,12 @@ namespace G2lib {
      |
     \*/
     int_type
-    findST1( real_type   x,
-             real_type   y,
-             real_type & s,
-             real_type & t ) const;
+    findST1(
+      real_type   x,
+      real_type   y,
+      real_type & s,
+      real_type & t
+    ) const;
 
     /*!
      | \brief Find parametric coordinate.
@@ -1297,12 +1375,14 @@ namespace G2lib {
      |                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     \*/
     int_type
-    findST1( int_type    ibegin,
-             int_type    iend,
-             real_type   x,
-             real_type   y,
-             real_type & s,
-             real_type & t ) const;
+    findST1(
+      int_type    ibegin,
+      int_type    iend,
+      real_type   x,
+      real_type   y,
+      real_type & s,
+      real_type & t
+    ) const;
 
     /*\
      |             _ _ _     _
@@ -1316,9 +1396,11 @@ namespace G2lib {
     collision( ClothoidList const & C ) const;
 
     bool
-    collision( real_type            offs,
-               ClothoidList const & CL,
-               real_type            offs_C ) const;
+    collision(
+      real_type            offs,
+      ClothoidList const & CL,
+      real_type            offs_C
+    ) const;
 
     /*\
      |   _       _                          _
@@ -1329,18 +1411,22 @@ namespace G2lib {
     \*/
 
     void
-    intersect( ClothoidList const & CL,
-               IntersectList      & ilist,
-               bool                 swap_s_vals ) const {
+    intersect(
+      ClothoidList const & CL,
+      IntersectList      & ilist,
+      bool                 swap_s_vals
+    ) const {
       intersect( 0, CL, 0, ilist, swap_s_vals );
     }
 
     void
-    intersect( real_type            offs,
-               ClothoidList const & CL,
-               real_type            offs_obj,
-               IntersectList      & ilist,
-               bool                 swap_s_vals ) const;
+    intersect(
+      real_type            offs,
+      ClothoidList const & CL,
+      real_type            offs_obj,
+      IntersectList      & ilist,
+      bool                 swap_s_vals
+    ) const;
 
     /*! \brief Save Clothoid list to a stream
      *
@@ -1407,18 +1493,29 @@ namespace G2lib {
     void setP9() { tt = P9; }
 
     void
-    build( real_type const xvec[],
-           real_type const yvec[],
-           int_type        npts );
+    build(
+      real_type const xvec[],
+      real_type const yvec[],
+      int_type        npts
+    );
 
     int_type numPnts() const { return npts; }
     int_type numTheta() const;
     int_type numConstraints() const;
 
     void
-    guess( real_type theta_guess[],
-           real_type theta_min[],
-           real_type theta_max[] ) const;
+    guess(
+      real_type theta_guess[],
+      real_type theta_min[],
+      real_type theta_max[]
+    ) const {
+      vector<real_type> omega(npts), len(npts);
+      G2lib::xy_to_guess_angle(
+        this->npts, &this->x.front(), &this->y.front(),
+        theta_guess, theta_min, theta_max,
+        &omega.front(), &len.front()
+      );
+    }
 
     bool
     objective( real_type const theta[], real_type & f ) const;

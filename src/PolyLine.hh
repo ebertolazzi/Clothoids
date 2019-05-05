@@ -40,11 +40,13 @@ namespace G2lib {
 
   class CircleArc;
   class Biarc;
+  class BiarcList;
   class ClothoidCurve;
   class ClothoidList;
 
   class PolyLine : public BaseCurve {
     friend class ClothoidList;
+    friend class BiarcList;
   private:
     vector<LineSegment> polylineList;
     vector<real_type>   s0;

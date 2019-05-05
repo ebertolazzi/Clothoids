@@ -72,6 +72,7 @@ namespace G2lib {
       *this = *static_cast<Biarc const *>(&C);
       break;
     case G2LIB_CLOTHOID:
+    case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
       G2LIB_ASSERT(
@@ -901,11 +902,44 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  build_guess_theta(
+    int_type        n,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[]
+  ) {
+
+    G2LIB_ASSERT( n > 1, "build_guess_theta, at least 2 points are necessary" );
+    Biarc b;
+    if ( n == 2 ) {
+      theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] );
+    } else {
+      bool ok, ciclic = hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10;
+      if ( ciclic ) {
+        ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] );
+        G2LIB_ASSERT( ok, "build_guess_theta, failed" );
+        theta[0] = theta[n-1] = b.thetaMiddle();
+      }
+      for ( int_type k = 1; k < n-1; ++k ) {
+        ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
+        G2LIB_ASSERT( ok, "build_guess_theta, failed" );
+        theta[k] = b.thetaMiddle();
+        if ( k == 1   && !ciclic ) theta[0]   = b.thetaBegin();
+        if ( k == n-2 && !ciclic ) theta[n-1] = b.thetaEnd();
+      }
+    }
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   ostream_type &
   operator << ( ostream_type & stream, Biarc const & bi ) {
-    stream << "C0\n" << bi.C0
-           << "C1\n" << bi.C1
-           << "\n";
+    stream
+      << "C0\n" << bi.C0
+      << "C1\n" << bi.C1
+      << "\n";
     return stream;
   }
 

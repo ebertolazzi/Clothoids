@@ -51,6 +51,7 @@ namespace G2lib {
     "POLYLINE",
     "CIRCLE",
     "BIARC",
+    "BIARC_LIST",
     "CLOTHOID",
     "CLOTHOID_LIST"
   };
@@ -402,6 +403,75 @@ namespace G2lib {
       s2[i] = ss2;
     }
     return nsol;
+  }
+
+  /*\
+   |  __  ____   __  _          _____ _          _
+   |  \ \/ /\ \ / / | |_ ___   |_   _| |__   ___| |_ __ _
+   |   \  /  \ V /  | __/ _ \    | | | '_ \ / _ \ __/ _` |
+   |   /  \   | |   | || (_) |   | | | | | |  __/ || (_| |
+   |  /_/\_\  |_|    \__\___/    |_| |_| |_|\___|\__\__,_|
+  \*/
+
+  void
+  xy_to_guess_angle(
+    int_type        npts,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[],
+    real_type       theta_min[],
+    real_type       theta_max[],
+    real_type       omega[],
+    real_type       len[]
+  ) {
+    //
+    // Compute guess angles
+    //
+    int_type ne  = npts-1;
+    int_type ne1 = npts-2;
+
+    real_type dx = x[1]-x[0];
+    real_type dy = y[1]-y[0];
+    omega[0] = atan2(dy,dx);
+    len[0]   = hypot(dy,dx);
+    for ( int_type j = 1; j < ne; ++j ) {
+      dx       = x[j+1]-x[j];
+      dy       = y[j+1]-y[j];
+      omega[j] = atan2(dy,dx);
+      len[j]   = hypot(dy,dx);
+      real_type domega = omega[j]-omega[j-1];
+      domega  -= round(domega/m_2pi)*m_2pi;
+      omega[j] = omega[j-1]+domega;
+    }
+
+    real_type const dangle = 0.99 * m_pi;
+
+    theta[0]      = omega[0];
+    theta_min[0]  = omega[0] - dangle;
+    theta_max[0]  = omega[0] + dangle;
+
+    theta[ne]     = omega[ne1];
+    theta_min[ne] = omega[ne1] - dangle;
+    theta_max[ne] = omega[ne1] + dangle;
+
+    real_type omega_L = omega[0];
+    real_type len_L   = len[0];
+    for ( int_type j = 1; j < ne; ++j ) {
+      real_type omega_R = omega[j];
+      real_type len_R   = len[j];
+      theta[j] = ( omega_L/len_L + omega_R / len_R ) / ( 1/len_L + 1/len_R );
+      if ( omega_R > omega_L ) {
+        theta_min[j] = omega_L;
+        theta_max[j] = omega_R;
+      } else {
+        theta_min[j] = omega_R;
+        theta_max[j] = omega_L;
+      }
+      theta_min[j] -= dangle;
+      theta_max[j] += dangle;
+      omega_L = omega_R;
+      len_L   = len_R;
+    }
   }
 
   /*\

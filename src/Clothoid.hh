@@ -57,66 +57,76 @@ namespace G2lib {
     real_type    L;   //!< lenght of clothoid segment
 
     void
-    optimized_sample_internal( real_type           s_begin,
-                               real_type           s_end,
-                               real_type           offs,
-                               real_type           ds,
-                               real_type           max_angle,
-                               vector<real_type> & s ) const;
+    optimized_sample_internal(
+      real_type           s_begin,
+      real_type           s_end,
+      real_type           offs,
+      real_type           ds,
+      real_type           max_angle,
+      vector<real_type> & s
+    ) const;
 
     void
-    bbTriangles_internal( real_type     offs,
-                          vector<T2D> & tvec,
-                          real_type     s0,
-                          real_type     s1,
-                          real_type     max_angle,
-                          real_type     max_size,
-                          int_type      icurve ) const;
+    bbTriangles_internal(
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            s0,
+      real_type            s1,
+      real_type            max_angle,
+      real_type            max_size,
+      int_type             icurve
+    ) const;
 
     void
-    closestPoint_internal( real_type   s_begin,
-                           real_type   s_end,
-                           real_type   qx,
-                           real_type   qy,
-                           real_type   offs,
-                           real_type & x,
-                           real_type & y,
-                           real_type & s,
-                           real_type & dst ) const;
+    closestPoint_internal(
+      real_type   s_begin,
+      real_type   s_end,
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & dst
+    ) const;
 
     static int_type  max_iter;
     static real_type tolerance;
 
-    mutable bool        aabb_done;
-    mutable AABBtree    aabb_tree;
-    mutable real_type   aabb_offs;
-    mutable real_type   aabb_max_angle;
-    mutable real_type   aabb_max_size;
-    mutable vector<T2D> aabb_tri;
+    mutable bool               aabb_done;
+    mutable AABBtree           aabb_tree;
+    mutable real_type          aabb_offs;
+    mutable real_type          aabb_max_angle;
+    mutable real_type          aabb_max_size;
+    mutable vector<Triangle2D> aabb_tri;
 
     bool
-    aabb_intersect( T2D           const & T1,
-                    real_type             offs,
-                    ClothoidCurve const * pC,
-                    T2D           const & T2,
-                    real_type             C_offs,
-                    real_type           & ss1,
-                    real_type           & ss2 ) const;
+    aabb_intersect(
+      Triangle2D    const & T1,
+      real_type             offs,
+      ClothoidCurve const * pC,
+      Triangle2D    const & T2,
+      real_type             C_offs,
+      real_type           & ss1,
+      real_type           & ss2
+    ) const;
 
     class T2D_approximate_collision {
       ClothoidCurve const * pC1;
       ClothoidCurve const * pC2;
     public:
-      T2D_approximate_collision( ClothoidCurve const * _pC1,
-                                 ClothoidCurve const * _pC2 )
+      T2D_approximate_collision(
+        ClothoidCurve const * _pC1,
+        ClothoidCurve const * _pC2
+      )
       : pC1(_pC1)
       , pC2(_pC2)
       {}
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        T2D const & T1 = pC1->aabb_tri[size_t(ptr1->Ipos())];
-        T2D const & T2 = pC2->aabb_tri[size_t(ptr2->Ipos())];
+        Triangle2D const & T1 = pC1->aabb_tri[size_t(ptr1->Ipos())];
+        Triangle2D const & T2 = pC2->aabb_tri[size_t(ptr2->Ipos())];
         return T1.overlap(T2);
       }
     };
@@ -127,10 +137,12 @@ namespace G2lib {
       ClothoidCurve const * pC2;
       real_type     const   offs2;
     public:
-      T2D_collision( ClothoidCurve const * _pC1,
-                     real_type     const   _offs1,
-                     ClothoidCurve const * _pC2,
-                     real_type     const   _offs2 )
+      T2D_collision(
+        ClothoidCurve const * _pC1,
+        real_type     const   _offs1,
+        ClothoidCurve const * _pC2,
+        real_type     const   _offs2
+      )
       : pC1(_pC1)
       , offs1(_offs1)
       , pC2(_pC2)
@@ -139,8 +151,8 @@ namespace G2lib {
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        T2D const & T1 = pC1->aabb_tri[size_t(ptr1->Ipos())];
-        T2D const & T2 = pC2->aabb_tri[size_t(ptr2->Ipos())];
+        Triangle2D const & T1 = pC1->aabb_tri[size_t(ptr1->Ipos())];
+        Triangle2D const & T2 = pC2->aabb_tri[size_t(ptr2->Ipos())];
         real_type ss1, ss2;
         return pC1->aabb_intersect( T1, offs1, pC2, T2, offs2, ss1, ss2 );
       }
@@ -207,12 +219,14 @@ namespace G2lib {
 
     //! construct a clothoid with the standard parameters
     explicit
-    ClothoidCurve( real_type _x0,
-                   real_type _y0,
-                   real_type _theta0,
-                   real_type _k,
-                   real_type _dk,
-                   real_type _L )
+    ClothoidCurve(
+      real_type _x0,
+      real_type _y0,
+      real_type _theta0,
+      real_type _k,
+      real_type _dk,
+      real_type _L
+    )
     : BaseCurve(G2LIB_CLOTHOID)
     , aabb_done(false)
     {
@@ -226,10 +240,12 @@ namespace G2lib {
 
     //! construct a clothoid by solving the hermite G1 problem
     explicit
-    ClothoidCurve( real_type const P0[],
-                   real_type       theta0,
-                   real_type const P1[],
-                   real_type       theta1 )
+    ClothoidCurve(
+      real_type const P0[],
+      real_type       theta0,
+      real_type const P1[],
+      real_type       theta1
+    )
     : BaseCurve(G2LIB_CLOTHOID)
     , aabb_done(false)
     {
@@ -284,12 +300,14 @@ namespace G2lib {
     \*/
     //! construct a clothoid with the standard parameters
     void
-    build( real_type _x0,
-           real_type _y0,
-           real_type _theta0,
-           real_type _k,
-           real_type _dk,
-           real_type _L ) {
+    build(
+      real_type _x0,
+      real_type _y0,
+      real_type _theta0,
+      real_type _k,
+      real_type _dk,
+      real_type _L
+    ) {
       CD.x0     = _x0;
       CD.y0     = _y0;
       CD.theta0 = _theta0;
@@ -312,13 +330,15 @@ namespace G2lib {
      | \return number of iteration performed
     \*/
     int
-    build_G1( real_type x0,
-              real_type y0,
-              real_type theta0,
-              real_type x1,
-              real_type y1,
-              real_type theta1,
-              real_type tol = 1e-12 ) {
+    build_G1(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type x1,
+      real_type y1,
+      real_type theta1,
+      real_type tol = 1e-12
+    ) {
       aabb_done = false;
       aabb_tree.clear();
       return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L );
@@ -336,16 +356,18 @@ namespace G2lib {
      | \return number of iteration performed
     \*/
     int
-    build_G1_D( real_type x0,
-                real_type y0,
-                real_type theta0,
-                real_type x1,
-                real_type y1,
-                real_type theta1,
-                real_type L_D[2],
-                real_type k_D[2],
-                real_type dk_D[2],
-                real_type tol = 1e-12 ) {
+    build_G1_D(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type x1,
+      real_type y1,
+      real_type theta1,
+      real_type L_D[2],
+      real_type k_D[2],
+      real_type dk_D[2],
+      real_type tol = 1e-12
+    ) {
       aabb_done = false;
       aabb_tree.clear();
       return CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, L,
@@ -363,13 +385,15 @@ namespace G2lib {
      | \param y1     final y position   \f$ y_1      \f$
     \*/
     bool
-    build_forward( real_type x0,
-                   real_type y0,
-                   real_type theta0,
-                   real_type kappa0,
-                   real_type x1,
-                   real_type y1,
-                   real_type tol = 1e-12 ) {
+    build_forward(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type kappa0,
+      real_type x1,
+      real_type y1,
+      real_type tol = 1e-12
+    ) {
       aabb_done = false;
       aabb_tree.clear();
       return CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, L );
@@ -455,10 +479,12 @@ namespace G2lib {
      |  \param s         vector of computed parameters
     \*/
     void
-    optimized_sample( real_type                offs,
-                      int_type                 npts,
-                      real_type                max_angle,
-                      std::vector<real_type> & s ) const;
+    optimized_sample(
+      real_type                offs,
+      int_type                 npts,
+      real_type                max_angle,
+      std::vector<real_type> & s
+    ) const;
 
     /*\
      |     _ _    _
@@ -478,26 +504,32 @@ namespace G2lib {
      |
     \*/
     real_type
-    closestPointBySample( real_type   ds,
-                          real_type   qx,
-                          real_type   qy,
-                          real_type & X,
-                          real_type & Y,
-                          real_type & S ) const;
+    closestPointBySample(
+      real_type   ds,
+      real_type   qx,
+      real_type   qy,
+      real_type & X,
+      real_type & Y,
+      real_type & S
+    ) const;
 
     real_type
-    distanceBySample( real_type   ds,
-                      real_type   qx,
-                      real_type   qy,
-                      real_type & S ) const {
+    distanceBySample(
+      real_type   ds,
+      real_type   qx,
+      real_type   qy,
+      real_type & S
+    ) const {
       real_type X, Y;
       return closestPointBySample( ds, qx, qy, X, Y, S );
     }
 
     real_type
-    distanceBySample( real_type ds,
-                      real_type qx,
-                      real_type qy ) const {
+    distanceBySample(
+      real_type ds,
+      real_type qx,
+      real_type qy
+    ) const {
       real_type X, Y, S;
       return closestPointBySample( ds, qx, qy, X, Y, S );
     }
@@ -512,9 +544,11 @@ namespace G2lib {
 
     //! get the triangle bounding box (if angle variation less that pi/2)
     bool
-    bbTriangle( real_type & xx0, real_type & yy0,
-                real_type & xx1, real_type & yy1,
-                real_type & xx2, real_type & yy2 ) const {
+    bbTriangle(
+      real_type & xx0, real_type & yy0,
+      real_type & xx1, real_type & yy1,
+      real_type & xx2, real_type & yy2
+    ) const {
       return CD.bbTriangle( L,
                             xx0, yy0,
                             xx1, yy1,
@@ -523,10 +557,12 @@ namespace G2lib {
 
     //! get the triangle bounding box (if angle variation less that pi/2)
     bool
-    bbTriangle( real_type offs,
-                real_type & xx0, real_type & yy0,
-                real_type & xx1, real_type & yy1,
-                real_type & xx2, real_type & yy2 ) const {
+    bbTriangle(
+      real_type offs,
+      real_type & xx0, real_type & yy0,
+      real_type & xx1, real_type & yy1,
+      real_type & xx2, real_type & yy2
+    ) const {
       return CD.bbTriangle( L, offs,
                             xx0, yy0,
                             xx1, yy1,
@@ -534,33 +570,37 @@ namespace G2lib {
     }
 
     bool
-    bbTriangle( Triangle2D & t ) const {
+    bbTriangle( Triangle2D & t, int_type icurve = 0 ) const {
       real_type x0, y0, x1, y1, x2, y2;
       bool ok = CD.bbTriangle( L, x0, y0, x1, y1, x2, y2 );
-      if ( ok ) t.build( x0, y0, x1, y1, x2, y2 );
+      if ( ok ) t.build( x0, y0, x1, y1, x2, y2, 0, 0, icurve );
       return ok;
     }
 
     bool
-    bbTriangle( real_type offs, Triangle2D & t ) const {
+    bbTriangle( real_type offs, Triangle2D & t, int_type icurve = 0 ) const {
       real_type x0, y0, x1, y1, x2, y2;
       bool ok = CD.bbTriangle( L, offs, x0, y0, x1, y1, x2, y2 );
-      if ( ok ) t.build( x0, y0, x1, y1, x2, y2 );
+      if ( ok ) t.build( x0, y0, x1, y1, x2, y2, 0, 0, icurve );
       return ok;
     }
 
     void
-    bbTriangles( real_type          offs,
-                 std::vector<T2D> & tvec,
-                 real_type          max_angle = m_pi/6, // 30 degree
-                 real_type          max_size  = 1e100,
-                 int_type           icurve    = 0 ) const;
+    bbTriangles(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const;
 
     void
-    bbTriangles( std::vector<T2D> & tvec,
-                 real_type          max_angle = m_pi/6, // 30 degree
-                 real_type          max_size  = 1e100,
-                 int_type           icurve    = 0 ) const {
+    bbTriangles(
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const {
       bbTriangles( 0, tvec, max_angle, max_size, icurve );
     }
 
@@ -568,20 +608,24 @@ namespace G2lib {
 
     virtual
     void
-    bbox( real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE {
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE {
       bbox( 0, xmin, ymin, xmax, ymax );
     }
 
     virtual
     void
-    bbox( real_type   offs,
-          real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE;
+    bbox(
+      real_type   offs,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -701,30 +745,38 @@ namespace G2lib {
 
     virtual
     void
-    tg( real_type   s,
-        real_type & tx,
-        real_type & ty ) const G2LIB_OVERRIDE
+    tg(
+      real_type   s,
+      real_type & tx,
+      real_type & ty
+    ) const G2LIB_OVERRIDE
     { CD.tg( s, tx, ty ); }
 
     virtual
     void
-    tg_D( real_type   s,
-          real_type & tx_D,
-          real_type & ty_D ) const G2LIB_OVERRIDE
+    tg_D(
+      real_type   s,
+      real_type & tx_D,
+      real_type & ty_D
+    ) const G2LIB_OVERRIDE
     { CD.tg_D( s, tx_D, ty_D ); }
 
     virtual
     void
-    tg_DD( real_type   s,
-           real_type & tx_DD,
-           real_type & ty_DD ) const G2LIB_OVERRIDE
+    tg_DD(
+      real_type   s,
+      real_type & tx_DD,
+      real_type & ty_DD
+    ) const G2LIB_OVERRIDE
     { CD.tg_DD( s, tx_DD, ty_DD ); }
 
     virtual
     void
-    tg_DDD( real_type   s,
-            real_type & tx_DDD,
-            real_type & ty_DDD ) const G2LIB_OVERRIDE
+    tg_DDD(
+      real_type   s,
+      real_type & tx_DDD,
+      real_type & ty_DDD
+    ) const G2LIB_OVERRIDE
     { CD.tg_DDD( s, tx_DDD, ty_DDD ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -771,11 +823,13 @@ namespace G2lib {
 
     virtual
     void
-    evaluate( real_type   s,
-              real_type & th,
-              real_type & k,
-              real_type & x,
-              real_type & y ) const G2LIB_OVERRIDE
+    evaluate(
+      real_type   s,
+      real_type & th,
+      real_type & k,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE
     { CD.evaluate( s, th, k, x, y ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -870,62 +924,78 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE
+    eval(
+      real_type   s,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE
     { CD.eval( s, x, y ); }
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE
+    eval_D(
+      real_type   s,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE
     { CD.eval_D( s, x_D, y_D ); }
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE
+    eval_DD(
+      real_type   s,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE
     { CD.eval_DD( s, x_DD, y_DD ); }
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE
+    eval_DDD(
+      real_type   s,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE
     { CD.eval_DDD( s, x_DDD, y_DDD ); }
 
     virtual
     void
-    eval( real_type   s,
-          real_type   offs,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE
+    eval(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE
     { CD.eval( s, offs, x, y ); }
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type   offs,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE
+    eval_D(
+      real_type   s,
+      real_type   offs,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE
     { CD.eval_D( s, offs, x_D, y_D ); }
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type   offs,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE
+    eval_DD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE
     { CD.eval_DD( s, offs, x_DD, y_DD ); }
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type   offs,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE
+    eval_DDD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE
     { CD.eval_DDD( s, offs, x_DDD, y_DDD ); }
 
     /*\
@@ -987,24 +1057,28 @@ namespace G2lib {
 
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type   offs,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -1018,9 +1092,11 @@ namespace G2lib {
     \*/
 
     void
-    build_AABBtree( real_type offs,
-                    real_type max_angle = m_pi/18, // 10 degree
-                    real_type max_size  = 1e100 ) const;
+    build_AABBtree(
+      real_type offs,
+      real_type max_angle = m_pi/18, // 10 degree
+      real_type max_size  = 1e100
+    ) const;
 
     // collision detection
     bool
@@ -1036,9 +1112,11 @@ namespace G2lib {
     collision( ClothoidCurve const & C ) const;
 
     bool
-    collision( real_type             offs,
-               ClothoidCurve const & C,
-               real_type             offs_C ) const;
+    collision(
+      real_type             offs,
+      ClothoidCurve const & C,
+      real_type             offs_C
+    ) const;
 
     /*\
      |   _       _                          _
@@ -1049,18 +1127,22 @@ namespace G2lib {
     \*/
 
     void
-    intersect( ClothoidCurve const & C,
-               IntersectList       & ilist,
-               bool                  swap_s_vals ) const {
+    intersect(
+      ClothoidCurve const & C,
+      IntersectList       & ilist,
+      bool                  swap_s_vals
+    ) const {
       intersect( 0, C, 0, ilist, swap_s_vals );
     }
 
     void
-    intersect( real_type               offs,
-               ClothoidCurve const   & C,
-               real_type               offs_C,
-               IntersectList         & ilist,
-               bool                    swap_s_vals ) const;
+    intersect(
+      real_type               offs,
+      ClothoidCurve const   & C,
+      real_type               offs_C,
+      IntersectList         & ilist,
+      bool                    swap_s_vals
+    ) const;
 
     void
     info( ostream_type & stream ) const G2LIB_OVERRIDE

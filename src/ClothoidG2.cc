@@ -117,9 +117,10 @@ namespace G2lib {
 
   void
   G2solve2arc::setTolerance( real_type tol ) {
-    G2LIB_ASSERT( tol > 0 && tol <= 0.1,
-                  "G2solve2arc::setTolerance, tolerance = " << tol <<
-                  " must be in (0,0.1]" );
+    G2LIB_ASSERT(
+      tol > 0 && tol <= 0.1,
+      "G2solve2arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
+    );
     tolerance = tol;
   }
 
@@ -127,9 +128,10 @@ namespace G2lib {
 
   void
   G2solve2arc::setMaxIter( int miter ) {
-    G2LIB_ASSERT( miter > 0 && miter <= 1000,
-                  "G2solve2arc::setMaxIter, maxIter = " << miter <<
-                  " must be in [1,1000]" );
+    G2LIB_ASSERT(
+      miter > 0 && miter <= 1000,
+      "G2solve2arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
+    );
     maxIter = miter;
   }
 
@@ -374,9 +376,10 @@ namespace G2lib {
 
   void
   G2solveCLC::setTolerance( real_type tol ) {
-    G2LIB_ASSERT( tol > 0 && tol <= 0.1,
-                  "G2solveCLC::setTolerance, tolerance = " << tol <<
-                  " must be in (0,0.1]" );
+    G2LIB_ASSERT(
+      tol > 0 && tol <= 0.1,
+      "G2solveCLC::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
+    );
     tolerance = tol;
   }
 
@@ -384,9 +387,10 @@ namespace G2lib {
 
   void
   G2solveCLC::setMaxIter( int miter ) {
-    G2LIB_ASSERT( miter > 0 && miter <= 1000,
-                  "G2solveCLC::setMaxIter, maxIter = " << miter <<
-                  " must be in [1,1000]" );
+    G2LIB_ASSERT(
+      miter > 0 && miter <= 1000,
+      "G2solveCLC::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
+    );
     maxIter = miter;
   }
 
@@ -477,9 +481,10 @@ namespace G2lib {
 
   void
   G2solve3arc::setTolerance( real_type tol ) {
-    G2LIB_ASSERT( tol > 0 && tol <= 0.1,
-                  "G2solve3arc::setTolerance, tolerance = " << tol <<
-                  " must be in (0,0.1]" );
+    G2LIB_ASSERT(
+      tol > 0 && tol <= 0.1,
+      "G2solve3arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
+    );
     tolerance = tol;
   }
 
@@ -487,9 +492,10 @@ namespace G2lib {
 
   void
   G2solve3arc::setMaxIter( int miter ) {
-    G2LIB_ASSERT( miter > 0 && miter <= 1000,
-                  "G2solve3arc::setMaxIter, maxIter = " << miter <<
-                  " must be in [1,1000]" );
+    G2LIB_ASSERT(
+      miter > 0 && miter <= 1000,
+      "G2solve3arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
+    );
     maxIter = miter;
   }
 
@@ -717,9 +723,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::evalFJ( real_type const vars[2],
-                       real_type       F[2],
-                       real_type       J[2][2]) const {
+  G2solve3arc::evalFJ(
+    real_type const vars[2],
+    real_type       F[2],
+    real_type       J[2][2]
+  ) const {
 
     real_type sM  = vars[0];
     real_type thM = vars[1];
@@ -1238,68 +1246,6 @@ namespace G2lib {
       default: break;
     }
     return N-2;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidSplineG2::guess(
-    real_type theta_guess[],
-    real_type theta_min[],
-    real_type theta_max[]
-  ) const {
-    //
-    // Compute guess angles
-    //
-    int_type ne  = npts-1;
-    int_type ne1 = npts-2;
-
-    vector<real_type> phi, rlen;
-    phi  . resize( unsigned(ne) );
-    rlen . resize( unsigned(ne) );
-
-    real_type dx = x[1]-x[0];
-    real_type dy = y[1]-y[0];
-    phi[0]  = atan2(dy,dx);
-    rlen[0] = 1/hypot(dy,dx);
-    for ( int_type j = 1; j < ne; ++j ) {
-      dx      = x[j+1]-x[j];
-      dy      = y[j+1]-y[j];
-      phi[j]  = atan2(dy,dx);
-      rlen[j] = 1/hypot(dy,dx);
-      real_type df = phi[j]-phi[j-1];
-      df -= round(df/m_2pi)*m_2pi;
-      phi[j] = phi[j-1]+df;
-    }
-
-    real_type const dangle = 0.99 * m_pi;
-
-    theta_guess[0] = phi[0];
-    theta_min[0]   = phi[0] - dangle;
-    theta_max[0]   = phi[0] + dangle;
-
-    theta_guess[ne] = phi[ne1];
-    theta_min[ne]   = phi[ne1] - dangle;
-    theta_max[ne]   = phi[ne1] + dangle;
-
-    real_type phi_L  = phi[0];
-    real_type rlen_L = rlen[0];
-    for ( int_type j = 1; j < ne; ++j ) {
-      real_type phi_R  = phi[j];
-      real_type rlen_R = rlen[j];
-      theta_guess[j] = (phi_L*rlen_L+phi_R*rlen_R)/(rlen_L+rlen_R);
-      if ( phi_R > phi_L ) {
-        theta_min[j] = phi_L;
-        theta_max[j] = phi_R;
-      } else {
-        theta_min[j] = phi_R;
-        theta_max[j] = phi_L;
-      }
-      theta_min[j] -= dangle;
-      theta_max[j] += dangle;
-      phi_L  = phi_R;
-      rlen_L = rlen_R;
-    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

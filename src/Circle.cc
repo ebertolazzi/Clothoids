@@ -77,6 +77,7 @@ namespace G2lib {
       break;
     case G2LIB_CLOTHOID:
     case G2LIB_BIARC:
+    case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
       G2LIB_ASSERT( false,
@@ -454,7 +455,8 @@ namespace G2lib {
   CircleArc::bbTriangles(
     vector<Triangle2D> & tvec,
     real_type            max_angle,
-    real_type            max_size
+    real_type            max_size,
+    int_type             icurve
   ) const {
     real_type dtheta = abs( min(L,max_size) * k);
     int_type  n      = 1;
@@ -478,7 +480,7 @@ namespace G2lib {
       real_type ny = xx2-xx0;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
-      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2) );
+      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2, 0, 0, icurve ) );
       xx0 = xx2;
       yy0 = yy2;
     }
@@ -491,7 +493,8 @@ namespace G2lib {
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
-    real_type            max_size
+    real_type            max_size,
+    int_type             icurve
   ) const {
     real_type scale  = 1-k*offs;
     real_type dtheta = abs( min(L,max_size/scale) * k );
@@ -501,9 +504,9 @@ namespace G2lib {
       dtheta /= n;
     }
     tvec.reserve( size_t(n) );
-    real_type ds    = L/n;
-    real_type ss    = ds;
-    real_type tg    = scale * tan(dtheta/2)/2;
+    real_type ds = L/n;
+    real_type ss = ds;
+    real_type tg = scale * tan(dtheta/2)/2;
     if ( k < 0 ) tg = -tg;
     real_type xx0, yy0;
     eval( 0, offs, xx0, yy0 );
@@ -516,7 +519,7 @@ namespace G2lib {
       real_type ny = xx2-xx0;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
-      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2) );
+      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2, 0, 0, icurve ) );
       xx0 = xx2;
       yy0 = yy2;
     }

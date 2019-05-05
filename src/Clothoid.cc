@@ -70,6 +70,7 @@ namespace G2lib {
       copy( *static_cast<ClothoidCurve const *>(&C) );
       break;
     case G2LIB_BIARC:
+    case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
       G2LIB_ASSERT( false,
@@ -161,13 +162,13 @@ namespace G2lib {
 
   void
   ClothoidCurve::bbTriangles_internal(
-    real_type     offs,
-    vector<T2D> & tvec,
-    real_type     s_begin,
-    real_type     s_end,
-    real_type     max_angle,
-    real_type     max_size,
-    int_type      icurve
+    real_type            offs,
+    vector<Triangle2D> & tvec,
+    real_type            s_begin,
+    real_type            s_end,
+    real_type            max_angle,
+    real_type            max_size,
+    int_type             icurve
   ) const {
 
     static real_type const one_degree = m_pi/180;
@@ -176,10 +177,12 @@ namespace G2lib {
     real_type thh = CD.theta(ss);
     real_type MX  = min( L, max_size );
     for ( int_type npts = 0; ss < s_end; ++npts ) {
-      G2LIB_ASSERT( npts < 1000000,
-                    "ClothoidCurve::bbTriangles_internal " <<
-                    "is generating too much triangles (>1000000)\n" <<
-                    "something is going wrong or parameters are not well set" );
+      G2LIB_ASSERT(
+        npts < 1000000,
+        "ClothoidCurve::bbTriangles_internal " <<
+        "is generating too much triangles (>1000000)\n" <<
+        "something is going wrong or parameters are not well set"
+      );
 
       // estimate angle variation and compute step accodingly
       real_type k   = CD.kappa( ss );
@@ -220,7 +223,7 @@ namespace G2lib {
 
       real_type x2 = x0 + alpha*tx0;
       real_type y2 = y0 + alpha*ty0;
-      T2D t( x0, y0, x2, y2, x1, y1, ss, sss, icurve );
+      Triangle2D t( x0, y0, x2, y2, x1, y1, ss, sss, icurve );
 
       tvec.push_back( t );
 
@@ -233,11 +236,11 @@ namespace G2lib {
 
   void
   ClothoidCurve::bbTriangles(
-    real_type     offs,
-    vector<T2D> & tvec,
-    real_type     max_angle,
-    real_type     max_size,
-    int_type      icurve
+    real_type            offs,
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    int_type             icurve
   ) const {
     if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
       bbTriangles_internal( offs, tvec, 0, L, max_angle, max_size, icurve );
@@ -265,11 +268,11 @@ namespace G2lib {
     real_type & xmax,
     real_type & ymax
   ) const {
-    vector<T2D> tvec;
+    vector<Triangle2D> tvec;
     bbTriangles( offs, tvec, m_pi/18, 1e100 );
     xmin = ymin = numeric_limits<real_type>::infinity();
     xmax = ymax = -xmin;
-    vector<T2D>::const_iterator it;
+    vector<Triangle2D>::const_iterator it;
     for ( it = tvec.begin(); it != tvec.end(); ++it ) {
       // - - - - - - - - - - - - - - - - - - - -
       if      ( it->x1() < xmin ) xmin = it->x1();
@@ -316,7 +319,7 @@ namespace G2lib {
 
     bbTriangles( offs, aabb_tri, max_angle, max_size );
     bboxes.reserve(aabb_tri.size());
-    vector<T2D>::const_iterator it;
+    vector<Triangle2D>::const_iterator it;
     int_type ipos = 0;
     for ( it = aabb_tri.begin(); it != aabb_tri.end(); ++it, ++ipos ) {
       real_type xmin, ymin, xmax, ymax;
@@ -401,10 +404,10 @@ namespace G2lib {
 
   bool
   ClothoidCurve::aabb_intersect(
-    T2D           const & T1,
+    Triangle2D    const & T1,
     real_type             offs,
     ClothoidCurve const * pC,
-    T2D           const & T2,
+    Triangle2D    const & T2,
     real_type             offs_C,
     real_type           & ss1,
     real_type           & ss2
@@ -481,8 +484,8 @@ namespace G2lib {
         size_t ipos1 = size_t(ip->first->Ipos());
         size_t ipos2 = size_t(ip->second->Ipos());
 
-        T2D const & T1 = aabb_tri[ipos1];
-        T2D const & T2 = C.aabb_tri[ipos2];
+        Triangle2D const & T1 = aabb_tri[ipos1];
+        Triangle2D const & T2 = C.aabb_tri[ipos2];
 
         real_type ss1, ss2;
         bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
@@ -495,12 +498,12 @@ namespace G2lib {
     } else {
       bbTriangles( offs, aabb_tri, m_pi/18, 1e100 );
       C.bbTriangles( offs_C, C.aabb_tri, m_pi/18, 1e100 );
-      for ( vector<T2D>::const_iterator i1 = aabb_tri.begin();
+      for ( vector<Triangle2D>::const_iterator i1 = aabb_tri.begin();
             i1 != aabb_tri.end(); ++i1 ) {
-        for ( vector<T2D>::const_iterator i2 = C.aabb_tri.begin();
+        for ( vector<Triangle2D>::const_iterator i2 = C.aabb_tri.begin();
               i2 != C.aabb_tri.end(); ++i2 ) {
-          T2D const & T1 = *i1;
-          T2D const & T2 = *i2;
+          Triangle2D const & T1 = *i1;
+          Triangle2D const & T2 = *i2;
 
           real_type ss1, ss2;
           bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
@@ -601,7 +604,7 @@ namespace G2lib {
                   "ClothoidCurve::closestPoint no candidate" );
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
       size_t ipos = size_t((*ic)->Ipos());
-      T2D const & T = aabb_tri[ipos];
+      Triangle2D const & T = aabb_tri[ipos];
       real_type dst = T.distMin( qx, qy );
       if ( dst < DST ) {
         // refine distance

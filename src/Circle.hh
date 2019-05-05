@@ -236,18 +236,29 @@ namespace G2lib {
     }
 
     bool
-    bbTriangle( Triangle2D & t ) const {
+    bbTriangle(
+      Triangle2D & t,
+      real_type    ss0    = 0,
+      real_type    ss1    = 0,
+      int_type     icurve = 0
+    ) const {
       real_type p0[2], p1[2], p2[2];
       bool ok = bbTriangle( p0, p1, p2 );
-      if ( ok ) t.build( p0, p1, p2 );
+      if ( ok ) t.build( p0, p1, p2, ss0, ss1, icurve );
       return ok;
     }
 
     bool
-    bbTriangle( real_type offs, Triangle2D & t ) const {
+    bbTriangle(
+      real_type    offs,
+      Triangle2D & t,
+      real_type    ss0    = 0,
+      real_type    ss1    = 0,
+      int_type     icurve = 0
+    ) const {
       real_type p0[2], p1[2], p2[2];
       bool ok = bbTriangle( offs, p0, p1, p2 );
-      if ( ok ) t.build( p0, p1, p2 );
+      if ( ok ) t.build( p0, p1, p2, ss0, ss1, icurve );
       return ok;
     }
 
@@ -255,7 +266,8 @@ namespace G2lib {
     bbTriangles(
       std::vector<Triangle2D> & tvec,
       real_type max_angle = m_pi/18,
-      real_type max_size  = 1e100
+      real_type max_size  = 1e100,
+      int_type  icurve    = 0
     ) const; // 10 degree
 
     void
@@ -263,7 +275,8 @@ namespace G2lib {
       real_type offs,
       std::vector<Triangle2D> & tvec,
       real_type max_angle = m_pi/18,
-      real_type max_size  = 1e100
+      real_type max_size  = 1e100,
+      int_type  icurve    = 0
     ) const; // 10 degree
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

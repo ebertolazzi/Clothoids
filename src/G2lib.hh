@@ -194,11 +194,13 @@ namespace G2lib {
 
   inline
   void
-  minmax3( real_type   a,
-           real_type   b,
-           real_type   c,
-           real_type & vmin,
-           real_type & vmax ) {
+  minmax3(
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & vmin,
+    real_type & vmax
+  ) {
     vmin = vmax = a;
     if ( b < vmin ) vmin = b;
     else            vmax = b;
@@ -209,14 +211,16 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  projectPointOnCircle( real_type x0,
-                        real_type y0,
-                        real_type c0, //!< cos(theta0)
-                        real_type s0, //!< sin(theta0)
-                        real_type k,
-                        real_type L,
-                        real_type qx,
-                        real_type qy );
+  projectPointOnCircle(
+    real_type x0,
+    real_type y0,
+    real_type c0, //!< cos(theta0)
+    real_type s0, //!< sin(theta0)
+    real_type k,
+    real_type L,
+    real_type qx,
+    real_type qy
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -227,19 +231,22 @@ namespace G2lib {
     real_type theta0,
     real_type k,
     real_type qx,
-    real_type qy );
+    real_type qy
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   inline
   bool
-  pointInsideCircle( real_type x0,
-                     real_type y0,
-                     real_type c0, //!< cos(theta0)
-                     real_type s0, //!< sin(theta0)
-                     real_type k,
-                     real_type qx,
-                     real_type qy ) {
+  pointInsideCircle(
+    real_type x0,
+    real_type y0,
+    real_type c0, //!< cos(theta0)
+    real_type s0, //!< sin(theta0)
+    real_type k,
+    real_type qx,
+    real_type qy
+  ) {
     real_type cx  = x0 - s0/k;
     real_type cy  = y0 + c0/k;
     real_type dst = hypot( qx - cx, qy - cy );
@@ -262,14 +269,16 @@ namespace G2lib {
    |
   \*/
   int_type
-  solveLinearQuadratic( real_type A,
-                        real_type B,
-                        real_type C,
-                        real_type a,
-                        real_type b,
-                        real_type c,
-                        real_type x[],
-                        real_type y[] );
+  solveLinearQuadratic(
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type x[],
+    real_type y[]
+  );
 
   /*!
    | Solve the nonlinear system
@@ -284,11 +293,13 @@ namespace G2lib {
    |
   \*/
   int_type
-  solveLinearQuadratic2( real_type A,
-                         real_type B,
-                         real_type C,
-                         real_type x[],
-                         real_type y[] );
+  solveLinearQuadratic2(
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type x[],
+    real_type y[]
+  );
 
   /*!
    | Intersect the parametric arc
@@ -316,16 +327,18 @@ namespace G2lib {
   \*/
 
   int_type
-  intersectCircleCircle( real_type x1,
-                         real_type y1,
-                         real_type theta1,
-                         real_type kappa1,
-                         real_type x2,
-                         real_type y2,
-                         real_type theta2,
-                         real_type kappa2,
-                         real_type s1[],
-                         real_type s2[] );
+  intersectCircleCircle(
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    real_type kappa1,
+    real_type x2,
+    real_type y2,
+    real_type theta2,
+    real_type kappa2,
+    real_type s1[],
+    real_type s2[]
+  );
 
   /*\
    |   ____        _           ____       ____
@@ -365,27 +378,34 @@ namespace G2lib {
   //  Algorithm from FileExchage geom2d adapated from Sedgewick's book.
   */
   int_type
-  isCounterClockwise( real_type const P1[2],
-                      real_type const P2[2],
-                      real_type const P3[2] );
+  isCounterClockwise(
+    real_type const P1[2],
+    real_type const P2[2],
+    real_type const P3[2]
+  );
+
   /*!
   //  return +1 = Inside
   //  return -1 = Outsize
   //  return  0 = on border
   */
   int_type
-  isPointInTriangle( real_type const pt[2],
-                     real_type const P1[2],
-                     real_type const P2[2],
-                     real_type const P3[2] );
+  isPointInTriangle(
+    real_type const pt[2],
+    real_type const P1[2],
+    real_type const P2[2],
+    real_type const P3[2]
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  updateInterval( int_type      & lastInterval,
-                  real_type       x,
-                  real_type const Xvec[],
-                  int_type        npts );
+  updateInterval(
+    int_type      & lastInterval,
+    real_type       x,
+    real_type const Xvec[],
+    int_type        npts
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /*\
@@ -401,6 +421,7 @@ namespace G2lib {
     G2LIB_POLYLINE,
     G2LIB_CIRCLE,
     G2LIB_BIARC,
+    G2LIB_BIARC_LIST,
     G2LIB_CLOTHOID,
     G2LIB_CLOTHOID_LIST
   } CurveType;
@@ -421,28 +442,33 @@ namespace G2lib {
   class BaseCurve;
 
   bool
-  collision( BaseCurve const & C1,
-             BaseCurve const & C2 );
+  collision( BaseCurve const & C1, BaseCurve const & C2 );
 
   bool
-  collision( BaseCurve const & C1,
-             real_type         offs_C1,
-             BaseCurve const & C2,
-             real_type         offs_C2 );
+  collision(
+    BaseCurve const & C1,
+    real_type         offs_C1,
+    BaseCurve const & C2,
+    real_type         offs_C2
+  );
 
   void
-  intersect( BaseCurve const & C1,
-             BaseCurve const & C2,
-             IntersectList   & ilist,
-             bool              swap_s_vals );
+  intersect(
+    BaseCurve const & C1,
+    BaseCurve const & C2,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  );
 
   void
-  intersect( BaseCurve const & C1,
-             real_type         offs_C1,
-             BaseCurve const & C2,
-             real_type         offs_C2,
-             IntersectList   & ilist,
-             bool              swap_s_vals );
+  intersect(
+    BaseCurve const & C1,
+    real_type         offs_C1,
+    BaseCurve const & C2,
+    real_type         offs_C2,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  );
 
   class BaseCurve {
 
@@ -485,18 +511,22 @@ namespace G2lib {
 
     virtual
     void
-    bbox( real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_PURE_VIRTUAL;
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     void
-    bbox( real_type   offs,
-          real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_PURE_VIRTUAL;
+    bbox(
+      real_type   offs,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_PURE_VIRTUAL;
 
     /*\
      |   ____             _          _______           _
@@ -656,36 +686,44 @@ namespace G2lib {
 
     virtual
     void
-    tg( real_type   s,
-        real_type & tg_x,
-        real_type & tg_y ) const {
+    tg(
+      real_type   s,
+      real_type & tg_x,
+      real_type & tg_y
+    ) const {
       tg_x = this->tx(s);
       tg_y = this->ty(s);
     }
 
     virtual
     void
-    tg_D( real_type   s,
-          real_type & tg_x_D,
-          real_type & tg_y_D ) const {
+    tg_D(
+      real_type   s,
+      real_type & tg_x_D,
+      real_type & tg_y_D
+    ) const {
       tg_x_D = this->tx_D(s);
       tg_y_D = this->ty_D(s);
     }
 
     virtual
     void
-    tg_DD( real_type   s,
-           real_type & tg_x_DD,
-           real_type & tg_y_DD ) const {
+    tg_DD(
+      real_type   s,
+      real_type & tg_x_DD,
+      real_type & tg_y_DD
+    ) const {
       tg_x_DD = this->tx_DD(s);
       tg_y_DD = this->ty_DD(s);
     }
 
     virtual
     void
-    tg_DDD( real_type   s,
-            real_type & tg_x_DDD,
-            real_type & tg_y_DDD ) const {
+    tg_DDD(
+      real_type   s,
+      real_type & tg_x_DDD,
+      real_type & tg_y_DDD
+    ) const {
       tg_x_DDD = this->tx_DDD(s);
       tg_y_DDD = this->ty_DDD(s);
     }
@@ -718,11 +756,13 @@ namespace G2lib {
 
     virtual
     void
-    evaluate( real_type   s,
-              real_type & th,
-              real_type & k,
-              real_type & x,
-              real_type & y ) const {
+    evaluate(
+      real_type   s,
+      real_type & th,
+      real_type & k,
+      real_type & x,
+      real_type & y
+    ) const {
       eval( s, x, y );
       th = theta( s );
       k  = theta_D( s );
@@ -732,12 +772,14 @@ namespace G2lib {
 
     virtual
     void
-    evaluate( real_type   s,
-              real_type   offs,
-              real_type & th,
-              real_type & k,
-              real_type & x,
-              real_type & y ) const {
+    evaluate(
+      real_type   s,
+      real_type   offs,
+      real_type & th,
+      real_type & k,
+      real_type & x,
+      real_type & y
+    ) const {
       eval( s, offs, x, y );
       th = theta( s );
       k  = theta_D( s );
@@ -782,27 +824,35 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const G2LIB_PURE_VIRTUAL;
+    eval(
+      real_type   s,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_PURE_VIRTUAL;
+    eval_D(
+      real_type   s,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_PURE_VIRTUAL;
+    eval_DD(
+      real_type   s,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_PURE_VIRTUAL;
+    eval_DDD(
+      real_type   s,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_PURE_VIRTUAL;
 
     /*\
      |         __  __          _
@@ -848,31 +898,39 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type   offs,
-          real_type & x,
-          real_type & y ) const;
+    eval(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const;
 
     virtual
     void
-    eval_D( real_type   s,
-            real_type   offs,
-            real_type & x_D,
-            real_type & y_D ) const;
+    eval_D(
+      real_type   s,
+      real_type   offs,
+      real_type & x_D,
+      real_type & y_D
+    ) const;
 
     virtual
     void
-    eval_DD( real_type   s,
-             real_type   offs,
-             real_type & x_DD,
-             real_type & y_DD ) const;
+    eval_DD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const;
 
     virtual
     void
-    eval_DDD( real_type   s,
-              real_type   offs,
-              real_type & x_DDD,
-              real_type & y_DDD ) const;
+    eval_DDD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const;
 
     /*\
      |  _                        __
@@ -919,24 +977,33 @@ namespace G2lib {
     { return G2lib::collision( *this, C ); }
 
     bool
-    collision( real_type         offs,
-               BaseCurve const & C,
-               real_type         offs_C ) const
-    { return G2lib::collision( *this, offs, C, offs_C ); }
+    collision(
+      real_type         offs,
+      BaseCurve const & C,
+      real_type         offs_C
+    ) const {
+      return G2lib::collision( *this, offs, C, offs_C );
+    }
 
     void
-    intersect( BaseCurve const & C,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const
-    { G2lib::intersect( *this, C, ilist, swap_s_vals ); }
+    intersect(
+      BaseCurve const & C,
+      IntersectList   & ilist,
+      bool              swap_s_vals
+    ) const {
+      G2lib::intersect( *this, C, ilist, swap_s_vals );
+    }
 
     void
-    intersect( real_type         offs,
-               BaseCurve const & C,
-               real_type         offs_C,
-               IntersectList   & ilist,
-               bool              swap_s_vals ) const
-    { G2lib::intersect( *this, offs, C, offs_C, ilist, swap_s_vals ); }
+    intersect(
+      real_type         offs,
+      BaseCurve const & C,
+      real_type         offs_C,
+      IntersectList   & ilist,
+      bool              swap_s_vals
+    ) const {
+      G2lib::intersect( *this, offs, C, offs_C, ilist, swap_s_vals );
+    }
 
     /*\
      |      _ _     _
@@ -960,13 +1027,15 @@ namespace G2lib {
     \*/
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_PURE_VIRTUAL;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_PURE_VIRTUAL;
 
     /*!
      | \param  qx  x-coordinate of the point
@@ -983,14 +1052,16 @@ namespace G2lib {
     \*/
     virtual
     int_type // true if projection is unique and orthogonal
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type   offs,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_PURE_VIRTUAL;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_PURE_VIRTUAL;
 
     virtual
     real_type
@@ -1002,9 +1073,11 @@ namespace G2lib {
 
     virtual
     real_type
-    distance( real_type qx,
-              real_type qy,
-              real_type offs ) const {
+    distance(
+      real_type qx,
+      real_type qy,
+      real_type offs
+    ) const {
       real_type x, y, s, t, dst;
       closestPoint( qx, qy, offs, x, y, s, t, dst );
       return dst;
@@ -1019,20 +1092,45 @@ namespace G2lib {
     \*/
 
     bool
-    findST( real_type   x,
-            real_type   y,
-            real_type & s,
-            real_type & t ) const {
+    findST(
+      real_type   x,
+      real_type   y,
+      real_type & s,
+      real_type & t
+    ) const {
       real_type X, Y, dst;
       int_type icode = closestPoint( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     virtual
     void
     info( ostream_type & stream ) const G2LIB_PURE_VIRTUAL;
 
   };
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |  __  ____   __  _          _____ _          _
+   |  \ \/ /\ \ / / | |_ ___   |_   _| |__   ___| |_ __ _
+   |   \  /  \ V /  | __/ _ \    | | | '_ \ / _ \ __/ _` |
+   |   /  \   | |   | || (_) |   | | | | | |  __/ || (_| |
+   |  /_/\_\  |_|    \__\___/    |_| |_| |_|\___|\__\__,_|
+  \*/
+
+  void
+  xy_to_guess_angle(
+    int_type        npts,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[],
+    real_type       theta_min[],
+    real_type       theta_max[],
+    real_type       omega[],
+    real_type       len[]
+  );
 
 }
 
