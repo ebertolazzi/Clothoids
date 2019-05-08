@@ -12,8 +12,6 @@
 function test_2_Omega
   addpath('../matlab');
 
-  tol = 1e-10;
-
   X = [2.9265642,2.6734362,2.5109322,1.9078122,1.1859282,1.9249962, ...
      2.8265562,0.00468420000000025,-2.826567,-1.9437558,-1.1859438, ...
      -1.9062558,-2.501565,-2.6734386,-2.9265642,-2.6187522,-1.1406318, ...
@@ -60,9 +58,6 @@ function test_2_Omega
   BL.plotNormal(0.25,0.25);
   title('Biarc List test');
   axis equal;
-  
-  size(theta_guess)
-  BL.numSegment()
 
 end
 

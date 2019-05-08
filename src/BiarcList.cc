@@ -271,6 +271,24 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  BiarcList::build_G1(
+    int_type        n,
+    real_type const x[],
+    real_type const y[]
+  ) {
+    size_t nn = size_t(n);
+    vector<real_type> theta( nn ), theta_min( nn ), theta_max( nn ), omega( nn ), len( nn );
+    G2lib::xy_to_guess_angle(
+      n, x, y,
+      &theta.front(), &theta_min.front(), &theta_max.front(),
+      &omega.front(), &len.front()
+    );
+    return this->build_G1( n, x, y, &theta.front() );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   Biarc const &
   BiarcList::get( int_type idx ) const {
     G2LIB_ASSERT(

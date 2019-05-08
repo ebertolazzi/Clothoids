@@ -182,15 +182,7 @@ namespace G2lib {
       int_type        n,
       real_type const x[],
       real_type const y[]
-    ) {
-      vector<real_type> theta(n), theta_min(n), theta_max(n), omega(n), len(n);
-      G2lib::xy_to_guess_angle(
-        n, x, y,
-        &theta.front(), &theta_min.front(), &theta_max.front(),
-        &omega.front(), &len.front()
-      );
-      return this->build_G1( n, x, y, &theta.front() );
-    }
+    );
 
     bool
     build_G1(

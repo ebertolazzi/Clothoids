@@ -1205,6 +1205,21 @@ namespace G2lib {
   \*/
 
   void
+  ClothoidSplineG2::guess(
+    real_type theta_guess[],
+    real_type theta_min[],
+    real_type theta_max[]
+  ) const {
+    size_t nn = size_t( npts );
+    vector<real_type> omega(nn), len(nn);
+    G2lib::xy_to_guess_angle(
+      this->npts, &this->x.front(), &this->y.front(),
+      theta_guess, theta_min, theta_max,
+      &omega.front(), &len.front()
+    );
+  }
+
+  void
   ClothoidSplineG2::build(
     real_type const xvec[],
     real_type const yvec[],

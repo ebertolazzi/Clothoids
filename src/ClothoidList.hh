@@ -1508,14 +1508,7 @@ namespace G2lib {
       real_type theta_guess[],
       real_type theta_min[],
       real_type theta_max[]
-    ) const {
-      vector<real_type> omega(npts), len(npts);
-      G2lib::xy_to_guess_angle(
-        this->npts, &this->x.front(), &this->y.front(),
-        theta_guess, theta_min, theta_max,
-        &omega.front(), &len.front()
-      );
-    }
+    ) const;
 
     bool
     objective( real_type const theta[], real_type & f ) const;
