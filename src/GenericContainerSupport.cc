@@ -112,7 +112,7 @@ namespace GenericContainerNamespace {
     //read a line
     std::string line;
 
-    this -> set_map();
+    this->set_map();
     GenericContainer & tmp = (*this)["headers"];
     vec_string_type & headers = tmp.set_vec_string();
 

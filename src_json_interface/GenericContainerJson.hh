@@ -35,21 +35,21 @@ namespace GenericContainerNamespace {
     gc_options is used to set some string formatting options.
     gc_options is expcted to contain the following entries:
 
-    gc_options[GC_JSON_IM_UNIT] -> string (default "i") :
+    gc_options[GC_JSON_IM_UNIT]->string (default "i") :
       character to use as imaginary unit for complex number representation
 
-    gc_options[GC_JSON_MAT_ORDER] -> GCJsonMatrixOrder (int_type expected) :
+    gc_options[GC_JSON_MAT_ORDER]->GCJsonMatrixOrder (int_type expected) :
       specifies the representation of matrices in the json.
       See description of the enum GCJsonMatrixOrder
 
-    gc_options[GC_JSON_PRETTY] -> bool (default false):
+    gc_options[GC_JSON_PRETTY]->bool (default false):
       if true the json string comes in prettified-human readable format.
 
-    gc_options[GC_JSON_INDENT_CHAR] -> string of length 1 (default ' '):
+    gc_options[GC_JSON_INDENT_CHAR]->string of length 1 (default ' '):
       indentation character to use for the prettified output.
       Allowed characters are: ' ', '\t', '\r', '\n'
 
-    gc_options[GC_JSON_INDENT_NUM] -> int (default 4):
+    gc_options[GC_JSON_INDENT_NUM]->int (default 4):
       number of indentation characters to use for the prettified output.
   \*/
   std::string

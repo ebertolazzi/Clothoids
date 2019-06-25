@@ -774,7 +774,7 @@ GenericContainerJsonHandler::String(
   transform ( stringa_lower.begin(),
               stringa_lower.end(),
               stringa_lower.begin(),
-              [] ( unsigned char c ) -> unsigned char
+              [] ( unsigned char c )->unsigned char
                    { return static_cast<unsigned char>(std::tolower( c )); } );
 
   if ( ( stringa_lower.length() != stringa.length() ) || ( stringa_lower.compare ( "null" ) != 0 ) ) {

@@ -748,6 +748,13 @@ namespace GenericContainerNamespace {
     { ck("get_pointer",GC_POINTER); return static_cast<T>(_data.p); }
     #endif
 
+    bool_type
+    get_map_bool( char const msg[] ) const {
+      bool_type ret = false;
+      if ( exists(msg) ) ret = (*this)(msg).get_bool();
+      return ret;
+    }
+
     GENERIC_CONTAINER_API_DLL
     bool_type & get_bool( char const msg[] = nullptr );
 
@@ -1073,53 +1080,53 @@ namespace GenericContainerNamespace {
 
     //! Assign a boolean to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( bool const & a ) { this -> set_bool(a); }
+    void set( bool const & a ) { this->set_bool(a); }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( uint_type const & a ) { this -> set_int(int_type(a)); }
+    void set( uint_type const & a ) { this->set_int(int_type(a)); }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( int_type const & a ) { this -> set_int(a); }
+    void set( int_type const & a ) { this->set_int(a); }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( ulong_type const & a ) { this -> set_long(long_type(a)); }
+    void set( ulong_type const & a ) { this->set_long(long_type(a)); }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( long_type const & a ) { this -> set_long(a); }
+    void set( long_type const & a ) { this->set_long(a); }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( float const & a ) { this -> set_real(real_type(a)); }
+    void set( float const & a ) { this->set_real(real_type(a)); }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( double const & a ) { this -> set_real(real_type(a)); }
+    void set( double const & a ) { this->set_real(real_type(a)); }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
     void set( std::complex<float> const & a )
-    { this -> set_complex(real_type(a.real()),real_type(a.imag())); }
+    { this->set_complex(real_type(a.real()),real_type(a.imag())); }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
     void set( std::complex<double> const & a )
-    { this -> set_complex(real_type(a.real()),real_type(a.imag())); }
+    { this->set_complex(real_type(a.real()),real_type(a.imag())); }
 
     //! Assign a string to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( char const a[] ) { this -> set_string(a); }
+    void set( char const a[] ) { this->set_string(a); }
 
     //! Assign a string to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( std::string const & a ) { this -> set_string(a); }
+    void set( std::string const & a ) { this->set_string(a); }
 
     //! Assign a pointer to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void set( pointer_type a ) { this -> set_pointer(a); }
+    void set( pointer_type a ) { this->set_pointer(a); }
 
     //@}
 
@@ -1130,47 +1137,47 @@ namespace GenericContainerNamespace {
     //! Assign a boolean to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( bool const & a )
-    { this -> set_bool(a); return * this; }
+    { this->set_bool(a); return * this; }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( uint_type const & a )
-    { this -> set_int(int_type(a)); return * this; }
+    { this->set_int(int_type(a)); return * this; }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( int_type const & a )
-    { this -> set_int(a); return * this; }
+    { this->set_int(a); return * this; }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( ulong_type const & a )
-    { this -> set_long(long_type(a)); return * this; }
+    { this->set_long(long_type(a)); return * this; }
 
     //! Assign an integer to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( long_type const & a )
-    { this -> set_long(a); return * this; }
+    { this->set_long(a); return * this; }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( float const & a )
-    { this -> set_real(real_type(a)); return * this; }
+    { this->set_real(real_type(a)); return * this; }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( double const & a )
-    { this -> set_real(real_type(a)); return * this; }
+    { this->set_real(real_type(a)); return * this; }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( std::complex<float> const & a )
-    { this -> set_complex(real_type(a.real()),real_type(a.imag())); return * this; }
+    { this->set_complex(real_type(a.real()),real_type(a.imag())); return * this; }
 
     //! Assign a floating point number to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( std::complex<double> const & a )
-    { this -> set_complex(real_type(a.real()),real_type(a.imag())); return * this; }
+    { this->set_complex(real_type(a.real()),real_type(a.imag())); return * this; }
 
     //! Assign a `vec_bool_type` to the generic container.
     GENERIC_CONTAINER_API_DLL
@@ -1215,22 +1222,22 @@ namespace GenericContainerNamespace {
     //! Assign a string to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( char const a[] )
-    { this -> set_string(a); return * this; }
+    { this->set_string(a); return * this; }
 
     //! Assign a string to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( std::string const & a )
-    { this -> set_string(a); return * this; }
+    { this->set_string(a); return * this; }
 
     //! Assign a pointer to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer & operator = ( pointer_type a )
-    { this -> set_pointer(a); return * this; }
+    { this->set_pointer(a); return * this; }
 
     //! Assign a generic container `a` to the generic container.
     GENERIC_CONTAINER_API_DLL
     GenericContainer const & operator = ( GenericContainer const & a )
-    { this -> load( a ); return * this; }
+    { this->load( a ); return * this; }
 
     //! Copy a generic container `a` to the generic container.
     GENERIC_CONTAINER_API_DLL
@@ -1562,7 +1569,7 @@ namespace GenericContainerNamespace {
     int
     check( int data_type ) const {
       if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
-      if ( data_type == head.back() -> get_type() ) {
+      if ( data_type == head.back()->get_type() ) {
         if ( head.back() == nullptr ) return GENERIC_CONTAINER_NO_DATA;
         return GENERIC_CONTAINER_OK;
       } else {
@@ -1573,8 +1580,8 @@ namespace GenericContainerNamespace {
     int
     check_no_data( int data_type ) const {
       if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
-      if ( GC_NOTYPE == head.back() -> get_type() ||
-           data_type == head.back() -> get_type() ) return GENERIC_CONTAINER_OK;
+      if ( GC_NOTYPE == head.back()->get_type() ||
+           data_type == head.back()->get_type() ) return GENERIC_CONTAINER_OK;
       return GENERIC_CONTAINER_NOT_EMPTY;
     }
 
@@ -1624,7 +1631,7 @@ namespace GenericContainerNamespace {
     char const *
     next_map_key() {
       if ( map_iterator != ptr_map->end() )
-        return map_iterator++ -> first.c_str();
+        return map_iterator++->first.c_str();
       else
         return nullptr;
     }
