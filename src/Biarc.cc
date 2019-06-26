@@ -305,43 +305,6 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-/*
-  real_type
-  Biarc::kappa( real_type s ) const {
-    real_type L0 = C0.length();
-    if ( s < L0 ) return C0.k;
-    else          return C1.k;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::kappa_D( real_type ) const
-  { return 0; }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::kappa_DD( real_type ) const
-  { return 0; }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::kappa_DDD( real_type ) const
-  { return 0; }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Biarc::tx( real_type s ) const {
-    real_type L0 = C0.length();
-    if ( s < L0 ) return C0.tx(s);
-    else          return C1.tx(s-L0);
-  }
-*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Biarc::tx( real_type s ) const {
@@ -358,7 +321,6 @@ namespace G2lib {
     if ( s < L0 ) return C0.tx_D(s);
     else          return C1.tx_D(s-L0);
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -468,7 +430,6 @@ namespace G2lib {
     else          return C1.Y_D(s-L0);
   }
 
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
@@ -505,7 +466,6 @@ namespace G2lib {
     else          return C1.X_D(s-L0,offs);
   }
 
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
@@ -541,7 +501,6 @@ namespace G2lib {
     if ( s < L0 ) return C0.Y_D(s,offs);
     else          return C1.Y_D(s-L0,offs);
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

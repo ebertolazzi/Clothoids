@@ -1127,8 +1127,8 @@ namespace G2lib {
   ClothoidList::trim( real_type s_begin, real_type s_end ) {
     G2LIB_ASSERT(
       s_begin >= s0.front() && s_end <= s0.back() && s_end > s_begin,
-      "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" <<
-      s_end << ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
+      "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" << s_end <<
+      ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
     );
 
     findAtS( s_begin ); size_t i_begin = size_t(last_idx);

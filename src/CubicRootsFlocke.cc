@@ -30,14 +30,16 @@ namespace G2lib {
   static
   inline
   void
-  scaleCubicMonicPolynomial( real_type   A,
-                             real_type   B,
-                             real_type   C,
-                             real_type & AS,
-                             real_type & BS,
-                             real_type & CS,
-                             int_type  & i_case,
-                             real_type & scale ) {
+  scaleCubicMonicPolynomial(
+    real_type   A,
+    real_type   B,
+    real_type   C,
+    real_type & AS,
+    real_type & BS,
+    real_type & CS,
+    int_type  & i_case,
+    real_type & scale
+  ) {
 
     real_type a = abs(A);
     real_type b = sqrt(abs(B));
@@ -78,13 +80,15 @@ namespace G2lib {
   // a3*x^3 + a2*x^2 + a1*x + a0 = (x-r)*(a3*x^2+b1*x+b0)
   static
   void
-  deflateCubicPolynomial( real_type   a3,
-                          real_type   a2,
-                          real_type   a1,
-                          real_type   a0,
-                          real_type   r,
-                          real_type & b1,
-                          real_type & b0 ) {
+  deflateCubicPolynomial(
+    real_type   a3,
+    real_type   a2,
+    real_type   a1,
+    real_type   a0,
+    real_type   r,
+    real_type & b1,
+    real_type & b0
+  ) {
     int_type  i_cross  = 0;
     real_type r2       = r*r;
     real_type v_cross  = abs(a0);
@@ -106,22 +110,26 @@ namespace G2lib {
   static
   inline
   real_type
-  evalMonicCubic( real_type x,
-                  real_type a,
-                  real_type b,
-                  real_type c ) {
+  evalMonicCubic(
+    real_type x,
+    real_type a,
+    real_type b,
+    real_type c
+  ) {
     return ((x+a)*x+b)*x+c;
   }
 
   static
   inline
   void
-  evalMonicCubic( real_type   x,
-                  real_type   a,
-                  real_type   b,
-                  real_type   c,
-                  real_type & p,
-                  real_type & dp ) {
+  evalMonicCubic(
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & p,
+    real_type & dp
+  ) {
     p  = x + a;
     dp = x + p;
     p  = p  * x + b;
@@ -133,10 +141,12 @@ namespace G2lib {
   // Translate to C from Polynomial234RootSolvers
   static
   int_type
-  zeroCubicByNewtonBisection( real_type const a,
-                              real_type const b,
-                              real_type const c,
-                              real_type     & x ) {
+  zeroCubicByNewtonBisection(
+    real_type const a,
+    real_type const b,
+    real_type const c,
+    real_type     & x
+  ) {
 
     real_type p, dp;
     evalMonicCubic( x, a, b, c, p, dp );
@@ -189,13 +199,15 @@ namespace G2lib {
    *  the product of the zeros c/a.
   \*/
   void
-  solveQuadratic( real_type   a,
-                  real_type   b,
-                  real_type   c,
-                  real_type & r1,
-                  real_type & r2,
-                  int_type  & nr,
-                  int_type  & nc ) {
+  solveQuadratic(
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & r1,
+    real_type & r2,
+    int_type  & nr,
+    int_type  & nc
+  ) {
     r1 = r2 = 0;
     nr = nc = 0;
     if ( isZero(a) ) { // less than two roots b*z + c = 0
@@ -359,15 +371,17 @@ namespace G2lib {
   \*/
 
   int_type
-  solveCubic( real_type   A,
-              real_type   B,
-              real_type   C,
-              real_type   D,
-              real_type & r1,
-              real_type & r2,
-              real_type & r3,
-              int_type  & nr,
-              int_type  & nc ) {
+  solveCubic(
+    real_type   A,
+    real_type   B,
+    real_type   C,
+    real_type   D,
+    real_type & r1,
+    real_type & r2,
+    real_type & r3,
+    int_type  & nr,
+    int_type  & nc
+  ) {
 
     // special cases
     if ( isZero(A) ) {

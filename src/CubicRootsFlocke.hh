@@ -39,13 +39,15 @@ namespace G2lib {
    *  the product of the zeros c/a.
   \*/
   void
-  solveQuadratic( real_type   a,
-                  real_type   b,
-                  real_type   c,
-                  real_type & r1,
-                  real_type & r2,
-                  int_type  & nr,
-                  int_type  & nc );
+  solveQuadratic(
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & r1,
+    real_type & r2,
+    int_type  & nr,
+    int_type  & nc
+  );
 
   /*\
   ... Calculate the zeros of the cubic A*z^3 + B*z^2 + C*z + D.
@@ -58,15 +60,17 @@ namespace G2lib {
   \*/
 
   int_type
-  solveCubic( real_type   A,
-              real_type   B,
-              real_type   C,
-              real_type   D,
-              real_type & r1,
-              real_type & r2,
-              real_type & r3,
-              int_type  & nr,
-              int_type  & nc );
+  solveCubic(
+    real_type   A,
+    real_type   B,
+    real_type   C,
+    real_type   D,
+    real_type & r1,
+    real_type & r2,
+    real_type & r3,
+    int_type  & nr,
+    int_type  & nc
+  );
 
 }
 
