@@ -42,7 +42,9 @@ S1.copy(S);
 
 fmt3 = {'Color','black','LineWidth',3};
 fmt4 = {'Color','green','LineWidth',3};
-S1.trim( 0.01*len, 0.9*len );
+s0 = 0.1*len;
+s1 = 0.9*len;
+S1.trim( s0, s1 );
 S1.plot( 100, fmt3, fmt4);
 
 axis equal
@@ -56,3 +58,12 @@ subplot(3,1,3);
 S.plotCurvature( 100, fmt1, fmt2);
 hold on;
 S1.plotCurvature( 100, fmt3, fmt4);
+
+ds = 0.234;
+
+[x1,y1,theta1,kappa1] = S.evaluate( s0+ds );
+fprintf('x = %g y = %g theta = %g kappa = %g\n', x1, y1, theta1, kappa1 );
+[x2,y2,theta2,kappa2] = S1.evaluate( 0+ds );
+fprintf('x = %g y = %g theta = %g kappa = %g\n', x2, y2, theta2, kappa2 );
+
+fprintf('dx = %g dy = %g dtheta = %g dkappa = %g\n', x1-x2, y1-y2, theta1-theta2, kappa1-kappa2 );
