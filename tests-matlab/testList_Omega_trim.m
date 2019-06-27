@@ -60,10 +60,28 @@ hold on;
 S1.plotCurvature( 100, fmt3, fmt4);
 
 ds = 0.234;
+ss = [0,5];
 
-[x1,y1,theta1,kappa1] = S.evaluate( s0+ds );
-fprintf('x = %g y = %g theta = %g kappa = %g\n', x1, y1, theta1, kappa1 );
-[x2,y2,theta2,kappa2] = S1.evaluate( 0+ds );
-fprintf('x = %g y = %g theta = %g kappa = %g\n', x2, y2, theta2, kappa2 );
+[x1,y1,theta1,kappa1] = S.evaluate( s0+ds+ss );
+[x2,y2,theta2,kappa2] = S1.evaluate( 0+ds+ss );
 
-fprintf('dx = %g dy = %g dtheta = %g dkappa = %g\n', x1-x2, y1-y2, theta1-theta2, kappa1-kappa2 );
+length(x1)
+length(x2)
+
+disp('-----------');
+for k=1:length(ss)
+  fprintf('x = %g y = %g theta = %g kappa = %g\n', x1(k), y1(k), theta1(k), kappa1(k) );
+  fprintf('x = %g y = %g theta = %g kappa = %g\n', x2(k), y2(k), theta2(k), kappa2(k) );
+  fprintf('dx = %g dy = %g dtheta = %g dkappa = %g\n', x1(k)-x2(k), y1(k)-y2(k), theta1(k)-theta2(k), kappa1(k)-kappa2(k) );
+end
+
+disp('-----------');
+
+ss = [0,1,2,3,4,5];
+for k=1:length(ss)
+  [x1,y1,theta1,kappa1] = S.evaluate( s0+ds+ss(k) );
+  [x2,y2,theta2,kappa2] = S1.evaluate( 0+ds+ss(k) );
+  fprintf('x = %g y = %g theta = %g kappa = %g\n', x1, y1, theta1, kappa1 );
+  fprintf('x = %g y = %g theta = %g kappa = %g\n', x2, y2, theta2, kappa2 );
+  fprintf('dx = %g dy = %g dtheta = %g dkappa = %g\n', x1-x2, y1-y2, theta1-theta2, kappa1-kappa2 );
+end

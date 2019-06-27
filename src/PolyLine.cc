@@ -343,7 +343,7 @@ namespace G2lib {
     vector<LineSegment>::iterator ic = polylineList.begin();
     s0[0] = 0;
     size_t k = 0;
-    for ( ++ic; ic != polylineList.end(); ++ic, ++k )
+    for (; ic != polylineList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
     isegment = 0;
   }

@@ -1146,7 +1146,7 @@ namespace G2lib {
     s0.resize( clotoidList.size() + 1 );
     s0[0] = 0;
     size_t k = 0;
-    for ( ++ic; ic != clotoidList.end(); ++ic, ++k )
+    for (; ic != clotoidList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
     last_idx = 0;
   }
