@@ -38,9 +38,11 @@ namespace GenericContainerNamespace {
   // Original code by Francesco Biral (francesco.biral@unitn.it)
   static
   void
-  tokenizeString( std::string const & str,
-                  vec_string_type   & tokens,
-                  std::string const & delimiters ) {
+  tokenizeString(
+    std::string const & str,
+    vec_string_type   & tokens,
+    std::string const & delimiters
+  ) {
 
     tokens.clear();
 
@@ -73,9 +75,11 @@ namespace GenericContainerNamespace {
 
   static
   unsigned
-  getLineAndSkipComments( std::istream      & stream,
-                          std::string       & line,
-                          std::string const & commentchars ) {
+  getLineAndSkipComments(
+    std::istream      & stream,
+    std::string       & line,
+    std::string const & commentchars
+  ) {
     unsigned nl = 0;
     do {
       if ( stream.fail() ) return 0;
@@ -88,12 +92,18 @@ namespace GenericContainerNamespace {
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)
   GenericContainer const &
-  GenericContainer::writeFormattedData( ostream_type & stream,
-                                        char const delimiter ) const {
-    GC_ASSERT( exists("headers"),
-               "writeFormattedData, missing field `headers` in container");
-    GC_ASSERT( exists("data"),
-               "writeFormattedData, missing field `data` in container");
+  GenericContainer::writeFormattedData(
+    ostream_type & stream,
+    char const     delimiter
+  ) const {
+    GC_ASSERT(
+      exists("headers"),
+      "writeFormattedData, missing field `headers` in container"
+    );
+    GC_ASSERT(
+      exists("data"),
+      "writeFormattedData, missing field `data` in container"
+    );
     GenericContainer const & data    = (*this)("data");
     vec_string_type  const & headers = (*this)("headers").get_vec_string(" writeFormattedData, `header` field must be `vec_string_type`");
     if ( (*this)("data").get_type() == GC_MAT_REAL )
@@ -106,9 +116,11 @@ namespace GenericContainerNamespace {
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)
   GenericContainer &
-  GenericContainer::readFormattedData( std::istream & stream,
-                                       char const commentChars[],
-                                       char const delimiters[] ) {
+  GenericContainer::readFormattedData(
+    std::istream & stream,
+    char const     commentChars[],
+    char const     delimiters[]
+  ) {
     //read a line
     std::string line;
 
@@ -134,9 +146,11 @@ namespace GenericContainerNamespace {
       tokenizeString( line, tokens, delimiters );
       if ( tokens.size() == 0 ) break; // riga vuota!
 
-      GC_ASSERT( unsigned(tokens.size()) == ncol,
-                 "readFormattedDataFile, in reading line: " << nline <<
-                 " expected " << ncol << " found: " << tokens.size() );
+      GC_ASSERT(
+        unsigned(tokens.size()) == ncol,
+        "readFormattedDataFile, in reading line: " << nline <<
+        " expected " << ncol << " found: " << tokens.size()
+      );
 
       // store data in row vector
       for ( unsigned icol = 0; icol < ncol; ++icol )

@@ -1481,17 +1481,24 @@ namespace GenericContainerNamespace {
     \*/
     GENERIC_CONTAINER_API_DLL
     GenericContainer &
-    readFormattedData( std::istream & stream,
-                       char const commentChars[] = "#%",
-                       char const delimiters[] = " \t" );
+    readFormattedData(
+      std::istream & stream,
+      char const commentChars[] = "#%",
+      char const delimiters[] = " \t"
+    );
 
     GENERIC_CONTAINER_API_DLL
     GenericContainer &
-    readFormattedData( char const fname[],
-                       char const commentChars[] = "#%",
-                       char const delimiters[] = " \t" );
+    readFormattedData(
+      char const fname[],
+      char const commentChars[] = "#%",
+      char const delimiters[] = " \t"
+    );
 
-    GENERIC_CONTAINER_API_DLL static void exception( char const msg[] ) GC_NO_RETURN;
+    GENERIC_CONTAINER_API_DLL
+    static
+    void
+    exception( char const msg[] ) GC_NO_RETURN;
 
   };
 
@@ -1499,29 +1506,37 @@ namespace GenericContainerNamespace {
   // support functions
   GENERIC_CONTAINER_API_DLL
   void
-  writeTable( vec_string_type const & headers,
-              vector_type     const & data,
-              ostream_type          & stream,
-              char const delimiter = '\t' );
+  writeTable(
+    vec_string_type const & headers,
+    vector_type     const & data,
+    ostream_type          & stream,
+    char const delimiter = '\t'
+  );
 
   GENERIC_CONTAINER_API_DLL
   void
-  writeTable( vec_string_type const & headers,
-              mat_real_type   const & data,
-              ostream_type          & stream,
-              char const delimiter = '\t' );
+  writeTable(
+    vec_string_type const & headers,
+    mat_real_type   const & data,
+    ostream_type          & stream,
+    char const delimiter = '\t'
+  );
 
   GENERIC_CONTAINER_API_DLL
   void
-  writeTableFormatted( vec_string_type const & headers,
-                       vector_type     const & data,
-                       ostream_type          & stream );
+  writeTableFormatted(
+    vec_string_type const & headers,
+    vector_type     const & data,
+    ostream_type          & stream
+  );
 
   GENERIC_CONTAINER_API_DLL
   void
-  writeTableFormatted( vec_string_type const & headers,
-                       mat_real_type   const & data,
-                       ostream_type          & stream );
+  writeTableFormatted(
+    vec_string_type const & headers,
+    mat_real_type   const & data,
+    ostream_type          & stream
+  );
 
   // -------------------------------------------------------
   class GenericContainerExplorer {
@@ -1547,19 +1562,27 @@ namespace GenericContainerNamespace {
 
     GenericContainer *
     top() {
-      GC_ASSERT( head.size() > 0,
-                 "GenericContainerExplorer::top() empty stack!" );
-      GC_ASSERT( head.back() != nullptr,
-                 "GenericContainerExplorer::top() bad top pointer!" );
+      GC_ASSERT(
+        head.size() > 0,
+        "GenericContainerExplorer::top() empty stack!"
+      );
+      GC_ASSERT(
+        head.back() != nullptr,
+        "GenericContainerExplorer::top() bad top pointer!"
+      );
       return head.back();
     }
 
     GenericContainer const *
     top() const {
-      GC_ASSERT( head.size() > 0,
-                 "GenericContainerExplorer::top() empty stack!" );
-      GC_ASSERT( head.back() != nullptr,
-                 "GenericContainerExplorer::top() bad top pointer!" );
+      GC_ASSERT(
+        head.size() > 0,
+        "GenericContainerExplorer::top() empty stack!"
+      );
+      GC_ASSERT(
+        head.back() != nullptr,
+        "GenericContainerExplorer::top() bad top pointer!"
+      );
       return head.back();
     }
 

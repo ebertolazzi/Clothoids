@@ -73,12 +73,14 @@ namespace GenericContainerNamespace {
   );
 
   void
-  real_to_stream ( real_type number, ostream_type & out );
+  real_to_stream( real_type number, ostream_type & out );
 
   void
-  complex_to_stream ( complex_type const & number,
-                      ostream_type       & out,
-                      std::string  const & im_unit );
+  complex_to_stream(
+    complex_type const & number,
+    ostream_type       & out,
+    std::string  const & im_unit
+  );
 
 }
 

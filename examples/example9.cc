@@ -89,10 +89,11 @@ gc_set( GenericContainer & gc ) {
 int
 main() {
 
-  cout << "\n\n\n"
-       << "***********************\n"
-       << "      example N.9      \n"
-       << "***********************\n\n";
+  cout
+    << "\n\n\n"
+    << "***********************\n"
+    << "      example N.9      \n"
+    << "***********************\n\n";
 
   try {
     GenericContainer gc;

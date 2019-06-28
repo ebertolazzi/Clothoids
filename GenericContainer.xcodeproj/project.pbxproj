@@ -544,8 +544,8 @@
 			isa = PBXGroup;
 			children = (
 				D9382DF51FBAFE93009C9A87 /* GenericContainerJson.hh */,
-				D9382DF61FBAFE93009C9A87 /* GenericContainerJsonHandler.cc */,
 				D9382DF71FBAFE93009C9A87 /* GenericContainerJsonHandler.hh */,
+				D9382DF61FBAFE93009C9A87 /* GenericContainerJsonHandler.cc */,
 				D9382DF81FBAFE93009C9A87 /* GenericContainerJson.cc */,
 			);
 			path = src_json_interface;

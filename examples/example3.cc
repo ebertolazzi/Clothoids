@@ -36,10 +36,11 @@ using namespace GC;
 int
 main() {
 
-  cout << "\n\n\n"
-       << "***********************\n"
-       << "      example N.3      \n"
-       << "***********************\n\n";
+  cout
+    << "\n\n\n"
+    << "***********************\n"
+    << "      example N.3      \n"
+    << "***********************\n\n";
 
   // Using complex data
   

@@ -6,9 +6,6 @@
 //  Copyright © 2017 Nicola Dal Bianco. All rights reserved.
 //
 
-
-
-
 #include "GenericContainerJsonHandler.hh"
 #include <iostream>
 #include <iomanip>
@@ -50,7 +47,7 @@ using namespace std;
   Due to the etherogeneus nature of Json, some 'awful' C-like functions
   are required for parsing: these functions are written below.
   After such functions, the implementation of the GenericContainerJsonHandler class follows.
-*/
+\*/
 
 static
 inline
@@ -315,8 +312,10 @@ convertGenericVectorToBoolVector ( GenericContainer & root ) {
 
 static
 void
-convertGenericVectorToStringVector( GenericContainer & root,
-                                    string     const & im_unit ) {
+convertGenericVectorToStringVector(
+  GenericContainer & root,
+  string     const & im_unit
+) {
   vector<string> new_vec;
 
   for ( GenericContainer const & gc : root.get_vector() ) {
@@ -345,7 +344,7 @@ convertGenericVectorToStringVector( GenericContainer & root,
 
 static
 void
-convertGenericVectorToIntVector ( GenericContainer & root ) {
+convertGenericVectorToIntVector( GenericContainer & root ) {
   vector<int_type> new_vec;
   for ( GenericContainer const & gc : root.get_vector() ) {
     new_vec.push_back ( gc.get_int() );
@@ -355,7 +354,7 @@ convertGenericVectorToIntVector ( GenericContainer & root ) {
 
 static
 void
-convertGenericVectorToLongVector ( GenericContainer & root ) {
+convertGenericVectorToLongVector( GenericContainer & root ) {
   vector<long_type> new_vec;
   for ( GenericContainer & gc : root.get_vector() ) {
     if ( gc.get_type() != GC_LONG ) {
@@ -396,8 +395,10 @@ convertGenericVectorToComplexVector( GenericContainer & root ) {
 
 static
 void
-convertGenericVectorToIntMat( GenericContainer & root,
-                              GCJsonMatrixOrder  order ) {
+convertGenericVectorToIntMat(
+  GenericContainer & root,
+  GCJsonMatrixOrder  order
+) {
 
   if ( root.get_vector().size() == 0 ) return;
 
@@ -433,8 +434,10 @@ convertGenericVectorToIntMat( GenericContainer & root,
 
 static
 void
-convertGenericVectorToLongMat( GenericContainer & root,
-                               GCJsonMatrixOrder  order ) {
+convertGenericVectorToLongMat(
+  GenericContainer & root,
+  GCJsonMatrixOrder  order
+) {
 
   if ( root.get_vector().size() == 0 ) return;
 
@@ -498,8 +501,10 @@ convertGenericVectorToLongMat( GenericContainer & root,
 
 static
 void
-convertGenericVectorToRealMat( GenericContainer & root,
-                               GCJsonMatrixOrder  order ) {
+convertGenericVectorToRealMat(
+  GenericContainer & root,
+  GCJsonMatrixOrder  order
+) {
 
   if ( root.get_vector().size() == 0 ) return;
 
@@ -579,8 +584,10 @@ convertGenericVectorToRealMat( GenericContainer & root,
 
 static
 void
-convertGenericVectorToComplexMat( GenericContainer & root,
-                                  GCJsonMatrixOrder  order ) {
+convertGenericVectorToComplexMat(
+  GenericContainer & root,
+  GCJsonMatrixOrder  order
+) {
 
   if ( root.get_vector().size() == 0 ) return;
 
@@ -830,9 +837,9 @@ bool
 GenericContainerJsonHandler::StartArray() {
   ASSERT_STACK_SIZE
   getCurrentGCPointer()->set_vector();
-  setCurrentGCPointerArrayType ( true );
+  setCurrentGCPointerArrayType( true );
   vector_type & vec = getCurrentGCPointer()->get_vector();
-  vec.push_back ( GenericContainer() );
+  vec.push_back( GenericContainer() );
   _gc_stack.push_back ( stack_entry ( & ( vec.back() ), false ) );
   return true;
 }
@@ -881,35 +888,35 @@ GenericContainerJsonHandler::finalizeArrayProcess() {
   if ( minimum_common_type == GC_NOTYPE ) return;
 
   if ( minimum_common_type == GC_BOOL ) {
-    convertGenericVectorToBoolVector ( *getCurrentGCPointer() );
+    convertGenericVectorToBoolVector( *getCurrentGCPointer() );
     return;
   } else if ( minimum_common_type == GC_STRING ) {
-    convertGenericVectorToStringVector ( *getCurrentGCPointer(), _im_unit );
+    convertGenericVectorToStringVector( *getCurrentGCPointer(), _im_unit );
     return;
   } else if ( minimum_common_type == GC_INTEGER ) {
-    convertGenericVectorToIntVector ( *getCurrentGCPointer() );
+    convertGenericVectorToIntVector( *getCurrentGCPointer() );
     return;
   } else if ( minimum_common_type == GC_LONG ) {
-    convertGenericVectorToLongVector ( *getCurrentGCPointer() );
+    convertGenericVectorToLongVector( *getCurrentGCPointer() );
     return;
   } else if ( minimum_common_type == GC_REAL ) {
-    convertGenericVectorToRealVector ( *getCurrentGCPointer() );
+    convertGenericVectorToRealVector( *getCurrentGCPointer() );
     return;
   } else if ( minimum_common_type == GC_COMPLEX ) {
-    convertGenericVectorToComplexVector ( *getCurrentGCPointer() );
+    convertGenericVectorToComplexVector( *getCurrentGCPointer() );
     return;
   }
 
   if ( _mat_order == GCJsonMatrixOrder::none ) return;
 
   if ( minimum_common_type == GC_VEC_INTEGER ) {
-    convertGenericVectorToIntMat ( *getCurrentGCPointer(), _mat_order );
+    convertGenericVectorToIntMat( *getCurrentGCPointer(), _mat_order );
   } else if ( minimum_common_type == GC_VEC_LONG ) {
-    convertGenericVectorToLongMat ( *getCurrentGCPointer(), _mat_order );
+    convertGenericVectorToLongMat( *getCurrentGCPointer(), _mat_order );
   } else if ( minimum_common_type == GC_VEC_REAL ) {
-    convertGenericVectorToRealMat ( *getCurrentGCPointer(), _mat_order );
+    convertGenericVectorToRealMat( *getCurrentGCPointer(), _mat_order );
   } else if ( minimum_common_type == GC_VEC_COMPLEX ) {
-    convertGenericVectorToComplexMat ( *getCurrentGCPointer(), _mat_order );
+    convertGenericVectorToComplexMat( *getCurrentGCPointer(), _mat_order );
   }
 
 }

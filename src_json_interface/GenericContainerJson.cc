@@ -59,16 +59,18 @@ namespace GenericContainerNamespace {
 
   void
   real_to_stream ( real_type number, ostream_type & out ) {
-    out << std::setprecision( std::numeric_limits<real_type>::digits10 + 1 )
-        << std::scientific
-        << number;
+    out
+      << std::setprecision( std::numeric_limits<real_type>::digits10 + 1 )
+      << std::scientific
+      << number;
   }
 
   void
-  complex_to_stream ( complex_type const & number,
-                      ostream_type       & out,
-                      string       const & im_unit )
-  {
+  complex_to_stream(
+    complex_type const & number,
+    ostream_type       & out,
+    string       const & im_unit
+  ) {
     if ( number == complex_type ( 0, 0 ) ) {
       out << "0";
       return;
@@ -90,10 +92,12 @@ namespace GenericContainerNamespace {
   template <typename W>
   static
   void
-  gc_to_writer( GenericContainer const & gc,
-                W                      & writer,
-                string const           & im_unit,
-                GCJsonMatrixOrder        mat_order ) {
+  gc_to_writer(
+    GenericContainer const & gc,
+    W                      & writer,
+    string const           & im_unit,
+    GCJsonMatrixOrder        mat_order
+  ) {
 
     switch ( gc.get_type() ) {
     case GC_NOTYPE: {

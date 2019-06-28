@@ -64,17 +64,17 @@ task :build, [:executable] do |t, args|
   puts "\n\nPrepare #{LIB_NAME} project".green
 
   if args.executable.to_s == "yes" then
-    sh 'cmake -DBUILD_EXECUTABLE=true -DCMAKE_INSTALL_PREFIX:PATH=../lib  ..'
+    sh 'cmake -DBUILD_EXECUTABLE=true -DCMAKE_INSTALL_PREFIX:PATH=../lib --parallel 8 ..'
   else
-    sh 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib ..'
+    sh 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib --parallel 8 ..'
   end
 
   puts "\n\nBuild #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug  --target install'
+  sh 'cmake --build . --config Debug --target install --parallel 8'
   FileUtils.cp "../lib/lib#{LIB_NAME}.a", "../lib/lib#{LIB_NAME}_debug.a"  
 
   puts "\n\nBuild #{LIB_NAME} Release".green
-  sh 'cmake --build . --config Release --target install'
+  sh 'cmake --build . --config Release --target install --parallel 8'
   FileUtils.cd '..'
 
 end
@@ -121,12 +121,12 @@ task :build_win, [:year, :bits, :executable] do |t, args|
   end
 
   FileUtils.mkdir_p "../lib"
-  sh 'cmake --build . --config Release --target install'
+  sh 'cmake --build . --config Release --target install --parallel 8'
 
   libname = "#{LIB_NAME}_vs#{args.year}_#{args.bits}"
 
   puts "\n\nBuild #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug --target install'
+  sh 'cmake --build . --config Debug --target install --parallel 8'
   FileUtils.cp "Debug/#{LIB_NAME}.lib", "../lib/#{libname}_debug.lib"
 
   puts "\n\nBuild #{LIB_NAME} Release".green

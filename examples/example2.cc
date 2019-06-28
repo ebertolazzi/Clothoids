@@ -36,10 +36,11 @@ using namespace GC;
 int
 main() {
 
-  cout << "\n\n\n"
-       << "***********************\n"
-       << "      example N.2      \n"
-       << "***********************\n\n";
+  cout
+    << "\n\n\n"
+    << "***********************\n"
+    << "      example N.2      \n"
+    << "***********************\n\n";
 
   // Simple example using simple data
   GenericContainer gc1, gc2, gc3, gc4, gc5;

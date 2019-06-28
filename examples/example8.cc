@@ -33,10 +33,11 @@ using namespace GC;
 int
 main() {
 
-  cout << "\n\n\n"
-       << "***********************\n"
-       << "      example N.8      \n"
-       << "***********************\n\n";
+  cout
+    << "\n\n\n"
+    << "***********************\n"
+    << "      example N.8      \n"
+    << "***********************\n\n";
 
   try {
     GenericContainer gc;

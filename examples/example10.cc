@@ -34,10 +34,11 @@ using namespace GC;
 int
 main() {
 
-  cout << "\n\n\n"
-       << "***********************\n"
-       << "      example N.10     \n"
-       << "***********************\n\n";
+  cout
+    << "\n\n\n"
+    << "***********************\n"
+    << "      example N.10     \n"
+    << "***********************\n\n";
 
   try {
     LuaInterpreter lua;

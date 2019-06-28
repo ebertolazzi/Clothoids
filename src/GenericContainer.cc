@@ -5071,8 +5071,10 @@ namespace GenericContainerNamespace {
   */
 
   void
-  GenericContainer::to_yaml( ostream_type      & stream,
-                             std::string const & prefix ) const {
+  GenericContainer::to_yaml(
+    ostream_type      & stream,
+    std::string const & prefix
+  ) const {
     switch (_data_type) {
     case GC_NOTYPE:
       stream << "Empty!\n";
@@ -5168,9 +5170,11 @@ namespace GenericContainerNamespace {
   }
 
   GenericContainer &
-  GenericContainer::readFormattedData( char const fname[],
-                                       char const commentChars[],
-                                       char const delimiters[] ) {
+  GenericContainer::readFormattedData(
+    char const fname[],
+    char const commentChars[],
+    char const delimiters[]
+  ) {
     std::ifstream file( fname );
     GC_ASSERT(
       file.good(),
