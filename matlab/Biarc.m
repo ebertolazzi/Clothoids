@@ -45,7 +45,7 @@ classdef Biarc < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'BiArc' ;
+      str = 'BiArc';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_3P( self, varargin )
@@ -123,22 +123,52 @@ classdef Biarc < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
       if nargin<2
-        npts = 64 ;
+        npts = 64;
       end
       if nargin>2
         fmt1 = varargin{1};
       else
-        fmt1 = {'Color','blue','Linewidth',2} ;
+        fmt1 = {'Color','blue','Linewidth',2};
       end
       if nargin>3
         fmt2 = varargin{2};
       else
-        fmt2 = {'Color','red','Linewidth',2} ;
+        fmt2 = {'Color','red','Linewidth',2};
       end
       [C0,C1] = self.getCircles();
-      C0.plot(npts,fmt1) ;
-      hold on ;
-      C1.plot(npts,fmt2) ;
+      C0.plot(npts,fmt1);
+      hold on;
+      C1.plot(npts,fmt2);
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, npts, varargin )
+      if nargin < 2
+        npts = 1000;
+      end
+      L = BiarcMexWrapper( 'length', self.objectHandle );
+      S = 0:L/npts:L;
+      [ ~, ~, ~, kappa ] = BiarcMexWrapper( 'evaluate', self.objectHandle, S );
+      plot( S, kappa, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTheta( self, npts, varargin )
+      if nargin < 2
+        npts = 1000;
+      end
+      L = BiarcMexWrapper( 'length', self.objectHandle );
+      S = 0:L/npts:L;
+      [ ~, ~, theta, ~ ] = BiarcMexWrapper( 'evaluate', self.objectHandle, S );
+      plot( S, theta, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotNormal( self, step, len )
+      for s=0:step:self.length()
+        [ x, y, theta, ~ ] = self.evaluate(s);
+        n = [sin(theta),-cos(theta)];
+        A = [x,x+len*n(1)];
+        B = [y,y+len*n(2)];
+        plot(A,B);
+      end
     end
   end
 end

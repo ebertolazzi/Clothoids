@@ -20,7 +20,7 @@ classdef ClothoidCurve < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'ClothoidCurve' ;
+      str = 'ClothoidCurve';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
@@ -85,8 +85,16 @@ classdef ClothoidCurve < CurveBase
                                     x0, y0, theta0, k0, x1, y1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function aabb_true( self )
+      ClothoidCurveMexWrapper( 'aabb_true', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function aabb_false( self )
+      ClothoidCurveMexWrapper( 'aabb_false', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ X, Y, S, DST ] = closestPoint( self, qx, qy )
-      [ X, Y, S, DST ] = ...
+      [ X, Y, S, ~, ~, DST ] = ...
         ClothoidCurveMexWrapper( 'closestPoint', ...
                                  self.objectHandle, qx, qy );
     end
@@ -140,12 +148,13 @@ classdef ClothoidCurve < CurveBase
       x0     = self.xBegin();
       y0     = self.yBegin();
       theta0 = self.thetaBegin();
-      k0      = self.kappaBegin();
-      dk     = self.dkappa();
+      k0     = self.kappaBegin();
+      dk     = self.kappa_D(0);
       L      = self.length();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [P1,P2,P3] = bbTriangles( self, varargin )
+      % bbTriangles( max_angle, max_size, offs );
       [P1,P2,P3] = ClothoidCurveMexWrapper( 'bbTriangles', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,7 +166,7 @@ classdef ClothoidCurve < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, varargin )
       if nargin < 2
-        npts = 1000 ;
+        npts = 1000;
       end
       S = self.optimized_sample( npts, pi/180, 0 );
       [ X, Y ] = ClothoidCurveMexWrapper( 'eval', self.objectHandle, S );
@@ -172,30 +181,30 @@ classdef ClothoidCurve < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotCurvature( self, npts, varargin )
       if nargin < 2
-        npts = 1000 ;
+        npts = 1000;
       end
       L = ClothoidCurveMexWrapper( 'length', self.objectHandle );
-      S = 0:L/npts:L ;
-      [ ~, ~, ~, kappa ] = ClothoidCurveMexWrapper( 'evaluate', ...
-                                                    self.objectHandle, S );
+      S = 0:L/npts:L;
+      [ ~, ~, ~, kappa ] = ...
+        ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
       plot( S, kappa, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotTheta( self, npts, varargin )
       if nargin < 2
-        npts = 1000 ;
+        npts = 1000;
       end
       L = ClothoidCurveMexWrapper( 'length', self.objectHandle );
-      S = 0:L/npts:L ;
-      [ ~, ~, theta, ~ ] = ClothoidCurveMexWrapper( 'evaluate', ...
-                                                    self.objectHandle, S );
+      S = 0:L/npts:L;
+      [ ~, ~, theta, ~ ] = ...
+        ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
       plot( S, theta, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plotNormal( self, step, len )
       for s=0:step:self.length()
-        [ x, y, theta, ~ ] = self.evaluate(s) ;
-        n = [sin(theta),-cos(theta)] ;
+        [ x, y, theta, ~ ] = self.evaluate(s);
+        n = [sin(theta),-cos(theta)];
         A = [x,x+len*n(1)];
         B = [y,y+len*n(2)];
         plot(A,B);

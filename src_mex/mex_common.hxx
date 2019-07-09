@@ -101,7 +101,7 @@ do_change_origin( int nlhs, mxArray       *plhs[],
   MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
   MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
 
-  real_type new_x0, new_y0 ;
+  real_type new_x0, new_y0;
   new_x0 = getScalarValue( arg_in_2,
                            CMD "`x0` expected to be a real scalar" );
   new_y0 = getScalarValue( arg_in_3,
@@ -1230,6 +1230,34 @@ do_kappa_end( int nlhs, mxArray       *plhs[],
   #undef CMD
 }
 
+static
+void
+do_yesAABBtree( int nlhs, mxArray       *plhs[],
+                int nrhs, mxArray const *prhs[] ) {
+
+  #define CMD CMD_BASE "('yesAABBtree',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
+
+  G2lib::yesAABBtree();
+
+  #undef CMD
+}
+
+static
+void
+do_noAABBtree( int nlhs, mxArray       *plhs[],
+               int nrhs, mxArray const *prhs[] ) {
+
+  #define CMD CMD_BASE "('noAABBtree',OBJ): "
+  MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+  MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
+
+  G2lib::noAABBtree();
+
+  #undef CMD
+}
+
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 #define CMD_VIRTUAL_LIST \
@@ -1270,7 +1298,9 @@ CMD_XY_END,              \
 CMD_X_END,               \
 CMD_Y_END,               \
 CMD_THETA_END,           \
-CMD_KAPPA_END
+CMD_KAPPA_END,           \
+CMD_YES_AABBTREE,        \
+CMD_NO_AABBTREE
 
 #define CMD_MAP_LIST                \
 {"length",CMD_LENGTH},              \
@@ -1310,7 +1340,9 @@ CMD_KAPPA_END
 {"xEnd",CMD_X_END},                 \
 {"yEnd",CMD_Y_END},                 \
 {"thetaEnd",CMD_THETA_END},         \
-{"kappaEnd",CMD_KAPPA_END}
+{"kappaEnd",CMD_KAPPA_END},         \
+{"yesAABBtree",CMD_YES_AABBTREE},   \
+{"noAABBtree",CMD_NO_AABBTREE}
 
 #define CMD_CASE_LIST                         \
 case CMD_LENGTH:                              \
@@ -1426,4 +1458,10 @@ case CMD_THETA_END:                           \
   break;                                      \
 case CMD_KAPPA_END:                           \
   do_kappa_end( nlhs, plhs, nrhs, prhs );     \
+  break;                                      \
+case CMD_YES_AABBTREE:                        \
+  do_yesAABBtree( nlhs, plhs, nrhs, prhs );   \
+  break;                                      \
+case CMD_NO_AABBTREE:                         \
+  do_noAABBtree( nlhs, plhs, nrhs, prhs );    \
   break

@@ -47,6 +47,7 @@ for k=1:6
     else
       axis(AXEL);
     end
+    xlim([-1.2 1.2])
     axis equal;
     title( sprintf('kappa1 = %g',kappa1(k))); 
     iter = C.build_G1(x0,y0,theta0,x1,y1,theta1(k));

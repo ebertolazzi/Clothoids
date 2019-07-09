@@ -77,12 +77,14 @@ namespace G2lib {
 
   public:
 
-    BBox( real_type _xmin,
-          real_type _ymin,
-          real_type _xmax,
-          real_type _ymax,
-          int_type  _id,
-          int_type  _ipos ){
+    BBox(
+      real_type _xmin,
+      real_type _ymin,
+      real_type _xmax,
+      real_type _ymax,
+      int_type  _id,
+      int_type  _ipos
+    ) {
       this -> xmin = _xmin;
       this -> ymin = _ymin;
       this -> xmax = _xmax;
@@ -91,9 +93,11 @@ namespace G2lib {
       this -> ipos = _ipos;
     }
 
-    BBox( vector<PtrBBox> const & bboxes,
-          int_type                _id,
-          int_type                _ipos ) {
+    BBox(
+      vector<PtrBBox> const & bboxes,
+      int_type                _id,
+      int_type                _ipos
+    ) {
       this -> id   = _id;
       this -> ipos = _ipos;
       this -> join( bboxes );
@@ -192,21 +196,25 @@ namespace G2lib {
     \*/
     static
     real_type
-    min_maxdist( real_type        x,
-                 real_type        y,
-                 AABBtree const & tree,
-                 real_type        mmDist );
+    min_maxdist(
+      real_type        x,
+      real_type        y,
+      AABBtree const & tree,
+      real_type        mmDist
+    );
 
     /*!
      | Select the candidate which bbox have distance less than mmDist
     \*/
     static
     void
-    min_maxdist_select( real_type        x,
-                        real_type        y,
-                        real_type        mmDist,
-                        AABBtree const & tree,
-                        VecPtrBBox     & candidateList );
+    min_maxdist_select(
+      real_type        x,
+      real_type        y,
+      real_type        mmDist,
+      AABBtree const & tree,
+      VecPtrBBox     & candidateList
+    );
 
   public:
 
@@ -226,10 +234,12 @@ namespace G2lib {
     bool empty() const;
 
     void
-    bbox( real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const {
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const {
       xmin = pBBox->xmin;
       ymin = pBBox->ymin;
       xmax = pBBox->xmax;
@@ -244,9 +254,11 @@ namespace G2lib {
 
     template <typename COLLISION_fun>
     bool
-    collision( AABBtree const & tree,
-               COLLISION_fun    ifun,
-               bool             swap_tree = false ) const {
+    collision(
+      AABBtree const & tree,
+      COLLISION_fun    ifun,
+      bool             swap_tree = false
+    ) const {
 
       // check bbox with
       if ( !tree.pBBox->collision(*pBBox) ) return false;
@@ -295,9 +307,11 @@ namespace G2lib {
     ) const;
 
     void
-    min_distance( real_type    x,
-                  real_type    y,
-                  VecPtrBBox & candidateList ) const;
+    min_distance(
+      real_type    x,
+      real_type    y,
+      VecPtrBBox & candidateList
+    ) const;
 
   };
 

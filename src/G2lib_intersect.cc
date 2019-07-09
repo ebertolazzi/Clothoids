@@ -21,16 +21,14 @@
 #include "Line.hh"
 #include "PolyLine.hh"
 #include "Circle.hh"
+#include "Biarc.hh"
 #include "Clothoid.hh"
+#include "BiarcList.hh"
 #include "ClothoidList.hh"
 
 #include <map>
 #include <algorithm>
 
-#ifdef __GCC__
-#pragma GCC diagnostic ignored "-Wglobal-constructors"
-#pragma GCC diagnostic ignored "-Wexit-time-destructors"
-#endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
@@ -61,14 +59,16 @@ namespace G2lib {
     {Ppair( G2LIB_LINE, G2LIB_LINE ),          G2LIB_LINE},
     {Ppair( G2LIB_LINE, G2LIB_CIRCLE ),        G2LIB_CIRCLE},
     {Ppair( G2LIB_LINE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID},
-    {Ppair( G2LIB_LINE, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
+    {Ppair( G2LIB_LINE, G2LIB_BIARC ),         G2LIB_BIARC_LIST},
+    {Ppair( G2LIB_LINE, G2LIB_BIARC_LIST ),    G2LIB_BIARC_LIST},
     {Ppair( G2LIB_LINE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_LINE, G2LIB_POLYLINE ),      G2LIB_POLYLINE},
 
     {Ppair( G2LIB_CIRCLE, G2LIB_LINE ),          G2LIB_CIRCLE},
     {Ppair( G2LIB_CIRCLE, G2LIB_CIRCLE ),        G2LIB_CIRCLE},
     {Ppair( G2LIB_CIRCLE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID},
-    {Ppair( G2LIB_CIRCLE, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
+    {Ppair( G2LIB_CIRCLE, G2LIB_BIARC ),         G2LIB_BIARC_LIST},
+    {Ppair( G2LIB_CIRCLE, G2LIB_BIARC_LIST ),    G2LIB_BIARC_LIST},
     {Ppair( G2LIB_CIRCLE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_CIRCLE, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
 
@@ -76,6 +76,7 @@ namespace G2lib {
     {Ppair( G2LIB_BIARC, G2LIB_CIRCLE ),        G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_BIARC, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_BIARC, G2LIB_BIARC ),         G2LIB_BIARC},
+    {Ppair( G2LIB_BIARC, G2LIB_BIARC_LIST ),    G2LIB_BIARC_LIST},
     {Ppair( G2LIB_BIARC, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_BIARC, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
 
@@ -83,6 +84,7 @@ namespace G2lib {
     {Ppair( G2LIB_CLOTHOID, G2LIB_CIRCLE ),        G2LIB_CLOTHOID},
     {Ppair( G2LIB_CLOTHOID, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID},
     {Ppair( G2LIB_CLOTHOID, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
+    {Ppair( G2LIB_CLOTHOID, G2LIB_BIARC_LIST ),    G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_CLOTHOID, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_CLOTHOID, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
 
@@ -90,6 +92,7 @@ namespace G2lib {
     {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CIRCLE ),        G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
+    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_BIARC_LIST ),    G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
 
@@ -97,6 +100,7 @@ namespace G2lib {
     {Ppair( G2LIB_POLYLINE, G2LIB_CIRCLE ),        G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_POLYLINE, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
+    {Ppair( G2LIB_POLYLINE, G2LIB_BIARC_LIST ),    G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ),      G2LIB_POLYLINE}
   };
@@ -104,13 +108,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  collision( BaseCurve const & obj1,
-             BaseCurve const & obj2 ) {
+  collision( BaseCurve const & obj1, BaseCurve const & obj2 ) {
     #ifdef DEBUG
-    std::cout << "collision " << CurveType_name[obj1.type()]
-              << " with " << CurveType_name[obj2.type()]
-              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-              << '\n';
+    std::cout
+      << "collision " << CurveType_name[obj1.type()]
+      << " with " << CurveType_name[obj2.type()]
+      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+      << '\n';
     #endif
 
     bool ok = false;
@@ -138,23 +142,30 @@ namespace G2lib {
       break;
     case G2LIB_BIARC:
       {
-        Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
-        Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
+        Biarc B1( obj1 );
+        Biarc B2( obj2 );
         ok = B1.collision( B2 );
+      }
+      break;
+    case G2LIB_BIARC_LIST:
+      {
+        BiarcList BL1( obj1 );
+        BiarcList BL2( obj2 );
+        ok = BL1.collision( BL2 );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1( obj1 );
-        ClothoidList C2( obj2 );
-        ok = C1.collision(C2);
+        ClothoidList CL1( obj1 );
+        ClothoidList CL2( obj2 );
+        ok = CL1.collision( CL2 );
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1( obj1 );
-        PolyLine C2( obj2 );
-        ok = C1.collision( C2 );
+        PolyLine PL1( obj1 );
+        PolyLine PL2( obj2 );
+        ok = PL1.collision( PL2 );
       }
       break;
     }
@@ -164,15 +175,18 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  collision( BaseCurve const & obj1,
-             real_type         offs1,
-             BaseCurve const & obj2,
-             real_type         offs2 ) {
+  collision(
+    BaseCurve const & obj1,
+    real_type         offs1,
+    BaseCurve const & obj2,
+    real_type         offs2
+  ) {
     #ifdef DEBUG
-    std::cout << "collision (offs) " << CurveType_name[obj1.type()]
-              << " with " << CurveType_name[obj2.type()]
-              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-              << '\n';
+    std::cout
+      << "collision (offs) " << CurveType_name[obj1.type()]
+      << " with " << CurveType_name[obj2.type()]
+      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+      << '\n';
     #endif
 
     bool ok = false;
@@ -200,23 +214,30 @@ namespace G2lib {
       break;
     case G2LIB_BIARC:
       {
-        Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
-        Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
+        Biarc B1( obj1 );
+        Biarc B2( obj2 );
         ok = B1.collision( offs1, B2, offs2 );
+      }
+      break;
+    case G2LIB_BIARC_LIST:
+      {
+        BiarcList BL1( obj1 );
+        BiarcList BL2( obj2 );
+        ok = BL1.collision( offs1, BL2, offs2 );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1( obj1 );
-        ClothoidList C2( obj2 );
-        ok = C1.collision( offs1, C2, offs2 );
+        ClothoidList CL1( obj1 );
+        ClothoidList CL2( obj2 );
+        ok = CL1.collision( offs1, CL2, offs2 );
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1( obj1 );
-        PolyLine C2( obj2 );
-        ok = C1.collision( offs1, C2, offs2 );
+        PolyLine PL1( obj1 );
+        PolyLine PL2( obj2 );
+        ok = PL1.collision( offs1, PL2, offs2 );
       }
     }
     return ok;
@@ -225,16 +246,19 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  intersect( BaseCurve const & obj1,
-             BaseCurve const & obj2,
-             IntersectList   & ilist,
-             bool              swap_s_vals ) {
+  intersect(
+    BaseCurve const & obj1,
+    BaseCurve const & obj2,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) {
 
     #ifdef DEBUG
-    std::cout << "intersect " << CurveType_name[obj1.type()]
-              << " with " << CurveType_name[obj2.type()]
-              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-              << '\n';
+    std::cout
+      << "intersect " << CurveType_name[obj1.type()]
+      << " with " << CurveType_name[obj2.type()]
+      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+      << '\n';
     #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
@@ -261,23 +285,30 @@ namespace G2lib {
       break;
     case G2LIB_BIARC:
       {
-        Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
-        Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
+        Biarc B1( obj1 );
+        Biarc B2( obj2 );
         B1.intersect( B2, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC_LIST:
+      {
+        BiarcList BL1( obj1 );
+        BiarcList BL2( obj2 );
+        BL1.intersect( BL2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1( obj1 );
-        ClothoidList C2( obj2 );
-        C1.intersect( C2, ilist, swap_s_vals );
+        ClothoidList CL1( obj1 );
+        ClothoidList CL2( obj2 );
+        CL1.intersect( CL2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1( obj1 );
-        PolyLine C2( obj2 );
-        C1.intersect( C2, ilist, swap_s_vals );
+        PolyLine PL1( obj1 );
+        PolyLine PL2( obj2 );
+        PL1.intersect( PL2, ilist, swap_s_vals );
       }
       break;
     }
@@ -286,18 +317,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  intersect( BaseCurve const & obj1,
-             real_type         offs1,
-             BaseCurve const & obj2,
-             real_type         offs2,
-             IntersectList   & ilist,
-             bool              swap_s_vals ) {
+  intersect(
+    BaseCurve const & obj1,
+    real_type         offs1,
+    BaseCurve const & obj2,
+    real_type         offs2,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) {
 
     #ifdef DEBUG
-    std::cout << "intersect (offs) " << CurveType_name[obj1.type()]
-              << " with " << CurveType_name[obj2.type()]
-              << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-              << '\n';
+    std::cout
+      << "intersect (offs) " << CurveType_name[obj1.type()]
+      << " with " << CurveType_name[obj2.type()]
+      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+      << '\n';
     #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
@@ -324,23 +358,30 @@ namespace G2lib {
       break;
     case G2LIB_BIARC:
       {
-        Biarc const & B1 = *static_cast<Biarc const *>(&obj1);
-        Biarc const & B2 = *static_cast<Biarc const *>(&obj2);
+        Biarc B1( obj1 );
+        Biarc B2( obj2 );
         B1.intersect( offs1, B2, offs2, ilist, swap_s_vals );
+      }
+      break;
+    case G2LIB_BIARC_LIST:
+      {
+        BiarcList BL1( obj1 );
+        BiarcList BL2( obj2 );
+        BL1.intersect( offs1, BL2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
-        ClothoidList C1( obj1 );
-        ClothoidList C2( obj2 );
-        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
+        ClothoidList CL1( obj1 );
+        ClothoidList CL2( obj2 );
+        CL1.intersect( offs1, CL2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
       {
-        PolyLine C1( obj1 );
-        PolyLine C2( obj2 );
-        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
+        PolyLine PL1( obj1 );
+        PolyLine PL2( obj2 );
+        PL1.intersect( offs1, PL2, offs2, ilist, swap_s_vals );
       }
       break;
     }

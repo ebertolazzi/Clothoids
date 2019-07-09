@@ -71,11 +71,11 @@ classdef Triangle2D < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, color, varargin )
-      [p1,p2,p3] = self.points() ;
-      x = [p1(1),p2(1),p3(1),p1(1)] ;
-      y = [p1(2),p2(2),p3(2),p1(2)] ;
-      plot( x, y, varargin{:} ) ;
-      fill( x, y, color ) ;
+      [p1,p2,p3] = self.points();
+      x = [p1(1),p2(1),p3(1),p1(1)];
+      y = [p1(2),p2(2),p3(2),p1(2)];
+      plot( x, y, varargin{:} );
+      fill( x, y, color );
     end
   end
 end

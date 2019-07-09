@@ -27,25 +27,14 @@
   #define TIC_TOC_USE_CXX11
 #endif
 
-#ifdef TIC_TOC_USE_CXX11
-
-  #include <chrono>
-  #include <thread>
-
-  #define TIC_TOC_USE_HRC
-
+#ifdef G2LIB_OS_WINDOWS
+  #include <windows.h>
   class TicToc {
 
-    #ifdef TIC_TOC_USE_HRC
-    std::chrono::high_resolution_clock::time_point start_time;
-    std::chrono::high_resolution_clock::time_point stop_time;
-    #else
-    std::chrono::system_clock::time_point start_time;
-    std::chrono::system_clock::time_point stop_time;
-    #endif
-  
-    std::chrono::microseconds elapsedPartial;
-    std::chrono::microseconds elapsedTotal;
+    typedef double real_type;
+    LARGE_INTEGER frequency;        // ticks per second
+    LARGE_INTEGER t1, t2;           // ticks
+    real_type elapsed_time;
 
     TicToc( TicToc const & );
     TicToc const & operator = ( TicToc const & ) const;
@@ -53,74 +42,172 @@
   public:
 
     TicToc()
-    : elapsedPartial(0)
-    , elapsedTotal(0) { tic(); }
+    : elapsed_time(0)
+    { QueryPerformanceFrequency(&frequency); tic(); }
 
     ~TicToc() {}
-
-    void reset() {
-      elapsedTotal   = std::chrono::microseconds(0);
-      elapsedPartial = std::chrono::microseconds(0);
-    }
 
     void
     tic()
-    #ifdef TIC_TOC_USE_HRC
-    { start_time = std::chrono::high_resolution_clock::now(); }
-    #else
-    { start_time = std::chrono::system_clock::now(); }
-    #endif
+    { QueryPerformanceCounter(&t1); }
 
     void
     toc() {
-      #ifdef TIC_TOC_USE_HRC
-      stop_time = std::chrono::high_resolution_clock::now();
-      #else
-      stop_time = std::chrono::system_clock::now();
-      #endif
-      elapsedPartial = std::chrono::duration_cast<std::chrono::microseconds>(stop_time - start_time);
-      elapsedTotal  += elapsedPartial;
+      QueryPerformanceCounter(&t2);
+      elapsed_time = (t2.QuadPart - t1.QuadPart) * 1000.0 / frequency.QuadPart;;
     }
 
-    double totalElapsedSeconds()      const { return 1e-6*elapsedTotal.count(); }
-    double totalElapsedMilliseconds() const { return 1e-3*elapsedTotal.count(); }
+    real_type
+    elapsed_s() const
+    { return 1e-3*elapsed_time; }
 
-    double elapsedSeconds()      const { return 1e-6*elapsedPartial.count(); }
-    double elapsedMilliseconds() const { return 1e-3*elapsedPartial.count(); }
-  
-    void sleep_for_seconds( unsigned s ) {
-      std::this_thread::sleep_for(std::chrono::seconds(s));
-    }
+    real_type
+    elapsed_ms() const
+    { return elapsed_time; }
 
-    void sleep_for_milliseconds( unsigned ms ) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-    }
   };
+
+  inline
+  void
+  sleep_for_seconds( unsigned s )
+  { Sleep(DWORD(s)*1000); }
+
+  inline
+  void
+  sleep_for_milliseconds( unsigned ms )
+  { Sleep(DWORD(ms)); }
+
 #else
 
-  // dummy class
-  class TicToc {
+  #ifdef TIC_TOC_USE_CXX11
 
-    TicToc( TicToc const & );
-    TicToc const & operator = ( TicToc const & ) const;
+    #include <chrono>
+    #include <thread>
 
-  public:
+    class TicToc {
 
-    TicToc() {}
-    ~TicToc() {}
+      typedef double real_type;
+      typedef std::chrono::high_resolution_clock clock;
 
-    void reset() {}
-    void tic()   {}
-    void toc()   {}
+      using elapsed_resolution = std::chrono::microseconds;
 
-    double totalElapsedSeconds()      const { return 1; }
-    double totalElapsedMilliseconds() const { return 1; }
+      clock::time_point start_time;
+      clock::time_point stop_time;
 
-    double elapsedSeconds()      const { return 1; }
-    double elapsedMilliseconds() const { return 1; }
-    void   sleep_for_seconds( unsigned ) {}
-    void   sleep_for_milliseconds( unsigned ) {}
-  };
+      elapsed_resolution elapsed_time;
+
+      TicToc( TicToc const & );
+      TicToc const & operator = ( TicToc const & ) const;
+
+    public:
+
+      TicToc()
+      : elapsed_time(0)
+      { tic(); }
+
+      ~TicToc() {}
+
+      void
+      tic()
+      { start_time = clock::now(); }
+
+      void
+      toc() {
+        stop_time    = clock::now();
+        elapsed_time = std::chrono::duration_cast<elapsed_resolution>(stop_time - start_time);
+      }
+
+      real_type
+      elapsed_s() const
+      { return 1e-6*elapsed_time.count(); }
+
+      real_type
+      elapsed_ms() const
+      { return 1e-3*elapsed_time.count(); }
+    };
+
+    inline
+    void
+    sleep_for_seconds( unsigned s )
+    { std::this_thread::sleep_for(std::chrono::seconds(s)); }
+
+    inline
+    void
+    sleep_for_milliseconds( unsigned ms )
+    { std::this_thread::sleep_for(std::chrono::milliseconds(ms)); }
+
+  #else
+
+    #include <sys/time.h>
+    #include <unistd.h>
+
+    inline
+    bool
+    getTime( long & sec, long & usec ) {
+      struct timeval now ;
+      bool ok = gettimeofday(&now, NULL) == 0 ;
+      if ( ok ) {
+        sec  = now . tv_sec;
+        usec = now . tv_usec;
+      } else {
+        sec = usec = 0 ;
+      }
+      return ok ;
+    }
+
+    class TicToc {
+
+      typedef double real_type;
+      long sec, usec ;
+      real_type elapsed_time;
+
+      TicToc( TicToc const & );
+      TicToc const & operator = ( TicToc const & ) const;
+
+    public:
+
+      TicToc()
+      : elapsed_time(0)
+      { tic(); }
+
+      ~TicToc() {}
+
+      void
+      tic()
+      { getTime( sec, usec ); }
+
+      void
+      toc() {
+        long new_sec, new_usec ;
+        getTime( new_sec, new_usec ) ;
+        elapsed_time = 1e3*(new_sec-sec)+1e-3*(new_usec-usec);
+      }
+
+      real_type
+      elapsed_s() const
+      { return 1e-3*elapsed_time; }
+
+      real_type
+      elapsed_ms() const
+      { return elapsed_time; }
+    };
+
+    inline
+    void
+    sleep_for_seconds( unsigned s ) {
+      useconds_t us = s; us *= 1000000;
+      usleep(us);
+    }
+
+    inline
+    void
+    sleep_for_milliseconds( unsigned ms ) {
+      useconds_t us = ms; us *= 1000;
+      usleep(us);
+    }
+
+  #endif
+
 #endif
 
 #endif

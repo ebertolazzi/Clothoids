@@ -5,7 +5,7 @@
 #      Enrico Bertolazzi                                                   #
 #      Dipartimento di Ingegneria Industriale                              #
 #      Universita` degli Studi di Trento                                   #
-#      email: enrico.bertolazzi@unitn.it                                   #
+#      <mailto:enrico.bertolazzi@unitn.it>                                 #
 #                                                                          #
 ############################################################################
 
@@ -15,7 +15,6 @@ SET( TARGET Clothoids )
 
 PROJECT( ${TARGET} CXX C )
 
-SET( BUILD_EXECUTABLE false )
 FILE( GLOB S ./CMakeLists-cflags.txt )
 IF( EXISTS ${S} )
   INCLUDE( ${S} )
@@ -59,25 +58,12 @@ ENDFOREACH (F ${S})
 
 INCLUDE_DIRECTORIES( src )
 
-IF (WIN32)
-  IF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-    IF ( NOT DEFINED BITS)
-      SET( BITS "x64" )
-    ENDIF()
-    INCLUDE_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include" )
-    IF ( ${BITS} STREQUAL "x64" )
-      SET( WINXXBITS Win64 )
-      LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/intel64" )
-    ELSE()
-      SET( WINXXBITS Win32 )
-      LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/ia32" )
-    ENDIF()
-  ENDIF()
-ENDIF()
-
 ADD_LIBRARY( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
 
 IF( BUILD_EXECUTABLE )
+
+  SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+
   SET( EXECUTABLE testBiarc testDistance testG2 testG2plot testG2stat testG2stat2arc testG2statCLC testIntersect testPolyline testTriangle2D )
   FOREACH ( EXE ${EXECUTABLE} )
     ADD_EXECUTABLE( ${EXE} tests-cpp/${EXE}.cc ${HEADERS} )
@@ -106,3 +92,4 @@ IF(APPLE)
   MESSAGE( STATUS "CMAKE_OSX_ARCHITECTURES     = ${CMAKE_OSX_ARCHITECTURES}" )
   MESSAGE( STATUS "CMAKE_OSX_DEPLOYMENT_TARGET = ${CMAKE_OSX_DEPLOYMENT_TARGET}" )
 ENDIF()
+MESSAGE( STATUS "BUILD_EXECUTABLE            = ${BUILD_EXECUTABLE}" )

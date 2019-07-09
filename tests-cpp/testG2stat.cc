@@ -81,9 +81,10 @@ main() {
     cout << "iter = " << is->first << " -- " << is->second << '\n';
     N += is->second;
   }
-  cout << "elapsed = " << tictoc.totalElapsedSeconds() << '\n';
-  cout << "ave = " << tictoc.totalElapsedSeconds()/N << '\n';
-  cout << "All done\n";
+  cout
+   << "elapsed = " << tictoc.elapsed_s() << "[s]\n"
+   << "ave     = " << tictoc.elapsed_s()/N << "[s]\n"
+   << "All done\n";
   return 0;
 }
 

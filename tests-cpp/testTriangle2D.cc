@@ -21,7 +21,7 @@ main() {
 
 
   G2lib::Triangle2D T1;
-  T1.build( x0, y0, x1, y1, x2, y2 );
+  T1.build( x0, y0, x1, y1, x2, y2, 0, 0, 0 );
 
   int_type icode = T1.isInside( T1.baricenterX(), T1.baricenterY() );
 
@@ -45,7 +45,7 @@ main() {
     real_type L      = 1;
     C.build( xx0, yy0, theta0, kappa0, dk, L );
 
-    vector<G2lib::T2D> tvec;
+    vector<G2lib::Triangle2D> tvec;
     C.bbTriangles( 0, tvec );
 
     for ( size_t i = 0; i < tvec.size(); ++i )

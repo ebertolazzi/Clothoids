@@ -50,9 +50,11 @@ namespace G2lib {
    * \param C the value of \f$ C(x) \f$
    */
   void
-  FresnelCS( real_type   x,
-             real_type & C,
-             real_type & S );
+  FresnelCS(
+    real_type   x,
+    real_type & C,
+    real_type & S
+  );
 
   //! Compute Fresnel integrals and its derivatives
   /*!
@@ -63,10 +65,12 @@ namespace G2lib {
    * \param C C[0]=\f$ C(x) \f$, C[1]=\f$ C'(x) \f$, C[2]=\f$ C''(x) \f$
    */
   void
-  FresnelCS( int_type  nk,
-             real_type x,
-             real_type C[],
-             real_type S[] );
+  FresnelCS(
+    int_type  nk,
+    real_type x,
+    real_type C[],
+    real_type S[]
+  );
 
   /*! \brief Compute the Fresnel integrals
    * \f[
@@ -81,12 +85,14 @@ namespace G2lib {
    * \param intS sine integrals
    */
   void
-  GeneralizedFresnelCS( int_type  nk,
-                        real_type a,
-                        real_type b,
-                        real_type c,
-                        real_type intC[],
-                        real_type intS[] );
+  GeneralizedFresnelCS(
+    int_type  nk,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type intC[],
+    real_type intS[]
+  );
 
   /*! \brief Compute the Fresnel integrals
    * \f[
@@ -100,11 +106,13 @@ namespace G2lib {
    * \param intS   sine integrals
    */
   void
-  GeneralizedFresnelCS( real_type   a,
-                        real_type   b,
-                        real_type   c,
-                        real_type & intC,
-                        real_type & intS );
+  GeneralizedFresnelCS(
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & intC,
+    real_type & intS
+  );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -237,55 +245,73 @@ namespace G2lib {
     { tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD; }
 
     void
-    evaluate( real_type   s,
-              real_type & theta,
-              real_type & kappa,
-              real_type & x,
-              real_type & y ) const;
+    evaluate(
+      real_type   s,
+      real_type & theta,
+      real_type & kappa,
+      real_type & x,
+      real_type & y
+    ) const;
 
     void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const;
+    eval(
+      real_type   s,
+      real_type & x,
+      real_type & y
+    ) const;
 
     void
-    eval_D( real_type   s,
-            real_type & x_D,
-            real_type & y_D ) const;
+    eval_D(
+      real_type   s,
+      real_type & x_D,
+      real_type & y_D
+    ) const;
 
     void
-    eval_DD( real_type   s,
-             real_type & x_DD,
-             real_type & y_DD ) const;
+    eval_DD(
+      real_type   s,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const;
 
     void
-    eval_DDD( real_type   s,
-              real_type & x_DDD,
-              real_type & y_DDD ) const;
+    eval_DDD(
+      real_type   s,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const;
 
     void
-    eval( real_type   s,
-          real_type   offs,
-          real_type & x,
-          real_type & y ) const;
+    eval(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const;
 
     void
-    eval_D( real_type   s,
-            real_type   offs,
-            real_type & x_D,
-            real_type & y_D ) const;
+    eval_D(
+      real_type   s,
+      real_type   offs,
+      real_type & x_D,
+      real_type & y_D
+    ) const;
 
     void
-    eval_DD( real_type   s,
-             real_type   offs,
-             real_type & x_DD,
-             real_type & y_DD ) const;
+    eval_DD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const;
 
     void
-    eval_DDD( real_type   s,
-              real_type   offs,
-              real_type & x_DDD,
-              real_type & y_DDD ) const;
+    eval_DDD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const;
 
     void
     eval( real_type s, ClothoidData & C) const;
@@ -315,41 +341,49 @@ namespace G2lib {
     aplus( real_type dtheta ) const;
 
     bool
-    bbTriangle( real_type   L,
-                real_type & xx0, real_type & yy0,
-                real_type & xx1, real_type & yy1,
-                real_type & xx2, real_type & yy2 ) const;
+    bbTriangle(
+      real_type   L,
+      real_type & xx0, real_type & yy0,
+      real_type & xx1, real_type & yy1,
+      real_type & xx2, real_type & yy2
+    ) const;
 
     bool
-    bbTriangle( real_type   L,
-                real_type   offs,
-                real_type & xx0, real_type & yy0,
-                real_type & xx1, real_type & yy1,
-                real_type & xx2, real_type & yy2 ) const;
+    bbTriangle(
+      real_type   L,
+      real_type   offs,
+      real_type & xx0, real_type & yy0,
+      real_type & xx1, real_type & yy1,
+      real_type & xx2, real_type & yy2
+    ) const;
 
     int
-    build_G1( real_type   x0,
-              real_type   y0,
-              real_type   theta0,
-              real_type   x1,
-              real_type   y1,
-              real_type   theta1,
-              real_type   tol,
-              real_type & L,
-              bool        compute_deriv = false,
-              real_type   L_D[2]        = nullptr,
-              real_type   k_D[2]        = nullptr,
-              real_type   dk_D[2]       = nullptr );
+    build_G1(
+      real_type   x0,
+      real_type   y0,
+      real_type   theta0,
+      real_type   x1,
+      real_type   y1,
+      real_type   theta1,
+      real_type   tol,
+      real_type & L,
+      bool        compute_deriv = false,
+      real_type   L_D[2]        = nullptr,
+      real_type   k_D[2]        = nullptr,
+      real_type   dk_D[2]       = nullptr
+    );
 
     bool
-    build_forward( real_type   x0,
-                   real_type   y0,
-                   real_type   theta0,
-                   real_type   kappa0,
-                   real_type   x1,
-                   real_type   y1,
-                   real_type   tol,
-                   real_type & L );
+    build_forward(
+      real_type   x0,
+      real_type   y0,
+      real_type   theta0,
+      real_type   kappa0,
+      real_type   x1,
+      real_type   y1,
+      real_type   tol,
+      real_type & L
+    );
 
     void
     info( ostream_type & s ) const;

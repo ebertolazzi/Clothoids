@@ -7,7 +7,7 @@ classdef PolyLine < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'PolyLine' ;
+      str = 'PolyLine';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, x, y )
@@ -27,14 +27,14 @@ classdef PolyLine < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
       if nargin > 1
-        fmt1 = varargin{1} ;
+        fmt1 = varargin{1};
       else
-        fmt1 = {'Color','red','LineWidth',3} ;
+        fmt1 = {'Color','red','LineWidth',3};
       end
       if nargin > 2
-        fmt2 = varargin{2} ;
+        fmt2 = varargin{2};
       else
-        fmt2 = {'Color','blue','LineWidth',3} ;
+        fmt2 = {'Color','blue','LineWidth',3};
       end
       [ x, y ] = self.polygon();
       for k=2:length(x)

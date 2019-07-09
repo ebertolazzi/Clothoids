@@ -10,7 +10,7 @@
 %=========================================================================%
 
 addpath('../matlab');
-addpath('../../ipopt/precompiled_mex');
+%addpath('../../ipopt/precompiled_mex');
 
 tol = 1e-10;
 
@@ -72,8 +72,8 @@ for k=1:9
     hold on
     SPL{2}.plot(1000,{'Color','red','LineWidth',1},{'Color','blue','LineWidth',1});
   end
-  
+
   title(sprintf('test P%d',k));
-  
+
   axis equal;
 end

@@ -19,6 +19,7 @@
 
 #include "ClothoidList.hh"
 #include "Biarc.hh"
+#include "BiarcList.hh"
 
 #include <cmath>
 #include <cfloat>
@@ -26,7 +27,7 @@
 #include <limits>
 #include <algorithm>
 
-#ifdef __GCC__
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
@@ -80,6 +81,15 @@ namespace G2lib {
     push_back( C.getC1() );
   }
 
+  ClothoidList::ClothoidList( BiarcList const & c )
+  : BaseCurve(G2LIB_CLOTHOID_LIST)
+  , last_idx(0)
+  , aabb_done(false)
+  {
+    init();
+    push_back( c );
+  }
+
   ClothoidList::ClothoidList( ClothoidCurve const & c )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
   , last_idx(0)
@@ -116,6 +126,9 @@ namespace G2lib {
       break;
     case G2LIB_BIARC:
       push_back( *static_cast<Biarc const *>(&C) );
+      break;
+    case G2LIB_BIARC_LIST:
+      push_back( *static_cast<BiarcList const *>(&C) );
       break;
     case G2LIB_CLOTHOID_LIST:
       copy( *static_cast<ClothoidList const *>(&C) );
@@ -211,6 +224,24 @@ namespace G2lib {
       s0.push_back(s0.back()+c.length());
     }
     clotoidList.push_back(c);
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back( BiarcList const & c ) {
+    s0.reserve( s0.size() + c.biarcList.size() + 1 );
+    clotoidList.reserve( clotoidList.size() + 2*c.biarcList.size() );
+
+    if ( s0.empty() ) s0.push_back(0);
+
+    vector<Biarc>::const_iterator ip = c.biarcList.begin();
+    for (; ip != c.biarcList.end(); ++ip ) {
+      s0.push_back(s0.back()+ip->length());
+      Biarc const & b = *ip;
+      clotoidList.push_back(ClothoidCurve(b.getC0()));
+      clotoidList.push_back(ClothoidCurve(b.getC1()));
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -360,8 +391,10 @@ namespace G2lib {
     real_type const theta[]
   ) {
 
-    G2LIB_ASSERT( n > 1,
-                  "ClothoidList::build_G1, at least 2 points are necessary" );
+    G2LIB_ASSERT(
+      n > 1,
+      "ClothoidList::build_G1, at least 2 points are necessary"
+    );
 
     init();
     reserve( n-1 );
@@ -369,38 +402,6 @@ namespace G2lib {
     for ( int_type k = 1; k < n; ++k ) {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       push_back(c);
-    }
-    return true;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  ClothoidList::build_theta(
-    int_type        n,
-    real_type const x[],
-    real_type const y[],
-    real_type       theta[]
-  ) const {
-    G2LIB_ASSERT( n > 1, "ClothoidList::build_theta, at least 2 points are necessary" );
-
-    if ( n == 2 ) {
-      theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] );
-    } else {
-      Biarc b;
-      bool ok, ciclic = hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10;
-      if ( ciclic ) {
-        ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] );
-        G2LIB_ASSERT( ok, "ClothoidList::build_theta, failed" );
-        theta[0] = theta[n-1] = b.thetaMiddle();
-      }
-      for ( int_type k = 1; k < n-1; ++k ) {
-        ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
-        G2LIB_ASSERT( ok, "ClothoidList::build_theta, failed" );
-        theta[k] = b.thetaMiddle();
-        if ( k == 1   && !ciclic ) theta[0]   = b.thetaBegin();
-        if ( k == n-2 && !ciclic ) theta[n-1] = b.thetaEnd();
-      }
     }
     return true;
   }
@@ -436,12 +437,15 @@ namespace G2lib {
 
   ClothoidCurve const &
   ClothoidList::get( int_type idx ) const {
-    G2LIB_ASSERT( !clotoidList.empty(),
-                  "ClothoidList::get( " << idx << " ) empty list" );
-    G2LIB_ASSERT( idx >= 0 && idx < int_type(clotoidList.size()),
-                  "ClothoidList::get( " << idx <<
-                  " ) bad index, must be in [0," <<
-                  clotoidList.size()-1 << "]" );
+    G2LIB_ASSERT(
+      !clotoidList.empty(),
+      "ClothoidList::get( " << idx << " ) empty list"
+    );
+    G2LIB_ASSERT(
+      idx >= 0 && idx < int_type(clotoidList.size()),
+      "ClothoidList::get( " << idx <<
+      " ) bad index, must be in [0," << clotoidList.size()-1 << "]"
+    );
     return clotoidList[idx];
   }
 
@@ -458,9 +462,10 @@ namespace G2lib {
   bool
   ClothoidList::findAtS( real_type s ) const {
     int_type ns = int_type(clotoidList.size());
-    G2LIB_ASSERT( last_idx >= 0 && last_idx < ns,
-                  "ClothoidList::findAtS( " << s << ", " << last_idx <<
-                  " ) bad index" );
+    G2LIB_ASSERT(
+      last_idx >= 0 && last_idx < ns,
+      "ClothoidList::findAtS( " << s << ", " << last_idx << " ) bad index"
+    );
     real_type const * sL = &s0[last_idx];
     if ( s < sL[0] ) {
       if ( s > s0.front() ) {
@@ -480,10 +485,11 @@ namespace G2lib {
       return true; // vale intervallo precedente
     }
     if ( s0[last_idx] > s ) --last_idx; // aggiustamento caso di bordo
-    G2LIB_ASSERT( last_idx >= 0 && last_idx < ns,
-                  "ClothoidList::findAtS( " << s <<
-                  ") last_idx = " << last_idx <<
-                  " range [" << s0.front() << ", " << s0.back() << "]" );
+    G2LIB_ASSERT(
+      last_idx >= 0 && last_idx < ns,
+      "ClothoidList::findAtS( " << s << ") last_idx = " << last_idx <<
+      " range [" << s0.front() << ", " << s0.back() << "]"
+    );
     return true;
   }
 
@@ -505,7 +511,7 @@ namespace G2lib {
   ClothoidList::length( real_type offs ) const {
     real_type L = 0;
     vector<ClothoidCurve>::const_iterator is = clotoidList.begin();
-    for ( ; is != clotoidList.end(); ++is ) L += is->length( offs );
+    for (; is != clotoidList.end(); ++is ) L += is->length( offs );
     return L;
   }
 
@@ -533,10 +539,10 @@ namespace G2lib {
 
   void
   ClothoidList::bbTriangles(
-    real_type     offs,
-    vector<T2D> & tvec,
-    real_type     max_angle,
-    real_type     max_size
+    real_type            offs,
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size
   ) const {
     vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for ( int_type ipos = 0; ic != clotoidList.end(); ++ic, ++ipos )
@@ -559,11 +565,11 @@ namespace G2lib {
     real_type & xmax,
     real_type & ymax
   ) const {
-    vector<T2D> tvec;
+    vector<Triangle2D> tvec;
     bbTriangles( offs, tvec, m_pi/18, 1e100 );
     xmin = ymin = numeric_limits<real_type>::infinity();
     xmax = ymax = -xmin;
-    vector<T2D>::const_iterator it;
+    vector<Triangle2D>::const_iterator it;
     for ( it = tvec.begin(); it != tvec.end(); ++it ) {
       // - - - - - - - - - - - - - - - - - - - -
       if      ( it->x1() < xmin ) xmin = it->x1();
@@ -1073,7 +1079,7 @@ namespace G2lib {
     real_type newx0 = ic->xBegin();
     real_type newy0 = ic->yBegin();
     s0[0] = 0;
-    for ( size_t k=0 ; ic != clotoidList.end(); ++ic, ++k ) {
+    for ( size_t k=0; ic != clotoidList.end(); ++ic, ++k ) {
       ic->scale( sfactor );
       ic->changeOrigin( newx0, newy0 );
       newx0 = ic->xEnd();
@@ -1094,7 +1100,7 @@ namespace G2lib {
     s0[0] = 0;
     s0[1] = ic->length();
     size_t k = 1;
-    for ( ++ic ; ic != clotoidList.end(); ++ic, ++k ) {
+    for ( ++ic; ic != clotoidList.end(); ++ic, ++k ) {
       ic->reverse();
       ic->changeOrigin( newx0, newy0 );
       newx0   = ic->xEnd();
@@ -1119,23 +1125,28 @@ namespace G2lib {
 
   void
   ClothoidList::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT( s_begin > s0.front() &&
-                  s_end < s0.back() &&
-                  s_end > s_begin,
-                  "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" <<
-                  s_end << ") bad range, must be in [ " << s0.front() <<
-                  ", " << s0.back() << " ]" );
+    G2LIB_ASSERT(
+      s_begin >= s0.front() && s_end <= s0.back() && s_end > s_begin,
+      "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" << s_end <<
+      ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
+    );
 
     findAtS( s_begin ); size_t i_begin = size_t(last_idx);
     findAtS( s_end );   size_t i_end   = size_t(last_idx);
-    clotoidList[i_begin].trim( s_begin-s0[i_begin], s0[i_begin+1] );
-    clotoidList[i_end].trim( s0[i_end], s_end-s0[i_end] );
+    if ( i_begin == i_end ) {
+      clotoidList[i_begin].trim( s_begin-s0[i_begin], s_end-s0[i_begin] );
+    } else {
+      clotoidList[i_begin].trim( s_begin-s0[i_begin], s0[i_begin+1]-s0[i_begin] );
+      clotoidList[i_end].trim( 0, s_end-s0[i_end] );
+    }
     clotoidList.erase( clotoidList.begin()+i_end+1, clotoidList.end() );
     clotoidList.erase( clotoidList.begin(), clotoidList.begin()+i_begin );
+    if ( clotoidList.back().L <= machepsi100 ) clotoidList.pop_back();
     vector<ClothoidCurve>::iterator ic = clotoidList.begin();
+    s0.resize( clotoidList.size() + 1 );
     s0[0] = 0;
     size_t k = 0;
-    for ( ++ic ; ic != clotoidList.end(); ++ic, ++k )
+    for (; ic != clotoidList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
     last_idx = 0;
   }
@@ -1168,7 +1179,7 @@ namespace G2lib {
 
     bbTriangles( offs, aabb_tri, max_angle, max_size );
     bboxes.reserve(aabb_tri.size());
-    vector<T2D>::const_iterator it;
+    vector<Triangle2D>::const_iterator it;
     int_type ipos = 0;
     for ( it = aabb_tri.begin(); it != aabb_tri.end(); ++it, ++ipos ) {
       real_type xmin, ymin, xmax, ymax;
@@ -1233,75 +1244,64 @@ namespace G2lib {
 
   void
   ClothoidList::intersect(
-    ClothoidList const & CL,
-    IntersectList      & ilist,
-    bool                 swap_s_vals
-  ) const {
-    real_type offs   = 0;
-    real_type offs_C = 0;
-    this->build_AABBtree( offs );
-    CL.build_AABBtree( offs_C );
-    AABBtree::VecPairPtrBBox iList;
-    aabb_tree.intersect( CL.aabb_tree, iList );
-
-    AABBtree::VecPairPtrBBox::const_iterator ip;
-    for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-      size_t ipos1 = size_t(ip->first->Ipos());
-      size_t ipos2 = size_t(ip->second->Ipos());
-
-      T2D const & T1 = aabb_tri[ipos1];
-      T2D const & T2 = CL.aabb_tri[ipos2];
-
-      ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
-      ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
-
-      real_type ss1, ss2;
-      bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_C, ss1, ss2 );
-
-      if ( converged ) {
-        ss1 += s0[T1.Icurve()];
-        ss2 += CL.s0[T2.Icurve()];
-        if ( swap_s_vals ) swap( ss1, ss2 );
-        ilist.push_back( Ipair( ss1, ss2 ) );
-      }
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  ClothoidList::intersect(
     real_type            offs,
     ClothoidList const & CL,
-    real_type            offs_C,
+    real_type            offs_CL,
     IntersectList      & ilist,
     bool                 swap_s_vals
   ) const {
-    this->build_AABBtree( offs );
-    CL.build_AABBtree( offs_C );
-    AABBtree::VecPairPtrBBox iList;
-    aabb_tree.intersect( CL.aabb_tree, iList );
+    if ( intersect_with_AABBtree ) {
+      this->build_AABBtree( offs );
+      CL.build_AABBtree( offs_CL );
+      AABBtree::VecPairPtrBBox iList;
+      aabb_tree.intersect( CL.aabb_tree, iList );
 
-    AABBtree::VecPairPtrBBox::const_iterator ip;
-    for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-      size_t ipos1 = size_t(ip->first->Ipos());
-      size_t ipos2 = size_t(ip->second->Ipos());
+      AABBtree::VecPairPtrBBox::const_iterator ip;
+      for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
+        size_t ipos1 = size_t(ip->first->Ipos());
+        size_t ipos2 = size_t(ip->second->Ipos());
 
-      T2D const & T1 = aabb_tri[ipos1];
-      T2D const & T2 = CL.aabb_tri[ipos2];
+        Triangle2D const & T1 = aabb_tri[ipos1];
+        Triangle2D const & T2 = CL.aabb_tri[ipos2];
 
-      ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
-      ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
+        ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
+        ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
 
-      real_type ss1, ss2;
-      bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_C, ss1, ss2 );
+        real_type ss1, ss2;
+        bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
 
-      if ( converged ) {
-        ss1 += s0[T1.Icurve()];
-        ss2 += CL.s0[T2.Icurve()];
-        if ( swap_s_vals ) swap( ss1, ss2 );
-        ilist.push_back( Ipair( ss1, ss2 ) );
+        if ( converged ) {
+          ss1 += s0[T1.Icurve()];
+          ss2 += CL.s0[T2.Icurve()];
+          if ( swap_s_vals ) swap( ss1, ss2 );
+          ilist.push_back( Ipair( ss1, ss2 ) );
+        }
       }
+    } else {
+      bbTriangles( offs, aabb_tri, m_pi/18, 1e100 );
+      CL.bbTriangles( offs_CL, CL.aabb_tri, m_pi/18, 1e100 );
+      for ( vector<Triangle2D>::const_iterator i1 = aabb_tri.begin();
+            i1 != aabb_tri.end(); ++i1 ) {
+        for ( vector<Triangle2D>::const_iterator i2 = CL.aabb_tri.begin();
+              i2 != CL.aabb_tri.end(); ++i2 ) {
+          Triangle2D const & T1 = *i1;
+          Triangle2D const & T2 = *i2;
+
+          ClothoidCurve const & C1 = clotoidList[T1.Icurve()];
+          ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
+
+          real_type ss1, ss2;
+          bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
+
+          if ( converged ) {
+            ss1 += s0[T1.Icurve()];
+            ss2 += CL.s0[T2.Icurve()];
+            if ( swap_s_vals ) swap( ss1, ss2 );
+            ilist.push_back( Ipair( ss1, ss2 ) );
+          }
+        }
+      }
+
     }
   }
 
@@ -1336,7 +1336,7 @@ namespace G2lib {
     DST = numeric_limits<real_type>::infinity();
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
       size_t ipos = size_t((*ic)->Ipos());
-      T2D const & T = aabb_tri[ipos];
+      Triangle2D const & T = aabb_tri[ipos];
       real_type dst = T.distMin( qx, qy );
       if ( dst < DST ) {
         // refine distance
@@ -1499,12 +1499,15 @@ namespace G2lib {
     real_type & t
   ) const {
 
-    G2LIB_ASSERT( !clotoidList.empty(), "ClothoidList::findST, empty list" );
-    G2LIB_ASSERT( ibegin >= 0 && ibegin <= iend &&
-                  iend < int_type(clotoidList.size()),
-                  "ClothoidList::findST( ibegin=" << ibegin << ", iend = " <<
-                  iend << " , x, y, s, t ) bad range not in [0," <<
-                  clotoidList.size()-1 << "]" );
+    G2LIB_ASSERT(
+      !clotoidList.empty(),
+      "ClothoidList::findST, empty list"
+    );
+    G2LIB_ASSERT(
+      ibegin >= 0 && ibegin <= iend && iend < int_type(clotoidList.size()),
+      "ClothoidList::findST( ibegin=" << ibegin << ", iend = " << iend <<
+      " , x, y, s, t ) bad range not in [0," << clotoidList.size()-1 << "]"
+    );
     s = t = 0;
     int_type iseg = 0;
     bool ok = false;
@@ -1530,12 +1533,13 @@ namespace G2lib {
     stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n";
     vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic )
-      stream << ic->xBegin()     << '\t'
-             << ic->yBegin()     << '\t'
-             << ic->thetaBegin() << '\t'
-             << ic->kappaBegin() << '\t'
-             << ic->dkappa()     << '\t'
-             << ic->length()     << '\n';
+      stream
+        << ic->xBegin()     << '\t'
+        << ic->yBegin()     << '\t'
+        << ic->thetaBegin() << '\t'
+        << ic->kappaBegin() << '\t'
+        << ic->dkappa()     << '\t'
+        << ic->length()     << '\n';
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1545,12 +1549,13 @@ namespace G2lib {
     stream << "data = {\n";
     vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for (; ic != clotoidList.end(); ++ic )
-      stream << ic->xBegin()     << '\t'
-             << ic->yBegin()     << '\t'
-             << ic->thetaBegin() << '\t'
-             << ic->kappaBegin() << '\t'
-             << ic->dkappa()     << '\t'
-             << ic->length()     << '\n';
+      stream
+        << ic->xBegin()     << '\t'
+        << ic->yBegin()     << '\t'
+        << ic->thetaBegin() << '\t'
+        << ic->kappaBegin() << '\t'
+        << ic->dkappa()     << '\t'
+        << ic->length()     << '\n';
     stream << "}\n";
   }
 
@@ -1559,8 +1564,8 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, ClothoidList const & CL ) {
     vector<ClothoidCurve>::const_iterator ic = CL.clotoidList.begin();
-    for ( ; ic != CL.clotoidList.end(); ++ic )
-      stream << *ic << '\n' ;
+    for (; ic != CL.clotoidList.end(); ++ic )
+      stream << *ic << '\n';
     return stream;
   }
 
