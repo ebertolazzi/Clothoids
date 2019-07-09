@@ -110,10 +110,12 @@ namespace G2lib {
 
     //! construct a circle curve with the standard parameters
     explicit
-    LineSegment( real_type _x0,
-                 real_type _y0,
-                 real_type _theta0,
-                 real_type _L )
+    LineSegment(
+      real_type _x0,
+      real_type _y0,
+      real_type _theta0,
+      real_type _L
+    )
     : BaseCurve(G2LIB_LINE)
     , x0(_x0)
     , y0(_y0)
@@ -158,18 +160,22 @@ namespace G2lib {
 
     virtual
     void
-    bbox( real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE;
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
-    bbox( real_type   offs,
-          real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const G2LIB_OVERRIDE;
+    bbox(
+      real_type   offs,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
 
     /*\
      |   ____             _          _______           _
@@ -405,36 +411,44 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE {
+    eval(
+      real_type   s,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE {
       x = x0+s*c0;
       y = y0+s*s0;
     }
 
     virtual
     void
-    eval_D( real_type,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE {
+    eval_D(
+      real_type,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE {
       x_D = c0;
       y_D = s0;
     }
 
     virtual
     void
-    eval_DD( real_type,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE {
+    eval_DD(
+      real_type,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE {
       x_DD = 0;
       y_DD = 0;
     }
 
     virtual
     void
-    eval_DDD( real_type,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE {
+    eval_DDD(
+      real_type,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE {
       x_DDD = 0;
       y_DDD = 0;
     }
@@ -491,39 +505,47 @@ namespace G2lib {
 
     virtual
     void
-    eval( real_type   s,
-          real_type   offs,
-          real_type & x,
-          real_type & y ) const G2LIB_OVERRIDE {
+    eval(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE {
       x = x0 + s*c0 - offs*s0;
       y = y0 + s*s0 + offs*c0;
     }
 
     virtual
     void
-    eval_D( real_type,
-            real_type,
-            real_type & x_D,
-            real_type & y_D ) const G2LIB_OVERRIDE {
+    eval_D(
+      real_type,
+      real_type,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE {
       x_D = c0;
       y_D = s0;
     }
 
     virtual
     void
-    eval_DD( real_type,
-             real_type,
-             real_type & x_DD,
-             real_type & y_DD ) const G2LIB_OVERRIDE {
+    eval_DD(
+      real_type,
+      real_type,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE {
       x_DD = y_DD = 0;
     }
 
     virtual
     void
-    eval_DDD( real_type,
-              real_type,
-              real_type & x_DDD,
-              real_type & y_DDD ) const G2LIB_OVERRIDE {
+    eval_DDD(
+      real_type,
+      real_type,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE {
       x_DDD = y_DDD = 0;
     }
 
@@ -587,24 +609,28 @@ namespace G2lib {
 
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     virtual
     int_type
-    closestPoint( real_type   qx,
-                  real_type   qy,
-                  real_type   offs,
-                  real_type & x,
-                  real_type & y,
-                  real_type & s,
-                  real_type & t,
-                  real_type & dst ) const G2LIB_OVERRIDE;
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
 
     virtual
     void
@@ -616,10 +642,12 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
-    build( real_type _x0,
-           real_type _y0,
-           real_type _theta0,
-           real_type _L ) {
+    build(
+      real_type _x0,
+      real_type _y0,
+      real_type _theta0,
+      real_type _L
+    ) {
       x0     = _x0;
       y0     = _y0;
       theta0 = _theta0;
@@ -630,10 +658,12 @@ namespace G2lib {
 
     //! construct a clothoid with the standard parameters
     void
-    build_2P( real_type _x0,
-              real_type _y0,
-              real_type _x1,
-              real_type _y1 );
+    build_2P(
+      real_type _x0,
+      real_type _y0,
+      real_type _x1,
+      real_type _y1
+    );
 
     //! construct a clothoid with the standard parameters
     void
@@ -650,21 +680,27 @@ namespace G2lib {
     }
 
     bool
-    intersect( LineSegment const & S,
-               real_type         & s1,
-               real_type         & s2 ) const;
+    intersect(
+      LineSegment const & S,
+      real_type         & s1,
+      real_type         & s2
+    ) const;
 
     bool
-    intersect( real_type           offs,
-               LineSegment const & S,
-               real_type           S_offs,
-               real_type         & s1,
-               real_type         & s2 ) const;
+    intersect(
+      real_type           offs,
+      LineSegment const & S,
+      real_type           S_offs,
+      real_type         & s1,
+      real_type         & s2
+    ) const;
 
     void
-    intersect( LineSegment const & LS,
-               IntersectList     & ilist,
-               bool                swap_s_vals ) const {
+    intersect(
+      LineSegment const & LS,
+      IntersectList     & ilist,
+      bool                swap_s_vals
+    ) const {
       real_type s1, s2;
       bool ok = this->intersect( LS, s1, s2 );
       if ( ok ) {
@@ -674,11 +710,13 @@ namespace G2lib {
     }
 
     void
-    intersect( real_type           offs,
-               LineSegment const & LS,
-               real_type           offs_LS,
-               IntersectList     & ilist,
-               bool                swap_s_vals ) const {
+    intersect(
+      real_type           offs,
+      LineSegment const & LS,
+      real_type           offs_LS,
+      IntersectList     & ilist,
+      bool                swap_s_vals
+    ) const {
       real_type s1, s2;
       bool ok = this->intersect( offs, LS, offs_LS, s1, s2 );
       if ( ok ) {
@@ -691,9 +729,11 @@ namespace G2lib {
     collision( LineSegment const & S ) const;
 
     bool
-    collision( real_type           offs,
-               LineSegment const & S,
-               real_type           S_offs ) const;
+    collision(
+      real_type           offs,
+      LineSegment const & S,
+      real_type           S_offs
+    ) const;
 
     /*\
      |   _   _ _   _ ____  ____ ____
@@ -704,17 +744,14 @@ namespace G2lib {
     \*/
 
     void
-    paramNURBS( int_type & n_knots,
-                int_type & n_pnts ) const;
+    paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
 
     void
-    toNURBS( real_type knots[],
-             real_type Poly[][3] ) const;
+    toNURBS( real_type knots[], real_type Poly[][3] ) const;
 
     virtual
     void
-    toBS( real_type knots[],
-          real_type Poly[][2] ) const;
+    toBS( real_type knots[], real_type Poly[][2] ) const;
 
     friend
     ostream_type &

@@ -52,7 +52,7 @@ main() {
   pC0->intersect( *pC1, ilist, false );
   pC0->intersect( CL1, ilist, false );
 
-  cout << collision( *pC0, *pC1 ) << '\n' ;
+  cout << collision( *pC0, *pC1 ) << '\n';
   //C0.intersect( C1, ilist );
 
   cout << "L0 = " << C0.length() << '\n';

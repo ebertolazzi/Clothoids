@@ -2,7 +2,7 @@
 %  TriTriOverlap:  Check if two triangles overlap                      %
 %                                                                      %
 %  USAGE:                                                              %
-%    intersect = TriTriOverlap( p0, p1, p2, q0, q1, q2 ) ;             %
+%    intersect = TriTriOverlap( p0, p1, p2, q0, q1, q2 );             %
 %                                                                      %
 %  On input:                                                           %
 %                                                                      %

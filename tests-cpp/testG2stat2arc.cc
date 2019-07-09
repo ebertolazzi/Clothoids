@@ -84,8 +84,9 @@ main() {
     if ( is->first>0 ) acc  += is->second;
     else               acc1 += is->second;
   }
-  cout << "ok = " << acc << " perc = " << double(acc)/(acc+acc1) << '\n';
-  cout << "elapsed = " << tictoc.totalElapsedSeconds() << '\n';
-  cout << "All done\n";
+  cout
+    << "ok = " << acc << " perc = " << double(acc)/(acc+acc1) << '\n'
+    << "elapsed = " << tictoc.elapsed_s() << '\n'
+    << "All done\n";
   return 0;
 }

@@ -11,6 +11,18 @@
 		D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9099D261F600AA600740ECF /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9099D291F600B9400740ECF /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
+		D9168D51227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D52227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D53227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D54227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D55227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D56227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D57227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D58227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D59227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D5A227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D5B227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
+		D9168D5C227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
 		D9179A7C206D211E006B66E7 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9179A7D206D211E006B66E7 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
@@ -317,6 +329,8 @@
 		D9099D251F600AA600740ECF /* G2lib.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = G2lib.cc; sourceTree = "<group>"; };
 		D9099D271F600B9400740ECF /* Circle.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Circle.hh; sourceTree = "<group>"; };
 		D9099D281F600B9400740ECF /* Circle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Circle.cc; sourceTree = "<group>"; };
+		D9168D4F227E207B0029D2BE /* BiarcList.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BiarcList.cc; sourceTree = "<group>"; };
+		D9168D50227E207B0029D2BE /* BiarcList.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BiarcList.hh; sourceTree = "<group>"; };
 		D9179A8D206D211E006B66E7 /* testDistance */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testDistance; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9179A8E206D2135006B66E7 /* testDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testDistance.cc; sourceTree = "<group>"; };
 		D918ADA41F62C1C9009893C3 /* Line.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Line.hh; sourceTree = "<group>"; };
@@ -501,6 +515,8 @@
 				D938F4E71DD3B84A00E08A70 /* Clothoid.hh */,
 				D9FCD3352075552600553A10 /* Clothoid.cc */,
 				D9FCD33C207556DD00553A10 /* ClothoidDistance.cc */,
+				D9168D50227E207B0029D2BE /* BiarcList.hh */,
+				D9168D4F227E207B0029D2BE /* BiarcList.cc */,
 				D92EFAAD2188742200BF8E18 /* ClothoidList.hh */,
 				D9614FD41FB8609F007E5770 /* ClothoidList.cc */,
 				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
@@ -747,7 +763,7 @@
 		D938F4D31DD3B83000E08A70 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 				TargetAttributes = {
 					D9179A7A206D211E006B66E7 = {
@@ -789,10 +805,11 @@
 			};
 			buildConfigurationList = D938F4D61DD3B83000E08A70 /* Build configuration list for PBXProject "G2solver" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = D938F4D21DD3B83000E08A70;
 			productRefGroup = D938F4DC1DD3B83000E08A70 /* Products */;
@@ -832,6 +849,7 @@
 				D9179A82206D211E006B66E7 /* Biarc.cc in Sources */,
 				D9179A83206D211E006B66E7 /* ClothoidAsyPlot.cc in Sources */,
 				D9FCD342207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9168D56227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9179A84206D211E006B66E7 /* Circle.cc in Sources */,
 				D9BA2F93217FE5AF009D45BD /* AABBtree.cc in Sources */,
 				D9179A86206D211E006B66E7 /* ClothoidG2.cc in Sources */,
@@ -855,6 +873,7 @@
 				D92EFA852186931500BF8E18 /* Biarc.cc in Sources */,
 				D92EFA862186931500BF8E18 /* ClothoidAsyPlot.cc in Sources */,
 				D92EFA872186931500BF8E18 /* ClothoidDistance.cc in Sources */,
+				D9168D58227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D92EFA882186931500BF8E18 /* Circle.cc in Sources */,
 				D92EFA892186931500BF8E18 /* AABBtree.cc in Sources */,
 				D92EFA8A2186931500BF8E18 /* ClothoidG2.cc in Sources */,
@@ -878,6 +897,7 @@
 				D92EFAAC2187B05800BF8E18 /* testIntersect3.cc in Sources */,
 				D92EFA9F2187B03600BF8E18 /* ClothoidAsyPlot.cc in Sources */,
 				D92EFAA02187B03600BF8E18 /* ClothoidDistance.cc in Sources */,
+				D9168D59227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D92EFAA12187B03600BF8E18 /* Circle.cc in Sources */,
 				D92EFAA22187B03600BF8E18 /* AABBtree.cc in Sources */,
 				D92EFAA32187B03600BF8E18 /* ClothoidG2.cc in Sources */,
@@ -901,6 +921,7 @@
 				D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D9099D291F600B9400740ECF /* Circle.cc in Sources */,
 				D9FCD33D207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D9168D51227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */,
 				D9BA2F8E217FD93E009D45BD /* AABBtree.cc in Sources */,
 				D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */,
@@ -924,6 +945,7 @@
 				D969AF7C21708CC200CA4DD0 /* Biarc.cc in Sources */,
 				D969AF7D21708CC200CA4DD0 /* ClothoidAsyPlot.cc in Sources */,
 				D969AF7E21708CC200CA4DD0 /* Circle.cc in Sources */,
+				D9168D5C227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF7F21708CC200CA4DD0 /* ClothoidDistance.cc in Sources */,
 				D9BA2F97217FE5B1009D45BD /* AABBtree.cc in Sources */,
 				D969AF8021708CC200CA4DD0 /* ClothoidG2.cc in Sources */,
@@ -948,6 +970,7 @@
 				D96E1FB21F75513000115228 /* Circle.cc in Sources */,
 				D96E1FB31F75513000115228 /* Triangle2D.cc in Sources */,
 				D96E1FB41F75513000115228 /* Line.cc in Sources */,
+				D9168D54227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF6C216E4CFC00CA4DD0 /* PolyLine.cc in Sources */,
 				D96E1FB51F75513000115228 /* Fresnel.cc in Sources */,
 			);
@@ -969,6 +992,7 @@
 				D971F89A1F613BC2000E663E /* Biarc.cc in Sources */,
 				D9FCD33E207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D918ADA71F62C1CE009893C3 /* Line.cc in Sources */,
+				D9168D52227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
 				D9BA2F8F217FE5AD009D45BD /* AABBtree.cc in Sources */,
 				D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */,
@@ -992,6 +1016,7 @@
 				D9AFBB6520E28F5900C498EF /* Biarc.cc in Sources */,
 				D9AFBB6620E28F5900C498EF /* ClothoidAsyPlot.cc in Sources */,
 				D9AFBB6720E28F5900C498EF /* ClothoidDistance.cc in Sources */,
+				D9168D5A227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9AFBB6820E28F5900C498EF /* Circle.cc in Sources */,
 				D9BA2F95217FE5B0009D45BD /* AABBtree.cc in Sources */,
 				D9AFBB6920E28F5900C498EF /* ClothoidG2.cc in Sources */,
@@ -1015,6 +1040,7 @@
 				D9BFDB1B20EE3C0E00612F3C /* Biarc.cc in Sources */,
 				D9BFDB1C20EE3C0E00612F3C /* ClothoidAsyPlot.cc in Sources */,
 				D9BFDB1D20EE3C0E00612F3C /* Circle.cc in Sources */,
+				D9168D5B227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9BFDB1E20EE3C0E00612F3C /* ClothoidDistance.cc in Sources */,
 				D9BA2F96217FE5B0009D45BD /* AABBtree.cc in Sources */,
 				D9BFDB2020EE3C0E00612F3C /* ClothoidG2.cc in Sources */,
@@ -1038,6 +1064,7 @@
 				D9C3739D20BC484100715C11 /* Biarc.cc in Sources */,
 				D9C3739E20BC484100715C11 /* ClothoidAsyPlot.cc in Sources */,
 				D9C3739F20BC484100715C11 /* ClothoidDistance.cc in Sources */,
+				D9168D57227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9C373A020BC484100715C11 /* Circle.cc in Sources */,
 				D9BA2F94217FE5AF009D45BD /* AABBtree.cc in Sources */,
 				D9C373A120BC484100715C11 /* ClothoidG2.cc in Sources */,
@@ -1062,6 +1089,7 @@
 				D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */,
 				D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */,
 				D9A393571FA14C57009C1E60 /* testG2statCLC.cc in Sources */,
+				D9168D55227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF6D216E4CFD00CA4DD0 /* PolyLine.cc in Sources */,
 				D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */,
 			);
@@ -1084,6 +1112,7 @@
 				D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */,
 				D9E74A591F68825600E47B88 /* Line.cc in Sources */,
 				D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */,
+				D9168D53227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF6B216E4CFC00CA4DD0 /* PolyLine.cc in Sources */,
 				D9A393591FA14C61009C1E60 /* testG2stat.cc in Sources */,
 			);
@@ -1144,6 +1173,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -1213,6 +1243,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;

@@ -69,10 +69,12 @@ namespace G2lib {
     case G2LIB_CIRCLE:
     case G2LIB_CLOTHOID:
     case G2LIB_BIARC:
+    case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
-      G2LIB_ASSERT( false,
-                    "PolyLine constructor cannot convert from: " <<
-                    CurveType_name[C.type()] );
+      G2LIB_ASSERT(
+        false,
+        "PolyLine constructor cannot convert from: " << CurveType_name[C.type()]
+      );
     }
   }
 
@@ -109,7 +111,6 @@ namespace G2lib {
     push_back( B, tol );
   }
 
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( ClothoidCurve const & C, real_type tol )
@@ -120,7 +121,6 @@ namespace G2lib {
     init( C.xBegin(), C.xBegin() );
     push_back( C, tol );
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -139,14 +139,14 @@ namespace G2lib {
   PolyLine::copy( PolyLine const & PL ) {
     polylineList.clear();
     polylineList.reserve( PL.polylineList.size() );
-    std::copy( PL.polylineList.begin(),
-               PL.polylineList.end(),
-               back_inserter(polylineList) );
+    std::copy(
+      PL.polylineList.begin(),
+      PL.polylineList.end(),
+      back_inserter(polylineList)
+    );
     s0.clear();
     s0.reserve( PL.s0.size() );
-    std::copy( PL.s0.begin(),
-               PL.s0.end(),
-               back_inserter(s0) );
+    std::copy( PL.s0.begin(), PL.s0.end(), back_inserter(s0) );
     aabb_done = false;
   }
 
@@ -155,15 +155,19 @@ namespace G2lib {
   void
   PolyLine::search( real_type s ) const {
 
-    G2LIB_ASSERT( !s0.empty(),
-                  "PolyLine::search(" << s << ") empty PolyLine" );
+    G2LIB_ASSERT(
+      !s0.empty(),
+      "PolyLine::search(" << s << ") empty PolyLine"
+    );
 
     int_type  npts = int_type(s0.size());
     real_type sl   = s0.front();
     real_type sr   = s0.back();
-    G2LIB_ASSERT( s >= sl && s <= sr,
-                  "PolyLine::search( " << s <<
-                  " ) out of range: [" << sl << ", " << sr << "]" );
+    G2LIB_ASSERT(
+      s >= sl && s <= sr,
+      "PolyLine::search( " << s <<
+      " ) out of range: [" << sl << ", " << sr << "]"
+    );
 
     if      ( isegment < 0      ) isegment = 0;
     else if ( isegment > npts-2 ) isegment = npts-2;
@@ -175,11 +179,15 @@ namespace G2lib {
 
   LineSegment const &
   PolyLine::getSegment( int_type n ) const {
-    G2LIB_ASSERT( !polylineList.empty(),
-                  "PolyLine::getSegment(...) empty PolyLine" );
-    G2LIB_ASSERT( n >= 0 && n < int_type(polylineList.size()),
-                  "PolyLine::getSegment( " << n <<
-                  " ) out of range [0," << polylineList.size()-1 << "]" );
+    G2LIB_ASSERT(
+      !polylineList.empty(),
+      "PolyLine::getSegment(...) empty PolyLine"
+    );
+    G2LIB_ASSERT(
+      n >= 0 && n < int_type(polylineList.size()),
+      "PolyLine::getSegment( " << n <<
+      " ) out of range [0," << polylineList.size()-1 << "]"
+    );
     return polylineList[size_t(n)];
   }
 
@@ -320,12 +328,11 @@ namespace G2lib {
 
   void
   PolyLine::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT( s_begin >= s0.front() &&
-                  s_end <= s0.back() &&
-                  s_end > s_begin,
-                  "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" <<
-                  s_end << ") bad range, must be in [ " << s0.front() <<
-                  ", " << s0.back() << " ]" );
+    G2LIB_ASSERT(
+      s_begin >= s0.front() && s_end <= s0.back() && s_end > s_begin,
+      "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" << s_end <<
+      ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
+    );
 
     search( s_begin ); size_t i_begin = size_t(isegment);
     search( s_end );   size_t i_end   = size_t(isegment);
@@ -336,11 +343,10 @@ namespace G2lib {
     vector<LineSegment>::iterator ic = polylineList.begin();
     s0[0] = 0;
     size_t k = 0;
-    for ( ++ic; ic != polylineList.end(); ++ic, ++k )
+    for (; ic != polylineList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
     isegment = 0;
   }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -493,9 +499,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PolyLine::build( real_type const x[],
-                   real_type const y[],
-                   int_type npts ) {
+  PolyLine::build(
+    real_type const x[],
+    real_type const y[],
+    int_type        npts
+  ) {
     init( x[0], y[0] );
     for ( int_type k = 1; k < npts; ++k )
       push_back( x[k], y[k] );
@@ -608,10 +616,14 @@ namespace G2lib {
     vector<real_type> & ss0,
     vector<real_type> & ss1
   ) const {
-    G2LIB_ASSERT( !polylineList.empty(),
-                  "PolyLine::intersect, empty list" );
-    G2LIB_ASSERT( !pl.polylineList.empty(),
-                  "PolyLine::intersect, empty secondary list" );
+    G2LIB_ASSERT(
+      !polylineList.empty(),
+      "PolyLine::intersect, empty list"
+    );
+    G2LIB_ASSERT(
+      !pl.polylineList.empty(),
+      "PolyLine::intersect, empty secondary list"
+    );
 
 #if 1
     build_AABBtree();
@@ -658,9 +670,11 @@ namespace G2lib {
   }
 
   void
-  PolyLine::intersect( PolyLine const & pl,
-                       IntersectList  & ilist,
-                       bool             swap_s_vals ) const {
+  PolyLine::intersect(
+    PolyLine const & pl,
+    IntersectList  & ilist,
+    bool             swap_s_vals
+  ) const {
     std::vector<real_type> s1, s2;
     this->intersect( pl, s1, s2 );
     ilist.reserve( ilist.size() + s1.size() );
@@ -676,13 +690,14 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, PolyLine const & P ) {
-    stream <<   "nseg   = " << P.numSegment()
-           << "\nxBegin = " << P.xBegin()
-           << "\nybegin = " << P.yBegin()
-           << "\nxEnd   = " << P.xEnd()
-           << "\nyEnd   = " << P.yEnd()
-           << "\nlength = " << P.length()
-           << "\n";
+    stream
+      <<   "nseg   = " << P.numSegment()
+      << "\nxBegin = " << P.xBegin()
+      << "\nybegin = " << P.yBegin()
+      << "\nxEnd   = " << P.xEnd()
+      << "\nyEnd   = " << P.yEnd()
+      << "\nlength = " << P.length()
+      << "\n";
     return stream;
   }
 

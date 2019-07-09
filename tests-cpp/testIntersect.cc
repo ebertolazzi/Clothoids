@@ -35,6 +35,8 @@ main() {
 
   G2lib::IntersectList ilist;
 
+  G2lib::noAABBtree();
+
   C0.intersect( C1, ilist, false );
 
   cout << "L0 = " << C0.length() << '\n';

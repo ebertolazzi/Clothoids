@@ -285,7 +285,7 @@ B.plot();
 % some options may be passed to plot command
 % npts   = number of points unsed to plot the circle
 % fmt1/2 = cell array with formatting command for first and second cicle
-npts = 100 ;
+npts = 100;
 fmt1 = {'Color','red'};
 fmt2 = {'Color','blue'};
 B.plot(npts,fmt1,fmt2);
@@ -415,7 +415,7 @@ CL.info();
 CL.plot();
 % some options may be passed to plot command
 % npts = number of points unsed to plot the circle
-npts = 100 ;
+npts = 100;
 CL.plot(npts,'Color','red');
 ~~~~~
 

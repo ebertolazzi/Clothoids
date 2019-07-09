@@ -23,10 +23,9 @@
 #define A_THRESOLD   0.01
 #define A_SERIE_SIZE 3
 
-#ifdef __GCC__
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wshadow"
-#pragma GCC diagnostic ignored "-Wglobal-constructors"
 #endif
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -71,55 +70,63 @@ namespace G2lib {
   // email: sivakanth.telasula@gmail.com
   // date: August 11, 2005
   */
-  static const real_type fn[] = { 0.49999988085884732562,
-                                  1.3511177791210715095,
-                                  1.3175407836168659241,
-                                  1.1861149300293854992,
-                                  0.7709627298888346769,
-                                  0.4173874338787963957,
-                                  0.19044202705272903923,
-                                  0.06655998896627697537,
-                                  0.022789258616785717418,
-                                  0.0040116689358507943804,
-                                  0.0012192036851249883877 };
+  static const real_type fn[] = {
+    0.49999988085884732562,
+    1.3511177791210715095,
+    1.3175407836168659241,
+    1.1861149300293854992,
+    0.7709627298888346769,
+    0.4173874338787963957,
+    0.19044202705272903923,
+    0.06655998896627697537,
+    0.022789258616785717418,
+    0.0040116689358507943804,
+    0.0012192036851249883877
+  };
 
-  static const real_type fd[] = { 1.0,
-                                  2.7022305772400260215,
-                                  4.2059268151438492767,
-                                  4.5221882840107715516,
-                                  3.7240352281630359588,
-                                  2.4589286254678152943,
-                                  1.3125491629443702962,
-                                  0.5997685720120932908,
-                                  0.20907680750378849485,
-                                  0.07159621634657901433,
-                                  0.012602969513793714191,
-                                  0.0038302423512931250065 };
+  static const real_type fd[] = {
+    1.0,
+    2.7022305772400260215,
+    4.2059268151438492767,
+    4.5221882840107715516,
+    3.7240352281630359588,
+    2.4589286254678152943,
+    1.3125491629443702962,
+    0.5997685720120932908,
+    0.20907680750378849485,
+    0.07159621634657901433,
+    0.012602969513793714191,
+    0.0038302423512931250065
+  };
 
-  static const real_type gn[] = { 0.50000014392706344801,
-                                  0.032346434925349128728,
-                                  0.17619325157863254363,
-                                  0.038606273170706486252,
-                                  0.023693692309257725361,
-                                  0.007092018516845033662,
-                                  0.0012492123212412087428,
-                                  0.00044023040894778468486,
-                                 -8.80266827476172521e-6,
-                                 -1.4033554916580018648e-8,
-                                  2.3509221782155474353e-10 };
+  static const real_type gn[] = {
+    0.50000014392706344801,
+    0.032346434925349128728,
+    0.17619325157863254363,
+    0.038606273170706486252,
+    0.023693692309257725361,
+    0.007092018516845033662,
+    0.0012492123212412087428,
+    0.00044023040894778468486,
+    -8.80266827476172521e-6,
+    -1.4033554916580018648e-8,
+    2.3509221782155474353e-10
+  };
 
-  static const real_type gd[] = { 1.0,
-                                  2.0646987497019598937,
-                                  2.9109311766948031235,
-                                  2.6561936751333032911,
-                                  2.0195563983177268073,
-                                  1.1167891129189363902,
-                                  0.57267874755973172715,
-                                  0.19408481169593070798,
-                                  0.07634808341431248904,
-                                  0.011573247407207865977,
-                                  0.0044099273693067311209,
-                                 -0.00009070958410429993314 };
+  static const real_type gd[] = {
+    1.0,
+    2.0646987497019598937,
+    2.9109311766948031235,
+    2.6561936751333032911,
+    2.0195563983177268073,
+    1.1167891129189363902,
+    0.57267874755973172715,
+    0.19408481169593070798,
+    0.07634808341431248904,
+    0.011573247407207865977,
+    0.0044099273693067311209,
+    -0.00009070958410429993314
+  };
 
   //! \endcond
 
@@ -247,9 +254,11 @@ namespace G2lib {
         term    *= numterm*(numterm-2.0)*t;
         sum     += term;
         absterm  = abs(term);
-        G2LIB_ASSERT( oldterm >= absterm,
-                      "In FresnelCS f not converged to eps, x = " << x <<
-                      " oldterm = " << oldterm << " absterm = " << absterm );
+        G2LIB_ASSERT(
+          oldterm >= absterm,
+          "In FresnelCS f not converged to eps, x = " << x <<
+          " oldterm = " << oldterm << " absterm = " << absterm
+        );
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
@@ -266,9 +275,11 @@ namespace G2lib {
         term    *= numterm*(numterm+2.0)*t;
         sum     += term;
         absterm  = abs(term);
-        G2LIB_ASSERT( oldterm >= absterm,
-                      "In FresnelCS g not converged to eps, x = " << x <<
-                      " oldterm = " << oldterm << " absterm = " << absterm );
+        G2LIB_ASSERT(
+          oldterm >= absterm,
+          "In FresnelCS g not converged to eps, x = " << x <<
+          " oldterm = " << oldterm << " absterm = " << absterm
+        );
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
@@ -350,8 +361,10 @@ namespace G2lib {
     real_type Y[]
   ) {
 
-    G2LIB_ASSERT( nk < 4 && nk > 0,
-                  "In evalXYaLarge first argument nk must be in 1..3, nk " << nk );
+    G2LIB_ASSERT(
+      nk < 4 && nk > 0,
+      "In evalXYaLarge first argument nk must be in 1..3, nk " << nk
+    );
 
     real_type s    = a > 0 ? +1 : -1;
     real_type absa = abs(a);
@@ -469,8 +482,10 @@ namespace G2lib {
     real_type & Y
   ) {
 
-    G2LIB_ASSERT( p < 11 && p > 0,
-                  "In evalXYaSmall p = " << p << " must be in 1..10" );
+    G2LIB_ASSERT(
+      p < 11 && p > 0,
+      "In evalXYaSmall p = " << p << " must be in 1..10"
+    );
 
     real_type X0[43], Y0[43];
 
@@ -507,9 +522,11 @@ namespace G2lib {
     int_type  nkk = nk + 4*p + 2; // max 45
     real_type X0[45], Y0[45];
 
-    G2LIB_ASSERT( nkk < 46,
-                  "In evalXYaSmall (nk,p) = (" << nk << "," << p << ")\n" <<
-                  "nk + 4*p + 2 = " << nkk  << " must be less than 46\n" );
+    G2LIB_ASSERT(
+      nkk < 46,
+      "In evalXYaSmall (nk,p) = (" << nk << "," << p << ")\n" <<
+      "nk + 4*p + 2 = " << nkk  << " must be less than 46\n"
+    );
 
     evalXYazero( nkk, b, X0, Y0 );
 
@@ -996,10 +1013,12 @@ namespace G2lib {
   ClothoidData::origin_at( real_type s_origin ) {
     real_type C, S;
     real_type sdk = s_origin*dk;
-    GeneralizedFresnelCS( sdk*s_origin,
-                          kappa0*s_origin,
-                          theta0,
-                          C, S );
+    GeneralizedFresnelCS(
+      sdk*s_origin,
+      kappa0*s_origin,
+      theta0,
+      C, S
+    );
     x0     += s_origin*C;
     y0     += s_origin*S;
     theta0 += s_origin*(kappa0+0.5*sdk);
@@ -1126,9 +1145,12 @@ namespace G2lib {
     real_type   k_D[2],
     real_type   dk_D[2]
   ) {
-    static real_type const CF[] = { 2.989696028701907,  0.716228953608281,
-                                   -0.458969738821509, -0.502821153340377,
-                                    0.261062141752652, -0.045854475238709 };
+    static real_type const CF[] = {
+      2.989696028701907,   0.716228953608281,
+      -0.458969738821509, -0.502821153340377,
+      0.261062141752652,  -0.045854475238709
+    };
+
     x0     = _x0;
     y0     = _y0;
     theta0 = _theta0;
@@ -1168,9 +1190,10 @@ namespace G2lib {
       A  -= g / dg;
     } while ( ++niter <= 10 && abs(g) > tol );
 
-    G2LIB_ASSERT( abs(g) <= tol,
-                  "Newton do not converge, g = " << g <<
-                  " niter = " << niter );
+    G2LIB_ASSERT(
+      abs(g) <= tol,
+      "Newton do not converge, g = " << g << " niter = " << niter
+    );
     GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] );
     L = r/intC[0];
 

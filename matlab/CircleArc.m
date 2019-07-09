@@ -25,7 +25,7 @@ classdef CircleArc < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'CircleArc' ;
+      str = 'CircleArc';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, x0, y0, theta0, k0, L )
@@ -100,13 +100,13 @@ classdef CircleArc < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, npts, fmt )
       if nargin<2
-        npts = 128 ;
+        npts = 128;
       end
       if nargin<3
         fmt = {'Color','blue','Linewidth',2};
       end
       L = self.length();
-      S = 0:L/npts:L ;
+      S = 0:L/npts:L;
       [X,Y] = self.eval(S);
       plot(X,Y,fmt{:});
     end

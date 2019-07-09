@@ -42,6 +42,9 @@ namespace G2lib {
 
   class Triangle2D {
     real_type p1[2], p2[2], p3[2];
+    real_type s0;
+    real_type s1;
+    int_type  icurve;
 
   public:
 
@@ -49,25 +52,43 @@ namespace G2lib {
     { *this = t; }
 
     Triangle2D( ) {
-      p1[0] = p1[1] =
-      p2[0] = p2[1] =
-      p3[0] = p3[1] = 0;
+      this->p1[0] = this->p1[1] =
+      this->p2[0] = this->p2[1] =
+      this->p3[0] = this->p3[1] = 0;
+      this->s0     = 0;
+      this->s1     = 0;
+      this->icurve = 0;
     }
 
-    Triangle2D( real_type x1, real_type y1,
-                real_type x2, real_type y2,
-                real_type x3, real_type y3 ) {
+    Triangle2D(
+      real_type x1,  real_type y1,
+      real_type x2,  real_type y2,
+      real_type x3,  real_type y3,
+      real_type _s0, real_type _s1,
+      int_type  _icurve
+    ) {
       p1[0] = x1; p1[1] = y1;
       p2[0] = x2; p2[1] = y2;
       p3[0] = x3; p3[1] = y3;
+      this->s0     = _s0;
+      this->s1     = _s1;
+      this->icurve = _icurve;
     }
 
-    Triangle2D( real_type const _p1[2],
-                real_type const _p2[2],
-                real_type const _p3[2] ) {
+    Triangle2D(
+      real_type const _p1[2],
+      real_type const _p2[2],
+      real_type const _p3[2],
+      real_type       _s0,
+      real_type       _s1,
+      int_type        _icurve
+    ) {
       p1[0] = _p1[0]; p1[1] = _p1[1];
       p2[0] = _p2[0]; p2[1] = _p2[1];
       p3[0] = _p3[0]; p3[1] = _p3[1];
+      this->s0     = _s0;
+      this->s1     = _s1;
+      this->icurve = _icurve;
     }
 
     ~Triangle2D() {}
@@ -77,40 +98,64 @@ namespace G2lib {
       this->p1[0] = t.p1[0]; this->p1[1] = t.p1[1];
       this->p2[0] = t.p2[0]; this->p2[1] = t.p2[1];
       this->p3[0] = t.p3[0]; this->p3[1] = t.p3[1];
+      this->s0     = t.s0;
+      this->s1     = t.s1;
+      this->icurve = t.icurve;
       return *this;
     }
 
     void
-    build( real_type const _p1[2],
-           real_type const _p2[2],
-           real_type const _p3[2] ) {
+    build(
+      real_type const _p1[2],
+      real_type const _p2[2],
+      real_type const _p3[2],
+      real_type       _s0,
+      real_type       _s1,
+      int_type        _icurve
+    ) {
       p1[0] = _p1[0]; p1[1] = _p1[1];
       p2[0] = _p2[0]; p2[1] = _p2[1];
       p3[0] = _p3[0]; p3[1] = _p3[1];
+      this->s0     = _s0;
+      this->s1     = _s1;
+      this->icurve = _icurve;
     }
 
     void
-    build( real_type x1, real_type y1,
-           real_type x2, real_type y2,
-           real_type x3, real_type y3 ) {
+    build(
+      real_type x1, real_type y1,
+      real_type x2, real_type y2,
+      real_type x3, real_type y3,
+      real_type _s0,
+      real_type _s1,
+      int_type  _icurve
+    ) {
       p1[0] = x1; p1[1] = y1;
       p2[0] = x2; p2[1] = y2;
       p3[0] = x3; p3[1] = y3;
+      this->s0     = _s0;
+      this->s1     = _s1;
+      this->icurve = _icurve;
     }
 
-    real_type x1() const { return p1[0]; }
-    real_type y1() const { return p1[1]; }
+    int_type  Icurve() const { return this->icurve; }
 
-    real_type x2() const { return p2[0]; }
-    real_type y2() const { return p2[1]; }
+    real_type x1() const { return this->p1[0]; }
+    real_type y1() const { return this->p1[1]; }
 
-    real_type x3() const { return p3[0]; }
-    real_type y3() const { return p3[1]; }
+    real_type x2() const { return this->p2[0]; }
+    real_type y2() const { return this->p2[1]; }
+
+    real_type x3() const { return this->p3[0]; }
+    real_type y3() const { return this->p3[1]; }
+
+    real_type S0() const { return this->s0; }
+    real_type S1() const { return this->s1; }
 
     void
     translate( real_type tx, real_type ty ) {
-      p1[0] += tx; p2[0] += tx; p3[0] += tx;
-      p1[1] += ty; p2[1] += ty; p3[1] += ty;
+      this->p1[0] += tx; this->p2[0] += tx; this->p3[0] += tx;
+      this->p1[1] += ty; this->p2[1] += ty; this->p3[1] += ty;
     }
 
     void
@@ -118,16 +163,18 @@ namespace G2lib {
 
     void
     scale( real_type sc ) {
-      p1[0] *= sc; p1[1] *= sc;
-      p2[0] *= sc; p2[1] *= sc;
-      p3[0] *= sc; p3[1] *= sc;
+      this->p1[0] *= sc; this->p1[1] *= sc;
+      this->p2[0] *= sc; this->p2[1] *= sc;
+      this->p3[0] *= sc; this->p3[1] *= sc;
     }
 
     void
-    bbox( real_type & xmin,
-          real_type & ymin,
-          real_type & xmax,
-          real_type & ymax ) const {
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const {
       minmax3( p1[0], p2[0], p3[0], xmin, xmax );
       minmax3( p1[1], p2[1], p3[1], ymin, ymax );
     }
@@ -181,43 +228,6 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, Triangle2D const & c );
 
-  };
-
-  class T2D : public Triangle2D {
-    real_type s0;
-    real_type s1;
-    int_type  icurve;
-    T2D();
-  public:
-
-    using Triangle2D::overlap;
-
-    T2D( real_type  x1, real_type  y1,
-         real_type  x2, real_type  y2,
-         real_type  x3, real_type  y3,
-         real_type _s0, real_type _s1,
-         int_type  _icurve )
-    : Triangle2D( x1, y1, x2, y2, x3, y3 )
-    , s0(_s0)
-    , s1(_s1)
-    , icurve(_icurve)
-    {}
-
-    T2D( T2D const & rhs )
-    { *this = rhs; }
-
-    T2D const &
-    operator = ( T2D const & rhs ) {
-      Triangle2D::operator = ( rhs );
-      this->s0     = rhs.s0;
-      this->s1     = rhs.s1;
-      this->icurve = rhs.icurve;
-      return *this;
-    }
-
-    real_type S0()     const { return s0; }
-    real_type S1()     const { return s1; }
-    int_type  Icurve() const { return icurve; }
   };
 
 }
