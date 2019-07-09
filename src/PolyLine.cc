@@ -347,7 +347,6 @@ namespace G2lib {
       s0[k+1] = s0[k] + ic->length();
     isegment = 0;
   }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -380,6 +379,7 @@ namespace G2lib {
   PolyLine::init( real_type x0, real_type y0 ) {
     xe = x0;
     ye = y0;
+    polylineList.clear();
     s0.clear();
     s0.push_back(0);
     aabb_done = false;
