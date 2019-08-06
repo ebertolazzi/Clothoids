@@ -73,9 +73,10 @@ namespace G2lib {
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_ASSERT( false,
-                    "ClothoidList constructor cannot convert from: " <<
-                    CurveType_name[C.type()] );
+      G2LIB_DO_ERROR(
+        "ClothoidList constructor cannot convert from: " <<
+        CurveType_name[C.type()]
+      );
     }
   }
 
@@ -93,13 +94,19 @@ namespace G2lib {
     real_type ss  = s_begin;
     real_type thh = theta(s_begin);
     for ( int_type npts = 0; ss < s_end; ++npts ) {
-      G2LIB_ASSERT( npts < 1000000,
-                    "ClothoidCurve::optimized_sample_internal " <<
-                    "is generating too much points (>1000000)\n" <<
-                    "something is going wrong or parameters are not well set" );
+      G2LIB_ASSERT(
+        npts < 1000000,
+        "ClothoidCurve::optimized_sample_internal " <<
+        "is generating too much points (>1000000)\n" <<
+        "something is going wrong or parameters are not well set"
+      );
       // estimate angle variation and compute step accodingly
       real_type k   = CD.kappa( ss );
+      #ifdef G2LIB_USE_SAE
       real_type dss = ds/(1-k*offs); // scale length with offset
+      #else
+      real_type dss = ds/(1+k*offs); // scale length with offset
+      #endif
       real_type sss = ss + dss;
       if ( sss > s_end ) {
         sss = s_end;
@@ -186,7 +193,11 @@ namespace G2lib {
 
       // estimate angle variation and compute step accodingly
       real_type k   = CD.kappa( ss );
+      #ifdef G2LIB_USE_SAE
       real_type dss = MX/(1-k*offs); // scale length with offset
+      #else
+      real_type dss = MX/(1+k*offs); // scale length with offset
+      #endif
       real_type sss = ss + dss;
       if ( sss > s_end ) {
         sss = s_end;
@@ -546,7 +557,11 @@ namespace G2lib {
       CD.eval( s, offs, x, y );
       real_type th = CD.theta( s );
       real_type kk = CD.kappa( s );
+      #ifdef G2LIB_USE_SAE
       real_type sc = 1-kk*offs;
+      #else
+      real_type sc = 1+kk*offs;
+      #endif
       real_type ds = projectPointOnArc( x, y, th, kk/sc, qx, qy )/sc;
 
       s += ds;
@@ -600,8 +615,10 @@ namespace G2lib {
     AABBtree::VecPtrBBox candidateList;
     aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
-    G2LIB_ASSERT( candidateList.size() > 0,
-                  "ClothoidCurve::closestPoint no candidate" );
+    G2LIB_ASSERT(
+      candidateList.size() > 0,
+      "ClothoidCurve::closestPoint no candidate"
+    );
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
       size_t ipos = size_t((*ic)->Ipos());
       Triangle2D const & T = aabb_tri[ipos];

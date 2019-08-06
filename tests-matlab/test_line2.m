@@ -12,6 +12,8 @@
 
 addpath('../matlab');
 
+close all;
+
 % check constructors
 x0     = [0,2,4,-2];
 y0     = [2,3,-4,5];

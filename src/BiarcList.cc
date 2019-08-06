@@ -114,8 +114,7 @@ namespace G2lib {
       break;
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
-      G2LIB_ASSERT(
-        false,
+      G2LIB_DO_ERROR(
         "BiarcList constructor cannot convert from: " <<
         CurveType_name[C.type()]
       );
@@ -218,8 +217,10 @@ namespace G2lib {
     real_type y1,
     real_type theta1
   ) {
-    G2LIB_ASSERT( !biarcList.empty(),
-                  "BiarcList::push_back_G1(...) empty list!");
+    G2LIB_ASSERT(
+      !biarcList.empty(),
+      "BiarcList::push_back_G1(...) empty list!"
+    );
     Biarc c;
     real_type x0     = biarcList.back().xEnd();
     real_type y0     = biarcList.back().yEnd();

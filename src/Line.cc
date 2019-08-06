@@ -54,9 +54,10 @@ namespace G2lib {
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_ASSERT( false,
-                    "LineSegment constructor cannot convert from: " <<
-                    CurveType_name[C.type()] );
+      G2LIB_DO_ERROR(
+        "LineSegment constructor cannot convert from: " <<
+        CurveType_name[C.type()]
+      );
     }
   }
 
@@ -271,10 +272,10 @@ namespace G2lib {
     real_type & xmax,
     real_type & ymax
   ) const {
-    real_type dx = -offs*s0;
-    real_type dy = offs*c0;
-    xmin = x0+dx; xmax = x0+L*c0+dx;
-    ymin = y0+dy; ymax = y0+L*s0+dy;
+    real_type dx = offs*nx_Begin();
+    real_type dy = offs*ny_Begin();
+    xmin = x0+dx; xmax = xEnd()+dx;
+    ymin = y0+dy; ymax = yEnd()+dy;
     if ( xmin > xmax ) swap( xmin, xmax );
     if ( ymin > ymax ) swap( ymin, ymax );
   }

@@ -211,38 +211,27 @@ namespace G2lib {
     real_type nor0_x() const { return -tg0_y(); }
     real_type nor0_y() const { return tg0_x(); }
 
-    real_type nor_x( real_type s ) const { return -tg_y(s); }
-    real_type nor_y( real_type s ) const { return tg_x(s); }
+    real_type nor_x( real_type s ) const { return G2LIB_NX(tg_x(s),tg_y(s)); }
+    real_type nor_y( real_type s ) const { return G2LIB_NY(tg_x(s),tg_y(s)); }
 
-    real_type nor_x_D( real_type s ) const { return -tg_y_D(s); }
-    real_type nor_y_D( real_type s ) const { return tg_x_D(s); }
+    real_type nor_x_D( real_type s ) const { return G2LIB_NX(tg_x_D(s),tg_y_D(s)); }
+    real_type nor_y_D( real_type s ) const { return G2LIB_NY(tg_x_D(s),tg_y_D(s));  }
 
-    real_type nor_x_DD( real_type s ) const { return -tg_y_DD(s); }
-    real_type nor_y_DD( real_type s ) const { return tg_x_DD(s); }
+    real_type nor_x_DD( real_type s ) const { return G2LIB_NX(tg_x_DD(s),tg_y_DD(s));  }
+    real_type nor_y_DD( real_type s ) const { return G2LIB_NY(tg_x_DD(s),tg_y_DD(s)); }
 
-    real_type nor_x_DDD( real_type s ) const { return -tg_y_DDD(s); }
-    real_type nor_y_DDD( real_type s ) const { return tg_x_DDD(s); }
+    real_type nor_x_DDD( real_type s ) const { return G2LIB_NX(tg_x_DDD(s),tg_y_DDD(s)); }
+    real_type nor_y_DDD( real_type s ) const { return G2LIB_NY(tg_x_DDD(s),tg_y_DDD(s)); }
 
     void tg( real_type s, real_type & tx, real_type & ty ) const;
     void tg_D( real_type s, real_type & tx, real_type & ty ) const;
     void tg_DD( real_type s, real_type & tx, real_type & ty ) const;
     void tg_DDD( real_type s, real_type & tx, real_type & ty ) const;
 
-    void
-    nor( real_type s, real_type & nx, real_type & ny ) const
-    { tg( s, ny, nx ); ny = -ny; }
-
-    void
-    nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const
-    { tg_D( s, ny_D, nx_D ); nx_D = -nx_D; }
-
-    void
-    nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
-    { tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD; }
-
-    void
-    nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
-    { tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD; }
+    void nor( real_type s, real_type & nx, real_type & ny ) const;
+    void nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const;
+    void nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const;
+    void nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
 
     void
     evaluate(

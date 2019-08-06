@@ -335,6 +335,7 @@
 		D9179A8E206D2135006B66E7 /* testDistance.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testDistance.cc; sourceTree = "<group>"; };
 		D918ADA41F62C1C9009893C3 /* Line.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Line.hh; sourceTree = "<group>"; };
 		D918ADA51F62C1CE009893C3 /* Line.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Line.cc; sourceTree = "<group>"; };
+		D923D69E22F9F55A00F43C11 /* BaseCurve_using.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseCurve_using.hxx; sourceTree = "<group>"; };
 		D92EFA912186931500BF8E18 /* testIntersect2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testIntersect2; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92EFA922186932B00BF8E18 /* testIntersect2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testIntersect2.cc; sourceTree = "<group>"; };
 		D92EFAAA2187B03600BF8E18 /* testIntersect3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testIntersect3; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -497,6 +498,7 @@
 		D938F4E51DD3B84A00E08A70 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				D923D69E22F9F55A00F43C11 /* BaseCurve_using.hxx */,
 				D98A2AA4217DADDE00EC0765 /* AABBtree.hh */,
 				D9BA2F8D217FD93E009D45BD /* AABBtree.cc */,
 				D9099D241F6009AC00740ECF /* G2lib.hh */,

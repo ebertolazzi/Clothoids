@@ -322,12 +322,12 @@ namespace G2lib {
   }
 
   /*!
-   |  Solve the problem
-   |
-   |  \f[ \frac{\sin(kx)}{k} = y, \qquad \frac{1-\cos(kx)}{k} = x \f]
-   |
-   |  smoothly for any k (zero too)
-  \*/
+   *  Solve the problem
+   *
+   *  \f[ \frac{\sin(kx)}{k} = y, \qquad \frac{1-\cos(kx)}{k} = x \f]
+   *
+   *  smoothly for any k (zero too)
+   */
   static
   real_type
   invCoscSinc( real_type k, real_type x, real_type y ) {

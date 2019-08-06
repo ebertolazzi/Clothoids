@@ -41,53 +41,17 @@ namespace G2lib {
     friend class CircleArc;
     friend class PolyLine;
 
-    real_type x0,     //!< initial x coordinate of the line
-              y0,     //!< initial y coordinate of the line
-              theta0; //!< angle of the line
+    real_type x0;     //!< initial x coordinate of the line
+    real_type y0;     //!< initial y coordinate of the line
+    real_type theta0; //!< angle of the line
 
-    real_type c0,     //!< `cos(theta0)`
-              s0,     //!< `sin(theta0)`
-              L;      //!< length of the segment
+    real_type c0;     //!< `cos(theta0)`
+    real_type s0;     //!< `sin(theta0)`
+    real_type L;      //!< length of the segment
 
   public:
 
-    using BaseCurve::thetaBegin;
-    using BaseCurve::thetaEnd;
-
-    using BaseCurve::xBegin;
-    using BaseCurve::yBegin;
-    using BaseCurve::xEnd;
-    using BaseCurve::yEnd;
-
-    using BaseCurve::tx_Begin;
-    using BaseCurve::ty_Begin;
-    using BaseCurve::tx_End;
-    using BaseCurve::ty_End;
-
-    using BaseCurve::nx_Begin;
-    using BaseCurve::ny_Begin;
-    using BaseCurve::nx_End;
-    using BaseCurve::ny_End;
-
-    using BaseCurve::X;
-    using BaseCurve::X_D;
-    using BaseCurve::X_DD;
-    using BaseCurve::X_DDD;
-
-    using BaseCurve::Y;
-    using BaseCurve::Y_D;
-    using BaseCurve::Y_DD;
-    using BaseCurve::Y_DDD;
-
-    using BaseCurve::evaluate;
-
-    using BaseCurve::eval;
-    using BaseCurve::eval_D;
-    using BaseCurve::eval_DD;
-    using BaseCurve::eval_DDD;
-
-    using BaseCurve::closestPoint;
-    using BaseCurve::distance;
+    #include "BaseCurve_using.hxx"
 
     //explicit
     LineSegment()
@@ -186,85 +150,40 @@ namespace G2lib {
      |              |___/
     \*/
 
-    virtual
-    real_type
-    xBegin() const G2LIB_OVERRIDE
-    { return x0; }
+    virtual real_type tx_Begin() const G2LIB_OVERRIDE { return this->c0; }
+    virtual real_type ty_Begin() const G2LIB_OVERRIDE { return this->s0; }
+    virtual real_type tx_End()   const G2LIB_OVERRIDE { return this->c0; }
+    virtual real_type ty_End()   const G2LIB_OVERRIDE { return this->s0; }
 
-    virtual
-    real_type
-    yBegin() const G2LIB_OVERRIDE
-    { return y0; }
+    virtual real_type nx_Begin() const G2LIB_OVERRIDE { return G2LIB_NX(c0,s0); }
+    virtual real_type ny_Begin() const G2LIB_OVERRIDE { return G2LIB_NY(c0,s0); }
+    virtual real_type nx_End()   const G2LIB_OVERRIDE { return G2LIB_NX(c0,s0); }
+    virtual real_type ny_End()   const G2LIB_OVERRIDE { return G2LIB_NY(c0,s0); }
 
-    virtual
-    real_type
-    xEnd() const G2LIB_OVERRIDE
-    { return x0+L*c0; }
-
-    virtual
-    real_type
-    yEnd() const G2LIB_OVERRIDE
-    { return y0+L*s0; }
+    virtual real_type xBegin() const G2LIB_OVERRIDE { return x0; }
+    virtual real_type yBegin() const G2LIB_OVERRIDE { return y0; }
+    virtual real_type xEnd()   const G2LIB_OVERRIDE { return x0+L*c0; }
+    virtual real_type yEnd()   const G2LIB_OVERRIDE { return y0+L*s0; }
 
     virtual
     real_type
     xBegin( real_type offs ) const G2LIB_OVERRIDE
-    { return x0-offs*s0; }
+    { return x0+offs*nx_Begin(); }
 
     virtual
     real_type
     yBegin( real_type offs ) const G2LIB_OVERRIDE
-    { return y0+offs*c0; }
+    { return y0+offs*ny_Begin(); }
 
     virtual
     real_type
     xEnd( real_type offs ) const G2LIB_OVERRIDE
-    { return x0+L*c0-offs*s0; }
+    { return xEnd()+offs*nx_Begin(); }
 
     virtual
     real_type
     yEnd( real_type offs ) const G2LIB_OVERRIDE
-    { return y0+L*s0+offs*c0; }
-
-    virtual
-    real_type
-    tx_Begin() const G2LIB_OVERRIDE
-    { return c0; }
-
-    virtual
-    real_type
-    ty_Begin() const G2LIB_OVERRIDE
-    { return s0; }
-
-    virtual
-    real_type
-    tx_End() const G2LIB_OVERRIDE
-    { return c0; }
-
-    virtual
-    real_type
-    ty_End()   const G2LIB_OVERRIDE
-    { return s0; }
-
-    virtual
-    real_type
-    nx_Begin() const G2LIB_OVERRIDE
-    { return -s0; }
-
-    virtual
-    real_type
-    ny_Begin() const G2LIB_OVERRIDE
-    { return c0; }
-
-    virtual
-    real_type
-    nx_End() const G2LIB_OVERRIDE
-    { return -s0; }
-
-    virtual
-    real_type
-    ny_End()   const G2LIB_OVERRIDE
-    { return c0; }
+    { return yEnd()+offs*ny_Begin(); }
 
     /*\
      |  _   _          _
@@ -464,12 +383,12 @@ namespace G2lib {
     virtual
     real_type
     X( real_type s, real_type offs ) const G2LIB_OVERRIDE
-    { return x0 + s*c0 - offs*s0; }
+    { return x0 + s*c0 + offs*nx_Begin(); }
 
     virtual
     real_type
     Y( real_type s, real_type offs ) const G2LIB_OVERRIDE
-    { return y0 + s*s0 + offs*c0; }
+    { return y0 + s*s0 + offs*ny_Begin(); }
 
     virtual
     real_type
@@ -511,8 +430,8 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const G2LIB_OVERRIDE {
-      x = x0 + s*c0 - offs*s0;
-      y = y0 + s*s0 + offs*c0;
+      x = x0 + s*c0 + offs*nx_Begin();
+      y = y0 + s*s0 + offs*ny_Begin();
     }
 
     virtual

@@ -189,7 +189,7 @@ namespace G2lib {
       real_type & /* xmax */,
       real_type & /* ymax */
     ) const G2LIB_OVERRIDE {
-      G2LIB_ASSERT( false, "PolyLine::bbox( offs ... ) not available!");
+      G2LIB_DO_ERROR( "PolyLine::bbox( offs ... ) not available!");
     }
 
     virtual
@@ -200,7 +200,7 @@ namespace G2lib {
     virtual
     real_type
     length( real_type ) const G2LIB_OVERRIDE {
-      G2LIB_ASSERT( false, "PolyLine::length( offs ) not available!");
+      G2LIB_DO_ERROR( "PolyLine::length( offs ) not available!");
       return 0;
     }
 
@@ -452,7 +452,7 @@ namespace G2lib {
       real_type & /* T    */,
       real_type & /* DST  */
     ) const G2LIB_OVERRIDE {
-      G2LIB_ASSERT( false, "PolyLine::closestPoint( ... offs ... ) not available!");
+      G2LIB_DO_ERROR( "PolyLine::closestPoint( ... offs ... ) not available!");
     }
 
     /*\

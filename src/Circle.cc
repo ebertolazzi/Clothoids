@@ -80,9 +80,10 @@ namespace G2lib {
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_ASSERT( false,
-                    "CircleArc constructor cannot convert from: " <<
-                    CurveType_name[C.type()] );
+      G2LIB_DO_ERROR(
+        "CircleArc constructor cannot convert from: " <<
+        CurveType_name[C.type()]
+      );
     }
   }
 
@@ -496,7 +497,11 @@ namespace G2lib {
     real_type            max_size,
     int_type             icurve
   ) const {
+    #ifdef G2LIB_USE_SAE
     real_type scale  = 1-k*offs;
+    #else
+    real_type scale  = 1+k*offs;
+    #endif
     real_type dtheta = abs( min(L,max_size/scale) * k );
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
@@ -611,17 +616,24 @@ namespace G2lib {
     real_type         offs_C
   ) const {
     real_type s1[2], s2[2];
+    #ifdef G2LIB_USE_SAE
     real_type sc1 = 1-k*offs;
     real_type sc2 = 1-C.k*offs_C;
-    int_type ni = intersectCircleCircle( this->X(0,offs),
-                                         this->Y(0,offs),
-                                         this->theta0,
-                                         this->k/sc2,
-                                         C.X(0,offs_C),
-                                         C.Y(0,offs_C),
-                                         C.theta0,
-                                         C.k/sc2,
-                                         s1, s2 );
+    #else
+    real_type sc1 = 1+k*offs;
+    real_type sc2 = 1+C.k*offs_C;
+    #endif
+    int_type ni = intersectCircleCircle(
+      this->X(0,offs),
+      this->Y(0,offs),
+      this->theta0,
+      this->k/sc2,
+      C.X(0,offs_C),
+      C.Y(0,offs_C),
+      C.theta0,
+      C.k/sc2,
+      s1, s2
+    );
     real_type eps1 = machepsi100*L;
     real_type eps2 = machepsi100*C.L;
     for ( int_type i = 0; i < ni; ++i ) {
@@ -676,17 +688,24 @@ namespace G2lib {
     bool              swap_s_vals
   ) const {
     real_type s1[2], s2[2];
+    #ifdef G2LIB_USE_SAE
     real_type sc1 = 1-k*offs;
     real_type sc2 = 1-C.k*offs_C;
-    int_type ni = intersectCircleCircle( this->X(0,offs),
-                                         this->Y(0,offs),
-                                         this->theta0,
-                                         this->k/sc2,
-                                         C.X(0,offs_C),
-                                         C.Y(0,offs_C),
-                                         C.theta0,
-                                         C.k/sc2,
-                                         s1, s2 );
+    #else
+    real_type sc1 = 1+k*offs;
+    real_type sc2 = 1+C.k*offs_C;
+    #endif
+    int_type ni = intersectCircleCircle(
+      this->X(0,offs),
+      this->Y(0,offs),
+      this->theta0,
+      this->k/sc2,
+      C.X(0,offs_C),
+      C.Y(0,offs_C),
+      C.theta0,
+      C.k/sc2,
+      s1, s2
+    );
     real_type eps1 = machepsi100*L;
     real_type eps2 = machepsi100*C.L;
     for ( int_type i = 0; i < ni; ++i ) {
@@ -764,9 +783,13 @@ namespace G2lib {
   ) const  {
     real_type cc0 = cos(theta0);
     real_type ss0 = sin(theta0);
-    real_type xx0 = x0-offs*s0;
-    real_type yy0 = y0+offs*c0;
+    real_type xx0 = x0+offs*nx_Begin();
+    real_type yy0 = y0+offs*ny_Begin();
+    #ifdef G2LIB_USE_SAE
     real_type ff = 1-k*offs;
+    #else
+    real_type ff = 1+k*offs;
+    #endif
     real_type LL = L*ff;
     s = projectPointOnCircle( xx0, yy0, cc0, ss0, k/ff, LL, qx, qy );
     int_type res = 1;

@@ -268,8 +268,10 @@ namespace G2lib {
     real_type dkappa,
     real_type L
   ) {
-    G2LIB_ASSERT( !clotoidList.empty(),
-                  "ClothoidList::push_back_G1(...) empty list!");
+    G2LIB_ASSERT(
+      !clotoidList.empty(),
+      "ClothoidList::push_back_G1(...) empty list!"
+    );
     ClothoidCurve c;
     real_type x0     = clotoidList.back().xEnd();
     real_type y0     = clotoidList.back().yEnd();
@@ -301,8 +303,10 @@ namespace G2lib {
     real_type y1,
     real_type theta1
   ) {
-    G2LIB_ASSERT( !clotoidList.empty(),
-                  "ClothoidList::push_back_G1(...) empty list!");
+    G2LIB_ASSERT(
+      !clotoidList.empty(),
+      "ClothoidList::push_back_G1(...) empty list!"
+    );
     ClothoidCurve c;
     real_type x0     = clotoidList.back().xEnd();
     real_type y0     = clotoidList.back().yEnd();
@@ -339,8 +343,10 @@ namespace G2lib {
     reserve( n-1 );
     ClothoidCurve c;
 
-    G2LIB_ASSERT( n > 1,
-                  "ClothoidList::build_G1, at least 2 points are necessary" );
+    G2LIB_ASSERT(
+      n > 1,
+      "ClothoidList::build_G1, at least 2 points are necessary"
+    );
 
     if ( n == 2 ) {
 
@@ -1330,8 +1336,10 @@ namespace G2lib {
     AABBtree::VecPtrBBox candidateList;
     aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
-    G2LIB_ASSERT( candidateList.size() > 0,
-                  "ClothoidList::closestPoint no candidate" );
+    G2LIB_ASSERT(
+      candidateList.size() > 0,
+      "ClothoidList::closestPoint no candidate"
+    );
     int_type icurve = 0;
     DST = numeric_limits<real_type>::infinity();
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {

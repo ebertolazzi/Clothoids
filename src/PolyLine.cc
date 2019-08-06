@@ -71,9 +71,9 @@ namespace G2lib {
     case G2LIB_BIARC:
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
-      G2LIB_ASSERT(
-        false,
-        "PolyLine constructor cannot convert from: " << CurveType_name[C.type()]
+      G2LIB_DO_ERROR(
+        "PolyLine constructor cannot convert from: " <<
+        CurveType_name[C.type()]
       );
     }
   }

@@ -75,8 +75,7 @@ namespace G2lib {
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_ASSERT(
-        false,
+      G2LIB_DO_ERROR(
         "Biarc constructor cannot convert from: " <<
         CurveType_name[C.type()]
       );
