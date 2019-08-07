@@ -23,17 +23,20 @@
 
 /*!
 
+\mainpage
+
 Clothoids
 =========
 
 G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
 
-**by Enrico Bertolazzi and Marco Frego**
+by Enrico Bertolazzi and Marco Frego
 
 for the documentation see `manual.md` or
 [Doxygen documentation: http://ebertolazzi.github.io/Clothoids/](http://ebertolazzi.github.io/Clothoids/)
 
-**Authors:**
+Authors:
+-------
 
   Enrico Bertolazzi and Marco Frego
   Department of Industrial Engineering

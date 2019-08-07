@@ -56,14 +56,8 @@ matrix:
     - os: windows
       env:
         - CMAKE_PATH="/c/Program Files/CMake/bin"
-      script: 
+      script:
         - export PATH=$CMAKE_PATH:$PATH
         - mkdir build && cd build
         - cmake .. 
         - cmake --build . 
-
-
-
-      
-      
-      

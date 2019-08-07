@@ -576,7 +576,7 @@ namespace G2lib {
    |  \____|_|\___/ \__|_| |_|\___/|_|\__,_|_____|_|___/\__|
    |
   \*/
-  //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 connected)
+  //! \brief Class to manage a list of clothoid curves (not necessarily G2 or G1 connected)
   class ClothoidList : public BaseCurve {
 
     vector<real_type>     s0;

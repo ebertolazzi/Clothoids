@@ -41,7 +41,7 @@ namespace G2lib {
    | | |_) | | (_| | | | (__| |___| \__ \ |_
    | |____/|_|\__,_|_|  \___|_____|_|___/\__|
   \*/
-  //! \brief Class to manage a list Clothoid Curve (not necessarily G2 or G1 connected)
+  //! \brief Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
   class BiarcList : public BaseCurve {
 
     friend class ClothoidList;
