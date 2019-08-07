@@ -19,7 +19,6 @@
 
 #include "Circle.hh"
 #include "Clothoid.hh"
-#include "CubicRootsFlocke.hh"
 
 // Workaround for Visual Studio
 #ifdef min

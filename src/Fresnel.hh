@@ -116,6 +116,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  //! data storage for clothoid type curve
   class ClothoidData {
   public:
 

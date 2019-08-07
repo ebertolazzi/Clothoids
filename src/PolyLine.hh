@@ -44,6 +44,7 @@ namespace G2lib {
   class ClothoidCurve;
   class ClothoidList;
 
+  //! Class to manage a collection of straight segment
   class PolyLine : public BaseCurve {
     friend class ClothoidList;
     friend class BiarcList;
@@ -427,7 +428,7 @@ namespace G2lib {
      * \param Y y-coordinate of the closest point
      * \param S param of the closest point
      * \return the distance point-segment
-    \*/
+     */
     virtual
     int_type
     closestPoint(

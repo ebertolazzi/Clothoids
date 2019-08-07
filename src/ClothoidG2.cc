@@ -19,7 +19,6 @@
 
 #include "ClothoidList.hh"
 #include "Biarc.hh"
-//#include "CubicRootsFlocke.hh"
 
 #include <cmath>
 #include <cfloat>

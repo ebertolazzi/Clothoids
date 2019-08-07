@@ -283,16 +283,16 @@ namespace G2lib {
     }
 
     /*!
-     | \brief build a clothoid by solving the hermite G1 problem
-     |
-     | \param x0     initial x position \f$ x_0      \f$
-     | \param y0     initial y position \f$ y_0      \f$
-     | \param theta0 initial angle      \f$ \theta_0 \f$
-     | \param x1     final x position   \f$ x_1      \f$
-     | \param y1     final y position   \f$ y_1      \f$
-     | \param theta1 final angle        \f$ \theta_1 \f$
-     | \return number of iteration performed
-    \*/
+     *  \brief build a clothoid by solving the hermite G1 problem
+     *
+     *  \param x0     initial x position \f$ x_0      \f$
+     *  \param y0     initial y position \f$ y_0      \f$
+     *  \param theta0 initial angle      \f$ \theta_0 \f$
+     *  \param x1     final x position   \f$ x_1      \f$
+     *  \param y1     final y position   \f$ y_1      \f$
+     *  \param theta1 final angle        \f$ \theta_1 \f$
+     *  \return number of iteration performed
+     */
     int
     build_G1(
       real_type x0,
@@ -309,16 +309,16 @@ namespace G2lib {
     }
 
     /*!
-     | \brief build a clothoid by solving the hermite G1 problem
-     |
-     | \param x0     initial x position \f$ x_0      \f$
-     | \param y0     initial y position \f$ y_0      \f$
-     | \param theta0 initial angle      \f$ \theta_0 \f$
-     | \param x1     final x position   \f$ x_1      \f$
-     | \param y1     final y position   \f$ y_1      \f$
-     | \param theta1 final angle        \f$ \theta_1 \f$
-     | \return number of iteration performed
-    \*/
+     *  \brief build a clothoid by solving the hermite G1 problem
+     *
+     *  \param x0     initial x position \f$ x_0      \f$
+     *  \param y0     initial y position \f$ y_0      \f$
+     *  \param theta0 initial angle      \f$ \theta_0 \f$
+     *  \param x1     final x position   \f$ x_1      \f$
+     *  \param y1     final y position   \f$ y_1      \f$
+     *  \param theta1 final angle        \f$ \theta_1 \f$
+     *  \return number of iteration performed
+     */
     int
     build_G1_D(
       real_type x0,
@@ -339,15 +339,15 @@ namespace G2lib {
     }
 
     /*!
-     | \brief build a clothoid by solving the forward problem
-     |
-     | \param x0     initial x position \f$ x_0      \f$
-     | \param y0     initial y position \f$ y_0      \f$
-     | \param theta0 initial angle      \f$ \theta_0 \f$
-     | \param kappa0 initial curvature  \f$ \kappa_0 \f$
-     | \param x1     final x position   \f$ x_1      \f$
-     | \param y1     final y position   \f$ y_1      \f$
-    \*/
+     *  \brief build a clothoid by solving the forward problem
+     *
+     *  \param x0     initial x position \f$ x_0      \f$
+     *  \param y0     initial y position \f$ y_0      \f$
+     *  \param theta0 initial angle      \f$ \theta_0 \f$
+     *  \param kappa0 initial curvature  \f$ \kappa_0 \f$
+     *  \param x1     final x position   \f$ x_1      \f$
+     *  \param y1     final y position   \f$ y_1      \f$
+     */
     bool
     build_forward(
       real_type x0,
@@ -364,10 +364,10 @@ namespace G2lib {
     }
 
     /*!
-     | \brief build a clothoid from a line segment
-     |
-     | \param LS line segment object
-    \*/
+     *  \brief build a clothoid from a line segment
+     *
+     *  \param LS line segment object
+     */
     void
     build( LineSegment const & LS ) {
       CD.x0     = LS.x0;
@@ -381,10 +381,10 @@ namespace G2lib {
     }
 
     /*!
-     | \brief build a clothoid from a line segment
-     |
-     | \param C line segment object
-    \*/
+     *  \brief build a clothoid from a line segment
+     *
+     *  \param C line segment object
+     */
     void
     build( CircleArc const & C ) {
       CD.x0     = C.x0;
@@ -406,8 +406,8 @@ namespace G2lib {
     { return CD.dk; }
 
     /*!
-     | \return clothoid total variation
-    \*/
+     *  \return clothoid total variation
+     */
     real_type
     thetaTotalVariation() const;
 
@@ -415,8 +415,8 @@ namespace G2lib {
     thetaMinMax( real_type & thMin, real_type & thMax ) const;
 
     /*!
-     | \return clothoid angle range
-    \*/
+     *  \return clothoid angle range
+     */
     real_type
     deltaTheta() const
     { real_type thMin, thMax; return thetaMinMax( thMin, thMax ); }
@@ -425,8 +425,8 @@ namespace G2lib {
     curvatureMinMax( real_type & kMin, real_type & kMax ) const;
 
     /*!
-     | \return clothoid total curvature variation
-    \*/
+     *  \return clothoid total curvature variation
+     */
     real_type curvatureTotalVariation() const;
 
     real_type integralCurvature2() const;
@@ -436,12 +436,12 @@ namespace G2lib {
     real_type integralSnap2() const;
 
     /*!
-     |  Return a vector of optimized sample parameters
-     |  \param offs      offset of the sampled curve
-     |  \param npts      suggested minimum number of sampled points
-     |  \param max_angle maximum angle variation between two sampled points
-     |  \param s         vector of computed parameters
-    \*/
+     *  Return a vector of optimized sample parameters
+     *  \param offs      offset of the sampled curve
+     *  \param npts      suggested minimum number of sampled points
+     *  \param max_angle maximum angle variation between two sampled points
+     *  \param s         vector of computed parameters
+     */
     void
     optimized_sample(
       real_type                offs,
@@ -457,16 +457,16 @@ namespace G2lib {
      | \__,_|_/__/\__\__,_|_||_\__\___|
     \*/
     /*!
-     | \brief Compute the point on clothoid at minimal distance from a given point
-     |
-     | \param  qx x-coordinate of the given point
-     | \param  qy y-coordinate of the given point
-     | \param  X  x-coordinate of the point on clothoid at minimal distance
-     | \param  Y  y-coordinate of the point on clothoid at minimal distance
-     | \param  S  curvilinear coordinate of the point (X,Y) on the clothoid
-     | \return the distance of the
-     |
-    \*/
+     * \brief Compute the point on clothoid at minimal distance from a given point
+     *
+     * \param  qx x-coordinate of the given point
+     * \param  qy y-coordinate of the given point
+     * \param  X  x-coordinate of the point on clothoid at minimal distance
+     * \param  Y  y-coordinate of the point on clothoid at minimal distance
+     * \param  S  curvilinear coordinate of the point (X,Y) on the clothoid
+     * \return the distance of the
+     *
+     */
     real_type
     closestPointBySample(
       real_type   ds,

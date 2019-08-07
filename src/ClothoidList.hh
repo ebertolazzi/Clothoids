@@ -43,7 +43,7 @@ namespace G2lib {
    |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
   \*/
 
-  // Clothoid-clothoid
+  //! computation of the G2 fitting with 2 clothoid arc
   class G2solve2arc {
 
     real_type tolerance;
@@ -170,7 +170,7 @@ namespace G2lib {
    |   \____|_____|___/\___/|_| \_/ \___|\____|_____\____|
   \*/
 
-  // Clothoid-line-clothoid
+  //! computation of the G2 fitting with 2 clothoid and one line segment
   class G2solveCLC {
 
     real_type tolerance;
@@ -249,6 +249,7 @@ namespace G2lib {
    |   \____|_____|___/\___/|_| \_/ \___|____/ \__,_|_|  \___|
   \*/
   // Clothoid-clothoid-clothoid with G2 continuity
+  //! computation of the G2 fitting with 3 clothoid arcs
   class G2solve3arc {
 
     ClothoidCurve S0, SM, S1;
@@ -303,21 +304,21 @@ namespace G2lib {
     void setMaxIter( int miter );
 
     /*!
-     | Compute the 3 arc clothoid spline that fit the data
-     |
-     | \param[in] x0      initial `x` position
-     | \param[in] y0      initial `y` position
-     | \param[in] theta0  initial angle
-     | \param[in] kappa0  initial curvature
-     | \param[in] x1      final `x` position
-     | \param[in] y1      final `y` position
-     | \param[in] theta1  final angle
-     | \param[in] kappa1  final curvature
-     | \param[in] Dmax    rough desidered maximum angle variation, if 0 computed automatically
-     | \param[in] dmax    rough desidered maximum angle divergence from guess, if 0 computed automatically
-     | \return number of iteration, -1 if fails
-     |
-    \*/
+     *  Compute the 3 arc clothoid spline that fit the data
+     *
+     *  \param[in] x0      initial `x` position
+     *  \param[in] y0      initial `y` position
+     *  \param[in] theta0  initial angle
+     *  \param[in] kappa0  initial curvature
+     *  \param[in] x1      final `x` position
+     *  \param[in] y1      final `y` position
+     *  \param[in] theta1  final angle
+     *  \param[in] kappa1  final curvature
+     *  \param[in] Dmax    rough desidered maximum angle variation, if 0 computed automatically
+     *  \param[in] dmax    rough desidered maximum angle divergence from guess, if 0 computed automatically
+     *  \return number of iteration, -1 if fails
+     *
+     */
     int
     build(
       real_type x0,
@@ -333,21 +334,21 @@ namespace G2lib {
     );
 
     /*!
-     | Compute the 3 arc clothoid spline that fit the data
-     |
-     | \param[in] s0      length of the first segment
-     | \param[in] x0      initial `x` position
-     | \param[in] y0      initial `y` position
-     | \param[in] theta0  initial angle
-     | \param[in] kappa0  initial curvature
-     | \param[in] s1      length of the last segment
-     | \param[in] x1      final `x` position
-     | \param[in] y1      final `y` position
-     | \param[in] theta1  final angle
-     | \param[in] kappa1  final curvature
-     | \return number of iteration, -1 if fails
-     |
-    \*/
+     *  Compute the 3 arc clothoid spline that fit the data
+     *
+     *  \param[in] s0      length of the first segment
+     *  \param[in] x0      initial `x` position
+     *  \param[in] y0      initial `y` position
+     *  \param[in] theta0  initial angle
+     *  \param[in] kappa0  initial curvature
+     *  \param[in] s1      length of the last segment
+     *  \param[in] x1      final `x` position
+     *  \param[in] y1      final `y` position
+     *  \param[in] theta1  final angle
+     *  \param[in] kappa1  final curvature
+     *  \return number of iteration, -1 if fails
+     *
+     */
     int
     build_fixed_length(
       real_type s0,
@@ -362,30 +363,22 @@ namespace G2lib {
       real_type kappa1
     );
 
-    /*!
-     | \return get the first clothoid for the 3 arc G2 fitting
-    \*/
+    //! \return get the first clothoid for the 3 arc G2 fitting
     ClothoidCurve const & getS0() const { return S0; }
-    /*!
-     | \return get the last clothoid for the 3 arc G2 fitting
-    \*/
+
+    //! \return get the last clothoid for the 3 arc G2 fitting
     ClothoidCurve const & getS1() const { return S1; }
-    /*!
-     | \return get the middle clothoid for the 3 arc G2 fitting
-    \*/
+
+    //! \return get the middle clothoid for the 3 arc G2 fitting
     ClothoidCurve const & getSM() const { return SM; }
 
-    /*!
-     | \return get the length of the 3 arc G2 fitting
-    \*/
+    //! \return get the length of the 3 arc G2 fitting
     real_type
     totalLength() const {
       return S0.length() + S1.length() + SM.length();
     }
 
-    /*!
-     | \return get the total angle variation of the 3 arc G2 fitting
-    \*/
+    //! \return get the total angle variation of the 3 arc G2 fitting
     real_type
     thetaTotalVariation() const {
       return S0.thetaTotalVariation() +
@@ -393,9 +386,7 @@ namespace G2lib {
              SM.thetaTotalVariation();
     }
 
-    /*!
-     | \return get the total curvature variation of the 3 arc G2 fitting
-    \*/
+    //! \return get the total curvature variation of the 3 arc G2 fitting
     real_type
     curvatureTotalVariation() const {
       return S0.curvatureTotalVariation() +
@@ -403,9 +394,7 @@ namespace G2lib {
              SM.curvatureTotalVariation();
     }
 
-    /*!
-     | \return get the integral of the curvature squared of the 3 arc G2 fitting
-    \*/
+    //! \return get the integral of the curvature squared of the 3 arc G2 fitting
     real_type
     integralCurvature2() const {
       return S0.integralCurvature2() +
@@ -413,9 +402,7 @@ namespace G2lib {
              SM.integralCurvature2();
     }
 
-    /*!
-     | \return get the integral of the jerk squared of the 3 arc G2 fitting
-    \*/
+    //! \return get the integral of the jerk squared of the 3 arc G2 fitting
     real_type
     integralJerk2() const {
       return S0.integralJerk2() +
@@ -423,9 +410,7 @@ namespace G2lib {
              SM.integralJerk2();
     }
 
-    /*!
-     | \return get the integral of the snap squared of the 3 arc G2 fitting
-    \*/
+    //! \return get the integral of the snap squared of the 3 arc G2 fitting
     real_type
     integralSnap2() const {
       return S0.integralSnap2() +
@@ -434,107 +419,107 @@ namespace G2lib {
     }
 
     /*!
-     | \param[out] thMin minimum angle in the 3 arc G2 fitting curve
-     | \param[out] thMax maximum angle in the 3 arc G2 fitting curve
-     | \return the difference of `thMax` and `thMin`
-    \*/
+     *  \param[out] thMin minimum angle in the 3 arc G2 fitting curve
+     *  \param[out] thMax maximum angle in the 3 arc G2 fitting curve
+     *  \return the difference of `thMax` and `thMin`
+     */
     real_type
     thetaMinMax( real_type & thMin, real_type & thMax ) const;
 
     /*!
-     | \return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
-    \*/
+     *  \return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
+     */
     real_type
     deltaTheta() const
     { real_type thMin, thMax; return thetaMinMax( thMin, thMax ); }
 
     /*!
-     | \param[out] kMin minimum curvature in the 3 arc G2 fitting curve
-     | \param[out] kMax maximum curvature in the 3 arc G2 fitting curve
-     | \return the difference of `kMax` and `kMin`
-    \*/
+     *  \param[out] kMin minimum curvature in the 3 arc G2 fitting curve
+     *  \param[out] kMax maximum curvature in the 3 arc G2 fitting curve
+     *  \return the difference of `kMax` and `kMin`
+     */
     real_type
     curvatureMinMax( real_type & kMin, real_type & kMax ) const;
 
     /*!
-     | \return angle as a function of curvilinear coordinate
-    \*/
+     *  \return angle as a function of curvilinear coordinate
+     */
     real_type theta( real_type s ) const;
 
     /*!
-     | \return angle derivative (curvature) as a function of curvilinear coordinate
-    \*/
+     *  \return angle derivative (curvature) as a function of curvilinear coordinate
+     */
     real_type theta_D( real_type s ) const;
 
     /*!
-     | \return angle second derivative (curvature derivative) as a function of curvilinear coordinate
-    \*/
+     *  \return angle second derivative (curvature derivative) as a function of curvilinear coordinate
+     */
     real_type theta_DD( real_type s ) const;
 
     /*!
-     | \return angle third derivative as a function of curvilinear coordinate
+     *  \return angle third derivative as a function of curvilinear coordinate
     \*/
     real_type theta_DDD( real_type s ) const;
 
     /*!
-     | \return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
-    \*/
+     *  \return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
+     */
     real_type X( real_type s ) const;
 
     /*!
-     | \return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
-    \*/
+     *  \return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
+     */
     real_type Y( real_type s ) const;
 
     /*!
-     | \return initial x coordinate of the 3 arc clothoid
-    \*/
+     *  \return initial x coordinate of the 3 arc clothoid
+     */
     real_type xBegin() const { return S0.xBegin(); }
 
     /*!
-     | \return initial y coordinate of the 3 arc clothoid
-    \*/
+     *  \return initial y coordinate of the 3 arc clothoid
+     */
     real_type yBegin() const { return S0.yBegin(); }
 
     /*!
-     | \return initial curvature of the 3 arc clothoid
-    \*/
+     *  \return initial curvature of the 3 arc clothoid
+     */
     real_type kappaBegin() const { return S0.kappaBegin(); }
 
     /*!
-     | \return initial angle of the 3 arc clothoid
-    \*/
+     *  \return initial angle of the 3 arc clothoid
+     */
     real_type thetaBegin() const { return S0.thetaBegin(); }
 
     /*!
-     | \return final x coordinate of the 3 arc clothoid
-    \*/
+     *  \return final x coordinate of the 3 arc clothoid
+     */
     real_type xEnd()const { return S1.xEnd(); }
 
     /*!
-     | \return final y coordinate of the 3 arc clothoid
-    \*/
+     *  \return final y coordinate of the 3 arc clothoid
+     */
     real_type yEnd() const { return S1.yEnd(); }
 
     /*!
-     | \return final curvature of the 3 arc clothoid
-    \*/
+     *  \return final curvature of the 3 arc clothoid
+     */
     real_type kappaEnd() const { return S1.kappaEnd(); }
 
     /*!
-     | \return final angle of the 3 arc clothoid
-    \*/
+     *  \return final angle of the 3 arc clothoid
+     */
     real_type thetaEnd() const { return S1.thetaEnd(); }
 
     /*!
-     | Compute parameters of 3 arc clothoid at curvilinear coordinate `s`
-     |
-     | \param[in]  s     curvilinear coordinate of where curve is computed
-     | \param[out] theta the curve angle
-     | \param[out] kappa the curve curvature
-     | \param[out] x     the curve x-coordinate
-     | \param[out] y     the curve y-coordinate
-    \*/
+     *  Compute parameters of 3 arc clothoid at curvilinear coordinate `s`
+     *
+     *  \param[in]  s     curvilinear coordinate of where curve is computed
+     *  \param[out] theta the curve angle
+     *  \param[out] kappa the curve curvature
+     *  \param[out] x     the curve x-coordinate
+     *  \param[out] y     the curve y-coordinate
+     */
     void
     eval(
       real_type   s,
@@ -737,9 +722,11 @@ namespace G2lib {
       vector<real_type> const & kappa
     ) {
       if ( s.size() != kappa.size() ) return false;
-      return build( x0, y0, theta0,
-                    int_type(s.size()),
-                    &s.front(), &kappa.front() );
+      return build(
+        x0, y0, theta0,
+        int_type(s.size()),
+        &s.front(), &kappa.front()
+      );
     }
 
     ClothoidCurve const & get( int_type idx ) const;
@@ -1233,17 +1220,17 @@ namespace G2lib {
     \*/
 
     /*!
-     | \param  qx  x-coordinate of the point
-     | \param  qy  y-coordinate of the point
-     | \param  x   x-coordinate of the projected point on the curve
-     | \param  y   y-coordinate of the projected point on the curve
-     | \param  s   parameter on the curve of the projection
-     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     | \param  dst distance point projected point
-     | \return 1 = point is projected orthogonal
-     |         0 = more than one projection (first returned)
-     |        -1 = minimum point is not othogonal projection to curve
-    \*/
+     *  \param  qx  x-coordinate of the point
+     *  \param  qy  y-coordinate of the point
+     *  \param  x   x-coordinate of the projected point on the curve
+     *  \param  y   y-coordinate of the projected point on the curve
+     *  \param  s   parameter on the curve of the projection
+     *  \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst distance point projected point
+     *  \return 1 = point is projected orthogonal
+     *          0 = more than one projection (first returned)
+     *         -1 = minimum point is not othogonal projection to curve
+     */
     virtual
     int_type
     closestPoint(
@@ -1257,18 +1244,18 @@ namespace G2lib {
     ) const G2LIB_OVERRIDE;
 
     /*!
-     | \param  qx  x-coordinate of the point
-     | \param  qy  y-coordinate of the point
-     | \param  offs offset of the curve
-     | \param  x   x-coordinate of the projected point on the curve
-     | \param  y   y-coordinate of the projected point on the curve
-     | \param  s   parameter on the curve of the projection
-     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     | \param  dst distance point projected point
-     | \return 1 = point is projected orthogonal
-     |         0 = more than one projection (first returned)
-     |        -1 = minimum point is not othogonal projection to curve
-    \*/
+     *  \param  qx  x-coordinate of the point
+     *  \param  qy  y-coordinate of the point
+     *  \param  offs offset of the curve
+     *  \param  x   x-coordinate of the projected point on the curve
+     *  \param  y   y-coordinate of the projected point on the curve
+     *  \param  s   parameter on the curve of the projection
+     *  \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst distance point projected point
+     *  \return 1 = point is projected orthogonal
+     *          0 = more than one projection (first returned)
+     *         -1 = minimum point is not othogonal projection to curve
+     */
     virtual
     int_type // true if projection is unique and orthogonal
     closestPoint(
@@ -1308,16 +1295,16 @@ namespace G2lib {
     getDeltaKappa( real_type deltaKappa[] ) const;
 
     /*!
-     | \brief Find parametric coordinate.
-     |
-     | \param  x    x-coordinate point
-     | \param  y    y-coordinate point
-     | \param  s    value \f$ s \f$
-     | \param  t    value \f$ t \f$
-     | \return idx  the segment with point at minimal distance, otherwise
-     |              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-     |
-    \*/
+     *  \brief Find parametric coordinate.
+     *
+     *  \param  x    x-coordinate point
+     *  \param  y    y-coordinate point
+     *  \param  s    value \f$ s \f$
+     *  \param  t    value \f$ t \f$
+     *  \return idx  the segment with point at minimal distance, otherwise
+     *               -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+     *
+     */
     int_type
     findST1(
       real_type   x,
@@ -1327,17 +1314,17 @@ namespace G2lib {
     ) const;
 
     /*!
-     | \brief Find parametric coordinate.
-     |
-     | \param  ibegin initial segment to compute the distance
-     | \param  iend   final segment to compute the distance
-     | \param  x      x-coordinate point
-     | \param  y      y-coordinate point
-     | \param  s      value \f$ s \f$
-     | \param  t      value \f$ t \f$
-     | \return idx    the segment with point at minimal distance, otherwise
-     |                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-    \*/
+     *  \brief Find parametric coordinate.
+     *
+     *  \param  ibegin initial segment to compute the distance
+     *  \param  iend   final segment to compute the distance
+     *  \param  x      x-coordinate point
+     *  \param  y      y-coordinate point
+     *  \param  s      value \f$ s \f$
+     *  \param  t      value \f$ t \f$
+     *  \return idx    the segment with point at minimal distance, otherwise
+     *                 -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+     */
     int_type
     findST1(
       int_type    ibegin,
@@ -1417,6 +1404,7 @@ namespace G2lib {
    |                                     |_|
   \*/
 
+  //! Class for the computation of G2 spljne of clothoids
   class ClothoidSplineG2 {
   public:
     typedef enum { P1 = 1, P2, P3, P4, P5, P6, P7, P8, P9 } TargetType;

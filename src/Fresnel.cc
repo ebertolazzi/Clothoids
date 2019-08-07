@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Fresnel.hh"
-#include "CubicRootsFlocke.hh"
+#include "PolynomialRoots.hh"
 
 #define A_THRESOLD   0.01
 #define A_SERIE_SIZE 3
@@ -1341,9 +1341,11 @@ namespace G2lib {
     real_type C   = 3*c*e*dt2 + b;
     real_type D   = c*(dt*dt2) + a*theta0 - k0;
 
+    PolynomialRoots::Cubic cubicSolver( A, B, C, D );
+
     real_type r[3];
-    int_type  nr, nc;
-    solveCubic( A, B, C, D, r[0], r[1], r[2], nr, nc );
+    int_type nr = cubicSolver.getRealRoots(r);
+
     // cerco radice reale piu vicina
     real_type theta;
     switch ( nr ) {

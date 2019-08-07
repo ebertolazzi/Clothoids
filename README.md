@@ -4,10 +4,8 @@ Clothoids [![Build Status](https://travis-ci.org/ebertolazzi/Clothoids.svg?branc
 
 **by Enrico Bertolazzi and Marco Frego**
 
-for the documentation see `manual.md`
-
-This is the NEW Object Oriented (OO) version of the Clothoids library.
-For the old NON OO interface look at the branch `old_interface`.
+for the documentation see `manual.md` or
+[Doxygen documentation: http://ebertolazzi.github.io/Clothoids/](http://ebertolazzi.github.io/Clothoids/)
 
 **Authors:**
 	

@@ -649,17 +649,17 @@ namespace G2lib {
     \*/
 
     /*!
-     | \param  qx  x-coordinate of the point
-     | \param  qy  y-coordinate of the point
-     | \param  x   x-coordinate of the projected point on the curve
-     | \param  y   y-coordinate of the projected point on the curve
-     | \param  s   parameter on the curve of the projection
-     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     | \param  dst distance point projected point
-     | \return 1 = point is projected orthogonal
-     |         0 = more than one projection (first returned)
-     |        -1 = minimum point is not othogonal projection to curve
-    \*/
+     * \param  qx  x-coordinate of the point
+     * \param  qy  y-coordinate of the point
+     * \param  x   x-coordinate of the projected point on the curve
+     * \param  y   y-coordinate of the projected point on the curve
+     * \param  s   parameter on the curve of the projection
+     * \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     * \param  dst distance point projected point
+     * \return 1 = point is projected orthogonal
+     *         0 = more than one projection (first returned)
+     *        -1 = minimum point is not othogonal projection to curve
+     */
     virtual
     int_type
     closestPoint(
@@ -673,18 +673,18 @@ namespace G2lib {
     ) const G2LIB_OVERRIDE;
 
     /*!
-     | \param  qx  x-coordinate of the point
-     | \param  qy  y-coordinate of the point
-     | \param  offs offset of the curve
-     | \param  x   x-coordinate of the projected point on the curve
-     | \param  y   y-coordinate of the projected point on the curve
-     | \param  s   parameter on the curve of the projection
-     | \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     | \param  dst distance point projected point
-     | \return 1 = point is projected orthogonal
-     |         0 = more than one projection (first returned)
-     |        -1 = minimum point is not othogonal projection to curve
-    \*/
+     *  \param  qx  x-coordinate of the point
+     *  \param  qy  y-coordinate of the point
+     *  \param  offs offset of the curve
+     *  \param  x   x-coordinate of the projected point on the curve
+     *  \param  y   y-coordinate of the projected point on the curve
+     *  \param  s   parameter on the curve of the projection
+     *  \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst distance point projected point
+     *  \return 1 = point is projected orthogonal
+     *          0 = more than one projection (first returned)
+     *         -1 = minimum point is not othogonal projection to curve
+     */
     virtual
     int_type // true if projection is unique and orthogonal
     closestPoint(
@@ -718,16 +718,16 @@ namespace G2lib {
     getXY( real_type x[], real_type y[] ) const;
 
     /*!
-     | \brief Find parametric coordinate.
-     |
-     | \param  x    x-coordinate point
-     | \param  y    y-coordinate point
-     | \param  s    value \f$ s \f$
-     | \param  t    value \f$ t \f$
-     | \return idx  the segment with point at minimal distance, otherwise
-     |              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-     |
-    \*/
+     *  \brief Find parametric coordinate.
+     *
+     *  \param  x    x-coordinate point
+     *  \param  y    y-coordinate point
+     *  \param  s    value \f$ s \f$
+     *  \param  t    value \f$ t \f$
+     *  \return idx  the segment with point at minimal distance, otherwise
+     *               -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+     *
+     */
     int_type
     findST1(
       real_type   x,
@@ -737,17 +737,17 @@ namespace G2lib {
     ) const;
 
     /*!
-     | \brief Find parametric coordinate.
-     |
-     | \param  ibegin initial segment to compute the distance
-     | \param  iend   final segment to compute the distance
-     | \param  x      x-coordinate point
-     | \param  y      y-coordinate point
-     | \param  s      value \f$ s \f$
-     | \param  t      value \f$ t \f$
-     | \return idx    the segment with point at minimal distance, otherwise
-     |                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-    \*/
+     *  \brief Find parametric coordinate.
+     *
+     *  \param  ibegin initial segment to compute the distance
+     *  \param  iend   final segment to compute the distance
+     *  \param  x      x-coordinate point
+     *  \param  y      y-coordinate point
+     *  \param  s      value \f$ s \f$
+     *  \param  t      value \f$ t \f$
+     *  \return idx    the segment with point at minimal distance, otherwise
+     *                 -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+     */
     int_type
     findST1(
       int_type    ibegin,

@@ -60,6 +60,7 @@ namespace G2lib {
    |  | |_) | |_) | (_) >  <
    |  |____/|____/ \___/_/\_\
   \*/
+  //! Class to manipulate bounding box
   class BBox {
   public:
     #ifdef G2LIB_USE_CXX11
@@ -69,9 +70,12 @@ namespace G2lib {
     #endif
 
   private:
-    real_type xmin, ymin, xmax, ymax;
-    int_type  id;
-    int_type  ipos;
+    real_type xmin; //!< left bottom
+    real_type ymin; //!< left bottom
+    real_type xmax; //!< right top
+    real_type ymax; //!< right top
+    int_type  id;   //!< id of the bbox
+    int_type  ipos; //!< rank of the bounding box used in external algorithms
     BBox();
     BBox( BBox const & );
 
@@ -110,8 +114,8 @@ namespace G2lib {
     real_type Xmax() const { return xmax; }
     real_type Ymax() const { return ymax; }
 
-    int_type const & Id()   const { return id; }
-    int_type const & Ipos() const { return ipos; }
+    int_type const & Id()   const { return id; }   //!< return BBOX id
+    int_type const & Ipos() const { return ipos; } //!< return BBOX position
 
     BBox const &
     operator = ( BBox const & rhs ) {
@@ -124,6 +128,7 @@ namespace G2lib {
       return *this;
     }
 
+    //! detect if two bbox collide
     bool
     collision( BBox const & box ) const {
       return !( (box.xmin > xmax ) ||
@@ -132,12 +137,15 @@ namespace G2lib {
                 (box.ymax < ymin ) );
     }
 
+    //! Build bbox for a list of bbox
     void
     join( vector<PtrBBox> const & bboxes );
 
+    //! distance of the point `(x,y)` to the bbox
     real_type
     distance( real_type x, real_type y ) const;
 
+    //! maximum distance of the point `(x,y)` to the point of bbox
     real_type
     maxDistance( real_type x, real_type y ) const;
 
@@ -166,7 +174,7 @@ namespace G2lib {
    |   / ___ \  / ___ \| |_) | |_) | |_| | |  __/  __/
    |  /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
-
+  //! Class to manage AABB tree
   class AABBtree {
   public:
 
@@ -191,9 +199,9 @@ namespace G2lib {
     AABBtree( AABBtree const & tree );
 
     /*!
-     | Compute the minimum of the maximum distance
-     | between a point
-    \*/
+     * Compute the minimum of the maximum distance
+     * between a point
+     */
     static
     real_type
     min_maxdist(
@@ -204,8 +212,8 @@ namespace G2lib {
     );
 
     /*!
-     | Select the candidate which bbox have distance less than mmDist
-    \*/
+     * Select the candidate which bbox have distance less than mmDist
+     */
     static
     void
     min_maxdist_select(
@@ -229,9 +237,9 @@ namespace G2lib {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    void clear();
+    void clear(); //!< initialized AABB tree
 
-    bool empty() const;
+    bool empty() const; //!< check if AABB tree is empty
 
     void
     bbox(
@@ -246,12 +254,22 @@ namespace G2lib {
       ymax = pBBox->ymax;
     }
 
+    //! build AABB tree given a list of bbox
     void
     build( vector<PtrBBox> const & bboxes );
 
     void
     print( ostream_type & stream, int level = 0 ) const;
 
+    /*!
+     * Check if two AABB tree collide
+     *
+     * \param[in] tree      an AABB tree that is used to check collision
+     * \param[in] ifun      function the check if the contents of two bbox (curve) collide
+     * \param[in] swap_tree if true exchange the tree in computation
+     * \return true if the two tree collides
+     *
+     */
     template <typename COLLISION_fun>
     bool
     collision(
@@ -298,6 +316,15 @@ namespace G2lib {
       }
       return false;
     }
+
+    /*!
+     * Compute all the intersection of AABB trees
+     *
+     * \param[in]  tree             an AABB tree that is used to check collision
+     * \param[out] intersectionList list of pair bbox that overlaps
+     * \param[in]  swap_tree        if true exchange the tree in computation
+     *
+     */
 
     void
     intersect(

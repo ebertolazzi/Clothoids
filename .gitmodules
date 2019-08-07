@@ -1,0 +1,3 @@
+[submodule "submodules/quarticRootsFlocke"]
+	path = submodules/quarticRootsFlocke
+	url = https://github.com/ebertolazzi/quarticRootsFlocke

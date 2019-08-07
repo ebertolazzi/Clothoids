@@ -29,10 +29,16 @@ LIB_NAMES = { ...
   'ClothoidList', ...
   'ClothoidDistance', ...
   'ClothoidG2', ...
-  'CubicRootsFlocke', ...
   'Fresnel', ...
   'Triangle2D', ...
 };
+
+LIB_NAMES2 = { ...
+  'PolynomialRoots-1-Quadratic', ...
+  'PolynomialRoots-2-Cubic', ...
+  'PolynomialRoots-Utils', ...
+};
+
 LIB_SRCS = '';
 LIB_OBJS = '';
 for k=1:length(LIB_NAMES)
@@ -43,12 +49,20 @@ for k=1:length(LIB_NAMES)
     LIB_OBJS = [ LIB_OBJS, LIB_NAMES{k}, '.obj ' ];
   end
 end
+for k=1:length(LIB_NAMES2)
+  LIB_SRCS = [ LIB_SRCS, ' ../submodules/quarticRootsFlocke/src/', LIB_NAMES2{k}, '.cc' ];
+  if isunix
+    LIB_OBJS = [ LIB_OBJS, LIB_NAMES2{k}, '.o ' ];
+  elseif ispc
+    LIB_OBJS = [ LIB_OBJS, LIB_NAMES2{k}, '.obj ' ];
+  end
+end
 
 [~,mexLoaded] = inmem('-completenames');
 
 disp('---------------------------------------------------------');
 
-CMD = 'mex -c -largeArrayDims -I../src ';
+CMD = 'mex -c -largeArrayDims -I../src -I../submodules/quarticRootsFlocke/src ';
 if isunix
   if ismac
     CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0" '];

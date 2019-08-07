@@ -23,8 +23,6 @@
 #include "Clothoid.hh"
 #include "ClothoidList.hh"
 #include "PolyLine.hh"
-#include "CubicRootsFlocke.hh"
-
 
 // workaround for windows that defines max and min as macros!
 #ifdef max
@@ -562,7 +560,7 @@ namespace G2lib {
       #else
       real_type sc = 1+kk*offs;
       #endif
-      real_type ds = projectPointOnArc( x, y, th, kk/sc, qx, qy )/sc;
+      real_type ds = projectPointOnCircle( x, y, th, kk/sc, qx, qy )/sc;
 
       s += ds;
 

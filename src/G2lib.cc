@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "G2lib.hh"
-#include "CubicRootsFlocke.hh"
+#include "PolynomialRoots.hh"
 
 #include <algorithm>
 
@@ -33,6 +33,12 @@ namespace G2lib {
   using std::lower_bound;
   using std::abs;
   using std::sqrt;
+  using std::sin;
+  using std::cos;
+  using std::tan;
+  using std::atan;
+  using std::asin;
+  using std::acos;
 
   real_type const machepsi     = numeric_limits<real_type>::epsilon();
   real_type const machepsi10   = 10*machepsi;
@@ -303,22 +309,22 @@ namespace G2lib {
     real_type a   = (Tx2+Ty2)*kB2/4+Tx*kA*kB+kA2;
     real_type b   = (Tx*kB+2*kA)*T-Ty2;
     real_type c   = T*T;
-    real_type z[2];
-    int_type  nr, nc;
-    G2lib::solveQuadratic( a, b, c, z[0], z[1], nr, nc );
-    nc = 0;
-    for ( int_type i = 0; i < nr; ++i ) {
+    PolynomialRoots::Quadratic qsolve( a, b, c);
+    if ( qsolve.complexRoots() ) return 0;
+    real_type z[2] = { qsolve.real_root0(), qsolve.real_root1() };
+    int_type nint = 0;
+    for ( int_type i = 0; i < qsolve.numRoots(); ++i ) {
       real_type tmp = z[i]*(4-kB2*z[i]);
       if ( tmp < 0 ) continue;
       real_type xx = kB*z[i]/2;
       real_type yy = sqrt( tmp )/2;
       tmp = Tx*xx+kA*z[i]+T;
       if ( abs(tmp-Ty*yy) < abs(tmp+Ty*yy) ) yy = -yy;
-      x[nc] = xx;
-      y[nc] = yy;
-      ++nc;
+      x[nint] = xx;
+      y[nint] = yy;
+      ++nint;
     }
-    return nc;
+    return nint;
   }
 
   /*!
@@ -560,7 +566,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  projectPointOnCircle(
+  projectPointOnCircleArc(
     real_type x0,
     real_type y0,
     real_type c0, //!< cos(theta0)
@@ -604,7 +610,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  projectPointOnArc(
+  projectPointOnCircle(
     real_type x0,
     real_type y0,
     real_type theta0,

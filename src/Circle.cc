@@ -22,7 +22,6 @@
 #include "Clothoid.hh"
 #include "ClothoidList.hh"
 #include "PolyLine.hh"
-#include "CubicRootsFlocke.hh"
 
 // Workaround for Visual Studio
 #ifdef min
@@ -739,7 +738,7 @@ namespace G2lib {
   ) const {
     real_type cc0 = cos(theta0);
     real_type ss0 = sin(theta0);
-    s = projectPointOnCircle( x0, y0, cc0, ss0, k, L, qx, qy );
+    s = projectPointOnCircleArc( x0, y0, cc0, ss0, k, L, qx, qy );
     int_type res = 1;
     if ( s < 0 || s > L ) {
       s = L;
@@ -791,7 +790,7 @@ namespace G2lib {
     real_type ff = 1+k*offs;
     #endif
     real_type LL = L*ff;
-    s = projectPointOnCircle( xx0, yy0, cc0, ss0, k/ff, LL, qx, qy );
+    s = projectPointOnCircleArc( xx0, yy0, cc0, ss0, k/ff, LL, qx, qy );
     int_type res = 1;
     if ( s < 0 || s > LL ) {
       s = L;

@@ -25,7 +25,6 @@
 		D9168D5C227E207B0029D2BE /* BiarcList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9168D4F227E207B0029D2BE /* BiarcList.cc */; };
 		D9179A7C206D211E006B66E7 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9179A7D206D211E006B66E7 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9179A80206D211E006B66E7 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
@@ -40,7 +39,6 @@
 		D918ADA91F62E2D2009893C3 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
 		D92EFA7D2186931500BF8E18 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D92EFA7E2186931500BF8E18 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D92EFA7F2186931500BF8E18 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D92EFA802186931500BF8E18 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D92EFA822186931500BF8E18 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
 		D92EFA832186931500BF8E18 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
@@ -55,7 +53,6 @@
 		D92EFA932186932B00BF8E18 /* testIntersect2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D92EFA922186932B00BF8E18 /* testIntersect2.cc */; };
 		D92EFA962187B03600BF8E18 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D92EFA972187B03600BF8E18 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D92EFA982187B03600BF8E18 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D92EFA992187B03600BF8E18 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D92EFA9A2187B03600BF8E18 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
 		D92EFA9B2187B03600BF8E18 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
@@ -68,7 +65,6 @@
 		D92EFAA32187B03600BF8E18 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D92EFAA42187B03600BF8E18 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
 		D92EFAAC2187B05800BF8E18 /* testIntersect3.cc in Sources */ = {isa = PBXBuildFile; fileRef = D92EFAAB2187B05800BF8E18 /* testIntersect3.cc */; };
-		D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D938F4ED1DD3B85200E08A70 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
 		D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9614FD41FB8609F007E5770 /* ClothoidList.cc */; };
@@ -85,7 +81,6 @@
 		D969AF71216E4CFF00CA4DD0 /* PolyLine.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E22EE0216CB48F00C033D2 /* PolyLine.cc */; };
 		D969AF7421708CC200CA4DD0 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D969AF7621708CC200CA4DD0 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D969AF7721708CC200CA4DD0 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D969AF7821708CC200CA4DD0 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D969AF7921708CC200CA4DD0 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D969AF7A21708CC200CA4DD0 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
@@ -99,7 +94,6 @@
 		D969AF8921708CEF00CA4DD0 /* testPolyline.cc in Sources */ = {isa = PBXBuildFile; fileRef = D969AF8821708CEF00CA4DD0 /* testPolyline.cc */; };
 		D96E1FAE1F75513000115228 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
-		D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D96E1FB11F75513000115228 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D96E1FB21F75513000115228 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
 		D96E1FB31F75513000115228 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
@@ -109,7 +103,66 @@
 		D971F89A1F613BC2000E663E /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D971F89C1F6169D2000E663E /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
 		D971F89D1F6169D2000E663E /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
-		D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
+		D975FF5A22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF5B22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF5C22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF5D22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF5E22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF5F22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF6022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF6122FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF6222FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF6322FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF6422FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF6522FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */; };
+		D975FF6622FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6722FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6822FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6922FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6A22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6B22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6C22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6D22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6E22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF6F22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF7022FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF7122FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */; };
+		D975FF7222FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7322FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7422FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7522FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7622FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7722FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7822FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7922FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7A22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7B22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7C22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7D22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */; };
+		D975FF7E22FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF7F22FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8022FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8122FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8222FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8322FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8422FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8522FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8622FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8722FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8822FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FF8922FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */; };
+		D975FFA222FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFA322FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFA422FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFA522FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFA622FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFA722FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFA822FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFA922FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFAA22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFAB22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFAC22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
+		D975FFAD22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */; };
 		D981B3151E8D5722006C933D /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
 		D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393501FA14C42009C1E60 /* testG2plot.cc */; };
 		D9A393571FA14C57009C1E60 /* testG2statCLC.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393511FA14C42009C1E60 /* testG2statCLC.cc */; };
@@ -118,7 +171,6 @@
 		D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9A393551FA14C42009C1E60 /* testG2.cc */; };
 		D9AFBB5D20E28F5900C498EF /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9AFBB5E20E28F5900C498EF /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D9AFBB5F20E28F5900C498EF /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D9AFBB6020E28F5900C498EF /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9AFBB6220E28F5900C498EF /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
 		D9AFBB6320E28F5900C498EF /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
@@ -143,7 +195,6 @@
 		D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */; };
 		D9BFDB1420EE3C0E00612F3C /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9BFDB1520EE3C0E00612F3C /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D9BFDB1620EE3C0E00612F3C /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D9BFDB1720EE3C0E00612F3C /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9BFDB1820EE3C0E00612F3C /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9BFDB1920EE3C0E00612F3C /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
@@ -156,7 +207,6 @@
 		D9BFDB2820EE3C2700612F3C /* testBiarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9BFDB2720EE3C2700612F3C /* testBiarc.cc */; };
 		D9C3739520BC484100715C11 /* Line.cc in Sources */ = {isa = PBXBuildFile; fileRef = D918ADA51F62C1CE009893C3 /* Line.cc */; };
 		D9C3739620BC484100715C11 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
-		D9C3739820BC484100715C11 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D9C3739920BC484100715C11 /* Fresnel.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D1F1F5FFB8300740ECF /* Fresnel.cc */; };
 		D9C3739A20BC484100715C11 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
 		D9C3739B20BC484100715C11 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
@@ -169,7 +219,6 @@
 		D9C373AA20BC485B00715C11 /* testIntersect.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9C373A920BC485B00715C11 /* testIntersect.cc */; };
 		D9C8B9E41F7AA69400DF4205 /* G2lib.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D251F600AA600740ECF /* G2lib.cc */; };
 		D9C8B9E51F7AA69400DF4205 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
-		D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D9C8B9E71F7AA69400DF4205 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D9C8B9E81F7AA69400DF4205 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
 		D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */; };
@@ -195,7 +244,6 @@
 		D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9099D281F600B9400740ECF /* Circle.cc */; };
 		D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F8971F613BC2000E663E /* Biarc.cc */; };
 		D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */ = {isa = PBXBuildFile; fileRef = D971F89B1F6169D2000E663E /* ClothoidG2.cc */; };
-		D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */; };
 		D9FCD3362075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
 		D9FCD3372075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
 		D9FCD3382075552700553A10 /* Clothoid.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9FCD3352075552600553A10 /* Clothoid.cc */; };
@@ -343,8 +391,6 @@
 		D92EFAAD2188742200BF8E18 /* ClothoidList.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClothoidList.hh; sourceTree = "<group>"; };
 		D938F4DB1DD3B83000E08A70 /* G2solver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = G2solver; sourceTree = BUILT_PRODUCTS_DIR; };
 		D938F4E71DD3B84A00E08A70 /* Clothoid.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Clothoid.hh; sourceTree = "<group>"; };
-		D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CubicRootsFlocke.cc; sourceTree = "<group>"; };
-		D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CubicRootsFlocke.hh; sourceTree = "<group>"; };
 		D938F4EA1DD3B84A00E08A70 /* Triangle2D.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle2D.cc; sourceTree = "<group>"; };
 		D9614FD41FB8609F007E5770 /* ClothoidList.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidList.cc; sourceTree = "<group>"; };
 		D969AF8721708CC200CA4DD0 /* testPolyline */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testPolyline; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -353,6 +399,13 @@
 		D971F8971F613BC2000E663E /* Biarc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Biarc.cc; sourceTree = "<group>"; };
 		D971F8981F613BC2000E663E /* Biarc.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Biarc.hh; sourceTree = "<group>"; };
 		D971F89B1F6169D2000E663E /* ClothoidG2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClothoidG2.cc; sourceTree = "<group>"; };
+		D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-2-Cubic.cc"; sourceTree = "<group>"; };
+		D975FF5122FB43E900A0ED8A /* PolynomialRoots-Utils.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "PolynomialRoots-Utils.hh"; sourceTree = "<group>"; };
+		D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-Utils.cc"; sourceTree = "<group>"; };
+		D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-3-Quartic.cc"; sourceTree = "<group>"; };
+		D975FF5422FB43E900A0ED8A /* PolynomialRoots.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolynomialRoots.hh; sourceTree = "<group>"; };
+		D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-1-Quadratic.cc"; sourceTree = "<group>"; };
+		D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-Jenkins-Traub.cc"; sourceTree = "<group>"; };
 		D981B3031E8D56AF006C933D /* testAB */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = testAB; path = testG2plot; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98A2AA4217DADDE00EC0765 /* AABBtree.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AABBtree.hh; sourceTree = "<group>"; };
 		D9A393501FA14C42009C1E60 /* testG2plot.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2plot.cc; sourceTree = "<group>"; };
@@ -472,6 +525,7 @@
 			children = (
 				D938F4DC1DD3B83000E08A70 /* Products */,
 				D9A3934F1FA14C42009C1E60 /* tests-cpp */,
+				D975FF4F22FB43E900A0ED8A /* src */,
 				D938F4E51DD3B84A00E08A70 /* src */,
 			);
 			sourceTree = "<group>";
@@ -524,12 +578,25 @@
 				D971F89B1F6169D2000E663E /* ClothoidG2.cc */,
 				D9E22EE1216CB48F00C033D2 /* PolyLine.hh */,
 				D9E22EE0216CB48F00C033D2 /* PolyLine.cc */,
-				D938F4E81DD3B84A00E08A70 /* CubicRootsFlocke.cc */,
-				D938F4E91DD3B84A00E08A70 /* CubicRootsFlocke.hh */,
 				D9BD861A1EFC021300C82B74 /* ClothoidAsyPlot.cc */,
 				D9BD861B1EFC021300C82B74 /* ClothoidAsyPlot.hh */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		D975FF4F22FB43E900A0ED8A /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */,
+				D975FF5022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc */,
+				D975FF5322FB43E900A0ED8A /* PolynomialRoots-3-Quartic.cc */,
+				D975FF5122FB43E900A0ED8A /* PolynomialRoots-Utils.hh */,
+				D975FF5222FB43E900A0ED8A /* PolynomialRoots-Utils.cc */,
+				D975FF5422FB43E900A0ED8A /* PolynomialRoots.hh */,
+				D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */,
+			);
+			name = src;
+			path = submodules/quarticRootsFlocke/src;
 			sourceTree = "<group>";
 		};
 		D9A3934F1FA14C42009C1E60 /* tests-cpp */ = {
@@ -839,17 +906,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFA722FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D9179A7C206D211E006B66E7 /* Line.cc in Sources */,
 				D9179A7D206D211E006B66E7 /* Triangle2D.cc in Sources */,
+				D975FF5F22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9179A8F206D2136006B66E7 /* testDistance.cc in Sources */,
-				D9179A7E206D211E006B66E7 /* CubicRootsFlocke.cc in Sources */,
 				D9179A7F206D211E006B66E7 /* Fresnel.cc in Sources */,
 				D9FCD33B2075552700553A10 /* Clothoid.cc in Sources */,
 				D9E4310F218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9179A80206D211E006B66E7 /* G2lib.cc in Sources */,
 				D9179A81206D211E006B66E7 /* ClothoidList.cc in Sources */,
 				D9179A82206D211E006B66E7 /* Biarc.cc in Sources */,
+				D975FF8322FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9179A83206D211E006B66E7 /* ClothoidAsyPlot.cc in Sources */,
+				D975FF6B22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7722FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D9FCD342207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D9168D56227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9179A84206D211E006B66E7 /* Circle.cc in Sources */,
@@ -863,9 +934,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFA922FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D92EFA7D2186931500BF8E18 /* Line.cc in Sources */,
 				D92EFA7E2186931500BF8E18 /* Triangle2D.cc in Sources */,
-				D92EFA7F2186931500BF8E18 /* CubicRootsFlocke.cc in Sources */,
+				D975FF6122FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D92EFA802186931500BF8E18 /* Fresnel.cc in Sources */,
 				D92EFA822186931500BF8E18 /* Clothoid.cc in Sources */,
 				D92EFA832186931500BF8E18 /* G2lib.cc in Sources */,
@@ -873,7 +945,10 @@
 				D92EFA842186931500BF8E18 /* ClothoidList.cc in Sources */,
 				D92EFA932186932B00BF8E18 /* testIntersect2.cc in Sources */,
 				D92EFA852186931500BF8E18 /* Biarc.cc in Sources */,
+				D975FF8522FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D92EFA862186931500BF8E18 /* ClothoidAsyPlot.cc in Sources */,
+				D975FF6D22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7922FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D92EFA872186931500BF8E18 /* ClothoidDistance.cc in Sources */,
 				D9168D58227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D92EFA882186931500BF8E18 /* Circle.cc in Sources */,
@@ -887,9 +962,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFAA22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D92EFA962187B03600BF8E18 /* Line.cc in Sources */,
 				D92EFA972187B03600BF8E18 /* Triangle2D.cc in Sources */,
-				D92EFA982187B03600BF8E18 /* CubicRootsFlocke.cc in Sources */,
+				D975FF6222FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D92EFA992187B03600BF8E18 /* Fresnel.cc in Sources */,
 				D92EFA9A2187B03600BF8E18 /* Clothoid.cc in Sources */,
 				D92EFA9B2187B03600BF8E18 /* G2lib.cc in Sources */,
@@ -897,7 +973,10 @@
 				D92EFA9C2187B03600BF8E18 /* ClothoidList.cc in Sources */,
 				D92EFA9E2187B03600BF8E18 /* Biarc.cc in Sources */,
 				D92EFAAC2187B05800BF8E18 /* testIntersect3.cc in Sources */,
+				D975FF8622FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D92EFA9F2187B03600BF8E18 /* ClothoidAsyPlot.cc in Sources */,
+				D975FF6E22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7A22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D92EFAA02187B03600BF8E18 /* ClothoidDistance.cc in Sources */,
 				D9168D59227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D92EFAA12187B03600BF8E18 /* Circle.cc in Sources */,
@@ -911,9 +990,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFA222FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D918ADA61F62C1CE009893C3 /* Line.cc in Sources */,
 				D938F4ED1DD3B85200E08A70 /* Triangle2D.cc in Sources */,
-				D938F4EC1DD3B85000E08A70 /* CubicRootsFlocke.cc in Sources */,
+				D975FF5A22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9099D201F5FFB8300740ECF /* Fresnel.cc in Sources */,
 				D9099D261F600AA600740ECF /* G2lib.cc in Sources */,
 				D9FCD3362075552700553A10 /* Clothoid.cc in Sources */,
@@ -921,7 +1001,10 @@
 				D9614FD51FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D971F8991F613BC2000E663E /* Biarc.cc in Sources */,
 				D9BD861C1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
+				D975FF7E22FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9099D291F600B9400740ECF /* Circle.cc in Sources */,
+				D975FF6622FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7222FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D9FCD33D207556DD00553A10 /* ClothoidDistance.cc in Sources */,
 				D9168D51227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9A3935A1FA14C64009C1E60 /* testG2.cc in Sources */,
@@ -935,9 +1018,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFAD22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D969AF7421708CC200CA4DD0 /* Line.cc in Sources */,
 				D969AF7621708CC200CA4DD0 /* Triangle2D.cc in Sources */,
-				D969AF7721708CC200CA4DD0 /* CubicRootsFlocke.cc in Sources */,
+				D975FF6522FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D969AF7821708CC200CA4DD0 /* Fresnel.cc in Sources */,
 				D969AF7921708CC200CA4DD0 /* G2lib.cc in Sources */,
 				D969AF8921708CEF00CA4DD0 /* testPolyline.cc in Sources */,
@@ -945,7 +1029,10 @@
 				D969AF7A21708CC200CA4DD0 /* Clothoid.cc in Sources */,
 				D969AF7B21708CC200CA4DD0 /* ClothoidList.cc in Sources */,
 				D969AF7C21708CC200CA4DD0 /* Biarc.cc in Sources */,
+				D975FF8922FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D969AF7D21708CC200CA4DD0 /* ClothoidAsyPlot.cc in Sources */,
+				D975FF7122FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7D22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D969AF7E21708CC200CA4DD0 /* Circle.cc in Sources */,
 				D9168D5C227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF7F21708CC200CA4DD0 /* ClothoidDistance.cc in Sources */,
@@ -966,14 +1053,18 @@
 				D9614FD81FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9BA2F91217FE5AE009D45BD /* AABBtree.cc in Sources */,
 				D96E1FAF1F75513000115228 /* ClothoidG2.cc in Sources */,
+				D975FF8122FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9E4310D218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
-				D96E1FB01F75513000115228 /* CubicRootsFlocke.cc in Sources */,
 				D96E1FB11F75513000115228 /* Biarc.cc in Sources */,
 				D96E1FB21F75513000115228 /* Circle.cc in Sources */,
 				D96E1FB31F75513000115228 /* Triangle2D.cc in Sources */,
+				D975FF7522FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
+				D975FF5D22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D96E1FB41F75513000115228 /* Line.cc in Sources */,
+				D975FF6922FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
 				D9168D54227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF6C216E4CFC00CA4DD0 /* PolyLine.cc in Sources */,
+				D975FFA522FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D96E1FB51F75513000115228 /* Fresnel.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -982,9 +1073,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFA322FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D971F89D1F6169D2000E663E /* ClothoidG2.cc in Sources */,
 				D981B3151E8D5722006C933D /* Triangle2D.cc in Sources */,
-				D981B3141E8D5720006C933D /* CubicRootsFlocke.cc in Sources */,
+				D975FF5B22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9099D221F6001ED00740ECF /* Fresnel.cc in Sources */,
 				D9A393561FA14C54009C1E60 /* testG2plot.cc in Sources */,
 				D9FCD3372075552700553A10 /* Clothoid.cc in Sources */,
@@ -992,7 +1084,10 @@
 				D9614FD61FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D918ADA81F62E2CA009893C3 /* G2lib.cc in Sources */,
 				D971F89A1F613BC2000E663E /* Biarc.cc in Sources */,
+				D975FF7F22FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9FCD33E207556DD00553A10 /* ClothoidDistance.cc in Sources */,
+				D975FF6722FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7322FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D918ADA71F62C1CE009893C3 /* Line.cc in Sources */,
 				D9168D52227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9BD861D1EFC021300C82B74 /* ClothoidAsyPlot.cc in Sources */,
@@ -1006,9 +1101,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFAB22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D9AFBB5D20E28F5900C498EF /* Line.cc in Sources */,
 				D9AFBB5E20E28F5900C498EF /* Triangle2D.cc in Sources */,
-				D9AFBB5F20E28F5900C498EF /* CubicRootsFlocke.cc in Sources */,
+				D975FF6322FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9AFBB7120E28F6900C498EF /* testTriangle2D.cc in Sources */,
 				D9AFBB6020E28F5900C498EF /* Fresnel.cc in Sources */,
 				D9AFBB6220E28F5900C498EF /* Clothoid.cc in Sources */,
@@ -1016,7 +1112,10 @@
 				D9AFBB6320E28F5900C498EF /* G2lib.cc in Sources */,
 				D9AFBB6420E28F5900C498EF /* ClothoidList.cc in Sources */,
 				D9AFBB6520E28F5900C498EF /* Biarc.cc in Sources */,
+				D975FF8722FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9AFBB6620E28F5900C498EF /* ClothoidAsyPlot.cc in Sources */,
+				D975FF6F22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7B22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D9AFBB6720E28F5900C498EF /* ClothoidDistance.cc in Sources */,
 				D9168D5A227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9AFBB6820E28F5900C498EF /* Circle.cc in Sources */,
@@ -1030,17 +1129,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFAC22FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D9BFDB1420EE3C0E00612F3C /* Line.cc in Sources */,
 				D9BFDB2820EE3C2700612F3C /* testBiarc.cc in Sources */,
+				D975FF6422FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9BFDB1520EE3C0E00612F3C /* Triangle2D.cc in Sources */,
-				D9BFDB1620EE3C0E00612F3C /* CubicRootsFlocke.cc in Sources */,
 				D9BFDB1720EE3C0E00612F3C /* Fresnel.cc in Sources */,
 				D9BFDB1820EE3C0E00612F3C /* G2lib.cc in Sources */,
 				D9E43114218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
 				D9BFDB1920EE3C0E00612F3C /* Clothoid.cc in Sources */,
 				D9BFDB1A20EE3C0E00612F3C /* ClothoidList.cc in Sources */,
 				D9BFDB1B20EE3C0E00612F3C /* Biarc.cc in Sources */,
+				D975FF8822FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9BFDB1C20EE3C0E00612F3C /* ClothoidAsyPlot.cc in Sources */,
+				D975FF7022FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7C22FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D9BFDB1D20EE3C0E00612F3C /* Circle.cc in Sources */,
 				D9168D5B227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9BFDB1E20EE3C0E00612F3C /* ClothoidDistance.cc in Sources */,
@@ -1054,9 +1157,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D975FFA822FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D9C3739520BC484100715C11 /* Line.cc in Sources */,
 				D9C3739620BC484100715C11 /* Triangle2D.cc in Sources */,
-				D9C3739820BC484100715C11 /* CubicRootsFlocke.cc in Sources */,
+				D975FF6022FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9C3739920BC484100715C11 /* Fresnel.cc in Sources */,
 				D9C373AA20BC485B00715C11 /* testIntersect.cc in Sources */,
 				D9C3739A20BC484100715C11 /* Clothoid.cc in Sources */,
@@ -1064,7 +1168,10 @@
 				D9C3739B20BC484100715C11 /* G2lib.cc in Sources */,
 				D9C3739C20BC484100715C11 /* ClothoidList.cc in Sources */,
 				D9C3739D20BC484100715C11 /* Biarc.cc in Sources */,
+				D975FF8422FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9C3739E20BC484100715C11 /* ClothoidAsyPlot.cc in Sources */,
+				D975FF6C22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
+				D975FF7822FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
 				D9C3739F20BC484100715C11 /* ClothoidDistance.cc in Sources */,
 				D9168D57227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D9C373A020BC484100715C11 /* Circle.cc in Sources */,
@@ -1084,15 +1191,19 @@
 				D9C8B9E51F7AA69400DF4205 /* ClothoidG2.cc in Sources */,
 				D9614FD91FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9BA2F92217FE5AF009D45BD /* AABBtree.cc in Sources */,
-				D9C8B9E61F7AA69400DF4205 /* CubicRootsFlocke.cc in Sources */,
 				D9E4310E218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
+				D975FF8222FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9C8B9E71F7AA69400DF4205 /* Biarc.cc in Sources */,
 				D9C8B9E81F7AA69400DF4205 /* Circle.cc in Sources */,
 				D9C8B9E91F7AA69400DF4205 /* Triangle2D.cc in Sources */,
 				D9C8B9EA1F7AA69400DF4205 /* Line.cc in Sources */,
+				D975FF7622FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
+				D975FF5E22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9A393571FA14C57009C1E60 /* testG2statCLC.cc in Sources */,
+				D975FF6A22FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
 				D9168D55227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF6D216E4CFD00CA4DD0 /* PolyLine.cc in Sources */,
+				D975FFA622FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D9C8B9EB1F7AA69400DF4205 /* Fresnel.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1107,15 +1218,19 @@
 				D9E74A5D1F68826800E47B88 /* ClothoidG2.cc in Sources */,
 				D9614FD71FB8609F007E5770 /* ClothoidList.cc in Sources */,
 				D9BA2F90217FE5AE009D45BD /* AABBtree.cc in Sources */,
-				D9E74A5E1F68826B00E47B88 /* CubicRootsFlocke.cc in Sources */,
 				D9E4310C218DBB10006CC6F3 /* G2lib_intersect.cc in Sources */,
+				D975FF8022FB43EA00A0ED8A /* PolynomialRoots-1-Quadratic.cc in Sources */,
 				D9E74A5B1F68825C00E47B88 /* Biarc.cc in Sources */,
 				D9E74A5A1F68825900E47B88 /* Circle.cc in Sources */,
 				D9E74A581F68825300E47B88 /* Triangle2D.cc in Sources */,
 				D9E74A591F68825600E47B88 /* Line.cc in Sources */,
+				D975FF7422FB43EA00A0ED8A /* PolynomialRoots-3-Quartic.cc in Sources */,
+				D975FF5C22FB43E900A0ED8A /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D9E74A571F68825100E47B88 /* Fresnel.cc in Sources */,
+				D975FF6822FB43EA00A0ED8A /* PolynomialRoots-Utils.cc in Sources */,
 				D9168D53227E207B0029D2BE /* BiarcList.cc in Sources */,
 				D969AF6B216E4CFC00CA4DD0 /* PolyLine.cc in Sources */,
+				D975FFA422FB43EA00A0ED8A /* PolynomialRoots-Jenkins-Traub.cc in Sources */,
 				D9A393591FA14C61009C1E60 /* testG2stat.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

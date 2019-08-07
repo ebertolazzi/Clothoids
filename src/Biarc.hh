@@ -41,7 +41,7 @@ namespace G2lib {
   /*!
    * \brief Compute biarc fitting by Hemite data
    *
-  \*/
+   */
 
   class Biarc : public BaseCurve {
     CircleArc C0, C1;
@@ -126,12 +126,12 @@ namespace G2lib {
     );
 
     /*!
-    //  \brief
-    //  construct a biarc by 3 point at "minimum energy"
-    //  - Planar point set fairing and fitting by arc splines
-    //  - Xunnian Yang and Guozhao Wang
-    //  - Computer-Aided Design, vol 33, 2001
-    */
+     *  \brief
+     *  construct a biarc by 3 point at "minimum energy"
+     *  - Planar point set fairing and fitting by arc splines
+     *  - Xunnian Yang and Guozhao Wang
+     *  - Computer-Aided Design, vol 33, 2001
+     */
     bool
     build_3P(
       real_type x0,

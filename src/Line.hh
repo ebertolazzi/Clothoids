@@ -36,6 +36,7 @@ namespace G2lib {
    |  |_____|_|_| |_|\___|
   \*/
 
+  //! Class to manage a straight segment
   class LineSegment : public BaseCurve {
 
     friend class CircleArc;
@@ -524,7 +525,7 @@ namespace G2lib {
      * \param y  y-coordinate of the closest point
      * \param s  param of the closest point
      * \return the distance point-segment
-    \*/
+     */
 
     virtual
     int_type

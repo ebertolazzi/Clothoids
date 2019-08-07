@@ -2,7 +2,7 @@
 OS=$(shell uname -s)
 PWD=$(shell pwd)
 
-INC         = -I./src -I./include
+INC         = -I./src -I./include -Isubmodules/quarticRootsFlocke/src
 LIBS        = -L./lib -lClothoids
 DEFS        =
 STATIC_EXT  = .a
@@ -10,8 +10,8 @@ DYNAMIC_EXT = .so
 AR          = ar rcs
 LDCONFIG    = sudo ldconfig
 
-WARN=-Wall -Wno-sign-compare
-#-Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
+WARN        = -Wall -Wno-sign-compare
+#-Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
 
 # default values
 
@@ -33,13 +33,17 @@ endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  WARN        = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
+  WARN        = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
   LIBS        = -L./lib -lClothoids
+	CC          = clang
+	CXX         = clang++
   CXXFLAGS    = $(WARN) -O3 -fPIC
   AR          = libtool -static -o
   LDCONFIG    =
   DYNAMIC_EXT = .dylib
 endif
+
+.SUFFIXES: .o
 
 LIB_CLOTHOID = libClothoids
 
@@ -51,12 +55,14 @@ src/Clothoid.cc \
 src/ClothoidDistance.cc \
 src/ClothoidG2.cc \
 src/ClothoidList.cc \
-src/CubicRootsFlocke.cc \
 src/Fresnel.cc \
 src/G2lib.cc \
 src/Line.cc \
 src/Triangle2D.cc \
-src/PolyLine.cc
+src/PolyLine.cc \
+submodules/quarticRootsFlocke/src/PolynomialRoots-1-Quadratic.cc \
+submodules/quarticRootsFlocke/src/PolynomialRoots-2-Cubic.cc \
+submodules/quarticRootsFlocke/src/PolynomialRoots-Utils.cc
 
 OBJS  = $(SRCS:.cc=.o)
 DEPS  = src/Clothoid.hh src/CubicRootsFlocke.hh
@@ -92,23 +98,23 @@ include_local:
 	$(MKDIR) lib/include
 	@cp -f src/*.hh lib/include
 
-src/%.o: src/%.cc $(DEPS)
-	$(CXX) $(INC) $(CXXFLAGS) $(DEFS) -c $< -o $@ 
+.cc.o : $(DEPS)
+	$(CXX) $(INC) $(CXXFLAGS) $(DEFS) -c $< -o $@
 
-src/%.o: src/%.c $(DEPS)
+.c.o : $(DEPS)
 	$(CC) $(INC) $(CFLAGS) $(DEFS) -c -o $@ $<
 
 lib/libClothoids.a: $(OBJS) include_local
 	@$(MKDIR) lib
-	$(AR) lib/libClothoids.a $(OBJS) 
+	$(AR) lib/libClothoids.a $(OBJS)
 
 lib/libClothoids.dylib: $(OBJS) include_local
 	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoids.dylib $(OBJS) 
+	$(CXX) -shared -o lib/libClothoids.dylib $(OBJS)
 
 lib/libClothoids.so: $(OBJS) include_local
 	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoids.so $(OBJS) 
+	$(CXX) -shared -o lib/libClothoids.so $(OBJS)
 
 install: lib
 	@$(MKDIR) $(PREFIX)/lib
@@ -120,8 +126,8 @@ install: lib
 install_as_framework: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
-	cp src/*.hh                $(PREFIX)/include/$(FRAMEWORK)
-	cp lib/$(LIB_CLOTHOID)     $(PREFIX)/lib
+	cp src/*.hh            $(PREFIX)/include/$(FRAMEWORK)
+	cp lib/$(LIB_CLOTHOID) $(PREFIX)/lib
 
 run:
 	./bin/testBiarc
@@ -135,10 +141,10 @@ run:
 	./bin/testPolyline
 	./bin/testTriangle2D
 
-doc:
-	doxygen
-	
+docs:
+	@doxygen
+	@open docs/index.html
+
 clean:
-	rm -f lib/libClothoids.* lib/libClothoids.* src/*.o
+	rm -f lib/libClothoids.* src/*.o
 	rm -rf bin
-	
