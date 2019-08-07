@@ -75,8 +75,10 @@ namespace G2lib {
 
   extern "C"
   void
-  mexFunction( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  mexFunction(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {
@@ -187,8 +189,10 @@ namespace G2lib {
 
         mwSize ntheta;
         real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
-        MEX_ASSERT( ntheta == ptr->numPnts(),
-                    CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() );
+        MEX_ASSERT(
+          ntheta == ptr->numPnts(),
+          CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts()
+        );
         double * g = createMatrixValue( arg_out_0, ntheta, 1 );
         bool ok = ptr->gradient( theta, g );
         MEX_ASSERT( ok, CMD "bad gradient computation");
@@ -204,8 +208,10 @@ namespace G2lib {
 
         mwSize ntheta;
         real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
-        MEX_ASSERT( ntheta == ptr->numPnts(),
-                    CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() );
+        MEX_ASSERT(
+          ntheta == ptr->numPnts(),
+          CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts()
+        );
         double * c = createMatrixValue( arg_out_0, ptr->numConstraints(), 1 );
         bool ok = ptr->constraints( theta, c );
         MEX_ASSERT( ok, CMD "bad constraints computation");
@@ -221,8 +227,10 @@ namespace G2lib {
 
         mwSize ntheta;
         real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
-        MEX_ASSERT( ntheta == ptr->numPnts(),
-                    CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() );
+        MEX_ASSERT(
+          ntheta == ptr->numPnts(),
+          CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts()
+        );
 
         int_type n   = ptr->numConstraints();
         int_type m   = ptr->numTheta();

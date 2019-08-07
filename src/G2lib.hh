@@ -166,6 +166,14 @@ namespace G2lib {
   extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
   extern bool            intersect_with_AABBtree;
 
+  #ifdef G2LIB_USE_SAE
+  static inline bool lib_use_SAE() { return true; }
+  static inline bool lib_use_ISO() { return false; }
+  #else
+  static inline bool lib_use_SAE() { return false; }
+  static inline bool lib_use_ISO() { return true; }
+  #endif
+
   //! disable AABB tree in computation
   static
   inline

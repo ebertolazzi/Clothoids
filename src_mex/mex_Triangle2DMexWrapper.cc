@@ -66,8 +66,10 @@ namespace G2lib {
 
   extern "C"
   void
-  mexFunction( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  mexFunction(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {
@@ -202,13 +204,19 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
         mwSize nrx, ncx, nry, ncy;
-        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
-                              CMD "`x` expected to be a real vector/matrix" );
-        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
-                              CMD "`y` expected to be a real vectormatrix" );
-        MEX_ASSERT( nrx == nry && ncx == ncy,
-                    CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                    nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+        real_type const * x = getMatrixPointer(
+          arg_in_2, nrx, ncx,
+          CMD "`x` expected to be a real vector/matrix"
+        );
+        real_type const * y = getMatrixPointer(
+          arg_in_3, nry, ncy,
+          CMD "`y` expected to be a real vectormatrix"
+        );
+        MEX_ASSERT(
+          nrx == nry && ncx == ncy,
+          CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+          nrx << " x " << nry << " size(y) = " << nry << " x " << ncy
+        );
 
         real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
 
@@ -225,14 +233,20 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
         mwSize nrx, ncx, nry, ncy;
-        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
-                              CMD "`x` expected to be a real vector/matrix" );
-        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
-                              CMD "`y` expected to be a real vectormatrix" );
-        MEX_ASSERT( nrx == nry && ncx == ncy,
-                    CMD "`x` and `y` expected to be of the same size, found" <<
-                    " size(x) = " << nrx << " x " << nry <<
-                    " size(y) = " << nry << " x " << ncy );
+        real_type const * x = getMatrixPointer(
+          arg_in_2, nrx, ncx,
+          CMD "`x` expected to be a real vector/matrix"
+        );
+        real_type const * y = getMatrixPointer(
+          arg_in_3, nry, ncy,
+          CMD "`y` expected to be a real vectormatrix"
+        );
+        MEX_ASSERT(
+          nrx == nry && ncx == ncy,
+          CMD "`x` and `y` expected to be of the same size, found" <<
+          " size(x) = " << nrx << " x " << nry <<
+          " size(y) = " << nry << " x " << ncy
+        );
 
         real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
 
@@ -249,14 +263,20 @@ namespace G2lib {
         MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
         mwSize nrx, ncx, nry, ncy;
-        real_type const * x = getMatrixPointer( arg_in_2, nrx, ncx,
-                              CMD "`x` expected to be a real vector/matrix" );
-        real_type const * y = getMatrixPointer( arg_in_3, nry, ncy,
-                              CMD "`y` expected to be a real vectormatrix" );
-        MEX_ASSERT( nrx == nry && ncx == ncy,
-                    CMD "`x` and `y` expected to be of the same size, found" <<
-                    " size(x) = " << nrx << " x " << ncx <<
-                    " size(y) = " << nry << " x " << ncy );
+        real_type const * x = getMatrixPointer(
+          arg_in_2, nrx, ncx,
+          CMD "`x` expected to be a real vector/matrix"
+        );
+        real_type const * y = getMatrixPointer(
+          arg_in_3, nry, ncy,
+          CMD "`y` expected to be a real vectormatrix"
+        );
+        MEX_ASSERT(
+          nrx == nry && ncx == ncy,
+          CMD "`x` and `y` expected to be of the same size, found" <<
+          " size(x) = " << nrx << " x " << ncx <<
+          " size(y) = " << nry << " x " << ncy
+        );
 
         int64_t * icode = createMatrixInt64( arg_out_0, nrx, ncx );
 

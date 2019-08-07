@@ -103,14 +103,18 @@ namespace G2lib {
 
   static
   void
-  do_new( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+  do_new(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('new'): "
-    MEX_ASSERT( nlhs == 1,
-                CMD "expected 1 output, nlhs = " << nlhs );
-    MEX_ASSERT( nrhs == 1,
-                CMD "expected 1 input, nlhs = " << nrhs );
+    MEX_ASSERT(
+      nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs
+    );
+    MEX_ASSERT(
+      nrhs == 1, CMD "expected 1 input, nlhs = " << nrhs
+    );
 
     //ClothoidList * ptr =
     DATA_NEW(arg_out_0);
@@ -122,13 +126,16 @@ namespace G2lib {
 
   static
   void
-  do_push_back( int nlhs, mxArray       *plhs[],
-                int nrhs, mxArray const *prhs[] ) {
+  do_push_back(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('push_back',OBJ,CLOT|[kappa0,dkappa,L]|[x0,y0,theta0,kappa0,dkappa,L]): "
 
-    MEX_ASSERT( nlhs == 0,
-                CMD "expected NO output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nlhs == 0, CMD "expected NO output, nlhs = " << nlhs
+    );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -159,13 +166,16 @@ namespace G2lib {
 
   static
   void
-  do_push_back_G1( int nlhs, mxArray       *plhs[],
-                   int nrhs, mxArray const *prhs[] ) {
+  do_push_back_G1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[CLOT]): "
 
-    MEX_ASSERT( nlhs == 0,
-                CMD "expected NO output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nlhs == 0, CMD "expected NO output, nlhs = " << nlhs
+    );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -193,8 +203,10 @@ namespace G2lib {
 
   static
   void
-  do_reserve( int nlhs, mxArray       *plhs[],
-              int nrhs, mxArray const *prhs[] ) {
+  do_reserve(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('reserve',OBJ,N): "
 
@@ -213,8 +225,10 @@ namespace G2lib {
 
   static
   void
-  do_getSTK( int nlhs, mxArray       *plhs[],
-             int nrhs, mxArray const *prhs[] ) {
+  do_getSTK(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('getSTK',OBJ): "
 
@@ -238,8 +252,10 @@ namespace G2lib {
 
   static
   void
-  do_getXY( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
+  do_getXY(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('getXY',OBJ): "
 
@@ -261,8 +277,10 @@ namespace G2lib {
 
   static
   void
-  do_build_G1( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  do_build_G1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('build_G1', OBJ, x, y [, theta]): "
 
@@ -305,8 +323,10 @@ namespace G2lib {
 
   static
   void
-  do_build_3arcG2( int nlhs, mxArray       *plhs[],
-                   int nrhs, mxArray const *prhs[] ) {
+  do_build_3arcG2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('build_3arcG2',OBJ,x0,y0,theta0,kappa0,x1,y1,theta1,kappa1): "
 
@@ -344,8 +364,10 @@ namespace G2lib {
 
   static
   void
-  do_build_2arcG2( int nlhs, mxArray       *plhs[],
-                   int nrhs, mxArray const *prhs[] ) {
+  do_build_2arcG2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('build_2arcG2',OBJ,x0,y0,theta0,kappa0,x1,y1,theta1,kappa1): "
 
@@ -382,8 +404,10 @@ namespace G2lib {
 
   static
   void
-  do_build_CLC( int nlhs, mxArray       *plhs[],
-                int nrhs, mxArray const *prhs[] ) {
+  do_build_CLC(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('build_CLC',OBJ,x0,y0,theta0,kappa0,x1,y1,theta1,kappa1): "
 
@@ -421,8 +445,10 @@ namespace G2lib {
 
   static
   void
-  do_build_3arcG2fixed( int nlhs, mxArray       *plhs[],
-                        int nrhs, mxArray const *prhs[] ) {
+  do_build_3arcG2fixed(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
     #define CMD "ClothoidListMexWrapper('build_3arcG2fixed',OBJ,s0,x0,y0,theta0,kappa0,s1,x1,y1,theta1,kappa1): "
 
     MEX_ASSERT(nrhs == 12, CMD "expected 12 inputs, nrhs = " << nrhs );
@@ -461,8 +487,10 @@ namespace G2lib {
 
   static
   void
-  do_build( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
+  do_build(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
     #define CMD "ClothoidListMexWrapper('build',OBJ,x0,y0,theta0,s,kappa): "
 
     MEX_ASSERT(nrhs == 7, CMD "expected 7 inputs, nrhs = " << nrhs );
@@ -494,8 +522,10 @@ namespace G2lib {
 
   static
   void
-  do_build_theta( int nlhs, mxArray       *plhs[],
-                  int nrhs, mxArray const *prhs[] ) {
+  do_build_theta(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('build_theta',OBJ,x,y): "
 
@@ -521,8 +551,10 @@ namespace G2lib {
 
   static
   void
-  do_get( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+  do_get(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('get',OBJ,n): "
 
@@ -552,8 +584,10 @@ namespace G2lib {
 
   static
   void
-  do_numSegment( int nlhs, mxArray       *plhs[],
-                 int nrhs, mxArray const *prhs[] ) {
+  do_numSegment(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
     #define CMD "ClothoidListMexWrapper('numSegment', OBJ): "
 
     MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
@@ -570,8 +604,10 @@ namespace G2lib {
 
   static
   void
-  do_deltaTheta( int nlhs, mxArray       *plhs[],
-                 int nrhs, mxArray const *prhs[] ) {
+  do_deltaTheta(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('deltaTheta',OBJ): "
 
@@ -592,8 +628,10 @@ namespace G2lib {
 
   static
   void
-  do_deltaKappa( int nlhs, mxArray       *plhs[],
-                 int nrhs, mxArray const *prhs[] ) {
+  do_deltaKappa(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('deltaKappa',OBJ): "
 
@@ -614,8 +652,10 @@ namespace G2lib {
 
   static
   void
-  do_export_table( int nlhs, mxArray       *plhs[],
-                   int nrhs, mxArray const *prhs[] ) {
+  do_export_table(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('export_table',OBJ,filename ): "
 
@@ -639,8 +679,10 @@ namespace G2lib {
 
   static
   void
-  do_export_ruby( int nlhs, mxArray       *plhs[],
-                  int nrhs, mxArray const *prhs[] ) {
+  do_export_ruby(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
    #define CMD "ClothoidListMexWrapper('export_ruby',OBJ,filename ): "
 
@@ -664,14 +706,20 @@ namespace G2lib {
 
   static
   void
-  do_findST1( int nlhs, mxArray       *plhs[],
-              int nrhs, mxArray const *prhs[] ) {
+  do_findST1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('findST1',OBJ,x,y[,ibegin,iend]): "
-    MEX_ASSERT( nrhs == 4 || nrhs == 6,
-                CMD "expected 4 or 6 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 3,
-                CMD "expected 3 output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nrhs == 4 || nrhs == 6,
+      CMD "expected 4 or 6 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 3,
+      CMD "expected 3 output, nlhs = " << nlhs
+    );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -679,23 +727,31 @@ namespace G2lib {
     real_type const * x;
     real_type const * y;
 
-    x = getMatrixPointer( arg_in_2, nrx, ncx,
-                          CMD "`x` expected to be a real vector/matrix" );
+    x = getMatrixPointer(
+      arg_in_2, nrx, ncx,
+      CMD "`x` expected to be a real vector/matrix"
+    );
 
-    y = getMatrixPointer( arg_in_3, nry, ncy,
-                          CMD "`y` expected to be a real vector/matrix" );
+    y = getMatrixPointer(
+      arg_in_3, nry, ncy,
+      CMD "`y` expected to be a real vector/matrix"
+    );
 
-    MEX_ASSERT( nrx == nry && ncx == ncy,
-                CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+    MEX_ASSERT(
+      nrx == nry && ncx == ncy,
+      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy
+    );
 
     int64_t ibegin = 0;
     int64_t iend   = ptr->numSegment()-1;
     if ( nrhs == 6 ) {
-      ibegin = getInt( arg_in_4,
-                       CMD "`ibegin` expected to be a scalar integer" );
-      iend   = getInt( arg_in_5,
-                       CMD "`iend` expected to be a scalar integer" );
+      ibegin = getInt(
+        arg_in_4, CMD "`ibegin` expected to be a scalar integer"
+      );
+      iend = getInt(
+        arg_in_5, CMD "`iend` expected to be a scalar integer"
+      );
     }
 
     real_type * s   = createMatrixValue( arg_out_0, nrx, ncx );
@@ -715,15 +771,21 @@ namespace G2lib {
 
   static
   void
-  do_bbTriangles( int nlhs, mxArray       *plhs[],
-                  int nrhs, mxArray const *prhs[] ) {
+  do_bbTriangles(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs]): "
 
-    MEX_ASSERT( nrhs >= 2 && nrhs <= 5,
-                CMD "expected 2 up to 5 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 3,
-                CMD "expected 3 output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nrhs >= 2 && nrhs <= 5,
+      CMD "expected 2 up to 5 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 3,
+      CMD "expected 3 output, nlhs = " << nlhs
+    );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -731,14 +793,17 @@ namespace G2lib {
     real_type max_size  = 1e100;
     real_type offs      = 0;
     if ( nrhs >= 3 )
-      max_angle = getScalarValue( arg_in_2,
-                                  CMD "`max_angle` expected to be a real scalar" );
+      max_angle = getScalarValue(
+        arg_in_2, CMD "`max_angle` expected to be a real scalar"
+      );
     if ( nrhs >= 4 )
-      max_size = getScalarValue( arg_in_3,
-                                 CMD "`max_size` expected to be a real scalar" );
+      max_size = getScalarValue(
+        arg_in_3, CMD "`max_size` expected to be a real scalar"
+      );
     if ( nrhs >= 5 )
-      offs = getScalarValue( arg_in_4,
-                             CMD "`offs` expected to be a real scalar" );
+      offs = getScalarValue(
+        arg_in_4, CMD "`offs` expected to be a real scalar"
+      );
 
     std::vector<Triangle2D> tvec;
     if ( nrhs == 5 ) {
@@ -770,8 +835,10 @@ namespace G2lib {
 
   static
   void
-  do_aabb_true( int nlhs, mxArray       *plhs[],
-                int nrhs, mxArray const *prhs[] ) {
+  do_aabb_true(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('aabb_true',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
@@ -784,8 +851,10 @@ namespace G2lib {
 
   static
   void
-  do_aabb_false( int nlhs, mxArray       *plhs[],
-                 int nrhs, mxArray const *prhs[] ) {
+  do_aabb_false(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "ClothoidListMexWrapper('aabb_false',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
@@ -860,8 +929,10 @@ namespace G2lib {
 
   extern "C"
   void
-  mexFunction( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  mexFunction(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {

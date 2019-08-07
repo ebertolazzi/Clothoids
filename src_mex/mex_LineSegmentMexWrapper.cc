@@ -83,14 +83,20 @@ namespace G2lib {
 
   static
   void
-  do_new( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+  do_new(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "LineSegmentMexWrapper('new',...): "
-    MEX_ASSERT( nlhs == 1,
-                CMD "expected 1 output, nlhs = " << nlhs  );
-    MEX_ASSERT( nrhs == 1 || nrhs == 3 || nrhs == 5,
-                CMD "expected 1, 3 or 5 inputs, nrhs = " << nrhs  );
+    MEX_ASSERT(
+      nlhs == 1,
+      CMD "expected 1 output, nlhs = " << nlhs
+    );
+    MEX_ASSERT(
+      nrhs == 1 || nrhs == 3 || nrhs == 5,
+      CMD "expected 1, 3 or 5 inputs, nrhs = " << nrhs
+    );
     #undef CMD
 
     LineSegment * ptr = DATA_NEW( arg_out_0 );
@@ -100,14 +106,18 @@ namespace G2lib {
       real_type x0, y0, th0, L;
       #define CMD "LineSegmentMexWrapper('new',x0,y0,theta0,L): "
 
-      x0  = getScalarValue( arg_in_1,
-                            CMD "`x0` expected to be a real scalar" );
-      y0  = getScalarValue( arg_in_2,
-                            CMD "`y0` expected to be a real scalar" );
-      th0 = getScalarValue( arg_in_3,
-                            CMD "`theta0` expected to be a real scalar" );
-      L   = getScalarValue( arg_in_4,
-                            CMD "`L` expected to be a real scalar" );
+      x0 = getScalarValue(
+        arg_in_1, CMD "`x0` expected to be a real scalar"
+      );
+      y0 = getScalarValue(
+        arg_in_2, CMD "`y0` expected to be a real scalar"
+      );
+      th0 = getScalarValue(
+        arg_in_3, CMD "`theta0` expected to be a real scalar"
+      );
+      L = getScalarValue(
+        arg_in_4, CMD "`L` expected to be a real scalar"
+      );
       ptr->build( x0, y0, th0, L );
 
       #undef CMD
@@ -119,14 +129,20 @@ namespace G2lib {
       #define CMD "LineSegmentMexWrapper('new',OBJ,p0,p1): "
 
       mwSize size0, size1;
-      p0 = getVectorPointer( arg_in_1, size0,
-                             CMD "`p0` expected to be a real vector" );
-      p1 = getVectorPointer( arg_in_2, size1,
-                             CMD "`p1` expected to be a real vector" );
+      p0 = getVectorPointer(
+        arg_in_1, size0,
+        CMD "`p0` expected to be a real vector"
+      );
+      p1 = getVectorPointer(
+        arg_in_2, size1,
+        CMD "`p1` expected to be a real vector"
+      );
 
-      MEX_ASSERT( size0 == 2 && size1 == 2,
-                  CMD "bad dimension size(p0) = " << size0 <<
-                   ", size(p1) = " << size1 );
+      MEX_ASSERT(
+        size0 == 2 && size1 == 2,
+        CMD "bad dimension size(p0) = " << size0 <<
+        ", size(p1) = " << size1
+      );
       #undef CMD
 
       ptr->build_2P( p0[0], p0[1], p1[0], p1[1] );
@@ -137,14 +153,20 @@ namespace G2lib {
 
   static
   void
-  do_build( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
+  do_build(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "LineSegmentMexWrapper('build',OBJ,...): "
-    MEX_ASSERT( nlhs == 0,
-                CMD "expected NO output, nlhs = " << nlhs  );
-    MEX_ASSERT( nrhs == 4 || nrhs == 6,
-                CMD "expected 4 or 6 inputs, nrhs = " << nrhs  );
+    MEX_ASSERT(
+      nlhs == 0,
+      CMD "expected NO output, nlhs = " << nlhs
+    );
+    MEX_ASSERT(
+      nrhs == 4 || nrhs == 6,
+      CMD "expected 4 or 6 inputs, nrhs = " << nrhs
+    );
     #undef CMD
 
     LineSegment * ptr = DATA_GET(arg_in_1);
@@ -153,14 +175,18 @@ namespace G2lib {
       real_type x0, y0, th0, L;
 
       #define CMD "LineSegmentMexWrapper('build',OBJ,x0,y0,theta0,L): "
-      x0  = getScalarValue( arg_in_2,
-                            CMD "`x0` expected to be a real scalar" );
-      y0  = getScalarValue( arg_in_3,
-                            CMD "`y0` expected to be a real scalar" );
-      th0 = getScalarValue( arg_in_4,
-                            CMD "`theta0` expected to be a real scalar" );
-      L   = getScalarValue( arg_in_5,
-                            CMD "`L` expected to be a real scalar" );
+      x0 = getScalarValue(
+        arg_in_2, CMD "`x0` expected to be a real scalar"
+      );
+      y0 = getScalarValue(
+        arg_in_3, CMD "`y0` expected to be a real scalar"
+      );
+      th0 = getScalarValue(
+        arg_in_4, CMD "`theta0` expected to be a real scalar"
+      );
+      L = getScalarValue(
+        arg_in_5, CMD "`L` expected to be a real scalar"
+      );
 
       ptr->build( x0, y0, th0, L );
 
@@ -173,14 +199,20 @@ namespace G2lib {
       #define CMD "LineSegmentMexWrapper('build',OBJ,p0,p1): "
 
       mwSize size0, size1;
-      p0 = getVectorPointer( arg_in_2, size0,
-                             CMD "`p0` expected to be a real vector" );
-      p1 = getVectorPointer( arg_in_3, size1,
-                             CMD "`p1` expected to be a real vector" );
+      p0 = getVectorPointer(
+        arg_in_2, size0,
+        CMD "`p0` expected to be a real vector"
+      );
+      p1 = getVectorPointer(
+        arg_in_3, size1,
+        CMD "`p1` expected to be a real vector"
+      );
 
-      MEX_ASSERT( size0 == 2 && size1 == 2,
-                  CMD "bad dimension size(p0) = " << size0 <<
-                  ", size(p1) = " << size1 );
+      MEX_ASSERT(
+        size0 == 2 && size1 == 2,
+        CMD "bad dimension size(p0) = " << size0 <<
+        ", size(p1) = " << size1
+      );
       #undef CMD
 
       ptr->build_2P( p0[0], p0[1], p1[0], p1[1] );
@@ -191,8 +223,10 @@ namespace G2lib {
 
   static
   void
-  do_to_nurbs( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  do_to_nurbs(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     LineSegment * ptr = DATA_GET(arg_in_1);
 
@@ -244,8 +278,10 @@ namespace G2lib {
 
   static
   void
-  do_points( int nlhs, mxArray       *plhs[],
-             int nrhs, mxArray const *prhs[] ) {
+  do_points(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     LineSegment * ptr = DATA_GET(arg_in_1);
 
@@ -293,8 +329,10 @@ namespace G2lib {
 
   extern "C"
   void
-  mexFunction( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  mexFunction(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {

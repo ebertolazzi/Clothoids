@@ -83,14 +83,20 @@ namespace G2lib {
 
   static
   void
-  do_new( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+  do_new(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "CircleArcMexWrapper('new',...): "
-    MEX_ASSERT( nrhs == 1 || nrhs == 6,
-                CMD "expected 1 or 6 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1,
-                CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nrhs == 1 || nrhs == 6,
+      CMD "expected 1 or 6 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 1,
+      CMD "expected 1 output, nlhs = " << nlhs
+    );
     #undef CMD
 
     CircleArc * ptr = DATA_NEW( arg_out_0 );
@@ -113,14 +119,18 @@ namespace G2lib {
 
   static
   void
-  do_build( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
+  do_build(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "CircleArcMexWrapper('build',OBJ,x0,y0,theta0,k0,L): "
-    MEX_ASSERT( nrhs == 7,
-                CMD "expected 7 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0,
-                CMD "expected NO output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nrhs == 7, CMD "expected 7 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 0, CMD "expected NO output, nlhs = " << nlhs
+    );
 
     CircleArc * ptr = DATA_GET( arg_in_1 );
 
@@ -139,12 +149,16 @@ namespace G2lib {
 
   static
   void
-  do_build_3P( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  do_build_3P(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "CircleArcMexWrapper('build_3P',...): "
-    MEX_ASSERT( nlhs == 0 || nlhs ==1,
-                CMD " expected 1 or no output, nlhs = " << nlhs  );
+    MEX_ASSERT(
+      nlhs == 0 || nlhs ==1,
+      CMD " expected 1 or no output, nlhs = " << nlhs
+    );
     #undef CMD
 
     CircleArc * ptr = DATA_GET(arg_in_1);
@@ -158,16 +172,21 @@ namespace G2lib {
       real_type const * p2;
       mwSize size0, size1, size2;
 
-      p0 = getVectorPointer( arg_in_2, size0,
-                             CMD "`p0` expected to be a real vector" );
-      p1 = getVectorPointer( arg_in_3, size1,
-                             CMD "`p1` expected to be a real vector" );
-      p2 = getVectorPointer( arg_in_4, size2,
-                             CMD "`p2` expected to be a real vector" );
+      p0 = getVectorPointer(
+        arg_in_2, size0, CMD "`p0` expected to be a real vector"
+      );
+      p1 = getVectorPointer(
+        arg_in_3, size1, CMD "`p1` expected to be a real vector"
+      );
+      p2 = getVectorPointer(
+        arg_in_4, size2, CMD "`p2` expected to be a real vector"
+      );
 
-      MEX_ASSERT( size0 == 2 && size1 == 2 && size2 == 2,
-                  CMD "bad dimension size(p0) = " << size0 <<
-                  ", size(p1) = " << size1 << ", size(p2) = " << size2 );
+      MEX_ASSERT(
+        size0 == 2 && size1 == 2 && size2 == 2,
+        CMD "bad dimension size(p0) = " << size0 <<
+        ", size(p1) = " << size1 << ", size(p2) = " << size2
+      );
       #undef CMD
 
       x0 = p0[0]; y0 = p0[1];
@@ -198,12 +217,16 @@ namespace G2lib {
 
   static
   void
-  do_build_G1( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  do_build_G1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "CircleArcMexWrapper('build_G1',...): "
-    MEX_ASSERT( nlhs == 0 || nlhs ==1,
-                CMD "expected 1 or no output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nlhs == 0 || nlhs ==1,
+      CMD "expected 1 or no output, nlhs = " << nlhs
+    );
     #undef CMD
 
     CircleArc * ptr = DATA_GET(arg_in_1);
@@ -215,16 +238,21 @@ namespace G2lib {
       real_type const * p0;
       real_type const * p1;
       mwSize size0, size1;
-      p0 = getVectorPointer( arg_in_2, size0,
-                             CMD "`p0` expected to be a real vector" );
-      p1 = getVectorPointer( arg_in_4, size1,
-                             CMD "`p1` expected to be a real vector" );
-      theta0 = getScalarValue( arg_in_3,
-                               CMD "`theta0` expected to be a real vector" );
+      p0 = getVectorPointer(
+        arg_in_2, size0, CMD "`p0` expected to be a real vector"
+      );
+      p1 = getVectorPointer(
+        arg_in_4, size1, CMD "`p1` expected to be a real vector"
+      );
+      theta0 = getScalarValue(
+        arg_in_3, CMD "`theta0` expected to be a real vector"
+      );
 
-      MEX_ASSERT( size0 == 2 && size1 == 2,
-                  CMD "bad dimension size(p0) = " << size0 <<
-                  ", size(p1) = " << size1 );
+      MEX_ASSERT(
+        size0 == 2 && size1 == 2,
+        CMD "bad dimension size(p0) = " << size0 <<
+        ", size(p1) = " << size1
+      );
       #undef CMD
 
       x0 = p0[0]; y0 = p0[1];
@@ -252,8 +280,10 @@ namespace G2lib {
 
   static
   void
-  do_change_curvilinear_origin( int nlhs, mxArray       *plhs[],
-                                int nrhs, mxArray const *prhs[] ) {
+  do_change_curvilinear_origin(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "CircleArcMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
     MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
@@ -270,8 +300,10 @@ namespace G2lib {
 
   static
   void
-  do_to_nurbs( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  do_to_nurbs(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     CircleArc * ptr = DATA_GET(arg_in_1);
 
@@ -305,30 +337,39 @@ namespace G2lib {
 
   static
   void
-  do_bbTriangles( int nlhs, mxArray       * plhs[],
-                  int nrhs, mxArray const * prhs[] ) {
+  do_bbTriangles(
+    int nlhs, mxArray       * plhs[],
+    int nrhs, mxArray const * prhs[]
+  ) {
 
     CircleArc * ptr = DATA_GET(arg_in_1);
 
     #define CMD "CircleArcMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs]): "
 
-    MEX_ASSERT( nrhs >= 2 && nrhs <= 5,
-                CMD "expected 2 up to 5 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 3,
-                CMD "expected 3 output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nrhs >= 2 && nrhs <= 5,
+      CMD "expected 2 up to 5 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 3,
+      CMD "expected 3 output, nlhs = " << nlhs
+    );
   
     real_type max_angle = m_pi/18;
     real_type max_size  = 1e100;
     real_type offs      = 0;
     if ( nrhs >= 3 )
-      max_angle = getScalarValue( arg_in_2,
-                                  CMD "`max_angle` expected to be a real scalar" );
+      max_angle = getScalarValue(
+        arg_in_2, CMD "`max_angle` expected to be a real scalar"
+      );
     if ( nrhs >= 4 )
-      max_size = getScalarValue( arg_in_3,
-                                 CMD "`max_size` expected to be a real scalar" );
+      max_size = getScalarValue(
+        arg_in_3, CMD "`max_size` expected to be a real scalar"
+      );
     if ( nrhs >= 5 )
-      offs = getScalarValue( arg_in_4,
-                             CMD "`offs` expected to be a real scalar" );
+      offs = getScalarValue(
+        arg_in_4, CMD "`offs` expected to be a real scalar"
+      );
 
     std::vector<Triangle2D> tvec;
     if ( nrhs == 5 ) {

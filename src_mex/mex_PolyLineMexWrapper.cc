@@ -84,8 +84,10 @@ namespace G2lib {
 
   static
   void
-  do_new( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+  do_new(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
     #define CMD "PolyLineMexWrapper('new'): "
     MEX_ASSERT( nlhs == 1, "expected 1 input, nlhs = " << nlhs );
     MEX_ASSERT( nrhs == 1, "expected 1 output, nrhs = " << nrhs );
@@ -97,8 +99,10 @@ namespace G2lib {
 
   static
   void
-  do_build( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
+  do_build(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "PolyLineMexWrapper('build',OBJ,x,y): "
     MEX_ASSERT( nlhs == 0, "expected no output, nlhs = " << nlhs );
@@ -106,14 +110,20 @@ namespace G2lib {
 
     mwSize size0, size1;
 
-    real_type const * x = getVectorPointer( arg_in_2, size0,
-                          CMD "`x` expected to be a real vector" );
-    real_type const * y = getVectorPointer( arg_in_3, size1,
-                          CMD "`y` expected to be a real vector" );
+    real_type const * x = getVectorPointer(
+      arg_in_2, size0,
+      CMD "`x` expected to be a real vector"
+    );
+    real_type const * y = getVectorPointer(
+      arg_in_3, size1,
+      CMD "`y` expected to be a real vector"
+    );
 
-    MEX_ASSERT( size0 == size1,
-                CMD "expected size(x) = " << size0 <<
-                " = size(y) = " << size1 );
+    MEX_ASSERT(
+      size0 == size1,
+      CMD "expected size(x) = " << size0 <<
+      " = size(y) = " << size1
+    );
 
     PolyLine * ptr = DATA_GET( arg_in_1 );
     ptr->build( x, y, size0 );
@@ -124,8 +134,10 @@ namespace G2lib {
 
   static
   void
-  do_polygon( int nlhs, mxArray       *plhs[],
-              int nrhs, mxArray const *prhs[] ) {
+  do_polygon(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "PolyLineMexWrapper('polygon',OBJ): "
     MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
@@ -142,15 +154,18 @@ namespace G2lib {
 
   static
   void
-  do_approx( int nlhs, mxArray       *plhs[],
-             int nrhs, mxArray const *prhs[] ) {
+  do_approx(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "PolyLineMexWrapper('approx',OBJ,OBJ1,tol,type): "
     MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
 
-    real_type tol = getScalarValue( arg_in_3,
-                                    CMD "`tol` expected to be a real scalar" );
+    real_type tol = getScalarValue(
+      arg_in_3, CMD "`tol` expected to be a real scalar"
+    );
 
     MEX_ASSERT( mxIsChar(arg_in_4), CMD "'type' argument must be a string" );
     string kind = mxArrayToString( arg_in_4 );
@@ -202,8 +217,10 @@ namespace G2lib {
 
   extern "C"
   void
-  mexFunction( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  mexFunction(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {

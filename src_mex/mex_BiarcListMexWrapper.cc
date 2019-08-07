@@ -92,14 +92,18 @@ namespace G2lib {
 
   static
   void
-  do_new( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+  do_new(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('new'): "
-    MEX_ASSERT( nlhs == 1,
-                CMD "expected 1 output, nlhs = " << nlhs );
-    MEX_ASSERT( nrhs == 1,
-                CMD "expected 1 input, nlhs = " << nrhs );
+    MEX_ASSERT(
+      nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs
+    );
+    MEX_ASSERT(
+      nrhs == 1, CMD "expected 1 input, nlhs = " << nrhs
+    );
 
     //BiarcList * ptr =
     DATA_NEW(arg_out_0);
@@ -111,13 +115,16 @@ namespace G2lib {
 
   static
   void
-  do_push_back_G1( int nlhs, mxArray       *plhs[],
-                   int nrhs, mxArray const *prhs[] ) {
+  do_push_back_G1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[CLOT]): "
 
-    MEX_ASSERT( nlhs == 0,
-                CMD "expected NO output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nlhs == 0, CMD "expected NO output, nlhs = " << nlhs
+    );
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
@@ -145,8 +152,10 @@ namespace G2lib {
 
   static
   void
-  do_reserve( int nlhs, mxArray       *plhs[],
-              int nrhs, mxArray const *prhs[] ) {
+  do_reserve(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('reserve',OBJ,N): "
 
@@ -165,8 +174,10 @@ namespace G2lib {
 
   static
   void
-  do_getSTK( int nlhs, mxArray       *plhs[],
-             int nrhs, mxArray const *prhs[] ) {
+  do_getSTK(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('getSTK',OBJ): "
 
@@ -190,8 +201,10 @@ namespace G2lib {
 
   static
   void
-  do_getXY( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
+  do_getXY(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('getXY',OBJ): "
 
@@ -213,8 +226,10 @@ namespace G2lib {
 
   static
   void
-  do_build_G1( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  do_build_G1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('build_G1', OBJ, x, y [, theta]): "
 
@@ -257,8 +272,10 @@ namespace G2lib {
 
   static
   void
-  do_build_theta( int nlhs, mxArray       *plhs[],
-                  int nrhs, mxArray const *prhs[] ) {
+  do_build_theta(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('build_theta',OBJ,x,y): "
 
@@ -284,8 +301,10 @@ namespace G2lib {
 
   static
   void
-  do_get( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+  do_get(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('get',OBJ,n): "
 
@@ -296,8 +315,10 @@ namespace G2lib {
 
     int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
-    MEX_ASSERT( n > 0 && n <= ptr->numSegment(),
-                CMD "n = " << n << " must be >= 1 and <= " << ptr->numSegment() );
+    MEX_ASSERT(
+      n > 0 && n <= ptr->numSegment(),
+      CMD "n = " << n << " must be >= 1 and <= " << ptr->numSegment()
+    );
 
     Biarc const & c = ptr->get(n-1);
 
@@ -315,8 +336,10 @@ namespace G2lib {
 
   static
   void
-  do_numSegment( int nlhs, mxArray       *plhs[],
-                 int nrhs, mxArray const *prhs[] ) {
+  do_numSegment(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
     #define CMD "BiarcListMexWrapper('numSegment', OBJ): "
 
     MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
@@ -333,14 +356,20 @@ namespace G2lib {
 
   static
   void
-  do_findST1( int nlhs, mxArray       *plhs[],
-              int nrhs, mxArray const *prhs[] ) {
+  do_findST1(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('findST1',OBJ,x,y[,ibegin,iend]): "
-    MEX_ASSERT( nrhs == 4 || nrhs == 6,
-                CMD "expected 4 or 6 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 3,
-                CMD "expected 3 output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nrhs == 4 || nrhs == 6,
+      CMD "expected 4 or 6 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 3,
+      CMD "expected 3 output, nlhs = " << nlhs
+    );
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
@@ -348,23 +377,31 @@ namespace G2lib {
     real_type const * x;
     real_type const * y;
 
-    x = getMatrixPointer( arg_in_2, nrx, ncx,
-                          CMD "`x` expected to be a real vector/matrix" );
+    x = getMatrixPointer(
+      arg_in_2, nrx, ncx,
+      CMD "`x` expected to be a real vector/matrix"
+    );
 
-    y = getMatrixPointer( arg_in_3, nry, ncy,
-                          CMD "`y` expected to be a real vector/matrix" );
+    y = getMatrixPointer(
+      arg_in_3, nry, ncy,
+      CMD "`y` expected to be a real vector/matrix"
+    );
 
-    MEX_ASSERT( nrx == nry && ncx == ncy,
-                CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-                nrx << " x " << nry << " size(y) = " << nry << " x " << ncy );
+    MEX_ASSERT(
+      nrx == nry && ncx == ncy,
+      CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
+      nrx << " x " << nry << " size(y) = " << nry << " x " << ncy
+    );
 
     int64_t ibegin = 0;
     int64_t iend   = ptr->numSegment()-1;
     if ( nrhs == 6 ) {
-      ibegin = getInt( arg_in_4,
-                       CMD "`ibegin` expected to be a scalar integer" );
-      iend   = getInt( arg_in_5,
-                       CMD "`iend` expected to be a scalar integer" );
+      ibegin = getInt(
+        arg_in_4, CMD "`ibegin` expected to be a scalar integer"
+      );
+      iend = getInt(
+        arg_in_5, CMD "`iend` expected to be a scalar integer"
+      );
     }
 
     real_type * s   = createMatrixValue( arg_out_0, nrx, ncx );
@@ -384,15 +421,21 @@ namespace G2lib {
 
   static
   void
-  do_bbTriangles( int nlhs, mxArray       *plhs[],
-                  int nrhs, mxArray const *prhs[] ) {
+  do_bbTriangles(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     #define CMD "BiarcListMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs]): "
 
-    MEX_ASSERT( nrhs >= 2 && nrhs <= 5,
-                CMD "expected 2 up to 5 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 3,
-                CMD "expected 3 output, nlhs = " << nlhs );
+    MEX_ASSERT(
+      nrhs >= 2 && nrhs <= 5,
+      CMD "expected 2 up to 5 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 3,
+      CMD "expected 3 output, nlhs = " << nlhs
+    );
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
@@ -400,14 +443,17 @@ namespace G2lib {
     real_type max_size  = 1e100;
     real_type offs      = 0;
     if ( nrhs >= 3 )
-      max_angle = getScalarValue( arg_in_2,
-                                  CMD "`max_angle` expected to be a real scalar" );
+      max_angle = getScalarValue(
+        arg_in_2, CMD "`max_angle` expected to be a real scalar"
+      );
     if ( nrhs >= 4 )
-      max_size = getScalarValue( arg_in_3,
-                                 CMD "`max_size` expected to be a real scalar" );
+      max_size = getScalarValue(
+        arg_in_3, CMD "`max_size` expected to be a real scalar"
+      );
     if ( nrhs >= 5 )
-      offs = getScalarValue( arg_in_4,
-                             CMD "`offs` expected to be a real scalar" );
+      offs = getScalarValue(
+        arg_in_4, CMD "`offs` expected to be a real scalar"
+      );
 
     std::vector<Triangle2D> tvec;
     if ( nrhs == 5 ) {
@@ -477,8 +523,10 @@ namespace G2lib {
 
   extern "C"
   void
-  mexFunction( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  mexFunction(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     // the first argument must be a string
     if ( nrhs == 0 ) {

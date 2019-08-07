@@ -100,6 +100,16 @@ using BaseCurve::eval_D;
 using BaseCurve::eval_DD;
 using BaseCurve::eval_DDD;
 
+using BaseCurve::eval_ISO;
+using BaseCurve::eval_D_ISO;
+using BaseCurve::eval_DD_ISO;
+using BaseCurve::eval_DDD_ISO;
+
+using BaseCurve::eval_SAE;
+using BaseCurve::eval_D_SAE;
+using BaseCurve::eval_DD_SAE;
+using BaseCurve::eval_DDD_SAE;
+
 using BaseCurve::closestPoint;
 using BaseCurve::distance;
 
