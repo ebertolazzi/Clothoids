@@ -162,43 +162,34 @@ namespace G2lib {
     real_type X_DDD( real_type s ) const;
     real_type Y_DDD( real_type s ) const;
 
-    real_type
-    X( real_type s, real_type t ) const
-    { return X(s) + t * nor_x(s); }
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    real_type X_ISO    ( real_type s, real_type offs ) const;
+    real_type Y_ISO    ( real_type s, real_type offs ) const;
+    real_type X_ISO_D  ( real_type s, real_type offs ) const;
+    real_type Y_ISO_D  ( real_type s, real_type offs ) const;
+    real_type X_ISO_DD ( real_type s, real_type offs ) const;
+    real_type Y_ISO_DD ( real_type s, real_type offs ) const;
+    real_type X_ISO_DDD( real_type s, real_type offs ) const;
+    real_type Y_ISO_DDD( real_type s, real_type offs ) const;
 
-    real_type
-    Y( real_type s, real_type t ) const
-    { return Y(s) + t * nor_y(s); }
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    real_type
-    X_D( real_type s, real_type t ) const
-    { return X_D(s) + t * nor_x_D(s); }
+    real_type X_SAE    ( real_type s, real_type offs ) const;
+    real_type Y_SAE    ( real_type s, real_type offs ) const;
+    real_type X_SAE_D  ( real_type s, real_type offs ) const;
+    real_type Y_SAE_D  ( real_type s, real_type offs ) const;
+    real_type X_SAE_DD ( real_type s, real_type offs ) const;
+    real_type Y_SAE_DD ( real_type s, real_type offs ) const;
+    real_type X_SAE_DDD( real_type s, real_type offs ) const;
+    real_type Y_SAE_DDD( real_type s, real_type offs ) const;
 
-    real_type
-    Y_D( real_type s, real_type t ) const
-    { return Y_D(s) + t * nor_y_D(s); }
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    real_type
-    X_DD( real_type s, real_type t ) const
-    { return X_DD(s) + t * nor_x_DD(s); }
+    real_type tg0_x() const { return cos(this->theta0); }
+    real_type tg0_y() const { return sin(this->theta0); }
 
-    real_type
-    Y_DD( real_type s, real_type t ) const
-    { return Y_DD(s) + t * nor_y_DD(s); }
-
-    real_type
-    X_DDD( real_type s, real_type t ) const
-    { return X_DDD(s) + t * nor_x_DDD(s); }
-
-    real_type
-    Y_DDD( real_type s, real_type t ) const
-    { return Y_DDD(s) + t * nor_y_DDD(s); }
-
-    real_type tg0_x() const { return cos(theta0); }
-    real_type tg0_y() const { return sin(theta0); }
-
-    real_type tg_x( real_type s ) const { return cos(theta(s)); }
-    real_type tg_y( real_type s ) const { return sin(theta(s)); }
+    real_type tg_x( real_type s ) const { return cos(this->theta(s)); }
+    real_type tg_y( real_type s ) const { return sin(this->theta(s)); }
 
     real_type tg_x_D( real_type s ) const;
     real_type tg_y_D( real_type s ) const;
@@ -209,30 +200,50 @@ namespace G2lib {
     real_type tg_x_DDD( real_type s ) const;
     real_type tg_y_DDD( real_type s ) const;
 
-    real_type nor0_x() const { return -tg0_y(); }
-    real_type nor0_y() const { return tg0_x(); }
+    real_type nor0_x_ISO() const { return -this->tg0_y(); }
+    real_type nor0_y_ISO() const { return this->tg0_x(); }
 
-    real_type nor_x( real_type s ) const { return G2LIB_NX(tg_x(s),tg_y(s)); }
-    real_type nor_y( real_type s ) const { return G2LIB_NY(tg_x(s),tg_y(s)); }
+    real_type nor_x_ISO( real_type s ) const { return -this->tg_y(s); }
+    real_type nor_y_ISO( real_type s ) const { return this->tg_x(s); }
 
-    real_type nor_x_D( real_type s ) const { return G2LIB_NX(tg_x_D(s),tg_y_D(s)); }
-    real_type nor_y_D( real_type s ) const { return G2LIB_NY(tg_x_D(s),tg_y_D(s));  }
+    real_type nor_x_ISO_D( real_type s ) const { return -this->tg_y_D(s); }
+    real_type nor_y_ISO_D( real_type s ) const { return this->tg_x_D(s);  }
 
-    real_type nor_x_DD( real_type s ) const { return G2LIB_NX(tg_x_DD(s),tg_y_DD(s));  }
-    real_type nor_y_DD( real_type s ) const { return G2LIB_NY(tg_x_DD(s),tg_y_DD(s)); }
+    real_type nor_x_ISO_DD( real_type s ) const { return -this->tg_y_DD(s);  }
+    real_type nor_y_ISO_DD( real_type s ) const { return this->tg_x_DD(s); }
 
-    real_type nor_x_DDD( real_type s ) const { return G2LIB_NX(tg_x_DDD(s),tg_y_DDD(s)); }
-    real_type nor_y_DDD( real_type s ) const { return G2LIB_NY(tg_x_DDD(s),tg_y_DDD(s)); }
+    real_type nor_x_ISO_DDD( real_type s ) const { return -this->tg_y_DDD(s); }
+    real_type nor_y_ISO_DDD( real_type s ) const { return this->tg_x_DDD(s); }
+
+    real_type nor0_x_SAE() const { return this->tg0_y(); }
+    real_type nor0_y_SAE() const { return -this->tg0_x(); }
+
+    real_type nor_x_SAE( real_type s ) const { return this->tg_y(s); }
+    real_type nor_y_SAE( real_type s ) const { return -this->tg_x(s); }
+
+    real_type nor_x_SAE_D( real_type s ) const { return this->tg_y_D(s); }
+    real_type nor_y_SAE_D( real_type s ) const { return -this->tg_x_D(s);  }
+
+    real_type nor_x_SAE_DD( real_type s ) const { return this->tg_y_DD(s);  }
+    real_type nor_y_SAE_DD( real_type s ) const { return -this->tg_x_DD(s); }
+
+    real_type nor_x_SAE_DDD( real_type s ) const { return this->tg_y_DDD(s); }
+    real_type nor_y_SAE_DDD( real_type s ) const { return -this->tg_x_DDD(s); }
 
     void tg( real_type s, real_type & tx, real_type & ty ) const;
     void tg_D( real_type s, real_type & tx, real_type & ty ) const;
     void tg_DD( real_type s, real_type & tx, real_type & ty ) const;
     void tg_DDD( real_type s, real_type & tx, real_type & ty ) const;
 
-    void nor( real_type s, real_type & nx, real_type & ny ) const;
-    void nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const;
-    void nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const;
-    void nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
+    void nor_ISO( real_type s, real_type & nx, real_type & ny ) const;
+    void nor_ISO_D( real_type s, real_type & nx_D, real_type & ny_D ) const;
+    void nor_ISO_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const;
+    void nor_ISO_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
+
+    void nor_SAE( real_type s, real_type & nx, real_type & ny ) const;
+    void nor_SAE_D( real_type s, real_type & nx_D, real_type & ny_D ) const;
+    void nor_SAE_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const;
+    void nor_SAE_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const;
 
     void
     evaluate(
@@ -272,7 +283,7 @@ namespace G2lib {
     ) const;
 
     void
-    eval(
+    eval_ISO(
       real_type   s,
       real_type   offs,
       real_type & x,
@@ -280,7 +291,7 @@ namespace G2lib {
     ) const;
 
     void
-    eval_D(
+    eval_ISO_D(
       real_type   s,
       real_type   offs,
       real_type & x_D,
@@ -288,7 +299,7 @@ namespace G2lib {
     ) const;
 
     void
-    eval_DD(
+    eval_ISO_DD(
       real_type   s,
       real_type   offs,
       real_type & x_DD,
@@ -296,7 +307,7 @@ namespace G2lib {
     ) const;
 
     void
-    eval_DDD(
+    eval_ISO_DDD(
       real_type   s,
       real_type   offs,
       real_type & x_DDD,
@@ -304,7 +315,47 @@ namespace G2lib {
     ) const;
 
     void
-    eval( real_type s, ClothoidData & C) const;
+    eval_SAE(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const {
+      this->eval_ISO( s, -offs, x, y );
+    }
+
+    void
+    eval_SAE_D(
+      real_type   s,
+      real_type   offs,
+      real_type & x_D,
+      real_type & y_D
+    ) const {
+      this->eval_ISO_D( s, -offs, x_D, y_D );
+    }
+
+    void
+    eval_DAE_DD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const {
+      this->eval_ISO_DD( s, -offs, x_DD, y_DD );
+    }
+
+    void
+    eval_SAE_DDD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const {
+      this->eval_ISO_DDD( s, -offs, x_DDD, y_DDD );
+    }
+
+    void
+    eval( real_type s, ClothoidData & C ) const;
 
     real_type c0x() const { return x0 - (sin(theta0)/kappa0); }
     real_type c0y() const { return y0 + (cos(theta0)/kappa0); }
@@ -339,13 +390,24 @@ namespace G2lib {
     ) const;
 
     bool
-    bbTriangle(
+    bbTriangle_ISO(
       real_type   L,
       real_type   offs,
       real_type & xx0, real_type & yy0,
       real_type & xx1, real_type & yy1,
       real_type & xx2, real_type & yy2
     ) const;
+
+    bool
+    bbTriangle_SAE(
+      real_type   L,
+      real_type   offs,
+      real_type & xx0, real_type & yy0,
+      real_type & xx1, real_type & yy1,
+      real_type & xx2, real_type & yy2
+    ) const {
+      return this->bbTriangle_ISO( L, -offs, xx0, yy0, xx1, yy1, xx2, yy2 );
+    }
 
     int
     build_G1(

@@ -601,131 +601,81 @@ namespace G2lib {
   // -------------------------------------------------------------------------
 
   void
-  ClothoidData::nor(
+  ClothoidData::nor_ISO(
     real_type   s,
     real_type & nx,
     real_type & ny
   ) const {
-    this->tg( s, ny, nx );
-    #ifdef G2LIB_USE_SAE
-    ny = -ny;
-    #else
-    nx = -nx;
-    #endif
+    this->tg( s, ny, nx ); nx = -nx;
+  }
+
+  void
+  ClothoidData::nor_SAE(
+    real_type   s,
+    real_type & nx,
+    real_type & ny
+  ) const {
+    this->tg( s, ny, nx ); ny = -ny;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::nor_D(
+  ClothoidData::nor_ISO_D(
     real_type   s,
     real_type & nx_D,
     real_type & ny_D
   ) const {
-    this->tg_D( s, ny_D, nx_D );
-    #ifdef G2LIB_USE_SAE
-    ny_D = -ny_D;
-    #else
-    nx_D = -nx_D;
-    #endif
+    this->tg_D( s, ny_D, nx_D ); nx_D = -nx_D;
+  }
+
+  void
+  ClothoidData::nor_SAE_D(
+    real_type   s,
+    real_type & nx_D,
+    real_type & ny_D
+  ) const {
+    this->tg_D( s, ny_D, nx_D ); ny_D = -ny_D;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::nor_DD(
+  ClothoidData::nor_ISO_DD(
     real_type   s,
     real_type & nx_DD,
     real_type & ny_DD
   ) const {
-    this->tg_DD( s, ny_DD, nx_DD );
-    #ifdef G2LIB_USE_SAE
-    ny_DD = -ny_DD;
-    #else
-    nx_DD = -nx_DD;
-    #endif
+    this->tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD;
+  }
+
+  void
+  ClothoidData::nor_SAE_DD(
+    real_type   s,
+    real_type & nx_DD,
+    real_type & ny_DD
+  ) const {
+    this->tg_DD( s, ny_DD, nx_DD ); ny_DD = -ny_DD;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::nor_DDD(
+  ClothoidData::nor_ISO_DDD(
     real_type   s,
     real_type & nx_DDD,
     real_type & ny_DDD
   ) const {
-    this->tg_DDD( s, ny_DDD, nx_DDD );
-    #ifdef G2LIB_USE_SAE
-    ny_DDD = -ny_DDD;
-    #else
-    nx_DDD = -nx_DDD;
-    #endif
+    this->tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::X( real_type s ) const {
-    real_type C, S;
-    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S );
-    return x0 + s*C;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::Y( real_type s ) const {
-    real_type C, S;
-    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S );
-    return y0 + s*S;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::X_D( real_type s ) const
-  { return cos( theta(s) ); }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::Y_D( real_type s ) const
-  { return sin( theta(s) ); }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::X_DD( real_type s ) const {
-    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
-    real_type theta_D = kappa0 + s*dk;
-    return -sin(theta)*theta_D;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::Y_DD( real_type s ) const {
-    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
-    real_type theta_D = kappa0 + s*dk;
-    return cos(theta)*theta_D;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::X_DDD( real_type s ) const {
-    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
-    real_type theta_D = kappa0+s*dk;
-    return -cos(theta)*theta_D*theta_D-sin(theta)*dk;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ClothoidData::Y_DDD( real_type s ) const {
-    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
-    real_type theta_D = kappa0+s*dk;
-    return -sin(theta)*theta_D*theta_D+cos(theta)*dk;
+  void
+  ClothoidData::nor_SAE_DDD(
+    real_type   s,
+    real_type & nx_DDD,
+    real_type & ny_DDD
+  ) const {
+    this->tg_DDD( s, ny_DDD, nx_DDD ); ny_DDD = -ny_DDD;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -856,6 +806,140 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  real_type
+  ClothoidData::X( real_type s ) const {
+    real_type C, S;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S );
+    return x0 + s*C;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y( real_type s ) const {
+    real_type C, S;
+    GeneralizedFresnelCS( dk*s*s, kappa0*s, theta0, C, S );
+    return y0 + s*S;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_D( real_type s ) const
+  { return cos( theta(s) ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_D( real_type s ) const
+  { return sin( theta(s) ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_DD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
+    real_type theta_D = kappa0 + s*dk;
+    return -sin(theta)*theta_D;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_DD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
+    real_type theta_D = kappa0 + s*dk;
+    return cos(theta)*theta_D;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_DDD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
+    real_type theta_D = kappa0+s*dk;
+    return -cos(theta)*theta_D*theta_D-sin(theta)*dk;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::Y_DDD( real_type s ) const {
+    real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
+    real_type theta_D = kappa0+s*dk;
+    return -sin(theta)*theta_D*theta_D+cos(theta)*dk;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_ISO( real_type s, real_type offs ) const
+  { return X(s) + offs * nor_x_ISO(s); }
+
+  real_type
+  ClothoidData::Y_ISO( real_type s, real_type offs ) const
+  { return Y(s) + offs * nor_y_ISO(s); }
+
+  real_type
+  ClothoidData::X_ISO_D( real_type s, real_type offs ) const
+  { return X_D(s) + offs * nor_x_ISO_D(s); }
+
+  real_type
+  ClothoidData::Y_ISO_D( real_type s, real_type offs ) const
+  { return Y_D(s) + offs * nor_y_ISO_D(s); }
+
+  real_type
+  ClothoidData::X_ISO_DD( real_type s, real_type offs ) const
+  { return X_DD(s) + offs * nor_x_ISO_DD(s); }
+
+  real_type
+  ClothoidData::Y_ISO_DD( real_type s, real_type offs ) const
+  { return Y_DD(s) + offs * nor_y_ISO_DD(s); }
+
+  real_type
+  ClothoidData::X_ISO_DDD( real_type s, real_type offs ) const
+  { return X_DDD(s) + offs * nor_x_ISO_DDD(s); }
+
+  real_type
+  ClothoidData::Y_ISO_DDD( real_type s, real_type offs ) const
+  { return Y_DDD(s) + offs * nor_y_ISO_DDD(s); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ClothoidData::X_SAE( real_type s, real_type offs ) const
+  { return X(s) + offs * nor_x_SAE(s); }
+
+  real_type
+  ClothoidData::Y_SAE( real_type s, real_type offs ) const
+  { return Y(s) + offs * nor_y_SAE(s); }
+
+  real_type
+  ClothoidData::X_SAE_D( real_type s, real_type offs ) const
+  { return X_D(s) + offs * nor_x_SAE_D(s); }
+
+  real_type
+  ClothoidData::Y_SAE_D( real_type s, real_type offs ) const
+  { return Y_D(s) + offs * nor_y_SAE_D(s); }
+
+  real_type
+  ClothoidData::X_SAE_DD( real_type s, real_type offs ) const
+  { return X_DD(s) + offs * nor_x_SAE_DD(s); }
+
+  real_type
+  ClothoidData::Y_SAE_DD( real_type s, real_type offs ) const
+  { return Y_DD(s) + offs * nor_y_SAE_DD(s); }
+
+  real_type
+  ClothoidData::X_SAE_DDD( real_type s, real_type offs ) const
+  { return X_DDD(s) + offs * nor_x_SAE_DDD(s); }
+
+  real_type
+  ClothoidData::Y_SAE_DDD( real_type s, real_type offs ) const
+  { return Y_DDD(s) + offs * nor_y_SAE_DDD(s); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidData::evaluate(
     real_type   s,
@@ -933,7 +1017,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::eval(
+  ClothoidData::eval_ISO(
     real_type   s,
     real_type   offs,
     real_type & x,
@@ -944,8 +1028,8 @@ namespace G2lib {
     real_type theta = theta0 + s*(kappa0+0.5*s*dk);
     real_type tx    = cos( theta );
     real_type ty    = sin( theta );
-    real_type nx    = G2LIB_NX( tx, ty );
-    real_type ny    = G2LIB_NY( tx, ty );
+    real_type nx    = -ty;
+    real_type ny    = tx;
     x = x0 + s*C + offs * nx;
     y = y0 + s*S + offs * ny;
   }
@@ -953,7 +1037,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::eval_D(
+  ClothoidData::eval_ISO_D(
     real_type   s,
     real_type   offs,
     real_type & x_D,
@@ -961,11 +1045,7 @@ namespace G2lib {
   ) const {
     real_type theta   = theta0 + s*(kappa0+0.5*s*dk);
     real_type theta_D = kappa0 + s*dk;
-    #ifdef G2LIB_USE_SAE
-    real_type scale   = 1+offs*theta_D;
-    #else
     real_type scale   = 1-offs*theta_D;
-    #endif
     x_D = cos(theta)*scale;
     y_D = sin(theta)*scale;
   }
@@ -973,7 +1053,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::eval_DD(
+  ClothoidData::eval_ISO_DD(
     real_type   s,
     real_type   offs,
     real_type & x_DD,
@@ -983,13 +1063,8 @@ namespace G2lib {
     real_type theta_D = kappa0 + s*dk;
     real_type C       = cos(theta);
     real_type S       = sin(theta);
-    #ifdef G2LIB_USE_SAE
-    real_type tmp1    = theta_D*(1+theta_D*offs);
-    real_type tmp2    = offs*dk;
-    #else
     real_type tmp1    = theta_D*(1-theta_D*offs);
     real_type tmp2    = -offs*dk;
-    #endif
     x_DD = -tmp1*S + C*tmp2;
     y_DD =  tmp1*C + S*tmp2;
   }
@@ -997,7 +1072,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidData::eval_DDD(
+  ClothoidData::eval_ISO_DDD(
     real_type   s,
     real_type   offs,
     real_type & x_DDD,
@@ -1007,11 +1082,7 @@ namespace G2lib {
     real_type theta_D = kappa0 + s*dk;
     real_type C       = cos(theta);
     real_type S       = sin(theta);
-    #ifdef G2LIB_USE_SAE
-    real_type tmp0    = theta_D*offs;
-    #else
     real_type tmp0    = -theta_D*offs;
-    #endif
     real_type tmp1    = -theta_D*theta_D*(1+tmp0);
     real_type tmp2    = dk*(1+3*tmp0);
     x_DDD = tmp1*C-tmp2*S;
@@ -1172,7 +1243,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidData::bbTriangle(
+  ClothoidData::bbTriangle_ISO(
     real_type   L,
     real_type   offs,
     real_type & xx0,
@@ -1187,11 +1258,11 @@ namespace G2lib {
     real_type dtheta    = abs( theta_max-theta_min );
     if ( dtheta < m_pi_2 ) {
       real_type alpha, tx0, ty0;
-      eval( 0, offs, xx0, yy0 );
+      eval_ISO( 0, offs, xx0, yy0 );
       eval_D( 0, tx0, ty0 ); // no offset solo scalato
       if ( dtheta > one_degree ) {
         real_type tx1, ty1;
-        eval( L, offs, xx1, yy1 );
+        eval_ISO( L, offs, xx1, yy1 );
         eval_D( L, tx1, ty1 ); // no offset solo scalato
         real_type det = tx1*ty0-tx0*ty1;
         alpha = ((yy1-yy0)*tx1 - (xx1-xx0)*ty1)/det;

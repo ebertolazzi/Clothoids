@@ -26,7 +26,7 @@ main() {
   real_type X, Y, S;
 
   real_type T, d;
-  int_type info = C.closestPoint( x, y, X, Y, S, T, d );
+  int_type info = C.closestPoint_ISO( x, y, X, Y, S, T, d );
 
   cout << "\nd = " << d
        << "\nX = " << X

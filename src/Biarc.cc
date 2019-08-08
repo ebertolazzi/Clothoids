@@ -211,16 +211,16 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::bbox(
+  Biarc::bbox_ISO(
     real_type   offs,
     real_type & xmin,
     real_type & ymin,
     real_type & xmax,
     real_type & ymax
   ) const {
-    C0.bbox( offs, xmin, ymin, xmax, ymax );
+    C0.bbox_ISO( offs, xmin, ymin, xmax, ymax );
     real_type xmi1, ymi1, xma1, yma1;
-    C1.bbox( offs, xmi1, ymi1, xma1, yma1 );
+    C1.bbox_ISO( offs, xmi1, ymi1, xma1, yma1 );
     if ( xmi1 < xmin ) xmin = xmi1;
     if ( xma1 > xmax ) xmax = xma1;
     if ( ymi1 < ymin ) ymin = ymi1;
@@ -450,73 +450,73 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::X( real_type s, real_type offs ) const {
+  Biarc::X_ISO( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.X(s,offs);
-    else          return C1.X(s-L0,offs);
+    if ( s < L0 ) return C0.X_ISO(s,offs);
+    else          return C1.X_ISO(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::X_D( real_type s, real_type offs ) const {
+  Biarc::X_ISO_D( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.X_D(s,offs);
-    else          return C1.X_D(s-L0,offs);
+    if ( s < L0 ) return C0.X_ISO_D(s,offs);
+    else          return C1.X_ISO_D(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::X_DD( real_type s, real_type offs ) const {
+  Biarc::X_ISO_DD( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.X_DD(s,offs);
-    else          return C1.X_DD(s-L0,offs);
+    if ( s < L0 ) return C0.X_ISO_DD(s,offs);
+    else          return C1.X_ISO_DD(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::X_DDD( real_type s, real_type offs ) const {
+  Biarc::X_ISO_DDD( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.X_DDD(s,offs);
-    else          return C1.X_DDD(s-L0,offs);
+    if ( s < L0 ) return C0.X_ISO_DDD(s,offs);
+    else          return C1.X_ISO_DDD(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::Y( real_type s, real_type offs ) const {
+  Biarc::Y_ISO( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.Y(s,offs);
-    else          return C1.Y(s-L0,offs);
+    if ( s < L0 ) return C0.Y_ISO(s,offs);
+    else          return C1.Y_ISO(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::Y_D( real_type s, real_type offs ) const {
+  Biarc::Y_ISO_D( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.Y_D(s,offs);
-    else          return C1.Y_D(s-L0,offs);
+    if ( s < L0 ) return C0.Y_ISO_D(s,offs);
+    else          return C1.Y_ISO_D(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::Y_DD( real_type s, real_type offs ) const {
+  Biarc::Y_ISO_DD( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.Y_DD(s,offs);
-    else          return C1.Y_DD(s-L0,offs);
+    if ( s < L0 ) return C0.Y_ISO_DD(s,offs);
+    else          return C1.Y_ISO_DD(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Biarc::Y_DDD( real_type s, real_type offs ) const {
+  Biarc::Y_ISO_DDD( real_type s, real_type offs ) const {
     real_type L0 = C0.length();
-    if ( s < L0 ) return C0.Y_DDD(s,offs);
-    else          return C1.Y_DDD(s-L0,offs);
+    if ( s < L0 ) return C0.Y_ISO_DDD(s,offs);
+    else          return C1.Y_ISO_DDD(s-L0,offs);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -644,68 +644,68 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval(
+  Biarc::eval_ISO(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x,
     real_type & y
   ) const {
     if ( s < C0.length() ) {
-      C0.eval(s,t,x,y);
+      C0.eval_ISO(s,offs,x,y);
     } else {
       s -= C0.length();
-      C1.eval(s,t,x,y);
+      C1.eval_ISO(s,offs,x,y);
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_D(
+  Biarc::eval_ISO_D(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x_D,
     real_type & y_D
   ) const {
     if ( s < C0.length() ) {
-      C0.eval_D(s,t,x_D,y_D);
+      C0.eval_ISO_D(s,offs,x_D,y_D);
     } else {
       s -= C0.length();
-      C1.eval_D(s,t,x_D,y_D);
+      C1.eval_ISO_D(s,offs,x_D,y_D);
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_DD(
+  Biarc::eval_ISO_DD(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x_DD,
     real_type & y_DD
   ) const {
     if ( s < C0.length() ) {
-      C0.eval_DD(s,t,x_DD,y_DD);
+      C0.eval_ISO_DD(s,offs,x_DD,y_DD);
     } else {
       s -= C0.length();
-      C1.eval_DD(s,t,x_DD,y_DD);
+      C1.eval_ISO_DD(s,offs,x_DD,y_DD);
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::eval_DDD(
+  Biarc::eval_ISO_DDD(
     real_type   s,
-    real_type   t,
+    real_type   offs,
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
     if ( s < C0.length() ) {
-      C0.eval_DDD(s,t,x_DDD,y_DDD);
+      C0.eval_ISO_DDD(s,offs,x_DDD,y_DDD);
     } else {
       s -= C0.length();
-      C1.eval_DDD(s,t,x_DDD,y_DDD);
+      C1.eval_ISO_DDD(s,offs,x_DDD,y_DDD);
     }
   }
 
@@ -763,7 +763,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Biarc::intersect(
+  Biarc::intersect_ISO(
     real_type       offs,
     Biarc const   & B,
     real_type       offs_B,
@@ -771,10 +771,10 @@ namespace G2lib {
     bool            swap_s_vals
   ) const {
     IntersectList ilist00, ilist01, ilist10, ilist11;
-    C0.intersect( offs, B.C0, offs_B, ilist00, false );
-    C0.intersect( offs, B.C1, offs_B, ilist01, false );
-    C1.intersect( offs, B.C0, offs_B, ilist10, false );
-    C1.intersect( offs, B.C1, offs_B, ilist11, false );
+    C0.intersect_ISO( offs, B.C0, offs_B, ilist00, false );
+    C0.intersect_ISO( offs, B.C1, offs_B, ilist01, false );
+    C1.intersect_ISO( offs, B.C0, offs_B, ilist10, false );
+    C1.intersect_ISO( offs, B.C1, offs_B, ilist11, false );
     real_type L  = C0.length();
     real_type LB = B.C0.length();
     IntersectList::iterator it;
@@ -808,7 +808,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  Biarc::closestPoint(
+  Biarc::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -818,8 +818,8 @@ namespace G2lib {
     real_type & dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    int_type res  = C0.closestPoint( qx, qy, x,  y,  s,  t,  dst  );
-    int_type res1 = C1.closestPoint( qx, qy, x1, y1, s1, t1, dst1 );
+    int_type res  = C0.closestPoint_ISO( qx, qy, x,  y,  s,  t,  dst  );
+    int_type res1 = C1.closestPoint_ISO( qx, qy, x1, y1, s1, t1, dst1 );
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -834,7 +834,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  Biarc::closestPoint(
+  Biarc::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -845,8 +845,8 @@ namespace G2lib {
     real_type & dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    int_type res  = C0.closestPoint( qx, qy, offs, x,  y,  s,  t,  dst  );
-    int_type res1 = C1.closestPoint( qx, qy, offs, x1, y1, s1, t1, dst1 );
+    int_type res  = C0.closestPoint_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
+    int_type res1 = C1.closestPoint_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;

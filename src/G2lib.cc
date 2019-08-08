@@ -52,6 +52,10 @@ namespace G2lib {
   real_type const m_1_sqrt_pi  = 0.564189583547756286948079451561; // 1/sqrt(pi)
   bool            intersect_with_AABBtree = true;
 
+  #ifdef G2LIB_COMPATIBILITY_MODE
+  bool use_ISO = true;
+  #endif
+
   char const *CurveType_name[] = {
     "LINE",
     "POLYLINE",
@@ -708,95 +712,6 @@ namespace G2lib {
   \*/
 
   /*\
-   |   ____             _          _______           _
-   |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |
-   |  |  _ \ / _ \/ _` | | '_ \  / /|  _| | '_ \ / _` |
-   |  | |_) |  __/ (_| | | | | |/ / | |___| | | | (_| |
-   |  |____/ \___|\__, |_|_| |_/_/  |_____|_| |_|\__,_|
-   |              |___/
-  \*/
-
-  real_type
-  BaseCurve::thetaBegin() const
-  { return theta(0); }
-
-  real_type
-  BaseCurve::thetaEnd() const
-  { return theta(length()); }
-
-  real_type
-  BaseCurve::kappaBegin() const
-  { return kappa(0); }
-
-  real_type
-  BaseCurve::kappaEnd() const
-  { return kappa(length()); }
-
-  real_type
-  BaseCurve::xBegin() const
-  { return X(0); }
-
-  real_type
-  BaseCurve::yBegin() const
-  { return Y(0); }
-
-  real_type
-  BaseCurve::xEnd() const
-  { return X(length()); }
-
-  real_type
-  BaseCurve::yEnd() const
-  { return Y(length()); }
-
-  real_type
-  BaseCurve::xBegin( real_type offs ) const
-  { return X(0,offs); }
-
-  real_type
-  BaseCurve::yBegin( real_type offs ) const
-  { return Y(0,offs); }
-
-  real_type
-  BaseCurve::xEnd( real_type offs ) const
-  { return X(length(),offs); }
-
-  real_type
-  BaseCurve::yEnd( real_type offs ) const
-  { return Y(length(),offs); }
-
-  real_type
-  BaseCurve::tx_Begin() const
-  { return tx(0); }
-
-  real_type
-  BaseCurve::ty_Begin() const
-  { return ty(0); }
-
-  real_type
-  BaseCurve::tx_End() const
-  { return tx(length()); }
-
-  real_type
-  BaseCurve::ty_End() const
-  { return ty(length()); }
-
-  real_type
-  BaseCurve::nx_Begin() const
-  { return nx(0); }
-
-  real_type
-  BaseCurve::ny_Begin() const
-  { return ny(0); }
-
-  real_type
-  BaseCurve::nx_End() const
-  { return nx(length()); }
-
-  real_type
-  BaseCurve::ny_End() const
-  { return ny(length()); }
-
-  /*\
    |  _____                   _   _   _
    | |_   _|   __ _ _ __   __| | | \ | |
    |   | |    / _` | '_ \ / _` | |  \| |
@@ -873,90 +788,90 @@ namespace G2lib {
   \*/
 
   real_type
-  BaseCurve::X( real_type s, real_type offs ) const
-  { return X(s) + offs * nx(s); }
+  BaseCurve::X_ISO( real_type s, real_type offs ) const
+  { return X(s) + offs * nx_ISO(s); }
 
   real_type
-  BaseCurve::Y( real_type s, real_type offs ) const
-  { return Y(s) + offs * ny(s); }
+  BaseCurve::Y_ISO( real_type s, real_type offs ) const
+  { return Y(s) + offs * ny_ISO(s); }
 
   real_type
-  BaseCurve::X_D( real_type s, real_type offs ) const
-  { return X_D(s) + offs * nx_D(s); }
+  BaseCurve::X_ISO_D( real_type s, real_type offs ) const
+  { return X_D(s) + offs * nx_ISO_D(s); }
 
   real_type
-  BaseCurve::Y_D( real_type s, real_type offs ) const
-  { return Y_D(s) + offs * ny_D(s); }
+  BaseCurve::Y_ISO_D( real_type s, real_type offs ) const
+  { return Y_D(s) + offs * ny_ISO_D(s); }
 
   real_type
-  BaseCurve::X_DD( real_type s, real_type offs ) const
-  { return X_DD(s) + offs * nx_DD(s); }
+  BaseCurve::X_ISO_DD( real_type s, real_type offs ) const
+  { return X_DD(s) + offs * nx_ISO_DD(s); }
 
   real_type
-  BaseCurve::Y_DD( real_type s, real_type offs ) const
-  { return Y_DD(s) + offs * ny_DD(s); }
+  BaseCurve::Y_ISO_DD( real_type s, real_type offs ) const
+  { return Y_DD(s) + offs * ny_ISO_DD(s); }
 
   real_type
-  BaseCurve::X_DDD( real_type s, real_type offs ) const
-  { return X_DDD(s) + offs * nx_DDD(s); }
+  BaseCurve::X_ISO_DDD( real_type s, real_type offs ) const
+  { return X_DDD(s) + offs * nx_ISO_DDD(s); }
 
   real_type
-  BaseCurve::Y_DDD( real_type s, real_type offs ) const
-  { return Y_DDD(s) + offs * ny_DDD(s); }
+  BaseCurve::Y_ISO_DDD( real_type s, real_type offs ) const
+  { return Y_DDD(s) + offs * ny_ISO_DDD(s); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  BaseCurve::eval(
+  BaseCurve::eval_ISO(
     real_type   s,
     real_type   offs,
     real_type & x,
     real_type & y
   ) const {
     real_type nx, ny;
-    nor( s, nx, ny );
+    nor_ISO( s, nx, ny );
     eval( s, x, y );
     x += offs * nx;
     y += offs * ny;
   }
 
   void
-  BaseCurve::eval_D(
+  BaseCurve::eval_ISO_D(
     real_type   s,
     real_type   offs,
     real_type & x_D,
     real_type & y_D
   ) const {
     real_type nx_D, ny_D;
-    nor_D( s, nx_D, ny_D );
+    nor_ISO_D( s, nx_D, ny_D );
     eval_D( s, x_D, y_D );
     x_D += offs * nx_D;
     y_D += offs * ny_D;
   }
 
   void
-  BaseCurve::eval_DD(
+  BaseCurve::eval_ISO_DD(
     real_type   s,
     real_type   offs,
     real_type & x_DD,
     real_type & y_DD
   ) const {
     real_type nx_DD, ny_DD;
-    nor_D( s, nx_DD, ny_DD );
+    nor_ISO_D( s, nx_DD, ny_DD );
     eval_DD( s, x_DD, y_DD );
     x_DD += offs * nx_DD;
     y_DD += offs * ny_DD;
   }
 
   void
-  BaseCurve::eval_DDD(
+  BaseCurve::eval_ISO_DDD(
     real_type   s,
     real_type   offs,
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
     real_type nx_DDD, ny_DDD;
-    nor_D( s, nx_DDD, ny_DDD );
+    nor_ISO_D( s, nx_DDD, ny_DDD );
     eval_DDD( s, x_DDD, y_DDD );
     x_DDD += offs * nx_DDD;
     y_DDD += offs * ny_DDD;

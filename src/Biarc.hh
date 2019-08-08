@@ -155,7 +155,7 @@ namespace G2lib {
 
     virtual
     void
-    bbox(
+    bbox_ISO(
       real_type   offs,
       real_type & xmin,
       real_type & ymin,
@@ -172,8 +172,8 @@ namespace G2lib {
 
     virtual
     real_type
-    length( real_type offs ) const G2LIB_OVERRIDE
-    { return C0.length(offs)+C1.length(offs); }
+    length_ISO( real_type offs ) const G2LIB_OVERRIDE
+    { return C0.length_ISO(offs)+C1.length_ISO(offs); }
 
     virtual
     real_type
@@ -182,8 +182,18 @@ namespace G2lib {
 
     virtual
     real_type
+    thetaEnd() const G2LIB_OVERRIDE
+    { return C1.thetaEnd(); }
+
+    virtual
+    real_type
     xBegin() const G2LIB_OVERRIDE
     { return C0.xBegin(); }
+
+    virtual
+    real_type
+    xEnd() const G2LIB_OVERRIDE
+    { return C1.xEnd(); }
 
     virtual
     real_type
@@ -192,8 +202,18 @@ namespace G2lib {
 
     virtual
     real_type
+    yEnd() const G2LIB_OVERRIDE
+    { return C1.yEnd(); }
+
+    virtual
+    real_type
     tx_Begin() const G2LIB_OVERRIDE
     { return C0.tx_Begin(); }
+
+    virtual
+    real_type
+    tx_End() const G2LIB_OVERRIDE
+    { return C1.tx_End(); }
 
     virtual
     real_type
@@ -202,13 +222,28 @@ namespace G2lib {
 
     virtual
     real_type
-    nx_Begin() const G2LIB_OVERRIDE
-    { return C0.nx_Begin(); }
+    ty_End() const G2LIB_OVERRIDE
+    { return C1.ty_End(); }
 
     virtual
     real_type
-    ny_Begin() const G2LIB_OVERRIDE
-    { return C0.ny_Begin(); }
+    nx_Begin_ISO() const G2LIB_OVERRIDE
+    { return C0.nx_Begin_ISO(); }
+
+    virtual
+    real_type
+    nx_End_ISO() const G2LIB_OVERRIDE
+    { return C1.nx_End_ISO(); }
+
+    virtual
+    real_type
+    ny_Begin_ISO() const G2LIB_OVERRIDE
+    { return C0.ny_Begin_ISO(); }
+
+    virtual
+    real_type
+    ny_End_ISO() const G2LIB_OVERRIDE
+    { return C1.ny_End_ISO(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -254,17 +289,17 @@ namespace G2lib {
     virtual real_type X_DDD( real_type ) const G2LIB_OVERRIDE;
     virtual real_type Y_DDD( real_type ) const G2LIB_OVERRIDE;
 
-    virtual real_type X( real_type s, real_type offs ) const G2LIB_OVERRIDE;
-    virtual real_type Y( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type X_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type Y_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE;
 
-    virtual real_type X_D( real_type, real_type offs ) const G2LIB_OVERRIDE;
-    virtual real_type Y_D( real_type, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type X_ISO_D( real_type, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type Y_ISO_D( real_type, real_type offs ) const G2LIB_OVERRIDE;
 
-    virtual real_type X_DD( real_type, real_type offs ) const G2LIB_OVERRIDE;
-    virtual real_type Y_DD( real_type, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type X_ISO_DD( real_type, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type Y_ISO_DD( real_type, real_type offs ) const G2LIB_OVERRIDE;
 
-    virtual real_type X_DDD( real_type, real_type offs ) const G2LIB_OVERRIDE;
-    virtual real_type Y_DDD( real_type, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type X_ISO_DDD( real_type, real_type offs ) const G2LIB_OVERRIDE;
+    virtual real_type Y_ISO_DDD( real_type, real_type offs ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -302,7 +337,7 @@ namespace G2lib {
 
     virtual
     void
-    eval(
+    eval_ISO(
       real_type   s,
       real_type   offs,
       real_type & x,
@@ -311,7 +346,7 @@ namespace G2lib {
 
     virtual
     void
-    eval_D(
+    eval_ISO_D(
       real_type   s,
       real_type   offs,
       real_type & x_D,
@@ -320,7 +355,7 @@ namespace G2lib {
 
     virtual
     void
-    eval_DD(
+    eval_ISO_DD(
       real_type   s,
       real_type   offs,
       real_type & x_DD,
@@ -329,7 +364,7 @@ namespace G2lib {
 
     virtual
     void
-    eval_DDD(
+    eval_ISO_DDD(
       real_type   s,
       real_type   offs,
       real_type & x_DDD,
@@ -454,7 +489,7 @@ namespace G2lib {
 
     virtual
     int_type
-    closestPoint(
+    closestPoint_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -466,7 +501,7 @@ namespace G2lib {
 
     virtual
     int_type
-    closestPoint(
+    closestPoint_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -502,15 +537,27 @@ namespace G2lib {
     }
 
     void
-    bbTriangles(
+    bbTriangles_ISO(
       real_type                 offs,
       std::vector<Triangle2D> & tvec,
       real_type                 max_angle = m_pi/18,
       real_type                 max_size  = 1e100,
       int_type                  icurve    = 0
     ) const {
-      C0.bbTriangles( offs, tvec, max_angle, max_size, icurve );
-      C1.bbTriangles( offs, tvec, max_angle, max_size, icurve );
+      C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
+    }
+
+    void
+    bbTriangles_SAE(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = m_pi/18,
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const {
+      C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\
@@ -528,15 +575,15 @@ namespace G2lib {
     }
 
     bool
-    collision(
+    collision_ISO(
       real_type     offs,
       Biarc const & B,
       real_type     offs_B
     ) const {
-      return C0.collision( offs, B.C0, offs_B ) ||
-             C0.collision( offs, B.C1, offs_B ) ||
-             C1.collision( offs, B.C0, offs_B ) ||
-             C1.collision( offs, B.C1, offs_B );
+      return C0.collision_ISO( offs, B.C0, offs_B ) ||
+             C0.collision_ISO( offs, B.C1, offs_B ) ||
+             C1.collision_ISO( offs, B.C0, offs_B ) ||
+             C1.collision_ISO( offs, B.C1, offs_B );
     }
 
     /*\
@@ -555,7 +602,7 @@ namespace G2lib {
     ) const;
 
     void
-    intersect(
+    intersect_ISO(
       real_type       offs,
       Biarc const   & B,
       real_type       offs_B,

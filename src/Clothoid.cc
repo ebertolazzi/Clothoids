@@ -81,7 +81,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::optimized_sample_internal(
+  ClothoidCurve::optimized_sample_internal_ISO(
     real_type           s_begin,
     real_type           s_end,
     real_type           offs,
@@ -100,11 +100,7 @@ namespace G2lib {
       );
       // estimate angle variation and compute step accodingly
       real_type k   = CD.kappa( ss );
-      #ifdef G2LIB_USE_SAE
-      real_type dss = ds/(1-k*offs); // scale length with offset
-      #else
       real_type dss = ds/(1+k*offs); // scale length with offset
-      #endif
       real_type sss = ss + dss;
       if ( sss > s_end ) {
         sss = s_end;
@@ -132,7 +128,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::optimized_sample(
+  ClothoidCurve::optimized_sample_ISO(
     real_type           offs,
     int_type            npts,
     real_type           max_angle,
@@ -144,12 +140,12 @@ namespace G2lib {
 
     real_type ds = L/npts;
     if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
-      optimized_sample_internal( 0, L, offs, ds, max_angle, s );
+      optimized_sample_internal_ISO( 0, L, offs, ds, max_angle, s );
     } else {
       // flex inside, split clothoid
       real_type sflex = -CD.kappa0/CD.dk;
-      optimized_sample_internal( 0, sflex, offs, ds, max_angle, s );
-      optimized_sample_internal( sflex, L, offs, ds, max_angle, s );
+      optimized_sample_internal_ISO( 0, sflex, offs, ds, max_angle, s );
+      optimized_sample_internal_ISO( sflex, L, offs, ds, max_angle, s );
     }
   }
 
@@ -166,7 +162,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::bbTriangles_internal(
+  ClothoidCurve::bbTriangles_internal_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            s_begin,
@@ -191,11 +187,7 @@ namespace G2lib {
 
       // estimate angle variation and compute step accodingly
       real_type k   = CD.kappa( ss );
-      #ifdef G2LIB_USE_SAE
-      real_type dss = MX/(1-k*offs); // scale length with offset
-      #else
       real_type dss = MX/(1+k*offs); // scale length with offset
-      #endif
       real_type sss = ss + dss;
       if ( sss > s_end ) {
         sss = s_end;
@@ -215,8 +207,8 @@ namespace G2lib {
       }
 
       real_type x0, y0, x1, y1;
-      CD.eval( ss,  offs, x0, y0 );
-      CD.eval( sss, offs, x1, y1 );
+      CD.eval_ISO( ss,  offs, x0, y0 );
+      CD.eval_ISO( sss, offs, x1, y1 );
 
       real_type tx0    = cos(thh);
       real_type ty0    = sin(thh);
@@ -244,7 +236,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::bbTriangles(
+  ClothoidCurve::bbTriangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
@@ -252,12 +244,12 @@ namespace G2lib {
     int_type             icurve
   ) const {
     if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
-      bbTriangles_internal( offs, tvec, 0, L, max_angle, max_size, icurve );
+      bbTriangles_internal_ISO( offs, tvec, 0, L, max_angle, max_size, icurve );
     } else {
       // flex inside, split clothoid
       real_type sflex = -CD.kappa0/CD.dk;
-      bbTriangles_internal( offs, tvec, 0, sflex, max_angle, max_size, icurve );
-      bbTriangles_internal( offs, tvec, sflex, L, max_angle, max_size, icurve );
+      bbTriangles_internal_ISO( offs, tvec, 0, sflex, max_angle, max_size, icurve );
+      bbTriangles_internal_ISO( offs, tvec, sflex, L, max_angle, max_size, icurve );
     }
   }
 
@@ -270,7 +262,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidCurve::bbox(
+  ClothoidCurve::bbox_ISO(
     real_type   offs,
     real_type & xmin,
     real_type & ymin,
@@ -278,7 +270,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    bbTriangles( offs, tvec, m_pi/18, 1e100 );
+    bbTriangles_ISO( offs, tvec, m_pi/18, 1e100 );
     xmin = ymin = numeric_limits<real_type>::infinity();
     xmax = ymax = -xmin;
     vector<Triangle2D>::const_iterator it;
@@ -309,7 +301,7 @@ namespace G2lib {
    | /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
   void
-  ClothoidCurve::build_AABBtree(
+  ClothoidCurve::build_AABBtree_ISO(
     real_type offs,
     real_type max_angle,
     real_type max_size
@@ -326,7 +318,7 @@ namespace G2lib {
     vector<BBox const *> bboxes;
     #endif
 
-    bbTriangles( offs, aabb_tri, max_angle, max_size );
+    bbTriangles_ISO( offs, aabb_tri, max_angle, max_size );
     bboxes.reserve(aabb_tri.size());
     vector<Triangle2D>::const_iterator it;
     int_type ipos = 0;
@@ -362,23 +354,23 @@ namespace G2lib {
 
   bool
   ClothoidCurve::collision( ClothoidCurve const & C ) const {
-    this->build_AABBtree( 0 );
-    C.build_AABBtree( 0 );
-    T2D_collision fun( this, 0, &C, 0 );
+    this->build_AABBtree_ISO( 0 );
+    C.build_AABBtree_ISO( 0 );
+    T2D_collision_ISO fun( this, 0, &C, 0 );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::collision(
+  ClothoidCurve::collision_ISO(
     real_type             offs,
     ClothoidCurve const & C,
     real_type             offs_C
   ) const {
-    this->build_AABBtree( offs );
-    C.build_AABBtree( offs_C );
-    T2D_collision fun( this, offs, &C, offs_C );
+    this->build_AABBtree_ISO( offs );
+    C.build_AABBtree_ISO( offs_C );
+    T2D_collision_ISO fun( this, offs, &C, offs_C );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
@@ -386,15 +378,15 @@ namespace G2lib {
 
   // collision detection
   bool
-  ClothoidCurve::approximate_collision(
+  ClothoidCurve::approximate_collision_ISO(
     real_type             offs,
     ClothoidCurve const & C,
     real_type             offs_C,
     real_type             max_angle,
     real_type             max_size
   ) const {
-    this->build_AABBtree( offs, max_angle, max_size );
-    C.build_AABBtree( offs_C, max_angle, max_size );
+    this->build_AABBtree_ISO( offs, max_angle, max_size );
+    C.build_AABBtree_ISO( offs_C, max_angle, max_size );
     T2D_approximate_collision fun( this, &C );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
@@ -412,7 +404,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidCurve::aabb_intersect(
+  ClothoidCurve::aabb_intersect_ISO(
     Triangle2D    const & T1,
     real_type             offs,
     ClothoidCurve const * pC,
@@ -434,10 +426,10 @@ namespace G2lib {
     ss2 = (s2_min+s2_max)/2;
     for ( int_type i = 0; i < max_iter && !converged; ++i ) {
       real_type t1[2], t2[2], p1[2], p2[2];
-      CD.eval  ( ss1, offs, p1[0], p1[1] );
-      CD.eval_D( ss1, offs, t1[0], t1[1] );
-      pC->CD.eval  ( ss2, offs_C, p2[0], p2[1] );
-      pC->CD.eval_D( ss2, offs_C, t2[0], t2[1] );
+      CD.eval_ISO  ( ss1, offs, p1[0], p1[1] );
+      CD.eval_ISO_D( ss1, offs, t1[0], t1[1] );
+      pC->CD.eval_ISO  ( ss2, offs_C, p2[0], p2[1] );
+      pC->CD.eval_ISO_D( ss2, offs_C, t2[0], t2[1] );
       /*
       // risolvo il sistema
       // p1 + alpha * t1 = p2 + beta * t2
@@ -475,7 +467,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::intersect(
+  ClothoidCurve::intersect_ISO(
     real_type             offs,
     ClothoidCurve const & C,
     real_type             offs_C,
@@ -483,8 +475,8 @@ namespace G2lib {
     bool                  swap_s_vals
   ) const {
     if ( intersect_with_AABBtree ) {
-      this->build_AABBtree( offs );
-      C.build_AABBtree( offs_C );
+      this->build_AABBtree_ISO( offs );
+      C.build_AABBtree_ISO( offs_C );
       AABBtree::VecPairPtrBBox iList;
       aabb_tree.intersect( C.aabb_tree, iList );
       AABBtree::VecPairPtrBBox::const_iterator ip;
@@ -497,7 +489,7 @@ namespace G2lib {
         Triangle2D const & T2 = C.aabb_tri[ipos2];
 
         real_type ss1, ss2;
-        bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
+        bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
 
         if ( converged ) {
           if ( swap_s_vals ) swap( ss1, ss2 );
@@ -505,8 +497,8 @@ namespace G2lib {
         }
       }
     } else {
-      bbTriangles( offs, aabb_tri, m_pi/18, 1e100 );
-      C.bbTriangles( offs_C, C.aabb_tri, m_pi/18, 1e100 );
+      bbTriangles_ISO( offs, aabb_tri, m_pi/18, 1e100 );
+      C.bbTriangles_ISO( offs_C, C.aabb_tri, m_pi/18, 1e100 );
       for ( vector<Triangle2D>::const_iterator i1 = aabb_tri.begin();
             i1 != aabb_tri.end(); ++i1 ) {
         for ( vector<Triangle2D>::const_iterator i2 = C.aabb_tri.begin();
@@ -515,7 +507,7 @@ namespace G2lib {
           Triangle2D const & T2 = *i2;
 
           real_type ss1, ss2;
-          bool converged = aabb_intersect( T1, offs, &C, T2, offs_C, ss1, ss2 );
+          bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
 
           if ( converged ) {
             if ( swap_s_vals ) swap( ss1, ss2 );
@@ -535,7 +527,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidCurve::closestPoint_internal(
+  ClothoidCurve::closestPoint_internal_ISO(
     real_type   s_begin,
     real_type   s_end,
     real_type   qx,
@@ -552,14 +544,10 @@ namespace G2lib {
     int_type nout = 0;
     for ( int_type iter = 0; iter < max_iter; ++iter ) {
       // osculating circle
-      CD.eval( s, offs, x, y );
+      CD.eval_ISO( s, offs, x, y );
       real_type th = CD.theta( s );
       real_type kk = CD.kappa( s );
-      #ifdef G2LIB_USE_SAE
-      real_type sc = 1-kk*offs;
-      #else
       real_type sc = 1+kk*offs;
-      #endif
       real_type ds = projectPointOnCircle( x, y, th, kk/sc, qx, qy )/sc;
 
       s += ds;
@@ -597,7 +585,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidCurve::closestPoint(
+  ClothoidCurve::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -608,7 +596,7 @@ namespace G2lib {
     real_type & DST
   ) const {
     DST = numeric_limits<real_type>::infinity();
-    this->build_AABBtree( offs );
+    this->build_AABBtree_ISO( offs );
 
     AABBtree::VecPtrBBox candidateList;
     aabb_tree.min_distance( qx, qy, candidateList );
@@ -624,7 +612,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        closestPoint_internal(
+        closestPoint_internal_ISO(
           T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -636,7 +624,7 @@ namespace G2lib {
       }
     }
     real_type nx, ny;
-    nor( s, nx, ny );
+    nor_ISO( s, nx, ny );
     t = (qx-x) * nx + (qy-y) * ny - offs;
     real_type err = abs( abs(t) - DST );
     if ( err > DST*machepsi1000 ) return -1;

@@ -266,15 +266,15 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::bbox(
+  LineSegment::bbox_ISO(
     real_type   offs,
     real_type & xmin,
     real_type & ymin,
     real_type & xmax,
     real_type & ymax
   ) const {
-    real_type dx = offs*nx_Begin();
-    real_type dy = offs*ny_Begin();
+    real_type dx = offs*nx_Begin_ISO();
+    real_type dy = offs*ny_Begin_ISO();
     xmin = x0+dx; xmax = xEnd()+dx;
     ymin = y0+dy; ymax = yEnd()+dy;
     if ( xmin > xmax ) swap( xmin, xmax );
@@ -381,7 +381,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  LineSegment::intersect(
+  LineSegment::intersect_ISO(
     real_type           offs,
     LineSegment const & S,
     real_type           S_offs,
@@ -393,18 +393,18 @@ namespace G2lib {
     L_struct L1;
     L_struct L2;
 
-    L1.p[0] = xBegin(offs);
-    L1.p[1] = yBegin(offs);
-    L1.q[0] = xEnd(offs);
-    L1.q[1] = yEnd(offs);
+    L1.p[0] = xBegin_ISO(offs);
+    L1.p[1] = yBegin_ISO(offs);
+    L1.q[0] = xEnd_ISO(offs);
+    L1.q[1] = yEnd_ISO(offs);
     L1.c    = c0;
     L1.s    = s0;
     L1.L    = L;
 
-    L2.p[0] = S.xBegin(S_offs);
-    L2.p[1] = S.yBegin(S_offs);
-    L2.q[0] = S.xEnd(S_offs);
-    L2.q[1] = S.yEnd(S_offs);
+    L2.p[0] = S.xBegin_ISO(S_offs);
+    L2.p[1] = S.yBegin_ISO(S_offs);
+    L2.q[0] = S.xEnd_ISO(S_offs);
+    L2.q[1] = S.yEnd_ISO(S_offs);
     L2.c    = S.c0;
     L2.s    = S.s0;
     L2.L    = S.L;
@@ -447,7 +447,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  LineSegment::collision(
+  LineSegment::collision_ISO(
     real_type           offs,
     LineSegment const & S,
     real_type           S_offs
@@ -457,18 +457,18 @@ namespace G2lib {
     L_struct L1;
     L_struct L2;
 
-    L1.p[0] = xBegin(offs);
-    L1.p[1] = yBegin(offs);
-    L1.q[0] = xEnd(offs);
-    L1.q[1] = yEnd(offs);
+    L1.p[0] = xBegin_ISO(offs);
+    L1.p[1] = yBegin_ISO(offs);
+    L1.q[0] = xEnd_ISO(offs);
+    L1.q[1] = yEnd_ISO(offs);
     L1.c    = c0;
     L1.s    = s0;
     L1.L    = L;
 
-    L2.p[0] = S.xBegin(S_offs);
-    L2.p[1] = S.yBegin(S_offs);
-    L2.q[0] = S.xEnd(S_offs);
-    L2.q[1] = S.yEnd(S_offs);
+    L2.p[0] = S.xBegin_ISO(S_offs);
+    L2.p[1] = S.yBegin_ISO(S_offs);
+    L2.q[0] = S.xEnd_ISO(S_offs);
+    L2.q[1] = S.yEnd_ISO(S_offs);
     L2.c    = S.c0;
     L2.s    = S.s0;
     L2.L    = S.L;
@@ -495,7 +495,7 @@ namespace G2lib {
   \*/
 
   int_type
-  LineSegment::closestPoint(
+  LineSegment::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -508,7 +508,7 @@ namespace G2lib {
     real_type dx = qx - x0;
     real_type dy = qy - y0;
     s = dx * tx_Begin() + dy * ty_Begin();
-    t = dx * nx_Begin() + dy * ny_Begin();
+    t = dx * nx_Begin_ISO() + dy * ny_Begin_ISO();
 
     if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
@@ -525,7 +525,7 @@ namespace G2lib {
 
     dx  = qx-x;
     dy  = qy-y;
-    t   = dx * nx_Begin() + dy * ny_Begin();
+    t   = dx * nx_Begin_ISO() + dy * ny_Begin_ISO();
     dst = hypot( dx, dy );
     return -1;
   }
@@ -533,7 +533,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  LineSegment::closestPoint(
+  LineSegment::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -543,13 +543,13 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    real_type xx0 = x0+offs*nx_Begin();
-    real_type yy0 = y0+offs*ny_Begin();
+    real_type xx0 = x0+offs*nx_Begin_ISO();
+    real_type yy0 = y0+offs*ny_Begin_ISO();
 
     real_type dx = qx - xx0;
     real_type dy = qy - yy0;
     s = dx * tx_Begin() + dy * ty_Begin();
-    t = dx * nx_Begin() + dy * ny_Begin();
+    t = dx * nx_Begin_ISO() + dy * ny_Begin_ISO();
 
     if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
@@ -557,16 +557,16 @@ namespace G2lib {
       y = yy0;
     } else if ( s > L ) {
       s = L;
-      eval( s, offs, x, y );
+      eval_ISO( s, offs, x, y );
     } else {
       t  += offs;
       dst = abs(t);
-      eval( s, offs, x, y );
+      eval_ISO( s, offs, x, y );
     }
 
     dx  = qx-x;
     dy  = qy-y;
-    t   = dx * nx_Begin() + dy * ny_Begin() + offs;
+    t   = dx * nx_Begin_ISO() + dy * ny_Begin_ISO() + offs;
     dst = hypot( dx, dy );
     return -1;
   }
@@ -575,11 +575,12 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, LineSegment const & c ) {
-    stream <<   "x0     = " << c.x0
-           << "\ny0     = " << c.y0
-           << "\ntheta0 = " << c.theta0
-           << "\nL      = " << c.L
-           << "\n";
+    stream
+      <<   "x0     = " << c.x0
+      << "\ny0     = " << c.y0
+      << "\ntheta0 = " << c.theta0
+      << "\nL      = " << c.L
+      << "\n";
     return stream;
   }
 

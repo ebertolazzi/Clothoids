@@ -46,7 +46,7 @@ main() {
     C.build( xx0, yy0, theta0, kappa0, dk, L );
 
     vector<G2lib::Triangle2D> tvec;
-    C.bbTriangles( 0, tvec );
+    C.bbTriangles_ISO( 0, tvec );
 
     for ( size_t i = 0; i < tvec.size(); ++i )
       cout << i << " " << tvec[i] << "\n\n";

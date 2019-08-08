@@ -175,7 +175,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  collision(
+  collision_ISO(
     BaseCurve const & obj1,
     real_type         offs1,
     BaseCurve const & obj2,
@@ -195,49 +195,49 @@ namespace G2lib {
       {
         LineSegment L1( obj1 );
         LineSegment L2( obj2 );
-        ok = L1.collision( offs1, L2, offs2 );
+        ok = L1.collision_ISO( offs1, L2, offs2 );
       }
       break;
     case G2LIB_CIRCLE:
       {
         CircleArc C1( obj1 );
         CircleArc C2( obj2 );
-        ok = C1.collision( offs1, C2, offs2 );
+        ok = C1.collision_ISO( offs1, C2, offs2 );
       }
       break;
     case G2LIB_CLOTHOID:
       {
         ClothoidCurve C1( obj1 );
         ClothoidCurve C2( obj2 );
-        ok = C1.collision( offs1, C2, offs2 );
+        ok = C1.collision_ISO( offs1, C2, offs2 );
       }
       break;
     case G2LIB_BIARC:
       {
         Biarc B1( obj1 );
         Biarc B2( obj2 );
-        ok = B1.collision( offs1, B2, offs2 );
+        ok = B1.collision_ISO( offs1, B2, offs2 );
       }
       break;
     case G2LIB_BIARC_LIST:
       {
         BiarcList BL1( obj1 );
         BiarcList BL2( obj2 );
-        ok = BL1.collision( offs1, BL2, offs2 );
+        ok = BL1.collision_ISO( offs1, BL2, offs2 );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
         ClothoidList CL1( obj1 );
         ClothoidList CL2( obj2 );
-        ok = CL1.collision( offs1, CL2, offs2 );
+        ok = CL1.collision_ISO( offs1, CL2, offs2 );
       }
       break;
     case G2LIB_POLYLINE:
       {
         PolyLine PL1( obj1 );
         PolyLine PL2( obj2 );
-        ok = PL1.collision( offs1, PL2, offs2 );
+        ok = PL1.collision_ISO( offs1, PL2, offs2 );
       }
     }
     return ok;
@@ -317,7 +317,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  intersect(
+  intersect_ISO(
     BaseCurve const & obj1,
     real_type         offs1,
     BaseCurve const & obj2,
@@ -339,49 +339,49 @@ namespace G2lib {
       {
         LineSegment L1( obj1 );
         LineSegment L2( obj2 );
-        L1.intersect( offs1, L2, offs2, ilist, swap_s_vals );
+        L1.intersect_ISO( offs1, L2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CIRCLE:
       {
         CircleArc C1( obj1 );
         CircleArc C2( obj2 );
-        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
+        C1.intersect_ISO( offs1, C2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID:
       {
         ClothoidCurve C1( obj1 );
         ClothoidCurve C2( obj2 );
-        C1.intersect( offs1, C2, offs2, ilist, swap_s_vals );
+        C1.intersect_ISO( offs1, C2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC:
       {
         Biarc B1( obj1 );
         Biarc B2( obj2 );
-        B1.intersect( offs1, B2, offs2, ilist, swap_s_vals );
+        B1.intersect_ISO( offs1, B2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_BIARC_LIST:
       {
         BiarcList BL1( obj1 );
         BiarcList BL2( obj2 );
-        BL1.intersect( offs1, BL2, offs2, ilist, swap_s_vals );
+        BL1.intersect_ISO( offs1, BL2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_CLOTHOID_LIST:
       {
         ClothoidList CL1( obj1 );
         ClothoidList CL2( obj2 );
-        CL1.intersect( offs1, CL2, offs2, ilist, swap_s_vals );
+        CL1.intersect_ISO( offs1, CL2, offs2, ilist, swap_s_vals );
       }
       break;
     case G2LIB_POLYLINE:
       {
         PolyLine PL1( obj1 );
         PolyLine PL2( obj2 );
-        PL1.intersect( offs1, PL2, offs2, ilist, swap_s_vals );
+        PL1.intersect_ISO( offs1, PL2, offs2, ilist, swap_s_vals );
       }
       break;
     }

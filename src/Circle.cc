@@ -427,7 +427,7 @@ namespace G2lib {
 
   //! get the bounding box triangle (if angle variation less that pi/3)
   bool
-  CircleArc::bbTriangle(
+  CircleArc::bbTriangle_ISO(
     real_type   offs,
     real_type & xx0, real_type & yy0,
     real_type & xx1, real_type & yy1,
@@ -436,8 +436,8 @@ namespace G2lib {
     real_type dtheta = L * k;
     bool ok = abs(dtheta) <= m_pi/3;
     if ( ok ) {
-      eval( 0, offs, xx0, yy0 );
-      eval( L, offs, xx2, yy2 );
+      eval_ISO( 0, offs, xx0, yy0 );
+      eval_ISO( L, offs, xx2, yy2 );
       xx1 = (xx0+xx2)/2;
       yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
@@ -489,18 +489,14 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangles(
+  CircleArc::bbTriangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
     int_type             icurve
   ) const {
-    #ifdef G2LIB_USE_SAE
-    real_type scale  = 1-k*offs;
-    #else
     real_type scale  = 1+k*offs;
-    #endif
     real_type dtheta = abs( min(L,max_size/scale) * k );
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
@@ -513,10 +509,10 @@ namespace G2lib {
     real_type tg = scale * tan(dtheta/2)/2;
     if ( k < 0 ) tg = -tg;
     real_type xx0, yy0;
-    eval( 0, offs, xx0, yy0 );
+    eval_ISO( 0, offs, xx0, yy0 );
     for ( int_type iter = 0; iter < n; ++iter, ss += ds ) {
       real_type xx2, yy2;
-      eval( ss, offs, xx2, yy2 );
+      eval_ISO( ss, offs, xx2, yy2 );
       real_type xx1 = (xx0+xx2)/2;
       real_type yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
@@ -554,7 +550,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbox(
+  CircleArc::bbox_ISO(
     real_type   offs,
     real_type & xmin,
     real_type & ymin,
@@ -562,7 +558,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    this->bbTriangles( offs, tvec, m_pi/4 );
+    this->bbTriangles_ISO( offs, tvec, m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( int_type iter = 1; iter < int_type(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
@@ -609,26 +605,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  CircleArc::collision(
+  CircleArc::collision_ISO(
     real_type         offs,
     CircleArc const & C,
     real_type         offs_C
   ) const {
     real_type s1[2], s2[2];
-    #ifdef G2LIB_USE_SAE
-    real_type sc1 = 1-k*offs;
-    real_type sc2 = 1-C.k*offs_C;
-    #else
     real_type sc1 = 1+k*offs;
     real_type sc2 = 1+C.k*offs_C;
-    #endif
     int_type ni = intersectCircleCircle(
-      this->X(0,offs),
-      this->Y(0,offs),
+      this->X_ISO(0,offs),
+      this->Y_ISO(0,offs),
       this->theta0,
       this->k/sc2,
-      C.X(0,offs_C),
-      C.Y(0,offs_C),
+      C.X_ISO(0,offs_C),
+      C.Y_ISO(0,offs_C),
       C.theta0,
       C.k/sc2,
       s1, s2
@@ -679,7 +670,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::intersect(
+  CircleArc::intersect_ISO(
     real_type         offs,
     CircleArc const & C,
     real_type         offs_C,
@@ -687,20 +678,15 @@ namespace G2lib {
     bool              swap_s_vals
   ) const {
     real_type s1[2], s2[2];
-    #ifdef G2LIB_USE_SAE
-    real_type sc1 = 1-k*offs;
-    real_type sc2 = 1-C.k*offs_C;
-    #else
     real_type sc1 = 1+k*offs;
     real_type sc2 = 1+C.k*offs_C;
-    #endif
     int_type ni = intersectCircleCircle(
-      this->X(0,offs),
-      this->Y(0,offs),
+      this->X_ISO(0,offs),
+      this->Y_ISO(0,offs),
       this->theta0,
       this->k/sc2,
-      C.X(0,offs_C),
-      C.Y(0,offs_C),
+      C.X_ISO(0,offs_C),
+      C.Y_ISO(0,offs_C),
       C.theta0,
       C.k/sc2,
       s1, s2
@@ -727,7 +713,7 @@ namespace G2lib {
   \*/
 
   int_type
-  CircleArc::closestPoint(
+  CircleArc::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -759,7 +745,7 @@ namespace G2lib {
       eval( s, x, y );
     }
     real_type nx, ny;
-    nor( s, nx, ny );
+    nor_ISO( s, nx, ny );
     real_type dx = qx-x;
     real_type dy = qy-y;
     t   = dx * nx + dy * ny;
@@ -770,7 +756,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  CircleArc::closestPoint(
+  CircleArc::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -782,19 +768,15 @@ namespace G2lib {
   ) const  {
     real_type cc0 = cos(theta0);
     real_type ss0 = sin(theta0);
-    real_type xx0 = x0+offs*nx_Begin();
-    real_type yy0 = y0+offs*ny_Begin();
-    #ifdef G2LIB_USE_SAE
-    real_type ff = 1-k*offs;
-    #else
-    real_type ff = 1+k*offs;
-    #endif
-    real_type LL = L*ff;
+    real_type xx0 = x0+offs*nx_Begin_ISO();
+    real_type yy0 = y0+offs*ny_Begin_ISO();
+    real_type ff  = 1+k*offs;
+    real_type LL  = L*ff;
     s = projectPointOnCircleArc( xx0, yy0, cc0, ss0, k/ff, LL, qx, qy );
     int_type res = 1;
     if ( s < 0 || s > LL ) {
       s = L;
-      eval( s, offs, x, y );
+      eval_ISO( s, offs, x, y );
       // costruisco piano
       real_type nx = x-xx0;
       real_type ny = y-yy0;
@@ -807,10 +789,10 @@ namespace G2lib {
       }
       res = -1;
     } else {
-      eval( s, offs, x, y );
+      eval_ISO( s, offs, x, y );
     }
     real_type nx, ny;
-    nor( s, nx, ny );
+    nor_ISO( s, nx, ny );
     real_type dx = qx-x;
     real_type dy = qy-y;
     t   = dx * nx + dy * ny + offs;

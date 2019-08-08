@@ -1109,21 +1109,21 @@ namespace G2lib {
 
   // offset curve
   void
-  G2solve3arc::eval(
+  G2solve3arc::eval_ISO(
     real_type   s,
     real_type   offs,
     real_type & x,
     real_type & y
   ) const {
     if ( s < S0.length() ) {
-      S0.eval(s, offs, x, y );
+      S0.eval_ISO( s, offs, x, y );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval(s, offs, x, y );
+        SM.eval_ISO( s, offs, x, y );
       } else {
         s -= SM.length();
-        S1.eval(s, offs, x, y );
+        S1.eval_ISO( s, offs, x, y );
       }
     }
   }
@@ -1131,21 +1131,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_D(
+  G2solve3arc::eval_ISO_D(
     real_type   s,
     real_type   offs,
     real_type & x_D,
     real_type & y_D
   ) const {
     if ( s < S0.length() ) {
-      S0.eval_D(s, offs, x_D, y_D );
+      S0.eval_ISO_D( s, offs, x_D, y_D );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval_D(s, offs, x_D, y_D );
+        SM.eval_ISO_D( s, offs, x_D, y_D );
       } else {
         s -= SM.length();
-        S1.eval_D(s, offs, x_D, y_D );
+        S1.eval_ISO_D( s, offs, x_D, y_D );
       }
     }
   }
@@ -1153,21 +1153,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_DD(
+  G2solve3arc::eval_ISO_DD(
     real_type   s,
     real_type   offs,
     real_type & x_DD,
     real_type & y_DD
   ) const {
     if ( s < S0.length() ) {
-      S0.eval_DD(s, offs, x_DD, y_DD );
+      S0.eval_ISO_DD( s, offs, x_DD, y_DD );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval_DD(s, offs, x_DD, y_DD );
+        SM.eval_ISO_DD( s, offs, x_DD, y_DD );
       } else {
         s -= SM.length();
-        S1.eval_DD(s, offs, x_DD, y_DD );
+        S1.eval_ISO_DD( s, offs, x_DD, y_DD );
       }
     }
   }
@@ -1175,21 +1175,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_DDD(
+  G2solve3arc::eval_ISO_DDD(
     real_type   s,
     real_type   offs,
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
     if ( s < S0.length() ) {
-      S0.eval_DDD(s, offs, x_DDD, y_DDD );
+      S0.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval_DDD(s, offs, x_DDD, y_DDD );
+        SM.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
       } else {
         s -= SM.length();
-        S1.eval_DDD(s, offs, x_DDD, y_DDD );
+        S1.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
       }
     }
   }

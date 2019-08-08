@@ -43,6 +43,8 @@ namespace G2lib {
   using std::vector;
   using std::ceil;
 
+  typedef vector<LineSegment>::difference_type LS_dist_type;
+
   /*\
    |  ____       _       _     _
    | |  _ \ ___ | |_   _| |   (_)_ __   ___
@@ -338,8 +340,8 @@ namespace G2lib {
     search( s_end );   size_t i_end   = size_t(isegment);
     polylineList[i_begin].trim( s_begin-s0[i_begin], s0[i_begin+1] );
     polylineList[i_end].trim( s0[i_end], s_end-s0[i_end] );
-    polylineList.erase( polylineList.begin()+i_end+1, polylineList.end() );
-    polylineList.erase( polylineList.begin(), polylineList.begin()+i_begin );
+    polylineList.erase( polylineList.begin()+LS_dist_type(i_end+1), polylineList.end() );
+    polylineList.erase( polylineList.begin(), polylineList.begin()+LS_dist_type(i_begin) );
     vector<LineSegment>::iterator ic = polylineList.begin();
     s0[0] = 0;
     size_t k = 0;
@@ -552,7 +554,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  PolyLine::closestPoint(
+  PolyLine::closestPoint_ISO(
     real_type   x,
     real_type   y,
     real_type & X,
@@ -564,23 +566,23 @@ namespace G2lib {
     G2LIB_ASSERT( !polylineList.empty(), "PolyLine::closestPoint, empty list" );
     vector<LineSegment>::const_iterator ic = polylineList.begin();
     vector<real_type>::const_iterator   is = s0.begin();
-    ic->closestPoint( x, y, X, Y, S, T, DST );
+    ic->closestPoint_ISO( x, y, X, Y, S, T, DST );
     size_t ipos = 0;
     for ( ++ic, ++is; ic != polylineList.end(); ++ic, ++is ) {
       real_type X1, Y1, S1, T1, DST1;
-      ic->closestPoint( x, y, X1, Y1, S1, T1, DST1 );
+      ic->closestPoint_ISO( x, y, X1, Y1, S1, T1, DST1 );
       if ( DST1 < DST ) {
         DST  = DST1;
         X    = X1;
         Y    = Y1;
         S    = *is + S1;
         T    = T1;
-        ipos = ic - polylineList.begin();
+        ipos = size_t(ic-polylineList.begin());
       }
     }
 
     real_type xx, yy;
-    polylineList[ipos].eval( S - s0[ipos], T, xx, yy );
+    polylineList[ipos].eval_ISO( S - s0[ipos], T, xx, yy );
     real_type err = hypot( x - xx, y - yy );
     if ( err > DST*machepsi1000 ) return -1;
     return 1;

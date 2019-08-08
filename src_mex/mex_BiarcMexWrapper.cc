@@ -372,6 +372,14 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  #define CMD_BASE "BiarcMexWrapper"
+  #define G2LIB_CLASS Biarc
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   static
   void
   do_bbTriangles( int nlhs, mxArray       * plhs[],
@@ -379,10 +387,10 @@ namespace G2lib {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "BiarcMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs]): "
+    #define CMD "BiarcMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs,'ISO'/'SAE']): "
 
-    MEX_ASSERT( nrhs >= 2 && nrhs <= 5,
-                CMD "expected 2 up to 5 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nrhs >= 2 && nrhs <= 6,
+                CMD "expected 2 up to 6 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 3,
                 CMD "expected 3 output, nlhs = " << nlhs );
 
@@ -390,18 +398,28 @@ namespace G2lib {
     real_type max_size  = 1e100;
     real_type offs      = 0;
     if ( nrhs >= 3 )
-      max_angle = getScalarValue( arg_in_2,
-                                  CMD "`max_angle` expected to be a real scalar" );
+      max_angle = getScalarValue(
+        arg_in_2, CMD "`max_angle` expected to be a real scalar"
+      );
     if ( nrhs >= 4 )
-      max_size = getScalarValue( arg_in_3,
-                                 CMD "`max_size` expected to be a real scalar" );
+      max_size = getScalarValue(
+        arg_in_3, CMD "`max_size` expected to be a real scalar"
+      );
     if ( nrhs >= 5 )
-      offs = getScalarValue( arg_in_4,
-                             CMD "`offs` expected to be a real scalar" );
+      offs = getScalarValue(
+        arg_in_4, CMD "`offs` expected to be a real scalar"
+      );
+
+    bool ISO = true;
+    if ( nrhs == 6 ) ISO = do_is_ISO( arg_in_5, CMD " last argument must be a string");
 
     std::vector<Triangle2D> tvec;
-    if ( nrhs == 5 ) {
-      ptr->bbTriangles( offs, tvec, max_angle, max_size );
+    if ( nrhs >= 5 ) {
+      if ( ISO ) {
+        ptr->bbTriangles_ISO( offs, tvec, max_angle, max_size );
+      } else {
+        ptr->bbTriangles_SAE( offs, tvec, max_angle, max_size );
+      }
     } else {
       ptr->bbTriangles( tvec, max_angle, max_size );
     }
@@ -424,12 +442,6 @@ namespace G2lib {
 
     #undef CMD
   }
-
-  #define CMD_BASE "BiarcMexWrapper"
-  #define G2LIB_CLASS Biarc
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

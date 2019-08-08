@@ -135,17 +135,6 @@ Authors:
 #pragma clang diagnostic ignored "-Wc++98-compat"
 #endif
 
-// for compatibility compile using SAE as default orientation
-#define G2LIB_USE_SAE
-
-#ifdef G2LIB_USE_SAE
-  #define G2LIB_NX( TX, TY ) (TY)
-  #define G2LIB_NY( TX, TY ) (-(TX))
-#else
-  #define G2LIB_NX( TX, TY ) (-(TY))
-  #define G2LIB_NY( TX, TY ) (TX)
-#endif
-
 //! Clothoid computations routine
 namespace G2lib {
 
@@ -166,12 +155,22 @@ namespace G2lib {
   extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
   extern bool            intersect_with_AABBtree;
 
-  #ifdef G2LIB_USE_SAE
-  static inline bool lib_use_SAE() { return true; }
-  static inline bool lib_use_ISO() { return false; }
-  #else
-  static inline bool lib_use_SAE() { return false; }
-  static inline bool lib_use_ISO() { return true; }
+  #ifdef G2LIB_COMPATIBILITY_MODE
+
+  extern bool            use_ISO;
+
+  static
+  inline
+  void
+  lib_use_ISO()
+  { use_ISO = true; }
+
+  static
+  inline
+  void
+  lib_use_SAE()
+  { use_ISO = false; }
+
   #endif
 
   //! disable AABB tree in computation
@@ -539,28 +538,21 @@ namespace G2lib {
    * \param[in] offs_C2 offset of the second curve
    */
   bool
-  collision(
+  collision_ISO(
     BaseCurve const & C1,
     real_type         offs_C1,
     BaseCurve const & C2,
     real_type         offs_C2
   );
 
-  inline
-  bool
-  collision_ISO(
-    BaseCurve const & C1,
-    real_type         offs_C1,
-    BaseCurve const & C2,
-    real_type         offs_C2
-  ) {
-    #ifdef G2LIB_USE_SAE
-    return collision( C1, -offs_C1, C2, -offs_C2 );
-    #else
-    return collision( C1, offs_C1, C2, offs_C2 );
-    #endif
-  }
-
+  /*!
+   * return `true` the the two curves intersect
+   *
+   * \param[in] C1      first curve
+   * \param[in] offs_C1 offset of the first curve
+   * \param[in] C2      second curve
+   * \param[in] offs_C2 offset of the second curve
+   */
   inline
   bool
   collision_SAE(
@@ -569,12 +561,30 @@ namespace G2lib {
     BaseCurve const & C2,
     real_type         offs_C2
   ) {
-    #ifdef G2LIB_USE_SAE
-    return collision( C1, offs_C1, C2, offs_C2 );
-    #else
-    return collision( C1, -offs_C1, C2, -offs_C2 );
-    #endif
+    return collision_ISO( C1, -offs_C1, C2, -offs_C2 );
   }
+
+  #ifdef G2LIB_COMPATIBILITY_MODE
+  /*!
+   * return `true` the the two curves intersect
+   *
+   * \param[in] C1      first curve
+   * \param[in] offs_C1 offset of the first curve
+   * \param[in] C2      second curve
+   * \param[in] offs_C2 offset of the second curve
+   */
+  inline
+  bool
+  collision(
+    BaseCurve const & C1,
+    real_type         offs_C1,
+    BaseCurve const & C2,
+    real_type         offs_C2
+  ) {
+    if ( G2lib::use_ISO ) return collision_ISO( C1, offs_C1, C2, offs_C2 );
+    else                  return collision_SAE( C1, offs_C1, C2, offs_C2 );
+  }
+  #endif
 
   /*!
    * collect the intersection of the two curve
@@ -594,7 +604,7 @@ namespace G2lib {
   );
 
   /*!
-   * collect the intersection of the two curve
+   * collect the intersections of the two curve
    *
    * \param[in]  C1          first curve
    * \param[in]  offs_C1     offset of the first curve
@@ -606,7 +616,7 @@ namespace G2lib {
    */
 
   void
-  intersect(
+  intersect_ISO(
     BaseCurve const & C1,
     real_type         offs_C1,
     BaseCurve const & C2,
@@ -615,22 +625,17 @@ namespace G2lib {
     bool              swap_s_vals
   );
 
-  inline
-  void
-  intersect_ISO(
-    BaseCurve const & C1,
-    real_type         offs_C1,
-    BaseCurve const & C2,
-    real_type         offs_C2,
-    IntersectList   & ilist,
-    bool              swap_s_vals
-  ) {
-    #ifdef G2LIB_USE_SAE
-    intersect( C1, -offs_C1, C2, -offs_C2, ilist, swap_s_vals );
-    #else
-    intersect( C1, offs_C1, C2, offs_C2, ilist, swap_s_vals );
-    #endif
-  }
+  /*!
+   * collect the intersections of the two curve
+   *
+   * \param[in]  C1          first curve
+   * \param[in]  offs_C1     offset of the first curve
+   * \param[in]  C2          second curve
+   * \param[in]  offs_C2     offset of the second curve
+   * \param[out] ilist       list of the intersection (as parameter on the curves)
+   * \param[out] swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+   *                         intersection
+   */
 
   inline
   void
@@ -642,12 +647,36 @@ namespace G2lib {
     IntersectList   & ilist,
     bool              swap_s_vals
   ) {
-    #ifdef G2LIB_USE_SAE
-    intersect( C1, offs_C1, C2, offs_C2, ilist, swap_s_vals );
-    #else
-    intersect( C1, -offs_C1, C2, -offs_C2, ilist, swap_s_vals );
-    #endif
+    intersect_ISO( C1, -offs_C1, C2, -offs_C2, ilist, swap_s_vals );
   }
+
+  #ifdef G2LIB_COMPATIBILITY_MODE
+  /*!
+   * collect the intersections of the two curve
+   *
+   * \param[in]  C1          first curve
+   * \param[in]  offs_C1     offset of the first curve
+   * \param[in]  C2          second curve
+   * \param[in]  offs_C2     offset of the second curve
+   * \param[out] ilist       list of the intersection (as parameter on the curves)
+   * \param[out] swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+   *                         intersection
+   */
+
+  inline
+  void
+  intersect(
+    BaseCurve const & C1,
+    real_type         offs_C1,
+    BaseCurve const & C2,
+    real_type         offs_C2,
+    IntersectList   & ilist,
+    bool              swap_s_vals
+  ) {
+    if ( G2lib::use_ISO ) intersect_ISO( C1, offs_C1, C2, offs_C2, ilist, swap_s_vals );
+    else                  intersect_SAE( C1, offs_C1, C2, offs_C2, ilist, swap_s_vals );
+  }
+  #endif
 
   //! base classe for all the curve ìs in the library
   class BaseCurve {
@@ -672,18 +701,22 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    //! \return lenght of the curve
+    //! \return length of the curve
     virtual real_type length() const G2LIB_PURE_VIRTUAL;
 
-    //! \return lenght of the curve offset
-    virtual real_type length( real_type offs ) const G2LIB_PURE_VIRTUAL;
+    //! \return length of the curve with offset
+    virtual real_type length_ISO( real_type offs ) const G2LIB_PURE_VIRTUAL;
 
-    #ifdef G2LIB_USE_SAE
-    real_type length_ISO( real_type offs ) const { return this->length(-offs); }
-    real_type length_SAE( real_type offs ) const { return this->length(offs); }
-    #else
-    real_type length_ISO( real_type offs ) const { return this->length(offs); }
-    real_type length_SAE( real_type offs ) const { return this->length(-offs); }
+    //! \return length of the curve with offset
+    real_type
+    length_SAE( real_type offs ) const
+    { return this->length_ISO(-offs); }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    //! \return length of the curve with offset
+    real_type
+    length( real_type offs ) const
+    { return G2lib::use_ISO ? this->length_ISO(offs) : this->length_SAE(offs); }
     #endif
 
     /*\
@@ -717,16 +750,8 @@ namespace G2lib {
      * \param[out] xmax right top
      * \param[out] ymax right top
      */
-    virtual
-    void
-    bbox(
-      real_type   offs,
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
-    ) const G2LIB_PURE_VIRTUAL;
 
+    virtual
     void
     bbox_ISO(
       real_type   offs,
@@ -734,14 +759,15 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const {
-      #ifdef G2LIB_USE_SAE
-      this->bbox( -offs, xmin, ymin, xmax, ymax );
-      #else
-      this->bbox( offs, xmin, ymin, xmax, ymax );
-      #endif
-    }
+    ) const G2LIB_PURE_VIRTUAL;
 
+    /*!
+     * Compute the bounding box of the curve
+     * \param[out] xmin left bottom
+     * \param[out] ymin left bottom
+     * \param[out] xmax right top
+     * \param[out] ymax right top
+     */
     void
     bbox_SAE(
       real_type   offs,
@@ -750,12 +776,29 @@ namespace G2lib {
       real_type & xmax,
       real_type & ymax
     ) const {
-      #ifdef G2LIB_USE_SAE
-      this->bbox( offs, xmin, ymin, xmax, ymax );
-      #else
-      this->bbox( -offs, xmin, ymin, xmax, ymax );
-      #endif
+      this->bbox_ISO( -offs, xmin, ymin, xmax, ymax );
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    /*!
+     * Compute the bounding box of the curve
+     * \param[out] xmin left bottom
+     * \param[out] ymin left bottom
+     * \param[out] xmax right top
+     * \param[out] ymax right top
+     */
+    void
+    bbox(
+      real_type   offs,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const {
+      if ( G2lib::use_ISO ) this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
+      else                  this->bbox_SAE( offs, xmin, ymin, xmax, ymax );
+    }
+    #endif
 
     /*\
      |   ____             _          _______           _
@@ -766,70 +809,74 @@ namespace G2lib {
      |              |___/
     \*/
 
-    virtual real_type thetaBegin() const;
-    virtual real_type thetaEnd() const;
+    virtual real_type thetaBegin() const { return this->theta(0); }
+    virtual real_type thetaEnd()   const { return this->theta(this->length()); }
+    virtual real_type kappaBegin() const { return this->kappa(0); }
+    virtual real_type kappaEnd()   const { return this->kappa(this->length()); }
+    virtual real_type xBegin()     const { return this->X(0); }
+    virtual real_type yBegin()     const { return this->Y(0); }
+    virtual real_type xEnd()       const { return this->X(this->length()); }
+    virtual real_type yEnd()       const { return this->Y(this->length()); }
 
-    virtual real_type kappaBegin() const;
-    virtual real_type kappaEnd() const;
+    virtual real_type xBegin_ISO( real_type offs ) const { return this->X_ISO(0,offs); }
+    virtual real_type yBegin_ISO( real_type offs ) const { return this->Y_ISO(0,offs); }
+    virtual real_type xEnd_ISO  ( real_type offs ) const { return this->X_ISO(this->length(),offs); }
+    virtual real_type yEnd_ISO  ( real_type offs ) const { return this->Y_ISO(this->length(),offs); }
 
-    virtual real_type xBegin() const;
-    virtual real_type yBegin() const;
-    virtual real_type xEnd() const;
-    virtual real_type yEnd() const;
+    real_type xBegin_SAE( real_type offs ) const { return this->xBegin_ISO(-offs); }
+    real_type yBegin_SAE( real_type offs ) const { return this->yBegin_ISO(-offs); }
+    real_type xEnd_SAE  ( real_type offs ) const { return this->xEnd_ISO(-offs); }
+    real_type yEnd_SAE  ( real_type offs ) const { return this->yEnd_ISO(-offs); }
 
-    virtual real_type xBegin( real_type offs ) const;
-    virtual real_type yBegin( real_type offs ) const;
-    virtual real_type xEnd( real_type offs ) const;
-    virtual real_type yEnd( real_type offs ) const;
-
-    #ifdef G2LIB_USE_SAE
-    real_type xBegin_ISO( real_type offs ) const { return this->xBegin(-offs); }
-    real_type yBegin_ISO( real_type offs ) const { return this->yBegin(-offs); }
-    real_type xEnd_ISO  ( real_type offs ) const { return this->xEnd(-offs); }
-    real_type yEnd_ISO  ( real_type offs ) const { return this->yEnd(-offs); }
-    real_type xBegin_SAE( real_type offs ) const { return this->xBegin(offs); }
-    real_type yBegin_SAE( real_type offs ) const { return this->yBegin(offs); }
-    real_type xEnd_SAE  ( real_type offs ) const { return this->xEnd(offs); }
-    real_type yEnd_SAE  ( real_type offs ) const { return this->yEnd(offs); }
-    #else
-    real_type xBegin_ISO( real_type offs ) const { return this->xBegin(offs); }
-    real_type yBegin_ISO( real_type offs ) const { return this->yBegin(offs); }
-    real_type xEnd_ISO  ( real_type offs ) const { return this->xEnd(offs); }
-    real_type yEnd_ISO  ( real_type offs ) const { return this->yEnd(offs); }
-    real_type xBegin_SAE( real_type offs ) const { return this->xBegin(-offs); }
-    real_type yBegin_SAE( real_type offs ) const { return this->yBegin(-offs); }
-    real_type xEnd_SAE  ( real_type offs ) const { return this->xEnd(-offs); }
-    real_type yEnd_SAE  ( real_type offs ) const { return this->yEnd(-offs); }
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    real_type
+    xBegin( real_type offs ) const
+    { return G2lib::use_ISO ? this->xBegin_ISO(offs) : this->xBegin_SAE(offs); }
+    
+    real_type
+    yBegin( real_type offs ) const
+    { return G2lib::use_ISO ? this->yBegin_ISO(offs) : this->yBegin_SAE(offs); }
+    
+    real_type
+    xEnd( real_type offs ) const
+    { return G2lib::use_ISO ? this->xEnd_ISO(offs) : this->xEnd_SAE(offs); }
+    
+    real_type
+    yEnd( real_type offs ) const
+    { return G2lib::use_ISO ? this->yEnd_ISO(offs) : this->yEnd_SAE(offs); }
     #endif
 
-    virtual real_type tx_Begin() const;
-    virtual real_type ty_Begin() const;
-    virtual real_type tx_End() const;
-    virtual real_type ty_End() const;
+    virtual real_type tx_Begin() const { return this->tx(0); }
+    virtual real_type ty_Begin() const { return this->ty(0); }
+    virtual real_type tx_End()   const { return this->tx(this->length()); }
+    virtual real_type ty_End()   const { return this->ty(this->length()); }
 
-    virtual real_type nx_Begin() const;
-    virtual real_type ny_Begin() const;
-    virtual real_type nx_End() const;
-    virtual real_type ny_End() const;
+    virtual real_type nx_Begin_ISO() const { return -this->ty(0); }
+    virtual real_type ny_Begin_ISO() const { return this->tx(0); }
+    virtual real_type nx_End_ISO()   const { return -this->ty(this->length()); }
+    virtual real_type ny_End_ISO()   const { return this->tx(this->length()); }
 
-    #ifdef G2LIB_USE_SAE
-    real_type nx_Begin_ISO() const { return -this->nx_Begin(); }
-    real_type ny_Begin_ISO() const { return -this->ny_Begin(); }
-    real_type nx_End_ISO()   const { return -this->nx_End(); }
-    real_type ny_End_ISO()   const { return -this->ny_End(); }
-    real_type nx_Begin_SAE() const { return this->nx_Begin(); }
-    real_type ny_Begin_SAE() const { return this->ny_Begin(); }
-    real_type nx_End_SAE()   const { return this->nx_End(); }
-    real_type ny_End_SAE()   const { return this->ny_End(); }
-    #else
-    real_type nx_Begin_ISO() const { return this->nx_Begin(); }
-    real_type ny_Begin_ISO() const { return this->ny_Begin(); }
-    real_type nx_End_ISO()   const { return this->nx_End(); }
-    real_type ny_End_ISO()   const { return this->ny_End(); }
-    real_type nx_Begin_SAE() const { return -this->nx_Begin(); }
-    real_type ny_Begin_SAE() const { return -this->ny_Begin(); }
-    real_type nx_End_SAE()   const { return -this->nx_End(); }
-    real_type ny_End_SAE()   const { return -this->ny_End(); }
+    real_type nx_Begin_SAE() const { return -nx_Begin_ISO(); }
+    real_type ny_Begin_SAE() const { return -ny_Begin_ISO(); }
+    real_type nx_End_SAE()   const { return -nx_End_ISO(); }
+    real_type ny_End_SAE()   const { return -ny_End_ISO(); }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    real_type
+    nx_Begin() const
+    { return G2lib::use_ISO ? this->nx_Begin_ISO() : this->nx_Begin_SAE(); }
+
+    real_type
+    ny_Begin() const
+    { return G2lib::use_ISO ? this->ny_Begin_ISO() : this->ny_Begin_SAE(); }
+
+    real_type
+    nx_End() const
+    { return G2lib::use_ISO ? this->nx_End_ISO() : this->nx_End_SAE(); }
+
+    real_type
+    ny_End() const
+    { return G2lib::use_ISO ? this->ny_End_ISO() : this->ny_End_SAE(); }
     #endif
 
     /*\
@@ -876,58 +923,52 @@ namespace G2lib {
     virtual real_type ty_DDD( real_type s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    real_type nx_ISO    ( real_type s ) const { return -ty(s); }
+    real_type nx_ISO_D  ( real_type s ) const { return -ty_D(s); }
+    real_type nx_ISO_DD ( real_type s ) const { return -ty_DD(s); }
+    real_type nx_ISO_DDD( real_type s ) const { return -ty_DDD(s); }
 
-    real_type nx    ( real_type s ) const { return G2LIB_NX(tx(s),ty(s)); }
-    real_type nx_D  ( real_type s ) const { return G2LIB_NX(tx_D(s),ty_D(s)); }
-    real_type nx_DD ( real_type s ) const { return G2LIB_NX(tx_DD(s),ty_DD(s)); }
-    real_type nx_DDD( real_type s ) const { return G2LIB_NX(tx_DDD(s),ty_DDD(s)); }
+    real_type ny_ISO    ( real_type s ) const { return tx(s); }
+    real_type ny_ISO_D  ( real_type s ) const { return tx_D(s); }
+    real_type ny_ISO_DD ( real_type s ) const { return tx_DD(s); }
+    real_type ny_ISO_DDD( real_type s ) const { return tx_DDD(s); }
 
-    real_type ny    ( real_type s ) const { return G2LIB_NY(tx(s),ty(s)); }
-    real_type ny_D  ( real_type s ) const { return G2LIB_NY(tx_D(s),ty_D(s)); }
-    real_type ny_DD ( real_type s ) const { return G2LIB_NY(tx_DD(s),ty_DD(s)); }
-    real_type ny_DDD( real_type s ) const { return G2LIB_NY(tx_DDD(s),ty_DDD(s)); }
+    real_type nx_SAE    ( real_type s ) const { return ty(s); }
+    real_type nx_SAE_D  ( real_type s ) const { return ty_D(s); }
+    real_type nx_SAE_DD ( real_type s ) const { return ty_DD(s); }
+    real_type nx_SAE_DDD( real_type s ) const { return ty_DDD(s); }
 
-    #ifdef G2LIB_USE_SAE
-    real_type nx_ISO    ( real_type s ) const { return -this->nx(s); }
-    real_type nx_ISO_D  ( real_type s ) const { return -this->nx_D(s); }
-    real_type nx_ISO_DD ( real_type s ) const { return -this->nx_DD(s); }
-    real_type nx_ISO_DDD( real_type s ) const { return -this->nx_DDD(s); }
+    real_type ny_SAE    ( real_type s ) const { return -tx(s); }
+    real_type ny_SAE_D  ( real_type s ) const { return -tx_D(s); }
+    real_type ny_SAE_DD ( real_type s ) const { return -tx_DD(s); }
+    real_type ny_SAE_DDD( real_type s ) const { return -tx_DDD(s); }
 
-    real_type ny_ISO    ( real_type s ) const { return -this->ny(s); }
-    real_type ny_ISO_D  ( real_type s ) const { return -this->ny_D(s); }
-    real_type ny_ISO_DD ( real_type s ) const { return -this->ny_DD(s); }
-    real_type ny_ISO_DDD( real_type s ) const { return -this->ny_DDD(s); }
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    real_type nx( real_type s ) const
+    { return G2lib::use_ISO ? this->nx_ISO(s) : this->nx_SAE(s); }
 
-    real_type nx_SAE    ( real_type s ) const { return this->nx(s); }
-    real_type nx_SAE_D  ( real_type s ) const { return this->nx_D(s); }
-    real_type nx_SAE_DD ( real_type s ) const { return this->nx_DD(s); }
-    real_type nx_SAE_DDD( real_type s ) const { return this->nx_DDD(s); }
+    real_type nx_D( real_type s ) const
+    { return G2lib::use_ISO ? this->nx_ISO_D(s) : this->nx_SAE_D(s); }
 
-    real_type ny_SAE    ( real_type s ) const { return this->ny(s); }
-    real_type ny_SAE_D  ( real_type s ) const { return this->ny_D(s); }
-    real_type ny_SAE_DD ( real_type s ) const { return this->ny_DD(s); }
-    real_type ny_SAE_DDD( real_type s ) const { return this->ny_DDD(s); }
-    #else
-    real_type nx_ISO    ( real_type s ) const { return this->nx(s); }
-    real_type nx_ISO_D  ( real_type s ) const { return this->nx_D(s); }
-    real_type nx_ISO_DD ( real_type s ) const { return this->nx_DD(s); }
-    real_type nx_ISO_DDD( real_type s ) const { return this->nx_DDD(s); }
+    real_type nx_DD( real_type s ) const
+    { return G2lib::use_ISO ? this->nx_ISO_DD(s) : this->nx_SAE_DD(s); }
 
-    real_type ny_ISO    ( real_type s ) const { return this->ny(s); }
-    real_type ny_ISO_D  ( real_type s ) const { return this->ny_D(s); }
-    real_type ny_ISO_DD ( real_type s ) const { return this->ny_DD(s); }
-    real_type ny_ISO_DDD( real_type s ) const { return this->ny_DDD(s); }
+    real_type nx_DDD( real_type s ) const
+    { return G2lib::use_ISO ? this->nx_ISO_DDD(s) : this->nx_SAE_DDD(s); }
+    
+    real_type ny( real_type s ) const
+    { return G2lib::use_ISO ? this->ny_ISO(s) : this->ny_SAE(s); }
 
-    real_type nx_SAE    ( real_type s ) const { return -this->nx(s); }
-    real_type nx_SAE_D  ( real_type s ) const { return -this->nx_D(s); }
-    real_type nx_SAE_DD ( real_type s ) const { return -this->nx_DD(s); }
-    real_type nx_SAE_DDD( real_type s ) const { return -this->nx_DDD(s); }
+    real_type ny_D( real_type s ) const
+    { return G2lib::use_ISO ? this->ny_ISO_D(s) : this->ny_SAE_D(s); }
 
-    real_type ny_SAE    ( real_type s ) const { return -this->ny(s); }
-    real_type ny_SAE_D  ( real_type s ) const { return -this->ny_D(s); }
-    real_type ny_SAE_DD ( real_type s ) const { return -this->ny_DD(s); }
-    real_type ny_SAE_DDD( real_type s ) const { return -this->ny_DDD(s); }
+    real_type ny_DD( real_type s ) const
+    { return G2lib::use_ISO ? this->ny_ISO_DD(s) : this->ny_SAE_DD(s); }
+
+    real_type ny_DDD( real_type s ) const
+    { return G2lib::use_ISO ? this->ny_ISO_DDD(s) : this->ny_SAE_DDD(s); }
     #endif
+
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
@@ -965,65 +1006,57 @@ namespace G2lib {
     { tg( s, ny, nx ); nx = -nx; }
 
     void
+    nor_ISO_D( real_type s, real_type & nx_D, real_type & ny_D ) const
+    { tg_D( s, ny_D, nx_D ); nx_D = -nx_D; }
+
+    void
+    nor_ISO_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
+    { tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD; }
+
+    void
+    nor_ISO_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
+    { tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD; }
+
+    void
     nor_SAE( real_type s, real_type & nx, real_type & ny ) const
     { tg( s, ny, nx ); ny = -ny; }
 
     void
-    nor_D_ISO( real_type s, real_type & nx_D, real_type & ny_D ) const
-    { tg_D( s, ny_D, nx_D ); nx_D = -nx_D; }
-
-    void
-    nor_D_SAE( real_type s, real_type & nx_D, real_type & ny_D ) const
+    nor_SAE_D( real_type s, real_type & nx_D, real_type & ny_D ) const
     { tg_D( s, ny_D, nx_D ); ny_D = -ny_D; }
 
     void
-    nor_DD_ISO( real_type s, real_type & nx_DD, real_type & ny_DD ) const
-    { tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD; }
-
-    void
-    nor_DD_SAE( real_type s, real_type & nx_DD, real_type & ny_DD ) const
+    nor_SAE_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
     { tg_DD( s, ny_DD, nx_DD ); ny_DD = -ny_DD; }
 
     void
-    nor_DDD_ISO( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
-    { tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD; }
-
-    void
-    nor_DDD_SAE( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
+    nor_SAE_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
     { tg_DDD( s, ny_DDD, nx_DDD ); ny_DDD = -ny_DDD; }
 
-    #ifdef G2LIB_USE_SAE
+    #ifdef G2LIB_COMPATIBILITY_MODE
     void
-    nor( real_type s, real_type & nx, real_type & ny ) const
-    { nor_SAE(s,nx,ny); }
+    nor( real_type s, real_type & nx, real_type & ny ) const {
+      if ( G2lib::use_ISO ) this->nor_ISO(s,nx,ny);
+      else                  this->nor_SAE(s,nx,ny);
+    }
 
     void
-    nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const
-    { nor_D_SAE(s,nx_D,ny_D); }
+    nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const {
+      if ( G2lib::use_ISO ) this->nor_ISO_D(s,nx_D,ny_D);
+      else                  this->nor_SAE_D(s,nx_D,ny_D);
+    }
 
     void
-    nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
-    { nor_DD_SAE(s,nx_DD,ny_DD); }
+    nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const {
+      if ( G2lib::use_ISO ) this->nor_ISO_DD(s,nx_DD,ny_DD);
+      else                  this->nor_SAE_DD(s,nx_DD,ny_DD);
+    }
 
     void
-    nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
-    { nor_DDD_SAE(s,nx_DDD,ny_DDD); }
-    #else
-    void
-    nor( real_type s, real_type & nx, real_type & ny ) const
-    { nor_ISO(s,nx,ny); }
-
-    void
-    nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const
-    { nor_D_ISO(s,nx_D,ny_D); }
-
-    void
-    nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
-    { nor_DD_ISO(s,nx_DD,ny_DD); }
-
-    void
-    nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
-    { nor_DDD_ISO(s,nx_DDD,ny_DDD); }
+    nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const {
+      if ( G2lib::use_ISO ) this->nor_ISO_DDD(s,nx_DDD,ny_DDD);
+      else                  this->nor_SAE_DDD(s,nx_DDD,ny_DDD);
+    }
     #endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -1042,28 +1075,7 @@ namespace G2lib {
       k  = theta_D( s );
     }
 
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
     virtual
-    void
-    evaluate(
-      real_type   s,
-      real_type   offs,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
-    ) const {
-      eval( s, offs, x, y );
-      th = theta( s );
-      k  = theta_D( s );
-      #ifdef G2LIB_USE_SAE
-      k /= 1-offs*k; // scale curvature
-      #else
-      k /= 1+offs*k; // scale curvature
-      #endif
-    }
-
     void
     evaluate_ISO(
       real_type   s,
@@ -1073,13 +1085,13 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const {
-      #ifdef G2LIB_USE_SAE
-      evaluate( s, -offs, th, k, x, y );
-      #else
-      evaluate( s, offs, th, k, x, y );
-      #endif
+      eval_ISO( s, offs, x, y );
+      th = theta( s );
+      k  = theta_D( s );
+      k /= 1+offs*k; // scale curvature
     }
 
+    virtual
     void
     evaluate_SAE(
       real_type   s,
@@ -1089,12 +1101,26 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const {
-      #ifdef G2LIB_USE_SAE
-      evaluate( s, offs, th, k, x, y );
-      #else
-      evaluate( s, -offs, th, k, x, y );
-      #endif
+      eval_SAE( s, offs, x, y );
+      th = theta( s );
+      k  = theta_D( s );
+      k /= 1-offs*k; // scale curvature
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    void
+    evaluate(
+      real_type   s,
+      real_type   offs,
+      real_type & th,
+      real_type & k,
+      real_type & x,
+      real_type & y
+    ) const {
+      if ( G2lib::use_ISO ) this->evaluate_ISO( s, offs, th, k, x, y );
+      else                  this->evaluate_SAE( s, offs, th, k, x, y );
+    }
+    #endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1137,49 +1163,56 @@ namespace G2lib {
      |  \___/|_| |_| |___/\___|\__|
     \*/
 
-    virtual real_type X    ( real_type s, real_type offs ) const;
-    virtual real_type Y    ( real_type s, real_type offs ) const;
-    virtual real_type X_D  ( real_type s, real_type offs ) const;
-    virtual real_type Y_D  ( real_type s, real_type offs ) const;
-    virtual real_type X_DD ( real_type s, real_type offs ) const;
-    virtual real_type Y_DD ( real_type s, real_type offs ) const;
-    virtual real_type X_DDD( real_type s, real_type offs ) const;
-    virtual real_type Y_DDD( real_type s, real_type offs ) const;
+    virtual real_type X_ISO    ( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO    ( real_type s, real_type offs ) const;
+    virtual real_type X_ISO_D  ( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO_D  ( real_type s, real_type offs ) const;
+    virtual real_type X_ISO_DD ( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO_DD ( real_type s, real_type offs ) const;
+    virtual real_type X_ISO_DDD( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO_DDD( real_type s, real_type offs ) const;
 
-    #ifdef G2LIB_USE_SAE
-    real_type X_ISO    ( real_type s, real_type offs ) const { return this->X(s,-offs); }
-    real_type Y_ISO    ( real_type s, real_type offs ) const { return this->Y(s,-offs); }
-    real_type X_ISO_D  ( real_type s, real_type offs ) const { return this->X_D(s,-offs); }
-    real_type Y_ISO_D  ( real_type s, real_type offs ) const { return this->Y_D(s,-offs); }
-    real_type X_ISO_DD ( real_type s, real_type offs ) const { return this->X_DD(s,-offs); }
-    real_type Y_ISO_DD ( real_type s, real_type offs ) const { return this->Y_DD(s,-offs); }
-    real_type X_ISO_DDD( real_type s, real_type offs ) const { return this->X_DDD(s,-offs); }
-    real_type Y_ISO_DDD( real_type s, real_type offs ) const { return this->Y_DDD(s,-offs); }
-    real_type X_SAE    ( real_type s, real_type offs ) const { return this->X(s,offs); }
-    real_type Y_SAE    ( real_type s, real_type offs ) const { return this->Y(s,offs); }
-    real_type X_SAE_D  ( real_type s, real_type offs ) const { return this->X_D(s,offs); }
-    real_type Y_SAE_D  ( real_type s, real_type offs ) const { return this->Y_D(s,offs); }
-    real_type X_SAE_DD ( real_type s, real_type offs ) const { return this->X_DD(s,offs); }
-    real_type Y_SAE_DD ( real_type s, real_type offs ) const { return this->Y_DD(s,offs); }
-    real_type X_SAE_DDD( real_type s, real_type offs ) const { return this->X_DDD(s,offs); }
-    real_type Y_SAE_DDD( real_type s, real_type offs ) const { return this->Y_DDD(s,offs); }
-    #else
-    real_type X_ISO    ( real_type s, real_type offs ) const { return this->X(s,offs); }
-    real_type Y_ISO    ( real_type s, real_type offs ) const { return this->Y(s,offs); }
-    real_type X_ISO_D  ( real_type s, real_type offs ) const { return this->X_D(s,offs); }
-    real_type Y_ISO_D  ( real_type s, real_type offs ) const { return this->Y_D(s,offs); }
-    real_type X_ISO_DD ( real_type s, real_type offs ) const { return this->X_DD(s,offs); }
-    real_type Y_ISO_DD ( real_type s, real_type offs ) const { return this->Y_DD(s,offs); }
-    real_type X_ISO_DDD( real_type s, real_type offs ) const { return this->X_DDD(s,offs); }
-    real_type Y_ISO_DDD( real_type s, real_type offs ) const { return this->Y_DDD(s,offs); }
-    real_type X_SAE    ( real_type s, real_type offs ) const { return this->X(s,-offs); }
-    real_type Y_SAE    ( real_type s, real_type offs ) const { return this->Y(s,-offs); }
-    real_type X_SAE_D  ( real_type s, real_type offs ) const { return this->X_D(s,-offs); }
-    real_type Y_SAE_D  ( real_type s, real_type offs ) const { return this->Y_D(s,-offs); }
-    real_type X_SAE_DD ( real_type s, real_type offs ) const { return this->X_DD(s,-offs); }
-    real_type Y_SAE_DD ( real_type s, real_type offs ) const { return this->Y_DD(s,-offs); }
-    real_type X_SAE_DDD( real_type s, real_type offs ) const { return this->X_DDD(s,-offs); }
-    real_type Y_SAE_DDD( real_type s, real_type offs ) const { return this->Y_DDD(s,-offs); }
+    real_type X_SAE    ( real_type s, real_type offs ) const { return this->X_ISO(s,-offs); }
+    real_type Y_SAE    ( real_type s, real_type offs ) const { return this->Y_ISO(s,-offs); }
+    real_type X_SAE_D  ( real_type s, real_type offs ) const { return this->X_ISO_D(s,-offs); }
+    real_type Y_SAE_D  ( real_type s, real_type offs ) const { return this->Y_ISO_D(s,-offs); }
+    real_type X_SAE_DD ( real_type s, real_type offs ) const { return this->X_ISO_DD(s,-offs); }
+    real_type Y_SAE_DD ( real_type s, real_type offs ) const { return this->Y_ISO_DD(s,-offs); }
+    real_type X_SAE_DDD( real_type s, real_type offs ) const { return this->X_ISO_DDD(s,-offs); }
+    real_type Y_SAE_DDD( real_type s, real_type offs ) const { return this->Y_ISO_DDD(s,-offs); }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    real_type
+    X( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->X_ISO( s, offs ) : this->X_SAE( s, offs ); }
+
+    real_type
+    Y( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->Y_ISO( s, offs ) : this->Y_SAE( s, offs ); }
+
+    real_type
+    X_D( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->X_ISO_D( s, offs ) : this->X_SAE_D( s, offs ); }
+
+    real_type
+    Y_D( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->Y_ISO_D( s, offs ) : this->Y_SAE_D( s, offs ); }
+
+    real_type
+    X_DD( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->X_ISO_DD( s, offs ) : this->X_SAE_DD( s, offs ); }
+
+    real_type
+    Y_DD( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->Y_ISO_DD( s, offs ) : this->Y_SAE_DD( s, offs ); }
+
+    real_type
+    X_DDD( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->X_ISO_DDD( s, offs ) : this->X_SAE_DDD( s, offs ); }
+
+    real_type
+    Y_DDD( real_type s, real_type offs ) const
+    { return G2lib::use_ISO ? this->Y_ISO_DDD( s, offs ) : this->Y_SAE_DDD( s, offs ); }
     #endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -1195,26 +1228,21 @@ namespace G2lib {
 
     virtual
     void
-    eval(
+    eval_ISO(
       real_type   s,
       real_type   offs,
       real_type & x,
       real_type & y
     ) const;
 
-    void
-    eval_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
-    ) const {
-      #ifdef G2LIB_USE_SAE
-      eval( s, -offs, x, y );
-      #else
-      eval( s, offs, x, y );
-      #endif
-    }
+    /*!
+     *  Compute curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x     coordinate
+     * \param[out] y     coordinate
+     */
 
     void
     eval_SAE(
@@ -1223,12 +1251,30 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const {
-      #ifdef G2LIB_USE_SAE
-      eval( s, offs, x, y );
-      #else
-      eval( s, -offs, x, y );
-      #endif
+      this->eval_ISO( s, -offs, x, y );
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    /*!
+     *  Compute curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x     coordinate
+     * \param[out] y     coordinate
+     */
+
+    void
+    eval(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const {
+      if ( G2lib::use_ISO ) this->eval_ISO( s, offs, x, y );
+      else                  this->eval_SAE( s, offs, x, y );
+    }
+    #endif
 
     /*!
      *  Compute derivative curve at position `s` with offset `offs`
@@ -1241,40 +1287,53 @@ namespace G2lib {
 
     virtual
     void
-    eval_D(
+    eval_ISO_D(
       real_type   s,
       real_type   offs,
       real_type & x_D,
       real_type & y_D
     ) const;
 
-    void
-    eval_D_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
-    ) const {
-      #ifdef G2LIB_USE_SAE
-      eval_D( s, -offs, x, y );
-      #else
-      eval_D( s, offs, x, y );
-      #endif
-    }
+    /*!
+     *  Compute derivative curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x_D   coordinate
+     * \param[out] y_D   coordinate
+     */
 
     void
-    eval_D_SAE(
+    eval_SAE_D(
       real_type   s,
       real_type   offs,
-      real_type & x,
-      real_type & y
+      real_type & x_D,
+      real_type & y_D
     ) const {
-      #ifdef G2LIB_USE_SAE
-      eval_D( s, offs, x, y );
-      #else
-      eval_D( s, -offs, x, y );
-      #endif
+      this->eval_ISO_D( s, -offs, x_D, y_D );
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    /*!
+     *  Compute derivative curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x_D   coordinate
+     * \param[out] y_D   coordinate
+     */
+
+    void
+    eval_D(
+      real_type   s,
+      real_type   offs,
+      real_type & x_D,
+      real_type & y_D
+    ) const {
+      if ( G2lib::use_ISO ) this->eval_ISO_D( s, offs, x_D, y_D );
+      else                  this->eval_SAE_D( s, offs, x_D, y_D );
+    }
+    #endif
 
     /*!
      *  Compute second derivative curve at position `s` with offset `offs`
@@ -1287,40 +1346,53 @@ namespace G2lib {
 
     virtual
     void
-    eval_DD(
+    eval_ISO_DD(
       real_type   s,
       real_type   offs,
       real_type & x_DD,
       real_type & y_DD
     ) const;
 
-    void
-    eval_DD_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
-    ) const {
-      #ifdef G2LIB_USE_SAE
-      eval_DD( s, -offs, x, y );
-      #else
-      eval_DD( s, offs, x, y );
-      #endif
-    }
+    /*!
+     *  Compute second derivative curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x_DD  coordinate
+     * \param[out] y_DD  coordinate
+     */
 
     void
-    eval_DD_SAE(
+    eval_SAE_DD(
       real_type   s,
       real_type   offs,
-      real_type & x,
-      real_type & y
+      real_type & x_DD,
+      real_type & y_DD
     ) const {
-      #ifdef G2LIB_USE_SAE
-      eval_DD( s, offs, x, y );
-      #else
-      eval_DD( s, -offs, x, y );
-      #endif
+      this->eval_ISO_DD( s, -offs, x_DD, y_DD );
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    /*!
+     *  Compute second derivative curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x_DD  coordinate
+     * \param[out] y_DD  coordinate
+     */
+
+    void
+    eval_DD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const {
+      if ( G2lib::use_ISO ) this->eval_ISO_DD( s, offs, x_DD, y_DD );
+      else                  this->eval_SAE_DD( s, offs, x_DD, y_DD );
+    }
+    #endif
 
     /*!
      *  Compute third derivative curve at position `s` with offset `offs`
@@ -1333,40 +1405,53 @@ namespace G2lib {
 
     virtual
     void
-    eval_DDD(
+    eval_ISO_DDD(
       real_type   s,
       real_type   offs,
       real_type & x_DDD,
       real_type & y_DDD
     ) const;
 
-    void
-    eval_DDD_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
-    ) const {
-      #ifdef G2LIB_USE_SAE
-      eval_DDD( s, -offs, x, y );
-      #else
-      eval_DDD( s, offs, x, y );
-      #endif
-    }
+    /*!
+     *  Compute third derivative curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x_DDD coordinate
+     * \param[out] y_DDD coordinate
+     */
 
     void
-    eval_DDD_SAE(
+    eval_SAE_DDD(
       real_type   s,
       real_type   offs,
-      real_type & x,
-      real_type & y
+      real_type & x_DDD,
+      real_type & y_DDD
     ) const {
-      #ifdef G2LIB_USE_SAE
-      eval_DDD( s, offs, x, y );
-      #else
-      eval_DDD( s, -offs, x, y );
-      #endif
+      this->eval_ISO_DDD( s, -offs, x_DDD, y_DDD );
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    /*!
+     *  Compute third derivative curve at position `s` with offset `offs`
+     *
+     * \param[in]  s     parameter on the curve
+     * \param[in]  offs  offset of the curve
+     * \param[out] x_DDD coordinate
+     * \param[out] y_DDD coordinate
+     */
+
+    void
+    eval_DDD(
+      real_type   s,
+      real_type   offs,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const {
+      if ( G2lib::use_ISO ) this->eval_ISO_DDD( s, offs, x_DDD, y_DDD );
+      else                  this->eval_SAE_DDD( s, offs, x_DDD, y_DDD );
+    }
+    #endif
 
     /*\
      |  _                        __
@@ -1413,15 +1498,6 @@ namespace G2lib {
     { return G2lib::collision( *this, C ); }
 
     bool
-    collision(
-      real_type         offs,
-      BaseCurve const & C,
-      real_type         offs_C
-    ) const {
-      return G2lib::collision( *this, offs, C, offs_C );
-    }
-
-    bool
     collision_ISO(
       real_type         offs,
       BaseCurve const & C,
@@ -1439,6 +1515,20 @@ namespace G2lib {
       return G2lib::collision_SAE( *this, offs, C, offs_C );
     }
 
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    bool
+    collision(
+      real_type         offs,
+      BaseCurve const & C,
+      real_type         offs_C
+    ) const {
+      if ( G2lib::use_ISO )
+        return G2lib::collision_ISO( *this, offs, C, offs_C );
+      else
+        return G2lib::collision_SAE( *this, offs, C, offs_C );
+    }
+    #endif
+
     void
     intersect(
       BaseCurve const & C,
@@ -1446,17 +1536,6 @@ namespace G2lib {
       bool              swap_s_vals
     ) const {
       G2lib::intersect( *this, C, ilist, swap_s_vals );
-    }
-
-    void
-    intersect(
-      real_type         offs,
-      BaseCurve const & C,
-      real_type         offs_C,
-      IntersectList   & ilist,
-      bool              swap_s_vals
-    ) const {
-      G2lib::intersect( *this, offs, C, offs_C, ilist, swap_s_vals );
     }
 
     void
@@ -1481,6 +1560,22 @@ namespace G2lib {
       G2lib::intersect_SAE( *this, offs, C, offs_C, ilist, swap_s_vals );
     }
 
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    void
+    intersect(
+      real_type         offs,
+      BaseCurve const & C,
+      real_type         offs_C,
+      IntersectList   & ilist,
+      bool              swap_s_vals
+    ) const {
+      if ( G2lib::use_ISO )
+        G2lib::intersect_ISO( *this, offs, C, offs_C, ilist, swap_s_vals );
+      else
+        G2lib::intersect_SAE( *this, offs, C, offs_C, ilist, swap_s_vals );
+    }
+    #endif
+
     /*\
      |      _ _     _
      |   __| (_)___| |_ __ _ _ __   ___ ___
@@ -1503,7 +1598,7 @@ namespace G2lib {
      */
     virtual
     int_type
-    closestPoint(
+    closestPoint_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -1513,22 +1608,18 @@ namespace G2lib {
       real_type & dst
     ) const G2LIB_PURE_VIRTUAL;
 
-    #ifdef G2LIB_USE_SAE
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      int_type res = this->closestPoint( qx, qy, x, y, s, t, dst );
-      t = -t;
-      return res;
-    }
-
+    /*!
+     * \param  qx  x-coordinate of the point
+     * \param  qy  y-coordinate of the point
+     * \param  x   x-coordinate of the projected point on the curve
+     * \param  y   y-coordinate of the projected point on the curve
+     * \param  s   parameter on the curve of the projection
+     * \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     * \param  dst distance point projected point
+     * \return 1 = point is projected orthogonal
+     *         0 = more than one projection (first returned)
+     *        -1 = minimum point is not othogonal projection to curve
+     */
     int_type
     closestPoint_SAE(
       real_type   qx,
@@ -1539,35 +1630,38 @@ namespace G2lib {
       real_type & t,
       real_type & dst
     ) const {
-      return this->closestPoint( qx, qy, x, y, s, t, dst );
-    }
-    #else
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return this->closestPoint( qx, qy, x, y, s, t, dst );
-    }
-
-    int_type
-    closestPoint_SAE(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      int_type res = this->closestPoint( qx, qy, x, y, s, t, dst );
+      int_type res = this->closestPoint_ISO( qx, qy, x, y, s, t, dst );
       t = -t;
       return res;
+    }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    /*!
+     * \param  qx  x-coordinate of the point
+     * \param  qy  y-coordinate of the point
+     * \param  x   x-coordinate of the projected point on the curve
+     * \param  y   y-coordinate of the projected point on the curve
+     * \param  s   parameter on the curve of the projection
+     * \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
+     * \param  dst distance point projected point
+     * \return 1 = point is projected orthogonal
+     *         0 = more than one projection (first returned)
+     *        -1 = minimum point is not othogonal projection to curve
+     */
+    int_type
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      if ( G2lib::use_ISO )
+        return this->closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      else
+        return this->closestPoint_SAE( qx, qy, x, y, s, t, dst );
     }
     #endif
 
@@ -1586,7 +1680,7 @@ namespace G2lib {
      */
     virtual
     int_type // true if projection is unique and orthogonal
-    closestPoint(
+    closestPoint_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -1597,22 +1691,19 @@ namespace G2lib {
       real_type & dst
     ) const G2LIB_PURE_VIRTUAL;
 
-    #ifdef G2LIB_USE_SAE
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      int_type res = this->closestPoint( qx, qy, -offs, x, y, s, t, dst );
-      t = -t;
-      return res;
-    }
+    /*!
+     * \param  qx   x-coordinate of the point
+     * \param  qy   y-coordinate of the point
+     * \param  offs offset of the curve
+     * \param  x    x-coordinate of the projected point on the curve
+     * \param  y    y-coordinate of the projected point on the curve
+     * \param  s    parameter on the curve of the projection
+     * \param  t    curvilinear coordinate of the point x,y (if orthogonal projection)
+     * \param  dst  distance point projected point
+     * \return 1 = point is projected orthogonal
+     *         0 = more than one projection (first returned)
+     *        -1 = minimum point is not othogonal projection to curve
+     */
 
     int_type
     closestPoint_SAE(
@@ -1625,37 +1716,41 @@ namespace G2lib {
       real_type & t,
       real_type & dst
     ) const {
-      return this->closestPoint( qx, qy, offs, x, y, s, t, dst );
-    }
-    #else
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return this->closestPoint( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    int_type
-    closestPoint_SAE(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      int_type res = this->closestPoint( qx, qy, -offs, x, y, s, t, dst );
+      int_type res = this->closestPoint_ISO( qx, qy, -offs, x, y, s, t, dst );
       t = -t;
       return res;
+    }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    /*!
+     * \param  qx   x-coordinate of the point
+     * \param  qy   y-coordinate of the point
+     * \param  offs offset of the curve
+     * \param  x    x-coordinate of the projected point on the curve
+     * \param  y    y-coordinate of the projected point on the curve
+     * \param  s    parameter on the curve of the projection
+     * \param  t    curvilinear coordinate of the point x,y (if orthogonal projection)
+     * \param  dst  distance point projected point
+     * \return 1 = point is projected orthogonal
+     *         0 = more than one projection (first returned)
+     *        -1 = minimum point is not othogonal projection to curve
+     */
+
+    int_type
+    closestPoint(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      if ( G2lib::use_ISO )
+        return this->closestPoint_ISO( qx, qy, offs, x, y, s, t, dst );
+      else
+        return this->closestPoint_SAE( qx, qy, offs, x, y, s, t, dst );
     }
     #endif
 
@@ -1663,19 +1758,7 @@ namespace G2lib {
     real_type
     distance( real_type qx, real_type qy ) const {
       real_type x, y, s, t, dst;
-      closestPoint( qx, qy, x, y, s, t, dst );
-      return dst;
-    }
-
-    virtual
-    real_type
-    distance(
-      real_type qx,
-      real_type qy,
-      real_type offs
-    ) const {
-      real_type x, y, s, t, dst;
-      closestPoint( qx, qy, offs, x, y, s, t, dst );
+      closestPoint_ISO( qx, qy, x, y, s, t, dst );
       return dst;
     }
 
@@ -1686,7 +1769,7 @@ namespace G2lib {
       real_type offs
     ) const {
       real_type x, y, s, t, dst;
-      closestPoint_ISO( qx, qy, offs, x, y, s, t, dst );
+      this->closestPoint_ISO( qx, qy, offs, x, y, s, t, dst );
       return dst;
     }
 
@@ -1697,9 +1780,23 @@ namespace G2lib {
       real_type offs
     ) const {
       real_type x, y, s, t, dst;
-      closestPoint_SAE( qx, qy, offs, x, y, s, t, dst );
+      this->closestPoint_SAE( qx, qy, offs, x, y, s, t, dst );
       return dst;
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    virtual
+    real_type
+    distance(
+      real_type qx,
+      real_type qy,
+      real_type offs
+    ) const {
+      real_type x, y, s, t, dst;
+      this->closestPoint( qx, qy, offs, x, y, s, t, dst );
+      return dst;
+    }
+    #endif
 
     /*\
      |    __ _           _ ____ _____
@@ -1710,18 +1807,6 @@ namespace G2lib {
     \*/
 
     bool
-    findST(
-      real_type   x,
-      real_type   y,
-      real_type & s,
-      real_type & t
-    ) const {
-      real_type X, Y, dst;
-      int_type icode = closestPoint( x, y, X, Y, s, t, dst );
-      return icode >= 0;
-    }
-
-    bool
     findST_ISO(
       real_type   x,
       real_type   y,
@@ -1729,7 +1814,7 @@ namespace G2lib {
       real_type & t
     ) const {
       real_type X, Y, dst;
-      int_type icode = closestPoint_ISO( x, y, X, Y, s, t, dst );
+      int_type icode = this->closestPoint_ISO( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
 
@@ -1741,9 +1826,23 @@ namespace G2lib {
       real_type & t
     ) const {
       real_type X, Y, dst;
-      int_type icode = closestPoint_SAE( x, y, X, Y, s, t, dst );
+      int_type icode = this->closestPoint_SAE( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    bool
+    findST(
+      real_type   x,
+      real_type   y,
+      real_type & s,
+      real_type & t
+    ) const {
+      real_type X, Y, dst;
+      int_type icode = this->closestPoint( x, y, X, Y, s, t, dst );
+      return icode >= 0;
+    }
+    #endif
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

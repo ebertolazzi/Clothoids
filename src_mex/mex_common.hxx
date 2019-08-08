@@ -17,7 +17,7 @@ do_length(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('length',OBJ[,offs,ISO/SAE]): "
+  #define CMD CMD_BASE "('length',OBJ[,offs,'ISO'/'SAE']): "
   MEX_ASSERT(
     nrhs == 2 || nrhs == 3 || nrhs == 4,
     CMD "expected 2, 3 or 4 inputs, nrhs = " << nrhs
@@ -35,7 +35,7 @@ do_length(
       arg_in_2,
       CMD "`offs` expected to be a real scalar"
     );
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 4 ) ISO = do_is_ISO( arg_in_3, CMD " last argument must be a string");
     real_type len = ISO ? ptr->length_ISO( offs ) : ptr->length_SAE( offs );
     setScalarValue( arg_out_0, len );
@@ -88,7 +88,7 @@ do_bbox(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  #define CMD CMD_BASE "('bbox',OBJ[,offs,ISO/SAE]): "
+  #define CMD CMD_BASE "('bbox',OBJ[,offs,'ISO'/'SAE']): "
   MEX_ASSERT(
     nrhs >= 2 && nrhs <= 4,
     CMD "expected 2, 3 or 4 inputs, nrhs = " << nrhs
@@ -105,7 +105,7 @@ do_bbox(
     real_type offs = getScalarValue(
       arg_in_2, CMD "`offs` expected to be a real scalar"
     );
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 4 ) ISO = do_is_ISO( arg_in_3, CMD " last argument must be a string");
     if ( ISO ) ptr->bbox_ISO( offs, xmin, ymin, xmax, ymax );
     else       ptr->bbox_SAE( offs, xmin, ymin, xmax, ymax );
@@ -276,7 +276,7 @@ do_closestPoint(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('closestPoint',OBJ,qx,qy[,offs,ISO/SAE]): "
+  #define CMD CMD_BASE "('closestPoint',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
 
   MEX_ASSERT(
     nrhs >= 4 || nrhs <= 6,
@@ -317,7 +317,7 @@ do_closestPoint(
     real_type offs = getScalarValue(
       arg_in_4, CMD "`offs` expected to be a real scalar"
     );
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 6 ) ISO = do_is_ISO( arg_in_5, CMD " last argument must be a string");
     if ( ISO ) {
       for ( mwSize i = 0; i < size; ++i )
@@ -332,7 +332,7 @@ do_closestPoint(
     }
   } else {
     for ( mwSize i = 0; i < size; ++i )
-      *iflag++ = ptr->closestPoint(
+      *iflag++ = ptr->closestPoint_ISO(
         *qx++, *qy++, *x++, *y++, *s++, *t++, *dst++
       );
   }
@@ -351,7 +351,7 @@ do_distance(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('distance',OBJ,qx,qy[,offs,ISO/SAE]): "
+  #define CMD CMD_BASE "('distance',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
 
   MEX_ASSERT(
     nrhs >= 4 || nrhs <= 6,
@@ -387,7 +387,7 @@ do_distance(
     real_type offs = getScalarValue(
       arg_in_4, CMD "`offs` expected to be a real scalar"
     );
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 6 ) ISO = do_is_ISO( arg_in_5, CMD " last argument must be a string");
     if ( ISO ) {
       for ( mwSize i = 0; i < size; ++i )
@@ -413,7 +413,7 @@ do_collision(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  #define CMD CMD_BASE "('collision',OBJ,OBJ1,type[,offs,offs1,ISO/SAE]): "
+  #define CMD CMD_BASE "('collision',OBJ,OBJ1,type[,offs,offs1,'ISO'/'SAE']): "
   MEX_ASSERT(
     nrhs >= 4 || nrhs <= 7,
     CMD "expected 4 to 7 inputs, nrhs = " << nrhs
@@ -449,7 +449,7 @@ do_collision(
     offs_obj = getScalarValue(
       arg_in_5, CMD "`offs_obj` expected to be a real scalar"
     );
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string");
     bool ok;
     if ( ISO ) ok = collision_ISO( *ptr, offs, *ptr1, offs_obj );
@@ -469,7 +469,7 @@ do_intersect(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  #define CMD CMD_BASE "('intersect',OBJ,OBJ1,type,[,offs,offs1,ISO/SAE]): "
+  #define CMD CMD_BASE "('intersect',OBJ,OBJ1,type,[,offs,offs1,'ISO'/'SAE']): "
   MEX_ASSERT(
     nrhs >= 4 || nrhs <= 7,
     CMD "expected 4 to 7 inputs, nrhs = " << nrhs
@@ -506,7 +506,7 @@ do_intersect(
     offs_obj = getScalarValue(
       arg_in_5, CMD "`offs_obj` expected to be a real scalar"
     );
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string");
     if ( ISO ) intersect_ISO( *ptr, offs, *ptr1, offs_obj, ilist, false );
     else       intersect_SAE( *ptr, offs, *ptr1, offs_obj, ilist, false );
@@ -534,7 +534,7 @@ do_findST(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('findST',OBJ,x,y[,ISO/SAE]): "
+  #define CMD CMD_BASE "('findST',OBJ,x,y[,'ISO'/'SAE']): "
   MEX_ASSERT( nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 input, nrhs = " << nrhs );
   MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
   mwSize nrx, ncx, nry, ncy;
@@ -557,7 +557,7 @@ do_findST(
   real_type * s = createMatrixValue( arg_out_0, nrx, ncx );
   real_type * t = createMatrixValue( arg_out_1, nrx, ncx );
 
-  bool ISO = G2lib::lib_use_ISO();
+  bool ISO = true;
   if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
   mwSize size = nrx*ncx;
@@ -600,9 +600,9 @@ do_eval(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  if ( nrhs == 4 ) {
+  if ( nrhs >= 4 ) {
 
-    #define CMD CMD_BASE "('eval',OBJ,s,t): "
+    #define CMD CMD_BASE "('eval',OBJ,s,[offs,'ISO'/'SAE'): "
 
     mwSize size, sizet;
     real_type const * s;
@@ -613,6 +613,9 @@ do_eval(
     t = getVectorPointer(
       arg_in_3, sizet, CMD "`t` expected to be a real vector"
     );
+
+    bool ISO = true;
+    if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
     MEX_ASSERT(
       size == sizet || size == 1 || sizet ==1,
@@ -629,11 +632,19 @@ do_eval(
 
     if ( nlhs == 1 ) {
       real_type *pXY = createMatrixValue( arg_out_0, 2,size );
-      LOOPXY1 ptr->eval( *s, *t, pXY[0], pXY[1] );
+      if ( ISO ) {
+        LOOPXY1 ptr->eval_ISO( *s, *t, pXY[0], pXY[1] );
+      } else {
+        LOOPXY1 ptr->eval_SAE( *s, *t, pXY[0], pXY[1] );
+      }
     } else if ( nlhs == 2 ) {
       real_type *pX = createMatrixValue( arg_out_0, 1,size );
       real_type *pY = createMatrixValue( arg_out_1, 1,size );
-      LOOPXY2 ptr->eval( *s, *t, *pX, *pY );
+      if ( ISO ) {
+        LOOPXY2 ptr->eval_ISO( *s, *t, *pX, *pY );
+      } else {
+        LOOPXY2 ptr->eval_SAE( *s, *t, *pX, *pY );
+      }
     } else {
       MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
     }
@@ -689,7 +700,7 @@ do_eval_D(
 
   if ( nrhs == 4 || nrhs == 5 ) {
 
-    #define CMD CMD_BASE "('eval_D',OBJ,s,t[,ISO/SAE]): "
+    #define CMD CMD_BASE "('eval_D',OBJ,s,t[,'ISO'/'SAE']): "
 
     mwSize size, sizet;
     real_type const * s;
@@ -701,7 +712,7 @@ do_eval_D(
       arg_in_3, sizet, CMD "`t` expected to be a real vector"
     );
 
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
     MEX_ASSERT(
@@ -721,17 +732,17 @@ do_eval_D(
     if ( nlhs == 1 ) {
       real_type *pXY = createMatrixValue( arg_out_0, 2,size );
       if ( ISO ) {
-        LOOPXY1 ptr->eval_D_ISO( *s, *t, pXY[0], pXY[1] );
+        LOOPXY1 ptr->eval_ISO_D( *s, *t, pXY[0], pXY[1] );
       } else {
-        LOOPXY1 ptr->eval_D_SAE( *s, *t, pXY[0], pXY[1] );
+        LOOPXY1 ptr->eval_SAE_D( *s, *t, pXY[0], pXY[1] );
       }
     } else if ( nlhs == 2 ) {
       real_type *pX = createMatrixValue( arg_out_0, 1,size );
       real_type *pY = createMatrixValue( arg_out_1, 1,size );
       if ( ISO ) {
-        LOOPXY2 ptr->eval_D_ISO( *s, *t, *pX, *pY );
+        LOOPXY2 ptr->eval_ISO_D( *s, *t, *pX, *pY );
       } else {
-        LOOPXY2 ptr->eval_D_SAE( *s, *t, *pX, *pY );
+        LOOPXY2 ptr->eval_SAE_D( *s, *t, *pX, *pY );
       }
     } else {
       MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
@@ -786,7 +797,7 @@ do_eval_DD(
 
   if ( nrhs == 4 || nrhs == 5 ) {
 
-    #define CMD CMD_BASE "('eval_DD',OBJ,s,t[,ISO/SAE]): "
+    #define CMD CMD_BASE "('eval_DD',OBJ,s,t[,'ISO'/'SAE']): "
 
     mwSize size, sizet;
     real_type const * s;
@@ -812,23 +823,23 @@ do_eval_DD(
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
 
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
     if ( nlhs == 1 ) {
       real_type *pXY = createMatrixValue( arg_out_0, 2,size );
       if ( ISO ) {
-        LOOPXY1 ptr->eval_DD_ISO( *s, *t, pXY[0], pXY[1] );
+        LOOPXY1 ptr->eval_ISO_DD( *s, *t, pXY[0], pXY[1] );
       } else {
-        LOOPXY1 ptr->eval_DD_SAE( *s, *t, pXY[0], pXY[1] );
+        LOOPXY1 ptr->eval_SAE_DD( *s, *t, pXY[0], pXY[1] );
       }
     } else if ( nlhs == 2 ) {
       real_type *pX = createMatrixValue( arg_out_0, 1,size );
       real_type *pY = createMatrixValue( arg_out_1, 1,size );
       if ( ISO ) {
-        LOOPXY2 ptr->eval_DD_ISO( *s, *t, *pX, *pY );
+        LOOPXY2 ptr->eval_ISO_DD( *s, *t, *pX, *pY );
       } else {
-        LOOPXY2 ptr->eval_DD_SAE( *s, *t, *pX, *pY );
+        LOOPXY2 ptr->eval_SAE_DD( *s, *t, *pX, *pY );
       }
     } else {
       MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
@@ -883,7 +894,7 @@ do_eval_DDD(
 
   if ( nrhs == 4 || nrhs == 5 ) {
 
-    #define CMD CMD_BASE "('eval_DDD',OBJ,s,t[,ISO/SAE]): "
+    #define CMD CMD_BASE "('eval_DDD',OBJ,s,t[,'ISO'/'SAE']): "
 
     mwSize size, sizet;
     real_type const * s;
@@ -909,23 +920,23 @@ do_eval_DDD(
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
 
-    bool ISO = G2lib::lib_use_ISO();
+    bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
     if ( nlhs == 1 ) {
       real_type *pXY = createMatrixValue( arg_out_0, 2,size );
       if ( ISO ) {
-        LOOPXY1 ptr->eval_DDD_ISO( *s, *t, pXY[0], pXY[1] );
+        LOOPXY1 ptr->eval_ISO_DDD( *s, *t, pXY[0], pXY[1] );
       } else {
-        LOOPXY1 ptr->eval_DDD_SAE( *s, *t, pXY[0], pXY[1] );
+        LOOPXY1 ptr->eval_SAE_DDD( *s, *t, pXY[0], pXY[1] );
       }
     } else if ( nlhs == 2 ) {
       real_type *pX = createMatrixValue( arg_out_0, 1,size );
       real_type *pY = createMatrixValue( arg_out_1, 1,size );
       if ( ISO ) {
-        LOOPXY2 ptr->eval_DDD_ISO( *s, *t, *pX, *pY );
+        LOOPXY2 ptr->eval_ISO_DDD( *s, *t, *pX, *pY );
       } else {
-        LOOPXY2 ptr->eval_DDD_SAE( *s, *t, *pX, *pY );
+        LOOPXY2 ptr->eval_SAE_DDD( *s, *t, *pX, *pY );
       }
     } else {
       MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
@@ -978,9 +989,9 @@ do_evaluate(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  if ( nrhs == 4 ) {
+  if ( nrhs >= 4 && nrhs <= 5) {
 
-    #define CMD CMD_BASE "('evaluate',OBJ,s): "
+    #define CMD CMD_BASE "('evaluate',OBJ,s,offs[,'ISO'/'SAE']): "
 
     mwSize size, sizet;
     real_type const * s;
@@ -991,6 +1002,8 @@ do_evaluate(
     t = getVectorPointer(
       arg_in_3, sizet, CMD "`t` expected to be a real vector"
     );
+    bool ISO = true;
+    if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
     MEX_ASSERT(
       size == sizet || size == 1 || sizet ==1,
@@ -1012,13 +1025,21 @@ do_evaluate(
 
     if ( nlhs == 1 ) {
       real_type *pXY = createMatrixValue( arg_out_0, 4, size );
-      LOOPXY1 ptr->evaluate( *s, *t, pXY[0], pXY[1], pXY[2], pXY[3] );
+      if ( ISO ) {
+        LOOPXY1 ptr->evaluate_ISO( *s, *t, pXY[0], pXY[1], pXY[2], pXY[3] );
+      } else {
+        LOOPXY1 ptr->evaluate_SAE( *s, *t, pXY[0], pXY[1], pXY[2], pXY[3] );
+      }
     } else if ( nlhs == 4 ) {
       real_type *pX  = createMatrixValue( arg_out_0, 1, size );
       real_type *pY  = createMatrixValue( arg_out_1, 1, size );
       real_type *pTH = createMatrixValue( arg_out_2, 1, size );
       real_type *pK  = createMatrixValue( arg_out_3, 1, size );
-      LOOPXY2 ptr->evaluate( *s, *t, *pTH, *pK, *pX, *pY );
+      if ( ISO ) {
+        LOOPXY2 ptr->evaluate_ISO( *s, *t, *pTH, *pK, *pX, *pY );
+      } else {
+        LOOPXY2 ptr->evaluate_SAE( *s, *t, *pTH, *pK, *pX, *pY );
+      }
     } else {
       MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = " << nlhs );
     }

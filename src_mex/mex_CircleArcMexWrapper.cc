@@ -335,6 +335,14 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  #define CMD_BASE "CircleArcMexWrapper"
+  #define G2LIB_CLASS CircleArc
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   static
   void
   do_bbTriangles(
@@ -344,17 +352,17 @@ namespace G2lib {
 
     CircleArc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "CircleArcMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs]): "
+    #define CMD "CircleArcMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs,['ISO'/'SAE']): "
 
     MEX_ASSERT(
-      nrhs >= 2 && nrhs <= 5,
-      CMD "expected 2 up to 5 inputs, nrhs = " << nrhs
+      nrhs >= 2 && nrhs <= 6,
+      CMD "expected 2 up to 6 inputs, nrhs = " << nrhs
     );
     MEX_ASSERT(
       nlhs == 3,
       CMD "expected 3 output, nlhs = " << nlhs
     );
-  
+
     real_type max_angle = m_pi/18;
     real_type max_size  = 1e100;
     real_type offs      = 0;
@@ -372,8 +380,11 @@ namespace G2lib {
       );
 
     std::vector<Triangle2D> tvec;
-    if ( nrhs == 5 ) {
-      ptr->bbTriangles( offs, tvec, max_angle, max_size );
+    if ( nrhs >= 5 ) {
+      bool ISO = true;
+      if ( nrhs == 6 ) ISO = do_is_ISO( arg_in_7, CMD " last argument must be a string");
+      if ( ISO ) ptr->bbTriangles_ISO( offs, tvec, max_angle, max_size );
+      else       ptr->bbTriangles_SAE( offs, tvec, max_angle, max_size );
     } else {
       ptr->bbTriangles( tvec, max_angle, max_size );
     }
@@ -396,14 +407,6 @@ namespace G2lib {
 
     #undef CMD
   }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  #define CMD_BASE "CircleArcMexWrapper"
-  #define G2LIB_CLASS CircleArc
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

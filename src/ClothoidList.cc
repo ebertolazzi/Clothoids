@@ -514,10 +514,10 @@ namespace G2lib {
   }
 
   real_type
-  ClothoidList::length( real_type offs ) const {
+  ClothoidList::length_ISO( real_type offs ) const {
     real_type L = 0;
     vector<ClothoidCurve>::const_iterator is = clotoidList.begin();
-    for (; is != clotoidList.end(); ++is ) L += is->length( offs );
+    for (; is != clotoidList.end(); ++is ) L += is->length_ISO( offs );
     return L;
   }
 
@@ -528,9 +528,9 @@ namespace G2lib {
   }
 
   real_type
-  ClothoidList::segment_length( int_type nseg, real_type offs ) const {
+  ClothoidList::segment_length_ISO( int_type nseg, real_type offs ) const {
     ClothoidCurve const & c = get( nseg );
-    return c.length( offs );
+    return c.length_ISO( offs );
   }
 
   /*\
@@ -544,7 +544,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidList::bbTriangles(
+  ClothoidList::bbTriangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
@@ -552,7 +552,7 @@ namespace G2lib {
   ) const {
     vector<ClothoidCurve>::const_iterator ic = clotoidList.begin();
     for ( int_type ipos = 0; ic != clotoidList.end(); ++ic, ++ipos )
-      ic->bbTriangles( offs, tvec, max_angle, max_size, ipos );
+      ic->bbTriangles_ISO( offs, tvec, max_angle, max_size, ipos );
   }
 
   /*\
@@ -564,7 +564,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidList::bbox(
+  ClothoidList::bbox_ISO(
     real_type   offs,
     real_type & xmin,
     real_type & ymin,
@@ -572,7 +572,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    bbTriangles( offs, tvec, m_pi/18, 1e100 );
+    bbTriangles_ISO( offs, tvec, m_pi/18, 1e100 );
     xmin = ymin = numeric_limits<real_type>::infinity();
     xmax = ymax = -xmin;
     vector<Triangle2D>::const_iterator it;
@@ -784,7 +784,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::evaluate(
+  ClothoidList::evaluate_ISO(
     real_type   s,
     real_type   offs,
     real_type & th,
@@ -794,7 +794,7 @@ namespace G2lib {
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    c.evaluate( s - s0[last_idx], offs, th, k, x, y );
+    c.evaluate_ISO( s - s0[last_idx], offs, th, k, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -930,79 +930,79 @@ namespace G2lib {
   \*/
 
   real_type
-  ClothoidList::X( real_type s, real_type offs ) const {
+  ClothoidList::X_ISO( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.X( s - s0[last_idx], offs );
+    return c.X_ISO( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::Y( real_type s, real_type offs ) const {
+  ClothoidList::Y_ISO( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.Y( s - s0[last_idx], offs );
+    return c.Y_ISO( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::X_D( real_type s, real_type offs ) const {
+  ClothoidList::X_ISO_D( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.X_D( s - s0[last_idx], offs );
+    return c.X_ISO_D( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::Y_D( real_type s, real_type offs ) const {
+  ClothoidList::Y_ISO_D( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.Y_D( s - s0[last_idx], offs );
+    return c.Y_ISO_D( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::X_DD( real_type s, real_type offs ) const {
+  ClothoidList::X_ISO_DD( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.X_DD( s - s0[last_idx], offs );
+    return c.X_ISO_DD( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::Y_DD( real_type s, real_type offs ) const {
+  ClothoidList::Y_ISO_DD( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.Y_DD( s - s0[last_idx], offs );
+    return c.Y_ISO_DD( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::X_DDD( real_type s, real_type offs ) const {
+  ClothoidList::X_ISO_DDD( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.X_DDD( s - s0[last_idx], offs );
+    return c.X_ISO_DDD( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidList::Y_DDD( real_type s, real_type offs ) const {
+  ClothoidList::Y_ISO_DDD( real_type s, real_type offs ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.Y_DDD( s - s0[last_idx], offs );
+    return c.Y_ISO_DDD( s - s0[last_idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval(
+  ClothoidList::eval_ISO(
     real_type   s,
     real_type   offs,
     real_type & x,
@@ -1010,13 +1010,13 @@ namespace G2lib {
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval( s - s0[last_idx], offs, x, y );
+    return c.eval_ISO( s - s0[last_idx], offs, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_D(
+  ClothoidList::eval_ISO_D(
     real_type   s,
     real_type   offs,
     real_type & x_D,
@@ -1024,13 +1024,13 @@ namespace G2lib {
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_D( s - s0[last_idx], offs, x_D, y_D );
+    return c.eval_ISO_D( s - s0[last_idx], offs, x_D, y_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_DD(
+  ClothoidList::eval_ISO_DD(
     real_type   s,
     real_type   offs,
     real_type & x_DD,
@@ -1038,13 +1038,13 @@ namespace G2lib {
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_DD( s - s0[last_idx], offs, x_DD, y_DD );
+    return c.eval_ISO_DD( s - s0[last_idx], offs, x_DD, y_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::eval_DDD(
+  ClothoidList::eval_ISO_DDD(
     real_type   s,
     real_type   offs,
     real_type & x_DDD,
@@ -1052,7 +1052,7 @@ namespace G2lib {
   ) const {
     findAtS( s );
     ClothoidCurve const & c = get( last_idx );
-    return c.eval_DDD( s - s0[last_idx], offs, x_DDD, y_DDD );
+    return c.eval_ISO_DDD( s - s0[last_idx], offs, x_DDD, y_DDD );
   }
 
   /*\
@@ -1166,7 +1166,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidList::build_AABBtree(
+  ClothoidList::build_AABBtree_ISO(
     real_type offs,
     real_type max_angle,
     real_type max_size
@@ -1183,7 +1183,7 @@ namespace G2lib {
     vector<BBox const *> bboxes;
     #endif
 
-    bbTriangles( offs, aabb_tri, max_angle, max_size );
+    bbTriangles_ISO( offs, aabb_tri, max_angle, max_size );
     bboxes.reserve(aabb_tri.size());
     vector<Triangle2D>::const_iterator it;
     int_type ipos = 0;
@@ -1219,23 +1219,23 @@ namespace G2lib {
 
   bool
   ClothoidList::collision( ClothoidList const & C ) const {
-    this->build_AABBtree( 0 );
-    C.build_AABBtree( 0 );
-    T2D_collision_list fun( this, 0, &C, 0 );
+    this->build_AABBtree_ISO( 0 );
+    C.build_AABBtree_ISO( 0 );
+    T2D_collision_list_ISO fun( this, 0, &C, 0 );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidList::collision(
+  ClothoidList::collision_ISO(
     real_type            offs,
     ClothoidList const & C,
     real_type            offs_C
   ) const {
-    this->build_AABBtree( offs );
-    C.build_AABBtree( offs_C );
-    T2D_collision_list fun( this, offs, &C, offs_C );
+    this->build_AABBtree_ISO( offs );
+    C.build_AABBtree_ISO( offs_C );
+    T2D_collision_list_ISO fun( this, offs, &C, offs_C );
     return aabb_tree.collision( C.aabb_tree, fun, false );
   }
 
@@ -1249,7 +1249,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidList::intersect(
+  ClothoidList::intersect_ISO(
     real_type            offs,
     ClothoidList const & CL,
     real_type            offs_CL,
@@ -1257,8 +1257,8 @@ namespace G2lib {
     bool                 swap_s_vals
   ) const {
     if ( intersect_with_AABBtree ) {
-      this->build_AABBtree( offs );
-      CL.build_AABBtree( offs_CL );
+      this->build_AABBtree_ISO( offs );
+      CL.build_AABBtree_ISO( offs_CL );
       AABBtree::VecPairPtrBBox iList;
       aabb_tree.intersect( CL.aabb_tree, iList );
 
@@ -1274,7 +1274,7 @@ namespace G2lib {
         ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
 
         real_type ss1, ss2;
-        bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
+        bool converged = C1.aabb_intersect_ISO( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
 
         if ( converged ) {
           ss1 += s0[T1.Icurve()];
@@ -1284,8 +1284,8 @@ namespace G2lib {
         }
       }
     } else {
-      bbTriangles( offs, aabb_tri, m_pi/18, 1e100 );
-      CL.bbTriangles( offs_CL, CL.aabb_tri, m_pi/18, 1e100 );
+      bbTriangles_ISO( offs, aabb_tri, m_pi/18, 1e100 );
+      CL.bbTriangles_ISO( offs_CL, CL.aabb_tri, m_pi/18, 1e100 );
       for ( vector<Triangle2D>::const_iterator i1 = aabb_tri.begin();
             i1 != aabb_tri.end(); ++i1 ) {
         for ( vector<Triangle2D>::const_iterator i2 = CL.aabb_tri.begin();
@@ -1297,7 +1297,7 @@ namespace G2lib {
           ClothoidCurve const & C2 = CL.clotoidList[T2.Icurve()];
 
           real_type ss1, ss2;
-          bool converged = C1.aabb_intersect( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
+          bool converged = C1.aabb_intersect_ISO( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
 
           if ( converged ) {
             ss1 += s0[T1.Icurve()];
@@ -1320,7 +1320,7 @@ namespace G2lib {
   \*/
 
   int_type
-  ClothoidList::closestPoint(
+  ClothoidList::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -1331,7 +1331,7 @@ namespace G2lib {
     real_type & DST
   ) const {
 
-    this->build_AABBtree( offs );
+    this->build_AABBtree_ISO( offs );
 
     AABBtree::VecPtrBBox candidateList;
     aabb_tree.min_distance( qx, qy, candidateList );
@@ -1349,7 +1349,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        clotoidList[T.Icurve()].closestPoint_internal(
+        clotoidList[T.Icurve()].closestPoint_internal_ISO(
           T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -1363,7 +1363,7 @@ namespace G2lib {
     }
 
     real_type nx, ny;
-    clotoidList[icurve].nor( s - s0[icurve], nx, ny );
+    clotoidList[icurve].nor_ISO( s - s0[icurve], nx, ny );
     t = (qx-x) * nx + (qy-y) * ny - offs;
     real_type err = abs( abs(t) - DST );
     if ( err > DST*machepsi1000 ) return -1;
@@ -1373,7 +1373,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::closestPoint(
+  ClothoidList::closestPoint_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -1382,7 +1382,7 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    return closestPoint( qx, qy, 0, x, y, s, t, dst );
+    return closestPoint_ISO( qx, qy, 0, x, y, s, t, dst );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1472,7 +1472,7 @@ namespace G2lib {
     int_type  ipos = 0;
     int_type  iseg = 0;
     real_type S, T;
-    bool ok = ic->findST( x, y, S, T );
+    bool ok = ic->findST_ISO( x, y, S, T );
     if ( ok ) {
       s    = *is + S;
       t    = T;
@@ -1482,7 +1482,7 @@ namespace G2lib {
     for ( ++ic, ++is, ++ipos;
           ic != clotoidList.end();
           ++ic, ++is, ++ipos ) {
-      bool ok1 = ic->findST( x, y, S, T );
+      bool ok1 = ic->findST_ISO( x, y, S, T );
       if ( ok && ok1 ) ok1 = abs(T) < abs(t);
       if ( ok1 ) {
         ok   = true;
@@ -1522,7 +1522,7 @@ namespace G2lib {
     for ( int_type k = ibegin; k <= iend; ++k ) {
       ClothoidCurve const & ck = clotoidList[k];
       real_type S, T;
-      bool ok1 = ck.findST( x, y, S, T );
+      bool ok1 = ck.findST_ISO( x, y, S, T );
       if ( ok && ok1 ) ok1 = abs(T) < abs(t);
       if ( ok1 ) {
         ok   = true;

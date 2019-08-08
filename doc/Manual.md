@@ -271,7 +271,7 @@ ang = B.thetaBegin1(); ang = B.thetaEnd1();
 
 % circle arc length for first and second circle
 L0 = B.length0(); L1 = B.length0();
-% total lenght of biarc
+% total length of biarc
 L = B.length();
 
 % circle curvature for first and second circle
@@ -397,7 +397,7 @@ k0 = CL.kappaBegin(); ang = CL.kappaEnd();
 % derivative of curvature of the clothoid curve
 dk = CL.kappa_D();
 
-% lenght of the clothoid curve
+% length of the clothoid curve
 L = CL.length();
 
 % point at infinity of the clothoid

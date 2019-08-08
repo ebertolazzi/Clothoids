@@ -45,12 +45,14 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::closestPointBySample( real_type   ds,
-                                       real_type   qx,
-                                       real_type   qy,
-                                       real_type & X,
-                                       real_type & Y,
-                                       real_type & S ) const {
+  ClothoidCurve::closestPointBySample(
+    real_type   ds,
+    real_type   qx,
+    real_type   qy,
+    real_type & X,
+    real_type & Y,
+    real_type & S
+  ) const {
     S = 0;
     X = CD.x0;
     Y = CD.y0;
@@ -75,12 +77,14 @@ namespace G2lib {
 
   static
   bool
-  closestPointQC2( real_type            epsi,
-                   ClothoidData const & CD,
-                   real_type            L,
-                   real_type            qx,
-                   real_type            qy,
-                   real_type          & S ) {
+  closestPointQC2(
+    real_type            epsi,
+    ClothoidData const & CD,
+    real_type            L,
+    real_type            qx,
+    real_type            qy,
+    real_type          & S
+  ) {
 
     // S = GUESS
     int nb = 0;
@@ -132,14 +136,16 @@ namespace G2lib {
 
   static
   real_type
-  closestPointQC1( real_type            epsi,
-                   ClothoidData const & CD,
-                   real_type            L,
-                   real_type            qx,
-                   real_type            qy,
-                   real_type          & X,
-                   real_type          & Y,
-                   real_type          & S ) {
+  closestPointQC1(
+    real_type            epsi,
+    ClothoidData const & CD,
+    real_type            L,
+    real_type            qx,
+    real_type            qy,
+    real_type          & X,
+    real_type          & Y,
+    real_type          & S
+  ) {
 
     real_type phi0 = CD.theta0 - atan2( CD.y0 - qy, CD.x0 - qx );
     bool ok0 = cos(phi0) < 0; // distanza decrescente
@@ -178,14 +184,16 @@ namespace G2lib {
 
   static
   real_type
-  closestPointQC( real_type            epsi,
-                  ClothoidData const & CD,
-                  real_type            L,
-                  real_type            qx,
-                  real_type            qy,
-                  real_type          & X,
-                  real_type          & Y,
-                  real_type          & S ) {
+  closestPointQC(
+    real_type            epsi,
+    ClothoidData const & CD,
+    real_type            L,
+    real_type            qx,
+    real_type            qy,
+    real_type          & X,
+    real_type          & Y,
+    real_type          & S
+  ) {
 
     real_type DTheta = abs( CD.theta(L) - CD.theta0 );
     if ( DTheta <= m_2pi )
@@ -231,12 +239,14 @@ namespace G2lib {
 
   static
   bool
-  closestPointStandard3( real_type   epsi,
-                         real_type   a,
-                         real_type   b,
-                         real_type   qx,
-                         real_type   qy,
-                         real_type & S ) {
+  closestPointStandard3(
+    real_type   epsi,
+    real_type   a,
+    real_type   b,
+    real_type   qx,
+    real_type   qy,
+    real_type & S
+  ) {
     // S = GUESS
     int nb = 0;
     real_type s = S, dS, dx, dy;
@@ -288,12 +298,14 @@ namespace G2lib {
 
   static
   real_type
-  closestPointStandard2( real_type   epsi,
-                         real_type   a,
-                         real_type   b,
-                         real_type   qx,
-                         real_type   qy,
-                         real_type & S ) {
+  closestPointStandard2(
+    real_type   epsi,
+    real_type   a,
+    real_type   b,
+    real_type   qx,
+    real_type   qy,
+    real_type & S
+  ) {
 
     real_type dx, dy;
     FresnelCS( a, dx, dy ); dx -= qx; dy -= qy;
@@ -333,12 +345,14 @@ namespace G2lib {
 
   static
   real_type
-  closestPointStandard( real_type            epsi,
-                        ClothoidData const & CD,
-                        real_type            L,
-                        real_type            qx,
-                        real_type            qy,
-                        real_type          & S ) {
+  closestPointStandard(
+    real_type            epsi,
+    ClothoidData const & CD,
+    real_type            L,
+    real_type            qx,
+    real_type            qy,
+    real_type          & S
+  ) {
 
     // transform to standard clothoid
     real_type sflex  = -CD.kappa0/CD.dk;
@@ -426,14 +440,16 @@ namespace G2lib {
 
   static
   real_type
-  closestPoint1( real_type            epsi,
-                 ClothoidData const & CD,
-                 real_type            L,
-                 real_type            qx,
-                 real_type            qy,
-                 real_type          & X,
-                 real_type          & Y,
-                 real_type          & S ) {
+  closestPoint1(
+    real_type            epsi,
+    ClothoidData const & CD,
+    real_type            L,
+    real_type            qx,
+    real_type            qy,
+    real_type          & X,
+    real_type          & Y,
+    real_type          & S
+  ) {
 
     real_type NT = 4; // number of turn of the clothid after wich is considered quasi-circular
     real_type DK = sqrt(NT*m_2pi*abs(CD.dk));
@@ -470,13 +486,15 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidCurve::closestPoint( real_type   qx,
-                               real_type   qy,
-                               real_type & X,
-                               real_type & Y,
-                               real_type & S,
-                               real_type & T,
-                               real_type & dst ) const {
+  ClothoidCurve::closestPoint_ISO(
+    real_type   qx,
+    real_type   qy,
+    real_type & X,
+    real_type & Y,
+    real_type & S,
+    real_type & T,
+    real_type & dst
+  ) const {
 
     real_type epsi = 1e-10;
 
@@ -509,7 +527,7 @@ namespace G2lib {
       }
     }
     real_type nx, ny;
-    nor( S, nx, ny );
+    nor_ISO( S, nx, ny );
     real_type dx = qx-X;
     real_type dy = qy-Y;
     T = dx * nx + dy * ny;

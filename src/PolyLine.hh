@@ -183,7 +183,7 @@ namespace G2lib {
 
     virtual
     void
-    bbox(
+    bbox_ISO(
       real_type   /* offs */,
       real_type & /* xmin */,
       real_type & /* ymin */,
@@ -200,7 +200,7 @@ namespace G2lib {
 
     virtual
     real_type
-    length( real_type ) const G2LIB_OVERRIDE {
+    length_ISO( real_type ) const G2LIB_OVERRIDE {
       G2LIB_DO_ERROR( "PolyLine::length( offs ) not available!");
       return 0;
     }
@@ -333,31 +333,31 @@ namespace G2lib {
 
     virtual
     void
-    eval(
+    eval_ISO(
       real_type   s,
-      real_type   t,
+      real_type   offs,
       real_type & x,
       real_type & y
     ) const G2LIB_OVERRIDE {
       this->search( s ); real_type ss = s0[size_t(isegment)];
-      polylineList[size_t(isegment)].eval( s-ss, t, x, y );
+      polylineList[size_t(isegment)].eval_ISO( s-ss, offs, x, y );
     }
 
     virtual
     void
-    eval_D(
+    eval_ISO_D(
       real_type   s,
-      real_type   t,
+      real_type   offs,
       real_type & x_D,
       real_type & y_D
     ) const G2LIB_OVERRIDE {
       this->search( s ); real_type ss = s0[size_t(isegment)];
-      polylineList[size_t(isegment)].eval_D( s-ss, t, x_D, y_D );
+      polylineList[size_t(isegment)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 
     virtual
     void
-    eval_DD(
+    eval_ISO_DD(
       real_type,
       real_type,
       real_type & x_DD,
@@ -367,7 +367,7 @@ namespace G2lib {
 
     virtual
     void
-    eval_DDD(
+    eval_ISO_DDD(
       real_type,
       real_type,
       real_type & x_DDD,
@@ -431,7 +431,7 @@ namespace G2lib {
      */
     virtual
     int_type
-    closestPoint(
+    closestPoint_ISO(
       real_type   x,
       real_type   y,
       real_type & X,
@@ -443,7 +443,7 @@ namespace G2lib {
 
     virtual
     int_type
-    closestPoint(
+    closestPoint_ISO(
       real_type   /* x    */,
       real_type   /* y    */,
       real_type   /* offs */,
@@ -468,7 +468,7 @@ namespace G2lib {
     collision( PolyLine const & C ) const;
 
     bool
-    collision(
+    collision_ISO(
       real_type        offs,
       PolyLine const & CL,
       real_type        offs_CL
@@ -503,7 +503,7 @@ namespace G2lib {
     ) const;
 
     void
-    intersect(
+    intersect_ISO(
       real_type        offs,
       PolyLine const & pl,
       real_type        offs_pl,
