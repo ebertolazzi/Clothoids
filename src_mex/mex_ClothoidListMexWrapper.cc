@@ -775,8 +775,6 @@ namespace G2lib {
   #undef CMD_BASE
   #undef G2LIB_CLASS
 
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
   static
   void
   do_bbTriangles(
@@ -877,6 +875,94 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  static
+  void
+  do_closestSegment(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('closestSegment',OBJ,qx,qy): "
+
+    MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    real_type qx = getScalarValue(
+      arg_in_2, CMD "`qx` expected to be a real scalar"
+    );
+    real_type qy = getScalarValue(
+      arg_in_3, CMD "`qx` expected to be a real scalar"
+    );
+
+    setScalarInt( arg_out_0, ptr->closestSegment( qx, qy ) );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_closestPointInRange(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('closestPointInRange',OBJ,qx,qy,ibegin,iend,['ISO'/'SAE']): "
+
+    MEX_ASSERT(
+      nrhs == 6 || nrhs == 7,
+      CMD "expected 6 or 7 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 7,
+      CMD "expected 1 output, nlhs = " << nlhs
+    );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    real_type qx = getScalarValue(
+      arg_in_2, CMD "`qx` expected to be a real scalar"
+    );
+    real_type qy = getScalarValue(
+      arg_in_3, CMD "`qx` expected to be a real scalar"
+    );
+    int64_t icurve_begin = getInt(
+      arg_in_4, CMD "`ibegin` expected to be an integer"
+    );
+    int64_t icurve_end = getInt(
+      arg_in_5, CMD "`iend` expected to be an integer"
+    );
+
+    bool ISO = true;
+    if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string");
+
+    int_type  iflag, icurve;
+    real_type x, y, s, t, dst;
+    if ( ISO )
+      iflag = ptr->closestPointInRange_ISO(
+        qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
+      );
+    else
+      iflag = ptr->closestPointInRange_SAE(
+        qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
+      );
+
+    setScalarInt( arg_out_0, icurve );
+    setScalarValue( arg_out_1, x );
+    setScalarValue( arg_out_2, y );
+    setScalarValue( arg_out_3, s );
+    setScalarValue( arg_out_4, t );
+    setScalarInt( arg_out_5, iflag );
+    setScalarValue( arg_out_6, dst );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   typedef enum {
     CMD_NEW,
     CMD_PUSH_BACK,
@@ -901,6 +987,8 @@ namespace G2lib {
     CMD_BB_TRIANGLES,
     CMD_AABB_TRUE,
     CMD_AABB_FALSE,
+    CMD_CLOSEST_SEGMENT,
+    CMD_CLOSEST_POINT_IN_RANGE,
     CMD_VIRTUAL_LIST
   } CMD_LIST;
 
@@ -930,6 +1018,8 @@ namespace G2lib {
     {"bbTriangles",CMD_BB_TRIANGLES},
     {"aabb_true",CMD_AABB_TRUE},
     {"aabb_false",CMD_AABB_FALSE},
+    {"closestSegment",CMD_CLOSEST_SEGMENT},
+    {"closestPointInRange",CMD_CLOSEST_POINT_IN_RANGE},
     CMD_MAP_LIST
   };
 
@@ -1020,6 +1110,12 @@ namespace G2lib {
         break;
       case CMD_AABB_FALSE:
         do_aabb_false( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_CLOSEST_SEGMENT:
+        do_closestSegment( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_CLOSEST_POINT_IN_RANGE:
+        do_closestPointInRange( nlhs, plhs, nrhs, prhs );
         break;
       CMD_CASE_LIST;
       }

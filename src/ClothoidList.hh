@@ -1283,6 +1283,56 @@ namespace G2lib {
       real_type & dst
     ) const G2LIB_OVERRIDE;
 
+    /*\
+     |      _ _     _
+     |   __| (_)___| |_ __ _ _ __   ___ ___
+     |  / _` | / __| __/ _` | '_ \ / __/ _ \
+     | | (_| | \__ \ || (_| | | | | (_|  __/
+     |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+    \*/
+
+    /*!
+     *  \param  qx  x-coordinate of the point
+     *  \param  qy  y-coordinate of the point
+     *  \return the segment at minimal distance from point (qx,qy)
+     */
+    int_type
+    closestSegment( real_type qx, real_type qy ) const;
+
+    int_type
+    closestPointInRange_ISO(
+      real_type   qx,
+      real_type   qy,
+      int_type    icurve_begin,
+      int_type    icurve_end,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst,
+      int_type  & icurve
+    ) const;
+
+    int_type
+    closestPointInRange_SAE(
+      real_type   qx,
+      real_type   qy,
+      int_type    icurve_begin,
+      int_type    icurve_end,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst,
+      int_type  & icurve
+    ) const {
+      int_type res = this->closestPointInRange_ISO(
+        qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
+      );
+      t = -t;
+      return res;
+    }
+
     virtual
     void
     info( ostream_type & stream ) const G2LIB_OVERRIDE

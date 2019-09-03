@@ -1385,6 +1385,80 @@ namespace G2lib {
     return closestPoint_ISO( qx, qy, 0, x, y, s, t, dst );
   }
 
+  /*\
+   |      _ _     _
+   |   __| (_)___| |_ __ _ _ __   ___ ___
+   |  / _` | / __| __/ _` | '_ \ / __/ _ \
+   | | (_| | \__ \ || (_| | | | | (_|  __/
+   |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+  \*/
+
+  int_type
+  ClothoidList::closestSegment( real_type qx, real_type qy ) const {
+    this->build_AABBtree_ISO( 0 );
+
+    AABBtree::VecPtrBBox candidateList;
+    aabb_tree.min_distance( qx, qy, candidateList );
+    AABBtree::VecPtrBBox::const_iterator ic;
+    G2LIB_ASSERT(
+      candidateList.size() > 0,
+      "ClothoidList::closestSegment no candidate"
+    );
+    int_type icurve = 0;
+    real_type DST = numeric_limits<real_type>::infinity();
+    for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
+      size_t ipos = size_t((*ic)->Ipos());
+      Triangle2D const & T = aabb_tri[ipos];
+      real_type dst = T.distMin( qx, qy );
+      if ( dst < DST ) {
+        // refine distance
+        real_type xx, yy, ss;
+        clotoidList[T.Icurve()].closestPoint_internal_ISO(
+          T.S0(), T.S1(), qx, qy, 0, xx, yy, ss, dst
+        );
+        if ( dst < DST ) {
+          DST    = dst;
+          icurve = T.Icurve();
+        }
+      }
+    }
+    return icurve;
+  }
+
+  int_type
+  ClothoidList::closestPointInRange_ISO(
+    real_type   qx,
+    real_type   qy,
+    int_type    icurve_begin,
+    int_type    icurve_end,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst,
+    int_type  & icurve
+  ) const {
+    int_type ib = icurve_begin % this->numSegment(); // to avoid infinite loop in case of bad input
+    int_type ie = icurve_end   % this->numSegment(); // to avoid infinite loop in case of bad input
+    int_type res = 0;
+    dst = numeric_limits<real_type>::infinity();
+    for ( int_type iseg = ib; iseg != ie; iseg = (++iseg) % this->numSegment() ) {
+      ClothoidCurve const & C = clotoidList[iseg];
+      real_type C_x, C_y, C_s, C_t, C_dst;
+      int_type C_res = C.closestPoint_ISO( qx, qy, C_x, C_y, C_s, C_t, C_dst );
+      if ( C_dst < dst ) {
+        dst    = C_dst;
+        x      = C_x;
+        y      = C_y;
+        s      = C_s+s0[iseg];
+        t      = C_t;
+        icurve = iseg;
+        res    = C_res;
+      }
+    }
+    return res;
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

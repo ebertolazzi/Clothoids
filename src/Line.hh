@@ -517,14 +517,18 @@ namespace G2lib {
     \*/
 
     /*!
-     * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
+     *  \brief compute the point at minimum distance from a point `[x,y]` and the line segment
      *
-     * \param qx x-coordinate
-     * \param qy y-coordinate
-     * \param x  x-coordinate of the closest point
-     * \param y  y-coordinate of the closest point
-     * \param s  param of the closest point
-     * \return the distance point-segment
+     *  \param qx  x-coordinate
+     *  \param qy  y-coordinate
+     *  \param x   x-coordinate of the closest point
+     *  \param y   y-coordinate of the closest point
+     *  \param s   param of the closest point
+     *  \param t   signed distance if projection is orthogonal to segment
+     *  \param dst signed distance from the segment
+     *  \return 1 = point is projected orthogonal
+     *          0 = more than one projection (first returned)
+     *         -1 = minimum point is not othogonal projection to curve
      */
 
     virtual

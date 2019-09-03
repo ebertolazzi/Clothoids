@@ -128,6 +128,15 @@ classdef ClothoidList < CurveBase
                                 self.objectHandle, qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function iseg = closestSegment( self, qx, qy )
+      iseg = ClothoidListMexWrapper( 'closestSegment', self.objectHandle, qx, qy );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ icurve, x, y, s, t, iflag, dst ] = closestPointInRange( self, qx, qy, ibegin, iend, varargin )
+      [ icurve, x, y, s, t, iflag, dst ] = ...
+         ClothoidListMexWrapper( 'closestPointInRange', self.objectHandle, qx, qy, ibegin, iend, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function export_table( self, filename )
       ClothoidListMexWrapper( 'export_table', self.objectHandle, filename );
     end
