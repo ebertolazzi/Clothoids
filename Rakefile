@@ -17,6 +17,13 @@ CLEAN.include   ["./**/*.o", "./**/*.obj", "./bin/**/example*", "./build"]
 CLOBBER.include []
 CLEAN.exclude('**/[cC][oO][rR][eE]')
 
+cmakeversion = %x( cmake --version ).scan(/\d+\.\d+/).last
+if cmakeversion >= "3.12" then
+  PARALLEL = '--parallel 8 '
+else
+  PARALLEL = ''
+end
+
 LIB_NAME="Clothoids"
 
 task :default => [:build]
@@ -76,28 +83,30 @@ task :build, [:gc_dir,:executable] do |t, args|
   if args.executable.to_s == "yes" then
     cmd += ' -DBUILD_EXECUTABLE=true'
   end
-  cmd += " .."
+  cmd += ' '+PARALLEL+'..'
 
   puts "\n\nPrepare #{LIB_NAME} project".green
 
   sh cmd
 
   puts "\n\nCompile #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug --target install'
-  FileUtils.cp "../lib/lib#{LIB_NAME}.a", "../lib/lib#{LIB_NAME}_debug.a"  
+  sh 'cmake --build . --config Debug --target install '+PARALLEL
+  FileUtils.cp "../lib/lib#{LIB_NAME}.a", "../lib/lib#{LIB_NAME}_debug.a"
 
   puts "\n\nCompile #{LIB_NAME} Release".green
-  sh 'cmake --build . --config Release --target install'
+  sh 'cmake --build . --config Release --target install '+PARALLEL
   FileUtils.cd '..'
 
 end
 
 desc "compile for Visual Studio [default year=2017 bits=x64 gc_dir=./GC executable=no]"
 task :build_win, [:year, :bits, :gc_dir, :executable ] do |t, args|
-  args.with_defaults( :year       => "2017",
-                      :bits       => "x64",
-                      :gc_dir     => './GC',
-                      :executable => 'no', )
+  args.with_defaults(
+    :year       => "2017",
+    :bits       => "x64",
+    :gc_dir     => './GC',
+    :executable => 'no'
+  )
 
   if args.gc_dir == './GC' then
     puts "\n\nBuild submodule GenericContainer".green
@@ -124,7 +133,7 @@ task :build_win, [:year, :bits, :gc_dir, :executable ] do |t, args|
   if args.executable.to_s == "yes" then
     tmp += ' -DBUILD_EXECUTABLE=true'
   end
-  tmp += " .."
+  tmp += ' '+PARALLEL+'..'
 
   win32_64 = ''
   case args.bits
@@ -150,12 +159,12 @@ task :build_win, [:year, :bits, :gc_dir, :executable ] do |t, args|
   FileUtils.mkdir_p "../lib"
 
   puts "\n\nCompile #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug --target install'
+  sh 'cmake --build . --config Debug --target install '+PARALLEL
   FileUtils.cp "Debug/#{LIB_NAME}.lib", "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}_debug.lib"
 
   puts "\n\nCompile #{LIB_NAME} Release".green
-  sh 'cmake --build . --config Release  --target install'
-  FileUtils.cp "Release/#{LIB_NAME}.lib", "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}.lib"  
+  sh 'cmake --build . --config Release --target install '+PARALLEL
+  FileUtils.cp "Release/#{LIB_NAME}.lib", "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}.lib"
 
   FileUtils.cd '..'
 
