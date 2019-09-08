@@ -40,12 +40,24 @@ FOREACH (F ${S})
   LIST( APPEND HEADERS ${RF} )
 ENDFOREACH (F ${S})
 
-INCLUDE(FindLua)
+SET( LUA_FOUND false )
+
+MESSAGE(STATUS "Adding Lua Path")
+IF (WIN32)
+  SET( LUA_FOUND true )
+  SET( LUA_INCLUDE_DIR ../../os_win/include/MechatronixCore )
+ENDIF (WIN32)
+IF (UNIX)
+  SET( LUA_FOUND true )
+  SET( LUA_INCLUDE_DIR ../../os_linux/include/MechatronixCore )
+ENDIF (UNIX)
+IF (APPLE)
+  SET( LUA_FOUND true )
+  SET( LUA_INCLUDE_DIR ../../os_mac/include/MechatronixCore )
+ENDIF(APPLE)
 
 IF ( LUA_FOUND )
   MESSAGE(STATUS "Adding Lua Support")
-  MESSAGE(STATUS "LUA_INCLUDE_DIR = ${LUA_INCLUDE_DIR}")
-  add_definitions(-DUSE_SYSTEM_LUA )
   FILE( GLOB S ./src_lua_interface/*.cc )
   FOREACH (F ${S})
     FILE( RELATIVE_PATH RF ${CMAKE_CURRENT_SOURCE_DIR} "${F}" )
@@ -75,12 +87,10 @@ ENDIF()
 
 ADD_LIBRARY( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
 
-INSTALL(
-  TARGETS ${TARGET}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-  LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}
-)
+INSTALL( TARGETS ${TARGET}
+         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+         LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
+         ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX} )
 
 INSTALL(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 
@@ -92,36 +102,36 @@ IF( BUILD_EXECUTABLE )
 
   ADD_EXECUTABLE( example1 examples/example1.cc ${HEADERS} )
   TARGET_LINK_LIBRARIES( example1 ${TARGET} )
-
+  
   ADD_EXECUTABLE( example2 examples/example2.cc ${HEADERS} )
   TARGET_LINK_LIBRARIES( example2 ${TARGET} )
-
+  
   ADD_EXECUTABLE( example3 examples/example3.cc ${HEADERS} )
   TARGET_LINK_LIBRARIES( example3 ${TARGET} )
-
+  
   ADD_EXECUTABLE( example4 examples/example4.cc ${HEADERS} )
   TARGET_LINK_LIBRARIES( example4 ${TARGET} )
-
+  
   ADD_EXECUTABLE( example5 examples/example5.cc ${HEADERS} )
   TARGET_LINK_LIBRARIES( example5 ${TARGET} )
-
+  
   ADD_EXECUTABLE( example6 examples/example6.c  ${HEADERS} ) # IT'S C!
   TARGET_LINK_LIBRARIES( example6 ${TARGET} )
-
+  
   ADD_EXECUTABLE( example7 examples/example7.cc ${HEADERS} )
   TARGET_LINK_LIBRARIES( example7 ${TARGET} )
-
+  
   IF ( LUA_FOUND )
     ADD_EXECUTABLE( example8 examples/example8.cc ${HEADERS} )
     TARGET_LINK_LIBRARIES( example8 ${TARGET} ${LUA_LIBRARIES} )
-
+  
     ADD_EXECUTABLE( example9 examples/example9.cc ${HEADERS} )
     TARGET_LINK_LIBRARIES( example9 ${TARGET} ${LUA_LIBRARIES} )
-
+  
     ADD_EXECUTABLE( example10 examples/example10.cc ${HEADERS} )
     TARGET_LINK_LIBRARIES( example10 ${TARGET} ${LUA_LIBRARIES} )
   ENDIF()
-
+  
   ADD_EXECUTABLE( example11 examples/example11.cc ${HEADERS} )
   TARGET_LINK_LIBRARIES( example11 ${TARGET} )
 
