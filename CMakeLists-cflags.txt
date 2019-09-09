@@ -1,6 +1,5 @@
 SET( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
 SET( CMAKE_VERBOSE_MAKEFILE            TRUE )
-SET( CMAKE_BUILD_TYPE                  Release )
 
 # /Gd Uses the __cdecl calling convention (x86 only).
 # /Gr	Uses the __fastcall calling convention (x86 only).
