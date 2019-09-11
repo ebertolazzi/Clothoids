@@ -81,33 +81,10 @@ task :build_win, [:year, :bits] do |t, args|
   if COMPILE_DEBUG then
     sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Debug ..'
     sh 'cmake --build . --config Debug --target install '+PARALLEL
-    FileUtils.cp_r './lib/dll', '../lib/' if Dir.exist?('./lib/dll')
-    Dir['./lib/bin/*'].each do |f|
-      FileUtils.cp f, '../lib/bin/'+args.bits+'/'+File.basename(f)
-    end
-    Dir['./lib/lib/*'].each do |f|
-      if /\_static.*\.lib$/.match(f) then
-        FileUtils.cp f, '../lib/lib/'+File.basename(f)
-      else
-        FileUtils.cp f, '../lib/dll/'+File.basename(f)
-      end
-    end
   end
 
   sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Release ..'
   sh 'cmake  --build . --config Release  --target install '+PARALLEL
-  FileUtils.cp_r './lib/dll', '../lib/' if Dir.exist?('./lib/dll')
-  Dir['./lib/bin/*'].each do |f|
-    FileUtils.cp f, '../lib/bin/'+args.bits+'/'+File.basename(f)
-  end
-  Dir['./lib/lib/*'].each do |f|
-    if /\_static.*\.lib$/.match(f) then
-      FileUtils.cp f, '../lib/lib/'+File.basename(f)
-    else
-      FileUtils.cp f, '../lib/dll/'+File.basename(f)
-    end
-  end
-  FileUtils.cp_r './lib/include', '../lib/' if Dir.exist?('./lib/include')
   FileUtils.cd '..'
 
 end
