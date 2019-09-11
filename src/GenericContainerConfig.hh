@@ -26,8 +26,10 @@
 
 #if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
   #define GENERIC_CONTAINER_ON_WINDOWS
-  //#pragma comment(lib, "kernel32.lib")
-  //#pragma comment(lib, "user32.lib")
+  #ifdef _MSC_VER
+    #pragma comment(lib, "kernel32.lib")
+    #pragma comment(lib, "user32.lib")
+  #endif
 #endif
 
 // check if compiler is C++11
