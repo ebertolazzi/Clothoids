@@ -11,9 +11,32 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-SET( TARGET GenericContainer )
+IF ( CMAKE_BUILD_TYPE STREQUAL "Debug" )
+  SET( DEBUG_SUFFIX "_debug" )
+ELSE()
+  SET( DEBUG_SUFFIX )
+ENDIF()
 
-PROJECT( ${TARGET} CXX C )
+IF ( BUILD_SHARED )
+  IF ( APPLE )
+    SET( TARGET GenericContainer_osx${DEBUG_SUFFIX} )
+  ELSEIF( LINUX OR UNIX )
+    SET( TARGET GenericContainer_linux${DEBUG_SUFFIX} )
+  ELSE()
+    SET( TARGET GenericContainer_win${BITS}${DEBUG_SUFFIX} )
+    SET( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
+  ENDIF()
+ENDIF()
+
+IF ( APPLE )
+  SET( TARGETS GenericContainer_osx_static${DEBUG_SUFFIX} )
+ELSEIF( LINUX OR UNIX )
+  SET( TARGETS GenericContainer_linux_static${DEBUG_SUFFIX} )
+ELSE()
+  SET( TARGETS GenericContainer_win${BITS}_static${DEBUG_SUFFIX} )
+ENDIF()
+
+PROJECT( GenericContainer CXX C )
 
 INCLUDE( "CMakeLists-cflags.txt" )
 
@@ -39,7 +62,6 @@ FOREACH (F ${S})
   FILE( RELATIVE_PATH RF ${CMAKE_CURRENT_SOURCE_DIR} "${F}" )
   LIST( APPEND HEADERS ${RF} )
 ENDFOREACH (F ${S})
-
 
 INCLUDE( "CMakeLists-lua.txt" )
 
@@ -94,7 +116,7 @@ ELSE()
   )
 ENDIF()
 
-##INSTALL(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+INSTALL( FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include )
 
 IF( BUILD_EXECUTABLE )
 
