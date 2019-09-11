@@ -1,0 +1,3 @@
+COMPILE_DEBUG      = false
+COMPILE_DYNAMIC    = false
+COMPILE_EXECUTABLE = false

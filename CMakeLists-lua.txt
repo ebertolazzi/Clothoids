@@ -1,0 +1,2 @@
+find_package(Lua REQUIRED)
+ADD_DEFINITIONS( -DUSE_SYSTEM_LUA )

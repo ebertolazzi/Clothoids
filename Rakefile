@@ -1,7 +1,3 @@
-#
-#
-#
-
 %w(colorize rake fileutils).each do |gem|
   begin
     require gem
@@ -17,80 +13,46 @@ CLEAN.include   ["./**/*.o", "./**/*.obj", "./bin/**/example*", "./build"]
 CLOBBER.include []
 CLEAN.exclude('**/[cC][oO][rR][eE]')
 
-verbose(false)
+require_relative "./Rakefile_common.rb"
 
-cmakeversion = %x( cmake --version ).scan(/\d+\.\d+/).last
-if cmakeversion >= "3.12" then
-  PARALLEL = '--parallel 8 '
-else
-  PARALLEL = ''
-end
+TESTS = [
+  "example1",
+  "example2",
+  "example3",
+  "example4",
+  "example5",
+  "example6",
+  "example7",
+  "example8",
+  "example9",
+  "example10",
+  "example11"
+]
 
-task :default => [:build]
-
-LIB_NAME="GenericContainer"
-
-desc "run tests"
+"run tests on linux/osx"
 task :run do
-	sh "./bin/example1"
-	sh "./bin/example2"
-	sh "./bin/example3"
-	sh "./bin/example4"
-	sh "./bin/example5"
-	sh "./bin/example6"
-	sh "./bin/example7"
-	sh "./bin/example8"
-	sh "./bin/example9"
-	sh "./bin/example10"
-	sh "./bin/example11"
-end
-
-desc "run tests"
-task :run_win do
-	sh "./bin/Release/example1"
-	sh "./bin/Release/example2"
-	sh "./bin/Release/example3"
-	sh "./bin/Release/example4"
-	sh "./bin/Release/example5"
-	sh "./bin/Release/example6"
-	sh "./bin/Release/example7"
-	sh "./bin/Release/example8"
-	sh "./bin/Release/example9"
-	sh "./bin/Release/example10"
-	sh "./bin/Release/example11"
-end
-
-desc "compile for UNIX/OSX"
-task :build, [:executable] do |t, args|
-  args.with_defaults(:executable => "no" )
-
-  FileUtils.rm_rf   "build"
-  FileUtils.mkdir_p "build"
-  FileUtils.cd      "build"
-
-  puts "\n\nPrepare #{LIB_NAME} project".green
-
-  if args.executable.to_s == "yes" then
-    sh 'cmake -DBUILD_EXECUTABLE=true -DCMAKE_INSTALL_PREFIX:PATH=../lib ' + PARALLEL + '..'
-  else
-    sh 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib ' + PARALLEL + '..'
+  TESTS.each do |cmd|
+    sh "./bin/#{cmd}"
   end
-
-  puts "\n\nBuild #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug --target install ' + PARALLEL
-  FileUtils.cp "../lib/lib#{LIB_NAME}.a", "../lib/lib#{LIB_NAME}_debug.a"
-
-  puts "\n\nBuild #{LIB_NAME} Release".green
-  sh 'cmake --build . --config Release --target install ' + PARALLEL
-  FileUtils.cd '..'
-
 end
 
-desc "compile for Visual Studio [default year=2017 bits=x64]"
-task :build_win, [:year, :bits, :executable] do |t, args|
-  args.with_defaults( :year => "2017", :bits => "x64", :executable => "no" )
+desc "run tests (Release) on windows"
+task :run_win do
+  TESTS.each do |cmd|
+    sh "bin\\Release\\#{cmd}.exe"
+  end
+end
 
-  puts "\n\nPrepare #{LIB_NAME} project".green
+desc "run tests (Debug) on windows"
+task :run_win_debug do
+  TESTS.each do |cmd|
+    sh "bin\\Debug\\#{cmd}.exe"
+  end
+end
+
+desc "compile for Visual Studio [default year=2017, bits=x64]"
+task :build_win, [:year, :bits] do |t, args|
+  args.with_defaults( :year => "2017", :bits => "x64" )
 
   dir = "vs_#{args.year}_#{args.bits}"
 
@@ -98,47 +60,101 @@ task :build_win, [:year, :bits, :executable] do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  tmp = " -DBITS=#{args.bits} -DYEAR=#{args.year} "
-
-  if args.executable.to_s == "yes" then
-    tmp += ' -DBUILD_EXECUTABLE=true'
-  end
-
-  tmp += ' -DCMAKE_INSTALL_PREFIX:PATH=..\lib ..'
-
-  win32_64 = ''
-  case args.bits
-  when /x64/
-    win32_64 = ' Win64'
-  end
-
-  case args.year
-  when "2010"
-    sh 'cmake -G "Visual Studio 10 2010' + win32_64 +'" ' + tmp
-  when "2012"
-    sh 'cmake -G "Visual Studio 11 2012' + win32_64 +'" ' + tmp
-  when "2013"
-    sh 'cmake -G "Visual Studio 12 2013' + win32_64 +'" ' + tmp
-  when "2015"
-    sh 'cmake -G "Visual Studio 14 2015' + win32_64 +'" ' + tmp
-  when "2017"
-    sh 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
+  cmake_cmd = win_vs(args.bits,args.year)
+  if COMPILE_EXECUTABLE then
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=true '
   else
-    puts "Visual Studio year ``#{year}'' not supported!\n";
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=false '
+  end
+  if COMPILE_DYNAMIC then
+    cmake_cmd += ' -DBUILD_SHARED:VAR=true '
+  else
+    cmake_cmd += ' -DBUILD_SHARED:VAR=false '
   end
 
-  FileUtils.mkdir_p "../lib"
-  sh 'cmake --build . --config Release --target install ' + PARALLEL
+  FileUtils.mkdir_p "../lib/lib"
+  FileUtils.mkdir_p "../lib/bin"
+  FileUtils.mkdir_p "../lib/bin/"+args.bits
+  FileUtils.mkdir_p "../lib/dll"
+  FileUtils.mkdir_p "../lib/include"
 
-  libname = "#{LIB_NAME}_vs#{args.year}_#{args.bits}"
+  if COMPILE_DEBUG then
+    sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Debug ..'
+    sh 'cmake --build . --config Debug --target install '+PARALLEL
+    FileUtils.cp_r './lib/dll', '../lib/' if Dir.exist?('./lib/dll')
+    Dir['./lib/bin/*'].each do |f|
+      FileUtils.cp f, '../lib/bin/'+args.bits+'/'+File.basename(f)
+    end
+    Dir['./lib/lib/*'].each do |f|
+      if /\_static.*\.lib$/.match(f) then
+        FileUtils.cp f, '../lib/lib/'+File.basename(f)
+      else
+        FileUtils.cp f, '../lib/dll/'+File.basename(f)
+      end
+    end
+  end
 
-  puts "\n\nBuild #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug --target install ' + PARALLEL
-  FileUtils.cp "Debug/#{LIB_NAME}.lib", "../lib/#{libname}_debug.lib"
-
-  puts "\n\nBuild #{LIB_NAME} Release".green
-  FileUtils.cp "Release/#{LIB_NAME}.lib", "../lib/#{libname}.lib"
-
+  sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Release ..'
+  sh 'cmake  --build . --config Release  --target install '+PARALLEL
+  FileUtils.cp_r './lib/dll', '../lib/' if Dir.exist?('./lib/dll')
+  Dir['./lib/bin/*'].each do |f|
+    FileUtils.cp f, '../lib/bin/'+args.bits+'/'+File.basename(f)
+  end
+  Dir['./lib/lib/*'].each do |f|
+    if /\_static.*\.lib$/.match(f) then
+      FileUtils.cp f, '../lib/lib/'+File.basename(f)
+    else
+      FileUtils.cp f, '../lib/dll/'+File.basename(f)
+    end
+  end
+  FileUtils.cp_r './lib/include', '../lib/' if Dir.exist?('./lib/include')
   FileUtils.cd '..'
 
+end
+
+desc 'compile for OSX'
+task :build_osx do
+
+  dir = "build"
+
+  FileUtils.rm_rf   dir
+  FileUtils.mkdir_p dir
+  FileUtils.cd      dir
+
+  cmake_cmd = 'cmake '
+
+  if COMPILE_EXECUTABLE then
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=true '
+  else
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=false '
+  end
+  if COMPILE_DYNAMIC then
+    cmake_cmd += ' -DBUILD_SHARED:VAR=true '
+  else
+    cmake_cmd += ' -DBUILD_SHARED:VAR=false '
+  end
+
+  if COMPILE_DEBUG then
+    sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Debug ..'
+    sh 'cmake --build . --config Debug --target install '+PARALLEL
+  end
+  sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Release ..'
+  sh 'cmake --build . --config Release --target install '+PARALLEL
+  FileUtils.cd '..'
+end
+
+desc 'compile for LINUX'
+task :build_linux => [ :build_osx ] do
+end
+
+desc "clean for OSX"
+task :clean_osx do
+end
+
+desc "clean for LINUX"
+task :clean_linux do
+end
+
+desc "clean for WINDOWS"
+task :clean_win do
 end
