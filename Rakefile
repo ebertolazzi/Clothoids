@@ -1,8 +1,4 @@
-#
-#
-#
-
-%w( colorize rake fileutils ).each do |gem|
+%w(colorize rake fileutils).each do |gem|
   begin
     require gem
   rescue LoadError
@@ -11,161 +7,154 @@
   end
 end
 
-require "rake/clean"
-
-CLEAN.include   ["./**/*.o", "./**/*.obj", "./bin/**/example*", "./build"]
-CLOBBER.include []
-CLEAN.exclude('**/[cC][oO][rR][eE]')
-
-cmakeversion = %x( cmake --version ).scan(/\d+\.\d+/).last
-if cmakeversion >= "3.12" then
-  PARALLEL = '--parallel 8 '
-else
-  PARALLEL = ''
-end
-
-LIB_NAME="Clothoids"
+require_relative "./Rakefile_common.rb"
 
 task :default => [:build]
 
-desc "run tests"
+task :mkl, [:year, :bits] do |t, args|
+  args.with_defaults(:year => "2017", :bits => "x64" )
+  sh "'C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/bin/compilervars.bat' -arch #{args.bits} vs#{args.year}shell"
+end
+
+TESTS = [
+  "testBiarc",
+  "testDistance",
+  "testG2",
+  "testG2plot",
+  "testG2stat",
+  "testG2stat2arc",
+  "testG2statCLC",
+  "testIntersect",
+  "testPolyline",
+  "testTriangle2D"
+]
+
+"run tests on linux/osx"
 task :run do
-  sh "./bin/testBiarc"
-  sh "./bin/testDistance"
-  sh "./bin/testG2"
-  sh "./bin/testG2plot"
-  sh "./bin/testG2stat"
-  sh "./bin/testG2stat2arc"
-  sh "./bin/testG2statCLC"
-  sh "./bin/testIntersect"
-  sh "./bin/testPolyline"
-  sh "./bin/testTriangle2D"
+  TESTS.each do |cmd|
+    sh "./bin/#{cmd}"
+  end
 end
 
-desc "run tests"
+desc "run tests (Release) on windows"
 task :run_win do
-  sh "./bin/Release/testBiarc"
-  sh "./bin/Release/testDistance"
-  sh "./bin/Release/testG2"
-  sh "./bin/Release/testG2plot"
-  sh "./bin/Release/testG2stat"
-  sh "./bin/Release/testG2stat2arc"
-  sh "./bin/Release/testG2statCLC"
-  sh "./bin/Release/testIntersect"
-  sh "./bin/Release/testPolyline"
-  sh "./bin/Release/testTriangle2D"
+  TESTS.each do |cmd|
+    sh "bin\\Release\\#{cmd}.exe"
+  end
 end
 
-
-desc "compile for UNIX/OSX [default GC='./GC',executable='no']"
-task :build, [:gc_dir,:executable] do |t, args|
-
-  args.with_defaults( :gc_dir => './GC', :executable => "no" )
-
-  if args.gc_dir == './GC' then
-    puts "\n\nBuild submodule GenericContainer".green
-    FileUtils.rm_rf "GC"
-    sh "git clone -b develop --depth 1 https://github.com/ebertolazzi/GenericContainer.git GC"
-    FileUtils.cd "GC"
-    FileUtils.cp "../CMakeLists-cflags.txt", "CMakeLists-cflags.txt"
-    sh "rake build"
-    FileUtils.cd ".."
-  else
-    puts "\n\nUse GenericContainer at #{args.gc_dir}".green
+desc "run tests (Debug) on windows"
+task :run_win_debug do
+  TESTS.each do |cmd|
+    sh "bin\\Debug\\#{cmd}.exe"
   end
-
-  FileUtils.rm_rf   "lib"
-  FileUtils.rm_rf   "build"
-  FileUtils.mkdir_p "build"
-  FileUtils.cd      "build"
-
-  cmd = 'cmake -DCMAKE_INSTALL_PREFIX:PATH=../lib'
-  if args.executable.to_s == "yes" then
-    cmd += ' -DBUILD_EXECUTABLE=true'
-  end
-  cmd += ' '+PARALLEL+'..'
-
-  puts "\n\nPrepare #{LIB_NAME} project".green
-
-  sh cmd
-
-  puts "\n\nCompile #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug --target install '+PARALLEL
-  FileUtils.cp "../lib/lib#{LIB_NAME}.a", "../lib/lib#{LIB_NAME}_debug.a"
-
-  puts "\n\nCompile #{LIB_NAME} Release".green
-  sh 'cmake --build . --config Release --target install '+PARALLEL
-  FileUtils.cd '..'
-
 end
 
-desc "compile for Visual Studio [default year=2017 bits=x64 gc_dir=./GC executable=no]"
-task :build_win, [:year, :bits, :gc_dir, :executable ] do |t, args|
-  args.with_defaults(
-    :year       => "2017",
-    :bits       => "x64",
-    :gc_dir     => './GC',
-    :executable => 'no'
-  )
+desc "compile for Visual Studio [default year=2017, bits=x64]"
+task :build_win, [:year, :bits] do |t, args|
+  args.with_defaults( :year => "2017", :bits => "x64" )
 
-  if args.gc_dir == './GC' then
-    puts "\n\nBuild submodule GenericContainer".green
-    FileUtils.rm_rf "GC"
-    sh "git clone -b develop --depth 1 https://github.com/ebertolazzi/GenericContainer.git GC"
-    FileUtils.cd "GC"
-    FileUtils.cp "../CMakeLists-cflags.txt", "CMakeLists-cflags.txt"
-    sh "rake build"
-    FileUtils.cd ".."
-  else
-    puts "\n\nUse GenericContainer at #{args.gc_dir}".green
-  end
-
-  puts "\n\nPrepare #{LIB_NAME} project".green
   dir = "vs_#{args.year}_#{args.bits}"
 
   FileUtils.rm_rf   dir
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  tmp = " -DBITS=#{args.bits} -DYEAR=#{args.year} " +
-        ' -DCMAKE_INSTALL_PREFIX:PATH=..\lib'
-
-  if args.executable.to_s == "yes" then
-    tmp += ' -DBUILD_EXECUTABLE=true'
-  end
-  tmp += ' '+PARALLEL+'..'
-
-  win32_64 = ''
-  case args.bits
-  when /x64/
-    win32_64 = ' Win64'
-  end
-
-  case args.year
-  when "2010"
-    sh 'cmake -G "Visual Studio 10 2010' + win32_64 +'" ' + tmp
-  when "2012"
-    sh 'cmake -G "Visual Studio 11 2012' + win32_64 +'" ' + tmp
-  when "2013"
-    sh 'cmake -G "Visual Studio 12 2013' + win32_64 +'" ' + tmp
-  when "2015"
-    sh 'cmake -G "Visual Studio 14 2015' + win32_64 +'" ' + tmp
-  when "2017"
-    sh 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
+  cmake_cmd = win_vs(args.bits,args.year)
+  if COMPILE_EXECUTABLE then
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=true '
   else
-    puts "Visual Studio year #{year} not supported!\n";
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=false '
+  end
+  if COMPILE_DYNAMIC then
+    cmake_cmd += ' -DBUILD_SHARED:VAR=true '
+  else
+    cmake_cmd += ' -DBUILD_SHARED:VAR=false '
   end
 
-  FileUtils.mkdir_p "../lib"
+  FileUtils.mkdir_p "../lib/lib"
+  FileUtils.mkdir_p "../lib/bin"
+  FileUtils.mkdir_p "../lib/bin/"+args.bits
+  FileUtils.mkdir_p "../lib/dll"
+  FileUtils.mkdir_p "../lib/include"
 
-  puts "\n\nCompile #{LIB_NAME} Debug".green
-  sh 'cmake --build . --config Debug --target install '+PARALLEL
-  FileUtils.cp "Debug/#{LIB_NAME}.lib", "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}_debug.lib"
+  if COMPILE_DEBUG then
+    sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Debug ..'
+    sh 'cmake --build . --config Debug --target install '+PARALLEL
+    FileUtils.cp_r './lib/dll', '../lib/' if Dir.exist?('./lib/dll')
+    Dir['./lib/bin/*'].each do |f|
+      FileUtils.cp f, '../lib/bin/'+args.bits+'/'+File.basename(f)
+    end
+    Dir['./lib/lib/*'].each do |f|
+      if /\_static.*\.lib$/.match(f) then
+        FileUtils.cp f, '../lib/lib/'+File.basename(f)
+      else
+        FileUtils.cp f, '../lib/dll/'+File.basename(f)
+      end
+    end
+  end
 
-  puts "\n\nCompile #{LIB_NAME} Release".green
-  sh 'cmake --build . --config Release --target install '+PARALLEL
-  FileUtils.cp "Release/#{LIB_NAME}.lib", "../lib/#{LIB_NAME}_vs#{args.year}_#{args.bits}.lib"
-
+  sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Release ..'
+  sh 'cmake  --build . --config Release  --target install '+PARALLEL
+  FileUtils.cp_r './lib/dll', '../lib/' if Dir.exist?('./lib/dll')
+  Dir['./lib/bin/*'].each do |f|
+    FileUtils.cp f, '../lib/bin/'+args.bits+'/'+File.basename(f)
+  end
+  Dir['./lib/lib/*'].each do |f|
+    if /\_static.*\.lib$/.match(f) then
+      FileUtils.cp f, '../lib/lib/'+File.basename(f)
+    else
+      FileUtils.cp f, '../lib/dll/'+File.basename(f)
+    end
+  end
+  FileUtils.cp_r './lib/include', '../lib/' if Dir.exist?('./lib/include')
   FileUtils.cd '..'
 
+end
+
+desc 'compile for OSX'
+task :build_osx do
+
+  dir = "build"
+
+  FileUtils.rm_rf   dir
+  FileUtils.mkdir_p dir
+  FileUtils.cd      dir
+
+  cmake_cmd = 'cmake '
+
+  if COMPILE_EXECUTABLE then
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=true '
+  else
+    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=false '
+  end
+  if COMPILE_DYNAMIC then
+    cmake_cmd += ' -DBUILD_SHARED:VAR=true '
+  else
+    cmake_cmd += ' -DBUILD_SHARED:VAR=false '
+  end
+
+  if COMPILE_DEBUG then
+    sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Debug ..'
+    sh 'cmake --build . --config Debug --target install '+PARALLEL
+  end
+  sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Release ..'
+  sh 'cmake --build . --config Release --target install '+PARALLEL
+  FileUtils.cd '..'
+end
+
+desc 'compile for LINUX'
+task :build_linux => [ :build_osx ] do
+end
+
+desc "clean for OSX"
+task :clean_osx do
+end
+
+desc "clean for LINUX"
+task :clean_linux do
+end
+
+desc "clean for WINDOWS"
+task :clean_win do
 end
