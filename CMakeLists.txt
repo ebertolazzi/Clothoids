@@ -63,7 +63,7 @@ FOREACH (F ${S})
   LIST( APPEND HEADERS ${RF} )
 ENDFOREACH (F ${S})
 
-INCLUDE( "CMakeLists-lua.txt" )
+INCLUDE( "./CMakeLists-lua.txt" )
 
 IF ( LUA_FOUND )
   MESSAGE(STATUS "Adding Lua Support")

@@ -1,2 +1,4 @@
-find_package(Lua REQUIRED)
-ADD_DEFINITIONS( -DUSE_SYSTEM_LUA )
+find_package(Lua)
+IF ( LUA_FOUND )
+  ADD_DEFINITIONS( -DUSE_SYSTEM_LUA )
+ENDIF()
