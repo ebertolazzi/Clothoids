@@ -896,9 +896,11 @@ namespace G2lib {
     real_type S  = sin(phi);
     real_type dx = (xM + 1) / Lscale;
     real_type dy = yM / Lscale;
-    SM.build( x0 + C * dx - S * dy,
-              y0 + C * dy + S * dx,
-              thM + phi, KM, dKM, 2*LM );
+    SM.build(
+      x0 + C * dx - S * dy,
+      y0 + C * dy + S * dx,
+      thM + phi, KM, dKM, 2*LM
+    );
     SM.changeCurvilinearOrigin( -LM, 2*LM );
   }
 
@@ -1358,12 +1360,16 @@ namespace G2lib {
     case P3:
       break;
     case P4:
-      cL.build_G1_D( x[0], y[0], theta[0],
-                     x[1], y[1], theta[1],
-                     LL_D, kL_D, dkL_D );
-      cR.build_G1_D( x[ne1], y[ne1], theta[ne1],
-                     x[ne],  y[ne],  theta[ne],
-                     LR_D, kR_D, dkR_D );
+      cL.build_G1_D(
+        x[0], y[0], theta[0],
+        x[1], y[1], theta[1],
+        LL_D, kL_D, dkL_D
+      );
+      cR.build_G1_D(
+        x[ne1], y[ne1], theta[ne1],
+        x[ne],  y[ne],  theta[ne],
+        LR_D, kR_D, dkR_D
+      );
       {
         real_type dkL = cL.dkappa();
         real_type dkR = cR.dkappa();
@@ -1374,12 +1380,16 @@ namespace G2lib {
       }
       break;
     case P5:
-      cL.build_G1_D( x[0], y[0], theta[0],
-                     x[1], y[1], theta[1],
-                     LL_D, kL_D, dkL_D );
-      cR.build_G1_D( x[ne1], y[ne1], theta[ne1],
-                     x[ne],  y[ne],  theta[ne],
-                     LR_D, kR_D, dkR_D );
+      cL.build_G1_D(
+        x[0], y[0], theta[0],
+        x[1], y[1], theta[1],
+        LL_D, kL_D, dkL_D
+      );
+      cR.build_G1_D(
+        x[ne1], y[ne1], theta[ne1],
+        x[ne],  y[ne],  theta[ne],
+        LR_D, kR_D, dkR_D
+      );
       g[0]   = LL_D[0];
       g[1]   = LL_D[1];
       g[ne1] = LR_D[0];
@@ -1388,9 +1398,11 @@ namespace G2lib {
     case P6:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         g[j]   += L_D[0];
         g[j+1] += L_D[1];
       }
@@ -1398,9 +1410,11 @@ namespace G2lib {
     case P7:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         real_type Len  = c.length();
         real_type L2   = Len*Len;
         real_type L3   = Len*L2;
@@ -1427,9 +1441,11 @@ namespace G2lib {
     case P8:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         real_type Len  = c.length();
         real_type dkur = c.dkappa();
         g[j]   += (2*Len*dk_D[0] + L_D[0]*dkur)*dkur;
@@ -1439,9 +1455,11 @@ namespace G2lib {
     case P9:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         real_type Len  = c.length();
         real_type kur  = c.kappaBegin();
         real_type k2   = kur*kur;
@@ -1598,7 +1616,11 @@ namespace G2lib {
 
     for ( int_type j = 0; j < ne; ++j ) {
       real_type L_D[2], k_D[2], dk_D[2];
-      cc.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D );
+      cc.build_G1_D(
+        x[j],   y[j],   theta[j],
+        x[j+1], y[j+1], theta[j+1],
+        L_D, k_D, dk_D
+      );
       k[j]    = cc.kappaBegin();
       dk[j]   = cc.dkappa();
       L[j]    = cc.length();
