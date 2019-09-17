@@ -163,6 +163,8 @@ def win_vs( bits, year )
     tmp = 'cmake -G "Visual Studio 14 2015' + win32_64 +'" ' + tmp
   when "2017"
     tmp = 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
+  when "2019"
+    tmp = 'cmake -G "Visual Studio 16 2019' + win32_64 +'" ' + tmp
   else
     puts "Visual Studio year #{year} not supported!\n";
     return ""
