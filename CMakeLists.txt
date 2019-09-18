@@ -10,6 +10,8 @@
 ############################################################################
 
 cmake_minimum_required(VERSION 3.5)
+SET( CMAKE_VERBOSE_MAKEFILE OFF )
+SET( CMAKE_INSTALL_MESSAGE NEVER )
 
 IF ( CMAKE_BUILD_TYPE STREQUAL "Debug" )
   SET( DEBUG_SUFFIX "_debug" )
