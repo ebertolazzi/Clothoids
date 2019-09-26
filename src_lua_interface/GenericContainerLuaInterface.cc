@@ -333,7 +333,9 @@ namespace GenericContainerNamespace {
   LuaInterpreter::LuaInterpreter() {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L));
     L = luaL_newstate(); // opens Lua
-    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::LuaInterpreter() lua_State invalid!" );
+    GC_ASSERT_DEBUG(
+      L != nullptr, "LuaInterpreter::LuaInterpreter() lua_State invalid!"
+    )
     luaL_openlibs(L);
   }
 
@@ -341,7 +343,9 @@ namespace GenericContainerNamespace {
 
   LuaInterpreter::~LuaInterpreter() {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L));
-    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::~LuaInterpreter() lua_State invalid!" );
+    GC_ASSERT_DEBUG(
+      L != nullptr, "LuaInterpreter::~LuaInterpreter() lua_State invalid!"
+    )
     lua_close(L);
   }
 
@@ -350,11 +354,17 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::do_file( char const filename[] ) {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L));
-    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::do_file('" << filename <<
-                                "')\nlua_State invalid!" );
+    GC_ASSERT_DEBUG(
+      L != nullptr,
+      "LuaInterpreter::do_file('" << filename <<
+      "')\nlua_State invalid!"
+    )
     if ( luaL_loadfile(L, filename) || lua_pcall(L, 0, 0, 0)  ) {
-      GC_ASSERT( lua_isnil(L,-1),
-                 "In LuaInterpreter::do_file('" << filename << "')\n" << lua_tostring(L, -1) );
+      GC_ASSERT(
+        lua_isnil(L,-1),
+        "In LuaInterpreter::do_file('" << filename <<
+        "')\n" << lua_tostring(L, -1)
+      )
     }
   }
 
@@ -363,11 +373,13 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::execute( char const cmd[] ) {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L));
-    GC_ASSERT( L != nullptr &&
-               !luaL_loadbuffer(L, cmd, strlen(cmd), "line") &&
-               !lua_pcall(L, 0, 0, 0),
-               "In LuaInterpreter::execute('" << cmd <<
-               "')\ncannot run the command or lua_State invalid" );
+    GC_ASSERT(
+      L != nullptr &&
+      !luaL_loadbuffer(L, cmd, strlen(cmd), "line") &&
+      !lua_pcall(L, 0, 0, 0),
+      "In LuaInterpreter::execute('" << cmd <<
+      "')\ncannot run the command or lua_State invalid"
+    )
   }
 
   // -----------------------------------------------------------------------------
@@ -385,8 +397,10 @@ namespace GenericContainerNamespace {
     GC_to_lua( L, args );
 
     /* do the call (1 arguments, 1 result) */
-    GC_ASSERT( lua_pcall(L, 1, 1, 0) == 0,
-               "GenericContainer: error running function `" << fname << "'\n");
+    GC_ASSERT(
+      lua_pcall(L, 1, 1, 0) == 0,
+      "GenericContainer: error running function `" << fname << "'\n"
+    )
 
     /* retrieve result */
     lua_to_GC( L, res );
@@ -397,11 +411,16 @@ namespace GenericContainerNamespace {
   void
   LuaInterpreter::global_to_GC( char const global_var[], GenericContainer & gc ) {
     lua_State *& L = *(reinterpret_cast<lua_State**>(&void_L));
-    GC_ASSERT_DEBUG( L != nullptr, "LuaInterpreter::global_to_GC(...) lua_State invalid!" );
+    GC_ASSERT_DEBUG(
+      L != nullptr, "LuaInterpreter::global_to_GC(...) lua_State invalid!"
+    )
       
     lua_getglobal( L, global_var );
-    GC_ASSERT( !lua_isnil(L,-1),
-               "LuaInterpreter::global_to_GC(...) cannot find global variable: '" << global_var << "'" );
+    GC_ASSERT(
+      !lua_isnil(L,-1),
+      "LuaInterpreter::global_to_GC(...) cannot find global variable: '" <<
+      global_var << "'"
+    )
 
     gc.clear();
     switch( lua_type(L, -1) ) {
@@ -424,9 +443,10 @@ namespace GenericContainerNamespace {
       lua_settop(L, 0);
       break;
     default:
-      GC_ASSERT( false,
-                 "LuaInterpreter::global_to_GC(...) global variable '" <<
-                 global_var << "' cannot be converted!" );
+      GC_DO_ERROR(
+        "LuaInterpreter::global_to_GC(...) global variable '" <<
+        global_var << "' cannot be converted!"
+      )
 
     }
 

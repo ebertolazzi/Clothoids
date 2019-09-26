@@ -30,10 +30,12 @@ namespace GenericContainerNamespace {
   using namespace std;
 
   void
-  writeTable( vec_string_type const & headers,
-              vector_type     const & data,
-              ostream_type          & stream,
-              char const              delimiter ) {
+  writeTable(
+    vec_string_type const & headers,
+    vector_type     const & data,
+    ostream_type          & stream,
+    char const              delimiter
+  ) {
 
     unsigned ncol = unsigned(headers.size());
     unsigned nrow = unsigned(data[0].get_num_elements());
@@ -52,10 +54,12 @@ namespace GenericContainerNamespace {
   }
 
   void
-  writeTable( vec_string_type const & headers,
-              mat_real_type   const & data,
-              ostream_type          & stream,
-              char const              delimiter ) {
+  writeTable(
+    vec_string_type const & headers,
+    mat_real_type   const & data,
+    ostream_type          & stream,
+    char const              delimiter
+  ) {
 
     unsigned ncol = unsigned(data.numCols());
     unsigned nrow = unsigned(data.numRows());
@@ -74,9 +78,11 @@ namespace GenericContainerNamespace {
   }
 
   void
-  writeTableFormatted( vec_string_type const & headers,
-                       vector_type     const & data,
-                       ostream_type          & stream ) {
+  writeTableFormatted(
+    vec_string_type const & headers,
+    vector_type     const & data,
+    ostream_type          & stream
+  ) {
 
     unsigned ncol = unsigned(headers.size());
     unsigned nrow = data[0].get_num_elements();
@@ -110,9 +116,11 @@ namespace GenericContainerNamespace {
   }
 
   void
-  writeTableFormatted( vec_string_type const & headers,
-                       mat_real_type   const & data,
-                       ostream_type          & stream ) {
+  writeTableFormatted(
+    vec_string_type const & headers,
+    mat_real_type   const & data,
+    ostream_type          & stream
+  ) {
 
     unsigned ncol = unsigned(data.numCols());
     unsigned nrow = unsigned(data.numRows());

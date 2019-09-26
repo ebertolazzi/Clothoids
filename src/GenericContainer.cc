@@ -125,7 +125,7 @@ namespace GenericContainerNamespace {
       "mat_type::operator() (" << i << ", " << j <<
       ") index out of range: [0," << _numRows <<
       ") x [0," << _numCols << ")\n"
-    );
+    )
     return (*this)[std::size_t(i+j*_numRows)];
   }
 
@@ -137,7 +137,7 @@ namespace GenericContainerNamespace {
       "mat_type::operator() (" << i << ", " << j <<
       ") index out of range: [0," << _numRows <<
       ") x [0," << _numCols << ")\n"
-    );
+    )
     return (*this)[std::size_t(i+j*_numRows)];
   }
 
@@ -148,7 +148,7 @@ namespace GenericContainerNamespace {
       nc < _numCols,
       "mat_type::getColumn(" << nc <<
       ",C) column index out of range max = " << _numCols-1
-    );
+    )
     C.clear();
     C.reserve(_numRows);
     for ( unsigned i = 0; i < _numRows; ++i )
@@ -162,7 +162,7 @@ namespace GenericContainerNamespace {
       nc < _numCols,
       "mat_type::getColumn(" << nc <<
       ",C) column index out of range max = " << _numCols-1
-    );
+    )
     for ( unsigned i = 0; i < _numRows; ++i )
       *C++ = (*this)(i,nc);
   }
@@ -188,7 +188,7 @@ namespace GenericContainerNamespace {
       nr < _numRows,
       "mat_type::getRow(" << nr <<
       ",C) row index out of range max = " << _numRows-1
-    );
+    )
     for ( unsigned j = 0; j < _numCols; ++j )
       *R++ = (*this)(nr,j);
   }
@@ -566,7 +566,7 @@ namespace GenericContainerNamespace {
       tp == _data_type,
       msg << "bad data type, expect: " << typeName[tp] <<
       " but data stored is of type: " << typeName[_data_type]
-    );
+    )
   }
 
   void
@@ -616,7 +616,7 @@ namespace GenericContainerNamespace {
       GC_POINTER == _data_type || GC_NOTYPE == _data_type,
       "free_pointer() bad data type\nexpect: " << typeName[GC_POINTER] <<
       "\nbut data stored is of type: " << typeName[_data_type]
-    );
+    )
     _data.p = nullptr;
     _data_type = GC_NOTYPE;
     return *this;
@@ -988,7 +988,7 @@ namespace GenericContainerNamespace {
       _data.v->resize(_data.v->size()+1);
       _data.v->back().set_bool( val );
     } else {
-      GC_DO_ERROR( "push_bool, bad data stored: " << get_type_name() );
+      GC_DO_ERROR( "push_bool, bad data stored: " << get_type_name() )
     }
   }
 
@@ -1128,8 +1128,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
-                   "' cannot be referred as `int_type const*'" );
+      GC_DO_ERROR(
+        "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `int_type const*'"
+      )
     }
     return nullptr;
   }
@@ -1168,8 +1170,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
-                   "' cannot be referred as `int_type*'" );
+      GC_DO_ERROR(
+        "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `int_type*'"
+      )
     }
     return nullptr;
   }
@@ -1208,8 +1212,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_long_pointer, bad data type: `" << typeName[_data_type] <<
-                   "' cannot be referred as `long_type const*'" );
+      GC_DO_ERROR(
+        "get_long_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `long_type const*'"
+      )
     }
     return nullptr;
   }
@@ -1248,8 +1254,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_long_pointer, bad data type: `" << typeName[_data_type] <<
-                   "' cannot be referred as `long_type*'" );
+      GC_DO_ERROR(
+        "get_long_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `long_type*'"
+      )
     }
     return nullptr;
   }
@@ -1288,8 +1296,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_real_pointer, bad data type: `" << typeName[_data_type] <<
-                 "' cannot be referred as `real_type cont *'" );
+      GC_DO_ERROR(
+        "get_real_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `real_type cont *'"
+      )
     }
     return nullptr;
   }
@@ -1328,8 +1338,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_real_pointer, bad data type: `" << typeName[_data_type] <<
-                 "' cannot be referred as `real_type*'" );
+      GC_DO_ERROR(
+        "get_real_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `real_type*'"
+      )
     }
     return nullptr;
   }
@@ -1368,8 +1380,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
-                   "' cannot be referred as `complex_type const*'" );
+      GC_DO_ERROR(
+        "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `complex_type const*'"
+      )
     }
     return nullptr;
   }
@@ -1408,8 +1422,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_STRING:
     case GC_VECTOR:
     case GC_MAP:
-      GC_DO_ERROR( "get_int_pointer, bad data type: `" << typeName[_data_type] <<
-                   "' cannot be referred as `complex_type const*'" );
+      GC_DO_ERROR(
+        "get_int_pointer, bad data type: `" << typeName[_data_type] <<
+        "' cannot be referred as `complex_type const*'"
+      )
     }
     return nullptr;
   }
@@ -1426,7 +1442,7 @@ namespace GenericContainerNamespace {
         _data.i >= 0,
         msg << "value '" << _data.i <<
         "' cannot be converted in `unsigned'"
-      );
+      )
       v = unsigned(_data.i);
       break;
     case GC_LONG:
@@ -1434,7 +1450,7 @@ namespace GenericContainerNamespace {
         _data.l >= 0,
         msg << "value '" << _data.l <<
         "' cannot be converted in `unsigned'"
-      );
+      )
       v = unsigned(_data.l);
       break;
     case GC_REAL:
@@ -1442,7 +1458,7 @@ namespace GenericContainerNamespace {
         _data.r >= 0 && isUnsigned32(_data.r),
         msg << "value '" << _data.r <<
         "' cannot be converted in `unsigned'"
-      );
+      )
       v = unsigned(_data.r);
       break;
     case GC_COMPLEX:
@@ -1450,7 +1466,7 @@ namespace GenericContainerNamespace {
         isZero(_data.c->imag()) && isUnsigned32(_data.c->real()),
         msg << "value = (" << _data.c->real() << "," << _data.c->imag() <<
         ") cannot be converted in `unsigned'"
-      );
+      )
       v = unsigned(_data.c->real());
       break;
     case GC_NOTYPE:
@@ -1469,9 +1485,10 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-    GC_DO_ERROR( msg <<
-                 "\nbad data type: `" << typeName[_data_type] <<
-                 "' cannot be converted in `unsigned'" );
+      GC_DO_ERROR(
+        msg << "\nbad data type: `" << typeName[_data_type] <<
+        "' cannot be converted in `unsigned'"
+      )
     }
   }
 
@@ -1486,7 +1503,7 @@ namespace GenericContainerNamespace {
       GC_ASSERT(
         _data.i >= 0,
         msg << "value '" << _data.i << "' cannot be converted in `int'"
-      );
+      )
       v = _data.i;
       break;
     case GC_LONG:
@@ -1496,7 +1513,7 @@ namespace GenericContainerNamespace {
       GC_ASSERT(
         isInteger32(_data.r),
         msg << "value '" << _data.r << "' cannot be converted in `int'"
-      );
+      )
       v = int(_data.r);
       break;
     case GC_COMPLEX:
@@ -1504,7 +1521,7 @@ namespace GenericContainerNamespace {
         isZero(_data.c->imag()) && isInteger32(_data.c->real()),
         msg << "value = (" << _data.c->real() << "," << _data.c->imag() <<
         ") cannot be converted in `int'"
-      );
+      )
       v = int(_data.c->real());
       break;
     case GC_NOTYPE:
@@ -1523,9 +1540,10 @@ namespace GenericContainerNamespace {
     case GC_MAT_COMPLEX:
     case GC_VECTOR:
     case GC_MAP:
-    GC_DO_ERROR( msg <<
-                 "\nbad data type: `" << typeName[_data_type] <<
-                 "' cannot be converted in `unsigned'" );
+      GC_DO_ERROR(
+        msg << "\nbad data type: `" << typeName[_data_type] <<
+        "' cannot be converted in `unsigned'"
+      )
     }
   }
 
@@ -1542,7 +1560,7 @@ namespace GenericContainerNamespace {
         _data.i >= 0,
         msg << "value '" << _data.i <<
         "' cannot be converted in `unsigned long'"
-      );
+      )
       v = ul(_data.i);
       break;
     case GC_LONG:
@@ -1550,7 +1568,7 @@ namespace GenericContainerNamespace {
         _data.l >= 0,
         msg << "value '" << _data.l <<
         "' cannot be converted in `unsigned long'"
-      );
+      )
       v = ul(_data.l);
       break;
     case GC_REAL:
@@ -1558,7 +1576,7 @@ namespace GenericContainerNamespace {
         _data.r >= 0 && isUnsigned64(_data.r),
         msg << "value '" << _data.r <<
         "' cannot be converted in `unsigned long'"
-      );
+      )
       v = ul(_data.r);
       break;
     case GC_COMPLEX:
@@ -1566,7 +1584,7 @@ namespace GenericContainerNamespace {
         isZero(_data.c->imag()) && isUnsigned64(_data.c->real()),
         msg << "value (" << _data.c->real() << "," << _data.c->imag() <<
         ") cannot be converted in `unsigned long'"
-      );
+      )
       v = ul(_data.c->real());
       break;
     case GC_NOTYPE:
@@ -1588,7 +1606,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         msg << "\nbad data type: `" << typeName[_data_type] <<
         "' cannot be converted in `unsigned long'"
-      );
+      )
     }
   }
 
@@ -1610,7 +1628,7 @@ namespace GenericContainerNamespace {
         isInteger64(_data.r),
         msg << "value '" << _data.r <<
         "' cannot be converted in `long'"
-      );
+      )
       v = long(_data.r);
       break;
     case GC_COMPLEX:
@@ -1618,7 +1636,7 @@ namespace GenericContainerNamespace {
         isZero(_data.c->imag()) && isInteger64(_data.c->real()),
         msg << "value (" << _data.c->real() << "," << _data.c->imag() <<
         ") cannot be converted in `long'"
-      );
+      )
       v = long(_data.c->real());
       break;
     case GC_NOTYPE:
@@ -1640,7 +1658,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         msg << "\nbad data type: `" << typeName[_data_type] <<
         "' cannot be converted in `long'"
-      );
+      )
     }
   }
 
@@ -1665,7 +1683,7 @@ namespace GenericContainerNamespace {
         isZero(_data.c->imag()),
         msg << "value (" << _data.c->real() << " " << _data.c->imag() <<
         ") cannot be converted in `float'"
-      );
+      )
       v = float(_data.c->real());
       break;
     case GC_NOTYPE:
@@ -1687,7 +1705,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         msg << "\nbad data type: `" << typeName[_data_type] <<
         "' cannot be converted in `float'"
-      );
+      )
     }
   }
 
@@ -1712,7 +1730,7 @@ namespace GenericContainerNamespace {
         isZero(_data.c->imag()),
         msg << "value (" << _data.c->real() << "," << _data.c->imag() <<
         ") cannot be converted in `double'"
-      );
+      )
       v = _data.c->real();
       break;
     case GC_NOTYPE:
@@ -1734,7 +1752,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         msg << "\nbad data type: `" << typeName[_data_type] <<
         "' cannot be converted in `double'"
-      );
+      )
     }
   }
 
@@ -1926,7 +1944,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_POINTER:
     case GC_VEC_STRING:
     case GC_MAP:
-      GC_DO_ERROR( msg << "bad data type: " << typeName[_data_type] << " can't be converted to int" );
+      GC_DO_ERROR(
+        msg << "bad data type: " << typeName[_data_type] <<
+        " can't be converted to int"
+      )
     case GC_BOOL:
       return _data.b ? 1 : 0;
     case GC_INTEGER:
@@ -1936,14 +1957,14 @@ namespace GenericContainerNamespace {
         (std::abs(_data.l)>>31) == 0,
         msg << "type: " << typeName[_data_type] <<
         " value = " << _data.l << " can't be converted to int"
-      );
+      )
       return int_type(_data.l);
     case GC_REAL:
       GC_ASSERT(
         isInteger32(_data.r),
         msg << "type: " << typeName[_data_type] <<
         " value = " << _data.r << " can't be converted to int"
-      );
+      )
       return int_type(_data.r);
     case GC_COMPLEX:
       GC_ASSERT(
@@ -1951,7 +1972,7 @@ namespace GenericContainerNamespace {
         msg << "type: " << typeName[_data_type] <<
         " value = (" << _data.c->real() << "," <<  _data.c->imag() <<
         ") can't be converted to int"
-      );
+      )
       return int_type(_data.c->real());
     }
     return 0;
@@ -1977,7 +1998,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_POINTER:
     case GC_VEC_STRING:
     case GC_MAP:
-      GC_DO_ERROR( msg << "bad data type: " << typeName[_data_type] << " can't be converted to uint" );
+      GC_DO_ERROR(
+        msg << "bad data type: " << typeName[_data_type] <<
+        " can't be converted to uint"
+      )
     case GC_BOOL:
       return _data.b ? 1 : 0;
     case GC_INTEGER:
@@ -1985,21 +2009,21 @@ namespace GenericContainerNamespace {
         _data.i >= 0,
         msg << "type: " << typeName[_data_type] <<
         " value = " << _data.i << " can't be converted to uint"
-      );
+      )
       return uint_type(_data.i);
     case GC_LONG:
       GC_ASSERT(
         (std::abs(_data.l)>>32) == 0 && _data.l >= 0,
         msg << "type: " << typeName[_data_type] <<
         " value = " << _data.l << " can't be converted to uint"
-      );
+      )
       return uint_type(_data.l);
     case GC_REAL:
       GC_ASSERT(
         isUnsigned32(_data.r),
         msg << "type: " << typeName[_data_type] <<
         " value = " << _data.r << " can't be converted to uint"
-      );
+      )
       return uint_type(_data.r);
     case GC_COMPLEX:
       GC_ASSERT(
@@ -2007,7 +2031,7 @@ namespace GenericContainerNamespace {
         msg << "type: " << typeName[_data_type] <<
         "v alue = (" << _data.c->real() << "," <<  _data.c->imag() <<
         ") can't be converted to uint"
-      );
+      )
       return uint_type(_data.c->real());
     }
     return 0;
@@ -2033,7 +2057,10 @@ namespace GenericContainerNamespace {
     case GC_VEC_POINTER:
     case GC_VEC_STRING:
     case GC_MAP:
-      GC_DO_ERROR( msg << "bad data type: " << typeName[_data_type] << " can't be converted to long" );
+      GC_DO_ERROR(
+        msg << "bad data type: " << typeName[_data_type] <<
+        " can't be converted to long"
+      )
     case GC_BOOL:
       return _data.b ? 1 : 0;
     case GC_INTEGER:
@@ -2044,14 +2071,14 @@ namespace GenericContainerNamespace {
       GC_ASSERT(
         isInteger64(_data.r),
         msg << "value = " << _data.r << " can't be converted to long"
-      );
+      )
       return long_type(_data.r);
     case GC_COMPLEX:
       GC_ASSERT(
         isInteger64(_data.c->real()) && isZero(_data.c->imag()),
         msg << "value = (" << _data.c->real() << "," <<  _data.c->imag() <<
         ") can't be converted to long"
-      );
+      )
       return long_type(_data.c->real());
     }
     return 0;
@@ -2077,33 +2104,36 @@ namespace GenericContainerNamespace {
     case GC_VEC_POINTER:
     case GC_VEC_STRING:
     case GC_MAP:
-      GC_DO_ERROR( msg << "bad data type: " << typeName[_data_type] << " can't be converted to ulong" );
+      GC_DO_ERROR(
+        msg << "bad data type: " << typeName[_data_type] <<
+        " can't be converted to ulong"
+      )
     case GC_BOOL:
       return _data.b ? 1 : 0;
     case GC_INTEGER:
       GC_ASSERT(
         _data.i >= 0,
         msg << "value = " << _data.i << " can't be converted to ulong"
-      );
+      )
       return ulong_type(_data.i);
     case GC_LONG:
       GC_ASSERT(
         _data.l >= 0,
         msg << "value = " << _data.l << " can't be converted to ulong"
-      );
+      )
       return ulong_type(_data.l);
     case GC_REAL:
       GC_ASSERT(
         isUnsigned64(_data.r),
         msg << "value = " << _data.r << " can't be converted to ulong"
-      );
+      )
       return ulong_type(_data.r);
     case GC_COMPLEX:
       GC_ASSERT(
         isUnsigned64(_data.c->real()) && isZero(_data.c->imag()),
         msg << "value = (" << _data.c->real() << "," <<  _data.c->imag() <<
         ") can't be converted to ulong"
-      );
+      )
       return ulong_type(_data.c->real());
     }
     return 0;
@@ -2375,7 +2405,7 @@ namespace GenericContainerNamespace {
           isInteger32(rval),
           msg << "copyto_vec_int: v[" << i << "] = " << rval <<
           " cannot be converted to `integer'"
-        );
+        )
         val = int_type(rval);
         break;
       case GC_VEC_BOOL:
@@ -2390,7 +2420,7 @@ namespace GenericContainerNamespace {
           int_type(lval) == lval,
           msg << "copyto_vec_int: v[" << i << "] = " << lval <<
           " cannot be converted to `integer'"
-        );
+        )
         val = int_type(lval);
         break;
       case GC_VEC_REAL:
@@ -2399,7 +2429,7 @@ namespace GenericContainerNamespace {
           isInteger32(rval),
           msg << "copyto_vec_int: v[" << i << "] = " << rval <<
           " cannot be converted to `integer'"
-        );
+        )
         val = int_type(rval);
         break;
       case GC_COMPLEX:
@@ -2409,7 +2439,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `integer'"
-        );
+        )
         val = int_type(cval.real());
         break;
       case GC_VEC_COMPLEX:
@@ -2419,7 +2449,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `integer'"
-        );
+        )
         val = int_type(cval.real());
         break;
       case GC_MAT_INTEGER:
@@ -2440,7 +2470,7 @@ namespace GenericContainerNamespace {
           isInteger32(rval),
           msg << "copyto_vec_int: v[" << i << "] = " << rval <<
           " cannot be converted to `integer'"
-        );
+        )
         val = int_type(rval);
         break;
       case GC_MAT_COMPLEX:
@@ -2450,7 +2480,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `integer'"
-        );
+        )
         val = int_type(cval.real());
         break;
       case GC_VECTOR:
@@ -2465,7 +2495,7 @@ namespace GenericContainerNamespace {
         GC_DO_ERROR(
           msg << "\nbad data type: `" << typeName[_data_type] <<
           "' cannot be converted in `vec_int_type'"
-        );
+        )
       }
       v.push_back(val);
     }
@@ -2504,7 +2534,7 @@ namespace GenericContainerNamespace {
           int_type(lval) == lval && lval >= 0,
           msg << "copyto_vec_uint: v[" << i << "] = " << lval <<
           " cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(lval);
         break;
       case GC_REAL:
@@ -2513,7 +2543,7 @@ namespace GenericContainerNamespace {
           isUnsigned32(rval),
           msg << "copyto_vec_uint: v[" << i << "] = " << rval <<
           " cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(rval);
         break;
       case GC_VEC_BOOL:
@@ -2534,7 +2564,7 @@ namespace GenericContainerNamespace {
           int_type(lval) == lval && lval >= 0,
           msg << "copyto_vec_uint: v[" << i << "] = " << lval <<
           " cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(lval);
         break;
       case GC_VEC_REAL:
@@ -2543,7 +2573,7 @@ namespace GenericContainerNamespace {
           isUnsigned32(rval),
           msg << "copyto_vec_uint: v[" << i << "] = " << rval <<
           " cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(rval);
         break;
       case GC_COMPLEX:
@@ -2553,7 +2583,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_uint: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(cval.real());
         break;
       case GC_VEC_COMPLEX:
@@ -2572,7 +2602,7 @@ namespace GenericContainerNamespace {
           ival >= 0,
           msg << "copyto_vec_uint: value = " << ival <<
           " cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(ival);
         break;
       case GC_MAT_LONG:
@@ -2581,7 +2611,7 @@ namespace GenericContainerNamespace {
           int_type(lval) == lval && lval >= 0,
           msg << "copyto_vec_uint: v[" << i << "] = " << lval <<
           " cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(lval);
         break;
       case GC_MAT_REAL:
@@ -2590,7 +2620,7 @@ namespace GenericContainerNamespace {
           isUnsigned32(rval),
           msg << "copyto_vec_uint: v[" << i << "] = " << rval <<
           " cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(rval);
         break;
       case GC_MAT_COMPLEX:
@@ -2600,7 +2630,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_uint: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `unsigned integer'"
-        );
+        )
         val = uint_type(cval.real());
         break;
       case GC_VECTOR:
@@ -2615,7 +2645,7 @@ namespace GenericContainerNamespace {
         GC_DO_ERROR(
           msg << "\nbad data type: `" << typeName[_data_type] <<
           "' cannot be converted in `vec_uint_type'"
-        );
+        )
       }
       v.push_back(val);
     }
@@ -2649,7 +2679,7 @@ namespace GenericContainerNamespace {
           isInteger64(rval),
           msg << "copyto_vec_long: v[" << i << "] = " << rval <<
           " cannot be converted to `long'"
-        );
+        )
         val = long_type(rval);
         break;
       case GC_VEC_BOOL:
@@ -2667,7 +2697,7 @@ namespace GenericContainerNamespace {
           isInteger64(rval),
           msg << "copyto_vec_long: v[" << i << "] = " << rval <<
           " cannot be converted to `long'"
-        );
+        )
         val = long_type(rval);
         break;
       case GC_COMPLEX:
@@ -2677,7 +2707,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_long: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `long'"
-        );
+        )
         val = long_type(cval.real());
         break;
       case GC_VEC_COMPLEX:
@@ -2687,7 +2717,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_long: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `long'"
-        );
+        )
         val = long_type(cval.real());
         break;
       case GC_MAT_INTEGER:
@@ -2702,7 +2732,7 @@ namespace GenericContainerNamespace {
           isInteger64(rval),
           msg << "copyto_vec_long: v[" << i << "] = " << rval <<
           " cannot be converted to `long'"
-        );
+        )
         val = long_type(rval);
         break;
       case GC_MAT_COMPLEX:
@@ -2712,7 +2742,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_long: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `long'"
-        );
+        )
         val = long_type(cval.real());
         break;
       case GC_VECTOR:
@@ -2727,7 +2757,7 @@ namespace GenericContainerNamespace {
         GC_DO_ERROR(
           msg << "\nbad data type: `" << typeName[_data_type] <<
           "' cannot be converted in `vec_long_type'"
-        );
+        )
       }
       v.push_back(val);
     }
@@ -2766,7 +2796,7 @@ namespace GenericContainerNamespace {
           lval >= 0,
           msg << "copyto_vec_int: v[" << i << "] = " << lval <<
           " cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(lval);
         break;
       case GC_REAL:
@@ -2775,7 +2805,7 @@ namespace GenericContainerNamespace {
           isUnsigned64(rval),
           msg << "copyto_vec_int: v[" << i << "] = " << rval <<
           " cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(rval);
         break;
       case GC_VEC_BOOL:
@@ -2787,7 +2817,7 @@ namespace GenericContainerNamespace {
           ival >= 0,
           msg << "copyto_vec_uint: value = " << ival <<
           " cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(ival);
         break;
       case GC_VEC_LONG:
@@ -2805,7 +2835,7 @@ namespace GenericContainerNamespace {
           isUnsigned64(rval),
           msg << "copyto_vec_int: v[" << i << "] = " << rval <<
           " cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(rval);
         break;
       case GC_COMPLEX:
@@ -2815,7 +2845,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(cval.real());
         break;
       case GC_VEC_COMPLEX:
@@ -2834,7 +2864,7 @@ namespace GenericContainerNamespace {
           ival >= 0,
           msg << "copyto_vec_uint: value = " << ival <<
           " cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(ival);
         break;
       case GC_MAT_LONG:
@@ -2843,7 +2873,7 @@ namespace GenericContainerNamespace {
           lval >= 0,
           msg << "copyto_vec_int: v[" << i << "] = " << lval <<
           " cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(lval);
         break;
       case GC_MAT_REAL:
@@ -2852,7 +2882,7 @@ namespace GenericContainerNamespace {
           isUnsigned64(rval),
           msg << "copyto_vec_int: v[" << i << "] = " << rval <<
           " cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(rval);
         break;
       case GC_MAT_COMPLEX:
@@ -2862,7 +2892,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `unsigned long'"
-        );
+        )
         val = ulong_type(cval.real());
         break;
       case GC_VECTOR:
@@ -2877,7 +2907,7 @@ namespace GenericContainerNamespace {
         GC_DO_ERROR(
           msg << "\nbad data type: `" << typeName[_data_type] <<
           "' cannot be converted in `vec_ulong_type'"
-        );
+        )
       }
       v.push_back(val);
     }
@@ -2927,7 +2957,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `real'"
-        );
+        )
         val = cval.real();
         break;
       case GC_VEC_COMPLEX:
@@ -2937,7 +2967,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `real'"
-        );
+        )
         val = cval.real();
         break;
       case GC_MAT_INTEGER:
@@ -2956,7 +2986,7 @@ namespace GenericContainerNamespace {
           msg << "copyto_vec_int: v[" << i << "] = (" <<
           cval.real() << "," << cval.imag() <<
           ") cannot be converted to `real'"
-        );
+        )
         val = cval.real();
         break;
       case GC_VECTOR:
@@ -2971,7 +3001,7 @@ namespace GenericContainerNamespace {
         GC_DO_ERROR(
           msg << "\nbad data type: `" << typeName[_data_type] <<
           "' cannot be converted in `vec_real_type'"
-        );
+        )
       }
       v.push_back(val);
     }
@@ -3044,7 +3074,7 @@ namespace GenericContainerNamespace {
         GC_DO_ERROR(
           msg << "\nbad data type: `" << typeName[_data_type] <<
           "' cannot be converted in `vec_complex_type'"
-        );
+        )
       }
       v.push_back(val);
     }
@@ -3091,7 +3121,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         msg << "\nbad data type: `" << typeName[_data_type] <<
         "' cannot be converted in `vec_string_type'"
-      );
+      )
     }
   }
 
@@ -3413,7 +3443,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v_b->size(),
       msg << "\nget_bool_at( " << i << " ) const, out of range"
-    );
+    )
     return (*_data.v_b)[i];
   }
 
@@ -3439,7 +3469,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v_i->size(),
       msg << "\nget_int_at( " << i << " ) const, out of range"
-    );
+    )
     return (*_data.v_i)[i];
   }
 
@@ -3453,7 +3483,7 @@ namespace GenericContainerNamespace {
       "get_int_at( " << i << ", " << j << " ) bad data type" <<
       "\nexpect: " << typeName[GC_MAT_INTEGER] <<
       "\nbut data stored is of type: " << typeName[_data_type]
-    );
+    )
     return (*_data.m_i)(i,j);
   }
 
@@ -3463,7 +3493,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.m_i->numRows() && j < _data.m_i->numCols(),
       msg << "\bget_int_at( " << i << ", " << j << " ) const, out of range"
-    );
+    )
     return (*_data.m_i)(i,j);
   }
 
@@ -3491,7 +3521,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v_l->size(),
       msg << "\nget_long_at( " << i << " ) const, out of range"
-    );
+    )
     return (*_data.v_l)[i];
   }
 
@@ -3506,7 +3536,7 @@ namespace GenericContainerNamespace {
       "get_long_at( " << i << ", " << j << " ) bad data type" <<
       "\nexpect: " << typeName[GC_MAT_LONG] <<
       "\nbut data stored is of type: " << typeName[_data_type]
-    );
+    )
     return (*_data.m_l)(i,j);
   }
 
@@ -3516,7 +3546,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.m_l->numRows() && j < _data.m_l->numCols(),
       msg << "\bget_long_at( " << i << ", " << j << " ) const, out of range"
-    );
+    )
     return (*_data.m_l)(i,j);
   }
 
@@ -3542,7 +3572,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v_r->size(),
       msg << "\nget_real_at( " << i << " ) const, out of range"
-    );
+    )
     return (*_data.v_r)[i];
   }
 
@@ -3558,7 +3588,7 @@ namespace GenericContainerNamespace {
       "get_real_at( " << i << ", " << j << " ) bad data type" <<
       "\nexpect: " << typeName[GC_MAT_REAL] <<
       "\nbut data stored is of type: " << typeName[_data_type]
-    );
+    )
     return (*_data.m_r)(i,j);
   }
 
@@ -3568,7 +3598,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v_r->size(),
       msg << "\bget_real_at( " << i << ", " << j << " ) const, out of range"
-    );
+    )
     return (*_data.m_r)(i,j);
   }
 
@@ -3595,7 +3625,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v_c->size(),
       msg << "\nget_complex_at( " << i << " ) const, out of range"
-    );
+    )
     return (*_data.v_c)[i];
   }
 
@@ -3613,7 +3643,7 @@ namespace GenericContainerNamespace {
       "get_complex_at( " << i << ", " << j << " ) bad data type" <<
       "\nexpect: " << typeName[GC_MAT_COMPLEX] <<
       "\nbut data stored is of type: " << typeName[_data_type]
-    );
+    )
     return (*_data.m_c)(i,j);
   }
 
@@ -3641,7 +3671,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v_s->size(),
       msg << "\nget_string_at( " << i << " ) const, out of range"
-    );
+    )
     return (*_data.v_s)[i];
   }
 
@@ -3762,11 +3792,11 @@ namespace GenericContainerNamespace {
       "operator [] integer argument = " << i <<
       "\nexpect: " << typeName[GC_VECTOR] <<
       "\nbut data stored is of type: " << typeName[_data_type]
-    );
+    )
     GC_ASSERT(
       i < _data.v->size(),
       "operator [] const, index " << i << " out of range"
-    );
+    )
     return (*_data.v)[i];
   }
 
@@ -3786,7 +3816,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v->size(),
       msg << "\noperator () const, index " << i << " out of range"
-    );
+    )
     return (*_data.v)[i];
   }
 
@@ -3797,7 +3827,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       i < _data.v->size(),
       msg << "\noperator () const, index " << i << " out of range"
-    );
+    )
     return (*_data.v)[i];
   }
 
@@ -3809,7 +3839,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       iv != _data.m->end(),
       msg << "\noperator(): Cannot find key '" << s.c_str() << "'!"
-    );
+    )
     return iv->second;
   }
 
@@ -3821,7 +3851,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       iv != _data.m->end(),
       msg << "\noperator(): Cannot find key '" << s.c_str() << "'!"
-    );
+    )
     return iv->second;
   }
 
@@ -3847,7 +3877,7 @@ namespace GenericContainerNamespace {
       "operator [] string argument ``" << s.c_str() << "''"
       "\nexpect: " << typeName[GC_MAP] <<
       "\nbut data stored is of type: " << typeName[_data_type]
-    );
+    )
     return (*_data.m)[s];
   }
 
@@ -3890,7 +3920,7 @@ namespace GenericContainerNamespace {
     case GC_MAP:
       GC_DO_ERROR(
         ":promote_to_int() cannot promote " << get_type_name() << " to int"
-      );
+      )
     }
     return *this;
   }
@@ -3928,7 +3958,7 @@ namespace GenericContainerNamespace {
     case GC_MAP:
       GC_DO_ERROR(
         ":promote_to_long() cannot promote " << get_type_name() << " to long"
-      );
+      )
     }
     return *this;
   }
@@ -3968,7 +3998,7 @@ namespace GenericContainerNamespace {
     case GC_MAP:
       GC_DO_ERROR(
         ":promote_to_real() cannot promote " << get_type_name() << " to real"
-      );
+      )
     }
     return *this;
   }
@@ -4013,7 +4043,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_complex_type() cannot promote " << get_type_name() <<
         " to real type"
-      );
+      )
     }
     return *this;
   }
@@ -4064,7 +4094,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_vec_int() cannot promote " << get_type_name() <<
         " to vec_int_type"
-      );
+      )
     }
     return *this;
 
@@ -4128,7 +4158,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_vec_long() cannot promote " << get_type_name() <<
         " to vec_long_type"
-      );
+      )
     }
     return *this;
   }
@@ -4204,7 +4234,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_vec_real() cannot promote " << get_type_name() <<
         " vec_real_type"
-      );
+      )
     }
     return *this;
   }
@@ -4292,7 +4322,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_vec_real() cannot promote " << get_type_name() <<
         " to vec_complex_type"
-      );
+      )
     }
     return *this;
   }
@@ -4352,7 +4382,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_mat_int() cannot promote " << get_type_name() <<
         " to mat_int_type"
-      );
+      )
     }
     return *this;
   }
@@ -4428,7 +4458,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_mat_long() cannot promote " << get_type_name() <<
         " to mat_long_type"
-      );
+      )
     }
     return *this;
   }
@@ -4524,7 +4554,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_mat_real() cannot promote " << get_type_name() <<
         " to mat_real_type"
-      );
+      )
     }
     return *this;
   }
@@ -4632,7 +4662,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_mat_real() cannot promote " << get_type_name() <<
         " to mat_complex_type"
-      );
+      )
     }
     return *this;
   }
@@ -4738,7 +4768,7 @@ namespace GenericContainerNamespace {
       GC_DO_ERROR(
         ":promote_to_vector() cannot promote " << get_type_name() <<
         " to vector_type"
-      );
+      )
     }
     return *this;
   }
@@ -5179,7 +5209,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT(
       file.good(),
       "readFormattedData, failed to open file: ``" << fname << "''"
-    );
+    )
     return readFormattedData( file, commentChars, delimiters );
   }
 

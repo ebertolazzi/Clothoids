@@ -1565,11 +1565,11 @@ namespace GenericContainerNamespace {
       GC_ASSERT(
         head.size() > 0,
         "GenericContainerExplorer::top() empty stack!"
-      );
+      )
       GC_ASSERT(
         head.back() != nullptr,
         "GenericContainerExplorer::top() bad top pointer!"
-      );
+      )
       return head.back();
     }
 
@@ -1578,11 +1578,11 @@ namespace GenericContainerNamespace {
       GC_ASSERT(
         head.size() > 0,
         "GenericContainerExplorer::top() empty stack!"
-      );
+      )
       GC_ASSERT(
         head.back() != nullptr,
         "GenericContainerExplorer::top() bad top pointer!"
-      );
+      )
       return head.back();
     }
 

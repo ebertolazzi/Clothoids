@@ -875,7 +875,7 @@
 		D9D7FC4D17F01B05002F07F8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 				TargetAttributes = {
 					D9A0E5FE1C258D0F00914760 = {
@@ -1151,6 +1151,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1163,6 +1164,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example11;
 			};
 			name = Release;
@@ -1171,6 +1173,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1183,6 +1186,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1191,6 +1195,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1203,6 +1208,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example2;
 			};
 			name = Release;
@@ -1211,6 +1217,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1223,6 +1230,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example3;
 			};
 			name = Release;
@@ -1231,6 +1239,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1243,6 +1252,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example4;
 			};
 			name = Release;
@@ -1251,6 +1261,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1263,6 +1274,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example5;
 			};
 			name = Release;
@@ -1271,6 +1283,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-llua",
@@ -1286,6 +1299,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				OTHER_LDFLAGS = (
 					"-llua",
 					"-lpcre",
@@ -1300,6 +1314,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1312,6 +1327,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example7;
 			};
 			name = Release;
@@ -1320,6 +1336,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1332,6 +1349,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example10;
 			};
 			name = Release;
@@ -1340,6 +1358,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1352,6 +1371,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example8;
 			};
 			name = Release;
@@ -1360,6 +1380,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1372,6 +1393,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = example9;
 			};
 			name = Release;
@@ -1445,6 +1467,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_WARN_ASSIGN_ENUM = YES;
+				CLANG_WARN_ATOMIC_IMPLICIT_SEQ_CST = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1461,12 +1484,15 @@
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1491,6 +1517,7 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = $PROJECT_DIR/lib3rd/include;
 				LIBRARY_SEARCH_PATHS = $PROJECT_DIR/lib3rd;
@@ -1515,6 +1542,7 @@
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_WARN_ASSIGN_ENUM = YES;
+				CLANG_WARN_ATOMIC_IMPLICIT_SEQ_CST = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1531,12 +1559,15 @@
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES_AGGRESSIVE;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1556,6 +1587,7 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = $PROJECT_DIR/lib3rd/include;
 				LIBRARY_SEARCH_PATHS = $PROJECT_DIR/lib3rd;
@@ -1575,6 +1607,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3811D6BA7CA005772D0 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1588,6 +1621,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95EB3831D6BA7CA005772D0 /* Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				INFOPLIST_FILE = "example11 copy-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

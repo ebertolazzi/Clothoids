@@ -773,7 +773,7 @@ bool
 GenericContainerJsonHandler::String(
   const char * str,
   SizeType     length,
-  bool         copy
+  bool         /* copy */
 ) {
   ASSERT_STACK_SIZE
   string stringa ( str, length );
@@ -819,7 +819,7 @@ bool
 GenericContainerJsonHandler::Key(
   const char * str,
   SizeType     length,
-  bool         copy
+  bool         /* copy */
 ) {
   string key ( str, length );
   _gc_stack.push_back ( stack_entry ( & ( getCurrentGCPointer()->operator[] ( key ) ), false ) );
@@ -827,7 +827,7 @@ GenericContainerJsonHandler::Key(
 }
 
 bool
-GenericContainerJsonHandler::EndObject( SizeType member_count ) {
+GenericContainerJsonHandler::EndObject( SizeType /* member_count */ ) {
   ASSERT_STACK_SIZE
   advanceCurrentGCPointer();
   return true;
@@ -845,7 +845,7 @@ GenericContainerJsonHandler::StartArray() {
 }
 
 bool
-GenericContainerJsonHandler::EndArray( SizeType member_count ) {
+GenericContainerJsonHandler::EndArray( SizeType /* member_count */ ) {
   ASSERT_STACK_SIZE
   // go one level up to the stack: point to the real vector being constructed
   _gc_stack.pop_back();
