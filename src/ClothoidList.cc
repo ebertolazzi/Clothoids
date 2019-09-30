@@ -1476,6 +1476,7 @@ namespace G2lib {
       ++k;
       ++ic;
     }
+    --ic; // last element
     s[k]     = ss;
     kappa[k] = ic->kappaEnd();
   }
@@ -1502,6 +1503,7 @@ namespace G2lib {
       ++k;
       ++ic;
     }
+    --ic; // last element
     s[k]     = ss;
     theta[k] = ic->thetaEnd();
     kappa[k] = ic->kappaEnd();
