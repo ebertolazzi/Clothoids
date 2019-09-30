@@ -15,8 +15,10 @@ require_relative "./Rakefile_conf.rb"
 cmakeversion = %x( cmake --version ).scan(/\d+\.\d+/).last
 if cmakeversion >= "3.12" then
   PARALLEL = '--parallel 8 '
+  QUIET    = '-- --quiet '
 else
   PARALLEL = ''
+  QUIET    = ''
 end
 
 if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil then
@@ -163,6 +165,8 @@ def win_vs( bits, year )
     tmp = 'cmake -G "Visual Studio 14 2015' + win32_64 +'" ' + tmp
   when "2017"
     tmp = 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
+  when "2019"
+    tmp = 'cmake -G "Visual Studio 16 2019' + win32_64 +'" ' + tmp
   else
     puts "Visual Studio year #{year} not supported!\n";
     return ""
