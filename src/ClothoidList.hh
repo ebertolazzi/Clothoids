@@ -1343,11 +1343,36 @@ namespace G2lib {
     operator << ( ostream_type & stream, ClothoidList const & CL );
 
     void
+    getSK( real_type s[], real_type kappa[] ) const;
+
+    void
+    getSK(
+      std::vector<real_type> & s,
+      std::vector<real_type> & kappa
+    ) const {
+      s.resize( clotoidList.size()+1 );
+      kappa.resize( clotoidList.size()+1 );
+      getSK( &s.front(), &kappa.front() );
+    }
+
+    void
     getSTK(
       real_type s[],
       real_type theta[],
       real_type kappa[]
     ) const;
+
+    void
+    getSTK(
+      std::vector<real_type> & s,
+      std::vector<real_type> & theta,
+      std::vector<real_type> & kappa
+    ) const {
+      s.resize( clotoidList.size()+1 );
+      theta.resize( clotoidList.size()+1 );
+      kappa.resize( clotoidList.size()+1 );
+      getSTK( &s.front(), &theta.front(), &kappa.front() );
+    }
 
     void
     getXY( real_type x[], real_type y[] ) const;

@@ -119,7 +119,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       tol > 0 && tol <= 0.1,
       "G2solve2arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
-    );
+    )
     tolerance = tol;
   }
 
@@ -130,7 +130,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       miter > 0 && miter <= 1000,
       "G2solve2arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
-    );
+    )
     maxIter = miter;
   }
 
@@ -378,7 +378,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       tol > 0 && tol <= 0.1,
       "G2solveCLC::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
-    );
+    )
     tolerance = tol;
   }
 
@@ -389,7 +389,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       miter > 0 && miter <= 1000,
       "G2solveCLC::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
-    );
+    )
     maxIter = miter;
   }
 
@@ -483,7 +483,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       tol > 0 && tol <= 0.1,
       "G2solve3arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
-    );
+    )
     tolerance = tol;
   }
 
@@ -494,7 +494,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       miter > 0 && miter <= 1000,
       "G2solve3arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
-    );
+    )
     maxIter = miter;
   }
 

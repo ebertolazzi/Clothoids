@@ -96,7 +96,7 @@ namespace G2lib {
         ", y1 = "      << y1     <<
         ", theta1 = "  << theta1 <<
         ") cannot be computed"
-      );
+      )
     }
 
     explicit

@@ -258,7 +258,7 @@ namespace G2lib {
           oldterm >= absterm,
           "In FresnelCS f not converged to eps, x = " << x <<
           " oldterm = " << oldterm << " absterm = " << absterm
-        );
+        )
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
@@ -279,7 +279,7 @@ namespace G2lib {
           oldterm >= absterm,
           "In FresnelCS g not converged to eps, x = " << x <<
           " oldterm = " << oldterm << " absterm = " << absterm
-        );
+        )
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
@@ -364,7 +364,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       nk < 4 && nk > 0,
       "In evalXYaLarge first argument nk must be in 1..3, nk " << nk
-    );
+    )
 
     real_type s    = a > 0 ? +1 : -1;
     real_type absa = abs(a);
@@ -485,7 +485,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       p < 11 && p > 0,
       "In evalXYaSmall p = " << p << " must be in 1..10"
-    );
+    )
 
     real_type X0[43], Y0[43];
 
@@ -526,7 +526,7 @@ namespace G2lib {
       nkk < 46,
       "In evalXYaSmall (nk,p) = (" << nk << "," << p << ")\n" <<
       "nk + 4*p + 2 = " << nkk  << " must be less than 46\n"
-    );
+    )
 
     evalXYazero( nkk, b, X0, Y0 );
 
@@ -582,7 +582,7 @@ namespace G2lib {
     real_type intC[],
     real_type intS[]
   ) {
-    G2LIB_ASSERT( nk > 0 && nk < 4, "nk = " << nk << " must be in 1..3" );
+    G2LIB_ASSERT( nk > 0 && nk < 4, "nk = " << nk << " must be in 1..3" )
 
     if ( abs(a) < A_THRESOLD ) evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS );
     else                       evalXYaLarge( nk, a, b, intC, intS );
@@ -1343,11 +1343,11 @@ namespace G2lib {
     G2LIB_ASSERT(
       abs(g) <= tol,
       "Newton do not converge, g = " << g << " niter = " << niter
-    );
+    )
     GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] );
     L = r/intC[0];
 
-    G2LIB_ASSERT( L > 0, "Negative length L = " << L );
+    G2LIB_ASSERT( L > 0, "Negative length L = " << L )
     this->kappa0 = (delta-A)/L;
     this->dk     = 2*A/L/L;
 

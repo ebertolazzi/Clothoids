@@ -82,7 +82,7 @@ namespace G2lib {
       G2LIB_DO_ERROR(
         "CircleArc constructor cannot convert from: " <<
         CurveType_name[C.type()]
-      );
+      )
     }
   }
 
@@ -324,7 +324,7 @@ namespace G2lib {
       s_end > s_begin,
       "CircleArc::trim(begin=" << s_begin <<
       ", s_end=" << s_end << ") s_end must be > s_begin"
-    );
+    )
     real_type x, y;
     eval( s_begin, x, y );
     theta0 += s_begin * k;
@@ -583,15 +583,10 @@ namespace G2lib {
   bool
   CircleArc::collision( CircleArc const & C ) const {
     real_type s1[2], s2[2];
-    int_type ni = intersectCircleCircle( this->x0,
-                                         this->y0,
-                                         this->theta0,
-                                         this->k,
-                                         C.x0,
-                                         C.y0,
-                                         C.theta0,
-                                         C.k,
-                                         s1, s2 );
+    int_type ni = intersectCircleCircle(
+      this->x0, this->y0, this->theta0, this->k,
+      C.x0, C.y0, C.theta0, C.k, s1, s2
+    );
     real_type eps1 = machepsi100*L;
     real_type eps2 = machepsi100*C.L;
     for ( int_type i = 0; i < ni; ++i ) {
@@ -645,15 +640,10 @@ namespace G2lib {
     bool              swap_s_vals
   ) const {
     real_type s1[2], s2[2];
-    int_type ni = intersectCircleCircle( this->x0,
-                                         this->y0,
-                                         this->theta0,
-                                         this->k,
-                                         C.x0,
-                                         C.y0,
-                                         C.theta0,
-                                         C.k,
-                                         s1, s2 );
+    int_type ni = intersectCircleCircle(
+      this->x0, this->y0, this->theta0, this->k,
+      C.x0, C.y0, C.theta0, C.k, s1, s2
+    );
     real_type eps1 = machepsi100*L;
     real_type eps2 = machepsi100*C.L;
     for ( int_type i = 0; i < ni; ++i ) {

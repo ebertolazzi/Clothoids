@@ -406,7 +406,7 @@
 		D975FF5422FB43E900A0ED8A /* PolynomialRoots.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolynomialRoots.hh; sourceTree = "<group>"; };
 		D975FF5522FB43E900A0ED8A /* PolynomialRoots-1-Quadratic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-1-Quadratic.cc"; sourceTree = "<group>"; };
 		D975FF5822FB43E900A0ED8A /* PolynomialRoots-Jenkins-Traub.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-Jenkins-Traub.cc"; sourceTree = "<group>"; };
-		D981B3031E8D56AF006C933D /* testAB */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = testAB; path = testG2plot; sourceTree = BUILT_PRODUCTS_DIR; };
+		D981B3031E8D56AF006C933D /* testG2plot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testG2plot; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98A2AA4217DADDE00EC0765 /* AABBtree.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AABBtree.hh; sourceTree = "<group>"; };
 		D9A393501FA14C42009C1E60 /* testG2plot.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2plot.cc; sourceTree = "<group>"; };
 		D9A393511FA14C42009C1E60 /* testG2statCLC.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testG2statCLC.cc; sourceTree = "<group>"; };
@@ -534,7 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				D938F4DB1DD3B83000E08A70 /* G2solver */,
-				D981B3031E8D56AF006C933D /* testAB */,
+				D981B3031E8D56AF006C933D /* testG2plot */,
 				D9E74A4D1F68801C00E47B88 /* statistic */,
 				D96E1FBD1F75513000115228 /* statistic_2arc */,
 				D9C8B9F21F7AA69400DF4205 /* statistic_CLC */,
@@ -738,7 +738,7 @@
 			);
 			name = testG2plot;
 			productName = testAB;
-			productReference = D981B3031E8D56AF006C933D /* testAB */;
+			productReference = D981B3031E8D56AF006C933D /* testG2plot */;
 			productType = "com.apple.product-type.tool";
 		};
 		D9AFBB5B20E28F5900C498EF /* testTriangle2D */ = {
@@ -832,7 +832,7 @@
 		D938F4D31DD3B83000E08A70 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 				TargetAttributes = {
 					D9179A7A206D211E006B66E7 = {
@@ -1241,6 +1241,7 @@
 		D9179A8B206D211E006B66E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1249,6 +1250,7 @@
 		D9179A8C206D211E006B66E7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1257,6 +1259,7 @@
 		D92EFA8F2186931500BF8E18 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1265,6 +1268,7 @@
 		D92EFA902186931500BF8E18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1273,6 +1277,7 @@
 		D92EFAA82187B03600BF8E18 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1281,6 +1286,7 @@
 		D92EFAA92187B03600BF8E18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1422,6 +1428,7 @@
 		D938F4E31DD3B83000E08A70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1430,6 +1437,7 @@
 		D938F4E41DD3B83000E08A70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1438,6 +1446,7 @@
 		D969AF8521708CC200CA4DD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1446,6 +1455,7 @@
 		D969AF8621708CC200CA4DD0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1455,6 +1465,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1463,6 +1474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1471,6 +1483,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1480,6 +1493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1488,6 +1502,7 @@
 		D9AFBB6D20E28F5900C498EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1496,6 +1511,7 @@
 		D9AFBB6E20E28F5900C498EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1504,6 +1520,7 @@
 		D9BFDB2420EE3C0E00612F3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1512,6 +1529,7 @@
 		D9BFDB2520EE3C0E00612F3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1520,6 +1538,7 @@
 		D9C373A620BC484100715C11 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1528,6 +1547,7 @@
 		D9C373A720BC484100715C11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = S8X788ZA8Y;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1537,6 +1557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1545,6 +1566,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1553,6 +1575,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1561,6 +1584,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

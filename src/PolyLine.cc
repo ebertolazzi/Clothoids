@@ -76,7 +76,7 @@ namespace G2lib {
       G2LIB_DO_ERROR(
         "PolyLine constructor cannot convert from: " <<
         CurveType_name[C.type()]
-      );
+      )
     }
   }
 
@@ -160,7 +160,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       !s0.empty(),
       "PolyLine::search(" << s << ") empty PolyLine"
-    );
+    )
 
     int_type  npts = int_type(s0.size());
     real_type sl   = s0.front();
@@ -169,7 +169,7 @@ namespace G2lib {
       s >= sl && s <= sr,
       "PolyLine::search( " << s <<
       " ) out of range: [" << sl << ", " << sr << "]"
-    );
+    )
 
     if      ( isegment < 0      ) isegment = 0;
     else if ( isegment > npts-2 ) isegment = npts-2;
@@ -184,12 +184,12 @@ namespace G2lib {
     G2LIB_ASSERT(
       !polylineList.empty(),
       "PolyLine::getSegment(...) empty PolyLine"
-    );
+    )
     G2LIB_ASSERT(
       n >= 0 && n < int_type(polylineList.size()),
       "PolyLine::getSegment( " << n <<
       " ) out of range [0," << polylineList.size()-1 << "]"
-    );
+    )
     return polylineList[size_t(n)];
   }
 
@@ -216,7 +216,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
 
-    G2LIB_ASSERT( !polylineList.empty(), "PolyLine::bbox, empty list" );
+    G2LIB_ASSERT( !polylineList.empty(), "PolyLine::bbox, empty list" )
 
     if ( aabb_done ) {
       aabb_tree.bbox( xmin, ymin, xmax, ymax );
@@ -334,7 +334,7 @@ namespace G2lib {
       s_begin >= s0.front() && s_end <= s0.back() && s_end > s_begin,
       "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" << s_end <<
       ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
-    );
+    )
 
     search( s_begin ); size_t i_begin = size_t(isegment);
     search( s_end );   size_t i_end   = size_t(isegment);
@@ -563,7 +563,10 @@ namespace G2lib {
     real_type & T,
     real_type & DST
   ) const{
-    G2LIB_ASSERT( !polylineList.empty(), "PolyLine::closestPoint, empty list" );
+    G2LIB_ASSERT(
+      !polylineList.empty(),
+      "PolyLine::closestPoint, empty list"
+    )
     vector<LineSegment>::const_iterator ic = polylineList.begin();
     vector<real_type>::const_iterator   is = s0.begin();
     ic->closestPoint_ISO( x, y, X, Y, S, T, DST );
@@ -621,11 +624,11 @@ namespace G2lib {
     G2LIB_ASSERT(
       !polylineList.empty(),
       "PolyLine::intersect, empty list"
-    );
+    )
     G2LIB_ASSERT(
       !pl.polylineList.empty(),
       "PolyLine::intersect, empty secondary list"
-    );
+    )
 
 #if 1
     build_AABBtree();
@@ -636,8 +639,14 @@ namespace G2lib {
     for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
       size_t ipos0 = size_t(ip->first->Ipos());
       size_t ipos1 = size_t(ip->second->Ipos());
-      G2LIB_ASSERT( ipos0 < polylineList.size(),    "Bad ipos0 = " << ipos0 );
-      G2LIB_ASSERT( ipos1 < pl.polylineList.size(), "Bad ipos1 = " << ipos1 );
+      G2LIB_ASSERT(
+        ipos0 < polylineList.size(),
+        "Bad ipos0 = " << ipos0
+      )
+      G2LIB_ASSERT(
+        ipos1 < pl.polylineList.size(),
+        "Bad ipos1 = " << ipos1
+      )
       real_type sss0, sss1;
       bool ok = polylineList[ipos0].intersect(pl.polylineList[ipos1],sss0,sss1);
       if ( ok ) {

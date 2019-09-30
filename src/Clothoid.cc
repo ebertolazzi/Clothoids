@@ -74,7 +74,7 @@ namespace G2lib {
       G2LIB_DO_ERROR(
         "ClothoidList constructor cannot convert from: " <<
         CurveType_name[C.type()]
-      );
+      )
     }
   }
 
@@ -93,11 +93,11 @@ namespace G2lib {
     real_type thh = theta(s_begin);
     for ( int_type npts = 0; ss < s_end; ++npts ) {
       G2LIB_ASSERT(
-        npts < 1000000,
+        npts < 100000000,
         "ClothoidCurve::optimized_sample_internal " <<
-        "is generating too much points (>1000000)\n" <<
+        "is generating too much points (>100000000)\n" <<
         "something is going wrong or parameters are not well set"
-      );
+      )
       // estimate angle variation and compute step accodingly
       real_type k   = CD.kappa( ss );
       real_type dss = ds/(1+k*offs); // scale length with offset
@@ -179,11 +179,11 @@ namespace G2lib {
     real_type MX  = min( L, max_size );
     for ( int_type npts = 0; ss < s_end; ++npts ) {
       G2LIB_ASSERT(
-        npts < 1000000,
+        npts < 100000000,
         "ClothoidCurve::bbTriangles_internal " <<
-        "is generating too much triangles (>1000000)\n" <<
+        "is generating too much triangles (>100000000)\n" <<
         "something is going wrong or parameters are not well set"
-      );
+      )
 
       // estimate angle variation and compute step accodingly
       real_type k   = CD.kappa( ss );
@@ -604,7 +604,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       candidateList.size() > 0,
       "ClothoidCurve::closestPoint no candidate"
-    );
+    )
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
       size_t ipos = size_t((*ic)->Ipos());
       Triangle2D const & T = aabb_tri[ipos];

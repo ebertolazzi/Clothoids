@@ -635,7 +635,7 @@ namespace G2lib {
     virtual
     real_type
     length_ISO( real_type ) const G2LIB_OVERRIDE {
-      G2LIB_DO_ERROR( "Offset length not available for Clothoids" );
+      G2LIB_DO_ERROR( "Offset length not available for Clothoids" )
       return 0;
     }
 

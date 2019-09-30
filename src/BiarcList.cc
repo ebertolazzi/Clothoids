@@ -220,7 +220,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       !biarcList.empty(),
       "BiarcList::push_back_G1(...) empty list!"
-    );
+    )
     Biarc c;
     real_type x0     = biarcList.back().xEnd();
     real_type y0     = biarcList.back().yEnd();
@@ -258,7 +258,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       n > 1,
       "BiarcList::build_G1, at least 2 points are necessary"
-    );
+    )
 
     init();
     reserve( n-1 );
@@ -295,13 +295,13 @@ namespace G2lib {
     G2LIB_ASSERT(
       !biarcList.empty(),
       "BiarcList::get( " << idx << " ) empty list"
-    );
+    )
     G2LIB_ASSERT(
       idx >= 0 && idx < int_type(biarcList.size()),
       "BiarcList::get( " << idx <<
       " ) bad index, must be in [0," <<
       biarcList.size()-1 << "]"
-    );
+    )
     return this->biarcList[idx];
   }
 
@@ -322,7 +322,7 @@ namespace G2lib {
       last_idx >= 0 && last_idx < ns,
       "BiarcList::findAtS( " << s << ", " << last_idx <<
       " ) bad index"
-    );
+    )
     real_type const * sL = &s0[last_idx];
     if ( s < sL[0] ) {
       if ( s > s0.front() ) {
@@ -347,7 +347,7 @@ namespace G2lib {
       "BiarcList::findAtS( " << s <<
       ") last_idx = " << last_idx <<
       " range [" << s0.front() << ", " << s0.back() << "]"
-    );
+    )
     return true;
   }
 
@@ -990,7 +990,7 @@ namespace G2lib {
       "BiarcList::trim( s_begin=" << s_begin << ", s_end=" <<
       s_end << ") bad range, must be in [ " << s0.front() <<
       ", " << s0.back() << " ]"
-    );
+    )
 
     findAtS( s_begin ); size_t i_begin = size_t(last_idx);
     findAtS( s_end );   size_t i_end   = size_t(last_idx);
@@ -1196,7 +1196,7 @@ namespace G2lib {
     G2LIB_ASSERT(
       candidateList.size() > 0,
       "BiarcList::closestPoint no candidate"
-    );
+    )
     int_type icurve = 0;
     DST = numeric_limits<real_type>::infinity();
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
@@ -1294,7 +1294,7 @@ namespace G2lib {
     real_type & t
   ) const {
 
-    G2LIB_ASSERT( !biarcList.empty(), "BiarcList::findST, empty list" );
+    G2LIB_ASSERT( !biarcList.empty(), "BiarcList::findST, empty list" )
     vector<Biarc>::const_iterator     ic = biarcList.begin();
     vector<real_type>::const_iterator is = s0.begin();
 
@@ -1340,14 +1340,14 @@ namespace G2lib {
     G2LIB_ASSERT(
       !biarcList.empty(),
       "BiarcList::findST, empty list"
-    );
+    )
     G2LIB_ASSERT(
       ibegin >= 0 && ibegin <= iend &&
       iend < int_type(biarcList.size()),
       "BiarcList::findST( ibegin=" << ibegin << ", iend = " <<
       iend << " , x, y, s, t ) bad range not in [0," <<
       biarcList.size()-1 << "]"
-    );
+    )
     s = t = 0;
     int_type iseg = 0;
     bool ok = false;

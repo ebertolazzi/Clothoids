@@ -257,7 +257,7 @@ namespace G2lib {
     vmin = vmax = a;
     if ( b < vmin ) vmin = b;
     else            vmax = b;
-    if ( c < vmin ) vmin = c;
+    if      ( c < vmin ) vmin = c;
     else if ( c > vmax ) vmax = c;
   }
 

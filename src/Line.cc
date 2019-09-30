@@ -57,7 +57,7 @@ namespace G2lib {
       G2LIB_DO_ERROR(
         "LineSegment constructor cannot convert from: " <<
         CurveType_name[C.type()]
-      );
+      )
     }
   }
 

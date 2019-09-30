@@ -51,7 +51,7 @@ namespace G2lib {
           ok,
           "Biarc constructor failed convert from: " <<
           CurveType_name[C.type()]
-        );
+        )
       }
       break;
     case G2LIB_CIRCLE:
@@ -65,7 +65,7 @@ namespace G2lib {
           ok,
           "Biarc constructor failed convert from: " <<
           CurveType_name[C.type()]
-        );
+        )
       }
       break;
     case G2LIB_BIARC:
@@ -78,7 +78,7 @@ namespace G2lib {
       G2LIB_DO_ERROR(
         "Biarc constructor cannot convert from: " <<
         CurveType_name[C.type()]
-      );
+      )
     }
   }
 
@@ -265,7 +265,7 @@ namespace G2lib {
       s_end > s_begin,
       "Biarc::trim(begin=" << s_begin <<
       ", s_end=" << s_end << ") s_end must be > s_begin"
-    );
+    )
     real_type L0 = C0.length();
     if ( s_end <= L0 ) {
       C0.trim( s_begin, s_end );
@@ -868,7 +868,10 @@ namespace G2lib {
     real_type       theta[]
   ) {
 
-    G2LIB_ASSERT( n > 1, "build_guess_theta, at least 2 points are necessary" );
+    G2LIB_ASSERT(
+      n > 1,
+      "build_guess_theta, at least 2 points are necessary"
+    )
     Biarc b;
     if ( n == 2 ) {
       theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] );
@@ -876,12 +879,12 @@ namespace G2lib {
       bool ok, ciclic = hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10;
       if ( ciclic ) {
         ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] );
-        G2LIB_ASSERT( ok, "build_guess_theta, failed" );
+        G2LIB_ASSERT( ok, "build_guess_theta, failed" )
         theta[0] = theta[n-1] = b.thetaMiddle();
       }
       for ( int_type k = 1; k < n-1; ++k ) {
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
-        G2LIB_ASSERT( ok, "build_guess_theta, failed" );
+        G2LIB_ASSERT( ok, "build_guess_theta, failed" )
         theta[k] = b.thetaMiddle();
         if ( k == 1   && !ciclic ) theta[0]   = b.thetaBegin();
         if ( k == n-2 && !ciclic ) theta[n-1] = b.thetaEnd();
