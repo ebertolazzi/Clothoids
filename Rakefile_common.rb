@@ -13,7 +13,8 @@ end
 require_relative "./Rakefile_conf.rb"
 
 cmakeversion = %x( cmake --version ).scan(/\d+\.\d+/).last
-if cmakeversion >= "3.12" then
+mm = cmakeversion.split('.');
+if mm[0].to_i > 3 || (mm[0].to_i == 3 && mm[1].to_i >= 12) then
   PARALLEL = '--parallel 8 '
   QUIET    = '-- --quiet '
 else
