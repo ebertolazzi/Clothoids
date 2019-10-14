@@ -55,6 +55,8 @@ namespace G2lib {
 
   typedef pair<CurveType,CurveType> Ppair;
 
+  // check if compiler is C++11
+  #ifdef G2LIB_USE_CXX11
   static map<Ppair,CurveType> const promote_map = {
     {Ppair( G2LIB_LINE, G2LIB_LINE ),          G2LIB_LINE},
     {Ppair( G2LIB_LINE, G2LIB_CIRCLE ),        G2LIB_CIRCLE},
@@ -104,6 +106,63 @@ namespace G2lib {
     {Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
     {Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ),      G2LIB_POLYLINE}
   };
+  #else
+    static map<Ppair,CurveType> promote_map;
+    static
+    void
+    init_promote_map() {
+      static bool done = false;
+      if ( done ) return;
+      promote_map[ Ppair( G2LIB_LINE, G2LIB_LINE ) ]          = G2LIB_LINE;
+      promote_map[ Ppair( G2LIB_LINE, G2LIB_CIRCLE ) ]        = G2LIB_CIRCLE;
+      promote_map[ Ppair( G2LIB_LINE, G2LIB_CLOTHOID ) ]      = G2LIB_CLOTHOID;
+      promote_map[ Ppair( G2LIB_LINE, G2LIB_BIARC ) ]         = G2LIB_BIARC_LIST;
+      promote_map[ Ppair( G2LIB_LINE, G2LIB_BIARC_LIST ) ]    = G2LIB_BIARC_LIST;
+      promote_map[ Ppair( G2LIB_LINE, G2LIB_CLOTHOID_LIST ) ] = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_LINE, G2LIB_POLYLINE ) ]      = G2LIB_POLYLINE;
+
+      promote_map[ Ppair( G2LIB_CIRCLE, G2LIB_LINE ) ]          = G2LIB_CIRCLE;
+      promote_map[ Ppair( G2LIB_CIRCLE, G2LIB_CIRCLE ) ]        = G2LIB_CIRCLE;
+      promote_map[ Ppair( G2LIB_CIRCLE, G2LIB_CLOTHOID ) ]      = G2LIB_CLOTHOID;
+      promote_map[ Ppair( G2LIB_CIRCLE, G2LIB_BIARC ) ]         = G2LIB_BIARC_LIST;
+      promote_map[ Ppair( G2LIB_CIRCLE, G2LIB_BIARC_LIST ) ]    = G2LIB_BIARC_LIST;
+      promote_map[ Ppair( G2LIB_CIRCLE, G2LIB_CLOTHOID_LIST ) ] = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CIRCLE, G2LIB_POLYLINE ) ]      = G2LIB_CLOTHOID_LIST;
+
+      promote_map[ Ppair( G2LIB_BIARC, G2LIB_LINE ) ]          = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_BIARC, G2LIB_CIRCLE ) ]        = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_BIARC, G2LIB_CLOTHOID ) ]      = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_BIARC, G2LIB_BIARC ) ]         = G2LIB_BIARC;
+      promote_map[ Ppair( G2LIB_BIARC, G2LIB_BIARC_LIST ) ]    = G2LIB_BIARC_LIST;
+      promote_map[ Ppair( G2LIB_BIARC, G2LIB_CLOTHOID_LIST ) ] = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_BIARC, G2LIB_POLYLINE ) ]      = G2LIB_CLOTHOID_LIST;
+
+      promote_map[ Ppair( G2LIB_CLOTHOID, G2LIB_LINE ) ]          = G2LIB_CLOTHOID;
+      promote_map[ Ppair( G2LIB_CLOTHOID, G2LIB_CIRCLE ) ]        = G2LIB_CLOTHOID;
+      promote_map[ Ppair( G2LIB_CLOTHOID, G2LIB_CLOTHOID ) ]      = G2LIB_CLOTHOID;
+      promote_map[ Ppair( G2LIB_CLOTHOID, G2LIB_BIARC ) ]         = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID, G2LIB_BIARC_LIST ) ]    = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID, G2LIB_CLOTHOID_LIST ) ] = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID, G2LIB_POLYLINE ) ]      = G2LIB_CLOTHOID_LIST;
+
+      promote_map[ Ppair( G2LIB_CLOTHOID_LIST, G2LIB_LINE ) ]          = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CIRCLE ) ]        = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CLOTHOID ) ]      = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID_LIST, G2LIB_BIARC ) ]         = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID_LIST, G2LIB_BIARC_LIST ) ]    = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CLOTHOID_LIST ) ] = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_CLOTHOID_LIST, G2LIB_POLYLINE ) ]      = G2LIB_CLOTHOID_LIST;
+
+      promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_LINE ) ]          = G2LIB_POLYLINE;
+      promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_CIRCLE ) ]        = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID ) ]      = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_BIARC ) ]         = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_BIARC_LIST ) ]    = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID_LIST ) ] = G2LIB_CLOTHOID_LIST;
+      promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ) ]      = G2LIB_POLYLINE;
+      done = true;
+    }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -181,6 +240,10 @@ namespace G2lib {
     BaseCurve const & obj2,
     real_type         offs2
   ) {
+    #ifndef G2LIB_USE_CXX11
+    init_promote_map();
+    #endif
+
     #ifdef DEBUG
     std::cout
       << "collision (offs) " << CurveType_name[obj1.type()]
@@ -252,6 +315,9 @@ namespace G2lib {
     IntersectList   & ilist,
     bool              swap_s_vals
   ) {
+    #ifndef G2LIB_USE_CXX11
+    init_promote_map();
+    #endif
 
     #ifdef DEBUG
     std::cout
@@ -325,6 +391,9 @@ namespace G2lib {
     IntersectList   & ilist,
     bool              swap_s_vals
   ) {
+    #ifndef G2LIB_USE_CXX11
+    init_promote_map();
+    #endif
 
     #ifdef DEBUG
     std::cout

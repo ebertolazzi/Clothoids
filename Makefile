@@ -7,12 +7,17 @@ DEFS        =
 STATIC_EXT  = .a
 DYNAMIC_EXT = .so
 AR          = ar rcs
-LDCONFIG    = sudo ldconfig
 
 WARN        = -Wall -Wno-sign-compare
 #-Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
 
 # default values
+LIB_CLOTHOID = Clothoids
+LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+CXXFLAGS     = -O3
+AR           = ar rcs
+LDCONFIG     =
+
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
@@ -38,7 +43,7 @@ ifneq (,$(findstring Darwin, $(OS)))
   LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
   WARN         = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
 	CC           = clang
-	CXX          = clang++
+	CXX          = clang++ -std=c++11
   CXXFLAGS     = $(WARN) -O3 -fPIC
   AR           = libtool -static -o
   LDCONFIG     =
@@ -50,16 +55,19 @@ endif
 SRCS = \
 src/AABBtree.cc \
 src/Biarc.cc \
+src/BiarcList.cc \
 src/Circle.cc \
 src/Clothoid.cc \
+src/ClothoidAsyPlot.cc \
 src/ClothoidDistance.cc \
 src/ClothoidG2.cc \
 src/ClothoidList.cc \
 src/Fresnel.cc \
 src/G2lib.cc \
+src/G2lib_intersect.cc \
 src/Line.cc \
-src/Triangle2D.cc \
 src/PolyLine.cc \
+src/Triangle2D.cc \
 submodules/quarticRootsFlocke/src/PolynomialRoots-1-Quadratic.cc \
 submodules/quarticRootsFlocke/src/PolynomialRoots-2-Cubic.cc \
 submodules/quarticRootsFlocke/src/PolynomialRoots-Utils.cc
