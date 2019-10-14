@@ -3,7 +3,6 @@ OS=$(shell uname -s)
 PWD=$(shell pwd)
 
 INC         = -I./src -I./include -Isubmodules/quarticRootsFlocke/src
-LIBS        = -L./lib -lClothoids
 DEFS        =
 STATIC_EXT  = .a
 DYNAMIC_EXT = .so
