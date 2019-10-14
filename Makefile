@@ -17,35 +17,36 @@ WARN        = -Wall -Wno-sign-compare
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
-  LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 $(WARN) -O3 -fPIC
-  AR       = ar rcs
-  LDCONFIG = sudo ldconfig
+  LIB_CLOTHOID = Clothoids_linux
+  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+  CXXFLAGS     = -std=c++11 $(WARN) -O3 -fPIC
+  AR           = ar rcs
+  LDCONFIG     = sudo ldconfig
 endif
 
 # check if the OS string contains 'MINGW'
 ifneq (,$(findstring MINGW, $(OS)))
-  LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 $(WARN) -O3
-  AR       = ar rcs
-  LDCONFIG = sudo ldconfig
+  LIB_CLOTHOID = Clothoids_mingw_x64
+  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+  CXXFLAGS     = -std=c++11 $(WARN) -O3
+  AR           = ar rcs
+  LDCONFIG     = sudo ldconfig
 endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  WARN        = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
-  LIBS        = -L./lib -lClothoids
-	CC          = clang
-	CXX         = clang++
-  CXXFLAGS    = $(WARN) -O3 -fPIC
-  AR          = libtool -static -o
-  LDCONFIG    =
-  DYNAMIC_EXT = .dylib
+  LIB_CLOTHOID = Clothoids_osx
+  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+  WARN         = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
+	CC           = clang
+	CXX          = clang++
+  CXXFLAGS     = $(WARN) -O3 -fPIC
+  AR           = libtool -static -o
+  LDCONFIG     =
+  DYNAMIC_EXT  = .dylib
 endif
 
 .SUFFIXES: .o
-
-LIB_CLOTHOID = libClothoids
 
 SRCS = \
 src/AABBtree.cc \
@@ -90,13 +91,14 @@ bin: lib
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testPolyline     tests-cpp/testPolyline.cc   $(LIBS)
 	$(CXX) $(INC) $(CXXFLAGS) -o bin/testTriangle2D   tests-cpp/testTriangle2D.cc $(LIBS)
 
-lib: lib/$(LIB_CLOTHOID)$(STATIC_EXT) lib/$(LIB_CLOTHOID)$(DYNAMIC_EXT)
+lib: lib/lib/lib$(LIB_CLOTHOID)_static$(STATIC_EXT) lib/lib/lib$(LIB_CLOTHOID)$(DYNAMIC_EXT)
 
 include_local:
 	@rm -rf lib/include
-	$(MKDIR) lib
-	$(MKDIR) lib/include
-	@cp -f src/*.hh lib/include
+	@$(MKDIR) -p lib/include
+	@cp -f src/*.hh                               lib/include
+	@cp -f submodules/quarticRootsFlocke/src/*.hh lib/include
+
 
 .cc.o : $(DEPS)
 	$(CXX) $(INC) $(CXXFLAGS) $(DEFS) -c $< -o $@
@@ -104,30 +106,32 @@ include_local:
 .c.o : $(DEPS)
 	$(CC) $(INC) $(CFLAGS) $(DEFS) -c -o $@ $<
 
-lib/libClothoids.a: $(OBJS) include_local
-	@$(MKDIR) lib
-	$(AR) lib/libClothoids.a $(OBJS)
+lib/lib/lib$(LIB_CLOTHOID)_static.a: $(OBJS) include_local
+	@$(MKDIR) -p lib/lib
+	$(AR) lib/lib/lib$(LIB_CLOTHOID)_static.a $(OBJS)
 
-lib/libClothoids.dylib: $(OBJS) include_local
-	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoids.dylib $(OBJS)
+lib/lib/lib$(LIB_CLOTHOID).dylib: $(OBJS) include_local
+	@$(MKDIR) -p lib/lib
+	$(CXX) -shared -o lib/lib/lib$(LIB_CLOTHOID).dylib $(OBJS)
 
-lib/libClothoids.so: $(OBJS) include_local
-	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoids.so $(OBJS)
+lib/lib/lib$(LIB_CLOTHOID).so: $(OBJS) include_local
+	@$(MKDIR) -p lib/lib
+	$(CXX) -shared -o lib/lib/lib$(LIB_CLOTHOID).so $(OBJS)
 
 install: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include
-	cp src/*.hh                $(PREFIX)/include
-	cp lib/$(LIB_CLOTHOID).*   $(PREFIX)/lib
+	@cp src/*.hh                                   $(PREFIX)/include
+	@cp src/submodules/quarticRootsFlocke/src/*.hh $(PREFIX)/include
+	@cp lib/lib/lib$(LIB_CLOTHOID).*               $(PREFIX)/lib
 	@$(LDCONFIG) $(PREFIX)/lib
 
 install_as_framework: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
-	cp src/*.hh            $(PREFIX)/include/$(FRAMEWORK)
-	cp lib/$(LIB_CLOTHOID) $(PREFIX)/lib
+	@cp src/*.hh                                   $(PREFIX)/include/$(FRAMEWORK)
+	@cp src/submodules/quarticRootsFlocke/src/*.hh $(PREFIX)/include/$(FRAMEWORK)
+	@cp lib/lib/lib$(LIB_CLOTHOID)                 $(PREFIX)/lib
 
 run:
 	./bin/testBiarc
