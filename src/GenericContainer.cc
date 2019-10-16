@@ -5051,7 +5051,7 @@ namespace GenericContainerNamespace {
           if ( pcreExecRet == 4 ) {
             std::string header = matches[3]; // header
             // found formatting
-            if ( im->second.simple_data() ) {
+            if ( im->second.simple_data() || im->second.simple_vec_data() ) {
               stream << prefix.c_str() << header << ": ";
               im->second.print_content_types(stream,"");
             } else {
