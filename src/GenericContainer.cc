@@ -4970,7 +4970,7 @@ namespace GenericContainerNamespace {
       stream << prefix.c_str() << "complex\n";
       break;
     case GC_STRING:
-      stream << prefix.c_str() << "string\"\n";
+      stream << prefix.c_str() << "string\n";
       break;
     case GC_VEC_POINTER:
       { vec_pointer_type const & v = this->get_vec_pointer();
@@ -5021,13 +5021,12 @@ namespace GenericContainerNamespace {
       { vector_type const & v = this->get_vector();
         for ( vector_type::size_type i = 0; i < v.size(); ++i ) {
           GenericContainer const & vi = v[i];
-          if ( vi.simple_data() ||
-               ( vi.simple_vec_data() && vi.get_num_elements() <= 10 ) ) {
+          if ( vi.simple_data() || vi.simple_vec_data()) {
             stream << prefix.c_str() << i << ": ";
             vi.print_content_types(stream,"");
           } else {
             stream << prefix.c_str() << i << ":\n";
-            vi.print_content_types(stream,prefix+indent);
+            vi.print_content_types(stream,prefix+indent,indent);
           }
         }
       }
@@ -5037,13 +5036,12 @@ namespace GenericContainerNamespace {
         for ( map_type::const_iterator im = m.begin(); im != m.end(); ++im ) {
           // check formatting using pcre
           #ifndef GENERIC_CONTAINER_USE_REGEX
-          if ( im->second.simple_data() ||
-               ( im->second.simple_vec_data() && im->second.get_num_elements() <= 10 ) ) {
+          if ( im->second.simple_data() || im->second.simple_vec_data() ) {
             stream << prefix.c_str() << im->first.c_str() << ": ";
             im->second.print_content_types(stream,"");
           } else {
             stream << prefix.c_str() << im->first.c_str() << ":\n";
-            im->second.print_content_types(stream,prefix+indent);
+            im->second.print_content_types(stream,prefix+indent,indent);
           }
           #else
           // num+"@"+"underline character"
@@ -5068,7 +5066,7 @@ namespace GenericContainerNamespace {
                 stream << ':';
               }
               stream << '\n';
-              im->second.print_content_types(stream,prefix+indent);
+              im->second.print_content_types(stream,prefix+indent,indent);
             }
           } else {
             std::string header = pcreExecRet == 3 ? matches[3] : im->first;
@@ -5077,7 +5075,7 @@ namespace GenericContainerNamespace {
               im->second.print_content_types(stream,"");
             } else {
               stream << prefix.c_str() << header.c_str() << ":\n";
-              im->second.print_content_types(stream,prefix+indent);
+              im->second.print_content_types(stream,prefix+indent,indent);
             }
           }
           #endif
