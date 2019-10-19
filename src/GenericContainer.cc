@@ -46,6 +46,47 @@
 
 namespace GenericContainerNamespace {
 
+  /*
+   backtrace() from:
+   https://eli.thegreenplace.net/2015/programmatic-access-to-the-call-stack-in-c/
+
+   to get the line from address
+   addr2line 0x400968 -e libunwind_backtrace
+  */
+
+  #ifndef SPLINES_OS_OSX
+  void backtrace( ostream_type & ) {}
+  #else
+  void
+  backtrace( ostream_type & ost ) {
+    unw_cursor_t cursor;
+    unw_context_t context;
+
+    // Initialize cursor to current frame for local unwinding.
+    unw_getcontext(&context);
+    unw_init_local(&cursor, &context);
+
+    // Unwind frames one by one, going up the frame stack.
+    while ( unw_step(&cursor) > 0 ) {
+      unw_word_t offset, pc;
+      unw_get_reg(&cursor, UNW_REG_IP, &pc);
+      if ( pc == 0 ) break;
+      ost << "0x" << std::hex << pc << ":" << std::dec;
+      char sym[256];
+      if ( unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
+        char* nameptr = sym;
+        int status;
+        char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
+        if ( status == 0 ) nameptr = demangled;
+        ost << " (" << nameptr << "+0x" << std::hex << offset << ")\n" << std::dec;
+        std::free(demangled);
+      } else {
+        ost << " -- error: unable to obtain symbol name for this frame\n";
+      }
+    }
+  }
+  #endif
+
   using std::fpclassify;
 
   static
@@ -5070,7 +5111,7 @@ namespace GenericContainerNamespace {
             }
           } else {
             std::string header = pcreExecRet == 3 ? matches[3] : im->first;
-            if ( im->second.simple_data() ) {
+            if ( im->second.simple_data() || im->second.simple_vec_data() ) {
               stream << prefix.c_str() << header.c_str() << ": ";
               im->second.print_content_types(stream,"");
             } else {
