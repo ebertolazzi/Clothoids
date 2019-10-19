@@ -49,6 +49,7 @@
 #ifndef GC_DO_ERROR
   #define GC_DO_ERROR(MSG) {                          \
     std::ostringstream ost;                           \
+    GenericContainerNamespace::backtrace( ost );      \
     ost << "in GenericContainer: " << MSG << '\n';    \
     GenericContainer::exception( ost.str().c_str() ); \
   }
@@ -76,6 +77,8 @@
 namespace GenericContainerNamespace {
 
   typedef std::basic_ostream<char> ostream_type;
+
+  void backtrace( ostream_type & );
 
   #if defined(GENERIC_CONTAINER_USE_CXX11) && !defined(_MSC_VER)
   using std::int32_t;
