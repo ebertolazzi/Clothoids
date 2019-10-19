@@ -26,7 +26,7 @@
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
 
-#ifndef G2LIB_OS_WINDOWS
+#ifdef G2LIB_OS_OSX
   #define UNW_LOCAL_ONLY
   #include <cxxabi.h>
   #include <libunwind.h>
@@ -44,7 +44,7 @@ namespace G2lib {
    addr2line 0x400968 -e libunwind_backtrace
   */
 
-  #ifdef G2LIB_OS_WINDOWS
+  #ifndef G2LIB_OS_OSX
   void backtrace( ostream_type & ) {}
   #else
   void
