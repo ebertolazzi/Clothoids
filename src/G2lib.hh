@@ -63,6 +63,7 @@ Authors:
   #define G2LIB_DO_ERROR(MSG)              \
     {                                      \
       std::ostringstream ost;              \
+      G2lib::backtrace( ost );             \
       ost << "On line: " << __LINE__       \
           << " file: " << __FILE__         \
           << '\n' << MSG << '\n';          \
@@ -138,7 +139,10 @@ Authors:
 //! Clothoid computations routine
 namespace G2lib {
 
+
   typedef std::basic_ostream<char> ostream_type;
+
+  void backtrace( ostream_type & );
 
   typedef double real_type;
   typedef int    int_type;
@@ -157,7 +161,7 @@ namespace G2lib {
 
   #ifdef G2LIB_COMPATIBILITY_MODE
 
-  extern bool            use_ISO;
+  extern bool use_ISO;
 
   static
   inline
