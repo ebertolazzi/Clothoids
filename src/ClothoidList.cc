@@ -1439,8 +1439,22 @@ namespace G2lib {
     int_type  & icurve
   ) const {
     G2LIB_ASSERT( !this->clotoidList.empty(), "ClothoidList::closestPointInRange_ISO, empty list" )
-    int_type ib = icurve_begin % this->numSegment(); // to avoid infinite loop in case of bad input
-    int_type ie = icurve_end   % this->numSegment(); // to avoid infinite loop in case of bad input
+    int_type nsegs = this->numSegment();
+    if ( nsegs == 1 ) {
+      icurve = 0;
+      int_type res = this->clotoidList.front().closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      s += s0[0];
+      return res;
+    }
+
+    int_type ib = icurve_begin % nsegs; // to avoid infinite loop in case of bad input
+    int_type ie = icurve_end   % nsegs; // to avoid infinite loop in case of bad input
+    if ( ib < 0 ) ib += nsegs;
+    if ( ie < 0 ) ie += nsegs;
+    G2LIB_ASSERT(
+      ib >= 0 && ie >= 0,
+      "ClothoidList::closestPointInRange_ISO, ib = " << ib  << " ie = " << ie
+    )
 
     icurve = ib;
     int_type res = this->clotoidList[icurve].closestPoint_ISO( qx, qy, x, y, s, t, dst );
@@ -1450,8 +1464,7 @@ namespace G2lib {
 
     int_type iseg = ib;
     do {
-      ++iseg; // next segment
-      iseg %= this->numSegment(); // (circular)
+      if ( ++iseg >= nsegs ) iseg -= nsegs; // next segment
       real_type C_x, C_y, C_s, C_t, C_dst;
       int_type C_res = this->clotoidList[iseg].closestPoint_ISO( qx, qy, C_x, C_y, C_s, C_t, C_dst );
       if ( C_dst < dst ) {

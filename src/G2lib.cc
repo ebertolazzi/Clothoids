@@ -61,14 +61,14 @@ namespace G2lib {
       unw_word_t offset, pc;
       unw_get_reg(&cursor, UNW_REG_IP, &pc);
       if ( pc == 0 ) break;
-      ost << "0x" << std::hex << pc << ":";
+      ost << "0x" << std::hex << pc << ":" << std::dec;
       char sym[256];
       if ( unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
         char* nameptr = sym;
         int status;
         char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
         if ( status == 0 ) nameptr = demangled;
-        ost << " (" << nameptr << "+0x" << std::hex << offset << ")\n";
+        ost << " (" << nameptr << "+0x" << std::hex << offset << ")\n" << std::dec;
         std::free(demangled);
       } else {
         ost << " -- error: unable to obtain symbol name for this frame\n";

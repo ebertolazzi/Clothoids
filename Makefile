@@ -70,6 +70,7 @@ src/PolyLine.cc \
 src/Triangle2D.cc \
 submodules/quarticRootsFlocke/src/PolynomialRoots-1-Quadratic.cc \
 submodules/quarticRootsFlocke/src/PolynomialRoots-2-Cubic.cc \
+submodules/quarticRootsFlocke/src/PolynomialRoots-3-Quartic.cc \
 submodules/quarticRootsFlocke/src/PolynomialRoots-Utils.cc
 
 OBJS  = $(SRCS:.cc=.o)
