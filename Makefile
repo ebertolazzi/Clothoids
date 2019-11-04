@@ -14,7 +14,7 @@ WARN        = -Wall -Wno-sign-compare
 # default values
 LIB_CLOTHOID = Clothoids
 LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
-CXXFLAGS     = -O3
+CXXFLAGS     = -O2
 AR           = ar rcs
 LDCONFIG     =
 
@@ -23,7 +23,7 @@ LDCONFIG     =
 ifneq (,$(findstring Linux, $(OS)))
   LIB_CLOTHOID = Clothoids_linux
   LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
-  CXXFLAGS     = -std=c++11 $(WARN) -O3 -fPIC
+  CXXFLAGS     = -std=c++11 $(WARN) -O2 -fPIC
   AR           = ar rcs
   LDCONFIG     = sudo ldconfig
 endif
@@ -32,7 +32,7 @@ endif
 ifneq (,$(findstring MINGW, $(OS)))
   LIB_CLOTHOID = Clothoids_mingw_x64
   LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
-  CXXFLAGS     = -std=c++11 $(WARN) -O3
+  CXXFLAGS     = -std=c++11 $(WARN) -O2
   AR           = ar rcs
   LDCONFIG     = sudo ldconfig
 endif
@@ -44,7 +44,7 @@ ifneq (,$(findstring Darwin, $(OS)))
   WARN         = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
 	CC           = clang
 	CXX          = clang++ -std=c++11
-  CXXFLAGS     = $(WARN) -O3 -fPIC
+  CXXFLAGS     = $(WARN) -O2 -fPIC
   AR           = libtool -static -o
   LDCONFIG     =
   DYNAMIC_EXT  = .dylib
