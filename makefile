@@ -22,8 +22,8 @@ endif
 ifneq (,$(findstring 6., $(VERSION)))
   CXX += -std=c++11
 endif
-  CXXFLAGS = -pthread -O2 -g0 -funroll-loops -fPIC
-  CFLAGS   = -pthread -O2 -g0 -funroll-loops -fPIC
+  CXXFLAGS = -pthread -O2 -g -funroll-loops -fPIC
+  CFLAGS   = -pthread -O2 -g -funroll-loops -fPIC
   CC      += $(WARN)
   CXX     += $(WARN)
   AR       = ar rcs
@@ -44,8 +44,8 @@ ifneq (,$(findstring 7., $(VERSION)))
 endif
   CC      += $(WARN)
   CXX     += $(WARN)
-  CXXFLAGS = -O2 -g0 -funroll-loops -fPIC
-  CXXFLAGS = -O2 -g0 -funroll-loops -fPIC
+  CXXFLAGS = -O2 -g -funroll-loops -fPIC
+  CXXFLAGS = -O2 -g -funroll-loops -fPIC
   AR       = libtool -static -o
   LIBSGCC  = -lstdc++ -lm
   #LIB_GC = libGenericContainer.dylib

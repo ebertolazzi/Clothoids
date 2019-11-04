@@ -17,9 +17,9 @@ for k=1:2
   CMD = ['mex -I../src -output ',N,' -largeArrayDims mex_',N,'.cc ', SRCS];
   if isunix
     if ismac
-      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'];
+      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"'];
     else
-      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g0"'];
+      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"'];
     end
   elseif ispc
   end
