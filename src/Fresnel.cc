@@ -483,8 +483,7 @@ namespace G2lib {
   ) {
 
     G2LIB_ASSERT(
-      p < 11 && p > 0,
-      "In evalXYaSmall p = " << p << " must be in 1..10"
+      p < 11 && p > 0, "In evalXYaSmall p = " << p << " must be in 1..10"
     )
 
     real_type X0[43], Y0[43];
@@ -1478,10 +1477,12 @@ namespace G2lib {
     if ( ok ) {
       for ( int_type iter = 0; iter < 20; ++iter ) {
         real_type LL, L_D[2], k_D[2], dk_D[2];
-        build_G1( 0, 0, th0,
-                  1, 0, th,
-                  tol, LL,
-                  true, L_D, k_D, dk_D );
+        build_G1(
+          0, 0, th0,
+          1, 0, th,
+          tol, LL,
+          true, L_D, k_D, dk_D
+        );
         real_type f   = this->kappa0 - k0; // use kappa0 of the class
         real_type df  = k_D[1];
         real_type dth = f/df;

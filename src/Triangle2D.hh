@@ -61,9 +61,9 @@ namespace G2lib {
     }
 
     Triangle2D(
-      real_type x1,  real_type y1,
-      real_type x2,  real_type y2,
-      real_type x3,  real_type y3,
+      real_type  x1, real_type  y1,
+      real_type  x2, real_type  y2,
+      real_type  x3, real_type  y3,
       real_type _s0, real_type _s1,
       int_type  _icurve
     ) {
@@ -170,10 +170,8 @@ namespace G2lib {
 
     void
     bbox(
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
+      real_type & xmin, real_type & ymin,
+      real_type & xmax, real_type & ymax
     ) const {
       minmax3( p1[0], p2[0], p3[0], xmin, xmax );
       minmax3( p1[1], p2[1], p3[1], ymin, ymax );

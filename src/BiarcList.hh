@@ -48,7 +48,13 @@ namespace G2lib {
 
     vector<real_type> s0;
     vector<Biarc>     biarcList;
-    mutable int_type  last_idx;
+
+    #ifdef G2LIB_USE_CXX11
+    mutable std::mutex                         last_idx_mutex;
+    mutable std::map<std::thread::id,int_type> last_idx_by_thread;
+    #else
+    mutable int_type last_idx;
+    #endif
 
     mutable bool               aabb_done;
     mutable AABBtree           aabb_tree;
@@ -92,9 +98,16 @@ namespace G2lib {
     //explicit
     BiarcList()
     : BaseCurve(G2LIB_BIARC_LIST)
+    #ifndef G2LIB_USE_CXX11
     , last_idx(0)
+    #endif
     , aabb_done(false)
-    {}
+    {
+      #ifdef G2LIB_USE_CXX11
+      std::lock_guard<std::mutex> lck(last_idx_mutex);
+      last_idx_by_thread[std::this_thread::get_id()] = 0;
+      #endif
+    }
 
     virtual
     ~BiarcList() G2LIB_OVERRIDE {
@@ -106,9 +119,17 @@ namespace G2lib {
     //explicit
     BiarcList( BiarcList const & s )
     : BaseCurve(G2LIB_BIARC_LIST)
+    #ifndef G2LIB_USE_CXX11
     , last_idx(0)
+    #endif
     , aabb_done(false)
-    { copy(s); }
+    {
+      #ifdef G2LIB_USE_CXX11
+      std::lock_guard<std::mutex> lck(last_idx_mutex);
+      last_idx_by_thread[std::this_thread::get_id()] = 0;
+      #endif
+      copy(s);
+    }
 
     void init();
     void reserve( int_type n );
@@ -161,7 +182,7 @@ namespace G2lib {
 
     int_type numSegment() const { return int_type(biarcList.size()); }
 
-    bool findAtS( real_type s ) const;
+    int_type findAtS( real_type s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

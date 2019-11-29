@@ -78,6 +78,7 @@ namespace G2lib {
     real_type const P1[2],
     real_type const Q1[2],
     real_type const R1[2],
+    // - - - - - - - - - -
     real_type const P2[2],
     real_type const Q2[2],
     real_type const R2[2]
@@ -176,11 +177,15 @@ namespace G2lib {
     real_type const r2[2]
   ) {
     if ( orient_2d(p1,q1,r1) < 0 ) {
-      if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,r1,q1,p2,r2,q2);
-      else                           return tri_tri_intersection_2d(p1,r1,q1,p2,q2,r2);
+      if ( orient_2d(p2,q2,r2) < 0 )
+        return tri_tri_intersection_2d(p1,r1,q1,p2,r2,q2);
+      else
+        return tri_tri_intersection_2d(p1,r1,q1,p2,q2,r2);
     } else {
-      if ( orient_2d(p2,q2,r2) < 0 ) return tri_tri_intersection_2d(p1,q1,r1,p2,r2,q2);
-      else                           return tri_tri_intersection_2d(p1,q1,r1,p2,q2,r2);
+      if ( orient_2d(p2,q2,r2) < 0 )
+        return tri_tri_intersection_2d(p1,q1,r1,p2,r2,q2);
+      else
+        return tri_tri_intersection_2d(p1,q1,r1,p2,q2,r2);
     }
   }
 

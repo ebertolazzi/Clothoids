@@ -124,8 +124,14 @@ Authors:
 #define G2LIB_PURE_VIRTUAL = 0
 #ifdef G2LIB_USE_CXX11
   #define G2LIB_OVERRIDE override
+  #ifdef __clang__
+    #define G2LIB_FALLTHROUGH [[clang::fallthrough]];
+  #else
+    #define G2LIB_FALLTHROUGH
+  #endif
 #else
   #define G2LIB_OVERRIDE
+  #define G2LIB_FALLTHROUGH
 #endif
 
 #ifdef __GNUC__
@@ -136,9 +142,14 @@ Authors:
 #pragma clang diagnostic ignored "-Wc++98-compat"
 #endif
 
+#ifdef G2LIB_USE_CXX11
+  #include <thread>
+  #include <mutex>
+  #include <map>
+#endif
+
 //! Clothoid computations routine
 namespace G2lib {
-
 
   typedef std::basic_ostream<char> ostream_type;
 
@@ -160,65 +171,39 @@ namespace G2lib {
   extern bool            intersect_with_AABBtree;
 
   #ifdef G2LIB_COMPATIBILITY_MODE
-
   extern bool use_ISO;
-
-  static
-  inline
-  void
-  lib_use_ISO()
-  { use_ISO = true; }
-
-  static
-  inline
-  void
-  lib_use_SAE()
-  { use_ISO = false; }
-
+  static inline void lib_use_ISO() { use_ISO = true; }
+  static inline void lib_use_SAE() { use_ISO = false; }
   #endif
 
   //! disable AABB tree in computation
-  static
-  inline
-  void
-  noAABBtree()
-  { intersect_with_AABBtree = false; }
+  static inline void noAABBtree() { intersect_with_AABBtree = false; }
 
   //! enable AABB tree in computation
-  static
-  inline
-  void
-  yesAABBtree()
-  { intersect_with_AABBtree = true; }
+  static inline void yesAABBtree() { intersect_with_AABBtree = true; }
 
   //! check if cloating point number `x` is zero
-  static
-  inline
-  bool
-  isZero( real_type x )
-  { return FP_ZERO == std::fpclassify(x); }
+  static inline
+  bool isZero( real_type x ) { return FP_ZERO == std::fpclassify(x); }
 
   //! check if cloating point number `x` is finite
   static
   inline
-  bool
-  isInfinite( real_type x )
-  { return FP_INFINITE == std::fpclassify(x); }
+  bool isInfinite( real_type x ) { return FP_INFINITE == std::fpclassify(x); }
 
   //! check if cloating point number `x` is Not A Number
   static
   inline
-  bool
-  isNaN( real_type x )
-  { return FP_NAN == std::fpclassify(x); }
+  bool isNaN( real_type x ) { return FP_NAN == std::fpclassify(x); }
 
   //! check if cloating point number `x` is regural (i.e. finite and not NaN)
   static
   inline
   bool
-  isRegular( real_type x )
-  { return !( FP_INFINITE == std::fpclassify(x) ||
-              FP_NAN      == std::fpclassify(x) ); }
+  isRegular( real_type x ) {
+    return !( FP_INFINITE == std::fpclassify(x) ||
+              FP_NAN      == std::fpclassify(x) );
+  }
 
   /*
   // sin(x)/x
