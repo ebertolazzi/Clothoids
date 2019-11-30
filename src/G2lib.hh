@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -57,6 +57,7 @@ Authors:
 #include <limits>
 
 #include <vector>
+#include <map>
 #include <utility>
 
 #ifndef G2LIB_DO_ERROR
@@ -136,9 +137,13 @@ Authors:
 #pragma clang diagnostic ignored "-Wc++98-compat"
 #endif
 
+#ifdef G2LIB_USE_CXX11
+  #include <thread>
+  #include <mutex>
+#endif
+
 //! Clothoid computations routine
 namespace G2lib {
-
 
   typedef std::basic_ostream<char> ostream_type;
 
@@ -836,15 +841,15 @@ namespace G2lib {
     real_type
     xBegin( real_type offs ) const
     { return G2lib::use_ISO ? this->xBegin_ISO(offs) : this->xBegin_SAE(offs); }
-    
+
     real_type
     yBegin( real_type offs ) const
     { return G2lib::use_ISO ? this->yBegin_ISO(offs) : this->yBegin_SAE(offs); }
-    
+
     real_type
     xEnd( real_type offs ) const
     { return G2lib::use_ISO ? this->xEnd_ISO(offs) : this->xEnd_SAE(offs); }
-    
+
     real_type
     yEnd( real_type offs ) const
     { return G2lib::use_ISO ? this->yEnd_ISO(offs) : this->yEnd_SAE(offs); }
@@ -1875,6 +1880,21 @@ namespace G2lib {
     real_type       theta_max[],
     real_type       omega[],
     real_type       len[]
+  );
+
+  /*\
+   |    __ _           _    _   _   ____
+   |   / _(_)_ __   __| |  / \ | |_/ ___|
+   |  | |_| | '_ \ / _` | / _ \| __\___ \
+   |  |  _| | | | | (_| |/ ___ \ |_ ___) |
+   |  |_| |_|_| |_|\__,_/_/   \_\__|____/
+  \*/
+
+  int_type
+  findAtS(
+    real_type                      s,
+    int_type                     & last_idx,
+    std::vector<real_type> const & s0
   );
 
 }

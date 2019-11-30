@@ -58,9 +58,9 @@ namespace G2lib {
 
   PolyLine::PolyLine( BaseCurve const & C )
   : BaseCurve(G2LIB_POLYLINE)
-  , isegment(0)
   , aabb_done(false)
   {
+    this->resetLastInterval(); 
     switch ( C.type() ) {
     case G2LIB_LINE:
       build( *static_cast<LineSegment const *>(&C) );
@@ -84,55 +84,55 @@ namespace G2lib {
 
   PolyLine::PolyLine( LineSegment const & LS )
   : BaseCurve(G2LIB_POLYLINE)
-  , isegment(0)
   , aabb_done(false)
   {
-    init( LS.xBegin(), LS.xBegin() );
-    push_back( LS );
+    this->resetLastInterval();
+    this->init( LS.xBegin(), LS.xBegin() );
+    this->push_back( LS );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( CircleArc const & C, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , isegment(0)
   , aabb_done(false)
   {
-    init( C.xBegin(), C.xBegin() );
-    push_back( C, tol );
+    this->resetLastInterval();
+    this->init( C.xBegin(), C.xBegin() );
+    this->push_back( C, tol );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( Biarc const & B, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , isegment(0)
   , aabb_done(false)
   {
-    init( B.xBegin(), B.xBegin() );
-    push_back( B, tol );
+    this->resetLastInterval();
+    this->init( B.xBegin(), B.xBegin() );
+    this->push_back( B, tol );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( ClothoidCurve const & C, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , isegment(0)
   , aabb_done(false)
   {
-    init( C.xBegin(), C.xBegin() );
-    push_back( C, tol );
+    this->resetLastInterval();
+    this->init( C.xBegin(), C.xBegin() );
+    this->push_back( C, tol );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( ClothoidList const & PL, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , isegment(0)
   , aabb_done(false)
   {
-    init( PL.xBegin(), PL.xBegin() );
-    push_back( PL, tol );
+    this->resetLastInterval();
+    this->init( PL.xBegin(), PL.xBegin() );
+    this->push_back( PL, tol );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -150,31 +150,6 @@ namespace G2lib {
     s0.reserve( PL.s0.size() );
     std::copy( PL.s0.begin(), PL.s0.end(), back_inserter(s0) );
     aabb_done = false;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  PolyLine::search( real_type s ) const {
-
-    G2LIB_ASSERT(
-      !s0.empty(),
-      "PolyLine::search(" << s << ") empty PolyLine"
-    )
-
-    int_type  npts = int_type(s0.size());
-    real_type sl   = s0.front();
-    real_type sr   = s0.back();
-    G2LIB_ASSERT(
-      s >= sl && s <= sr,
-      "PolyLine::search( " << s <<
-      " ) out of range: [" << sl << ", " << sr << "]"
-    )
-
-    if      ( isegment < 0      ) isegment = 0;
-    else if ( isegment > npts-2 ) isegment = npts-2;
-
-    updateInterval( isegment, s, &s0.front(), npts );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -246,8 +221,7 @@ namespace G2lib {
 
   real_type
   PolyLine::theta( real_type s ) const {
-    search( s );
-    return polylineList[size_t(isegment)].theta0;
+    return polylineList[size_t(this->findAtS( s ))].theta0;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -336,8 +310,8 @@ namespace G2lib {
       ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
     )
 
-    search( s_begin ); size_t i_begin = size_t(isegment);
-    search( s_end );   size_t i_end   = size_t(isegment);
+    size_t i_begin = size_t(findAtS(s_begin));
+    size_t i_end   = size_t(findAtS(s_end));
     polylineList[i_begin].trim( s_begin-s0[i_begin], s0[i_begin+1] );
     polylineList[i_end].trim( s0[i_end], s_end-s0[i_end] );
     polylineList.erase( polylineList.begin()+LS_dist_type(i_end+1), polylineList.end() );
@@ -347,7 +321,7 @@ namespace G2lib {
     size_t k = 0;
     for (; ic != polylineList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
-    isegment = 0;
+    this->resetLastInterval();
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
