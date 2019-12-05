@@ -579,14 +579,14 @@ namespace G2lib {
   //! \brief Class to manage a list of clothoid curves (not necessarily G2 or G1 connected)
   class ClothoidList : public BaseCurve {
 
+    bool                  curve_is_closed;
     vector<real_type>     s0;
     vector<ClothoidCurve> clotoidList;
  
     #ifdef G2LIB_USE_CXX11
     mutable std::mutex                         lastInterval_mutex;
     mutable std::map<std::thread::id,int_type> lastInterval_by_thread;
-    #else
-    mutable int_type lastInterval;
+                            mutable int_type lastInterval;
     #endif
 
     mutable bool               aabb_done;
@@ -638,6 +638,7 @@ namespace G2lib {
     //explicit
     ClothoidList()
     : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , curve_is_closed(false)
     , aabb_done(false)
     { this->resetLastInterval(); }
 
@@ -651,6 +652,7 @@ namespace G2lib {
     //explicit
     ClothoidList( ClothoidList const & s )
     : BaseCurve(G2LIB_CLOTHOID_LIST)
+    , curve_is_closed(false)
     , aabb_done(false)
     { this->resetLastInterval(); copy(s); }
 
@@ -683,6 +685,23 @@ namespace G2lib {
     void push_back_G1( real_type x1, real_type y1, real_type theta1 );
     void push_back_G1( real_type x0, real_type y0, real_type theta0,
                        real_type x1, real_type y1, real_type theta1 );
+
+    bool is_closed() const { return this->curve_is_closed; }
+    void make_closed() { this->curve_is_closed = true; }
+    void make_open()   { this->curve_is_closed = false; }
+
+    real_type closure_gap_x()  const { return this->xEnd() - this->xBegin(); }
+    real_type closure_gap_y()  const { return this->yEnd() - this->yBegin(); }
+    real_type closure_gap_tx() const { return this->tx_End() - this->tx_Begin(); }
+    real_type closure_gap_ty() const { return this->ty_End() - this->ty_Begin(); }
+
+    bool
+    closure_check( real_type tol_xy = 1e-6, real_type tol_tg = 1e-6 ) const {
+      return std::abs(closure_gap_x())  < tol_xy &&
+             std::abs(closure_gap_y())  < tol_xy &&
+             std::abs(closure_gap_tx()) < tol_tg &&
+             std::abs(closure_gap_ty()) < tol_tg;
+    }
 
     bool
     build_G1(
@@ -729,6 +748,8 @@ namespace G2lib {
     ClothoidCurve const & getAtS( real_type s ) const;
 
     int_type numSegment() const { return int_type(clotoidList.size()); }
+
+    void wrap_in_range( real_type & s );
 
     int_type
     findAtS( real_type s ) const {
