@@ -98,12 +98,12 @@ end
 #
 # https://stackoverflow.com/questions/856891/unzip-zip-tar-tag-gz-files-with-ruby
 #
-TAR_LONGLINK = '././@LongLink'
 def extract_tgz( tar_gz_archive, destination = '.' )
+  tar_longlink = '././@LongLink'
   Gem::Package::TarReader.new( Zlib::GzipReader.open tar_gz_archive ) do |tar|
     dest = nil
     tar.each do |entry|
-      if entry.full_name == TAR_LONGLINK
+      if entry.full_name == tar_longlink
         dest = File.join destination, entry.read.strip
         next
       end
