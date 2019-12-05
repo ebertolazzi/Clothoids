@@ -710,44 +710,6 @@ namespace G2lib {
     return 0;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  updateInterval(
-    int_type      & lastInterval,
-    real_type       x,
-    real_type const Xvec[],
-    int_type        npts
-  ) {
-
-    if ( npts <= 2 ) { lastInterval = 0; return; } // nothing to search
-
-    // optimized interval search
-    real_type const * XL = Xvec + lastInterval;
-    if ( XL[1] <= x ) { // x on the right
-      if ( x >= Xvec[npts-2] ) { // x in [X[npt-2],X[npts-1]]
-        lastInterval = npts-2; // last interval
-      } else if ( x < XL[2] ) { // x in [XL[1],XL[2])
-        ++lastInterval;
-      } else { // x >= XL[2] search the right interval
-        real_type const * XE = Xvec+npts;
-        lastInterval += int_type(lower_bound( XL, XE, x )-XL);
-        if ( Xvec[lastInterval] > x ) --lastInterval;
-      }
-    } else if ( x < XL[0] ) { // on the left
-      if ( x < Xvec[1] ) { // x in [X[0],X[1])
-        lastInterval = 0; // first interval
-      } else if ( XL[-1] <= x ) { // x in [XL[-1],XL[0])
-        --lastInterval;
-      } else {
-        lastInterval = int_type(lower_bound( Xvec, XL, x )-Xvec);
-        if ( Xvec[lastInterval] > x ) --lastInterval;
-      }
-    } else {
-      // x in the interval [XL[0],XL[1]) nothing to do
-    }
-  }
-
   /*\
    |  ____                  ____
    | | __ )  __ _ ___  ___ / ___|   _ _ ____   _____
@@ -920,6 +882,92 @@ namespace G2lib {
     eval_DDD( s, x_DDD, y_DDD );
     x_DDD += offs * nx_DDD;
     y_DDD += offs * ny_DDD;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  /*\
+   |    __ _           _    _   _   ____
+   |   / _(_)_ __   __| |  / \ | |_/ ___|
+   |  | |_| | '_ \ / _` | / _ \| __\___ \
+   |  |  _| | | | | (_| |/ ___ \ |_ ___) |
+   |  |_| |_|_| |_|\__,_/_/   \_\__|____/
+  \*/
+
+  int_type
+  findAtS(
+    real_type                      s,
+    int_type                     & idx,
+    std::vector<real_type> const & s0
+  ) {
+    int_type ns = int_type(s0.size()-1);
+    G2LIB_ASSERT(
+      idx >= 0 && idx < ns,
+      "findAtS( s=" << s << ", idx=" << idx << ",... ) bad index"
+    )
+    real_type const * sL = &s0[size_t(idx)];
+    if ( s < sL[0] ) {
+      if ( s > s0.front() ) {
+        real_type const * sB = &s0.front();
+        idx = int_type(lower_bound( sB, sL, s )-sB);
+      } else {
+        idx = 0;
+      }
+    } else if ( s > sL[1] ) {
+      if ( s < s0.back() ) {
+        real_type const * sE = &s0[size_t(ns+1)]; // past to the last
+        idx += int_type(lower_bound( sL, sE, s )-sL);
+      } else {
+        idx = ns-1;
+      }
+    } else {
+      return idx; // vale intervallo precedente
+    }
+    if ( s0[size_t(idx)] > s ) --idx; // aggiustamento caso di bordo
+    G2LIB_ASSERT(
+      idx >= 0 && idx < ns,
+      "findAtS( s=" << s << ", idx=" << idx <<
+      ",... ) range [" << s0.front() << ", " << s0.back() << "]"
+    )
+    return idx;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  updateInterval(
+    int_type      & lastInterval,
+    real_type       x,
+    real_type const Xvec[],
+    int_type        npts
+  ) {
+
+    if ( npts <= 2 ) { lastInterval = 0; return; } // nothing to search
+
+    // optimized interval search
+    real_type const * XL = Xvec + lastInterval;
+    if ( XL[1] <= x ) { // x on the right
+      if ( x >= Xvec[npts-2] ) { // x in [X[npt-2],X[npts-1]]
+        lastInterval = npts-2; // last interval
+      } else if ( x < XL[2] ) { // x in [XL[1],XL[2])
+        ++lastInterval;
+      } else { // x >= XL[2] search the right interval
+        real_type const * XE = Xvec+npts;
+        lastInterval += int_type(lower_bound( XL, XE, x )-XL);
+        if ( Xvec[lastInterval] > x ) --lastInterval;
+      }
+    } else if ( x < XL[0] ) { // on the left
+      if ( x < Xvec[1] ) { // x in [X[0],X[1])
+        lastInterval = 0; // first interval
+      } else if ( XL[-1] <= x ) { // x in [XL[-1],XL[0])
+        --lastInterval;
+      } else {
+        lastInterval = int_type(lower_bound( Xvec, XL, x )-Xvec);
+        if ( Xvec[lastInterval] > x ) --lastInterval;
+      }
+    } else {
+      // x in the interval [XL[0],XL[1]) nothing to do
+    }
   }
 
 }

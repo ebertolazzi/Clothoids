@@ -55,121 +55,65 @@ namespace G2lib {
 
   ClothoidList::ClothoidList( LineSegment const & LS )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( LS );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( LS );
   }
 
   ClothoidList::ClothoidList( CircleArc const & C )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( C );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
   }
 
   ClothoidList::ClothoidList( Biarc const & C )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( C.getC0() );
-    push_back( C.getC1() );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C.getC0() );
+    this->push_back( C.getC1() );
   }
 
   ClothoidList::ClothoidList( BiarcList const & c )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( c );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( c );
   }
 
   ClothoidList::ClothoidList( ClothoidCurve const & c )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( c );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( c );
   }
 
   ClothoidList::ClothoidList( PolyLine const & pl )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( pl );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( pl );
   }
 
   ClothoidList::ClothoidList( BaseCurve const & C )
   : BaseCurve(G2LIB_CLOTHOID_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
+    this->resetLastInterval();
+    this->init();
     switch ( C.type() ) {
     case G2LIB_LINE:
       push_back( *static_cast<LineSegment const *>(&C) );
@@ -199,16 +143,9 @@ namespace G2lib {
 
   void
   ClothoidList::init() {
-    s0.clear();
-    clotoidList.clear();
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #else
-    last_idx = 0;
-    #endif
+    this->s0.clear();
+    this->clotoidList.clear();
+    this->resetLastInterval();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -521,54 +458,8 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ClothoidCurve const &
-  ClothoidList::getAtS( real_type s ) const {
-    int_type idx = this->findAtS(s);
-    return get(idx);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  int_type
-  ClothoidList::findAtS( real_type s ) const {
-    int_type ns = int_type(clotoidList.size());
-    #ifdef G2LIB_USE_CXX11
-    int_type last_idx;
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx = last_idx_by_thread[std::this_thread::get_id()];
-    }
-    #endif
-
-    G2LIB_ASSERT(
-      last_idx >= 0 && last_idx < ns,
-      "ClothoidList::findAtS( " << s << ", " << last_idx << " ) bad index"
-    )
-    real_type const * sL = &s0[last_idx];
-    if ( s < sL[0] ) {
-      if ( s > s0.front() ) {
-        real_type const * sB = &s0.front();
-        last_idx = int_type(lower_bound( sB, sL, s )-sB);
-      } else {
-        last_idx = 0;
-      }
-    } else if ( s > sL[1] ) {
-      if ( s < s0.back() ) {
-        real_type const * sE = &s0[ns+1]; // past to the last
-        last_idx += int_type(lower_bound( sL, sE, s )-sL);
-      } else {
-        last_idx = ns-1;
-      }
-    } else {
-      return true; // vale intervallo precedente
-    }
-    if ( s0[last_idx] > s ) --last_idx; // aggiustamento caso di bordo
-    G2LIB_ASSERT(
-      last_idx >= 0 && last_idx < ns,
-      "ClothoidList::findAtS( " << s << ") last_idx = " << last_idx <<
-      " range [" << s0.front() << ", " << s0.back() << "]"
-    )
-    return true;
-  }
+  ClothoidList::getAtS( real_type s ) const
+  { return get(findAtS(s)); }
 
   /*\
    |   _                  _   _
@@ -675,7 +566,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta( s - s0[idx] );
   }
@@ -684,7 +575,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta_D( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta_D( s - s0[idx] );
   }
@@ -693,7 +584,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta_DD( real_type s ) const  {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta_DD( s - s0[idx] );
   }
@@ -702,7 +593,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta_DDD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta_DDD( s - s0[idx] );
   }
@@ -717,7 +608,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx( s - s0[idx] );
   }
@@ -726,7 +617,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty( s - s0[idx] );
   }
@@ -735,7 +626,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx_D( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx_D( s - s0[idx] );
   }
@@ -744,7 +635,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty_D( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty_D( s - s0[idx] );
   }
@@ -753,7 +644,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx_DD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx_DD( s - s0[idx] );
   }
@@ -762,7 +653,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty_DD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty_DD( s - s0[idx] );
   }
@@ -771,7 +662,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx_DDD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx_DDD( s - s0[idx] );
   }
@@ -780,7 +671,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty_DDD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty_DDD( s - s0[idx] );
   }
@@ -793,7 +684,7 @@ namespace G2lib {
     real_type & tg_x,
     real_type & tg_y
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg( s - s0[idx], tg_x, tg_y );
   }
@@ -806,7 +697,7 @@ namespace G2lib {
     real_type & tg_x_D,
     real_type & tg_y_D
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg_D( s - s0[idx], tg_x_D, tg_y_D );
   }
@@ -819,7 +710,7 @@ namespace G2lib {
     real_type & tg_x_DD,
     real_type & tg_y_DD
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg_DD( s - s0[idx], tg_x_DD, tg_y_DD );
   }
@@ -832,7 +723,7 @@ namespace G2lib {
     real_type & tg_x_DDD,
     real_type & tg_y_DDD
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg_DDD( s - s0[idx], tg_x_DDD, tg_y_DDD );
   }
@@ -847,7 +738,7 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     c.evaluate( s - s0[idx], th, k, x, y );
   }
@@ -863,7 +754,7 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     c.evaluate_ISO( s - s0[idx], offs, th, k, x, y );
   }
@@ -872,7 +763,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X( s - s0[idx] );
   }
@@ -881,7 +772,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y( real_type s ) const  {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y( s - s0[idx] );
   }
@@ -890,7 +781,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_D( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_D( s - s0[idx] );
   }
@@ -899,7 +790,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_D( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_D( s - s0[idx] );
   }
@@ -908,7 +799,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_DD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_DD( s - s0[idx] );
   }
@@ -917,7 +808,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_DD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_DD( s - s0[idx] );
   }
@@ -926,7 +817,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_DDD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_DDD( s - s0[idx] );
   }
@@ -935,7 +826,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_DDD( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_DDD( s - s0[idx] );
   }
@@ -948,7 +839,7 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval( s - s0[idx], x, y );
   }
@@ -961,7 +852,7 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_D( s - s0[idx], x_D, y_D );
   }
@@ -974,7 +865,7 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_DD( s - s0[idx], x_DD, y_DD );
   }
@@ -987,7 +878,7 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_DDD( s - s0[idx], x_DDD, y_DDD );
   }
@@ -1002,7 +893,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO( s - s0[idx], offs );
   }
@@ -1011,7 +902,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO( s - s0[idx], offs );
   }
@@ -1020,7 +911,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO_D( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO_D( s - s0[idx], offs );
   }
@@ -1029,7 +920,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO_D( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO_D( s - s0[idx], offs );
   }
@@ -1038,7 +929,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO_DD( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO_DD( s - s0[idx], offs );
   }
@@ -1047,7 +938,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO_DD( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO_DD( s - s0[idx], offs );
   }
@@ -1056,7 +947,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO_DDD( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO_DDD( s - s0[idx], offs );
   }
@@ -1065,7 +956,7 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO_DDD( real_type s, real_type offs ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO_DDD( s - s0[idx], offs );
   }
@@ -1079,7 +970,7 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO( s - s0[idx], offs, x, y );
   }
@@ -1093,7 +984,7 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO_D( s - s0[idx], offs, x_D, y_D );
   }
@@ -1107,7 +998,7 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO_DD( s - s0[idx], offs, x_DD, y_DD );
   }
@@ -1121,7 +1012,7 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO_DDD( s - s0[idx], offs, x_DDD, y_DDD );
   }
@@ -1208,8 +1099,8 @@ namespace G2lib {
       ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
     )
 
-    size_t i_begin = this->findAtS( s_begin );
-    size_t i_end   = this->findAtS( s_end );
+    size_t i_begin = size_t(findAtS( s_begin ));
+    size_t i_end   = size_t(findAtS( s_end ));
     if ( i_begin == i_end ) {
       clotoidList[i_begin].trim( s_begin-s0[i_begin], s_end-s0[i_begin] );
     } else {
@@ -1225,15 +1116,7 @@ namespace G2lib {
     size_t k = 0;
     for (; ic != clotoidList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
-
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #else
-    this->last_idx = 0;
-    #endif
+    this->resetLastInterval();
   }
 
   /*\

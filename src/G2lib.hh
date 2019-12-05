@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -57,6 +57,7 @@ Authors:
 #include <limits>
 
 #include <vector>
+#include <map>
 #include <utility>
 
 #ifndef G2LIB_DO_ERROR
@@ -124,14 +125,8 @@ Authors:
 #define G2LIB_PURE_VIRTUAL = 0
 #ifdef G2LIB_USE_CXX11
   #define G2LIB_OVERRIDE override
-  #ifdef __clang__
-    #define G2LIB_FALLTHROUGH [[clang::fallthrough]];
-  #else
-    #define G2LIB_FALLTHROUGH
-  #endif
 #else
   #define G2LIB_OVERRIDE
-  #define G2LIB_FALLTHROUGH
 #endif
 
 #ifdef __GNUC__
@@ -145,7 +140,6 @@ Authors:
 #ifdef G2LIB_USE_CXX11
   #include <thread>
   #include <mutex>
-  #include <map>
 #endif
 
 //! Clothoid computations routine
@@ -171,39 +165,65 @@ namespace G2lib {
   extern bool            intersect_with_AABBtree;
 
   #ifdef G2LIB_COMPATIBILITY_MODE
+
   extern bool use_ISO;
-  static inline void lib_use_ISO() { use_ISO = true; }
-  static inline void lib_use_SAE() { use_ISO = false; }
+
+  static
+  inline
+  void
+  lib_use_ISO()
+  { use_ISO = true; }
+
+  static
+  inline
+  void
+  lib_use_SAE()
+  { use_ISO = false; }
+
   #endif
 
   //! disable AABB tree in computation
-  static inline void noAABBtree() { intersect_with_AABBtree = false; }
+  static
+  inline
+  void
+  noAABBtree()
+  { intersect_with_AABBtree = false; }
 
   //! enable AABB tree in computation
-  static inline void yesAABBtree() { intersect_with_AABBtree = true; }
+  static
+  inline
+  void
+  yesAABBtree()
+  { intersect_with_AABBtree = true; }
 
   //! check if cloating point number `x` is zero
-  static inline
-  bool isZero( real_type x ) { return FP_ZERO == std::fpclassify(x); }
+  static
+  inline
+  bool
+  isZero( real_type x )
+  { return FP_ZERO == std::fpclassify(x); }
 
   //! check if cloating point number `x` is finite
   static
   inline
-  bool isInfinite( real_type x ) { return FP_INFINITE == std::fpclassify(x); }
+  bool
+  isInfinite( real_type x )
+  { return FP_INFINITE == std::fpclassify(x); }
 
   //! check if cloating point number `x` is Not A Number
   static
   inline
-  bool isNaN( real_type x ) { return FP_NAN == std::fpclassify(x); }
+  bool
+  isNaN( real_type x )
+  { return FP_NAN == std::fpclassify(x); }
 
   //! check if cloating point number `x` is regural (i.e. finite and not NaN)
   static
   inline
   bool
-  isRegular( real_type x ) {
-    return !( FP_INFINITE == std::fpclassify(x) ||
-              FP_NAN      == std::fpclassify(x) );
-  }
+  isRegular( real_type x )
+  { return !( FP_INFINITE == std::fpclassify(x) ||
+              FP_NAN      == std::fpclassify(x) ); }
 
   /*
   // sin(x)/x
@@ -821,15 +841,15 @@ namespace G2lib {
     real_type
     xBegin( real_type offs ) const
     { return G2lib::use_ISO ? this->xBegin_ISO(offs) : this->xBegin_SAE(offs); }
-    
+
     real_type
     yBegin( real_type offs ) const
     { return G2lib::use_ISO ? this->yBegin_ISO(offs) : this->yBegin_SAE(offs); }
-    
+
     real_type
     xEnd( real_type offs ) const
     { return G2lib::use_ISO ? this->xEnd_ISO(offs) : this->xEnd_SAE(offs); }
-    
+
     real_type
     yEnd( real_type offs ) const
     { return G2lib::use_ISO ? this->yEnd_ISO(offs) : this->yEnd_SAE(offs); }
@@ -1860,6 +1880,21 @@ namespace G2lib {
     real_type       theta_max[],
     real_type       omega[],
     real_type       len[]
+  );
+
+  /*\
+   |    __ _           _    _   _   ____
+   |   / _(_)_ __   __| |  / \ | |_/ ___|
+   |  | |_| | '_ \ / _` | / _ \| __\___ \
+   |  |  _| | | | | (_| |/ ___ \ |_ ___) |
+   |  |_| |_|_| |_|\__,_/_/   \_\__|____/
+  \*/
+
+  int_type
+  findAtS(
+    real_type                      s,
+    int_type                     & last_idx,
+    std::vector<real_type> const & s0
   );
 
 }

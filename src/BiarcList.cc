@@ -56,86 +56,46 @@ namespace G2lib {
 
   BiarcList::BiarcList( LineSegment const & LS )
   : BaseCurve(G2LIB_BIARC_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( LS );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( LS );
   }
 
   BiarcList::BiarcList( CircleArc const & C )
   : BaseCurve(G2LIB_BIARC_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( C );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
   }
 
   BiarcList::BiarcList( Biarc const & C )
   : BaseCurve(G2LIB_BIARC_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( C );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
   }
 
   BiarcList::BiarcList( PolyLine const & pl )
   : BaseCurve(G2LIB_BIARC_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
-    push_back( pl );
+    this->resetLastInterval();
+    this->init();
+    this->push_back( pl );
   }
 
   BiarcList::BiarcList( BaseCurve const & C )
   : BaseCurve(G2LIB_BIARC_LIST)
-  #ifndef G2LIB_USE_CXX11
-  , last_idx(0)
-  #endif
   , aabb_done(false)
   {
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #endif
-    init();
+    this->resetLastInterval();
+    this->init();
     switch ( C.type() ) {
     case G2LIB_LINE:
       push_back( *static_cast<LineSegment const *>(&C) );
@@ -157,7 +117,7 @@ namespace G2lib {
       G2LIB_DO_ERROR(
         "BiarcList constructor cannot convert from: " <<
         CurveType_name[C.type()]
-      )
+      );
     }
   }
 
@@ -165,16 +125,9 @@ namespace G2lib {
 
   void
   BiarcList::init() {
-    s0.clear();
-    biarcList.clear();
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #else
-    last_idx = 0;
-    #endif
+    this->s0.clear();
+    this->biarcList.clear();
+    this->resetLastInterval();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -188,7 +141,9 @@ namespace G2lib {
                back_inserter(biarcList) );
     s0.clear();
     s0.reserve(L.s0.size());
-    std::copy( L.s0.begin(), L.s0.end(), back_inserter(s0) );
+    std::copy( L.s0.begin(),
+               L.s0.end(),
+               back_inserter(s0) );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -353,58 +308,8 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Biarc const &
-  BiarcList::getAtS( real_type s ) const {
-    return this->get(this->findAtS(s));
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  int_type
-  BiarcList::findAtS( real_type s ) const {
-    #ifdef G2LIB_USE_CXX11
-    int_type last_idx;
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx = last_idx_by_thread[std::this_thread::get_id()];
-    }
-    #endif
-    int_type ns = int_type(biarcList.size());
-    G2LIB_ASSERT(
-      last_idx >= 0 && last_idx < ns,
-      "BiarcList::findAtS( " << s << ") last_idx = " << last_idx << " ) bad index"
-    )
-    real_type const * sL = &s0[last_idx];
-    if ( s < sL[0] ) {
-      if ( s > s0.front() ) {
-        real_type const * sB = &s0.front();
-        last_idx = int_type(lower_bound( sB, sL, s )-sB);
-      } else {
-        last_idx = 0;
-      }
-    } else if ( s > sL[1] ) {
-      if ( s < s0.back() ) {
-        real_type const * sE = &s0[ns+1]; // past to the last
-        last_idx += int_type(lower_bound( sL, sE, s )-sL);
-      } else {
-        last_idx = ns-1;
-      }
-    } else {
-      return last_idx; // vale intervallo precedente
-    }
-    if ( s0[last_idx] > s ) --last_idx; // aggiustamento caso di bordo
-    G2LIB_ASSERT(
-      last_idx >= 0 && last_idx < ns,
-      "BiarcList::findAtS( " << s << ") last_idx = " << last_idx <<
-      " range [" << s0.front() << ", " << s0.back() << "]"
-    )
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = last_idx;
-    }
-    #endif
-    return last_idx;
-  }
+  BiarcList::getAtS( real_type s ) const 
+  { return this->get(findAtS(s)); }
 
   /*\
    |   _                  _   _
@@ -1039,13 +944,16 @@ namespace G2lib {
   void
   BiarcList::trim( real_type s_begin, real_type s_end ) {
     G2LIB_ASSERT(
-      s_begin >= s0.front() && s_end <= s0.back() && s_end > s_begin,
-      "BiarcList::trim( s_begin=" << s_begin << ", s_end=" << s_end <<
-      ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
+      s_begin >= s0.front() &&
+      s_end <= s0.back() &&
+      s_end > s_begin,
+      "BiarcList::trim( s_begin=" << s_begin << ", s_end=" <<
+      s_end << ") bad range, must be in [ " << s0.front() <<
+      ", " << s0.back() << " ]"
     )
 
-    size_t i_begin = findAtS( s_begin );
-    size_t i_end   = findAtS( s_end );
+    size_t i_begin = size_t( findAtS( s_begin ) );
+    size_t i_end   = size_t( findAtS( s_end ) );
     if ( i_begin == i_end ) {
       biarcList[i_begin].trim( s_begin-s0[i_begin], s_end-s0[i_begin] );
     } else {
@@ -1061,15 +969,7 @@ namespace G2lib {
     size_t k = 0;
     for ( ++ic; ic != biarcList.end(); ++ic, ++k )
       s0[k+1] = s0[k] + ic->length();
-
-    #ifdef G2LIB_USE_CXX11
-    {
-      std::lock_guard<std::mutex> lck(last_idx_mutex);
-      last_idx_by_thread[std::this_thread::get_id()] = 0;
-    }
-    #else
-    this->last_idx = 0;
-    #endif
+    this->resetLastInterval();
   }
 
   /*\

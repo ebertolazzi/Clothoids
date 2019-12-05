@@ -53,8 +53,12 @@ namespace G2lib {
     vector<real_type>   s0;
     real_type           xe, ye;
 
-    mutable int_type isegment;
-    void search( real_type s ) const;
+    #ifdef G2LIB_USE_CXX11
+    mutable std::mutex                         lastInterval_mutex;
+    mutable std::map<std::thread::id,int_type> lastInterval_by_thread;
+    #else
+    mutable int_type lastInterval;
+    #endif
 
     mutable bool     aabb_done;
     mutable AABBtree aabb_tree;
@@ -75,14 +79,20 @@ namespace G2lib {
         return LS1.collision( LS2 );
       }
     };
+
+    void
+    resetLastInterval() {
+      std::lock_guard<std::mutex> lck(lastInterval_mutex);
+      lastInterval_by_thread[std::this_thread::get_id()] = 0;
+    }
+
   public:
 
     //explicit
     PolyLine()
     : BaseCurve(G2LIB_POLYLINE)
-    , isegment(0)
     , aabb_done(false)
-    {}
+    { this->resetLastInterval(); }
 
     void
     copy( PolyLine const & l );
@@ -90,27 +100,25 @@ namespace G2lib {
     //explicit
     PolyLine( PolyLine const & PL )
     : BaseCurve(G2LIB_POLYLINE)
-    , isegment(0)
     , aabb_done(false)
-    { copy(PL); }
+    { this->resetLastInterval(); copy(PL); }
 
-    explicit
-    PolyLine( LineSegment const & LS );
+    int_type
+    findAtS( real_type s ) const {
+      #ifdef G2LIB_USE_CXX11
+      std::lock_guard<std::mutex> lck(lastInterval_mutex);
+      return ::G2lib::findAtS( s, lastInterval_by_thread[std::this_thread::get_id()], s0 );
+      #else
+      return ::G2lib::findAtS( s, lastInterval, s0 );
+      #endif
+    }
 
-    explicit
-    PolyLine( CircleArc const & C, real_type tol );
-
-    explicit
-    PolyLine( Biarc const & B, real_type tol );
-
-    explicit
-    PolyLine( ClothoidCurve const & B, real_type tol );
-
-    explicit
-    PolyLine( ClothoidList const & B, real_type tol );
-
-    explicit
-    PolyLine( BaseCurve const & C );
+    explicit PolyLine( LineSegment const & LS );
+    explicit PolyLine( CircleArc const & C, real_type tol );
+    explicit PolyLine( Biarc const & B, real_type tol );
+    explicit PolyLine( ClothoidCurve const & B, real_type tol );
+    explicit PolyLine( ClothoidList const & B, real_type tol );
+    explicit PolyLine( BaseCurve const & C );
 
     PolyLine const & operator = ( PolyLine const & s )
     { copy(s); return *this; }
@@ -126,29 +134,14 @@ namespace G2lib {
     numPoints() const
     { return int_type(s0.size()); }
 
-    void
-    polygon( real_type x[], real_type y[]) const;
-
-    void
-    init( real_type x0, real_type y0 );
-
-    void
-    push_back( real_type x, real_type y );
-
-    void
-    push_back( LineSegment const & C );
-
-    void
-    push_back( CircleArc const & C, real_type tol );
-
-    void
-    push_back( Biarc const & C, real_type tol );
-
-    void
-    push_back( ClothoidCurve const & C, real_type tol );
-
-    void
-    push_back( ClothoidList const & L, real_type tol );
+    void polygon( real_type x[], real_type y[]) const;
+    void init( real_type x0, real_type y0 );
+    void push_back( real_type x, real_type y );
+    void push_back( LineSegment const & C );
+    void push_back( CircleArc const & C, real_type tol );
+    void push_back( Biarc const & C, real_type tol );
+    void push_back( ClothoidCurve const & C, real_type tol );
+    void push_back( ClothoidList const & L, real_type tol );
 
     void
     build(
@@ -157,20 +150,11 @@ namespace G2lib {
       int_type npts
     );
 
-    void
-    build( LineSegment const & L );
-
-    void
-    build( CircleArc const & C, real_type tol );
-
-    void
-    build( Biarc const & B, real_type tol );
-
-    void
-    build( ClothoidCurve const & C, real_type tol );
-
-    void
-    build( ClothoidList const & CL, real_type tol );
+    void build( LineSegment const & L );
+    void build( CircleArc const & C, real_type tol );
+    void build( Biarc const & B, real_type tol );
+    void build( ClothoidCurve const & C, real_type tol );
+    void build( ClothoidList const & CL, real_type tol );
 
     virtual
     void
@@ -228,15 +212,15 @@ namespace G2lib {
     virtual
     real_type
     X( real_type s ) const G2LIB_OVERRIDE {
-      this->search( s ); real_type ss = s0[size_t(isegment)];
-      return polylineList[size_t(isegment)].X(s-ss);
+      int_type idx = this->findAtS( s );
+      real_type ss = s0[size_t(idx)];
+      return polylineList[size_t(idx)].X(s-ss);
     }
 
     virtual
     real_type
     X_D( real_type s ) const G2LIB_OVERRIDE {
-      this->search( s );
-      return polylineList[size_t(isegment)].c0;
+      return polylineList[size_t(this->findAtS( s ))].c0;
     }
 
     virtual
@@ -252,15 +236,15 @@ namespace G2lib {
     virtual
     real_type
     Y( real_type s ) const G2LIB_OVERRIDE {
-      this->search( s ); real_type ss = s0[size_t(isegment)];
-      return polylineList[size_t(isegment)].Y(s-ss);
+      int_type idx = this->findAtS( s );
+      real_type ss = s0[size_t(idx)];
+      return polylineList[size_t(idx)].Y(s-ss);
     }
 
     virtual
     real_type
     Y_D( real_type s ) const G2LIB_OVERRIDE {
-      this->search( s );
-      return polylineList[size_t(isegment)].s0;
+      return polylineList[size_t(this->findAtS( s ))].s0;
     }
 
     virtual
@@ -296,8 +280,9 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const G2LIB_OVERRIDE {
-      this->search( s ); real_type ss = s0[size_t(isegment)];
-      polylineList[size_t(isegment)].eval( s-ss, x, y );
+      int_type idx = this->findAtS( s );
+      real_type ss = s0[size_t(idx)];
+      polylineList[size_t(idx)].eval( s-ss, x, y );
     }
 
     virtual
@@ -307,8 +292,9 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const G2LIB_OVERRIDE {
-      this->search( s ); real_type ss = s0[size_t(isegment)];
-      polylineList[size_t(isegment)].eval_D( s-ss, x_D, y_D );
+      int_type idx = this->findAtS( s );
+      real_type ss = s0[size_t(idx)];
+      polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
 
     virtual
@@ -339,8 +325,9 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const G2LIB_OVERRIDE {
-      this->search( s ); real_type ss = s0[size_t(isegment)];
-      polylineList[size_t(isegment)].eval_ISO( s-ss, offs, x, y );
+      int_type idx = this->findAtS( s );
+      real_type ss = s0[size_t(idx)];
+      polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
     virtual
@@ -351,8 +338,9 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const G2LIB_OVERRIDE {
-      this->search( s ); real_type ss = s0[size_t(isegment)];
-      polylineList[size_t(isegment)].eval_ISO_D( s-ss, offs, x_D, y_D );
+      int_type idx = this->findAtS( s );
+      real_type ss = s0[size_t(idx)];
+      polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 
     virtual
