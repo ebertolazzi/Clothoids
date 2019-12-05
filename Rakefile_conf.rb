@@ -1,5 +1,5 @@
 # check for a conf file on a upper directory
-if File.exists?('../Rakefile_conf.rb') then
+if File.exists?(File.expand_path('../Rakefile_conf.rb', File.dirname(__FILE__))) then
   require_relative '../Rakefile_conf.rb'
 else
   COMPILE_DEBUG      = false
