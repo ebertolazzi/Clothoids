@@ -149,7 +149,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::wrap_in_range( real_type & s ) {
+  ClothoidList::wrap_in_range( real_type & s ) const {
     real_type a = s0.front();
     real_type b = s0.back();
     real_type L = b-a;

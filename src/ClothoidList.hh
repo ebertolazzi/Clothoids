@@ -582,11 +582,12 @@ namespace G2lib {
     bool                  curve_is_closed;
     vector<real_type>     s0;
     vector<ClothoidCurve> clotoidList;
- 
+
     #ifdef G2LIB_USE_CXX11
     mutable std::mutex                         lastInterval_mutex;
     mutable std::map<std::thread::id,int_type> lastInterval_by_thread;
-                            mutable int_type lastInterval;
+    #else
+    mutable int_type lastInterval;
     #endif
 
     mutable bool               aabb_done;
@@ -749,7 +750,7 @@ namespace G2lib {
 
     int_type numSegment() const { return int_type(clotoidList.size()); }
 
-    void wrap_in_range( real_type & s );
+    void wrap_in_range( real_type & s ) const;
 
     int_type
     findAtS( real_type s ) const {

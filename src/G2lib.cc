@@ -123,17 +123,8 @@ namespace G2lib {
     while ( ang >  m_pi ) ang -= m_2pi;
   }
 
-  static
-  inline
-  real_type
-  power2( real_type a )
-  { return a*a; }
-
-  static
-  inline
-  real_type
-  power3( real_type a )
-  { return a*a*a; }
+  static inline real_type power2( real_type a ) { return a*a; }
+  static inline real_type power3( real_type a ) { return a*a*a; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -199,15 +190,19 @@ namespace G2lib {
   real_type
   Cosc_DD( real_type x ) {
     real_type x2  = x*x;
-    if ( abs(x) < 0.04 ) return -(x/4)*(1-(x2/9)*(1-((3.0/80.0)*x2)*(1-((2.0/105.0)*x2))));
-    else                 return ((1-2/x2)*cos(x)+(2/x-sin(x))/x)/x;
+    if ( abs(x) < 0.04 )
+      return -(x/4)*(1-(x2/9)*(1-((3.0/80.0)*x2)*(1-((2.0/105.0)*x2))));
+    else
+      return ((1-2/x2)*cos(x)+(2/x-sin(x))/x)/x;
   }
 
   real_type
   Cosc_DDD( real_type x ) {
-    real_type x2  = x*x;
-    if ( abs(x) < 0.02 ) return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0;
-    else                 return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x;
+    real_type x2 = x*x;
+    if ( abs(x) < 0.02 )
+      return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0;
+    else
+      return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

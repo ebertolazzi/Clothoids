@@ -867,10 +867,8 @@ namespace G2lib {
     real_type const y[],
     real_type       theta[]
   ) {
-
     G2LIB_ASSERT(
-      n > 1,
-      "build_guess_theta, at least 2 points are necessary"
+      n > 1, "build_guess_theta, at least 2 points are necessary"
     )
     Biarc b;
     if ( n == 2 ) {
