@@ -551,6 +551,60 @@ namespace G2lib {
 
   static
   void
+  do_make_closed( int nlhs, mxArray       *plhs[],
+                  int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidListMexWrapper('make_closed',OBJ): "
+
+    MEX_ASSERT( nlhs == 0, CMD "expected 0 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+
+    ClothoidListMexWrapper * ptr = DATA_GET( arg_in_1 );
+    ptr->make_closed();
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_make_opened( int nlhs, mxArray       *plhs[],
+                  int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidListMexWrapper('make_opened',OBJ): "
+
+    MEX_ASSERT( nlhs == 0, CMD "expected 0 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+
+    ClothoidListMexWrapper * ptr = DATA_GET( arg_in_1 );
+    ptr->make_opened();
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_is_closed( int nlhs, mxArray       *plhs[],
+                int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "ClothoidListMexWrapper('is_closed',OBJ): "
+
+    MEX_ASSERT( nlhs == 0, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
+
+    ClothoidListMexWrapper * ptr = DATA_GET( arg_in_1 );
+    setScalarBool( arg_out_0, ptr->is_closed() );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
   do_get(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
@@ -977,6 +1031,9 @@ namespace G2lib {
     CMD_3_ARC_G2_FIXED,
     CMD_BUILD,
     CMD_BUILD_THETA,
+    CMD_MAKE_CLOSED,
+    CMD_MAKE_OPENED,
+    CMD_IS_CLOSED,
     CMD_GET,
     CMD_NUM_SEGMENT,
     CMD_DELTA_THETA,
@@ -1008,6 +1065,9 @@ namespace G2lib {
     {"build_3arcG2fixed",CMD_3_ARC_G2_FIXED},
     {"build",CMD_BUILD},
     {"build_theta",CMD_BUILD_THETA},
+    {"make_closed",CMD_MAKE_CLOSED},
+    {"make_opened",CMD_MAKE_OPENED},
+    {"is_closed",CMD_IS_CLOSED},
     {"get",CMD_GET},
     {"numSegment",CMD_NUM_SEGMENT},
     {"deltaTheta",CMD_DELTA_THETA},
@@ -1080,6 +1140,15 @@ namespace G2lib {
         break;
       case CMD_BUILD_THETA:
         do_build_theta( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_MAKE_CLOSED:
+        do_make_closed( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_MAKE_OPENED:
+        do_make_opened( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_IS_CLOSED:
+        do_is_closed( nlhs, plhs, nrhs, prhs );
         break;
       case CMD_GET:
         do_get( nlhs, plhs, nrhs, prhs );

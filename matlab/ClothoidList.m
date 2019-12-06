@@ -107,6 +107,18 @@ classdef ClothoidList < CurveBase
       [theta,ok] = ...
         ClothoidListMexWrapper( 'build_theta', self.objectHandle, x, y );
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function make_closed( self )
+      ClothoidListMexWrapper( 'make_closed', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function make_opened( self )
+      ClothoidListMexWrapper( 'make_opened', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ok = is_closed( self )
+      ok = ClothoidListMexWrapper( 'is_closed', self.objectHandle );
+    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function dtheta = deltaTheta( self )
       dtheta = ClothoidListMexWrapper( 'deltaTheta', self.objectHandle );
