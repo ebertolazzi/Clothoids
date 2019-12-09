@@ -109,12 +109,8 @@ namespace G2lib {
   ) {
 
     #define CMD "ClothoidListMexWrapper('new'): "
-    MEX_ASSERT(
-      nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs
-    );
-    MEX_ASSERT(
-      nrhs == 1, CMD "expected 1 input, nlhs = " << nrhs
-    );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nlhs = " << nrhs );
 
     //ClothoidList * ptr =
     DATA_NEW(arg_out_0);
@@ -133,9 +129,7 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('push_back',OBJ,CLOT|[kappa0,dkappa,L]|[x0,y0,theta0,kappa0,dkappa,L]): "
 
-    MEX_ASSERT(
-      nlhs == 0, CMD "expected NO output, nlhs = " << nlhs
-    );
+    MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -173,9 +167,7 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[CLOT]): "
 
-    MEX_ASSERT(
-      nlhs == 0, CMD "expected NO output, nlhs = " << nlhs
-    );
+    MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -284,7 +276,7 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('build_G1', OBJ, x, y [, theta]): "
 
-    MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs);
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -306,13 +298,19 @@ namespace G2lib {
       real_type const * y     = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" );
       real_type const * theta = getVectorPointer( arg_in_4, nt, CMD "Error in reading theta" );
 
-      MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny );
-      MEX_ASSERT( nx == nt, CMD "length(theta) = " << nt << " != length(x) = length(y) = " << ny );
+      MEX_ASSERT(
+        nx == ny,
+        CMD "length(x) = " << nx << " != length(y) = " << ny
+      );
+      MEX_ASSERT(
+        nx == nt,
+        CMD "length(theta) = " << nt << " != length(x) = length(y) = " << ny
+      );
 
       ok = ptr->build_G1( nx, x, y, theta );
 
     } else {
-      MEX_ASSERT( false, CMD "expected 4 or 5 input, nrhs = " << nrhs);
+      MEX_ASSERT( false, CMD "expected 4 or 5 input, nrhs = " << nrhs );
     }
 
     setScalarBool( arg_out_0, ok );
@@ -330,8 +328,8 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('build_3arcG2',OBJ,x0,y0,theta0,kappa0,x1,y1,theta1,kappa1): "
 
-    MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -371,8 +369,8 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('build_2arcG2',OBJ,x0,y0,theta0,kappa0,x1,y1,theta1,kappa1): "
 
-    MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -411,8 +409,8 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('build_CLC',OBJ,x0,y0,theta0,kappa0,x1,y1,theta1,kappa1): "
 
-    MEX_ASSERT(nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 10, CMD "expected 10 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -451,8 +449,8 @@ namespace G2lib {
   ) {
     #define CMD "ClothoidListMexWrapper('build_3arcG2fixed',OBJ,s0,x0,y0,theta0,kappa0,s1,x1,y1,theta1,kappa1): "
 
-    MEX_ASSERT(nrhs == 12, CMD "expected 12 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 12, CMD "expected 12 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1,  CMD "expected 1 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -493,8 +491,8 @@ namespace G2lib {
   ) {
     #define CMD "ClothoidListMexWrapper('build',OBJ,x0,y0,theta0,s,kappa): "
 
-    MEX_ASSERT(nrhs == 7, CMD "expected 7 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 7, CMD "expected 7 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -529,8 +527,8 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('build_theta',OBJ,x,y): "
 
-    MEX_ASSERT(nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs);
-    MEX_ASSERT(nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs);
+    MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
 
     mwSize nx, ny;
     real_type const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" );
@@ -592,7 +590,7 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('is_closed',OBJ): "
 
-    MEX_ASSERT( nlhs == 0, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
     MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
 
     ClothoidList * ptr = DATA_GET( arg_in_1 );
@@ -612,24 +610,26 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('get',OBJ,n): "
 
-    MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 6, CMD "expected 6 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 6, CMD "expected 6 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
     int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
-    MEX_ASSERT( n > 0 && n <= ptr->numSegment(),
-                CMD "n = " << n << " must be >= 1 and <= " << ptr->numSegment() );
+    MEX_ASSERT(
+      n > 0 && n <= ptr->numSegment(),
+      CMD "n = " << n << " must be >= 1 and <= " << ptr->numSegment()
+    );
 
     ClothoidCurve const & c = ptr->get(n-1);
 
-    setScalarValue(arg_out_0, c.xBegin());
-    setScalarValue(arg_out_1, c.yBegin());
-    setScalarValue(arg_out_2, c.thetaBegin());
-    setScalarValue(arg_out_3, c.kappaBegin());
-    setScalarValue(arg_out_4, c.dkappa());
-    setScalarValue(arg_out_5, c.length());
+    setScalarValue( arg_out_0, c.xBegin()     );
+    setScalarValue( arg_out_1, c.yBegin()     );
+    setScalarValue( arg_out_2, c.thetaBegin() );
+    setScalarValue( arg_out_3, c.kappaBegin() );
+    setScalarValue( arg_out_4, c.dkappa()     );
+    setScalarValue( arg_out_5, c.length()     );
 
     #undef CMD
   }
@@ -644,8 +644,8 @@ namespace G2lib {
   ) {
     #define CMD "ClothoidListMexWrapper('numSegment', OBJ): "
 
-    MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -665,8 +665,8 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('deltaTheta',OBJ): "
 
-    MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs);
-    MEX_ASSERT(nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs);
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -689,8 +689,8 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('deltaKappa',OBJ): "
 
-    MEX_ASSERT(nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs);
-    MEX_ASSERT(nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs);
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
@@ -713,8 +713,8 @@ namespace G2lib {
 
     #define CMD "ClothoidListMexWrapper('export_table',OBJ,filename ): "
 
-    MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nlhs = " << nlhs);
-    MEX_ASSERT(nlhs == 0, CMD "expected no output, nrhs = " << nrhs);
+    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nlhs = " << nlhs );
+    MEX_ASSERT( nlhs == 0, CMD "expected no output, nrhs = " << nrhs );
 
     MEX_ASSERT( mxIsChar(arg_in_2), CMD "filename must be a string" );
     string filename = mxArrayToString(arg_in_2);
@@ -740,8 +740,8 @@ namespace G2lib {
 
    #define CMD "ClothoidListMexWrapper('export_ruby',OBJ,filename ): "
 
-    MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nlhs = " << nlhs);
-    MEX_ASSERT(nlhs == 0, CMD "expected no output, nrhs = " << nrhs);
+    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nlhs = " << nlhs );
+    MEX_ASSERT( nlhs == 0, CMD "expected no output, nrhs = " << nrhs );
 
     MEX_ASSERT( mxIsChar(arg_in_2), CMD "filename must be a string" );
     string filename = mxArrayToString(arg_in_2);
@@ -964,11 +964,11 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('closestPointInRange',OBJ,qx,qy,ibegin,iend,['ISO'/'SAE']): "
+    #define CMD "ClothoidListMexWrapper('closestPointInRange',OBJ,qx,qy,[ibegin,iend],['ISO'/'SAE']): "
 
     MEX_ASSERT(
-      nrhs == 6 || nrhs == 7,
-      CMD "expected 6 or 7 inputs, nrhs = " << nrhs
+      4 <= nrhs && nrhs <= 7,
+      CMD "expected 4, 5, 6 or 7 inputs, nrhs = " << nrhs
     );
     MEX_ASSERT(
       nlhs == 7,
@@ -983,26 +983,33 @@ namespace G2lib {
     real_type qy = getScalarValue(
       arg_in_3, CMD "`qx` expected to be a real scalar"
     );
-    int64_t icurve_begin = getInt(
-      arg_in_4, CMD "`ibegin` expected to be an integer"
-    );
-    int64_t icurve_end = getInt(
-      arg_in_5, CMD "`iend` expected to be an integer"
-    );
+    int64_t icurve_begin = 0;
+    int64_t icurve_end   = ptr->numSegment()-1;
+
+    if ( nrhs >= 6 ) {
+      icurve_begin = getInt(
+        arg_in_4, CMD "`ibegin` expected to be an integer"
+      );
+      icurve_end = getInt(
+        arg_in_5, CMD "`iend` expected to be an integer"
+      );
+    }
 
     bool ISO = true;
-    if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string");
+    if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string" );
+    if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
 
     int_type  iflag, icurve;
     real_type x, y, s, t, dst;
-    if ( ISO )
+    if ( ISO ) {
       iflag = ptr->closestPointInRange_ISO(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
       );
-    else
+    } else {
       iflag = ptr->closestPointInRange_SAE(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
       );
+    }
 
     setScalarInt( arg_out_0, icurve );
     setScalarValue( arg_out_1, x );
