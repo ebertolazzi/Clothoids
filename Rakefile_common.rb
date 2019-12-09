@@ -12,16 +12,6 @@ end
 
 require_relative "./Rakefile_conf.rb"
 
-cmakeversion = %x( cmake --version ).scan(/\d+\.\d+/).last
-mm = cmakeversion.split('.');
-if mm[0].to_i > 3 || (mm[0].to_i == 3 && mm[1].to_i >= 12) then
-  PARALLEL = '--parallel 8 '
-  QUIET    = '-- --quiet '
-else
-  PARALLEL = ''
-  QUIET    = ''
-end
-
 if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil then
   #linux
   task :default => [:install_linux]
