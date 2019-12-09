@@ -112,8 +112,8 @@ classdef ClothoidList < CurveBase
       ClothoidListMexWrapper( 'make_closed', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function make_opened( self )
-      ClothoidListMexWrapper( 'make_opened', self.objectHandle );
+    function make_open( self )
+      ClothoidListMexWrapper( 'make_open', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = is_closed( self )
