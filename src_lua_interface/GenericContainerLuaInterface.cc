@@ -233,7 +233,7 @@ namespace GenericContainerNamespace {
       lua_pushnumber(L,gc.get_int());
       break;
     case GC_LONG:
-      lua_pushnumber(L,gc.get_long());
+      lua_pushnumber(L,lua_Number(gc.get_long()));
       break;
     case GC_REAL:
       lua_pushnumber(L,gc.get_real());
