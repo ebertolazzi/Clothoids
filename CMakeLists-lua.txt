@@ -1,19 +1,22 @@
 SET( LUA_FOUND true )
 IF (WIN32)
   SET( LUA_INCLUDE_DIR ../../os_win/include/MechatronixCore )
-  IF ( BUILD_SHARED )
-    find_library( LUA_LIBRARIES lua_win_${BITS}${DEBUG_SUFFIX}.lib HINTS ../../os_win/lib )
-  ENDIF()
+  FIND_LIBRARY(
+    LUA_LIBRARIES Lua_win_${BITS}_static${DEBUG_SUFFIX}.lib
+    HINTS ../../os_win/lib ../../os_win/dll
+  )
 ENDIF (WIN32)
 IF (UNIX)
   SET( LUA_INCLUDE_DIR ../../os_linux/include/MechatronixCore )
-  IF ( BUILD_SHARED )
-    find_library( LUA_LIBRARIES libLua_linux${DEBUG_SUFFIX}.so HINTS ../../os_linux/dll )
-  ENDIF()
+  FIND_LIBRARY(
+    LUA_LIBRARIES libLua_linux_static${DEBUG_SUFFIX}.a
+    HINTS ../../os_linux/lib
+  )
 ENDIF (UNIX)
 IF (APPLE)
   SET( LUA_INCLUDE_DIR ../../os_mac/include/MechatronixCore )
-  IF ( BUILD_SHARED )
-    find_library( LUA_LIBRARIES libLua_osx${DEBUG_SUFFIX}.dylib HINTS ../../os_mac/dll )
-  ENDIF()
+  FIND_LIBRARY(
+    LUA_LIBRARIES libLua_osx_static${DEBUG_SUFFIX}.a
+    HINTS ../../os_mac/lib
+  )
 ENDIF(APPLE)
