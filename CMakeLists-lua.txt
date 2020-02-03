@@ -1,25 +1,4 @@
-SET( LUA_FOUND true )
-IF (WIN32)
-  SET( LUA_INCLUDE_DIR ../../os_win/include/MechatronixCore )
-  MESSAGE( STATUS "search Lua_win_${BITS}_static${DEBUG_SUFFIX}.lib" )
-  FIND_LIBRARY(
-    LUA_LIBRARIES Lua_win_${BITS}_static${DEBUG_SUFFIX}.lib
-    HINTS ../../os_win/lib ../../os_win/dll
-  )
-ENDIF (WIN32)
-IF (UNIX)
-  SET( LUA_INCLUDE_DIR ../../os_linux/include/MechatronixCore )
-  MESSAGE( STATUS "search libLua_linux_static${DEBUG_SUFFIX}.a" )
-  FIND_LIBRARY(
-    LUA_LIBRARIES libLua_linux_static${DEBUG_SUFFIX}.a
-    HINTS ../../os_linux/lib
-  )
-ENDIF (UNIX)
-IF (APPLE)
-  SET( LUA_INCLUDE_DIR ../../os_mac/include/MechatronixCore )
-  MESSAGE( STATUS "search libLua_linux_static${DEBUG_SUFFIX}.a" )
-  FIND_LIBRARY(
-    LUA_LIBRARIES libLua_osx_static${DEBUG_SUFFIX}.a
-    HINTS ../../os_mac/lib
-  )
-ENDIF(APPLE)
+FIND_PACKAGE(Lua)
+IF ( LUA_FOUND )
+  ADD_DEFINITIONS( -DUSE_SYSTEM_LUA )
+ENDIF()
