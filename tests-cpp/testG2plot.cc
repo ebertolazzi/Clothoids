@@ -9,6 +9,10 @@
 using G2lib::real_type;
 using namespace std;
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338328
+#endif
+
 int
 main() {
 
