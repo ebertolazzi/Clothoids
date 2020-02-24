@@ -84,7 +84,7 @@ FRAMEWORK = Clothoids
 
 all: bin
 
-travis: bin
+travis: bin run
 
 bin: lib
 	@$(MKDIR) bin

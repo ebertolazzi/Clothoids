@@ -9,10 +9,10 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9
-            - gcc-4.9
+            - g++-5
+            - gcc-5
       env:
-         - COMPILER="CC=gcc-4.9 && CXX=g++-4.9"
+         - COMPILER="CC=gcc-5 && CXX=g++-5"
       before_install: eval "${COMPILER}"
       script: make travis
     - os: linux
@@ -21,10 +21,10 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-5
-            - gcc-5
+            - g++-6
+            - gcc-6
       env:
-         - COMPILER="CC=gcc-5 && CXX=g++-5"
+         - COMPILER="CC=gcc-6 && CXX=g++-6"
       before_install: eval "${COMPILER}"
       script: make travis
     - os: linux
@@ -40,6 +40,18 @@ matrix:
       before_install: eval "${COMPILER}"
       script: make travis
     - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - gcc-8
+      env:
+         - COMPILER="CC=gcc-8 && CXX=g++-8"
+      before_install: eval "${COMPILER}"
+      script: make travis
+    - os: linux
       compiler: clang
       script: make travis
     - os: osx
@@ -51,13 +63,10 @@ matrix:
       install: choco install mingw
       script: mingw32-make travis
     - os: windows
-      install: choco install mingw --version 4.9.3 --force
-      script: mingw32-make travis
-    - os: windows
       env:
         - CMAKE_PATH="/c/Program Files/CMake/bin"
       script:
         - export PATH=$CMAKE_PATH:$PATH
         - mkdir build && cd build
-        - cmake .. 
-        - cmake --build . 
+        - cmake ..
+        - cmake --build .
