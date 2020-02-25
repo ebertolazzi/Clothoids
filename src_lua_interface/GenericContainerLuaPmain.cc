@@ -96,7 +96,7 @@
 #define lua_stdin_is_tty()	isatty(0)
 
 #elif defined(LUA_USE_WINDOWS)	/* }{ */
-
+#include  <stdlib.h>
 #include <io.h>
 #define lua_stdin_is_tty()	_isatty(_fileno(stdin))
 
@@ -605,13 +605,28 @@ static
 int
 handle_luainit (lua_State *L) {
   const char *name = "=" LUA_INITVARVERSION;
+  #ifdef LUA_USE_WINDOWS
+  size_t sz;
+  char * buffer;
+  errno_t err = _dupenv_s( &buffer, &sz, name );
+  const char *init = err ? nullptr : buffer;
+  #else
   const char *init = getenv(name + 1);
-  if (init == nullptr) {
+  #endif
+  if ( init == nullptr ) {
     name = "=" LUA_INIT_VAR;
+    #ifdef LUA_USE_WINDOWS
+    errno_t err = _dupenv_s( &buffer, &sz, name );
+    const char *init = err ? nullptr : buffer;
+    #else
     init = getenv(name + 1);  /* try alternative name */
+    #endif
   }
-  if (init == nullptr) return LUA_OK;
-  else if (init[0] == '@')
+  #ifdef LUA_USE_WINDOWS
+  free( buffer );
+  #endif
+  if ( init == nullptr ) return LUA_OK;
+  else if ( init[0] == '@' )
     return dofile(L, init+1);
   else
     return dostring(L, init, name);
@@ -670,10 +685,12 @@ pmain (lua_State *L) {
 namespace GenericContainerNamespace {
 
   int
-  LuaInterpreter::interactive( int argc,
-                               char const * argv[],
-                               char const * messages[],
-                               char const * prompt ) {
+  LuaInterpreter::interactive(
+    int argc,
+    char const * argv[],
+    char const * messages[],
+    char const * prompt
+  ) {
     lua_State *L = luaL_newstate();  /* create state */
     GC_ASSERT( L != nullptr, "LuaInterpreter::interactive, cannot create state: not enough memory" );
     /* call 'pmain' in protected mode */

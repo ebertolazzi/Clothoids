@@ -227,39 +227,39 @@ namespace GenericContainerNamespace {
       lua_pushnil(L);
       break;
     case GC_BOOL:
-      lua_pushboolean(L, gc.get_bool() ? 1 : 0 );
+      lua_pushboolean( L, gc.get_bool() ? 1 : 0 );
       break;
     case GC_INTEGER:
-      lua_pushnumber(L,gc.get_int());
+      lua_pushnumber( L, gc.get_int() );
       break;
     case GC_LONG:
-      lua_pushnumber(L,gc.get_long());
+      lua_pushnumber( L, lua_Number(gc.get_long()) );
       break;
     case GC_REAL:
-      lua_pushnumber(L,gc.get_real());
+      lua_pushnumber( L, gc.get_real() );
       break;
     case GC_STRING:
-      lua_pushstring(L, gc.get_string().c_str());
+      lua_pushstring( L, gc.get_string().c_str() );
       break;
     case GC_VEC_POINTER:
       lua_pushnil(L);
       break;
     case GC_VEC_BOOL:
       { vec_bool_type const & vb = gc.get_vec_bool();
-        lua_createtable(L, int(vb.size()), 0);
+        lua_createtable( L, int(vb.size()), 0 );
         for ( unsigned i = 0; i < vb.size(); ++i ) {
-          lua_pushboolean(L, vb[i] ? 1 : 0 );
-          lua_rawseti (L, -2, int(i+1));
+          lua_pushboolean( L, vb[i] ? 1 : 0 );
+          lua_rawseti( L, -2, int(i+1) );
         }
       }
       lua_pushnil(L);
       break;
     case GC_VEC_INTEGER:
       { vec_int_type const & vi = gc.get_vec_int();
-        lua_createtable(L, int(vi.size()), 0);
+        lua_createtable( L, int(vi.size()), 0);
         for ( unsigned i = 0; i < vi.size(); ++i ) {
-          lua_pushnumber(L, vi[i]);
-          lua_rawseti (L, -2, int(i+1));
+          lua_pushnumber( L, lua_Number(vi[i]) );
+          lua_rawseti( L, -2, int(i+1) );
         }
       }
       break;
@@ -267,8 +267,8 @@ namespace GenericContainerNamespace {
       { vec_long_type const & vi = gc.get_vec_long();
         lua_createtable(L, int(vi.size()), 0);
         for ( unsigned i = 0; i < vi.size(); ++i ) {
-          lua_pushnumber(L, vi[i]);
-          lua_rawseti (L, -2, int(i+1));
+          lua_pushnumber( L, lua_Number(vi[i]) );
+          lua_rawseti( L, -2, int(i+1) );
         }
       }
       break;
@@ -276,17 +276,17 @@ namespace GenericContainerNamespace {
       { vec_real_type const & vr = gc.get_vec_real();
         lua_createtable(L, int(vr.size()), 0);
         for ( unsigned i = 0; i < vr.size(); ++i ) {
-          lua_pushnumber(L, vr[i]);
-          lua_rawseti (L, -2, int(i+1));
+          lua_pushnumber( L, vr[i] );
+          lua_rawseti( L, -2, int(i+1) );
         }
       }
       break;
     case GC_VEC_STRING:
       { vec_string_type const & vs = gc.get_vec_string();
-        lua_createtable(L, int(vs.size()), 0);
+        lua_createtable( L, int(vs.size()), 0);
         for ( unsigned i = 0; i < vs.size(); ++i ) {
-          lua_pushstring(L, vs[i].c_str());
-          lua_rawseti (L, -2, int(i+1));
+          lua_pushstring( L, vs[i].c_str() );
+          lua_rawseti( L, -2, int(i+1) );
         }
       }
       break;
@@ -295,7 +295,7 @@ namespace GenericContainerNamespace {
         lua_createtable(L, int(v.size()), 0);
         for ( unsigned i = 0; i < v.size(); ++i ) {
           GC_to_lua( L, v[i] );
-          lua_rawseti (L, -2, int(i+1));
+          lua_rawseti( L, -2, int(i+1) );
         }
       }
       break;
@@ -305,7 +305,7 @@ namespace GenericContainerNamespace {
         for ( map_type::const_iterator it = m.begin(); it != m.end(); ++it ) {
           lua_pushstring(L, it->first.c_str());
           GC_to_lua( L, it->second );
-          lua_settable(L, -3);
+          lua_settable( L, -3 );
         }
       }
       break;

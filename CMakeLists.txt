@@ -85,17 +85,6 @@ ELSE()
   INCLUDE_DIRECTORIES( src )
 ENDIF()
 
-IF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-  INCLUDE_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/include" )
-  IF ( ${BITS} STREQUAL "x64" )
-    set(WINXXBITS Win64)
-    LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/intel64" )
-  ELSE()
-    set(WINXXBITS Win32)
-    LINK_DIRECTORIES( "C:/Program Files (x86)/IntelSWTools/compilers_and_libraries/windows/mkl/lib/ia32" )
-  ENDIF()
-ENDIF()
-
 SET( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib )
 
 IF ( BUILD_SHARED )
@@ -118,6 +107,8 @@ ELSE()
   )
 ENDIF()
 
+SET_PROPERTY( TARGET ${TARGETS} PROPERTY POSITION_INDEPENDENT_CODE ON )
+
 INSTALL( FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include )
 
 IF( BUILD_EXECUTABLE )
@@ -125,39 +116,39 @@ IF( BUILD_EXECUTABLE )
   SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
   ADD_EXECUTABLE( example1 examples/example1.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example1 ${TARGET} )
+  TARGET_LINK_LIBRARIES( example1 ${TARGETS} )
 
   ADD_EXECUTABLE( example2 examples/example2.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example2 ${TARGET} )
+  TARGET_LINK_LIBRARIES( example2 ${TARGETS} )
 
   ADD_EXECUTABLE( example3 examples/example3.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example3 ${TARGET} )
+  TARGET_LINK_LIBRARIES( example3 ${TARGETS} )
 
   ADD_EXECUTABLE( example4 examples/example4.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example4 ${TARGET} )
+  TARGET_LINK_LIBRARIES( example4 ${TARGETS} )
 
   ADD_EXECUTABLE( example5 examples/example5.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example5 ${TARGET} )
+  TARGET_LINK_LIBRARIES( example5 ${TARGETS} )
 
   ADD_EXECUTABLE( example6 examples/example6.c  ${HEADERS} ) # IT'S C!
-  TARGET_LINK_LIBRARIES( example6 ${TARGET} )
+  TARGET_LINK_LIBRARIES( example6 ${TARGETS} )
 
   ADD_EXECUTABLE( example7 examples/example7.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example7 ${TARGET} )
+  TARGET_LINK_LIBRARIES( example7 ${TARGETS} )
 
   IF ( LUA_FOUND )
     ADD_EXECUTABLE( example8 examples/example8.cc ${HEADERS} )
-    TARGET_LINK_LIBRARIES( example8 ${TARGET} ${LUA_LIBRARIES} )
+    TARGET_LINK_LIBRARIES( example8 ${TARGETS} ${LUA_LIBRARIES} )
 
     ADD_EXECUTABLE( example9 examples/example9.cc ${HEADERS} )
-    TARGET_LINK_LIBRARIES( example9 ${TARGET} ${LUA_LIBRARIES} )
+    TARGET_LINK_LIBRARIES( example9 ${TARGETS} ${LUA_LIBRARIES} )
 
     ADD_EXECUTABLE( example10 examples/example10.cc ${HEADERS} )
-    TARGET_LINK_LIBRARIES( example10 ${TARGET} ${LUA_LIBRARIES} )
-  ENDIF()
+    TARGET_LINK_LIBRARIES( example10 ${TARGETS} ${LUA_LIBRARIES} )
 
-  ADD_EXECUTABLE( example11 examples/example11.cc ${HEADERS} )
-  TARGET_LINK_LIBRARIES( example11 ${TARGET} )
+    ADD_EXECUTABLE( example11 examples/example11.cc ${HEADERS} )
+    TARGET_LINK_LIBRARIES( example11 ${TARGETS} ${LUA_LIBRARIES} )
+  ENDIF()
 
 ENDIF()
 
@@ -174,3 +165,4 @@ IF(APPLE)
   MESSAGE( STATUS "CMAKE_OSX_ARCHITECTURES     = ${CMAKE_OSX_ARCHITECTURES}" )
   MESSAGE( STATUS "CMAKE_OSX_DEPLOYMENT_TARGET = ${CMAKE_OSX_DEPLOYMENT_TARGET}" )
 ENDIF()
+MESSAGE( STATUS "LUA_LIBRARIES               = ${LUA_LIBRARIES}" )

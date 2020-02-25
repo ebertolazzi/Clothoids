@@ -25,9 +25,7 @@
 #include <iomanip>
 #include <cmath>
 
-#ifdef GENERIC_CONTAINER_USE_CXX11
 #include <ctgmath>
-#endif
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"
@@ -35,11 +33,7 @@
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
 
-// use pcre for pattern matching
-#ifdef GENERIC_CONTAINER_USE_REGEX
-  #include <regex>
-#endif
-
+#include <regex>
 #include <fstream>
 
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
@@ -71,14 +65,14 @@ namespace GenericContainerNamespace {
       unw_word_t offset, pc;
       unw_get_reg(&cursor, UNW_REG_IP, &pc);
       if ( pc == 0 ) break;
-      ost << "0x" << std::hex << pc << ":";
+      ost << "0x" << std::hex << pc << ":" << std::dec;
       char sym[256];
       if ( unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
         char* nameptr = sym;
         int status;
         char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
         if ( status == 0 ) nameptr = demangled;
-        ost << " (" << nameptr << "+0x" << std::hex << offset << ")\n";
+        ost << " (" << nameptr << "+0x" << std::hex << offset << ")\n" << std::dec;
         std::free(demangled);
       } else {
         ost << " -- error: unable to obtain symbol name for this frame\n";
@@ -271,8 +265,6 @@ namespace GenericContainerNamespace {
   template ostream_type & operator << ( ostream_type & s, mat_type<long_type> const & m );
   template ostream_type & operator << ( ostream_type & s, mat_type<real_type> const & m );
 
-  #ifdef GENERIC_CONTAINER_USE_REGEX
-
   class GENERIC_CONTAINER_API_DLL Pcre_for_GC {
 
   private:
@@ -302,8 +294,6 @@ namespace GenericContainerNamespace {
   };
 
   static Pcre_for_GC pcre_for_GC;
-
-  #endif
 
   static char const *typeName[] = {
 
@@ -1141,11 +1131,7 @@ namespace GenericContainerNamespace {
     case GC_INTEGER:
       return &_data.i;
     case GC_VEC_INTEGER:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_i->data();
-      #else
-      return &_data.v_i->front();
-      #endif
     case GC_MAT_INTEGER:
       return _data.m_i->data();
     case GC_NOTYPE:
@@ -1183,11 +1169,7 @@ namespace GenericContainerNamespace {
     case GC_INTEGER:
       return &_data.i;
     case GC_VEC_INTEGER:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_i->data();
-      #else
-      return &_data.v_i->front();
-      #endif
     case GC_MAT_INTEGER:
       return _data.m_i->data();
     case GC_NOTYPE:
@@ -1225,11 +1207,7 @@ namespace GenericContainerNamespace {
     case GC_LONG:
       return &_data.l;
     case GC_VEC_LONG:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_l->data();
-      #else
-      return &_data.v_l->front();
-      #endif
     case GC_MAT_LONG:
       return _data.m_l->data();
     case GC_NOTYPE:
@@ -1267,11 +1245,7 @@ namespace GenericContainerNamespace {
     case GC_LONG:
       return &_data.l;
     case GC_VEC_LONG:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_l->data();
-      #else
-      return &_data.v_l->front();
-      #endif
     case GC_MAT_LONG:
       return _data.m_l->data();
     case GC_NOTYPE:
@@ -1309,11 +1283,7 @@ namespace GenericContainerNamespace {
     case GC_REAL:
       return &_data.r;
     case GC_VEC_REAL:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_r->data();
-      #else
-      return &_data.v_r->front();
-      #endif
     case GC_MAT_REAL:
       return _data.m_r->data();
     case GC_NOTYPE:
@@ -1351,11 +1321,7 @@ namespace GenericContainerNamespace {
     case GC_REAL:
       return &_data.r;
     case GC_VEC_REAL:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_r->data();
-      #else
-      return &_data.v_r->front();
-      #endif
     case GC_MAT_REAL:
       return _data.m_r->data();
     case GC_NOTYPE:
@@ -1393,11 +1359,7 @@ namespace GenericContainerNamespace {
     case GC_COMPLEX:
       return _data.c;
     case GC_VEC_COMPLEX:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_c->data();
-      #else
-      return &_data.v_c->front();
-      #endif
     case GC_MAT_COMPLEX:
       return _data.m_c->data();
     case GC_NOTYPE:
@@ -1435,11 +1397,7 @@ namespace GenericContainerNamespace {
     case GC_COMPLEX:
       return _data.c;
     case GC_VEC_COMPLEX:
-      #ifdef GENERIC_CONTAINER_USE_CXX11
       return _data.v_c->data();
-      #else
-      return &_data.v_c->front();
-      #endif
     case GC_MAT_COMPLEX:
       return _data.m_c->data();
     case GC_NOTYPE:
@@ -4925,16 +4883,6 @@ namespace GenericContainerNamespace {
       { map_type const & m = this->get_map();
         for ( map_type::const_iterator im = m.begin(); im != m.end(); ++im ) {
           // check formatting using pcre
-          #ifndef GENERIC_CONTAINER_USE_REGEX
-          if ( im->second.simple_data() ||
-               ( im->second.simple_vec_data() && im->second.get_num_elements() <= 10 ) ) {
-            stream << prefix.c_str() << im->first.c_str() << ": ";
-            im->second.dump(stream,"");
-          } else {
-            stream << prefix.c_str() << im->first.c_str() << ":\n";
-            im->second.dump(stream,prefix+indent);
-          }
-          #else
           // num+"@"+"underline character"
           // Try to find the regex in aLineToMatch, and report results.
           std::string matches[4];
@@ -4969,7 +4917,6 @@ namespace GenericContainerNamespace {
               im->second.dump(stream,prefix+indent);
             }
           }
-          #endif
         }
       }
       break;
@@ -5076,15 +5023,6 @@ namespace GenericContainerNamespace {
       { map_type const & m = this->get_map();
         for ( map_type::const_iterator im = m.begin(); im != m.end(); ++im ) {
           // check formatting using pcre
-          #ifndef GENERIC_CONTAINER_USE_REGEX
-          if ( im->second.simple_data() || im->second.simple_vec_data() ) {
-            stream << prefix.c_str() << im->first.c_str() << ": ";
-            im->second.print_content_types(stream,"");
-          } else {
-            stream << prefix.c_str() << im->first.c_str() << ":\n";
-            im->second.print_content_types(stream,prefix+indent,indent);
-          }
-          #else
           // num+"@"+"underline character"
           // Try to find the regex in aLineToMatch, and report results.
           std::string matches[4];
@@ -5119,7 +5057,6 @@ namespace GenericContainerNamespace {
               im->second.print_content_types(stream,prefix+indent,indent);
             }
           }
-          #endif
         }
       }
       break;

@@ -18,62 +18,24 @@
 \*--------------------------------------------------------------------------*/
 
 //
-// file: GenericContainerConfig.hh
+// file: GenericContainerLibs.hh
 //
 
-#pragma once
+#ifndef GENERIC_CONTAINER_LIBS_HH
+#define GENERIC_CONTAINER_LIBS_HH
 
-#ifndef GENERIC_CONTAINER_CONFIG_HH
-#define GENERIC_CONTAINER_CONFIG_HH
+#include "GenericContainerConfig.hh"
 
-// check if compiler is C++11
-#if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
-    (defined(__cplusplus) && __cplusplus >= 201103L)
-#else
-  #error "must use a compiler >= c++11"
-#endif
-
-#ifndef GENERIC_CONTAINER_API_DLL
-  #ifdef GENERIC_CONTAINER_ON_WINDOWS
-    #ifdef GENERIC_CONTAINER_EXPORT
-      #define GENERIC_CONTAINER_API_DLL __declspec(dllexport)
-    #elif defined(GENERIC_CONTAINER_IMPORT)
-      #define GENERIC_CONTAINER_API_DLL __declspec(dllimport)
-    #else
-      #define GENERIC_CONTAINER_API_DLL
-    #endif
-  #elif defined(__GNUC__) || defined(__clang__)
-    #define GENERIC_CONTAINER_API_DLL __attribute__((visibility("default")))
-  #else
-    #define GENERIC_CONTAINER_API_DLL
-  #endif
-#endif
-
-// Standard types
-#ifdef GENERIC_CONTAINER_ON_WINDOWS
-  // se in windows includo PRIMA windows.h per evitare conflitti!
-  #ifndef WIN32_LEAN_AND_MEAN
-    #define WIN32_LEAN_AND_MEAN
-  #endif
-  #include <windows.h>
+#if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
+  #define GENERIC_CONTAINER_ON_WINDOWS
   #ifdef _MSC_VER
-    #include <stdint.h>
-  #else
-    typedef          __int8  int8_t;
-    typedef          __int16 int16_t;
-    typedef          __int32 int32_t;
-    typedef          __int64 int64_t;
-    typedef unsigned __int8  uint8_t;
-    typedef unsigned __int16 uint16_t;
-    typedef unsigned __int32 uint32_t;
-    typedef unsigned __int64 uint64_t;
+    #pragma comment(lib, "kernel32.lib")
+    #pragma comment(lib, "user32.lib")
   #endif
-#else
-  #include <cstdint>
 #endif
 
 #endif
 
 //
-// eof: GenericContainerConfig.hh
+// eof: GenericContainerLibs.hh
 //

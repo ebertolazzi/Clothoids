@@ -1,12 +1,72 @@
-language: cpp
-compiler:
-  - gcc
-script:
-  - "make -e && make run"
-os:
-  - linux
-  - osx
-branches:
-  only:
-  - master
-  - working
+language: bash
+matrix:
+  include:
+    - os: linux
+      script: make travis
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+            - gcc-5
+      env:
+         - COMPILER="CC=gcc-5 && CXX=g++-5"
+      before_install: eval "${COMPILER}"
+      script: make travis
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+            - gcc-6
+      env:
+         - COMPILER="CC=gcc-6 && CXX=g++-6"
+      before_install: eval "${COMPILER}"
+      script: make travis
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - gcc-7
+      env:
+         - COMPILER="CC=gcc-7 && CXX=g++-7"
+      before_install: eval "${COMPILER}"
+      script: make travis
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - gcc-8
+      env:
+         - COMPILER="CC=gcc-8 && CXX=g++-8"
+      before_install: eval "${COMPILER}"
+      script: make travis
+    - os: linux
+      compiler: clang
+      script: make travis
+    - os: osx
+      script: make travis
+    - os: osx
+      osx_image: xcode10
+      script: make travis
+    - os: windows
+      install: choco install mingw
+      script: mingw32-make AR="ar rcs -o" travis
+    - os: windows
+      env:
+        - CMAKE_PATH="/c/Program Files/CMake/bin"
+      script:
+        - export PATH=$CMAKE_PATH:$PATH
+        - mkdir build && cd build
+        - cmake -DBITS:VAR="x64" ..
+        - cmake --build .
