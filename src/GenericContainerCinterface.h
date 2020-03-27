@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -341,7 +341,7 @@ GENERIC_CONTAINER_API_DLL
 int GC_get_matrix_num_cols( void );
 
 /*! \brief
- *  Set the position of insertion point is at the `pos` element 
+ *  Set the position of insertion point is at the `pos` element
  *  of the actual generic vector.
  */
 GENERIC_CONTAINER_API_DLL
@@ -364,7 +364,7 @@ GENERIC_CONTAINER_API_DLL
 int GC_init_map_key( void );
 
 /*! \brief
- *  Return key of the actual element of a map 
+ *  Return key of the actual element of a map
  */
 GENERIC_CONTAINER_API_DLL
 char const * GC_get_next_key( void );

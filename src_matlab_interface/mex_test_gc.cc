@@ -1,15 +1,6 @@
 /****************************************************************************\
   Copyright (c) Enrico Bertolazzi 2014
-  All Rights Reserved.
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation;
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+  See file license.txt
 \****************************************************************************/
 
 #include "GenericContainer.hh"
@@ -24,7 +15,7 @@ extern "C"
 void
 mexFunction( int nlhs, mxArray       *plhs[],
              int nrhs, mxArray const *prhs[] ) {
-  
+
   try {
 
     // Check for proper number of arguments, etc
@@ -41,7 +32,7 @@ mexFunction( int nlhs, mxArray       *plhs[],
 "%======================================================================%\n" );
     }
     */
-  
+
     GenericContainer gc;
     mxArray_to_GenericContainer( prhs[0], gc );
     GenericContainer_to_mxArray( gc, plhs[0] );

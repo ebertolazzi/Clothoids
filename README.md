@@ -2,7 +2,7 @@ GenericContainer [![Build Status](https://travis-ci.org/ebertolazzi/GenericConta
 =======
 
 `GenericContainer` is a C++ class with permit to store eterogeneous data:
-  
+
   - pointer
   - boolean
   - integer

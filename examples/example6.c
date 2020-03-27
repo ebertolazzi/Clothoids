@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 /*!
  \example example6.c
- 
+
  Example of usage of the C interface.
  */
 
@@ -113,22 +113,22 @@ main() {
   CK( GC_pop_head() ); /* return to vector */
 
   CK( GC_push_vector_position(6) );
-  
+
   CK( GC_push_map_position("aaa") );
   CK( GC_set_int(123) );
   CK( GC_pop_head() );
-  
+
   CK( GC_push_map_position("bbb") );
   CK( GC_set_real(3.4) );
   CK( GC_pop_head() );
-  
+
   CK( GC_push_map_position("vector") );
     CK( GC_set_empty_vector_of_int() );
     CK( GC_push_int(12) );
     CK( GC_push_int(10) );
     CK( GC_push_int(1) );
   CK( GC_pop_head() );
-  
+
   CK( GC_pop_head() ); /* return to vector */
 
   CK( GC_push_vector_position(7) );
@@ -142,6 +142,6 @@ main() {
   GC_dump();
 
   printf("ALL DONE!\n\n\n\n");
-  
+
   return 0;
 }

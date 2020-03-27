@@ -1,15 +1,6 @@
 /****************************************************************************\
   Copyright (c) Enrico Bertolazzi 2014
-  All Rights Reserved.
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation;
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+  See file license.txt
 \****************************************************************************/
 
 #include "GenericContainerMatlabInterface.hh"
@@ -469,7 +460,7 @@ namespace GenericContainerNamespace {
 
   void
   GenericContainer_to_mxArray( GenericContainer const & gc, mxArray * & mx ) {
-    static char const where[] = "in GenericContainer_to_mxArray: "; 
+    static char const where[] = "in GenericContainer_to_mxArray: ";
     mwSize dims[2] = {1,1};
     switch ( gc.get_type() ) {
     case GC_NOTYPE:
@@ -629,7 +620,7 @@ namespace GenericContainerNamespace {
         fieldnames.reserve(nfield);
         for ( map_type::const_iterator im = mappa.begin(); im != mappa.end(); ++im )
           fieldnames.push_back(im->first.c_str());
-          
+
         mx = mxCreateStructMatrix(1,1,nfield,&fieldnames.front());
 
         int ifield = 0;

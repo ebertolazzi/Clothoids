@@ -414,7 +414,7 @@ namespace GenericContainerNamespace {
     GC_ASSERT_DEBUG(
       L != nullptr, "LuaInterpreter::global_to_GC(...) lua_State invalid!"
     )
-      
+
     lua_getglobal( L, global_var );
     GC_ASSERT(
       !lua_isnil(L,-1),

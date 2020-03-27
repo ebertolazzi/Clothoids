@@ -131,7 +131,7 @@ install_as_framework: lib/$(LIB_GC)
 	cp lib/include/GenericContainerLuaInterface.hh $(PREFIX)/include/$(FRAMEWORK)
 	cp lib/$(LIB_GC) $(PREFIX)/lib
 
-run:
+run: tests
 	cd bin; ./example1
 	cd bin; ./example2
 	cd bin; ./example3

@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -23,7 +23,7 @@
  Simple usage of `GenericContainer` class.
  The class is used to store one element
  of the basic available types.
- 
+
  */
 
 #include "GenericContainer.hh"
@@ -44,7 +44,7 @@ main() {
   GenericContainer gc3 = true;
   GenericContainer gc4 = "pippo";
   GenericContainer gc5;
-  
+
   cout << "GenericContainer simple usage\n";
   cout << "gc1: "; gc1.info(cout);
   cout << "gc2: "; gc2.info(cout);
