@@ -26,7 +26,7 @@
 \author    Enrico Bertolazzi (enrico.bertolazzi@unitn.it), homepage: http://www.ing.unitn.it/~bertolaz
 \version   1.0.5
 \date      2013
-\copyright 2-Clause BSD License, see file license.txt
+\copyright See file license.txt
 
 \details
 
