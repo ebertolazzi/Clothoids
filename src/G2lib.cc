@@ -905,18 +905,19 @@ namespace G2lib {
       idx >= 0 && idx < ns,
       "findAtS( s=" << s << ", idx=" << idx << ",... ) bad index"
     )
-    real_type const * sL = &s0[size_t(idx)];
-    if ( s < sL[0] ) {
+    using const_s0_it = std::vector<G2lib::real_type>::const_iterator const;
+    const_s0_it itL = std::next(s0.cbegin(), idx);
+    if ( s < *itL ) {
       if ( s > s0.front() ) {
-        real_type const * sB = &s0.front();
-        idx = int_type(lower_bound( sB, sL, s )-sB);
+        const_s0_it itB = s0.cbegin();
+        idx = int_type(std::distance(itB,lower_bound( itB, itL, s )));
       } else {
         idx = 0;
       }
-    } else if ( s > sL[1] ) {
+    } else if ( s > *std::next(itL,1) ) {
       if ( s < s0.back() ) {
-        real_type const * sE = &s0[size_t(ns+1)]; // past to the last
-        idx += int_type(lower_bound( sL, sE, s )-sL);
+        const_s0_it itE = s0.cend(); // past to the last
+        idx += int_type(std::distance(itL,lower_bound( itL, itE, s )));
       } else {
         idx = ns-1;
       }
