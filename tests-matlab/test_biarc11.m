@@ -10,8 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
 close all;
 figure('Position',[1,1,500,800]);
 

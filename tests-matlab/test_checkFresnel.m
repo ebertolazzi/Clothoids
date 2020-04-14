@@ -10,8 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
 % Values computed with MAPLE for comparison
 points = {...
 [0.98,.779269472398985793616327384272, .418272107748504825551976929861],...

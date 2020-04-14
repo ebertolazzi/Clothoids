@@ -1,6 +1,4 @@
 % Francorchamps
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autors: Enrico Bertolazzi                                              %

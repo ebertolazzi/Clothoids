@@ -11,7 +11,6 @@
 
 function test_2_Omega
   close all;
-  addpath('../matlab');
 
   %
   % Choosing nodes in parametric curve interpolation

@@ -11,9 +11,9 @@ Mex files for fast computation
 ------------------------------
 
 In directory `src_mex` you find the C++ implementation of the proposed algorithm 
-with `mex` interface. To compile run `CompileLib` from MATLAB window.
+with `mex` interface. To compile run `CompileClothoidsLib` from MATLAB window.
 After compilation the compiled version of the scripts
-are available in the `matlab` directory.
+are available in the `bin` directory.
 
 LineSegment
 -----------
@@ -480,9 +480,9 @@ XY_DDD        = CL.eval_DDD( s, offs );
 ClothoisList
 ------------
 
-Store a list of clothoids to be used as a spline
+Store a list of clothoids to be used as a single spline.
 
-documentation will be available soon, see examples in `tests-matlab` for the moments
+Documentation will be available soon, see examples in `tests` for the moments
 
 
 ClothoisSplineG2
@@ -490,7 +490,7 @@ ClothoisSplineG2
 
 Implements the algorithm described in references [2] and [3].
 
-documentation will be available soon, see examples in `tests-matlab` for the moments
+documentation will be available soon, see examples in `tests` for the moments
 
 
 Authors
@@ -520,3 +520,7 @@ References
    **Interpolating clothoid splines with curvature continuity**,<br>
    Mathematical Methods in the Applied Sciences, 2018, vol. 41, n.4, pp. 1099-1476.<br>
    https://doi.org/10.1002/mma.4700
+   
+4. E. Bertolazzi, M. Frego
+   **A Note on Robust Biarc Computation**,<br>
+   Computer-Aided Design & Applications 16 (5), 822-835

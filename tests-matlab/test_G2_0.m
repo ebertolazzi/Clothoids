@@ -10,7 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
 close all;
 
 % G2 fitting data

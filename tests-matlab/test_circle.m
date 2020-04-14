@@ -10,8 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
 % check constructors
 x0     = 0;
 y0     = 2;

@@ -10,8 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
 close all;
 
 arange = pi*0.99;

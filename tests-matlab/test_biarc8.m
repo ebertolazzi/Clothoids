@@ -10,8 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
 close all;
 
 x0=[-0.1,-20,-0.1,-0.1];
