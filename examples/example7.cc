@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -18,8 +18,8 @@
 \*--------------------------------------------------------------------------*/
 /*!
  \example example7.cc
- 
- Example of I/O utilities. `GenericContainer` is used 
+
+ Example of I/O utilities. `GenericContainer` is used
  to read and store a table from a file and to print
  a formatted table on a stream.
  */
@@ -38,7 +38,7 @@ main() {
     << "***********************\n"
     << "      example N.7      \n"
     << "***********************\n\n";
-  
+
   try {
     GC::GenericContainer gc;
     ifstream file("data_example.txt");
@@ -54,6 +54,6 @@ main() {
   catch (...) {
     cout << "Unknonwn error\n";
   }
-  
+
   cout << "ALL DONE!\n\n\n\n";
 }

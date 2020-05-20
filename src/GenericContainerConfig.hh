@@ -21,31 +21,16 @@
 // file: GenericContainerConfig.hh
 //
 
+#pragma once
+
 #ifndef GENERIC_CONTAINER_CONFIG_HH
 #define GENERIC_CONTAINER_CONFIG_HH
-
-#if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
-  #define GENERIC_CONTAINER_ON_WINDOWS
-  #ifdef _MSC_VER
-    #pragma comment(lib, "kernel32.lib")
-    #pragma comment(lib, "user32.lib")
-  #endif
-#endif
 
 // check if compiler is C++11
 #if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
     (defined(__cplusplus) && __cplusplus >= 201103L)
-  #ifndef GENERIC_CONTAINER_DO_NOT_USE_CXX11
-    #define GENERIC_CONTAINER_USE_CXX11
-  #endif
 #else
-  #include <cstdlib>
-  #ifndef nullptr
-    #include <cstddef>
-    #ifndef nullptr
-      #define nullptr NULL
-    #endif
-  #endif
+  #error "must use a compiler >= c++11"
 #endif
 
 #ifndef GENERIC_CONTAINER_API_DLL
@@ -57,14 +42,10 @@
     #else
       #define GENERIC_CONTAINER_API_DLL
     #endif
+  #elif defined(__GNUC__) || defined(__clang__)
+    #define GENERIC_CONTAINER_API_DLL __attribute__((visibility("default")))
   #else
     #define GENERIC_CONTAINER_API_DLL
-  #endif
-#endif
-
-#ifdef GENERIC_CONTAINER_USE_CXX11
-  #ifndef GENERIC_CONTAINER_USE_REGEX
-    #define GENERIC_CONTAINER_USE_REGEX
   #endif
 #endif
 
@@ -88,11 +69,7 @@
     typedef unsigned __int64 uint64_t;
   #endif
 #else
-  #ifdef GENERIC_CONTAINER_USE_CXX11
-    #include <cstdint>
-  #else
-    #include <stdint.h>
-  #endif
+  #include <cstdint>
 #endif
 
 #endif

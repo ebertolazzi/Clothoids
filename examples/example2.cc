@@ -19,13 +19,13 @@
 
 /*!
  \example example2.cc
- 
+
  Simple usage of `GenericContainer` class.
  The class is used to store one element
  of the basic available types.
  The elements are initialized by deducing the type
  on the right of `=` operator.
- 
+
  */
 
 #include "GenericContainer.hh"
@@ -56,13 +56,13 @@ main() {
   gc2 = 1.2;
   gc3 = true;
   gc4 = "pippo";
-  
+
   cout << "After initialization\n";
   cout << "gc1: "; gc1.info(cout);
   cout << "gc2: "; gc2.info(cout);
   cout << "gc3: "; gc3.info(cout);
   cout << "gc4: "; gc4.info(cout);
   cout << "gc5: "; gc5.info(cout);
-  
+
   cout << "ALL DONE!\n\n\n\n";
 }

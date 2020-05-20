@@ -39,7 +39,7 @@ SET( CMAKE_CXX_FLAGS       ${CMAKE_CXX_FLAGS_RELEASE} )
 SET( CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} )
 SET( CMAKE_C_FLAGS_DEBUG   ${CMAKE_CXX_FLAGS_DEBUG} )
 
-# set 64 bit 
+# set 64 bit
 if (WIN32)
   set(WINXXBITS Win32)
 endif(WIN32)
@@ -50,7 +50,7 @@ endif(WIN64)
 SET( SOURCES )
 FILE( GLOB S ./src/*.c )
 FOREACH (F ${S})
-  IF ( ${F} MATCHES "wmain.c$" OR ${F} MATCHES "luac.c$"  ) 
+  IF ( ${F} MATCHES "wmain.c$" OR ${F} MATCHES "luac.c$" )
   ELSE()
     FILE( RELATIVE_PATH RF ${CMAKE_CURRENT_SOURCE_DIR} "${F}" )
     LIST( APPEND SOURCES ${RF} )

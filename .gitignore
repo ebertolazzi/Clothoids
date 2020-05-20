@@ -86,10 +86,10 @@ DerivedData/*
 
 # auto git version noise
 InfoPlist.h
- 
+
 # old skool
 .svn
- 
+
 # OS generated files #
 ######################
 .DS_Store*

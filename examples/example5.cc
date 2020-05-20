@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -34,9 +34,9 @@ main() {
     << "***********************\n"
     << "      example N.5      \n"
     << "***********************\n\n";
-  
+
   try {
-    
+
     GenericContainer gc;
     GC::vector_type & v = gc.set_vector();
     v.resize(10);
@@ -78,11 +78,11 @@ main() {
     vg[0] = 123;
     vg[1] = 3.14;
     vg[2] = "nonna papera";
-  
+
     cout << "\n\n\nPrint gc:\n";
     gc.dump(cout);
     //gc.to_yaml(cout);
-    
+
     GenericContainer gc1 = gc; // save a copy
     gc.clear();
 
@@ -93,7 +93,7 @@ main() {
     cout << "\n\n\nPrint gc1:\n";
     gc1.dump(cout);
     //gc1.to_yaml(cout);
-  
+
   }
   catch ( std::exception & exc ) {
     cout << exc.what() << '\n';

@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 /*!
  \example example8.cc
- 
+
  Example of use of Lua interface. `GenericContainer` is used
  to read a lua table initialied in a lua script.
  */
@@ -53,6 +53,6 @@ main() {
   catch (...) {
     cout << "Unknonwn error\n";
   }
-  
+
   cout << "ALL DONE!\n\n\n\n";
 }

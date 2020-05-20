@@ -19,12 +19,12 @@
 
 /*!
  \example example4.cc
- 
+
  Complex usage of `GenericContainer` class.
  The class is used to store a generic map, i.e.
  a map whose elements are of type `GenericContainer`
  or basic types.
- 
+
  */
 
 #include "GenericContainer.hh"
@@ -42,24 +42,24 @@ main() {
     << "***********************\n\n";
 
   // Using complex data
-  
+
   try {
-    
+
     GenericContainer gc;
     cout << "gc: "; gc.info(cout);
-    
+
     gc . set_map();
     cout << "gc: "; gc.info(cout);
-    
+
     GC::map_type & m = gc . set_map();
     cout << "gc: "; gc.info(cout);
 
-    // access using map and vector like syntax 
+    // access using map and vector like syntax
     m["a"] = 1;
     m["b"] = 1.2;
     m["c"] = true;
     m["d"] = "pippo";
-    
+
     // or using overloading
     gc["e"] = 1;
     gc["f"] = 1.2;

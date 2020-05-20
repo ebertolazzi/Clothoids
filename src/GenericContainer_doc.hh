@@ -21,20 +21,20 @@
 // file: GenericContainer_doc.hh
 //
 
-/*! 
+/*!
 \mainpage  Generic container class
 \author    Enrico Bertolazzi (enrico.bertolazzi@unitn.it), homepage: http://www.ing.unitn.it/~bertolaz
 \version   1.0.5
 \date      2013
-\copyright GNU Public License.
+\copyright See file license.txt
 
 \details
- 
+
 This library available at
- 
+
  - https://github.com/ebertolazzi/GenericContainer
 
-implement `GenericContainer` a class which permit to store eterogeneous data:
+implement `GenericContainer` a class which permit to store heterogeneous data:
 
 - pointer
 - boolean
@@ -88,9 +88,9 @@ in the distribution.
 ============================
 
 \section sec1 Initialization
- 
+
 Getting an instance of `GenericContainer`
- 
+
 ~~~~~~~~~~~~~{.cc}
 GC::GenericContainer gc; // initialize empty container
 ~~~~~~~~~~~~~
@@ -148,22 +148,22 @@ gc.set_vec_int(rv);   // a vector of 3 floating point copy of rv
 ~~~~~~~~~~~~~
 
 to a vector of strings or pointers
- 
+
 ~~~~~~~~~~~~~{.cc}
 gc.set_vec_string(10);  // a vector of 10 strings
 GC::vec_string_type sv; // initialize an empty vector of booleans
 sv.push_bach("pippo"); sv.push_bach("pluto");
 gc.set_vec_string(sv);  // a vector of 2 string copy of sv
- 
+
 gc.set_vec_pointer(10);  // a vector of 10 pointers
 GC::vec_pointer_type pv; // initialize an empty vector of pointers
 pv.push_back(&cout); pv.push_back(&cin);
 gc.set_vec_pointer(pv);  // a vector of 2 pointers copy of pv
 ~~~~~~~~~~~~~
- 
+
 To build complex aggregate data a generic vector and generic
 map data type are available:
- 
+
 ~~~~~~~~~~~~~{.cc}
 gc.set_vector(10); // a generic vector of 10 elements
 gc.set_map();      // an empty generic map of
@@ -189,7 +189,7 @@ GC::GenericContainer gc7(gc6);     // store a copy of gc6, a pointer
 GC::GenericContainer gc8(gc1);     // store a copy of gc1, no data
 ~~~~~~~~~~~~~
 
-getting information 
+getting information
 
 ~~~~~~~~~~~~~{.cc}
 gc1.info(cout); // print the type stored in the `GenericContainer`
@@ -217,7 +217,7 @@ GenericContainer: No data stored
 
 Initialization with operator =
 ------------------------------
- 
+
 A generic container can be initialized using `operator =`
 
 ~~~~~~~~~~~~~{.cc}
@@ -243,12 +243,12 @@ Generic pointer: 7fff74272f48
 ~~~~~~~~~~~~~
 
 ============================
- 
+
 \section sec3 Accessing data stored in vector
- 
-To retrieve the data stored in a `GenericContainer` you can use the 
+
+To retrieve the data stored in a `GenericContainer` you can use the
 following methods:
- 
+
 ~~~~~~~~~~~~~{.cc}
 bool   b = gc.get_bool();          // to access a boolean
 int    i = gc.get_int();           // to access an integer
@@ -357,7 +357,7 @@ gc(i) = "pippo"; // run time error cannot change allocation type
 ~~~~~~~~~~~~~
 
 ============================
- 
+
 \section sec4 Accessing data stored in map
 
 Map are associative array indexed with strings.
@@ -383,7 +383,7 @@ gc["pluto"] = 4; // access element "pluto" of the generic map
 ~~~~~~~~~~~~~
 
 ============================
- 
+
 \section sec5 Build complex data structures
 
 For more complex examples and recursive data see examples files

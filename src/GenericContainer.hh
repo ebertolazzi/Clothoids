@@ -42,10 +42,6 @@
 
 #include "GenericContainerConfig.hh"
 
-#if !defined(GENERIC_CONTAINER_USE_CXX11) && defined(GENERIC_CONTAINER_USE_REGEX)
-  #error "GenericContainer libray was compiled with regex, needs c++11 support!"
-#endif
-
 #ifndef GC_DO_ERROR
   #define GC_DO_ERROR(MSG) {                          \
     std::ostringstream ost;                           \
@@ -80,7 +76,7 @@ namespace GenericContainerNamespace {
 
   void backtrace( ostream_type & );
 
-  #if defined(GENERIC_CONTAINER_USE_CXX11) && !defined(_MSC_VER)
+  #ifndef _MSC_VER
   using std::int32_t;
   using std::int64_t;
   using std::uint32_t;
@@ -173,15 +169,13 @@ namespace GenericContainerNamespace {
     void
     info( ostream_type & stream ) const;
 
-    #ifndef GENERIC_CONTAINER_USE_CXX11
     TYPE       * data()       { return &std::vector<TYPE>::front(); }
     TYPE const * data() const { return &std::vector<TYPE>::front(); }
-    #endif
   };
 
   // ---------------------------------------------------------------------------
 
-  #if defined(GENERIC_CONTAINER_USE_CXX11) && !defined(GENERIC_CONTAINER_ON_WINDOWS)
+  #ifndef GENERIC_CONTAINER_ON_WINDOWS
   extern template class mat_type<int_type>;
   extern template class mat_type<long_type>;
   extern template class mat_type<real_type>;
@@ -751,6 +745,7 @@ namespace GenericContainerNamespace {
     { ck("get_pointer",GC_POINTER); return static_cast<T>(_data.p); }
     #endif
 
+    GENERIC_CONTAINER_API_DLL
     bool_type
     get_map_bool( char const msg[] ) const {
       bool_type ret = false;
@@ -1244,8 +1239,7 @@ namespace GenericContainerNamespace {
 
     //! Copy a generic container `a` to the generic container.
     GENERIC_CONTAINER_API_DLL
-    void
-    load( GenericContainer const & a );
+    void load( GenericContainer const & a );
     //@}
 
     //! \name Promotion to a ``bigger'' data
@@ -1345,7 +1339,7 @@ namespace GenericContainerNamespace {
     //! Construct a generic container storing a complex floating point number
     GENERIC_CONTAINER_API_DLL
     GenericContainer( std::complex<float> const & a )
-     : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : _data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a complex floating point number
     GENERIC_CONTAINER_API_DLL
@@ -1376,7 +1370,8 @@ namespace GenericContainerNamespace {
     //! \name Utilities methods
 
     //! Check if string `s` is a key of the stored map (if fails issue an error).
-    GENERIC_CONTAINER_API_DLL bool exists( std::string const & s ) const;
+    GENERIC_CONTAINER_API_DLL
+    bool exists( std::string const & s ) const;
 
     GENERIC_CONTAINER_API_DLL
     bool get_if_exists( char const field[], bool & value ) const;
@@ -1463,8 +1458,7 @@ namespace GenericContainerNamespace {
     \*/
     GENERIC_CONTAINER_API_DLL
     GenericContainer const &
-    writeFormattedData( ostream_type & stream,
-                        char const delimiter = '\t' ) const;
+    writeFormattedData( ostream_type & stream, char const delimiter = '\t' ) const;
 
     /*!
     :|:  \brief read regular formatted data from `stream` to `GenericContainer`.
@@ -1592,6 +1586,7 @@ namespace GenericContainerNamespace {
     void       * mem_ptr()       { return &data; }
     void const * mem_ptr() const { return &data; }
 
+    GENERIC_CONTAINER_API_DLL
     int
     check( int data_type ) const {
       if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -1603,6 +1598,7 @@ namespace GenericContainerNamespace {
       }
     }
 
+    GENERIC_CONTAINER_API_DLL
     int
     check_no_data( int data_type ) const {
       if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -1611,6 +1607,7 @@ namespace GenericContainerNamespace {
       return GENERIC_CONTAINER_NOT_EMPTY;
     }
 
+    GENERIC_CONTAINER_API_DLL
     int
     pop() {
       if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA;
@@ -1618,12 +1615,14 @@ namespace GenericContainerNamespace {
       return GENERIC_CONTAINER_OK;
     }
 
+    GENERIC_CONTAINER_API_DLL
     int
     push( GenericContainer * gc ) {
       head.push_back( gc );
       return GENERIC_CONTAINER_OK;
     }
 
+    GENERIC_CONTAINER_API_DLL
     int
     push_vector_position( unsigned pos ) {
       int ok = check( GC_VECTOR );
@@ -1634,6 +1633,7 @@ namespace GenericContainerNamespace {
       return ok;
     }
 
+    GENERIC_CONTAINER_API_DLL
     int
     push_map_position( char const pos[] ) {
       int ok = check( GC_MAP );
@@ -1644,6 +1644,7 @@ namespace GenericContainerNamespace {
       return ok;
     }
 
+    GENERIC_CONTAINER_API_DLL
     int
     init_map_key() {
       int ok = check( GC_MAP );
@@ -1654,6 +1655,7 @@ namespace GenericContainerNamespace {
       return ok;
     }
 
+    GENERIC_CONTAINER_API_DLL
     char const *
     next_map_key() {
       if ( map_iterator != ptr_map->end() )
@@ -1662,6 +1664,7 @@ namespace GenericContainerNamespace {
         return nullptr;
     }
 
+    GENERIC_CONTAINER_API_DLL
     int
     reset() {
       if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA;
