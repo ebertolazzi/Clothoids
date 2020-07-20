@@ -1,5 +1,3 @@
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autors: Enrico Bertolazzi                                              %
@@ -44,7 +42,7 @@ for a=0:pi/3:2*pi
   subplot(2,1,2);
   plot(p(1,:),p(2,:),'k')
   L1 = Biarc( x0, y0, theta0+a, x1, y1, theta1+a );
-  L1.plot() ;
+  L1.plot();
 end
 
 

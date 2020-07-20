@@ -1,5 +1,3 @@
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autor: Enrico Bertolazzi                                               %
@@ -11,19 +9,19 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
-x0     = 0 ;
-y0     = 0 ;
-theta0 = 0*pi/2 ;
+x0     = 0;
+y0     = 0;
+theta0 = 0*pi/2;
 
-S = ClothoidList() ;
+S = ClothoidList();
 
-to_rad  = @(a) a*pi/180 ;
-addseg  = @(a,r) S.push_back( 1/r, 0, abs(to_rad(a)*r) ) ;
-addseg1 = @(l) S.push_back( 0, 0, l ) ;
+to_rad  = @(a) a*pi/180;
+addseg  = @(a,r) S.push_back( 1/r, 0, abs(to_rad(a)*r) );
+addseg1 = @(l) S.push_back( 0, 0, l );
 
-S.push_back( x0, y0, theta0, 0, 0, 378.364557 ) ; % first segment
+S.push_back( x0, y0, theta0, 0, 0, 378.364557 ); % first segment
 
 addseg( 44.000000,-339.539241 );
 addseg( 15.000000,-60.744304 );
@@ -65,8 +63,8 @@ addseg1( 170.724051);
 
 
 %addseg1(283.563770397571);
-%S.push_back_G1( x0, y0, theta0) ; % close curve
+%S.push_back_G1( x0, y0, theta0); % close curve
 %%
 
-S.plot() ;
+S.plot();
 axis equal

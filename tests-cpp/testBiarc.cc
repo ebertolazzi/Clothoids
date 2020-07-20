@@ -1,9 +1,10 @@
-#define _USE_MATH_DEFINES
+//#define _USE_MATH_DEFINES
 #include "Biarc.hh"
 #include <cmath>
 #include <iostream>
 
 using G2lib::real_type;
+using namespace std;
 
 int
 main() {
@@ -29,9 +30,9 @@ main() {
 
   ba.build( x0, y0, th0, x1, y1, th1 );
 
-  std::cout << ba;
+  cout << ba;
 
-  std::cout << "\n\nALL DONE FOLKS!!!\n";
+  cout << "\n\nALL DONE FOLKS!!!\n";
 
   return 0;
 }

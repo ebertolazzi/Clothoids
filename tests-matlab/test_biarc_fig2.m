@@ -1,5 +1,3 @@
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autors: Enrico Bertolazzi                                              %
@@ -12,10 +10,10 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-format long ;
+format long;
 addpath(fullfile(pwd,'../matlab2tikz','src'));
 
-close all ;
+close all;
 
 x0 = 0;
 y0 = 0;
@@ -28,10 +26,10 @@ thmax = 0.5*pi;
 
 LAB = {'(a)','(b)','(c)','(d)'};
 
-ba = Biarc() ;
+ba = Biarc();
 
-aa = 0.04 ;
-bb = 0.5-2*aa ;
+aa = 0.04;
+bb = 0.5-2*aa;
 
 figure('Position',[ 1 1 600 900]);
 
@@ -56,13 +54,13 @@ for theta1=thmin:(thmax-thmin)/3:thmax
   end
   axis([-1,1.2,-1.4,1.4]);
   axis equal
-  xlabel(LAB{choose}) ;
+  xlabel(LAB{choose});
 
-  set(gca,'DataAspectRatio',[1,1,1]) ;
-  set(gca,'XTick',[-2,-1,0,1,2]) ;
-  set(gca,'XTickLabel',{'-2','-1','0','1','2'}) ;
-  set(gca,'YTick',[-2,-1,0,1,2]) ;
-  set(gca,'YTickLabel',{'-2','-1','0','1','2'}) ;
+  set(gca,'DataAspectRatio',[1,1,1]);
+  set(gca,'XTick',[-2,-1,0,1,2]);
+  set(gca,'XTickLabel',{'-2','-1','0','1','2'});
+  set(gca,'YTick',[-2,-1,0,1,2]);
+  set(gca,'YTickLabel',{'-2','-1','0','1','2'});
   legend({},'FontSize',12);
   legend('off');
   switch(choose)
@@ -74,7 +72,7 @@ for theta1=thmin:(thmax-thmin)/3:thmax
   choose = choose+1;
 end
 
-if true
+if false
   matlab2tikz('figure2.tex', ...
               'standalone',true, ...
               'extraaxisoptions',{'xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...

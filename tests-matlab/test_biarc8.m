@@ -10,10 +10,7 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
-clear all ;
-close all ;
+close all;
 
 x0=[-0.1,-20,-0.1,-0.1];
 y0=[ 0,1,0,0];
@@ -26,7 +23,7 @@ B = Biarc();
 A = CircleArc();
 for kk=1:4
   
-  subplot(2,2,kk) ;
+  subplot(2,2,kk);
 
   ok1 = B.build_3P( x0(kk), y0(kk), x1(kk), y1(kk), x2(kk), y2(kk) );
   ok2 = A.build_3P( x0(kk), y0(kk), x1(kk), y1(kk), x2(kk), y2(kk) );
@@ -38,14 +35,14 @@ for kk=1:4
   fmt2 = {'-r','LineWidth',2};
   
   B.plot(1000);%,fmt1,fmt2);
-  A.plot() ;
+  A.plot();
 
   plot( [x0(kk),x1(kk),x2(kk)],[y0(kk),y1(kk),y2(kk)], ...
         '--gs',...
         'LineWidth',2,...
         'MarkerSize',10,...
         'MarkerEdgeColor','b',...
-        'MarkerFaceColor',[0.5,0.5,0.5]) ;
+        'MarkerFaceColor',[0.5,0.5,0.5]);
   title(sprintf('test N. %d',kk));
   axis equal;
 end

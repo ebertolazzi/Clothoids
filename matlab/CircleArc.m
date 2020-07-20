@@ -1,8 +1,5 @@
-classdef CircleArc < handle
+classdef CircleArc < CurveBase
   %% MATLAB class wrapper for the underlying C++ class
-  properties (SetAccess = private, Hidden = true)
-    objectHandle; % Handle to the underlying C++ class instance
-  end
 
   methods
     function self = CircleArc( varargin )
@@ -23,24 +20,12 @@ classdef CircleArc < handle
       %  On output:
       %    ref: reference handle to the object instance
       %
-      self.objectHandle = CircleArcMexWrapper('new', varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function delete(self)
-      %% Destroy the C++ class instance
-      CircleArcMexWrapper('delete', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function obj = obj_handle( self )
-      obj = self.objectHandle ;
+      self@CurveBase( 'CircleArcMexWrapper' );
+      self.objectHandle = CircleArcMexWrapper( 'new', varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function str = is_type( ~ )
-      str = 'CircleArc' ;
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function copy( C )
-      CircleArcMexWrapper('copy', self.objectHandle, C.obj_handle() );
+      str = 'CircleArc';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, x0, y0, theta0, k0, L )
@@ -57,8 +42,7 @@ classdef CircleArc < handle
       %    L:      length of curve from initial to final point
       %
       %    (1) circle passing from (x0,y0) at angle theta0 with curvature and length
-      CircleArcMexWrapper( 'build', ...
-                           self.objectHandle, x0, y0, theta0, k0, L );
+      CircleArcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, k0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_G1( self, varargin )
@@ -91,24 +75,7 @@ classdef CircleArc < handle
       %    (1) ref.build( x0, y0, x1, y1, x2, y2 )
       %    (2) ref.build( p0, p1, p2 )
       %
-      ok = CircleArcMexWrapper( 'build_3P', ...
-                                self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function translate( self, tx, ty )
-      % move the object by `(tx,ty)`
-      CircleArcMexWrapper( 'translate', self.objectHandle, tx, ty );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function changeCurvilinearOrigin( self, s0, L )
-      % change the origin of the circle curve to `s0`
-      CircleArcMexWrapper( 'changeCurvilinearOrigin', ...
-                           self.objectHandle, s0, L );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function trim( self, smin, smax )
-      % trim circle curve to the corresponding curvilinear parameters
-      CircleArcMexWrapper('trim', self.objectHandle, smin, smax );
+      ok = CircleArcMexWrapper( 'build_3P', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function scale( self, sc )
@@ -116,32 +83,14 @@ classdef CircleArc < handle
       CircleArcMexWrapper( 'scale', self.objectHandle, sc );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function rotate( self, angle, cx, cy )
-      % rotate the circle by angle with center of rotation `(cx,cy)`
-      % Usage:
-      %    ref.rotate(angle, cx, cy)
-      %
-      % On input:
-      %    angle: the angle of rotation
-      %    cx, cy: coordinates of the centre of rotation
-      %
-      CircleArcMexWrapper( 'rotate', self.objectHandle, angle, cx, cy );
+    function changeCurvilinearOrigin( self, s0, L )
+      % change the origin of the circle curve to `s0`
+      CircleArcMexWrapper( 'changeCurvilinearOrigin', self.objectHandle, s0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function changeOrigin(self, newX0, newY0)
-      % move the origin of the circle to `(newX0, newY0)`
-      % Usage:
-      %    ref.changeOrigin(newX0, newY0)
-      %
-      % On input:
-      %    newX0, newY0: new coordinates of initial point
-      %
-      CircleArcMexWrapper( 'changeOrigin', self.objectHandle, newX0, newY0 );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [p0,p1,p2,ok] = bbTriangle(self)
-      % return the bounding box triangle of the circle arc
-      [p0,p1,p2,ok] = CircleArcMexWrapper( 'bbTriangle', self.objectHandle );
+    function [p0,p1,p2] = bbTriangles( self, varargin )
+      % return the bounding box triangles of the circle arc
+      [p0,p1,p2] = CircleArcMexWrapper( 'bbTriangles', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function nurbs = to_nurbs( self )
@@ -149,102 +98,37 @@ classdef CircleArc < handle
       nurbs = CircleArcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval( self, varargin )
-      % eval the circle at curvilinear abscissa `s`
-      [ varargout{1:nargout} ] = ...
-        CircleArcMexWrapper( 'eval', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_D( self, varargin )
-      % eval the circle derivative at curvilinear abscissa `s`
-      [ varargout{1:nargout} ] = ...
-        CircleArcMexWrapper( 'eval_D', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DD( self, varargin )
-      % eval the circle second derivative at curvilinear abscissa `s`
-      [ varargout{1:nargout} ] = ...
-        CircleArcMexWrapper( 'eval_DD', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function varargout = eval_DDD( self, varargin )
-      % eval the circle third derivative at curvilinear abscissa `s`
-      [ varargout{1:nargout} ] = ...
-        CircleArcMexWrapper( 'eval_DDD', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function th = theta(self, s)
-      % eval the angle of the circle curve at curvilinear abscissa `s`
-      th = CircleArcMexWrapper( 'theta', self.objectHandle, s );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function X0 = xBegin(self)
-      X0 = CircleArcMexWrapper( 'xBegin', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function X1 = xEnd(self)
-      X1 = CircleArcMexWrapper( 'xEnd', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function Y0 = yBegin(self)
-      Y0 = CircleArcMexWrapper( 'yBegin', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function Y1 = yEnd(self)
-      Y1 = CircleArcMexWrapper( 'yEnd', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function th0 = thetaBegin(self)
-      th0 = CircleArcMexWrapper( 'thetaBegin', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function th1 = thetaEnd(self)
-      th1 = CircleArcMexWrapper( 'thetaEnd', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function k = kappa(self)
-      k = CircleArcMexWrapper( 'kappa', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = length(self)
-      res = CircleArcMexWrapper( 'length', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [DST,S] = distance( self, varargin )
-      % eval the angle of the circle curve at curvilinear abscissa `s`
-      [ DST, S ] = ...
-        CircleArcMexWrapper( 'distance', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ s, t ] = find_coord( self, x, y )
-      [ s, t ] = CircleArcMexWrapper( 'findST', self.objectHandle, x, y );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function info( self )
-      CircleArcMexWrapper( 'info', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plot(self,npts,fmt)
+    function plot( self, npts, fmt )
       if nargin<2
-        npts = 128 ;
+        npts = 128;
       end
       if nargin<3
         fmt = {'Color','blue','Linewidth',2};
       end
       L = self.length();
-      S = 0:L/npts:L ;
+      S = 0:L/npts:L;
       [X,Y] = self.eval(S);
       plot(X,Y,fmt{:});
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plotPolygon(self,varargin)
-      arc = self.to_nurbs() ;
+    function plotPolygon( self, varargin )
+      arc = self.to_nurbs();
       xx  = arc.coefs(1,:)./arc.coefs(3,:);
       yy  = arc.coefs(2,:)./arc.coefs(3,:);
       if nargin > 1
         plot(xx,yy,varargin{:});
       else
         plot(xx,yy,':ok');
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTriangles( self, varargin )
+      [p1,p2,p3] = self.bbTriangles();
+      for k=1:size(p1,2)
+        x = [ p1(1,k), p2(1,k), p3(1,k), p1(1,k) ];
+        y = [ p1(2,k), p2(2,k), p3(2,k), p1(2,k) ];
+        fill( x, y, 'red','FaceAlpha', 0.5 );
+        %plot( x, y, varargin{:});
       end
     end
   end

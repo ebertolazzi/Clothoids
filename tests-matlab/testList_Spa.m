@@ -1,6 +1,4 @@
 % Francorchamps
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autors: Enrico Bertolazzi                                              %
@@ -13,20 +11,20 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
-x0     = 0 ;
-y0     = 0 ;
-theta0 = pi+pi/4 ;
+x0     = 0;
+y0     = 0;
+theta0 = pi+pi/4;
 kappa0 = -0.00013852;
 kappa1 = -0.00111413;
 L0     = 268.41596493;
 
-S = ClothoidList() ;
+S = ClothoidList();
 
-addseg = @(l,c0,c1) S.push_back(c0,(c1-c0)/l,l) ;
+addseg = @(l,c0,c1) S.push_back(c0,(c1-c0)/l,l);
 
-S.push_back( x0, y0, theta0, kappa0, (kappa1-kappa0)/L0, L0 ) ;
+S.push_back( x0, y0, theta0, kappa0, (kappa1-kappa0)/L0, L0 );
 %addseg( 268.41596493,  -0.00013852,   -0.00111413 ); 
 
 addseg(  31.16644924,  -0.14835903,   -0.00905621 ); 
@@ -73,8 +71,8 @@ addseg(  28.80513435,  -0.08890172,   -0.05712332 );
 addseg(  45.61022550,   0.00885904,    0.06595860 ); 
 addseg(  44.86161912,   0.05021172,   -0.01200622 ); 
 %addseg( 257.77168829,  -0.00088992,    0.00086831 );
-S.push_back_G1( x0, y0, theta0) ; % close curve
+S.push_back_G1( x0, y0, theta0); % close curve
 %%
 
-S.plot() ;
+S.plot();
 axis equal

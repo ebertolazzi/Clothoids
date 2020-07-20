@@ -10,9 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
-clear all;
 close all;
 
 x0     = 0;
@@ -26,7 +23,7 @@ y1     = 1;
 theta1 = 2;
 kappa1 = 3;
 
-close all ;
+close all;
 figure('Position',[1,1,500,800]);
 
 C = ClothoidCurve();

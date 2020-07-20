@@ -27,7 +27,7 @@ triple f_distCloth( real t, real [] pars){
 	real dk = pars[0];
 	real Px = pars[1];
 	real Py = pars[2];
-	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 ) ;
+	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 );
 	triple res = (sqrt((CS.x-Px)^2+(CS.y-Py)^2),0,0);
 	return res;
 }
@@ -37,7 +37,7 @@ triple f_fresnelX_Ptx( real t, real [] pars){
 	// standard fresnel, not generalised
 	real dk = pars[0];
 	real Px = pars[1];
-	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 ) ;
+	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 );
 	triple res = (CS.x-Px,cos(1/2*dk*t^2),-dk*t*sin(1/2*dk*t^2));
 	return res;
 }
@@ -47,7 +47,7 @@ triple f_fresnelY_Pty( real t, real [] pars){
 	// standard fresnel, not generalised
 	real dk = pars[0];
 	real Py = pars[1];
-	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 ) ;
+	pair CS =  t*GeneralizedFresnelCS( dk*t^2, 0,0 );
 	triple res = (CS.y-Py,sin(1/2*dk*t^2),dk*t*cos(1/2*dk*t^2));
 	return res;
 }
@@ -87,69 +87,69 @@ real HalleyHybrid(real a, real b, real[] pars, string fname){
   // write(a,b);
    //write(A.x,B.x);
   
-  //if ( abs(A.x)< tol ) { return a ;}
-  //if ( abs(B.x)< tol ) { return b ;}
+  //if ( abs(A.x)< tol ) { return a;}
+  //if ( abs(B.x)< tol ) { return b;}
   
   if ( A.x * B.x > 0 ) {
-      //write("HalleyHybrid bad input interval") ;
-      return nan ;
+      //write("HalleyHybrid bad input interval");
+      return nan;
     }
   
-   bool use_right = true ;
-   for ( int iter = 0 ; iter < 50; ++iter ) {
-    int ierr = 0 ;
+   bool use_right = true;
+   for ( int iter = 0; iter < 50; ++iter ) {
+    int ierr = 0;
     if ( use_right ) { // uso B come punto per Halley
       if ( abs(B.y) < tol ) {
-		  ierr = 1 ;
+		  ierr = 1;
       } else {
-		 //write("f_B= ",B.x) ;
-	    //s = b - B.x / B.y  / (1-B.x/B.y*B.z/B.y/2) ; // halley
-		s = b - B.x / B.y ; // newton
+		 //write("f_B= ",B.x);
+	    //s = b - B.x / B.y  / (1-B.x/B.y*B.z/B.y/2); // halley
+		s = b - B.x / B.y; // newton
 		
 	  }
     } else {
       if ( abs(A.y) < tol ) {
-		  ierr = 1 ;
+		  ierr = 1;
       } else  {
-		 //write("f_A= ",A.x) ;
-		//s = a - A.x / A.y   / (1-A.x/A.y*A.z/A.y/2) ;   // halley  
-		s = a - A.x / A.y ; //newton
+		 //write("f_A= ",A.x);
+		//s = a - A.x / A.y   / (1-A.x/A.y*A.z/A.y/2);   // halley  
+		s = a - A.x / A.y; //newton
 	  }
     }
     // controllo che stia nell'intervallo
     if ( ierr != 0 || s <= min(a,b) || s >= max(a,b) ) { // passo sbagliato applico bisezione
       write("passo sbagliato uso bisezione, ierr",ierr);
-      s = (a+b)/2 ;
-      use_right = !use_right ;
+      s = (a+b)/2;
+      use_right = !use_right;
     }
     // selezione nuovo intervallo
-    C = func(s,pars,fname) ;
+    C = func(s,pars,fname);
     if ( A.x * C.x <0 ) {
-      B    = C ;
-      b    = s ;
+      B    = C;
+      b    = s;
     } else if ( B.x * C.x <0 ) {
-      A    = C ;
-      a    = s ;
+      A    = C;
+      a    = s;
     } else {
 		write("Halley exit, iter = ", iter);
-		//write("f_A= ",A.x) ;
-		//write("f_B= ",B.x) ;
-		//write("f_C= ",C.x) ;
+		//write("f_A= ",A.x);
+		//write("f_B= ",B.x);
+		//write("f_C= ",C.x);
 		if (abs(A.x)<tol) return a;
 		if (abs(B.x)<tol) return b;
 		if (abs(C.x)<tol) return s;
 		
-      //return s ;
+      //return s;
     }
     
     // controllo tolleranza
     if ( abs(C.x) < tol ) {
       write("Halley OK, iter = ", iter);
-      return s ;
+      return s;
     }
   }
   write("Halley failed, last value and residual = ",s,C.x);
-  return nan ;
+  return nan;
 }
 
 

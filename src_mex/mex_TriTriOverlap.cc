@@ -53,8 +53,10 @@ namespace G2lib {
 
   extern "C"
   void
-  mexFunction( int nlhs, mxArray       *plhs[],
-               int nrhs, mxArray const *prhs[] ) {
+  mexFunction(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
 
     try {
 
@@ -85,8 +87,8 @@ namespace G2lib {
       real_type const * q2 = mxGetPr(arg_q2);
 
       // costruisco bb
-      Triangle2D T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
-      Triangle2D T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1] );
+      Triangle2D T1( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1], 0, 0, 0 );
+      Triangle2D T2( q0[0], q0[1], q1[0], q1[1], q2[0], q2[1], 0, 0, 0 );
 
       if ( nlhs == 1 ) {
         bool over = T1.overlap(T2);

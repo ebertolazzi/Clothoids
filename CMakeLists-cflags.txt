@@ -1,0 +1,27 @@
+SET( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
+SET( CMAKE_VERBOSE_MAKEFILE            TRUE )
+
+# /Gd Uses the __cdecl calling convention (x86 only).
+# /Gr	Uses the __fastcall calling convention (x86 only).
+# /Gv	Uses the __vectorcall calling convention. (x86 and x64 only)
+# /Gz	Uses the __stdcall calling convention (x86 only).
+
+IF( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )
+  SET( CMAKE_CXX_FLAGS "-std=c++11 " )
+  SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Wall -Wno-float-equal -Wno-padded -funroll-loops -O2 -g " )
+  SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -Wall -Wno-float-equal -Wno-padded -O0 -g -DMECHATRONIX_DEBUG -DDEBUG " )
+ELSEIF( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
+  SET( CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ " )
+  SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation -funroll-loops -O2 -g " )
+  SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation -O0 -gfull -DMECHATRONIX_DEBUG -DDEBUG " )
+ELSEIF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
+  SET( CMAKE_CXX_FLAGS_RELEASE "/nologo /GS /W3 /WX- /Gm- /fp:precise /EHsc /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /O2 /MD " )
+  SET( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /W3 /WX- /Gm- /fp:precise /EHsc /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /Z7 /RTC1 /D_DEBUG /DMECHATRONIX_DEBUG " )
+ELSE()
+  MESSAGE( FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
+ENDIF()
+
+MESSAGE( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
+
+SET( CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} )
+SET( CMAKE_C_FLAGS_DEBUG   ${CMAKE_CXX_FLAGS_DEBUG} )

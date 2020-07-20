@@ -186,9 +186,8 @@ setScalarInt( mxArray * & arg, int64_t value ) {
 static
 inline
 void
-setScalarBool( mxArray * & arg, bool v ) {
-  arg = mxCreateLogicalMatrix(1, 1);
-  *mxGetLogicals(arg) = v;
+setScalarBool( mxArray * & arg, bool value ) {
+  arg = mxCreateLogicalScalar( value );
 }
 
 static

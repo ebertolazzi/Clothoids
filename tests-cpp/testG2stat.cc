@@ -1,5 +1,5 @@
-#define _USE_MATH_DEFINES
-#include "Clothoid.hh"
+//#define _USE_MATH_DEFINES
+#include "ClothoidList.hh"
 #include "ClothoidAsyPlot.hh"
 #include "TicToc.hh"
 #include <cmath>
@@ -9,15 +9,14 @@
 #include <map>
 
 using G2lib::real_type;
-
-static const real_type m_pi = 3.14159265358979323846264338328;
-
 using namespace std;
 
-map<int,int> stats;
-
 int
-main(int argc, const char * argv[]) {
+main() {
+
+  static const real_type m_pi = 3.14159265358979323846264338328;
+
+  map<int,int> stats;
 
   G2lib::G2solve3arc g2solve3arc;
   TicToc             tictoc;
@@ -56,7 +55,7 @@ main(int argc, const char * argv[]) {
   tictoc.tic();
   for ( int ii = 0; ii < nkur; ++ii ) {
     cout << "ii = " << ii << '\n';
-    real_type k0 = kur[ii];
+    k0 = kur[ii];
     for ( int jj = 0; jj < nkur; ++jj ) {
       real_type k1 = kur[jj];
       for ( int i = 0; i < NMAX; ++i ) {
@@ -82,9 +81,10 @@ main(int argc, const char * argv[]) {
     cout << "iter = " << is->first << " -- " << is->second << '\n';
     N += is->second;
   }
-  cout << "elapsed = " << tictoc.totalElapsedSeconds() << '\n';
-  cout << "ave = " << tictoc.totalElapsedSeconds()/N << '\n';
-  cout << "All done\n";
+  cout
+   << "elapsed = " << tictoc.elapsed_s() << "[s]\n"
+   << "ave     = " << tictoc.elapsed_s()/N << "[s]\n"
+   << "All done\n";
   return 0;
 }
 

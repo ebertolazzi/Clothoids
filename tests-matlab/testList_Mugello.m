@@ -1,5 +1,3 @@
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autor: Enrico Bertolazzi                                               %
@@ -11,18 +9,18 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
-x0     = 0 ;
-y0     = 0 ;
-theta0 = 0 ;
+x0     = 0;
+y0     = 0;
+theta0 = 0;
 
-S = ClothoidList() ;
+S = ClothoidList();
 % STRAIGHT LINE      START GRID
-S.push_back( x0, y0, theta0, 0, 0, 153.950959920426 ) ; % first segment
+S.push_back( x0, y0, theta0, 0, 0, 153.950959920426 ); % first segment
 
-addseg  = @(a,r) S.push_back( -1/r, 0, abs(a*r) ) ;
-addseg1 = @(l) S.push_back( 0, 0, l ) ;
+addseg  = @(a,r) S.push_back( -1/r, 0, abs(a*r) );
+addseg1 = @(l) S.push_back( 0, 0, l );
 
 % CORNER:
 addseg(45.2707044337391/347.327792187656,347.327792187656);
@@ -125,9 +123,9 @@ addseg(265.379041347039/78.7276328958688,-78.7276328958688);
 
 % STRAIGHT LINE
 %addseg1(543.929215677558);
-S.push_back_G1( x0, y0, theta0 ) ; % first segment
+S.push_back_G1( x0, y0, theta0 ); % first segment
 
-S.plot() ;
+S.plot();
 axis equal
 
 S.save('Mugello.txt',10);

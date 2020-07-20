@@ -1,57 +1,77 @@
 # get the type of OS currently running
-OS=$(shell uname)
+OS=$(shell uname -s)
 PWD=$(shell pwd)
 
-CC   = gcc
-CXX  = g++
-INC  = -I./src -I./include
-LIBS = -L./lib -lClothoids
-DEFS =
-LDCONFIG =
-STATIC_EXT = .a
+INC         = -I./src -I./include -Isubmodules/quarticRootsFlocke/src
+DEFS        =
+STATIC_EXT  = .a
 DYNAMIC_EXT = .so
+AR          = ar rcs
+
+WARN        = -Wall -Wno-sign-compare
+#-Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
+
+# default values
+LIB_CLOTHOID = Clothoids
+LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+CXXFLAGS     = -O2
+AR           = ar rcs
+LDCONFIG     =
+
 
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
-  LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 -Wall -O3 -fPIC -Wno-sign-compare
-  AR       = ar rcs
-  LDCONFIG = sudo ldconfig
+  LIB_CLOTHOID = Clothoids_linux
+  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+  CXXFLAGS     = -std=c++11 $(WARN) -O2 -fPIC
+  AR           = ar rcs
+  LDCONFIG     = sudo ldconfig
 endif
 
-# check if the OS string contains 'Linux'
+# check if the OS string contains 'MINGW'
 ifneq (,$(findstring MINGW, $(OS)))
-  LIBS     = -static -L./lib -lClothoids
-  CXXFLAGS = -std=c++11 -Wall -O3 -Wno-sign-compare
-  AR       = ar rcs
-  LDCONFIG = sudo ldconfig
+  LIB_CLOTHOID = Clothoids_mingw_x64
+  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+  CXXFLAGS     = -std=c++11 $(WARN) -O2
+  AR           = ar rcs
+  LDCONFIG     = sudo ldconfig
 endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  CC       = clang
-  CXX      = clang++
-  LIBS     = -L./lib -lClothoids
-  CXXFLAGS = -Wall -O3 -fPIC -Wno-sign-compare
-  AR       = libtool -static -o
-	DYNAMIC_EXT = .dylib
+  LIB_CLOTHOID = Clothoids_osx
+  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+  WARN         = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
+	CC           = clang
+	CXX          = clang++ -std=c++11
+  CXXFLAGS     = $(WARN) -O2 -fPIC
+  AR           = libtool -static -o
+  LDCONFIG     =
+  DYNAMIC_EXT  = .dylib
 endif
 
-LIB_CLOTHOID = libClothoids
+.SUFFIXES: .o
 
 SRCS = \
+src/AABBtree.cc \
 src/Biarc.cc \
+src/BiarcList.cc \
 src/Circle.cc \
 src/Clothoid.cc \
+src/ClothoidAsyPlot.cc \
 src/ClothoidDistance.cc \
 src/ClothoidG2.cc \
 src/ClothoidList.cc \
-src/CubicRootsFlocke.cc \
 src/Fresnel.cc \
 src/G2lib.cc \
+src/G2lib_intersect.cc \
 src/Line.cc \
+src/PolyLine.cc \
 src/Triangle2D.cc \
-src/PolyLine.cc
+submodules/quarticRootsFlocke/src/PolynomialRoots-1-Quadratic.cc \
+submodules/quarticRootsFlocke/src/PolynomialRoots-2-Cubic.cc \
+submodules/quarticRootsFlocke/src/PolynomialRoots-3-Quartic.cc \
+submodules/quarticRootsFlocke/src/PolynomialRoots-Utils.cc
 
 OBJS  = $(SRCS:.cc=.o)
 DEPS  = src/Clothoid.hh src/CubicRootsFlocke.hh
@@ -62,64 +82,81 @@ MKDIR = mkdir -p
 PREFIX    = /usr/local
 FRAMEWORK = Clothoids
 
-all: lib
-	@$(MKDIR) bin
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2         tests-cpp/testG2.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat     tests-cpp/testG2stat.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat2arc tests-cpp/testG2stat2arc.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2statCLC  tests-cpp/testG2statCLC.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/testPolyline   tests-cpp/testPolyline.cc $(LIBS)
-	#$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot tests-cpp/testG2plot.cc $(LIBS)
+all: bin
 
-lib: lib/$(LIB_CLOTHOID)$(STATIC_EXT) lib/$(LIB_CLOTHOID)$(DYNAMIC_EXT)
+travis: bin run
+
+bin: lib
+	@$(MKDIR) bin
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testBiarc        tests-cpp/testBiarc.cc      $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testDistance     tests-cpp/testDistance.cc   $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2           tests-cpp/testG2.cc         $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2plot       tests-cpp/testG2plot.cc     $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat       tests-cpp/testG2stat.cc     $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2stat2arc   tests-cpp/testG2stat2arc.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testG2statCLC    tests-cpp/testG2statCLC.cc  $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testIntersect    tests-cpp/testIntersect.cc  $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testPolyline     tests-cpp/testPolyline.cc   $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/testTriangle2D   tests-cpp/testTriangle2D.cc $(LIBS)
+
+lib: lib/lib/lib$(LIB_CLOTHOID)_static$(STATIC_EXT) lib/lib/lib$(LIB_CLOTHOID)$(DYNAMIC_EXT)
 
 include_local:
 	@rm -rf lib/include
-	$(MKDIR) lib
-	$(MKDIR) lib/include
-	@cp -f src/*.hh lib/include
+	@$(MKDIR) -p lib/include
+	@cp -f src/*.hh                               lib/include
+	@cp -f submodules/quarticRootsFlocke/src/*.hh lib/include
 
-src/%.o: src/%.cc $(DEPS)
-	$(CXX) $(INC) $(CXXFLAGS) $(DEFS) -c $< -o $@ 
 
-src/%.o: src/%.c $(DEPS)
+.cc.o : $(DEPS)
+	$(CXX) $(INC) $(CXXFLAGS) $(DEFS) -c $< -o $@
+
+.c.o : $(DEPS)
 	$(CC) $(INC) $(CFLAGS) $(DEFS) -c -o $@ $<
 
-lib/libClothoids.a: $(OBJS) include_local
-	@$(MKDIR) lib
-	$(AR) lib/libClothoids.a $(OBJS) 
+lib/lib/lib$(LIB_CLOTHOID)_static.a: $(OBJS) include_local
+	@$(MKDIR) -p lib/lib
+	$(AR) lib/lib/lib$(LIB_CLOTHOID)_static.a $(OBJS)
 
-lib/libClothoids.dylib: $(OBJS) include_local
-	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoids.dylib $(OBJS) 
+lib/lib/lib$(LIB_CLOTHOID).dylib: $(OBJS) include_local
+	@$(MKDIR) -p lib/lib
+	$(CXX) -shared -o lib/lib/lib$(LIB_CLOTHOID).dylib $(OBJS)
 
-lib/libClothoids.so: $(OBJS) include_local
-	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libClothoids.so $(OBJS) 
+lib/lib/lib$(LIB_CLOTHOID).so: $(OBJS) include_local
+	@$(MKDIR) -p lib/lib
+	$(CXX) -shared -o lib/lib/lib$(LIB_CLOTHOID).so $(OBJS)
 
 install: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include
-	cp src/*.hh                $(PREFIX)/include
-	cp lib/$(LIB_CLOTHOID).*   $(PREFIX)/lib
-	@$(LDCONFIG)
+	@cp src/*.hh                                   $(PREFIX)/include
+	@cp src/submodules/quarticRootsFlocke/src/*.hh $(PREFIX)/include
+	@cp lib/lib/lib$(LIB_CLOTHOID).*               $(PREFIX)/lib
+	@$(LDCONFIG) $(PREFIX)/lib
 
 install_as_framework: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include/$(FRAMEWORK)
-	cp src/*.hh                $(PREFIX)/include/$(FRAMEWORK)
-	cp lib/$(LIB_CLOTHOID)     $(PREFIX)/lib
+	@cp src/*.hh                                   $(PREFIX)/include/$(FRAMEWORK)
+	@cp src/submodules/quarticRootsFlocke/src/*.hh $(PREFIX)/include/$(FRAMEWORK)
+	@cp lib/lib/lib$(LIB_CLOTHOID)                 $(PREFIX)/lib
 
 run:
+	./bin/testBiarc
+	./bin/testDistance
 	./bin/testG2
+	./bin/testG2plot
 	./bin/testG2stat
 	./bin/testG2stat2arc
 	./bin/testG2statCLC
+	./bin/testIntersect
+	./bin/testPolyline
+	./bin/testTriangle2D
 
-doc:
-	doxygen
-	
+docs:
+	@doxygen
+	@open docs/index.html
+
 clean:
-	rm -f lib/libClothoids.* lib/libClothoids.* src/*.o
+	rm -f lib/libClothoids.* src/*.o
 	rm -rf bin
-	

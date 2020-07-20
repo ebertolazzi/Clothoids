@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$d2/d03/class_g2lib_1_1_base_curve.html" title="base classe for all the curve ìs in the library" alt="" coords="5,153,131,179"/>
+<area shape="rect" id="node2" href="$dd/dd4/class_g2lib_1_1_biarc.html" title="Compute biarc fitting by Hemite data." alt="" coords="206,5,296,31"/>
+<area shape="rect" id="node3" href="$df/d29/class_g2lib_1_1_biarc_list.html" title="Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)" alt="" coords="196,55,307,80"/>
+<area shape="rect" id="node4" href="$d7/dd9/class_g2lib_1_1_circle_arc.html" title="Class to manage Clothoid Curve." alt="" coords="194,104,308,129"/>
+<area shape="rect" id="node5" href="$dc/d27/class_g2lib_1_1_clothoid_curve.html" title="Class to manage Clothoid Curve." alt="" coords="179,153,324,179"/>
+<area shape="rect" id="node6" href="$d7/d02/class_g2lib_1_1_clothoid_list.html" title="Class to manage a list of clothoid curves (not necessarily G2 or G1 connected)" alt="" coords="187,203,316,228"/>
+<area shape="rect" id="node7" href="$d9/d0c/class_g2lib_1_1_line_segment.html" title="Class to manage a straight segment." alt="" coords="182,252,321,277"/>
+<area shape="rect" id="node8" href="$d2/d00/class_g2lib_1_1_poly_line.html" title="Class to manage a collection of straight segment." alt="" coords="196,301,307,327"/>
+</map>

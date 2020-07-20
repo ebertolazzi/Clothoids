@@ -1,5 +1,5 @@
-#define _USE_MATH_DEFINES
-#include "Clothoid.hh"
+//#define _USE_MATH_DEFINES
+#include "ClothoidList.hh"
 #include "ClothoidAsyPlot.hh"
 #include "TicToc.hh"
 #include <cmath>
@@ -8,29 +8,15 @@
 #include <ctime>
 #include <map>
 
-std::stack<clock_t> tictoc_stack;
-
-void tic() {
-	tictoc_stack.push(clock());
-}
-
-void toc() {
-	std::cout << "Time elapsed: "
-		<< ((double)(clock() - tictoc_stack.top())) / CLOCKS_PER_SEC
-		<< std::endl;
-	tictoc_stack.pop();
-}
-
 using G2lib::real_type;
 
 static const real_type m_pi = 3.14159265358979323846264338328;
-
 using namespace std;
 
-map<int,int> stats;
-
 int
-main(int argc, const char * argv[]) {
+main() {
+
+  map<int,int> stats;
 
   G2lib::G2solve2arc g2solve2arc;
   TicToc             tictoc;
@@ -70,7 +56,7 @@ main(int argc, const char * argv[]) {
   // real_type kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 };
   tictoc.tic();
   for ( int ii = 0; ii < nkur; ++ii ) {
-    real_type k0 = kur[ii];
+    k0 = kur[ii];
     for ( int jj = 0; jj < nkur; ++jj ) {
       real_type k1 = kur[jj];
       for ( int i = 0; i < NMAX; ++i ) {
@@ -98,8 +84,9 @@ main(int argc, const char * argv[]) {
     if ( is->first>0 ) acc  += is->second;
     else               acc1 += is->second;
   }
-  cout << "ok = " << acc << " perc = " << double(acc)/(acc+acc1) << '\n';
-  cout << "elapsed = " << tictoc.totalElapsedSeconds() << '\n';
-  cout << "All done\n";
+  cout
+    << "ok = " << acc << " perc = " << double(acc)/(acc+acc1) << '\n'
+    << "elapsed = " << tictoc.elapsed_s() << '\n'
+    << "All done\n";
   return 0;
 }

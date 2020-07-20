@@ -1,5 +1,3 @@
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autors: Enrico Bertolazzi                                              %
@@ -12,10 +10,10 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-format long ;
+format long;
 addpath(fullfile(pwd,'../matlab2tikz','src'));
 
-close all ;
+close all;
 
 x0 = 0;
 y0 = 0;
@@ -34,10 +32,10 @@ thr1={r0,-r0};
 L = 0.4;
 LAB = {'(a)','(b)','(c)','(d)'};
 
-ba = Biarc() ;
+ba = Biarc();
 
-aa = 0.04 ;
-bb = 0.5-2*aa ;
+aa = 0.04;
+bb = 0.5-2*aa;
 
 figure('Position',[ 1 1 600 600]);
 
@@ -67,11 +65,11 @@ for kk=[0,1]
   end
   
   axis equal
-  set(gca,'DataAspectRatio',[1,1,1]) ;
-  set(gca,'XTick',[-2,-1,0,1,2]) ;
-  set(gca,'XTickLabel',{'-2','-1','0','1','2'}) ;
-  set(gca,'YTick',[-2,-1,0,1,2]) ;
-  set(gca,'YTickLabel',{'-2','-1','0','1','2'}) ;
+  set(gca,'DataAspectRatio',[1,1,1]);
+  set(gca,'XTick',[-2,-1,0,1,2]);
+  set(gca,'XTickLabel',{'-2','-1','0','1','2'});
+  set(gca,'YTick',[-2,-1,0,1,2]);
+  set(gca,'YTickLabel',{'-2','-1','0','1','2'});
   title([LAB{1+2*kk} ' Present Method'])
 
   switch(2+2*kk)
@@ -103,16 +101,16 @@ for kk=[0,1]
   end
 
   axis equal
-  set(gca,'DataAspectRatio',[1,1,1]) ;
-  set(gca,'XTick',[-2,-1,0,1,2]) ;
-  set(gca,'XTickLabel',{'-2','-1','0','1','2'}) ;
-  set(gca,'YTick',[-2,-1,0,1,2]) ;
-  set(gca,'YTickLabel',{'-2','-1','0','1','2'}) ;
+  set(gca,'DataAspectRatio',[1,1,1]);
+  set(gca,'XTick',[-2,-1,0,1,2]);
+  set(gca,'XTickLabel',{'-2','-1','0','1','2'});
+  set(gca,'YTick',[-2,-1,0,1,2]);
+  set(gca,'YTickLabel',{'-2','-1','0','1','2'});
   title([LAB{2+2*kk} ' Matlab rscvn'])
   
 end
 
-if true
+if false
   matlab2tikz('figure3.tex', ...
               'standalone',true, ...
               'extraaxisoptions',{'xlabel style={font=\LARGE}','ylabel style={font=\LARGE}','ticklabel style={font=\LARGE}'}, ...

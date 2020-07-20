@@ -1,28 +1,8 @@
-language: cpp
-
-branches:
-  only:
-    - develop
-
-git:
-  quiet: true
-  submodules: false
-  depth: false
-
-script: make
-
+language: bash
 matrix:
   include:
     - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-4.9
-            - gcc-4.9
-      env:
-         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+      script: make travis
     - os: linux
       addons:
         apt:
@@ -32,7 +12,21 @@ matrix:
             - g++-5
             - gcc-5
       env:
-        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - COMPILER="CC=gcc-5 && CXX=g++-5"
+      before_install: eval "${COMPILER}"
+      script: make travis
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+            - gcc-6
+      env:
+         - COMPILER="CC=gcc-6 && CXX=g++-6"
+      before_install: eval "${COMPILER}"
+      script: make travis
     - os: linux
       addons:
         apt:
@@ -42,18 +36,37 @@ matrix:
             - g++-7
             - gcc-7
       env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+         - COMPILER="CC=gcc-7 && CXX=g++-7"
+      before_install: eval "${COMPILER}"
+      script: make travis
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - gcc-8
+      env:
+         - COMPILER="CC=gcc-8 && CXX=g++-8"
+      before_install: eval "${COMPILER}"
+      script: make travis
     - os: linux
       compiler: clang
-      env: 
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
+      script: make travis
+    - os: osx
+      script: make travis
     - os: osx
       osx_image: xcode10
-      env: 
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
-
-before_install:
-  - eval "${MATRIX_EVAL}"
-
-      
-      
+      script: make travis
+    - os: windows
+      install: choco install mingw
+      script: mingw32-make travis
+    - os: windows
+      env:
+        - CMAKE_PATH="/c/Program Files/CMake/bin"
+      script:
+        - export PATH=$CMAKE_PATH:$PATH
+        - mkdir build && cd build
+        - cmake ..
+        - cmake --build .

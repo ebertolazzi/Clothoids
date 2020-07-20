@@ -10,8 +10,6 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-addpath('../matlab');
-
 % Values computed with MAPLE for comparison
 points = {...
 [0.98,.779269472398985793616327384272, .418272107748504825551976929861],...
@@ -33,7 +31,7 @@ points = {...
 [10000,.499999999999898678816357662244, .499968169011381620933813769280]};
 
 for k=1:length(points)
-  pt = points{k} ;
-  [C,S] = FresnelCS(pt(1)) ;
-  fprintf(1,'x=%5g err = [%10g,%10g] [C,S] = [%14g,%14g]\n',pt(1),C,S,C-pt(2),S-pt(3)) ;	
+  pt = points{k};
+  [C,S] = FresnelCS(pt(1));
+  fprintf(1,'x=%5g err = [%10g,%10g] [C,S] = [%14g,%14g]\n',pt(1),C,S,C-pt(2),S-pt(3));	
 end

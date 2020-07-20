@@ -1,0 +1,2 @@
+addpath('lib');
+addpath('bin');

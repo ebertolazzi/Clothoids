@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -17,14 +17,13 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Clothoid.hh"
+#include "ClothoidList.hh"
 #include "Biarc.hh"
-//#include "CubicRootsFlocke.hh"
 
 #include <cmath>
 #include <cfloat>
 
-#ifdef __GCC__
+#ifdef __GNUC__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wswitch-enum"
@@ -37,7 +36,12 @@
 
 namespace G2lib {
 
-  using namespace std;
+  using std::abs;
+  using std::fpclassify;
+  using std::copy;
+  using std::back_inserter;
+  using std::fill;
+  using std::vector;
 
   inline
   real_type
@@ -63,14 +67,16 @@ namespace G2lib {
   \*/
 
   int
-  G2solve2arc::build( real_type _x0,
-                      real_type _y0,
-                      real_type _theta0,
-                      real_type _kappa0,
-                      real_type _x1,
-                      real_type _y1,
-                      real_type _theta1,
-                      real_type _kappa1 ) {
+  G2solve2arc::build(
+    real_type _x0,
+    real_type _y0,
+    real_type _theta0,
+    real_type _kappa0,
+    real_type _x1,
+    real_type _y1,
+    real_type _theta1,
+    real_type _kappa1
+  ) {
 
     x0     = _x0;
     y0     = _y0;
@@ -106,45 +112,51 @@ namespace G2lib {
     return solve();
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solve2arc::setTolerance( real_type tol ) {
-    G2LIB_ASSERT( tol > 0 && tol <= 0.1,
-                  "G2solve2arc::setTolerance, tolerance = " << tol <<
-                  " must be in (0,0.1]" );
+    G2LIB_ASSERT(
+      tol > 0 && tol <= 0.1,
+      "G2solve2arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
+    )
     tolerance = tol;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solve2arc::setMaxIter( int miter ) {
-    G2LIB_ASSERT( miter > 0 && miter <= 1000,
-                  "G2solve2arc::setMaxIter, maxIter = " << miter <<
-                  " must be in [1,1000]" );
+    G2LIB_ASSERT(
+      miter > 0 && miter <= 1000,
+      "G2solve2arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
+    )
     maxIter = miter;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::evalA( real_type   alpha,
-                      real_type   L,
-                      real_type & A ) const {
+  G2solve2arc::evalA(
+    real_type   alpha,
+    real_type   L,
+    real_type & A
+  ) const {
     real_type K  = k0+k1;
     real_type aK = alpha*DeltaK;
     A = alpha*(L*(aK-K)+2*DeltaTheta);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::evalA( real_type   alpha,
-                      real_type   L,
-                      real_type & A,
-                      real_type & A_1,
-                      real_type & A_2 ) const {
+  G2solve2arc::evalA(
+    real_type   alpha,
+    real_type   L,
+    real_type & A,
+    real_type & A_1,
+    real_type & A_2
+  ) const {
     real_type K  = k0+k1;
     real_type aK = alpha*DeltaK;
     A   = alpha*(L*(aK-K)+2*DeltaTheta);
@@ -152,14 +164,16 @@ namespace G2lib {
     A_2 = alpha*(aK-K);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::evalG( real_type alpha,
-                      real_type L,
-                      real_type th,
-                      real_type k,
-                      real_type G[2] ) const {
+  G2solve2arc::evalG(
+    real_type alpha,
+    real_type L,
+    real_type th,
+    real_type k,
+    real_type G[2]
+  ) const {
     real_type A, X, Y;
     evalA( alpha, L, A );
     real_type ak = alpha*k;
@@ -168,16 +182,18 @@ namespace G2lib {
     G[1] = alpha*Y;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::evalG( real_type alpha,
-                      real_type L,
-                      real_type th,
-                      real_type k,
-                      real_type G[2],
-                      real_type G_1[2],
-                      real_type G_2[2] ) const {
+  G2solve2arc::evalG(
+    real_type alpha,
+    real_type L,
+    real_type th,
+    real_type k,
+    real_type G[2],
+    real_type G_1[2],
+    real_type G_2[2]
+  ) const {
 
     real_type A, A_1, A_2, X[3], Y[3];
     evalA( alpha, L, A, A_1, A_2 );
@@ -195,7 +211,7 @@ namespace G2lib {
 
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solve2arc::evalF( real_type const vars[2], real_type F[2] ) const {
@@ -208,12 +224,14 @@ namespace G2lib {
     F[0] -= G[0]; F[1] -= G[1];
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::evalFJ( real_type const vars[2],
-                       real_type       F[2],
-                       real_type       J[2][2] ) const {
+  G2solve2arc::evalFJ(
+    real_type const vars[2],
+    real_type       F[2],
+    real_type       J[2][2]
+  ) const {
 
     real_type alpha = vars[0];
     real_type L     = vars[1];
@@ -231,7 +249,7 @@ namespace G2lib {
     J[0][1] -= G_2[0]; J[1][1] -= G_2[1];
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
   G2solve2arc::solve() {
@@ -274,7 +292,7 @@ namespace G2lib {
     return converged ? iter : -1;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solve2arc::buildSolution( real_type alpha, real_type L ) {
@@ -311,14 +329,16 @@ namespace G2lib {
   \*/
 
   int
-  G2solveCLC::build( real_type _x0,
-                     real_type _y0,
-                     real_type _theta0,
-                     real_type _kappa0,
-                     real_type _x1,
-                     real_type _y1,
-                     real_type _theta1,
-                     real_type _kappa1 ) {
+  G2solveCLC::build(
+    real_type _x0,
+    real_type _y0,
+    real_type _theta0,
+    real_type _kappa0,
+    real_type _x1,
+    real_type _y1,
+    real_type _theta1,
+    real_type _kappa1
+  ) {
 
     x0     = _x0;
     y0     = _y0;
@@ -351,32 +371,34 @@ namespace G2lib {
     return solve();
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solveCLC::setTolerance( real_type tol ) {
-    G2LIB_ASSERT( tol > 0 && tol <= 0.1,
-                  "G2solveCLC::setTolerance, tolerance = " << tol <<
-                  " must be in (0,0.1]" );
+    G2LIB_ASSERT(
+      tol > 0 && tol <= 0.1,
+      "G2solveCLC::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
+    )
     tolerance = tol;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solveCLC::setMaxIter( int miter ) {
-    G2LIB_ASSERT( miter > 0 && miter <= 1000,
-                  "G2solveCLC::setMaxIter, maxIter = " << miter <<
-                  " must be in [1,1000]" );
+    G2LIB_ASSERT(
+      miter > 0 && miter <= 1000,
+      "G2solveCLC::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
+    )
     maxIter = miter;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
   G2solveCLC::solve() {
     real_type X0[3], Y0[3], X1[3], Y1[3];
-      real_type thM = 0, sM = 0.0;
+    real_type thM = 0, sM = 0.0;
     int iter = 0;
     bool converged = false;
     do {
@@ -392,7 +414,7 @@ namespace G2lib {
                      - k0*k1*cos(thM)
                      + k1*Y0[0]-k0*Y1[0];
 
-      if ( std::abs(dF) < 1e-10 ) break;
+      if ( abs(dF) < 1e-10 ) break;
       real_type d = F/dF;
       #if 0
       thM -= d;
@@ -410,12 +432,12 @@ namespace G2lib {
         GeneralizedFresnelCS( 1, 2*D1, -2*D1, D1, X1, Y1 );
         FF = D0*k1*Y0[0]-D1*k0*Y1[0] - k0*k1*sin(thM1);
         dd = FF/dF;
-        step_found = std::abs( dd ) <= (1-tau/2)*std::abs(d) + 1e-6;
+        step_found = abs( dd ) <= (1-tau/2)*abs(d) + 1e-6;
       } while ( tau > 1e-6 && !step_found );
       if ( !step_found ) break;
       thM = thM1;
       #endif
-      converged = std::abs(d) < tolerance;
+      converged = abs(d) < tolerance;
     } while ( ++iter < maxIter && !converged );
     if ( converged ) {
       real_type D0 = thM - th0;
@@ -429,7 +451,7 @@ namespace G2lib {
     return converged ? iter : -1;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   G2solveCLC::buildSolution( real_type sM, real_type thM ) {
@@ -458,35 +480,39 @@ namespace G2lib {
 
   void
   G2solve3arc::setTolerance( real_type tol ) {
-    G2LIB_ASSERT( tol > 0 && tol <= 0.1,
-                  "G2solve3arc::setTolerance, tolerance = " << tol <<
-                  " must be in (0,0.1]" );
+    G2LIB_ASSERT(
+      tol > 0 && tol <= 0.1,
+      "G2solve3arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
+    )
     tolerance = tol;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solve3arc::setMaxIter( int miter ) {
-    G2LIB_ASSERT( miter > 0 && miter <= 1000,
-                  "G2solve3arc::setMaxIter, maxIter = " << miter <<
-                  " must be in [1,1000]" );
+    G2LIB_ASSERT(
+      miter > 0 && miter <= 1000,
+      "G2solve3arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
+    )
     maxIter = miter;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
-  G2solve3arc::build( real_type _x0,
-                      real_type _y0,
-                      real_type _theta0,
-                      real_type _kappa0,
-                      real_type _x1,
-                      real_type _y1,
-                      real_type _theta1,
-                      real_type _kappa1,
-                      real_type Dmax,
-                      real_type dmax ) {
+  G2solve3arc::build(
+    real_type _x0,
+    real_type _y0,
+    real_type _theta0,
+    real_type _kappa0,
+    real_type _x1,
+    real_type _y1,
+    real_type _theta1,
+    real_type _kappa1,
+    real_type Dmax,
+    real_type dmax
+  ) {
     try {
       // save data
       x0     = _x0;
@@ -526,22 +552,22 @@ namespace G2lib {
 
       real_type kA = SG.kappaBegin();
       real_type kB = SG.kappaEnd();
-      real_type dk = std::abs(SG.dkappa());
+      real_type dk = abs(SG.dkappa());
       real_type L3 = SG.length()/3;
 
-      real_type tmp = 0.5*std::abs(K0-kA)/dmax;
+      real_type tmp = 0.5*abs(K0-kA)/dmax;
       s0 = L3;
       if ( tmp*s0 > 1 ) s0 = 1/tmp;
-      tmp = (std::abs(K0+kA)+s0*dk)/(2*Dmax);
+      tmp = (abs(K0+kA)+s0*dk)/(2*Dmax);
       if ( tmp*s0 > 1 ) s0 = 1/tmp;
 
-      tmp = 0.5*std::abs(K1-kB)/dmax;
+      tmp = 0.5*abs(K1-kB)/dmax;
       s1 = L3;
       if ( tmp*s1 > 1 ) s1 = 1/tmp;
-      tmp = (std::abs(K1+kB)+s1*dk)/(2*Dmax);
+      tmp = (abs(K1+kB)+s1*dk)/(2*Dmax);
       if ( tmp*s1 > 1 ) s1 = 1/tmp;
 
-      real_type dth   = std::abs(th0-th1) / m_2pi;
+      real_type dth   = abs(th0-th1) / m_2pi;
       real_type scale = power3(cos( power4(dth)*m_pi_2 ));
       s0 *= scale;
       s1 *= scale;
@@ -581,21 +607,21 @@ namespace G2lib {
     }
   }
 
-  // ---------------------------------------------------------------------------
-
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
-  G2solve3arc::build_fixed_length( real_type _s0,
-                                   real_type _x0,
-                                   real_type _y0,
-                                   real_type _theta0,
-                                   real_type _kappa0,
-                                   real_type _s1,
-                                   real_type _x1,
-                                   real_type _y1,
-                                   real_type _theta1,
-                                   real_type _kappa1 ) {
+  G2solve3arc::build_fixed_length(
+    real_type _s0,
+    real_type _x0,
+    real_type _y0,
+    real_type _theta0,
+    real_type _kappa0,
+    real_type _s1,
+    real_type _x1,
+    real_type _y1,
+    real_type _theta1,
+    real_type _kappa1
+  ) {
     try {
       // save data
       x0     = _x0;
@@ -668,7 +694,7 @@ namespace G2lib {
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solve3arc::evalF( real_type const vars[2], real_type F[2] ) const {
@@ -693,12 +719,14 @@ namespace G2lib {
     F[1] = s0*Y0 + s1*Y1 + sM*(YMm + YMp) - 0;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::evalFJ( real_type const vars[2],
-                       real_type       F[2],
-                       real_type       J[2][2]) const {
+  G2solve3arc::evalFJ(
+    real_type const vars[2],
+    real_type       F[2],
+    real_type       J[2][2]
+  ) const {
 
     real_type sM  = vars[0];
     real_type thM = vars[1];
@@ -757,7 +785,7 @@ namespace G2lib {
     J[1][1] = f4 * dK0_thM + f5 * dK1_thM + f6 * dKM_thM + f7 * KM_thM + sM * t0;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int
   G2solve3arc::solve( real_type sM_guess, real_type thM_guess ) {
@@ -807,20 +835,20 @@ namespace G2lib {
 
       // re-check solution
       if ( converged )
-        converged = FP_INFINITE != std::fpclassify(X[0]) &&
-                    FP_NAN      != std::fpclassify(X[0]) &&
-                    FP_INFINITE != std::fpclassify(X[1]) &&
-                    FP_NAN      != std::fpclassify(X[1]);
+        converged = FP_INFINITE != fpclassify(X[0]) &&
+                    FP_NAN      != fpclassify(X[0]) &&
+                    FP_INFINITE != fpclassify(X[1]) &&
+                    FP_NAN      != fpclassify(X[1]);
     }
     catch (...) {
-      cout << "PASSA\n";
+      std::cerr << "G2solve3arc::solve, something go wrong\n";
       // nothing to do
     }
     if ( converged ) buildSolution(X[0], X[1]); // costruisco comunque soluzione
     return converged ? iter : -1;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   G2solve3arc::buildSolution( real_type sM, real_type thM ) {
@@ -868,13 +896,15 @@ namespace G2lib {
     real_type S  = sin(phi);
     real_type dx = (xM + 1) / Lscale;
     real_type dy = yM / Lscale;
-    SM.build( x0 + C * dx - S * dy,
-              y0 + C * dy + S * dx,
-              thM + phi, KM, dKM, 2*LM );
+    SM.build(
+      x0 + C * dx - S * dy,
+      y0 + C * dy + S * dx,
+      thM + phi, KM, dKM, 2*LM
+    );
     SM.changeCurvilinearOrigin( -LM, 2*LM );
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::thetaMinMax( real_type & thMin, real_type & thMax ) const {
@@ -889,7 +919,7 @@ namespace G2lib {
     return thMax-thMin;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::curvatureMinMax( real_type & kMin, real_type & kMax ) const {
@@ -904,7 +934,7 @@ namespace G2lib {
     return kMax-kMin;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::theta( real_type s ) const {
@@ -915,7 +945,7 @@ namespace G2lib {
     return S1.theta(s);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::theta_D( real_type s ) const {
@@ -926,7 +956,7 @@ namespace G2lib {
     return S1.theta_D(s);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::theta_DD( real_type s ) const {
@@ -937,7 +967,7 @@ namespace G2lib {
     return S1.theta_DD(s);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::theta_DDD( real_type s ) const {
@@ -948,7 +978,7 @@ namespace G2lib {
     return S1.theta_DDD(s);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::X( real_type s ) const {
@@ -959,7 +989,7 @@ namespace G2lib {
     return S1.X(s);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::Y( real_type s ) const {
@@ -970,31 +1000,37 @@ namespace G2lib {
     return S1.Y(s);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval( real_type   s,
-                     real_type & theta,
-                     real_type & kappa,
-                     real_type & x,
-                     real_type & y ) const {
+  G2solve3arc::eval(
+    real_type   s,
+    real_type & theta,
+    real_type & kappa,
+    real_type & x,
+    real_type & y
+  ) const {
     if ( s < S0.length() ) {
-      S0.eval(s, theta, kappa, x, y );
+      S0.evaluate( s, theta, kappa, x, y );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval(s, theta, kappa, x, y );
+        SM.evaluate( s, theta, kappa, x, y );
       } else {
         s -= SM.length();
-        S1.eval(s, theta, kappa, x, y );
+        S1.evaluate( s, theta, kappa, x, y );
       }
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval( real_type s, real_type & x, real_type & y ) const {
+  G2solve3arc::eval(
+    real_type   s,
+    real_type & x,
+    real_type & y
+  ) const {
     if ( s < S0.length() ) {
       S0.eval(s, x, y );
     } else {
@@ -1008,10 +1044,14 @@ namespace G2lib {
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_D( real_type s, real_type & x_D, real_type & y_D ) const {
+  G2solve3arc::eval_D(
+    real_type   s,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
     if ( s < S0.length() ) {
       S0.eval_D(s, x_D, y_D );
     } else {
@@ -1025,10 +1065,14 @@ namespace G2lib {
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const {
+  G2solve3arc::eval_DD(
+    real_type   s,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
     if ( s < S0.length() ) {
       S0.eval_DD(s, x_DD, y_DD );
     } else {
@@ -1042,10 +1086,14 @@ namespace G2lib {
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const {
+  G2solve3arc::eval_DDD(
+    real_type   s,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
     if ( s < S0.length() ) {
       S0.eval_DDD(s, x_DDD, y_DDD );
     } else {
@@ -1059,79 +1107,91 @@ namespace G2lib {
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   // offset curve
   void
-  G2solve3arc::eval( real_type s, real_type offs, real_type & x, real_type & y ) const {
+  G2solve3arc::eval_ISO(
+    real_type   s,
+    real_type   offs,
+    real_type & x,
+    real_type & y
+  ) const {
     if ( s < S0.length() ) {
-      S0.eval(s, offs, x, y );
+      S0.eval_ISO( s, offs, x, y );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval(s, offs, x, y );
+        SM.eval_ISO( s, offs, x, y );
       } else {
         s -= SM.length();
-        S1.eval(s, offs, x, y );
+        S1.eval_ISO( s, offs, x, y );
       }
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_D( real_type   s,
-                       real_type   offs,
-                       real_type & x_D,
-                       real_type & y_D ) const {
+  G2solve3arc::eval_ISO_D(
+    real_type   s,
+    real_type   offs,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
     if ( s < S0.length() ) {
-      S0.eval_D(s, offs, x_D, y_D );
+      S0.eval_ISO_D( s, offs, x_D, y_D );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval_D(s, offs, x_D, y_D );
+        SM.eval_ISO_D( s, offs, x_D, y_D );
       } else {
         s -= SM.length();
-        S1.eval_D(s, offs, x_D, y_D );
+        S1.eval_ISO_D( s, offs, x_D, y_D );
       }
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_DD( real_type   s,
-                        real_type   offs,
-                        real_type & x_DD,
-                        real_type & y_DD ) const {
+  G2solve3arc::eval_ISO_DD(
+    real_type   s,
+    real_type   offs,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
     if ( s < S0.length() ) {
-      S0.eval_DD(s, offs, x_DD, y_DD );
+      S0.eval_ISO_DD( s, offs, x_DD, y_DD );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval_DD(s, offs, x_DD, y_DD );
+        SM.eval_ISO_DD( s, offs, x_DD, y_DD );
       } else {
         s -= SM.length();
-        S1.eval_DD(s, offs, x_DD, y_DD );
+        S1.eval_ISO_DD( s, offs, x_DD, y_DD );
       }
     }
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::eval_DDD( real_type   s,
-                         real_type   offs,
-                         real_type & x_DDD,
-                         real_type & y_DDD ) const {
+  G2solve3arc::eval_ISO_DDD(
+    real_type   s,
+    real_type   offs,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
     if ( s < S0.length() ) {
-      S0.eval_DDD(s, offs, x_DDD, y_DDD );
+      S0.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
     } else {
       s -= S0.length();
       if ( s < SM.length() ) {
-        SM.eval_DDD(s, offs, x_DDD, y_DDD );
+        SM.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
       } else {
         s -= SM.length();
-        S1.eval_DDD(s, offs, x_DDD, y_DDD );
+        S1.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
       }
     }
   }
@@ -1146,13 +1206,30 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidSplineG2::build( real_type const xvec[],
-                           real_type const yvec[],
-                           int_type        n ) {
+  ClothoidSplineG2::guess(
+    real_type theta_guess[],
+    real_type theta_min[],
+    real_type theta_max[]
+  ) const {
+    size_t nn = size_t( npts );
+    vector<real_type> omega(nn), len(nn);
+    G2lib::xy_to_guess_angle(
+      this->npts, &this->x.front(), &this->y.front(),
+      theta_guess, theta_min, theta_max,
+      &omega.front(), &len.front()
+    );
+  }
+
+  void
+  ClothoidSplineG2::build(
+    real_type const xvec[],
+    real_type const yvec[],
+    int_type        n
+  ) {
     x.clear(); x.reserve( unsigned(n) );
     y.clear(); y.reserve( unsigned(n) );
-    std::copy_n( xvec, n, std::back_inserter(x) );
-    std::copy_n( yvec, n, std::back_inserter(y) );
+    copy( xvec, xvec+n, back_inserter(x) );
+    copy( yvec, yvec+n, back_inserter(y) );
     npts = n;
     unsigned n1 = unsigned(n-1);
     k    . resize(n1);
@@ -1167,14 +1244,14 @@ namespace G2lib {
     dk_2 . resize(n1);
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
   ClothoidSplineG2::numTheta() const {
     return int_type(x.size());
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
   ClothoidSplineG2::numConstraints() const {
@@ -1187,70 +1264,13 @@ namespace G2lib {
     return N-2;
   }
 
-  // ---------------------------------------------------------------------------
-
-  void
-  ClothoidSplineG2::guess( real_type theta_guess[],
-                           real_type theta_min[],
-                           real_type theta_max[] ) const {
-    //
-    // Compute guess angles
-    //
-    int_type ne  = npts-1;
-    int_type ne1 = npts-2;
-
-    vector<real_type> phi, rlen;
-    phi  . resize( unsigned(ne) );
-    rlen . resize( unsigned(ne) );
-
-    real_type dx = x[1]-x[0];
-    real_type dy = y[1]-y[0];
-    phi[0]  = atan2(dy,dx);
-    rlen[0] = 1/hypot(dy,dx);
-    for ( int_type j = 1; j < ne; ++j ) {
-      dx      = x[j+1]-x[j];
-      dy      = y[j+1]-y[j];
-      phi[j]  = atan2(dy,dx);
-      rlen[j] = 1/hypot(dy,dx);
-      real_type df = phi[j]-phi[j-1];
-      df -= round(df/m_2pi)*m_2pi;
-      phi[j] = phi[j-1]+df;
-    }
-
-    real_type const dangle = 0.99 * m_pi;
-
-    theta_guess[0] = phi[0];
-    theta_min[0]   = phi[0] - dangle;
-    theta_max[0]   = phi[0] + dangle;
-
-    theta_guess[ne] = phi[ne1];
-    theta_min[ne]   = phi[ne1] - dangle;
-    theta_max[ne]   = phi[ne1] + dangle;
-
-    real_type phi_L  = phi[0];
-    real_type rlen_L = rlen[0];
-    for ( int_type j = 1; j < ne; ++j ) {
-      real_type phi_R  = phi[j];
-      real_type rlen_R = rlen[j];
-      theta_guess[j] = (phi_L*rlen_L+phi_R*rlen_R)/(rlen_L+rlen_R);
-      if ( phi_R > phi_L ) {
-        theta_min[j] = phi_L;
-        theta_max[j] = phi_R;
-      } else {
-        theta_min[j] = phi_R;
-        theta_max[j] = phi_L;
-      }
-      theta_min[j] -= dangle;
-      theta_max[j] += dangle;
-      phi_L  = phi_R;
-      rlen_L = rlen_R;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidSplineG2::objective( real_type const theta[], real_type & f ) const {
+  ClothoidSplineG2::objective(
+    real_type const theta[],
+    real_type     & f
+  ) const {
     ClothoidCurve cL, cR, c;
     int_type ne  = npts - 1;
     int_type ne1 = npts - 2;
@@ -1320,14 +1340,17 @@ namespace G2lib {
     return true;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidSplineG2::gradient( real_type const theta[], real_type g[] ) const {
+  ClothoidSplineG2::gradient(
+    real_type const theta[],
+    real_type       g[]
+  ) const {
     ClothoidCurve cL, cR, c;
     real_type     LL_D[2], kL_D[2], dkL_D[2];
     real_type     LR_D[2], kR_D[2], dkR_D[2];
-    std::fill( g, g+npts, 0 );
+    fill( g, g+npts, 0 );
     int_type ne  = npts - 1;
     int_type ne1 = npts - 2;
     switch (tt) {
@@ -1337,12 +1360,16 @@ namespace G2lib {
     case P3:
       break;
     case P4:
-      cL.build_G1_D( x[0], y[0], theta[0],
-                     x[1], y[1], theta[1],
-                     LL_D, kL_D, dkL_D );
-      cR.build_G1_D( x[ne1], y[ne1], theta[ne1],
-                     x[ne],  y[ne],  theta[ne],
-                     LR_D, kR_D, dkR_D );
+      cL.build_G1_D(
+        x[0], y[0], theta[0],
+        x[1], y[1], theta[1],
+        LL_D, kL_D, dkL_D
+      );
+      cR.build_G1_D(
+        x[ne1], y[ne1], theta[ne1],
+        x[ne],  y[ne],  theta[ne],
+        LR_D, kR_D, dkR_D
+      );
       {
         real_type dkL = cL.dkappa();
         real_type dkR = cR.dkappa();
@@ -1353,12 +1380,16 @@ namespace G2lib {
       }
       break;
     case P5:
-      cL.build_G1_D( x[0], y[0], theta[0],
-                     x[1], y[1], theta[1],
-                     LL_D, kL_D, dkL_D );
-      cR.build_G1_D( x[ne1], y[ne1], theta[ne1],
-                     x[ne],  y[ne],  theta[ne],
-                     LR_D, kR_D, dkR_D );
+      cL.build_G1_D(
+        x[0], y[0], theta[0],
+        x[1], y[1], theta[1],
+        LL_D, kL_D, dkL_D
+      );
+      cR.build_G1_D(
+        x[ne1], y[ne1], theta[ne1],
+        x[ne],  y[ne],  theta[ne],
+        LR_D, kR_D, dkR_D
+      );
       g[0]   = LL_D[0];
       g[1]   = LL_D[1];
       g[ne1] = LR_D[0];
@@ -1367,9 +1398,11 @@ namespace G2lib {
     case P6:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         g[j]   += L_D[0];
         g[j+1] += L_D[1];
       }
@@ -1377,9 +1410,11 @@ namespace G2lib {
     case P7:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         real_type Len  = c.length();
         real_type L2   = Len*Len;
         real_type L3   = Len*L2;
@@ -1406,9 +1441,11 @@ namespace G2lib {
     case P8:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         real_type Len  = c.length();
         real_type dkur = c.dkappa();
         g[j]   += (2*Len*dk_D[0] + L_D[0]*dkur)*dkur;
@@ -1418,9 +1455,11 @@ namespace G2lib {
     case P9:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
-        c.build_G1_D( x[j],   y[j],   theta[j],
-                      x[j+1], y[j+1], theta[j+1],
-                      L_D, k_D, dk_D );
+        c.build_G1_D(
+          x[j],   y[j],   theta[j],
+          x[j+1], y[j+1], theta[j+1],
+          L_D, k_D, dk_D
+        );
         real_type Len  = c.length();
         real_type kur  = c.kappaBegin();
         real_type k2   = kur*kur;
@@ -1439,10 +1478,13 @@ namespace G2lib {
     return true;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidSplineG2::constraints( real_type const theta[], real_type c[] ) const {
+  ClothoidSplineG2::constraints(
+    real_type const theta[],
+    real_type       c[]
+  ) const {
     ClothoidCurve cc;
     int_type ne  = npts - 1;
     int_type ne1 = npts - 2;
@@ -1472,7 +1514,7 @@ namespace G2lib {
     return true;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
   ClothoidSplineG2::jacobian_nnz() const {
@@ -1485,10 +1527,13 @@ namespace G2lib {
     return nnz;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidSplineG2::jacobian_pattern( int_type ii[], int_type jj[] ) const {
+  ClothoidSplineG2::jacobian_pattern(
+    int_type ii[],
+    int_type jj[]
+  ) const {
     ClothoidCurve cc;
     int_type ne  = npts - 1;
     int_type ne1 = npts - 2;
@@ -1520,10 +1565,13 @@ namespace G2lib {
     return true;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidSplineG2::jacobian_pattern_matlab( real_type ii[], real_type jj[] ) const {
+  ClothoidSplineG2::jacobian_pattern_matlab(
+    real_type ii[],
+    real_type jj[]
+  ) const {
     ClothoidCurve cc;
     int_type ne  = npts - 1;
     int_type ne1 = npts - 2;
@@ -1555,17 +1603,24 @@ namespace G2lib {
     return true;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidSplineG2::jacobian( real_type const theta[], real_type vals[] ) const {
+  ClothoidSplineG2::jacobian(
+    real_type const theta[],
+    real_type       vals[]
+  ) const {
     ClothoidCurve cc;
     int_type ne  = npts - 1;
     int_type ne1 = npts - 2;
 
     for ( int_type j = 0; j < ne; ++j ) {
       real_type L_D[2], k_D[2], dk_D[2];
-      cc.build_G1_D( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1], L_D, k_D, dk_D );
+      cc.build_G1_D(
+        x[j],   y[j],   theta[j],
+        x[j+1], y[j+1], theta[j+1],
+        L_D, k_D, dk_D
+      );
       k[j]    = cc.kappaBegin();
       dk[j]   = cc.dkappa();
       L[j]    = cc.length();
@@ -1601,10 +1656,10 @@ namespace G2lib {
     return true;
   }
 
-  // ---------------------------------------------------------------------------
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  std::ostream &
-  operator << ( std::ostream & stream, ClothoidSplineG2 const & c ) {
+  ostream_type &
+  operator << ( ostream_type & stream, ClothoidSplineG2 const & c ) {
     stream
       <<   "npts   = " << c.npts
       << "\ntarget = " << int(c.tt)

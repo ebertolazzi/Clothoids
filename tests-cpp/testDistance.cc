@@ -1,9 +1,11 @@
-#define _USE_MATH_DEFINES
+//#define _USE_MATH_DEFINES
 #include "Clothoid.hh"
 #include <cmath>
 #include <iostream>
 
 using G2lib::real_type;
+using G2lib::int_type;
+using namespace std;
 
 int
 main() {
@@ -23,15 +25,18 @@ main() {
   real_type y = 15;
   real_type X, Y, S;
 
-  real_type d = C.closestPoint( x, y, X, Y, S );
+  real_type T, d;
+  int_type info = C.closestPoint_ISO( x, y, X, Y, S, T, d );
 
-  std::cout << "\nd = " << d
-            << "\nX = " << X
-            << "\nY = " << Y
-            << "\nS = " << S
-            << "\n";
+  cout << "\nd = " << d
+       << "\nX = " << X
+       << "\nY = " << Y
+       << "\nS = " << S
+       << "\nT = " << T
+       << "\ninfo = " << info
+       << "\n";
 
-  std::cout << "\n\nALL DONE FOLKS!!!\n";
+  cout << "\n\nALL DONE FOLKS!!!\n";
 
   return 0;
 }

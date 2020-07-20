@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -33,23 +33,31 @@ namespace G2lib {
    |  | |   (_)_ __   ___
    |  | |   | | '_ \ / _ \
    |  | |___| | | | |  __/
-   |  |_____|_|_| |_|\___| 
+   |  |_____|_|_| |_|\___|
   \*/
 
-  class LineSegment {
+  //! Class to manage a straight segment
+  class LineSegment : public BaseCurve {
 
-    real_type x0,     //!< initial x coordinate of the line
-              y0,     //!< initial y coordinate of the line
-              theta0; //!< angle of the line
+    friend class CircleArc;
+    friend class PolyLine;
 
-    real_type c0,     //!< `cos(theta0)`
-              s0,     //!< `sin(theta0)`
-              L;      //!< length of the segment
+    real_type x0;     //!< initial x coordinate of the line
+    real_type y0;     //!< initial y coordinate of the line
+    real_type theta0; //!< angle of the line
+
+    real_type c0;     //!< `cos(theta0)`
+    real_type s0;     //!< `sin(theta0)`
+    real_type L;      //!< length of the segment
 
   public:
 
+    #include "BaseCurve_using.hxx"
+
+    //explicit
     LineSegment()
-    : x0(0)
+    : BaseCurve(G2LIB_LINE)
+    , x0(0)
     , y0(0)
     , theta0(0)
     , c0(1)
@@ -57,12 +65,24 @@ namespace G2lib {
     , L(0)
     {}
 
+    //explicit
+    LineSegment( LineSegment const & s )
+    : BaseCurve(G2LIB_LINE)
+    { copy(s); }
+
+    explicit
+    LineSegment( BaseCurve const & C );
+
     //! construct a circle curve with the standard parameters
-    LineSegment( real_type _x0,
-                 real_type _y0,
-                 real_type _theta0,
-                 real_type _L )
-    : x0(_x0)
+    explicit
+    LineSegment(
+      real_type _x0,
+      real_type _y0,
+      real_type _theta0,
+      real_type _L
+    )
+    : BaseCurve(G2LIB_LINE)
+    , x0(_x0)
     , y0(_y0)
     , theta0(_theta0)
     , c0(cos(_theta0))
@@ -80,25 +100,478 @@ namespace G2lib {
       L      = c.L;
     }
 
-    LineSegment( LineSegment const & s ) { copy(s); }
-
     LineSegment const & operator = ( LineSegment const & s )
     { copy(s); return *this; }
 
-    real_type xBegin()   const { return x0; }
-    real_type yBegin()   const { return y0; }
-    real_type xEnd()     const { return x0+L*c0; }
-    real_type yEnd()     const { return y0+L*s0; }
-    real_type theta()    const { return theta0; }
-    real_type sinTheta() const { return s0; }
-    real_type cosTheta() const { return c0; }
-    real_type length()   const { return L; }
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    length() const G2LIB_OVERRIDE
+    { return L; }
+
+    virtual
+    real_type
+    length_ISO( real_type ) const G2LIB_OVERRIDE
+    { return L; }
+
+    /*\
+     |   _     _
+     |  | |__ | |__   _____  __
+     |  | '_ \| '_ \ / _ \ \/ /
+     |  | |_) | |_) | (_) >  <
+     |  |_.__/|_.__/ \___/_/\_\
+    \*/
+
+    virtual
+    void
+    bbox(
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    bbox_ISO(
+      real_type   offs,
+      real_type & xmin,
+      real_type & ymin,
+      real_type & xmax,
+      real_type & ymax
+    ) const G2LIB_OVERRIDE;
+
+    /*\
+     |   ____             _          _______           _
+     |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |
+     |  |  _ \ / _ \/ _` | | '_ \  / /|  _| | '_ \ / _` |
+     |  | |_) |  __/ (_| | | | | |/ / | |___| | | | (_| |
+     |  |____/ \___|\__, |_|_| |_/_/  |_____|_| |_|\__,_|
+     |              |___/
+    \*/
+
+    virtual real_type tx_Begin() const G2LIB_OVERRIDE { return this->c0; }
+    virtual real_type ty_Begin() const G2LIB_OVERRIDE { return this->s0; }
+    virtual real_type tx_End()   const G2LIB_OVERRIDE { return this->c0; }
+    virtual real_type ty_End()   const G2LIB_OVERRIDE { return this->s0; }
+
+    virtual real_type nx_Begin_ISO() const G2LIB_OVERRIDE { return -s0; }
+    virtual real_type ny_Begin_ISO() const G2LIB_OVERRIDE { return c0; }
+    virtual real_type nx_End_ISO()   const G2LIB_OVERRIDE { return -s0; }
+    virtual real_type ny_End_ISO()   const G2LIB_OVERRIDE { return c0; }
+
+    virtual real_type xBegin() const G2LIB_OVERRIDE { return x0; }
+    virtual real_type yBegin() const G2LIB_OVERRIDE { return y0; }
+    virtual real_type xEnd()   const G2LIB_OVERRIDE { return x0+L*c0; }
+    virtual real_type yEnd()   const G2LIB_OVERRIDE { return y0+L*s0; }
+
+    virtual
+    real_type
+    xBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
+    { return x0+offs*nx_Begin_ISO(); }
+
+    virtual
+    real_type
+    yBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
+    { return y0+offs*ny_Begin_ISO(); }
+
+    virtual
+    real_type
+    xEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
+    { return xEnd()+offs*nx_Begin_ISO(); }
+
+    virtual
+    real_type
+    yEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
+    { return yEnd()+offs*ny_Begin_ISO(); }
+
+    /*\
+     |  _   _          _
+     | | |_| |__   ___| |_ __ _
+     | | __| '_ \ / _ \ __/ _` |
+     | | |_| | | |  __/ || (_| |
+     |  \__|_| |_|\___|\__\__,_|
+    \*/
+
+    virtual
+    real_type
+    theta( real_type ) const G2LIB_OVERRIDE
+    { return theta0; }
+
+    virtual
+    real_type
+    theta_D( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    theta_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    theta_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+
+    /*\
+     |  _____                   _   _   _
+     | |_   _|   __ _ _ __   __| | | \ | |
+     |   | |    / _` | '_ \ / _` | |  \| |
+     |   | |   | (_| | | | | (_| | | |\  |
+     |   |_|    \__,_|_| |_|\__,_| |_| \_|
+    \*/
+
+    virtual
+    real_type
+    tx( real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    ty( real_type ) const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    tx_D( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ty_D( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    tx_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ty_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    tx_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    ty_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    tg( real_type, real_type & tx, real_type & ty ) const G2LIB_OVERRIDE
+    { tx = c0; ty = s0; }
+
+    virtual
+    void
+    tg_D( real_type, real_type & tx_D, real_type & ty_D ) const G2LIB_OVERRIDE
+    { tx_D = ty_D = 0; }
+
+    virtual
+    void
+    tg_DD( real_type, real_type & tx_DD, real_type & ty_DD ) const G2LIB_OVERRIDE
+    { tx_DD = ty_DD = 0; }
+
+    virtual
+    void
+    tg_DDD( real_type, real_type & tx_DDD, real_type & ty_DDD ) const G2LIB_OVERRIDE
+    { tx_DDD = ty_DDD = 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    real_type
+    X( real_type s ) const G2LIB_OVERRIDE
+    { return x0+s*c0; }
+
+    virtual
+    real_type
+    Y( real_type s ) const G2LIB_OVERRIDE
+    { return y0+s*s0; }
+
+    virtual
+    real_type
+    X_D( real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    Y_D( real_type ) const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    X_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    X_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_DDD( real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    eval(
+      real_type   s,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE {
+      x = x0+s*c0;
+      y = y0+s*s0;
+    }
+
+    virtual
+    void
+    eval_D(
+      real_type,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE {
+      x_D = c0;
+      y_D = s0;
+    }
+
+    virtual
+    void
+    eval_DD(
+      real_type,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE {
+      x_DD = 0;
+      y_DD = 0;
+    }
+
+    virtual
+    void
+    eval_DDD(
+      real_type,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE {
+      x_DDD = 0;
+      y_DDD = 0;
+    }
+
+    /*\
+     |         __  __          _
+     |   ___  / _|/ _|___  ___| |_
+     |  / _ \| |_| |_/ __|/ _ \ __|
+     | | (_) |  _|  _\__ \  __/ |_
+     |  \___/|_| |_| |___/\___|\__|
+    \*/
+
+    virtual
+    real_type
+    X_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE
+    { return x0 + s*c0 + offs*nx_Begin_ISO(); }
+
+    virtual
+    real_type
+    Y_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE
+    { return y0 + s*s0 + offs*ny_Begin_ISO(); }
+
+    virtual
+    real_type
+    X_ISO_D( real_type, real_type ) const G2LIB_OVERRIDE
+    { return c0; }
+
+    virtual
+    real_type
+    Y_ISO_D( real_type, real_type ) const G2LIB_OVERRIDE
+    { return s0; }
+
+    virtual
+    real_type
+    X_ISO_DD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_ISO_DD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    X_ISO_DDD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    virtual
+    real_type
+    Y_ISO_DDD( real_type, real_type ) const G2LIB_OVERRIDE
+    { return 0; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+    virtual
+    void
+    eval_ISO(
+      real_type   s,
+      real_type   offs,
+      real_type & x,
+      real_type & y
+    ) const G2LIB_OVERRIDE {
+      x = x0 + s*c0 + offs*nx_Begin_ISO();
+      y = y0 + s*s0 + offs*ny_Begin_ISO();
+    }
+
+    virtual
+    void
+    eval_ISO_D(
+      real_type,
+      real_type,
+      real_type & x_D,
+      real_type & y_D
+    ) const G2LIB_OVERRIDE {
+      x_D = c0;
+      y_D = s0;
+    }
+
+    virtual
+    void
+    eval_ISO_DD(
+      real_type,
+      real_type,
+      real_type & x_DD,
+      real_type & y_DD
+    ) const G2LIB_OVERRIDE {
+      x_DD = y_DD = 0;
+    }
+
+    virtual
+    void
+    eval_ISO_DDD(
+      real_type,
+      real_type,
+      real_type & x_DDD,
+      real_type & y_DDD
+    ) const G2LIB_OVERRIDE {
+      x_DDD = y_DDD = 0;
+    }
+
+    /*\
+     |  _                        __
+     | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___
+     | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \
+     | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |
+     |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
+    \*/
+
+    virtual
+    void
+    translate( real_type tx, real_type ty ) G2LIB_OVERRIDE
+    { x0 += tx; y0 += ty; }
+
+    virtual
+    void
+    rotate( real_type angle, real_type cx, real_type cy ) G2LIB_OVERRIDE;
+
+    virtual
+    void
+    reverse() G2LIB_OVERRIDE;
+
+    virtual
+    void
+    changeOrigin( real_type newx0, real_type newy0 ) G2LIB_OVERRIDE
+    { x0 = newx0; y0 = newy0; }
+
+    virtual
+    void
+    scale( real_type sc ) G2LIB_OVERRIDE
+    { L *= sc; }
+
+    virtual
+    void
+    trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE {
+      x0 += c0 * s_begin;
+      y0 += s0 * s_begin;
+      L   = s_end - s_begin;
+    }
+
+    /*\
+     |      _ _     _
+     |   __| (_)___| |_ __ _ _ __   ___ ___
+     |  / _` | / __| __/ _` | '_ \ / __/ _ \
+     | | (_| | \__ \ || (_| | | | | (_|  __/
+     |  \__,_|_|___/\__\__,_|_| |_|\___\___|
+    \*/
+
+    /*!
+     *  \brief compute the point at minimum distance from a point `[x,y]` and the line segment
+     *
+     *  \param qx  x-coordinate
+     *  \param qy  y-coordinate
+     *  \param x   x-coordinate of the closest point
+     *  \param y   y-coordinate of the closest point
+     *  \param s   param of the closest point
+     *  \param t   signed distance if projection is orthogonal to segment
+     *  \param dst signed distance from the segment
+     *  \return 1 = point is projected orthogonal
+     *          0 = more than one projection (first returned)
+     *         -1 = minimum point is not othogonal projection to curve
+     */
+
+    virtual
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
+
+    virtual
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const G2LIB_OVERRIDE;
+
+    virtual
+    void
+    info( ostream_type & stream ) const G2LIB_OVERRIDE
+    { stream << "LineSegment\n" << *this << '\n'; }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
-    build( real_type _x0,
-           real_type _y0,
-           real_type _theta0,
-           real_type _L ) {
+    build(
+      real_type _x0,
+      real_type _y0,
+      real_type _theta0,
+      real_type _L
+    ) {
       x0     = _x0;
       y0     = _y0;
       theta0 = _theta0;
@@ -109,176 +582,17 @@ namespace G2lib {
 
     //! construct a clothoid with the standard parameters
     void
-    build_2P( real_type _x0,
-              real_type _y0,
-              real_type _x1,
-              real_type _y1 );
+    build_2P(
+      real_type _x0,
+      real_type _y0,
+      real_type _x1,
+      real_type _y1
+    );
 
     //! construct a clothoid with the standard parameters
     void
-    build_2P( real_type const p0[2],
-              real_type const p1[2] )
+    build_2P( real_type const p0[2], real_type const p1[2] )
     { build_2P( p0[0], p0[1], p1[0], p1[1] ); }
-
-    real_type X( real_type s ) const { return x0 + c0 * s; }
-    real_type Y( real_type s ) const { return y0 + s0 * s; }
-
-    void
-    eval( real_type s, real_type & x, real_type & y ) const {
-      x = x0 + c0 * s;
-      y = y0 + s0 * s;
-    }
-
-    void
-    eval_D( real_type, real_type & x_D, real_type & y_D ) const {
-      x_D = c0;
-      y_D = s0;
-    }
-
-    void
-    eval_DD( real_type, real_type & x_DD, real_type & y_DD ) const {
-      x_DD = y_DD = 0;
-    }
-
-    void
-    eval_DDD( real_type, real_type & x_DDD, real_type & y_DDD ) const {
-      x_DDD = y_DDD = 0;
-    }
-
-    // ---
-
-    void
-    eval( real_type s, real_type t, real_type & x, real_type & y ) const {
-      x = x0 + c0 * s - s0 * t;
-      y = y0 + s0 * s + c0 * t;
-    }
-
-    void
-    eval_D( real_type, real_type, real_type & x_D, real_type & y_D ) const {
-      x_D = c0;
-      y_D = s0;
-    }
-
-    void
-    eval_DD( real_type, real_type, real_type & x_DD, real_type & y_DD ) const {
-      x_DD = y_DD = 0;
-    }
-
-    void
-    eval_DDD( real_type, real_type, real_type & x_DDD, real_type & y_DDD ) const {
-      x_DDD = y_DDD = 0;
-    }
-
-    void
-    trim( real_type s_begin, real_type s_end ) {
-      x0 += c0 * s_begin;
-      y0 += s0 * s_begin;
-      L   = s_end - s_begin;
-    }
-
-    void
-    translate( real_type tx, real_type ty )
-    { x0 += tx; y0 += ty; }
-
-    void
-    rotate( real_type angle, real_type cx, real_type cy );
-
-    void
-    reverse();
-
-    void
-    changeOrigin( real_type newx0, real_type newy0 )
-    { x0 = newx0; y0 = newy0; }
-
-    /*!
-     * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
-     *
-     * \param x x-coordinate
-     * \param y y-coordinate
-     * \param X x-coordinate of the closest point
-     * \param Y y-coordinate of the closest point
-     * \param S param of the closest point
-     * \return the distance point-segment
-    \*/
-    real_type
-    closestPoint( real_type   x,
-                  real_type   y,
-                  real_type & X,
-                  real_type & Y,
-                  real_type & S ) const;
-
-    /*!
-     * \brief compute the distance from a point `[x,y]` and the line segment
-     *
-     * \param x x-coordinate
-     * \param y y-coordinate
-     * \param S param at minimum distance
-     * \return the distance point-segment
-    \*/
-    real_type
-    distance( real_type   x,
-              real_type   y,
-              real_type & S ) const {
-      real_type X, Y;
-      return closestPoint( x, y, X, Y, S );
-    }
-
-    /*!
-     * \brief compute the distance from a point `[x,y]` and the line segment
-     *
-     * \param x x-coordinate
-     * \param y y-coordinate
-     * \return the distance point-segment
-    \*/
-    real_type
-    distance( real_type x, real_type y ) const {
-      real_type ss;
-      return distance( x, y, ss );
-    }
-
-    /*! \brief Find parametric coordinate.
-     *
-     * We consider the line passing to the point \f$ P \f$
-     * with tangent \f$ T \f$ and a point \f$ Q \f$
-     * compute the coordinte \f$ s \f$ and \f$ t \f$ such that
-     * \f$ Q = P + T s + N t \f$
-     * where \f$ P + T s \f$ is the point on the line at coordinate
-     * \f$ s \f$ and \f$ N \f$ is the normal to the line obtained by
-     * rotating by `90` degree counterclockwise the tangent \f$ T \f$.
-     *
-     * \param x x-coordinate point
-     * \param y y-coordinate point
-     * \param s value \f$ s \f$
-     * \param t value \f$ t \f$
-     */
-    void
-    findST( real_type   x,
-            real_type   y,
-            real_type & s,
-            real_type & t ) const {
-      real_type dx = x - x0;
-      real_type dy = y - y0;
-      s = c0 * dx + s0 * dy;
-      t = c0 * dy - s0 * dx;
-    }
-
-    /*! \brief Compute rational B-spline coefficients for a line segment
-     *
-     * \param knots  knots of the B-spline
-     * \param Poly   polygon of the B-spline
-     * \return       2 the number of polygon points
-     */
-    int
-    toNURBS( real_type knots[5], real_type Poly[2][3] ) const;
-
-    /*! \brief Compute B-spline coefficients for a line segment
-     *
-     * \param knots  knots of the B-spline
-     * \param Poly   polygon of the B-spline
-     * \return       2 the number of polygon points
-     */
-    int
-    toBS( real_type knots[5], real_type Poly[2][2] ) const;
 
     void
     p1p2( real_type p1[2], real_type p2[2] ) const {
@@ -289,20 +603,82 @@ namespace G2lib {
     }
 
     bool
-    intersect( LineSegment const & S,
-               real_type         & s1,
-               real_type         & s2 ) const;
+    intersect(
+      LineSegment const & S,
+      real_type         & s1,
+      real_type         & s2
+    ) const;
 
     bool
-    intersect( LineSegment const & S ) const;
+    intersect_ISO(
+      real_type           offs,
+      LineSegment const & S,
+      real_type           S_offs,
+      real_type         & s1,
+      real_type         & s2
+    ) const;
 
     void
-    info( std::ostream & stream ) const
-    { stream << "LineSegment\n" << *this << '\n'; }
+    intersect(
+      LineSegment const & LS,
+      IntersectList     & ilist,
+      bool                swap_s_vals
+    ) const {
+      real_type s1, s2;
+      bool ok = this->intersect( LS, s1, s2 );
+      if ( ok ) {
+        if ( swap_s_vals ) ilist.push_back( Ipair(s2, s1) );
+        else               ilist.push_back( Ipair(s1, s2) );
+      }
+    }
+
+    void
+    intersect_ISO(
+      real_type           offs,
+      LineSegment const & LS,
+      real_type           offs_LS,
+      IntersectList     & ilist,
+      bool                swap_s_vals
+    ) const {
+      real_type s1, s2;
+      bool ok = this->intersect_ISO( offs, LS, offs_LS, s1, s2 );
+      if ( ok ) {
+        if ( swap_s_vals ) ilist.push_back( Ipair(s2, s1) );
+        else               ilist.push_back( Ipair(s1, s2) );
+      }
+    }
+
+    bool
+    collision( LineSegment const & S ) const;
+
+    bool
+    collision_ISO(
+      real_type           offs,
+      LineSegment const & S,
+      real_type           S_offs
+    ) const;
+
+    /*\
+     |   _   _ _   _ ____  ____ ____
+     |  | \ | | | | |  _ \| __ ) ___|
+     |  |  \| | | | | |_) |  _ \___ \
+     |  | |\  | |_| |  _ <| |_) |__) |
+     |  |_| \_|\___/|_| \_\____/____/
+    \*/
+
+    void
+    paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
+
+    void
+    toNURBS( real_type knots[], real_type Poly[][3] ) const;
+
+    virtual
+    void
+    toBS( real_type knots[], real_type Poly[][2] ) const;
 
     friend
-    std::ostream &
-    operator << ( std::ostream & stream, LineSegment const & c );
+    ostream_type &
+    operator << ( ostream_type & stream, LineSegment const & c );
 
     friend class ClothoidCurve;
 

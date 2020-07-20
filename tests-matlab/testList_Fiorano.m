@@ -1,5 +1,3 @@
-addpath('../matlab');
-
 %=========================================================================%
 %                                                                         %
 %  Autor: Enrico Bertolazzi                                               %
@@ -11,7 +9,7 @@ addpath('../matlab');
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
-close all ;
+close all;
 
 XY = [ ...
 -0.475412514	8.65E-05	; ...
@@ -600,14 +598,14 @@ XY = [ ...
 -0.475412514	8.65E-05	; ...
 ];
 
-S = ClothoidSplineG2() ;
-%S.ipopt(true) ;
+S = ClothoidSplineG2();
+%S.ipopt(true);
 
-X = [XY(1:4:end,1) ; XY(1,1)] ;
-Y = [XY(1:4:end,2) ; XY(1,2)] ;
+X = [XY(1:4:end,1); XY(1,1)];
+Y = [XY(1:4:end,2); XY(1,2)];
 
-SPL = S.buildP2( X, Y ) ;
+SPL = S.buildP2( X, Y );
 SPL.rotate(1.15*pi,0,0);
-SPL.plot() ;
+SPL.plot();
 
 axis equal
