@@ -417,6 +417,7 @@ namespace G2lib {
 
   typedef enum {
     CMD_NEW,
+    CMD_DELETE,
     CMD_BUILD,
     CMD_TARGET,
     CMD_GUESS,
@@ -433,6 +434,7 @@ namespace G2lib {
 
   static map<string,unsigned> cmd_to_idx = {
     {"new",CMD_NEW},
+    {"delete",CMD_DELETE},
     {"build",CMD_BUILD},
     {"target",CMD_TARGET},
     {"guess",CMD_GUESS},
