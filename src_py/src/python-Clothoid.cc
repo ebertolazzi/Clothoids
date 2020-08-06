@@ -7,6 +7,7 @@
  */
 
 #include "python-Clothoid.hh"
+#include "python-ipopt-ClothoidSpline.hh"
 #include <pybind11/stl.h>
 
 #ifdef _WIN32
@@ -198,6 +199,10 @@ namespace G2lib {
           self->info(str);
           return str.str();
         });
+
+#ifdef IPOPT_CLOTHOID_SPLINE
+      m.def("interpolate", &G2lib::ipopt::interpolate_clothoid_list);
+#endif
     }
 
     void wrap_ClothoidList(py::module & m) {

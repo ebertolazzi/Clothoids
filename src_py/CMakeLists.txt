@@ -9,12 +9,18 @@
 cmake_minimum_required(VERSION 3.10.2)
 
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
-set(CMAKE_VERBOSE_MAKEFILE            TRUE)
+set(CMAKE_VERBOSE_MAKEFILE TRUE)
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 project(G2lib VERSION 1.0)
 
 find_package(pybind11 REQUIRED)
-find_package(pybind11)
+find_package(PkgConfig)
+
+if (PkgConfig_FOUND)
+  pkg_check_modules(ipopt ipopt)
+endif()
+
 
 set(G2LIB_SOURCES
 	"src/python-Triangle2D.cc"
@@ -24,7 +30,8 @@ set(G2LIB_SOURCES
 	"src/python-CircleArc.cc"
 	"src/python-Biarc.cc"
 	"src/python-BaseCurve.cc"
-	"src/python-AABBtree.cc")
+	"src/python-AABBtree.cc"
+	"src/python-ipopt-ClothoidSpline.cc")
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-QuarticRootsFlocke.txt")
 include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-Clothoids.txt")
@@ -34,8 +41,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 target_link_libraries(${PROJECT_NAME} PRIVATE quartic_roots_flocke)
 target_link_libraries(${PROJECT_NAME} PRIVATE clothoids)
+if (ipopt_FOUND)
+  target_compile_definitions(${PROJECT_NAME} IPOPT_CLOTHOID_SPLINE)
+endif()
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
   target_compile_options(${PROJECT_NAME} PRIVATE 
     -fPIC -std=c++14 -Wall -Wno-float-equal -Wno-padded
@@ -45,7 +55,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
 
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
   target_compile_options(${PROJECT_NAME} PRIVATE
     -fPIC -std=c++14 -stdlib=libc++  -Weverything -Wno-weak-vtables 
@@ -58,7 +68,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
 
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
   target_compile_options(${PROJECT_NAME} PRIVATE
     /nologo /GS /W3 /WX- /Gm- /fp:precise /EHsc 
@@ -67,11 +77,12 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
   target_compile_definitions(${PROJECT_NAME} PRIVATE
     _WINDOWS _SCL_SECURE_NO_WARNINGS HAVE_STRING_H NO_GETTIMEOFDAY
-    $<$<CONFIG:Debug>: _DEBUG MECHATRONIX_DEBUG >
-  )
+    $<$<CONFIG:Debug>: _DEBUG MECHATRONIX_DEBUG >)
 
 else()
-  message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
+  
+	message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
+
 endif()
 
 
