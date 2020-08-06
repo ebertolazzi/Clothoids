@@ -1,3 +1,12 @@
+%
+%  This class implement the algorithms described in the paper:
+%
+%  I nterpolating clothoid splines with curvature continuity
+%  by Enrico Bertolaziz and Marco frego
+%  Mathematical Methods in the Applied Science
+%  Volume 41, Issue 4, 2018
+%  DOI: 10.1002/mma.4700
+%
 classdef ClothoidSplineG2 < handle
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
@@ -11,24 +20,37 @@ classdef ClothoidSplineG2 < handle
   methods (Hidden = true)
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ceq,jaceq] = nlsys( self, theta )
-      ceq   = ClothoidSplineG2MexWrapper( 'constraints', ...
-                                          self.objectHandle, theta );
-      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', ...
-                                          self.objectHandle, theta );
+      ceq = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
+      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta  );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [c,ceq,jac,jaceq] = con( self, theta )
-      c     = zeros(0,0);
-      ceq   = ClothoidSplineG2MexWrapper( 'constraints', ...
-                                          self.objectHandle, theta );
+      c   = zeros(0,0);
+      ceq = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
       jac   = sparse(0,0);
-      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', ...
-                                          self.objectHandle, theta ).';
+      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta  ).';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [o,g] = obj( self, theta )
       o = ClothoidSplineG2MexWrapper( 'objective', self.objectHandle, theta );
       g = ClothoidSplineG2MexWrapper( 'gradient', self.objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function build( self, x, y )
+      %
+      % Call C++ setup for the problem solver.
+      % Check that consecutive points are distintx
+      %
+      chk = diff(x).^2+diff(y).^2;
+      mi  = min(chk);
+      ma  = max(chk);
+      if mi == 0 || mi < 1e-10*ma
+        error( ...
+          [ 'ClothoidSplineG2, build failed: minimum distance between ', ...
+            'two consecutive points [min dist=%g] is 0 or too small!\n'], mi ...
+        );
+      end
+      ClothoidSplineG2MexWrapper( 'build', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = build_internal( self, x, y, varargin )
@@ -125,12 +147,14 @@ classdef ClothoidSplineG2 < handle
       if self.isOctave
         options.TolX = 1e-20;
       else
-        options = optimoptions('fsolve','Display',self.iter_opt, ...
-                               'CheckGradients',false, ...
-                               'FiniteDifferenceType','central', ...
-                               'Algorithm','levenberg-marquardt',...
-                               'SpecifyObjectiveGradient',true,...
-                               'OptimalityTolerance',1e-20);
+        options = optimoptions( ...
+          'fsolve', 'Display', self.iter_opt, ...
+          'CheckGradients', false, ...
+          'FiniteDifferenceType', 'central', ...
+          'Algorithm', 'levenberg-marquardt',...
+          'SpecifyObjectiveGradient', true,...
+          'OptimalityTolerance', 1e-20 ...
+        );
       end
       obj = @(theta) self.nlsys(theta);
       [theta,~,exitflag,~] = fsolve(obj,theta_guess,options);
@@ -163,10 +187,6 @@ classdef ClothoidSplineG2 < handle
       ClothoidSplineG2MexWrapper( 'delete', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function build( self, x, y )
-      ClothoidSplineG2MexWrapper( 'build', self.objectHandle, x, y );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function verbose( self, yes )
       if yes
         self.iter_opt = 'iter';
@@ -193,18 +213,33 @@ classdef ClothoidSplineG2 < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP1( self, x, y, theta0, theta1 )
-      ClothoidSplineG2MexWrapper( 'target', ...
-                                  self.objectHandle, ...
-                                  'P1', theta0, theta1 );
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  with initial angle theta0 (radiants) and final angle theta1 (radiants)
+      %
+      ClothoidSplineG2MexWrapper( ...
+        'target', self.objectHandle, 'P1', theta0, theta1 ...
+      );
       clots = self.build_internal2( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP2( self, x, y )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  with cyclic condition (tangent and curvature meet)
+      %   theta(1) = theta(end) mod 2*pi
+      %   kappa(1) = kappa(end)
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P2' );
       clots = self.build_internal2( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP3( self, x, y, theta0, kappa0 )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  with assignede initial angle and survature
+      %  NB: this target is not reccomended (its unstable), used only for debugging 
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P3' );
       %
       % Compute spline parameters
@@ -234,31 +269,63 @@ classdef ClothoidSplineG2 < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP4( self, x, y )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  and minimizing derivative of the curvature al the extrema
+      %
+      %  minimize k'(0)^2 + k'(L)^2
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P4' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP5( self, x, y )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  and minimizing the length of the first and last segment
+      %
+      %  minimize s(2)-s(1) + s(end)-s(end-1)
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P5' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP6( self, x, y )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  and minimizing the total length of the spline L = s(end)-s(1)
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P6' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP7( self, x, y )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  and minimizing the integral of the square of the curvature:
+      %
+      %  minimize: int_0^L k(s)^2 ds
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P7' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP8( self, x, y )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  and minimizing the integral of the square of the curvature derivative:
+      %
+      %  minimize: int_0^L (k'(s)^2) ds
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P8' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = buildP9( self, x, y )
+      %
+      %  Compute the clothoid spline passing to the points (x(i),y(i))
+      %  and minimizing the integral of the jerk squared
+      %
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P9' );
       clots = self.build_internal( x, y );
     end

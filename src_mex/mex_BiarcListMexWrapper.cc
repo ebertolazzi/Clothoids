@@ -98,12 +98,8 @@ namespace G2lib {
   ) {
 
     #define CMD "BiarcListMexWrapper('new'): "
-    MEX_ASSERT(
-      nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs
-    );
-    MEX_ASSERT(
-      nrhs == 1, CMD "expected 1 input, nlhs = " << nrhs
-    );
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nlhs = " << nrhs );
 
     //BiarcList * ptr =
     DATA_NEW(arg_out_0);

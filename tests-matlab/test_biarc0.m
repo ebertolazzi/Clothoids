@@ -1,38 +1,31 @@
-%=========================================================================%
-%                                                                         %
-%  Autors: Enrico Bertolazzi                                              %
-%          Department of Industrial Engineering                           %
-%          University of Trento                                           %
-%          enrico.bertolazzi@unitn.it                                     %
-%          m.fregox@gmail.com                                             %
-%                                                                         %
-%=========================================================================%
-% Driver test program to check Clothoids lib                              %
-%=========================================================================%
+%% *Driver test program to check Clothoids lib*
 
-addpath('../matlab');
 close all;
 
 % check constructors
-x0     = 0;
-y0     = 2;
-x1     = 3;
-y1     = 3;
-x2     = 5;
-y2     = 2;
-theta0 = 0;
-theta1 = pi;
-L      = 10;
-k0     = 1/3;
-dk     = 0;
+x0 = 0; y0 = 2; theta0 = 0;
+x1 = 3; y1 = 3; theta1 = pi;
+x2 = 5; y2 = 2;
 
+L  = 10;
+k0 = 1/3;
+dk = 0;
+% Initialize some biarcs
+
+% contruct and initialize a biarc using G1 hermite data
+% (points and tangents)
 L1 = Biarc( x0, y0, theta0, x1, y1, theta1 );
-L2 = Biarc();
-L2.build( x0, y0, theta0, x1, y1, theta1 );
-L3 = Biarc();
-L3.build( x0, y0, theta0, x2, y2, theta1 );
 
-%
+% Initialize some empty biarcs
+L2 = Biarc();
+L3 = Biarc();
+
+% contruct the biarc using G1 hermite data
+L2.build( x0, y0, theta0, x1, y1, theta1 );
+L3.build( x0, y0, theta0, x2, y2, theta1 );
+% Plot some Biarcs
+
+figure();
 npts = 1000;
 fmt1 = {'Color','red','LineWidth',3};
 fmt2 = {'Color','black','LineWidth',3};
@@ -56,17 +49,13 @@ L3.plot(npts,fmt1,fmt3);
 
 L3.translate(3,3);
 L3.plot(npts,fmt1,fmt3);
-
-L3.eval(1)
-L3.eval_D(1)
-L3.eval_DD(1)
-L3.eval_DDD(1)
-L3.xBegin()
-L3.yBegin()
-L3.thetaBegin()
-L3.length()
-
-%L3.distance(1,4)
-
 axis equal;
-%
+% Evaluate Biarc at some points
+
+fprintf('L3(1)  = %g\n', L3.eval(1));
+fprintf('L3''(1) = %g\n', L3.eval_D(1));
+fprintf('L3''''(1) = %g\n', L3.eval_DD(1));
+fprintf('L3''''''(1) = %g\n', L3.eval_DDD(1));
+fprintf('L3 initial [x,y,theta] = [%g,%g,%g]\n', ...
+         L3.xBegin(),L3.yBegin(),L3.thetaBegin());
+L3.length()
