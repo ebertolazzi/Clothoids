@@ -8,45 +8,72 @@
 
 cmake_minimum_required(VERSION 3.10.2)
 
+set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
+set(CMAKE_VERBOSE_MAKEFILE            TRUE)
+
 project(G2lib VERSION 1.0)
 
 find_package(pybind11 REQUIRED)
-
 find_package(pybind11)
 
-	set(CLOTHOIDS "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
+set(G2LIB_SOURCES
+	"src/python-Triangle2D.cc"
+	"src/python-LineSegment.cc"
+	"src/python-G2lib.cc"
+	"src/python-Clothoid.cc"
+	"src/python-CircleArc.cc"
+	"src/python-Biarc.cc"
+	"src/python-BaseCurve.cc"
+	"src/python-AABBtree.cc")
 
-	set(SOURCES
-	  "src/python-Triangle2D.cc"
-		"src/python-LineSegment.cc"
-		"src/python-G2lib.cc"
-		"src/python-Clothoid.cc"
-		"src/python-CircleArc.cc"
-		"src/python-Biarc.cc"
-		"src/python-BaseCurve.cc"
-		"src/python-AABBtree.cc")
+include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-QuarticRootsFlocke.txt")
+include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-Clothoids.txt")
+pybind11_add_module(${PROJECT_NAME} MODULE ${G2LIB_SOURCES} NO_EXTRAS)
 
-pybind11_add_module(${PROJECT_NAME} MODULE ${SOURCES} NO_EXTRAS)
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
+target_link_libraries(${PROJECT_NAME} PRIVATE quartic_roots_flocke)
+target_link_libraries(${PROJECT_NAME} PRIVATE clothoids)
 
-	target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
-	target_include_directories(${PROJECT_NAME}
-			PUBLIC "${CLOTHOIDS}/include"
-			PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+  target_compile_options(${PROJECT_NAME} PRIVATE 
+    -fPIC -std=c++14 -Wall -Wno-float-equal -Wno-padded
+    $<$<CONFIG:Release>: " -funroll-loops -O2 -g0 " >
+    $<$<CONFIG:Debug>: " -O0 -g3 " >)
 
-	set_property(TARGET ${PROJECT_NAME} PROPERTY
-			POSITION_INDEPENDENT_CODE 1)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
 
-if(APPLE)
-  target_link_libraries(${PROJECT_NAME} 
-    PUBLIC "${CLOTHOIDS}/lib/libClothoids_osx_static.a")
-ELSEIF(LINUX OR UNIX)
-  target_link_libraries(${PROJECT_NAME} 
-    PUBLIC "${CLOTHOIDS}/lib/libClothoids_linux_static.a")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+
+  target_compile_options(${PROJECT_NAME} PRIVATE
+    -fPIC -std=c++14 -stdlib=libc++  -Weverything -Wno-weak-vtables 
+    -Wno-implicit-fallthrough -Wno-documentation-unknown-command 
+    -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic 
+    -Wno-padded -Wno-reserved-id-macro -Wno-documentation
+    $<$<CONFIG:Release>: " -funroll-loops -O2 -g0 " >
+    $<$<CONFIG:Debug>: " -O0 -g3 " >)
+
+  target_compile_definitions(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
+
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+
+  target_compile_options(${PROJECT_NAME} PRIVATE
+    /nologo /GS /W3 /WX- /Gm- /fp:precise /EHsc 
+    $<$<CONFIG:Release>: /O2 /MD >
+    $<$<CONFIG:Debug>: /Od /Ob0 /MDd /Z7 /RTC1 >)
+
+  target_compile_definitions(${PROJECT_NAME} PRIVATE
+    _WINDOWS _SCL_SECURE_NO_WARNINGS HAVE_STRING_H NO_GETTIMEOFDAY
+    $<$<CONFIG:Debug>: _DEBUG MECHATRONIX_DEBUG >
+  )
+
 else()
-  target_link_libraries(${PROJECT_NAME} 
-    PUBLIC "${CLOTHOIDS}/lib/Clothoids_win__static.lib")
+  message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
 endif()
+
 
 set(INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../lib/lib)
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_PREFIX})
