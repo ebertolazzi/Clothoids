@@ -201,7 +201,30 @@ namespace G2lib {
         });
 
 #ifdef IPOPT_CLOTHOID_SPLINE
-      m.def("interpolate", &G2lib::ipopt::interpolate_clothoid_list);
+      m.def("interpolator", [](const std::vector<real_type> xs, const std::vector<real_type> ys, const std::string & type) -> G2lib::ClothoidList {
+        G2lib::ClothoidSplineG2 cs;
+        G2lib::ClothoidList cl;
+
+        if (type == "P4") cs.setP4();
+        else if (type == "P5") cs.setP5();
+        else if (type == "P6") cs.setP6();
+        else if (type == "P7") cs.setP7();
+        else if (type == "P8") cs.setP8();
+        else if (type == "P9") cs.setP9();
+        else throw std::runtime_error("Unknown interpolation type " + type);
+        
+        int_type n = static_cast<int_type>(std::min(xs.size(), ys.size()));
+        cs.build(&xs.front(), &ys.front(), n);
+
+        std::vector<real_type> theta_opt = G2lib::ipopt::interpolate_clothoid_list(cs);
+
+        cl.reserve(cs.numTheta() - 1);
+        for (int i = 0; i < cs.numTheta() - 1; i++) {
+          cl.push_back_G1(xs[i], ys[i], theta_opt[i], xs[i + 1], ys[i + 1], theta_opt[i + 1]);
+        }       
+        return cl;
+      }, py::arg("xs"), py::arg("ys"), py::arg("type") = "P5");
+
 #endif
     }
 

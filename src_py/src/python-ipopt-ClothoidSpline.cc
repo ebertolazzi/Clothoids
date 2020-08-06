@@ -19,30 +19,31 @@ namespace G2lib {
 
   namespace ipopt {
 
-    using ::Ipopt::ApplicationReturnStatus;
-    using ::Ipopt::Index;
-    using ::Ipopt::IndexStyleEnum;
-    using ::Ipopt::IpoptApplication;
-    using ::Ipopt::IpoptApplicationFactory;
-    using ::Ipopt::Number;
-    using ::Ipopt::SmartPtr;
-    using ::Ipopt::TLNP;
+    using Ipopt::TNLP;
+    using Ipopt::ApplicationReturnStatus;
+    using Ipopt::Index;
+    using Ipopt::IpoptApplication;
+    using Ipopt::Number;
+    using Ipopt::SmartPtr;
 
-    using ::G2lib::ClothoidList;
-    using ::G2lib::ClothoidSplineG2;
-    using ::G2lib::int_type;
-    using ::G2lib::real_type;
+    using G2lib::ClothoidList;
+    using G2lib::ClothoidSplineG2;
+    using G2lib::int_type;
+    using G2lib::real_type;
 
-    ClothoidSplineProblem::ClothoidSplineProblem(const ClothoidSplineG2 &spline) : TNLP(), m_spline(spline) {
-      m_theta_sol = std::vector< rela_type >(m_spline.numTheta(), 0.0);
+    ClothoidSplineProblem::ClothoidSplineProblem(const ClothoidSplineG2 &spline) : 
+      TNLP(), m_spline(spline), m_theta_sol(std::vector< real_type >(m_spline.numTheta(), 0.0)),
+      m_theta_guess(std::vector<real_type>(m_spline.numTheta())), m_theta_min(std::vector<real_type>(m_spline.numTheta())),
+      m_theta_max(std::vector<real_type>(m_spline.numTheta())) {
+      m_spline.guess(&m_theta_guess.front(), &m_theta_min.front(), &m_theta_max.front());
     }
 
     bool ClothoidSplineProblem::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g, Index &nnz_h_lag,
-                                             IndexStyleEnum &index_style) {
+                                             TNLP::IndexStyleEnum &index_style) {
       n = m_spline.numTheta();
       m = m_spline.numConstraints();
       nnz_jac_g = m_spline.jacobian_nnz();
-      nnz_h_lag = (n + m) * (n + m);  // Worst case scenario;
+      nnz_h_lag = (n + m) * (n + m);  // Worst case scenario; we will se in future if we need other dimensions
       index_style = TNLP::C_STYLE;
       return true;
     }
@@ -57,10 +58,10 @@ namespace G2lib {
       if ((x_l == nullptr) || (x_u == nullptr) || (g_l == nullptr) || (g_u == nullptr))
         return false;
 
-      std::vector< Number > theta_guess(n);
-      m_spline.guess(theta_guess.front(), x_l, x_u);
       std::fill_n(g_l, m, 0.0);
       std::fill_n(g_u, m, 0.0);
+      std::copy(m_theta_min.begin(), m_theta_min.end(), x_l);
+      std::copy(m_theta_max.begin(), m_theta_max.end(), x_u);
       return true;
     }
 
@@ -79,11 +80,9 @@ namespace G2lib {
         return false;
 
       if (init_x) {
-        std::vector< Number > theta_min(n);
-        std::vector< Number > theta_max(n);
-        m_spline.guess(x, theta_min.front(), theta_max.front());
+        std::copy(m_theta_guess.begin(), m_theta_guess.end(), x);
       }
-      return true
+      return true;
     }
 
     bool ClothoidSplineProblem::eval_f(Index n, const Number *x, bool new_x, Number &obj_value) {
@@ -95,7 +94,7 @@ namespace G2lib {
     bool ClothoidSplineProblem::eval_grad_f(Index n, const Number *x, bool new_x, Number *grad_f) {
       if (n != m_spline.numTheta())
         return false;
-      return m_spline.gradient(x, grad_f) :
+      return m_spline.gradient(x, grad_f);
     }
 
     bool ClothoidSplineProblem::eval_g(Index n, const Number *x, bool new_x, Index m, Number *g) {
@@ -103,7 +102,7 @@ namespace G2lib {
         return false;
       if (m != m_spline.numConstraints())
         return false;
-      return m_spline.contraints(x, g);
+      return m_spline.constraints(x, g);
     }
 
     bool ClothoidSplineProblem::eval_jac_g(Index n, const Number *x, bool new_x, Index m, Index nele_jac, Index *iRow,
@@ -120,12 +119,18 @@ namespace G2lib {
         index_ok = m_spline.jacobian_pattern(iRow, jCol);
       }
 
-      return index_ok & m_spline.jacobian(x, values);
+      bool jac_eval_ok = true;
+      if (values != NULL) {
+        jac_eval_ok = m_spline.jacobian(x, values);
+      }
+
+      return index_ok & jac_eval_ok;
     }
 
-    void finalize_solution(SolverReturn status, Index n, const Number *x, const Number *z_L, const Number *z_U, Index m,
-                           const Number *g, const Number *lambda, Number obj_value, const Ipopt::IpoptData *ip_data,
-                           Ipopt::IpoptCalculatedQuantities *ip_cq) {
+    void ClothoidSplineProblem::finalize_solution(SolverReturn status, Index n, const Number *x, const Number *z_L, 
+                                                  const Number *z_U, Index m, const Number *g, const Number *lambda, 
+                                                  Number obj_value, const Ipopt::IpoptData *ip_data,
+                                                  Ipopt::IpoptCalculatedQuantities *ip_cq) {
       std::copy(x, x + n, m_theta_sol.begin());
     }
 
@@ -133,20 +138,20 @@ namespace G2lib {
       SmartPtr< ClothoidSplineProblem > spline_problem = new ClothoidSplineProblem(spline);
       SmartPtr< IpoptApplication > app = IpoptApplicationFactory();
 
-      app->Options()->setStringValue("jac_d_constant", "no");
-      app->Options()->setStringValue("hessian_constant", "no");
-      app->Options()->setStringValue("mu_strategy", "adaptive");
-      app->Options()->setStringValue("derivative_test", "none");
-      app->Options()->setStringValue("hessian_approximation", "limited-memory");
-      app->Options()->setStringValue("limited_memory_update_type", "bfgs");
+      app->Options()->SetStringValue("jac_d_constant", "no");
+      app->Options()->SetStringValue("hessian_constant", "no");
+      app->Options()->SetStringValue("mu_strategy", "adaptive");
+      app->Options()->SetStringValue("derivative_test", "none");
+      app->Options()->SetStringValue("hessian_approximation", "limited-memory");
+      app->Options()->SetStringValue("limited_memory_update_type", "bfgs");
 
-      app->Options()->setIntegerValue("max_iter", 400);
+      app->Options()->SetIntegerValue("max_iter", 400);
 
-      app->Options()->setNumericValue("tol", 1e-10);
-      app->Options()->setNumericValue("derivative_test_tol", 1e-5);
+      app->Options()->SetNumericValue("tol", 1e-10);
+      app->Options()->SetNumericValue("derivative_test_tol", 1e-5);
 
-      if (app->Initialize() != ApplicationReturnStatus::Solve_Suceeded)
-        throw runtime_exception("Cannot initialize solver");
+      if (app->Initialize() != ApplicationReturnStatus::Solve_Succeeded)
+        throw std::runtime_error("Cannot initialize solver");
 
       app->OptimizeTNLP(spline_problem);
 

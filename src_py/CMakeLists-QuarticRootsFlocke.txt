@@ -18,11 +18,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
   target_compile_options(quartic_roots_flocke PRIVATE 
     -fPIC -Wall -Wno-float-equal -Wno-padded
-    $<$<CONFIG:Release>: " -funroll-loops -O2 -g0 " >
-    $<$<CONFIG:Debug>: " -O0 -g3 " >)
+    $<$<CONFIG:Release>: -funroll-loops -O2 -g0 >
+    $<$<CONFIG:Debug>: -O0 -g3 >)
 
   target_compile_definitions(quartic_roots_flocke PRIVATE
-    $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
+    $<$<CONFIG:Debug>: MECHATRONIX_DEBUG DEBUG >)
 
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
@@ -31,11 +31,11 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     -Wno-implicit-fallthrough -Wno-documentation-unknown-command 
     -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic 
     -Wno-padded -Wno-reserved-id-macro -Wno-documentation
-    $<$<CONFIG:Release>: " -funroll-loops -O2 -g0 " >
-    $<$<CONFIG:Debug>: " -O0 -g3 " >)
+    $<$<CONFIG:Release>: -funroll-loops -O2 -g0 >
+    $<$<CONFIG:Debug>: -O0 -g3 >)
 
   target_compile_definitions(quartic_roots_flocke PRIVATE
-    $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
+    $<$<CONFIG:Debug>: MECHATRONIX_DEBUG DEBUG >)
 
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 

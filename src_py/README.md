@@ -50,8 +50,18 @@ help(G2lib)
 
 The wrapper wraps one to one the original C++ library, the same interface should be expected.
 
+## Using IPOPT as interpolator
+
+If IPOPT is installed via `apt`, the library will append to `G2lib` a function `interpolator` that
+solves the interpolation optimal problem. Required pckages are:
+
+``` bash
+sudo apt install coinor-libipopt-dev coinor-libipopt1v5
+```
+
 ## TODO
 
  - [x] Include in Clothoids repo
+ - [x] Implement an interpolator in Ipopt
  - [ ] Add docstrings to all methods
  - [ ] Naming arguments in methods

@@ -21,7 +21,6 @@ if (PkgConfig_FOUND)
   pkg_check_modules(ipopt ipopt)
 endif()
 
-
 set(G2LIB_SOURCES
 	"src/python-Triangle2D.cc"
 	"src/python-LineSegment.cc"
@@ -42,28 +41,31 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 target_link_libraries(${PROJECT_NAME} PRIVATE quartic_roots_flocke)
 target_link_libraries(${PROJECT_NAME} PRIVATE clothoids)
 if (ipopt_FOUND)
-  target_compile_definitions(${PROJECT_NAME} IPOPT_CLOTHOID_SPLINE)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE IPOPT_CLOTHOID_SPLINE)
+  target_include_directories(${PROJECT_NAME} PRIVATE ${ipopt_INCLUDE_DIRS})
+  target_link_libraries(${PROJECT_NAME} PRIVATE ${ipopt_LIBRARIES})
+  target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_CSTDDEF)
 endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
   target_compile_options(${PROJECT_NAME} PRIVATE 
-    -fPIC -std=c++14 -Wall -Wno-float-equal -Wno-padded
-    $<$<CONFIG:Release>: " -funroll-loops -O2 -g0 " >
-    $<$<CONFIG:Debug>: " -O0 -g3 " >)
+    -std=c++14 -Wall -Wno-float-equal -Wno-padded
+    $<$<CONFIG:Release>: -funroll-loops -O2 -g0 >
+    $<$<CONFIG:Debug>: -O0 -g3 >)
 
   target_compile_definitions(${PROJECT_NAME} PRIVATE
-    $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
+    $<$<CONFIG:Debug>: MECHATRONIX_DEBUG DEBUG >)
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
   target_compile_options(${PROJECT_NAME} PRIVATE
-    -fPIC -std=c++14 -stdlib=libc++  -Weverything -Wno-weak-vtables 
+    -std=c++14 -stdlib=libc++  -Weverything -Wno-weak-vtables 
     -Wno-implicit-fallthrough -Wno-documentation-unknown-command 
     -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic 
     -Wno-padded -Wno-reserved-id-macro -Wno-documentation
-    $<$<CONFIG:Release>: " -funroll-loops -O2 -g0 " >
-    $<$<CONFIG:Debug>: " -O0 -g3 " >)
+    $<$<CONFIG:Release>: -funroll-loops -O2 -g0 >
+    $<$<CONFIG:Debug>: -O0 -g3 >)
 
   target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
