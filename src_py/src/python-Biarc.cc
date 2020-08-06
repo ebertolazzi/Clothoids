@@ -91,7 +91,7 @@ namespace G2lib {
         .def("push_back_G1", py::overload_cast<real_type, real_type, real_type>(&BiarcList::push_back_G1))
         .def("push_back_G1", py::overload_cast<real_type, real_type, real_type, real_type, real_type, real_type>(&BiarcList::push_back_G1))
         .def("build_G1", [](BiarcList * self, std::vector<real_type> x, std::vector<real_type> y) {
-          int_type n = std::min(x.size(), y.size());
+          int_type n = static_cast<int_type>(std::min(x.size(), y.size()));
           real_type * x_ = new real_type[n];
           real_type * y_ = new real_type[n];
           for (int_type i = 0; i < n; i++) {
@@ -104,7 +104,7 @@ namespace G2lib {
           return ret;
         })
         .def("build_G1", [](BiarcList * self, std::vector<real_type> x, std::vector<real_type> y, std::vector<real_type> theta) {
-          int_type n = std::min({x.size(), y.size(), theta.size()});
+          int_type n = static_cast<int_type>(std::min({x.size(), y.size(), theta.size()}));
           real_type * x_ = new real_type[n];
           real_type * y_ = new real_type[n];
           real_type * theta_ = new real_type[n];

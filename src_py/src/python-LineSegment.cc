@@ -122,7 +122,7 @@ namespace G2lib {
         .def("push_back", py::overload_cast<ClothoidCurve const &, real_type>(&PolyLine::push_back))
         .def("push_back", py::overload_cast<ClothoidList const &, real_type>(&PolyLine::push_back))
         .def("build", [](PolyLine * self, std::vector<std::tuple<real_type, real_type>> points) {
-          int_type nPoints = points.size();
+          int_type nPoints = static_cast<int_type>(points.size());
           real_type * x = new real_type[nPoints];
           real_type * y = new real_type[nPoints];
           for (int_type i = 0; i < nPoints; i++) {

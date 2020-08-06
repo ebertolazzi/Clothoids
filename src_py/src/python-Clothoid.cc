@@ -150,7 +150,7 @@ namespace G2lib {
         .def("setP8", &ClothoidSplineG2::setP8)
         .def("setP9", &ClothoidSplineG2::setP9)
         .def("build", [](ClothoidSplineG2 * self, std::vector<real_type> x, std::vector<real_type> y) {
-          size_t n = std::min(x.size(), y.size());
+          int_type n = static_cast<int_type>(std::min(x.size(), y.size()));
           self->build(&x.front(), &y.front(), n);
         })
         .def("numPnts", &ClothoidSplineG2::numPnts)
@@ -225,15 +225,15 @@ namespace G2lib {
         .def("push_back_G1", py::overload_cast<real_type, real_type, real_type>(&ClothoidList::push_back_G1))
         .def("push_back_G1", py::overload_cast<real_type, real_type, real_type, real_type, real_type, real_type>(&ClothoidList::push_back_G1))
         .def("build_G1", [](ClothoidList * self, std::vector<real_type> x, std::vector<real_type> y) {
-          int_type n = std::min(x.size(), y.size());
+          int_type n = static_cast<int_type>(std::min(x.size(), y.size()));
           return self->build_G1(n, &x.front(), &y.front());
         })
         .def("build_G1", [](ClothoidList * self, std::vector<real_type> x, std::vector<real_type> y, std::vector<real_type> theta) {
-          int_type n = std::min({x.size(), y.size(), theta.size()});
+          int_type n = static_cast<int_type>(std::min({x.size(), y.size(), theta.size()}));
           return self->build_G1(n, &x.front(), &y.front(), &theta.front());
         })
         .def("build", [](ClothoidList * self, real_type x0, real_type y0, real_type theta0, std::vector<real_type> s, std::vector<real_type> kappa) {
-          int_type n = std::min(s.size(), kappa.size());
+          int_type n = static_cast<int_type>(std::min(s.size(), kappa.size()));
           return self->build(x0, y0, theta0, n, &s.front(), &kappa.front());
         })
         .def("getAtS", &ClothoidList::getAtS)
