@@ -173,23 +173,23 @@ namespace G2lib {
           return std::make_tuple(result, g);
         })
         .def("constraints", [](ClothoidSplineG2 * self, std::vector<real_type> theta) {
-          std::vector<real_type> c(self->numPnts());
+          std::vector<real_type> c(self->numConstraints());
           bool result = self->constraints(&theta.front(), &c.front());
           return std::make_tuple(result, c);
         })
         .def("jacobian_nnz", &ClothoidSplineG2::jacobian_nnz)
         .def("jacobian_pattern", [](ClothoidSplineG2 * self) {
-          std::vector<int_type> ii(self->numPnts()), jj(self->numPnts());
+          std::vector<int_type> ii(self->jacobian_nnz()), jj(self->jacobian_nnz());
           bool result = self->jacobian_pattern(&ii.front(), &jj.front());
           return std::make_tuple(result, ii, jj);
         })
         .def("jacobian_pattern_matlab", [](ClothoidSplineG2 * self) {
-          std::vector<real_type> ii(self->numPnts()), jj(self->numPnts());
+          std::vector<real_type> ii(self->jacobian_nnz()), jj(self->jacobian_nnz());
           bool result = self->jacobian_pattern_matlab(&ii.front(), &jj.front());
           return std::make_tuple(result, ii, jj);
         })
         .def("jacobian", [](ClothoidSplineG2 * self, std::vector<real_type> theta) {
-          std::vector<real_type> vals(self->numPnts());
+          std::vector<real_type> vals(self->jacobian_nnz());
           bool result = self->jacobian(&theta.front(), &vals.front());
           return std::make_tuple(result, vals);
         })
