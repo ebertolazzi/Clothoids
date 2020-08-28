@@ -12,6 +12,8 @@ SET DIR=%3
   @set VSCMAKE=Visual Studio 14 2015
 ) ELSE IF %YEAR% == 2017 (
   @set VSCMAKE=Visual Studio 15 2017
+) ELSE IF %YEAR% == 2019 (
+  @set VSCMAKE=Visual Studio 16 2019
 ) ELSE (
   @echo.
   powershell -command write-host -foreground "red" -background "yellow" -nonewline "Unsupported Visual Studio %YEAR%"

@@ -139,10 +139,12 @@ def win_vs( bits, year )
 
   tmp = " -DBITS=#{bits} -DYEAR=#{year} "
 
-  win32_64 = ''
+  win32_64  = ''
+  win32_64_ = '-A x64'
   case bits
   when /x64/
-    win32_64 = ' Win64'
+    win32_64  = ' Win64'
+    win32_64_ = ' -A Win64'
   end
 
   case year
@@ -157,7 +159,7 @@ def win_vs( bits, year )
   when "2017"
     tmp = 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
   when "2019"
-    tmp = 'cmake -G "Visual Studio 16 2019' + win32_64 +'" ' + tmp
+    tmp = 'cmake -G "Visual Studio 16 2019"' + win32_64_ + tmp
   else
     puts "Visual Studio year #{year} not supported!\n";
     return ""

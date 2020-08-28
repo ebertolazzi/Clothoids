@@ -11,6 +11,8 @@
   "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %BITS%
 ) ELSE IF %YEAR% == 2017 (
   "C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\vcvarsall.bat" %BITS%
+) ELSE IF %YEAR% == 2019 (
+  "C:\Program Files (x86)\Microsoft Visual Studio 16.0\VC\vcvarsall.bat" %BITS%
 ) ELSE (
   @echo.
   powershell -command write-host -foreground "red" -background "yellow" -nonewline "Unsupported Visual Studio %YEAR%"
