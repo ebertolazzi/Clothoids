@@ -16,6 +16,7 @@ project(G2lib VERSION 1.0)
 
 find_package(pybind11 REQUIRED)
 find_package(PkgConfig)
+find_package(Eigen3 3.3 NO_MODULE)
 
 if (PkgConfig_FOUND)
   pkg_check_modules(ipopt ipopt)
@@ -30,7 +31,10 @@ set(G2LIB_SOURCES
 	"src/python-Biarc.cc"
 	"src/python-BaseCurve.cc"
 	"src/python-AABBtree.cc"
-	"src/python-ipopt-ClothoidSpline.cc")
+  "src/python-ClothoidSpline-Solver.cc"
+  "src/python-ClothoidSpline-LMSolver.cc"
+  "src/python-ClothoidSpline-IpoptSolver.cc"
+  "src/python-ClothoidSpline-Interpolation.cc")
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-QuarticRootsFlocke.txt")
 include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists-Clothoids.txt")
@@ -45,6 +49,10 @@ if (ipopt_FOUND)
   target_include_directories(${PROJECT_NAME} PRIVATE ${ipopt_INCLUDE_DIRS})
   target_link_libraries(${PROJECT_NAME} PRIVATE ${ipopt_LIBRARIES})
   target_compile_definitions(${PROJECT_NAME} PRIVATE HAVE_CSTDDEF)
+endif()
+if (TARGET Eigen3::Eigen)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE LMSOLVE_CLOTHOID_SPLINE)
+  target_link_libraries(${PROJECT_NAME} PRIVATE Eigen3::Eigen)
 endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")

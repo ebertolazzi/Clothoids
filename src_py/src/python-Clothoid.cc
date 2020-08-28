@@ -7,8 +7,9 @@
  */
 
 #include "python-Clothoid.hh"
-#include "python-ipopt-ClothoidSpline.hh"
+#include "python-ClothoidSpline-Interpolation.hh"
 #include <pybind11/stl.h>
+#include <stdexcept>
 
 #ifdef _WIN32
 #ifdef max
@@ -200,32 +201,54 @@ namespace G2lib {
           return str.str();
         });
 
-#ifdef IPOPT_CLOTHOID_SPLINE
-      m.def("interpolator", [](const std::vector<real_type> xs, const std::vector<real_type> ys, const std::string & type) -> G2lib::ClothoidList {
-        G2lib::ClothoidSplineG2 cs;
-        G2lib::ClothoidList cl;
-
-        if (type == "P4") cs.setP4();
-        else if (type == "P5") cs.setP5();
-        else if (type == "P6") cs.setP6();
-        else if (type == "P7") cs.setP7();
-        else if (type == "P8") cs.setP8();
-        else if (type == "P9") cs.setP9();
-        else throw std::runtime_error("Unknown interpolation type " + type);
-        
-        int_type n = static_cast<int_type>(std::min(xs.size(), ys.size()));
-        cs.build(&xs.front(), &ys.front(), n);
-
-        std::vector<real_type> theta_opt = G2lib::ipopt::interpolate_clothoid_list(cs);
-
-        cl.reserve(cs.numTheta() - 1);
-        for (int i = 0; i < cs.numTheta() - 1; i++) {
-          cl.push_back_G1(xs[i], ys[i], theta_opt[i], xs[i + 1], ys[i + 1], theta_opt[i + 1]);
-        }       
-        return cl;
-      }, py::arg("xs"), py::arg("ys"), py::arg("type") = "P5");
-
-#endif
+      m.def("buildP1", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys, real_type theta_0, real_type theta_1) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP1(theta_0, theta_1, result);
+        return std::make_tuple(info, result);
+      })
+      .def("buildP2", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP2(result);
+        return std::make_tuple(info, result);
+      })
+      .def("buildP4", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP4(result);
+        return std::make_tuple(info, result);
+      })
+      .def("buildP5", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP5(result);
+        return std::make_tuple(info, result);
+      })
+      .def("buildP6", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP6(result);
+        return std::make_tuple(info, result);
+      })
+      .def("buildP7", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP7(result);
+        return std::make_tuple(info, result);
+      })
+      .def("buildP8", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP8(result);
+        return std::make_tuple(info, result);
+      })
+      .def("buildP9", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+        G2lib::ClothoidList result;
+        G2lib::Interpolation::Interpolator builder(xs, ys);
+        bool info = builder.buildP9(result);
+        return std::make_tuple(info, result);
+      });
     }
 
     void wrap_ClothoidList(py::module & m) {
