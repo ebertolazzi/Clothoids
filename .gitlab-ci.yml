@@ -22,7 +22,7 @@ linux_builds:
     cd ..
     /usr/bin/python3.7 test
     mkdir -p $CI_PROJECT_DIR/releases/linux/python3.7
-    cp build3.7/G2lib.cpython-36m-x86_64-linux-gnu.so $CI_PROJECT_DIR/releases/linux/python3.7
+    cp build3.7/G2lib.cpython-37m-x86_64-linux-gnu.so $CI_PROJECT_DIR/releases/linux/python3.7
     mkdir build2.7
     cd build2.7
     cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python2.7 ..
