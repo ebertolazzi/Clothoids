@@ -34,3 +34,5 @@ linux_builds:
   artifacts:
     paths:
     - releases
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
