@@ -45,10 +45,22 @@ sys.path.insert(0, "{clothoid_dir}/lib/lib")
 
 import G2lib
 
-help(G2lib)
+help(G2lib)  # This is the best way to know the actual python interface
 ```
 
-The wrapper wraps one to one the original C++ library, the same interface should be expected.
+The wrapper wraps one to one the original C++ library, almost the same interface should be expected.
+
+## Using Levemberg-Marquardt (Eigen3) as interpolator
+
+If Eigen3 is installed via `apt`, the library will append to `G2lib` a function `interpolator` that
+solves the interpolation optimal problem. Required pckages are:
+
+``` bash
+sudo apt install libeigen3-dev
+```
+
+This enable `G2lib.buildP[1-2]`
+
 
 ## Using IPOPT as interpolator
 
@@ -60,15 +72,6 @@ sudo apt install coinor-libipopt-dev coinor-libipopt1v5
 ```
 
 This enable `G1lib.buildP[3-9]`
-
-## Using Levemberg-Marquardt (Eigen3) as interpolator
-
-If Eigen3 is installed via `apt`, the library will append to `G2lib` a function `interpolator` that
-solves the interpolation optimal problem. Required pckages are:
-
-``` bash
-sudo apt install libeigen3-dev
-```
 
 ## TODO
 

@@ -21,3 +21,4 @@ toolbox/src
 license.txt
 
 __pycache__
+*.pyc
