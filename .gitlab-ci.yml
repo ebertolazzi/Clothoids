@@ -3,7 +3,7 @@ python36:
   only:
     - develop
   image: ubuntu:18.04
-  before-script:
+  before_script:
   - |
     echo "Installing Dependencies"
     apt update
@@ -37,7 +37,7 @@ python37:
   only:
     - develop
   image: ubuntu:18.04
-  before-script:
+  before_script:
   - |
     echo "Installing Dependencies"
     apt update
@@ -71,7 +71,7 @@ python27:
   only:
     - develop
   image: ubuntu:18.04
-  before-script:
+  before_script:
   - |
     echo "Installing Dependencies"
     apt update
