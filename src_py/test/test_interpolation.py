@@ -8,6 +8,10 @@
 import sys
 import os
 sys.path.insert(0, os.path.normpath(os.path.join(__file__, "../../build")))
+# Path for CI
+sys.path.insert(0, os.path.normpath(os.path.join(__file__, "../../build3.6")))
+sys.path.insert(0, os.path.normpath(os.path.join(__file__, "../../build3.7")))
+sys.path.insert(0, os.path.normpath(os.path.join(__file__, "../../build2.7")))
 
 
 import unittest

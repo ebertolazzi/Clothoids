@@ -1,104 +1,36 @@
-python36:
+linux_builds:
   tags: 
   - linux
   only:
   - develop
-  image: ubuntu:18.04
-  before_script:
-  - |
-    echo "Installing Dependencies"
-    apt update
-    apt install -y --no-install-recommends python3 python3-dev build-essential libeigen3-dev coinor-libipopt-dev cmake git
-    echo "Installing Pybind11"
-    git clone https://github.com/pybind/pybind11
-    cd pybind11
-    git checkout 3b1dbebabc801c9cf6f0953a4c20b904d444f879
-    mkdir build
-    cd build 
-    cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.6 .. 
-    make install
-    cd ../..
+  image: matteoragni/clothoids.build.antemotion.com:latest
   script:
   - |
     cd src_py
-    mkdir build
-    cd build
-    cmake ..
-    make install
+    mkdir build3.6
+    cd build3.6
+    cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.6 ..
+    make
     cd ..
-    python3 test
-    mkdir -p $CI_PROJECT_DIR/release/linux/python3.6
-    cp build/G2lib.cpython-36m-x86_64-linux-gnu.so $CI_PROJECT_DIR/release/linux/python3.6
-  artifacts:
-    paths:
-    - release
-
-python37:
-  tags: 
-  - linux
-  only:
-  - develop
-  image: ubuntu:18.04
-  before_script:
-  - |
-    echo "Installing Dependencies"
-    apt update
-    apt install -y --no-install-recommends python3.7 python3.7-dev build-essential libeigen3-dev coinor-libipopt-dev cmake git
-    echo "Installing Pybind11"
-    git clone https://github.com/pybind/pybind11
-    cd pybind11
-    git checkout 3b1dbebabc801c9cf6f0953a4c20b904d444f879
-    mkdir build
-    cd build 
+    /usr/bin/python3.6 test
+    mkdir -p $CI_PROJECT_DIR/releases/linux/python3.6
+    cp build3.6/G2lib.cpython-36m-x86_64-linux-gnu.so $CI_PROJECT_DIR/releases/linux/python3.6
+    mkdir build3.7
+    cd build3.7
     cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.7 ..
-    make install
-    cd ../..
-  script:
-  - |
-    cd src_py
-    mkdir build
-    cd build
-    cmake ..
-    make install
+    make
     cd ..
-    python3.7 test
-    mkdir -p $CI_PROJECT_DIR/release/linux/python3.7
-    cp build/G2lib.cpython-37m-x86_64-linux-gnu.so $CI_PROJECT_DIR/release/linux/python3.7
-  artifacts:
-    paths:
-    - release
-
-python27:
-  tags: 
-  - linux
-  only:
-  - develop
-  image: ubuntu:18.04
-  before_script:
-  - |
-    echo "Installing Dependencies"
-    apt update
-    apt install -y --no-install-recommends python python-dev build-essential libeigen3-dev coinor-libipopt-dev cmake git
-    echo "Installing Pybind11"
-    git clone https://github.com/pybind/pybind11
-    cd pybind11
-    git checkout 3b1dbebabc801c9cf6f0953a4c20b904d444f879
-    mkdir build
-    cd build 
+    /usr/bin/python3.7 test
+    mkdir -p $CI_PROJECT_DIR/releases/linux/python3.7
+    cp build3.7/G2lib.cpython-36m-x86_64-linux-gnu.so $CI_PROJECT_DIR/releases/linux/python3.7
+    mkdir build2.7
+    cd build2.7
     cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python2.7 ..
-    make install
-    cd ../..
-  script:
-  - |
-    cd src_py
-    mkdir build
-    cd build
-    cmake ..
-    make install
+    make
     cd ..
-    python test
-    mkdir -p $CI_PROJECT_DIR/release/linux/python2.7
-    cp build G2lib.so $CI_PROJECT_DIR/release/linux/python2.7
+    /usr/bin/python2.7 test
+    mkdir -p $CI_PROJECT_DIR/releases/linux/python2.7
+    cp build2.7/G2lib.so $CI_PROJECT_DIR/releases/linux/python2.7
   artifacts:
     paths:
-    - release
+    - releases
