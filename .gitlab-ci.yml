@@ -8,7 +8,7 @@ python36:
   - |
     echo "Installing Dependencies"
     apt update
-    apt install -y python3 python3-dev build-essential libeigen3-dev coinor-libipopt-dev cmake
+    apt install -y --no-install-recommends python3 python3-dev build-essential libeigen3-dev coinor-libipopt-dev cmake git
     echo "Installing Pybind11"
     git clone https://github.com/pybind/pybind11
     cd pybind11
@@ -43,7 +43,7 @@ python37:
   - |
     echo "Installing Dependencies"
     apt update
-    apt install -y python3.7 python3.7-dev build-essential libeigen3-dev coinor-libipopt-dev cmake
+    apt install -y --no-install-recommends python3.7 python3.7-dev build-essential libeigen3-dev coinor-libipopt-dev cmake git
     echo "Installing Pybind11"
     git clone https://github.com/pybind/pybind11
     cd pybind11
@@ -78,7 +78,7 @@ python27:
   - |
     echo "Installing Dependencies"
     apt update
-    apt install -y python python-dev build-essential libeigen3-dev coinor-libipopt-dev cmake
+    apt install -y --no-install-recommends python python-dev build-essential libeigen3-dev coinor-libipopt-dev cmake git
     echo "Installing Pybind11"
     git clone https://github.com/pybind/pybind11
     cd pybind11
