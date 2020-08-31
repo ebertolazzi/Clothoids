@@ -59,6 +59,17 @@ solves the interpolation optimal problem. Required pckages are:
 sudo apt install coinor-libipopt-dev coinor-libipopt1v5
 ```
 
+This enable `G1lib.buildP[3-9]`
+
+## Using Levemberg-Marquardt (Eigen3) as interpolator
+
+If Eigen3 is installed via `apt`, the library will append to `G2lib` a function `interpolator` that
+solves the interpolation optimal problem. Required pckages are:
+
+``` bash
+sudo apt install libeigen3-dev
+```
+
 ## TODO
 
  - [x] Include in Clothoids repo

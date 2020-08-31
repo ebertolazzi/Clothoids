@@ -19,3 +19,5 @@ toolbox/tests
 toolbox/src_mex
 toolbox/src
 license.txt
+
+__pycache__

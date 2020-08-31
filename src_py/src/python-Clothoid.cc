@@ -201,53 +201,53 @@ namespace G2lib {
           return str.str();
         });
 
-      m.def("buildP1", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys, real_type theta_0, real_type theta_1) -> std::tuple<bool, G2lib::ClothoidList> {
+      m.def("buildP1", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys, real_type theta_0, real_type theta_1) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP1(theta_0, theta_1, result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP1(theta_0, theta_1, result);
+        return result;
       })
-      .def("buildP2", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+      .def("buildP2", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP2(result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP2(result);
+        return result;
       })
-      .def("buildP4", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+      .def("buildP4", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP4(result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP4(result);
+        return result;
       })
-      .def("buildP5", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+      .def("buildP5", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP5(result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP5(result);
+        return result;
       })
-      .def("buildP6", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+      .def("buildP6", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP6(result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP6(result);
+        return result;
       })
-      .def("buildP7", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+      .def("buildP7", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP7(result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP7(result);
+        return result;
       })
-      .def("buildP8", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+      .def("buildP8", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP8(result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP8(result);
+        return result;
       })
-      .def("buildP9", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> std::tuple<bool, G2lib::ClothoidList> {
+      .def("buildP9", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
-        G2lib::Interpolation::Interpolator builder(xs, ys);
-        bool info = builder.buildP9(result);
-        return std::make_tuple(info, result);
+        G2lib::Interpolation::Interpolator interpolator(xs, ys);
+        interpolator.buildP9(result);
+        return result;
       });
     }
 
