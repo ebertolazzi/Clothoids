@@ -1024,6 +1024,73 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  static
+  void
+  do_closestPointInSRange(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('closestPointInSRange',OBJ,qx,qy,[s_begin,s_end],['ISO'/'SAE']): "
+
+    MEX_ASSERT(
+      4 <= nrhs && nrhs <= 7,
+      CMD "expected 4, 5, 6 or 7 inputs, nrhs = " << nrhs
+    );
+    MEX_ASSERT(
+      nlhs == 7,
+      CMD "expected 1 output, nlhs = " << nlhs
+    );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    real_type qx = getScalarValue(
+      arg_in_2, CMD "`qx` expected to be a real scalar"
+    );
+    real_type qy = getScalarValue(
+      arg_in_3, CMD "`qx` expected to be a real scalar"
+    );
+    int64_t s_curve_begin = 0;
+    int64_t s_curve_end   = ptr->length();
+
+    if ( nrhs >= 6 ) {
+      s_curve_begin = getScalarValue(
+        arg_in_4, CMD "`s_begin` expected to be a scalar"
+      );
+      s_curve_end = getScalarValue(
+        arg_in_5, CMD "`s_end` expected to be a scalar"
+      );
+    }
+
+    bool ISO = true;
+    if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string" );
+    if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
+
+    int_type  iflag, icurve;
+    real_type x, y, s, t, dst;
+    if ( ISO ) {
+      iflag = ptr->closestPointInSRange_ISO(
+        qx, qy, s_curve_begin, s_curve_end, x, y, s, t, dst, icurve
+      );
+    } else {
+      iflag = ptr->closestPointInSRange_SAE(
+        qx, qy, s_curve_begin, s_curve_end, x, y, s, t, dst, icurve
+      );
+    }
+
+    setScalarInt( arg_out_0, icurve );
+    setScalarValue( arg_out_1, x );
+    setScalarValue( arg_out_2, y );
+    setScalarValue( arg_out_3, s );
+    setScalarValue( arg_out_4, t );
+    setScalarInt( arg_out_5, iflag );
+    setScalarValue( arg_out_6, dst );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   typedef enum {
     CMD_NEW,
     CMD_PUSH_BACK,
@@ -1053,6 +1120,7 @@ namespace G2lib {
     CMD_AABB_FALSE,
     CMD_CLOSEST_SEGMENT,
     CMD_CLOSEST_POINT_IN_RANGE,
+    CMD_CLOSEST_POINT_IN_SRANGE,
     CMD_VIRTUAL_LIST
   } CMD_LIST;
 
@@ -1087,6 +1155,7 @@ namespace G2lib {
     {"aabb_false",CMD_AABB_FALSE},
     {"closestSegment",CMD_CLOSEST_SEGMENT},
     {"closestPointInRange",CMD_CLOSEST_POINT_IN_RANGE},
+    {"closestPointInSRange",CMD_CLOSEST_POINT_IN_SRANGE},
     CMD_MAP_LIST
   };
 
@@ -1192,6 +1261,9 @@ namespace G2lib {
         break;
       case CMD_CLOSEST_POINT_IN_RANGE:
         do_closestPointInRange( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_CLOSEST_POINT_IN_SRANGE:
+        do_closestPointInSRange( nlhs, plhs, nrhs, prhs );
         break;
       CMD_CASE_LIST;
       }
