@@ -176,14 +176,12 @@ namespace G2lib {
   ClothoidList::copy( ClothoidList const & L ) {
     clotoidList.clear();
     clotoidList.reserve(L.clotoidList.size());
-    std::copy( L.clotoidList.begin(),
-               L.clotoidList.end(),
-               back_inserter(clotoidList) );
+    std::copy(
+      L.clotoidList.begin(), L.clotoidList.end(), back_inserter(clotoidList)
+    );
     s0.clear();
-    s0.reserve(L.s0.size());
-    std::copy( L.s0.begin(),
-               L.s0.end(),
-               back_inserter(s0) );
+    s0.reserve( L.s0.size() );
+    std::copy( L.s0.begin(), L.s0.end(), back_inserter(s0) );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -224,15 +222,13 @@ namespace G2lib {
 
   void
   ClothoidList::push_back( Biarc const & c ) {
-    if ( clotoidList.empty() ) {
-      s0.push_back(0);
-      s0.push_back(c.length());
-    } else {
-      s0.push_back(s0.back()+c.getC0().length());
-      s0.push_back(s0.back()+c.getC1().length());
-    }
-    clotoidList.push_back(ClothoidCurve(c.getC0()));
-    clotoidList.push_back(ClothoidCurve(c.getC1()));
+    if ( clotoidList.empty() ) s0.push_back( 0 );
+    CircleArc const & C0 = c.getC0();
+    CircleArc const & C1 = c.getC1();
+    s0.push_back( s0.back()+C0.length() );
+    s0.push_back( s0.back()+C1.length() );
+    clotoidList.push_back( ClothoidCurve(C0) );
+    clotoidList.push_back( ClothoidCurve(C1) );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -366,8 +362,7 @@ namespace G2lib {
     ClothoidCurve c;
 
     G2LIB_ASSERT(
-      n > 1,
-      "ClothoidList::build_G1, at least 2 points are necessary"
+      n > 1, "ClothoidList::build_G1, at least 2 points are necessary"
     )
 
     if ( n == 2 ) {
@@ -420,8 +415,7 @@ namespace G2lib {
   ) {
 
     G2LIB_ASSERT(
-      n > 1,
-      "ClothoidList::build_G1, at least 2 points are necessary"
+      n > 1, "ClothoidList::build_G1, at least 2 points are necessary"
     )
 
     init();
@@ -466,8 +460,7 @@ namespace G2lib {
   ClothoidCurve const &
   ClothoidList::get( int_type idx ) const {
     G2LIB_ASSERT(
-      !clotoidList.empty(),
-      "ClothoidList::get( " << idx << " ) empty list"
+      !clotoidList.empty(), "ClothoidList::get( " << idx << " ) empty list"
     )
     G2LIB_ASSERT(
       idx >= 0 && idx < int_type(clotoidList.size()),
@@ -493,9 +486,8 @@ namespace G2lib {
   \*/
 
   real_type
-  ClothoidList::length() const {
-    return s0.back() - s0.front();
-  }
+  ClothoidList::length() const
+  { return s0.back() - s0.front(); }
 
   real_type
   ClothoidList::length_ISO( real_type offs ) const {
@@ -625,11 +617,11 @@ namespace G2lib {
   }
 
   /*\
-   |  _____                   _   _   _
-   | |_   _|   __ _ _ __   __| | | \ | |
-   |   | |    / _` | '_ \ / _` | |  \| |
-   |   | |   | (_| | | | | (_| | | |\  |
-   |   |_|    \__,_|_| |_|\__,_| |_| \_|
+   |  _____                   _    _   _
+   | |_   _|   __ _ _ __   __| |  | \ | |
+   |   | |    / _` | '_ \ / _` |  |  \| |
+   |   | |   | (_| | | | | (_| |  | |\  |
+   |   |_|    \__,_|_| |_|\__,_|  |_| \_|
   \*/
 
   real_type
@@ -1312,10 +1304,9 @@ namespace G2lib {
     } else {
       bbTriangles_ISO( offs, aabb_tri, m_pi/18, 1e100 );
       CL.bbTriangles_ISO( offs_CL, CL.aabb_tri, m_pi/18, 1e100 );
-      for ( vector<Triangle2D>::const_iterator i1 = aabb_tri.begin();
-            i1 != aabb_tri.end(); ++i1 ) {
-        for ( vector<Triangle2D>::const_iterator i2 = CL.aabb_tri.begin();
-              i2 != CL.aabb_tri.end(); ++i2 ) {
+      vector<Triangle2D>::const_iterator i1, i2;
+      for ( i1 = aabb_tri.begin(); i1 != aabb_tri.end(); ++i1 ) {
+        for ( i2 = CL.aabb_tri.begin(); i2 != CL.aabb_tri.end(); ++i2 ) {
           Triangle2D const & T1 = *i1;
           Triangle2D const & T2 = *i2;
 
@@ -1363,8 +1354,7 @@ namespace G2lib {
     aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
     G2LIB_ASSERT(
-      candidateList.size() > 0,
-      "ClothoidList::closestPoint no candidate"
+      candidateList.size() > 0, "ClothoidList::closestPoint no candidate"
     )
     int_type icurve = 0;
     DST = numeric_limits<real_type>::infinity();
@@ -1427,8 +1417,7 @@ namespace G2lib {
     aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
     G2LIB_ASSERT(
-      candidateList.size() > 0,
-      "ClothoidList::closestSegment no candidate"
+      candidateList.size() > 0, "ClothoidList::closestSegment no candidate"
     )
     int_type icurve = 0;
     real_type DST = numeric_limits<real_type>::infinity();
@@ -1451,6 +1440,8 @@ namespace G2lib {
     return icurve;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   int_type
   ClothoidList::closestPointInRange_ISO(
     real_type   qx,
@@ -1464,7 +1455,10 @@ namespace G2lib {
     real_type & dst,
     int_type  & icurve
   ) const {
-    G2LIB_ASSERT( !this->clotoidList.empty(), "ClothoidList::closestPointInRange_ISO, empty list" )
+    G2LIB_ASSERT(
+      !this->clotoidList.empty(),
+      "ClothoidList::closestPointInRange_ISO, empty list"
+    )
     int_type nsegs = this->numSegment();
     if ( nsegs == 1 ) {
       icurve = 0;
@@ -1503,6 +1497,84 @@ namespace G2lib {
         res    = C_res;
       }
     } while ( iseg != ie );
+    return res;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  ClothoidList::closestPointInSRange_ISO(
+    real_type   qx,
+    real_type   qy,
+    real_type   s_begin,
+    real_type   s_end,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst,
+    int_type  & icurve
+  ) const {
+    G2LIB_ASSERT(
+      !this->clotoidList.empty(),
+      "ClothoidList::closestPointInSRange_ISO, empty list"
+    )
+    // put in range
+    while ( s_begin < 0              ) s_begin += this->length();
+    while ( s_begin > this->length() ) s_begin += this->length();
+    while ( s_end < 0                ) s_end   += this->length();
+    while ( s_end > this->length()   ) s_end   += this->length();
+
+    // get initial and final segment
+    int_type i_begin = findAtS( s_begin );
+    int_type i_end   = findAtS( s_end );
+    int_type res     = 0;
+    if ( i_begin == i_end ) {
+      // stesso segmento
+      real_type     ss = this->s0[i_begin];
+      ClothoidCurve C  = this->clotoidList[i_begin]; // crea copia
+      C.trim( s_begin-ss, s_end-ss );
+      res = C.closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      s += ss;
+    } else {
+      // segmenti consecutivi
+      real_type x1, y1, s1, t1, dst1;
+
+      real_type     ss0  = this->s0[i_begin];
+      real_type     ss1  = this->s0[i_end];
+      ClothoidCurve C0   = this->clotoidList[i_begin]; // crea copia
+      ClothoidCurve C1   = this->clotoidList[i_end];   // crea copia
+
+      // taglia i segmenti
+      C0.trim( s_begin-ss0, C0.length() );
+      C1.trim( 0, s_end-ss1 );
+
+      // calcolo closest point
+      res    = C0.closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      s     += ss0;
+      icurve = i_begin;
+
+      int_type res1 = C0.closestPoint_ISO( qx, qy, x1, y1, s1, t1, dst1 );
+      s1 += ss1;
+
+      if ( dst1 < dst ) {
+        x = x1; y = y1; s = s1; t = t1;
+        dst = dst1; res = res1; icurve = i_end;
+      }
+      // ci sono altri segmenti?
+      if ( i_end < i_begin ) i_end += this->clotoidList.size();
+      ++i_begin;
+      if ( i_begin < i_end ) {
+        int_type icurve1;
+        res1 = this->closestPointInRange_ISO(
+          qx, qy, i_begin, i_end, x1, y1, s1, t1, dst1, icurve1
+        );
+        if ( dst1 < dst ) {
+          x = x1; y = y1; s = s1; t = t1;
+          dst = dst1; res = res1; icurve = icurve1;
+        }
+      }
+    }
     return res;
   }
 

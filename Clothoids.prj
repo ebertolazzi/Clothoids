@@ -7,7 +7,7 @@
     <param.summary>Clothoids, a library for clothoids computation and more</param.summary>
     <param.description>A library for clothoids computation and more.</param.description>
     <param.screenshot>${PROJECT_ROOT}/toolbox/logo.png</param.screenshot>
-    <param.version>1.0.0</param.version>
+    <param.version>1.0.1</param.version>
     <param.output>${PROJECT_ROOT}/Clothoids.mltbx</param.output>
     <param.products.name />
     <param.products.id />

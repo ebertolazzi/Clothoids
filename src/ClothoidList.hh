@@ -1325,6 +1325,18 @@ namespace G2lib {
     int_type
     closestSegment( real_type qx, real_type qy ) const;
 
+    /*!
+     *  \param  qx           x-coordinate of the point
+     *  \param  qy           y-coordinate of the point
+     *  \param  icurve_begin index of the initial segment
+     *  \param  icurve_end   index of the past to the last segment
+     *  \param  x            x-coordinate of the projected point on the curve
+     *  \param  y            y-coordinate of the projected point on the curve
+     *  \param  s            parameter on the curve of the projection
+     *  \param  t            curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst          distance point projected point
+     *  \param  icurve       number of the segment with the projected point
+     */
     int_type
     closestPointInRange_ISO(
       real_type   qx,
@@ -1339,6 +1351,18 @@ namespace G2lib {
       int_type  & icurve
     ) const;
 
+    /*!
+     *  \param  qx           x-coordinate of the point
+     *  \param  qy           y-coordinate of the point
+     *  \param  icurve_begin index of the initial segment
+     *  \param  icurve_end   index of the past to the last segment
+     *  \param  x            x-coordinate of the projected point on the curve
+     *  \param  y            y-coordinate of the projected point on the curve
+     *  \param  s            parameter on the curve of the projection
+     *  \param  t            curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst          distance point projected point
+     *  \param  icurve       number of the segment with the projected point
+     */
     int_type
     closestPointInRange_SAE(
       real_type   qx,
@@ -1354,6 +1378,64 @@ namespace G2lib {
     ) const {
       int_type res = this->closestPointInRange_ISO(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
+      );
+      t = -t;
+      return res;
+    }
+
+    /*!
+     *  \param  qx      x-coordinate of the point
+     *  \param  qy      y-coordinate of the point
+     *  \param  s_begin initial curvilinear coordinate of the search range
+     *  \param  s_end   final curvilinear coordinate of the search range
+     *  \param  x       x-coordinate of the projected point on the curve
+     *  \param  y       y-coordinate of the projected point on the curve
+     *  \param  s       parameter on the curve of the projection
+     *  \param  t       curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst     distance point projected point
+     *  \param  icurve  number of the segment with the projected point
+     */
+    int_type
+    closestPointInSRange_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   s_begin,
+      real_type   s_end,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst,
+      int_type  & icurve
+    ) const;
+
+    /*!
+     *  \param  qx      x-coordinate of the point
+     *  \param  qy      y-coordinate of the point
+     *  \param  s_begin initial curvilinear coordinate of the search range
+     *  \param  s_end   final curvilinear coordinate of the search range
+     *  \param  x       x-coordinate of the projected point on the curve
+     *  \param  y       y-coordinate of the projected point on the curve
+     *  \param  s       parameter on the curve of the projection
+     *  \param  t       curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst     distance point projected point
+     *  \param  icurve  number of the segment with the projected point
+     */
+    int_type
+    closestPointInSRange_SAE(
+      real_type   qx,
+      real_type   qy,
+      int_type    s_begin,
+      int_type    s_end,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst,
+      int_type  & icurve
+    ) const {
+      int_type res = this->closestPointInSRange_ISO(
+        qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
       );
       t = -t;
       return res;
