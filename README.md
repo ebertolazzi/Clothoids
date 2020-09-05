@@ -67,3 +67,28 @@ where OSTYPE can be `linux`, `osx`, `mingw_x64`, `win_x64`
 	enrico.bertolazzi@unitn.it
 	m.fregox@gmail.com
 
+
+References
+----------
+
+1. E. Bertolazzi, M. Frego,
+   **G1 fitting with clothoids**,<br>
+   Mathematical Methods in the Applied Sciences,
+   John Wiley & Sons, 2014, vol. 38, n.5, pp. 881-897,<br>
+   https://doi.org/10.1002/mma.3114
+
+2. E. Bertolazzi, M. Frego,
+   **On the G2 Hermite interpolation problem with clothoids**,<br>
+   Journal of Computational and Applied Mathematics, 2018, vol. 15, n.341, pp. 99-116.<br>
+   https://doi.org/10.1016/j.cam.2018.03.029
+
+3. E. Bertolazzi, M. Frego,
+   **Interpolating clothoid splines with curvature continuity**,<br>
+   Mathematical Methods in the Applied Sciences, 2018, vol. 41, n.4, pp. 1099-1476.<br>
+   https://doi.org/10.1002/mma.4700
+   
+4. E. Bertolazzi, M. Frego
+   **A Note on Robust Biarc Computation**,<br>
+   Computer-Aided Design & Applications 16 (5), 822-835
+ 
+

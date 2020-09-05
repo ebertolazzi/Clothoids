@@ -39,6 +39,8 @@ LIB_NAMES2 = { ...
   'PolynomialRoots-Utils', ...
 };
 
+MROOT = matlabroot;
+
 LIB_SRCS = '';
 LIB_OBJS = '';
 for k=1:length(LIB_NAMES)
@@ -64,11 +66,7 @@ disp('---------------------------------------------------------');
 
 CMD = 'mex -c -largeArrayDims -I../src -I../submodules/quarticRootsFlocke/src ';
 if isunix
-  if ismac
-    CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g" '];
-  else
-    CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g" '];
-  end
+  CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g" '];
 elseif ispc
 end
 CMD = [ CMD, LIB_SRCS ];
@@ -87,14 +85,23 @@ for k=1:length(NAMES)
   CMD = [ 'mex -I../src -output ../matlab/', N ];
   CMD = [ CMD, ' -largeArrayDims ../src_mex/mex_', N ];
   CMD = [ CMD, '.cc ', LIB_OBJS ];
-  if isunix
-    if ismac
-      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"'];
-    else
-      CMD = [CMD, ' -lstdc++ CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"'];
-    end
+
+  if ismac
+    CMD = [CMD, ' CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"'];
+  elseif isunix
+    % Workaround for MATLAB 2020 that force dynamic link with old libstdc++
+    % solution: link with static libstdc++
+    ARCH  = computer('arch');
+    PATH1 = [MROOT, '/bin/', ARCH];
+    PATH2 = [MROOT, '/extern/bin/', ARCH];
+    CMD   = [ CMD, ...
+      ' CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"' ...
+      ' LDFLAGS="\$LDFLAGS -static-libgcc -static-libstdc++"' ...
+      ' LINKLIBS="-L' PATH1 ' -L' PATH2 ' -lMatlabDataArray -lmx -lmex -lmat -lm "' ...
+    ];
   elseif ispc
   end
+
   disp(CMD);
   eval(CMD);
 end
