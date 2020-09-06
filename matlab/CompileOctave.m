@@ -83,6 +83,8 @@ for k=1:length(LIB_NAMES)
   delete([ LIB_NAMES{k}, '.o' ]);
 end
 
+disp('Install struct, io, statistics, optim package, it may take long time');
+
 pkg install -forge struct
 pkg install -forge io
 pkg install -forge statistics
