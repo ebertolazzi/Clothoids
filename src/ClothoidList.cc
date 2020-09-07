@@ -1521,9 +1521,9 @@ namespace G2lib {
     )
     // put in range
     while ( s_begin < 0              ) s_begin += this->length();
-    while ( s_begin > this->length() ) s_begin += this->length();
+    while ( s_begin > this->length() ) s_begin -= this->length();
     while ( s_end < 0                ) s_end   += this->length();
-    while ( s_end > this->length()   ) s_end   += this->length();
+    while ( s_end > this->length()   ) s_end   -= this->length();
 
     // get initial and final segment
     int_type i_begin = findAtS( s_begin );

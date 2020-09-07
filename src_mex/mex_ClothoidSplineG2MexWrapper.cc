@@ -12,6 +12,8 @@
 #include "Triangle2D.hh"
 #include "mex_utils.hh"
 
+#include "mex_Workaround.hxx"
+
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "ClothoidSplineG2MexWrapper:  Compute parameters of the G2 Hermite clothoid fitting\n" \

@@ -18,6 +18,8 @@
 #include "mex_utils.hh"
 #include "mex_info.hxx"
 
+#include "mex_Workaround.hxx"
+
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "ClothoidCurveMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \

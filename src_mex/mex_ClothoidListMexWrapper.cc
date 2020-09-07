@@ -20,6 +20,8 @@
 
 #include <fstream>
 
+#include "mex_Workaround.hxx"
+
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "ClothoidListMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \
@@ -1031,7 +1033,7 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('closestPointInSRange',OBJ,qx,qy,[s_begin,s_end],['ISO'/'SAE']): "
+    #define CMD "ClothoidListMexWrapper('closestPointInSRange',OBJ,qx,qy,s_begin,s_end,['ISO'/'SAE']): "
 
     MEX_ASSERT(
       4 <= nrhs && nrhs <= 7,

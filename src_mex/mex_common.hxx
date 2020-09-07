@@ -991,7 +991,7 @@ do_evaluate(
 
   if ( nrhs >= 4 && nrhs <= 5) {
 
-    #define CMD CMD_BASE "('evaluate',OBJ,s,offs[,'ISO'/'SAE']): "
+    #define CMD CMD_BASE "('evaluate',OBJ,s,[offs,'ISO'/'SAE']): "
 
     mwSize size, sizet;
     real_type const * s;
@@ -1046,11 +1046,7 @@ do_evaluate(
     #undef LOOPXY1
     #undef LOOPXY2
 
-    #undef CMD
-
   } else if ( nrhs == 3 ) {
-
-    #define CMD CMD_BASE "('eval_DDD',OBJ,s): "
 
     mwSize npts;
     real_type const * s;
@@ -1080,9 +1076,8 @@ do_evaluate(
 
     #undef LOOPXY1
     #undef LOOPXY2
-
-    #undef CMD
   }
+  #undef CMD
 }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

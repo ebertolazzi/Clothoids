@@ -15,6 +15,8 @@
 #include <sstream>
 #include <stdexcept>
 
+#include "mex_Workaround.hxx"
+
 #define arg_p0 prhs[0]
 #define arg_p1 prhs[1]
 #define arg_p2 prhs[2]

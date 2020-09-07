@@ -21,6 +21,8 @@
 
 #include <fstream>
 
+#include "mex_Workaround.hxx"
+
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "BiarcListMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \

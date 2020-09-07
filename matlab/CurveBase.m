@@ -43,73 +43,95 @@ classdef CurveBase < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function rotate( self, angle, cx, cy )
+      % rotate curve around `(cx,cy)` by angle `angle`
       feval( self.mexName, 'rotate', self.objectHandle, angle, cx, cy );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function reverse( self )
+      % reverse curve mileage
       feval( self.mexName, 'reverse', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function scale( self, sc )
+      % scale curve by `sc`
       feval( self.mexName, 'scale', self.objectHandle, sc );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeOrigin( self, newX0, newY0 )
+      % change the origgin or the curve to `(newX0,newY0)`
       feval( self.mexName, 'changeOrigin', self.objectHandle, newX0, newY0 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y, theta, kappa ] = evaluate( self, s, varargin )
+      % evaluate points, angle and curvature at `s`
+      % evaluate(s,[offs,ISO/SAE])
       [ x, y, theta, kappa ] = feval( self.mexName, 'evaluate', self.objectHandle, s, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval( self, varargin )
+      % evaluate points at `s`
+      % XY = eval(s,[offs,'ISO'/'SAE')
+      % [X,Y] = eval(s,[offs,'ISO'/'SAE')
       [ varargout{1:nargout} ] = ...
         feval( self.mexName, 'eval', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval_D( self, varargin )
-      % eval the circle derivative at curvilinear abscissa `s`
+      % evaluate derivative at `s`
+      % XY = eval_D(s,[offs,'ISO'/'SAE')
+      % [X,Y] = eval_D(s,[offs,'ISO'/'SAE')
       [ varargout{1:nargout} ] = ...
         feval( self.mexName, 'eval_D', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval_DD( self, varargin )
-      % eval the circle second derivative at curvilinear abscissa `s`
+      % evaluate second derivative at `s`
+      % XY = eval_DD(s,[offs,'ISO'/'SAE')
+      % [X,Y] = eval_DD(s,[offs,'ISO'/'SAE')
       [ varargout{1:nargout} ] = ...
         feval( self.mexName, 'eval_DD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = eval_DDD( self, varargin )
-      % eval the circle third derivative at curvilinear abscissa `s`
+      % evaluate third derivative at `s`
+      % XY = eval_DD(s,[offs,'ISO'/'SAE')
+      % [X,Y] = eval_DD(s,[offs,'ISO'/'SAE')
       [ varargout{1:nargout} ] = ...
         feval( self.mexName, 'eval_DDD', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta(self, s)
+      % evaluate angle at `s`
       th = feval( self.mexName, 'theta', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta_D(self, s)
+      % evaluate angle derivative [curvature] at `s`
       th = feval( self.mexName, 'theta_D', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta_DD(self, s)
+      % evaluate angle second derivative at `s`
       th = feval( self.mexName, 'theta_DD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = theta_DDD(self, s)
+      % evaluate angle third derivative at `s`
       th = feval( self.mexName, 'theta_DDD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = kappa(self, s)
+      % evaluate curvature at `s`
       th = feval( self.mexName, 'kappa', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = kappa_D(self, s)
+      % evaluate curvature derivative at `s`
       th = feval( self.mexName, 'kappa_D', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th = kappa_DD(self, s)
+      % evaluate curvature second derivative at `s`
       th = feval( self.mexName, 'kappa_DD', self.objectHandle, s );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

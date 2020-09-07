@@ -82,17 +82,17 @@ for k=1:length(NAMES)
   elseif isunix
     % Workaround for MATLAB 2020 that force dynamic link with old libstdc++
     % solution: link with static libstdc++
-    ARCH  = computer('arch');
-    PATH1 = [MROOT, '/bin/', ARCH];
-    PATH2 = [MROOT, '/extern/bin/', ARCH];
-    CMD   = [ CMD, ...
+    % ARCH  = computer('arch');
+    % PATH1 = [MROOT, '/bin/', ARCH];
+    % PATH2 = [MROOT, '/extern/bin/', ARCH];
+    CMD = [ CMD, ...
       ' CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"' ...
       ' LDFLAGS="\$LDFLAGS -static-libgcc -static-libstdc++"' ...
-      ' LINKLIBS="-L' PATH1 ' -L' PATH2 ' -lMatlabDataArray -lmx -lmex -lmat -lm "' ...
+      ' LINKLIBS="-L\$MATLABROOT/bin/\$ARCH -L\$MATLABROOT/extern/bin/\$ARCH -lMatlabDataArray -lmx -lmex -lmat -lm "' ...
     ];
   elseif ispc
   end
-  
+
   disp(CMD);
   eval(CMD);
 end

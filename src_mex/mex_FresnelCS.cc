@@ -11,6 +11,8 @@
 #include "Fresnel.hh"
 #include "mex_utils.hh"
 
+#include "mex_Workaround.hxx"
+
 #define MEX_ERROR_MESSAGE \
 "======================================================================\n" \
 "\n" \
