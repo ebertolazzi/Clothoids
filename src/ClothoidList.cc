@@ -457,6 +457,33 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  ClothoidList::build_raw(
+    int_type        n,
+    real_type const x[],
+    real_type const y[],
+    real_type const abscissa[],
+    real_type const theta[],
+    real_type const kappa[]
+  ) {
+    if ( n < 2 ) return false;
+    init();
+    clotoidList.reserve(size_t(n-1));
+    real_type const * px = x;
+    real_type const * py = y;
+    real_type const * pa = abscissa;
+    real_type const * pt = theta;
+    real_type const * pk = kappa;
+    for ( int_type i = 1; i < n; ++i, ++px, ++py, ++pa, ++pt, ++pk ) {
+      real_type dk  = pk[1]-pk[0];
+      real_type L   = pa[1]-pa[0];
+      push_back( *px, *py, *pt, *pk, dk, L );
+    }
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   ClothoidCurve const &
   ClothoidList::get( int_type idx ) const {
     G2LIB_ASSERT(

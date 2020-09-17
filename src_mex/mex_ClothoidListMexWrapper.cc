@@ -57,6 +57,7 @@
 "                                 s0, x0, y0, theta0, kappa0, ...\n" \
 "                                 s1, x1, y1, theta1, kappa1 );%\n" \
 "    ok = ClothoidListMexWrapper( 'build_G1', OBJ, x, y [,theta] );%\n" \
+"    ok = ClothoidListMexWrapper( 'build_raw', OBJ, x, y, abscissa, theta, kappa );%\n" \
 "    [theta,ok] = ClothoidListMexWrapper( 'build_theta', OBJ, x, y );%\n" \
 "    dtheta = ClothoidListMexWrapper( 'deltaTheta', OBJ );%\n" \
 "    dkappa = ClothoidListMexWrapper( 'deltaKappa', OBJ );%\n" \
@@ -314,6 +315,44 @@ namespace G2lib {
     } else {
       MEX_ASSERT( false, CMD "expected 4 or 5 input, nrhs = " << nrhs );
     }
+
+    setScalarBool( arg_out_0, ok );
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_build_raw(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('build_raw', OBJ, x, y, ascissa, theta, kappa): "
+
+    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT( nrhs == 7, CMD "expected 7 input, nrhs = " << nrhs );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    bool ok = true;
+
+    mwSize nx, ny;
+    real_type const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" );
+    real_type const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" );
+    MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(y) = " << ny );
+
+    real_type const * a = getVectorPointer( arg_in_4, ny, CMD "Error in reading abscissa" );
+    MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(abscissa) = " << ny );
+
+    real_type const * t = getVectorPointer( arg_in_5, ny, CMD "Error in reading theta" );
+    MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(theta) = " << ny );
+
+    real_type const * k = getVectorPointer( arg_in_6, ny, CMD "Error in reading kappa" );
+    MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " != length(kappa) = " << ny );
+
+    ok = ptr->build_raw( nx, x, y, a, t, k );
 
     setScalarBool( arg_out_0, ok );
     #undef CMD
@@ -1101,6 +1140,7 @@ namespace G2lib {
     CMD_GET_STK,
     CMD_GET_XY,
     CMD_BUILD_G1,
+    CMD_BUILD_RAW,
     CMD_3_ARC_G2,
     CMD_2_ARC_G2,
     CMD_3_ARC_CLC,
@@ -1136,6 +1176,7 @@ namespace G2lib {
     {"getSTK",CMD_GET_STK},
     {"getXY",CMD_GET_XY},
     {"build_G1",CMD_BUILD_G1},
+    {"build_raw",CMD_BUILD_RAW},
     {"build_3arcG2",CMD_3_ARC_G2},
     {"build_2arcG2",CMD_2_ARC_G2},
     {"build_CLC",CMD_3_ARC_CLC},
@@ -1200,6 +1241,9 @@ namespace G2lib {
         break;
       case CMD_BUILD_G1:
         do_build_G1( nlhs, plhs, nrhs, prhs );
+        break;
+      case CMD_BUILD_RAW:
+        do_build_raw( nlhs, plhs, nrhs, prhs );
         break;
       case CMD_3_ARC_G2:
         do_build_3arcG2( nlhs, plhs, nrhs, prhs );
