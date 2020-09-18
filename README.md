@@ -1,4 +1,5 @@
 Clothoids [![Build Status](https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master)](https://travis-ci.org/ebertolazzi/Clothoids)
+[![View ebertolazzi/Clothoids on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://it.mathworks.com/matlabcentral/fileexchange/64849-ebertolazzi-clothoids)
 
 ### G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
 
@@ -7,7 +8,8 @@ Clothoids [![Build Status](https://travis-ci.org/ebertolazzi/Clothoids.svg?branc
 for the documentation see `manual.md` or
 [Doxygen documentation: http://ebertolazzi.github.io/Clothoids/](http://ebertolazzi.github.io/Clothoids/)
 
-**installation**
+Installation
+------------
 
 download the library
 
@@ -57,6 +59,32 @@ using `make` you have the library and headers in the following tree
 ~~~~
 
 where OSTYPE can be `linux`, `osx`, `mingw_x64`, `win_x64`
+
+
+Installation mex interface
+--------------------------
+
+The easy way is to download the compiled Toolbox at
+[https://github.com/ebertolazzi/Clothoids/releases](https://github.com/ebertolazzi/Clothoids/releases) and install it.
+After installation in Matlab run the command `CompileClothoidsLib`.
+
+If you want to compile the Toolbox by yourself
+
+~~~
+cd toolbox
+ruby populate_toolbox.rb
+~~~
+
+run Matlab and from the cmmand windows of MATLAB:
+
+~~~
+> cd toolbox
+> setup
+> CompileClothoidsLib
+> run('../Clothoids.prj')
+~~~
+
+then compile toolbox and install.
 
 
 **Authors:**
