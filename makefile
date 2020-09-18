@@ -57,11 +57,11 @@ src_lua_interface/GenericContainerLuaInterface.hh
 
 # prefix for installation, use make PREFIX=/new/prefix install
 # to override
-PREFIX    = /usr/local
+PREFIX    = /opt/local
 FRAMEWORK = GenericContainer
 
-INC     += -I/usr/local/include -I./src -I./src_lua_interface
-LIB_DIR  = -L/usr/local/lib -L./lib
+INC     += -I./src -I./src_lua_interface
+LIB_DIR  = -L./lib
 LIBS     = $(LIB_DIR) -lGenericContainer -lm
 DEFINE   =
 
