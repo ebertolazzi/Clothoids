@@ -81,7 +81,7 @@ run Matlab and from the cmmand windows of MATLAB:
 > cd toolbox
 > setup
 > CompileClothoidsLib
-> run('../Clothoids.prj')
+> open('../Clothoids.prj')
 ~~~
 
 then compile toolbox and install.

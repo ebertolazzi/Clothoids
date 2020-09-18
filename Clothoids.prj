@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="2575816791" file="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/Clothoids.prj" location="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids" name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="2575816791" file="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/toolbox/../Clothoids.prj" location="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/toolbox/.." name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Clothoids</param.appname>
     <param.authnamewatermark>Enrico Bertolazzi</param.authnamewatermark>
     <param.email>enrico.bertolazzi@unitn.it</param.email>
@@ -99,7 +99,6 @@ setup.m
     </fileset.rootdir>
     <fileset.rootfiles>
       <file>${PROJECT_ROOT}/toolbox/CompileClothoidsLib.m</file>
-      <file>${PROJECT_ROOT}/toolbox/bin</file>
       <file>${PROJECT_ROOT}/toolbox/demos.xml</file>
       <file>${PROJECT_ROOT}/toolbox/doc</file>
       <file>${PROJECT_ROOT}/toolbox/helptoc.xml</file>
@@ -116,7 +115,7 @@ setup.m
     <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/Clothoids.mltbx</file>
+      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/toolbox/../Clothoids.mltbx</file>
     </build-deliverables>
     <workflow />
     <matlab>
