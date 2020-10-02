@@ -116,28 +116,28 @@ namespace GenericContainerNamespace {
   // ---------------------------------------------------------------------------
   template <typename TYPE>
   class mat_type : public std::vector<TYPE> {
-    unsigned _numRows;
-    unsigned _numCols;
+    unsigned m_numRows;
+    unsigned m_numCols;
     typedef typename std::vector<TYPE>::size_type size_type;
   public:
 
     GENERIC_CONTAINER_API_DLL
     mat_type()
-    : _numRows(0)
-    , _numCols(0)
+    : m_numRows(0)
+    , m_numCols(0)
     {}
 
     GENERIC_CONTAINER_API_DLL
     mat_type( unsigned nr, unsigned nc )
-    : _numRows(nr)
-    , _numCols(nc)
+    : m_numRows(nr)
+    , m_numCols(nc)
     { std::vector<TYPE>::resize(size_type(nr*nc)); }
 
     GENERIC_CONTAINER_API_DLL
     void
     resize( unsigned nr, unsigned nc ) {
-      _numRows = nr;
-      _numCols = nc;
+      m_numRows = nr;
+      m_numCols = nc;
       std::vector<TYPE>::resize(size_type(nr*nc));
     }
 
@@ -157,8 +157,8 @@ namespace GenericContainerNamespace {
     void
     getRow( unsigned nr, TYPE * R ) const;
 
-    GENERIC_CONTAINER_API_DLL unsigned numRows() const { return _numRows; }
-    GENERIC_CONTAINER_API_DLL unsigned numCols() const { return _numCols; }
+    GENERIC_CONTAINER_API_DLL unsigned numRows() const { return m_numRows; }
+    GENERIC_CONTAINER_API_DLL unsigned numCols() const { return m_numCols; }
 
     GENERIC_CONTAINER_API_DLL
     TYPE const & operator () ( unsigned i, unsigned j ) const;
@@ -321,8 +321,8 @@ namespace GenericContainerNamespace {
 
     } DataStorage;
 
-    DataStorage _data;      //!< The data stored in the class instance
-    TypeAllowed _data_type; //!< The kind of data stored
+    DataStorage m_data;      //!< The data stored in the class instance
+    TypeAllowed m_data_type; //!< The kind of data stored
 
     void allocate_string();
     void allocate_complex();
@@ -350,8 +350,8 @@ namespace GenericContainerNamespace {
     bool simple_data()     const;
     bool simple_vec_data() const;
     #else
-    bool simple_data()     const { return _data_type <= GC_STRING; }
-    bool simple_vec_data() const { return _data_type <= GC_VEC_STRING; }
+    bool simple_data()     const { return m_data_type <= GC_STRING; }
+    bool simple_vec_data() const { return m_data_type <= GC_VEC_STRING; }
     #endif
 
   public:
@@ -661,7 +661,7 @@ namespace GenericContainerNamespace {
     :|:   20. `map_type`
     \*/
     GENERIC_CONTAINER_API_DLL
-    TypeAllowed get_type() const { return _data_type; }
+    TypeAllowed get_type() const { return m_data_type; }
 
     //! Return a string pointer representing the type of data stored
     GENERIC_CONTAINER_API_DLL
@@ -739,11 +739,11 @@ namespace GenericContainerNamespace {
     #else
     template <typename T>
     T& get_pointer()
-    { ck("get_pointer",GC_POINTER); return *static_cast<T*>(&(_data.p)); }
+    { ck("get_pointer",GC_POINTER); return *static_cast<T*>(&(m_data.p)); }
 
     template <typename T>
     T get_pointer() const
-    { ck("get_pointer",GC_POINTER); return static_cast<T>(_data.p); }
+    { ck("get_pointer",GC_POINTER); return static_cast<T>(m_data.p); }
     #endif
 
     GENERIC_CONTAINER_API_DLL
@@ -1305,67 +1305,67 @@ namespace GenericContainerNamespace {
     //! Construct a generic container storing a boolean
     GENERIC_CONTAINER_API_DLL
     GenericContainer( bool const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
     GenericContainer( uint_type const & a )
-    : _data_type(GC_NOTYPE) { *this = a; }
+    : m_data_type(GC_NOTYPE) { *this = a; }
 
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
     GenericContainer( int_type const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
     GenericContainer( ulong_type const & a )
-    : _data_type(GC_NOTYPE) { *this = a; }
+    : m_data_type(GC_NOTYPE) { *this = a; }
 
     //! Construct a generic container storing an integer
     GENERIC_CONTAINER_API_DLL
     GenericContainer( long_type const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a floating point number
     GENERIC_CONTAINER_API_DLL
     GenericContainer( float const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a floating point number
     GENERIC_CONTAINER_API_DLL
     GenericContainer( double const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a complex floating point number
     GENERIC_CONTAINER_API_DLL
     GenericContainer( std::complex<float> const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a complex floating point number
     GENERIC_CONTAINER_API_DLL
     GenericContainer( std::complex<double> const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a string
     GENERIC_CONTAINER_API_DLL
     GenericContainer( char const a[] )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a string
     GENERIC_CONTAINER_API_DLL
     GenericContainer( std::string const & a )
-    : _data_type(GC_NOTYPE) { this->operator=(a); }
+    : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
     //! Construct a generic container storing a pointer
     GENERIC_CONTAINER_API_DLL
     GenericContainer( pointer_type a )
-    : _data_type(GC_NOTYPE) { this->set_pointer(a); }
+    : m_data_type(GC_NOTYPE) { this->set_pointer(a); }
 
     //! Construct a generic container copying container `gc`
     GENERIC_CONTAINER_API_DLL
     GenericContainer( GenericContainer const & gc )
-    : _data_type(GC_NOTYPE) { this->load(gc); }
+    : m_data_type(GC_NOTYPE) { this->load(gc); }
     //@}
 
     //! \name Utilities methods
