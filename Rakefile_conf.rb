@@ -11,7 +11,7 @@ else
     PARALLEL = ''
     QUIET    = ''
   else
-    cmakeversion = %x( cmake --version ).scan(/\d+\.\d+/).last
+    cmakeversion = %x( cmake --version ).scan(/\d+\.\d+\.\d+/).last
     mm = cmakeversion.split('.');
     if mm[0].to_i > 3 || (mm[0].to_i == 3 && mm[1].to_i >= 12) then
       PARALLEL = '--parallel 8 '
