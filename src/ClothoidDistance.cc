@@ -531,7 +531,8 @@ namespace G2lib {
     real_type dx = qx-X;
     real_type dy = qy-Y;
     T = dx * nx + dy * ny;
-    if ( abs(abs(T)-dst) < std::max(real_type(1),dst)*machepsi1000 ) return 1;
+    real_type tol = (dst > 1 ? dst*machepsi1000 : machepsi1000);
+    if ( abs(abs(T)-dst) < tol ) return 1;
     return -1;
   }
 

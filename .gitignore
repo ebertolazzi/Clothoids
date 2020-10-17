@@ -8,6 +8,7 @@ DerivedData
 *.blg
 *.spl
 *.o
+/vs_20*
 lib/*
 Usage.pdf
 cmake

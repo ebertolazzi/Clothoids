@@ -561,7 +561,8 @@ namespace G2lib {
     real_type xx, yy;
     m_polylineList[ipos].eval_ISO( S - m_s0[ipos], T, xx, yy );
     real_type err = hypot( x - xx, y - yy );
-    if ( err > std::max(real_type(1),DST)*machepsi1000 ) return -1;
+    real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
+    if ( err > tol ) return -1;
     return 1;
   }
 

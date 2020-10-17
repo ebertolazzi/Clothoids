@@ -1409,7 +1409,8 @@ namespace G2lib {
     m_clotoidList[icurve].nor_ISO( s - m_s0[icurve], nx, ny );
     t = (qx-x) * nx + (qy-y) * ny - offs;
     real_type err = abs( abs(t) - DST );
-    if ( err > std::max(real_type(1),DST)*machepsi1000 ) return -1;
+    real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
+    if ( err > tol ) return -1;
     return 1;
   }
 
@@ -1589,7 +1590,7 @@ namespace G2lib {
         dst = dst1; res = res1; icurve = i_end;
       }
       // ci sono altri segmenti?
-      if ( i_end < i_begin ) i_end += m_clotoidList.size();
+      if ( i_end < i_begin ) i_end += int_type(m_clotoidList.size());
       ++i_begin;
       if ( i_begin < i_end ) {
         int_type icurve1;
