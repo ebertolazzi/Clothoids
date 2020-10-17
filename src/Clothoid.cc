@@ -48,14 +48,14 @@ namespace G2lib {
   using std::isfinite;
   using std::numeric_limits;
 
-  int_type  ClothoidCurve::max_iter  = 10;
-  real_type ClothoidCurve::tolerance = 1e-9;
+  int_type  ClothoidCurve::m_max_iter  = 10;
+  real_type ClothoidCurve::m_tolerance = 1e-9;
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   ClothoidCurve::ClothoidCurve( BaseCurve const & C )
   : BaseCurve(G2LIB_CLOTHOID)
-  , aabb_done(false)
+  , m_aabb_done(false)
   {
     switch ( C.type() ) {
     case G2LIB_LINE:
@@ -99,7 +99,7 @@ namespace G2lib {
         "something is going wrong or parameters are not well set"
       )
       // estimate angle variation and compute step accodingly
-      real_type k   = CD.kappa( ss );
+      real_type k   = m_CD.kappa( ss );
       real_type dss = ds/(1+k*offs); // scale length with offset
       real_type sss = ss + dss;
       if ( sss > s_end ) {
@@ -113,7 +113,7 @@ namespace G2lib {
       // check and recompute if necessary
       real_type thhh = theta(sss);
       if ( abs(thh-thhh) > max_angle ) {
-        k    = CD.kappa( sss );
+        k    = m_CD.kappa( sss );
         dss  = abs(max_angle/k);
         sss  = ss + dss;
         thhh = theta(sss);
@@ -138,14 +138,14 @@ namespace G2lib {
     s.reserve( size_t(npts) );
     s.push_back(0);
 
-    real_type ds = L/npts;
-    if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
-      optimized_sample_internal_ISO( 0, L, offs, ds, max_angle, s );
+    real_type ds = m_L/npts;
+    if ( m_CD.kappa0*m_CD.dk >= 0 || m_CD.kappa(m_L)*m_CD.dk <= 0 ) {
+      optimized_sample_internal_ISO( 0, m_L, offs, ds, max_angle, s );
     } else {
       // flex inside, split clothoid
-      real_type sflex = -CD.kappa0/CD.dk;
-      optimized_sample_internal_ISO( 0, sflex, offs, ds, max_angle, s );
-      optimized_sample_internal_ISO( sflex, L, offs, ds, max_angle, s );
+      real_type sflex = -m_CD.kappa0/m_CD.dk;
+      optimized_sample_internal_ISO( 0,   sflex, offs, ds, max_angle, s );
+      optimized_sample_internal_ISO( sflex, m_L, offs, ds, max_angle, s );
     }
   }
 
@@ -175,8 +175,8 @@ namespace G2lib {
     static real_type const one_degree = m_pi/180;
 
     real_type ss  = s_begin;
-    real_type thh = CD.theta(ss);
-    real_type MX  = min( L, max_size );
+    real_type thh = m_CD.theta(ss);
+    real_type MX  = min( m_L, max_size );
     for ( int_type npts = 0; ss < s_end; ++npts ) {
       G2LIB_ASSERT(
         npts < 100000000,
@@ -186,7 +186,7 @@ namespace G2lib {
       )
 
       // estimate angle variation and compute step accodingly
-      real_type k   = CD.kappa( ss );
+      real_type k   = m_CD.kappa( ss );
       real_type dss = MX/(1+k*offs); // scale length with offset
       real_type sss = ss + dss;
       if ( sss > s_end ) {
@@ -200,15 +200,15 @@ namespace G2lib {
       // check and recompute if necessary
       real_type thhh = theta(sss);
       if ( abs(thh-thhh) > max_angle ) {
-        k    = CD.kappa( sss );
+        k    = m_CD.kappa( sss );
         dss  = abs(max_angle/k);
         sss  = ss + dss;
         thhh = theta(sss);
       }
 
       real_type x0, y0, x1, y1;
-      CD.eval_ISO( ss,  offs, x0, y0 );
-      CD.eval_ISO( sss, offs, x1, y1 );
+      m_CD.eval_ISO( ss,  offs, x0, y0 );
+      m_CD.eval_ISO( sss, offs, x1, y1 );
 
       real_type tx0    = cos(thh);
       real_type ty0    = sin(thh);
@@ -243,13 +243,13 @@ namespace G2lib {
     real_type            max_size,
     int_type             icurve
   ) const {
-    if ( CD.kappa0*CD.dk >= 0 || CD.kappa(L)*CD.dk <= 0 ) {
-      bbTriangles_internal_ISO( offs, tvec, 0, L, max_angle, max_size, icurve );
+    if ( m_CD.kappa0*m_CD.dk >= 0 || m_CD.kappa(m_L)*m_CD.dk <= 0 ) {
+      bbTriangles_internal_ISO( offs, tvec, 0, m_L, max_angle, max_size, icurve );
     } else {
       // flex inside, split clothoid
-      real_type sflex = -CD.kappa0/CD.dk;
-      bbTriangles_internal_ISO( offs, tvec, 0, sflex, max_angle, max_size, icurve );
-      bbTriangles_internal_ISO( offs, tvec, sflex, L, max_angle, max_size, icurve );
+      real_type sflex = -m_CD.kappa0/m_CD.dk;
+      bbTriangles_internal_ISO( offs, tvec, 0,   sflex, max_angle, max_size, icurve );
+      bbTriangles_internal_ISO( offs, tvec, sflex, m_L, max_angle, max_size, icurve );
     }
   }
 
@@ -307,10 +307,10 @@ namespace G2lib {
     real_type max_size
   ) const {
 
-    if ( aabb_done &&
-         isZero( offs-aabb_offs ) &&
-         isZero( max_angle-aabb_max_angle ) &&
-         isZero( max_size-aabb_max_size ) ) return;
+    if ( m_aabb_done &&
+         isZero( offs-m_aabb_offs ) &&
+         isZero( max_angle-m_aabb_max_angle ) &&
+         isZero( max_size-m_aabb_max_size ) ) return;
 
     #ifdef G2LIB_USE_CXX11
     vector<shared_ptr<BBox const> > bboxes;
@@ -318,11 +318,11 @@ namespace G2lib {
     vector<BBox const *> bboxes;
     #endif
 
-    bbTriangles_ISO( offs, aabb_tri, max_angle, max_size );
-    bboxes.reserve(aabb_tri.size());
+    bbTriangles_ISO( offs, m_aabb_tri, max_angle, max_size );
+    bboxes.reserve(m_aabb_tri.size());
     vector<Triangle2D>::const_iterator it;
     int_type ipos = 0;
-    for ( it = aabb_tri.begin(); it != aabb_tri.end(); ++it, ++ipos ) {
+    for ( it = m_aabb_tri.begin(); it != m_aabb_tri.end(); ++it, ++ipos ) {
       real_type xmin, ymin, xmax, ymax;
       it->bbox( xmin, ymin, xmax, ymax );
       #ifdef G2LIB_USE_CXX11
@@ -335,11 +335,11 @@ namespace G2lib {
       );
       #endif
     }
-    aabb_tree.build(bboxes);
-    aabb_done      = true;
-    aabb_offs      = offs;
-    aabb_max_angle = max_angle;
-    aabb_max_size  = max_size;
+    m_aabb_tree.build(bboxes);
+    m_aabb_done      = true;
+    m_aabb_offs      = offs;
+    m_aabb_max_angle = max_angle;
+    m_aabb_max_size  = max_size;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -357,7 +357,7 @@ namespace G2lib {
     this->build_AABBtree_ISO( 0 );
     C.build_AABBtree_ISO( 0 );
     T2D_collision_ISO fun( this, 0, &C, 0 );
-    return aabb_tree.collision( C.aabb_tree, fun, false );
+    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -371,7 +371,7 @@ namespace G2lib {
     this->build_AABBtree_ISO( offs );
     C.build_AABBtree_ISO( offs_C );
     T2D_collision_ISO fun( this, offs, &C, offs_C );
-    return aabb_tree.collision( C.aabb_tree, fun, false );
+    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -388,7 +388,7 @@ namespace G2lib {
     this->build_AABBtree_ISO( offs, max_angle, max_size );
     C.build_AABBtree_ISO( offs_C, max_angle, max_size );
     T2D_approximate_collision fun( this, &C );
-    return aabb_tree.collision( C.aabb_tree, fun, false );
+    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -413,8 +413,8 @@ namespace G2lib {
     real_type           & ss1,
     real_type           & ss2
   ) const {
-    real_type eps1   = machepsi1000*L;
-    real_type eps2   = machepsi1000*pC->L;
+    real_type eps1   = machepsi1000*m_L;
+    real_type eps2   = machepsi1000*pC->m_L;
     real_type s1_min = T1.S0()-eps1;
     real_type s1_max = T1.S1()+eps1;
     real_type s2_min = T2.S0()-eps2;
@@ -424,12 +424,12 @@ namespace G2lib {
 
     ss1 = (s1_min+s1_max)/2;
     ss2 = (s2_min+s2_max)/2;
-    for ( int_type i = 0; i < max_iter && !converged; ++i ) {
+    for ( int_type i = 0; i < m_max_iter && !converged; ++i ) {
       real_type t1[2], t2[2], p1[2], p2[2];
-      CD.eval_ISO  ( ss1, offs, p1[0], p1[1] );
-      CD.eval_ISO_D( ss1, offs, t1[0], t1[1] );
-      pC->CD.eval_ISO  ( ss2, offs_C, p2[0], p2[1] );
-      pC->CD.eval_ISO_D( ss2, offs_C, t2[0], t2[1] );
+      m_CD.eval_ISO  ( ss1, offs, p1[0], p1[1] );
+      m_CD.eval_ISO_D( ss1, offs, t1[0], t1[1] );
+      pC->m_CD.eval_ISO  ( ss2, offs_C, p2[0], p2[1] );
+      pC->m_CD.eval_ISO_D( ss2, offs_C, t2[0], t2[1] );
       /*
       // risolvo il sistema
       // p1 + alpha * t1 = p2 + beta * t2
@@ -452,7 +452,7 @@ namespace G2lib {
       if ( out ) {
         if ( ++nout > 3 ) break;
       } else {
-        converged = abs(px) <= tolerance && abs(py) <= tolerance;
+        converged = abs(px) <= m_tolerance && abs(py) <= m_tolerance;
       }
     }
     if ( converged ) {
@@ -478,15 +478,15 @@ namespace G2lib {
       this->build_AABBtree_ISO( offs );
       C.build_AABBtree_ISO( offs_C );
       AABBtree::VecPairPtrBBox iList;
-      aabb_tree.intersect( C.aabb_tree, iList );
+      m_aabb_tree.intersect( C.m_aabb_tree, iList );
       AABBtree::VecPairPtrBBox::const_iterator ip;
 
       for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
         size_t ipos1 = size_t(ip->first->Ipos());
         size_t ipos2 = size_t(ip->second->Ipos());
 
-        Triangle2D const & T1 = aabb_tri[ipos1];
-        Triangle2D const & T2 = C.aabb_tri[ipos2];
+        Triangle2D const & T1 = m_aabb_tri[ipos1];
+        Triangle2D const & T2 = C.m_aabb_tri[ipos2];
 
         real_type ss1, ss2;
         bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
@@ -497,12 +497,11 @@ namespace G2lib {
         }
       }
     } else {
-      bbTriangles_ISO( offs, aabb_tri, m_pi/18, 1e100 );
-      C.bbTriangles_ISO( offs_C, C.aabb_tri, m_pi/18, 1e100 );
-      for ( vector<Triangle2D>::const_iterator i1 = aabb_tri.begin();
-            i1 != aabb_tri.end(); ++i1 ) {
-        for ( vector<Triangle2D>::const_iterator i2 = C.aabb_tri.begin();
-              i2 != C.aabb_tri.end(); ++i2 ) {
+      bbTriangles_ISO( offs, m_aabb_tri, m_pi/18, 1e100 );
+      C.bbTriangles_ISO( offs_C, C.m_aabb_tri, m_pi/18, 1e100 );
+      vector<Triangle2D>::const_iterator i1, i2;
+      for ( i1 = m_aabb_tri.begin(); i1 != m_aabb_tri.end(); ++i1 ) {
+        for ( i2 = C.m_aabb_tri.begin(); i2 != C.m_aabb_tri.end(); ++i2 ) {
           Triangle2D const & T1 = *i1;
           Triangle2D const & T2 = *i2;
 
@@ -542,11 +541,12 @@ namespace G2lib {
     // minimize using circle approximation
     s = (s_begin + s_end)/2;
     int_type nout = 0;
-    for ( int_type iter = 0; iter < max_iter; ++iter ) {
+    int_type n_ok = 0;
+    for ( int_type iter = 0; iter < m_max_iter; ++iter ) {
       // osculating circle
-      CD.eval_ISO( s, offs, x, y );
-      real_type th = CD.theta( s );
-      real_type kk = CD.kappa( s );
+      m_CD.eval_ISO( s, offs, x, y );
+      real_type th = m_CD.theta( s );
+      real_type kk = m_CD.kappa( s );
       real_type sc = 1+kk*offs;
       real_type ds = projectPointOnCircle( x, y, th, kk/sc, qx, qy )/sc;
 
@@ -559,7 +559,8 @@ namespace G2lib {
       if ( out ) {
         if ( ++nout > 3 ) break;
       } else {
-        if ( abs(ds) <= tolerance ) break;
+        // force one more itaration to improve accuracy
+        if ( abs(ds) <= m_tolerance && ++n_ok >= 2 ) break;
       }
     }
     dst = hypot( qx-x, qy-y );
@@ -599,7 +600,7 @@ namespace G2lib {
     this->build_AABBtree_ISO( offs );
 
     AABBtree::VecPtrBBox candidateList;
-    aabb_tree.min_distance( qx, qy, candidateList );
+    m_aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
     G2LIB_ASSERT(
       candidateList.size() > 0,
@@ -607,7 +608,7 @@ namespace G2lib {
     )
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
       size_t ipos = size_t((*ic)->Ipos());
-      Triangle2D const & T = aabb_tri[ipos];
+      Triangle2D const & T = m_aabb_tri[ipos];
       real_type dst = T.distMin( qx, qy );
       if ( dst < DST ) {
         // refine distance
@@ -627,7 +628,7 @@ namespace G2lib {
     nor_ISO( s, nx, ny );
     t = (qx-x) * nx + (qy-y) * ny - offs;
     real_type err = abs( abs(t) - DST );
-    if ( err > DST*machepsi1000 ) return -1;
+    if ( err > std::max(real_type(1),DST)*machepsi1000 ) return -1;
     return 1;
   }
 
@@ -637,14 +638,14 @@ namespace G2lib {
   ClothoidCurve::thetaTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    real_type kL  = CD.kappa0;
-    real_type kR  = CD.kappa(L);
+    real_type kL  = m_CD.kappa0;
+    real_type kR  = m_CD.kappa(m_L);
     real_type thL = 0;
-    real_type thR = CD.deltaTheta(L);
+    real_type thR = m_CD.deltaTheta(m_L);
     if ( kL*kR < 0 ) {
-      real_type root = -CD.kappa0/CD.dk;
-      if ( root > 0 && root < L ) {
-        real_type thM  = CD.deltaTheta(root);
+      real_type root = -m_CD.kappa0/m_CD.dk;
+      if ( root > 0 && root < m_L ) {
+        real_type thM  = m_CD.deltaTheta(root);
         return abs( thR - thM ) + abs( thM - thL );
       }
     }
@@ -657,16 +658,16 @@ namespace G2lib {
   ClothoidCurve::thetaMinMax( real_type & thMin, real_type & thMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    real_type kL  = CD.kappa0;
-    real_type kR  = CD.kappa(L);
+    real_type kL  = m_CD.kappa0;
+    real_type kR  = m_CD.kappa(m_L);
     real_type thL = 0;
-    real_type thR = CD.deltaTheta(L);
+    real_type thR = m_CD.deltaTheta(m_L);
     if ( thL < thR ) { thMin = thL; thMax = thR; }
     else             { thMin = thR; thMax = thL; }
     if ( kL*kR < 0 ) {
-      real_type root = -CD.kappa0/CD.dk;
-      if ( root > 0 && root < L ) {
-        real_type thM = CD.deltaTheta(root);
+      real_type root = -m_CD.kappa0/m_CD.dk;
+      if ( root > 0 && root < m_L ) {
+        real_type thM = m_CD.deltaTheta(root);
         if      ( thM < thMin ) thMin = thM;
         else if ( thM > thMax ) thMax = thM;
       }
@@ -680,8 +681,8 @@ namespace G2lib {
   ClothoidCurve::curvatureMinMax( real_type & kMin, real_type & kMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    kMin = CD.kappa0;
-    kMax = CD.kappa(L);
+    kMin = m_CD.kappa0;
+    kMax = m_CD.kappa(m_L);
     if ( kMax < kMin ) swap( kMax, kMin );
     return kMax - kMin;
   }
@@ -692,8 +693,8 @@ namespace G2lib {
   ClothoidCurve::curvatureTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    real_type km = CD.kappa0;
-    real_type kp = CD.kappa(L);
+    real_type km = m_CD.kappa0;
+    real_type kp = m_CD.kappa(m_L);
     return abs(kp-km);
   }
 
@@ -701,59 +702,59 @@ namespace G2lib {
 
   real_type
   ClothoidCurve::integralCurvature2() const {
-    return L*( CD.kappa0*(CD.kappa0+L*CD.dk) + (L*L)*CD.dk*CD.dk/3 );
+    return m_L*( m_CD.kappa0*(m_CD.kappa0+m_L*m_CD.dk) + (m_L*m_L)*m_CD.dk*m_CD.dk/3 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   ClothoidCurve::integralJerk2() const {
-    real_type k2 = CD.kappa0*CD.kappa0;
-    real_type k3 = CD.kappa0*k2;
+    real_type k2 = m_CD.kappa0*m_CD.kappa0;
+    real_type k3 = m_CD.kappa0*k2;
     real_type k4 = k2*k2;
-    real_type t1 = L;
-    real_type t2 = L*t1;
-    real_type t3 = L*t2;
-    real_type t4 = L*t3;
-    return ((((t4/5*CD.dk+t3*CD.kappa0)*CD.dk+(1+2*t2)*k2)*CD.dk+2*t1*k3)*CD.dk+k4)*L;
+    real_type t1 = m_L;
+    real_type t2 = m_L*t1;
+    real_type t3 = m_L*t2;
+    real_type t4 = m_L*t3;
+    return ((((t4/5*m_CD.dk+t3*m_CD.kappa0)*m_CD.dk+(1+2*t2)*k2)*m_CD.dk+2*t1*k3)*m_CD.dk+k4)*m_L;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   ClothoidCurve::integralSnap2() const {
-    real_type k2  = CD.kappa0*CD.kappa0;
-    real_type k3  = CD.kappa0*k2;
+    real_type k2  = m_CD.kappa0*m_CD.kappa0;
+    real_type k3  = m_CD.kappa0*k2;
     real_type k4  = k2*k2;
-    real_type k5  = k4*CD.kappa0;
+    real_type k5  = k4*m_CD.kappa0;
     real_type k6  = k4*k2;
-    real_type dk2 = CD.dk*CD.dk;
-    real_type dk3 = CD.dk*dk2;
+    real_type dk2 = m_CD.dk*m_CD.dk;
+    real_type dk3 = m_CD.dk*dk2;
     real_type dk4 = dk2*dk2;
-    real_type dk5 = dk4*CD.dk;
+    real_type dk5 = dk4*m_CD.dk;
     real_type dk6 = dk4*dk2;
-    real_type t2  = L;
-    real_type t3  = L*t2;
-    real_type t4  = L*t3;
-    real_type t5  = L*t4;
-    real_type t6  = L*t5;
-    real_type t7  = L*t6;
+    real_type t2  = m_L;
+    real_type t3  = m_L*t2;
+    real_type t4  = m_L*t3;
+    real_type t5  = m_L*t4;
+    real_type t6  = m_L*t5;
+    real_type t7  = m_L*t6;
 
-    return ( (t7/7)*dk6 + dk5*CD.kappa0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
-             5*dk2*k4*t3 + 3*dk3*t3 + 3*CD.dk*k5*t2 + 9*dk2*CD.kappa0*t2 +
-             k6+9*k2*CD.dk ) * L;
+    return ( (t7/7)*dk6 + dk5*m_CD.kappa0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
+             5*dk2*k4*t3 + 3*dk3*t3 + 3*m_CD.dk*k5*t2 + 9*dk2*m_CD.kappa0*t2 +
+             k6+9*k2*m_CD.dk ) * m_L;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ostream_type &
   operator << ( ostream_type & stream, ClothoidCurve const & c ) {
-    stream <<   "x0     = " << c.CD.x0
-           << "\ny0     = " << c.CD.y0
-           << "\ntheta0 = " << c.CD.theta0
-           << "\nkappa0 = " << c.CD.kappa0
-           << "\ndk     = " << c.CD.dk
-           << "\nL      = " << c.L
+    stream <<   "x0     = " << c.m_CD.x0
+           << "\ny0     = " << c.m_CD.y0
+           << "\ntheta0 = " << c.m_CD.theta0
+           << "\nkappa0 = " << c.m_CD.kappa0
+           << "\ndk     = " << c.m_CD.dk
+           << "\nL      = " << c.m_L
            << "\n";
     return stream;
   }

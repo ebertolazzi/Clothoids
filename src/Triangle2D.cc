@@ -196,26 +196,26 @@ namespace G2lib {
     real_type C   = cos(angle);
     real_type S   = sin(angle);
 
-    real_type dx  = p1[0] - cx;
-    real_type dy  = p1[1] - cy;
+    real_type dx  = m_p1[0] - cx;
+    real_type dy  = m_p1[1] - cy;
     real_type ndx = C*dx - S*dy;
     real_type ndy = C*dy + S*dx;
-    p1[0] = cx + ndx;
-    p1[1] = cy + ndy;
+    m_p1[0] = cx + ndx;
+    m_p1[1] = cy + ndy;
 
-    dx  = p2[0] - cx;
-    dy  = p2[1] - cy;
-    ndx = C*dx - S*dy;
-    ndy = C*dy + S*dx;
-    p2[0] = cx + ndx;
-    p2[1] = cy + ndy;
+    dx      = m_p2[0] - cx;
+    dy      = m_p2[1] - cy;
+    ndx     = C*dx - S*dy;
+    ndy     = C*dy + S*dx;
+    m_p2[0] = cx + ndx;
+    m_p2[1] = cy + ndy;
 
-    dx  = p3[0] - cx;
-    dy  = p3[1] - cy;
-    ndx = C*dx - S*dy;
-    ndy = C*dy + S*dx;
-    p3[0] = cx + ndx;
-    p3[1] = cy + ndy;
+    dx      = m_p3[0] - cx;
+    dy      = m_p3[1] - cy;
+    ndx     = C*dx - S*dy;
+    ndy     = C*dy + S*dx;
+    m_p3[0] = cx + ndx;
+    m_p3[1] = cy + ndy;
 
   }
 
@@ -223,16 +223,16 @@ namespace G2lib {
 
   bool
   Triangle2D::overlap( Triangle2D const & t2 ) const {
-    return tri_tri_overlap_test_2d( p1, p2, p3, t2.p1, t2.p2, t2.p3 );
+    return tri_tri_overlap_test_2d( m_p1, m_p2, m_p3, t2.m_p1, t2.m_p2, t2.m_p3 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   Triangle2D::distMax( real_type x, real_type y ) const {
-    real_type d1 = hypot( x-p1[0], y-p1[1] );
-    real_type d2 = hypot( x-p2[0], y-p2[1] );
-    real_type d3 = hypot( x-p3[0], y-p3[1] );
+    real_type d1 = hypot( x-m_p1[0], y-m_p1[1] );
+    real_type d2 = hypot( x-m_p2[0], y-m_p2[1] );
+    real_type d3 = hypot( x-m_p3[0], y-m_p3[1] );
     return max(d1,max(d2,d3));
   }
 
@@ -285,9 +285,9 @@ namespace G2lib {
     real_type d2 = L2.distance( x, y );
     real_type d3 = L3.distance( x, y );
 #else
-    real_type d1 = distSeg( x, y, p1, p2 );
-    real_type d2 = distSeg( x, y, p2, p3 );
-    real_type d3 = distSeg( x, y, p3, p1 );
+    real_type d1 = distSeg( x, y, m_p1, m_p2 );
+    real_type d2 = distSeg( x, y, m_p2, m_p3 );
+    real_type d3 = distSeg( x, y, m_p3, m_p1 );
 #endif
 
     if ( d1 > d2 ) swap( d1, d2 );
@@ -302,9 +302,9 @@ namespace G2lib {
   operator << ( ostream_type & stream, Triangle2D const & t ) {
     stream
       << "Triangle2D\n"
-      << "P0 = [" << t.p1[0] << ", " << t.p1[1] << "]\n"
-      << "P1 = [" << t.p2[0] << ", " << t.p2[1] << "]\n"
-      << "P2 = [" << t.p3[0] << ", " << t.p3[1] << "]\n";
+      << "P0 = [" << t.m_p1[0] << ", " << t.m_p1[1] << "]\n"
+      << "P1 = [" << t.m_p2[0] << ", " << t.m_p2[1] << "]\n"
+      << "P2 = [" << t.m_p3[0] << ", " << t.m_p3[1] << "]\n";
     return stream;
   }
 

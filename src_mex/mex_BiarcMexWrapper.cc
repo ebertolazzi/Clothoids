@@ -325,8 +325,8 @@ namespace G2lib {
     MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
     MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
 
-    CircleArc const & C0 = ptr->getC0();
-    CircleArc const & C1 = ptr->getC1();
+    CircleArc const & C0 = ptr->C0();
+    CircleArc const & C1 = ptr->C1();
 
     int_type npts0, nknots0, npts1, nknots1;
     C0.paramNURBS( nknots0, npts0 );

@@ -579,29 +579,29 @@ namespace G2lib {
   //! \brief Class to manage a list of clothoid curves (not necessarily G2 or G1 connected)
   class ClothoidList : public BaseCurve {
 
-    bool                  curve_is_closed;
-    vector<real_type>     s0;
-    vector<ClothoidCurve> clotoidList;
+    bool                  m_curve_is_closed;
+    vector<real_type>     m_s0;
+    vector<ClothoidCurve> m_clotoidList;
 
     #ifdef G2LIB_USE_CXX11
-    mutable std::mutex                         lastInterval_mutex;
-    mutable std::map<std::thread::id,int_type> lastInterval_by_thread;
+    mutable std::mutex                         m_lastInterval_mutex;
+    mutable std::map<std::thread::id,int_type> m_lastInterval_by_thread;
     #else
-    mutable int_type lastInterval;
+    mutable int_type m_lastInterval;
     #endif
 
-    mutable bool               aabb_done;
-    mutable AABBtree           aabb_tree;
-    mutable real_type          aabb_offs;
-    mutable real_type          aabb_max_angle;
-    mutable real_type          aabb_max_size;
-    mutable vector<Triangle2D> aabb_tri;
+    mutable bool               m_aabb_done;
+    mutable AABBtree           m_aabb_tree;
+    mutable real_type          m_aabb_offs;
+    mutable real_type          m_aabb_max_angle;
+    mutable real_type          m_aabb_max_size;
+    mutable vector<Triangle2D> m_aabb_tri;
 
     class T2D_collision_list_ISO {
       ClothoidList const * pList1;
-      real_type    const   offs1;
+      real_type    const   m_offs1;
       ClothoidList const * pList2;
-      real_type    const   offs2;
+      real_type    const   m_offs2;
     public:
       T2D_collision_list_ISO(
         ClothoidList const * _pList1,
@@ -610,26 +610,26 @@ namespace G2lib {
         real_type    const   _offs2
       )
       : pList1(_pList1)
-      , offs1(_offs1)
+      , m_offs1(_offs1)
       , pList2(_pList2)
-      , offs2(_offs2)
+      , m_offs2(_offs2)
       {}
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        Triangle2D    const & T1 = pList1->aabb_tri[size_t(ptr1->Ipos())];
-        Triangle2D    const & T2 = pList2->aabb_tri[size_t(ptr2->Ipos())];
+        Triangle2D    const & T1 = pList1->m_aabb_tri[size_t(ptr1->Ipos())];
+        Triangle2D    const & T2 = pList2->m_aabb_tri[size_t(ptr2->Ipos())];
         ClothoidCurve const & C1 = pList1->get(T1.Icurve());
         ClothoidCurve const & C2 = pList2->get(T2.Icurve());
         real_type ss1, ss2;
-        return C1.aabb_intersect_ISO( T1, offs1, &C2, T2, offs2, ss1, ss2 );
+        return C1.aabb_intersect_ISO( T1, m_offs1, &C2, T2, m_offs2, ss1, ss2 );
       }
     };
 
     void
     resetLastInterval() {
-      std::lock_guard<std::mutex> lck(lastInterval_mutex);
-      lastInterval_by_thread[std::this_thread::get_id()] = 0;
+      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
+      m_lastInterval_by_thread[std::this_thread::get_id()] = 0;
     }
 
   public:
@@ -639,22 +639,22 @@ namespace G2lib {
     //explicit
     ClothoidList()
     : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , curve_is_closed(false)
-    , aabb_done(false)
+    , m_curve_is_closed(false)
+    , m_aabb_done(false)
     { this->resetLastInterval(); }
 
     virtual
     ~ClothoidList() G2LIB_OVERRIDE {
-      s0.clear();
-      clotoidList.clear();
-      aabb_tri.clear();
+      m_s0.clear();
+      m_clotoidList.clear();
+      m_aabb_tri.clear();
     }
 
     //explicit
     ClothoidList( ClothoidList const & s )
     : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , curve_is_closed(false)
-    , aabb_done(false)
+    , m_curve_is_closed(false)
+    , m_aabb_done(false)
     { this->resetLastInterval(); copy(s); }
 
     void init();
@@ -687,9 +687,9 @@ namespace G2lib {
     void push_back_G1( real_type x0, real_type y0, real_type theta0,
                        real_type x1, real_type y1, real_type theta1 );
 
-    bool is_closed() const { return this->curve_is_closed; }
-    void make_closed() { this->curve_is_closed = true; }
-    void make_open()   { this->curve_is_closed = false; }
+    bool is_closed() const { return m_curve_is_closed; }
+    void make_closed() { m_curve_is_closed = true; }
+    void make_open()   { m_curve_is_closed = false; }
 
     real_type closure_gap_x()  const { return this->xEnd() - this->xBegin(); }
     real_type closure_gap_y()  const { return this->yEnd() - this->yBegin(); }
@@ -777,17 +777,17 @@ namespace G2lib {
     ClothoidCurve const & get( int_type idx ) const;
     ClothoidCurve const & getAtS( real_type s ) const;
 
-    int_type numSegment() const { return int_type(clotoidList.size()); }
+    int_type numSegment() const { return int_type(m_clotoidList.size()); }
 
     void wrap_in_range( real_type & s ) const;
 
     int_type
     findAtS( real_type s ) const {
       #ifdef G2LIB_USE_CXX11
-      std::lock_guard<std::mutex> lck(lastInterval_mutex);
-      return ::G2lib::findAtS( s, lastInterval_by_thread[std::this_thread::get_id()], s0 );
+      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
+      return ::G2lib::findAtS( s, m_lastInterval_by_thread[std::this_thread::get_id()], m_s0 );
       #else
-      return ::G2lib::findAtS( s, lastInterval, s0 );
+      return ::G2lib::findAtS( s, m_lastInterval, m_s0 );
       #endif
     }
 
@@ -894,90 +894,90 @@ namespace G2lib {
     virtual
     real_type
     thetaBegin() const G2LIB_OVERRIDE
-    { return clotoidList.front().thetaBegin(); }
+    { return m_clotoidList.front().thetaBegin(); }
 
     virtual
     real_type
     thetaEnd() const G2LIB_OVERRIDE
-    { return clotoidList.back().thetaEnd(); }
+    { return m_clotoidList.back().thetaEnd(); }
 
     virtual
     real_type
     xBegin() const G2LIB_OVERRIDE
-    { return clotoidList.front().xBegin(); }
+    { return m_clotoidList.front().xBegin(); }
 
     virtual
     real_type
     yBegin() const G2LIB_OVERRIDE
-    { return clotoidList.front().yBegin(); }
+    { return m_clotoidList.front().yBegin(); }
 
     virtual
     real_type
     xEnd() const G2LIB_OVERRIDE
-    { return clotoidList.back().xEnd(); }
+    { return m_clotoidList.back().xEnd(); }
 
     virtual
     real_type
     yEnd() const G2LIB_OVERRIDE
-    { return clotoidList.back().yEnd(); }
+    { return m_clotoidList.back().yEnd(); }
 
     virtual
     real_type
     xBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return clotoidList.front().xBegin_ISO( offs ); }
+    { return m_clotoidList.front().xBegin_ISO( offs ); }
 
     virtual
     real_type
     yBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return clotoidList.front().yBegin_ISO( offs ); }
+    { return m_clotoidList.front().yBegin_ISO( offs ); }
 
     virtual
     real_type xEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return clotoidList.back().xEnd_ISO( offs ); }
+    { return m_clotoidList.back().xEnd_ISO( offs ); }
 
     virtual
     real_type
     yEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return clotoidList.back().yEnd_ISO( offs ); }
+    { return m_clotoidList.back().yEnd_ISO( offs ); }
 
     virtual
     real_type tx_Begin() const G2LIB_OVERRIDE
-    { return clotoidList.front().tx_Begin(); }
+    { return m_clotoidList.front().tx_Begin(); }
 
     virtual
     real_type
     ty_Begin() const G2LIB_OVERRIDE
-    { return clotoidList.front().ty_Begin(); }
+    { return m_clotoidList.front().ty_Begin(); }
 
     virtual
     real_type
     tx_End() const G2LIB_OVERRIDE
-    { return clotoidList.back().tx_End(); }
+    { return m_clotoidList.back().tx_End(); }
 
     virtual
     real_type
     ty_End() const G2LIB_OVERRIDE
-    { return clotoidList.back().ty_End(); }
+    { return m_clotoidList.back().ty_End(); }
 
     virtual
     real_type
     nx_Begin_ISO() const G2LIB_OVERRIDE
-    { return clotoidList.front().nx_Begin_ISO(); }
+    { return m_clotoidList.front().nx_Begin_ISO(); }
 
     virtual
     real_type
     ny_Begin_ISO() const G2LIB_OVERRIDE
-    { return clotoidList.front().ny_Begin_ISO(); }
+    { return m_clotoidList.front().ny_Begin_ISO(); }
 
     virtual
     real_type
     nx_End_ISO() const G2LIB_OVERRIDE
-    { return clotoidList.back().nx_End_ISO(); }
+    { return m_clotoidList.back().nx_End_ISO(); }
 
     virtual
     real_type
     ny_End_ISO() const G2LIB_OVERRIDE
-    { return clotoidList.back().ny_End_ISO(); }
+    { return m_clotoidList.back().ny_End_ISO(); }
 
     /*\
      |  _   _          _
@@ -987,21 +987,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual
-    real_type
-    theta( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    theta_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    theta_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    theta_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta_DDD( real_type s ) const G2LIB_OVERRIDE;
 
     /*\
      |  _____                   _   _   _
@@ -1011,37 +1000,14 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    virtual
-    real_type
-    tx( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    tx_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    tx_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    tx_DDD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty_DDD( real_type s ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1104,37 +1070,14 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
-    real_type
-    X( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    X_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    X_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    X_DDD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y_DDD( real_type s ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1487,8 +1430,8 @@ namespace G2lib {
       std::vector<real_type> & s,
       std::vector<real_type> & kappa
     ) const {
-      s.resize( clotoidList.size()+1 );
-      kappa.resize( clotoidList.size()+1 );
+      s.resize( m_clotoidList.size()+1 );
+      kappa.resize( m_clotoidList.size()+1 );
       getSK( &s.front(), &kappa.front() );
     }
 
@@ -1505,9 +1448,9 @@ namespace G2lib {
       std::vector<real_type> & theta,
       std::vector<real_type> & kappa
     ) const {
-      s.resize( clotoidList.size()+1 );
-      theta.resize( clotoidList.size()+1 );
-      kappa.resize( clotoidList.size()+1 );
+      s.resize( m_clotoidList.size()+1 );
+      theta.resize( m_clotoidList.size()+1 );
+      kappa.resize( m_clotoidList.size()+1 );
       getSTK( &s.front(), &theta.front(), &kappa.front() );
     }
 
@@ -1637,15 +1580,24 @@ namespace G2lib {
 
   private:
 
-    vector<real_type> x;
-    vector<real_type> y;
-    TargetType        tt;
-    real_type         theta_I;
-    real_type         theta_F;
-    int_type          npts;
+    vector<real_type> m_x;
+    vector<real_type> m_y;
+    TargetType        m_tt;
+    real_type         m_theta_I;
+    real_type         m_theta_F;
+    int_type          m_npts;
 
     // work vector
-    mutable vector<real_type> k, dk, L, kL, L_1, L_2, k_1, k_2, dk_1, dk_2;
+    mutable vector<real_type> m_k;
+    mutable vector<real_type> m_dk;
+    mutable vector<real_type> m_L;
+    mutable vector<real_type> m_kL;
+    mutable vector<real_type> m_L_1;
+    mutable vector<real_type> m_L_2;
+    mutable vector<real_type> m_k_1;
+    mutable vector<real_type> m_k_2;
+    mutable vector<real_type> m_dk_1;
+    mutable vector<real_type> m_dk_2;
 
     real_type
     diff2pi( real_type in ) const {
@@ -1654,21 +1606,21 @@ namespace G2lib {
 
   public:
 
-    ClothoidSplineG2() : tt(P1) {}
+    ClothoidSplineG2() : m_tt(P1) {}
     ~ClothoidSplineG2() {}
 
     void
     setP1( real_type theta0, real_type thetaN )
-    { tt = P1; theta_I = theta0; theta_F = thetaN; }
+    { m_tt = P1; m_theta_I = theta0; m_theta_F = thetaN; }
 
-    void setP2() { tt = P2; }
-    void setP3() { tt = P3; }
-    void setP4() { tt = P4; }
-    void setP5() { tt = P5; }
-    void setP6() { tt = P6; }
-    void setP7() { tt = P7; }
-    void setP8() { tt = P8; }
-    void setP9() { tt = P9; }
+    void setP2() { m_tt = P2; }
+    void setP3() { m_tt = P3; }
+    void setP4() { m_tt = P4; }
+    void setP5() { m_tt = P5; }
+    void setP6() { m_tt = P6; }
+    void setP7() { m_tt = P7; }
+    void setP8() { m_tt = P8; }
+    void setP9() { m_tt = P9; }
 
     void
     build(
@@ -1677,7 +1629,7 @@ namespace G2lib {
       int_type        npts
     );
 
-    int_type numPnts() const { return npts; }
+    int_type numPnts() const { return m_npts; }
     int_type numTheta() const;
     int_type numConstraints() const;
 

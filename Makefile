@@ -41,7 +41,7 @@ endif
 ifneq (,$(findstring Darwin, $(OS)))
   LIB_CLOTHOID = Clothoids_osx
   LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
-  WARN         = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
+  WARN         = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command -Wno-poison-system-directories
 	CC           = clang
 	CXX          = clang++ -std=c++11
   CXXFLAGS     = $(WARN) -O2 -fPIC

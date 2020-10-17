@@ -229,22 +229,22 @@ namespace G2lib {
 
   void
   LineSegment::build_2P(
-    real_type _x0,
-    real_type _y0,
-    real_type _x1,
-    real_type _y1
+    real_type x0,
+    real_type y0,
+    real_type x1,
+    real_type y1
   ) {
-    real_type dx = _x1-_x0;
-    real_type dy = _y1-_y0;
-    L      = hypot( dx, dy );
-    x0     = _x0;
-    y0     = _y0;
-    theta0 = atan2(dy, dx);
-    if ( L > 0 ) {
-      c0 = dx / L;
-      s0 = dy / L;
+    real_type dx = x1-x0;
+    real_type dy = y1-y0;
+    m_L      = hypot( dx, dy );
+    m_x0     = x0;
+    m_y0     = y0;
+    m_theta0 = atan2(dy, dx);
+    if ( m_L > 0 ) {
+      m_c0 = dx / m_L;
+      m_s0 = dy / m_L;
     } else {
-      c0 = s0 = 0;
+      m_c0 = m_s0 = 0;
     }
   }
 
@@ -257,8 +257,8 @@ namespace G2lib {
     real_type & xmax,
     real_type & ymax
   ) const {
-    xmin = x0; xmax = x0+L*c0;
-    ymin = y0; ymax = y0+L*s0;
+    xmin = m_x0; xmax = m_x0+m_L*m_c0;
+    ymin = m_y0; ymax = m_y0+m_L*m_s0;
     if ( xmin > xmax ) swap( xmin, xmax );
     if ( ymin > ymax ) swap( ymin, ymax );
   }
@@ -275,8 +275,8 @@ namespace G2lib {
   ) const {
     real_type dx = offs*nx_Begin_ISO();
     real_type dy = offs*ny_Begin_ISO();
-    xmin = x0+dx; xmax = xEnd()+dx;
-    ymin = y0+dy; ymax = yEnd()+dy;
+    xmin = m_x0+dx; xmax = xEnd()+dx;
+    ymin = m_y0+dy; ymax = yEnd()+dy;
     if ( xmin > xmax ) swap( xmin, xmax );
     if ( ymin > ymax ) swap( ymin, ymax );
   }
@@ -285,30 +285,29 @@ namespace G2lib {
 
   void
   LineSegment::rotate( real_type angle, real_type cx, real_type cy ) {
-    real_type dx  = x0 - cx;
-    real_type dy  = y0 - cy;
+    real_type dx  = m_x0 - cx;
+    real_type dy  = m_y0 - cy;
     real_type C   = cos(angle);
     real_type S   = sin(angle);
     real_type ndx = C*dx - S*dy;
     real_type ndy = C*dy + S*dx;
-    x0      = cx + ndx;
-    y0      = cy + ndy;
-    theta0 += angle;
-    c0      = cos(theta0);
-    s0      = sin(theta0);
-
+    m_x0      = cx + ndx;
+    m_y0      = cy + ndy;
+    m_theta0 += angle;
+    m_c0      = cos(m_theta0);
+    m_s0      = sin(m_theta0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   LineSegment::reverse() {
-    x0     += c0 * L;
-    y0     += s0 * L;
-    c0      = -c0;
-    s0      = -s0;
-    theta0 += m_pi;
-    if ( theta0 > m_pi ) theta0 -= m_2pi;
+    m_x0     += m_c0 * m_L;
+    m_y0     += m_s0 * m_L;
+    m_c0      = -m_c0;
+    m_s0      = -m_s0;
+    m_theta0 += m_pi;
+    if ( m_theta0 > m_pi ) m_theta0 -= m_2pi;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -325,11 +324,11 @@ namespace G2lib {
   LineSegment::toNURBS( real_type knots[], real_type Poly[][3] ) const {
     knots[0] = knots[1] = 0;
     knots[2] = knots[3] = 1;
-    Poly[0][0] = x0;
-    Poly[0][1] = y0;
+    Poly[0][0] = m_x0;
+    Poly[0][1] = m_y0;
     Poly[0][2] = 1;
-    Poly[1][0] = x0+L*c0;
-    Poly[1][1] = y0+L*s0;
+    Poly[1][0] = m_x0+m_L*m_c0;
+    Poly[1][1] = m_y0+m_L*m_s0;
     Poly[1][2] = 1;
   }
 
@@ -339,10 +338,10 @@ namespace G2lib {
   LineSegment::toBS( real_type knots[4], real_type Poly[2][2] ) const {
     knots[0] = knots[1] = 0;
     knots[2] = knots[3] = 1;
-    Poly[0][0] = x0;
-    Poly[0][1] = y0;
-    Poly[1][0] = x0+L*c0;
-    Poly[1][1] = y0+L*s0;
+    Poly[0][0] = m_x0;
+    Poly[0][1] = m_y0;
+    Poly[1][0] = m_x0+m_L*m_c0;
+    Poly[1][1] = m_y0+m_L*m_s0;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -362,19 +361,19 @@ namespace G2lib {
     L1.p[1] = yBegin();
     L1.q[0] = xEnd();
     L1.q[1] = yEnd();
-    L1.c    = c0;
-    L1.s    = s0;
-    L1.L    = L;
+    L1.c    = m_c0;
+    L1.s    = m_s0;
+    L1.L    = m_L;
 
     L2.p[0] = S.xBegin();
     L2.p[1] = S.yBegin();
     L2.q[0] = S.xEnd();
     L2.q[1] = S.yEnd();
-    L2.c    = S.c0;
-    L2.s    = S.s0;
-    L2.L    = S.L;
+    L2.c    = S.m_c0;
+    L2.s    = S.m_s0;
+    L2.L    = S.m_L;
 
-    real_type const epsi = max(L,S.L)*machepsi100;
+    real_type const epsi = max(m_L,S.m_L)*machepsi100;
     return G2lib::intersect( epsi, L1, L2, s1, s2 );
   }
 
@@ -397,19 +396,19 @@ namespace G2lib {
     L1.p[1] = yBegin_ISO(offs);
     L1.q[0] = xEnd_ISO(offs);
     L1.q[1] = yEnd_ISO(offs);
-    L1.c    = c0;
-    L1.s    = s0;
-    L1.L    = L;
+    L1.c    = m_c0;
+    L1.s    = m_s0;
+    L1.L    = m_L;
 
     L2.p[0] = S.xBegin_ISO(S_offs);
     L2.p[1] = S.yBegin_ISO(S_offs);
     L2.q[0] = S.xEnd_ISO(S_offs);
     L2.q[1] = S.yEnd_ISO(S_offs);
-    L2.c    = S.c0;
-    L2.s    = S.s0;
-    L2.L    = S.L;
+    L2.c    = S.m_c0;
+    L2.s    = S.m_s0;
+    L2.L    = S.m_L;
 
-    real_type const epsi = max(L,S.L)*machepsi100;
+    real_type const epsi = max(m_L,S.m_L)*machepsi100;
 
     return G2lib::intersect( epsi, L1, L2, s1, s2 );
   }
@@ -427,19 +426,19 @@ namespace G2lib {
     L1.p[1] = yBegin();
     L1.q[0] = xEnd();
     L1.q[1] = yEnd();
-    L1.c    = c0;
-    L1.s    = s0;
-    L1.L    = L;
+    L1.c    = m_c0;
+    L1.s    = m_s0;
+    L1.L    = m_L;
 
     L2.p[0] = S.xBegin();
     L2.p[1] = S.yBegin();
     L2.q[0] = S.xEnd();
     L2.q[1] = S.yEnd();
-    L2.c    = S.c0;
-    L2.s    = S.s0;
-    L2.L    = S.L;
+    L2.c    = S.m_c0;
+    L2.s    = S.m_s0;
+    L2.L    = S.m_L;
 
-    real_type const epsi = max(L,S.L)*machepsi100;
+    real_type const epsi = max(m_L,S.m_L)*machepsi100;
 
     return G2lib::collision( epsi, L1, L2 );
   }
@@ -461,19 +460,19 @@ namespace G2lib {
     L1.p[1] = yBegin_ISO(offs);
     L1.q[0] = xEnd_ISO(offs);
     L1.q[1] = yEnd_ISO(offs);
-    L1.c    = c0;
-    L1.s    = s0;
-    L1.L    = L;
+    L1.c    = m_c0;
+    L1.s    = m_s0;
+    L1.L    = m_L;
 
     L2.p[0] = S.xBegin_ISO(S_offs);
     L2.p[1] = S.yBegin_ISO(S_offs);
     L2.q[0] = S.xEnd_ISO(S_offs);
     L2.q[1] = S.yEnd_ISO(S_offs);
-    L2.c    = S.c0;
-    L2.s    = S.s0;
-    L2.L    = S.L;
+    L2.c    = S.m_c0;
+    L2.s    = S.m_s0;
+    L2.L    = S.m_L;
 
-    real_type const epsi = max(L,S.L)*machepsi100;
+    real_type const epsi = max(m_L,S.m_L)*machepsi100;
 
     return G2lib::collision( epsi, L1, L2 );
   }
@@ -505,17 +504,17 @@ namespace G2lib {
     real_type & dst
   ) const {
 
-    real_type dx = qx - x0;
-    real_type dy = qy - y0;
+    real_type dx = qx - m_x0;
+    real_type dy = qy - m_y0;
     s = dx * tx_Begin() + dy * ty_Begin();
     t = dx * nx_Begin_ISO() + dy * ny_Begin_ISO();
 
     if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
-      x = x0;
-      y = y0;
-    } else if ( s > L ) {
-      s = L;
+      x = m_x0;
+      y = m_y0;
+    } else if ( s > m_L ) {
+      s = m_L;
       eval( s, x, y );
     } else {
       dst = abs(t);
@@ -543,8 +542,8 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    real_type xx0 = x0+offs*nx_Begin_ISO();
-    real_type yy0 = y0+offs*ny_Begin_ISO();
+    real_type xx0 = m_x0+offs*nx_Begin_ISO();
+    real_type yy0 = m_y0+offs*ny_Begin_ISO();
 
     real_type dx = qx - xx0;
     real_type dy = qy - yy0;
@@ -555,8 +554,8 @@ namespace G2lib {
       s = 0;
       x = xx0;
       y = yy0;
-    } else if ( s > L ) {
-      s = L;
+    } else if ( s > m_L ) {
+      s = m_L;
       eval_ISO( s, offs, x, y );
     } else {
       t  += offs;
@@ -576,10 +575,10 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, LineSegment const & c ) {
     stream
-      <<   "x0     = " << c.x0
-      << "\ny0     = " << c.y0
-      << "\ntheta0 = " << c.theta0
-      << "\nL      = " << c.L
+      <<   "x0     = " << c.m_x0
+      << "\ny0     = " << c.m_y0
+      << "\ntheta0 = " << c.m_theta0
+      << "\nL      = " << c.m_L
       << "\n";
     return stream;
   }

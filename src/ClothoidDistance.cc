@@ -54,13 +54,13 @@ namespace G2lib {
     real_type & S
   ) const {
     S = 0;
-    X = CD.x0;
-    Y = CD.y0;
+    X = m_CD.x0;
+    Y = m_CD.y0;
     real_type DST = hypot( X-qx, Y-qy );
     real_type SSS = ds;
-    while ( SSS <= L ) {
+    while ( SSS <= m_L ) {
       real_type theta, kappa, XS, YS;
-      CD.evaluate( SSS, theta, kappa, XS, YS );
+      m_CD.evaluate( SSS, theta, kappa, XS, YS );
       real_type dst = hypot( XS-qx, YS-qy );
       if ( dst < DST ) {
         DST = dst;
@@ -500,19 +500,19 @@ namespace G2lib {
 
     // check if flex is inside curve, if so then split
 
-    if ( CD.kappa0*CD.dk >= 0 ) { // flex on the left
-      dst = closestPoint1( epsi, CD, L, qx, qy, X, Y, S );
-    } else if ( CD.dk*CD.kappa(L) <= 0 ) { // flex on the right, reverse curve
+    if ( m_CD.kappa0*m_CD.dk >= 0 ) { // flex on the left
+      dst = closestPoint1( epsi, m_CD, m_L, qx, qy, X, Y, S );
+    } else if ( m_CD.dk*m_CD.kappa(m_L) <= 0 ) { // flex on the right, reverse curve
       ClothoidData CD1;
-      CD.reverse( L, CD1 );
-      dst = closestPoint1( epsi, CD1, L, qx, qy, X, Y, S );
-      S   = L-S;
+      m_CD.reverse( m_L, CD1 );
+      dst = closestPoint1( epsi, CD1, m_L, qx, qy, X, Y, S );
+      S   = m_L-S;
     } else {
       // flex inside, split clothoid
       ClothoidData C0, C1;
-      real_type sflex = CD.split_at_flex( C0, C1 );
+      real_type sflex = m_CD.split_at_flex( C0, C1 );
 
-      real_type d0 = closestPoint1( epsi, C0, L-sflex, qx, qy, X, Y, S  );
+      real_type d0 = closestPoint1( epsi, C0, m_L-sflex, qx, qy, X, Y, S  );
       real_type x1, y1, s1;
       real_type d1 = closestPoint1( epsi, C1, sflex, qx, qy, x1, y1, s1 );
 
@@ -531,7 +531,7 @@ namespace G2lib {
     real_type dx = qx-X;
     real_type dy = qy-Y;
     T = dx * nx + dy * ny;
-    if ( abs(abs(T)-dst) < dst*machepsi1000 ) return 1;
+    if ( abs(abs(T)-dst) < std::max(real_type(1),dst)*machepsi1000 ) return 1;
     return -1;
   }
 

@@ -42,13 +42,13 @@ namespace G2lib {
     friend class CircleArc;
     friend class PolyLine;
 
-    real_type x0;     //!< initial x coordinate of the line
-    real_type y0;     //!< initial y coordinate of the line
-    real_type theta0; //!< angle of the line
+    real_type m_x0;     //!< initial x coordinate of the line
+    real_type m_y0;     //!< initial y coordinate of the line
+    real_type m_theta0; //!< angle of the line
 
-    real_type c0;     //!< `cos(theta0)`
-    real_type s0;     //!< `sin(theta0)`
-    real_type L;      //!< length of the segment
+    real_type m_c0;     //!< `cos(theta0)`
+    real_type m_s0;     //!< `sin(theta0)`
+    real_type m_L;      //!< length of the segment
 
   public:
 
@@ -57,12 +57,12 @@ namespace G2lib {
     //explicit
     LineSegment()
     : BaseCurve(G2LIB_LINE)
-    , x0(0)
-    , y0(0)
-    , theta0(0)
-    , c0(1)
-    , s0(0)
-    , L(0)
+    , m_x0(0)
+    , m_y0(0)
+    , m_theta0(0)
+    , m_c0(1)
+    , m_s0(0)
+    , m_L(0)
     {}
 
     //explicit
@@ -82,22 +82,22 @@ namespace G2lib {
       real_type _L
     )
     : BaseCurve(G2LIB_LINE)
-    , x0(_x0)
-    , y0(_y0)
-    , theta0(_theta0)
-    , c0(cos(_theta0))
-    , s0(sin(_theta0))
-    , L(_L)
+    , m_x0(_x0)
+    , m_y0(_y0)
+    , m_theta0(_theta0)
+    , m_c0(cos(_theta0))
+    , m_s0(sin(_theta0))
+    , m_L(_L)
     {}
 
     void
     copy( LineSegment const & c ) {
-      x0     = c.x0;
-      y0     = c.y0;
-      theta0 = c.theta0;
-      c0     = c.c0;
-      s0     = c.s0;
-      L      = c.L;
+      m_x0     = c.m_x0;
+      m_y0     = c.m_y0;
+      m_theta0 = c.m_theta0;
+      m_c0     = c.m_c0;
+      m_s0     = c.m_s0;
+      m_L      = c.m_L;
     }
 
     LineSegment const & operator = ( LineSegment const & s )
@@ -108,12 +108,12 @@ namespace G2lib {
     virtual
     real_type
     length() const G2LIB_OVERRIDE
-    { return L; }
+    { return m_L; }
 
     virtual
     real_type
     length_ISO( real_type ) const G2LIB_OVERRIDE
-    { return L; }
+    { return m_L; }
 
     /*\
      |   _     _
@@ -151,30 +151,30 @@ namespace G2lib {
      |              |___/
     \*/
 
-    virtual real_type tx_Begin() const G2LIB_OVERRIDE { return this->c0; }
-    virtual real_type ty_Begin() const G2LIB_OVERRIDE { return this->s0; }
-    virtual real_type tx_End()   const G2LIB_OVERRIDE { return this->c0; }
-    virtual real_type ty_End()   const G2LIB_OVERRIDE { return this->s0; }
+    virtual real_type tx_Begin() const G2LIB_OVERRIDE { return m_c0; }
+    virtual real_type ty_Begin() const G2LIB_OVERRIDE { return m_s0; }
+    virtual real_type tx_End()   const G2LIB_OVERRIDE { return m_c0; }
+    virtual real_type ty_End()   const G2LIB_OVERRIDE { return m_s0; }
 
-    virtual real_type nx_Begin_ISO() const G2LIB_OVERRIDE { return -s0; }
-    virtual real_type ny_Begin_ISO() const G2LIB_OVERRIDE { return c0; }
-    virtual real_type nx_End_ISO()   const G2LIB_OVERRIDE { return -s0; }
-    virtual real_type ny_End_ISO()   const G2LIB_OVERRIDE { return c0; }
+    virtual real_type nx_Begin_ISO() const G2LIB_OVERRIDE { return -m_s0; }
+    virtual real_type ny_Begin_ISO() const G2LIB_OVERRIDE { return m_c0; }
+    virtual real_type nx_End_ISO()   const G2LIB_OVERRIDE { return -m_s0; }
+    virtual real_type ny_End_ISO()   const G2LIB_OVERRIDE { return m_c0; }
 
-    virtual real_type xBegin() const G2LIB_OVERRIDE { return x0; }
-    virtual real_type yBegin() const G2LIB_OVERRIDE { return y0; }
-    virtual real_type xEnd()   const G2LIB_OVERRIDE { return x0+L*c0; }
-    virtual real_type yEnd()   const G2LIB_OVERRIDE { return y0+L*s0; }
+    virtual real_type xBegin() const G2LIB_OVERRIDE { return m_x0; }
+    virtual real_type yBegin() const G2LIB_OVERRIDE { return m_y0; }
+    virtual real_type xEnd()   const G2LIB_OVERRIDE { return m_x0+m_L*m_c0; }
+    virtual real_type yEnd()   const G2LIB_OVERRIDE { return m_y0+m_L*m_s0; }
 
     virtual
     real_type
     xBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return x0+offs*nx_Begin_ISO(); }
+    { return m_x0+offs*nx_Begin_ISO(); }
 
     virtual
     real_type
     yBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return y0+offs*ny_Begin_ISO(); }
+    { return m_y0+offs*ny_Begin_ISO(); }
 
     virtual
     real_type
@@ -197,7 +197,7 @@ namespace G2lib {
     virtual
     real_type
     theta( real_type ) const G2LIB_OVERRIDE
-    { return theta0; }
+    { return m_theta0; }
 
     virtual
     real_type
@@ -226,12 +226,12 @@ namespace G2lib {
     virtual
     real_type
     tx( real_type ) const G2LIB_OVERRIDE
-    { return c0; }
+    { return m_c0; }
 
     virtual
     real_type
     ty( real_type ) const G2LIB_OVERRIDE
-    { return s0; }
+    { return m_s0; }
 
     virtual
     real_type
@@ -268,7 +268,7 @@ namespace G2lib {
     virtual
     void
     tg( real_type, real_type & tx, real_type & ty ) const G2LIB_OVERRIDE
-    { tx = c0; ty = s0; }
+    { tx = m_c0; ty = m_s0; }
 
     virtual
     void
@@ -290,22 +290,22 @@ namespace G2lib {
     virtual
     real_type
     X( real_type s ) const G2LIB_OVERRIDE
-    { return x0+s*c0; }
+    { return m_x0+s*m_c0; }
 
     virtual
     real_type
     Y( real_type s ) const G2LIB_OVERRIDE
-    { return y0+s*s0; }
+    { return m_y0+s*m_s0; }
 
     virtual
     real_type
     X_D( real_type ) const G2LIB_OVERRIDE
-    { return c0; }
+    { return m_c0; }
 
     virtual
     real_type
     Y_D( real_type ) const G2LIB_OVERRIDE
-    { return s0; }
+    { return m_s0; }
 
     virtual
     real_type
@@ -336,8 +336,8 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const G2LIB_OVERRIDE {
-      x = x0+s*c0;
-      y = y0+s*s0;
+      x = m_x0+s*m_c0;
+      y = m_y0+s*m_s0;
     }
 
     virtual
@@ -347,8 +347,8 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const G2LIB_OVERRIDE {
-      x_D = c0;
-      y_D = s0;
+      x_D = m_c0;
+      y_D = m_s0;
     }
 
     virtual
@@ -384,22 +384,22 @@ namespace G2lib {
     virtual
     real_type
     X_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE
-    { return x0 + s*c0 + offs*nx_Begin_ISO(); }
+    { return m_x0 + s*m_c0 + offs*nx_Begin_ISO(); }
 
     virtual
     real_type
     Y_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE
-    { return y0 + s*s0 + offs*ny_Begin_ISO(); }
+    { return m_y0 + s*m_s0 + offs*ny_Begin_ISO(); }
 
     virtual
     real_type
     X_ISO_D( real_type, real_type ) const G2LIB_OVERRIDE
-    { return c0; }
+    { return m_c0; }
 
     virtual
     real_type
     Y_ISO_D( real_type, real_type ) const G2LIB_OVERRIDE
-    { return s0; }
+    { return m_s0; }
 
     virtual
     real_type
@@ -431,8 +431,8 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const G2LIB_OVERRIDE {
-      x = x0 + s*c0 + offs*nx_Begin_ISO();
-      y = y0 + s*s0 + offs*ny_Begin_ISO();
+      x = m_x0 + s*m_c0 + offs*nx_Begin_ISO();
+      y = m_y0 + s*m_s0 + offs*ny_Begin_ISO();
     }
 
     virtual
@@ -443,8 +443,8 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const G2LIB_OVERRIDE {
-      x_D = c0;
-      y_D = s0;
+      x_D = m_c0;
+      y_D = m_s0;
     }
 
     virtual
@@ -480,7 +480,7 @@ namespace G2lib {
     virtual
     void
     translate( real_type tx, real_type ty ) G2LIB_OVERRIDE
-    { x0 += tx; y0 += ty; }
+    { m_x0 += tx; m_y0 += ty; }
 
     virtual
     void
@@ -493,19 +493,19 @@ namespace G2lib {
     virtual
     void
     changeOrigin( real_type newx0, real_type newy0 ) G2LIB_OVERRIDE
-    { x0 = newx0; y0 = newy0; }
+    { m_x0 = newx0; m_y0 = newy0; }
 
     virtual
     void
     scale( real_type sc ) G2LIB_OVERRIDE
-    { L *= sc; }
+    { m_L *= sc; }
 
     virtual
     void
     trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE {
-      x0 += c0 * s_begin;
-      y0 += s0 * s_begin;
-      L   = s_end - s_begin;
+      m_x0 += m_c0 * s_begin;
+      m_y0 += m_s0 * s_begin;
+      m_L   = s_end - s_begin;
     }
 
     /*\
@@ -567,17 +567,17 @@ namespace G2lib {
 
     void
     build(
-      real_type _x0,
-      real_type _y0,
-      real_type _theta0,
-      real_type _L
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type L
     ) {
-      x0     = _x0;
-      y0     = _y0;
-      theta0 = _theta0;
-      c0     = cos(_theta0);
-      s0     = sin(_theta0);
-      L      = _L;
+      m_x0     = x0;
+      m_y0     = y0;
+      m_theta0 = theta0;
+      m_c0     = cos(theta0);
+      m_s0     = sin(theta0);
+      m_L      = L;
     }
 
     //! construct a clothoid with the standard parameters
@@ -596,10 +596,10 @@ namespace G2lib {
 
     void
     p1p2( real_type p1[2], real_type p2[2] ) const {
-      p1[0] = x0;
-      p1[1] = y0;
-      p2[0] = x0+L*c0;
-      p2[1] = y0+L*s0;
+      p1[0] = m_x0;
+      p1[1] = m_y0;
+      p2[0] = m_x0+m_L*m_c0;
+      p2[1] = m_y0+m_L*m_s0;
     }
 
     bool

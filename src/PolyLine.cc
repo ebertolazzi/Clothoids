@@ -58,7 +58,7 @@ namespace G2lib {
 
   PolyLine::PolyLine( BaseCurve const & C )
   : BaseCurve(G2LIB_POLYLINE)
-  , aabb_done(false)
+  , m_aabb_done(false)
   {
     this->resetLastInterval(); 
     switch ( C.type() ) {
@@ -84,7 +84,7 @@ namespace G2lib {
 
   PolyLine::PolyLine( LineSegment const & LS )
   : BaseCurve(G2LIB_POLYLINE)
-  , aabb_done(false)
+  , m_aabb_done(false)
   {
     this->resetLastInterval();
     this->init( LS.xBegin(), LS.xBegin() );
@@ -95,7 +95,7 @@ namespace G2lib {
 
   PolyLine::PolyLine( CircleArc const & C, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , aabb_done(false)
+  , m_aabb_done(false)
   {
     this->resetLastInterval();
     this->init( C.xBegin(), C.xBegin() );
@@ -106,7 +106,7 @@ namespace G2lib {
 
   PolyLine::PolyLine( Biarc const & B, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , aabb_done(false)
+  , m_aabb_done(false)
   {
     this->resetLastInterval();
     this->init( B.xBegin(), B.xBegin() );
@@ -117,7 +117,7 @@ namespace G2lib {
 
   PolyLine::PolyLine( ClothoidCurve const & C, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , aabb_done(false)
+  , m_aabb_done(false)
   {
     this->resetLastInterval();
     this->init( C.xBegin(), C.xBegin() );
@@ -128,7 +128,7 @@ namespace G2lib {
 
   PolyLine::PolyLine( ClothoidList const & PL, real_type tol )
   : BaseCurve(G2LIB_POLYLINE)
-  , aabb_done(false)
+  , m_aabb_done(false)
   {
     this->resetLastInterval();
     this->init( PL.xBegin(), PL.xBegin() );
@@ -139,17 +139,17 @@ namespace G2lib {
 
   void
   PolyLine::copy( PolyLine const & PL ) {
-    polylineList.clear();
-    polylineList.reserve( PL.polylineList.size() );
+    m_polylineList.clear();
+    m_polylineList.reserve( PL.m_polylineList.size() );
     std::copy(
-      PL.polylineList.begin(),
-      PL.polylineList.end(),
-      back_inserter(polylineList)
+      PL.m_polylineList.begin(),
+      PL.m_polylineList.end(),
+      back_inserter(m_polylineList)
     );
-    s0.clear();
-    s0.reserve( PL.s0.size() );
-    std::copy( PL.s0.begin(), PL.s0.end(), back_inserter(s0) );
-    aabb_done = false;
+    m_s0.clear();
+    m_s0.reserve( PL.m_s0.size() );
+    std::copy( PL.m_s0.begin(), PL.m_s0.end(), back_inserter(m_s0) );
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,28 +157,28 @@ namespace G2lib {
   LineSegment const &
   PolyLine::getSegment( int_type n ) const {
     G2LIB_ASSERT(
-      !polylineList.empty(),
+      !m_polylineList.empty(),
       "PolyLine::getSegment(...) empty PolyLine"
     )
     G2LIB_ASSERT(
-      n >= 0 && n < int_type(polylineList.size()),
+      n >= 0 && n < int_type(m_polylineList.size()),
       "PolyLine::getSegment( " << n <<
-      " ) out of range [0," << polylineList.size()-1 << "]"
+      " ) out of range [0," << m_polylineList.size()-1 << "]"
     )
-    return polylineList[size_t(n)];
+    return m_polylineList[size_t(n)];
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   PolyLine::polygon( real_type x[], real_type y[]) const {
-    int_type n = int_type(polylineList.size());
-    for ( int_type k = 0; k < n; ++k ) {
-      x[size_t(k)] = polylineList[size_t(k)].xBegin();
-      y[size_t(k)] = polylineList[size_t(k)].yBegin();
+    int_type n = int_type(m_polylineList.size());
+    for ( size_t k = 0; k < size_t(n); ++k ) {
+      x[k] = m_polylineList[k].xBegin();
+      y[k] = m_polylineList[k].yBegin();
     }
-    x[size_t(n)] = polylineList[size_t(n-1)].xEnd();
-    y[size_t(n)] = polylineList[size_t(n-1)].yEnd();
+    x[size_t(n)] = m_polylineList[size_t(n-1)].xEnd();
+    y[size_t(n)] = m_polylineList[size_t(n-1)].yEnd();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -191,15 +191,15 @@ namespace G2lib {
     real_type & ymax
   ) const {
 
-    G2LIB_ASSERT( !polylineList.empty(), "PolyLine::bbox, empty list" )
+    G2LIB_ASSERT( !m_polylineList.empty(), "PolyLine::bbox, empty list" )
 
-    if ( aabb_done ) {
-      aabb_tree.bbox( xmin, ymin, xmax, ymax );
+    if ( m_aabb_done ) {
+      m_aabb_tree.bbox( xmin, ymin, xmax, ymax );
     } else {
-      vector<LineSegment>::const_iterator ic = polylineList.begin();
+      vector<LineSegment>::const_iterator ic = m_polylineList.begin();
       xmin = xmax = ic->xBegin();
       ymin = ymax = ic->yBegin();
-      for ( ++ic; ic != polylineList.end(); ++ic ) {
+      for ( ++ic; ic != m_polylineList.end(); ++ic ) {
         real_type x = ic->xBegin();
         real_type y = ic->yBegin();
         if      ( x < xmin ) xmin = x;
@@ -221,7 +221,7 @@ namespace G2lib {
 
   real_type
   PolyLine::theta( real_type s ) const {
-    return polylineList[size_t(this->findAtS( s ))].theta0;
+    return m_polylineList[size_t(this->findAtS( s ))].m_theta0;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -254,16 +254,16 @@ namespace G2lib {
 
   void
   PolyLine::scale( real_type sfactor ) {
-    vector<LineSegment>::iterator ic = polylineList.begin();
+    vector<LineSegment>::iterator ic = m_polylineList.begin();
     real_type newx0 = ic->xBegin();
     real_type newy0 = ic->yBegin();
-    s0[0] = 0;
-    for ( size_t k=0; ic != polylineList.end(); ++ic, ++k ) {
+    m_s0[0] = 0;
+    for ( size_t k=0; ic != m_polylineList.end(); ++ic, ++k ) {
       ic->scale( sfactor );
       ic->changeOrigin( newx0, newy0 );
-      newx0 = ic->xEnd();
-      newy0 = ic->yEnd();
-      s0[k+1] = s0[k] + ic->length();
+      newx0     = ic->xEnd();
+      newy0     = ic->yEnd();
+      m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
 
@@ -271,20 +271,20 @@ namespace G2lib {
 
   void
   PolyLine::reverse() {
-    std::reverse( polylineList.begin(), polylineList.end() );
-    vector<LineSegment>::iterator ic = polylineList.begin();
+    std::reverse( m_polylineList.begin(), m_polylineList.end() );
+    vector<LineSegment>::iterator ic = m_polylineList.begin();
     ic->reverse();
     real_type newx0 = ic->xEnd();
     real_type newy0 = ic->yEnd();
-    s0[0] = 0;
-    s0[1] = ic->length();
+    m_s0[0] = 0;
+    m_s0[1] = ic->length();
     size_t k = 1;
-    for ( ++ic; ic != polylineList.end(); ++ic, ++k ) {
+    for ( ++ic; ic != m_polylineList.end(); ++ic, ++k ) {
       ic->reverse();
       ic->changeOrigin( newx0, newy0 );
-      newx0   = ic->xEnd();
-      newy0   = ic->yEnd();
-      s0[k+1] = s0[k] + ic->length();
+      newx0     = ic->xEnd();
+      newy0     = ic->yEnd();
+      m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
 
@@ -292,8 +292,8 @@ namespace G2lib {
 
   void
   PolyLine::changeOrigin( real_type newx0, real_type newy0 ) {
-    vector<LineSegment>::iterator ic = polylineList.begin();
-    for (; ic != polylineList.end(); ++ic ) {
+    vector<LineSegment>::iterator ic = m_polylineList.begin();
+    for (; ic != m_polylineList.end(); ++ic ) {
       ic->changeOrigin( newx0, newy0 );
       newx0 = ic->xEnd();
       newy0 = ic->yEnd();
@@ -305,22 +305,22 @@ namespace G2lib {
   void
   PolyLine::trim( real_type s_begin, real_type s_end ) {
     G2LIB_ASSERT(
-      s_begin >= s0.front() && s_end <= s0.back() && s_end > s_begin,
+      s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
       "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" << s_end <<
-      ") bad range, must be in [ " << s0.front() << ", " << s0.back() << " ]"
+      ") bad range, must be in [ " <<m_s0.front() << ", " << m_s0.back() << " ]"
     )
 
     size_t i_begin = size_t(findAtS(s_begin));
     size_t i_end   = size_t(findAtS(s_end));
-    polylineList[i_begin].trim( s_begin-s0[i_begin], s0[i_begin+1] );
-    polylineList[i_end].trim( s0[i_end], s_end-s0[i_end] );
-    polylineList.erase( polylineList.begin()+LS_dist_type(i_end+1), polylineList.end() );
-    polylineList.erase( polylineList.begin(), polylineList.begin()+LS_dist_type(i_begin) );
-    vector<LineSegment>::iterator ic = polylineList.begin();
-    s0[0] = 0;
+    m_polylineList[i_begin].trim( s_begin-m_s0[i_begin], m_s0[i_begin+1] );
+    m_polylineList[i_end].trim( m_s0[i_end], s_end-m_s0[i_end] );
+    m_polylineList.erase( m_polylineList.begin()+LS_dist_type(i_end+1), m_polylineList.end() );
+    m_polylineList.erase( m_polylineList.begin(), m_polylineList.begin()+LS_dist_type(i_begin) );
+    vector<LineSegment>::iterator ic = m_polylineList.begin();
+    m_s0[0] = 0;
     size_t k = 0;
-    for (; ic != polylineList.end(); ++ic, ++k )
-      s0[k+1] = s0[k] + ic->length();
+    for (; ic != m_polylineList.end(); ++ic, ++k )
+      m_s0[k+1] = m_s0[k] + ic->length();
     this->resetLastInterval();
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -332,10 +332,10 @@ namespace G2lib {
     #else
     vector<BBox const *> bboxes;
     #endif
-    bboxes.reserve(polylineList.size());
+    bboxes.reserve(m_polylineList.size());
     vector<LineSegment>::const_iterator it;
     int_type ipos = 0;
-    for ( it = polylineList.begin(); it != polylineList.end(); ++it, ++ipos ) {
+    for ( it = m_polylineList.begin(); it != m_polylineList.end(); ++it, ++ipos ) {
       real_type xmin, ymin, xmax, ymax;
       it->bbox( xmin, ymin, xmax, ymax );
       #ifdef G2LIB_USE_CXX11
@@ -353,12 +353,12 @@ namespace G2lib {
 
   void
   PolyLine::init( real_type x0, real_type y0 ) {
-    xe = x0;
-    ye = y0;
-    polylineList.clear();
-    s0.clear();
-    s0.push_back(0);
-    aabb_done = false;
+    m_xe = x0;
+    m_ye = y0;
+    m_polylineList.clear();
+    m_s0.clear();
+    m_s0.push_back(0);
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -366,27 +366,27 @@ namespace G2lib {
   void
   PolyLine::push_back( real_type x, real_type y ) {
     LineSegment s;
-    s.build_2P( xe, ye, x, y );
-    polylineList.push_back( s );
-    real_type slast = s0.back() + s.length();
-    s0.push_back( slast );
-    xe = x;
-    ye = y;
-    aabb_done = false;
+    s.build_2P( m_xe, m_ye, x, y );
+    m_polylineList.push_back( s );
+    real_type slast = m_s0.back() + s.length();
+    m_s0.push_back( slast );
+    m_xe = x;
+    m_ye = y;
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   PolyLine::push_back( LineSegment const & C ) {
-    polylineList.push_back( C );
-    LineSegment & S = polylineList.back();
-    S.changeOrigin( xe, ye );
-    real_type slast = s0.back() + S.length();
-    s0.push_back( slast );
-    xe = S.xEnd();
-    ye = S.yEnd();
-    aabb_done = false;
+    m_polylineList.push_back( C );
+    LineSegment & S = m_polylineList.back();
+    S.changeOrigin( m_xe, m_ye );
+    real_type slast = m_s0.back() + S.length();
+    m_s0.push_back( slast );
+    m_xe = S.xEnd();
+    m_ye = S.yEnd();
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -395,31 +395,31 @@ namespace G2lib {
   PolyLine::push_back( CircleArc const & C, real_type tol ) {
     real_type L  = C.length();
     int_type  ns = int_type(ceil( L / C.lenTolerance( tol ) ));
-    real_type tx = xe - C.xBegin();
-    real_type ty = ye - C.yBegin();
+    real_type tx = m_xe - C.xBegin();
+    real_type ty = m_ye - C.yBegin();
     for ( int_type i = 1; i < ns; ++i ) {
       real_type s = (i*L)/ns;
       push_back( tx + C.X(s), ty + C.Y(s) );
     }
     push_back( tx + C.xEnd(), ty + C.yEnd() );
-    xe = tx + C.xEnd();
-    ye = ty + C.yEnd();
-    aabb_done = false;
+    m_xe = tx + C.xEnd();
+    m_ye = ty + C.yEnd();
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   PolyLine::push_back( Biarc const & B, real_type tol ) {
-    CircleArc const & C0 = B.getC0();
-    CircleArc const & C1 = B.getC1();
+    CircleArc const & C0 = B.C0();
+    CircleArc const & C1 = B.C1();
     real_type L0  = C0.length();
     real_type L1  = C1.length();
     int_type  ns0 = int_type(ceil( L0 / C0.lenTolerance( tol ) ));
     int_type  ns1 = int_type(ceil( L1 / C1.lenTolerance( tol ) ));
 
-    real_type tx = xe - C0.xBegin();
-    real_type ty = ye - C0.yBegin();
+    real_type tx = m_xe - C0.xBegin();
+    real_type ty = m_ye - C0.yBegin();
 
     for ( int_type i = 1; i < ns0; ++i ) {
       real_type s = (i*L0)/ns0;
@@ -431,9 +431,9 @@ namespace G2lib {
       push_back( tx + C1.X(s), ty + C1.Y(s) );
     }
     push_back( tx + C1.xEnd(), ty + C1.yEnd() );
-    xe = tx + C1.xEnd();
-    ye = ty + C1.yEnd();
-    aabb_done = false;
+    m_xe = tx + C1.xEnd();
+    m_ye = ty + C1.yEnd();
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -447,17 +447,17 @@ namespace G2lib {
     int_type ns = 1;
     if ( tmp > -1 ) ns = int_type( ceil( L*absk/(2*(m_pi-acos(tmp))) ) );
 
-    real_type tx = xe - C.xBegin();
-    real_type ty = ye - C.yBegin();
+    real_type tx = m_xe - C.xBegin();
+    real_type ty = m_ye - C.yBegin();
     for ( int_type i = 1; i < ns; ++i ) {
       real_type s = (i*L)/ns;
       push_back( tx + C.X(s), ty + C.Y(s) );
     }
 
     push_back( tx + C.xEnd(), ty + C.yEnd() );
-    xe = tx + C.xEnd();
-    ye = ty + C.yEnd();
-    aabb_done = false;
+    m_xe = tx + C.xEnd();
+    m_ye = ty + C.yEnd();
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -538,14 +538,14 @@ namespace G2lib {
     real_type & DST
   ) const{
     G2LIB_ASSERT(
-      !polylineList.empty(),
+      !m_polylineList.empty(),
       "PolyLine::closestPoint, empty list"
     )
-    vector<LineSegment>::const_iterator ic = polylineList.begin();
-    vector<real_type>::const_iterator   is = s0.begin();
+    vector<LineSegment>::const_iterator ic = m_polylineList.begin();
+    vector<real_type>::const_iterator   is = m_s0.begin();
     ic->closestPoint_ISO( x, y, X, Y, S, T, DST );
     size_t ipos = 0;
-    for ( ++ic, ++is; ic != polylineList.end(); ++ic, ++is ) {
+    for ( ++ic, ++is; ic != m_polylineList.end(); ++ic, ++is ) {
       real_type X1, Y1, S1, T1, DST1;
       ic->closestPoint_ISO( x, y, X1, Y1, S1, T1, DST1 );
       if ( DST1 < DST ) {
@@ -554,14 +554,14 @@ namespace G2lib {
         Y    = Y1;
         S    = *is + S1;
         T    = T1;
-        ipos = size_t(ic-polylineList.begin());
+        ipos = size_t(ic-m_polylineList.begin());
       }
     }
 
     real_type xx, yy;
-    polylineList[ipos].eval_ISO( S - s0[ipos], T, xx, yy );
+    m_polylineList[ipos].eval_ISO( S - m_s0[ipos], T, xx, yy );
     real_type err = hypot( x - xx, y - yy );
-    if ( err > DST*machepsi1000 ) return -1;
+    if ( err > std::max(real_type(1),DST)*machepsi1000 ) return -1;
     return 1;
   }
 
@@ -578,7 +578,7 @@ namespace G2lib {
     this->build_AABBtree();
     C.build_AABBtree();
     Collision_list fun( this, &C );
-    return aabb_tree.collision( C.aabb_tree, fun, false );
+    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
   }
 
   /*\
@@ -596,11 +596,11 @@ namespace G2lib {
     vector<real_type> & ss1
   ) const {
     G2LIB_ASSERT(
-      !polylineList.empty(),
+      !m_polylineList.empty(),
       "PolyLine::intersect, empty list"
     )
     G2LIB_ASSERT(
-      !pl.polylineList.empty(),
+      !pl.m_polylineList.empty(),
       "PolyLine::intersect, empty secondary list"
     )
 
@@ -608,24 +608,24 @@ namespace G2lib {
     build_AABBtree();
     pl.build_AABBtree();
     AABBtree::VecPairPtrBBox intersectionList;
-    aabb_tree.intersect( pl.aabb_tree, intersectionList );
+    m_aabb_tree.intersect( pl.m_aabb_tree, intersectionList );
     AABBtree::VecPairPtrBBox::const_iterator ip;
     for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
       size_t ipos0 = size_t(ip->first->Ipos());
       size_t ipos1 = size_t(ip->second->Ipos());
       G2LIB_ASSERT(
-        ipos0 < polylineList.size(),
+        ipos0 < m_polylineList.size(),
         "Bad ipos0 = " << ipos0
       )
       G2LIB_ASSERT(
-        ipos1 < pl.polylineList.size(),
+        ipos1 < pl.m_polylineList.size(),
         "Bad ipos1 = " << ipos1
       )
       real_type sss0, sss1;
-      bool ok = polylineList[ipos0].intersect(pl.polylineList[ipos1],sss0,sss1);
+      bool ok = m_polylineList[ipos0].intersect(pl.m_polylineList[ipos1],sss0,sss1);
       if ( ok ) {
-        ss0.push_back(sss0+s0[ipos0]);
-        ss1.push_back(sss1+pl.s0[ipos1]);
+        ss0.push_back(sss0+m_s0[ipos0]);
+        ss1.push_back(sss1+pl.m_s0[ipos1]);
       }
     }
 

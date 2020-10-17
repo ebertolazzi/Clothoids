@@ -1211,10 +1211,10 @@ namespace G2lib {
     real_type theta_min[],
     real_type theta_max[]
   ) const {
-    size_t nn = size_t( npts );
+    size_t nn = size_t( m_npts );
     vector<real_type> omega(nn), len(nn);
     G2lib::xy_to_guess_angle(
-      this->npts, &this->x.front(), &this->y.front(),
+      m_npts, &m_x.front(), &m_y.front(),
       theta_guess, theta_min, theta_max,
       &omega.front(), &len.front()
     );
@@ -1226,37 +1226,37 @@ namespace G2lib {
     real_type const yvec[],
     int_type        n
   ) {
-    x.clear(); x.reserve( unsigned(n) );
-    y.clear(); y.reserve( unsigned(n) );
-    copy( xvec, xvec+n, back_inserter(x) );
-    copy( yvec, yvec+n, back_inserter(y) );
-    npts = n;
+    m_x.clear(); m_x.reserve( unsigned(n) );
+    m_y.clear(); m_y.reserve( unsigned(n) );
+    copy( xvec, xvec+n, back_inserter(m_x) );
+    copy( yvec, yvec+n, back_inserter(m_y) );
+    m_npts = n;
     unsigned n1 = unsigned(n-1);
-    k    . resize(n1);
-    dk   . resize(n1);
-    L    . resize(n1);
-    kL   . resize(n1);
-    L_1  . resize(n1);
-    L_2  . resize(n1);
-    k_1  . resize(n1);
-    k_2  . resize(n1);
-    dk_1 . resize(n1);
-    dk_2 . resize(n1);
+    m_k    . resize(n1);
+    m_dk   . resize(n1);
+    m_L    . resize(n1);
+    m_kL   . resize(n1);
+    m_L_1  . resize(n1);
+    m_L_2  . resize(n1);
+    m_k_1  . resize(n1);
+    m_k_2  . resize(n1);
+    m_dk_1 . resize(n1);
+    m_dk_2 . resize(n1);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
   ClothoidSplineG2::numTheta() const {
-    return int_type(x.size());
+    return int_type(m_x.size());
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
   ClothoidSplineG2::numConstraints() const {
-    int_type N = int_type(x.size());
-    switch (tt) {
+    int_type N = int_type(m_x.size());
+    switch (m_tt) {
       case P1:
       case P2: return N;
       default: break;
@@ -1272,9 +1272,9 @@ namespace G2lib {
     real_type     & f
   ) const {
     ClothoidCurve cL, cR, c;
-    int_type ne  = npts - 1;
-    int_type ne1 = npts - 2;
-    switch (tt) {
+    int_type ne  = m_npts - 1;
+    int_type ne1 = m_npts - 2;
+    switch (m_tt) {
     case P1:
     case P2:
       f = 0;
@@ -1283,29 +1283,29 @@ namespace G2lib {
       // forward target
       break;
     case P4:
-      cL.build_G1( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1] );
-      cR.build_G1( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne] );
+      cL.build_G1( m_x[0],   m_y[0],   theta[0],   m_x[1],  m_y[1],  theta[1] );
+      cR.build_G1( m_x[ne1], m_y[ne1], theta[ne1], m_x[ne], m_y[ne], theta[ne] );
       { real_type dk_L = cL.dkappa();
         real_type dk_R = cR.dkappa();
         f = dk_L*dk_L+dk_R*dk_R;
       }
       break;
     case P5:
-      cL.build_G1( x[0],   y[0],   theta[0],   x[1],  y[1],  theta[1] );
-      cR.build_G1( x[ne1], y[ne1], theta[ne1], x[ne], y[ne], theta[ne] );
+      cL.build_G1( m_x[0],   m_y[0],   theta[0],   m_x[1],  m_y[1],  theta[1] );
+      cR.build_G1( m_x[ne1], m_y[ne1], theta[ne1], m_x[ne], m_y[ne], theta[ne] );
       f = cL.length()+cR.length();
       break;
     case P6:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
-        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] );
+        c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         f += c.length();
       }
       break;
     case P7:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
-        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] );
+        c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
         real_type kur  = c.kappaBegin();
         real_type dkur = c.dkappa();
@@ -1315,7 +1315,7 @@ namespace G2lib {
     case P8:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
-        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] );
+        c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
         real_type dkur = c.dkappa();
         f += Len*dkur*dkur;
@@ -1324,7 +1324,7 @@ namespace G2lib {
     case P9:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
-        c.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] );
+        c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
         real_type kur  = c.kappaBegin();
         real_type k2   = kur*kur;
@@ -1350,10 +1350,10 @@ namespace G2lib {
     ClothoidCurve cL, cR, c;
     real_type     LL_D[2], kL_D[2], dkL_D[2];
     real_type     LR_D[2], kR_D[2], dkR_D[2];
-    fill( g, g+npts, 0 );
-    int_type ne  = npts - 1;
-    int_type ne1 = npts - 2;
-    switch (tt) {
+    std::fill_n( g, m_npts, 0 );
+    int_type ne  = m_npts - 1;
+    int_type ne1 = m_npts - 2;
+    switch (m_tt) {
     case P1:
     case P2:
       break;
@@ -1361,13 +1361,13 @@ namespace G2lib {
       break;
     case P4:
       cL.build_G1_D(
-        x[0], y[0], theta[0],
-        x[1], y[1], theta[1],
+        m_x[0], m_y[0], theta[0],
+        m_x[1], m_y[1], theta[1],
         LL_D, kL_D, dkL_D
       );
       cR.build_G1_D(
-        x[ne1], y[ne1], theta[ne1],
-        x[ne],  y[ne],  theta[ne],
+        m_x[ne1], m_y[ne1], theta[ne1],
+        m_x[ne],  m_y[ne],  theta[ne],
         LR_D, kR_D, dkR_D
       );
       {
@@ -1381,13 +1381,13 @@ namespace G2lib {
       break;
     case P5:
       cL.build_G1_D(
-        x[0], y[0], theta[0],
-        x[1], y[1], theta[1],
+        m_x[0], m_y[0], theta[0],
+        m_x[1], m_y[1], theta[1],
         LL_D, kL_D, dkL_D
       );
       cR.build_G1_D(
-        x[ne1], y[ne1], theta[ne1],
-        x[ne],  y[ne],  theta[ne],
+        m_x[ne1], m_y[ne1], theta[ne1],
+        m_x[ne],  m_y[ne],  theta[ne],
         LR_D, kR_D, dkR_D
       );
       g[0]   = LL_D[0];
@@ -1399,8 +1399,8 @@ namespace G2lib {
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
-          x[j],   y[j],   theta[j],
-          x[j+1], y[j+1], theta[j+1],
+          m_x[j],   m_y[j],   theta[j],
+          m_x[j+1], m_y[j+1], theta[j+1],
           L_D, k_D, dk_D
         );
         g[j]   += L_D[0];
@@ -1411,8 +1411,8 @@ namespace G2lib {
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
-          x[j],   y[j],   theta[j],
-          x[j+1], y[j+1], theta[j+1],
+          m_x[j],   m_y[j],   theta[j],
+          m_x[j+1], m_y[j+1], theta[j+1],
           L_D, k_D, dk_D
         );
         real_type Len  = c.length();
@@ -1442,8 +1442,8 @@ namespace G2lib {
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
-          x[j],   y[j],   theta[j],
-          x[j+1], y[j+1], theta[j+1],
+          m_x[j],   m_y[j],   theta[j],
+          m_x[j+1], m_y[j+1], theta[j+1],
           L_D, k_D, dk_D
         );
         real_type Len  = c.length();
@@ -1456,8 +1456,8 @@ namespace G2lib {
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
-          x[j],   y[j],   theta[j],
-          x[j+1], y[j+1], theta[j+1],
+          m_x[j],   m_y[j],   theta[j],
+          m_x[j+1], m_y[j+1], theta[j+1],
           L_D, k_D, dk_D
         );
         real_type Len  = c.length();
@@ -1486,26 +1486,26 @@ namespace G2lib {
     real_type       c[]
   ) const {
     ClothoidCurve cc;
-    int_type ne  = npts - 1;
-    int_type ne1 = npts - 2;
+    int_type ne  = m_npts - 1;
+    int_type ne1 = m_npts - 2;
 
     for ( int_type j = 0; j < ne; ++j ) {
-      cc.build_G1( x[j], y[j], theta[j], x[j+1], y[j+1], theta[j+1] );
-      k[j]  = cc.kappaBegin();
-      dk[j] = cc.dkappa();
-      L[j]  = cc.length();
-      kL[j] = k[j]+dk[j]*L[j];
+      cc.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
+      m_k[j]  = cc.kappaBegin();
+      m_dk[j] = cc.dkappa();
+      m_L[j]  = cc.length();
+      m_kL[j] = m_k[j]+m_dk[j]*m_L[j];
     }
 
-    for ( int_type j = 0; j < ne1; ++j ) c[j] = kL[j]-k[j+1];
+    for ( int_type j = 0; j < ne1; ++j ) c[j] = m_kL[j]-m_k[j+1];
 
-    switch (tt) {
+    switch (m_tt) {
     case P1:
-      c[ne1] = diff2pi( theta[0]  - theta_I );
-      c[ne]  = diff2pi( theta[ne] - theta_F );
+      c[ne1] = diff2pi( theta[0]  - m_theta_I );
+      c[ne]  = diff2pi( theta[ne] - m_theta_F );
       break;
     case P2:
-      c[ne1] = kL[ne1] - k[0];
+      c[ne1] = m_kL[ne1] - m_k[0];
       c[ne]  = diff2pi( theta[0] - theta[ne] );
       break;
     default:
@@ -1518,8 +1518,8 @@ namespace G2lib {
 
   int_type
   ClothoidSplineG2::jacobian_nnz() const {
-    int_type nnz = 3*(npts-2);
-    switch (tt) {
+    int_type nnz = 3*(m_npts-2);
+    switch (m_tt) {
     case P1: nnz += 2; break;
     case P2: nnz += 6; break;
     default:            break;
@@ -1535,8 +1535,8 @@ namespace G2lib {
     int_type jj[]
   ) const {
     ClothoidCurve cc;
-    int_type ne  = npts - 1;
-    int_type ne1 = npts - 2;
+    int_type ne  = m_npts - 1;
+    int_type ne1 = m_npts - 2;
 
     int_type kk = 0;
     for ( int_type j = 0; j < ne1; ++j ) {
@@ -1545,7 +1545,7 @@ namespace G2lib {
       ii[kk] = j; jj[kk] = j+2; ++kk;
     }
 
-    switch (tt) {
+    switch (m_tt) {
     case P1:
       ii[kk] = ne1; jj[kk] = 0; ++kk;
       ii[kk] = ne; jj[kk] = ne; ++kk;
@@ -1573,28 +1573,28 @@ namespace G2lib {
     real_type jj[]
   ) const {
     ClothoidCurve cc;
-    int_type ne  = npts - 1;
-    int_type ne1 = npts - 2;
+    int_type ne  = m_npts - 1;
+    int_type ne1 = m_npts - 2;
 
     int_type kk = 0;
     for ( int_type j = 1; j <= ne1; ++j ) {
-      ii[kk] = j; jj[kk] = j; ++kk;
+      ii[kk] = j; jj[kk] = j;   ++kk;
       ii[kk] = j; jj[kk] = j+1; ++kk;
       ii[kk] = j; jj[kk] = j+2; ++kk;
     }
 
-    switch (tt) {
+    switch (m_tt) {
     case P1:
-      ii[kk] = ne; jj[kk] = 1; ++kk;
-      ii[kk] = npts; jj[kk] = npts; ++kk;
+      ii[kk] = ne;     jj[kk] = 1;      ++kk;
+      ii[kk] = m_npts; jj[kk] = m_npts; ++kk;
       break;
     case P2:
-      ii[kk] = ne; jj[kk] = 1; ++kk;
-      ii[kk] = ne; jj[kk] = 2; ++kk;
-      ii[kk] = ne; jj[kk] = ne; ++kk;
-      ii[kk] = ne; jj[kk] = npts; ++kk;
-      ii[kk] = npts; jj[kk] = 1; ++kk;
-      ii[kk] = npts; jj[kk] = npts; ++kk;
+      ii[kk] = ne;     jj[kk] = 1;      ++kk;
+      ii[kk] = ne;     jj[kk] = 2;      ++kk;
+      ii[kk] = ne;     jj[kk] = ne;     ++kk;
+      ii[kk] = ne;     jj[kk] = m_npts; ++kk;
+      ii[kk] = m_npts; jj[kk] = 1;      ++kk;
+      ii[kk] = m_npts; jj[kk] = m_npts; ++kk;
       break;
     default:
       break;
@@ -1611,42 +1611,42 @@ namespace G2lib {
     real_type       vals[]
   ) const {
     ClothoidCurve cc;
-    int_type ne  = npts - 1;
-    int_type ne1 = npts - 2;
+    int_type ne  = m_npts - 1;
+    int_type ne1 = m_npts - 2;
 
     for ( int_type j = 0; j < ne; ++j ) {
       real_type L_D[2], k_D[2], dk_D[2];
       cc.build_G1_D(
-        x[j],   y[j],   theta[j],
-        x[j+1], y[j+1], theta[j+1],
+        m_x[j],   m_y[j],   theta[j],
+        m_x[j+1], m_y[j+1], theta[j+1],
         L_D, k_D, dk_D
       );
-      k[j]    = cc.kappaBegin();
-      dk[j]   = cc.dkappa();
-      L[j]    = cc.length();
-      kL[j]   = k[j]+dk[j]*L[j];
-      L_1[j]  = L_D[0]; L_2[j]  = L_D[1];
-      k_1[j]  = k_D[0]; k_2[j]  = k_D[1];
-      dk_1[j] = dk_D[0]; dk_2[j] = dk_D[1];
+      m_k[j]    = cc.kappaBegin();
+      m_dk[j]   = cc.dkappa();
+      m_L[j]    = cc.length();
+      m_kL[j]   = m_k[j]+m_dk[j]*m_L[j];
+      m_L_1[j]  = L_D[0];  m_L_2[j]  = L_D[1];
+      m_k_1[j]  = k_D[0];  m_k_2[j]  = k_D[1];
+      m_dk_1[j] = dk_D[0]; m_dk_2[j] = dk_D[1];
     }
 
     int_type kk = 0;
     for ( int_type j = 0; j < ne1; ++j ) {
-      vals[kk++] =  k_1[j] + dk_1[j]*L[j] + dk[j]*L_1[j];
-      vals[kk++] =  k_2[j] + dk_2[j]*L[j] + dk[j]*L_2[j] - k_1[j+1];
-      vals[kk++] = -k_2[j+1];
+      vals[kk++] =  m_k_1[j] + m_dk_1[j]*m_L[j] + m_dk[j]*m_L_1[j];
+      vals[kk++] =  m_k_2[j] + m_dk_2[j]*m_L[j] + m_dk[j]*m_L_2[j] - m_k_1[j+1];
+      vals[kk++] = -m_k_2[j+1];
     }
 
-    switch (tt) {
+    switch (m_tt) {
     case P1:
       vals[kk++] = 1;
       vals[kk++] = 1;
       break;
     case P2:
-      vals[kk++] = -k_1[0];
-      vals[kk++] = -k_2[0];
-      vals[kk++] = k_1[ne1]+L_1[ne1]*dk[ne1]+L[ne1]*dk_1[ne1];
-      vals[kk++] = k_2[ne1]+L_2[ne1]*dk[ne1]+L[ne1]*dk_2[ne1];
+      vals[kk++] = -m_k_1[0];
+      vals[kk++] = -m_k_2[0];
+      vals[kk++] = m_k_1[ne1]+m_L_1[ne1]*m_dk[ne1]+m_L[ne1]*m_dk_1[ne1];
+      vals[kk++] = m_k_2[ne1]+m_L_2[ne1]*m_dk[ne1]+m_L[ne1]*m_dk_2[ne1];
       vals[kk++] = 1;
       vals[kk++] = -1;
       break;
@@ -1661,8 +1661,8 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, ClothoidSplineG2 const & c ) {
     stream
-      <<   "npts   = " << c.npts
-      << "\ntarget = " << int(c.tt)
+      <<   "npts   = " << c.m_npts
+      << "\ntarget = " << int(c.m_tt)
       << "\n";
     return stream;
   }

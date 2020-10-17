@@ -46,55 +46,55 @@ namespace G2lib {
 
     friend class ClothoidList;
 
-    vector<real_type> s0;
-    vector<Biarc>     biarcList;
+    vector<real_type> m_s0;
+    vector<Biarc>     m_biarcList;
 
     #ifdef G2LIB_USE_CXX11
-    mutable std::mutex                         lastInterval_mutex;
-    mutable std::map<std::thread::id,int_type> lastInterval_by_thread;
+    mutable std::mutex                         m_lastInterval_mutex;
+    mutable std::map<std::thread::id,int_type> m_lastInterval_by_thread;
     #else
     mutable int_type lastInterval;
     #endif
 
-    mutable bool               aabb_done;
-    mutable AABBtree           aabb_tree;
-    mutable real_type          aabb_offs;
-    mutable real_type          aabb_max_angle;
-    mutable real_type          aabb_max_size;
-    mutable vector<Triangle2D> aabb_tri;
+    mutable bool               m_aabb_done;
+    mutable AABBtree           m_aabb_tree;
+    mutable real_type          m_aabb_offs;
+    mutable real_type          m_aabb_max_angle;
+    mutable real_type          m_aabb_max_size;
+    mutable vector<Triangle2D> m_aabb_tri;
 
     class T2D_collision_list_ISO {
-      BiarcList const * pList1;
-      real_type const   offs1;
-      BiarcList const * pList2;
-      real_type const   offs2;
+      BiarcList const * m_pList1;
+      real_type const   m_offs1;
+      BiarcList const * m_pList2;
+      real_type const   m_offs2;
     public:
       T2D_collision_list_ISO(
-        BiarcList const * _pList1,
-        real_type const   _offs1,
-        BiarcList const * _pList2,
-        real_type const   _offs2
+        BiarcList const * pList1,
+        real_type const   offs1,
+        BiarcList const * pList2,
+        real_type const   offs2
       )
-      : pList1(_pList1)
-      , offs1(_offs1)
-      , pList2(_pList2)
-      , offs2(_offs2)
+      : m_pList1(pList1)
+      , m_offs1(offs1)
+      , m_pList2(pList2)
+      , m_offs2(offs2)
       {}
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        Triangle2D const & T1 = pList1->aabb_tri[size_t(ptr1->Ipos())];
-        Triangle2D const & T2 = pList2->aabb_tri[size_t(ptr2->Ipos())];
-        Biarc      const & C1 = pList1->get(T1.Icurve());
-        Biarc      const & C2 = pList2->get(T2.Icurve());
-        return C1.collision_ISO( offs1, C2, offs2 );
+        Triangle2D const & T1 = m_pList1->m_aabb_tri[size_t(ptr1->Ipos())];
+        Triangle2D const & T2 = m_pList2->m_aabb_tri[size_t(ptr2->Ipos())];
+        Biarc      const & C1 = m_pList1->get(T1.Icurve());
+        Biarc      const & C2 = m_pList2->get(T2.Icurve());
+        return C1.collision_ISO( m_offs1, C2, m_offs2 );
       }
     };
 
     void
     resetLastInterval() {
-      std::lock_guard<std::mutex> lck(lastInterval_mutex);
-      lastInterval_by_thread[std::this_thread::get_id()] = 0;
+      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
+      m_lastInterval_by_thread[std::this_thread::get_id()] = 0;
     }
 
   public:
@@ -104,20 +104,20 @@ namespace G2lib {
     //explicit
     BiarcList()
     : BaseCurve(G2LIB_BIARC_LIST)
-    , aabb_done(false)
+    , m_aabb_done(false)
     { this->resetLastInterval(); }
 
     virtual
     ~BiarcList() G2LIB_OVERRIDE {
-      s0.clear();
-      biarcList.clear();
-      aabb_tri.clear();
+      m_s0.clear();
+      m_biarcList.clear();
+      m_aabb_tri.clear();
     }
 
     //explicit
     BiarcList( BiarcList const & s )
     : BaseCurve(G2LIB_BIARC_LIST)
-    , aabb_done(false)
+    , m_aabb_done(false)
     { this->resetLastInterval(); copy(s); }
 
     void init();
@@ -160,15 +160,15 @@ namespace G2lib {
     Biarc const & get( int_type idx ) const;
     Biarc const & getAtS( real_type s ) const;
 
-    int_type numSegment() const { return int_type(biarcList.size()); }
+    int_type numSegment() const { return int_type(m_biarcList.size()); }
 
     int_type
     findAtS( real_type s ) const {
       #ifdef G2LIB_USE_CXX11
-      std::lock_guard<std::mutex> lck(lastInterval_mutex);
-      return ::G2lib::findAtS( s, lastInterval_by_thread[std::this_thread::get_id()], s0 );
+      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
+      return ::G2lib::findAtS( s, m_lastInterval_by_thread[std::this_thread::get_id()], m_s0 );
       #else
-      return ::G2lib::findAtS( s, lastInterval, s0 );
+      return ::G2lib::findAtS( s, m_lastInterval, m_s0 );
       #endif
     }
 
@@ -280,92 +280,92 @@ namespace G2lib {
     virtual
     real_type
     thetaBegin() const G2LIB_OVERRIDE
-    { return biarcList.front().thetaBegin(); }
+    { return m_biarcList.front().thetaBegin(); }
 
     virtual
     real_type
     thetaEnd() const G2LIB_OVERRIDE
-    { return biarcList.back().thetaEnd(); }
+    { return m_biarcList.back().thetaEnd(); }
 
     virtual
     real_type
     xBegin() const G2LIB_OVERRIDE
-    { return biarcList.front().xBegin(); }
+    { return m_biarcList.front().xBegin(); }
 
     virtual
     real_type
     yBegin() const G2LIB_OVERRIDE
-    { return biarcList.front().yBegin(); }
+    { return m_biarcList.front().yBegin(); }
 
     virtual
     real_type
     xEnd() const G2LIB_OVERRIDE
-    { return biarcList.back().xEnd(); }
+    { return m_biarcList.back().xEnd(); }
 
     virtual
     real_type
     yEnd() const G2LIB_OVERRIDE
-    { return biarcList.back().yEnd(); }
+    { return m_biarcList.back().yEnd(); }
 
     virtual
     real_type
     xBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return biarcList.front().xBegin_ISO( offs ); }
+    { return m_biarcList.front().xBegin_ISO( offs ); }
 
     virtual
     real_type
     yBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return biarcList.front().yBegin_ISO( offs ); }
+    { return m_biarcList.front().yBegin_ISO( offs ); }
 
     virtual
     real_type
     xEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return biarcList.back().xEnd_ISO( offs ); }
+    { return m_biarcList.back().xEnd_ISO( offs ); }
 
     virtual
     real_type
     yEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return biarcList.back().yEnd_ISO( offs ); }
+    { return m_biarcList.back().yEnd_ISO( offs ); }
 
     virtual
     real_type
     tx_Begin() const G2LIB_OVERRIDE
-    { return biarcList.front().tx_Begin(); }
+    { return m_biarcList.front().tx_Begin(); }
 
     virtual
     real_type
     ty_Begin() const G2LIB_OVERRIDE
-    { return biarcList.front().ty_Begin(); }
+    { return m_biarcList.front().ty_Begin(); }
 
     virtual
     real_type
     tx_End() const G2LIB_OVERRIDE
-    { return biarcList.back().tx_End(); }
+    { return m_biarcList.back().tx_End(); }
 
     virtual
     real_type
     ty_End() const G2LIB_OVERRIDE
-    { return biarcList.back().ty_End(); }
+    { return m_biarcList.back().ty_End(); }
 
     virtual
     real_type
     nx_Begin_ISO() const G2LIB_OVERRIDE
-    { return biarcList.front().nx_Begin_ISO(); }
+    { return m_biarcList.front().nx_Begin_ISO(); }
 
     virtual
     real_type
     ny_Begin_ISO() const G2LIB_OVERRIDE
-    { return biarcList.front().ny_Begin_ISO(); }
+    { return m_biarcList.front().ny_Begin_ISO(); }
 
     virtual
     real_type
     nx_End_ISO() const G2LIB_OVERRIDE
-    { return biarcList.back().nx_End_ISO(); }
+    { return m_biarcList.back().nx_End_ISO(); }
 
     virtual
     real_type
     ny_End_ISO() const G2LIB_OVERRIDE
-    { return biarcList.back().ny_End_ISO(); }
+    { return m_biarcList.back().ny_End_ISO(); }
 
     /*\
      |  _   _          _
@@ -375,21 +375,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual
-    real_type
-    theta( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    theta_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    theta_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    theta_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta_DDD( real_type s ) const G2LIB_OVERRIDE;
 
     /*\
      |  _____                   _   _   _
@@ -399,37 +388,14 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    virtual
-    real_type
-    tx( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    tx_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    tx_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    tx_DDD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    ty_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type ty_DDD( real_type s ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -492,37 +458,14 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
-    real_type
-    X( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    X_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y_D( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    X_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y_DD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    X_DDD( real_type s ) const G2LIB_OVERRIDE;
-
-    virtual
-    real_type
-    Y_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y_D( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y_DD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type Y_DDD( real_type s ) const G2LIB_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

@@ -49,19 +49,19 @@ namespace G2lib {
     friend class ClothoidList;
     friend class BiarcList;
   private:
-    vector<LineSegment> polylineList;
-    vector<real_type>   s0;
-    real_type           xe, ye;
+    vector<LineSegment> m_polylineList;
+    vector<real_type>   m_s0;
+    real_type           m_xe, m_ye;
 
     #ifdef G2LIB_USE_CXX11
-    mutable std::mutex                         lastInterval_mutex;
-    mutable std::map<std::thread::id,int_type> lastInterval_by_thread;
+    mutable std::mutex                         m_lastInterval_mutex;
+    mutable std::map<std::thread::id,int_type> m_lastInterval_by_thread;
     #else
-    mutable int_type lastInterval;
+    mutable int_type m_lastInterval;
     #endif
 
-    mutable bool     aabb_done;
-    mutable AABBtree aabb_tree;
+    mutable bool     m_aabb_done;
+    mutable AABBtree m_aabb_tree;
 
     class Collision_list {
       PolyLine const * pPL1;
@@ -74,16 +74,16 @@ namespace G2lib {
 
       bool
       operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        LineSegment const & LS1 = pPL1->polylineList[size_t(ptr1->Ipos())];
-        LineSegment const & LS2 = pPL2->polylineList[size_t(ptr2->Ipos())];
+        LineSegment const & LS1 = pPL1->m_polylineList[size_t(ptr1->Ipos())];
+        LineSegment const & LS2 = pPL2->m_polylineList[size_t(ptr2->Ipos())];
         return LS1.collision( LS2 );
       }
     };
 
     void
     resetLastInterval() {
-      std::lock_guard<std::mutex> lck(lastInterval_mutex);
-      lastInterval_by_thread[std::this_thread::get_id()] = 0;
+      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
+      m_lastInterval_by_thread[std::this_thread::get_id()] = 0;
     }
 
   public:
@@ -91,7 +91,7 @@ namespace G2lib {
     //explicit
     PolyLine()
     : BaseCurve(G2LIB_POLYLINE)
-    , aabb_done(false)
+    , m_aabb_done(false)
     { this->resetLastInterval(); }
 
     void
@@ -100,16 +100,16 @@ namespace G2lib {
     //explicit
     PolyLine( PolyLine const & PL )
     : BaseCurve(G2LIB_POLYLINE)
-    , aabb_done(false)
+    , m_aabb_done(false)
     { this->resetLastInterval(); copy(PL); }
 
     int_type
     findAtS( real_type s ) const {
       #ifdef G2LIB_USE_CXX11
-      std::lock_guard<std::mutex> lck(lastInterval_mutex);
-      return ::G2lib::findAtS( s, lastInterval_by_thread[std::this_thread::get_id()], s0 );
+      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
+      return ::G2lib::findAtS( s, m_lastInterval_by_thread[std::this_thread::get_id()], m_s0 );
       #else
-      return ::G2lib::findAtS( s, lastInterval, s0 );
+      return ::G2lib::findAtS( s, m_lastInterval, m_s0 );
       #endif
     }
 
@@ -128,11 +128,11 @@ namespace G2lib {
 
     int_type
     numSegment() const
-    { return int_type(polylineList.size()); }
+    { return int_type(m_polylineList.size()); }
 
     int_type
     numPoints() const
-    { return int_type(s0.size()); }
+    { return int_type(m_s0.size()); }
 
     void polygon( real_type x[], real_type y[]) const;
     void init( real_type x0, real_type y0 );
@@ -180,7 +180,7 @@ namespace G2lib {
     virtual
     real_type
     length() const G2LIB_OVERRIDE
-    { return s0.back(); }
+    { return m_s0.back(); }
 
     virtual
     real_type
@@ -192,35 +192,36 @@ namespace G2lib {
     virtual
     real_type
     xBegin() const G2LIB_OVERRIDE
-    { return polylineList.front().xBegin(); }
+    { return m_polylineList.front().xBegin(); }
 
     virtual
     real_type
     yBegin() const G2LIB_OVERRIDE
-    { return polylineList.front().yBegin(); }
+    { return m_polylineList.front().yBegin(); }
 
     virtual
     real_type
     xEnd() const G2LIB_OVERRIDE
-    { return polylineList.back().xEnd(); }
+    { return m_polylineList.back().xEnd(); }
 
     virtual
     real_type
     yEnd() const G2LIB_OVERRIDE
-    { return polylineList.back().yEnd(); }
+    { return m_polylineList.back().yEnd(); }
 
     virtual
     real_type
     X( real_type s ) const G2LIB_OVERRIDE {
       int_type idx = this->findAtS( s );
-      real_type ss = s0[size_t(idx)];
-      return polylineList[size_t(idx)].X(s-ss);
+      real_type ss = m_s0[size_t(idx)];
+      return m_polylineList[size_t(idx)].X(s-ss);
     }
 
     virtual
     real_type
     X_D( real_type s ) const G2LIB_OVERRIDE {
-      return polylineList[size_t(this->findAtS( s ))].c0;
+      int_type idx = this->findAtS( s );
+      return m_polylineList[size_t(idx)].m_c0;
     }
 
     virtual
@@ -237,14 +238,15 @@ namespace G2lib {
     real_type
     Y( real_type s ) const G2LIB_OVERRIDE {
       int_type idx = this->findAtS( s );
-      real_type ss = s0[size_t(idx)];
-      return polylineList[size_t(idx)].Y(s-ss);
+      real_type ss = m_s0[size_t(idx)];
+      return m_polylineList[size_t(idx)].Y(s-ss);
     }
 
     virtual
     real_type
     Y_D( real_type s ) const G2LIB_OVERRIDE {
-      return polylineList[size_t(this->findAtS( s ))].s0;
+      int_type idx = this->findAtS( s );
+      return m_polylineList[size_t(idx)].m_s0;
     }
 
     virtual
@@ -281,8 +283,8 @@ namespace G2lib {
       real_type & y
     ) const G2LIB_OVERRIDE {
       int_type idx = this->findAtS( s );
-      real_type ss = s0[size_t(idx)];
-      polylineList[size_t(idx)].eval( s-ss, x, y );
+      real_type ss = m_s0[size_t(idx)];
+      m_polylineList[size_t(idx)].eval( s-ss, x, y );
     }
 
     virtual
@@ -293,8 +295,8 @@ namespace G2lib {
       real_type & y_D
     ) const G2LIB_OVERRIDE {
       int_type idx = this->findAtS( s );
-      real_type ss = s0[size_t(idx)];
-      polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
+      real_type ss = m_s0[size_t(idx)];
+      m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
 
     virtual
@@ -326,8 +328,8 @@ namespace G2lib {
       real_type & y
     ) const G2LIB_OVERRIDE {
       int_type idx = this->findAtS( s );
-      real_type ss = s0[size_t(idx)];
-      polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
+      real_type ss = m_s0[size_t(idx)];
+      m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
     virtual
@@ -339,8 +341,8 @@ namespace G2lib {
       real_type & y_D
     ) const G2LIB_OVERRIDE {
       int_type idx = this->findAtS( s );
-      real_type ss = s0[size_t(idx)];
-      polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
+      real_type ss = m_s0[size_t(idx)];
+      m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 
     virtual
@@ -375,7 +377,7 @@ namespace G2lib {
     void
     translate( real_type tx, real_type ty ) G2LIB_OVERRIDE {
       std::vector<LineSegment>::iterator il;
-      for ( il = polylineList.begin(); il != polylineList.end(); ++il )
+      for ( il = m_polylineList.begin(); il != m_polylineList.end(); ++il )
         il->translate( tx, ty );
     }
 
@@ -387,7 +389,7 @@ namespace G2lib {
       real_type cy
     ) G2LIB_OVERRIDE {
       std::vector<LineSegment>::iterator il;
-      for ( il = polylineList.begin(); il != polylineList.end(); ++il )
+      for ( il = m_polylineList.begin(); il != m_polylineList.end(); ++il )
         il->rotate( angle, cx, cy );
     }
 
@@ -519,9 +521,9 @@ namespace G2lib {
 
     void
     build_AABBtree() const {
-      if ( !aabb_done ) {
-        this->build_AABBtree( aabb_tree );
-        aabb_done = true;
+      if ( !m_aabb_done ) {
+        this->build_AABBtree( m_aabb_tree );
+        m_aabb_done = true;
       }
     }
 

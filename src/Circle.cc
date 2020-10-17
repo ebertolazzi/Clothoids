@@ -62,13 +62,13 @@ namespace G2lib {
     case G2LIB_LINE:
       {
         LineSegment const & LS = *static_cast<LineSegment const *>(&C);
-        x0     = LS.xBegin();
-        y0     = LS.yBegin();
-        theta0 = LS.theta0;
-        c0     = LS.c0;
-        s0     = LS.s0;
-        k      = 0;
-        L      = LS.length();
+        m_x0     = LS.xBegin();
+        m_y0     = LS.yBegin();
+        m_theta0 = LS.m_theta0;
+        m_c0     = LS.m_c0;
+        m_s0     = LS.m_s0;
+        m_k      = 0;
+        m_L      = LS.length();
       }
       break;
     case G2LIB_CIRCLE:
@@ -90,24 +90,24 @@ namespace G2lib {
 
   bool
   CircleArc::build_G1(
-    real_type _x0,
-    real_type _y0,
-    real_type _theta0,
-    real_type _x1,
-    real_type _y1
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1
   ) {
 
-    real_type dx = _x1 - _x0;
-    real_type dy = _y1 - _y0;
+    real_type dx = x1 - x0;
+    real_type dy = y1 - y0;
     real_type d  = hypot( dx, dy );
 
     if ( d > 0 ) {
-      real_type th = atan2( dy, dx ) - _theta0;
-      x0     = _x0;
-      y0     = _y0;
-      theta0 = _theta0;
-      k      = 2*sin(th)/d;
-      L      = d/Sinc(th);
+      real_type th = atan2( dy, dx ) - theta0;
+      m_x0     = x0;
+      m_y0     = y0;
+      m_theta0 = theta0;
+      m_k      = 2*sin(th)/d;
+      m_L      = d/Sinc(th);
       return true;
     }
     return false;
@@ -153,8 +153,8 @@ namespace G2lib {
 
   real_type
   CircleArc::thetaMinMax( real_type & thMin, real_type & thMax ) const  {
-    thMin = theta0;
-    thMax = theta0 + L * k;
+    thMin = m_theta0;
+    thMax = m_theta0 + m_L * m_k;
     if ( thMax < thMin ) swap( thMin, thMax );
     return thMax-thMin;
   }
@@ -163,46 +163,46 @@ namespace G2lib {
 
   real_type
   CircleArc::X( real_type s ) const {
-    real_type sk = (s*k)/2;
-    return x0+s*Sinc(sk)*cos(theta0+sk);
+    real_type sk = (s*m_k)/2;
+    return m_x0+s*Sinc(sk)*cos(m_theta0+sk);
   }
 
   real_type
   CircleArc::X_D( real_type s ) const {
-    return cos(theta0+s*k);
+    return cos(m_theta0+s*m_k);
   }
 
   real_type
   CircleArc::X_DD( real_type s ) const {
-    return -k*sin(theta0+s*k);
+    return -m_k*sin(m_theta0+s*m_k);
   }
 
   real_type
   CircleArc::X_DDD( real_type s ) const {
-    return -(k*k)*cos(theta0+s*k);
+    return -(m_k*m_k)*cos(m_theta0+s*m_k);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   CircleArc::Y( real_type s ) const {
-    real_type sk = (s*k)/2;
-    return y0+s*Sinc(sk)*sin(theta0+sk);
+    real_type sk = (s*m_k)/2;
+    return m_y0+s*Sinc(sk)*sin(m_theta0+sk);
   }
 
   real_type
   CircleArc::Y_D( real_type s ) const {
-    return sin(theta0+s*k);
+    return sin(m_theta0+s*m_k);
   }
 
   real_type
   CircleArc::Y_DD( real_type s ) const {
-    return k*cos(theta0+s*k);
+    return m_k*cos(m_theta0+s*m_k);
   }
 
   real_type
   CircleArc::Y_DDD( real_type s ) const {
-    return -(k*k)*sin(theta0+s*k);
+    return -(m_k*m_k)*sin(m_theta0+s*m_k);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -233,8 +233,8 @@ namespace G2lib {
     real_type & ty_D
   ) const {
     real_type th = theta(s);
-    tx_D = -sin(th)*k;
-    ty_D = cos(th)*k;
+    tx_D = -sin(th)*m_k;
+    ty_D = cos(th)*m_k;
   }
 
   void
@@ -244,7 +244,7 @@ namespace G2lib {
     real_type & ty_DD
   ) const {
     real_type th = theta(s);
-    real_type k2 = k*k;
+    real_type k2 = m_k*m_k;
     tx_DD = -cos(th)*k2;
     ty_DD = -sin(th)*k2;
   }
@@ -256,7 +256,7 @@ namespace G2lib {
     real_type & ty_DDD
   ) const {
     real_type th = theta(s);
-    real_type k3 = k*k*k;
+    real_type k3 = m_k*m_k*m_k;
     tx_DDD = sin(th)*k3;
     ty_DDD = -cos(th)*k3;
   }
@@ -269,11 +269,11 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    real_type sk  = (s*k)/2;
+    real_type sk  = (s*m_k)/2;
     real_type LS  = s*Sinc(sk);
-    real_type arg = theta0+sk;
-    x = x0+LS*cos(arg);
-    y = y0+LS*sin(arg);
+    real_type arg = m_theta0+sk;
+    x = m_x0+LS*cos(arg);
+    y = m_y0+LS*sin(arg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -284,7 +284,7 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    real_type arg = theta0+s*k;
+    real_type arg = m_theta0+s*m_k;
     x_D = cos(arg);
     y_D = sin(arg);
   }
@@ -297,9 +297,9 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    real_type arg = theta0+s*k;
-    x_DD = -k*sin(arg);
-    y_DD = k*cos(arg);
+    real_type arg = m_theta0+s*m_k;
+    x_DD = -m_k*sin(arg);
+    y_DD = m_k*cos(arg);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -310,8 +310,8 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    real_type arg = theta0+s*k;
-    real_type k2  = k*k;
+    real_type arg = m_theta0+s*m_k;
+    real_type k2  = m_k*m_k;
     x_DDD = -k2*cos(arg);
     y_DDD = -k2*sin(arg);
   }
@@ -327,37 +327,37 @@ namespace G2lib {
     )
     real_type x, y;
     eval( s_begin, x, y );
-    theta0 += s_begin * k;
-    L  = s_end - s_begin;
-    x0 = x;
-    y0 = y;
-    c0 = cos(theta0);
-    s0 = sin(theta0);
+    m_theta0 += s_begin * m_k;
+    m_L  = s_end - s_begin;
+    m_x0 = x;
+    m_y0 = y;
+    m_c0 = cos(m_theta0);
+    m_s0 = sin(m_theta0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::rotate( real_type angle, real_type cx, real_type cy ) {
-    real_type dx  = x0 - cx;
-    real_type dy  = y0 - cy;
+    real_type dx  = m_x0 - cx;
+    real_type dy  = m_y0 - cy;
     real_type C   = cos(angle);
     real_type S   = sin(angle);
     real_type ndx = C*dx - S*dy;
     real_type ndy = C*dy + S*dx;
-    x0      = cx + ndx;
-    y0      = cy + ndy;
-    theta0 += angle;
-    c0      = cos(theta0);
-    s0      = sin(theta0);
+    m_x0      = cx + ndx;
+    m_y0      = cy + ndy;
+    m_theta0 += angle;
+    m_c0      = cos(m_theta0);
+    m_s0      = sin(m_theta0);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::scale( real_type s ) {
-    k /= s;
-    L *= s;
+    m_k /= s;
+    m_L *= s;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -365,25 +365,25 @@ namespace G2lib {
   void
   CircleArc::reverse() {
     real_type xx, yy;
-    eval( L, xx, yy );
-    theta0 += L*k+m_pi;
-    while ( theta0 >  m_pi ) theta0 -= m_2pi;
-    while ( theta0 < -m_pi ) theta0 += m_2pi;
-    x0 = xx;
-    y0 = yy;
-    c0 = cos(theta0);
-    s0 = sin(theta0);
-    k  = -k;
+    eval( m_L, xx, yy );
+    m_theta0 += m_L*m_k+m_pi;
+    while ( m_theta0 >  m_pi ) m_theta0 -= m_2pi;
+    while ( m_theta0 < -m_pi ) m_theta0 += m_2pi;
+    m_x0 = xx;
+    m_y0 = yy;
+    m_c0 = cos(m_theta0);
+    m_s0 = sin(m_theta0);
+    m_k  = -m_k;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   CircleArc::center( real_type & cx, real_type & cy ) const {
-    real_type nx = -sin(theta0);
-    real_type ny = cos(theta0);
-    cx = x0 + nx/k;
-    cy = y0 + ny/k;
+    real_type nx = -sin(m_theta0);
+    real_type ny = cos(m_theta0);
+    cx = m_x0 + nx/m_k;
+    cy = m_y0 + ny/m_k;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -392,10 +392,10 @@ namespace G2lib {
   CircleArc::changeCurvilinearOrigin( real_type new_s0, real_type newL ) {
     real_type new_x0, new_y0;
     eval( new_s0,  new_x0, new_y0 );
-    x0      = new_x0;
-    y0      = new_y0;
-    theta0 += k*new_s0;
-    L       = newL;
+    m_x0      = new_x0;
+    m_y0      = new_y0;
+    m_theta0 += m_k*new_s0;
+    m_L       = newL;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -407,11 +407,12 @@ namespace G2lib {
     real_type & xx1, real_type & yy1,
     real_type & xx2, real_type & yy2
   ) const {
-    real_type dtheta = L * k;
+    real_type dtheta = m_L * m_k;
     bool ok = abs(dtheta) <= m_pi/3;
     if ( ok ) {
-      xx0 = x0; yy0 = y0;
-      eval( L, xx2, yy2 );
+      xx0 = m_x0;
+      yy0 = m_y0;
+      eval( m_L, xx2, yy2 );
       xx1 = (xx0+xx2)/2;
       yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
@@ -433,11 +434,11 @@ namespace G2lib {
     real_type & xx1, real_type & yy1,
     real_type & xx2, real_type & yy2
   ) const {
-    real_type dtheta = L * k;
+    real_type dtheta = m_L * m_k;
     bool ok = abs(dtheta) <= m_pi/3;
     if ( ok ) {
-      eval_ISO( 0, offs, xx0, yy0 );
-      eval_ISO( L, offs, xx2, yy2 );
+      eval_ISO( 0,   offs, xx0, yy0 );
+      eval_ISO( m_L, offs, xx2, yy2 );
       xx1 = (xx0+xx2)/2;
       yy1 = (yy0+yy2)/2;
       real_type nx = yy0-yy2;
@@ -458,26 +459,26 @@ namespace G2lib {
     real_type            max_size,
     int_type             icurve
   ) const {
-    real_type dtheta = abs( min(L,max_size) * k);
+    real_type dtheta = abs( min(m_L,max_size) * m_k);
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
       n       = int_type(ceil( dtheta/max_angle ));
       dtheta /= n;
     }
     real_type tg = tan(dtheta/2)/2;
-    if ( k < 0 ) tg = -tg;
+    if ( m_k < 0 ) tg = -tg;
     tvec.reserve( size_t(n) );
-    real_type xx0 = x0;
-    real_type yy0 = y0;
-    real_type ds  = L/n;
+    real_type xx0 = m_x0;
+    real_type yy0 = m_y0;
+    real_type ds  = m_L/n;
     real_type ss  = ds;
     for ( int_type iter = 0; iter < n; ++iter, ss += ds ) {
       real_type xx2, yy2;
       eval( ss, xx2, yy2 );
       real_type xx1 = (xx0+xx2)/2;
       real_type yy1 = (yy0+yy2)/2;
-      real_type nx = yy0-yy2;
-      real_type ny = xx2-xx0;
+      real_type nx  = yy0-yy2;
+      real_type ny  = xx2-xx0;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
       tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2, 0, 0, icurve ) );
@@ -496,18 +497,18 @@ namespace G2lib {
     real_type            max_size,
     int_type             icurve
   ) const {
-    real_type scale  = 1+k*offs;
-    real_type dtheta = abs( min(L,max_size/scale) * k );
+    real_type scale  = 1+m_k*offs;
+    real_type dtheta = abs( min(m_L,max_size/scale) * m_k );
     int_type  n      = 1;
     if ( dtheta > max_angle ) {
       n       = int_type(ceil( dtheta/max_angle ));
       dtheta /= n;
     }
     tvec.reserve( size_t(n) );
-    real_type ds = L/n;
+    real_type ds = m_L/n;
     real_type ss = ds;
     real_type tg = scale * tan(dtheta/2)/2;
-    if ( k < 0 ) tg = -tg;
+    if ( m_k < 0 ) tg = -tg;
     real_type xx0, yy0;
     eval_ISO( 0, offs, xx0, yy0 );
     for ( int_type iter = 0; iter < n; ++iter, ss += ds ) {
@@ -584,14 +585,14 @@ namespace G2lib {
   CircleArc::collision( CircleArc const & C ) const {
     real_type s1[2], s2[2];
     int_type ni = intersectCircleCircle(
-      this->x0, this->y0, this->theta0, this->k,
-      C.x0, C.y0, C.theta0, C.k, s1, s2
+      m_x0, m_y0, m_theta0, m_k,
+      C.m_x0, C.m_y0, C.m_theta0, C.m_k, s1, s2
     );
-    real_type eps1 = machepsi100*L;
-    real_type eps2 = machepsi100*C.L;
+    real_type eps1 = machepsi100*m_L;
+    real_type eps2 = machepsi100*C.m_L;
     for ( int_type i = 0; i < ni; ++i ) {
-      if ( s1[i] >= -eps1 && s1[i] <= L+eps1 &&
-           s2[i] >= -eps2 && s2[i] <= L+eps2 )
+      if ( s1[i] >= -eps1 && s1[i] <= m_L+eps1 &&
+           s2[i] >= -eps2 && s2[i] <= m_L+eps2 )
         return true;
     }
     return false;
@@ -606,26 +607,26 @@ namespace G2lib {
     real_type         offs_C
   ) const {
     real_type s1[2], s2[2];
-    real_type sc1 = 1+k*offs;
-    real_type sc2 = 1+C.k*offs_C;
+    real_type sc1 = 1+m_k*offs;
+    real_type sc2 = 1+C.m_k*offs_C;
     int_type ni = intersectCircleCircle(
       this->X_ISO(0,offs),
       this->Y_ISO(0,offs),
-      this->theta0,
-      this->k/sc2,
+      m_theta0,
+      m_k/sc2,
       C.X_ISO(0,offs_C),
       C.Y_ISO(0,offs_C),
-      C.theta0,
-      C.k/sc2,
+      C.m_theta0,
+      C.m_k/sc2,
       s1, s2
     );
-    real_type eps1 = machepsi100*L;
-    real_type eps2 = machepsi100*C.L;
+    real_type eps1 = machepsi100*m_L;
+    real_type eps2 = machepsi100*C.m_L;
     for ( int_type i = 0; i < ni; ++i ) {
       real_type ss1 = s1[i]/sc1;
       real_type ss2 = s2[i]/sc2;
-      if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
-           ss2 >= -eps2 && ss2 <= C.L+eps2 )
+      if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
+           ss2 >= -eps2 && ss2 <= C.m_L+eps2 )
         return true;
     }
     return false;
@@ -641,16 +642,16 @@ namespace G2lib {
   ) const {
     real_type s1[2], s2[2];
     int_type ni = intersectCircleCircle(
-      this->x0, this->y0, this->theta0, this->k,
-      C.x0, C.y0, C.theta0, C.k, s1, s2
+      m_x0, m_y0, m_theta0, m_k,
+      C.m_x0, C.m_y0, C.m_theta0, C.m_k, s1, s2
     );
-    real_type eps1 = machepsi100*L;
-    real_type eps2 = machepsi100*C.L;
+    real_type eps1 = machepsi100*m_L;
+    real_type eps2 = machepsi100*C.m_L;
     for ( int_type i = 0; i < ni; ++i ) {
       real_type ss1 = s1[i];
       real_type ss2 = s2[i];
-      if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
-           ss2 >= -eps2 && ss2 <= C.L+eps2 ) {
+      if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
+           ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
         if ( swap_s_vals ) ilist.push_back( Ipair(ss2,ss1) );
         else               ilist.push_back( Ipair(ss1,ss2) );
       }
@@ -668,26 +669,26 @@ namespace G2lib {
     bool              swap_s_vals
   ) const {
     real_type s1[2], s2[2];
-    real_type sc1 = 1+k*offs;
-    real_type sc2 = 1+C.k*offs_C;
+    real_type sc1 = 1+m_k*offs;
+    real_type sc2 = 1+C.m_k*offs_C;
     int_type ni = intersectCircleCircle(
       this->X_ISO(0,offs),
       this->Y_ISO(0,offs),
-      this->theta0,
-      this->k/sc2,
+      m_theta0,
+      m_k/sc2,
       C.X_ISO(0,offs_C),
       C.Y_ISO(0,offs_C),
-      C.theta0,
-      C.k/sc2,
+      C.m_theta0,
+      C.m_k/sc2,
       s1, s2
     );
-    real_type eps1 = machepsi100*L;
-    real_type eps2 = machepsi100*C.L;
+    real_type eps1 = machepsi100*m_L;
+    real_type eps2 = machepsi100*C.m_L;
     for ( int_type i = 0; i < ni; ++i ) {
       real_type ss1 = s1[i]/sc1;
       real_type ss2 = s2[i]/sc2;
-      if ( ss1 >= -eps1 && ss1 <= L+eps1 &&
-           ss2 >= -eps2 && ss2 <= C.L+eps2 ) {
+      if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
+           ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
         if ( swap_s_vals ) ilist.push_back( Ipair(ss2,ss1) );
         else               ilist.push_back( Ipair(ss1,ss2) );
       }
@@ -712,23 +713,23 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    real_type cc0 = cos(theta0);
-    real_type ss0 = sin(theta0);
-    s = projectPointOnCircleArc( x0, y0, cc0, ss0, k, L, qx, qy );
+    real_type cc0 = cos(m_theta0);
+    real_type ss0 = sin(m_theta0);
+    s = projectPointOnCircleArc( m_x0, m_y0, cc0, ss0, m_k, m_L, qx, qy );
     int_type res = 1;
-    if ( s < 0 || s > L ) {
-      s = L;
+    if ( s < 0 || s > m_L ) {
+      s = m_L;
       t = 0;
       eval( s, x, y );
       // costruisco piano
-      real_type nx = x-x0;
-      real_type ny = y-y0;
-      real_type dx = 2*qx-(x0+x);
-      real_type dy = 2*qy-(y0+y);
+      real_type nx = x-m_x0;
+      real_type ny = y-m_y0;
+      real_type dx = 2*qx-(m_x0+x);
+      real_type dy = 2*qy-(m_y0+y);
       if ( nx*dx + ny*dy <= 0 ) {
         s = 0;
-        x = x0;
-        y = y0;
+        x = m_x0;
+        y = m_y0;
       }
       res = -1;
     } else {
@@ -756,16 +757,16 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const  {
-    real_type cc0 = cos(theta0);
-    real_type ss0 = sin(theta0);
-    real_type xx0 = x0+offs*nx_Begin_ISO();
-    real_type yy0 = y0+offs*ny_Begin_ISO();
-    real_type ff  = 1+k*offs;
-    real_type LL  = L*ff;
-    s = projectPointOnCircleArc( xx0, yy0, cc0, ss0, k/ff, LL, qx, qy );
+    real_type cc0 = cos(m_theta0);
+    real_type ss0 = sin(m_theta0);
+    real_type xx0 = m_x0+offs*nx_Begin_ISO();
+    real_type yy0 = m_y0+offs*ny_Begin_ISO();
+    real_type ff  = 1+m_k*offs;
+    real_type LL  = m_L*ff;
+    s = projectPointOnCircleArc( xx0, yy0, cc0, ss0, m_k/ff, LL, qx, qy );
     int_type res = 1;
     if ( s < 0 || s > LL ) {
-      s = L;
+      s = m_L;
       eval_ISO( s, offs, x, y );
       // costruisco piano
       real_type nx = x-xx0;
@@ -797,7 +798,7 @@ namespace G2lib {
     int_type & n_knots,
     int_type & n_pnts
   ) const {
-    real_type dtheta = L*k;
+    real_type dtheta = m_L*m_k;
     int_type  ns     = int_type(floor(3*abs(dtheta)/m_pi));
     if ( ns < 1 ) ns = 1;
     n_pnts  = 1+2*ns;
@@ -812,7 +813,7 @@ namespace G2lib {
     real_type Poly[][3]
   ) const {
 
-    real_type dtheta = L*k;
+    real_type dtheta = m_L*m_k;
     int_type  ns     = int_type(floor(3*abs(dtheta)/m_pi));
     if ( ns < 1 ) ns = 1;
 
@@ -821,7 +822,8 @@ namespace G2lib {
     real_type tg = tan(th)/2;
 
     real_type p0[2], p2[2];
-    p0[0] = x0; p0[1] = y0;
+    p0[0] = m_x0;
+    p0[1] = m_y0;
 
     knots[0] = knots[1] = knots[2] = 0;
     Poly[0][0] = p0[0];
@@ -829,7 +831,7 @@ namespace G2lib {
     Poly[0][2] = 1;
 
     real_type s  = 0;
-    real_type ds = L/ns;
+    real_type ds = m_L/ns;
     int_type  kk = 0;
     for ( int_type i = 0; i < ns; ++i ) {
       s += ds;
@@ -864,13 +866,13 @@ namespace G2lib {
 
   real_type
   CircleArc::lenTolerance( real_type tol ) const {
-    real_type absk = abs(k);
+    real_type absk = abs(m_k);
     real_type tmp  = absk*tol;
     if ( tmp > 0 ) {
       real_type dtheta = 2*(m_pi-acos(tmp-1));
       return dtheta/absk;
     } else {
-      return L;
+      return m_L;
     }
   }
 
@@ -879,11 +881,11 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, CircleArc const & c ) {
     stream
-      <<   "x0     = " << c.x0
-      << "\ny0     = " << c.y0
-      << "\ntheta0 = " << c.theta0
-      << "\nk      = " << c.k
-      << "\nL      = " << c.L
+      <<   "x0     = " << c.m_x0
+      << "\ny0     = " << c.m_y0
+      << "\ntheta0 = " << c.m_theta0
+      << "\nk      = " << c.m_k
+      << "\nL      = " << c.m_L
       << "\n";
     return stream;
   }

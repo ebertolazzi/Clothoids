@@ -44,7 +44,7 @@ namespace G2lib {
    */
 
   class Biarc : public BaseCurve {
-    CircleArc C0, C1;
+    CircleArc m_C0, m_C1;
 
     void
     gfun( real_type alpha, real_type g[3] ) const {
@@ -104,15 +104,15 @@ namespace G2lib {
 
     void
     copy( Biarc const & c ) {
-      C0.copy(c.C0);
-      C1.copy(c.C1);
+      m_C0.copy(c.m_C0);
+      m_C1.copy(c.m_C1);
     }
 
     Biarc const & operator = ( Biarc const & ba )
     { copy(ba); return *this; }
 
-    CircleArc const & getC0() const { return C0; }
-    CircleArc const & getC1() const { return C1; }
+    CircleArc const & C0() const { return m_C0; }
+    CircleArc const & C1() const { return m_C1; }
 
     //! construct a biarc with the standard parameters
     bool
@@ -168,82 +168,82 @@ namespace G2lib {
     virtual
     real_type
     length() const G2LIB_OVERRIDE
-    { return C0.length()+C1.length(); }
+    { return m_C0.length()+m_C1.length(); }
 
     virtual
     real_type
     length_ISO( real_type offs ) const G2LIB_OVERRIDE
-    { return C0.length_ISO(offs)+C1.length_ISO(offs); }
+    { return m_C0.length_ISO(offs)+m_C1.length_ISO(offs); }
 
     virtual
     real_type
     thetaBegin() const G2LIB_OVERRIDE
-    { return C0.thetaBegin(); }
+    { return m_C0.thetaBegin(); }
 
     virtual
     real_type
     thetaEnd() const G2LIB_OVERRIDE
-    { return C1.thetaEnd(); }
+    { return m_C1.thetaEnd(); }
 
     virtual
     real_type
     xBegin() const G2LIB_OVERRIDE
-    { return C0.xBegin(); }
+    { return m_C0.xBegin(); }
 
     virtual
     real_type
     xEnd() const G2LIB_OVERRIDE
-    { return C1.xEnd(); }
+    { return m_C1.xEnd(); }
 
     virtual
     real_type
     yBegin() const G2LIB_OVERRIDE
-    { return C0.yBegin(); }
+    { return m_C0.yBegin(); }
 
     virtual
     real_type
     yEnd() const G2LIB_OVERRIDE
-    { return C1.yEnd(); }
+    { return m_C1.yEnd(); }
 
     virtual
     real_type
     tx_Begin() const G2LIB_OVERRIDE
-    { return C0.tx_Begin(); }
+    { return m_C0.tx_Begin(); }
 
     virtual
     real_type
     tx_End() const G2LIB_OVERRIDE
-    { return C1.tx_End(); }
+    { return m_C1.tx_End(); }
 
     virtual
     real_type
     ty_Begin() const G2LIB_OVERRIDE
-    { return C0.ty_Begin(); }
+    { return m_C0.ty_Begin(); }
 
     virtual
     real_type
     ty_End() const G2LIB_OVERRIDE
-    { return C1.ty_End(); }
+    { return m_C1.ty_End(); }
 
     virtual
     real_type
     nx_Begin_ISO() const G2LIB_OVERRIDE
-    { return C0.nx_Begin_ISO(); }
+    { return m_C0.nx_Begin_ISO(); }
 
     virtual
     real_type
     nx_End_ISO() const G2LIB_OVERRIDE
-    { return C1.nx_End_ISO(); }
+    { return m_C1.nx_End_ISO(); }
 
     virtual
     real_type
     ny_Begin_ISO() const G2LIB_OVERRIDE
-    { return C0.ny_Begin_ISO(); }
+    { return m_C0.ny_Begin_ISO(); }
 
     virtual
     real_type
     ny_End_ISO() const G2LIB_OVERRIDE
-    { return C1.ny_End_ISO(); }
+    { return m_C1.ny_End_ISO(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -456,12 +456,12 @@ namespace G2lib {
     virtual
     void
     translate( real_type tx, real_type ty ) G2LIB_OVERRIDE
-    { C0.translate(tx,ty); C1.translate(tx,ty); }
+    { m_C0.translate(tx,ty); m_C1.translate(tx,ty); }
 
     virtual
     void
     rotate( real_type angle, real_type cx, real_type cy ) G2LIB_OVERRIDE
-    { C0.rotate(angle,cx,cy); C1.rotate(angle,cx,cy); }
+    { m_C0.rotate(angle,cx,cy); m_C1.rotate(angle,cx,cy); }
 
     virtual
     void
@@ -515,15 +515,15 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type xMiddle()     const { return C1.xBegin(); }
-    real_type yMiddle()     const { return C1.yBegin(); }
-    real_type thetaMiddle() const { return C1.thetaBegin(); }
-    real_type kappa0()      const { return C0.curvature(); }
-    real_type length0()     const { return C0.length(); }
-    real_type kappa1()      const { return C1.curvature(); }
-    real_type length1()     const { return C1.length(); }
+    real_type xMiddle()     const { return m_C1.xBegin(); }
+    real_type yMiddle()     const { return m_C1.yBegin(); }
+    real_type thetaMiddle() const { return m_C1.thetaBegin(); }
+    real_type kappa0()      const { return m_C0.curvature(); }
+    real_type length0()     const { return m_C0.length(); }
+    real_type kappa1()      const { return m_C1.curvature(); }
+    real_type length1()     const { return m_C1.length(); }
 
-    real_type delta_theta() const { return C0.delta_theta() + C1.delta_theta(); }
+    real_type delta_theta() const { return m_C0.delta_theta() + m_C1.delta_theta(); }
 
     void
     bbTriangles(
@@ -532,8 +532,8 @@ namespace G2lib {
       real_type                 max_size  = 1e100,
       int_type                  icurve    = 0
     ) const {
-      C0.bbTriangles( tvec, max_angle, max_size, icurve );
-      C1.bbTriangles( tvec, max_angle, max_size, icurve );
+      m_C0.bbTriangles( tvec, max_angle, max_size, icurve );
+      m_C1.bbTriangles( tvec, max_angle, max_size, icurve );
     }
 
     void
@@ -544,8 +544,8 @@ namespace G2lib {
       real_type                 max_size  = 1e100,
       int_type                  icurve    = 0
     ) const {
-      C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
-      C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
     }
 
     void
@@ -556,8 +556,8 @@ namespace G2lib {
       real_type                 max_size  = 1e100,
       int_type                  icurve    = 0
     ) const {
-      C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
-      C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\
@@ -570,8 +570,8 @@ namespace G2lib {
 
     bool
     collision( Biarc const & B ) const {
-      return C0.collision( B.C0 ) || C0.collision( B.C1 ) ||
-             C1.collision( B.C0 ) || C1.collision( B.C1 );
+      return m_C0.collision( B.m_C0 ) || m_C0.collision( B.m_C1 ) ||
+             m_C1.collision( B.m_C0 ) || m_C1.collision( B.m_C1 );
     }
 
     bool
@@ -580,10 +580,10 @@ namespace G2lib {
       Biarc const & B,
       real_type     offs_B
     ) const {
-      return C0.collision_ISO( offs, B.C0, offs_B ) ||
-             C0.collision_ISO( offs, B.C1, offs_B ) ||
-             C1.collision_ISO( offs, B.C0, offs_B ) ||
-             C1.collision_ISO( offs, B.C1, offs_B );
+      return m_C0.collision_ISO( offs, B.m_C0, offs_B ) ||
+             m_C0.collision_ISO( offs, B.m_C1, offs_B ) ||
+             m_C1.collision_ISO( offs, B.m_C0, offs_B ) ||
+             m_C1.collision_ISO( offs, B.m_C1, offs_B );
     }
 
     /*\
