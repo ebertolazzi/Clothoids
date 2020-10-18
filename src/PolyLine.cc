@@ -562,8 +562,8 @@ namespace G2lib {
     m_polylineList[ipos].eval_ISO( S - m_s0[ipos], T, xx, yy );
     real_type err = hypot( x - xx, y - yy );
     real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
-    if ( err > tol ) return -1;
-    return 1;
+    if ( err > tol ) return -(ipos+1);
+    return ipos;
   }
 
   /*\

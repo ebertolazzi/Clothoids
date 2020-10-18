@@ -1232,16 +1232,15 @@ namespace G2lib {
     \*/
 
     /*!
-     *  \param  qx  x-coordinate of the point
-     *  \param  qy  y-coordinate of the point
-     *  \param  x   x-coordinate of the projected point on the curve
-     *  \param  y   y-coordinate of the projected point on the curve
-     *  \param  s   parameter on the curve of the projection
-     *  \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     *  \param  dst distance point projected point
-     *  \return 1 = point is projected orthogonal
-     *          0 = more than one projection (first returned)
-     *         -1 = minimum point is not othogonal projection to curve
+     *  \param  qx     x-coordinate of the point
+     *  \param  qy     y-coordinate of the point
+     *  \param  x      x-coordinate of the projected point on the curve
+     *  \param  y      y-coordinate of the projected point on the curve
+     *  \param  s      parameter on the curve of the projection
+     *  \param  t      curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst    distance point projected point
+     *  \return n >= 0 point is projected orthogonal, n is the number of the segment at minimum distance<br>
+     *         -(n+1)  minimum point is not othogonal projection to curve
      */
     virtual
     int_type
@@ -1256,17 +1255,16 @@ namespace G2lib {
     ) const G2LIB_OVERRIDE;
 
     /*!
-     *  \param  qx  x-coordinate of the point
-     *  \param  qy  y-coordinate of the point
-     *  \param  offs offset of the curve
-     *  \param  x   x-coordinate of the projected point on the curve
-     *  \param  y   y-coordinate of the projected point on the curve
-     *  \param  s   parameter on the curve of the projection
-     *  \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     *  \param  dst distance point projected point
-     *  \return 1 = point is projected orthogonal
-     *          0 = more than one projection (first returned)
-     *         -1 = minimum point is not othogonal projection to curve
+     *  \param  qx    x-coordinate of the point
+     *  \param  qy    y-coordinate of the point
+     *  \param  offs  offset of the curve
+     *  \param  x     x-coordinate of the projected point on the curve
+     *  \param  y     y-coordinate of the projected point on the curve
+     *  \param  s     parameter on the curve of the projection
+     *  \param  t     curvilinear coordinate of the point x,y (if orthogonal projection)
+     *  \param  dst   distance point projected point
+     *  \return n > 0 point is projected orthogonal, n-1 is the number of the segment at minimum distance<br>
+     *         -(n+1) minimum point is not othogonal projection to curve
      */
     virtual
     int_type // true if projection is unique and orthogonal
@@ -1308,6 +1306,9 @@ namespace G2lib {
      *  \param  t            curvilinear coordinate of the point x,y (if orthogonal projection)
      *  \param  dst          distance point projected point
      *  \param  icurve       number of the segment with the projected point
+     *  \return 1            point is projected orthogonal<br>
+     *          0 =          more than one projection (first returned)<br>
+     *         -1 =          minimum point is not othogonal projection to curve
      */
     int_type
     closestPointInRange_ISO(
@@ -1334,6 +1335,9 @@ namespace G2lib {
      *  \param  t            curvilinear coordinate of the point x,y (if orthogonal projection)
      *  \param  dst          distance point projected point
      *  \param  icurve       number of the segment with the projected point
+     *  \return 1            point is projected orthogonal<br>
+     *          0            = more than one projection (first returned)<br>
+     *         -1            = minimum point is not othogonal projection to curve<br>
      */
     int_type
     closestPointInRange_SAE(

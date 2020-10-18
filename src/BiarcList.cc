@@ -1181,8 +1181,8 @@ namespace G2lib {
     t = (qx-x) * nx + (qy-y) * ny - offs;
     real_type err = abs( abs(t) - DST );
     real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
-    if ( err > tol ) return -1;
-    return 1;
+    if ( err > tol ) return -(icurve+1);
+    return icurve;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
