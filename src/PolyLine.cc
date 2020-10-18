@@ -544,7 +544,7 @@ namespace G2lib {
     vector<LineSegment>::const_iterator ic = m_polylineList.begin();
     vector<real_type>::const_iterator   is = m_s0.begin();
     ic->closestPoint_ISO( x, y, X, Y, S, T, DST );
-    size_t ipos = 0;
+    int_type ipos = 0;
     for ( ++ic, ++is; ic != m_polylineList.end(); ++ic, ++is ) {
       real_type X1, Y1, S1, T1, DST1;
       ic->closestPoint_ISO( x, y, X1, Y1, S1, T1, DST1 );
@@ -554,12 +554,12 @@ namespace G2lib {
         Y    = Y1;
         S    = *is + S1;
         T    = T1;
-        ipos = size_t(ic-m_polylineList.begin());
+        ipos = int_type(ic-m_polylineList.begin());
       }
     }
 
     real_type xx, yy;
-    m_polylineList[ipos].eval_ISO( S - m_s0[ipos], T, xx, yy );
+    m_polylineList[size_t(ipos)].eval_ISO( S - m_s0[size_t(ipos)], T, xx, yy );
     real_type err = hypot( x - xx, y - yy );
     real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
     if ( err > tol ) return -(ipos+1);
