@@ -58,7 +58,7 @@ disp('---------------------------------------------------------');
 CMD = 'mex -c -largeArrayDims -Isrc ';
 if isunix
   CMD = [CMD, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g" '];
-ßelseif ispc
+elseif ispc
 end
 CMD = [ CMD, LIB_SRCS ];
 

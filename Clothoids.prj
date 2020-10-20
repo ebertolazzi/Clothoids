@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="2575816791" file="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/toolbox/../Clothoids.prj" location="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/toolbox/.." name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="3384642174" file="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/Clothoids.prj" location="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids" name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Clothoids</param.appname>
     <param.authnamewatermark>Enrico Bertolazzi</param.authnamewatermark>
     <param.email>enrico.bertolazzi@unitn.it</param.email>
@@ -7,7 +7,7 @@
     <param.summary>Clothoids, a library for clothoids computation and more</param.summary>
     <param.description>A library for clothoids computation and more.</param.description>
     <param.screenshot>${PROJECT_ROOT}/toolbox/logo.png</param.screenshot>
-    <param.version>1.0.1</param.version>
+    <param.version>2.0.3</param.version>
     <param.output>${PROJECT_ROOT}/Clothoids.mltbx</param.output>
     <param.products.name />
     <param.products.id />
@@ -98,7 +98,9 @@ setup.m
       <file>${PROJECT_ROOT}/toolbox</file>
     </fileset.rootdir>
     <fileset.rootfiles>
+      <file>${PROJECT_ROOT}/toolbox/Clothoid-a95800e3.o.tmp</file>
       <file>${PROJECT_ROOT}/toolbox/CompileClothoidsLib.m</file>
+      <file>${PROJECT_ROOT}/toolbox/bin</file>
       <file>${PROJECT_ROOT}/toolbox/demos.xml</file>
       <file>${PROJECT_ROOT}/toolbox/doc</file>
       <file>${PROJECT_ROOT}/toolbox/helptoc.xml</file>
@@ -115,7 +117,7 @@ setup.m
     <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/toolbox/../Clothoids.mltbx</file>
+      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/Clothoids.mltbx</file>
     </build-deliverables>
     <workflow />
     <matlab>
@@ -131,7 +133,7 @@ setup.m
       <vista>false</vista>
       <linux>false</linux>
       <solaris>false</solaris>
-      <osver>10.15.6</osver>
+      <osver>10.15.7</osver>
       <os32>false</os32>
       <os64>true</os64>
       <arch>maci64</arch>
