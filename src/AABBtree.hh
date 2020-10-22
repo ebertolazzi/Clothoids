@@ -70,71 +70,71 @@ namespace G2lib {
     #endif
 
   private:
-    real_type xmin; //!< left bottom
-    real_type ymin; //!< left bottom
-    real_type xmax; //!< right top
-    real_type ymax; //!< right top
-    int_type  id;   //!< id of the bbox
-    int_type  ipos; //!< rank of the bounding box used in external algorithms
+    real_type m_xmin; //!< left bottom
+    real_type m_ymin; //!< left bottom
+    real_type m_xmax; //!< right top
+    real_type m_ymax; //!< right top
+    int_type  m_id;   //!< id of the bbox
+    int_type  m_ipos; //!< rank of the bounding box used in external algorithms
     BBox();
     BBox( BBox const & );
 
   public:
 
     BBox(
-      real_type _xmin,
-      real_type _ymin,
-      real_type _xmax,
-      real_type _ymax,
-      int_type  _id,
-      int_type  _ipos
+      real_type xmin,
+      real_type ymin,
+      real_type xmax,
+      real_type ymax,
+      int_type  id,
+      int_type  ipos
     ) {
-      this -> xmin = _xmin;
-      this -> ymin = _ymin;
-      this -> xmax = _xmax;
-      this -> ymax = _ymax;
-      this -> id   = _id;
-      this -> ipos = _ipos;
+      m_xmin = xmin;
+      m_ymin = ymin;
+      m_xmax = xmax;
+      m_ymax = ymax;
+      m_id   = id;
+      m_ipos = ipos;
     }
 
     BBox(
       vector<PtrBBox> const & bboxes,
-      int_type                _id,
-      int_type                _ipos
+      int_type                id,
+      int_type                ipos
     ) {
-      this -> id   = _id;
-      this -> ipos = _ipos;
+      m_id   = id;
+      m_ipos = ipos;
       this -> join( bboxes );
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    real_type Xmin() const { return xmin; }
-    real_type Ymin() const { return ymin; }
-    real_type Xmax() const { return xmax; }
-    real_type Ymax() const { return ymax; }
+    real_type Xmin() const { return m_xmin; }
+    real_type Ymin() const { return m_ymin; }
+    real_type Xmax() const { return m_xmax; }
+    real_type Ymax() const { return m_ymax; }
 
-    int_type const & Id()   const { return id; }   //!< return BBOX id
-    int_type const & Ipos() const { return ipos; } //!< return BBOX position
+    int_type const & Id()   const { return m_id; }   //!< return BBOX id
+    int_type const & Ipos() const { return m_ipos; } //!< return BBOX position
 
     BBox const &
     operator = ( BBox const & rhs ) {
-      this -> xmin = rhs.xmin;
-      this -> ymin = rhs.ymin;
-      this -> xmax = rhs.xmax;
-      this -> ymax = rhs.ymax;
-      this -> id   = rhs.id;
-      this -> ipos = rhs.ipos;
+      m_xmin = rhs.m_xmin;
+      m_ymin = rhs.m_ymin;
+      m_xmax = rhs.m_xmax;
+      m_ymax = rhs.m_ymax;
+      m_id   = rhs.m_id;
+      m_ipos = rhs.m_ipos;
       return *this;
     }
 
     //! detect if two bbox collide
     bool
     collision( BBox const & box ) const {
-      return !( (box.xmin > xmax ) ||
-                (box.xmax < xmin ) ||
-                (box.ymin > ymax ) ||
-                (box.ymax < ymin ) );
+      return !( (box.m_xmin > m_xmax ) ||
+                (box.m_xmax < m_xmin ) ||
+                (box.m_ymin > m_ymax ) ||
+                (box.m_ymax < m_ymin ) );
     }
 
     //! Build bbox for a list of bbox
@@ -152,8 +152,8 @@ namespace G2lib {
     void
     print( ostream_type & stream ) const {
       stream
-        << "BBOX (xmin,ymin,xmax,ymax) = ( " << xmin
-        << ", " << ymin << ", " << xmax << ", " << ymax
+        << "BBOX (xmin,ymin,xmax,ymax) = ( " << m_xmin
+        << ", " << m_ymin << ", " << m_xmax << ", " << m_ymax
         << " )\n";
     }
 
@@ -248,10 +248,10 @@ namespace G2lib {
       real_type & xmax,
       real_type & ymax
     ) const {
-      xmin = pBBox->xmin;
-      ymin = pBBox->ymin;
-      xmax = pBBox->xmax;
-      ymax = pBBox->ymax;
+      xmin = pBBox->m_xmin;
+      ymin = pBBox->m_ymin;
+      xmax = pBBox->m_xmax;
+      ymax = pBBox->m_ymax;
     }
 
     //! build AABB tree given a list of bbox

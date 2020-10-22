@@ -440,16 +440,31 @@ namespace G2lib {
     real_type const kappa[]
   ) {
     if ( n < 2 ) return false;
+    real_type tol = abs(s[n-1]-s[0])*machepsi10; // minimum admissible length
+
     init();
     real_type k  = kappa[0];
     real_type L  = s[1]-s[0];
     real_type dk = (kappa[1]-k)/L;
-
+    G2LIB_ASSERT(
+      isRegular( k ) && isRegular( L ) && isRegular( dk ),
+      "ClothoidList::build, failed first segment found\n" <<
+      "L = " << L << " k = " << k << " dk = " << dk << '\n'
+    )
     push_back( x0, y0, theta0, k, dk, L );
     for ( int_type i = 2; i < n; ++i ) {
       k  = kappa[i-1];
       L  = s[i]-s[i-1];
+      if ( abs(L) < tol ) {
+        std::cout << "ClothoidList::build, skipping segment N." << i << '\n';
+        continue; // skip too small segment
+      }
       dk = (kappa[i]-k)/L;
+      G2LIB_ASSERT(
+        isRegular( k ) && isRegular( L ) && isRegular( dk ),
+        "ClothoidList::build, failed at segment N." << i << " found\n" <<
+        "L = " << L << " k = " << k << " dk = " << dk << '\n'
+      )
       push_back( k, dk, L );
     }
     return true;

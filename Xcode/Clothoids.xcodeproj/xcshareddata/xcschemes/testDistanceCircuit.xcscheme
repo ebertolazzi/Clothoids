@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1100"
+   LastUpgradeVersion = "1200"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D96E1FAC1F75513000115228"
-               BuildableName = "statistic_2arc"
-               BlueprintName = "statistic_2arc"
-               ReferencedContainer = "container:G2solver.xcodeproj">
+               BlueprintIdentifier = "D93D6C2C2541F0EB000BC059"
+               BuildableName = "testDistanceCircuit"
+               BlueprintName = "testDistanceCircuit"
+               ReferencedContainer = "container:Clothoids.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,25 +27,16 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D96E1FAC1F75513000115228"
-            BuildableName = "statistic_2arc"
-            BlueprintName = "statistic_2arc"
-            ReferencedContainer = "container:G2solver.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "$SRCROOT"
+      customWorkingDirectory = "$(SOURCE_ROOT)"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -54,10 +45,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D96E1FAC1F75513000115228"
-            BuildableName = "statistic_2arc"
-            BlueprintName = "statistic_2arc"
-            ReferencedContainer = "container:G2solver.xcodeproj">
+            BlueprintIdentifier = "D93D6C2C2541F0EB000BC059"
+            BuildableName = "testDistanceCircuit"
+            BlueprintName = "testDistanceCircuit"
+            ReferencedContainer = "container:Clothoids.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,10 +62,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D96E1FAC1F75513000115228"
-            BuildableName = "statistic_2arc"
-            BlueprintName = "statistic_2arc"
-            ReferencedContainer = "container:G2solver.xcodeproj">
+            BlueprintIdentifier = "D93D6C2C2541F0EB000BC059"
+            BuildableName = "testDistanceCircuit"
+            BlueprintName = "testDistanceCircuit"
+            ReferencedContainer = "container:Clothoids.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

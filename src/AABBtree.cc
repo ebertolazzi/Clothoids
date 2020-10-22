@@ -56,21 +56,21 @@ namespace G2lib {
   void
   BBox::join( vector<PtrBBox> const & bboxes ) {
     if ( bboxes.empty() ) {
-      xmin = ymin = xmax = ymax = 0;
+      m_xmin = m_ymin = m_xmax = m_ymax = 0;
     } else {
       vector<PtrBBox>::const_iterator it = bboxes.begin();
 
-      xmin = (*it)->xmin;
-      ymin = (*it)->ymin;
-      xmax = (*it)->xmax;
-      ymax = (*it)->ymax;
+      m_xmin = (*it)->m_xmin;
+      m_ymin = (*it)->m_ymin;
+      m_xmax = (*it)->m_xmax;
+      m_ymax = (*it)->m_ymax;
 
       for ( ++it; it != bboxes.end(); ++it ) {
         BBox const & currBox = **it;
-        if ( currBox.xmin < xmin ) xmin = currBox.xmin;
-        if ( currBox.ymin < ymin ) ymin = currBox.ymin;
-        if ( currBox.xmax > xmax ) xmax = currBox.xmax;
-        if ( currBox.ymax > ymax ) ymax = currBox.ymax;
+        if ( currBox.m_xmin < m_xmin ) m_xmin = currBox.m_xmin;
+        if ( currBox.m_ymin < m_ymin ) m_ymin = currBox.m_ymin;
+        if ( currBox.m_xmax > m_xmax ) m_xmax = currBox.m_xmax;
+        if ( currBox.m_ymax > m_ymax ) m_ymax = currBox.m_ymax;
       }
     }
   }
@@ -91,21 +91,21 @@ namespace G2lib {
      |
     \*/
     int_type icase = 4;
-    if      ( x < xmin ) icase = 3;
-    else if ( x > xmax ) icase = 5;
-    if      ( y < ymin ) icase -= 3;
-    else if ( y > ymax ) icase += 3;
+    if      ( x < m_xmin ) icase = 3;
+    else if ( x > m_xmax ) icase = 5;
+    if      ( y < m_ymin ) icase -= 3;
+    else if ( y > m_ymax ) icase += 3;
     real_type dst = 0;
     switch ( icase ) {
-      case 0: dst = hypot( x-xmin, y-ymin); break;
-      case 1: dst = ymin-y;                 break;
-      case 2: dst = hypot( x-xmax, y-ymin); break;
-      case 3: dst = xmin-x;                 break;
-      case 4:                               break;
-      case 5: dst = x-xmax;                 break;
-      case 6: dst = hypot( x-xmin, y-ymax); break;
-      case 7: dst = y-ymax;                 break;
-      case 8: dst = hypot( x-xmax, y-ymax); break;
+      case 0: dst = hypot( x-m_xmin, y-m_ymin); break;
+      case 1: dst = m_ymin-y;                   break;
+      case 2: dst = hypot( x-m_xmax, y-m_ymin); break;
+      case 3: dst = m_xmin-x;                   break;
+      case 4:                                   break;
+      case 5: dst = x-m_xmax;                   break;
+      case 6: dst = hypot( x-m_xmin, y-m_ymax); break;
+      case 7: dst = y-m_ymax;                   break;
+      case 8: dst = hypot( x-m_xmax, y-m_ymax); break;
     }
     return dst;
   }
@@ -114,8 +114,8 @@ namespace G2lib {
 
   real_type
   BBox::maxDistance( real_type x, real_type y ) const {
-    real_type dx = max( abs(x-xmin), abs(x-xmax) );
-    real_type dy = max( abs(y-ymin), abs(y-ymax) );
+    real_type dx = max( abs(x-m_xmin), abs(x-m_xmax) );
+    real_type dy = max( abs(y-m_ymin), abs(y-m_ymax) );
     return hypot(dx,dy);
   }
 
@@ -267,10 +267,10 @@ namespace G2lib {
         << "[EMPTY AABB tree]\n";
     } else {
       stream
-        << "BBOX xmin = " << setw(12) << pBBox->xmin
-        << " ymin = "     << setw(12) << pBBox->ymin
-        << " xmax = "     << setw(12) << pBBox->xmax
-        << " ymax = "     << setw(12) << pBBox->ymax
+        << "BBOX xmin = " << setw(12) << pBBox->m_xmin
+        << " ymin = "     << setw(12) << pBBox->m_ymin
+        << " xmax = "     << setw(12) << pBBox->m_xmax
+        << " ymax = "     << setw(12) << pBBox->m_ymax
         << " level = "    << level    << "\n";
       vector<PtrAABB>::const_iterator it;
       for ( it = children.begin(); it != children.end(); ++it )
