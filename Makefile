@@ -2,7 +2,7 @@
 OS=$(shell uname -s)
 PWD=$(shell pwd)
 
-INC         = -I./src -I./include -Isubmodules/quarticRootsFlocke/src
+INC         = -I./src -I./include -Isubmodules/Utils/src -Isubmodules/quarticRootsFlocke/src -Isubmodules/GenericContainer/src
 DEFS        =
 STATIC_EXT  = .a
 DYNAMIC_EXT = .so
@@ -52,26 +52,11 @@ endif
 
 .SUFFIXES: .o
 
-SRCS = \
-src/AABBtree.cc \
-src/Biarc.cc \
-src/BiarcList.cc \
-src/Circle.cc \
-src/Clothoid.cc \
-src/ClothoidAsyPlot.cc \
-src/ClothoidDistance.cc \
-src/ClothoidG2.cc \
-src/ClothoidList.cc \
-src/Fresnel.cc \
-src/G2lib.cc \
-src/G2lib_intersect.cc \
-src/Line.cc \
-src/PolyLine.cc \
-src/Triangle2D.cc \
-submodules/quarticRootsFlocke/src/PolynomialRoots-1-Quadratic.cc \
-submodules/quarticRootsFlocke/src/PolynomialRoots-2-Cubic.cc \
-submodules/quarticRootsFlocke/src/PolynomialRoots-3-Quartic.cc \
-submodules/quarticRootsFlocke/src/PolynomialRoots-Utils.cc
+SRCS  = $(shell echo src/*.cc) \
+        $(shell echo submodules/Utils/src/*.cc) \
+        $(shell echo submodules/Utils/src/fmt/*.cc) \
+        $(shell echo submodules/quarticRootsFlocke/src/*.cc) \
+        $(shell echo submodules/GenericContainer/src/*.cc)
 
 OBJS  = $(SRCS:.cc=.o)
 DEPS  = src/Clothoid.hh src/CubicRootsFlocke.hh

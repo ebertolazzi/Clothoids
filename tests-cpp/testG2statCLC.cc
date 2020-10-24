@@ -1,7 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "ClothoidList.hh"
 #include "ClothoidAsyPlot.hh"
-#include "TicToc.hh"
 #include <cmath>
 #include <iostream>
 #include <map>

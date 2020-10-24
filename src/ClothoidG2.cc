@@ -116,10 +116,10 @@ namespace G2lib {
 
   void
   G2solve2arc::setTolerance( real_type tol ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solve2arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
-    )
+      "G2solve2arc::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+    );
     tolerance = tol;
   }
 
@@ -127,10 +127,10 @@ namespace G2lib {
 
   void
   G2solve2arc::setMaxIter( int miter ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solve2arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
-    )
+      "G2solve2arc::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+    );
     maxIter = miter;
   }
 
@@ -375,10 +375,10 @@ namespace G2lib {
 
   void
   G2solveCLC::setTolerance( real_type tol ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solveCLC::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
-    )
+      "G2solveCLC::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+    );
     tolerance = tol;
   }
 
@@ -386,10 +386,10 @@ namespace G2lib {
 
   void
   G2solveCLC::setMaxIter( int miter ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solveCLC::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
-    )
+      "G2solveCLC::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+    );
     maxIter = miter;
   }
 
@@ -480,10 +480,10 @@ namespace G2lib {
 
   void
   G2solve3arc::setTolerance( real_type tol ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solve3arc::setTolerance, tolerance = " << tol << " must be in (0,0.1]"
-    )
+      "G2solve3arc::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+    );
     tolerance = tol;
   }
 
@@ -491,10 +491,10 @@ namespace G2lib {
 
   void
   G2solve3arc::setMaxIter( int miter ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solve3arc::setMaxIter, maxIter = " << miter << " must be in [1,1000]"
-    )
+      "G2solve3arc::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+    );
     maxIter = miter;
   }
 
@@ -540,11 +540,11 @@ namespace G2lib {
       K0 = (kappa0/Lscale); // k0
       K1 = (kappa1/Lscale); // k1
 
-      if ( Dmax <= 0 ) Dmax = m_pi;
-      if ( dmax <= 0 ) dmax = m_pi/8;
+      if ( Dmax <= 0 ) Dmax = Utils::m_pi;
+      if ( dmax <= 0 ) dmax = Utils::m_pi/8;
 
-      if ( Dmax > m_2pi  ) Dmax = m_2pi;
-      if ( dmax > m_pi/4 ) dmax = m_pi/4;
+      if ( Dmax > Utils::m_2pi  ) Dmax = Utils::m_2pi;
+      if ( dmax > Utils::m_pi/4 ) dmax = Utils::m_pi/4;
 
       // compute guess G1
       ClothoidCurve SG;
@@ -567,8 +567,8 @@ namespace G2lib {
       tmp = (abs(K1+kB)+s1*dk)/(2*Dmax);
       if ( tmp*s1 > 1 ) s1 = 1/tmp;
 
-      real_type dth   = abs(th0-th1) / m_2pi;
-      real_type scale = power3(cos( power4(dth)*m_pi_2 ));
+      real_type dth   = abs(th0-th1) / Utils::m_2pi;
+      real_type scale = power3(cos( power4(dth)*Utils::m_pi_2 ));
       s0 *= scale;
       s1 *= scale;
 
@@ -1660,10 +1660,11 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, ClothoidSplineG2 const & c ) {
-    stream
-      <<   "npts   = " << c.m_npts
-      << "\ntarget = " << int(c.m_tt)
-      << "\n";
+    fmt::print( stream,
+      "npts   = {}\n"
+      "target = {}\n",
+      c.m_npts, int(c.m_tt)
+    );
     return stream;
   }
 

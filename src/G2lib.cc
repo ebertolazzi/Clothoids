@@ -26,57 +26,7 @@
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
 
-#ifdef G2LIB_OS_OSX
-  #define UNW_LOCAL_ONLY
-  #include <cxxabi.h>
-  #include <libunwind.h>
-  #include <cstdio>
-  #include <cstdlib>
-#endif
-
 namespace G2lib {
-
-  /*
-   backtrace() from:
-   https://eli.thegreenplace.net/2015/programmatic-access-to-the-call-stack-in-c/
-
-   to get the line from address
-   addr2line 0x400968 -e libunwind_backtrace
-  */
-
-  #ifndef G2LIB_OS_OSX
-  void backtrace( ostream_type & ) {}
-  #else
-  void
-  backtrace( ostream_type & ost ) {
-    unw_cursor_t cursor;
-    unw_context_t context;
-
-    // Initialize cursor to current frame for local unwinding.
-    unw_getcontext(&context);
-    unw_init_local(&cursor, &context);
-
-    // Unwind frames one by one, going up the frame stack.
-    while ( unw_step(&cursor) > 0 ) {
-      unw_word_t offset, pc;
-      unw_get_reg(&cursor, UNW_REG_IP, &pc);
-      if ( pc == 0 ) break;
-      ost << "0x" << std::hex << pc << ":" << std::dec;
-      char sym[256];
-      if ( unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
-        char* nameptr = sym;
-        int status;
-        char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
-        if ( status == 0 ) nameptr = demangled;
-        ost << " (" << nameptr << "+0x" << std::hex << offset << ")\n" << std::dec;
-        std::free(demangled);
-      } else {
-        ost << " -- error: unable to obtain symbol name for this frame\n";
-      }
-    }
-  }
-
-  #endif
 
   using std::numeric_limits;
   using std::fpclassify;
@@ -90,16 +40,13 @@ namespace G2lib {
   using std::asin;
   using std::acos;
 
+  real_type const m_1_sqrt_pi  = 0.564189583547756286948079451561; // 1/sqrt(pi)
+
   real_type const machepsi     = numeric_limits<real_type>::epsilon();
   real_type const machepsi10   = 10*machepsi;
   real_type const machepsi100  = 100*machepsi;
   real_type const machepsi1000 = 1000*machepsi;
   real_type const sqrtMachepsi = sqrt(machepsi);
-  real_type const m_pi         = 3.14159265358979323846264338328;  // pi
-  real_type const m_pi_2       = 1.57079632679489661923132169164;  // pi/2
-  real_type const m_2pi        = 6.28318530717958647692528676656;  // 2*pi
-  real_type const m_1_pi       = 0.318309886183790671537767526745; // 1/pi
-  real_type const m_1_sqrt_pi  = 0.564189583547756286948079451561; // 1/sqrt(pi)
   bool            intersect_with_AABBtree = true;
 
   #ifdef G2LIB_COMPATIBILITY_MODE
@@ -118,9 +65,9 @@ namespace G2lib {
 
   void
   rangeSymm( real_type & ang ) {
-    ang = fmod( ang, m_2pi );
-    while ( ang < -m_pi ) ang += m_2pi;
-    while ( ang >  m_pi ) ang -= m_2pi;
+    ang = fmod( ang, Utils::m_2pi );
+    while ( ang < -Utils::m_pi ) ang += Utils::m_2pi;
+    while ( ang >  Utils::m_pi ) ang -= Utils::m_2pi;
   }
 
   static inline real_type power2( real_type a ) { return a*a; }
@@ -445,8 +392,8 @@ namespace G2lib {
         yy1[i] = C12*yy2[i]+S12*xx2[i]+Ca1;
       }
     }
-    real_type len1 = m_2pi/(machepsi+abs(kappa1));
-    real_type len2 = m_2pi/(machepsi+abs(kappa1));
+    real_type len1 = Utils::m_2pi/(machepsi+abs(kappa1));
+    real_type len2 = Utils::m_2pi/(machepsi+abs(kappa1));
     for ( int_type i = 0; i < nsol; ++i ) {
       real_type ss1 = invCoscSinc( kappa1, xx1[i], yy1[i] );
       real_type ss2 = invCoscSinc( kappa2, xx2[i], yy2[i] );
@@ -495,11 +442,11 @@ namespace G2lib {
       omega[j] = atan2(dy,dx);
       len[j]   = hypot(dy,dx);
       real_type domega = omega[j]-omega[j-1];
-      domega  -= round(domega/m_2pi)*m_2pi;
+      domega  -= round(domega/Utils::m_2pi)*Utils::m_2pi;
       omega[j] = omega[j-1]+domega;
     }
 
-    real_type const dangle = 0.99 * m_pi;
+    real_type const dangle = 0.99 * Utils::m_pi;
 
     theta[0]      = omega[0];
     theta_min[0]  = omega[0] - dangle;
@@ -548,7 +495,7 @@ namespace G2lib {
     if ( tmp > Amax ) { ij = 2; Amax = tmp; }
     tmp = abs(A[1][1]);
     if ( tmp > Amax ) { ij = 3; Amax = tmp; }
-    if ( isZero(Amax) ) return false;
+    if ( Utils::isZero(Amax) ) return false;
     if ( (ij&0x01) == 0x01 ) { j[0] = 1; j[1] = 0; }
     else                     { j[0] = 0; j[1] = 1; }
     if ( (ij&0x02) == 0x02 ) { i[0] = 1; i[1] = 0; }
@@ -639,7 +586,7 @@ namespace G2lib {
       if ( tmp < 0 ) {
         real_type absk = abs(k);
         // if 2*pi*R + tmp <= L add 2*pi*R  to the solution
-        if ( m_2pi <= absk*(L-tmp) ) tmp += m_2pi / absk;
+        if ( Utils::m_2pi <= absk*(L-tmp) ) tmp += Utils::m_2pi / absk;
       }
 
       return tmp;
@@ -647,9 +594,9 @@ namespace G2lib {
     } else {
 
       real_type om = atan2( b0, a0+1/k );
-      if ( k < 0 ) om += m_pi;
+      if ( k < 0 ) om += Utils::m_pi;
       real_type ss = -om/k;
-      real_type t  = m_2pi/abs(k);
+      real_type t  = Utils::m_2pi/abs(k);
       if      ( ss < 0 ) ss += t;
       else if ( ss > t ) ss -= t;
       return ss;
@@ -682,8 +629,8 @@ namespace G2lib {
     } else {
       real_type om = atan2( b0, a0+1/k );
       if ( k < 0 ) {
-        if ( om < 0 ) om += m_pi;
-        else          om -= m_pi;
+        if ( om < 0 ) om += Utils::m_pi;
+        else          om -= Utils::m_pi;
       }
       return -om/k;
     }
@@ -901,10 +848,10 @@ namespace G2lib {
     std::vector<real_type> const & s0
   ) {
     int_type ns = int_type(s0.size()-1);
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       idx >= 0 && idx < ns,
-      "findAtS( s=" << s << ", idx=" << idx << ",... ) bad index"
-    )
+      "findAtS( s={}, idx={},... ) bad index\n", s, idx
+    );
     using const_s0_it = std::vector<G2lib::real_type>::const_iterator const;
     const_s0_it itL = std::next(s0.cbegin(), idx);
     if ( s < *itL ) {
@@ -925,11 +872,11 @@ namespace G2lib {
       return idx; // vale intervallo precedente
     }
     if ( s0[size_t(idx)] > s ) --idx; // aggiustamento caso di bordo
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       idx >= 0 && idx < ns,
-      "findAtS( s=" << s << ", idx=" << idx <<
-      ",... ) range [" << s0.front() << ", " << s0.back() << "]"
-    )
+      "findAtS( s={}, idx={},... ) range [{},{}]\n",
+      s, idx, s0.front(), s0.back()
+    );
     return idx;
   }
 

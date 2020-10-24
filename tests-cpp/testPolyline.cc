@@ -20,13 +20,13 @@ main() {
   real_type th0 = 0;
   real_type x1  = 0;
   real_type y1  = 3;
-  real_type th1 = G2lib::m_pi;
+  real_type th1 = Utils::m_pi;
 
   C1.build_G1( x0, y0, th0, x1, y1, th1 );
   C1.info(cout);
 
   C2 = C1;
-  C2.rotate(G2lib::m_pi/3,0,0);
+  C2.rotate(Utils::m_pi/3,0,0);
   C2.translate(1,-1);
 
   G2lib::IntersectList ilist;

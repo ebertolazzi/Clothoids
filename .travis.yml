@@ -21,18 +21,6 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-6
-            - gcc-6
-      env:
-         - COMPILER="CC=gcc-6 && CXX=g++-6"
-      before_install: eval "${COMPILER}"
-      script: make travis
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
             - g++-7
             - gcc-7
       env:
@@ -45,10 +33,10 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-8
-            - gcc-8
+            - g++-9
+            - gcc-9
       env:
-         - COMPILER="CC=gcc-8 && CXX=g++-8"
+         - COMPILER="CC=gcc-9 && CXX=g++-9"
       before_install: eval "${COMPILER}"
       script: make travis
     - os: linux
@@ -59,9 +47,6 @@ matrix:
     - os: osx
       osx_image: xcode10
       script: make travis
-    - os: windows
-      install: choco install mingw
-      script: mingw32-make travis
     - os: windows
       env:
         - CMAKE_PATH="/c/Program Files/CMake/bin"

@@ -163,7 +163,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -173,45 +173,45 @@ namespace G2lib {
       real_type & /* ymin */,
       real_type & /* xmax */,
       real_type & /* ymax */
-    ) const G2LIB_OVERRIDE {
-      G2LIB_DO_ERROR( "PolyLine::bbox( offs ... ) not available!" )
+    ) const UTILS_OVERRIDE {
+      UTILS_ERROR0( "PolyLine::bbox( offs ... ) not available!\n" );
     }
 
     virtual
     real_type
-    length() const G2LIB_OVERRIDE
+    length() const UTILS_OVERRIDE
     { return m_s0.back(); }
 
     virtual
     real_type
-    length_ISO( real_type ) const G2LIB_OVERRIDE {
-      G2LIB_DO_ERROR( "PolyLine::length( offs ) not available!" )
+    length_ISO( real_type ) const UTILS_OVERRIDE {
+      UTILS_ERROR0( "PolyLine::length( offs ) not available!\n" );
       return 0;
     }
 
     virtual
     real_type
-    xBegin() const G2LIB_OVERRIDE
+    xBegin() const UTILS_OVERRIDE
     { return m_polylineList.front().xBegin(); }
 
     virtual
     real_type
-    yBegin() const G2LIB_OVERRIDE
+    yBegin() const UTILS_OVERRIDE
     { return m_polylineList.front().yBegin(); }
 
     virtual
     real_type
-    xEnd() const G2LIB_OVERRIDE
+    xEnd() const UTILS_OVERRIDE
     { return m_polylineList.back().xEnd(); }
 
     virtual
     real_type
-    yEnd() const G2LIB_OVERRIDE
+    yEnd() const UTILS_OVERRIDE
     { return m_polylineList.back().yEnd(); }
 
     virtual
     real_type
-    X( real_type s ) const G2LIB_OVERRIDE {
+    X( real_type s ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       real_type ss = m_s0[size_t(idx)];
       return m_polylineList[size_t(idx)].X(s-ss);
@@ -219,24 +219,24 @@ namespace G2lib {
 
     virtual
     real_type
-    X_D( real_type s ) const G2LIB_OVERRIDE {
+    X_D( real_type s ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       return m_polylineList[size_t(idx)].m_c0;
     }
 
     virtual
     real_type
-    X_DD( real_type ) const G2LIB_OVERRIDE
+    X_DD( real_type ) const UTILS_OVERRIDE
     { return 0; }
 
     virtual
     real_type
-    X_DDD( real_type ) const G2LIB_OVERRIDE
+    X_DDD( real_type ) const UTILS_OVERRIDE
     { return 0; }
 
     virtual
     real_type
-    Y( real_type s ) const G2LIB_OVERRIDE {
+    Y( real_type s ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       real_type ss = m_s0[size_t(idx)];
       return m_polylineList[size_t(idx)].Y(s-ss);
@@ -244,36 +244,36 @@ namespace G2lib {
 
     virtual
     real_type
-    Y_D( real_type s ) const G2LIB_OVERRIDE {
+    Y_D( real_type s ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       return m_polylineList[size_t(idx)].m_s0;
     }
 
     virtual
     real_type
-    Y_DD( real_type ) const G2LIB_OVERRIDE
+    Y_DD( real_type ) const UTILS_OVERRIDE
     { return 0; }
 
     virtual
     real_type
-    Y_DDD( real_type ) const G2LIB_OVERRIDE
+    Y_DDD( real_type ) const UTILS_OVERRIDE
     { return 0; }
 
     virtual
     real_type
-    theta( real_type s ) const G2LIB_OVERRIDE;
+    theta( real_type s ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    theta_D( real_type s ) const G2LIB_OVERRIDE;
+    theta_D( real_type s ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    theta_DD( real_type s ) const G2LIB_OVERRIDE;
+    theta_DD( real_type s ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    theta_DDD( real_type s ) const G2LIB_OVERRIDE;
+    theta_DDD( real_type s ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -281,7 +281,7 @@ namespace G2lib {
       real_type   s,
       real_type & x,
       real_type & y
-    ) const G2LIB_OVERRIDE {
+    ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval( s-ss, x, y );
@@ -293,7 +293,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_D,
       real_type & y_D
-    ) const G2LIB_OVERRIDE {
+    ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
@@ -305,7 +305,7 @@ namespace G2lib {
       real_type,
       real_type & x_DD,
       real_type & y_DD
-    ) const G2LIB_OVERRIDE
+    ) const UTILS_OVERRIDE
     { x_DD = y_DD = 0; }
 
     virtual
@@ -314,7 +314,7 @@ namespace G2lib {
       real_type,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const G2LIB_OVERRIDE
+    ) const UTILS_OVERRIDE
     { x_DDD = y_DDD = 0; }
 
     // ---
@@ -326,7 +326,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x,
       real_type & y
-    ) const G2LIB_OVERRIDE {
+    ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
@@ -339,7 +339,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_D,
       real_type & y_D
-    ) const G2LIB_OVERRIDE {
+    ) const UTILS_OVERRIDE {
       int_type idx = this->findAtS( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
@@ -352,7 +352,7 @@ namespace G2lib {
       real_type,
       real_type & x_DD,
       real_type & y_DD
-    ) const G2LIB_OVERRIDE
+    ) const UTILS_OVERRIDE
     { x_DD = y_DD = 0; }
 
     virtual
@@ -362,7 +362,7 @@ namespace G2lib {
       real_type,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const G2LIB_OVERRIDE
+    ) const UTILS_OVERRIDE
     { x_DDD = y_DDD = 0; }
 
     /*\
@@ -375,7 +375,7 @@ namespace G2lib {
 
     virtual
     void
-    translate( real_type tx, real_type ty ) G2LIB_OVERRIDE {
+    translate( real_type tx, real_type ty ) UTILS_OVERRIDE {
       std::vector<LineSegment>::iterator il;
       for ( il = m_polylineList.begin(); il != m_polylineList.end(); ++il )
         il->translate( tx, ty );
@@ -387,7 +387,7 @@ namespace G2lib {
       real_type angle,
       real_type cx,
       real_type cy
-    ) G2LIB_OVERRIDE {
+    ) UTILS_OVERRIDE {
       std::vector<LineSegment>::iterator il;
       for ( il = m_polylineList.begin(); il != m_polylineList.end(); ++il )
         il->rotate( angle, cx, cy );
@@ -395,19 +395,19 @@ namespace G2lib {
 
     virtual
     void
-    reverse() G2LIB_OVERRIDE;
+    reverse() UTILS_OVERRIDE;
 
     virtual
     void
-    scale( real_type sc ) G2LIB_OVERRIDE;
+    scale( real_type sc ) UTILS_OVERRIDE;
 
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) G2LIB_OVERRIDE;
+    changeOrigin( real_type newx0, real_type newy0 ) UTILS_OVERRIDE;
 
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE;
+    trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE;
 
     /*!
      * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
@@ -429,7 +429,7 @@ namespace G2lib {
       real_type & S,
       real_type & T,
       real_type & DST
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     int_type
@@ -442,8 +442,8 @@ namespace G2lib {
       real_type & /* S    */,
       real_type & /* T    */,
       real_type & /* DST  */
-    ) const G2LIB_OVERRIDE {
-      G2LIB_DO_ERROR( "PolyLine::closestPoint( ... offs ... ) not available!" )
+    ) const UTILS_OVERRIDE {
+      UTILS_ERROR( "PolyLine::closestPoint( ... offs ... ) not available!\n" );
     }
 
     /*\
@@ -463,10 +463,10 @@ namespace G2lib {
       PolyLine const & CL,
       real_type        offs_CL
     ) const {
-      G2LIB_ASSERT(
-        isZero(offs) && isZero(offs_CL),
-        "PolyLine::collision( offs ... ) not available!"
-      )
+      UTILS_ASSERT0(
+        Utils::isZero(offs) && Utils::isZero(offs_CL),
+        "PolyLine::collision( offs ... ) not available!\n"
+      );
       return this->collision( CL );
     }
 
@@ -500,16 +500,16 @@ namespace G2lib {
       IntersectList  & ilist,
       bool             swap_s_vals
     ) {
-      G2LIB_ASSERT(
-        isZero(offs) && isZero(offs_pl),
-        "PolyLine::intersect( offs ... ) not available!"
-      )
+      UTILS_ASSERT0(
+        Utils::isZero(offs) && Utils::isZero(offs_pl),
+        "PolyLine::intersect( offs ... ) not available!\n"
+      );
       this->intersect( pl, ilist, swap_s_vals );
     }
 
     virtual
     void
-    info( ostream_type & stream ) const G2LIB_OVERRIDE
+    info( ostream_type & stream ) const UTILS_OVERRIDE
     { stream << "PolyLine\n" << *this << '\n'; }
 
     friend

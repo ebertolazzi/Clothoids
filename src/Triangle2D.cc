@@ -300,11 +300,15 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, Triangle2D const & t ) {
-    stream
-      << "Triangle2D\n"
-      << "P0 = [" << t.m_p1[0] << ", " << t.m_p1[1] << "]\n"
-      << "P1 = [" << t.m_p2[0] << ", " << t.m_p2[1] << "]\n"
-      << "P2 = [" << t.m_p3[0] << ", " << t.m_p3[1] << "]\n";
+    fmt::print( stream,
+      "Triangle2D\n"
+      "P0 = [{},{}]\n"
+      "P1 = [{},{}]\n"
+      "P2 = [{},{}]\n",
+      t.m_p1[0], t.m_p1[1],
+      t.m_p2[0], t.m_p2[1],
+      t.m_p3[0], t.m_p3[1]
+    );
     return stream;
   }
 

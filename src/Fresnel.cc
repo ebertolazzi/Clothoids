@@ -170,7 +170,7 @@ namespace G2lib {
     if ( x < 1.0 ) {
       real_type twofn, fact, denterm, numterm, sum, term;
 
-      real_type const s = m_pi_2*(x*x);
+      real_type const s = Utils::m_pi_2*(x*x);
       real_type const t = -s*s;
 
       // Cosine integral series
@@ -205,7 +205,7 @@ namespace G2lib {
         sum     += term;
       } while ( abs(term) > eps*abs(sum) );
 
-      S = m_pi_2*sum*(x*x*x);
+      S = Utils::m_pi_2*sum*(x*x*x);
 
     } else if ( x < 6.0 ) {
 
@@ -227,7 +227,7 @@ namespace G2lib {
       }
       real_type g = sumn/sumd;
 
-      real_type U    = m_pi_2*(x*x);
+      real_type U    = Utils::m_pi_2*(x*x);
       real_type SinU = sin(U);
       real_type CosU = cos(U);
       C = 0.5 + f*SinU - g*CosU;
@@ -239,7 +239,7 @@ namespace G2lib {
 
       // x >= 6; asymptotic expansions for  f  and  g
 
-      real_type const s = m_pi*x*x;
+      real_type const s = Utils::m_pi*x*x;
       real_type const t = -1/(s*s);
 
       // Expansion for f
@@ -254,15 +254,15 @@ namespace G2lib {
         term    *= numterm*(numterm-2.0)*t;
         sum     += term;
         absterm  = abs(term);
-        G2LIB_ASSERT(
+        UTILS_ASSERT(
           oldterm >= absterm,
-          "In FresnelCS f not converged to eps, x = " << x <<
-          " oldterm = " << oldterm << " absterm = " << absterm
-        )
+          "In FresnelCS f not converged to eps, x = {} oldterm = {} absterm = {}\n",
+          x, oldterm, absterm
+        );
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
-      real_type f = sum / (m_pi*x);
+      real_type f = sum / (Utils::m_pi*x);
 
       //  Expansion for  g
       numterm = -1.0;
@@ -275,17 +275,17 @@ namespace G2lib {
         term    *= numterm*(numterm+2.0)*t;
         sum     += term;
         absterm  = abs(term);
-        G2LIB_ASSERT(
+        UTILS_ASSERT(
           oldterm >= absterm,
-          "In FresnelCS g not converged to eps, x = " << x <<
-          " oldterm = " << oldterm << " absterm = " << absterm
-        )
+          "In FresnelCS g not converged to eps, x = {} oldterm = {} absterm = {}\n",
+          x, oldterm, absterm
+        );
         oldterm  = absterm;
       } while ( absterm > eps10 * abs(sum) );
 
-      real_type g = m_pi*x; g = sum/(g*g*x);
+      real_type g = Utils::m_pi*x; g = sum/(g*g*x);
 
-      real_type U    = m_pi_2*(x*x);
+      real_type U    = Utils::m_pi_2*(x*x);
       real_type SinU = sin(U);
       real_type CosU = cos(U);
       C = 0.5 + f*SinU - g*CosU;
@@ -307,14 +307,14 @@ namespace G2lib {
   ) {
     FresnelCS(t,C[0],S[0]);
     if ( nk > 1 ) {
-      real_type tt = m_pi_2*(t*t);
+      real_type tt = Utils::m_pi_2*(t*t);
       real_type ss = sin(tt);
       real_type cc = cos(tt);
-      C[1] = ss*m_1_pi;
-      S[1] = (1-cc)*m_1_pi;
+      C[1] = ss*Utils::m_1_pi;
+      S[1] = (1-cc)*Utils::m_1_pi;
       if ( nk > 2 ) {
-        C[2] = (t*ss-S[0])*m_1_pi;
-        S[2] = (C[0]-t*cc)*m_1_pi;
+        C[2] = (t*ss-S[0])*Utils::m_1_pi;
+        S[2] = (C[0]-t*cc)*Utils::m_1_pi;
       }
     }
   }
@@ -361,10 +361,10 @@ namespace G2lib {
     real_type Y[]
   ) {
 
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       nk < 4 && nk > 0,
-      "In evalXYaLarge first argument nk must be in 1..3, nk " << nk
-    )
+      "In evalXYaLarge first argument nk must be in 1..3, nk {}\n", nk
+    );
 
     real_type s    = a > 0 ? +1 : -1;
     real_type absa = abs(a);
@@ -482,9 +482,9 @@ namespace G2lib {
     real_type & Y
   ) {
 
-    G2LIB_ASSERT(
-      p < 11 && p > 0, "In evalXYaSmall p = " << p << " must be in 1..10"
-    )
+    UTILS_ASSERT(
+      p < 11 && p > 0, "In evalXYaSmall p = {} must be in 1..10\n", p
+    );
 
     real_type X0[43], Y0[43];
 
@@ -521,11 +521,12 @@ namespace G2lib {
     int_type  nkk = nk + 4*p + 2; // max 45
     real_type X0[45], Y0[45];
 
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       nkk < 46,
-      "In evalXYaSmall (nk,p) = (" << nk << "," << p << ")\n" <<
-      "nk + 4*p + 2 = " << nkk  << " must be less than 46\n"
-    )
+      "In evalXYaSmall (nk,p) = ({},{})\n"
+      "nk + 4*p + 2 = {} must be less than 46\n",
+      nk, p, nkk
+    );
 
     evalXYazero( nkk, b, X0, Y0 );
 
@@ -581,7 +582,7 @@ namespace G2lib {
     real_type intC[],
     real_type intS[]
   ) {
-    G2LIB_ASSERT( nk > 0 && nk < 4, "nk = " << nk << " must be in 1..3" )
+    UTILS_ASSERT( nk > 0 && nk < 4, "nk = {} must be in 1..3\n", nk );
 
     if ( abs(a) < A_THRESOLD ) evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS );
     else                       evalXYaLarge( nk, a, b, intC, intS );
@@ -1096,7 +1097,7 @@ namespace G2lib {
     this->evaluate( -kappa0/dk, theta, tmp, x, y );
     real_type Ct = cos(theta);
     real_type St = sin(theta);
-    tmp = 0.5*sqrt( m_pi/abs(dk) );
+    tmp = 0.5*sqrt( Utils::m_pi/abs(dk) );
     if ( !plus ) tmp = -tmp;
     if ( dk > 0 ) {
       x += tmp*(Ct-St);
@@ -1125,9 +1126,9 @@ namespace G2lib {
     y0     += L*S;
     theta0 += L*(kappa0+0.5*L*dk);
     kappa0 += L*dk;
-    theta0 += m_pi;
-    while ( theta0 >  m_pi ) theta0 -= m_2pi;
-    while ( theta0 < -m_pi ) theta0 += m_2pi;
+    theta0 += Utils::m_pi;
+    while ( theta0 >  Utils::m_pi ) theta0 -= Utils::m_2pi;
+    while ( theta0 < -Utils::m_pi ) theta0 += Utils::m_2pi;
     kappa0  = -kappa0;
   }
 
@@ -1136,11 +1137,11 @@ namespace G2lib {
   void
   ClothoidData::reverse( real_type L, ClothoidData & out ) const {
     this->evaluate( L, out.theta0, out.kappa0, out.x0, out.y0 );
-    out.theta0 += m_pi;
+    out.theta0 += Utils::m_pi;
     out.kappa0 = -(out.kappa0);
     out.dk     = dk;
-    while ( out.theta0 >  m_pi ) out.theta0 -= m_2pi;
-    while ( out.theta0 < -m_pi ) out.theta0 += m_2pi;
+    while ( out.theta0 >  Utils::m_pi ) out.theta0 -= Utils::m_2pi;
+    while ( out.theta0 < -Utils::m_pi ) out.theta0 += Utils::m_2pi;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1184,7 +1185,7 @@ namespace G2lib {
     eval( sflex, C0.x0, C0.y0 );
     C1.x0     = C0.x0;
     C1.y0     = C0.y0;
-    C1.theta0 = C0.theta0+m_pi; // reverse curve
+    C1.theta0 = C0.theta0+Utils::m_pi; // reverse curve
     C0.kappa0 = C1.kappa0 = 0;
     C0.dk     = C1.dk     = dk;
     return sflex;
@@ -1202,7 +1203,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  static real_type const one_degree = m_pi/180;
+  static real_type const one_degree = Utils::m_pi/180;
 
   bool
   ClothoidData::bbTriangle(
@@ -1217,7 +1218,7 @@ namespace G2lib {
     real_type theta_max = theta( L );
     real_type theta_min = theta0;
     real_type dtheta    = abs( theta_max-theta_min );
-    if ( dtheta < m_pi_2 ) {
+    if ( dtheta < Utils::m_pi_2 ) {
       real_type alpha, tx0, ty0;
       eval( 0, xx0, yy0 );
       eval_D( 0, tx0, ty0 );
@@ -1255,7 +1256,7 @@ namespace G2lib {
     real_type theta_max = theta( L );
     real_type theta_min = theta0;
     real_type dtheta    = abs( theta_max-theta_min );
-    if ( dtheta < m_pi_2 ) {
+    if ( dtheta < Utils::m_pi_2 ) {
       real_type alpha, tx0, ty0;
       eval_ISO( 0, offs, xx0, yy0 );
       eval_D( 0, tx0, ty0 ); // no offset solo scalato
@@ -1312,19 +1313,19 @@ namespace G2lib {
     real_type phi0 = theta0 - phi;
     real_type phi1 = theta1 - phi;
 
-    phi0 -= m_2pi*round(phi0/m_2pi);
-    phi1 -= m_2pi*round(phi1/m_2pi);
+    phi0 -= Utils::m_2pi*round(phi0/Utils::m_2pi);
+    phi1 -= Utils::m_2pi*round(phi1/Utils::m_2pi);
 
-    if      ( phi0 >  m_pi ) phi0 -= m_2pi;
-    else if ( phi0 < -m_pi ) phi0 += m_2pi;
-    if      ( phi1 >  m_pi ) phi1 -= m_2pi;
-    else if ( phi1 < -m_pi ) phi1 += m_2pi;
+    if      ( phi0 >  Utils::m_pi ) phi0 -= Utils::m_2pi;
+    else if ( phi0 < -Utils::m_pi ) phi0 += Utils::m_2pi;
+    if      ( phi1 >  Utils::m_pi ) phi1 -= Utils::m_2pi;
+    else if ( phi1 < -Utils::m_pi ) phi1 += Utils::m_2pi;
 
     real_type delta = phi1 - phi0;
 
     // punto iniziale
-    real_type X  = phi0*m_1_pi;
-    real_type Y  = phi1*m_1_pi;
+    real_type X  = phi0*Utils::m_1_pi;
+    real_type Y  = phi1*Utils::m_1_pi;
     real_type xy = X*Y;
     Y *= Y; X *= X;
     real_type A = (phi0+phi1) * ( CF[0] + xy*(CF[1] + xy*CF[2]) +
@@ -1339,14 +1340,15 @@ namespace G2lib {
       A  -= g / dg;
     } while ( ++niter <= 10 && abs(g) > tol );
 
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       abs(g) <= tol,
-      "Newton do not converge, g = " << g << " niter = " << niter
-    )
+      "Newton do not converge, g = {} niter = {}\n", 
+      g, niter
+    );
     GeneralizedFresnelCS( 2*A, delta-A, phi0, intC[0], intS[0] );
     L = r/intC[0];
 
-    G2LIB_ASSERT( L > 0, "Negative length L = " << L )
+    UTILS_ASSERT( L > 0, "Negative length L = {}\n", L );
     this->kappa0 = (delta-A)/L;
     this->dk     = 2*A/L/L;
 
@@ -1438,7 +1440,7 @@ namespace G2lib {
       }
       break;
     }
-    ok = abs(theta-theta0) < m_pi;
+    ok = abs(theta-theta0) < Utils::m_pi;
     return theta;
   }
 
@@ -1462,14 +1464,14 @@ namespace G2lib {
     real_type arot = atan2( dy, dx );
     real_type th0  = theta0 - arot;
     // normalize angle
-    while ( th0 >  m_pi ) th0 -= m_2pi;
-    while ( th0 < -m_pi ) th0 += m_2pi;
+    while ( th0 >  Utils::m_pi ) th0 -= Utils::m_2pi;
+    while ( th0 < -Utils::m_pi ) th0 += Utils::m_2pi;
 
     // solve the problem from (0,0) to (1,0)
     real_type k0    = kappa0*len;
     real_type alpha = 2.6;
-    real_type thmin = max(-m_pi,-theta0/2-alpha);
-    real_type thmax = min( m_pi,-theta0/2+alpha);
+    real_type thmin = max(-Utils::m_pi,-theta0/2-alpha);
+    real_type thmax = min( Utils::m_pi,-theta0/2+alpha);
     real_type Kmin  = kappa_fun( th0, thmax );
     real_type Kmax  = kappa_fun( th0, thmin );
     bool ok;
@@ -1501,12 +1503,14 @@ namespace G2lib {
 
   void
   ClothoidData::info( ostream_type & s ) const {
-    s <<   "x0     = " << x0
-      << "\ny0     = " << y0
-      << "\ntheta0 = " << theta0
-      << "\nkappa0 = " << kappa0
-      << "\ndk     = " << dk
-      << '\n';
+    fmt::print( s,
+      "x0     = {}\n"
+      "y0     = {}\n"
+      "theta0 = {}\n"
+      "kappa0 = {}\n"
+      "dk     = {}\n",
+      x0, y0, theta0, kappa0, dk
+    );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

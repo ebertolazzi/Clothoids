@@ -14,18 +14,18 @@ main() {
 #if 0
   real_type x0  = 0;
   real_type y0  = 0;
-  real_type th0 = G2lib::m_pi/2;
+  real_type th0 = Utils::m_pi/2;
   real_type x1  = 2;
   real_type y1  = 0;
-  real_type th1 = -G2lib::m_pi/2;
+  real_type th1 = -Utils::m_pi/2;
 #else
   real_type x0  = -1;
   real_type y0  = 0;
-  real_type th0 = G2lib::m_pi/12;
+  real_type th0 = Utils::m_pi/12;
 
   real_type x1  = 1;
   real_type y1  = 0;
-  real_type th1 = -G2lib::m_pi/4;
+  real_type th1 = -Utils::m_pi/4;
 #endif
 
   ba.build( x0, y0, th0, x1, y1, th1 );

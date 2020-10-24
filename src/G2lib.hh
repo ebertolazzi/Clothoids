@@ -46,100 +46,21 @@ Authors:
 
  */
 
+#pragma once
+
 #ifndef G2LIB_HH
 #define G2LIB_HH
 
-#include <iostream>
-#include <cmath>
-#include <cfloat>
-#include <sstream>
-#include <stdexcept>
-#include <limits>
+#include "Utils.hh"
 
-#include <vector>
+//#include <vector>
 #include <map>
 #include <utility>
 
-#ifndef G2LIB_DO_ERROR
-  #define G2LIB_DO_ERROR(MSG)              \
-    {                                      \
-      std::ostringstream ost;              \
-      G2lib::backtrace( ost );             \
-      ost << "On line: " << __LINE__       \
-          << " file: " << __FILE__         \
-          << '\n' << MSG << '\n';          \
-      throw std::runtime_error(ost.str()); \
-    }
-#endif
-
-#ifndef G2LIB_ASSERT
-  #define G2LIB_ASSERT(COND,MSG) if ( !(COND) ) G2LIB_DO_ERROR(MSG)
-#endif
-
-// select computer architecture
-#if defined(__APPLE__) && defined(__MACH__)
-  // osx architecture
-  #define G2LIB_OS_OSX 1
-  #if defined(__i386__)
-    #define G2LIB_ARCH32 1
-  #elif defined(__x86_64__)
-    #define G2LIB_ARCH64 1
-  #endif
-#elif defined(__unix__)
-  // linux architecture
-  #define G2LIB_OS_LINUX 1
-  #if defined(__i386__)
-    #define G2LIB_ARCH32 1
-  #elif defined(__x86_64__)
-    #define G2LIB_ARCH64 1
-  #endif
-#elif defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
-  // windows architecture
-  #define G2LIB_OS_WINDOWS 1
-  #if defined(_M_X64) || defined(_M_AMD64)
-    #define G2LIB_ARCH64 1
-  #else
-    #define G2LIB_ARCH32 1
-  #endif
-  #ifndef WIN32_LEAN_AND_MEAN
-    #define WIN32_LEAN_AND_MEAN
-  #endif
-  #include <windows.h>
-#else
-  #error "unsupported OS!"
-#endif
 
 // check if compiler is C++11
-#if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
-    (defined(__cplusplus) && __cplusplus > 199711L)
-  #ifndef G2LIB_DO_NOT_USE_CXX11
-    #define G2LIB_USE_CXX11
-  #endif
-#else
-  // not C++11 compiler
-  #ifndef nullptr
-    #define nullptr NULL
-  #endif
-#endif
-
-#define G2LIB_PURE_VIRTUAL = 0
-#ifdef G2LIB_USE_CXX11
-  #define G2LIB_OVERRIDE override
-#else
-  #define G2LIB_OVERRIDE
-#endif
-
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wpadded"
-#endif
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wpadded"
-#pragma clang diagnostic ignored "-Wc++98-compat"
-#endif
-
-#ifdef G2LIB_USE_CXX11
-  #include <thread>
-  #include <mutex>
+#ifndef G2LIB_DO_NOT_USE_CXX11
+  #define G2LIB_USE_CXX11
 #endif
 
 //! Clothoid computations routine
@@ -147,21 +68,16 @@ namespace G2lib {
 
   typedef std::basic_ostream<char> ostream_type;
 
-  void backtrace( ostream_type & );
-
   typedef double real_type;
   typedef int    int_type;
+
+  extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
 
   extern real_type const machepsi;     //!< machine espilon \f$ \varepsilon \f$
   extern real_type const machepsi10;   //!< \f$ 10\varepsilon \f$
   extern real_type const machepsi100;  //!< \f$ 100\varepsilon \f$
   extern real_type const machepsi1000; //!< \f$ 1000\varepsilon \f$
   extern real_type const sqrtMachepsi; //!< \f$ \sqrt{\varepsilon} \f$
-  extern real_type const m_pi;         //!< \f$ \pi \f$
-  extern real_type const m_pi_2;       //!< \f$ \pi/2 \f$
-  extern real_type const m_2pi;        //!< \f$ 2\pi \f$
-  extern real_type const m_1_pi;       //!< \f$ 1/\pi \f$
-  extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
   extern bool            intersect_with_AABBtree;
 
   #ifdef G2LIB_COMPATIBILITY_MODE
@@ -195,35 +111,6 @@ namespace G2lib {
   void
   yesAABBtree()
   { intersect_with_AABBtree = true; }
-
-  //! check if cloating point number `x` is zero
-  static
-  inline
-  bool
-  isZero( real_type x )
-  { return FP_ZERO == std::fpclassify(x); }
-
-  //! check if cloating point number `x` is finite
-  static
-  inline
-  bool
-  isInfinite( real_type x )
-  { return FP_INFINITE == std::fpclassify(x); }
-
-  //! check if cloating point number `x` is Not A Number
-  static
-  inline
-  bool
-  isNaN( real_type x )
-  { return FP_NAN == std::fpclassify(x); }
-
-  //! check if cloating point number `x` is regural (i.e. finite and not NaN)
-  static
-  inline
-  bool
-  isRegular( real_type x )
-  { return !( FP_INFINITE == std::fpclassify(x) ||
-              FP_NAN      == std::fpclassify(x) ); }
 
   /*
   // sin(x)/x
@@ -711,10 +598,10 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //! \return length of the curve
-    virtual real_type length() const G2LIB_PURE_VIRTUAL;
+    virtual real_type length() const UTILS_PURE_VIRTUAL;
 
     //! \return length of the curve with offset
-    virtual real_type length_ISO( real_type offs ) const G2LIB_PURE_VIRTUAL;
+    virtual real_type length_ISO( real_type offs ) const UTILS_PURE_VIRTUAL;
 
     //! \return length of the curve with offset
     real_type
@@ -750,7 +637,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const G2LIB_PURE_VIRTUAL;
+    ) const UTILS_PURE_VIRTUAL;
 
     /*!
      * Compute the bounding box of the curve with offset
@@ -768,7 +655,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const G2LIB_PURE_VIRTUAL;
+    ) const UTILS_PURE_VIRTUAL;
 
     /*!
      * Compute the bounding box of the curve
@@ -896,10 +783,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual real_type theta    ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type theta_D  ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type theta_DD ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type theta_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+    virtual real_type theta    ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type theta_D  ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type theta_DD ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type theta_DDD( real_type s ) const UTILS_PURE_VIRTUAL;
 
     /*\
      |   _
@@ -1133,36 +1020,36 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual real_type X    ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type Y    ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type X_D  ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type Y_D  ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type X_DD ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type Y_DD ( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type X_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
-    virtual real_type Y_DDD( real_type s ) const G2LIB_PURE_VIRTUAL;
+    virtual real_type X    ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type Y    ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type X_D  ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type Y_D  ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type X_DD ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type Y_DD ( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type X_DDD( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type Y_DDD( real_type s ) const UTILS_PURE_VIRTUAL;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     void
     eval( real_type s, real_type & x, real_type & y ) const
-    G2LIB_PURE_VIRTUAL;
+    UTILS_PURE_VIRTUAL;
 
     virtual
     void
     eval_D( real_type s, real_type & x_D, real_type & y_D ) const
-    G2LIB_PURE_VIRTUAL;
+    UTILS_PURE_VIRTUAL;
 
     virtual
     void
     eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const
-    G2LIB_PURE_VIRTUAL;
+    UTILS_PURE_VIRTUAL;
 
     virtual
     void
     eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const
-    G2LIB_PURE_VIRTUAL;
+    UTILS_PURE_VIRTUAL;
 
     /*\
      |         __  __          _
@@ -1472,27 +1359,27 @@ namespace G2lib {
 
     virtual
     void
-    translate( real_type tx, real_type ty ) G2LIB_PURE_VIRTUAL;
+    translate( real_type tx, real_type ty ) UTILS_PURE_VIRTUAL;
 
     virtual
     void
-    rotate( real_type angle, real_type cx, real_type cy ) G2LIB_PURE_VIRTUAL;
+    rotate( real_type angle, real_type cx, real_type cy ) UTILS_PURE_VIRTUAL;
 
     virtual
     void
-    scale( real_type sc ) G2LIB_PURE_VIRTUAL;
+    scale( real_type sc ) UTILS_PURE_VIRTUAL;
 
     virtual
     void
-    reverse() G2LIB_PURE_VIRTUAL;
+    reverse() UTILS_PURE_VIRTUAL;
 
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) G2LIB_PURE_VIRTUAL;
+    changeOrigin( real_type newx0, real_type newy0 ) UTILS_PURE_VIRTUAL;
 
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) G2LIB_PURE_VIRTUAL;
+    trim( real_type s_begin, real_type s_end ) UTILS_PURE_VIRTUAL;
 
     /*\
      |   _       _                          _
@@ -1615,7 +1502,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const G2LIB_PURE_VIRTUAL;
+    ) const UTILS_PURE_VIRTUAL;
 
     /*!
      * \param  qx  x-coordinate of the point
@@ -1698,7 +1585,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const G2LIB_PURE_VIRTUAL;
+    ) const UTILS_PURE_VIRTUAL;
 
     /*!
      * \param  qx   x-coordinate of the point
@@ -1857,7 +1744,7 @@ namespace G2lib {
 
     virtual
     void
-    info( ostream_type & stream ) const G2LIB_PURE_VIRTUAL;
+    info( ostream_type & stream ) const UTILS_PURE_VIRTUAL;
 
   };
 

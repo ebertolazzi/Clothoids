@@ -73,10 +73,10 @@ namespace G2lib {
     case G2LIB_BIARC:
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
-      G2LIB_DO_ERROR(
-        "PolyLine constructor cannot convert from: " <<
+      UTILS_ERROR(
+        "PolyLine constructor cannot convert from: {}\n",
         CurveType_name[C.type()]
-      )
+      );
     }
   }
 
@@ -156,15 +156,15 @@ namespace G2lib {
 
   LineSegment const &
   PolyLine::getSegment( int_type n ) const {
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
       !m_polylineList.empty(),
-      "PolyLine::getSegment(...) empty PolyLine"
-    )
-    G2LIB_ASSERT(
+      "PolyLine::getSegment(...) empty PolyLine\n"
+    );
+    UTILS_ASSERT(
       n >= 0 && n < int_type(m_polylineList.size()),
-      "PolyLine::getSegment( " << n <<
-      " ) out of range [0," << m_polylineList.size()-1 << "]"
-    )
+      "PolyLine::getSegment( {} ) out of range [0,{}]\n",
+      n, m_polylineList.size()-1
+    );
     return m_polylineList[size_t(n)];
   }
 
@@ -191,7 +191,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
 
-    G2LIB_ASSERT( !m_polylineList.empty(), "PolyLine::bbox, empty list" )
+    UTILS_ASSERT0( !m_polylineList.empty(), "PolyLine::bbox, empty list\n" );
 
     if ( m_aabb_done ) {
       m_aabb_tree.bbox( xmin, ymin, xmax, ymax );
@@ -304,11 +304,11 @@ namespace G2lib {
 
   void
   PolyLine::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
-      "ClothoidList::trim( s_begin=" << s_begin << ", s_end=" << s_end <<
-      ") bad range, must be in [ " <<m_s0.front() << ", " << m_s0.back() << " ]"
-    )
+      "ClothoidList::trim( s_begin={}, s_end={} ) bad range, must be in [{},{}]\n",
+      s_begin, s_end, m_s0.front(), m_s0.back()
+    );
 
     size_t i_begin = size_t(findAtS(s_begin));
     size_t i_end   = size_t(findAtS(s_end));
@@ -445,7 +445,7 @@ namespace G2lib {
     real_type absk = max(abs(C.kappaBegin()), abs(C.kappaEnd()));
     real_type tmp  = absk*tol - 1;
     int_type ns = 1;
-    if ( tmp > -1 ) ns = int_type( ceil( L*absk/(2*(m_pi-acos(tmp))) ) );
+    if ( tmp > -1 ) ns = int_type( ceil( L*absk/(2*(Utils::m_pi-acos(tmp))) ) );
 
     real_type tx = m_xe - C.xBegin();
     real_type ty = m_ye - C.yBegin();
@@ -537,10 +537,10 @@ namespace G2lib {
     real_type & T,
     real_type & DST
   ) const{
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
       !m_polylineList.empty(),
-      "PolyLine::closestPoint, empty list"
-    )
+      "PolyLine::closestPoint, empty list\n"
+    );
     vector<LineSegment>::const_iterator ic = m_polylineList.begin();
     vector<real_type>::const_iterator   is = m_s0.begin();
     ic->closestPoint_ISO( x, y, X, Y, S, T, DST );
@@ -596,14 +596,14 @@ namespace G2lib {
     vector<real_type> & ss0,
     vector<real_type> & ss1
   ) const {
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
       !m_polylineList.empty(),
-      "PolyLine::intersect, empty list"
-    )
-    G2LIB_ASSERT(
+      "PolyLine::intersect, empty list\n"
+    );
+    UTILS_ASSERT(
       !pl.m_polylineList.empty(),
-      "PolyLine::intersect, empty secondary list"
-    )
+      "PolyLine::intersect, empty secondary list\n"
+    );
 
 #if 1
     build_AABBtree();
@@ -614,14 +614,14 @@ namespace G2lib {
     for ( ip = intersectionList.begin(); ip != intersectionList.end(); ++ip ) {
       size_t ipos0 = size_t(ip->first->Ipos());
       size_t ipos1 = size_t(ip->second->Ipos());
-      G2LIB_ASSERT(
+      UTILS_ASSERT(
         ipos0 < m_polylineList.size(),
-        "Bad ipos0 = " << ipos0
-      )
-      G2LIB_ASSERT(
+        "Bad ipos0 = {}\n", ipos0
+      );
+      UTILS_ASSERT(
         ipos1 < pl.m_polylineList.size(),
-        "Bad ipos1 = " << ipos1
-      )
+        "Bad ipos1 = {}\n", ipos1
+      );
       real_type sss0, sss1;
       bool ok = m_polylineList[ipos0].intersect(pl.m_polylineList[ipos1],sss0,sss1);
       if ( ok ) {
@@ -676,14 +676,20 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, PolyLine const & P ) {
-    stream
-      <<   "nseg   = " << P.numSegment()
-      << "\nxBegin = " << P.xBegin()
-      << "\nybegin = " << P.yBegin()
-      << "\nxEnd   = " << P.xEnd()
-      << "\nyEnd   = " << P.yEnd()
-      << "\nlength = " << P.length()
-      << "\n";
+    fmt::print( stream,
+      "nseg   = {}\n"
+      "xBegin = {}\n"
+      "ybegin = {}\n"
+      "xEnd   = {}\n"
+      "yEnd   = {}\n"
+      "length = {}\n",
+      P.numSegment(),
+      P.xBegin(),
+      P.yBegin(),
+      P.xEnd(),
+      P.yEnd(),
+      P.length()
+    );
     return stream;
   }
 

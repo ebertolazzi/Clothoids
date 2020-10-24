@@ -54,10 +54,10 @@ namespace G2lib {
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_DO_ERROR(
-        "LineSegment constructor cannot convert from: " <<
+      UTILS_ERROR(
+        "LineSegment constructor cannot convert from: {}\n",
         CurveType_name[C.type()]
-      )
+      );
     }
   }
 
@@ -306,8 +306,8 @@ namespace G2lib {
     m_y0     += m_s0 * m_L;
     m_c0      = -m_c0;
     m_s0      = -m_s0;
-    m_theta0 += m_pi;
-    if ( m_theta0 > m_pi ) m_theta0 -= m_2pi;
+    m_theta0 += Utils::m_pi;
+    if ( m_theta0 > Utils::m_pi ) m_theta0 -= Utils::m_2pi;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -574,12 +574,13 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, LineSegment const & c ) {
-    stream
-      <<   "x0     = " << c.m_x0
-      << "\ny0     = " << c.m_y0
-      << "\ntheta0 = " << c.m_theta0
-      << "\nL      = " << c.m_L
-      << "\n";
+    fmt::print( stream,
+      "x0     = {}\n"
+      "y0     = {}\n"
+      "theta0 = {}\n"
+      "L      = {}\n",
+      c.m_x0, c.m_y0, c.m_theta0, c.m_L
+    );
     return stream;
   }
 

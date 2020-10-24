@@ -263,15 +263,12 @@ namespace G2lib {
   void
   AABBtree::print( ostream_type & stream, int level ) const {
     if ( empty() ) {
-      stream
-        << "[EMPTY AABB tree]\n";
+      stream << "[EMPTY AABB tree]\n";
     } else {
-      stream
-        << "BBOX xmin = " << setw(12) << pBBox->m_xmin
-        << " ymin = "     << setw(12) << pBBox->m_ymin
-        << " xmax = "     << setw(12) << pBBox->m_xmax
-        << " ymax = "     << setw(12) << pBBox->m_ymax
-        << " level = "    << level    << "\n";
+      fmt::print( stream,
+        "BBOX xmin={:<12.4)} ymin={:<12.4)} xmax={:<12.4)} ymax={:<12.4)} level={}\n",
+        pBBox->m_xmin, pBBox->m_ymin, pBBox->m_xmax, pBBox->m_ymax
+      );
       vector<PtrAABB>::const_iterator it;
       for ( it = children.begin(); it != children.end(); ++it )
         (*it)->print( stream, level+1 );

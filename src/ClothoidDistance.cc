@@ -109,8 +109,8 @@ namespace G2lib {
 
         real_type om = atan2( b0, a0+1/kappa );
         if ( kappa < 0 ) {
-          if ( om < 0 ) om += m_pi;
-          else          om -= m_pi;
+          if ( om < 0 ) om += Utils::m_pi;
+          else          om -= Utils::m_pi;
         }
 
         dS = -om/kappa;
@@ -196,7 +196,7 @@ namespace G2lib {
   ) {
 
     real_type DTheta = abs( CD.theta(L) - CD.theta0 );
-    if ( DTheta <= m_2pi )
+    if ( DTheta <= Utils::m_2pi )
       return closestPointQC1( epsi, CD, L, qx, qy, X, Y, S );
 
     real_type cx = CD.c0x();
@@ -204,7 +204,7 @@ namespace G2lib {
 
     //if ( hypot( CD.x0 - cx, CD.y0 - cy ) <= hypot( qx - cx, qy - cy ) ) {
     if ( 1 <= abs(CD.kappa0) * hypot( qx - cx, qy - cy ) ) {
-      real_type ell = CD.aplus(m_2pi);
+      real_type ell = CD.aplus(Utils::m_2pi);
       return closestPointQC1( epsi, CD, ell, qx, qy, X, Y, S );
     }
 
@@ -215,7 +215,7 @@ namespace G2lib {
 
     //if ( hypot( CD1.x0 - cx, CD1.y0 - cy ) >= hypot( qx - cx, qy - cy ) ) {
     if ( 1 >= abs(CD1.kappa0) * hypot( qx - cx, qy - cy ) ) {
-      real_type ell = CD1.aplus(m_2pi);
+      real_type ell = CD1.aplus(Utils::m_2pi);
       real_type d   = closestPointQC1( epsi, CD1, ell, qx, qy, X, Y, S );
       S = L - S;
       return d;
@@ -252,7 +252,7 @@ namespace G2lib {
     real_type s = S, dS, dx, dy;
     for ( int iter = 0; iter < 20 && nb < 2; ++iter ) {
       // approx clothoid with a circle
-      real_type kappa = m_pi * s;
+      real_type kappa = Utils::m_pi * s;
       real_type theta = 0.5*(kappa*s);
       FresnelCS( s, dx, dy ); dx -= qx; dy -= qy;
 
@@ -271,8 +271,8 @@ namespace G2lib {
 
         real_type om = atan2( b0, a0+1/kappa );
         if ( kappa < 0 ) {
-          if ( om < 0 ) om += m_pi;
-          else          om -= m_pi;
+          if ( om < 0 ) om += Utils::m_pi;
+          else          om -= Utils::m_pi;
         }
 
         dS = -om/kappa;
@@ -309,11 +309,11 @@ namespace G2lib {
 
     real_type dx, dy;
     FresnelCS( a, dx, dy ); dx -= qx; dy -= qy;
-    real_type phia = m_pi_2 * (a*a) - atan2( dy, dx );
+    real_type phia = Utils::m_pi_2 * (a*a) - atan2( dy, dx );
     bool ok0 = cos(phia) < 0; // distanza decrescente
 
     FresnelCS( b, dx, dy ); dx -= qx; dy -= qy;
-    real_type phib = m_pi_2 * (b*b) - atan2( dy, dx );
+    real_type phib = Utils::m_pi_2 * (b*b) - atan2( dy, dx );
     bool ok1 = cos(phib) > 0; // distanza crescente
 
     real_type s0 = a;
@@ -357,12 +357,12 @@ namespace G2lib {
     // transform to standard clothoid
     real_type sflex  = -CD.kappa0/CD.dk;
 
-    G2LIB_ASSERT( sflex <= 0, " bad sflex = " << sflex )
+    UTILS_ASSERT( sflex <= 0, " bad sflex = {}\n", sflex );
 
     real_type thflex = CD.theta0 + 0.5*CD.kappa0*sflex;
     real_type ssf    = sin(thflex);
     real_type csf    = cos(thflex);
-    real_type gamma  = sqrt(abs(CD.dk)/m_pi);
+    real_type gamma  = sqrt(abs(CD.dk)/Utils::m_pi);
     real_type a      = -sflex*gamma;
     real_type b      = (L-sflex)*gamma;
     real_type xflex, yflex;
@@ -407,8 +407,8 @@ namespace G2lib {
     bool converged = false;
     for ( int iter = 0; iter < 20 && !converged; ++iter ) {
       FresnelCS( ss, xx, yy );
-      real_type kappa = m_pi * ss;
-      real_type theta = m_pi_2 * (ss*ss);
+      real_type kappa = Utils::m_pi * ss;
+      real_type theta = Utils::m_pi_2 * (ss*ss);
       real_type rhox  = xx - 0.5;
       real_type rhoy  = yy - 0.5;
       real_type rho   = hypot( rhox, rhoy );
@@ -423,7 +423,7 @@ namespace G2lib {
       converged = abs(ds) < epsi;
     }
 
-    G2LIB_ASSERT( converged, " closestPointStandard not converged " )
+    UTILS_ASSERT0( converged, "closestPointStandard not converged\n" );
 
     real_type Lp = min( b-ss, 4/(ss+sqrt(ss*ss+4)) );
     real_type Lm = min( ss-a, 4/(ss+sqrt(ss*ss-4)) );
@@ -452,7 +452,7 @@ namespace G2lib {
   ) {
 
     real_type NT = 4; // number of turn of the clothid after wich is considered quasi-circular
-    real_type DK = sqrt(NT*m_2pi*abs(CD.dk));
+    real_type DK = sqrt(NT*Utils::m_2pi*abs(CD.dk));
     if ( abs(CD.kappa0) >= DK ) {
       return closestPointQC( epsi, CD, L, qx, qy, X, Y, S );
     }
@@ -465,7 +465,7 @@ namespace G2lib {
 
     real_type ell = (DK-abs(CD.kappa0))/abs(CD.dk);
 
-    G2LIB_ASSERT( ell > 0 && ell < L, " bad ell = " << ell << " L = " << L )
+    UTILS_ASSERT( ell > 0 && ell < L, "bad ell = {} L = {}\n", ell, L );
 
     ClothoidData CDS;
     CD.eval( ell, CDS );

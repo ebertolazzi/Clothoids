@@ -71,10 +71,10 @@ namespace G2lib {
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_DO_ERROR(
-        "ClothoidList constructor cannot convert from: " <<
+      UTILS_ERROR(
+        "ClothoidList constructor cannot convert from: {}\n",
         CurveType_name[C.type()]
-      )
+      );
     }
   }
 
@@ -92,12 +92,12 @@ namespace G2lib {
     real_type ss  = s_begin;
     real_type thh = theta(s_begin);
     for ( int_type npts = 0; ss < s_end; ++npts ) {
-      G2LIB_ASSERT(
+      UTILS_ASSERT0(
         npts < 100000000,
-        "ClothoidCurve::optimized_sample_internal " <<
-        "is generating too much points (>100000000)\n" <<
-        "something is going wrong or parameters are not well set"
-      )
+        "ClothoidCurve::optimized_sample_internal "
+        "is generating too much points (>100000000)\n"
+        "something is going wrong or parameters are not well set\n"
+      );
       // estimate angle variation and compute step accodingly
       real_type k   = m_CD.kappa( ss );
       real_type dss = ds/(1+k*offs); // scale length with offset
@@ -172,18 +172,18 @@ namespace G2lib {
     int_type             icurve
   ) const {
 
-    static real_type const one_degree = m_pi/180;
+    static real_type const one_degree = Utils::m_pi/180;
 
     real_type ss  = s_begin;
     real_type thh = m_CD.theta(ss);
     real_type MX  = min( m_L, max_size );
     for ( int_type npts = 0; ss < s_end; ++npts ) {
-      G2LIB_ASSERT(
+      UTILS_ASSERT0(
         npts < 100000000,
-        "ClothoidCurve::bbTriangles_internal " <<
-        "is generating too much triangles (>100000000)\n" <<
-        "something is going wrong or parameters are not well set"
-      )
+        "ClothoidCurve::bbTriangles_internal "
+        "is generating too much triangles (>100000000)\n"
+        "something is going wrong or parameters are not well set\n"
+      );
 
       // estimate angle variation and compute step accodingly
       real_type k   = m_CD.kappa( ss );
@@ -270,7 +270,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    bbTriangles_ISO( offs, tvec, m_pi/18, 1e100 );
+    bbTriangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
     xmin = ymin = numeric_limits<real_type>::infinity();
     xmax = ymax = -xmin;
     vector<Triangle2D>::const_iterator it;
@@ -308,9 +308,9 @@ namespace G2lib {
   ) const {
 
     if ( m_aabb_done &&
-         isZero( offs-m_aabb_offs ) &&
-         isZero( max_angle-m_aabb_max_angle ) &&
-         isZero( max_size-m_aabb_max_size ) ) return;
+         Utils::isZero( offs-m_aabb_offs ) &&
+         Utils::isZero( max_angle-m_aabb_max_angle ) &&
+         Utils::isZero( max_size-m_aabb_max_size ) ) return;
 
     #ifdef G2LIB_USE_CXX11
     vector<shared_ptr<BBox const> > bboxes;
@@ -497,8 +497,8 @@ namespace G2lib {
         }
       }
     } else {
-      bbTriangles_ISO( offs, m_aabb_tri, m_pi/18, 1e100 );
-      C.bbTriangles_ISO( offs_C, C.m_aabb_tri, m_pi/18, 1e100 );
+      bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
+      C.bbTriangles_ISO( offs_C, C.m_aabb_tri, Utils::m_pi/18, 1e100 );
       vector<Triangle2D>::const_iterator i1, i2;
       for ( i1 = m_aabb_tri.begin(); i1 != m_aabb_tri.end(); ++i1 ) {
         for ( i2 = C.m_aabb_tri.begin(); i2 != C.m_aabb_tri.end(); ++i2 ) {
@@ -602,10 +602,10 @@ namespace G2lib {
     AABBtree::VecPtrBBox candidateList;
     m_aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
       candidateList.size() > 0,
-      "ClothoidCurve::closestPoint no candidate"
-    )
+      "ClothoidCurve::closestPoint no candidate\n"
+    );
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
       size_t ipos = size_t((*ic)->Ipos());
       Triangle2D const & T = m_aabb_tri[ipos];
@@ -750,13 +750,20 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, ClothoidCurve const & c ) {
-    stream <<   "x0     = " << c.m_CD.x0
-           << "\ny0     = " << c.m_CD.y0
-           << "\ntheta0 = " << c.m_CD.theta0
-           << "\nkappa0 = " << c.m_CD.kappa0
-           << "\ndk     = " << c.m_CD.dk
-           << "\nL      = " << c.m_L
-           << "\n";
+    fmt::print( stream,
+      "x0     = {}\n"
+      "y0     = {}\n"
+      "theta0 = {}\n"
+      "kappa0 = {}\n"
+      "dk     = {}\n"
+      "L      = {}\n",
+      c.m_CD.x0,
+      c.m_CD.y0,
+      c.m_CD.theta0,
+      c.m_CD.kappa0,
+      c.m_CD.dk,
+      c.m_L
+    );
     return stream;
   }
 

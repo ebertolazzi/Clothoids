@@ -10,7 +10,7 @@ namespace G2lib {
   : filename(_filename)
   , showAxes(_showAxes)
   {
-    G2LIB_ASSERT( openFile(), "Failed to open file " << filename )
+    UTILS_ASSERT( openFile(), "Failed to open file {}\n", filename );
     initFile();
   }
 

@@ -151,10 +151,10 @@ namespace G2lib {
 
     void
     print( ostream_type & stream ) const {
-      stream
-        << "BBOX (xmin,ymin,xmax,ymax) = ( " << m_xmin
-        << ", " << m_ymin << ", " << m_xmax << ", " << m_ymax
-        << " )\n";
+      fmt::print( stream,
+        "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n",
+        m_xmin, m_ymin, m_xmax, m_ymax
+      );
     }
 
     friend class AABBtree;

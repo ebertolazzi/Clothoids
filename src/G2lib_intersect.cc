@@ -169,11 +169,12 @@ namespace G2lib {
   bool
   collision( BaseCurve const & obj1, BaseCurve const & obj2 ) {
     #ifdef DEBUG
-    std::cout
-      << "collision " << CurveType_name[obj1.type()]
-      << " with " << CurveType_name[obj2.type()]
-      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-      << '\n';
+    fmt::print(
+      "collision {} with {} using {}\n",
+      CurveType_name[obj1.type()],
+      CurveType_name[obj2.type()],
+      CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+    );
     #endif
 
     bool ok = false;
@@ -245,11 +246,12 @@ namespace G2lib {
     #endif
 
     #ifdef DEBUG
-    std::cout
-      << "collision (offs) " << CurveType_name[obj1.type()]
-      << " with " << CurveType_name[obj2.type()]
-      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-      << '\n';
+    fmt::print(
+      "collision (offs) {} with {} using {}\n",
+      CurveType_name[obj1.type()],
+      CurveType_name[obj2.type()],
+      CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+    );
     #endif
 
     bool ok = false;
@@ -320,11 +322,12 @@ namespace G2lib {
     #endif
 
     #ifdef DEBUG
-    std::cout
-      << "intersect " << CurveType_name[obj1.type()]
-      << " with " << CurveType_name[obj2.type()]
-      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-      << '\n';
+    fmt::print(
+      "intersect {} with {} using {}\n",
+      CurveType_name[obj1.type()],
+      CurveType_name[obj2.type()],
+      CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+    );
     #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
@@ -396,11 +399,12 @@ namespace G2lib {
     #endif
 
     #ifdef DEBUG
-    std::cout
-      << "intersect (offs) " << CurveType_name[obj1.type()]
-      << " with " << CurveType_name[obj2.type()]
-      << " using " << CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
-      << '\n';
+    fmt::print(
+      "intersect (offs) {} with {} using {}\n",
+      CurveType_name[obj1.type()],
+      CurveType_name[obj2.type()],
+      CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
+    );
     #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {

@@ -79,10 +79,10 @@ namespace G2lib {
     case G2LIB_BIARC_LIST:
     case G2LIB_CLOTHOID_LIST:
     case G2LIB_POLYLINE:
-      G2LIB_DO_ERROR(
-        "CircleArc constructor cannot convert from: " <<
+      UTILS_ERROR(
+        "CircleArc constructor cannot convert from: {}\n",
         CurveType_name[C.type()]
-      )
+      );
     }
   }
 
@@ -320,11 +320,11 @@ namespace G2lib {
 
   void
   CircleArc::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       s_end > s_begin,
-      "CircleArc::trim(begin=" << s_begin <<
-      ", s_end=" << s_end << ") s_end must be > s_begin"
-    )
+      "CircleArc::trim( begin={}, s_end={} ) s_end must be > s_begin\n",
+      s_begin, s_end
+    );
     real_type x, y;
     eval( s_begin, x, y );
     m_theta0 += s_begin * m_k;
@@ -366,9 +366,9 @@ namespace G2lib {
   CircleArc::reverse() {
     real_type xx, yy;
     eval( m_L, xx, yy );
-    m_theta0 += m_L*m_k+m_pi;
-    while ( m_theta0 >  m_pi ) m_theta0 -= m_2pi;
-    while ( m_theta0 < -m_pi ) m_theta0 += m_2pi;
+    m_theta0 += m_L*m_k+Utils::m_pi;
+    while ( m_theta0 >  Utils::m_pi ) m_theta0 -= Utils::m_2pi;
+    while ( m_theta0 < -Utils::m_pi ) m_theta0 += Utils::m_2pi;
     m_x0 = xx;
     m_y0 = yy;
     m_c0 = cos(m_theta0);
@@ -408,7 +408,7 @@ namespace G2lib {
     real_type & xx2, real_type & yy2
   ) const {
     real_type dtheta = m_L * m_k;
-    bool ok = abs(dtheta) <= m_pi/3;
+    bool ok = abs(dtheta) <= Utils::m_pi/3;
     if ( ok ) {
       xx0 = m_x0;
       yy0 = m_y0;
@@ -435,7 +435,7 @@ namespace G2lib {
     real_type & xx2, real_type & yy2
   ) const {
     real_type dtheta = m_L * m_k;
-    bool ok = abs(dtheta) <= m_pi/3;
+    bool ok = abs(dtheta) <= Utils::m_pi/3;
     if ( ok ) {
       eval_ISO( 0,   offs, xx0, yy0 );
       eval_ISO( m_L, offs, xx2, yy2 );
@@ -536,7 +536,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    this->bbTriangles( tvec, m_pi/4 );
+    this->bbTriangles( tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( int_type iter = 1; iter < int_type(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
@@ -559,7 +559,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    this->bbTriangles_ISO( offs, tvec, m_pi/4 );
+    this->bbTriangles_ISO( offs, tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( int_type iter = 1; iter < int_type(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
@@ -799,7 +799,7 @@ namespace G2lib {
     int_type & n_pnts
   ) const {
     real_type dtheta = m_L*m_k;
-    int_type  ns     = int_type(floor(3*abs(dtheta)/m_pi));
+    int_type  ns     = int_type(floor(3*abs(dtheta)/Utils::m_pi));
     if ( ns < 1 ) ns = 1;
     n_pnts  = 1+2*ns;
     n_knots = n_pnts+3;
@@ -814,7 +814,7 @@ namespace G2lib {
   ) const {
 
     real_type dtheta = m_L*m_k;
-    int_type  ns     = int_type(floor(3*abs(dtheta)/m_pi));
+    int_type  ns     = int_type(floor(3*abs(dtheta)/Utils::m_pi));
     if ( ns < 1 ) ns = 1;
 
     real_type th = dtheta/(2*ns);
@@ -869,7 +869,7 @@ namespace G2lib {
     real_type absk = abs(m_k);
     real_type tmp  = absk*tol;
     if ( tmp > 0 ) {
-      real_type dtheta = 2*(m_pi-acos(tmp-1));
+      real_type dtheta = 2*(Utils::m_pi-acos(tmp-1));
       return dtheta/absk;
     } else {
       return m_L;
@@ -880,13 +880,14 @@ namespace G2lib {
 
   ostream_type &
   operator << ( ostream_type & stream, CircleArc const & c ) {
-    stream
-      <<   "x0     = " << c.m_x0
-      << "\ny0     = " << c.m_y0
-      << "\ntheta0 = " << c.m_theta0
-      << "\nk      = " << c.m_k
-      << "\nL      = " << c.m_L
-      << "\n";
+    fmt::print( stream,
+      "x0     = {}\n"
+      "y0     = {}\n"
+      "theta0 = {}\n"
+      "k      = {}\n"
+      "L      = {}\n",
+      c.m_x0, c.m_y0, c.m_theta0, c.m_k, c.m_L
+    );
     return stream;
   }
 

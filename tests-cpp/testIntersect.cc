@@ -13,7 +13,7 @@ main() {
   G2lib::ClothoidCurve C0, C1;
   real_type x0     = 0;
   real_type y0     = 0;
-  real_type theta0 = G2lib::m_pi*0.7;
+  real_type theta0 = Utils::m_pi*0.7;
   real_type k0     = -0.1;
   real_type dk0    = 0.05;
   real_type L0     = 100;
@@ -21,7 +21,7 @@ main() {
 
   real_type x1     = -13;
   real_type y1     = 0.3;
-  real_type theta1 = G2lib::m_pi/4;
+  real_type theta1 = Utils::m_pi/4;
   real_type k1     = 0.1;
   real_type dk1    = -0.05;
   real_type L1     = 100;

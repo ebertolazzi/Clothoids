@@ -108,7 +108,7 @@ namespace G2lib {
     { this->resetLastInterval(); }
 
     virtual
-    ~BiarcList() G2LIB_OVERRIDE {
+    ~BiarcList() UTILS_OVERRIDE {
       m_s0.clear();
       m_biarcList.clear();
       m_aabb_tri.clear();
@@ -176,11 +176,11 @@ namespace G2lib {
 
     virtual
     real_type
-    length() const G2LIB_OVERRIDE;
+    length() const UTILS_OVERRIDE;
 
     virtual
     real_type
-    length_ISO( real_type offs ) const G2LIB_OVERRIDE;
+    length_ISO( real_type offs ) const UTILS_OVERRIDE;
 
     real_type
     segment_length( int_type nseg ) const;
@@ -200,7 +200,7 @@ namespace G2lib {
     bbTriangles_ISO(
       real_type                 offs,
       std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = m_pi/6, // 30 degree
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
       real_type                 max_size  = 1e100
     ) const;
 
@@ -208,7 +208,7 @@ namespace G2lib {
     bbTriangles_SAE(
       real_type                 offs,
       std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = m_pi/6, // 30 degree
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
       real_type                 max_size  = 1e100
     ) const {
       bbTriangles_ISO( -offs, tvec, max_angle, max_size );
@@ -217,7 +217,7 @@ namespace G2lib {
     void
     bbTriangles(
       std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = m_pi/6, // 30 degree
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
       real_type                 max_size  = 1e100
     ) const {
       bbTriangles_ISO( 0, tvec, max_angle, max_size );
@@ -226,14 +226,14 @@ namespace G2lib {
     void
     build_AABBtree_ISO(
       real_type offs,
-      real_type max_angle = m_pi/6, // 30 degree
+      real_type max_angle = Utils::m_pi/6, // 30 degree
       real_type max_size  = 1e100
     ) const;
 
     void
     build_AABBtree_SAE(
       real_type offs,
-      real_type max_angle = m_pi/6, // 30 degree
+      real_type max_angle = Utils::m_pi/6, // 30 degree
       real_type max_size  = 1e100
     ) const {
       build_AABBtree_ISO( -offs, max_angle, max_size );
@@ -254,7 +254,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const G2LIB_OVERRIDE {
+    ) const UTILS_OVERRIDE {
       bbox_ISO( 0, xmin, ymin, xmax, ymax );
     }
 
@@ -266,7 +266,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     /*\
      |   ____             _          _______           _
@@ -279,92 +279,92 @@ namespace G2lib {
 
     virtual
     real_type
-    thetaBegin() const G2LIB_OVERRIDE
+    thetaBegin() const UTILS_OVERRIDE
     { return m_biarcList.front().thetaBegin(); }
 
     virtual
     real_type
-    thetaEnd() const G2LIB_OVERRIDE
+    thetaEnd() const UTILS_OVERRIDE
     { return m_biarcList.back().thetaEnd(); }
 
     virtual
     real_type
-    xBegin() const G2LIB_OVERRIDE
+    xBegin() const UTILS_OVERRIDE
     { return m_biarcList.front().xBegin(); }
 
     virtual
     real_type
-    yBegin() const G2LIB_OVERRIDE
+    yBegin() const UTILS_OVERRIDE
     { return m_biarcList.front().yBegin(); }
 
     virtual
     real_type
-    xEnd() const G2LIB_OVERRIDE
+    xEnd() const UTILS_OVERRIDE
     { return m_biarcList.back().xEnd(); }
 
     virtual
     real_type
-    yEnd() const G2LIB_OVERRIDE
+    yEnd() const UTILS_OVERRIDE
     { return m_biarcList.back().yEnd(); }
 
     virtual
     real_type
-    xBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
+    xBegin_ISO( real_type offs ) const UTILS_OVERRIDE
     { return m_biarcList.front().xBegin_ISO( offs ); }
 
     virtual
     real_type
-    yBegin_ISO( real_type offs ) const G2LIB_OVERRIDE
+    yBegin_ISO( real_type offs ) const UTILS_OVERRIDE
     { return m_biarcList.front().yBegin_ISO( offs ); }
 
     virtual
     real_type
-    xEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
+    xEnd_ISO( real_type offs ) const UTILS_OVERRIDE
     { return m_biarcList.back().xEnd_ISO( offs ); }
 
     virtual
     real_type
-    yEnd_ISO( real_type offs ) const G2LIB_OVERRIDE
+    yEnd_ISO( real_type offs ) const UTILS_OVERRIDE
     { return m_biarcList.back().yEnd_ISO( offs ); }
 
     virtual
     real_type
-    tx_Begin() const G2LIB_OVERRIDE
+    tx_Begin() const UTILS_OVERRIDE
     { return m_biarcList.front().tx_Begin(); }
 
     virtual
     real_type
-    ty_Begin() const G2LIB_OVERRIDE
+    ty_Begin() const UTILS_OVERRIDE
     { return m_biarcList.front().ty_Begin(); }
 
     virtual
     real_type
-    tx_End() const G2LIB_OVERRIDE
+    tx_End() const UTILS_OVERRIDE
     { return m_biarcList.back().tx_End(); }
 
     virtual
     real_type
-    ty_End() const G2LIB_OVERRIDE
+    ty_End() const UTILS_OVERRIDE
     { return m_biarcList.back().ty_End(); }
 
     virtual
     real_type
-    nx_Begin_ISO() const G2LIB_OVERRIDE
+    nx_Begin_ISO() const UTILS_OVERRIDE
     { return m_biarcList.front().nx_Begin_ISO(); }
 
     virtual
     real_type
-    ny_Begin_ISO() const G2LIB_OVERRIDE
+    ny_Begin_ISO() const UTILS_OVERRIDE
     { return m_biarcList.front().ny_Begin_ISO(); }
 
     virtual
     real_type
-    nx_End_ISO() const G2LIB_OVERRIDE
+    nx_End_ISO() const UTILS_OVERRIDE
     { return m_biarcList.back().nx_End_ISO(); }
 
     virtual
     real_type
-    ny_End_ISO() const G2LIB_OVERRIDE
+    ny_End_ISO() const UTILS_OVERRIDE
     { return m_biarcList.back().ny_End_ISO(); }
 
     /*\
@@ -375,10 +375,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual real_type theta( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type theta_D( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type theta_DD( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type theta_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type theta( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type theta_D( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type theta_DD( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type theta_DDD( real_type s ) const UTILS_OVERRIDE;
 
     /*\
      |  _____                   _   _   _
@@ -388,14 +388,14 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    virtual real_type tx( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type ty( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type tx_D( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type ty_D( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type tx_DD( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type ty_DD( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type tx_DDD( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type ty_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type tx( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type ty( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type tx_D( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type ty_D( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type tx_DD( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type ty_DD( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type tx_DDD( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type ty_DDD( real_type s ) const UTILS_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -405,7 +405,7 @@ namespace G2lib {
       real_type   s,
       real_type & tg_x,
       real_type & tg_y
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -413,7 +413,7 @@ namespace G2lib {
       real_type   s,
       real_type & tg_x_D,
       real_type & tg_y_D
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -421,7 +421,7 @@ namespace G2lib {
       real_type   s,
       real_type & tg_x_DD,
       real_type & tg_y_DD
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -429,7 +429,7 @@ namespace G2lib {
       real_type   s,
       real_type & tg_x_DDD,
       real_type & tg_y_DDD
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -441,7 +441,7 @@ namespace G2lib {
       real_type & k,
       real_type & x,
       real_type & y
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -454,18 +454,18 @@ namespace G2lib {
       real_type & k,
       real_type & x,
       real_type & y
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual real_type X( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type Y( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type X_D( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type Y_D( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type X_DD( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type Y_DD( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type X_DDD( real_type s ) const G2LIB_OVERRIDE;
-    virtual real_type Y_DDD( real_type s ) const G2LIB_OVERRIDE;
+    virtual real_type X( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type Y( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type X_D( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type Y_D( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type X_DD( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type Y_DD( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type X_DDD( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type Y_DDD( real_type s ) const UTILS_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -475,7 +475,7 @@ namespace G2lib {
       real_type   s,
       real_type & x,
       real_type & y
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -483,7 +483,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_D,
       real_type & y_D
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -491,7 +491,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_DD,
       real_type & y_DD
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -499,7 +499,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     /*\
      |         __  __          _
@@ -511,35 +511,35 @@ namespace G2lib {
 
     virtual
     real_type
-    X_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    X_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    Y_ISO( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    Y_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    X_ISO_D( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    X_ISO_D( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    Y_ISO_D( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    Y_ISO_D( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    X_ISO_DD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    X_ISO_DD( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    Y_ISO_DD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    Y_ISO_DD( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    X_ISO_DDD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    X_ISO_DDD( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     virtual
     real_type
-    Y_ISO_DDD( real_type s, real_type offs ) const G2LIB_OVERRIDE;
+    Y_ISO_DDD( real_type s, real_type offs ) const UTILS_OVERRIDE;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -550,7 +550,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x,
       real_type & y
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -559,7 +559,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_D,
       real_type & y_D
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -568,7 +568,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_DD,
       real_type & y_DD
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
@@ -577,7 +577,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     /*\
      |  _                        __
@@ -589,27 +589,27 @@ namespace G2lib {
 
     virtual
     void
-    translate( real_type tx, real_type ty ) G2LIB_OVERRIDE;
+    translate( real_type tx, real_type ty ) UTILS_OVERRIDE;
 
     virtual
     void
-    rotate( real_type angle, real_type cx, real_type cy ) G2LIB_OVERRIDE;
+    rotate( real_type angle, real_type cx, real_type cy ) UTILS_OVERRIDE;
 
     virtual
     void
-    scale( real_type sc ) G2LIB_OVERRIDE;
+    scale( real_type sc ) UTILS_OVERRIDE;
 
     virtual
     void
-    reverse() G2LIB_OVERRIDE;
+    reverse() UTILS_OVERRIDE;
 
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) G2LIB_OVERRIDE;
+    changeOrigin( real_type newx0, real_type newy0 ) UTILS_OVERRIDE;
 
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) G2LIB_OVERRIDE;
+    trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE;
 
     /*\
      |      _ _     _
@@ -641,7 +641,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     /*!
      *  \param  qx  x-coordinate of the point
@@ -667,11 +667,11 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const G2LIB_OVERRIDE;
+    ) const UTILS_OVERRIDE;
 
     virtual
     void
-    info( ostream_type & stream ) const G2LIB_OVERRIDE
+    info( ostream_type & stream ) const UTILS_OVERRIDE
     { stream << "BiarcList\n" << *this << '\n'; }
 
     friend

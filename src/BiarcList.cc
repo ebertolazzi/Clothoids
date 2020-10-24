@@ -114,8 +114,8 @@ namespace G2lib {
       break;
     case G2LIB_CLOTHOID:
     case G2LIB_CLOTHOID_LIST:
-      G2LIB_DO_ERROR(
-        "BiarcList constructor cannot convert from: " <<
+      UTILS_ERROR(
+        "BiarcList constructor cannot convert from: {}\n",
         CurveType_name[C.type()]
       );
     }
@@ -217,10 +217,10 @@ namespace G2lib {
     real_type y1,
     real_type theta1
   ) {
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
       !m_biarcList.empty(),
-      "BiarcList::push_back_G1(...) empty list!"
-    )
+      "BiarcList::push_back_G1(...) empty list!\n"
+    );
     Biarc c;
     real_type x0     = m_biarcList.back().xEnd();
     real_type y0     = m_biarcList.back().yEnd();
@@ -254,12 +254,10 @@ namespace G2lib {
     real_type const y[],
     real_type const theta[]
   ) {
-
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
       n > 1,
-      "BiarcList::build_G1, at least 2 points are necessary"
-    )
-
+      "BiarcList::build_G1, at least 2 points are necessary\n"
+    );
     init();
     reserve( n-1 );
     Biarc c;
@@ -292,16 +290,15 @@ namespace G2lib {
 
   Biarc const &
   BiarcList::get( int_type idx ) const {
-    G2LIB_ASSERT(
+    UTILS_ASSERT(
       !m_biarcList.empty(),
-      "BiarcList::get( " << idx << " ) empty list"
-    )
-    G2LIB_ASSERT(
+      "BiarcList::get( {} ) empty list\n", idx
+    );
+    UTILS_ASSERT(
       idx >= 0 && idx < int_type(m_biarcList.size()),
-      "BiarcList::get( " << idx <<
-      " ) bad index, must be in [0," <<
-      m_biarcList.size()-1 << "]"
-    )
+      "BiarcList::get( {} ) bad index, must be in [0,{}]\n",
+      idx, m_biarcList.size()-1
+    );
     return m_biarcList[idx];
   }
 
@@ -384,7 +381,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    bbTriangles_ISO( offs, tvec, m_pi/18, 1e100 );
+    bbTriangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
     xmin = ymin = numeric_limits<real_type>::infinity();
     xmax = ymax = -xmin;
     vector<Triangle2D>::const_iterator it;
@@ -943,14 +940,11 @@ namespace G2lib {
 
   void
   BiarcList::trim( real_type s_begin, real_type s_end ) {
-    G2LIB_ASSERT(
-      s_begin >= m_s0.front() &&
-      s_end <= m_s0.back() &&
-      s_end > s_begin,
-      "BiarcList::trim( s_begin=" << s_begin << ", s_end=" <<
-      s_end << ") bad range, must be in [ " << m_s0.front() <<
-      ", " << m_s0.back() << " ]"
-    )
+    UTILS_ASSERT(
+      s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
+      "BiarcList::trim( s_begin={}, s_end={} ) bad range, must be in [ {}, {} ]\n",
+      s_begin, s_end, m_s0.front(), m_s0.back()
+    );
 
     size_t i_begin = size_t( findAtS( s_begin ) );
     size_t i_end   = size_t( findAtS( s_end ) );
@@ -988,9 +982,9 @@ namespace G2lib {
   ) const {
 
     if ( m_aabb_done &&
-         isZero( offs-m_aabb_offs ) &&
-         isZero( max_angle-m_aabb_max_angle ) &&
-         isZero( max_size-m_aabb_max_size ) ) return;
+         Utils::isZero( offs-m_aabb_offs ) &&
+         Utils::isZero( max_angle-m_aabb_max_angle ) &&
+         Utils::isZero( max_size-m_aabb_max_size ) ) return;
 
     #ifdef G2LIB_USE_CXX11
     vector<shared_ptr<BBox const> > bboxes;
@@ -1100,8 +1094,8 @@ namespace G2lib {
         }
       }
     } else {
-      bbTriangles_ISO( offs, m_aabb_tri, m_pi/18, 1e100 );
-      CL.bbTriangles_ISO( offs_CL, CL.m_aabb_tri, m_pi/18, 1e100 );
+      bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
+      CL.bbTriangles_ISO( offs_CL, CL.m_aabb_tri, Utils::m_pi/18, 1e100 );
       vector<Triangle2D>::const_iterator i1, i2;
       for ( i1 = m_aabb_tri.begin(); i1 != m_aabb_tri.end(); ++i1 ) {
         for ( i2 = CL.m_aabb_tri.begin(); i2 != CL.m_aabb_tri.end(); ++i2 ) {
@@ -1152,10 +1146,10 @@ namespace G2lib {
     AABBtree::VecPtrBBox candidateList;
     m_aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
       candidateList.size() > 0,
-      "BiarcList::closestPoint no candidate"
-    )
+      "BiarcList::closestPoint no candidate\n"
+    );
     int_type icurve = 0;
     DST = numeric_limits<real_type>::infinity();
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
@@ -1254,7 +1248,7 @@ namespace G2lib {
     real_type & t
   ) const {
 
-    G2LIB_ASSERT( !m_biarcList.empty(), "BiarcList::findST, empty list" )
+    UTILS_ASSERT0( !m_biarcList.empty(), "BiarcList::findST, empty list\n" );
     vector<Biarc>::const_iterator     ic = m_biarcList.begin();
     vector<real_type>::const_iterator is = m_s0.begin();
 
@@ -1297,17 +1291,16 @@ namespace G2lib {
     real_type & t
   ) const {
 
-    G2LIB_ASSERT(
-      !m_biarcList.empty(),
-      "BiarcList::findST, empty list"
-    )
-    G2LIB_ASSERT(
+    UTILS_ASSERT0(
+      !m_biarcList.empty(), "BiarcList::findST, empty list\n"
+    );
+    UTILS_ASSERT(
       ibegin >= 0 && ibegin <= iend &&
       iend < int_type(m_biarcList.size()),
-      "BiarcList::findST( ibegin=" << ibegin << ", iend = " <<
-      iend << " , x, y, s, t ) bad range not in [0," <<
-      m_biarcList.size()-1 << "]"
-    )
+      "BiarcList::findST( ibegin={}, iend={}, x, y, s, t )\n"
+      "bad range not in [0,{}]\n",
+      ibegin, iend, m_biarcList.size()-1
+    );
     s = t = 0;
     int_type iseg = 0;
     bool ok = false;
