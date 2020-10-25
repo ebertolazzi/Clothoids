@@ -22,7 +22,7 @@ LDCONFIG     =
 # check if the OS string contains 'Linux'
 ifneq (,$(findstring Linux, $(OS)))
   LIB_CLOTHOID = Clothoids_linux
-  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
+  LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static -ldl
   CXXFLAGS     = -std=c++11 $(WARN) -O2 -fPIC
   AR           = ar rcs
   LDCONFIG     = sudo ldconfig

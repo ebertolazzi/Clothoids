@@ -70,7 +70,7 @@ FOREACH (F ${S})
   LIST( APPEND HEADERS ${RF} )
 ENDFOREACH (F ${S})
 
-INCLUDE_DIRECTORIES( src submodules/quarticRootsFlocke/src )
+INCLUDE_DIRECTORIES( src lib3rd/include )
 
 SET( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib )
 
