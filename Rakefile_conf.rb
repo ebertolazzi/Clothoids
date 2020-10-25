@@ -4,7 +4,7 @@ if File.exists?(File.expand_path('../Rakefile_conf.rb', File.dirname(__FILE__)))
 else
   COMPILE_DEBUG      = false
   COMPILE_DYNAMIC    = false
-  COMPILE_EXECUTABLE = false
+  COMPILE_EXECUTABLE = true
 
   case RUBY_PLATFORM
   when /mingw|mswin/

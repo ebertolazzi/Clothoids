@@ -174,7 +174,7 @@ src/AABBtree.o: submodules/Utils/src/Utils/TicToc.hxx
 src/AABBtree.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/AABBtree.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/AABBtree.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/AABBtree.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/AABBtree.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/AABBtree.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/AABBtree.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/AABBtree.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -204,7 +204,7 @@ src/Biarc.o: submodules/Utils/src/Utils/TicToc.hxx
 src/Biarc.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/Biarc.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/Biarc.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/Biarc.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/Biarc.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/Biarc.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/Biarc.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/Biarc.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -234,7 +234,7 @@ src/BiarcList.o: submodules/Utils/src/Utils/TicToc.hxx
 src/BiarcList.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/BiarcList.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/BiarcList.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/BiarcList.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/BiarcList.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/BiarcList.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/BiarcList.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/BiarcList.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -264,7 +264,7 @@ src/Circle.o: submodules/Utils/src/Utils/TicToc.hxx
 src/Circle.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/Circle.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/Circle.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/Circle.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/Circle.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/Circle.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/Circle.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/Circle.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -294,7 +294,7 @@ src/Clothoid.o: submodules/Utils/src/Utils/TicToc.hxx
 src/Clothoid.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/Clothoid.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/Clothoid.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/Clothoid.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/Clothoid.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/Clothoid.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/Clothoid.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/Clothoid.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -324,7 +324,8 @@ src/ClothoidAsyPlot.o: submodules/Utils/src/Utils/TicToc.hxx
 src/ClothoidAsyPlot.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/ClothoidAsyPlot.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/ClothoidAsyPlot.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/ClothoidAsyPlot.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/ClothoidAsyPlot.o: src/Clothoids/Line.hxx
+src/ClothoidAsyPlot.o: src/Clothoids/BaseCurve_using.hxx
 src/ClothoidAsyPlot.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/ClothoidAsyPlot.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/ClothoidAsyPlot.o: src/Clothoids/BiarcList.hxx
@@ -355,7 +356,8 @@ src/ClothoidDistance.o: submodules/Utils/src/Utils/TicToc.hxx
 src/ClothoidDistance.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/ClothoidDistance.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/ClothoidDistance.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/ClothoidDistance.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/ClothoidDistance.o: src/Clothoids/Line.hxx
+src/ClothoidDistance.o: src/Clothoids/BaseCurve_using.hxx
 src/ClothoidDistance.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/ClothoidDistance.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/ClothoidDistance.o: src/Clothoids/BiarcList.hxx
@@ -386,7 +388,7 @@ src/ClothoidG2.o: submodules/Utils/src/Utils/TicToc.hxx
 src/ClothoidG2.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/ClothoidG2.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/ClothoidG2.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/ClothoidG2.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/ClothoidG2.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/ClothoidG2.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/ClothoidG2.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/ClothoidG2.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -416,7 +418,7 @@ src/ClothoidList.o: submodules/Utils/src/Utils/TicToc.hxx
 src/ClothoidList.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/ClothoidList.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/ClothoidList.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/ClothoidList.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/ClothoidList.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/ClothoidList.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/ClothoidList.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/ClothoidList.o: src/Clothoids/BiarcList.hxx
@@ -447,7 +449,7 @@ src/Fresnel.o: submodules/Utils/src/Utils/TicToc.hxx
 src/Fresnel.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/Fresnel.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/Fresnel.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/Fresnel.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/Fresnel.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/Fresnel.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/Fresnel.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/Fresnel.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -478,7 +480,7 @@ src/G2lib.o: submodules/Utils/src/Utils/TicToc.hxx
 src/G2lib.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/G2lib.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/G2lib.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/G2lib.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/G2lib.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/G2lib.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/G2lib.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/G2lib.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -509,7 +511,8 @@ src/G2lib_intersect.o: submodules/Utils/src/Utils/TicToc.hxx
 src/G2lib_intersect.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/G2lib_intersect.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/G2lib_intersect.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/G2lib_intersect.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/G2lib_intersect.o: src/Clothoids/Line.hxx
+src/G2lib_intersect.o: src/Clothoids/BaseCurve_using.hxx
 src/G2lib_intersect.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/G2lib_intersect.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/G2lib_intersect.o: src/Clothoids/BiarcList.hxx
@@ -540,7 +543,7 @@ src/Line.o: submodules/Utils/src/Utils/TicToc.hxx
 src/Line.o: submodules/Utils/src/Utils/ThreadPool.hxx src/Clothoids/G2lib.hxx
 src/Line.o: src/Clothoids/Triangle2D.hxx src/Clothoids/AABBtree.hxx
 src/Line.o: src/Clothoids/Fresnel.hxx src/Clothoids/Line.hxx
-src/Line.o: ./src/BaseCurve_using.hxx src/Clothoids/Circle.hxx
+src/Line.o: src/Clothoids/BaseCurve_using.hxx src/Clothoids/Circle.hxx
 src/Line.o: src/Clothoids/Biarc.hxx src/Clothoids/Clothoid.hxx
 src/Line.o: src/Clothoids/PolyLine.hxx src/Clothoids/BiarcList.hxx
 src/Line.o: src/Clothoids/ClothoidList.hxx src/Clothoids/ClothoidAsyPlot.hxx
@@ -569,7 +572,7 @@ src/PolyLine.o: submodules/Utils/src/Utils/TicToc.hxx
 src/PolyLine.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/PolyLine.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/PolyLine.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/PolyLine.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/PolyLine.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/PolyLine.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/PolyLine.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/PolyLine.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -599,7 +602,7 @@ src/Triangle2D.o: submodules/Utils/src/Utils/TicToc.hxx
 src/Triangle2D.o: submodules/Utils/src/Utils/ThreadPool.hxx
 src/Triangle2D.o: src/Clothoids/G2lib.hxx src/Clothoids/Triangle2D.hxx
 src/Triangle2D.o: src/Clothoids/AABBtree.hxx src/Clothoids/Fresnel.hxx
-src/Triangle2D.o: src/Clothoids/Line.hxx ./src/BaseCurve_using.hxx
+src/Triangle2D.o: src/Clothoids/Line.hxx src/Clothoids/BaseCurve_using.hxx
 src/Triangle2D.o: src/Clothoids/Circle.hxx src/Clothoids/Biarc.hxx
 src/Triangle2D.o: src/Clothoids/Clothoid.hxx src/Clothoids/PolyLine.hxx
 src/Triangle2D.o: src/Clothoids/BiarcList.hxx src/Clothoids/ClothoidList.hxx
@@ -719,6 +722,12 @@ submodules/Utils/src/Utils.o: submodules/Utils/src/Utils/Malloc.hxx
 submodules/Utils/src/Utils.o: submodules/Utils/src/Utils/Numbers.hxx
 submodules/Utils/src/Utils.o: submodules/Utils/src/Utils/TicToc.hxx
 submodules/Utils/src/Utils.o: submodules/Utils/src/Utils/ThreadPool.hxx
+submodules/Utils/src/Utils/fmt/format.o: submodules/Utils/src/Utils/fmt/format-inl.h
+submodules/Utils/src/Utils/fmt/format.o: submodules/Utils/src/Utils/fmt/format.h
+submodules/Utils/src/Utils/fmt/format.o: submodules/Utils/src/Utils/fmt/core.h
+submodules/Utils/src/Utils/fmt/os.o: submodules/Utils/src/Utils/fmt/os.h
+submodules/Utils/src/Utils/fmt/os.o: submodules/Utils/src/Utils/fmt/format.h
+submodules/Utils/src/Utils/fmt/os.o: submodules/Utils/src/Utils/fmt/core.h
 submodules/quarticRootsFlocke/src/PolynomialRoots-1-Quadratic.o: submodules/quarticRootsFlocke/src/PolynomialRoots.hh
 submodules/quarticRootsFlocke/src/PolynomialRoots-2-Cubic.o: submodules/quarticRootsFlocke/src/PolynomialRoots.hh
 submodules/quarticRootsFlocke/src/PolynomialRoots-3-Quartic.o: submodules/quarticRootsFlocke/src/PolynomialRoots.hh
