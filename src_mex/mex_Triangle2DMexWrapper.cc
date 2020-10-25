@@ -8,7 +8,7 @@
   See the file license.txt for more details.
 \****************************************************************************/
 
-#include "Triangle2D.hh"
+#include "Clothoids.hh"
 #include "mex_utils.hh"
 #include "mex_info.hxx"
 

@@ -8,7 +8,7 @@
   See the file license.txt for more details.
 \****************************************************************************/
 
-#include "Fresnel.hh"
+#include "Clothoids.hh"
 #include "mex_utils.hh"
 
 #include "mex_Workaround.hxx"

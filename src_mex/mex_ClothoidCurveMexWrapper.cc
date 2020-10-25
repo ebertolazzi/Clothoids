@@ -524,7 +524,7 @@ namespace G2lib {
     
     ClothoidCurve * ptr = DATA_GET(arg_in_1);
 
-    real_type max_angle = m_pi/18;
+    real_type max_angle = Utils::m_pi/18;
     real_type max_size  = 1e100;
     real_type offs      = 0;
     if ( nrhs >= 3 )
