@@ -40,8 +40,7 @@
  *
  */
 
-#include "Triangle2D.hh"
-#include "Line.hh"
+#include "Clothoids.hh"
 
 // workaround for windows that defines max and min as macros!
 #ifdef max

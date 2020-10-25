@@ -18,15 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Circle.hh
+/// file: Circle.hxx
 ///
-
-#ifndef CIRCLE_HH
-#define CIRCLE_HH
-
-#include "G2lib.hh"
-#include "Triangle2D.hh"
-#include "Line.hh"
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -680,8 +673,6 @@ namespace G2lib {
 
 }
 
-#endif
-
 ///
-/// eof: Circle.hh
+/// eof: Circle.hxx
 ///

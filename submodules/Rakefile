@@ -8,9 +8,13 @@ task :copy_submodules, [:arg] do |t, args|
   FileUtils.mkdir_p "../lib3rd/lib/"
   FileUtils.mkdir_p "../lib3rd/dll/"
   FileUtils.mkdir_p "../lib3rd/bin/"
+  FileUtils.mkdir_p "../lib3rd/include/"
   tmp = '_' + args.arg
   ["./Utils/","./quarticRootsFlocke/", "./GenericContainer/"].each do |base|
-    FileUtils.cp_r base + "lib/.", "../lib3rd/"
+    FileUtils.cp_r base + "lib/lib/.",     "../lib3rd/lib" if Dir.exist?(base + "lib/lib")
+    FileUtils.cp_r base + "lib/dll/.",     "../lib3rd/dll" if Dir.exist?(base + "lib/dll")
+    FileUtils.cp_r base + "lib/bin/.",     "../lib3rd/bin" if Dir.exist?(base + "lib/bin")
+    FileUtils.cp_r base + "lib/include/.", "../lib3rd/include"
   end
 end
 

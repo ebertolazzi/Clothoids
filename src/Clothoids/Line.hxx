@@ -18,13 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Line.hh
+/// file: Line.hxx
 ///
-
-#ifndef LINE_HH
-#define LINE_HH
-
-#include "G2lib.hh"
 
 namespace G2lib {
 
@@ -686,8 +681,6 @@ namespace G2lib {
 
 }
 
-#endif
-
 ///
-/// eof: Line.hh
+/// eof: Line.hxx
 ///

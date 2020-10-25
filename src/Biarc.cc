@@ -21,7 +21,7 @@
 /// file: Biarc.cc
 ///
 
-#include "Biarc.hh"
+#include "Clothoids.hh"
 
 namespace G2lib {
 

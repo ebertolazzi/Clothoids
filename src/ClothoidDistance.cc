@@ -17,8 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Circle.hh"
-#include "Clothoid.hh"
+#include "Clothoids.hh"
 
 // Workaround for Visual Studio
 #ifdef min
@@ -28,10 +27,6 @@
 #ifdef max
   #undef max
 #endif
-
-#include <cmath>
-#include <cfloat>
-#include <algorithm>
 
 namespace G2lib {
 

@@ -8,14 +8,7 @@
   See the file license.txt for more details.
 \****************************************************************************/
 
-#include "Line.hh"
-#include "Circle.hh"
-#include "Biarc.hh"
-#include "BiarcList.hh"
-#include "PolyLine.hh"
-#include "ClothoidList.hh"
-#include "Triangle2D.hh"
-
+#include "Clothoids.hh"
 #include "mex_utils.hh"
 #include "mex_info.hxx"
 

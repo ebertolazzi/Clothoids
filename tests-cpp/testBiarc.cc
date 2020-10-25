@@ -1,7 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "Biarc.hh"
-#include <cmath>
-#include <iostream>
+#include "Clothoids.hh"
 
 using G2lib::real_type;
 using namespace std;

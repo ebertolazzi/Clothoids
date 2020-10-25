@@ -17,10 +17,8 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "ClothoidList.hh"
-#include "Biarc.hh"
+#include "Clothoids.hh"
 
-#include <cmath>
 #include <cfloat>
 
 #ifdef __GNUC__

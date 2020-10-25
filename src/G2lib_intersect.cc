@@ -17,17 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "G2lib.hh"
-#include "Line.hh"
-#include "PolyLine.hh"
-#include "Circle.hh"
-#include "Biarc.hh"
-#include "Clothoid.hh"
-#include "BiarcList.hh"
-#include "ClothoidList.hh"
-
-#include <map>
-#include <algorithm>
+#include "Clothoids.hh"
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"

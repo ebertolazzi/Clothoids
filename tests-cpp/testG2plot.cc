@@ -1,8 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "ClothoidList.hh"
-#include "ClothoidAsyPlot.hh"
-#include <cmath>
-#include <iostream>
+#include "Clothoids.hh"
 #include <stack>
 #include <ctime>
 
@@ -17,7 +14,7 @@ int
 main() {
 
 	G2lib::G2solve2arc g2sol;
-	
+
   #if 1
 	real_type x0  = -2;
 	real_type y0  = 3;

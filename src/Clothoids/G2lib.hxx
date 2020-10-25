@@ -46,30 +46,9 @@ Authors:
 
  */
 
-#pragma once
-
-#ifndef G2LIB_HH
-#define G2LIB_HH
-
-#include "Utils.hh"
-
-//#include <vector>
-#include <map>
-#include <utility>
-
-
-// check if compiler is C++11
-#ifndef G2LIB_DO_NOT_USE_CXX11
-  #define G2LIB_USE_CXX11
-#endif
 
 //! Clothoid computations routine
 namespace G2lib {
-
-  typedef std::basic_ostream<char> ostream_type;
-
-  typedef double real_type;
-  typedef int    int_type;
 
   extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
 
@@ -1785,8 +1764,6 @@ namespace G2lib {
   );
 
 }
-
-#endif
 
 ///
 /// eof: G2lib.hh

@@ -21,15 +21,6 @@
 /// file: ClothoidList.hh
 ///
 
-#ifndef CLOTHOID_LIST_HH
-#define CLOTHOID_LIST_HH
-
-#include "G2lib.hh"
-#include "Clothoid.hh"
-#include "PolyLine.hh"
-#include "Biarc.hh"
-#include "BiarcList.hh"
-
 //! Clothoid computations routine
 namespace G2lib {
 
@@ -1676,8 +1667,6 @@ namespace G2lib {
   };
 
 }
-
-#endif
 
 ///
 /// eof: ClothoidList.hh

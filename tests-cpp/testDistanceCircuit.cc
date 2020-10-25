@@ -1,9 +1,6 @@
 //#define _USE_MATH_DEFINES
-#include "ClothoidList.hh"
-#include <cmath>
-#include <fstream>
+#include "Clothoids.hh"
 #include <sstream>
-#include <vector>
 
 using G2lib::real_type;
 using G2lib::int_type;

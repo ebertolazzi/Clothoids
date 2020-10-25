@@ -7,12 +7,4 @@
  */
 
 #pragma once
-
-#include "G2lib.hh"
-#include "Line.hh"
-#include "PolyLine.hh"
-#include "Circle.hh"
-#include "Biarc.hh"
-#include "BiarcList.hh"
-#include "Clothoid.hh"
-#include "ClothoidList.hh"
+#include "Clothoids.hh"

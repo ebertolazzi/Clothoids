@@ -18,17 +18,8 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#ifndef ASYPLOT_H
-#define ASYPLOT_H
-
-#include "Clothoid.hh"
-
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <cmath>
-
 //! Clothoid computations routine
+
 namespace G2lib {
 
   using std::string;
@@ -95,5 +86,3 @@ namespace G2lib {
     void compileFile();
   };
 }
-
-#endif 

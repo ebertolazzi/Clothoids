@@ -18,14 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Biarc.hh
+/// file: Biarc.hxx
 ///
-
-#ifndef BIARC_HH
-#define BIARC_HH
-
-#include "G2lib.hh"
-#include "Circle.hh"
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -627,8 +621,6 @@ namespace G2lib {
 
 }
 
-#endif
-
 ///
-/// eof: Biarc.hh
+/// eof: Biarc.hxx
 ///

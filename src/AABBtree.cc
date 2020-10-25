@@ -25,7 +25,7 @@
 /// file: AABBtree.hh
 ///
 
-#include "AABBtree.hh"
+#include "Clothoids.hh"
 
 // Workaround for Visual Studio
 #ifdef min

@@ -18,16 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Fresnel.hh
+/// file: Fresnel.hxx
 ///
-
-#ifndef FRESNEL_HH
-#define FRESNEL_HH
-
-#include "G2lib.hh"
-
-#include <iostream>
-#include <cmath>
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -444,8 +436,6 @@ namespace G2lib {
 
 }
 
-#endif
-
 ///
-/// eof: Fresnel.hh
+/// eof: Fresnel.hxx
 ///

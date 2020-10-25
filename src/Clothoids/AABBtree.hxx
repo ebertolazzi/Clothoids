@@ -22,23 +22,8 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: AABBtree.hh
+/// file: AABBtree.hxx
 ///
-
-#pragma once
-
-#ifndef AABBTREE_HH
-#define AABBTREE_HH
-
-#include "G2lib.hh"
-
-#include <vector>
-#include <iomanip>
-#include <utility> // pair
-
-#ifdef G2LIB_USE_CXX11
-#include <memory>  // shared_ptr
-#endif
 
 namespace G2lib {
 
@@ -344,8 +329,6 @@ namespace G2lib {
 
 }
 
-#endif
-
 ///
-/// eof: AABBtree.hh
+/// eof: AABBtree.hxx
 ///

@@ -21,12 +21,6 @@
 /// file: BiarcList.hh
 ///
 
-#ifndef BIARC_LIST_HH
-#define BIARC_LIST_HH
-
-#include "PolyLine.hh"
-#include "Biarc.hh"
-
 //! Clothoid computations routine
 namespace G2lib {
 
@@ -777,8 +771,6 @@ namespace G2lib {
 
 }
 
-#endif
-
 ///
-/// eof: BiarcList.hh
+/// eof: BiarcList.hxx
 ///

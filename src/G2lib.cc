@@ -17,7 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "G2lib.hh"
+#include "Clothoids.hh"
 #include "PolynomialRoots.hh"
 
 #include <algorithm>

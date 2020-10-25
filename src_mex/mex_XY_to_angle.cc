@@ -8,7 +8,7 @@
   See the file license.txt for more details.
 \****************************************************************************/
 
-#include "G2lib.hh"
+#include "Clothoids.hh"
 #include "mex_utils.hh"
 
 #define MEX_ERROR_MESSAGE \

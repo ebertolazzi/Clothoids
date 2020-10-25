@@ -17,12 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Line.hh"
-#include "Circle.hh"
-#include "Biarc.hh"
-#include "Clothoid.hh"
-#include "ClothoidList.hh"
-#include "PolyLine.hh"
+#include "Clothoids.hh"
 
 // Microsoft visual studio Workaround
 #ifdef max

@@ -1,9 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "ClothoidList.hh"
-#include "ClothoidAsyPlot.hh"
-#include <cmath>
-#include <iostream>
-#include <map>
+#include "Clothoids.hh"
 
 using G2lib::real_type;
 using namespace std;

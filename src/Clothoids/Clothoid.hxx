@@ -21,21 +21,6 @@
 /// file: Clothoid.hh
 ///
 
-#ifndef CLOTHOID_HH
-#define CLOTHOID_HH
-
-#include "Fresnel.hh"
-#include "Line.hh"
-#include "Circle.hh"
-#include "Triangle2D.hh"
-#include "AABBtree.hh"
-
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <iterator>
-#include <iostream>
-
 //! Clothoid computations routine
 namespace G2lib {
 
@@ -1156,8 +1141,6 @@ namespace G2lib {
   };
 
 }
-
-#endif
 
 ///
 /// eof: Clothoid.hh

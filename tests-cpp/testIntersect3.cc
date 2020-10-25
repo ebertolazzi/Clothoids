@@ -1,10 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "Biarc.hh"
-#include "PolyLine.hh"
-#include "ClothoidList.hh"
-#include <cmath>
-#include <iostream>
-#include <iomanip>
+#include "Clothoids.hh"
 
 using namespace std;
 using G2lib::real_type;

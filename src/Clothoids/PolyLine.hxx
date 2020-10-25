@@ -18,14 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: PolyLine.hh
+/// file: PolyLine.hxx
 ///
-
-#ifndef POLY_LINE_HH
-#define POLY_LINE_HH
-
-#include "Line.hh"
-#include "AABBtree.hh"
 
 namespace G2lib {
 
@@ -531,8 +525,6 @@ namespace G2lib {
 
 }
 
-#endif
-
 ///
-/// eof: PolyLine.hh
+/// eof: PolyLine.hxx
 ///

@@ -17,11 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Circle.hh"
-#include "Biarc.hh"
-#include "Clothoid.hh"
-#include "ClothoidList.hh"
-#include "PolyLine.hh"
+#include "Clothoids.hh"
 
 // Workaround for Visual Studio
 #ifdef min

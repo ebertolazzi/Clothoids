@@ -17,7 +17,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Fresnel.hh"
+#include "Clothoids.hh"
 #include "PolynomialRoots.hh"
 
 #define A_THRESOLD   0.01

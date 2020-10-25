@@ -11,7 +11,7 @@
 #include <tuple>
 
 #include <pybind11/pybind11.h>
-#include "G2lib.hh"
+#include "Clothoids.hh"
 
 namespace py = pybind11;
 

@@ -18,14 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Triangle2D.hh
+/// file: Triangle2D.hxx
 ///
-
-#ifndef TRIANGLE2D_HH
-#define TRIANGLE2D_HH
-
-#include "G2lib.hh"
-#include <vector>
 
 //! Clothoid computations routine
 namespace G2lib {
@@ -227,8 +221,6 @@ namespace G2lib {
   };
 
 }
-
-#endif
 
 ///
 /// eof: Triangle2D.hh

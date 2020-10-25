@@ -17,16 +17,10 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "Biarc.hh"
-#include "BiarcList.hh"
-#include "Clothoid.hh"
-#include "ClothoidList.hh"
+#include "Clothoids.hh"
 
-#include <cmath>
 #include <cfloat>
-#include <fstream>
 #include <limits>
-#include <algorithm>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push

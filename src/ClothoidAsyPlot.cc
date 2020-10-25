@@ -1,8 +1,4 @@
-#include "Clothoid.hh"
-#include "Triangle2D.hh"
-#include "ClothoidAsyPlot.hh"
-
-#include <stdlib.h>
+#include "Clothoids.hh"
 
 namespace G2lib {
 
