@@ -14,7 +14,7 @@ main() {
   map<int,int> stats;
 
   G2lib::G2solve3arc g2solve3arc;
-  TicToc             tictoc;
+  Utils::TicToc      tictoc;
 
   int NMAX = 128/8;
   int nkur = 64/8;

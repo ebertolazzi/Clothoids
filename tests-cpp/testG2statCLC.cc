@@ -11,7 +11,7 @@ main() {
   map<int,int> stats;
 
   G2lib::G2solveCLC g2solveCLC;
-  TicToc            tictoc;
+  Utils::TicToc     tictoc;
 
   int NMAX = 32/8;
   int nkur = 32/8;
