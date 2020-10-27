@@ -1214,6 +1214,9 @@ namespace G2lib {
     void
     trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE;
 
+    void
+    trim( real_type s_begin, real_type s_end, ClothoidList & newCL ) const;
+
     /*\
      |      _ _     _
      |   __| (_)___| |_ __ _ _ __   ___ ___

@@ -1214,6 +1214,59 @@ namespace G2lib {
     this->resetLastInterval();
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::trim( real_type s_begin, real_type s_end, ClothoidList & newCL ) const {
+
+    newCL.init();
+
+    if ( m_clotoidList.empty() ) return;
+
+    // put in range
+    while ( s_begin < 0              ) s_begin += this->length();
+    while ( s_begin > this->length() ) s_begin -= this->length();
+    while ( s_end < 0                ) s_end   += this->length();
+    while ( s_end > this->length()   ) s_end   -= this->length();
+
+    // get initial and final segment
+    int_type i_begin = findAtS( s_begin );
+    int_type i_end   = findAtS( s_end );
+    int_type res     = 0;
+    if ( i_begin == i_end ) {
+      // stesso segmento
+      real_type     ss0 = m_s0[i_begin];
+      ClothoidCurve C   = m_clotoidList[i_begin]; // crea copia
+      C.trim( s_begin-ss0, s_end-ss0 );
+      newCL.push_back( C );
+    } else {
+      real_type     ss0  = m_s0[i_begin];
+      real_type     ss1  = m_s0[i_end];
+      ClothoidCurve C0   = m_clotoidList[i_begin]; // crea copia
+      ClothoidCurve C1   = m_clotoidList[i_end];   // crea copia
+
+      // taglia i segmenti
+      C0.trim( s_begin-ss0, C0.length() );
+      newCL.push_back( C0 );
+      // ci sono altri segmenti?
+      for ( ++i_begin ; i_begin != i_end; ++i_begin ) {
+        i_begin = i_begin % m_clotoidList.size();
+        newCL.push_back( m_clotoidList[i_begin] );
+      }
+
+      C1.trim( 0, s_end-ss1 );
+      newCL.push_back( C1 );
+    }
+  }
+
+
+
+
+
+
+
+
+
   /*\
    |     _        _    ____  ____  _
    |    / \      / \  | __ )| __ )| |_ _ __ ___  ___

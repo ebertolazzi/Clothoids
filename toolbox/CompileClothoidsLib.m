@@ -110,7 +110,7 @@ for k=1:length(NAMES)
 end
 
 for k=1:length(LIB_OBJS)
-  delete(LIB_OBJS{k});
+  delete LIB_OBJS{k};
 end
 
 cd(old_dir);
