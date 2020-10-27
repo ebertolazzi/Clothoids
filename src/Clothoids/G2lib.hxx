@@ -344,24 +344,6 @@ namespace G2lib {
   );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  /*!
-   * Given a vector `Xvec` and a real number `x` update `lastInterval` in such a way
-   * `Xvec[lastInterval] <= x <= Xvec[lastInterval+1]`
-   *
-   * \param[in,out] lastInterval index of the interval to be updated
-   * \param[in]     x            point used to search interval
-   * \param[in]     Xvec         vector of the interval extremas
-   * \param[in]     npts         dimension of `Xvec`
-   */
-  void
-  updateInterval(
-    int_type      & lastInterval,
-    real_type       x,
-    real_type const Xvec[],
-    int_type        npts
-  );
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /*\
    |  ____                  ____
    | | __ )  __ _ ___  ___ / ___|   _ _ ____   _____
@@ -560,19 +542,19 @@ namespace G2lib {
     BaseCurve( BaseCurve const & );
 
   protected:
-    CurveType _type;
+    CurveType m_type;
 
   public:
 
-    BaseCurve( CurveType const & __type )
-    : _type(__type)
+    BaseCurve( CurveType const & type )
+    : m_type(type)
     {}
 
     virtual
     ~BaseCurve() {}
 
     //! \return name of the curve type
-    CurveType type() const { return _type; }
+    CurveType type() const { return m_type; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1746,21 +1728,6 @@ namespace G2lib {
     real_type       theta_max[],
     real_type       omega[],
     real_type       len[]
-  );
-
-  /*\
-   |    __ _           _    _   _   ____
-   |   / _(_)_ __   __| |  / \ | |_/ ___|
-   |  | |_| | '_ \ / _` | / _ \| __\___ \
-   |  |  _| | | | | (_| |/ ___ \ |_ ___) |
-   |  |_| |_|_| |_|\__,_/_/   \_\__|____/
-  \*/
-
-  int_type
-  findAtS(
-    real_type                      s,
-    int_type                     & last_idx,
-    std::vector<real_type> const & s0
   );
 
 }

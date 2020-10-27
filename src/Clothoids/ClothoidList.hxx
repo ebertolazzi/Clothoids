@@ -769,11 +769,7 @@ namespace G2lib {
     void wrap_in_range( real_type & s ) const;
 
     int_type
-    findAtS( real_type s ) const {
-      bool ok;
-      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
-      return ::G2lib::findAtS( s, lastInterval, m_s0 );
-    }
+    findAtS( real_type s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1571,24 +1567,26 @@ namespace G2lib {
 
   private:
 
-    vector<real_type> m_x;
-    vector<real_type> m_y;
-    TargetType        m_tt;
-    real_type         m_theta_I;
-    real_type         m_theta_F;
-    int_type          m_npts;
+    Utils::Malloc<real_type> realValues;
+
+    real_type * m_x;
+    real_type * m_y;
+    TargetType  m_tt;
+    real_type   m_theta_I;
+    real_type   m_theta_F;
+    int_type    m_npts;
 
     // work vector
-    mutable vector<real_type> m_k;
-    mutable vector<real_type> m_dk;
-    mutable vector<real_type> m_L;
-    mutable vector<real_type> m_kL;
-    mutable vector<real_type> m_L_1;
-    mutable vector<real_type> m_L_2;
-    mutable vector<real_type> m_k_1;
-    mutable vector<real_type> m_k_2;
-    mutable vector<real_type> m_dk_1;
-    mutable vector<real_type> m_dk_2;
+    mutable real_type * m_k;
+    mutable real_type * m_dk;
+    mutable real_type * m_L;
+    mutable real_type * m_kL;
+    mutable real_type * m_L_1;
+    mutable real_type * m_L_2;
+    mutable real_type * m_k_1;
+    mutable real_type * m_k_2;
+    mutable real_type * m_dk_1;
+    mutable real_type * m_dk_2;
 
     real_type
     diff2pi( real_type in ) const {
@@ -1597,7 +1595,10 @@ namespace G2lib {
 
   public:
 
-    ClothoidSplineG2() : m_tt(P1) {}
+    ClothoidSplineG2()
+    : realValues("ClothoidSplineG2"), m_tt(P1)
+    {}
+
     ~ClothoidSplineG2() {}
 
     void

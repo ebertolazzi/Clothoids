@@ -135,9 +135,19 @@ namespace G2lib {
                back_inserter(m_biarcList) );
     m_s0.clear();
     m_s0.reserve(L.m_s0.size());
-    std::copy( L.m_s0.begin(),
-               L.m_s0.end(),
-               back_inserter(m_s0) );
+    std::copy( L.m_s0.begin(), L.m_s0.end(), back_inserter(m_s0) );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  BiarcList::findAtS( real_type s ) const {
+    bool ok;
+    int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    Utils::searchInterval<int_type,real_type>(
+      m_s0.size(), &m_s0.front(), s, lastInterval, false, false
+    );
+    return lastInterval;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -271,13 +281,17 @@ namespace G2lib {
     real_type const y[]
   ) {
     size_t nn = size_t(n);
-    vector<real_type> theta( nn ), theta_min( nn ), theta_max( nn ), omega( nn ), len( nn );
+    Utils::Malloc<real_type> mem( "BiarcList::build_G1" );
+    mem.allocate( 4 * nn );
+    real_type * theta     = mem( nn );
+    real_type * theta_min = mem( nn );
+    real_type * theta_max = mem( nn );
+    real_type * omega     = mem( nn );
+    real_type * len       = mem( nn );
     G2lib::xy_to_guess_angle(
-      n, x, y,
-      &theta.front(), &theta_min.front(), &theta_max.front(),
-      &omega.front(), &len.front()
+      n, x, y, theta, theta_min, theta_max, omega, len
     );
-    return this->build_G1( n, x, y, &theta.front() );
+    return this->build_G1( n, x, y, theta );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -45,7 +45,8 @@ namespace G2lib {
   private:
     vector<LineSegment> m_polylineList;
     vector<real_type>   m_s0;
-    real_type           m_xe, m_ye;
+    real_type           m_xe;
+    real_type           m_ye;
 
     mutable Utils::BinarySearch<int_type> m_lastInterval;
 
@@ -85,6 +86,9 @@ namespace G2lib {
     { this->resetLastInterval(); }
 
     void
+    init();
+
+    void
     copy( PolyLine const & l );
 
     //explicit
@@ -94,11 +98,7 @@ namespace G2lib {
     { this->resetLastInterval(); copy(PL); }
 
     int_type
-    findAtS( real_type s ) const {
-      bool ok;
-      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
-      return ::G2lib::findAtS( s, lastInterval, m_s0 );
-    }
+    findAtS( real_type & s ) const;
 
     explicit PolyLine( LineSegment const & LS );
     explicit PolyLine( CircleArc const & C, real_type tol );
@@ -395,6 +395,9 @@ namespace G2lib {
     virtual
     void
     trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE;
+
+    void
+    trim( real_type s_begin, real_type s_end, PolyLine & newPL ) const;
 
     /*!
      * \brief compute the point at minimum distance from a point `[x,y]` and the line segment

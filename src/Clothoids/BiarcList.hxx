@@ -153,11 +153,7 @@ namespace G2lib {
     int_type numSegment() const { return int_type(m_biarcList.size()); }
 
     int_type
-    findAtS( real_type s ) const {
-      bool ok;
-      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
-      return ::G2lib::findAtS( s, lastInterval, m_s0 );
-    }
+    findAtS( real_type s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

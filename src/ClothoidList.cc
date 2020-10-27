@@ -143,6 +143,18 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  int_type
+  ClothoidList::findAtS( real_type s ) const {
+    bool ok;
+    int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    Utils::searchInterval<int_type,real_type>(
+      m_s0.size(), &m_s0.front(), s, lastInterval, m_curve_is_closed, false
+    );
+    return lastInterval;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::wrap_in_range( real_type & s ) const {
     real_type a = m_s0.front();
@@ -512,8 +524,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ClothoidCurve const &
-  ClothoidList::getAtS( real_type s ) const
-  { return get(findAtS(s)); }
+  ClothoidList::getAtS( real_type s ) const {
+    int_type idx = this->findAtS(s);
+    return get( idx );
+  }
 
   /*\
    |   _                  _   _
@@ -1194,8 +1208,8 @@ namespace G2lib {
       s_begin, s_end, m_s0.front(), m_s0.back()
     );
 
-    size_t i_begin = size_t(findAtS( s_begin ));
-    size_t i_end   = size_t(findAtS( s_end ));
+    size_t i_begin = size_t( findAtS( s_begin ) );
+    size_t i_end   = size_t( findAtS( s_end   ) );
     if ( i_begin == i_end ) {
       m_clotoidList[i_begin].trim( s_begin-m_s0[i_begin], s_end-m_s0[i_begin] );
     } else {
@@ -1224,48 +1238,51 @@ namespace G2lib {
     if ( m_clotoidList.empty() ) return;
 
     // put in range
-    while ( s_begin < 0              ) s_begin += this->length();
-    while ( s_begin > this->length() ) s_begin -= this->length();
-    while ( s_end < 0                ) s_end   += this->length();
-    while ( s_end > this->length()   ) s_end   -= this->length();
+    real_type L = this->length();
+    while ( s_begin > L ) s_begin -= L;
+    while ( s_begin < 0 ) s_begin += L;
+    while ( s_end   > L ) s_end   -= L;
+    while ( s_end   < 0 ) s_end   += L;
 
-    // get initial and final segment
+    int_type n_seg   = int_type( m_clotoidList.size() );
     int_type i_begin = findAtS( s_begin );
     int_type i_end   = findAtS( s_end );
-    int_type res     = 0;
-    if ( i_begin == i_end ) {
-      // stesso segmento
-      real_type     ss0 = m_s0[i_begin];
-      ClothoidCurve C   = m_clotoidList[i_begin]; // crea copia
-      C.trim( s_begin-ss0, s_end-ss0 );
-      newCL.push_back( C );
-    } else {
-      real_type     ss0  = m_s0[i_begin];
-      real_type     ss1  = m_s0[i_end];
-      ClothoidCurve C0   = m_clotoidList[i_begin]; // crea copia
-      ClothoidCurve C1   = m_clotoidList[i_end];   // crea copia
 
-      // taglia i segmenti
-      C0.trim( s_begin-ss0, C0.length() );
-      newCL.push_back( C0 );
-      // ci sono altri segmenti?
-      for ( ++i_begin ; i_begin != i_end; ++i_begin ) {
-        i_begin = i_begin % m_clotoidList.size();
-        newCL.push_back( m_clotoidList[i_begin] );
+    if ( s_begin < s_end ) {
+      // get initial and final segment
+      if ( i_begin == i_end ) { // stesso segmento
+        real_type   ss0 = m_s0[i_begin];
+        ClothoidCurve C = m_clotoidList[i_begin];
+        C.trim( s_begin-ss0, s_end-ss0 );
+        newCL.push_back( C );
+      } else {
+        ClothoidCurve C0 = m_clotoidList[i_begin];
+        C0.trim( s_begin - m_s0[i_begin], C0.length() );
+        newCL.push_back( C0 );
+
+        for ( ++i_begin; i_begin < i_end; ++i_begin )
+          newCL.push_back( m_clotoidList[i_begin] );
+
+        ClothoidCurve C1 = m_clotoidList[i_end];
+        C1.trim( 0, s_end - m_s0[i_end] );
+        newCL.push_back( C1 );
       }
+    } else {
+      ClothoidCurve C0 = m_clotoidList[i_begin];
+      C0.trim( s_begin - m_s0[i_begin], C0.length() );
+      newCL.push_back( C0 );
 
-      C1.trim( 0, s_end-ss1 );
+      for ( ++i_begin; i_begin < n_seg; ++i_begin )
+        newCL.push_back( m_clotoidList[i_begin] );
+
+      for ( i_begin = 0; i_begin < i_end; ++i_begin )
+        newCL.push_back( m_clotoidList[i_begin] );
+
+      ClothoidCurve C1 = m_clotoidList[i_end];
+      C1.trim( 0, s_end - m_s0[i_end] );
       newCL.push_back( C1 );
     }
   }
-
-
-
-
-
-
-
-
 
   /*\
    |     _        _    ____  ____  _

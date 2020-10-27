@@ -133,6 +133,27 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  int_type
+  PolyLine::findAtS( real_type & s ) const {
+    bool ok;
+    int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    Utils::searchInterval<int_type,real_type>(
+      m_s0.size(), &m_s0.front(), s, lastInterval, false, false
+    );
+    return lastInterval;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  PolyLine::init() {
+    m_s0.clear();
+    m_polylineList.clear();
+    this->resetLastInterval();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   PolyLine::copy( PolyLine const & PL ) {
     m_polylineList.clear();
@@ -217,7 +238,8 @@ namespace G2lib {
 
   real_type
   PolyLine::theta( real_type s ) const {
-    return m_polylineList[size_t(this->findAtS( s ))].m_theta0;
+    int_type idx = this->findAtS( s );
+    return m_polylineList[idx].m_theta0;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -302,7 +324,7 @@ namespace G2lib {
   PolyLine::trim( real_type s_begin, real_type s_end ) {
     UTILS_ASSERT(
       s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
-      "ClothoidList::trim( s_begin={}, s_end={} ) bad range, must be in [{},{}]\n",
+      "void::trim( s_begin={}, s_end={} ) bad range, must be in [{},{}]\n",
       s_begin, s_end, m_s0.front(), m_s0.back()
     );
 
@@ -319,6 +341,63 @@ namespace G2lib {
       m_s0[k+1] = m_s0[k] + ic->length();
     this->resetLastInterval();
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  PolyLine::trim( real_type s_begin, real_type s_end, PolyLine & newPL ) const {
+
+    newPL.init();
+
+    if ( m_polylineList.empty() ) return;
+
+    // put in range
+    real_type L = this->length();
+    while ( s_begin > L ) s_begin -= L;
+    while ( s_begin < 0 ) s_begin += L;
+    while ( s_end   > L ) s_end   -= L;
+    while ( s_end   < 0 ) s_end   += L;
+
+    int_type n_seg   = int_type( m_polylineList.size() );
+    int_type i_begin = findAtS( s_begin );
+    int_type i_end   = findAtS( s_end );
+
+    if ( s_begin < s_end ) {
+      // get initial and final segment
+      if ( i_begin == i_end ) { // stesso segmento
+        real_type   ss0 = m_s0[i_begin];
+        LineSegment LL  = m_polylineList[i_begin];
+        LL.trim( s_begin-ss0, s_end-ss0 );
+        newPL.push_back( LL );
+      } else {
+        LineSegment L0 = m_polylineList[i_begin];
+        L0.trim( s_begin - m_s0[i_begin], L0.length() );
+        newPL.push_back( L0 );
+
+        for ( ++i_begin; i_begin < i_end; ++i_begin )
+          newPL.push_back( m_polylineList[i_begin] );
+
+        LineSegment L1 = m_polylineList[i_end];
+        L1.trim( 0, s_end - m_s0[i_end] );
+        newPL.push_back( L1 );
+      }
+    } else {
+      LineSegment L0 = m_polylineList[i_begin];
+      L0.trim( s_begin - m_s0[i_begin], L0.length() );
+      newPL.push_back( L0 );
+
+      for ( ++i_begin; i_begin < n_seg; ++i_begin )
+        newPL.push_back( m_polylineList[i_begin] );
+
+      for ( i_begin = 0; i_begin < i_end; ++i_begin )
+        newPL.push_back( m_polylineList[i_begin] );
+
+      LineSegment L1 = m_polylineList[i_end];
+      L1.trim( 0, s_end - m_s0[i_end] );
+      newPL.push_back( L1 );
+    }
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void

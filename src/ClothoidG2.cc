@@ -1210,11 +1210,11 @@ namespace G2lib {
     real_type theta_max[]
   ) const {
     size_t nn = size_t( m_npts );
-    vector<real_type> omega(nn), len(nn);
+    Utils::Malloc<real_type> mem( "ClothoidSplineG2::guess" );
+    real_type * omega = mem(nn);
+    real_type * len   = mem(nn);
     G2lib::xy_to_guess_angle(
-      m_npts, &m_x.front(), &m_y.front(),
-      theta_guess, theta_min, theta_max,
-      &omega.front(), &len.front()
+      m_npts, m_x, m_y, theta_guess, theta_min, theta_max, omega, len
     );
   }
 
@@ -1224,42 +1224,42 @@ namespace G2lib {
     real_type const yvec[],
     int_type        n
   ) {
-    m_x.clear(); m_x.reserve( unsigned(n) );
-    m_y.clear(); m_y.reserve( unsigned(n) );
-    copy( xvec, xvec+n, back_inserter(m_x) );
-    copy( yvec, yvec+n, back_inserter(m_y) );
     m_npts = n;
-    unsigned n1 = unsigned(n-1);
-    m_k    . resize(n1);
-    m_dk   . resize(n1);
-    m_L    . resize(n1);
-    m_kL   . resize(n1);
-    m_L_1  . resize(n1);
-    m_L_2  . resize(n1);
-    m_k_1  . resize(n1);
-    m_k_2  . resize(n1);
-    m_dk_1 . resize(n1);
-    m_dk_2 . resize(n1);
+    size_t n1 = size_t(n-1);
+
+    realValues.allocate( 2*size_t(n) + 10 * n1 );
+
+    m_x    = realValues( size_t(n) );
+    m_y    = realValues( size_t(n) );
+    m_k    = realValues( n1 );
+    m_dk   = realValues( n1 );
+    m_L    = realValues( n1 );
+    m_kL   = realValues( n1 );
+    m_L_1  = realValues( n1 );
+    m_L_2  = realValues( n1 );
+    m_k_1  = realValues( n1 );
+    m_k_2  = realValues( n1 );
+    m_dk_1 = realValues( n1 );
+    m_dk_2 = realValues( n1 );
+    std::copy_n( xvec, n, m_x );
+    std::copy_n( yvec, n, m_y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidSplineG2::numTheta() const {
-    return int_type(m_x.size());
-  }
+  ClothoidSplineG2::numTheta() const { return m_npts; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
   ClothoidSplineG2::numConstraints() const {
-    int_type N = int_type(m_x.size());
     switch (m_tt) {
       case P1:
-      case P2: return N;
+      case P2: return m_npts;
       default: break;
     }
-    return N-2;
+    return m_npts-2;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
