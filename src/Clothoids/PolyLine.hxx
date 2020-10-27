@@ -47,12 +47,7 @@ namespace G2lib {
     vector<real_type>   m_s0;
     real_type           m_xe, m_ye;
 
-    #ifdef G2LIB_USE_CXX11
-    mutable std::mutex                         m_lastInterval_mutex;
-    mutable std::map<std::thread::id,int_type> m_lastInterval_by_thread;
-    #else
-    mutable int_type m_lastInterval;
-    #endif
+    mutable Utils::BinarySearch<int_type> m_lastInterval;
 
     mutable bool     m_aabb_done;
     mutable AABBtree m_aabb_tree;
@@ -76,8 +71,9 @@ namespace G2lib {
 
     void
     resetLastInterval() {
-      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
-      m_lastInterval_by_thread[std::this_thread::get_id()] = 0;
+      bool ok;
+      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      lastInterval = 0;
     }
 
   public:
@@ -99,12 +95,9 @@ namespace G2lib {
 
     int_type
     findAtS( real_type s ) const {
-      #ifdef G2LIB_USE_CXX11
-      std::lock_guard<std::mutex> lck(m_lastInterval_mutex);
-      return ::G2lib::findAtS( s, m_lastInterval_by_thread[std::this_thread::get_id()], m_s0 );
-      #else
-      return ::G2lib::findAtS( s, m_lastInterval, m_s0 );
-      #endif
+      bool ok;
+      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      return ::G2lib::findAtS( s, lastInterval, m_s0 );
     }
 
     explicit PolyLine( LineSegment const & LS );
