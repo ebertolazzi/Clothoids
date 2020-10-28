@@ -89,7 +89,7 @@ namespace G2lib {
 
       if ( do_new ) {
 
-        MEX_ASSERT( nlhs == 1, "Triangle2DMexWrapper, expected 1 output, nlhs = " << nlhs  );
+        MEX_ASSERT2( nlhs == 1, "Triangle2DMexWrapper, expected 1 output, nlhs = {}\n", nlhs  );
 
         if ( nrhs == 7 ) {
 
@@ -118,12 +118,12 @@ namespace G2lib {
           ptr->build( p0, p1, p2, 0, 0, 0  );
           #undef CMD
         } else {
-          MEX_ASSERT(false, "Triangle2D, expected 4 or 7 inputs, nrhs = " << nrhs );
+          MEX_ASSERT2(false, "Triangle2D, expected 4 or 7 inputs, nrhs = {}\n", nrhs );
         }
 
       } else if ( cmd == "build" ) {
 
-          MEX_ASSERT( nlhs == 0, "Triangle2DMexWrapper, expected no output, nlhs = " << nlhs  );
+        MEX_ASSERT2( nlhs == 0, "Triangle2DMexWrapper, expected no output, nlhs = {}\n", nlhs );
 
         if ( nrhs == 8 ) {
 
@@ -152,14 +152,14 @@ namespace G2lib {
           ptr->build( p0, p1, p2, 0, 0, 0  );
           #undef CMD
         } else {
-          MEX_ASSERT(false, "Triangle2D, expected 5 or 8 inputs, nrhs = " << nrhs );
+          MEX_ASSERT2(false, "Triangle2D, expected 5 or 8 inputs, nrhs = {}\n", nrhs );
         }
 
       } else if ( cmd == "delete" ) {
 
         #define CMD "Triangle2DMexWrapper('delete',OBJ): "
-        MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
         // Destroy the C++ object
         DATA_DELETE( arg_in_1 );
         #undef CMD
@@ -167,8 +167,8 @@ namespace G2lib {
       } else if ( cmd == "translate" ) {
 
         #define CMD "Triangle2DMexWrapper('translate',OBJ,tx,ty): "
-        MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
-        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
         real_type tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
         real_type ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
@@ -179,8 +179,8 @@ namespace G2lib {
       } else if ( cmd == "rotate" ) {
         #define CMD "Triangle2DMexWrapper('rotate',OBJ,angle,cx,cy): "
 
-        MEX_ASSERT(nrhs == 5, CMD "expected 5 inputs, nrhs = " << nrhs );
-        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 5, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
         real_type angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
         real_type cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
@@ -192,8 +192,8 @@ namespace G2lib {
       } else if ( cmd == "scale" ) {
 
         #define CMD "Triangle2DMexWrapper('scale',OBJ,scale): "
-        MEX_ASSERT(nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-        MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
         real_type sc = getScalarValue( arg_in_2, CMD "`scale` expected to be a real scalar" );
         ptr->scale( sc );
@@ -202,8 +202,8 @@ namespace G2lib {
       } else if ( cmd == "distanceMin" ) {
 
         #define CMD "Triangle2DMexWrapper('distanceMin',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
         mwSize nrx, ncx, nry, ncy;
         real_type const * x = getMatrixPointer(
@@ -214,10 +214,11 @@ namespace G2lib {
           arg_in_3, nry, ncy,
           CMD "`y` expected to be a real vectormatrix"
         );
-        MEX_ASSERT(
+        MEX_ASSERT2(
           nrx == nry && ncx == ncy,
-          CMD "`x` and `y` expected to be of the same size, found size(x) = " <<
-          nrx << " x " << nry << " size(y) = " << nry << " x " << ncy
+          CMD "`x` and `y` expected to be of the same size, found\n"
+          "size(x) = {} x {} size(y) = {} x {}\n",
+          nrx, ncx, nry, ncy
         );
 
         real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
@@ -231,8 +232,8 @@ namespace G2lib {
       } else if ( cmd == "distanceMax" ) {
 
         #define CMD "Triangle2DMexWrapper('distanceMax',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
         mwSize nrx, ncx, nry, ncy;
         real_type const * x = getMatrixPointer(
@@ -243,11 +244,11 @@ namespace G2lib {
           arg_in_3, nry, ncy,
           CMD "`y` expected to be a real vectormatrix"
         );
-        MEX_ASSERT(
+        MEX_ASSERT2(
           nrx == nry && ncx == ncy,
-          CMD "`x` and `y` expected to be of the same size, found" <<
-          " size(x) = " << nrx << " x " << nry <<
-          " size(y) = " << nry << " x " << ncy
+          CMD "`x` and `y` expected to be of the same size, found\n"
+          "size(x) = {} x {} size(y) = {} x {}\n",
+          nrx, ncx, nry, ncy
         );
 
         real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
@@ -261,8 +262,8 @@ namespace G2lib {
       } else if ( cmd == "isInside" ) {
 
         #define CMD "Triangle2DMexWrapper('isInside',OBJ,x,y): "
-        MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
         mwSize nrx, ncx, nry, ncy;
         real_type const * x = getMatrixPointer(
@@ -273,11 +274,11 @@ namespace G2lib {
           arg_in_3, nry, ncy,
           CMD "`y` expected to be a real vectormatrix"
         );
-        MEX_ASSERT(
+        MEX_ASSERT2(
           nrx == nry && ncx == ncy,
-          CMD "`x` and `y` expected to be of the same size, found" <<
-          " size(x) = " << nrx << " x " << ncx <<
-          " size(y) = " << nry << " x " << ncy
+          CMD "`x` and `y` expected to be of the same size, found\n"
+          "size(x) = {} x {} size(y) = {} x {}",
+          nrx, ncx, nry, ncy
         );
 
         int64_t * icode = createMatrixInt64( arg_out_0, nrx, ncx );
@@ -291,8 +292,8 @@ namespace G2lib {
       } else if ( cmd == "points" ) {
 
         #define CMD "Triangle2DMexWrapper('points',OBJ): "
-        MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 3, CMD "expected 3 output, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 3, CMD "expected 3 output, nlhs = {}\n", nlhs );
 
         real_type * p1 = createMatrixValue( arg_out_0, 2, 1 );
         real_type * p2 = createMatrixValue( arg_out_1, 2, 1 );
@@ -308,21 +309,21 @@ namespace G2lib {
 
         #define CMD "Triangle2DMexWrapper('info',OBJ): "
 
-        MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-        MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs );
+        MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+        MEX_ASSERT2( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
 
         ptr->info(cout);
 
         #undef CMD
 
       } else {
-        MEX_ASSERT(false, "Triangle2DMexWrapper unknown command: " << cmd );
+        MEX_ASSERT2(false, "Triangle2DMexWrapper unknown command: {}\n", cmd );
       }
 
     } catch ( exception const & e ) {
-    	mexErrMsgTxt(e.what());
+      mexErrMsgTxt( fmt::format( "Triangle2D Error: {}", e.what() ).c_str() );
     } catch (...) {
-    	mexErrMsgTxt("Triangle2DMexWrapper failed\n");
+    	mexErrMsgTxt("Triangle2D failed\n");
     }
   }
 }

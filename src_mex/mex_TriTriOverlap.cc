@@ -100,8 +100,7 @@ namespace G2lib {
       }
 
     } catch ( std::exception const & e ) {
-    	mexErrMsgTxt(e.what());
-
+      mexErrMsgTxt( fmt::format( "TriTriOverlap Error: {}", e.what() ).c_str() );
     } catch (...) {
     	mexErrMsgTxt("TriTriOverlap failed\n");
     }

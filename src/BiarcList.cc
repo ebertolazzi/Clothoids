@@ -122,18 +122,18 @@ namespace G2lib {
     m_s0.clear();
     m_biarcList.clear();
     this->resetLastInterval();
+    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BiarcList::copy( BiarcList const & L ) {
-    m_biarcList.clear();
+    this->init();
     m_biarcList.reserve(L.m_biarcList.size());
     std::copy( L.m_biarcList.begin(),
                L.m_biarcList.end(),
                back_inserter(m_biarcList) );
-    m_s0.clear();
     m_s0.reserve(L.m_s0.size());
     std::copy( L.m_s0.begin(), L.m_s0.end(), back_inserter(m_s0) );
   }
@@ -141,11 +141,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  BiarcList::findAtS( real_type s ) const {
+  BiarcList::findAtS( real_type & s ) const {
     bool ok;
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
-      m_s0.size(), &m_s0.front(), s, lastInterval, false, false
+      m_s0.size(), &m_s0.front(), s, lastInterval, false, true
     );
     return lastInterval;
   }

@@ -85,13 +85,13 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('new',...): "
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nrhs == 1 || nrhs == 6,
-      CMD "expected 1 or 6 inputs, nrhs = " << nrhs
+      CMD "expected 1 or 6 inputs, nrhs = {}\n", nrhs
     );
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nlhs == 1,
-      CMD "expected 1 output, nlhs = " << nlhs
+      CMD "expected 1 output, nlhs = {}\n", nlhs
     );
     #undef CMD
 
@@ -121,11 +121,11 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('build',OBJ,x0,y0,theta0,k0,L): "
-    MEX_ASSERT(
-      nrhs == 7, CMD "expected 7 inputs, nrhs = " << nrhs
+    MEX_ASSERT2(
+      nrhs == 7, CMD "expected 7 inputs, nrhs = {}\n", nrhs
     );
-    MEX_ASSERT(
-      nlhs == 0, CMD "expected NO output, nlhs = " << nlhs
+    MEX_ASSERT2(
+      nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs
     );
 
     CircleArc * ptr = DATA_GET( arg_in_1 );
@@ -151,9 +151,9 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('build_3P',...): "
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nlhs == 0 || nlhs ==1,
-      CMD " expected 1 or no output, nlhs = " << nlhs
+      CMD " expected 1 or no output, nlhs = {}\n", nlhs
     );
     #undef CMD
 
@@ -178,10 +178,10 @@ namespace G2lib {
         arg_in_4, size2, CMD "`p2` expected to be a real vector"
       );
 
-      MEX_ASSERT(
+      MEX_ASSERT2(
         size0 == 2 && size1 == 2 && size2 == 2,
-        CMD "bad dimension size(p0) = " << size0 <<
-        ", size(p1) = " << size1 << ", size(p2) = " << size2
+        CMD "bad dimension size(p0) = {}, size(p1) = {}, size(p2) = {}\n",
+        size0, size1, size2
       );
       #undef CMD
 
@@ -200,7 +200,7 @@ namespace G2lib {
       y2 = getScalarValue( arg_in_7, CMD "`y2` expected to be a scalar value" );
       #undef CMD
     } else {
-      MEX_ASSERT(false, "CircleArc, expected 5 or 7 inputs, nrhs = " << nrhs );
+      MEX_ASSERT2(false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
     }
 
     bool ok = ptr->build_3P( x0, y0, x1, y1, x2, y2 );
@@ -219,9 +219,9 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('build_G1',...): "
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nlhs == 0 || nlhs ==1,
-      CMD "expected 1 or no output, nlhs = " << nlhs
+      CMD "expected 1 or no output, nlhs = {}\n", nlhs
     );
     #undef CMD
 
@@ -244,10 +244,9 @@ namespace G2lib {
         arg_in_3, CMD "`theta0` expected to be a real vector"
       );
 
-      MEX_ASSERT(
+      MEX_ASSERT2(
         size0 == 2 && size1 == 2,
-        CMD "bad dimension size(p0) = " << size0 <<
-        ", size(p1) = " << size1
+        CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1
       );
       #undef CMD
 
@@ -264,7 +263,7 @@ namespace G2lib {
       y1     = getScalarValue( arg_in_6, CMD "`y1` expected to be a scalar value" );
       #undef CMD
     } else {
-      MEX_ASSERT(false, "CircleArc, expected 5 or 7 inputs, nrhs = " << nrhs );
+      MEX_ASSERT2(false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
     }
 
     bool ok = ptr->build_G1( x0, y0, theta0, x1, y1 );
@@ -282,7 +281,7 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
-    MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
+    MEX_ASSERT2(nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
 
     CircleArc * ptr = DATA_GET(arg_in_1);
 
@@ -304,8 +303,8 @@ namespace G2lib {
     CircleArc * ptr = DATA_GET(arg_in_1);
 
     #define CMD "CircleArcMexWrapper('to_nurbs',OBJ): "
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     int_type npts, nknots;
     ptr->paramNURBS( nknots, npts );
@@ -350,13 +349,13 @@ namespace G2lib {
 
     #define CMD "CircleArcMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs,['ISO'/'SAE']): "
 
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nrhs >= 2 && nrhs <= 6,
-      CMD "expected 2 up to 6 inputs, nrhs = " << nrhs
+      CMD "expected 2 up to 6 inputs, nrhs = {}\n", nrhs
     );
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nlhs == 3,
-      CMD "expected 3 output, nlhs = " << nlhs
+      CMD "expected 3 output, nlhs = {}\n", nlhs
     );
 
     real_type max_angle = Utils::m_pi/18;
@@ -473,7 +472,7 @@ namespace G2lib {
       }
 
     } catch ( exception const & e ) {
-      mexErrMsgTxt(e.what());
+      mexErrMsgTxt( fmt::format( "CircleArc Error: {}", e.what() ).c_str() );
     } catch (...) {
       mexErrMsgTxt("CircleArc failed\n");
     }

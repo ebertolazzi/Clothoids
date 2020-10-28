@@ -1211,6 +1211,7 @@ namespace G2lib {
   ) const {
     size_t nn = size_t( m_npts );
     Utils::Malloc<real_type> mem( "ClothoidSplineG2::guess" );
+    mem.allocate( 2*nn );
     real_type * omega = mem(nn);
     real_type * len   = mem(nn);
     G2lib::xy_to_guess_angle(

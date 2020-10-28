@@ -17,14 +17,15 @@ for kkk=1:nFile
   file = list(kkk).name;
   if ~strcmp( file, 'test_all.m' ) && ~strcmp( file, 'bspline_plot.m' )
     try
+      [filepath,name,ext] = fileparts(file);
       fprintf('\n\ntest file: %s\n',file);
-      run(fullfile(folder, file));
+      run(name);
       success(kkk) = true;
       fprintf('test file: %s done\n',file);
     catch ME
       ME
       fprintf('failed: %s\n', file);
-      stop
+      str = input('advance?\n','s');
     end
   end
 end

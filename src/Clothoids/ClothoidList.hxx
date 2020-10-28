@@ -769,7 +769,7 @@ namespace G2lib {
     void wrap_in_range( real_type & s ) const;
 
     int_type
-    findAtS( real_type s ) const;
+    findAtS( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

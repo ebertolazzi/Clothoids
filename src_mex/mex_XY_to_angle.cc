@@ -51,9 +51,9 @@ namespace G2lib {
         real_type const * x = getVectorPointer( arg_in_0, nx, "XY_to_angle: argument `x` expected to be a real scalar/vector");
         real_type const * y = getVectorPointer( arg_in_1, ny, "XY_to_angle: argument `y` expected to be a real scalar/vector");
 
-        MEX_ASSERT(
+        MEX_ASSERT2(
           nx == ny,
-          "XY_to_angle( x, y ), size(x) [" << nx << "] != size(y) [" << ny << "]"
+          "XY_to_angle( x, y ), size(x) [{}] != size(y) [{}]\n", nx, ny
         );
 
         real_type * theta     = createMatrixValue( arg_out_0, 1, nx );
@@ -68,8 +68,7 @@ namespace G2lib {
       }
 
     } catch ( std::exception const & e ) {
-    	mexErrMsgTxt(e.what());
-
+      mexErrMsgTxt( fmt::format( "XY_to_angle Error: {}", e.what() ).c_str() );
     } catch (...) {
   	  mexErrMsgTxt("XY_to_angle failed\n");
     }

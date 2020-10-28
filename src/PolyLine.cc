@@ -138,7 +138,7 @@ namespace G2lib {
     bool ok;
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
-      m_s0.size(), &m_s0.front(), s, lastInterval, false, false
+      m_s0.size(), &m_s0.front(), s, lastInterval, false, true
     );
     return lastInterval;
   }
@@ -150,23 +150,23 @@ namespace G2lib {
     m_s0.clear();
     m_polylineList.clear();
     this->resetLastInterval();
+    m_aabb_done = false;
+    this->resetLastInterval();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   PolyLine::copy( PolyLine const & PL ) {
-    m_polylineList.clear();
+    this->init();
     m_polylineList.reserve( PL.m_polylineList.size() );
     std::copy(
       PL.m_polylineList.begin(),
       PL.m_polylineList.end(),
       back_inserter(m_polylineList)
     );
-    m_s0.clear();
     m_s0.reserve( PL.m_s0.size() );
     std::copy( PL.m_s0.begin(), PL.m_s0.end(), back_inserter(m_s0) );
-    m_aabb_done = false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

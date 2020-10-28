@@ -87,12 +87,20 @@ namespace G2lib {
       } else if ( nrhs == 4 ) {
 
         int_type nk = getInt( arg_in_0, "FresnelCS: argument `nk` expected to be and integer" );
-        MEX_ASSERT( nk >= 1 && nk <= 3, "FresnelCS: argument `nk` = " << nk << " must be in [1,2,3]" );
+        MEX_ASSERT2(
+          nk >= 1 && nk <= 3,
+          "FresnelCS: argument `nk` = {} must be in [1,2,3]\n", nk
+        );
         mwSize na, nb, nc;
         double const * a = getVectorPointer( arg_in_1, na, "FresnelCS: argument `a` expected to be a real scalar/vector");
         double const * b = getVectorPointer( arg_in_2, nb, "FresnelCS: argument `b` expected to be a real scalar/vector");
         double const * c = getVectorPointer( arg_in_3, nc, "FresnelCS: argument `c` expected to be a real scalar/vector");
-        MEX_ASSERT( na == nb && nb == nc, "FresnelCS: Second to last arguments must be vectors of the same length" );
+        MEX_ASSERT2(
+          na == nb && nb == nc,
+          "FresnelCS: Second to last arguments must be vectors of the same length\n"
+          "found length(a) = {}, length(b) = {}, length(c) = {}\n",
+          na, nb, nc
+        );
         double * X = createMatrixValue( arg_out_0, nk, na );
         double * Y = createMatrixValue( arg_out_1, nk, na );
         for ( mwSize k = 0; k < na; ++k ) {
@@ -104,8 +112,7 @@ namespace G2lib {
       }
 
     } catch ( std::exception const & e ) {
-    	mexErrMsgTxt(e.what());
-
+      mexErrMsgTxt( fmt::format( "FresnelCS Error: {}", e.what() ).c_str() );
     } catch (...) {
   	  mexErrMsgTxt("FresnelCS failed\n");
     }

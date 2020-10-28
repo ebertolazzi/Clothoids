@@ -144,11 +144,11 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::findAtS( real_type s ) const {
+  ClothoidList::findAtS( real_type & s ) const {
     bool ok;
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
-      m_s0.size(), &m_s0.front(), s, lastInterval, m_curve_is_closed, false
+      m_s0.size(), &m_s0.front(), s, lastInterval, m_curve_is_closed, true
     );
     return lastInterval;
   }
@@ -175,18 +175,19 @@ namespace G2lib {
     m_s0.clear();
     m_clotoidList.clear();
     this->resetLastInterval();
+    m_aabb_done = false;
+    this->resetLastInterval();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::copy( ClothoidList const & L ) {
-    m_clotoidList.clear();
+    this->init();
     m_clotoidList.reserve( L.m_clotoidList.size() );
     std::copy(
       L.m_clotoidList.begin(), L.m_clotoidList.end(), back_inserter(m_clotoidList)
     );
-    m_s0.clear();
     m_s0.reserve( L.m_s0.size() );
     std::copy( L.m_s0.begin(), L.m_s0.end(), back_inserter(m_s0) );
   }
@@ -633,7 +634,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta( s - m_s0[idx] );
@@ -643,7 +643,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta_D( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta_D( s - m_s0[idx] );
@@ -653,7 +652,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta_DD( real_type s ) const  {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta_DD( s - m_s0[idx] );
@@ -663,7 +661,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::theta_DDD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.theta_DDD( s - m_s0[idx] );
@@ -679,7 +676,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx( s - m_s0[idx] );
@@ -689,7 +685,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty( s - m_s0[idx] );
@@ -699,7 +694,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx_D( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx_D( s - m_s0[idx] );
@@ -709,7 +703,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty_D( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty_D( s - m_s0[idx] );
@@ -719,7 +712,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx_DD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx_DD( s - m_s0[idx] );
@@ -729,7 +721,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty_DD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty_DD( s - m_s0[idx] );
@@ -739,7 +730,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::tx_DDD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tx_DDD( s - m_s0[idx] );
@@ -749,7 +739,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::ty_DDD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.ty_DDD( s - m_s0[idx] );
@@ -763,7 +752,6 @@ namespace G2lib {
     real_type & tg_x,
     real_type & tg_y
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg( s - m_s0[idx], tg_x, tg_y );
@@ -777,7 +765,6 @@ namespace G2lib {
     real_type & tg_x_D,
     real_type & tg_y_D
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg_D( s - m_s0[idx], tg_x_D, tg_y_D );
@@ -791,7 +778,6 @@ namespace G2lib {
     real_type & tg_x_DD,
     real_type & tg_y_DD
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg_DD( s - m_s0[idx], tg_x_DD, tg_y_DD );
@@ -805,7 +791,6 @@ namespace G2lib {
     real_type & tg_x_DDD,
     real_type & tg_y_DDD
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.tg_DDD( s - m_s0[idx], tg_x_DDD, tg_y_DDD );
@@ -821,7 +806,6 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     c.evaluate( s - m_s0[idx], th, k, x, y );
@@ -838,7 +822,6 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     c.evaluate_ISO( s - m_s0[idx], offs, th, k, x, y );
@@ -848,7 +831,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X( s - m_s0[idx] );
@@ -858,7 +840,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y( real_type s ) const  {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y( s - m_s0[idx] );
@@ -868,7 +849,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_D( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_D( s - m_s0[idx] );
@@ -878,7 +858,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_D( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_D( s - m_s0[idx] );
@@ -888,7 +867,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_DD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_DD( s - m_s0[idx] );
@@ -898,7 +876,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_DD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_DD( s - m_s0[idx] );
@@ -908,7 +885,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_DDD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_DDD( s - m_s0[idx] );
@@ -918,7 +894,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_DDD( real_type s ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_DDD( s - m_s0[idx] );
@@ -932,7 +907,6 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval( s - m_s0[idx], x, y );
@@ -946,7 +920,6 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_D( s - m_s0[idx], x_D, y_D );
@@ -960,7 +933,6 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_DD( s - m_s0[idx], x_DD, y_DD );
@@ -974,7 +946,6 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_DDD( s - m_s0[idx], x_DDD, y_DDD );
@@ -990,7 +961,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO( s - m_s0[idx], offs );
@@ -1000,7 +970,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO( s - m_s0[idx], offs );
@@ -1010,7 +979,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO_D( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO_D( s - m_s0[idx], offs );
@@ -1020,7 +988,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO_D( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO_D( s - m_s0[idx], offs );
@@ -1030,7 +997,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO_DD( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO_DD( s - m_s0[idx], offs );
@@ -1040,7 +1006,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO_DD( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO_DD( s - m_s0[idx], offs );
@@ -1050,7 +1015,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::X_ISO_DDD( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.X_ISO_DDD( s - m_s0[idx], offs );
@@ -1060,7 +1024,6 @@ namespace G2lib {
 
   real_type
   ClothoidList::Y_ISO_DDD( real_type s, real_type offs ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.Y_ISO_DDD( s - m_s0[idx], offs );
@@ -1075,7 +1038,6 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO( s - m_s0[idx], offs, x, y );
@@ -1090,7 +1052,6 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO_D( s - m_s0[idx], offs, x_D, y_D );
@@ -1105,7 +1066,6 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO_DD( s - m_s0[idx], offs, x_DD, y_DD );
@@ -1120,7 +1080,6 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    if ( m_curve_is_closed ) this->wrap_in_range( s );
     int_type idx = findAtS( s );
     ClothoidCurve const & c = get( idx );
     return c.eval_ISO_DDD( s - m_s0[idx], offs, x_DDD, y_DDD );
@@ -1202,6 +1161,12 @@ namespace G2lib {
 
   void
   ClothoidList::trim( real_type s_begin, real_type s_end ) {
+
+    ClothoidList newCL;
+    this->trim( s_begin, s_end, newCL );
+    this->copy( newCL );
+
+#if 0
     UTILS_ASSERT(
       s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
       "ClothoidList::trim( s_begin={}, s_end={} ) bad range, must be in [{},{}]\n",
@@ -1226,6 +1191,7 @@ namespace G2lib {
     for (; ic != m_clotoidList.end(); ++ic, ++k )
       m_s0[k+1] = m_s0[k] + ic->length();
     this->resetLastInterval();
+#endif
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

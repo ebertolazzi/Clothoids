@@ -153,7 +153,7 @@ namespace G2lib {
     int_type numSegment() const { return int_type(m_biarcList.size()); }
 
     int_type
-    findAtS( real_type s ) const;
+    findAtS( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

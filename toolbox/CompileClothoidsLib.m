@@ -60,6 +60,16 @@ if isunix
 elseif ispc
 end
 
+for k=1:length(NAMES)
+  N=NAMES{k};
+  disp('---------------------------------------------------------');
+  fprintf(1,'Compiling: %s\n',N)
+  CMD = [CMDBASE ' -c src_mex/mex_' N '.cc' ];
+  disp('---------------------------------------------------------');
+  disp(CMD);
+  eval(CMD);
+end
+
 LIB_OBJS = '';
 for k=1:length(LIB_NAMES)
   [filepath,bname,ext] = fileparts(LIB_NAMES{k});
@@ -80,14 +90,18 @@ end
 for k=1:length(NAMES)
   N=NAMES{k};
   disp('---------------------------------------------------------');
-  fprintf(1,'Compiling: %s\n',N);
+  fprintf(1,'Linking: %s\n',N);
 
   CMD = [ 'while mislocked(''' N '''); munlock(''' N '''); end;'];
   eval(CMD);
 
-  CMD = [ 'mex -Isrc -output bin/', N ];
-  CMD = [ CMD, ' -largeArrayDims src_mex/mex_', N ];
-  CMD = [ CMD, '.cc ', LIB_OBJS ];
+  CMD = [ 'mex -Isrc -output bin/', N, ' -largeArrayDims mex_'];
+  if ispc
+    CMD = [ CMD, N, '.obj ', LIB_OBJS ];
+  else
+    CMD = [ CMD, N, '.o ', LIB_OBJS ];
+  end
+
 
   if ismac
     CMD = [CMD, ' CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"'];
@@ -109,8 +123,10 @@ for k=1:length(NAMES)
   eval(CMD);
 end
 
-for k=1:length(LIB_OBJS)
-  delete LIB_OBJS{k};
+if isunix
+  delete *.o;
+elseif ispc
+  delete *.obj;
 end
 
 cd(old_dir);

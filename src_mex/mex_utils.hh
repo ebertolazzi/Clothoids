@@ -67,6 +67,9 @@ either expressed or implied, of the FreeBSD Project.
     mexErrMsgTxt(ost.str().c_str());     \
   }
 
+#define MEX_ASSERT2(COND,FMT,...) \
+  if ( !(COND) ) mexErrMsgTxt(fmt::format("Mex Error: " FMT,__VA_ARGS__).c_str())
+
 // -----------------------------------------------------------------------------
 
 static
@@ -86,8 +89,11 @@ getScalarValue( mxArray const * arg, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT( dims[0] == 1 && dims[1] == 1,
-              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" );
+  MEX_ASSERT2(
+    dims[0] == 1 && dims[1] == 1,
+    "{}, found {} x {} matrix\n",
+    msg, dims[0], dims[1]
+  );
   return mxGetScalar(arg);
 }
 
@@ -106,8 +112,11 @@ getInt( mxArray const * arg, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT( dims[0] == 1 && dims[1] == 1,
-              msg << ", found " << dims[0] << " x " << dims[1] << " matrix" );
+  MEX_ASSERT2(
+    dims[0] == 1 && dims[1] == 1,
+    "{}, found {} x {} matrix\n",
+    msg, dims[0], dims[1]
+  );
   mxClassID category = mxGetClassID(arg);
   int64_t res = 0;
   void *ptr = mxGetData(arg);
@@ -122,13 +131,19 @@ getInt( mxArray const * arg, char const msg[] ) {
     case mxUINT64_CLASS: res = *static_cast<uint64_t*>(ptr); break;
     case mxDOUBLE_CLASS:
       { double tmp = *static_cast<double*>(ptr);
-        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp );
+        MEX_ASSERT2(
+          tmp == std::floor(tmp),
+          "{} expected int, found {}\n", msg, tmp
+        );
         res = static_cast<int64_t>(tmp);
       }
       break;
     case mxSINGLE_CLASS:
       { float tmp = *static_cast<float*>(ptr);
-        MEX_ASSERT( tmp == std::floor(tmp), msg << " expected int, found " << tmp );
+        MEX_ASSERT2(
+          tmp == std::floor(tmp),
+          "{} expected int, found {}\n", msg, tmp
+        );
         res = static_cast<int64_t>(tmp);
       }
       break;
@@ -146,9 +161,11 @@ getVectorPointer( mxArray const * arg, mwSize & sz, char const msg[] ) {
   mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
   MEX_ASSERT( number_of_dimensions == 2, msg );
   mwSize const * dims = mxGetDimensions(arg);
-  MEX_ASSERT( dims[0] == 1 || dims[1] == 1,
-              msg << "\nExpect (1 x n or n x 1) matrix, found " <<
-              dims[0] << " x " << dims[1] );
+  MEX_ASSERT2(
+    dims[0] == 1 || dims[1] == 1,
+    "{}\nExpect (1 x n or n x 1) matrix, found {} x {}\n",
+    msg, dims[0], dims[1]
+  );
   sz = dims[0]*dims[1];
   return mxGetPr(arg);
 }

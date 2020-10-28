@@ -85,13 +85,13 @@ namespace G2lib {
   ) {
 
     #define CMD "LineSegmentMexWrapper('new',...): "
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nlhs == 1,
-      CMD "expected 1 output, nlhs = " << nlhs
+      CMD "expected 1 output, nlhs = {}\n", nlhs
     );
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nrhs == 1 || nrhs == 3 || nrhs == 5,
-      CMD "expected 1, 3 or 5 inputs, nrhs = " << nrhs
+      CMD "expected 1, 3 or 5 inputs, nrhs = {}\n", nrhs
     );
     #undef CMD
 
@@ -134,10 +134,9 @@ namespace G2lib {
         CMD "`p1` expected to be a real vector"
       );
 
-      MEX_ASSERT(
+      MEX_ASSERT2(
         size0 == 2 && size1 == 2,
-        CMD "bad dimension size(p0) = " << size0 <<
-        ", size(p1) = " << size1
+        CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1
       );
       #undef CMD
 
@@ -155,13 +154,13 @@ namespace G2lib {
   ) {
 
     #define CMD "LineSegmentMexWrapper('build',OBJ,...): "
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nlhs == 0,
-      CMD "expected NO output, nlhs = " << nlhs
+      CMD "expected NO output, nlhs = {}\n", nlhs
     );
-    MEX_ASSERT(
+    MEX_ASSERT2(
       nrhs == 4 || nrhs == 6,
-      CMD "expected 4 or 6 inputs, nrhs = " << nrhs
+      CMD "expected 4 or 6 inputs, nrhs = {}\n", nrhs
     );
     #undef CMD
 
@@ -204,10 +203,9 @@ namespace G2lib {
         CMD "`p1` expected to be a real vector"
       );
 
-      MEX_ASSERT(
+      MEX_ASSERT2(
         size0 == 2 && size1 == 2,
-        CMD "bad dimension size(p0) = " << size0 <<
-        ", size(p1) = " << size1
+        CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1
       );
       #undef CMD
 
@@ -227,8 +225,8 @@ namespace G2lib {
     LineSegment * ptr = DATA_GET(arg_in_1);
 
     #define CMD "LineSegmentMexWrapper('to_nurbs',OBJ): "
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     int_type npts, nknots;
     ptr->paramNURBS( nknots, npts );
@@ -282,8 +280,8 @@ namespace G2lib {
     LineSegment * ptr = DATA_GET(arg_in_1);
 
     #define CMD "LineSegmentMexWrapper('points',OBJ): "
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
     real_type * p1 = createMatrixValue( arg_out_0, 2, 1 );
     real_type * p2 = createMatrixValue( arg_out_1, 2, 1 );
@@ -358,9 +356,9 @@ namespace G2lib {
       }
 
     } catch ( exception const & e ) {
-    	mexErrMsgTxt(e.what());
+      mexErrMsgTxt( fmt::format( "LineSegment Error: {}", e.what() ).c_str() );
     } catch (...) {
-    	mexErrMsgTxt("Line failed\n");
+    	mexErrMsgTxt("LineSegment failed\n");
     }
 
   }

@@ -82,8 +82,8 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "ClothoidSplineG2MexWrapper('new'): "
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = " << nlhs );
-    MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nlhs = " << nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    MEX_ASSERT2( nrhs == 1, CMD "expected 1 input, nlhs = {}\n", nrhs );
     DATA_NEW(arg_out_0);
     #undef CMD
   }
@@ -98,8 +98,8 @@ namespace G2lib {
   ) {
     #define CMD "ClothoidListMexWrapper('delete',OBJ): "
 
-    MEX_ASSERT(nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT(nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
     // Destroy the C++ object
     DATA_DELETE(arg_in_1);
@@ -117,8 +117,8 @@ namespace G2lib {
   ) {
     #define CMD "ClothoidSplineG2MexWrapper('build',OBJ,x,y): "
 
-    MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
@@ -126,7 +126,7 @@ namespace G2lib {
     real_type const * x = getVectorPointer( arg_in_2, nx, CMD "Error in reading x" );
     real_type const * y = getVectorPointer( arg_in_3, ny, CMD "Error in reading y" );
 
-    MEX_ASSERT( nx == ny, CMD "length(x) = " << nx << " must be equal to size(y) = " << ny );
+    MEX_ASSERT2( nx == ny, CMD "length(x) = {} must be equal to size(y) = {}\n", nx, ny );
 
     ptr->build( x, y, nx );
 
@@ -144,8 +144,8 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('target',OBJ,target[,theta0,theta1]): "
 
-    MEX_ASSERT( nrhs >= 3, CMD "expected at least 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs >= 3, CMD "expected at least 3 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
@@ -153,12 +153,12 @@ namespace G2lib {
     string obj = mxArrayToString(arg_in_2);
 
     if ( obj == "P1" ) {
-      MEX_ASSERT( nrhs == 5, CMD "expected at 5 inputs, nrhs = " << nrhs );
+      MEX_ASSERT2( nrhs == 5, CMD "expected at 5 inputs, nrhs = {}\n", nrhs );
       real_type theta0 = getScalarValue( arg_in_3, CMD "Error in reading theta0" );
       real_type theta1 = getScalarValue( arg_in_4, CMD "Error in reading theta1" );
       ptr->setP1( theta0, theta1 );
     } else {
-      MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
+      MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
       if      ( obj == "P2" ) ptr->setP2();
       else if ( obj == "P3" ) ptr->setP3();
       else if ( obj == "P4" ) ptr->setP4();
@@ -168,7 +168,7 @@ namespace G2lib {
       else if ( obj == "P8" ) ptr->setP8();
       else if ( obj == "P9" ) ptr->setP9();
       else {
-        MEX_ASSERT( false, CMD "Unknown target " << obj );
+        MEX_ASSERT2( false, CMD "Unknown target {}\n", obj );
       }
     }
     #undef CMD
@@ -185,8 +185,8 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('guess',OBJ): "
 
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 3, CMD "expected 3 outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
@@ -212,15 +212,17 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('objective',OBJ,theta): "
 
-    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
-    MEX_ASSERT( ntheta == ptr->numPnts(),
-                    CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts() );
+    MEX_ASSERT2(
+      ntheta == ptr->numPnts(),
+      CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts() 
+    );
     real_type f;
     bool ok = ptr->objective( theta, f );
     if ( ok ) setScalarValue( arg_out_0, f );
@@ -239,16 +241,16 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('gradient',OBJ,theta): "
 
-    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
-    MEX_ASSERT(
+    MEX_ASSERT2(
       ntheta == ptr->numPnts(),
-      CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts()
+      CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
     double * g = createMatrixValue( arg_out_0, ntheta, 1 );
     bool ok = ptr->gradient( theta, g );
@@ -268,16 +270,16 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('gradient',OBJ,theta): "
 
-    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
-    MEX_ASSERT(
+    MEX_ASSERT2(
       ntheta == ptr->numPnts(),
-      CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts()
+      CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
     double * c = createMatrixValue( arg_out_0, ptr->numConstraints(), 1 );
     bool ok = ptr->constraints( theta, c );
@@ -297,16 +299,16 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('jacobian',OBJ,theta): "
 
-    MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
-    MEX_ASSERT(
+    MEX_ASSERT2(
       ntheta == ptr->numPnts(),
-      CMD "length(theta) = " << ntheta << " must be " << ptr->numPnts()
+      CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
 
     int_type n   = ptr->numConstraints();
@@ -341,8 +343,8 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('jacobian_pattern',OBJ): "
 
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
@@ -378,8 +380,8 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('dims',OBJ): "
 
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 2, CMD "expected 2 outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
@@ -403,8 +405,8 @@ namespace G2lib {
 
     #define CMD "ClothoidSplineG2MexWrapper('info',OBJ): "
 
-    MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = " << nrhs );
-    MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = " << nlhs );
+    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
@@ -462,7 +464,10 @@ namespace G2lib {
 
     try {
 
-      MEX_ASSERT( mxIsChar(arg_in_0), "ClothoidListMexWrapper: First argument must be a string" );
+      MEX_ASSERT(
+        mxIsChar(arg_in_0),
+        "ClothoidListMexWrapper: First argument must be a string"
+      );
       string cmd = mxArrayToString(arg_in_0);
 
       switch ( cmd_to_idx.at(cmd) ) {
@@ -505,10 +510,9 @@ namespace G2lib {
       }
 
     } catch ( std::exception const & e ) {
-    	mexErrMsgTxt(e.what());
-
+      mexErrMsgTxt( fmt::format( "Clothoid Error: {}", e.what() ).c_str() );
     } catch (...) {
-  	  mexErrMsgTxt("clothoid failed\n");
+  	  mexErrMsgTxt("Clothoid failed\n");
     }
   }
 }
