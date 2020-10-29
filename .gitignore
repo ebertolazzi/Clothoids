@@ -17,8 +17,6 @@ lib
 bin
 .vscode
 doxygen_doc
-toolbox/tests
-toolbox/src_mex
 toolbox/src
 toolbox/license.txt
 toolbox/doc/Art_Figure_1.pdf
