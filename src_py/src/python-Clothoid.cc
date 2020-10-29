@@ -348,6 +348,16 @@ namespace G2lib {
           real_type s, t;
           self->findST1(ibegin, iend, x, y, s, t);
           return std::make_tuple(s, t);
+        })
+        .def("intersect", [](ClothoidList * self, ClothoidList const & B, bool swap_s_vals) {
+          IntersectList ilist;
+          self->intersect(B, ilist, swap_s_vals);
+          return ilist;
+        })
+        .def("intersect_ISO", [](ClothoidList * self, real_type offs, ClothoidList const & B, real_type Coffs, bool swap_s_vals) {
+          IntersectList ilist;
+          self->intersect_ISO(offs, B, Coffs, ilist, swap_s_vals);
+          return ilist;
         });
     }
   }
