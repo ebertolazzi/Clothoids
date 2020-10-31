@@ -1156,6 +1156,29 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  static
+  void
+  do_s_to_index(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD "ClothoidListMexWrapper('s_to_index',OBJ,s): "
+
+    MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    real_type s = getScalarValue(
+      arg_in_2, CMD "`s` expected to be a real scalar"
+    );
+
+    setScalarInt( arg_out_0, ptr->findAtS( s ) );
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   static std::map<std::string,DO_CMD> cmd_to_fun = {
     {"new",do_new},
     {"push_back",do_push_back},
@@ -1187,8 +1210,11 @@ namespace G2lib {
     {"closestSegment",do_closestSegment},
     {"closestPointInRange",do_closestPointInRange},
     {"closestPointInSRange",do_closestPointInSRange},
+    {"s_to_index",do_s_to_index},
     CMD_MAP_FUN
   };
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   extern "C"
   void
@@ -1214,4 +1240,7 @@ namespace G2lib {
       mexErrMsgTxt("ClothoidList failed\n");
     }
   }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 }

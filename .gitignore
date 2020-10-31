@@ -9,11 +9,10 @@ DerivedData
 *.spl
 *.o
 /vs_20*
-lib/*
+/lib/*
 Usage.pdf
 cmake
 build
-lib
 bin
 .vscode
 doxygen_doc

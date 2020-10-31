@@ -195,9 +195,9 @@ setScalarValue( mxArray * & arg, double value ) {
 static
 inline
 void
-setScalarInt( mxArray * & arg, int64_t value ) {
-  arg = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-  *static_cast<int64_t*>(mxGetData(arg)) = value;
+setScalarInt( mxArray * & arg, int32_t value ) {
+  arg = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+  *static_cast<int32_t*>(mxGetData(arg)) = value;
 }
 
 static

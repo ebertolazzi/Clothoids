@@ -440,4 +440,7 @@ namespace G2lib {
     	mexErrMsgTxt("Triangle2D failed\n");
     }
   }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 }

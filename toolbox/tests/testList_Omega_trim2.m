@@ -29,7 +29,7 @@ S3 = ClothoidList();
 
 subplot(3,1,1);
 
-S  = SC.buildP2( X, Y );
+S = SC.buildP2( X, Y );
 S1.copy(S);
 S2.copy(S);
 S3.copy(S);
@@ -57,12 +57,13 @@ S1.trim(s_min, s_max);
 S1.plot( 100, fmt1, fmt2);
 res1 = S1.closestPoint( x0, y0 );
 res2 = S.closestPointInSRange( x0, y0, s_min, s_max );
+idx  = S.s_to_index( s_min );
 hold on;
 %[x1,y1] = S1.eval( s );
 plot([x0,res1.x],[y0,res1.y],'-s','LineWidth',2,'MarkerSize',5,'MarkerEdgeColor','b','MarkerFaceColor','red');
 plot([x0,res2.x],[y0,res2.y],'-o','LineWidth',2,'MarkerSize',10,'MarkerEdgeColor','b');
 axis equal
-fprintf('iflag = %d, icurve = %d\n', res1.iflag, res2.icurve );
+fprintf('iflag+idx = %d, icurve = %d\n\n', res1.iflag+idx, res2.icurve );
 title('two');
 
 subplot(2,2,3);
@@ -72,13 +73,14 @@ S2.trim( s_min, s_max );
 S2.plot( 100, fmt1, fmt2);
 res1 = S2.closestPoint( x0, y0 );
 res2 = S.closestPointInSRange( x0, y0, s_min, s_max );
+idx  = S.s_to_index( s_min );
 hold on;
 %[x1,y1] = S1.eval( s );
 plot([x0,res1.x],[y0,res1.y],'-s','LineWidth',2,'MarkerSize',5,'MarkerEdgeColor','b','MarkerFaceColor','red');
 plot([x0,res2.x],[y0,res2.y],'-o','LineWidth',2,'MarkerSize',10,'MarkerEdgeColor','b');
 axis equal
-fprintf('iflag = %d, icurve = %d\n', res1.iflag, res2.icurve );
-title('tre');
+fprintf('iflag+idx = %d, icurve = %d\n\n', res1.iflag+idx, res2.icurve );
+title('three');
 
 subplot(2,2,4);
 s_min = 35;
@@ -87,11 +89,12 @@ S3.trim(s_min, s_max);
 S3.plot( 100, fmt1, fmt2);
 res1 = S3.closestPoint( x0, y0 );
 res2 = S.closestPointInSRange( x0, y0, s_min, s_max );
+idx  = S.s_to_index( s_min );
 hold on;
 %[x1,y1] = S1.eval( s );
 plot([x0,res1.x],[y0,res1.y],'-s','LineWidth',2,'MarkerSize',5,'MarkerEdgeColor','b','MarkerFaceColor','red');
 plot([x0,res2.x],[y0,res2.y],'-o','LineWidth',2,'MarkerSize',10,'MarkerEdgeColor','b');
 axis equal
-fprintf('iflag = %d, icurve = %d\n', res1.iflag, res2.icurve );
-title('quattro');
+fprintf('iflag+idx = %d, icurve = %d\n\n', res1.iflag+idx, res2.icurve );
+title('four');
 
