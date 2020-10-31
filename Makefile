@@ -54,7 +54,6 @@ endif
 
 SRCS  = $(shell echo src/*.cc) \
         $(shell echo submodules/Utils/src/*.cc) \
-        $(shell echo submodules/Utils/src/Utils/fmt/*.cc) \
         $(shell echo submodules/quarticRootsFlocke/src/*.cc) \
         $(shell echo submodules/GenericContainer/src/*.cc)
 
