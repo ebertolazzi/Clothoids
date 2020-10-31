@@ -41,7 +41,13 @@ MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
-  using namespace std;
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  #define CMD_BASE "PolyLineMexWrapper"
+  #define G2LIB_CLASS PolyLine
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
 
   /*\
    |  ____    _  _____  _
@@ -184,30 +190,12 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  #define CMD_BASE "PolyLineMexWrapper"
-  #define G2LIB_CLASS PolyLine
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  typedef enum {
-    CMD_NEW,
-    CMD_BUILD,
-    CMD_POLYGON,
-    CMD_APPROX,
-    CMD_VIRTUAL_LIST
-  } CMD_LIST;
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static map<string,unsigned> cmd_to_idx = {
-    {"new",CMD_NEW},
-    {"build",CMD_BUILD},
-    {"polygon",CMD_POLYGON},
-    {"approx",CMD_APPROX},
-    CMD_MAP_LIST
+  static std::map<std::string,DO_CMD> cmd_to_fun = {
+    {"new",do_new},
+    {"build",do_build},
+    {"polygon",do_polygon},
+    {"approx",do_approx},
+    CMD_MAP_FUN
   };
 
   extern "C"
@@ -224,28 +212,12 @@ namespace G2lib {
     }
 
     try {
-
       MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
-
-      switch ( cmd_to_idx.at(cmd) ) {
-      case CMD_NEW:
-        do_new( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD:
-        do_build( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_POLYGON:
-        do_polygon( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_APPROX:
-        do_approx( nlhs, plhs, nrhs, prhs );
-        break;
-      CMD_CASE_LIST;
-      }
-
-    } catch ( exception const & e ) {
-      mexErrMsgTxt( fmt::format( "PolyLineMex Error: {}", e.what() ).c_str() );
+      DO_CMD pfun = cmd_to_fun.at(cmd);
+      pfun( nlhs, plhs, nrhs, prhs );
+    } catch ( std::exception const & e ) {
+      mexErrMsgTxt( fmt::format( "PolyLineMex Error: {}\n", e.what() ).c_str() );
     } catch (...) {
       mexErrMsgTxt("PolyLine failed\n");
     }

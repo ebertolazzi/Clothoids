@@ -50,7 +50,13 @@ MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
-  using namespace std;
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  #define CMD_BASE "BiarcListMexWrapper"
+  #define G2LIB_CLASS BiarcList
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
 
   /*\
    |  ____    _  _____  _
@@ -409,14 +415,6 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  #define CMD_BASE "BiarcListMexWrapper"
-  #define G2LIB_CLASS BiarcList
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
   static
   void
   do_bbTriangles(
@@ -488,36 +486,19 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  typedef enum {
-    CMD_NEW,
-    CMD_PUSH_BACK_G1,
-    CMD_RESERVE,
-    CMD_GET_STK,
-    CMD_GET_XY,
-    CMD_BUILD_G1,
-    CMD_BUILD_THETA,
-    CMD_GET,
-    CMD_NUM_SEGMENT,
-    CMD_FIND_ST1,
-    CMD_BB_TRIANGLES,
-    CMD_VIRTUAL_LIST
-  } CMD_LIST;
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static map<string,unsigned> cmd_to_idx = {
-    {"new",CMD_NEW},
-    {"push_back_G1",CMD_PUSH_BACK_G1},
-    {"reserve",CMD_RESERVE},
-    {"getSTK",CMD_GET_STK},
-    {"getXY",CMD_GET_XY},
-    {"build_G1",CMD_BUILD_G1},
-    {"build_theta",CMD_BUILD_THETA},
-    {"get",CMD_GET},
-    {"numSegment",CMD_NUM_SEGMENT},
-    {"findST1",CMD_FIND_ST1},
-    {"bbTriangles",CMD_BB_TRIANGLES},
-    CMD_MAP_LIST
+  static std::map<std::string,DO_CMD> cmd_to_fun = {
+    {"new",do_new},
+    {"push_back_G1",do_push_back_G1},
+    {"reserve",do_reserve},
+    {"getSTK",do_getSTK},
+    {"getXY",do_getXY},
+    {"build_G1",do_build_G1},
+    {"build_theta",do_build_theta},
+    {"get",do_get},
+    {"numSegment",do_numSegment},
+    {"findST1",do_findST1},
+    {"bbTriangles",do_bbTriangles},
+    CMD_MAP_FUN
   };
 
   extern "C"
@@ -534,48 +515,11 @@ namespace G2lib {
     }
 
     try {
-
       MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
-
-      switch ( cmd_to_idx.at(cmd) ) {
-      case CMD_NEW:
-        do_new( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_PUSH_BACK_G1:
-        do_push_back_G1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_RESERVE:
-        do_reserve( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GET_STK:
-        do_getSTK( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GET_XY:
-        do_getXY( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_G1:
-        do_build_G1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_THETA:
-        do_build_theta( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GET:
-        do_get( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_NUM_SEGMENT:
-        do_numSegment( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_FIND_ST1:
-        do_findST1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BB_TRIANGLES:
-        do_bbTriangles( nlhs, plhs, nrhs, prhs );
-        break;
-      CMD_CASE_LIST;
-      }
-
-    } catch ( exception const & e ) {
+      DO_CMD pfun = cmd_to_fun.at(cmd);
+      pfun( nlhs, plhs, nrhs, prhs );
+    } catch ( std::exception const & e ) {
       mexErrMsgTxt( fmt::format( "BiarcList Error: {}", e.what() ).c_str() );
     } catch (...) {
       mexErrMsgTxt( "BiarcList failed" );

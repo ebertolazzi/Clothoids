@@ -51,8 +51,6 @@
 
 namespace G2lib {
 
-  using namespace std;
-
   extern "C"
   void
   mexFunction(

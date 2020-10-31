@@ -40,7 +40,13 @@ MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
-  using namespace std;
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  #define CMD_BASE "CircleArcMexWrapper"
+  #define G2LIB_CLASS CircleArc
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
 
   /*\
    |  ____    _  _____  _
@@ -330,14 +336,6 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  #define CMD_BASE "CircleArcMexWrapper"
-  #define G2LIB_CLASS CircleArc
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
   static
   void
   do_bbTriangles(
@@ -405,28 +403,15 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  typedef enum {
-    CMD_NEW,
-    CMD_BUILD,
-    CMD_BUILD_3P,
-    CMD_BUILD_G1,
-    CMD_CHANGE_CURVILINEAR_ORIGIN,
-    CMD_TO_NURBS,
-    CMD_BB_TRIANGLES,
-    CMD_VIRTUAL_LIST
-  } CMD_LIST;
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static map<string,unsigned> cmd_to_idx = {
-    {"new",CMD_NEW},
-    {"build",CMD_BUILD},
-    {"build_3P",CMD_BUILD_3P},
-    {"build_G1",CMD_BUILD_G1},
-    {"changeCurvilinearOrigin",CMD_CHANGE_CURVILINEAR_ORIGIN},
-    {"to_nurbs",CMD_TO_NURBS},
-    {"bbTriangles",CMD_BB_TRIANGLES},
-    CMD_MAP_LIST
+  static std::map<std::string,DO_CMD> cmd_to_fun = {
+    {"new",do_new},
+    {"build",do_build},
+    {"build_3P",do_build_3P},
+    {"build_G1",do_build_G1},
+    {"changeCurvilinearOrigin",do_change_curvilinear_origin},
+    {"to_nurbs",do_to_nurbs},
+    {"bbTriangles",do_bbTriangles},
+    CMD_MAP_FUN
   };
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -442,36 +427,11 @@ namespace G2lib {
     }
 
     try {
-
       MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
-
-      switch ( cmd_to_idx.at(cmd) ) {
-      case CMD_NEW:
-        do_new( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD:
-        do_build( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_3P:
-        do_build_3P( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_G1:
-        do_build_G1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CHANGE_CURVILINEAR_ORIGIN:
-        do_change_curvilinear_origin( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_TO_NURBS:
-        do_to_nurbs( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BB_TRIANGLES:
-        do_bbTriangles( nlhs, plhs, nrhs, prhs );
-        break;
-      CMD_CASE_LIST;
-      }
-
-    } catch ( exception const & e ) {
+      DO_CMD pfun = cmd_to_fun.at(cmd);
+      pfun( nlhs, plhs, nrhs, prhs );
+    } catch ( std::exception const & e ) {
       mexErrMsgTxt( fmt::format( "CircleArc Error: {}", e.what() ).c_str() );
     } catch (...) {
       mexErrMsgTxt("CircleArc failed\n");

@@ -9,6 +9,10 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
+disp('----------------------- START ---------------------------');
+
+old_dir = cd(fileparts(which(mfilename)));
+
 folder  = '.';
 list    = dir(fullfile(folder, '*.m'));
 nFile   = length(list);
@@ -18,7 +22,9 @@ for kkk=1:nFile
   if ~strcmp( file, 'test_all.m' ) && ~strcmp( file, 'bspline_plot.m' )
     try
       [filepath,name,ext] = fileparts(file);
-      fprintf('\n\ntest file: %s\n',file);
+      fprintf('\n\n\n\n\n\n==============================================\n');
+      fprintf('test file: %s\n',file);
+      fprintf('==============================================\n\n');
       run(name);
       success(kkk) = true;
       fprintf('test file: %s done\n',file);
@@ -29,3 +35,7 @@ for kkk=1:nFile
     end
   end
 end
+
+cd(old_dir);
+
+disp('----------------------- DONE ----------------------------');

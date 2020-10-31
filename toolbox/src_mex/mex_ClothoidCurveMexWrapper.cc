@@ -54,7 +54,13 @@ MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
-  using namespace std;
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  #define CMD_BASE "ClothoidCurveMexWrapper"
+  #define G2LIB_CLASS ClothoidCurve
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
 
   /*\
    |  ____    _  _____  _
@@ -493,14 +499,6 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  #define CMD_BASE "ClothoidCurveMexWrapper"
-  #define G2LIB_CLASS ClothoidCurve
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
   static
   void
   do_bbTriangles(
@@ -671,42 +669,22 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  typedef enum {
-    CMD_NEW,
-    CMD_BUILD,
-    CMD_BUILD_G1,
-    CMD_BUILD_G1_D,
-    CMD_BUILD_FORWARD,
-    CMD_CHANGE_CURVILINEAR_ORIGIN,
-    CMD_DKAPPA,
-    CMD_INFINITY,
-    CMD_DISTANCE_BY_SAMPLE,
-    CMD_CLOSEST_BY_SAMPLE,
-    CMD_BB_TRIANGLES,
-    CMD_OPTIMIZED_SAMPLE,
-    CMD_VIRTUAL_LIST,
-    CMD_AABB_TRUE,
-    CMD_AABB_FALSE
-  } CMD_LIST;
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static map<string,unsigned> cmd_to_idx = {
-    {"new",CMD_NEW},
-    {"build",CMD_BUILD},
-    {"build_G1",CMD_BUILD_G1},
-    {"build_G1_D",CMD_BUILD_G1_D},
-    {"build_forward",CMD_BUILD_FORWARD},
-    {"changeCurvilinearOrigin",CMD_CHANGE_CURVILINEAR_ORIGIN},
-    {"dkappa",CMD_DKAPPA},
-    {"infinity",CMD_INFINITY},
-    {"distanceBySample",CMD_DISTANCE_BY_SAMPLE},
-    {"closestPointBySample",CMD_CLOSEST_BY_SAMPLE},
-    {"bbTriangles",CMD_BB_TRIANGLES},
-    {"optimized_sample",CMD_OPTIMIZED_SAMPLE},
-    {"aabb_true",CMD_AABB_TRUE},
-    {"aabb_false",CMD_AABB_FALSE},
-    CMD_MAP_LIST
+  static std::map<std::string,DO_CMD> cmd_to_fun = {
+    {"new",do_new},
+    {"build",do_build},
+    {"build_G1",do_build_G1},
+    {"build_G1_D",do_build_G1_D},
+    {"build_forward",do_build_forward},
+    {"changeCurvilinearOrigin",do_change_curvilinear_origin},
+    {"dkappa",do_dkappa},
+    {"infinity",do_infinity},
+    {"distanceBySample",do_distance_by_sample},
+    {"closestPointBySample",do_closest_by_sample},
+    {"bbTriangles",do_bbTriangles},
+    {"optimized_sample",do_optimized_sample},
+    {"aabb_true",do_aabb_true},
+    {"aabb_false",do_aabb_false},
+    CMD_MAP_FUN
   };
 
   extern "C"
@@ -723,57 +701,11 @@ namespace G2lib {
     }
 
     try {
-
       MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
-
-      switch ( cmd_to_idx.at(cmd) ) {
-      case CMD_NEW:
-        do_new( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD:
-        do_build( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_G1:
-        do_build_G1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_G1_D:
-        do_build_G1_D( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_FORWARD:
-        do_build_forward( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CHANGE_CURVILINEAR_ORIGIN:
-        do_change_curvilinear_origin( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_DKAPPA:
-        do_dkappa( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_INFINITY:
-        do_infinity( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_DISTANCE_BY_SAMPLE:
-        do_distance_by_sample( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CLOSEST_BY_SAMPLE:
-        do_closest_by_sample( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BB_TRIANGLES:
-        do_bbTriangles( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_OPTIMIZED_SAMPLE:
-        do_optimized_sample( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_AABB_TRUE:
-        do_aabb_true( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_AABB_FALSE:
-        do_aabb_false( nlhs, plhs, nrhs, prhs );
-        break;
-      CMD_CASE_LIST;
-      }
-
-    } catch ( exception const & e ) {
+      DO_CMD pfun = cmd_to_fun.at(cmd);
+      pfun( nlhs, plhs, nrhs, prhs );
+    } catch ( std::exception const & e ) {
       mexErrMsgTxt( fmt::format( "ClothoidCurve Error: {}", e.what() ).c_str() );
     } catch (...) {
       mexErrMsgTxt("ClothoidCurve failed\n");

@@ -26,7 +26,7 @@
 "    OBJ = pointer to the internal object\n" \
 "\n" \
 "  - Build:\n" \
-"    BiarcMexWrapper( 'build', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
+"    BiarcMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
 "    BiarcMexWrapper( 'build_3P', OBJ, x0, y0, x1, y1, x2, y2 );\n" \
 "    [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', OBJ );\n" \
 "\n" \
@@ -38,7 +38,13 @@ MEX_INFO_MESSAGE_END
 
 namespace G2lib {
 
-  using namespace std;
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  #define CMD_BASE "BiarcMexWrapper"
+  #define G2LIB_CLASS Biarc
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
 
   /*\
    |  ____    _  _____  _
@@ -93,8 +99,8 @@ namespace G2lib {
 
   static
   void
-  do_build( int nlhs, mxArray       *plhs[],
-            int nrhs, mxArray const *prhs[] ) {
+  do_build_G1( int nlhs, mxArray       *plhs[],
+               int nrhs, mxArray const *prhs[] ) {
 
     #define CMD "BiarcMexWrapper('build',OBJ,x0,y0,theta0,x1,y1,theta1): "
 
@@ -283,8 +289,8 @@ namespace G2lib {
 
   static
   void
-  do_L0( int nlhs, mxArray       *plhs[],
-         int nrhs, mxArray const *prhs[] ) {
+  do_length0( int nlhs, mxArray       *plhs[],
+              int nrhs, mxArray const *prhs[] ) {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
@@ -299,8 +305,8 @@ namespace G2lib {
 
   static
   void
-  do_L1( int nlhs, mxArray       *plhs[],
-         int nrhs, mxArray const *prhs[] ) {
+  do_length1( int nlhs, mxArray       *plhs[],
+              int nrhs, mxArray const *prhs[] ) {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
@@ -373,14 +379,6 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  #define CMD_BASE "BiarcMexWrapper"
-  #define G2LIB_CLASS Biarc
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
   static
   void
   do_bbTriangles( int nlhs, mxArray       * plhs[],
@@ -450,42 +448,22 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  typedef enum {
-    CMD_NEW,
-    CMD_BUILD,
-    CMD_BUILD_3P,
-    CMD_BUILD_G1,
-    CMD_X_MIDDLE,
-    CMD_Y_MIDDLE,
-    CMD_THETA_MIDDLE,
-    CMD_S_MIDDLE,
-    CMD_KAPPA0,
-    CMD_KAPPA1,
-    CMD_L0,
-    CMD_L1,
-    CMD_TO_NURBS,
-    CMD_BB_TRIANGLES,
-    CMD_VIRTUAL_LIST
-  } CMD_LIST;
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static map<string,unsigned> cmd_to_idx = {
-    {"new",CMD_NEW},
-    {"build",CMD_BUILD},
-    {"build_3P",CMD_BUILD_3P},
-    {"build_G1",CMD_BUILD_G1},
-    {"xMiddle",CMD_X_MIDDLE},
-    {"yMiddle",CMD_Y_MIDDLE},
-    {"thetaMiddle",CMD_THETA_MIDDLE},
-    {"sMiddle",CMD_S_MIDDLE},
-    {"kappa0",CMD_KAPPA0},
-    {"kappa1",CMD_KAPPA1},
-    {"length0",CMD_L0},
-    {"length1",CMD_L1},
-    {"to_nurbs",CMD_TO_NURBS},
-    {"bbTriangles",CMD_BB_TRIANGLES},
-    CMD_MAP_LIST
+  static std::map<std::string,DO_CMD> cmd_to_fun = {
+    {"new",do_new},
+    //{"build",do_build},
+    {"build_3P",do_build_3P},
+    {"build_G1",do_build_G1},
+    {"xMiddle",do_x_middle},
+    {"yMiddle",do_y_middle},
+    {"thetaMiddle",do_theta_middle},
+    {"sMiddle",do_s_middle},
+    {"kappa0",do_kappa0},
+    {"kappa1",do_kappa1},
+    {"length0",do_length0},
+    {"length1",do_length1},
+    {"to_nurbs",do_to_nurbs},
+    {"bbTriangles",do_bbTriangles},
+    CMD_MAP_FUN
   };
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -501,55 +479,11 @@ namespace G2lib {
     }
 
     try {
-
       MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
-
-      switch ( cmd_to_idx.at(cmd) ) {
-      case CMD_NEW:
-        do_new( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD:
-      case CMD_BUILD_G1:
-        do_build( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_3P:
-        do_build_3P( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_X_MIDDLE:
-        do_x_middle( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_Y_MIDDLE:
-        do_y_middle( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_THETA_MIDDLE:
-        do_theta_middle( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_S_MIDDLE:
-        do_s_middle( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_KAPPA0:
-        do_kappa0( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_KAPPA1:
-        do_kappa1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_L0:
-        do_L0( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_L1:
-        do_L1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_TO_NURBS:
-        do_to_nurbs( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BB_TRIANGLES:
-        do_bbTriangles( nlhs, plhs, nrhs, prhs );
-        break;
-      CMD_CASE_LIST;
-      }
-
-    } catch ( exception const & e ) {
+      DO_CMD pfun = cmd_to_fun.at(cmd);
+      pfun( nlhs, plhs, nrhs, prhs );
+    } catch ( std::exception const & e ) {
       mexErrMsgTxt( fmt::format( "Biarc Error: {}", e.what() ).c_str() );
     } catch (...) {
       mexErrMsgTxt("Biarc failed\n");

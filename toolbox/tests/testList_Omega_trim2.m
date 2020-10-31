@@ -37,21 +37,61 @@ S3.copy(S);
 fmt1 = {'Color','red','LineWidth',4};
 fmt2 = {'Color','blue','LineWidth',4};
 
+x0 = 0;
+y0 = 0;
+
 subplot(2,2,1);
 S.plot( 100, fmt1, fmt2);
+[ x1, y1, s1, t1, iflag1, dst1 ] = S.closestPoint( x0, y0 );
+%[ x, y, s, t, iflag, dst ] = S.closestPointInSRange( PNT(1), PNT(2), s_begin, s_end );
+hold on;
+%[x1,y1] = S.eval( s );
+plot([x0,x1],[y0,y1],'-s','LineWidth',2,'MarkerSize',10,'MarkerEdgeColor','b','MarkerFaceColor','red');
 axis equal
+title('one');
 
 subplot(2,2,2);
-S1.trim(0,10);
+s_min = 0;
+s_max = 10;
+S1.trim(s_min, s_max);
 S1.plot( 100, fmt1, fmt2);
+res1 = S1.closestPoint( x0, y0 );
+res2 = S.closestPointInSRange( x0, y0, s_min, s_max );
+hold on;
+%[x1,y1] = S1.eval( s );
+plot([x0,res1.x],[y0,res1.y],'-s','LineWidth',2,'MarkerSize',5,'MarkerEdgeColor','b','MarkerFaceColor','red');
+plot([x0,res2.x],[y0,res2.y],'-o','LineWidth',2,'MarkerSize',10,'MarkerEdgeColor','b');
 axis equal
+fprintf('iflag = %d, icurve = %d\n', res1.iflag, res2.icurve );
+title('two');
 
 subplot(2,2,3);
-S2.trim(10,60);
+s_min = 10;
+s_max = 43;
+S2.trim( s_min, s_max );
 S2.plot( 100, fmt1, fmt2);
+res1 = S2.closestPoint( x0, y0 );
+res2 = S.closestPointInSRange( x0, y0, s_min, s_max );
+hold on;
+%[x1,y1] = S1.eval( s );
+plot([x0,res1.x],[y0,res1.y],'-s','LineWidth',2,'MarkerSize',5,'MarkerEdgeColor','b','MarkerFaceColor','red');
+plot([x0,res2.x],[y0,res2.y],'-o','LineWidth',2,'MarkerSize',10,'MarkerEdgeColor','b');
 axis equal
+fprintf('iflag = %d, icurve = %d\n', res1.iflag, res2.icurve );
+title('tre');
 
 subplot(2,2,4);
-S3.trim(35,5);
+s_min = 35;
+s_max = 5;
+S3.trim(s_min, s_max);
 S3.plot( 100, fmt1, fmt2);
+res1 = S3.closestPoint( x0, y0 );
+res2 = S.closestPointInSRange( x0, y0, s_min, s_max );
+hold on;
+%[x1,y1] = S1.eval( s );
+plot([x0,res1.x],[y0,res1.y],'-s','LineWidth',2,'MarkerSize',5,'MarkerEdgeColor','b','MarkerFaceColor','red');
+plot([x0,res2.x],[y0,res2.y],'-o','LineWidth',2,'MarkerSize',10,'MarkerEdgeColor','b');
 axis equal
+fprintf('iflag = %d, icurve = %d\n', res1.iflag, res2.icurve );
+title('quattro');
+

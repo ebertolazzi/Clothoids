@@ -79,15 +79,16 @@ main() {
     qx1, qy1, icurve_begin, icurve_end, x, y, s, t, dst, icurve
   );
 
-  cout
-    << "idx      = " << idx
-    << "\nx      = " << x
-    << "\ny      = " << y
-    << "\ns      = " << s
-    << "\nt      = " << t
-    << "\ndst    = " << dst
-    << "\nicurve = " << icurve
-    << '\n';
+  fmt::print(
+    "idx    = {}\n"
+    "x      = {}\n"
+    "y      = {}\n"
+    "s      = {}\n"
+    "t      = {}\n"
+    "dst    = {}\n"
+    "icurve = {}\n",
+    idx, x, y, s, t, dst, icurve
+  );
 
   int_type s_begin = 200;
   int_type s_end   = 300;
@@ -95,15 +96,16 @@ main() {
     qx1, qy1, s_begin, s_end, x, y, s, t, dst, icurve
   );
 
-  cout
-    << "idx       = " << idx
-    << "\nx       = " << x
-    << "\ny       = " << y
-    << "\ns       = " << s
-    << "\nt       = " << t
-    << "\ndst    = " << dst
-    << "\nicurve = " << icurve
-    << '\n';
+  fmt::print(
+    "idx    = {}\n"
+    "x      = {}\n"
+    "y      = {}\n"
+    "s      = {}\n"
+    "t      = {}\n"
+    "dst    = {}\n"
+    "icurve = {}\n",
+    idx, x, y, s, t, dst, icurve
+  );
 
   cout << "\n\nALL DONE FOLKS!!!\n";
 

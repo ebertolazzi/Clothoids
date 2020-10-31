@@ -60,10 +60,13 @@ MEX_INFO_MESSAGE("ClothoidListMexWrapper") \
 MEX_INFO_MESSAGE_END
 
 
-
 namespace G2lib {
 
-  using namespace std;
+  #define CMD_BASE "ClothoidListMexWrapper"
+  #define G2LIB_CLASS ClothoidList
+  #include "mex_common.hxx"
+  #undef CMD_BASE
+  #undef G2LIB_CLASS
 
   /*\
    |  ____    _  _____  _
@@ -853,12 +856,6 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  #define CMD_BASE "ClothoidListMexWrapper"
-  #define G2LIB_CLASS ClothoidList
-  #include "mex_common.hxx"
-  #undef CMD_BASE
-  #undef G2LIB_CLASS
-
   static
   void
   do_bbTriangles(
@@ -1001,8 +998,8 @@ namespace G2lib {
       CMD "expected 4, 5, 6 or 7 inputs, nrhs = {}\n", nrhs
     );
     MEX_ASSERT2(
-      nlhs == 7,
-      CMD "expected 1 output, nlhs = {}\n", nlhs
+      nlhs == 1 || nlhs == 7,
+      CMD "expected 1 or 7 outputs, nlhs = {}\n", nlhs
     );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
@@ -1041,13 +1038,32 @@ namespace G2lib {
       );
     }
 
-    setScalarInt( arg_out_0, icurve );
-    setScalarValue( arg_out_1, x );
-    setScalarValue( arg_out_2, y );
-    setScalarValue( arg_out_3, s );
-    setScalarValue( arg_out_4, t );
-    setScalarInt( arg_out_5, iflag );
-    setScalarValue( arg_out_6, dst );
+    if ( nlhs == 1 ) {
+      static char const * fieldnames[] = {
+        "icurve", "x", "y", "s", "t", "iflag", "dst"
+      };
+
+      mxArray * mx_icurve; setScalarInt( mx_icurve, icurve );
+      mxArray * mx_iflag;  setScalarInt( mx_iflag,  iflag  );
+
+      arg_out_0 = mxCreateStructMatrix(1,1,7,fieldnames);
+      mxSetFieldByNumber( arg_out_0, 0, 0, mx_icurve );
+      mxSetFieldByNumber( arg_out_0, 0, 1, mxCreateDoubleScalar(x) );
+      mxSetFieldByNumber( arg_out_0, 0, 2, mxCreateDoubleScalar(y) );
+      mxSetFieldByNumber( arg_out_0, 0, 3, mxCreateDoubleScalar(s) );
+      mxSetFieldByNumber( arg_out_0, 0, 4, mxCreateDoubleScalar(t) );
+      mxSetFieldByNumber( arg_out_0, 0, 5, mx_iflag );
+      mxSetFieldByNumber( arg_out_0, 0, 6, mxCreateDoubleScalar(dst) );
+
+    } else {
+      setScalarInt  ( arg_out_0, icurve );
+      setScalarValue( arg_out_1, x      );
+      setScalarValue( arg_out_2, y      );
+      setScalarValue( arg_out_3, s      );
+      setScalarValue( arg_out_4, t      );
+      setScalarInt  ( arg_out_5, iflag  );
+      setScalarValue( arg_out_6, dst    );
+    }
 
     #undef CMD
   }
@@ -1068,8 +1084,8 @@ namespace G2lib {
       CMD "expected 4, 5, 6 or 7 inputs, nrhs = {}\n", nrhs
     );
     MEX_ASSERT2(
-      nlhs == 7,
-      CMD "expected 1 output, nlhs = {}\n", nlhs
+      nlhs == 1 || nlhs == 7,
+      CMD "expected 1 or 7 output, nlhs = {}\n", nlhs
     );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
@@ -1108,87 +1124,70 @@ namespace G2lib {
       );
     }
 
-    setScalarInt( arg_out_0, icurve );
-    setScalarValue( arg_out_1, x );
-    setScalarValue( arg_out_2, y );
-    setScalarValue( arg_out_3, s );
-    setScalarValue( arg_out_4, t );
-    setScalarInt( arg_out_5, iflag );
-    setScalarValue( arg_out_6, dst );
+    if ( nlhs == 1 ) {
+      static char const * fieldnames[] = {
+        "icurve", "x", "y", "s", "t", "iflag", "dst"
+      };
+
+      mxArray * mx_icurve; setScalarInt( mx_icurve, icurve );
+      mxArray * mx_iflag;  setScalarInt( mx_iflag,  iflag  );
+
+      arg_out_0 = mxCreateStructMatrix(1,1,7,fieldnames);
+      mxSetFieldByNumber( arg_out_0, 0, 0, mx_icurve );
+      mxSetFieldByNumber( arg_out_0, 0, 1, mxCreateDoubleScalar(x) );
+      mxSetFieldByNumber( arg_out_0, 0, 2, mxCreateDoubleScalar(y) );
+      mxSetFieldByNumber( arg_out_0, 0, 3, mxCreateDoubleScalar(s) );
+      mxSetFieldByNumber( arg_out_0, 0, 4, mxCreateDoubleScalar(t) );
+      mxSetFieldByNumber( arg_out_0, 0, 5, mx_iflag );
+      mxSetFieldByNumber( arg_out_0, 0, 6, mxCreateDoubleScalar(dst) );
+
+    } else {
+      setScalarInt  ( arg_out_0, icurve );
+      setScalarValue( arg_out_1, x      );
+      setScalarValue( arg_out_2, y      );
+      setScalarValue( arg_out_3, s      );
+      setScalarValue( arg_out_4, t      );
+      setScalarInt  ( arg_out_5, iflag  );
+      setScalarValue( arg_out_6, dst    );
+    }
 
     #undef CMD
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  typedef enum {
-    CMD_NEW,
-    CMD_PUSH_BACK,
-    CMD_PUSH_BACK_G1,
-    CMD_RESERVE,
-    CMD_GET_STK,
-    CMD_GET_XY,
-    CMD_BUILD_G1,
-    CMD_BUILD_RAW,
-    CMD_3_ARC_G2,
-    CMD_2_ARC_G2,
-    CMD_3_ARC_CLC,
-    CMD_3_ARC_G2_FIXED,
-    CMD_BUILD,
-    CMD_BUILD_THETA,
-    CMD_MAKE_CLOSED,
-    CMD_MAKE_OPEN,
-    CMD_IS_CLOSED,
-    CMD_GET,
-    CMD_NUM_SEGMENT,
-    CMD_DELTA_THETA,
-    CMD_DELTA_KAPPA,
-    CMD_EXPORT_TABLE,
-    CMD_EXPORT_RUBY,
-    CMD_FIND_ST1,
-    CMD_BB_TRIANGLES,
-    CMD_AABB_TRUE,
-    CMD_AABB_FALSE,
-    CMD_CLOSEST_SEGMENT,
-    CMD_CLOSEST_POINT_IN_RANGE,
-    CMD_CLOSEST_POINT_IN_SRANGE,
-    CMD_VIRTUAL_LIST
-  } CMD_LIST;
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static map<string,unsigned> cmd_to_idx = {
-    {"new",CMD_NEW},
-    {"push_back",CMD_PUSH_BACK},
-    {"push_back_G1",CMD_PUSH_BACK_G1},
-    {"reserve",CMD_RESERVE},
-    {"getSTK",CMD_GET_STK},
-    {"getXY",CMD_GET_XY},
-    {"build_G1",CMD_BUILD_G1},
-    {"build_raw",CMD_BUILD_RAW},
-    {"build_3arcG2",CMD_3_ARC_G2},
-    {"build_2arcG2",CMD_2_ARC_G2},
-    {"build_CLC",CMD_3_ARC_CLC},
-    {"build_3arcG2fixed",CMD_3_ARC_G2_FIXED},
-    {"build",CMD_BUILD},
-    {"build_theta",CMD_BUILD_THETA},
-    {"make_closed",CMD_MAKE_CLOSED},
-    {"make_open",CMD_MAKE_OPEN},
-    {"is_closed",CMD_IS_CLOSED},
-    {"get",CMD_GET},
-    {"numSegment",CMD_NUM_SEGMENT},
-    {"deltaTheta",CMD_DELTA_THETA},
-    {"deltaKappa",CMD_DELTA_KAPPA},
-    {"export_table",CMD_EXPORT_TABLE},
-    {"export_ruby",CMD_EXPORT_RUBY},
-    {"findST1",CMD_FIND_ST1},
-    {"bbTriangles",CMD_BB_TRIANGLES},
-    {"aabb_true",CMD_AABB_TRUE},
-    {"aabb_false",CMD_AABB_FALSE},
-    {"closestSegment",CMD_CLOSEST_SEGMENT},
-    {"closestPointInRange",CMD_CLOSEST_POINT_IN_RANGE},
-    {"closestPointInSRange",CMD_CLOSEST_POINT_IN_SRANGE},
-    CMD_MAP_LIST
+  static std::map<std::string,DO_CMD> cmd_to_fun = {
+    {"new",do_new},
+    {"push_back",do_push_back},
+    {"push_back_G1",do_push_back_G1},
+    {"reserve",do_reserve},
+    {"getSTK",do_getSTK},
+    {"getXY",do_getXY},
+    {"build_G1",do_build_G1},
+    {"build_raw",do_build_raw},
+    {"build_3arcG2",do_build_3arcG2},
+    {"build_2arcG2",do_build_2arcG2},
+    {"build_CLC",do_build_CLC},
+    {"build_3arcG2fixed",do_build_3arcG2fixed},
+    {"build",do_build},
+    {"build_theta",do_build_theta},
+    {"make_closed",do_make_closed},
+    {"make_open",do_make_open},
+    {"is_closed",do_is_closed},
+    {"get",do_get},
+    {"numSegment",do_numSegment},
+    {"deltaTheta",do_deltaTheta},
+    {"deltaKappa",do_deltaKappa},
+    {"export_table",do_export_table},
+    {"export_ruby",do_export_ruby},
+    {"findST1",do_findST1},
+    {"bbTriangles",do_bbTriangles},
+    {"aabb_true",do_aabb_true},
+    {"aabb_false",do_aabb_false},
+    {"closestSegment",do_closestSegment},
+    {"closestPointInRange",do_closestPointInRange},
+    {"closestPointInSRange",do_closestPointInSRange},
+    CMD_MAP_FUN
   };
 
   extern "C"
@@ -1205,105 +1204,11 @@ namespace G2lib {
     }
 
     try {
-
       MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
-
-      switch ( cmd_to_idx.at(cmd) ) {
-      case CMD_NEW:
-        do_new( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_PUSH_BACK:
-        do_push_back( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_PUSH_BACK_G1:
-        do_push_back_G1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_RESERVE:
-        do_reserve( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GET_STK:
-        do_getSTK( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GET_XY:
-        do_getXY( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_G1:
-        do_build_G1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_RAW:
-        do_build_raw( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_3_ARC_G2:
-        do_build_3arcG2( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_2_ARC_G2:
-        do_build_2arcG2( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_3_ARC_CLC:
-        do_build_CLC( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_3_ARC_G2_FIXED:
-        do_build_3arcG2fixed( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD:
-        do_build( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD_THETA:
-        do_build_theta( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_MAKE_CLOSED:
-        do_make_closed( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_MAKE_OPEN:
-        do_make_open( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_IS_CLOSED:
-        do_is_closed( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GET:
-        do_get( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_NUM_SEGMENT:
-        do_numSegment( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_DELTA_THETA:
-        do_deltaTheta( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_DELTA_KAPPA:
-        do_deltaKappa( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_EXPORT_TABLE:
-        do_export_table( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_EXPORT_RUBY:
-        do_export_ruby( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_FIND_ST1:
-        do_findST1( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BB_TRIANGLES:
-        do_bbTriangles( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_AABB_TRUE:
-        do_aabb_true( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_AABB_FALSE:
-        do_aabb_false( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CLOSEST_SEGMENT:
-        do_closestSegment( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CLOSEST_POINT_IN_RANGE:
-        do_closestPointInRange( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CLOSEST_POINT_IN_SRANGE:
-        do_closestPointInSRange( nlhs, plhs, nrhs, prhs );
-        break;
-      CMD_CASE_LIST;
-      }
-
-    } catch ( exception const & e ) {
+      DO_CMD pfun = cmd_to_fun.at(cmd);
+      pfun( nlhs, plhs, nrhs, prhs );
+    } catch ( std::exception const & e ) {
       mexErrMsgTxt( fmt::format( "ClothoidList Error: {}", e.what() ).c_str() );
     } catch (...) {
       mexErrMsgTxt("ClothoidList failed\n");

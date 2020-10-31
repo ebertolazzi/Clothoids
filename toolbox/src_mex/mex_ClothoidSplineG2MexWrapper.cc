@@ -50,8 +50,6 @@
 
 namespace G2lib {
 
-  using namespace std;
-
   static
   ClothoidSplineG2 *
   DATA_NEW( mxArray * & mx_id ) {
@@ -410,43 +408,28 @@ namespace G2lib {
 
     ClothoidSplineG2 * ptr = DATA_GET(arg_in_1);
 
-    ptr->info(cout);
+    ptr->info( std::cout );
 
     #undef CMD
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  typedef enum {
-    CMD_NEW,
-    CMD_DELETE,
-    CMD_BUILD,
-    CMD_TARGET,
-    CMD_GUESS,
-    CMD_OBJECTIVE,
-    CMD_GRADIENT,
-    CMD_CONSTRAINTS,
-    CMD_JACOBIAN,
-    CMD_JACOBIAN_PATTERN,
-    CMD_DIMS,
-    CMD_INFO,
-  } CMD_LIST;
+  typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static map<string,unsigned> cmd_to_idx = {
-    {"new",CMD_NEW},
-    {"delete",CMD_DELETE},
-    {"build",CMD_BUILD},
-    {"target",CMD_TARGET},
-    {"guess",CMD_GUESS},
-    {"objective",CMD_OBJECTIVE},
-    {"gradient",CMD_GRADIENT},
-    {"constraints",CMD_CONSTRAINTS},
-    {"jacobian",CMD_JACOBIAN},
-    {"jacobian_pattern",CMD_JACOBIAN_PATTERN},
-    {"dims",CMD_DIMS},
-    {"info",CMD_INFO},
+  static std::map<std::string,DO_CMD> cmd_to_fun = {
+    {"new",do_new},
+    {"delete",do_delete},
+    {"build",do_build},
+    {"target",do_target},
+    {"guess",do_guess},
+    {"objective",do_objective},
+    {"gradient",do_gradient},
+    {"constraints",do_constraints},
+    {"jacobian",do_jacobian},
+    {"jacobian_pattern",do_jacobian_pattern},
+    {"dims",do_dims},
+    {"info",do_info},
   };
 
   extern "C"
@@ -463,52 +446,13 @@ namespace G2lib {
     }
 
     try {
-
       MEX_ASSERT(
         mxIsChar(arg_in_0),
         "ClothoidListMexWrapper: First argument must be a string"
       );
       string cmd = mxArrayToString(arg_in_0);
-
-      switch ( cmd_to_idx.at(cmd) ) {
-      case CMD_NEW:
-        do_new( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_DELETE:
-        do_delete( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_BUILD:
-        do_build( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_TARGET:
-        do_target( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GUESS:
-        do_guess( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_OBJECTIVE:
-        do_objective( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_GRADIENT:
-        do_gradient( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_CONSTRAINTS:
-        do_constraints( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_JACOBIAN:
-        do_jacobian( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_JACOBIAN_PATTERN:
-        do_jacobian_pattern( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_DIMS:
-        do_dims( nlhs, plhs, nrhs, prhs );
-        break;
-      case CMD_INFO:
-        do_info( nlhs, plhs, nrhs, prhs );
-        break;
-      }
-
+      DO_CMD pfun = cmd_to_fun.at(cmd);
+      pfun( nlhs, plhs, nrhs, prhs );
     } catch ( std::exception const & e ) {
       mexErrMsgTxt( fmt::format( "Clothoid Error: {}", e.what() ).c_str() );
     } catch (...) {

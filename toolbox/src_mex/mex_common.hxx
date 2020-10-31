@@ -1,5 +1,9 @@
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 static
 bool
 do_is_ISO( mxArray const * plhs, char const msg[] ) {
@@ -7,6 +11,8 @@ do_is_ISO( mxArray const * plhs, char const msg[] ) {
   string cmd = mxArrayToString( plhs );
   return cmd == "ISO";
 }
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 static
 void
@@ -271,8 +277,8 @@ do_closestPoint(
     CMD "expected 4, 5 or 6 input, nrhs = {}\n", nrhs
   );
   MEX_ASSERT2(
-    nlhs == 6,
-    CMD "expected 6 output, nlhs = {}\n", nlhs
+    nlhs == 1 || nlhs == 6,
+    CMD "expected 1 pr 6 outputs, nlhs = {}\n", nlhs
   );
 
   mwSize nrx, ncx, nry, ncy;
@@ -294,12 +300,49 @@ do_closestPoint(
     nrx, ncx, nry, ncy
   );
 
-  real_type * x     = createMatrixValue( arg_out_0, nrx, ncx );
-  real_type * y     = createMatrixValue( arg_out_1, nrx, ncx );
-  real_type * s     = createMatrixValue( arg_out_2, nrx, ncx );
-  real_type * t     = createMatrixValue( arg_out_3, nrx, ncx );
-  int32_t   * iflag = createMatrixInt32( arg_out_4, nrx, ncx );
-  real_type * dst   = createMatrixValue( arg_out_5, nrx, ncx );
+  real_type * x     = nullptr;
+  real_type * y     = nullptr;
+  real_type * s     = nullptr;
+  real_type * t     = nullptr;
+  int32_t   * iflag = nullptr;
+  real_type * dst   = nullptr;
+
+  if ( nlhs == 1 ) {
+
+    mxArray * mx_x;
+    mxArray * mx_y;
+    mxArray * mx_s;
+    mxArray * mx_t;
+    mxArray * mx_iflag;
+    mxArray * mx_dst;
+
+    x      = createMatrixValue( mx_x,     nrx, ncx );
+    y      = createMatrixValue( mx_y,     nrx, ncx );
+    s      = createMatrixValue( mx_s,     nrx, ncx );
+    t      = createMatrixValue( mx_t,     nrx, ncx );
+    iflag  = createMatrixInt32( mx_iflag, nrx, ncx );
+    dst    = createMatrixValue( mx_dst,   nrx, ncx );
+
+    static char const * fieldnames[] = {
+      "x", "y", "s", "t", "iflag", "dst"
+    };
+
+    arg_out_0 = mxCreateStructMatrix(1,1,6,fieldnames);
+    mxSetFieldByNumber( arg_out_0, 0, 0, mx_x     );
+    mxSetFieldByNumber( arg_out_0, 0, 1, mx_y     );
+    mxSetFieldByNumber( arg_out_0, 0, 2, mx_s     );
+    mxSetFieldByNumber( arg_out_0, 0, 3, mx_t     );
+    mxSetFieldByNumber( arg_out_0, 0, 4, mx_iflag );
+    mxSetFieldByNumber( arg_out_0, 0, 5, mx_dst   );
+
+  } else {
+    x     = createMatrixValue( arg_out_0, nrx, ncx );
+    y     = createMatrixValue( arg_out_1, nrx, ncx );
+    s     = createMatrixValue( arg_out_2, nrx, ncx );
+    t     = createMatrixValue( arg_out_3, nrx, ncx );
+    iflag = createMatrixInt32( arg_out_4, nrx, ncx );
+    dst   = createMatrixValue( arg_out_5, nrx, ncx );
+  }
 
   mwSize size = nrx * ncx;
   if ( nrhs >= 5 ) {
@@ -576,7 +619,7 @@ do_info(
   #define CMD CMD_BASE "('info',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
-  ptr->info(cout);
+  ptr->info( std::cout );
   #undef CMD
 }
 
@@ -612,7 +655,7 @@ do_eval(
 
     mwSize incs = size  == 1 ? 0 : 1;
     mwSize inct = sizet == 1 ? 0 : 1;
-    mwSize npts = max(size,sizet);
+    mwSize npts = size > sizet ? size : sizet;
 
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
@@ -704,7 +747,7 @@ do_eval_D(
 
     mwSize incs = size  == 1 ? 0 : 1;
     mwSize inct = sizet == 1 ? 0 : 1;
-    mwSize npts = max(size,sizet);
+    mwSize npts = size > sizet ? size : sizet;
 
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
@@ -793,7 +836,7 @@ do_eval_DD(
 
     mwSize incs = size  == 1 ? 0 : 1;
     mwSize inct = sizet == 1 ? 0 : 1;
-    mwSize npts = max(size,sizet);
+    mwSize npts = size > sizet ? size : sizet;
 
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
@@ -885,7 +928,7 @@ do_eval_DDD(
 
     mwSize incs = size  == 1 ? 0 : 1;
     mwSize inct = sizet == 1 ? 0 : 1;
-    mwSize npts = max(size,sizet);
+    mwSize npts = size > sizet ? size : sizet;
 
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
@@ -978,7 +1021,7 @@ do_evaluate(
 
     mwSize incs = size  == 1 ? 0 : 1;
     mwSize inct = sizet == 1 ? 0 : 1;
-    mwSize npts = max(size,sizet);
+    mwSize npts = size > sizet ? size : sizet;
 
     #define LOOPXY1 \
       for ( mwSize i = 0; i < npts;  \
@@ -1464,210 +1507,46 @@ do_noAABBtree(
   #undef CMD
 }
 
+#define CMD_MAP_FUN                 \
+{"length",do_length},               \
+{"delete",do_delete},               \
+{"copy",do_copy},                   \
+{"bbox",do_bbox},                   \
+{"changeOrigin",do_change_origin},  \
+{"translate",do_translate},         \
+{"rotate",do_rotate},               \
+{"scale",do_scale},                 \
+{"reverse",do_reverse},             \
+{"trim",do_trim},                   \
+{"distance",do_distance},           \
+{"closestPoint",do_closestPoint},   \
+{"collision",do_collision},         \
+{"intersect",do_intersect},         \
+{"findST",do_findST},               \
+{"info",do_info},                   \
+{"evaluate",do_evaluate},           \
+{"eval",do_eval},                   \
+{"eval_D",do_eval_D},               \
+{"eval_DD",do_eval_DD},             \
+{"eval_DDD",do_eval_DDD},           \
+{"theta",do_theta},                 \
+{"theta_D",do_theta_D},             \
+{"theta_DD",do_theta_DD},           \
+{"theta_DDD",do_theta_DDD},         \
+{"kappa",do_kappa},                 \
+{"kappa_D",do_kappa_D},             \
+{"kappa_DD",do_kappa_DD},           \
+{"xyBegin",do_xy_begin},            \
+{"xBegin",do_x_begin},              \
+{"yBegin",do_y_begin},              \
+{"thetaBegin",do_theta_begin},      \
+{"kappaBegin",do_kappa_begin},      \
+{"xyEnd",do_xy_end},                \
+{"xEnd",do_x_end},                  \
+{"yEnd",do_y_end},                  \
+{"thetaEnd",do_theta_end},          \
+{"kappaEnd",do_kappa_end},          \
+{"yesAABBtree",do_yesAABBtree},     \
+{"noAABBtree",do_noAABBtree}
+
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-#define CMD_VIRTUAL_LIST \
-CMD_LENGTH,              \
-CMD_DELETE,              \
-CMD_COPY,                \
-CMD_BBOX,                \
-CMD_CHANGE_ORIGIN,       \
-CMD_TRANSLATE,           \
-CMD_ROTATE,              \
-CMD_SCALE,               \
-CMD_REVERSE,             \
-CMD_TRIM,                \
-CMD_DISTANCE,            \
-CMD_CLOSEST_POINT,       \
-CMD_COLLISION,           \
-CMD_INTERSECT,           \
-CMD_FINDST,              \
-CMD_INFO,                \
-CMD_EVALUATE,            \
-CMD_EVAL,                \
-CMD_EVAL_D,              \
-CMD_EVAL_DD,             \
-CMD_EVAL_DDD,            \
-CMD_THETA,               \
-CMD_THETA_D,             \
-CMD_THETA_DD,            \
-CMD_THETA_DDD,           \
-CMD_KAPPA,               \
-CMD_KAPPA_D,             \
-CMD_KAPPA_DD,            \
-CMD_XY_BEGIN,            \
-CMD_X_BEGIN,             \
-CMD_Y_BEGIN,             \
-CMD_THETA_BEGIN,         \
-CMD_KAPPA_BEGIN,         \
-CMD_XY_END,              \
-CMD_X_END,               \
-CMD_Y_END,               \
-CMD_THETA_END,           \
-CMD_KAPPA_END,           \
-CMD_YES_AABBTREE,        \
-CMD_NO_AABBTREE
-
-#define CMD_MAP_LIST                \
-{"length",CMD_LENGTH},              \
-{"delete",CMD_DELETE},              \
-{"copy",CMD_COPY},                  \
-{"bbox",CMD_BBOX},                  \
-{"changeOrigin",CMD_CHANGE_ORIGIN}, \
-{"translate",CMD_TRANSLATE},        \
-{"rotate",CMD_ROTATE},              \
-{"scale",CMD_SCALE},                \
-{"reverse",CMD_REVERSE},            \
-{"trim",CMD_TRIM},                  \
-{"distance",CMD_DISTANCE},          \
-{"closestPoint",CMD_CLOSEST_POINT}, \
-{"collision",CMD_COLLISION},        \
-{"intersect",CMD_INTERSECT},        \
-{"findST",CMD_FINDST},              \
-{"info",CMD_INFO},                  \
-{"evaluate",CMD_EVALUATE},          \
-{"eval",CMD_EVAL},                  \
-{"eval_D",CMD_EVAL_D},              \
-{"eval_DD",CMD_EVAL_DD},            \
-{"eval_DDD",CMD_EVAL_DDD},          \
-{"theta",CMD_THETA},                \
-{"theta_D",CMD_THETA_D},            \
-{"theta_DD",CMD_THETA_DD},          \
-{"theta_DDD",CMD_THETA_DDD},        \
-{"kappa",CMD_KAPPA},                \
-{"kappa_D",CMD_KAPPA_D},            \
-{"kappa_DD",CMD_KAPPA_DD},          \
-{"xyBegin",CMD_XY_BEGIN},           \
-{"xBegin",CMD_X_BEGIN},             \
-{"yBegin",CMD_Y_BEGIN},             \
-{"thetaBegin",CMD_THETA_BEGIN},     \
-{"kappaBegin",CMD_KAPPA_BEGIN},     \
-{"xyEnd",CMD_XY_END},               \
-{"xEnd",CMD_X_END},                 \
-{"yEnd",CMD_Y_END},                 \
-{"thetaEnd",CMD_THETA_END},         \
-{"kappaEnd",CMD_KAPPA_END},         \
-{"yesAABBtree",CMD_YES_AABBTREE},   \
-{"noAABBtree",CMD_NO_AABBTREE}
-
-#define CMD_CASE_LIST                         \
-case CMD_LENGTH:                              \
-  do_length( nlhs, plhs, nrhs, prhs );        \
-  break;                                      \
-case CMD_DELETE:                              \
-  do_delete( nlhs, plhs, nrhs, prhs );        \
-  break;                                      \
-case CMD_COPY:                                \
-  do_copy( nlhs, plhs, nrhs, prhs );          \
-  break;                                      \
-case CMD_BBOX:                                \
-  do_bbox( nlhs, plhs, nrhs, prhs );          \
-  break;                                      \
-case CMD_CHANGE_ORIGIN:                       \
-  do_change_origin( nlhs, plhs, nrhs, prhs ); \
-  break;                                      \
-case CMD_TRANSLATE:                           \
-  do_translate( nlhs, plhs, nrhs, prhs );     \
-  break;                                      \
-case CMD_ROTATE:                              \
-  do_rotate( nlhs, plhs, nrhs, prhs );        \
-  break;                                      \
-case CMD_SCALE:                               \
-  do_scale( nlhs, plhs, nrhs, prhs );         \
-  break;                                      \
-case CMD_REVERSE:                             \
-  do_reverse( nlhs, plhs, nrhs, prhs );       \
-  break;                                      \
-case CMD_TRIM:                                \
-  do_trim( nlhs, plhs, nrhs, prhs );          \
-  break;                                      \
-case CMD_DISTANCE:                            \
-  do_distance( nlhs, plhs, nrhs, prhs );      \
-  break;                                      \
-case CMD_CLOSEST_POINT:                       \
-  do_closestPoint( nlhs, plhs, nrhs, prhs );  \
-  break;                                      \
-case CMD_COLLISION:                           \
-  do_collision( nlhs, plhs, nrhs, prhs );     \
-  break;                                      \
-case CMD_INTERSECT:                           \
-  do_intersect( nlhs, plhs, nrhs, prhs );     \
-  break;                                      \
-case CMD_FINDST:                              \
-  do_findST( nlhs, plhs, nrhs, prhs );        \
-  break;                                      \
-case CMD_INFO:                                \
-  do_info( nlhs, plhs, nrhs, prhs );          \
-  break;                                      \
-case CMD_EVALUATE:                            \
-  do_evaluate( nlhs, plhs, nrhs, prhs );      \
-  break;                                      \
-case CMD_EVAL:                                \
-  do_eval( nlhs, plhs, nrhs, prhs );          \
-  break;                                      \
-case CMD_EVAL_D:                              \
-  do_eval_D( nlhs, plhs, nrhs, prhs );        \
-  break;                                      \
-case CMD_EVAL_DD:                             \
-  do_eval_DD( nlhs, plhs, nrhs, prhs );       \
-  break;                                      \
-case CMD_EVAL_DDD:                            \
-  do_eval_DDD( nlhs, plhs, nrhs, prhs );      \
-  break;                                      \
-case CMD_THETA:                               \
-  do_theta( nlhs, plhs, nrhs, prhs );         \
-  break;                                      \
-case CMD_THETA_D:                             \
-  do_theta_D( nlhs, plhs, nrhs, prhs );       \
-  break;                                      \
-case CMD_THETA_DD:                            \
-  do_theta_DD( nlhs, plhs, nrhs, prhs );      \
-  break;                                      \
-case CMD_THETA_DDD:                           \
-  do_theta_DDD( nlhs, plhs, nrhs, prhs );     \
-  break;                                      \
-case CMD_KAPPA:                               \
-  do_kappa( nlhs, plhs, nrhs, prhs );         \
-  break;                                      \
-case CMD_KAPPA_D:                             \
-  do_kappa_D( nlhs, plhs, nrhs, prhs );       \
-  break;                                      \
-case CMD_KAPPA_DD:                            \
-  do_kappa_DD( nlhs, plhs, nrhs, prhs );      \
-  break;                                      \
-case CMD_XY_BEGIN:                            \
-  do_xy_begin( nlhs, plhs, nrhs, prhs );      \
-  break;                                      \
-case CMD_X_BEGIN:                             \
-  do_x_begin( nlhs, plhs, nrhs, prhs );       \
-  break;                                      \
-case CMD_Y_BEGIN:                             \
-  do_y_begin( nlhs, plhs, nrhs, prhs );       \
-  break;                                      \
-case CMD_THETA_BEGIN:                         \
-  do_theta_begin( nlhs, plhs, nrhs, prhs );   \
-  break;                                      \
-case CMD_KAPPA_BEGIN:                         \
-  do_kappa_begin( nlhs, plhs, nrhs, prhs );   \
-  break;                                      \
-case CMD_XY_END:                              \
-  do_xy_end( nlhs, plhs, nrhs, prhs );        \
-  break;                                      \
-case CMD_X_END:                               \
-  do_x_end( nlhs, plhs, nrhs, prhs );         \
-  break;                                      \
-case CMD_Y_END:                               \
-  do_y_end( nlhs, plhs, nrhs, prhs );         \
-  break;                                      \
-case CMD_THETA_END:                           \
-  do_theta_end( nlhs, plhs, nrhs, prhs );     \
-  break;                                      \
-case CMD_KAPPA_END:                           \
-  do_kappa_end( nlhs, plhs, nrhs, prhs );     \
-  break;                                      \
-case CMD_YES_AABBTREE:                        \
-  do_yesAABBtree( nlhs, plhs, nrhs, prhs );   \
-  break;                                      \
-case CMD_NO_AABBTREE:                         \
-  do_noAABBtree( nlhs, plhs, nrhs, prhs );    \
-  break
