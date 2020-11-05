@@ -42,12 +42,13 @@ classdef ClothoidSplineG2 < handle
       % Check that consecutive points are distintx
       %
       chk = diff(x).^2+diff(y).^2;
-      mi  = min(chk);
-      ma  = max(chk);
+      [mi,idx1] = min(chk);
+      [ma,idx2] = max(chk);
       if mi == 0 || mi < 1e-10*ma
         error( ...
           [ 'ClothoidSplineG2, build failed: minimum distance between ', ...
-            'two consecutive points [min dist=%g] is 0 or too small!\n'], mi ...
+            'two consecutive points [min dist=%g, max dist=%g] is 0 or too small!\n', ...
+            'index of points at minimum distance is %d\n'], mi, ma, idx1 ...
         );
       end
       ClothoidSplineG2MexWrapper( 'build', self.objectHandle, x, y );
