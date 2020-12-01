@@ -1,8 +1,8 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="2095973427" file="/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/Clothoids.prj" location="/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids" name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="2095973427" file="/home/enrico/pins-mechatronix/LibSources/submodules/Clothoids/Clothoids.prj" location="/home/enrico/pins-mechatronix/LibSources/submodules/Clothoids" name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Clothoids</param.appname>
-    <param.authnamewatermark>Enrico Bertolazzi</param.authnamewatermark>
-    <param.email>enrico.bertolazzi@unitn.it</param.email>
+    <param.authnamewatermark />
+    <param.email />
     <param.company>Unversità degli Studi di Trento</param.company>
     <param.summary>Clothoids, a library for clothoids computation and more</param.summary>
     <param.description>A library for clothoids computation and more.</param.description>
@@ -98,7 +98,6 @@ setup.m
       <file>${PROJECT_ROOT}/toolbox</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}/toolbox/.vscode</file>
       <file>${PROJECT_ROOT}/toolbox/CompileClothoidsLib.m</file>
       <file>${PROJECT_ROOT}/toolbox/bin</file>
       <file>${PROJECT_ROOT}/toolbox/demos.xml</file>
@@ -117,26 +116,26 @@ setup.m
     <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/Clothoids.mltbx</file>
+      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">/home/enrico/pins-mechatronix/LibSources/submodules/Clothoids/Clothoids.mltbx</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>/Applications/MATLAB_R2020b.app</root>
+      <root>/usr/local/MATLAB/R2020a</root>
       <toolboxes />
     </matlab>
     <platform>
       <unix>true</unix>
-      <mac>true</mac>
+      <mac>false</mac>
       <windows>false</windows>
       <win2k>false</win2k>
       <winxp>false</winxp>
       <vista>false</vista>
-      <linux>false</linux>
+      <linux>true</linux>
       <solaris>false</solaris>
-      <osver>10.15.7</osver>
+      <osver>5.4.0-56-generic</osver>
       <os32>false</os32>
       <os64>true</os64>
-      <arch>maci64</arch>
+      <arch>glnxa64</arch>
       <matlab>true</matlab>
     </platform>
   </configuration>

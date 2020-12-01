@@ -60,15 +60,15 @@ if isunix
 elseif ispc
 end
 
-for k=1:length(NAMES)
-  N=NAMES{k};
-  disp('---------------------------------------------------------');
-  fprintf(1,'Compiling: %s\n',N)
-  CMD = [CMDBASE ' -c src_mex/mex_' N '.cc' ];
-  disp('---------------------------------------------------------');
-  disp(CMD);
-  eval(CMD);
-end
+%for k=1:length(NAMES)
+%  N=NAMES{k};
+%  disp('---------------------------------------------------------');
+%  fprintf(1,'Compiling: %s\n',N)
+%  CMD = [CMDBASE ' -c src_mex/mex_' N '.cc' ];
+%  disp('---------------------------------------------------------');
+%  disp(CMD);
+%  eval(CMD);
+%end
 
 LIB_OBJS = '';
 for k=1:length(LIB_NAMES)
@@ -85,23 +85,17 @@ for k=1:length(LIB_NAMES)
   eval(CMD);
 end
 
-[~,mexLoaded] = inmem('-completenames');
-
 for k=1:length(NAMES)
   N=NAMES{k};
   disp('---------------------------------------------------------');
-  fprintf(1,'Linking: %s\n',N);
+  fprintf(1,'Compiling: %s\n',N);
 
   CMD = [ 'while mislocked(''' N '''); munlock(''' N '''); end;'];
   eval(CMD);
 
-  CMD = [ 'mex -Isrc -output bin/', N, ' -largeArrayDims mex_'];
-  if ispc
-    CMD = [ CMD, N, '.obj ', LIB_OBJS ];
-  else
-    CMD = [ CMD, N, '.o ', LIB_OBJS ];
-  end
-
+  CMD = [ 'mex -Isrc -output bin/', N ];
+  CMD = [ CMD, ' -largeArrayDims src_mex/mex_', N ];
+  CMD = [ CMD, '.cc ', LIB_OBJS ];
 
   if ismac
     CMD = [CMD, ' CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"'];
@@ -114,7 +108,7 @@ for k=1:length(NAMES)
     CMD = [ CMD, ...
       ' CXXFLAGS="\$CXXFLAGS -Wall -O2 -g"' ...
       ' LDFLAGS="\$LDFLAGS -static-libgcc -static-libstdc++"' ...
-      ' LINKLIBS="-L\$MATLABROOT/bin/\$ARCH -L\$MATLABROOT/extern/bin/\$ARCH -lMatlabDataArray -lmx -lmex -lmat -lm "' ...
+      ' LINKLIBS="-ldl -L\$MATLABROOT/bin/\$ARCH -L\$MATLABROOT/extern/bin/\$ARCH -lMatlabDataArray -lmx -lmex -lmat -lm "' ...
     ];
   elseif ispc
   end
@@ -124,9 +118,9 @@ for k=1:length(NAMES)
 end
 
 if isunix
-  delete *.o;
-elseif ispc
-  delete *.obj;
+  delete *.o
+else
+  delete *.obj
 end
 
 cd(old_dir);

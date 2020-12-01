@@ -218,7 +218,7 @@ namespace G2lib {
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
     MEX_ASSERT2(
-      ntheta == ptr->numPnts(),
+      ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts() 
     );
     real_type f;
@@ -247,7 +247,7 @@ namespace G2lib {
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
     MEX_ASSERT2(
-      ntheta == ptr->numPnts(),
+      ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
     double * g = createMatrixValue( arg_out_0, ntheta, 1 );
@@ -276,7 +276,7 @@ namespace G2lib {
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
     MEX_ASSERT2(
-      ntheta == ptr->numPnts(),
+      ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
     double * c = createMatrixValue( arg_out_0, ptr->numConstraints(), 1 );
@@ -305,7 +305,7 @@ namespace G2lib {
     mwSize ntheta;
     real_type const * theta = getVectorPointer( arg_in_2, ntheta, CMD "Error in reading theta" );
     MEX_ASSERT2(
-      ntheta == ptr->numPnts(),
+      ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
 

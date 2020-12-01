@@ -356,10 +356,10 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "BiarcListMexWrapper('findST1',OBJ,x,y[,ibegin,iend]): "
+    #define CMD "BiarcListMexWrapper('findST1',OBJ,x,y): "
     MEX_ASSERT2(
-      nrhs == 4 || nrhs == 6,
-      CMD "expected 4 or 6 inputs, nrhs = {}\n", nrhs
+      nrhs == 4,
+      CMD "expected 4 inputs, nrhs = {}\n", nrhs
     );
     MEX_ASSERT2(
       nlhs == 3,
@@ -388,17 +388,6 @@ namespace G2lib {
       "size(x) = {} x {} size(y) = {} x {}\n",
       nrx, ncx, nry, ncy
     );
-
-    int64_t ibegin = 0;
-    int64_t iend   = ptr->numSegment()-1;
-    if ( nrhs == 6 ) {
-      ibegin = getInt(
-        arg_in_4, CMD "`ibegin` expected to be a scalar integer"
-      );
-      iend = getInt(
-        arg_in_5, CMD "`iend` expected to be a scalar integer"
-      );
-    }
 
     real_type * s   = createMatrixValue( arg_out_0, nrx, ncx );
     real_type * t   = createMatrixValue( arg_out_1, nrx, ncx );
