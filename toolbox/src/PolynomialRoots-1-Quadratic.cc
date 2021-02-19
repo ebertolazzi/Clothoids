@@ -25,7 +25,7 @@
 
 namespace PolynomialRoots {
 
-  using  std::abs;
+  using std::abs;
   static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
 
   indexType
@@ -102,8 +102,8 @@ namespace PolynomialRoots {
       }
     } else { // Compute discriminant avoiding overflow.
       valueType hb    = B/2; // b now b/2
-      valueType abs_b = std::abs(hb);
-      valueType abs_c = std::abs(C);
+      valueType abs_b = abs(hb);
+      valueType abs_c = abs(C);
       valueType e, d;
       if ( abs_b < abs_c ) {
         e = C < 0 ? -A : A;

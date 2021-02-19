@@ -242,11 +242,11 @@ namespace PolynomialRoots {
       dp = p/dp; // Newton correction
       x -= dp;   // new Newton root
       bisection = oscillate > 2; // activate bisection
-      converged = std::abs(dp) <= (1+std::abs(x)) * machepsi; // Newton convergence indicator
+      converged = std::abs(dp) <= std::abs(x) * machepsi; // Newton convergence indicator
     }
     if ( bisection ) {
       t = u - s; // initial bisection interval
-      while ( std::abs(t) > (1+std::abs(x)) * machepsi ) { // bisection iterates
+      while ( abs(t) > abs(x) * machepsi ) { // bisection iterates
         ++iter;
         p = evalMonicCubic( x, a, b, c );
         if ( p < 0 ) s = x;
@@ -366,17 +366,17 @@ namespace PolynomialRoots {
     case 5:
       r0   = a[1]-third;
       r1   = a[0]+one27th;
-      trpx = std::abs(r0) <= machepsi && std::abs(r1) <= machepsi; // check for triple root
+      trpx = abs(r0) <= machepsi && abs(r1) <= machepsi; // check for triple root
       if ( trpx ) { r0 = r1 = r2 = third * scale; nrts = 3; return; }
-      use_shifted = std::abs(r0) <= 0.01 && std::abs(r1) <= 0.01;
+      use_shifted = abs(r0) <= 0.01 && abs(r1) <= 0.01;
       r2 = guess5(a);
       break;
     case 6:
       r0   = a[1]-third;
       r1   = a[0]-one27th;
-      trpx = std::abs(r0) <= machepsi && std::abs(r1) <= machepsi; // check for triple root
+      trpx = abs(r0) <= machepsi && abs(r1) <= machepsi; // check for triple root
       if ( trpx ) { r0 = r1 = r2 = -third * scale; nrts = 3; return; }
-      use_shifted = std::abs(r0) <= 0.01 && std::abs(r1) <= 0.01;
+      use_shifted = abs(r0) <= 0.01 && abs(r1) <= 0.01;
       r2 = guess6(a);
       break;
     }
@@ -400,7 +400,7 @@ namespace PolynomialRoots {
         // y^3 + (a[1]-1/3)* y + (a[0]-a[1]/3+2/27), x = y+1/3
         r2 += third; // shift guess
         r1 -= a[1]/3-one27th;
-        //if ( std::abs(r3) < machepsi ) r3 = 0;
+        //if ( abs(r3) < machepsi ) r3 = 0;
         iter = NewtonBisection( 0, r0, a[0]-a[1]/3+two27th, r2 );
         r2 -= third; // unshift solution
       }

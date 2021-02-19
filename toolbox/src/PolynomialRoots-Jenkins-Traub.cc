@@ -123,11 +123,11 @@ namespace PolynomialRoots {
     // Synthetic division of K by the quadratic 1, u, v
     QuadraticSyntheticDivision( N, u, v, K, qk, c, d );
 
-    if ( std::abs(c) <= epsilon100 * std::abs(K[N-1]) &&
-         std::abs(d) <= epsilon100 * std::abs(K[N-2]) ) return dumFlag;
+    if ( abs(c) <= epsilon100 * abs(K[N-1]) &&
+         abs(d) <= epsilon100 * abs(K[N-2]) ) return dumFlag;
 
     h = v*b;
-    if ( std::abs(d) >= std::abs(c) ) {
+    if ( abs(d) >= abs(c) ) {
       dumFlag = 2; // TYPE = 2 indicates that all formulas are divided by d
       e  = a / d;
       f  = c / d;
@@ -169,7 +169,7 @@ namespace PolynomialRoots {
       for ( indexType i = 2; i < N; ++i ) K[i] = qk[i-2];
     } else {
       valueType temp = tFlag == 1 ? b : a;
-      if ( std::abs(a1) > epsilon10 * std::abs(temp) ) {
+      if ( abs(a1) > epsilon10 * abs(temp) ) {
         // Use scaled form of the recurrence
         a7 /= a1;
         a3 /= a1;
@@ -265,11 +265,11 @@ namespace PolynomialRoots {
       qp[0] = pv;
       for ( indexType i = 1; i < NN; ++i )
         qp[i] = pv = pv * s + p[i];
-      valueType mp = std::abs(pv);
+      valueType mp = abs(pv);
       // Compute a rigorous bound on the error in evaluating p
-      valueType ms = std::abs(s);
-      valueType ee = 0.5 * std::abs(qp[0]);
-      for ( indexType i = 1; i < NN; ++i ) ee = ee * ms + std::abs(qp[i]);
+      valueType ms = abs(s);
+      valueType ee = 0.5 * abs(qp[0]);
+      for ( indexType i = 1; i < NN; ++i ) ee = ee * ms + abs(qp[i]);
       // Iteration has converged sufficiently if the polynomial
       // value is less than 20 times this bound
       if ( mp <= 20.0 * epsilon * (2*ee - mp) )
@@ -278,7 +278,7 @@ namespace PolynomialRoots {
       // Stop iteration after 10 steps
       if ( ++j > 10 ) break;
       if ( j >= 2 ) {
-        if ( (abs(t) <= 0.001 * std::abs(s-t)) && (mp > omp) ) {
+        if ( (abs(t) <= 0.001 * abs(s-t)) && (mp > omp) ) {
           // A cluster of zeros near the real axis has been encountered;
           // Return with iFlag set to initiate a quadratic iteration
           iFlag = 1;
@@ -293,7 +293,7 @@ namespace PolynomialRoots {
       for ( indexType i = 1; i < N; ++i )
         qk[i] = kv = kv * s + K[i];
 
-      if ( std::abs(kv) > std::abs(K[N-1]) * epsilon10 ) {
+      if ( abs(kv) > abs(K[N-1]) * epsilon10 ) {
         // Use the scaled form of the recurrence if the value of K at s is non - zero
         valueType tt = -(pv / kv);
         K[0] = qp[0];
@@ -304,7 +304,7 @@ namespace PolynomialRoots {
       }
       kv = K[0];
       for ( indexType i = 1; i < N; ++i ) kv = kv * s + K[i];
-      t = std::abs(kv) > std::abs(K[N-1])*epsilon10 ? -(pv/kv) : 0;
+      t = abs(kv) > abs(K[N-1])*epsilon10 ? -(pv/kv) : 0;
       s += t;
     }
   }
@@ -356,16 +356,16 @@ namespace PolynomialRoots {
 
       // Return if roots of the quadratic are real and not close
       // to multiple or nearly equal and of opposite sign.
-      if ( std::abs(abs(szr) - std::abs(lzr)) > 0.01 * std::abs(lzr) ) break;
+      if ( abs(abs(szr) - abs(lzr)) > 0.01 * abs(lzr) ) break;
       // Evaluate polynomial by quadratic synthetic division
       QuadraticSyntheticDivision( NN, u, v, p, qp, a, b );
-      valueType mp = std::abs(a-(szr*b)) + std::abs(szi*b);
+      valueType mp = abs(a-(szr*b)) + abs(szi*b);
       // Compute a rigorous bound on the rounding error in evaluating p
-      valueType zm = std::sqrt(abs(v));
-      valueType ee = 2 * std::abs(qp[0]);
+      valueType zm = sqrt(abs(v));
+      valueType ee = 2 * abs(qp[0]);
       valueType t  = -szr*b;
-      for ( indexType i = 1; i < N; ++i ) ee = ee * zm + std::abs(qp[i]);
-      ee = ee * zm + std::abs(a+t);
+      for ( indexType i = 1; i < N; ++i ) ee = ee * zm + abs(qp[i]);
+      ee = ee * zm + abs(a+t);
       ee = (9*ee+2*abs(t)-7*(abs(a+t)+zm*abs(b)))*epsilon;
       // Iteration has converged sufficiently if the polynomial
       // value is less than 20 times this bound
@@ -376,7 +376,7 @@ namespace PolynomialRoots {
         if ( (relstp <= 0.01) && (mp >= omp) && !triedFlag ) {
           // A cluster appears to be stalling the convergence.
           // Five fixed shift steps are taken with a u, v close to the cluster.
-          relstp = (relstp < epsilon) ? std::sqrt(epsilon) : std::sqrt(relstp);
+          relstp = (relstp < epsilon) ? sqrt(epsilon) : sqrt(relstp);
           u -= u * relstp;
           v += v * relstp;
           QuadraticSyntheticDivision(NN, u, v, p, qp, a, b);
@@ -397,7 +397,7 @@ namespace PolynomialRoots {
 
       // If vi is zero, the iteration is not converging
       if ( !isZero(vi) ) {
-        relstp = std::abs((vi-v)/vi);
+        relstp = abs((vi-v)/vi);
         u = ui;
         v = vi;
       }
@@ -467,8 +467,8 @@ namespace PolynomialRoots {
       valueType tv = 1.0;
       if ( (j != 0) && (tFlag != 3) ) {
         // Compute relative measures of convergence of s and v sequences
-        tv = (vv != 0.0) ? std::abs((vv - ovv) / vv) : tv;
-        ts = (ss != 0.0) ? std::abs((ss - oss) / ss) : ts;
+        tv = (vv != 0.0) ? abs((vv - ovv) / vv) : tv;
+        ts = (ss != 0.0) ? abs((ss - oss) / ss) : ts;
         // If decreasing, multiply the two most recent convergence measures
         valueType tvv = (tv < otv) ? tv * otv : 1;
         valueType tss = (ts < ots) ? ts * ots : 1;
@@ -569,7 +569,7 @@ namespace PolynomialRoots {
   /*
   // Scale if there are large or very small coefficients
   // Computes a scale factor to multiply the coefficients of the polynomial.
-  // The scaling is done to avoid overflow and to avoid undetected underflow
+  // The scaling is done to avoid overflow and to avoid undetected underflow 
   // interfering with the convergence criterion.
   // The factor is a power of the base.
   */
@@ -585,7 +585,7 @@ namespace PolynomialRoots {
     .. The frexp() functions break the floating-point number value into
     .. a normalized fraction and an integral power of 2.
     .. They store the integer in the int object pointed to by exp.
-    .. The functions return a number x such that x has a magnitude in
+    .. The functions return a number x such that x has a magnitude in 
     .. the interval [1/2, 1) or 0, and value = x*(2**exp).
     */
     int max_exponent = std::numeric_limits<int>::min();
@@ -614,7 +614,7 @@ namespace PolynomialRoots {
     valueType pt[N+1];
 	  #endif
 
-    for ( indexType i = 0; i < N; ++i ) pt[i] = std::abs(p[i]);
+    for ( indexType i = 0; i < N; ++i ) pt[i] = abs(p[i]);
     pt[N] = -abs(p[N]);
 
     // Compute upper estimate of bound
@@ -634,7 +634,7 @@ namespace PolynomialRoots {
       evalPoly( x, pt, N, f, df );
       dx = f / df;
       x -= dx;
-    } while ( std::abs(dx) > std::abs(x)*0.005 );
+    } while ( abs(dx) > abs(x)*0.005 );
     return x;
   }
 
@@ -661,7 +661,7 @@ namespace PolynomialRoots {
     } else if ( Degree == 3 ) {
       Cubic solve( p[0], p[1], p[2], p[3] );
       switch ( solve.numRoots() ) {
-        case 3: solve.getRoot2( zeror[2], zeroi[2] );
+        case 3: solve.getRoot1( zeror[2], zeroi[2] );
         case 2: solve.getRoot1( zeror[1], zeroi[1] );
         case 1: solve.getRoot0( zeror[0], zeroi[0] );
       }
@@ -697,7 +697,7 @@ namespace PolynomialRoots {
     #endif
 
     int N = Degree;
-    valueType xx = std::sqrt(0.5); //= 0.70710678
+    valueType xx = sqrt(0.5); //= 0.70710678
     valueType yy = -xx;
 
     // Remove zeros at the origin, if any
@@ -735,7 +735,7 @@ namespace PolynomialRoots {
             K[j] = t * K[j-1] + p[j];
           }
           K[0] = p[0];
-          zerok = std::abs(K[NM1]) <= std::abs(bb) * epsilon10;
+          zerok = abs(K[NM1]) <= abs(bb) * epsilon10;
         }
       }
 
