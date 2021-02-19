@@ -16,11 +16,11 @@ build
 bin
 .vscode
 doxygen_doc
-toolbox/src
-toolbox/license.txt
-toolbox/doc/Art_Figure_1.pdf
-toolbox/doc/Manual.md
-toolbox/doc/paper.pdf
+#toolbox/src
+#toolbox/license.txt
+#toolbox/doc/Art_Figure_1.pdf
+#toolbox/doc/Manual.md
+#toolbox/doc/paper.pdf
 Clothoids.mltbx
 lib3rd
 Mugello.txt
