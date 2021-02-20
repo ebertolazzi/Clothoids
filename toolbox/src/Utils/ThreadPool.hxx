@@ -401,8 +401,10 @@ namespace Utils {
     setup() {
       for ( auto & w: m_workers ) {
         w.start();
-        std::thread & t = w.m_running_thread;
-        SetThreadPriority( t.native_handle(), THREAD_PRIORITY_HIGHEST );
+        #ifdef _MSC_VER
+          std::thread & t = w.m_running_thread;
+          SetThreadPriority( t.native_handle(), THREAD_PRIORITY_HIGHEST );
+        #endif
       }
     }
     #elif defined(UTILS_OS_LINUX)

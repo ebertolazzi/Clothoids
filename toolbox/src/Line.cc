@@ -114,7 +114,7 @@ namespace G2lib {
     real_type rq_y = r[1] - q[1];
 
     real_type det = qp_y * rq_x - qp_x * rq_y;
-    if ( abs(det) < epsi ) return 0;  // collinear
+    if ( std::abs(det) < epsi ) return 0;  // collinear
     return (det > 0)? 1: 2; // clock or counterclock wise
   }
 
@@ -512,7 +512,7 @@ namespace G2lib {
       s = m_L;
       eval( s, x, y );
     } else {
-      dst = abs(t);
+      dst = std::abs(t);
       eval( s, x, y );
       return 1;
     }
@@ -554,7 +554,7 @@ namespace G2lib {
       eval_ISO( s, offs, x, y );
     } else {
       t  += offs;
-      dst = abs(t);
+      dst = std::abs(t);
       eval_ISO( s, offs, x, y );
     }
 

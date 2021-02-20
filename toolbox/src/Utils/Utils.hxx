@@ -26,6 +26,9 @@
 #ifndef UTILS_dot_HXX
 #define UTILS_dot_HXX
 
+// must be the first header included
+#include "rang.hpp"
+
 // select computer architecture
 #if defined(__APPLE__) && defined(__MACH__)
   // osx architecture
@@ -81,8 +84,6 @@
   #define UTILS_OVERRIDE
   #define UTILS_CONSTEXPR
 #endif
-
-#include "rang.hpp"
 
 #include "fmt/printf.h"
 #include "fmt/chrono.h"
