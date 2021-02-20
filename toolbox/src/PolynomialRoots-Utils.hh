@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -44,7 +44,7 @@ namespace PolynomialRoots {
   typedef std::complex<valueType> complexType;
 
   static int       const bitsValueType = std::numeric_limits<valueType>::digits;
-  static valueType const splitFactor   = (long(1)<<(bitsValueType-1))+1;
+  static valueType const splitFactor   = (long(1)<<(bitsValueType-2))+1; // one extra digit is implicitly 1
 
   /*
   ||         _   _ _

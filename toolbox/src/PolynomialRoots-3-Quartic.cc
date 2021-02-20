@@ -77,10 +77,10 @@ namespace PolynomialRoots {
     valueType & scale
   ) {
 
-    valueType a = abs(A);
-    valueType b = sqrt(abs(B));
-    valueType c = cbrt(abs(C));
-    valueType d = sqrt(sqrt(abs(D)));
+    valueType a = std::abs(A);
+    valueType b = std::sqrt(abs(B));
+    valueType c = std::cbrt(abs(C));
+    valueType d = std::sqrt(sqrt(abs(D)));
 
     if ( a < b ) {
       if ( b < c ) {
@@ -201,14 +201,14 @@ namespace PolynomialRoots {
   ) {
     indexType i_cross  = 0;
     valueType r2       = r*r;
-    valueType v_cross  = abs(a0);
-    valueType v_cross1 = abs(a1*r);
+    valueType v_cross  = std::abs(a0);
+    valueType v_cross1 = std::abs(a1*r);
     if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 1; }
-    v_cross1 = abs(a2*r2);
+    v_cross1 = std::abs(a2*r2);
     if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 2; }
-    v_cross1 = abs(a3*r*r2);
+    v_cross1 = std::abs(a3*r*r2);
     if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 3; }
-    v_cross1 = abs(a4*r2*r2);
+    v_cross1 = std::abs(a4*r2*r2);
     if ( v_cross1 > v_cross ) i_cross = 4;
     switch ( i_cross ) {
       case 0: b2 = a3+a4*r; b1 = a2+r*b2; b0 = a1+r*b1;   break;
@@ -267,11 +267,11 @@ namespace PolynomialRoots {
       //dp = p/dp; // Newton correction
       x -= dp; // new Newton root
       bisection = oscillate > 2; // activate bisection
-      converged = std::abs(dp) <= std::abs(x) * machepsi; // Newton convergence indicator
+      converged = std::abs(dp) <= (1+std::abs(x)) * machepsi; // Newton convergence indicator
     }
     if ( bisection || !converged ) {
       t = u - s; // initial bisection interval
-      while ( abs(t) > abs(x) * machepsi ) { // bisection iterates
+      while ( std::abs(t) > (1+std::abs(x)) * machepsi ) { // bisection iterates
         ++iter;
         p = evalMonicQuartic( x, a, b, c, d );
         if ( p < 0 ) s = x;
@@ -319,11 +319,11 @@ namespace PolynomialRoots {
       dp = p/dp; // Newton correction
       x -= dp; // new Newton root
       bisection = oscillate > 2; // activate bisection
-      converged = abs(dp) <= abs(x) * machepsi; // Newton convergence indicator
+      converged = std::abs(dp) <= std::abs(x) * machepsi; // Newton convergence indicator
     }
     if ( bisection ) {
       t = u - s; // initial bisection interval
-      while ( abs(t) > abs(x) * machepsi ) { // bisection iterates
+      while ( std::abs(t) > std::abs(x) * machepsi ) { // bisection iterates
         ++iter;
         p = evalHexic( x, q3, q2, q1, q0 );
         if ( p < 0 ) s = x;
@@ -404,8 +404,8 @@ namespace PolynomialRoots {
         x /= 2; // re
         y /= 2; // im
         valueType z = hypot(x,y);
-        y = sqrt(z - x);
-        x = sqrt(z + x);
+        y = std::sqrt(z - x);
+        x = std::sqrt(z + x);
         r0 = -x;
         r1 = y;
         r2 = x;
@@ -414,16 +414,16 @@ namespace PolynomialRoots {
         // real roots of quadratic are ordered x <= y
         if ( x >= 0 ) { // y >= 0
           nreal = 4;
-          x = sqrt(x); y = sqrt(y);
+          x = std::sqrt(x); y = std::sqrt(y);
           r0 = -y; r1 = -x; r2 =  x; r3 =  y;
         } else if ( y >= 0 ) { // x < 0 && y >= 0
           nreal = ncplx = 2;
-          x = sqrt(-x); y = sqrt(y);
+          x = std::sqrt(-x); y = std::sqrt(y);
           r0 =  0; r1 = x; // (real,imaginary)
           r2 = -y; r3 = y;
         } else { // x < 0 && y < 0
           ncplx = 4;
-          x = sqrt(-x); y = sqrt(-y);
+          x = std::sqrt(-x); y = std::sqrt(-y);
           r0 = 0; r1 = x; r2 = 0; r3 = y; // 2 x (real,imaginary)
         }
       }
@@ -495,6 +495,7 @@ namespace PolynomialRoots {
     valueType t = qsolve.real_root1();
     valueType s = qsolve.real_root2();
 
+    bool must_refine_r3 = true;
     if ( !qsolve.complexRoots() ) {
       valueType Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       valueType Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
@@ -521,9 +522,13 @@ namespace PolynomialRoots {
         else if ( Qu <= epsi ) r3 = u;
         else                   nreal = 0;
         */
-        if      ( isZero(Qs) ) r3    = s;
-        else if ( isZero(Qu) ) r3    = u;
-        else                   nreal = 0;
+        if ( isZero(Qs) ) {
+          must_refine_r3 = false; r3 = s;
+        } else if ( isZero(Qu) ) {
+          must_refine_r3 = false; r3 = u;
+        } else {
+          nreal = 0;
+        }
       }
     } else {
       // one single real root (only 1 minimum)
@@ -548,7 +553,8 @@ namespace PolynomialRoots {
     ..  oscillation brackets.
     */
     if ( nreal > 0 ) {
-      iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, r3 );
+      if ( must_refine_r3 )
+        iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, r3 );
       r3 *= scale;
 
       /*
@@ -621,11 +627,11 @@ namespace PolynomialRoots {
         valueType tt = d + z;   // magnitude^2 of (b + iz) root
 
         if ( ss > tt ) {         // minimize imaginary error
-          c = sqrt(y);           // 1st imaginary component -> c
-          d = sqrt(A0 / ss - d); // 2nd imaginary component -> d
+          c = std::sqrt(y);           // 1st imaginary component -> c
+          d = std::sqrt(A0 / ss - d); // 2nd imaginary component -> d
         } else {
-          c = sqrt(A0 / tt - c); // 1st imaginary component -> c
-          d = sqrt(z);           // 2nd imaginary component -> d
+          c = std::sqrt(A0 / tt - c); // 1st imaginary component -> c
+          d = std::sqrt(z);           // 2nd imaginary component -> d
         }
 
       } else { // no bisection -> real components equal
@@ -639,12 +645,12 @@ namespace PolynomialRoots {
         x = x * a + A0;
         valueType y = A2/2 - 3*(a*a); // Q''(a) / 2
         valueType z = y * y - x;
-        z = z > 0 ? sqrt(z) : 0;     // force discriminant to be >= 0
+        z = z > 0 ? std::sqrt(z) : 0;     // force discriminant to be >= 0
                                      // square root of discriminant
         y = y > 0 ? y + z : y - z;   // larger magnitude root
         x /= y;                      // smaller magnitude root
-        c = y < 0 ? 0 : sqrt(y);     // ensure root of biquadratic > 0
-        d = x < 0 ? 0 : sqrt(x);     // large magnitude imaginary component
+        c = y < 0 ? 0 : std::sqrt(y);     // ensure root of biquadratic > 0
+        d = x < 0 ? 0 : std::sqrt(x);     // large magnitude imaginary component
       }
 
       ncplx = 4;

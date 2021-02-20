@@ -145,7 +145,8 @@ namespace G2lib {
     bool ok;
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
-      m_s0.size(), &m_s0.front(), s, lastInterval, false, true
+      static_cast<int_type>(m_s0.size()),
+      &m_s0.front(), s, lastInterval, false, true
     );
     return lastInterval;
   }
@@ -313,7 +314,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Biarc const &
-  BiarcList::getAtS( real_type s ) const 
+  BiarcList::getAtS( real_type s ) const
   { return this->get(findAtS(s)); }
 
   /*\

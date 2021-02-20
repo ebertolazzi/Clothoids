@@ -148,7 +148,8 @@ namespace G2lib {
     bool ok;
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
-      m_s0.size(), &m_s0.front(), s, lastInterval, m_curve_is_closed, true
+      static_cast<int_type>(m_s0.size()),
+      &m_s0.front(), s, lastInterval, m_curve_is_closed, true
     );
     return lastInterval;
   }

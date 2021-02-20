@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -63,7 +63,7 @@ namespace PolynomialRoots {
       return res;
     }
   }
-    
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
   // op[0] * x^n + .... + op[n-1]*x + op[n]
@@ -89,9 +89,9 @@ namespace PolynomialRoots {
       return res;
     }
   }
-    
+
   //============================================================================
-    
+
   /*
   ..  scale roots by pair.second, after scaling the polinomial has the form
   ..
@@ -100,7 +100,7 @@ namespace PolynomialRoots {
   ..  pair.first is the index such that p[pair.first] = +-1
   ..
   */
-    
+
   static
   pair<indexType,valueType>
   scalePolynomial(
@@ -114,7 +114,7 @@ namespace PolynomialRoots {
     indexType i = n;
     while ( --i >= 0 ) {
       ps[i] = p[i]/an;
-      valueType scale1 = std::pow( abs(ps[i]), 1.0/(n-i) );
+      valueType scale1 = std::pow( std::abs(ps[i]), 1.0/(n-i) );
       if ( scale1 > scale ) { scale = scale1; i_max = i; }
     }
     // scale coeffs
@@ -124,13 +124,13 @@ namespace PolynomialRoots {
     ps[n] = 1;
     return res;
   }
-    
+
   //============================================================================
-    
+
   /*
   .. divide a(x)  by (x-r) so that a(x) = (x-r) * b(x)
   */
-    
+
   static
   void
   deflatePolynomial(
@@ -144,10 +144,10 @@ namespace PolynomialRoots {
     // Practical problems arising in the solution of polynomial equations.
     // J. Inst. Math. Appl. 8 (1971), 16–35.
     indexType i_cross = 0;
-    valueType v_cross = abs(a[0]);
+    valueType v_cross = std::abs(a[0]);
     valueType r1 = r;
     for ( indexType i = 1; i < n; ++i, r1 *= r ) {
-      valueType v_cross1 = abs(a[i]*r1);
+      valueType v_cross1 = std::abs(a[i]*r1);
       if ( v_cross1 > v_cross )
         { v_cross = v_cross1; i_cross = i; }
     }
@@ -206,7 +206,7 @@ namespace PolynomialRoots {
     return res;
   }
   #endif
-    
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
   // x^3 + A x^2 + B x + C
@@ -223,11 +223,11 @@ namespace PolynomialRoots {
     indexType & i_case,
     valueType & scale
   ) {
-        
-    valueType a = abs(A);
-    valueType b = sqrt(abs(B));
-    valueType c = cbrt(abs(C));
-        
+
+    valueType a = std::abs(A);
+    valueType b = std::sqrt(abs(B));
+    valueType c = std::cbrt(abs(C));
+
     if ( a < b ) {
       if ( b < c ) i_case = 0; // a < b < c --> c MAX
       else         i_case = 1; // a < b and c <= b --> b MAX
@@ -235,7 +235,7 @@ namespace PolynomialRoots {
       if ( a < c ) i_case = 0; // b <= a < c --> c MAX
       else         i_case = 2; // b <= a  and c <= a --> a MAX
     }
-        
+
     switch ( i_case ) {
     case 0:
       scale = c;
@@ -257,7 +257,7 @@ namespace PolynomialRoots {
       break;
     }
   }
-    
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
   // a3*x^3 + a2*x^2 + a1*x + a0 = (x-r)*(a3*x^2+b1*x+b0)
@@ -274,12 +274,12 @@ namespace PolynomialRoots {
   ) {
     indexType i_cross  = 0;
     valueType r2       = r*r;
-    valueType v_cross  = abs(a0);
-    valueType v_cross1 = abs(a1*r);
+    valueType v_cross  = std::abs(a0);
+    valueType v_cross1 = std::abs(a1*r);
     if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 1; }
-      v_cross1 = abs(a2*r2);
+      v_cross1 = std::abs(a2*r2);
       if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 2; }
-      v_cross1 = abs(a3*r*r2);
+      v_cross1 = std::abs(a3*r*r2);
       if ( v_cross1 > v_cross ) i_cross = 3;
       switch ( i_cross ) {
       case 0: b1 = a2+a3*r; b0 = a1+r*b1; break;

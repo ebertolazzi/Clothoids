@@ -56,7 +56,7 @@ namespace G2lib {
   : BaseCurve(G2LIB_POLYLINE)
   , m_aabb_done(false)
   {
-    this->resetLastInterval(); 
+    this->resetLastInterval();
     switch ( C.type() ) {
     case G2LIB_LINE:
       build( *static_cast<LineSegment const *>(&C) );
@@ -138,7 +138,8 @@ namespace G2lib {
     bool ok;
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
-      m_s0.size(), &m_s0.front(), s, lastInterval, false, true
+      static_cast<int_type>(m_s0.size()),
+      &m_s0.front(), s, lastInterval, false, true
     );
     return lastInterval;
   }
