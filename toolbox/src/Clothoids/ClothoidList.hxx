@@ -230,6 +230,7 @@ namespace G2lib {
     ClothoidCurve const & getSM() const { return SM; }
     ClothoidCurve const & getS1() const { return S1; }
 
+    void save( ostream_type & stream ) const;
   };
 
   /*\
@@ -557,6 +558,7 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
+    void save( ostream_type & stream ) const;
   };
 
   /*\
@@ -1548,6 +1550,9 @@ namespace G2lib {
      */
     void
     export_ruby( ostream_type & stream ) const;
+
+    void save( ostream_type & stream ) const;
+    void load( istream_type & stream, real_type epsi = 1e-8 );
 
   };
 

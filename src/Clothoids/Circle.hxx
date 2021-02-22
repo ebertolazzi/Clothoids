@@ -319,6 +319,16 @@ namespace G2lib {
 
     virtual
     real_type
+    kappaBegin() const UTILS_OVERRIDE
+    { return m_k; }
+    virtual
+
+    real_type
+    kappaEnd() const UTILS_OVERRIDE
+    { return m_k; }
+
+    virtual
+    real_type
     xBegin() const UTILS_OVERRIDE
     { return m_x0; }
 

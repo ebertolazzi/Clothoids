@@ -11,7 +11,7 @@ main() {
 
   real_type x0     =   1.00793864;
   real_type y0     =   0.04992756;
-  real_type z0     =  -0.02035145;
+  //real_type z0     =  -0.02035145;
   real_type theta0 =  -0.00034839;
   real_type x_mid_line, y_mid_line, dir_mid_line, abscissa,
             curvature, width_L, width_R, elevation, banking,

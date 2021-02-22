@@ -54,7 +54,8 @@
 #endif
 
 namespace G2lib {
-  using Utils::ostream_type;
+  typedef std::basic_istream<char> istream_type;
+  typedef std::basic_ostream<char> ostream_type;
   typedef double real_type;
   typedef int    int_type;
 }

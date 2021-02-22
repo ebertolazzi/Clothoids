@@ -53,6 +53,12 @@ main() {
     << "\nth = " << S1.thetaBegin() << " " << SM.thetaEnd()   << " err = " << S1.thetaBegin()-SM.thetaEnd()
     << '\n';
 
+  G2lib::ClothoidList S;
+  ifstream file("G2_test.txt");
+  S.load(file);
+  file.close();
+  S.info( cout );
+
   cout << "\n\nALL DONE FOLKS!!!\n";
 
   return 0;

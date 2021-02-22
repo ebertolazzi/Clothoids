@@ -1168,6 +1168,64 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  static
+  void
+  do_load(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD "ClothoidListMexWrapper('load',OBJ,filename,[epsi]): "
+    MEX_ASSERT2(
+      nrhs == 3 || nrhs == 4,
+      CMD "expected 3 or 4 inputs, nrhs = {}\n", nrhs
+    );
+
+    MEX_ASSERT2( nlhs == 0, CMD "expected 0 output, nlhs = {}\n", nlhs );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    MEX_ASSERT( mxIsChar(arg_in_2), "Third argument must be a string" );
+
+    std::string fname = mxArrayToString(arg_in_2);
+    std::ifstream file(fname.c_str());
+
+    if ( nrhs == 4 ) {
+      real_type epsi = getScalarValue( arg_in_3, CMD "Error in reading epsi" );
+      ptr->load( file, epsi );
+    } else {
+      ptr->load( file );
+    }
+    file.close();
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_save(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD "ClothoidListMexWrapper('save',OBJ,filename): "
+
+    MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 0, CMD "expected 0 output, nlhs = {}\n", nlhs );
+
+    ClothoidList * ptr = DATA_GET(arg_in_1);
+
+    MEX_ASSERT( mxIsChar(arg_in_2), "Third argument must be a string" );
+
+    std::string fname = mxArrayToString(arg_in_2);
+    std::ofstream file(fname.c_str());
+    ptr->save( file );
+    file.close();
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   static std::map<std::string,DO_CMD> cmd_to_fun = {
     {"new",do_new},
     {"push_back",do_push_back},
@@ -1200,6 +1258,8 @@ namespace G2lib {
     {"closestPointInRange",do_closestPointInRange},
     {"closestPointInSRange",do_closestPointInSRange},
     {"s_to_index",do_s_to_index},
+    {"save",do_save},
+    {"load",do_load},
     CMD_MAP_FUN
   };
 

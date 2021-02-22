@@ -37,6 +37,8 @@
 ..
 */
 
+#include <cstdint>
+
 namespace PolynomialRoots {
 
   typedef double valueType;
@@ -44,7 +46,7 @@ namespace PolynomialRoots {
   typedef std::complex<valueType> complexType;
 
   static int       const bitsValueType = std::numeric_limits<valueType>::digits;
-  static valueType const splitFactor   = (long(1)<<(bitsValueType-2))+1; // one extra digit is implicitly 1
+  static valueType const splitFactor   = static_cast<valueType>((std::uint64_t(1)<<(bitsValueType-2))+1); // one extra digit is implicitly 1
 
   /*
   ||         _   _ _

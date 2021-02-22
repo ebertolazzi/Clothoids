@@ -256,16 +256,7 @@ namespace G2lib {
       real_type _k,
       real_type _dk,
       real_type _L
-    ) {
-      m_CD.x0     = _x0;
-      m_CD.y0     = _y0;
-      m_CD.theta0 = _theta0;
-      m_CD.kappa0 = _k;
-      m_CD.dk     = _dk;
-      m_L         = _L;
-      m_aabb_done = false;
-      m_aabb_tree.clear();
-    }
+    );
 
     /*!
      *  \brief build a clothoid by solving the hermite G1 problem
@@ -632,8 +623,8 @@ namespace G2lib {
 
     virtual
     real_type
-    thetaEnd() const UTILS_OVERRIDE
-    { return m_CD.theta(m_L); }
+    kappaBegin() const UTILS_OVERRIDE
+    { return m_CD.kappa0; }
 
     virtual
     real_type

@@ -1876,6 +1876,114 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  static
+  void
+  save_segment( ostream_type & stream, ClothoidCurve const & c ) {
+    fmt::print( stream,
+      "{:<16}\t{:<16}\t{:<16}\t{:<16}\n"
+      "{:<16}\t{:<16}\t{:<16}\t{:<16}\n",
+      //------------------
+      fmt::format("{:.12}",c.xBegin()),
+      fmt::format("{:.12}",c.yBegin()),
+      fmt::format("{:.12}",c.thetaBegin()),
+      fmt::format("{:.12}",c.kappaBegin()),
+      //------------------
+      fmt::format("{:.12}",c.xEnd()),
+      fmt::format("{:.12}",c.yEnd()),
+      fmt::format("{:.12}",c.thetaEnd()),
+      fmt::format("{:.12}",c.kappaEnd())
+    );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  static
+  bool
+  load_segment(
+    istream_type  & stream,
+    ClothoidCurve & c, 
+    real_type       epsi
+  ) {
+    string line1, line2;
+    while ( stream.good() ) {
+      if ( !getline(stream,line1) ) return false;
+      if ( line1[0] != '#' ) break;
+    }
+    if ( !stream.good() ) return false;
+    while ( stream.good() ) {
+      if ( !getline(stream,line2) ) return false;
+      if ( line2[0] != '#' ) break;
+    }
+    if ( !stream.good() ) return false;
+    std::istringstream iss1(line1);
+    std::istringstream iss2(line2);
+    real_type x0, y0, x1, y1, theta0, theta1, kappa0, kappa1;
+    iss1 >> x0 >> y0 >> theta0 >> kappa0;
+    iss2 >> x1 >> y1 >> theta1 >> kappa1;
+    c.build_G1( x0, y0, theta0, x1, y1, theta1 );
+    // check segment
+    real_type err1 = std::abs( kappa0 - c.kappaBegin() ) * c.length();
+    real_type err2 = std::abs( kappa1 - c.kappaEnd() ) * c.length();
+    UTILS_ASSERT(
+      err1 < epsi && err2 < epsi,
+      "load_segment, failed tolerance on curvature\n"
+      "begin error = {}, end error = {}\n",
+      err1, err2
+    );
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::save( ostream_type & stream ) const {
+    vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
+    stream << "# x y theta kappa\n";
+    for ( int_type nseg = 1; ic != m_clotoidList.end(); ++ic, ++nseg ) {
+      stream << "# segment n." << nseg << '\n';
+      save_segment( stream, *ic );
+    }
+    stream << "# EOF\n";
+  }
+  
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::load( istream_type & stream, real_type epsi ) {
+    this->init();
+    while ( stream.good() ) {
+      ClothoidCurve c;
+      bool ok = load_segment( stream, c, epsi );
+      if ( !ok ) break;
+      this->push_back( c );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  G2solveCLC::save( ostream_type & stream ) const {
+    stream << "# x y theta kappa\n";
+    save_segment( stream, S0 );
+    save_segment( stream, SM );
+    save_segment( stream, S1 );
+    stream << "# EOF\n";
+  }
+  
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  G2solve3arc::save( ostream_type & stream ) const {
+    stream << "# x y theta kappa\n";
+    save_segment( stream, S0 );
+    save_segment( stream, SM );
+    save_segment( stream, S1 );
+    stream << "# EOF\n";
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 }
 
 // EOF: ClothoidList.cc

@@ -23,6 +23,14 @@ classdef ClothoidList < CurveBase
       ClothoidListMexWrapper( 'reserve', self.objectHandle, N );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function save( self, fname )
+      ClothoidListMexWrapper( 'save', self.objectHandle, fname );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function load( self, varargin ) % file, tol
+      ClothoidListMexWrapper( 'load', self.objectHandle, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function push_back( self, varargin )
       if nargin == 2
         ClothoidListMexWrapper( ...
@@ -317,7 +325,7 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function save( self, filename, ds )
+    function saveSampled( self, filename, ds )
       fd = fopen( filename, 'w' );
       L  = self.length();
       n  = ceil( L / ds );

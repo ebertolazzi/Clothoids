@@ -76,6 +76,33 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
+  ClothoidCurve::build(
+    real_type _x0,
+    real_type _y0,
+    real_type _theta0,
+    real_type _k,
+    real_type _dk,
+    real_type _L
+  ) {
+    UTILS_ASSERT(
+      _L > 0,
+      "ClothoidCurve::build( x0={}, y0={}, theta0={}, k={}, dk={}, L={} )\n"
+      "L must be positive!\n",
+      _x0, _y0, _theta0, _k, _dk, _L
+    );
+    m_CD.x0     = _x0;
+    m_CD.y0     = _y0;
+    m_CD.theta0 = _theta0;
+    m_CD.kappa0 = _k;
+    m_CD.dk     = _dk;
+    m_L         = _L;
+    m_aabb_done = false;
+    m_aabb_tree.clear();
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
   ClothoidCurve::optimized_sample_internal_ISO(
     real_type           s_begin,
     real_type           s_end,
@@ -746,18 +773,21 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, ClothoidCurve const & c ) {
     fmt::print( stream,
-      "x0     = {}\n"
-      "y0     = {}\n"
-      "theta0 = {}\n"
-      "kappa0 = {}\n"
-      "dk     = {}\n"
-      "L      = {}\n",
-      c.m_CD.x0,
-      c.m_CD.y0,
-      c.m_CD.theta0,
-      c.m_CD.kappa0,
-      c.m_CD.dk,
-      c.m_L
+      "x0     = {:<12} x1     = {:<12}\n"
+      "y0     = {:<12} y1     = {:<12}\n"
+      "theta0 = {:<12} theta1 = {:<12}\n"
+      "kappa0 = {:<12} kappa1 = {:<12}\n"
+      "dk     = {:<12} L      = {:<12}\n",
+      fmt::format("{:.6}",c.xBegin()),
+      fmt::format("{:.6}",c.xEnd()),
+      fmt::format("{:.6}",c.yBegin()),
+      fmt::format("{:.6}",c.yEnd()),
+      fmt::format("{:.6}",c.thetaBegin()),
+      fmt::format("{:.6}",c.thetaEnd()),
+      fmt::format("{:.6}",c.kappaBegin()),
+      fmt::format("{:.6}",c.kappaEnd()),
+      fmt::format("{:.6}",c.m_CD.dk),
+      fmt::format("{:.6}",c.m_L)
     );
     return stream;
   }
