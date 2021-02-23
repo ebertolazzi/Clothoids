@@ -14,7 +14,7 @@ SET( VS_WARN    "")
 IF( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )
   SET( CMAKE_CXX_FLAGS         "-std=c++11 " )
   SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -fopenmp -O2 -g -floop-interchange -floop-block -funroll-loops  ${CXX_WARN}" )
-  SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -fopenmp -O0 -g -DMECHATRONIX_DEBUG -DDEBUG  ${CXX_WARN}" )
+  SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -fopenmp -O0 -ggdb -DMECHATRONIX_DEBUG -DDEBUG  ${CXX_WARN}" )
 ELSEIF( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
   SET( CMAKE_CXX_FLAGS         "-std=c++11 -stdlib=libc++ " )
   SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics  ${CLANG_WARN}" )
@@ -35,3 +35,8 @@ SET( CMAKE_C_FLAGS_DEBUG   ${CMAKE_CXX_FLAGS_DEBUG} )
 
 # select LAPACK library to be used
 SET( PINS_USE_ACCELERATE true )
+
+# check if link against static libgcc
+SET( PINS_USE_STATIC_LIBGCC false )
+
+SET( PINS_ON_RASPBERRY false )
