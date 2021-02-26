@@ -1228,7 +1228,7 @@ namespace G2lib {
     m_npts = n;
     size_t n1 = size_t(n-1);
 
-    realValues.allocate( 2*size_t(n) + 10 * n1 );
+    realValues.reallocate( 2*size_t(n) + 10 * n1 );
 
     m_x    = realValues( size_t(n) );
     m_y    = realValues( size_t(n) );
