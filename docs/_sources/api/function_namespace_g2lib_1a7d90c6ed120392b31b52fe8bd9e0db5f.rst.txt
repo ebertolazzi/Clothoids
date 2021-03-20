@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a7d90c6ed120392b31b52fe8bd9e0db5f:
+
+Function G2lib::evalXYaSmall(real_type, real_type, int_type, real_type&, real_type&)
+====================================================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::evalXYaSmall(real_type, real_type, int_type, real_type&, real_type&)

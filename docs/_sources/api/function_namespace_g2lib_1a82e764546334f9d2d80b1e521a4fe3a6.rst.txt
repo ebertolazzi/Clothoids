@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a82e764546334f9d2d80b1e521a4fe3a6:
+
+Function G2lib::Cosc
+====================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::Cosc(real_type)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1ab7b6fbe4ec0be674223208ff74d6fdf0:
+
+Function G2lib::intersectCircleCircle
+=====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::intersectCircleCircle(real_type, real_type, real_type, real_type, real_type, real_type, real_type, real_type, real_type, real_type)

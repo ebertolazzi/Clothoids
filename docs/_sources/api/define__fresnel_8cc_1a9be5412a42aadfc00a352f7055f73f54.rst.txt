@@ -1,0 +1,13 @@
+.. _exhale_define__fresnel_8cc_1a9be5412a42aadfc00a352f7055f73f54:
+
+Define A_SERIE_SIZE
+===================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: A_SERIE_SIZE

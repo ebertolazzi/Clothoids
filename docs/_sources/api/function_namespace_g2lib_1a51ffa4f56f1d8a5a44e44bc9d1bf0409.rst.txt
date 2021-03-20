@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a51ffa4f56f1d8a5a44e44bc9d1bf0409:
+
+Function G2lib::maxabs3
+=======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::maxabs3(real_type, real_type, real_type)

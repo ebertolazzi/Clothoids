@@ -1,0 +1,16 @@
+.. _exhale_class_class_g2lib_1_1_clothoid_data:
+
+Class ClothoidData
+==================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Fresnel.hxx`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: G2lib::ClothoidData
+   :members:
+   :protected-members:
+   :undoc-members:

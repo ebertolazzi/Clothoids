@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1ab7ac7a6362cda3cffee0380891e51dfe:
+
+Function G2lib::Sinc_D
+======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::Sinc_D(real_type)

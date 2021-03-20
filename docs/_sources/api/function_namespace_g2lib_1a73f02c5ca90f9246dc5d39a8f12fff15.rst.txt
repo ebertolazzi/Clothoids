@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a73f02c5ca90f9246dc5d39a8f12fff15:
+
+Function G2lib::theta_guess
+===========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::theta_guess(real_type, real_type, bool&)

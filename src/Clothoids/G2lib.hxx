@@ -140,13 +140,25 @@ namespace G2lib {
   /*!
    * project point `(qx,qy)` to the circle arc passing from `(x0,y0)`
    * with tangent direction `(c0,s0)` curvature `k` length `L`
+   * 
+   * \param[in] x0 x-starting point of circle arc
+   * \param[in] y0 y-starting point of circle arc
+   * \param[in] c0 \f$ \cos \theta_0 \f$
+   * \param[in] s0 \f$ \sin \theta_0 \f$
+   * \param[in] k  curvature
+   * \param[in] L  arc length
+   * \param[in] qx x-point to be projected
+   * \param[in] qy y-point to be projected
+   * 
+   * \return distance point circle
+   * 
    */
   real_type
   projectPointOnCircleArc(
     real_type x0,
     real_type y0,
-    real_type c0, //!< cos(theta0)
-    real_type s0, //!< sin(theta0)
+    real_type c0,
+    real_type s0,
     real_type k,
     real_type L,
     real_type qx,
@@ -157,6 +169,15 @@ namespace G2lib {
   /*!
    * project point `(qx,qy)` to the circle passing from `(x0,y0)`
    * with tangent direction `(c0,s0)` and curvature `k`
+   * 
+   * \param[in] x0     x-starting point of circle arc
+   * \param[in] y0     y-starting point of circle arc
+   * \param[in] theta0 initial angle
+   * \param[in] k      curvature
+   * \param[in] qx     x-point to be projected
+   * \param[in] qy     y-point to be projected
+   * 
+   * \return distance point circle
    */
   real_type
   projectPointOnCircle(
@@ -170,18 +191,26 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /*!
-   * check if point `(qx,qy)` is inside the circle passing from `(x0,y0)`
-   * with tangent direction `(c0,s0)` and curvature `k`
+   * \brief check if point `(qx,qy)` is inside the circle passing from `(x0,y0)`
+   *        with tangent direction `(c0,s0)` and curvature `k`
+   * 
+   * \param[in] x0 starting x-coordinate of the circle arc
+   * \param[in] y0 starting y-coordinate of the circle arc
+   * \param[in] c0 \f$ \cos \theta \f$
+   * \param[in] s0 \f$ \sin \theta \f$
+   * \param[in] k  Curvature of the circle
+   * \param[in] qx x-coordinate point to check
+   * \param[in] qy y-coordinate point to check
+   * 
    * \return true if point is inside
    */
-
   inline
   bool
   pointInsideCircle(
     real_type x0,
     real_type y0,
-    real_type c0, //!< cos(theta0)
-    real_type s0, //!< sin(theta0)
+    real_type c0,
+    real_type s0,
     real_type k,
     real_type qx,
     real_type qy
@@ -198,12 +227,14 @@ namespace G2lib {
    * \f[ A x + B y = C \f]
    * \f[ a x^2 + b y^2 = c \f]
    *
-   * \param A first parameter of the linear equation
-   * \param B second parameter of the linear equation
-   * \param C third parameter of the linear equation
-   * \param a first parameter of the quadratic equation
-   * \param b second parameter of the quadratic equation
-   * \param c third parameter of the quadratic equation
+   * \param[in]  A first parameter of the linear equation
+   * \param[in]  B second parameter of the linear equation
+   * \param[in]  C third parameter of the linear equation
+   * \param[in]  a first parameter of the quadratic equation
+   * \param[in]  b second parameter of the quadratic equation
+   * \param[in]  c third parameter of the quadratic equation
+   * \param[out] x x-coordinates of the solutions
+   * \param[out] y y-coordinates of the solutions
    * \return the number of solution 0, 1 or 2
    *
    */
@@ -226,9 +257,11 @@ namespace G2lib {
    * \f[ A x + B y = C \f]
    * \f[ x^2 + y^2 = 1 \f]
    *
-   * \param A first parameter of the linear equation
-   * \param B second parameter of the linear equation
-   * \param C third parameter of the linear equation
+   * \param[in]  A first parameter of the linear equation
+   * \param[in]  B second parameter of the linear equation
+   * \param[in]  C third parameter of the linear equation
+   * \param[out] x x-coordinates of the solutions
+   * \param[out] y y-coordinates of the solutions
    * \return the number of solution 0, 1 or 2
    *
    */
@@ -252,16 +285,16 @@ namespace G2lib {
    * \f[ x = x_2+\frac{\sin(\kappa_2 s+\theta_2)-sin(\theta_2)}{\kappa_2} \f]
    * \f[ y = y_2+\frac{\cos(\theta_2)-\cos(\kappa_2 s+\theta_2)}{\kappa_2} \f]
    *
-   * \param x1     x-origin of the first arc
-   * \param y1     y-origin of the first arc
-   * \param theta1 initial angle of the first arc
-   * \param kappa1 curvature of the first arc
-   * \param x2     x-origin of the second arc
-   * \param y2     y-origin of the second arc
-   * \param theta2 initial angle of the second arc
-   * \param kappa2 curvature of the second arc
-   * \param s1     parameter2 of intersection for the first circle arc
-   * \param s2     parameter2 of intersection for the second circle arc
+   * \param[in]  x1     x-origin of the first arc
+   * \param[in]  y1     y-origin of the first arc
+   * \param[in]  theta1 initial angle of the first arc
+   * \param[in]  kappa1 curvature of the first arc
+   * \param[in]  x2     x-origin of the second arc
+   * \param[in]  y2     y-origin of the second arc
+   * \param[in]  theta2 initial angle of the second arc
+   * \param[in]  kappa2 curvature of the second arc
+   * \param[out] s1     parameter2 of intersection for the first circle arc
+   * \param[out] s2     parameter2 of intersection for the second circle arc
    *
    * \return the number of solution 0, 1 or 2
    *
@@ -307,6 +340,13 @@ namespace G2lib {
   };
 
   /*!
+   * \brief Return the orientation of a triangle
+   *
+   * \param[in] P1 first point of the triangle
+   * \param[in] P2 second point of the triangle
+   * \param[in] P3 third point of the triangle
+   * \return sign of rotation
+   *
    *  return +1 = CounterClockwise
    *  return -1 = Clockwise
    *  return  0 = flat
@@ -331,6 +371,13 @@ namespace G2lib {
   );
 
   /*!
+   * \brief Check if a point is inside a triangle
+   *
+   * \param[in] pt point to check if is inside the triangle
+   * \param[in] P1 first point of the triangle
+   * \param[in] P2 second point of the triangle
+   * \param[in] P3 third point of the triangle
+   * \return {0,+1,-1}
    *  return +1 = Inside
    *  return -1 = Outsize
    *  return  0 = on border
@@ -559,10 +606,10 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //! \return length of the curve
-    virtual real_type length() const UTILS_PURE_VIRTUAL;
+    virtual real_type length() const = 0;
 
     //! \return length of the curve with offset
-    virtual real_type length_ISO( real_type offs ) const UTILS_PURE_VIRTUAL;
+    virtual real_type length_ISO( real_type offs ) const = 0;
 
     //! \return length of the curve with offset
     real_type
@@ -598,10 +645,12 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_PURE_VIRTUAL;
+    ) const = 0;
 
     /*!
      * Compute the bounding box of the curve with offset
+     * 
+     * \param[in]  offs curve offset
      * \param[out] xmin left bottom
      * \param[out] ymin left bottom
      * \param[out] xmax right top
@@ -616,10 +665,12 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_PURE_VIRTUAL;
+    ) const = 0;
 
     /*!
      * Compute the bounding box of the curve
+     * 
+     * \param[in]  offs curve offset
      * \param[out] xmin left bottom
      * \param[out] ymin left bottom
      * \param[out] xmax right top
@@ -639,6 +690,8 @@ namespace G2lib {
     #ifdef G2LIB_COMPATIBILITY_MODE
     /*!
      * Compute the bounding box of the curve
+     * 
+     * \param[in]  off  curve offset
      * \param[out] xmin left bottom
      * \param[out] ymin left bottom
      * \param[out] xmax right top
@@ -744,10 +797,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual real_type theta    ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type theta_D  ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type theta_DD ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type theta_DDD( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type theta    ( real_type s ) const = 0;
+    virtual real_type theta_D  ( real_type s ) const = 0;
+    virtual real_type theta_DD ( real_type s ) const = 0;
+    virtual real_type theta_DDD( real_type s ) const = 0;
 
     /*\
      |   _
@@ -981,36 +1034,32 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual real_type X    ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type Y    ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type X_D  ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type Y_D  ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type X_DD ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type Y_DD ( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type X_DDD( real_type s ) const UTILS_PURE_VIRTUAL;
-    virtual real_type Y_DDD( real_type s ) const UTILS_PURE_VIRTUAL;
+    virtual real_type X    ( real_type s ) const = 0;
+    virtual real_type Y    ( real_type s ) const = 0;
+    virtual real_type X_D  ( real_type s ) const = 0;
+    virtual real_type Y_D  ( real_type s ) const = 0;
+    virtual real_type X_DD ( real_type s ) const = 0;
+    virtual real_type Y_DD ( real_type s ) const = 0;
+    virtual real_type X_DDD( real_type s ) const = 0;
+    virtual real_type Y_DDD( real_type s ) const = 0;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     void
-    eval( real_type s, real_type & x, real_type & y ) const
-    UTILS_PURE_VIRTUAL;
+    eval( real_type s, real_type & x, real_type & y ) const = 0;
 
     virtual
     void
-    eval_D( real_type s, real_type & x_D, real_type & y_D ) const
-    UTILS_PURE_VIRTUAL;
+    eval_D( real_type s, real_type & x_D, real_type & y_D ) const = 0;
 
     virtual
     void
-    eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const
-    UTILS_PURE_VIRTUAL;
+    eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const = 0;
 
     virtual
     void
-    eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const
-    UTILS_PURE_VIRTUAL;
+    eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const = 0;
 
     /*\
      |         __  __          _
@@ -1320,27 +1369,27 @@ namespace G2lib {
 
     virtual
     void
-    translate( real_type tx, real_type ty ) UTILS_PURE_VIRTUAL;
+    translate( real_type tx, real_type ty ) = 0;
 
     virtual
     void
-    rotate( real_type angle, real_type cx, real_type cy ) UTILS_PURE_VIRTUAL;
+    rotate( real_type angle, real_type cx, real_type cy ) = 0;
 
     virtual
     void
-    scale( real_type sc ) UTILS_PURE_VIRTUAL;
+    scale( real_type sc ) = 0;
 
     virtual
     void
-    reverse() UTILS_PURE_VIRTUAL;
+    reverse() = 0;
 
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) UTILS_PURE_VIRTUAL;
+    changeOrigin( real_type newx0, real_type newy0 ) = 0;
 
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) UTILS_PURE_VIRTUAL;
+    trim( real_type s_begin, real_type s_end ) = 0;
 
     /*\
      |   _       _                          _
@@ -1463,7 +1512,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_PURE_VIRTUAL;
+    ) const = 0;
 
     /*!
      * \param  qx  x-coordinate of the point
@@ -1546,7 +1595,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_PURE_VIRTUAL;
+    ) const = 0;
 
     /*!
      * \param  qx   x-coordinate of the point
@@ -1705,7 +1754,7 @@ namespace G2lib {
 
     virtual
     void
-    info( ostream_type & stream ) const UTILS_PURE_VIRTUAL;
+    info( ostream_type & stream ) const = 0;
 
   };
 

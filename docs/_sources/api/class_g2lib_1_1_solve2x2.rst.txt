@@ -1,0 +1,16 @@
+.. _exhale_class_class_g2lib_1_1_solve2x2:
+
+Class Solve2x2
+==============
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_G2lib.hxx`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: G2lib::Solve2x2
+   :members:
+   :protected-members:
+   :undoc-members:

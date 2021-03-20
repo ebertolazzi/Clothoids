@@ -1,0 +1,16 @@
+.. _exhale_class_class_g2lib_1_1_a_a_b_btree:
+
+Class AABBtree
+==============
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_AABBtree.hxx`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: G2lib::AABBtree
+   :members:
+   :protected-members:
+   :undoc-members:

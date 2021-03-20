@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1ae9bc88d2300abf2d8eceeddddb422bf4:
+
+Function G2lib::intersect(BaseCurve const&, BaseCurve const&, IntersectList&, bool)
+===================================================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib_intersect.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::intersect(BaseCurve const&, BaseCurve const&, IntersectList&, bool)

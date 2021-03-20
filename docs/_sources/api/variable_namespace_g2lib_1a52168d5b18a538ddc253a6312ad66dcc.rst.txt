@@ -1,0 +1,13 @@
+.. _exhale_variable_namespace_g2lib_1a52168d5b18a538ddc253a6312ad66dcc:
+
+Variable G2lib::machepsi
+========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: G2lib::machepsi

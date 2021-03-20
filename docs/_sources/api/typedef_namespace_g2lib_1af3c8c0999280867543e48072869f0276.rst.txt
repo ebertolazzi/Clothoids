@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespace_g2lib_1af3c8c0999280867543e48072869f0276:
+
+Typedef G2lib::Ipair
+====================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_G2lib.hxx`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: G2lib::Ipair

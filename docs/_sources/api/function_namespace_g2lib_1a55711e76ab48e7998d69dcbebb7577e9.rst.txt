@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a55711e76ab48e7998d69dcbebb7577e9:
+
+Function G2lib::operator<<(ostream_type&, ClothoidList const&)
+==============================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_ClothoidList.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::operator<<(ostream_type&, ClothoidList const&)

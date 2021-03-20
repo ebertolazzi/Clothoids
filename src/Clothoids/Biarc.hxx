@@ -55,7 +55,7 @@ namespace G2lib {
     #include "BaseCurve_using.hxx"
 
     virtual
-    ~Biarc() UTILS_OVERRIDE
+    ~Biarc() override
     {}
 
     //explicit
@@ -140,7 +140,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -150,118 +150,118 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     real_type
-    length() const UTILS_OVERRIDE
+    length() const override
     { return m_C0.length()+m_C1.length(); }
 
     virtual
     real_type
-    length_ISO( real_type offs ) const UTILS_OVERRIDE
+    length_ISO( real_type offs ) const override
     { return m_C0.length_ISO(offs)+m_C1.length_ISO(offs); }
 
     virtual
     real_type
-    thetaBegin() const UTILS_OVERRIDE
+    thetaBegin() const override
     { return m_C0.thetaBegin(); }
 
     virtual
     real_type
-    thetaEnd() const UTILS_OVERRIDE
+    thetaEnd() const override
     { return m_C1.thetaEnd(); }
 
     virtual
     real_type
-    kappaBegin() const UTILS_OVERRIDE
+    kappaBegin() const override
     { return m_C0.kappaBegin(); }
 
     virtual
     real_type
-    kappaEnd() const UTILS_OVERRIDE
+    kappaEnd() const override
     { return m_C1.kappaEnd(); }
 
     virtual
     real_type
-    xBegin() const UTILS_OVERRIDE
+    xBegin() const override
     { return m_C0.xBegin(); }
 
     virtual
     real_type
-    xEnd() const UTILS_OVERRIDE
+    xEnd() const override
     { return m_C1.xEnd(); }
 
     virtual
     real_type
-    yBegin() const UTILS_OVERRIDE
+    yBegin() const override
     { return m_C0.yBegin(); }
 
     virtual
     real_type
-    yEnd() const UTILS_OVERRIDE
+    yEnd() const override
     { return m_C1.yEnd(); }
 
     virtual
     real_type
-    tx_Begin() const UTILS_OVERRIDE
+    tx_Begin() const override
     { return m_C0.tx_Begin(); }
 
     virtual
     real_type
-    tx_End() const UTILS_OVERRIDE
+    tx_End() const override
     { return m_C1.tx_End(); }
 
     virtual
     real_type
-    ty_Begin() const UTILS_OVERRIDE
+    ty_Begin() const override
     { return m_C0.ty_Begin(); }
 
     virtual
     real_type
-    ty_End() const UTILS_OVERRIDE
+    ty_End() const override
     { return m_C1.ty_End(); }
 
     virtual
     real_type
-    nx_Begin_ISO() const UTILS_OVERRIDE
+    nx_Begin_ISO() const override
     { return m_C0.nx_Begin_ISO(); }
 
     virtual
     real_type
-    nx_End_ISO() const UTILS_OVERRIDE
+    nx_End_ISO() const override
     { return m_C1.nx_End_ISO(); }
 
     virtual
     real_type
-    ny_Begin_ISO() const UTILS_OVERRIDE
+    ny_Begin_ISO() const override
     { return m_C0.ny_Begin_ISO(); }
 
     virtual
     real_type
-    ny_End_ISO() const UTILS_OVERRIDE
+    ny_End_ISO() const override
     { return m_C1.ny_End_ISO(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     real_type
-    theta( real_type s ) const UTILS_OVERRIDE;
+    theta( real_type s ) const override;
 
     virtual
     real_type
-    theta_D( real_type ) const UTILS_OVERRIDE;
+    theta_D( real_type ) const override;
 
     virtual
     real_type
-    theta_DD( real_type ) const UTILS_OVERRIDE
+    theta_DD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    theta_DDD( real_type ) const UTILS_OVERRIDE
+    theta_DDD( real_type ) const override
     { return 0; }
 
     virtual
@@ -272,33 +272,33 @@ namespace G2lib {
       real_type & k,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual real_type X( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type Y( real_type s ) const UTILS_OVERRIDE;
+    virtual real_type X( real_type s ) const override;
+    virtual real_type Y( real_type s ) const override;
 
-    virtual real_type X_D( real_type ) const UTILS_OVERRIDE;
-    virtual real_type Y_D( real_type ) const UTILS_OVERRIDE;
+    virtual real_type X_D( real_type ) const override;
+    virtual real_type Y_D( real_type ) const override;
 
-    virtual real_type X_DD( real_type ) const UTILS_OVERRIDE;
-    virtual real_type Y_DD( real_type ) const UTILS_OVERRIDE;
+    virtual real_type X_DD( real_type ) const override;
+    virtual real_type Y_DD( real_type ) const override;
 
-    virtual real_type X_DDD( real_type ) const UTILS_OVERRIDE;
-    virtual real_type Y_DDD( real_type ) const UTILS_OVERRIDE;
+    virtual real_type X_DDD( real_type ) const override;
+    virtual real_type Y_DDD( real_type ) const override;
 
-    virtual real_type X_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE;
-    virtual real_type Y_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE;
+    virtual real_type X_ISO( real_type s, real_type offs ) const override;
+    virtual real_type Y_ISO( real_type s, real_type offs ) const override;
 
-    virtual real_type X_ISO_D( real_type, real_type offs ) const UTILS_OVERRIDE;
-    virtual real_type Y_ISO_D( real_type, real_type offs ) const UTILS_OVERRIDE;
+    virtual real_type X_ISO_D( real_type, real_type offs ) const override;
+    virtual real_type Y_ISO_D( real_type, real_type offs ) const override;
 
-    virtual real_type X_ISO_DD( real_type, real_type offs ) const UTILS_OVERRIDE;
-    virtual real_type Y_ISO_DD( real_type, real_type offs ) const UTILS_OVERRIDE;
+    virtual real_type X_ISO_DD( real_type, real_type offs ) const override;
+    virtual real_type Y_ISO_DD( real_type, real_type offs ) const override;
 
-    virtual real_type X_ISO_DDD( real_type, real_type offs ) const UTILS_OVERRIDE;
-    virtual real_type Y_ISO_DDD( real_type, real_type offs ) const UTILS_OVERRIDE;
+    virtual real_type X_ISO_DDD( real_type, real_type offs ) const override;
+    virtual real_type Y_ISO_DDD( real_type, real_type offs ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -308,7 +308,7 @@ namespace G2lib {
       real_type   s,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -316,7 +316,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -324,7 +324,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -332,7 +332,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -341,7 +341,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -350,7 +350,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -359,7 +359,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -368,7 +368,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     /*\
      |  _____                   _   _   _
@@ -380,35 +380,35 @@ namespace G2lib {
 
     virtual
     real_type
-    tx( real_type s ) const UTILS_OVERRIDE;
+    tx( real_type s ) const override;
 
     virtual
     real_type
-    tx_D( real_type s ) const UTILS_OVERRIDE;
+    tx_D( real_type s ) const override;
 
     virtual
     real_type
-    tx_DD( real_type s ) const UTILS_OVERRIDE;
+    tx_DD( real_type s ) const override;
 
     virtual
     real_type
-    tx_DDD( real_type s ) const UTILS_OVERRIDE;
+    tx_DDD( real_type s ) const override;
 
     virtual
     real_type
-    ty( real_type s ) const UTILS_OVERRIDE;
+    ty( real_type s ) const override;
 
     virtual
     real_type
-    ty_D( real_type s ) const UTILS_OVERRIDE;
+    ty_D( real_type s ) const override;
 
     virtual
     real_type
-    ty_DD( real_type s ) const UTILS_OVERRIDE;
+    ty_DD( real_type s ) const override;
 
     virtual
     real_type
-    ty_DDD( real_type s ) const UTILS_OVERRIDE;
+    ty_DDD( real_type s ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -418,7 +418,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx,
       real_type & ty
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -426,7 +426,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx_D,
       real_type & ty_D
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -434,7 +434,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx_DD,
       real_type & ty_DD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -442,7 +442,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx_DDD,
       real_type & ty_DDD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     /*\
      |  _                        __
@@ -454,29 +454,29 @@ namespace G2lib {
 
     virtual
     void
-    translate( real_type tx, real_type ty ) UTILS_OVERRIDE
+    translate( real_type tx, real_type ty ) override
     { m_C0.translate(tx,ty); m_C1.translate(tx,ty); }
 
     virtual
     void
-    rotate( real_type angle, real_type cx, real_type cy ) UTILS_OVERRIDE
+    rotate( real_type angle, real_type cx, real_type cy ) override
     { m_C0.rotate(angle,cx,cy); m_C1.rotate(angle,cx,cy); }
 
     virtual
     void
-    reverse() UTILS_OVERRIDE;
+    reverse() override;
 
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) UTILS_OVERRIDE;
+    changeOrigin( real_type newx0, real_type newy0 ) override;
 
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE;
+    trim( real_type s_begin, real_type s_end ) override;
 
     virtual
     void
-    scale( real_type s ) UTILS_OVERRIDE;
+    scale( real_type s ) override;
 
     /*\
      |        _                     _   ____       _       _
@@ -496,7 +496,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     int_type
@@ -509,7 +509,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -610,7 +610,7 @@ namespace G2lib {
     ) const;
 
     void
-    info( ostream_type & stream ) const UTILS_OVERRIDE
+    info( ostream_type & stream ) const override
     { stream << "BiArc\n" << *this << '\n'; }
 
     friend

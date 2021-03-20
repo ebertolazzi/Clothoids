@@ -1,0 +1,22 @@
+.. _exhale_class_class_g2lib_1_1_clothoid_curve_1_1_t2_d__approximate__collision:
+
+Class ClothoidCurve::T2D_approximate_collision
+==============================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Clothoid.hxx`
+
+
+Nested Relationships
+--------------------
+
+This class is a nested type of :ref:`exhale_class_class_g2lib_1_1_clothoid_curve`.
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: G2lib::ClothoidCurve::T2D_approximate_collision
+   :members:
+   :protected-members:
+   :undoc-members:

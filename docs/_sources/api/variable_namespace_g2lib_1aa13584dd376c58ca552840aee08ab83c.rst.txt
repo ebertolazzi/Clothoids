@@ -1,0 +1,13 @@
+.. _exhale_variable_namespace_g2lib_1aa13584dd376c58ca552840aee08ab83c:
+
+Variable G2lib::one_degree
+==========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: G2lib::one_degree

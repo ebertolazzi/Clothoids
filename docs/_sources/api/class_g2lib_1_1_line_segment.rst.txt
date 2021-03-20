@@ -1,0 +1,25 @@
+.. _exhale_class_class_g2lib_1_1_line_segment:
+
+Class LineSegment
+=================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Line.hxx`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public BaseCurve`` (:ref:`exhale_class_class_g2lib_1_1_base_curve`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: G2lib::LineSegment
+   :members:
+   :protected-members:
+   :undoc-members:

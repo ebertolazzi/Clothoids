@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1aa57348d683f260251202e4fe1e7c6ff1:
+
+Function G2lib::operator<<(ostream_type&, Biarc const&)
+=======================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Biarc.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::operator<<(ostream_type&, Biarc const&)

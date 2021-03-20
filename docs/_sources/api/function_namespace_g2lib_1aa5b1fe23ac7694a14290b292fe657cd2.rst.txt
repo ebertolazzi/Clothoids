@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1aa5b1fe23ac7694a14290b292fe657cd2:
+
+Function G2lib::collision_SAE
+=============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_G2lib.hxx`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::collision_SAE(BaseCurve const&, real_type, BaseCurve const&, real_type)

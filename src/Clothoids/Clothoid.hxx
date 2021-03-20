@@ -261,12 +261,13 @@ namespace G2lib {
     /*!
      *  \brief build a clothoid by solving the hermite G1 problem
      *
-     *  \param x0     initial x position \f$ x_0      \f$
-     *  \param y0     initial y position \f$ y_0      \f$
-     *  \param theta0 initial angle      \f$ \theta_0 \f$
-     *  \param x1     final x position   \f$ x_1      \f$
-     *  \param y1     final y position   \f$ y_1      \f$
-     *  \param theta1 final angle        \f$ \theta_1 \f$
+     *  \param[in] x0     initial x position \f$ x_0      \f$
+     *  \param[in] y0     initial y position \f$ y_0      \f$
+     *  \param[in] theta0 initial angle      \f$ \theta_0 \f$
+     *  \param[in] x1     final x position   \f$ x_1      \f$
+     *  \param[in] y1     final y position   \f$ y_1      \f$
+     *  \param[in] theta1 final angle        \f$ \theta_1 \f$
+     *  \param[in] tol    tolerance
      *  \return number of iteration performed
      */
     int
@@ -287,12 +288,16 @@ namespace G2lib {
     /*!
      *  \brief build a clothoid by solving the hermite G1 problem
      *
-     *  \param x0     initial x position \f$ x_0      \f$
-     *  \param y0     initial y position \f$ y_0      \f$
-     *  \param theta0 initial angle      \f$ \theta_0 \f$
-     *  \param x1     final x position   \f$ x_1      \f$
-     *  \param y1     final y position   \f$ y_1      \f$
-     *  \param theta1 final angle        \f$ \theta_1 \f$
+     *  \param[in]  x0     initial x position \f$ x_0      \f$
+     *  \param[in]  y0     initial y position \f$ y_0      \f$
+     *  \param[in]  theta0 initial angle      \f$ \theta_0 \f$
+     *  \param[in]  x1     final x position   \f$ x_1      \f$
+     *  \param[in]  y1     final y position   \f$ y_1      \f$
+     *  \param[in]  theta1 final angle        \f$ \theta_1 \f$
+     *  \param[out] L_D    derivative of the length \f$ L(\theta_0,\theta_1) \f$ 
+     *  \param[out] k_D    derivative of the curvature \f$ \kappa(\theta_0,\theta_1) \f$ 
+     *  \param[out] dk_D   derivative of the curvature variation \f$ \kappa'(\theta_0,\theta_1) \f$ 
+     *  \param[out] tol = 1e-12
      *  \return number of iteration performed
      */
     int
@@ -318,12 +323,13 @@ namespace G2lib {
     /*!
      *  \brief build a clothoid by solving the forward problem
      *
-     *  \param x0     initial x position \f$ x_0      \f$
-     *  \param y0     initial y position \f$ y_0      \f$
-     *  \param theta0 initial angle      \f$ \theta_0 \f$
-     *  \param kappa0 initial curvature  \f$ \kappa_0 \f$
-     *  \param x1     final x position   \f$ x_1      \f$
-     *  \param y1     final y position   \f$ y_1      \f$
+     *  \param[in] x0     initial x position \f$ x_0      \f$
+     *  \param[in] y0     initial y position \f$ y_0      \f$
+     *  \param[in] theta0 initial angle      \f$ \theta_0 \f$
+     *  \param[in] kappa0 initial curvature  \f$ \kappa_0 \f$
+     *  \param[in] x1     final x position   \f$ x_1      \f$
+     *  \param[in] y1     final y position   \f$ y_1      \f$
+     *  \param[in] tol    tolerance of the forward problem
      */
     bool
     build_forward(
@@ -446,6 +452,7 @@ namespace G2lib {
     /*!
      * \brief Compute the point on clothoid at minimal distance from a given point
      *
+     * \param  ds sampling step
      * \param  qx x-coordinate of the given point
      * \param  qy y-coordinate of the given point
      * \param  X  x-coordinate of the point on clothoid at minimal distance
@@ -588,7 +595,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE {
+    ) const override {
       bbox_ISO( 0, xmin, ymin, xmax, ymax );
     }
 
@@ -600,70 +607,70 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     real_type
-    length() const UTILS_OVERRIDE
+    length() const override
     { return m_L; }
 
     virtual
     real_type
-    length_ISO( real_type ) const UTILS_OVERRIDE {
+    length_ISO( real_type ) const override {
       UTILS_ERROR0( "Offset length not available for Clothoids\n" );
       return 0;
     }
 
     virtual
     real_type
-    thetaBegin() const UTILS_OVERRIDE
+    thetaBegin() const override
     { return m_CD.theta0; }
 
     virtual
     real_type
-    kappaBegin() const UTILS_OVERRIDE
+    kappaBegin() const override
     { return m_CD.kappa0; }
 
     virtual
     real_type
-    xBegin() const UTILS_OVERRIDE
+    xBegin() const override
     { return m_CD.x0; }
 
     virtual
     real_type
-    xEnd() const UTILS_OVERRIDE
+    xEnd() const override
     { return m_CD.X(m_L); }
 
     virtual
     real_type
-    yBegin() const UTILS_OVERRIDE
+    yBegin() const override
     { return m_CD.y0; }
 
     virtual
     real_type
-    yEnd() const UTILS_OVERRIDE
+    yEnd() const override
     { return m_CD.Y(m_L); }
 
     virtual
     real_type
-    tx_Begin() const UTILS_OVERRIDE
+    tx_Begin() const override
     { return m_CD.tg0_x(); }
 
     virtual
     real_type
-    ty_Begin() const UTILS_OVERRIDE
+    ty_Begin() const override
     { return m_CD.tg0_y(); }
 
     virtual
     real_type
-    nx_Begin_ISO() const UTILS_OVERRIDE
+    nx_Begin_ISO() const override
     { return m_CD.nor0_x_ISO(); }
 
     virtual
     real_type
-    ny_Begin_ISO() const UTILS_OVERRIDE
+    ny_Begin_ISO() const override
     { return m_CD.nor0_y_ISO(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -678,42 +685,42 @@ namespace G2lib {
 
     virtual
     real_type
-    tx( real_type s ) const UTILS_OVERRIDE
+    tx( real_type s ) const override
     { return m_CD.tg_x( s ); }
 
     virtual
     real_type
-    ty( real_type s ) const UTILS_OVERRIDE
+    ty( real_type s ) const override
     { return m_CD.tg_y( s ); }
 
     virtual
     real_type
-    tx_D( real_type s ) const UTILS_OVERRIDE
+    tx_D( real_type s ) const override
     { return m_CD.tg_x_D( s ); }
 
     virtual
     real_type
-    ty_D( real_type s ) const UTILS_OVERRIDE
+    ty_D( real_type s ) const override
     { return m_CD.tg_y_D( s ); }
 
     virtual
     real_type
-    tx_DD( real_type s ) const UTILS_OVERRIDE
+    tx_DD( real_type s ) const override
     { return m_CD.tg_x_DD( s ); }
 
     virtual
     real_type
-    ty_DD( real_type s ) const UTILS_OVERRIDE
+    ty_DD( real_type s ) const override
     { return m_CD.tg_y_DD( s ); }
 
     virtual
     real_type
-    tx_DDD( real_type s ) const UTILS_OVERRIDE
+    tx_DDD( real_type s ) const override
     { return m_CD.tg_x_DDD( s ); }
 
     virtual
     real_type
-    ty_DDD( real_type s ) const UTILS_OVERRIDE
+    ty_DDD( real_type s ) const override
     { return m_CD.tg_y_DDD( s ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -724,7 +731,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx,
       real_type & ty
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.tg( s, tx, ty ); }
 
     virtual
@@ -733,7 +740,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx_D,
       real_type & ty_D
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.tg_D( s, tx_D, ty_D ); }
 
     virtual
@@ -742,7 +749,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx_DD,
       real_type & ty_DD
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.tg_DD( s, tx_DD, ty_DD ); }
 
     virtual
@@ -751,7 +758,7 @@ namespace G2lib {
       real_type   s,
       real_type & tx_DDD,
       real_type & ty_DDD
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.tg_DDD( s, tx_DDD, ty_DDD ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -763,7 +770,7 @@ namespace G2lib {
      * \return angle (radiant) at curvilinear cooordinate `s`
      */
     real_type
-    theta( real_type s ) const UTILS_OVERRIDE
+    theta( real_type s ) const override
     { return m_CD.theta(s); }
 
     /*!
@@ -773,7 +780,7 @@ namespace G2lib {
      * \return angle derivative (radiant/s) at curvilinear cooordinate `s`
      */
     real_type
-    theta_D( real_type s ) const UTILS_OVERRIDE
+    theta_D( real_type s ) const override
     { return m_CD.kappa(s); }
 
     /*!
@@ -782,7 +789,7 @@ namespace G2lib {
      * \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
      */
     real_type
-    theta_DD( real_type ) const UTILS_OVERRIDE
+    theta_DD( real_type ) const override
     { return m_CD.dk; }
 
     /*!
@@ -791,7 +798,7 @@ namespace G2lib {
      * \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
      */
     real_type
-    theta_DDD( real_type ) const UTILS_OVERRIDE
+    theta_DDD( real_type ) const override
     { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -805,7 +812,7 @@ namespace G2lib {
       real_type & k,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.evaluate( s, th, k, x, y ); }
     #endif
 
@@ -817,19 +824,19 @@ namespace G2lib {
      * \return clothoid X coordinate
      */
     real_type
-    X( real_type s ) const UTILS_OVERRIDE
+    X( real_type s ) const override
     { return m_CD.X(s); }
 
     real_type
-    X_D( real_type s ) const UTILS_OVERRIDE
+    X_D( real_type s ) const override
     { return m_CD.X_D(s); }
 
     real_type
-    X_DD( real_type s ) const UTILS_OVERRIDE
+    X_DD( real_type s ) const override
     { return m_CD.X_DD(s); }
 
     real_type
-    X_DDD( real_type s ) const UTILS_OVERRIDE
+    X_DDD( real_type s ) const override
     { return m_CD.X_DDD(s); }
 
     /*!
@@ -838,19 +845,19 @@ namespace G2lib {
      * \return clothoid Y coordinate
      */
     real_type
-    Y( real_type s ) const UTILS_OVERRIDE
+    Y( real_type s ) const override
     { return m_CD.Y(s); }
 
     real_type
-    Y_D( real_type s ) const UTILS_OVERRIDE
+    Y_D( real_type s ) const override
     { return m_CD.Y_D(s); }
 
     real_type
-    Y_DD ( real_type s ) const UTILS_OVERRIDE
+    Y_DD ( real_type s ) const override
     { return m_CD.Y_DD(s); }
 
     real_type
-    Y_DDD( real_type s ) const UTILS_OVERRIDE
+    Y_DDD( real_type s ) const override
     { return m_CD.Y_DDD(s); }
 
     /*!
@@ -860,19 +867,19 @@ namespace G2lib {
      * \return     clothoid X coordinate
      */
     real_type
-    X_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE
+    X_ISO( real_type s, real_type offs ) const override
     { return m_CD.X_ISO(s,offs); }
 
     real_type
-    X_ISO_D( real_type s, real_type offs ) const UTILS_OVERRIDE
+    X_ISO_D( real_type s, real_type offs ) const override
     { return m_CD.X_ISO_D(s,offs); }
 
     real_type
-    X_ISO_DD( real_type s, real_type offs ) const UTILS_OVERRIDE
+    X_ISO_DD( real_type s, real_type offs ) const override
     { return m_CD.X_ISO_DD(s,offs); }
 
     real_type
-    X_ISO_DDD( real_type s, real_type offs ) const UTILS_OVERRIDE
+    X_ISO_DDD( real_type s, real_type offs ) const override
     { return m_CD.X_ISO_DDD(s,offs); }
 
     /*!
@@ -882,19 +889,19 @@ namespace G2lib {
      * \return clothoid Y coordinate
      */
     real_type
-    Y_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE
+    Y_ISO( real_type s, real_type offs ) const override
     { return m_CD.Y_ISO(s,offs); }
 
     real_type
-    Y_ISO_D( real_type s, real_type offs ) const UTILS_OVERRIDE
+    Y_ISO_D( real_type s, real_type offs ) const override
     { return m_CD.Y_ISO_D(s,offs); }
 
     real_type
-    Y_ISO_DD( real_type s, real_type offs ) const UTILS_OVERRIDE
+    Y_ISO_DD( real_type s, real_type offs ) const override
     { return m_CD.Y_ISO_DD(s,offs); }
 
     real_type
-    Y_ISO_DDD( real_type s, real_type offs ) const UTILS_OVERRIDE
+    Y_ISO_DDD( real_type s, real_type offs ) const override
     { return m_CD.Y_ISO_DDD(s,offs); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -905,7 +912,7 @@ namespace G2lib {
       real_type   s,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval( s, x, y ); }
 
     virtual
@@ -914,7 +921,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval_D( s, x_D, y_D ); }
 
     virtual
@@ -923,7 +930,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval_DD( s, x_DD, y_DD ); }
 
     virtual
@@ -932,7 +939,7 @@ namespace G2lib {
       real_type   s,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval_DDD( s, x_DDD, y_DDD ); }
 
     virtual
@@ -942,7 +949,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval_ISO( s, offs, x, y ); }
 
     virtual
@@ -952,7 +959,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval_ISO_D( s, offs, x_D, y_D ); }
 
     virtual
@@ -962,7 +969,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval_ISO_DD( s, offs, x_DD, y_DD ); }
 
     virtual
@@ -972,7 +979,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE
+    ) const override
     { m_CD.eval_ISO_DDD( s, offs, x_DDD, y_DDD ); }
 
     /*\
@@ -985,17 +992,17 @@ namespace G2lib {
 
     virtual
     void
-    translate( real_type tx, real_type ty ) UTILS_OVERRIDE
+    translate( real_type tx, real_type ty ) override
     { m_CD.x0 += tx; m_CD.y0 += ty; }
 
     virtual
     void
-    rotate( real_type angle, real_type cx, real_type cy ) UTILS_OVERRIDE
+    rotate( real_type angle, real_type cx, real_type cy ) override
     { m_CD.rotate( angle, cx, cy ); }
 
     virtual
     void
-    scale( real_type s ) UTILS_OVERRIDE {
+    scale( real_type s ) override {
       m_CD.kappa0 /= s;
       m_CD.dk     /= s*s;
       m_L         *= s;
@@ -1003,17 +1010,17 @@ namespace G2lib {
 
     virtual
     void
-    reverse() UTILS_OVERRIDE
+    reverse() override
     { m_CD.reverse(m_L); }
 
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) UTILS_OVERRIDE
+    changeOrigin( real_type newx0, real_type newy0 ) override
     { m_CD.x0 = newx0; m_CD.y0 = newy0; }
 
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE {
+    trim( real_type s_begin, real_type s_end ) override {
       m_CD.origin_at( s_begin );
       m_L = s_end - s_begin;
     }
@@ -1042,7 +1049,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     int_type
@@ -1055,7 +1062,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -1081,8 +1088,8 @@ namespace G2lib {
       real_type             offs,
       ClothoidCurve const & c,
       real_type             c_offs,
-      real_type             max_angle, //!< maximum angle variation
-      real_type             max_size   //!< curve offset
+      real_type             max_angle,
+      real_type             max_size
     ) const;
 
     bool
@@ -1122,7 +1129,7 @@ namespace G2lib {
     ) const;
 
     void
-    info( ostream_type & stream ) const UTILS_OVERRIDE
+    info( ostream_type & stream ) const override
     { stream << "Clothoid\n" << *this << '\n'; }
 
     friend

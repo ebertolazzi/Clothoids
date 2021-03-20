@@ -1,0 +1,13 @@
+.. _exhale_variable_namespace_g2lib_1ac805fb06cc3d7b2d17f3133870ca903f:
+
+Variable G2lib::fn
+==================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: G2lib::fn

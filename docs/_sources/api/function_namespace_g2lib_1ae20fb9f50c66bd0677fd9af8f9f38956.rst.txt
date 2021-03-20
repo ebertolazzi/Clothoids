@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1ae20fb9f50c66bd0677fd9af8f9f38956:
+
+Function G2lib::intersect(real_type, L_struct const&, L_struct const&, real_type&, real_type&)
+==============================================================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Line.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::intersect(real_type, L_struct const&, L_struct const&, real_type&, real_type&)

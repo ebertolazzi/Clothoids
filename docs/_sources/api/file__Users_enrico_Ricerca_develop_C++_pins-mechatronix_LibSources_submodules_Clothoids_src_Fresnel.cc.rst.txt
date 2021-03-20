@@ -1,0 +1,105 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc:
+
+File Fresnel.cc
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc``)
+------------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``Clothoids.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids.hh`)
+
+- ``PolynomialRoots.hh``
+
+- ``algorithm``
+
+- ``cfloat``
+
+- ``cmath``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_G2lib`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespace_g2lib_1abaebb139cf4fdc624b1ccb7dd4e89d3a`
+
+- :ref:`exhale_function_namespace_g2lib_1a107bd1d818f054cd9e549d363c758c5b`
+
+- :ref:`exhale_function_namespace_g2lib_1a7d90c6ed120392b31b52fe8bd9e0db5f`
+
+- :ref:`exhale_function_namespace_g2lib_1a76c7263fd1bf8a016391d3dc2c564f3c`
+
+- :ref:`exhale_function_namespace_g2lib_1a737cb704d1c89ab2225a49b93eb45e97`
+
+- :ref:`exhale_function_namespace_g2lib_1ac60e2aca66d163827dce4c91f99584b9`
+
+- :ref:`exhale_function_namespace_g2lib_1a20623a029977ac87bcf4fb3ff5d1b044`
+
+- :ref:`exhale_function_namespace_g2lib_1a8546dab6d8c2ac2db8e518ca8c0189b6`
+
+- :ref:`exhale_function_namespace_g2lib_1aac7328b3a4cc85ef6e27524f3fbdcfa7`
+
+- :ref:`exhale_function_namespace_g2lib_1a43b76debcc6247f6af99f3c3c1f0c003`
+
+- :ref:`exhale_function_namespace_g2lib_1a37163aa773926b21dec85ed79eade78b`
+
+- :ref:`exhale_function_namespace_g2lib_1a73f02c5ca90f9246dc5d39a8f12fff15`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define__fresnel_8cc_1a9be5412a42aadfc00a352f7055f73f54`
+
+- :ref:`exhale_define__fresnel_8cc_1aeb6f1b8dbc03491de4146824ffe061ca`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_namespace_g2lib_1a0aadafb02e925a06fe9e67ffc29fc52c`
+
+- :ref:`exhale_variable_namespace_g2lib_1ac805fb06cc3d7b2d17f3133870ca903f`
+
+- :ref:`exhale_variable_namespace_g2lib_1af62818905b5d95b6dd48cb87454e2a49`
+
+- :ref:`exhale_variable_namespace_g2lib_1ad5e2571d40de2574f0d5fa4387369fd5`
+
+- :ref:`exhale_variable_namespace_g2lib_1aa13584dd376c58ca552840aee08ab83c`
+

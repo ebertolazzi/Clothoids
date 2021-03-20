@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespace_g2lib_1a064d224aea6b2fb81e1e88cca2b3b62f:
+
+Typedef G2lib::Ppair
+====================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib_intersect.cc`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: G2lib::Ppair

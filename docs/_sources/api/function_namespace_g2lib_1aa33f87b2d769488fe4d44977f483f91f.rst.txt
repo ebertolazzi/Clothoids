@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1aa33f87b2d769488fe4d44977f483f91f:
+
+Function G2lib::yesAABBtree
+===========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_G2lib.hxx`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::yesAABBtree()

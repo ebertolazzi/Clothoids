@@ -57,7 +57,6 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  /// \cond NODOC
   typedef struct {
     real_type p[2];
     real_type q[2];
@@ -65,7 +64,6 @@ namespace G2lib {
     real_type s;
     real_type L;
   } L_struct;
-  /// \endcond NODOC
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Given three colinear points p, q, r, the function checks if

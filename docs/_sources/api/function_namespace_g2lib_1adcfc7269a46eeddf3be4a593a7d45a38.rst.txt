@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1adcfc7269a46eeddf3be4a593a7d45a38:
+
+Function G2lib::noAABBtree
+==========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_G2lib.hxx`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::noAABBtree()

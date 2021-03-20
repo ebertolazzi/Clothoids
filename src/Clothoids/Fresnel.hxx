@@ -33,8 +33,9 @@ namespace G2lib {
    |  |  _|| | |  __/\__ \ | | |  __/ |
    |  |_|  |_|  \___||___/_| |_|\___|_|
   \*/
-  //! Compute Fresnel integrals
   /*!
+   * \brief Compute Fresnel integrals
+   *
    * \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
    *     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
    * \param x the input abscissa
@@ -48,13 +49,15 @@ namespace G2lib {
     real_type & S
   );
 
-  //! Compute Fresnel integrals and its derivatives
   /*!
+   * \brief Compute Fresnel integrals and its derivatives
+   *
    * \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
    *     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
-   * \param x the input abscissa
-   * \param S S[0]=\f$ S(x) \f$, S[1]=\f$ S'(x) \f$, S[2]=\f$ S''(x) \f$
-   * \param C C[0]=\f$ C(x) \f$, C[1]=\f$ C'(x) \f$, C[2]=\f$ C''(x) \f$
+   * \param nk maximum order of the derivative
+   * \param x  the input abscissa
+   * \param S  S[0]=\f$ S(x) \f$, S[1]=\f$ S'(x) \f$, S[2]=\f$ S''(x) \f$
+   * \param C  C[0]=\f$ C(x) \f$, C[1]=\f$ C'(x) \f$, C[2]=\f$ C''(x) \f$
    */
   void
   FresnelCS(
@@ -64,11 +67,14 @@ namespace G2lib {
     real_type S[]
   );
 
-  /*! \brief Compute the Fresnel integrals
+  /*!
+   * \brief Compute the Fresnel integrals
+   * 
    * \f[
    *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
    *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
    * \f]
+   * 
    * \param nk   number of momentae to compute
    * \param a    parameter \f$ a \f$
    * \param b    parameter \f$ b \f$
@@ -86,7 +92,9 @@ namespace G2lib {
     real_type intS[]
   );
 
-  /*! \brief Compute the Fresnel integrals
+  /*!
+   * \brief Compute the Fresnel integrals
+   * 
    * \f[
    *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
    *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt

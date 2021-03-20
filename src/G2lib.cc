@@ -565,8 +565,8 @@ namespace G2lib {
   projectPointOnCircleArc(
     real_type x0,
     real_type y0,
-    real_type c0, //!< cos(theta0)
-    real_type s0, //!< sin(theta0)
+    real_type c0,
+    real_type s0,
     real_type k,
     real_type L,
     real_type qx,

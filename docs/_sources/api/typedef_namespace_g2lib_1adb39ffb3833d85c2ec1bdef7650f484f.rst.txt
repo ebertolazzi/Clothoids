@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespace_g2lib_1adb39ffb3833d85c2ec1bdef7650f484f:
+
+Typedef G2lib::IntersectList
+============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_G2lib.hxx`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: G2lib::IntersectList

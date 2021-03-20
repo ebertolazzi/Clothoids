@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a2d45cc29039fad7437a291c6f11a40d6:
+
+Function G2lib::closestPointQC
+==============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_ClothoidDistance.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::closestPointQC(real_type, ClothoidData const&, real_type, real_type, real_type, real_type&, real_type&, real_type&)
