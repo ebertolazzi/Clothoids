@@ -51,9 +51,5 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_namespace_g2lib_1a4ded2a28c33f58b43f376df6661e48e9`
-
 - :ref:`exhale_function_namespace_g2lib_1a55711e76ab48e7998d69dcbebb7577e9`
-
-- :ref:`exhale_function_namespace_g2lib_1a869afcaa69d20095b3a24e02a51e9c54`
 

@@ -45,24 +45,9 @@ Namespaces
 - :ref:`namespace_G2lib`
 
 
-Classes
--------
-
-
-- :ref:`exhale_struct_struct_g2lib_1_1_l__struct`
-
-
 Functions
 ---------
 
 
-- :ref:`exhale_function_namespace_g2lib_1a2d8029a2b6a851eed7612ac1a02eb507`
-
-- :ref:`exhale_function_namespace_g2lib_1ae20fb9f50c66bd0677fd9af8f9f38956`
-
-- :ref:`exhale_function_namespace_g2lib_1a3b7b682cdd6cadfa9120f826946e15f3`
-
 - :ref:`exhale_function_namespace_g2lib_1a93332a83835beb3d4b71a5d46dc2342f`
-
-- :ref:`exhale_function_namespace_g2lib_1ac2a2468c0efc1809385d32b0a81d8c2d`
 

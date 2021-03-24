@@ -121,7 +121,7 @@ namespace G2lib {
     numPoints() const
     { return int_type(m_s0.size()); }
 
-    void polygon( real_type x[], real_type y[]) const;
+    void polygon( real_type * x, real_type * y) const;
     void init( real_type x0, real_type y0 );
     void push_back( real_type x, real_type y );
     void push_back( LineSegment const & C );
@@ -132,8 +132,8 @@ namespace G2lib {
 
     void
     build(
-      real_type const x[],
-      real_type const y[],
+      real_type const * x,
+      real_type const * y,
       int_type npts
     );
 
@@ -143,7 +143,6 @@ namespace G2lib {
     void build( ClothoidCurve const & C, real_type tol );
     void build( ClothoidList const & CL, real_type tol );
 
-    virtual
     void
     bbox(
       real_type & xmin,
@@ -152,7 +151,6 @@ namespace G2lib {
       real_type & ymax
     ) const override;
 
-    virtual
     void
     bbox_ISO(
       real_type   /* offs */,
@@ -162,6 +160,42 @@ namespace G2lib {
       real_type & /* ymax */
     ) const override {
       UTILS_ERROR0( "PolyLine::bbox( offs ... ) not available!\n" );
+    }
+
+    /*\
+     |  _    _   _____    _                _
+     | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+     | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+     | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+     |                               |___/
+    \*/
+
+    void
+    bbTriangles(
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override;
+
+    void
+    bbTriangles_ISO(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override;
+
+    void
+    bbTriangles_SAE(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override {
+      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     virtual
@@ -488,9 +522,9 @@ namespace G2lib {
      * intersect PolyLine with another PolyLine
      * 
      * \param[in]  pl          other PolyLine
-     * \param[out] ilist       list of the paramter of intersection
-     * \param[in]  swap_s_vals if `true` exchange the paramter of the 
-     *                         first and second PolyLine in the list
+     * \param[out] ilist       list of the intersection (as parameter on the curves)
+     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+     *                         intersection
      */
     void
     intersect(
@@ -505,9 +539,9 @@ namespace G2lib {
      * \param[in]  offs        Poliline offset
      * \param[in]  pl          other PolyLine
      * \param[in]  offs_pl     Other Poliline offset
-     * \param[out] ilist       list of the paramter of intersection
-     * \param[in]  swap_s_vals if `true` exchange the paramter of the 
-     *                         first and second PolyLine in the list
+     * \param[out] ilist       list of the intersection (as parameter on the curves)
+     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+     *                         intersection
      */
     void
     intersect_ISO(

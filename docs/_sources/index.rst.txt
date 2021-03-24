@@ -1,17 +1,18 @@
-.. Splines documentation master file, created by
-   sphinx-quickstart on Fri Mar 19 01:43:44 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. rst-class:: emphasize-children
 
+.. rst-class:: html-toggle
+
+*********
 Clothoids
-=========
+*********
 
+==========================================================================
 G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
---------------------------------------------------------------------------
+==========================================================================
 
 **by Enrico Bertolazzi and Marco Frego**
 
-`Github repository <https://github.com/ebertolazzi/Clothoids>`__
+`Github repository <https://github.com/ebertolazzi/Clothoids>`  
 
 
 .. toctree::

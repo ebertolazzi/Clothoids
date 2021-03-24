@@ -45,6 +45,8 @@ namespace PolynomialRoots {
   typedef int    indexType;
   typedef std::complex<valueType> complexType;
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   static int       const bitsValueType = std::numeric_limits<valueType>::digits;
   static valueType const splitFactor   = static_cast<valueType>((std::uint64_t(1)<<(bitsValueType-2))+1); // one extra digit is implicitly 1
 
@@ -137,6 +139,8 @@ namespace PolynomialRoots {
     f = complexType(-h2,h4);
     g = complexType(h5,h6);
   }
+
+  #endif
 
 }
 

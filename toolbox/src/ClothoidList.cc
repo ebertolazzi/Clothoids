@@ -362,9 +362,9 @@ namespace G2lib {
 
   bool
   ClothoidList::build_G1(
-    int_type        n,
-    real_type const x[],
-    real_type const y[]
+    int_type          n,
+    real_type const * x,
+    real_type const * y
   ) {
     init();
     reserve( n-1 );
@@ -417,10 +417,10 @@ namespace G2lib {
 
   bool
   ClothoidList::build_G1(
-    int_type        n,
-    real_type const x[],
-    real_type const y[],
-    real_type const theta[]
+    int_type          n,
+    real_type const * x,
+    real_type const * y,
+    real_type const * theta
   ) {
 
     UTILS_ASSERT0(
@@ -441,12 +441,12 @@ namespace G2lib {
 
   bool
   ClothoidList::build(
-    real_type       x0,
-    real_type       y0,
-    real_type       theta0,
-    int_type        n,
-    real_type const s[],
-    real_type const kappa[]
+    real_type         x0,
+    real_type         y0,
+    real_type         theta0,
+    int_type          n,
+    real_type const * s,
+    real_type const * kappa
   ) {
     if ( n < 2 ) return false;
     real_type tol = abs(s[n-1]-s[0])*machepsi10; // minimum admissible length
@@ -485,12 +485,12 @@ namespace G2lib {
 
   bool
   ClothoidList::build_raw(
-    int_type        n,
-    real_type const x[],
-    real_type const y[],
-    real_type const abscissa[],
-    real_type const theta[],
-    real_type const kappa[]
+    int_type          n,
+    real_type const * x,
+    real_type const * y,
+    real_type const * abscissa,
+    real_type const * theta,
+    real_type const * kappa
   ) {
     if ( n < 2 ) return false;
     init();
@@ -572,6 +572,18 @@ namespace G2lib {
    |                               |___/
   \*/
 
+  void
+  ClothoidList::bbTriangles(
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    int_type             icurve
+  ) const {
+    vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
+    for ( int_type ipos = icurve; ic != m_clotoidList.end(); ++ic, ++ipos )
+      ic->bbTriangles( tvec, max_angle, max_size, ipos );
+  }
+
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
@@ -579,10 +591,11 @@ namespace G2lib {
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
-    real_type            max_size
+    real_type            max_size,
+    int_type             icurve
   ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
-    for ( int_type ipos = 0; ic != m_clotoidList.end(); ++ic, ++ipos )
+    for ( int_type ipos = icurve; ic != m_clotoidList.end(); ++ic, ++ipos )
       ic->bbTriangles_ISO( offs, tvec, max_angle, max_size, ipos );
   }
 
@@ -1667,7 +1680,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getSK( real_type s[], real_type kappa[] ) const {
+  ClothoidList::getSK( real_type * s, real_type * kappa ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type  k  = 0;
     real_type ss = 0;
@@ -1690,9 +1703,9 @@ namespace G2lib {
 
   void
   ClothoidList::getSTK(
-    real_type s[],
-    real_type theta[],
-    real_type kappa[]
+    real_type * s,
+    real_type * theta,
+    real_type * kappa
   ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type  k  = 0;
@@ -1714,7 +1727,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getXY( real_type x[], real_type y[] ) const {
+  ClothoidList::getXY( real_type * x, real_type * y ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type k  = 0;
     while ( ic != m_clotoidList.end() ) {
@@ -1730,7 +1743,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getDeltaTheta( real_type deltaTheta[] ) const {
+  ClothoidList::getDeltaTheta( real_type * deltaTheta ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type k = 0;
     for ( ++ic; ic != m_clotoidList.end(); ++ic, ++k ) {
@@ -1744,7 +1757,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getDeltaKappa( real_type deltaKappa[] ) const {
+  ClothoidList::getDeltaKappa( real_type * deltaKappa ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type k = 0;
     for ( ++ic; ic != m_clotoidList.end(); ++ic, ++k  )
@@ -1877,6 +1890,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   void
   save_segment( ostream_type & stream, ClothoidCurve const & c ) {
@@ -1895,9 +1909,11 @@ namespace G2lib {
       fmt::format("{:.12}",c.kappaEnd())
     );
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   bool
   load_segment(
@@ -1933,6 +1949,7 @@ namespace G2lib {
     );
     return true;
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

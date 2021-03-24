@@ -59,6 +59,8 @@ namespace G2lib {
   using std::max;
   using std::swap;
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   static
   inline
   real_type
@@ -188,6 +190,8 @@ namespace G2lib {
     }
   }
 
+  #endif
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -237,13 +241,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   static
   real_type
   distSeg(
-    real_type       x,
-    real_type       y,
-    real_type const A[],
-    real_type const B[]
+    real_type         x,
+    real_type         y,
+    real_type const * A,
+    real_type const * B
   ) {
     real_type dx  = x    - A[0];
     real_type dy  = y    - A[1];
@@ -267,6 +273,8 @@ namespace G2lib {
 
     return hypot( x-X, y-Y );
   }
+
+  #endif
 
   real_type
   Triangle2D::distMin( real_type x, real_type y ) const {

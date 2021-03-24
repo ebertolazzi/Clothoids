@@ -47,25 +47,11 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_namespace_g2lib_1a929fed6c39693ebc46a9ef1c08769453`
+- :ref:`exhale_function_namespace_g2lib_1a33af202f949766ed84cf69aab3a30177`
 
-- :ref:`exhale_function_namespace_g2lib_1af07c5fd5394d761c08c1297499507796`
+- :ref:`exhale_function_namespace_g2lib_1a8540d64742a9701f6974fc640b68b5d5`
 
-- :ref:`exhale_function_namespace_g2lib_1ae9bc88d2300abf2d8eceeddddb422bf4`
+- :ref:`exhale_function_namespace_g2lib_1a72e4aead03fd8a133aa7b9bace759785`
 
-- :ref:`exhale_function_namespace_g2lib_1a592833ffa284d4724feea8f78a65e07b`
-
-
-Typedefs
---------
-
-
-- :ref:`exhale_typedef_namespace_g2lib_1a064d224aea6b2fb81e1e88cca2b3b62f`
-
-
-Variables
----------
-
-
-- :ref:`exhale_variable_namespace_g2lib_1a806fcbc60872c0ae0d05d05084cc5f52`
+- :ref:`exhale_function_namespace_g2lib_1a400185708fe33f311154b493e9ad537b`
 

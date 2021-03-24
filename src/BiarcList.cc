@@ -254,10 +254,10 @@ namespace G2lib {
 
   bool
   BiarcList::build_G1(
-    int_type        n,
-    real_type const x[],
-    real_type const y[],
-    real_type const theta[]
+    int_type          n,
+    real_type const * x,
+    real_type const * y,
+    real_type const * theta
   ) {
     UTILS_ASSERT0(
       n > 1,
@@ -277,9 +277,9 @@ namespace G2lib {
 
   bool
   BiarcList::build_G1(
-    int_type        n,
-    real_type const x[],
-    real_type const y[]
+    int_type          n,
+    real_type const * x,
+    real_type const * y
   ) {
     size_t nn = size_t(n);
     Utils::Malloc<real_type> mem( "BiarcList::build_G1" );
@@ -359,18 +359,42 @@ namespace G2lib {
    |                                |___/
   \*/
 
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  void
+  BiarcList::bbTriangles(
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    int_type             icurve
+  ) const {
+    vector<Biarc>::const_iterator ic = m_biarcList.begin();
+    for ( int_type ipos = icurve; ic != m_biarcList.end(); ++ic, ++ipos )
+      ic->bbTriangles( tvec, max_angle, max_size, ipos );
+  }
 
   void
   BiarcList::bbTriangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
-    real_type            max_size
+    real_type            max_size,
+    int_type             icurve
   ) const {
     vector<Biarc>::const_iterator ic = m_biarcList.begin();
-    for ( int_type ipos = 0; ic != m_biarcList.end(); ++ic, ++ipos )
+    for ( int_type ipos = icurve; ic != m_biarcList.end(); ++ic, ++ipos )
       ic->bbTriangles_ISO( offs, tvec, max_angle, max_size, ipos );
+  }
+
+  void
+  BiarcList::bbTriangles_SAE(
+    real_type            offs,
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    int_type             icurve
+  ) const {
+    vector<Biarc>::const_iterator ic = m_biarcList.begin();
+    for ( int_type ipos = icurve; ic != m_biarcList.end(); ++ic, ++ipos )
+      ic->bbTriangles_SAE( offs, tvec, max_angle, max_size, ipos );
   }
 
   /*\
@@ -1210,9 +1234,9 @@ namespace G2lib {
 
   void
   BiarcList::getSTK(
-    real_type s[],
-    real_type theta[],
-    real_type kappa[]
+    real_type * s,
+    real_type * theta,
+    real_type * kappa
   ) const {
     vector<Biarc>::const_iterator ic = m_biarcList.begin();
     int_type  k  = 0;
@@ -1234,7 +1258,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BiarcList::getXY( real_type x[], real_type y[] ) const {
+  BiarcList::getXY( real_type * x, real_type * y ) const {
     vector<Biarc>::const_iterator ic = m_biarcList.begin();
     int_type k  = 0;
     while ( ic != m_biarcList.end() ) {

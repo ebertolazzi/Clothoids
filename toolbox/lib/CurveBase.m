@@ -184,6 +184,13 @@ classdef CurveBase < handle
     function [ p1, p2 ] = points( self )
       [ p1, p2 ] = feval( self.mexName, 'points', self.objectHandle );
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [P1,P2,P3] = bbTriangles( self, varargin )
+      % bbTriangles( max_angle, max_size, offs );
+      [P1,P2,P3] = feval( self.mexName, 'bbTriangles', ...
+        self.objectHandle, varargin{:} ...
+      );
+    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = closestPoint( self, qx, qy, varargin )
       % [ x, y, s, t, iflag, dst ] = closestPoint( qx, qy [, offs, 'ISO'/'SAE'] )
@@ -252,6 +259,16 @@ classdef CurveBase < handle
         plot( x, y, varargin{2:end});
       else
         plot( x, y );
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTriangles( self, varargin )
+      [p1,p2,p3] = self.bbTriangles();
+      for k=1:size(p1,2)
+        x = [ p1(1,k), p2(1,k), p3(1,k), p1(1,k) ];
+        y = [ p1(2,k), p2(2,k), p3(2,k), p1(2,k) ];
+        fill( x, y, 'red','FaceAlpha', 0.5 );
+        %plot( x, y, varargin{:});
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

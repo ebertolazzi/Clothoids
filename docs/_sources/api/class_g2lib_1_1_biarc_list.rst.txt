@@ -6,16 +6,6 @@ Class BiarcList
 - Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_BiarcList.hxx`
 
 
-Nested Relationships
---------------------
-
-
-Nested Types
-************
-
-- :ref:`exhale_class_class_g2lib_1_1_biarc_list_1_1_t2_d__collision__list___i_s_o`
-
-
 Inheritance Relationships
 -------------------------
 

@@ -6,7 +6,7 @@ Clothoids
 
 G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
 
-*by Enrico Bertolazzi and Marco Frego*
+*by Enrico Bertolazzi (<enrico.bertolazzi@unitn.it>) and Marco Frego (<m.fregox@gmail.com>)*
 
 for the documentation see
 [online documentation](http://ebertolazzi.github.io/Clothoids/)
@@ -74,15 +74,6 @@ where OSTYPE can be `linux`, `osx`, `mingw_x64`, `win_x64`
 
 Available at: [http://ebertolazzi.github.io/Clothoids](http://ebertolazzi.github.io/Clothoids)
 
-**Authors:**
-	
-	Enrico Bertolazzi and Marco Frego
-	Department of Industrial Engineering
-	University of Trento
-	enrico.bertolazzi@unitn.it
-	m.fregox@gmail.com
-
-
 References
 ----------
 
@@ -91,7 +82,7 @@ References
    Mathematical Methods in the Applied Sciences,  
    John Wiley & Sons, 2014, vol. 38, n.5, pp. 881-897,  
    [https://doi.org/10.1002/mma.3114]
-   ([https://doi.org/10.1002/mma.3114)
+   (https://doi.org/10.1002/mma.3114)
 
 2. *E. Bertolazzi, M. Frego*,
    **On the G2 Hermite interpolation problem with clothoids**,  

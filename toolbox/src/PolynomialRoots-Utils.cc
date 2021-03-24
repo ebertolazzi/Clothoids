@@ -26,6 +26,8 @@
 #pragma clang diagnostic ignored "-Wunused-function"
 #endif
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 namespace PolynomialRoots {
 
   // static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
@@ -61,6 +63,90 @@ namespace PolynomialRoots {
       valueType res(op[0]);
       for ( indexType i = 1; i <= Degree; ++i ) res = res*x + op[i];
       return res;
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // stable computation of Newton step
+  //
+  // op[0] * x^n + .... + op[n-1]*x + op[n]
+  //
+  // (op[0] + op[1]/x.... + op[n]/x^n)*x^n
+  //
+  bool
+  NewtonStep(
+    valueType const op[],
+    indexType       Degree,
+    valueType     & x
+  ) {
+    valueType p, dp;
+    bool reverse = std::abs(x) > 1;
+    if ( reverse ) {
+      p = op[Degree];
+      valueType xn(1);
+      for ( indexType i = 1; i <= Degree; ++i ) {
+        p = p/x + op[Degree-i];
+        xn *= x;
+      }
+      p *= xn;
+
+      dp = op[Degree];
+      xn = 1;
+      for ( indexType i = 2; i <= Degree; ++i ) {
+        dp = dp/x + (Degree-i)*op[Degree-i];
+        xn *= x;
+      }
+      dp *= xn;
+    } else {
+      dp = Degree*op[0];
+      p  = op[0];
+      for ( indexType i = 1; i < Degree; ++i ) {
+        p  = p*x  + op[i];
+        dp = dp*x + (Degree-i)*op[i];
+      }
+      p = p*x + op[Degree];
+    }
+    x -= p/dp;
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // stable computation of polinomial and its derivative
+  //
+  // op[0] * x^n + .... + op[n-1]*x + op[n]
+  //
+  // (op[0] + op[1]/x.... + op[n]/x^n)*x^n
+  //
+  void
+  evalPolyDPoly(
+    valueType const op[],
+    indexType       Degree,
+    valueType       x,
+    valueType     & p,
+    valueType     & dp
+  ) {
+    bool reverse = std::abs(x) > 1;
+    if ( reverse ) {
+      valueType const * pc = op+Degree;
+      valueType rD = Degree;
+      p  = *pc--;
+      dp = rD*p;
+      valueType xn(1);
+      for ( indexType i = 1; i < Degree; ++i ) {
+        p  = p/x  + *pc;
+        dp = dp/x + rD*(*pc--);
+        xn *= x;
+      }
+      dp *= xn;
+      p   = p/x + *pc;
+      xn *= x;
+      p  *= xn;
+    } else {
+      p = op[0]*x+op[1];
+      for ( indexType i = 2; i <= Degree; ++i ) {
+        p  = p*x  + op[i];
+        dp = dp*x + i*op[i];
+      }
     }
   }
 
@@ -290,5 +376,7 @@ namespace PolynomialRoots {
   }
 
 }
+
+#endif
 
 // EOF: PolynomialRoots-Utils.cc

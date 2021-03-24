@@ -33,6 +33,8 @@
 #endif
 
 namespace G2lib {
+  
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   using std::abs;
   using std::fpclassify;
@@ -55,6 +57,8 @@ namespace G2lib {
   real_type
   power4( real_type a )
   { real_type a2 = a*a; return a2*a2; }
+
+  #endif
 
   /*\
    |    ____ ____            _           ____
@@ -1205,9 +1209,9 @@ namespace G2lib {
 
   void
   ClothoidSplineG2::guess(
-    real_type theta_guess[],
-    real_type theta_min[],
-    real_type theta_max[]
+    real_type * theta_guess,
+    real_type * theta_min,
+    real_type * theta_max
   ) const {
     size_t nn = size_t( m_npts );
     Utils::Malloc<real_type> mem( "ClothoidSplineG2::guess" );
@@ -1221,9 +1225,9 @@ namespace G2lib {
 
   void
   ClothoidSplineG2::build(
-    real_type const xvec[],
-    real_type const yvec[],
-    int_type        n
+    real_type const * xvec,
+    real_type const * yvec,
+    int_type          n
   ) {
     m_npts = n;
     size_t n1 = size_t(n-1);
@@ -1267,8 +1271,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::objective(
-    real_type const theta[],
-    real_type     & f
+    real_type const * theta,
+    real_type       & f
   ) const {
     ClothoidCurve cL, cR, c;
     int_type ne  = m_npts - 1;
@@ -1343,8 +1347,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::gradient(
-    real_type const theta[],
-    real_type       g[]
+    real_type const * theta,
+    real_type       * g
   ) const {
     ClothoidCurve cL, cR, c;
     real_type     LL_D[2], kL_D[2], dkL_D[2];
@@ -1481,8 +1485,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::constraints(
-    real_type const theta[],
-    real_type       c[]
+    real_type const * theta,
+    real_type       * c
   ) const {
     ClothoidCurve cc;
     int_type ne  = m_npts - 1;
@@ -1530,8 +1534,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::jacobian_pattern(
-    int_type ii[],
-    int_type jj[]
+    int_type * ii,
+    int_type * jj
   ) const {
     ClothoidCurve cc;
     int_type ne  = m_npts - 1;
@@ -1568,8 +1572,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::jacobian_pattern_matlab(
-    real_type ii[],
-    real_type jj[]
+    real_type * ii,
+    real_type * jj
   ) const {
     ClothoidCurve cc;
     int_type ne  = m_npts - 1;
@@ -1606,8 +1610,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::jacobian(
-    real_type const theta[],
-    real_type       vals[]
+    real_type const * theta,
+    real_type       * vals
   ) const {
     ClothoidCurve cc;
     int_type ne  = m_npts - 1;

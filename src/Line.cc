@@ -56,6 +56,8 @@ namespace G2lib {
     }
   }
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   typedef struct {
     real_type p[2];
@@ -212,6 +214,8 @@ namespace G2lib {
     return false; // Doesn't fall in any of the above cases
   }
 
+  #endif
+
   /*\
    |   _     _
    |  | |   (_)_ __   ___
@@ -314,7 +318,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::toNURBS( real_type knots[], real_type Poly[][3] ) const {
+  LineSegment::toNURBS( real_type * knots, real_type Poly[][3] ) const {
     knots[0] = knots[1] = 0;
     knots[2] = knots[3] = 1;
     Poly[0][0] = m_x0;
@@ -328,7 +332,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::toBS( real_type knots[4], real_type Poly[2][2] ) const {
+  LineSegment::toBS( real_type * knots, real_type Poly[2][2] ) const {
     knots[0] = knots[1] = 0;
     knots[2] = knots[3] = 1;
     Poly[0][0] = m_x0;

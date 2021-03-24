@@ -121,19 +121,16 @@ namespace GenericContainerNamespace {
     typedef typename std::vector<TYPE>::size_type size_type;
   public:
 
-    GENERIC_CONTAINER_API_DLL
     mat_type()
     : m_numRows(0)
     , m_numCols(0)
     {}
 
-    GENERIC_CONTAINER_API_DLL
     mat_type( unsigned nr, unsigned nc )
     : m_numRows(nr)
     , m_numCols(nc)
     { std::vector<TYPE>::resize(size_type(nr*nc)); }
 
-    GENERIC_CONTAINER_API_DLL
     void
     resize( unsigned nr, unsigned nc ) {
       m_numRows = nr;
@@ -141,34 +138,18 @@ namespace GenericContainerNamespace {
       std::vector<TYPE>::resize(size_type(nr*nc));
     }
 
-    GENERIC_CONTAINER_API_DLL
-    void
-    getColumn( unsigned nc, std::vector<TYPE> & C ) const;
+    void getColumn( unsigned nc, std::vector<TYPE> & C ) const;
+    void getRow( unsigned nr, std::vector<TYPE> & R ) const;
+    void getColumn( unsigned nc, TYPE * C ) const;
+    void getRow( unsigned nr, TYPE * R ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void
-    getRow( unsigned nr, std::vector<TYPE> & R ) const;
+    unsigned numRows() const { return m_numRows; }
+    unsigned numCols() const { return m_numCols; }
 
-    GENERIC_CONTAINER_API_DLL
-    void
-    getColumn( unsigned nc, TYPE * C ) const;
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    getRow( unsigned nr, TYPE * R ) const;
-
-    GENERIC_CONTAINER_API_DLL unsigned numRows() const { return m_numRows; }
-    GENERIC_CONTAINER_API_DLL unsigned numCols() const { return m_numCols; }
-
-    GENERIC_CONTAINER_API_DLL
     TYPE const & operator () ( unsigned i, unsigned j ) const;
+    TYPE       & operator () ( unsigned i, unsigned j );
 
-    GENERIC_CONTAINER_API_DLL
-    TYPE & operator () ( unsigned i, unsigned j );
-
-    GENERIC_CONTAINER_API_DLL
-    void
-    info( ostream_type & stream ) const;
+    void info( ostream_type & stream ) const;
 
     TYPE       * data()       { return &std::vector<TYPE>::front(); }
     TYPE const * data() const { return &std::vector<TYPE>::front(); }
@@ -189,21 +170,11 @@ namespace GenericContainerNamespace {
   typedef mat_type<complex_type> mat_complex_type;
 
   // ---------------------------------------------------------------------------
-
-  GENERIC_CONTAINER_API_DLL
-  ostream_type & operator << ( ostream_type & s, vec_pointer_type const & v );
-
-  GENERIC_CONTAINER_API_DLL
-  ostream_type & operator << ( ostream_type & s, vec_bool_type const & v );
-
   template <typename TYPE>
-  GENERIC_CONTAINER_API_DLL
   ostream_type & operator << ( ostream_type & s, std::vector<TYPE> const & v );
 
   template <typename TYPE>
-  GENERIC_CONTAINER_API_DLL
   ostream_type & operator << ( ostream_type & s, mat_type<TYPE> const & );
-
   // ---------------------------------------------------------------------------
 
   //! Type allowed for the `GenericContainer`
@@ -342,9 +313,9 @@ namespace GenericContainerNamespace {
     void allocate_vector( unsigned sz );
     void allocate_map();
 
-    void ck(char const [],TypeAllowed) const;
-    int  ck(TypeAllowed) const;
-    void ck_or_set(char const [], TypeAllowed);
+    void ck( char const *, TypeAllowed ) const;
+    int  ck( TypeAllowed ) const;
+    void ck_or_set( char const *, TypeAllowed );
 
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
     bool simple_data()     const;
@@ -357,276 +328,326 @@ namespace GenericContainerNamespace {
   public:
 
     //! build an instance of `GenericContainer` with empty data
-    GENERIC_CONTAINER_API_DLL
     GenericContainer();
 
     //! destroy the instance of `GenericContainer`
-    GENERIC_CONTAINER_API_DLL
     ~GenericContainer() { clear(); }
 
     //! free memory of the data stored in `GenericContainer`, data type become `NOTYPE`
-    GENERIC_CONTAINER_API_DLL
     void clear();
 
     //! \name Initialize simple data
     //@{
     //! Set data to `pointer_type` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     pointer_type & set_pointer( pointer_type value );
 
     //! Free pointer to memory pointed, set data to `NO TYPE` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     GenericContainer & free_pointer();
 
     //! Set data to `bool_type` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     bool_type & set_bool( bool_type value );
 
     //! Set data to `int_type` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     int_type & set_int( int_type value );
 
     //! Set data to `int_type` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     long_type & set_long( long_type value );
 
     //! Set data to `real_type` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     real_type & set_real( real_type value );
 
     //! Set data to `complex_type` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     complex_type & set_complex( complex_type & value );
 
     //! Set data to `complex_type` initialize and return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     complex_type & set_complex( real_type r, real_type i );
 
     //! Set data to `string_type`, allocate and initialize. Return a reference to the data
-    GENERIC_CONTAINER_API_DLL
     string_type & set_string( string_type const & value );
     //@}
 
     //! \name Initialize vector data
     //@{
-    /*! \brief
-    :|: Set data to `vec_pointer_type`, allocate and initialize.
-    :|: Return a reference to vector of pointer.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_pointer_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of pointer.
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz dimension of the vector of pointers that will be allocated
+     *  \return the reference of the internally allocated vector of pointers
+     */
     vec_pointer_type & set_vec_pointer( unsigned sz = 0 );
 
-    /*! \brief
-    :|: Set data to `vec_pointer_type`, allocate and initialize.
-    :|: Return a reference to vector of pointer.
-    :|: Copy the data from vector `v`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_pointer_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of pointer.
+     *  Copy the data from vector `v`.
+     * 
+     *  \param[in] v  vector of pointers  used to initialize that will be allocated
+     *  \return the reference of the internally allocated vector of pointers
+     */
     vec_pointer_type & set_vec_pointer( vec_pointer_type const & v );
 
-    /*! \brief
-    :|: Set data to `vec_bool_type`, allocate and initialize.
-    :|: Return a reference to vector of booleans.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_bool_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of booleans.
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz dimension of the vector of bools that will be allocated
+     *  \return the reference of the internally allocated vector of bools
+     */
     vec_bool_type & set_vec_bool( unsigned sz = 0 );
 
-    /*! \brief
-    :|: Set data to `vec_bool_type`, allocate and initialize.
-    :|: Return a reference to vector of `bool`.
-    :|: Copy the data from vector `v`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*! 
+     *  \brief Set data to `vec_bool_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of `bool`.
+     *  Copy the data from vector `v`.
+     * 
+     *  \param[in] v  vector of pointers  used to initialize that will be allocated
+     *  \return the reference of the internally allocated vector of pointers
+     */
     vec_bool_type & set_vec_bool( vec_bool_type const & v );
 
-    /*! \brief
-    :|: Set data to `vec_int_type`, allocate and initialize.
-    :|: Return a reference to vector of integers.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_int_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of integers.
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz dimension of the vector of integers that will be allocated
+     *  \return the reference of the internally allocated vector of integers
+     */
     vec_int_type & set_vec_int( unsigned sz = 0 );
 
-    /*! \brief
-    :|: Set data to `vec_int_type`, allocate and initialize.
-    :|: Return a reference to vector of integer.
-    :|: Copy the data from vector `v`.
+    /*!
+     *  \brief Set data to `vec_int_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of integer.
+     *  Copy the data from vector `v`.
+     * 
+     *  \param[in] v  vector of integer used to initialize that will be allocated
+     *  \return the reference of the internally allocated vector of integers
     \*/
-    GENERIC_CONTAINER_API_DLL
     vec_int_type & set_vec_int( vec_int_type const & v );
 
-    /*! \brief
-    :|: Set data to `vec_int_type`, allocate and initialize.
-    :|: Return a reference to vector of integers.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_int_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of integers.
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz dimension of the vector of integers that will be allocated
+     *  \return the reference of the internally allocated vector of integers
+     */
     vec_long_type & set_vec_long( unsigned sz = 0 );
 
-    /*! \brief
-    :|: Set data to `vec_int_type`, allocate and initialize.
-    :|: Return a reference to vector of integer.
-    :|: Copy the data from vector `v`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_int_type`, allocate and initialize.
+     *
+     *  Return a reference to vector of integer.
+     *  Copy the data from vector `v`.
+     *
+     *  \param[in] v  vector of long integers used to initialize that will be allocated
+     *  \return the reference of the internally allocated vector of long integers
+     */
     vec_long_type & set_vec_long( vec_long_type const & v );
 
-    /*! \brief
-    :|: Set data to `vec_real_type`, allocate and initialize.
-    :|: Return a reference to vector of floating point numbers.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_real_type`, allocate and initialize.
+     * 
+     *  Return a reference to vector of `real_type` numbers.
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz dimension of the vector of integers that will be allocated
+     *  \return the reference of the internally allocated vector of integers
+     */
     vec_real_type & set_vec_real( unsigned sz = 0 );
 
-    /*! \brief
-    :|: Set data to `vec_real_type`, allocate and initialize.
-    :|: Return a reference to vector of floating point number.
-    :|: Copy the data from vector `v`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_real_type`, allocate and initialize.
+     *
+     *  Return a reference to vector of `real_type` number.
+     *  Copy the data from vector `v`.
+     * 
+     *  \param[in] v  vector of reals  used to initialize that will be allocated
+     *  \return the reference of the internally allocated vector of reals
+     */
     vec_real_type & set_vec_real( vec_real_type const & v );
 
-
     /*! \brief
-    :|: Set data to `vec_complex_type`, allocate and initialize.
-    :|: Return a reference to vector of complex floating point numbers.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+     *  Set data to `vec_complex_type`, allocate and initialize.
+     *  Return a reference to vector of complex numbers.
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz dimension of the vector of integers that will be allocated
+     *  \return the reference of the internally allocated vector of integers
+     */
     vec_complex_type & set_vec_complex( unsigned sz = 0 );
 
-    /*! \brief
-    :|: Set data to `vec_complex_type`, allocate and initialize.
-    :|: Return a reference to vector of complex floating point number.
-    :|: Copy the data from vector `v`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*! 
+     *  \brief Set data to `vec_complex_type`, allocate and initialize.
+     *
+     *  Return a reference to vector of complex number.
+     *  Copy the data from vector `v`.
+     * 
+     *  \param[in] v  vector of complex used to initialize that will be allocated
+     *  \return the reference of the internally allocated vector of complex
+     */
     vec_complex_type & set_vec_complex( vec_complex_type const & v );
 
-    /*! \brief
-    :|: Set data to `vec_string_type`, allocate and initialize.
-    :|: Return a reference to vector of strings.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_string_type`, allocate and initialize.
+     *
+     *  Return a reference to vector of strings.
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz dimension of the vector of integers that will be allocated
+     *  \return the reference of the internally allocated vector of integers
+     */
     vec_string_type & set_vec_string( unsigned sz = 0 );
 
-    /*! \brief
-    :|: Set data to `vec_string_type`, allocate and initialize.
-    :|: Return a reference to vector of strings.
-    :|: Copy the data from vector `v`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vec_string_type`, allocate and initialize.
+     *
+     *  Return a reference to vector of strings.
+     *  Copy the data from vector `v`.
+     * 
+     *  \param[in] v  vector of strings used to initialize that will be allocated
+     *  \return the reference of the internally allocated vector of strings
+     */
     vec_string_type & set_vec_string( vec_string_type const & v );
 
-    /*! \brief
-    :|: Set data to `mat_int_type`, allocate and initialize.
-    :|: Return a reference to a matrix of floating point numbers.
-    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_int_type`, allocate and initialize.
+     *
+     *  Return a reference to a matrix of `real_type`.
+     *  If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     * 
+     *  \param[in] nr number of rows
+     *  \param[in] nc number of columns
+     *  \return the reference of the internally allocated matrix of integers
+     */
     mat_int_type & set_mat_int( unsigned nr = 0, unsigned nc = 0 );
 
-    /*! \brief
-    :|: Set data to `mat_int_type`, allocate and initialize.
-    :|: Return a reference to a matrix of floating point number.
-    :|: Copy the data from matrix `m`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_int_type`, allocate and initialize.
+     * 
+     *  Return a reference to a matrix of `real_type`.
+     *  Copy the data from matrix `m`.
+     *
+     *  \param[in] m matrix of integers used to initialize data
+     *  \return the reference of the internally allocated matrix of integers
+     */
     mat_int_type & set_mat_int( mat_int_type const & m );
 
-    /*! \brief
-    :|: Set data to `mat_long_type`, allocate and initialize.
-    :|: Return a reference to a matrix of floating point numbers.
-    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_long_type`, allocate and initialize.
+     *
+     *  Return a reference to a matrix of `real_type`.
+     *  If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     * 
+     *  \param[in] nr number of rows
+     *  \param[in] nc number of columns
+     *  \return the reference of the internally allocated matrix of long integers
+     */
     mat_long_type & set_mat_long( unsigned nr = 0, unsigned nc = 0 );
 
-    /*! \brief
-    :|: Set data to `mat_long_type`, allocate and initialize.
-    :|: Return a reference to a matrix of floating point number.
-    :|: Copy the data from matrix `m`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_long_type`, allocate and initialize.
+     * 
+     *  Return a reference to a matrix of `real_type`.
+     *  Copy the data from matrix `m`.
+     *
+     *  \param[in] m matrix of long used to initialize data
+     *  \return the reference of the internally allocated matrix of long
+     */
     mat_long_type & set_mat_long( mat_long_type const & m );
 
-    /*! \brief
-    :|: Set data to `mat_real_type`, allocate and initialize.
-    :|: Return a reference to a matrix of floating point numbers.
-    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_real_type`, allocate and initialize.
+     *
+     *  Return a reference to a matrix of `real_type`.
+     *  If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     * 
+     *  \param[in] nr number of rows
+     *  \param[in] nc number of columns
+     *  \return the reference of the internally allocated matrix of reals
+     */
     mat_real_type & set_mat_real( unsigned nr = 0, unsigned nc = 0 );
 
-    /*! \brief
-    :|: Set data to `mat_real_type`, allocate and initialize.
-    :|: Return a reference to a matrix of floating point number.
-    :|: Copy the data from matrix `m`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_real_type`, allocate and initialize.
+     * 
+     *  Return a reference to a matrix of `real_type`.
+     *  Copy the data from matrix `m`.
+     *
+     *  \param[in] m matrix of reals used to initialize data
+     *  \return the reference of the internally allocated matrix of reals
+     */
     mat_real_type & set_mat_real( mat_real_type const & m );
 
-    /*! \brief
-    :|: Set data to `mat_complex_type`, allocate and initialize.
-    :|: Return a reference to a matrix of complex floating point numbers.
-    :|: If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_complex_type`, allocate and initialize.
+     *
+     *  Return a reference to a matrix of `complex_type`.
+     *  If `nr` > 0 and `nc` > 0 then the matrix is allocated to size `nr` x `nc`.
+     * 
+     *  \param[in] nr number of rows
+     *  \param[in] nc number of columns
+     *  \return the reference of the internally allocated matrix of complex
+     */
     mat_complex_type & set_mat_complex( unsigned nr = 0, unsigned nc = 0 );
 
-    /*! \brief
-    :|: Set data to `mat_complex_type`, allocate and initialize.
-    :|: Return a reference to a matrix of floating point number.
-    :|: Copy the data from matrix `m`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `mat_complex_type`, allocate and initialize.
+     *
+     *  Return a reference to a matrix of `complex_type`.
+     *  Copy the data from matrix `m`.
+     *
+     *  \param[in] m matrix of integers used to initialize data
+     *  \return the reference of the internally allocated matrix of integers
+     */
     mat_complex_type & set_mat_complex( mat_complex_type const & m );
 
     //! push boolean if data is `vec_bool_type` or `vector_type'
-    GENERIC_CONTAINER_API_DLL
     void push_bool( bool );
 
     //! push integer if data is `vec_int_type` or `vector_type'
-    GENERIC_CONTAINER_API_DLL
     void push_int( int_type );
 
     //! push integer if data is `vec_int_type` or `vector_type'
-    GENERIC_CONTAINER_API_DLL
     void push_long( long_type );
 
     //! push real if data is `vec_real_type` or `vector_type'
-    GENERIC_CONTAINER_API_DLL
     void push_real( real_type );
 
     //! push complex if data is `vec_complex_type` or `vector_type'
-    GENERIC_CONTAINER_API_DLL
     void push_complex( complex_type & );
 
     //! push complex if data is `vec_complex_type` or `vector_type'
-    GENERIC_CONTAINER_API_DLL
     void push_complex( real_type re, real_type im );
 
     //! push complex if data is `vec_string_type` or `vector_type'
-    GENERIC_CONTAINER_API_DLL
     void push_string( string_type const & );
 
     //@}
 
     //! \name Initialize generic data
     //@{
-    /*! \brief
-    :|: Set data to `vector_type`, allocate an empty generic vector and return a reference to it.
-    :|: If `sz` > 0 then the vector is allocated to size `sz`.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Set data to `vector_type`, allocate an empty generic vector and return a reference to it.
+     * 
+     *  If `sz` > 0 then the vector is allocated to size `sz`.
+     * 
+     *  \param[in] sz the size of the allocated vector
+     */
     vector_type & set_vector( unsigned sz = 0 );
 
     //! Set data to `map_type`, allocate an empty generic map and return a reference to it.
-    GENERIC_CONTAINER_API_DLL
     map_type & set_map();
     //@}
 
@@ -635,496 +656,907 @@ namespace GenericContainerNamespace {
 
     //! Return an integer representing the type of data stored
     /*!
-    :|:  Integer to data type map
-    :|:  ------------------------
-    :|:
-    :|:   -   No data stored (return 0)
-    :|:   1.  `pointer_type`
-    :|:   2.  `bool_type`
-    :|:   3.  `int_type`
-    :|:   4.  `long_type`
-    :|:   5.  `real_type`
-    :|:   6.  `complex_type`
-    :|:   7.  `string_data`
-    :|:   8.  `vec_pointer_type`
-    :|:   9.  `vec_bool_type`
-    :|:   10. `vec_int_type`
-    :|:   11. `vec_long_type`
-    :|:   12. `vec_real_type`
-    :|:   13. `vec_complex_type`
-    :|:   14. `vec_string_type`
-    :|:   15. `mat_int_type`
-    :|:   16. `mat_long_type`
-    :|:   17. `mat_real_type`
-    :|:   18. `mat_complex_type`
-    :|:   19. `vector_type`
-    :|:   20. `map_type`
-    \*/
-    GENERIC_CONTAINER_API_DLL
+     *   Integer to data type map
+     *   ------------------------
+     *
+     *   -   No data stored (return 0)
+     *   1.  `pointer_type`
+     *   2.  `bool_type`
+     *   3.  `int_type`
+     *   4.  `long_type`
+     *   5.  `real_type`
+     *   6.  `complex_type`
+     *   7.  `string_data`
+     *   8.  `vec_pointer_type`
+     *   9.  `vec_bool_type`
+     *   10. `vec_int_type`
+     *   11. `vec_long_type`
+     *   12. `vec_real_type`
+     *   13. `vec_complex_type`
+     *   14. `vec_string_type`
+     *   15. `mat_int_type`
+     *   16. `mat_long_type`
+     *   17. `mat_real_type`
+     *   18. `mat_complex_type`
+     *   19. `vector_type`
+     *   20. `map_type`
+     * 
+     *  \return the type of the internally stored data 
+     */
     TypeAllowed get_type() const { return m_data_type; }
 
     //! Return a string pointer representing the type of data stored
-    GENERIC_CONTAINER_API_DLL
     char const * get_type_name() const;
 
     //! Print to stream the kind of data stored
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & info( ostream_type & stream ) const;
 
-    /*! Return the number of the elements of the first level of the generic container
-    //  1 for single element, the size of vector or map, or 0
-    */
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  Return the number of the elements of the first level of the generic container
+     *  1 for single element, the size of vector or map, or 0
+     */
     unsigned get_num_elements() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! \return the number of rows ot the internally stored matrix
     unsigned get_numRows() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! \return the number of columns ot the internally stored matrix
     unsigned get_numCols() const;
 
-    //! If data is boolean, integer or floating point return number, otherwise return `0`.
-    GENERIC_CONTAINER_API_DLL
+    //! If data is boolean, integer or `real_type` return number, otherwise return `0`.
     real_type get_number() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! If data is boolean, integer, `real_type` or `complex_type` return number, otherwise return `0`.
     complex_type get_complex_number() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! If data is boolean, integer, `real_type` or `complex_type` return number, otherwise return `0`.
     void get_complex_number( real_type & re, real_type & im ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void * get_pvoid( char const msg[] = nullptr ) const;
+    //! return the stored data as a pointer
+    void * get_pvoid( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void ** get_ppvoid( char const msg[] = nullptr ) const;
+    //! return the stored data as a double pointer
+    void ** get_ppvoid( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to const integer
     int_type const * get_int_pointer() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to integer
     int_type * get_int_pointer();
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to const long
     long_type const * get_long_pointer() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to long
     long_type * get_long_pointer();
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to const `real_type`
     real_type const * get_real_pointer() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to `real_type`
     real_type * get_real_pointer();
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to const `complex_type`
     complex_type const * get_complex_pointer() const;
 
-    GENERIC_CONTAINER_API_DLL
+    //! return the stored data as a pointer to `complex_type`
     complex_type * get_complex_pointer();
 
+    //! get the stored value
+    /*!
+     *
+     *  \param[out] v    a copy of the stored value
+     *  \param[in]  msg  message of error in case of failure
+     */
     template <typename T>
-    GENERIC_CONTAINER_API_DLL
     void
-    get_value( T & v, char const msg[] = "" ) const;
+    get_value( T & v, char const * msg = "" ) const;
 
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
     template <typename T>
     T& get_pointer()
-    { ck("get_pointer",GC_POINTER); return *static_cast<T*>(get_ppvoid()); }
+    { ck("get_pointer",GC_POINTER); return *reinterpret_cast<T*>(get_ppvoid()); }
 
     template <typename T>
     T get_pointer() const
-    { ck("get_pointer",GC_POINTER); return static_cast<T>(get_pvoid()); }
+    { ck("get_pointer",GC_POINTER); return reinterpret_cast<T>(get_pvoid()); }
     #else
     template <typename T>
     T& get_pointer()
-    { ck("get_pointer",GC_POINTER); return *static_cast<T*>(&(m_data.p)); }
+    { ck("get_pointer",GC_POINTER); return *reinterpret_cast<T*>(&(m_data.p)); }
 
     template <typename T>
     T get_pointer() const
-    { ck("get_pointer",GC_POINTER); return static_cast<T>(m_data.p); }
+    { ck("get_pointer",GC_POINTER); return reinterpret_cast<T>(m_data.p); }
     #endif
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief get the stored value in the map as boolean
+     *
+     *  \param[in] key key of the map to be selected
+     *  \return the boolean stored in the container
+     */
     bool_type
-    get_map_bool( char const msg[] ) const {
+    get_map_bool( char const * key ) const {
       bool_type ret = false;
-      if ( exists(msg) ) ret = (*this)(msg).get_bool();
+      if ( exists(key) ) ret = (*this)(key).get_bool();
       return ret;
     }
 
-    GENERIC_CONTAINER_API_DLL
-    bool_type & get_bool( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a boolean
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the boolean stored in the container
+     */
+    bool_type & get_bool( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    bool_type const & get_bool( char const msg[] = nullptr ) const;
-    //!< Return the stored boolean (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const boolean
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the boolean stored in the container
+     */
+    bool_type const & get_bool( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    int_type  & get_int( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as an integer
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the boolean stored in the container
+     */
+    int_type & get_int( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    int_type const & get_int( char const msg[] = nullptr ) const;
-    //!< Return the stored integer (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const integer
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the integer stored in the container
+     */
+    int_type const & get_int( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    long_type & get_long( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a long integer
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the long integer stored in the container
+     */
+    long_type & get_long( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    long_type const & get_long( char const msg[] = nullptr ) const;
-    //!< Return the stored long integer (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a long integer
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the long integer stored in the container
+     */
+    long_type const & get_long( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    int_type get_as_int( char const msg[] = nullptr ) const;
+    /*!
+     *  \brief get the stored value as an integer
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as an integer
+     */
+    int_type get_as_int( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    uint_type get_as_uint( char const msg[] = nullptr ) const;
+    /*!
+     *  \brief get the stored value as an unsigned
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as an unsigned
+     */
+    uint_type get_as_uint( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    long_type get_as_long( char const msg[] = nullptr ) const;
+    /*!
+     *  \brief get the stored value as a long integer
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a long integer
+     */
+    long_type get_as_long( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    ulong_type get_as_ulong( char const msg[] = nullptr ) const;
+    /*!
+     *  \brief get the stored value as an unsigned long
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as an unsigned long
+     */
+    ulong_type get_as_ulong( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    real_type & get_real( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as `real_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as `real_type`
+     */
+    real_type & get_real( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    real_type const & get_real( char const msg[] = nullptr ) const;
-    //!< Return the stored floating point (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const `real_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const `real_type`
+     */
+    real_type const & get_real( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    complex_type & get_complex( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a `complex_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a `complex_type`
+     */
+    complex_type & get_complex( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    complex_type const & get_complex( char const msg[] = nullptr ) const;
-    //!< Return the stored complex floating point (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const `complex_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const `complex_type`
+     */
+    complex_type const & get_complex( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    string_type & get_string( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a string
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a string
+     */
+    string_type & get_string( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    string_type const & get_string( char const msg[] = nullptr ) const;
-    //!< Return the stored string (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const string
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const string
+     */
+    string_type const & get_string( char const * msg = nullptr ) const;
     //@}
 
     //! \name Access to vector type data
     //@{
-    GENERIC_CONTAINER_API_DLL
-    vector_type & get_vector( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of `GenericoContainer`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of `GenericoContainer`
+     */
+    vector_type & get_vector( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vector_type const & get_vector( char const msg[] = nullptr ) const;
-    //!< Return reference to a generic vector (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of `GenericoContainer`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of `GenericoContainer`
+     */
+    vector_type const & get_vector( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    vec_pointer_type & get_vec_pointer( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of pointers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of pointers
+     */
+    vec_pointer_type & get_vec_pointer( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vec_pointer_type const & get_vec_pointer( char const msg[] = nullptr ) const;
-    //!< Return reference to a vector of pointer (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of pointers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of pointers
+     */
+    vec_pointer_type const & get_vec_pointer( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    vec_bool_type & get_vec_bool( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of booleans
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of booleans
+     */
+    vec_bool_type & get_vec_bool( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vec_bool_type const & get_vec_bool( char const msg[] = nullptr ) const;
-    //!< Return reference to a vector of booleans (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of booleans
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of booleans
+     */
+    vec_bool_type const & get_vec_bool( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    vec_int_type & get_vec_int( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of integers
+     */
+    vec_int_type & get_vec_int( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vec_int_type const & get_vec_int( char const msg[] = nullptr ) const;
-    //!< Return reference to a vector of integers (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of integers
+     */
+    vec_int_type const & get_vec_int( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    vec_long_type & get_vec_long( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of long integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of long integers
+     */
+    vec_long_type & get_vec_long( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vec_long_type const & get_vec_long( char const msg[] = nullptr ) const;
-    //!< Return reference to a vector of integers (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of long integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of long integers
+     */
+    vec_long_type const & get_vec_long( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    vec_real_type & get_vec_real( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of `real_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of `real_type`
+     */
+    vec_real_type & get_vec_real( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vec_real_type const & get_vec_real( char const msg[] = nullptr ) const;
-    //!< Return reference to a vector of floating point number (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of `real_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of `real_type`
+     */
+    vec_real_type const & get_vec_real( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    vec_complex_type & get_vec_complex( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of `complex_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of `complex_type`
+     */
+    vec_complex_type & get_vec_complex( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vec_complex_type const & get_vec_complex( char const msg[] = nullptr ) const;
-    //!< Return reference to a vector of complex floating point number (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of `complex_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of `complex_type`
+     */
+    vec_complex_type const & get_vec_complex( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    mat_int_type & get_mat_int( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a matrix of integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a matrix of integers
+     */
+    mat_int_type & get_mat_int( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    mat_int_type const & get_mat_int( char const msg[] = nullptr ) const;
-    //!< Return reference to a matrix of integers (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const matrix of integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const matrix of integers
+     */
+    mat_int_type const & get_mat_int( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    mat_long_type & get_mat_long( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a matrix of long integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a matrix of long integers
+     */
+    mat_long_type & get_mat_long( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    mat_long_type const & get_mat_long( char const msg[] = nullptr ) const;
-    //!< Return reference to a matrix of long intgers (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const matrix of long integers
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const matrix of long integers
+     */
+    mat_long_type const & get_mat_long( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    mat_real_type & get_mat_real( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a matrix of `real_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a matrix of `real_type`
+     */
+    mat_real_type & get_mat_real( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    mat_real_type const & get_mat_real( char const msg[] = nullptr ) const;
-    //!< Return reference to a matrix of floating point number (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const matrix of `real_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const matrix of `real_type`
+     */
+    mat_real_type const & get_mat_real( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    mat_complex_type & get_mat_complex( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a matrix of `complex_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a matrix of `complex_type`
+     */
+    mat_complex_type & get_mat_complex( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    mat_complex_type const & get_mat_complex( char const msg[] = nullptr ) const;
-    //!< Return reference to a matrix of complex floating point number (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const matrix of `complex_type`
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const matrix of `complex_type`
+     */
+    mat_complex_type const & get_mat_complex( char const * msg = nullptr ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    vec_string_type & get_vec_string( char const msg[] = nullptr );
+    /*!
+     *  \brief get the stored value as a vector of string
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a vector of string
+     */
+    vec_string_type & get_vec_string( char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    vec_string_type const & get_vec_string( char const msg[] = nullptr ) const;
-    //!< Return reference to a vector of strings (if fails issue an error).
+    /*!
+     *  \brief get the stored value as a const vector of string
+     *
+     *  \param[in] msg message of error in case of failure
+     *  \return the data stored in the container as a const vector of string
+     */
+    vec_string_type const & get_vec_string( char const * msg = nullptr ) const;
+
     //@}
 
     //! \name Access to vector type data and convert
-    GENERIC_CONTAINER_API_DLL
-    void copyto_vec_int( vec_int_type & v, char const msg[] = "" ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void copyto_vec_uint( vec_uint_type & v, char const msg[] = "" ) const;
+    /*!
+     *  \brief Copy internal data a vector of integers
+     *
+     *  \param[out] v   vector to store the data
+     *  \param[in]  msg message of error in case of failure
+     */
+    void copyto_vec_int( vec_int_type & v, char const * msg = "" ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void copyto_vec_long( vec_long_type & v, char const msg[] = "" ) const;
+    /*!
+     *  \brief Copy internal data a vector of unsigned integer
+     *
+     *  \param[out] v   vector to store the data
+     *  \param[in]  msg message of error in case of failure
+     */
+    void copyto_vec_uint( vec_uint_type & v, char const * msg = "" ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void copyto_vec_ulong( vec_ulong_type & v, char const msg[] = "" ) const;
+    /*!
+     *  \brief Copy internal data a vector of long integer
+     *
+     *  \param[out] v   vector to store the data
+     *  \param[in]  msg message of error in case of failure
+     */
+    void copyto_vec_long( vec_long_type & v, char const * msg = "" ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void copyto_vec_real( vec_real_type & v, char const msg[] = "" ) const;
+    /*!
+     *  \brief Copy internal data a vector of unsigned long integer
+     *
+     *  \param[out] v   vector to store the data
+     *  \param[in]  msg message of error in case of failure
+     */
+    void copyto_vec_ulong( vec_ulong_type & v, char const * msg = "" ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void copyto_vec_complex( vec_complex_type & v, char const msg[] = "" ) const;
+    /*!
+     *  \brief Copy internal data a vector of `real_type`
+     *
+     *  \param[out] v   vector to store the data
+     *  \param[in]  msg message of error in case of failure
+     */
+    void copyto_vec_real( vec_real_type & v, char const * msg = "" ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    void copyto_vec_string( vec_string_type & v, char const msg[] = "" ) const;
+    /*!
+     *  \brief Copy internal data a vector of `complex_type`
+     *
+     *  \param[out] v   vector to store the data
+     *  \param[in]  msg message of error in case of failure
+     */
+    void copyto_vec_complex( vec_complex_type & v, char const * msg = "" ) const;
+
+    /*!
+     *  \brief Copy internal data a vector of strings
+     *
+     *  \param[out] v   vector to store the data
+     *  \param[in]  msg message of error in case of failure
+     */
+    void copyto_vec_string( vec_string_type & v, char const * msg = "" ) const;
+
     //@}
 
     //! \name Access to element of vector type data
+
     //@{
-    //! If `i`-th element of the vector is boolean, integer or floating point then return number, otherwise return `0`.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief If `i`-th element of the vector is boolean, integer or floating point then return number, otherwise return `0`.
+     *  \param[in] i the position of the element in the vector
+     *  \return the value as `real_type`
+     */
     real_type get_number_at( unsigned i ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief If `i`-th element of the vector is convertible to compex return number, otherwise return `0`.
+     *  \param[in] i the position of the element in the vector
+     *  \return the value as `complex_type`
+     */
     complex_type get_complex_number_at( unsigned i ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief If `i`-th element of the vector is convertible to compex return number, otherwise return `0`.
+     *  \param[in]  i  the position of the element in the vector
+     *  \param[out] re real part of the number
+     *  \param[out] im imaginary part of the number
+     */
     void get_complex_number_at( unsigned i, real_type & re, real_type & im ) const;
 
+    /*!
+     *  \brief Get the `i`-th pointer of the vector of pointers.
+     *  \param[in]  i  the position of the element in the vector
+     *  \return the reference to the pointer
+     */
     template <typename T>
     T& get_pointer_at( unsigned i )
     { return (*this)[i].get_pointer<T>(); }
 
+    /*!
+     *  \brief Get the `i`-th pointer of the vector of pointers.
+     *  \param[in]  i  the position of the element in the vector
+     *  \return the stored pointer
+     */
     template <typename T>
     T get_pointer_at( unsigned i ) const
     { return (*this)[i].get_pointer<T>(); }
     //!< Return `i`-th generic pointer (if fails issue an error).
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th boolean of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \return the stored value
+     */
     bool_type get_bool_at( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
-    bool_type get_bool_at( unsigned i, char const msg[] ) const;
-    //!< Return `i`-th boolean (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th boolean of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    bool_type get_bool_at( unsigned i, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th integer of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \return the stored value
+     */
     int_type & get_int_at( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
-    int_type const & get_int_at( unsigned i, char const msg[] ) const;
-    //!< Return `i`-th integer (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const integer of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    int_type const & get_int_at( unsigned i, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th long integer of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \return the stored value
+     */
     long_type & get_long_at( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
-    long_type const & get_long_at( unsigned i, char const msg[] ) const;
-    //!< Return `i`-th integer (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const long integer of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    long_type const & get_long_at( unsigned i, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th `real_type` of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \return the stored value
+     */
     real_type & get_real_at( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
-    real_type const & get_real_at( unsigned i, char const msg[] ) const;
-    //!< Return `i`-th floating point number (if fails issue an error).
-
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th const `real_type` of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    real_type const & get_real_at( unsigned i, char const * msg ) const;
+ 
+    /*!
+     *  \brief Get the `i`-th `complex_type` of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \return the stored value
+     */
     complex_type & get_complex_at( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
-    complex_type const & get_complex_at( unsigned i, char const msg[] ) const;
-    //!< Return `i`-th complex floating point number (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const `complex_type` of the stored data.
+     *  \param[in]  i  the position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    complex_type const & get_complex_at( unsigned i, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th integer of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \return the stored value
+     */
     int_type & get_int_at( unsigned i, unsigned j );
 
-    GENERIC_CONTAINER_API_DLL
-    int_type const & get_int_at( unsigned i, unsigned j, char const msg[] ) const;
-    //!< Return `i`-th integer number (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const integer of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    int_type const & get_int_at( unsigned i, unsigned j, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th long integer of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \return the stored value
+     */
     long_type & get_long_at( unsigned i, unsigned j );
 
-    GENERIC_CONTAINER_API_DLL
-    long_type const & get_long_at( unsigned i, unsigned j, char const msg[] ) const;
-    //!< Return `i`-th long integer number (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const long integer of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    long_type const & get_long_at( unsigned i, unsigned j, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th `real_type` of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \return the stored value
+     */
     real_type & get_real_at( unsigned i, unsigned j );
 
-    GENERIC_CONTAINER_API_DLL
-    real_type const & get_real_at( unsigned i, unsigned j, char const msg[] ) const;
-    //!< Return `i`-th floating point number (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const `real_type` of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    real_type const & get_real_at( unsigned i, unsigned j, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th `complex_type` of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \return the stored value
+     */
     complex_type & get_complex_at( unsigned i, unsigned j );
 
-    GENERIC_CONTAINER_API_DLL
-    complex_type const & get_complex_at( unsigned i, unsigned j, char const msg[] ) const;
-    //!< Return `i`-th complex floating point number (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const `complex_type` of the stored data.
+     *  \param[in]  i  row position of the element in the matrix
+     *  \param[in]  j  colun position of the element in the matrix
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    complex_type const & get_complex_at( unsigned i, unsigned j, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th string of the stored data.
+     *  \param[in]  i  position of the element in the vector
+     *  \return the stored value
+     */
     string_type & get_string_at( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
-    string_type const & get_string_at( unsigned i, char const msg[] ) const;
-    //!< Return `i`-th string (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const string of the stored data.
+     *  \param[in]  i  position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    string_type const & get_string_at( unsigned i, char const * msg ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th const `GenericContainer` of the stored data.
+     *  \param[in]  i  position of the element in the vector
+     *  \return the stored value
+     */
     GenericContainer & get_gc_at( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
-    GenericContainer const & get_gc_at( unsigned i, char const msg[] ) const;
-    //!< Return `i`-th `GenericContainer` of a generic vector (if fails issue an error).
+    /*!
+     *  \brief Get the `i`-th const `GenericContainer` of the stored data.
+     *  \param[in]  i  position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    GenericContainer const & get_gc_at( unsigned i, char const * msg ) const;
+
     //@}
 
     //! \name Access to map type element
     //@{
-    GENERIC_CONTAINER_API_DLL
-    map_type & get_map( char const msg[] = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    map_type const & get_map( char const msg[] = nullptr ) const;
-    //!< Return the reference of the stored map or issue an error.
+    /*!
+     *  \brief Get the stored data as a map of `GenericContainer`.
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    map_type & get_map( char const * msg = nullptr );
+
+    /*!
+     *  \brief Get the stored data as a const map of `GenericContainer`.
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    map_type const & get_map( char const * msg = nullptr ) const;
+
     //@}
 
     //! \name Access using operators
     //@{
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th `GenericContainer` of the stored data.
+     *  \param[in]  i  position of the element in the vector
+     *  \return the stored value
+     */
     GenericContainer & operator [] ( unsigned i );
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th const `GenericContainer` of the stored data.
+     *  \param[in]  i  position of the element in the vector
+     *  \return the stored value
+     */
     GenericContainer const & operator [] ( unsigned i ) const;
-    /*! \brief
-    :|: Overload of the `[]` operator to access the `i`-th element of a stored generic vector.
-    :|: Run time bound check.
-    \*/
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th `GenericContainer` of the stored data.
+     *  \param[in]  s  key string of the element in the map
+     *  \return the stored value
+     */
     GenericContainer & operator [] ( std::string const & s );
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Get the `i`-th const `GenericContainer` of the stored data.
+     *  \param[in]  s  key string of the element in the map
+     *  \return the stored value
+     */
     GenericContainer const & operator [] ( std::string const & s ) const;
-    /*! \brief
-    :|: Overload of the `[]` operator to access the `s`-th element of a stored generic map.
-    :|: If the element do not exists it is created.
-    \*/
 
-    GENERIC_CONTAINER_API_DLL
-    GenericContainer & operator () ( unsigned i, char const msg[] = nullptr );
+    /*!
+     *  \brief Get the `i`-th `GenericContainer` of the stored data.
+     *  \param[in]  i   position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    GenericContainer & operator () ( unsigned i, char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    GenericContainer const & operator () ( unsigned i, char const msg[] = nullptr ) const;
+    /*!
+     *  \brief Get the `i`-th `GenericContainer` of the stored data.
+     *  \param[in]  i   position of the element in the vector
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    GenericContainer const & operator () ( unsigned i, char const * msg = nullptr ) const;
 
-    /*! \brief
-    :|: Overload of the `()` operator to access the `i`-th element of a stored generic vector.
-    :|: NO run time bound check.
-    \*/
+    /*!
+     *  \brief Get a `GenericContainer` in the stored data.
+     *  \param[in]  s   key string of the element in the map
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    GenericContainer & operator () ( std::string const & s, char const * msg = nullptr );
 
-    GENERIC_CONTAINER_API_DLL
-    GenericContainer & operator () ( std::string const & s, char const msg[] = nullptr );
-    GENERIC_CONTAINER_API_DLL
-    GenericContainer const & operator () ( std::string const & s, char const msg[] = nullptr ) const;
-
-    /*! \brief
-    :|: Overload of the `()` operator to access the `s`-th element of a stored generic map.
-    :|: If the element do not exists an error is issued.
-    \*/
-
+    /*!
+     *  \brief Get a const `GenericContainer` in the stored data.
+     *  \param[in]  s   key string of the element in the map
+     *  \param[in]  msg message of error in case of failure
+     *  \return the stored value
+     */
+    GenericContainer const & operator () ( std::string const & s, char const * msg = nullptr ) const;
     //@}
 
     //! \name Initialize data using set command
     //@{
 
-    //! Assign a boolean to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a boolean to the generic container.
+     * 
+     * \param[in] a boolean to be stored
+     */
     void set( bool const & a ) { this->set_bool(a); }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign an integer to the generic container.
+     * 
+     * \param[in] a integer to be stored
+     */
     void set( uint_type const & a ) { this->set_int(int_type(a)); }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign an integer to the generic container.
+     * 
+     * \param[in] a integer to be stored
+     */
     void set( int_type const & a ) { this->set_int(a); }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign an unsigned integer to the generic container.
+     * 
+     * \param[in] a unsigned integer to be stored
+     */
     void set( ulong_type const & a ) { this->set_long(long_type(a)); }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a long integer to the generic container.
+     * 
+     * \param[in] a long integer to be stored
+     */
     void set( long_type const & a ) { this->set_long(a); }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a float to the generic container.
+     * 
+     * \param[in] a float to be stored
+     */
     void set( float const & a ) { this->set_real(real_type(a)); }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a double to the generic container.
+     * 
+     * \param[in] a double to be stored
+     */
     void set( double const & a ) { this->set_real(real_type(a)); }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a complex of float to the generic container.
+     * 
+     * \param[in] a complex of float to be stored
+     */
     void set( std::complex<float> const & a )
     { this->set_complex(real_type(a.real()),real_type(a.imag())); }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a complex of double to the generic container.
+     * 
+     * \param[in] a complex of double to be stored
+     */
     void set( std::complex<double> const & a )
     { this->set_complex(real_type(a.real()),real_type(a.imag())); }
 
-    //! Assign a string to the generic container.
-    GENERIC_CONTAINER_API_DLL
-    void set( char const a[] ) { this->set_string(a); }
+    /*!
+     * \brief Assign a string to the generic container.
+     * 
+     * \param[in] a string to be stored
+     */
+    void set( char const * a ) { this->set_string(a); }
 
-    //! Assign a string to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a string to the generic container.
+     * 
+     * \param[in] a string to be stored
+     */
     void set( std::string const & a ) { this->set_string(a); }
 
-    //! Assign a pointer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a pointer to the generic container.
+     * 
+     * \param[in] a pointer to be stored
+     */
     void set( pointer_type a ) { this->set_pointer(a); }
 
     //@}
@@ -1133,168 +1565,227 @@ namespace GenericContainerNamespace {
     //! The `=` operator is overloaded to initialize the `GenericContainer` on its left side.
     //@{
 
-    //! Assign a boolean to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a boolean to the generic container.
+     * 
+     * \param[in] a boolean to be stored
+     */
     GenericContainer & operator = ( bool const & a )
     { this->set_bool(a); return * this; }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign an integer to the generic container.
+     * 
+     * \param[in] a integer to be stored
+     */
     GenericContainer & operator = ( uint_type const & a )
     { this->set_int(int_type(a)); return * this; }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign an integer to the generic container.
+     * 
+     * \param[in] a integer to be stored
+     */
     GenericContainer & operator = ( int_type const & a )
     { this->set_int(a); return * this; }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign an unsigned long to the generic container.
+     * 
+     * \param[in] a unsigned long to be stored
+     */
     GenericContainer & operator = ( ulong_type const & a )
     { this->set_long(long_type(a)); return * this; }
 
-    //! Assign an integer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a long integer to the generic container.
+     * 
+     * \param[in] a long integer to be stored
+     */
     GenericContainer & operator = ( long_type const & a )
     { this->set_long(a); return * this; }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a float to the generic container.
+     * 
+     * \param[in] a float to be stored
+     */
     GenericContainer & operator = ( float const & a )
     { this->set_real(real_type(a)); return * this; }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a double to the generic container.
+     * 
+     * \param[in] a double to be stored
+     */
     GenericContainer & operator = ( double const & a )
     { this->set_real(real_type(a)); return * this; }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a complex of float to the generic container.
+     * 
+     * \param[in] a complex of float to be stored
+     */
     GenericContainer & operator = ( std::complex<float> const & a )
     { this->set_complex(real_type(a.real()),real_type(a.imag())); return * this; }
 
-    //! Assign a floating point number to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a complex of double to the generic container.
+     * 
+     * \param[in] a complex of double to be stored
+     */
     GenericContainer & operator = ( std::complex<double> const & a )
     { this->set_complex(real_type(a.real()),real_type(a.imag())); return * this; }
 
-    //! Assign a `vec_bool_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a vector of bool to the generic container.
+     * 
+     * \param[in] a vector of bool to be stored
+     */
     GenericContainer & operator = ( vec_bool_type const & a );
 
-    //! Assign a `vec_int_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a vector of integer to the generic container.
+     * 
+     * \param[in] a vector of integer to be stored
+     */
     GenericContainer & operator = ( vec_int_type const & a );
 
-    //! Assign a `vec_long_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a vector of long integer to the generic container.
+     * 
+     * \param[in] a vector of long integer to be stored
+     */
     GenericContainer & operator = ( vec_long_type const & a );
 
-    //! Assign a `vec_real_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a vector of `real_type` to the generic container.
+     * 
+     * \param[in] a vector of `real_type` to be stored
+     */
     GenericContainer & operator = ( vec_real_type const & a );
 
-    //! Assign a `vec_complex_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a vector of `complex_type` to the generic container.
+     * 
+     * \param[in] a vector of `complex_type` to be stored
+     */
     GenericContainer & operator = ( vec_complex_type const & a );
 
-    //! Assign a `vec_string_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a vector of string to the generic container.
+     * 
+     * \param[in] a vector of string to be stored
+     */
     GenericContainer & operator = ( vec_string_type const & a );
 
-    //! Assign a `vec_int_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a matrix of integer to the generic container.
+     * 
+     * \param[in] a matrix of integer to be stored
+     */
     GenericContainer & operator = ( mat_int_type const & a );
 
-    //! Assign a `vec_long_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a matrix of long integer to the generic container.
+     * 
+     * \param[in] a matrix of long integer to be stored
+     */
     GenericContainer & operator = ( mat_long_type const & a );
 
-    //! Assign a `vec_real_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a matrix of `real_type` to the generic container.
+     * 
+     * \param[in] a matrix of `real_type` to be stored
+     */
     GenericContainer & operator = ( mat_real_type const & a );
 
-    //! Assign a `vec_complex_type` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a matrix of `complex_type` to the generic container.
+     * 
+     * \param[in] a matrix of `complex_type` to be stored
+     */
     GenericContainer & operator = ( mat_complex_type const & a );
 
-    //! Assign a string to the generic container.
-    GENERIC_CONTAINER_API_DLL
-    GenericContainer & operator = ( char const a[] )
+    /*!
+     * \brief Assign a string to the generic container.
+     * 
+     * \param[in] a string to be stored
+     */
+    GenericContainer & operator = ( char const * a )
     { this->set_string(a); return * this; }
 
-    //! Assign a string to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a string to the generic container.
+     * 
+     * \param[in] a string to be stored
+     */
     GenericContainer & operator = ( std::string const & a )
     { this->set_string(a); return * this; }
 
-    //! Assign a pointer to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a pointer to the generic container.
+     * 
+     * \param[in] a pointer to be stored
+     */
     GenericContainer & operator = ( pointer_type a )
     { this->set_pointer(a); return * this; }
 
-    //! Assign a generic container `a` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Assign a `GenericContainer` to the generic container (deep copy).
+     * 
+     * \param[in] a `GenericContainer` to be stored
+     */
     GenericContainer const & operator = ( GenericContainer const & a )
     { this->load( a ); return * this; }
 
-    //! Copy a generic container `a` to the generic container.
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Load a `GenericContainer` to the generic container (deep copy).
+     * 
+     * \param[in] a `GenericContainer` to be stored
+     */
     void load( GenericContainer const & a );
     //@}
 
     //! \name Promotion to a ``bigger'' data
     //@{
     //! If data contains a boolean it is promoted to an integer.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_int();
 
     //! If data contains a boolean it is promoted to an integer.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_long();
 
     //! If data contains a boolean or an integer it is promoted to a real.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_real();
 
     //! If data contains a boolean or an integer or floating point it is promoted to a complex floating point.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_complex();
 
     //! If data contains vector of booleans it is promoted to a vector of integer.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_vec_int();
 
     //! If data contains vector of booleans it is promoted to a vector of integer.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_vec_long();
 
     //! If data contains vector of booleans or integer it is promoted to a vector of real.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_vec_real();
 
     //! If data contains vector of booleans or integer or real it is promoted to a vector of complex.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_vec_complex();
 
     //! If data contains vector of booleans, integer or real it is promoted to a matrix of integer.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_mat_int();
 
     //! If data contains vector of booleans, integer or real it is promoted to a matrix of long integer.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_mat_long();
 
     //! If data contains vector of booleans, integer or real it is promoted to a matrix of real.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_mat_real();
 
     //! If data contains vector of booleans, integer or real or complex or matrix of real it is promoted to a matrix of complex.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_mat_complex();
 
     //! If data contains vector of someting it is promoted to a vector of `GenericContainer`.
-    GENERIC_CONTAINER_API_DLL
     GenericContainer const & promote_to_vector();
 
     //@}
@@ -1302,108 +1793,175 @@ namespace GenericContainerNamespace {
     //! \name Initialize data by overloading constructor
     //@{
 
-    //! Construct a generic container storing a boolean
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing a boolean
+     * \param[in] a initializer data
+     */
     GenericContainer( bool const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing an integer
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing an integer
+     * \param[in] a initializer data
+     */
     GenericContainer( uint_type const & a )
     : m_data_type(GC_NOTYPE) { *this = a; }
 
-    //! Construct a generic container storing an integer
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing an integer
+     * \param[in] a initializer data
+     */
     GenericContainer( int_type const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing an integer
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing an integer
+     * \param[in] a initializer data
+     */
     GenericContainer( ulong_type const & a )
     : m_data_type(GC_NOTYPE) { *this = a; }
 
-    //! Construct a generic container storing an integer
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing an integer
+     * \param[in] a initializer data
+     */
     GenericContainer( long_type const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing a floating point number
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing a floating point number
+     * \param[in] a initializer data
+     */
     GenericContainer( float const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing a floating point number
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing a floating point number
+     * \param[in] a initializer data
+     */
     GenericContainer( double const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing a complex floating point number
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing a complex floating point number
+     * \param[in] a initializer data
+     */
     GenericContainer( std::complex<float> const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing a complex floating point number
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing a complex floating point number
+     * \param[in] a initializer data
+     */
     GenericContainer( std::complex<double> const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing a string
-    GENERIC_CONTAINER_API_DLL
-    GenericContainer( char const a[] )
+    /*!
+     * \brief Construct a generic container storing a string
+     * \param[in] a initializer data
+     */
+    GenericContainer( char const * a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing a string
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing a string
+     * \param[in] a initializer data
+     */
     GenericContainer( std::string const & a )
     : m_data_type(GC_NOTYPE) { this->operator=(a); }
 
-    //! Construct a generic container storing a pointer
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container storing a pointer
+     * \param[in] a initializer data
+     */
     GenericContainer( pointer_type a )
     : m_data_type(GC_NOTYPE) { this->set_pointer(a); }
 
-    //! Construct a generic container copying container `gc`
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     * \brief Construct a generic container copying container `gc`
+     * \param[in] gc initializer data
+     */
     GenericContainer( GenericContainer const & gc )
     : m_data_type(GC_NOTYPE) { this->load(gc); }
+
     //@}
 
     //! \name Utilities methods
 
-    //! Check if string `s` is a key of the stored map (if fails issue an error).
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief Check if string `s` is a key of the stored map (if fails issue an error).
+     *  \param[in] s key to be checked
+     */
     bool exists( std::string const & s ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], bool & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, bool & value ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], int_type & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, int_type & value ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], uint_type & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, uint_type & value ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], long_type & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, long_type & value ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], ulong_type & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, ulong_type & value ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], real_type & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, real_type & value ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], complex_type & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, complex_type & value ) const;
 
-    GENERIC_CONTAINER_API_DLL
-    bool get_if_exists( char const field[], string_type & value ) const;
+    /*!
+     *  \brief Check if string `field` is a key of the stored map and extract value if exists
+     *  \param[in] field key to be checked
+     *  \param[in] value value to be extracted
+     */
+    bool get_if_exists( char const * field, string_type & value ) const;
+
     //@}
 
     //! \name I/O for `GenericContainer` objects
     //@{
 
-    //! print the contents of the object in a human readable way (without data)
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief print the contents of the object in a human readable way (without data)
+     * 
+     *  \param[in] stream output stream
+     *  \param[in] prefix strig to be prepended to any field of the `GenericContainer`
+     *  \param[in] indent indentation
+     */
     void
     print_content_types(
       ostream_type      & stream,
@@ -1411,8 +1969,13 @@ namespace GenericContainerNamespace {
       std::string const & indent = "    "
     ) const;
 
-    //! dump the contents of the object in a human readable way
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief dump the contents of the object in a human readable way
+     * 
+     *  \param[in] stream output stream
+     *  \param[in] prefix strig to be prepended to any field of the `GenericContainer`
+     *  \param[in] indent indentation
+     */
     void
     dump(
       ostream_type      & stream,
@@ -1420,7 +1983,13 @@ namespace GenericContainerNamespace {
       std::string const & indent = "    "
     ) const;
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief dump the contents of the object in a human readable way (aliad of dump)
+     * 
+     *  \param[in] stream output stream
+     *  \param[in] prefix strig to be prepended to any field of the `GenericContainer`
+     *  \param[in] indent indentation
+     */
     void
     print(
       ostream_type      & stream,
@@ -1430,79 +1999,107 @@ namespace GenericContainerNamespace {
       this->dump( stream, prefix, indent );
     }
 
-    //! print the contents of the object in yaml syntax
-    GENERIC_CONTAINER_API_DLL
-    void to_yaml( ostream_type &, std::string const & prefix = "" ) const;
+    /*!
+     *  \brief print the contents of the object in yaml syntax
+     * 
+     *  \param[in] stream output stream
+     *  \param[in] prefix strig to be prepended to any field of the `GenericContainer`
+     */
+    void to_yaml( ostream_type & stream, std::string const & prefix = "" ) const;
 
     /*!
-    :|:  \brief write `GenericContainer` as regular formatted data
-    :|:
-    :|:  Write the contents of the `GenericContainer` object to stream.
-    :|:
-    :|:  `GenericContainer` must be a map which contains the fields:
-    :|:
-    :|:  - "headers" this element must be a `vec_string_type` which contains
-    :|:              the strings of the headers of the columns of the data
-    :|:
-    :|:  - "data"    this element must be a `vector_type` which contais the
-    :|:              vectors which are the columns of the data to be saved.
-    :|:              Each column can be of type
-    :|:
-    :|:              1. `vec_bool_type`
-    :|:              2. `vec_int_type`
-    :|:              3. `vec_real_type`
-    :|:
-    :|:              all the vector must have the same size.
-    :|:
-    :|:   \param stream     stream to write the output
-    :|:   \param delimiter  desired delimiter (optional). Default is tab.
-    \*/
-    GENERIC_CONTAINER_API_DLL
+     *  \brief write `GenericContainer` as regular formatted data
+     *
+     *  Write the contents of the `GenericContainer` object to stream.
+     *
+     *  `GenericContainer` must be a map which contains the fields:
+     *
+     *  - "headers" this element must be a `vec_string_type` which contains
+     *              the strings of the headers of the columns of the data
+     *
+     *  - "data"    this element must be a `vector_type` which contais the
+     *              vectors which are the columns of the data to be saved.
+     *              Each column can be of type
+     *
+     *              1. `vec_bool_type`
+     *              2. `vec_int_type`
+     *              3. `vec_real_type`
+     *
+     *              all the vector must have the same size.
+     *
+     *   \param stream     stream to write the output
+     *   \param delimiter  desired delimiter (optional). Default is tab.
+     */
     GenericContainer const &
     writeFormattedData( ostream_type & stream, char const delimiter = '\t' ) const;
 
     /*!
-    :|:  \brief read regular formatted data from `stream` to `GenericContainer`.
-    :|:
-    :|:  After successful read `GenericContainer` will be a map which contains the fields:
-    :|:
-    :|:  - "headers"  a `vec_string_type` which contains
-    :|:               the strings of the headers of the columns of the data
-    :|:
-    :|:  - "data"     a `vector_type` which contais the vectors which are the
-    :|:               columns of the data readed of type `vec_real_type`.
-    :|:
-    :|:   \param stream       stream to write the output
-    :|:   \param commentChars lines beginnig with one of this chars are treated as comments.
-    :|:                       Default are `#` and `%`
-    :|:   \param delimiters   caracters used as delimiter for headers
-    \*/
-    GENERIC_CONTAINER_API_DLL
+     *  \brief read regular formatted data from `stream` to `GenericContainer`.
+     *
+     *  After successful read `GenericContainer` will be a map which contains the fields:
+     *
+     *  - "headers"  a `vec_string_type` which contains
+     *               the strings of the headers of the columns of the data
+     *
+     *  - "data"     a `vector_type` which contais the vectors which are the
+     *               columns of the data readed of type `vec_real_type`.
+     *
+     *   \param stream       stream to write the output
+     *   \param commentChars lines beginnig with one of this chars are treated as comments.
+     *                       Default are `#` and `%`
+     *   \param delimiters   caracters used as delimiter for headers
+     */
     GenericContainer &
     readFormattedData(
       std::istream & stream,
-      char const commentChars[] = "#%",
-      char const delimiters[] = " \t"
+      char const * commentChars = "#%",
+      char const * delimiters = " \t"
     );
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief read regular formatted data from file `fname` to `GenericContainer`.
+     *
+     *  After successful read `GenericContainer` will be a map which contains the fields:
+     *
+     *  - "headers"  a `vec_string_type` which contains
+     *               the strings of the headers of the columns of the data
+     *
+     *  - "data"     a `vector_type` which contais the vectors which are the
+     *               columns of the data readed of type `vec_real_type`.
+     *
+     *   \param fname        file name to be read
+     *   \param commentChars lines beginnig with one of this chars are treated as comments.
+     *                       Default are `#` and `%`
+     *   \param delimiters   caracters used as delimiter for headers
+     */
     GenericContainer &
     readFormattedData(
-      char const fname[],
-      char const commentChars[] = "#%",
-      char const delimiters[] = " \t"
+      char const * fname,
+      char const * commentChars = "#%",
+      char const * delimiters   = " \t"
     );
 
-    GENERIC_CONTAINER_API_DLL
+    /*!
+     *  \brief do an exception
+     *
+     *  \param[in] msg message of the exception
+     */
     static
     void
-    exception( char const msg[] ) GC_NO_RETURN;
+    exception( char const * msg ) GC_NO_RETURN;
 
   };
 
   // -------------------------------------------------------
   // support functions
-  GENERIC_CONTAINER_API_DLL
+  /*!
+   *  Write data as a table
+   * 
+   *  \param[in] headers   vector of string with the header of the table
+   *  \param[in] data      vector of `GenericContainer` with the columns of the table
+   *  \param[in] stream    output stream
+   *  \param[in] delimiter delimiter character between columns
+   */
   void
   writeTable(
     vec_string_type const & headers,
@@ -1511,7 +2108,14 @@ namespace GenericContainerNamespace {
     char const delimiter = '\t'
   );
 
-  GENERIC_CONTAINER_API_DLL
+  /*!
+   *  Write data as a table
+   * 
+   *  \param[in] headers   vector of string with the header of the table
+   *  \param[in] data      matrix of `real_type` with the columns of the table
+   *  \param[in] stream    output stream
+   *  \param[in] delimiter delimiter character between columns
+   */
   void
   writeTable(
     vec_string_type const & headers,
@@ -1520,7 +2124,13 @@ namespace GenericContainerNamespace {
     char const delimiter = '\t'
   );
 
-  GENERIC_CONTAINER_API_DLL
+  /*!
+   *  Write data as a table
+   * 
+   *  \param[in] headers   vector of string with the header of the table
+   *  \param[in] data      matrix of `real_type` with the columns of the table
+   *  \param[in] stream    output stream
+   */
   void
   writeTableFormatted(
     vec_string_type const & headers,
@@ -1528,7 +2138,13 @@ namespace GenericContainerNamespace {
     ostream_type          & stream
   );
 
-  GENERIC_CONTAINER_API_DLL
+  /*!
+   *  Write data as a table
+   * 
+   *  \param[in] headers   vector of string with the header of the table
+   *  \param[in] data      matrix of `real_type` with the columns of the table
+   *  \param[in] stream    output stream
+   */
   void
   writeTableFormatted(
     vec_string_type const & headers,
@@ -1539,6 +2155,8 @@ namespace GenericContainerNamespace {
   // -------------------------------------------------------
   class GenericContainerExplorer {
   private:
+
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     enum {
       GENERIC_CONTAINER_OK        = 0,
       GENERIC_CONTAINER_BAD_TYPE  = 1,
@@ -1546,6 +2164,7 @@ namespace GenericContainerNamespace {
       GENERIC_CONTAINER_NOT_EMPTY = 3,
       GENERIC_CONTAINER_BAD_HEAD  = 4
     };
+    #endif
 
     GenericContainer              data;
     std::deque<GenericContainer*> head;
@@ -1555,8 +2174,8 @@ namespace GenericContainerNamespace {
 
   public:
 
-    GENERIC_CONTAINER_API_DLL GenericContainerExplorer() { head.push_back(&data); }
-    GENERIC_CONTAINER_API_DLL ~GenericContainerExplorer() {}
+    GenericContainerExplorer() { head.push_back(&data); }
+    ~GenericContainerExplorer() {}
 
     GenericContainer *
     top() {
@@ -1587,7 +2206,6 @@ namespace GenericContainerNamespace {
     void       * mem_ptr()       { return &data; }
     void const * mem_ptr() const { return &data; }
 
-    GENERIC_CONTAINER_API_DLL
     int
     check( int data_type ) const {
       if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -1599,7 +2217,6 @@ namespace GenericContainerNamespace {
       }
     }
 
-    GENERIC_CONTAINER_API_DLL
     int
     check_no_data( int data_type ) const {
       if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -1608,7 +2225,6 @@ namespace GenericContainerNamespace {
       return GENERIC_CONTAINER_NOT_EMPTY;
     }
 
-    GENERIC_CONTAINER_API_DLL
     int
     pop() {
       if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA;
@@ -1616,14 +2232,12 @@ namespace GenericContainerNamespace {
       return GENERIC_CONTAINER_OK;
     }
 
-    GENERIC_CONTAINER_API_DLL
     int
     push( GenericContainer * gc ) {
       head.push_back( gc );
       return GENERIC_CONTAINER_OK;
     }
 
-    GENERIC_CONTAINER_API_DLL
     int
     push_vector_position( unsigned pos ) {
       int ok = check( GC_VECTOR );
@@ -1634,9 +2248,8 @@ namespace GenericContainerNamespace {
       return ok;
     }
 
-    GENERIC_CONTAINER_API_DLL
     int
-    push_map_position( char const pos[] ) {
+    push_map_position( char const * pos ) {
       int ok = check( GC_MAP );
       if ( ok == GENERIC_CONTAINER_OK  ) {
         GenericContainer * gc = &((*head.back())[pos]);
@@ -1645,7 +2258,6 @@ namespace GenericContainerNamespace {
       return ok;
     }
 
-    GENERIC_CONTAINER_API_DLL
     int
     init_map_key() {
       int ok = check( GC_MAP );
@@ -1656,7 +2268,6 @@ namespace GenericContainerNamespace {
       return ok;
     }
 
-    GENERIC_CONTAINER_API_DLL
     char const *
     next_map_key() {
       if ( map_iterator != ptr_map->end() )
@@ -1665,7 +2276,6 @@ namespace GenericContainerNamespace {
         return nullptr;
     }
 
-    GENERIC_CONTAINER_API_DLL
     int
     reset() {
       if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA;

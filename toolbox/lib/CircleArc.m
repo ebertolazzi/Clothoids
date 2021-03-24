@@ -88,11 +88,6 @@ classdef CircleArc < CurveBase
       CircleArcMexWrapper( 'changeCurvilinearOrigin', self.objectHandle, s0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [p0,p1,p2] = bbTriangles( self, varargin )
-      % return the bounding box triangles of the circle arc
-      [p0,p1,p2] = CircleArcMexWrapper( 'bbTriangles', self.objectHandle, varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function nurbs = to_nurbs( self )
       % return a nurbs representation of the circle arc
       nurbs = CircleArcMexWrapper( 'to_nurbs', self.objectHandle );
@@ -119,16 +114,6 @@ classdef CircleArc < CurveBase
         plot(xx,yy,varargin{:});
       else
         plot(xx,yy,':ok');
-      end
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plotTriangles( self, varargin )
-      [p1,p2,p3] = self.bbTriangles();
-      for k=1:size(p1,2)
-        x = [ p1(1,k), p2(1,k), p3(1,k), p1(1,k) ];
-        y = [ p1(2,k), p2(2,k), p3(2,k), p1(2,k) ];
-        fill( x, y, 'red','FaceAlpha', 0.5 );
-        %plot( x, y, varargin{:});
       end
     end
   end

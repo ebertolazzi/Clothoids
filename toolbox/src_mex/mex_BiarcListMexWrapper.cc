@@ -404,77 +404,6 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  static
-  void
-  do_bbTriangles(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD "BiarcListMexWrapper('bbTriangles',OBJ[,max_angle,max_size,offs,'ISO'/'SAE']): "
-
-    MEX_ASSERT2(
-      nrhs >= 2 && nrhs <= 6,
-      CMD "expected 2 up to 6 inputs, nrhs = {}\n", nrhs
-    );
-    MEX_ASSERT2(
-      nlhs == 3,
-      CMD "expected 3 output, nlhs = {}\n", nlhs
-    );
-
-    BiarcList * ptr = DATA_GET(arg_in_1);
-
-    real_type max_angle = Utils::m_pi/18;
-    real_type max_size  = 1e100;
-    real_type offs      = 0;
-    if ( nrhs >= 3 )
-      max_angle = getScalarValue(
-        arg_in_2, CMD "`max_angle` expected to be a real scalar"
-      );
-    if ( nrhs >= 4 )
-      max_size = getScalarValue(
-        arg_in_3, CMD "`max_size` expected to be a real scalar"
-      );
-    if ( nrhs >= 5 )
-      offs = getScalarValue(
-        arg_in_4, CMD "`offs` expected to be a real scalar"
-      );
-
-    bool ISO = true;
-    if ( nrhs == 6 ) ISO = do_is_ISO( arg_in_5, CMD " last argument must be a string");
-
-    std::vector<Triangle2D> tvec;
-    if ( nrhs >= 5 ) {
-      if ( ISO ) {
-        ptr->bbTriangles_ISO( offs, tvec, max_angle, max_size );
-      } else {
-        ptr->bbTriangles_SAE( offs, tvec, max_angle, max_size );
-      }
-    } else {
-      ptr->bbTriangles( tvec, max_angle, max_size );
-    }
-
-    mwSize nt = tvec.size();
-
-    real_type * p0 = createMatrixValue( arg_out_0, 2, nt );
-    real_type * p1 = createMatrixValue( arg_out_1, 2, nt );
-    real_type * p2 = createMatrixValue( arg_out_2, 2, nt );
-
-    for ( mwSize i = 0; i < nt; ++i ) {
-      Triangle2D const & t = tvec[i];
-      *p0++ = t.x1();
-      *p0++ = t.y1();
-      *p1++ = t.x2();
-      *p1++ = t.y2();
-      *p2++ = t.x3();
-      *p2++ = t.y3();
-    }
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
   static std::map<std::string,DO_CMD> cmd_to_fun = {
     {"new",do_new},
     {"push_back_G1",do_push_back_G1},
@@ -486,7 +415,6 @@ namespace G2lib {
     {"get",do_get},
     {"numSegment",do_numSegment},
     {"findST1",do_findST1},
-    {"bbTriangles",do_bbTriangles},
     CMD_MAP_FUN
   };
 

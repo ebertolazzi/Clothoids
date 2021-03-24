@@ -41,6 +41,9 @@ Program Listing for File Fresnel.hxx
       |  |  _|| | |  __/\__ \ | | |  __/ |
       |  |_|  |_|  \___||___/_| |_|\___|_|
      \*/
+     /*
+      * Compute Fresnel integrals
+      */
      void
      FresnelCS(
        real_type   x,
@@ -50,20 +53,20 @@ Program Listing for File Fresnel.hxx
    
      void
      FresnelCS(
-       int_type  nk,
-       real_type x,
-       real_type C[],
-       real_type S[]
+       int_type    nk,
+       real_type   x,
+       real_type * C,
+       real_type * S
      );
    
      void
      GeneralizedFresnelCS(
-       int_type  nk,
-       real_type a,
-       real_type b,
-       real_type c,
-       real_type intC[],
-       real_type intS[]
+       int_type    nk,
+       real_type   a,
+       real_type   b,
+       real_type   c,
+       real_type * intC,
+       real_type * intS
      );
    
      void

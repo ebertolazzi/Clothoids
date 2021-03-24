@@ -35,6 +35,11 @@ Files
 .. toctree::
    :maxdepth: 5
 
+   file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_BaseCurve.hxx.rst
+
+.. toctree::
+   :maxdepth: 5
+
    file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_BaseCurve_using.hxx.rst
 
 .. toctree::

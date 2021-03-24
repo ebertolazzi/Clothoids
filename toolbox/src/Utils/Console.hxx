@@ -29,6 +29,7 @@
 namespace Utils {
 
   typedef std::basic_ostream<char> ostream_type;
+  typedef std::basic_istream<char> istream_type;
 
   std::string basename( char const filename[] );
 
@@ -65,8 +66,14 @@ namespace Utils {
 
     Console( ostream_type * stream = &std::cout, int level = 4 );
 
-    void changeLevel( int new_level );
-    void changeStream( ostream_type * new_stream );
+    void change_level( int new_level );
+    void change_stream( ostream_type * new_stream );
+    int  get_level() const { return m_level; }
+
+    ostream_type * get_stream() const { return m_stream; }
+
+    void changeLevel( int new_level ) { this->change_level(new_level); }
+    void changeStream( ostream_type * new_stream ) { this->change_stream( new_stream ); }
     int  getLevel() const { return m_level; }
 
     ostream_type * getStream() const { return m_stream; }
@@ -107,60 +114,75 @@ namespace Utils {
     Console const & gray_reversed    ( std::string const & msg, int msg_level = 0 ) const;
 
     void
-    setMessageStyle(
-      rang::style const & s,
-      rang::fg    const & f,
-      rang::bg    const & b
+    set_message_style(
+      rang::style const & s, rang::fg const & f, rang::bg const & b
     ) {
-      m_message_style.s = s;
-      m_message_style.f = f;
-      m_message_style.b = b;
+      m_message_style.s = s; m_message_style.f = f; m_message_style.b = b;
+    }
+
+    void
+    setMessageStyle(
+      rang::style const & s, rang::fg const & f, rang::bg const & b
+    ) {
+      this->set_message_style( s, f, b );
+    }
+
+    void
+    set_warning_style(
+      rang::style const & s, rang::fg const & f, rang::bg const & b
+    ) {
+      m_warning_style.s = s; m_warning_style.f = f; m_warning_style.b = b;
     }
 
     void
     setWarningStyle(
-      rang::style const & s,
-      rang::fg    const & f,
-      rang::bg    const & b
+      rang::style const & s, rang::fg const & f, rang::bg const & b
     ) {
-      m_warning_style.s = s;
-      m_warning_style.f = f;
-      m_warning_style.b = b;
+      this->set_warning_style( s, f, b );
+    }
+
+    void
+    set_error_style(
+      rang::style const & s, rang::fg const & f, rang::bg const & b
+    ) {
+      m_error_style.s = s; m_error_style.f = f; m_error_style.b = b;
     }
 
     void
     setErrorStyle(
-      rang::style const & s,
-      rang::fg    const & f,
-      rang::bg    const & b
+      rang::style const & s, rang::fg const & f, rang::bg const & b
     ) {
-      m_error_style.s = s;
-      m_error_style.f = f;
-      m_error_style.b = b;
+      this->set_error_style( s, f, b );
+    }
+
+    void
+    set_fatal_style(
+      rang::style const & s, rang::fg const & f, rang::bg const & b
+    ) {
+      m_fatal_style.s = s; m_fatal_style.f = f; m_fatal_style.b = b;
     }
 
     void
     setFatalStyle(
-      rang::style const & s,
-      rang::fg    const & f,
-      rang::bg    const & b
+      rang::style const & s, rang::fg const & f, rang::bg const & b
     ) {
-      m_fatal_style.s = s;
-      m_fatal_style.f = f;
-      m_fatal_style.b = b;
+      this->set_fatal_style( s, f, b );
     }
 
     //! set off coloring
     void
-    setOff() const {
+    set_off() const {
       #ifndef UTILS_OS_WINDOWS
       rang::setControlMode( rang::control::Off );
       #endif
     }
 
+    //! set off coloring
+    void setOff() const { this->set_off(); }
+
     //! set coloring automatic
     void
-    setAuto() const {
+    set_auto() const {
       #ifdef UTILS_OS_WINDOWS
       rang::setWinTermMode( rang::winTerm::Auto );
       #else
@@ -168,7 +190,10 @@ namespace Utils {
       #endif
     }
 
+    //! set coloring automatic
+    void setAuto() const { this->set_auto(); }
   };
+
 }
 
 #endif

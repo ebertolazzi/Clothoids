@@ -20,8 +20,10 @@
 #include "Clothoids.hh"
 #include "PolynomialRoots.hh"
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define A_THRESOLD   0.01
 #define A_SERIE_SIZE 3
+#endif
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -51,6 +53,8 @@ namespace G2lib {
   using std::abs;
   using std::min;
   using std::max;
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   /*
   // This function calculates the fresnel cosine and sine integrals.
@@ -128,7 +132,7 @@ namespace G2lib {
     -0.00009070958410429993314
   };
 
-  //! \endcond
+  #endif
 
   /*
   //  #######
@@ -140,29 +144,46 @@ namespace G2lib {
   //  #       #    # ######  ####  #    # ###### ######
   */
 
+  /*!
+   *  **Purpose:**
+   * 
+   *  Compute Fresnel integrals C(x) and S(x)
+   * 
+   *  \f[
+   *    S(x) = \int_0^x \sin t^2 \,\mathrm{d} t, \qquad
+   *    C(x) = \int_0^x \cos t^2 \,\mathrm{d} t
+   *  \f]
+   * 
+   *  **Example:**
+   * 
+   *  | \f$ x \f$ | \f$ C(x) \f$  |  \f$ S(x) \f$ | 
+   *  | :-------: | :-----------: | :-----------: |
+   *  | 0.0       | 0.00000000    |  0.00000000   |
+   *  | 0.5       | 0.49234423    |  0.06473243   |
+   *  | 1.0       | 0.77989340    |  0.43825915   |
+   *  | 1.5       | 0.44526118    |  0.69750496   |
+   *  | 2.0       | 0.48825341    |  0.34341568   |
+   *  | 2.5       | 0.45741301    |  0.61918176   |
+   *
+   *  **Adapted from:**
+   * 
+   *  - *William J. Thompson*, Atlas for computing mathematical functions : 
+   *    an illustrated guide for practitioners, with programs in C and Mathematica,
+   *    Wiley, 1997.
+   * 
+   *  **Author:**
+   * 
+   *  - *Venkata Sivakanth Telasula*,
+   *    email: sivakanth.telasula@gmail.com,
+   *    date: August 11, 2005
+   *
+   *  \param[in]  y Argument of \f$ C(y) \f$ and \f$ S(y) \f$ 
+   *  \param[out] C \f$ C(x) \f$ 
+   *  \param[out] S \f$ S(x) \f$
+   */
+
   void
   FresnelCS( real_type y, real_type & C, real_type & S ) {
-    /*=======================================================*\
-      Purpose: This program computes the Fresnel integrals
-               C(x) and S(x) using subroutine FCS
-      Input :  x --- Argument of C(x) and S(x)
-      Output:  C --- C(x)
-               S --- S(x)
-      Example:
-              x          C(x)          S(x)
-             -----------------------------------
-             0.0      .00000000      .00000000
-             0.5      .49234423      .06473243
-             1.0      .77989340      .43825915
-             1.5      .44526118      .69750496
-             2.0      .48825341      .34341568
-             2.5      .45741301      .61918176
-
-      Purpose: Compute Fresnel integrals C(x) and S(x)
-      Input :  x --- Argument of C(x) and S(x)
-      Output:  C --- C(x)
-               S --- S(x)
-    \*=======================================================*/
 
     real_type const eps = 1E-15;
     real_type const x   = y > 0 ? y : -y;
@@ -300,10 +321,10 @@ namespace G2lib {
 
   void
   FresnelCS(
-    int_type  nk,
-    real_type t,
-    real_type C[],
-    real_type S[]
+    int_type    nk,
+    real_type   t,
+    real_type * C,
+    real_type * S
   ) {
     FresnelCS(t,C[0],S[0]);
     if ( nk > 1 ) {
@@ -322,6 +343,7 @@ namespace G2lib {
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   void
   evalXYaLarge(
@@ -354,11 +376,11 @@ namespace G2lib {
   static
   void
   evalXYaLarge(
-    int_type  nk,
-    real_type a,
-    real_type b,
-    real_type X[],
-    real_type Y[]
+    int_type    nk,
+    real_type   a,
+    real_type   b,
+    real_type * X,
+    real_type * Y
   ) {
 
     UTILS_ASSERT(
@@ -427,10 +449,10 @@ namespace G2lib {
   static
   void
   evalXYazero(
-    int_type  nk,
-    real_type b,
-    real_type X[],
-    real_type Y[]
+    int_type    nk,
+    real_type   b,
+    real_type * X,
+    real_type * Y
   ) {
     real_type sb = sin(b);
     real_type cb = cos(b);
@@ -510,12 +532,12 @@ namespace G2lib {
   static
   void
   evalXYaSmall(
-    int_type  nk,
-    real_type a,
-    real_type b,
-    int_type  p,
-    real_type X[],
-    real_type Y[]
+    int_type    nk,
+    real_type   a,
+    real_type   b,
+    int_type    p,
+    real_type * X,
+    real_type * Y
   ) {
 
     int_type  nkk = nk + 4*p + 2; // max 45
@@ -547,6 +569,7 @@ namespace G2lib {
       }
     }
   }
+  #endif
 
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
@@ -575,12 +598,12 @@ namespace G2lib {
 
   void
   GeneralizedFresnelCS(
-    int_type  nk,
-    real_type a,
-    real_type b,
-    real_type c,
-    real_type intC[],
-    real_type intS[]
+    int_type    nk,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type * intC,
+    real_type * intS
   ) {
     UTILS_ASSERT( nk > 0 && nk < 4, "nk = {} must be in 1..3\n", nk );
 
@@ -1381,6 +1404,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   kappa_fun( real_type theta0, real_type theta ) {
@@ -1393,9 +1417,11 @@ namespace G2lib {
     real_type t = d*theta0+e*theta;
     return a * theta0 + b * theta + c * (t*t*t);
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   theta_guess( real_type theta0, real_type k0, bool & ok ) {
@@ -1443,6 +1469,7 @@ namespace G2lib {
     ok = abs(theta-theta0) < Utils::m_pi;
     return theta;
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

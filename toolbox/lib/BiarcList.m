@@ -68,11 +68,6 @@ classdef BiarcList < CurveBase
                                              self.objectHandle, ...
                                              x, y, varargin{:} );
     end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [P1,P2,P3] = bbTriangles( self, varargin )
-      % bbTriangles( max_angle, max_size, offs );
-      [P1,P2,P3] = BiarcListMexWrapper( 'bbTriangles', self.objectHandle, varargin{:} );
-    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function plot( self, varargin )
       if nargin > 1

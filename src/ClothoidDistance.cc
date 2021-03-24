@@ -70,6 +70,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   bool
   closestPointQC2(
@@ -126,9 +127,11 @@ namespace G2lib {
     }
     return false;
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   closestPointQC1(
@@ -174,9 +177,11 @@ namespace G2lib {
     else           { S = s1; X = x1; Y = y1; return d1; }
 
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   closestPointQC(
@@ -229,9 +234,11 @@ namespace G2lib {
     return d0;
 
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   bool
   closestPointStandard3(
@@ -288,9 +295,11 @@ namespace G2lib {
     }
     return false;
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   closestPointStandard2(
@@ -335,9 +344,11 @@ namespace G2lib {
     else           { S = s1; return d1; }
 
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   closestPointStandard(
@@ -430,9 +441,11 @@ namespace G2lib {
     if ( dp < dm ) { S = sflex + sp/gamma; return dp/gamma; }
     else           { S = sflex + sm/gamma; return dm/gamma; }
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   closestPoint1(
@@ -477,6 +490,7 @@ namespace G2lib {
       return d1;
     }
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

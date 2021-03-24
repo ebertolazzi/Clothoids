@@ -82,6 +82,7 @@ Program Listing for File ClothoidDistance.cc
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      static
      bool
      closestPointQC2(
@@ -138,9 +139,11 @@ Program Listing for File ClothoidDistance.cc
        }
        return false;
      }
+     #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      static
      real_type
      closestPointQC1(
@@ -186,9 +189,11 @@ Program Listing for File ClothoidDistance.cc
        else           { S = s1; X = x1; Y = y1; return d1; }
    
      }
+     #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      static
      real_type
      closestPointQC(
@@ -241,9 +246,11 @@ Program Listing for File ClothoidDistance.cc
        return d0;
    
      }
+     #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      static
      bool
      closestPointStandard3(
@@ -300,9 +307,11 @@ Program Listing for File ClothoidDistance.cc
        }
        return false;
      }
+     #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      static
      real_type
      closestPointStandard2(
@@ -347,9 +356,11 @@ Program Listing for File ClothoidDistance.cc
        else           { S = s1; return d1; }
    
      }
+     #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      static
      real_type
      closestPointStandard(
@@ -442,9 +453,11 @@ Program Listing for File ClothoidDistance.cc
        if ( dp < dm ) { S = sflex + sp/gamma; return dp/gamma; }
        else           { S = sflex + sm/gamma; return dm/gamma; }
      }
+     #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      static
      real_type
      closestPoint1(
@@ -489,6 +502,7 @@ Program Listing for File ClothoidDistance.cc
          return d1;
        }
      }
+     #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    

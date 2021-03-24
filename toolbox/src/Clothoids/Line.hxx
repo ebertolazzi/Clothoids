@@ -102,12 +102,12 @@ namespace G2lib {
 
     virtual
     real_type
-    length() const UTILS_OVERRIDE
+    length() const override
     { return m_L; }
 
     virtual
     real_type
-    length_ISO( real_type ) const UTILS_OVERRIDE
+    length_ISO( real_type ) const override
     { return m_L; }
 
     /*\
@@ -125,7 +125,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
@@ -135,7 +135,78 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE;
+    ) const override;
+
+    /*\
+     |  _    _   _____    _                _
+     | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+     | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+     | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+     |                               |___/
+    \*/
+
+    void
+    bbTriangles(
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100, // unused
+      int_type                  icurve    = 0
+    ) const override {
+      real_type xmin, ymin, xmax, ymax;
+      this->bbox( xmin, ymin, xmax, ymax );
+      real_type xc = (xmax+xmin)/2;
+      real_type yc = (ymax+ymin)/2;
+      real_type nx = (ymax-ymin)/100;
+      real_type ny = (xmin-xmax)/100;
+      if ( xmax > xmin || ymax > ymin ) {
+        Triangle2D t( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
+        tvec.push_back( t );
+      } else {
+        UTILS_ERROR(
+          "LineSegment bbTriangles found a degenerate line\n"
+          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ] max_angle={} max_size={}\n",
+          xmin, ymin, xmax, ymax, max_angle, max_size
+        );
+      }
+    }
+
+    void
+    bbTriangles_ISO(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100, // unused
+      int_type                  icurve    = 0
+    ) const override {
+      real_type xmin, ymin, xmax, ymax;
+      this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
+      real_type xc = (xmax+xmin)/2;
+      real_type yc = (ymax+ymin)/2;
+      real_type nx = (ymax-ymin)/100;
+      real_type ny = (xmin-xmax)/100;
+      if ( xmax > xmin || ymax > ymin ) {
+        Triangle2D t( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
+        tvec.push_back( t );
+      } else {
+        UTILS_ERROR(
+          "LineSegment bbTriangles found a degenerate line\n"
+          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ]\n"
+          "offs={} max_angle={} max_size={}\n",
+          xmin, ymin, xmax, ymax, offs, max_angle, max_size
+        );
+      }
+    }
+
+    void
+    bbTriangles_SAE(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override {
+      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+    }
 
     /*\
      |   ____             _          _______           _
@@ -146,39 +217,39 @@ namespace G2lib {
      |              |___/
     \*/
 
-    virtual real_type tx_Begin() const UTILS_OVERRIDE { return m_c0; }
-    virtual real_type ty_Begin() const UTILS_OVERRIDE { return m_s0; }
-    virtual real_type tx_End()   const UTILS_OVERRIDE { return m_c0; }
-    virtual real_type ty_End()   const UTILS_OVERRIDE { return m_s0; }
+    virtual real_type tx_Begin() const override { return m_c0; }
+    virtual real_type ty_Begin() const override { return m_s0; }
+    virtual real_type tx_End()   const override { return m_c0; }
+    virtual real_type ty_End()   const override { return m_s0; }
 
-    virtual real_type nx_Begin_ISO() const UTILS_OVERRIDE { return -m_s0; }
-    virtual real_type ny_Begin_ISO() const UTILS_OVERRIDE { return m_c0; }
-    virtual real_type nx_End_ISO()   const UTILS_OVERRIDE { return -m_s0; }
-    virtual real_type ny_End_ISO()   const UTILS_OVERRIDE { return m_c0; }
+    virtual real_type nx_Begin_ISO() const override { return -m_s0; }
+    virtual real_type ny_Begin_ISO() const override { return m_c0; }
+    virtual real_type nx_End_ISO()   const override { return -m_s0; }
+    virtual real_type ny_End_ISO()   const override { return m_c0; }
 
-    virtual real_type xBegin() const UTILS_OVERRIDE { return m_x0; }
-    virtual real_type yBegin() const UTILS_OVERRIDE { return m_y0; }
-    virtual real_type xEnd()   const UTILS_OVERRIDE { return m_x0+m_L*m_c0; }
-    virtual real_type yEnd()   const UTILS_OVERRIDE { return m_y0+m_L*m_s0; }
+    virtual real_type xBegin() const override { return m_x0; }
+    virtual real_type yBegin() const override { return m_y0; }
+    virtual real_type xEnd()   const override { return m_x0+m_L*m_c0; }
+    virtual real_type yEnd()   const override { return m_y0+m_L*m_s0; }
 
     virtual
     real_type
-    xBegin_ISO( real_type offs ) const UTILS_OVERRIDE
+    xBegin_ISO( real_type offs ) const override
     { return m_x0+offs*nx_Begin_ISO(); }
 
     virtual
     real_type
-    yBegin_ISO( real_type offs ) const UTILS_OVERRIDE
+    yBegin_ISO( real_type offs ) const override
     { return m_y0+offs*ny_Begin_ISO(); }
 
     virtual
     real_type
-    xEnd_ISO( real_type offs ) const UTILS_OVERRIDE
+    xEnd_ISO( real_type offs ) const override
     { return xEnd()+offs*nx_Begin_ISO(); }
 
     virtual
     real_type
-    yEnd_ISO( real_type offs ) const UTILS_OVERRIDE
+    yEnd_ISO( real_type offs ) const override
     { return yEnd()+offs*ny_Begin_ISO(); }
 
     /*\
@@ -191,22 +262,22 @@ namespace G2lib {
 
     virtual
     real_type
-    theta( real_type ) const UTILS_OVERRIDE
+    theta( real_type ) const override
     { return m_theta0; }
 
     virtual
     real_type
-    theta_D( real_type ) const UTILS_OVERRIDE
+    theta_D( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    theta_DD( real_type ) const UTILS_OVERRIDE
+    theta_DD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    theta_DDD( real_type ) const UTILS_OVERRIDE
+    theta_DDD( real_type ) const override
     { return 0; }
 
 
@@ -220,106 +291,106 @@ namespace G2lib {
 
     virtual
     real_type
-    tx( real_type ) const UTILS_OVERRIDE
+    tx( real_type ) const override
     { return m_c0; }
 
     virtual
     real_type
-    ty( real_type ) const UTILS_OVERRIDE
+    ty( real_type ) const override
     { return m_s0; }
 
     virtual
     real_type
-    tx_D( real_type ) const UTILS_OVERRIDE
+    tx_D( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    ty_D( real_type ) const UTILS_OVERRIDE
+    ty_D( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    tx_DD( real_type ) const UTILS_OVERRIDE
+    tx_DD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    ty_DD( real_type ) const UTILS_OVERRIDE
+    ty_DD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    tx_DDD( real_type ) const UTILS_OVERRIDE
+    tx_DDD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    ty_DDD( real_type ) const UTILS_OVERRIDE
+    ty_DDD( real_type ) const override
     { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     void
-    tg( real_type, real_type & tx, real_type & ty ) const UTILS_OVERRIDE
+    tg( real_type, real_type & tx, real_type & ty ) const override
     { tx = m_c0; ty = m_s0; }
 
     virtual
     void
-    tg_D( real_type, real_type & tx_D, real_type & ty_D ) const UTILS_OVERRIDE
+    tg_D( real_type, real_type & tx_D, real_type & ty_D ) const override
     { tx_D = ty_D = 0; }
 
     virtual
     void
-    tg_DD( real_type, real_type & tx_DD, real_type & ty_DD ) const UTILS_OVERRIDE
+    tg_DD( real_type, real_type & tx_DD, real_type & ty_DD ) const override
     { tx_DD = ty_DD = 0; }
 
     virtual
     void
-    tg_DDD( real_type, real_type & tx_DDD, real_type & ty_DDD ) const UTILS_OVERRIDE
+    tg_DDD( real_type, real_type & tx_DDD, real_type & ty_DDD ) const override
     { tx_DDD = ty_DDD = 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     virtual
     real_type
-    X( real_type s ) const UTILS_OVERRIDE
+    X( real_type s ) const override
     { return m_x0+s*m_c0; }
 
     virtual
     real_type
-    Y( real_type s ) const UTILS_OVERRIDE
+    Y( real_type s ) const override
     { return m_y0+s*m_s0; }
 
     virtual
     real_type
-    X_D( real_type ) const UTILS_OVERRIDE
+    X_D( real_type ) const override
     { return m_c0; }
 
     virtual
     real_type
-    Y_D( real_type ) const UTILS_OVERRIDE
+    Y_D( real_type ) const override
     { return m_s0; }
 
     virtual
     real_type
-    X_DD( real_type ) const UTILS_OVERRIDE
+    X_DD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    Y_DD( real_type ) const UTILS_OVERRIDE
+    Y_DD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    X_DDD( real_type ) const UTILS_OVERRIDE
+    X_DDD( real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    Y_DDD( real_type ) const UTILS_OVERRIDE
+    Y_DDD( real_type ) const override
     { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -330,7 +401,7 @@ namespace G2lib {
       real_type   s,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x = m_x0+s*m_c0;
       y = m_y0+s*m_s0;
     }
@@ -341,7 +412,7 @@ namespace G2lib {
       real_type,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x_D = m_c0;
       y_D = m_s0;
     }
@@ -352,7 +423,7 @@ namespace G2lib {
       real_type,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x_DD = 0;
       y_DD = 0;
     }
@@ -363,7 +434,7 @@ namespace G2lib {
       real_type,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x_DDD = 0;
       y_DDD = 0;
     }
@@ -378,42 +449,42 @@ namespace G2lib {
 
     virtual
     real_type
-    X_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE
+    X_ISO( real_type s, real_type offs ) const override
     { return m_x0 + s*m_c0 + offs*nx_Begin_ISO(); }
 
     virtual
     real_type
-    Y_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE
+    Y_ISO( real_type s, real_type offs ) const override
     { return m_y0 + s*m_s0 + offs*ny_Begin_ISO(); }
 
     virtual
     real_type
-    X_ISO_D( real_type, real_type ) const UTILS_OVERRIDE
+    X_ISO_D( real_type, real_type ) const override
     { return m_c0; }
 
     virtual
     real_type
-    Y_ISO_D( real_type, real_type ) const UTILS_OVERRIDE
+    Y_ISO_D( real_type, real_type ) const override
     { return m_s0; }
 
     virtual
     real_type
-    X_ISO_DD( real_type, real_type ) const UTILS_OVERRIDE
+    X_ISO_DD( real_type, real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    Y_ISO_DD( real_type, real_type ) const UTILS_OVERRIDE
+    Y_ISO_DD( real_type, real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    X_ISO_DDD( real_type, real_type ) const UTILS_OVERRIDE
+    X_ISO_DDD( real_type, real_type ) const override
     { return 0; }
 
     virtual
     real_type
-    Y_ISO_DDD( real_type, real_type ) const UTILS_OVERRIDE
+    Y_ISO_DDD( real_type, real_type ) const override
     { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -425,7 +496,7 @@ namespace G2lib {
       real_type   offs,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x = m_x0 + s*m_c0 + offs*nx_Begin_ISO();
       y = m_y0 + s*m_s0 + offs*ny_Begin_ISO();
     }
@@ -437,7 +508,7 @@ namespace G2lib {
       real_type,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x_D = m_c0;
       y_D = m_s0;
     }
@@ -449,7 +520,7 @@ namespace G2lib {
       real_type,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x_DD = y_DD = 0;
     }
 
@@ -460,7 +531,7 @@ namespace G2lib {
       real_type,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE {
+    ) const override {
       x_DDD = y_DDD = 0;
     }
 
@@ -474,30 +545,30 @@ namespace G2lib {
 
     virtual
     void
-    translate( real_type tx, real_type ty ) UTILS_OVERRIDE
+    translate( real_type tx, real_type ty ) override
     { m_x0 += tx; m_y0 += ty; }
 
     virtual
     void
-    rotate( real_type angle, real_type cx, real_type cy ) UTILS_OVERRIDE;
+    rotate( real_type angle, real_type cx, real_type cy ) override;
 
     virtual
     void
-    reverse() UTILS_OVERRIDE;
+    reverse() override;
 
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) UTILS_OVERRIDE
+    changeOrigin( real_type newx0, real_type newy0 ) override
     { m_x0 = newx0; m_y0 = newy0; }
 
     virtual
     void
-    scale( real_type sc ) UTILS_OVERRIDE
+    scale( real_type sc ) override
     { m_L *= sc; }
 
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE {
+    trim( real_type s_begin, real_type s_end ) override {
       m_x0 += m_c0 * s_begin;
       m_y0 += m_s0 * s_begin;
       m_L   = s_end - s_begin;
@@ -536,7 +607,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     int_type
@@ -549,11 +620,11 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     virtual
     void
-    info( ostream_type & stream ) const UTILS_OVERRIDE
+    info( ostream_type & stream ) const override
     { stream << "LineSegment\n" << *this << '\n'; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -665,11 +736,11 @@ namespace G2lib {
     paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
 
     void
-    toNURBS( real_type knots[], real_type Poly[][3] ) const;
+    toNURBS( real_type * knots, real_type Poly[][3] ) const;
 
     virtual
     void
-    toBS( real_type knots[], real_type Poly[][2] ) const;
+    toBS( real_type * knots, real_type Poly[][2] ) const;
 
     friend
     ostream_type &

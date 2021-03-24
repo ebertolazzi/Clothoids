@@ -24,7 +24,6 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 #include <cmath>
-
 #include <ctgmath>
 
 #ifdef __clang__
@@ -50,6 +49,38 @@
 #include <fstream>
 
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
+
+using std::fpclassify;
+using GenericContainerNamespace::real_type;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+static
+inline
+bool isZero( real_type x )
+{ return FP_ZERO == fpclassify(x); }
+
+static
+inline
+bool isInteger32( real_type x )
+{ return isZero( x-static_cast<int32_t>(floor(x)) ); }
+
+static
+inline
+bool isUnsigned32( real_type x )
+{ return isInteger32(x) && x >= 0; }
+
+static
+inline
+bool isInteger64( real_type x )
+{ return isZero( x-static_cast<int64_t>(floor(x)) ); }
+
+static
+inline
+bool isUnsigned64( real_type x )
+{ return isInteger64(x) && x >= 0; }
+
+#endif
 
 namespace GenericContainerNamespace {
 
@@ -94,39 +125,12 @@ namespace GenericContainerNamespace {
   }
   #endif
 
-  using std::fpclassify;
-
-  static
-  inline
-  bool isZero( real_type x )
-  { return FP_ZERO == fpclassify(x); }
-
-  static
-  inline
-  bool isInteger32( real_type x )
-  { return isZero( x-static_cast<int_type>(floor(x)) ); }
-
-  static
-  inline
-  bool isUnsigned32( real_type x )
-  { return isInteger32(x) && x >= 0; }
-
-  static
-  inline
-  bool isInteger64( real_type x )
-  { return isZero( x-static_cast<long_type>(floor(x)) ); }
-
-  static
-  inline
-  bool isUnsigned64( real_type x )
-  { return isInteger64(x) && x >= 0; }
-
+  template <typename TYPE>
   ostream_type &
-  operator << ( ostream_type & s, vec_bool_type const & v ) {
+  operator << ( ostream_type & s, std::vector<TYPE> const & v ) {
     if ( v.size() > 0 ) {
-      s << (v[0]?"[ true":"[ false");
-      for ( unsigned i = 1; i < v.size(); ++i )
-        s << (v[i]?" true":" false");
+      s << "[ " << v[0];
+      for ( unsigned i = 1; i < v.size(); ++i ) s << " " << v[i];
       s << " ]";
     } else {
       s << "[]";
@@ -134,12 +138,13 @@ namespace GenericContainerNamespace {
     return s;
   }
 
-  template <typename TYPE>
+  template <>
   ostream_type &
-  operator << ( ostream_type & s, std::vector<TYPE> const & v ) {
+  operator << ( ostream_type & s, vec_bool_type const & v ) {
     if ( v.size() > 0 ) {
-      s << "[ " << v[0];
-      for ( unsigned i = 1; i < v.size(); ++i ) s << " " << v[i];
+      s << (v[0]?"[ true":"[ false");
+      for ( unsigned i = 1; i < v.size(); ++i )
+        s << (v[i]?" true":" false");
       s << " ]";
     } else {
       s << "[]";
@@ -161,9 +166,11 @@ namespace GenericContainerNamespace {
     return s;
   }
 
-  template ostream_type & operator << ( ostream_type & s, std::vector<int_type> const & v );
-  template ostream_type & operator << ( ostream_type & s, std::vector<long_type> const & v );
-  template ostream_type & operator << ( ostream_type & s, std::vector<real_type> const & v );
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  template ostream_type & operator << ( ostream_type & s, vec_int_type const & v );
+  template ostream_type & operator << ( ostream_type & s, vec_long_type const & v );
+  template ostream_type & operator << ( ostream_type & s, vec_real_type const & v );
+  #endif
 
   template <typename TYPE>
   TYPE const &
@@ -274,12 +281,14 @@ namespace GenericContainerNamespace {
     return s;
   }
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   template ostream_type & operator << ( ostream_type & s, mat_type<int_type> const & m );
   template ostream_type & operator << ( ostream_type & s, mat_type<long_type> const & m );
   template ostream_type & operator << ( ostream_type & s, mat_type<real_type> const & m );
+  #endif
 
   #ifdef HAVE_WORKING_REGEX
-  class GENERIC_CONTAINER_API_DLL Pcre_for_GC {
+  class Pcre_for_GC {
 
   private:
 
@@ -470,7 +479,6 @@ namespace GenericContainerNamespace {
     m_data_type = GC_NOTYPE;
   }
 
-  //! Return a string representing the type of data stored
   char const *
   GenericContainer::get_type_name() const {
     return typeName[m_data_type];
@@ -565,7 +573,6 @@ namespace GenericContainerNamespace {
     return 0;
   }
 
-  //! Assign a generic container `a` to the generic container.
   void
   GenericContainer::load( GenericContainer const & gc ) {
     this->clear();
@@ -619,17 +626,18 @@ namespace GenericContainerNamespace {
   }
 
   void
-  GenericContainer::ck( char const msg_in[], TypeAllowed tp ) const {
+  GenericContainer::ck( char const * msg_in, TypeAllowed tp ) const {
     char const * msg = msg_in == nullptr ? "" : msg_in;
     GC_ASSERT(
       tp == m_data_type,
-      msg << "bad data type, expect: " << typeName[tp] <<
-      " but data stored is of type: " << typeName[m_data_type]
+      msg
+        << "bad data type, expect: " << typeName[tp]
+        << " but data stored is of type: " << typeName[m_data_type]
     )
   }
 
   void
-  GenericContainer::ck_or_set( char const msg[], TypeAllowed tp) {
+  GenericContainer::ck_or_set( char const * msg, TypeAllowed tp) {
     if ( m_data_type == GC_NOTYPE ) m_data_type = tp;
     else                            ck(msg,tp);
   }
@@ -1142,13 +1150,13 @@ namespace GenericContainerNamespace {
   */
 
   void *
-  GenericContainer::get_pvoid( char const msg[] ) const {
+  GenericContainer::get_pvoid( char const * msg ) const {
     ck(msg,GC_POINTER);
     return m_data.p;
   }
 
   void **
-  GenericContainer::get_ppvoid( char const msg[] ) const {
+  GenericContainer::get_ppvoid( char const * msg ) const {
     ck(msg,GC_POINTER);
     return const_cast<void **>(&m_data.p);
   }
@@ -1459,7 +1467,7 @@ namespace GenericContainerNamespace {
 
   template <>
   void
-  GenericContainer::get_value( unsigned & v, char const msg[] ) const {
+  GenericContainer::get_value( unsigned & v, char const * msg ) const {
     switch (m_data_type) {
     case GC_BOOL:
       v = m_data.b?1:0;
@@ -1467,24 +1475,21 @@ namespace GenericContainerNamespace {
     case GC_INTEGER:
       GC_ASSERT(
         m_data.i >= 0,
-        msg << "value '" << m_data.i <<
-        "' cannot be converted in `unsigned'"
+        msg << "value '" << m_data.i << "' cannot be converted in `unsigned'"
       )
       v = unsigned(m_data.i);
       break;
     case GC_LONG:
       GC_ASSERT(
         m_data.l >= 0,
-        msg << "value '" << m_data.l <<
-        "' cannot be converted in `unsigned'"
+        msg << "value '" << m_data.l << "' cannot be converted in `unsigned'"
       )
       v = unsigned(m_data.l);
       break;
     case GC_REAL:
       GC_ASSERT(
         m_data.r >= 0 && isUnsigned32(m_data.r),
-        msg << "value '" << m_data.r <<
-        "' cannot be converted in `unsigned'"
+        msg << "value '" << m_data.r << "' cannot be converted in `unsigned'"
       )
       v = unsigned(m_data.r);
       break;
@@ -1521,7 +1526,7 @@ namespace GenericContainerNamespace {
 
   template <>
   void
-  GenericContainer::get_value( int & v, char const msg[] ) const {
+  GenericContainer::get_value( int & v, char const * msg ) const {
     switch (m_data_type) {
     case GC_BOOL:
       v = m_data.b?1:0;
@@ -1576,7 +1581,7 @@ namespace GenericContainerNamespace {
 
   template <>
   void
-  GenericContainer::get_value( unsigned long & v, char const msg[] ) const {
+  GenericContainer::get_value( unsigned long & v, char const * msg ) const {
     typedef unsigned long ul;
     switch (m_data_type) {
     case GC_BOOL:
@@ -1585,24 +1590,21 @@ namespace GenericContainerNamespace {
     case GC_INTEGER:
       GC_ASSERT(
         m_data.i >= 0,
-        msg << "value '" << m_data.i <<
-        "' cannot be converted in `unsigned long'"
+        msg << "value '" << m_data.i << "' cannot be converted in `unsigned long'"
       )
       v = ul(m_data.i);
       break;
     case GC_LONG:
       GC_ASSERT(
         m_data.l >= 0,
-        msg << "value '" << m_data.l <<
-        "' cannot be converted in `unsigned long'"
+        msg << "value '" << m_data.l << "' cannot be converted in `unsigned long'"
       )
       v = ul(m_data.l);
       break;
     case GC_REAL:
       GC_ASSERT(
         m_data.r >= 0 && isUnsigned64(m_data.r),
-        msg << "value '" << m_data.r <<
-        "' cannot be converted in `unsigned long'"
+        msg << "value '" << m_data.r << "' cannot be converted in `unsigned long'"
       )
       v = ul(m_data.r);
       break;
@@ -1639,7 +1641,7 @@ namespace GenericContainerNamespace {
 
   template <>
   void
-  GenericContainer::get_value( long & v, char const msg[] ) const {
+  GenericContainer::get_value( long & v, char const * msg ) const {
     switch (m_data_type) {
     case GC_BOOL:
       v = m_data.b?1:0;
@@ -1653,8 +1655,7 @@ namespace GenericContainerNamespace {
     case GC_REAL:
       GC_ASSERT(
         isInteger64(m_data.r),
-        msg << "value '" << m_data.r <<
-        "' cannot be converted in `long'"
+        msg << "value '" << m_data.r << "' cannot be converted in `long'"
       )
       v = long(m_data.r);
       break;
@@ -1691,7 +1692,7 @@ namespace GenericContainerNamespace {
 
   template <>
   void
-  GenericContainer::get_value( float & v, char const msg[] ) const {
+  GenericContainer::get_value( float & v, char const * msg ) const {
     switch (m_data_type) {
     case GC_BOOL:
       v = float(m_data.b?1:0);
@@ -1738,7 +1739,7 @@ namespace GenericContainerNamespace {
 
   template <>
   void
-  GenericContainer::get_value( double & v, char const msg[] ) const {
+  GenericContainer::get_value( double & v, char const * msg ) const {
     switch (m_data_type) {
     case GC_BOOL:
       v = m_data.b?1:0;
@@ -1783,7 +1784,6 @@ namespace GenericContainerNamespace {
     }
   }
 
-  //! If data is boolean, integer or floating point return number, otherwise return `0`.
   real_type
   GenericContainer::get_number() const {
     switch (m_data_type) {
@@ -1813,7 +1813,6 @@ namespace GenericContainerNamespace {
     return 0;
   }
 
-  //! If data is boolean, integer or floating point return number, otherwise return `0`.
   complex_type
   GenericContainer::get_complex_number() const {
     switch (m_data_type) {
@@ -1916,43 +1915,43 @@ namespace GenericContainerNamespace {
   }
 
   bool_type &
-  GenericContainer::get_bool( char const msg[] ) {
+  GenericContainer::get_bool( char const * msg ) {
     ck_or_set(msg,GC_BOOL);
     return m_data.b;
   }
 
   bool_type const &
-  GenericContainer::get_bool( char const msg[] ) const {
+  GenericContainer::get_bool( char const * msg ) const {
     ck(msg,GC_BOOL);
     return m_data.b;
   }
 
   int_type &
-  GenericContainer::get_int( char const msg[] ) {
+  GenericContainer::get_int( char const * msg ) {
     ck_or_set(msg,GC_INTEGER);
     return m_data.i;
   }
 
   int_type const &
-  GenericContainer::get_int( char const msg[] ) const {
+  GenericContainer::get_int( char const * msg ) const {
     ck(msg,GC_INTEGER);
     return m_data.i;
   }
 
   long_type &
-  GenericContainer::get_long( char const msg[] ) {
+  GenericContainer::get_long( char const * msg ) {
     ck_or_set(msg,GC_LONG);
     return m_data.l;
   }
 
   long_type const &
-  GenericContainer::get_long( char const msg[] ) const {
+  GenericContainer::get_long( char const * msg ) const {
     ck(msg,GC_LONG);
     return m_data.l;
   }
 
   int_type
-  GenericContainer::get_as_int( char const msg_in[] ) const {
+  GenericContainer::get_as_int( char const * msg_in ) const {
     char const * msg = msg_in == nullptr ? "" : msg_in;
     switch (m_data_type) {
     case GC_VEC_BOOL:
@@ -2006,7 +2005,7 @@ namespace GenericContainerNamespace {
   }
 
   uint_type
-  GenericContainer::get_as_uint( char const msg_in[] ) const {
+  GenericContainer::get_as_uint( char const * msg_in ) const {
     char const * msg = msg_in == nullptr ? "" : msg_in;
     switch (m_data_type) {
     case GC_VEC_BOOL:
@@ -2065,7 +2064,7 @@ namespace GenericContainerNamespace {
   }
 
   long_type
-  GenericContainer::get_as_long( char const msg_in[] ) const {
+  GenericContainer::get_as_long( char const * msg_in ) const {
     char const * msg = msg_in == nullptr ? "" : msg_in;
     switch (m_data_type) {
     case GC_VEC_BOOL:
@@ -2112,7 +2111,7 @@ namespace GenericContainerNamespace {
   }
 
   ulong_type
-  GenericContainer::get_as_ulong( char const msg_in[] ) const {
+  GenericContainer::get_as_ulong( char const * msg_in ) const {
     char const * msg = msg_in == nullptr ? "" : msg_in;
     switch (m_data_type) {
     case GC_VEC_BOOL:
@@ -2168,79 +2167,79 @@ namespace GenericContainerNamespace {
 
 
   real_type &
-  GenericContainer::get_real( char const msg[] ) {
+  GenericContainer::get_real( char const * msg ) {
     ck_or_set(msg,GC_REAL);
     return m_data.r;
   }
 
   real_type const &
-  GenericContainer::get_real( char const msg[] ) const {
+  GenericContainer::get_real( char const * msg ) const {
     ck(msg,GC_REAL);
     return m_data.r;
   }
 
   complex_type &
-  GenericContainer::get_complex( char const msg[] ) {
+  GenericContainer::get_complex( char const * msg ) {
     ck_or_set(msg,GC_COMPLEX);
     return *m_data.c;
   }
 
   complex_type const &
-  GenericContainer::get_complex( char const msg[] ) const {
+  GenericContainer::get_complex( char const * msg ) const {
     ck(msg,GC_REAL);
     return *m_data.c;
   }
 
   string_type &
-  GenericContainer::get_string( char const msg[] ) {
+  GenericContainer::get_string( char const * msg ) {
     ck_or_set(msg,GC_STRING);
     return *m_data.s;
   }
 
   string_type const &
-  GenericContainer::get_string( char const msg[] ) const {
+  GenericContainer::get_string( char const * msg ) const {
     ck(msg,GC_STRING);
     return *m_data.s;
   }
 
   vector_type &
-  GenericContainer::get_vector( char const msg[] ) {
+  GenericContainer::get_vector( char const * msg ) {
     ck(msg,GC_VECTOR);
     return *m_data.v;
   }
 
   vector_type const &
-  GenericContainer::get_vector( char const msg[] ) const {
+  GenericContainer::get_vector( char const * msg ) const {
     ck(msg,GC_VECTOR);
     return *m_data.v;
   }
 
   vec_pointer_type &
-  GenericContainer::get_vec_pointer( char const msg[] ) {
+  GenericContainer::get_vec_pointer( char const * msg ) {
     ck(msg,GC_VEC_POINTER);
     return *m_data.v_p;
   }
 
   vec_pointer_type const &
-  GenericContainer::get_vec_pointer( char const msg[] ) const {
+  GenericContainer::get_vec_pointer( char const * msg ) const {
     ck(msg,GC_VEC_POINTER);
     return *m_data.v_p;
   }
 
   vec_bool_type &
-  GenericContainer::get_vec_bool( char const msg[] ) {
+  GenericContainer::get_vec_bool( char const * msg ) {
     ck(msg,GC_VEC_BOOL);
     return *m_data.v_b;
   }
 
   vec_bool_type const &
-  GenericContainer::get_vec_bool( char const msg[] ) const {
+  GenericContainer::get_vec_bool( char const * msg ) const {
     ck(msg,GC_VEC_BOOL);
     return *m_data.v_b;
   }
 
   vec_int_type &
-  GenericContainer::get_vec_int( char const msg[] ) {
+  GenericContainer::get_vec_int( char const * msg ) {
     if ( m_data_type == GC_NOTYPE   ) set_vec_int();
     if ( m_data_type == GC_VEC_BOOL ) promote_to_vec_int();
     ck(msg,GC_VEC_INTEGER);
@@ -2248,13 +2247,13 @@ namespace GenericContainerNamespace {
   }
 
   vec_int_type const &
-  GenericContainer::get_vec_int( char const msg[] ) const {
+  GenericContainer::get_vec_int( char const * msg ) const {
     ck(msg,GC_VEC_INTEGER);
     return *m_data.v_i;
   }
 
   vec_long_type &
-  GenericContainer::get_vec_long( char const msg[] ) {
+  GenericContainer::get_vec_long( char const * msg ) {
     if ( m_data_type == GC_NOTYPE ) set_vec_long();
     if ( m_data_type == GC_VEC_BOOL || m_data_type == GC_VEC_INTEGER ) promote_to_vec_long();
     ck(msg,GC_VEC_LONG);
@@ -2262,13 +2261,13 @@ namespace GenericContainerNamespace {
   }
 
   vec_long_type const &
-  GenericContainer::get_vec_long( char const msg[] ) const {
+  GenericContainer::get_vec_long( char const * msg ) const {
     ck(msg,GC_VEC_LONG);
     return *m_data.v_l;
   }
 
   vec_real_type &
-  GenericContainer::get_vec_real( char const msg[] ) {
+  GenericContainer::get_vec_real( char const * msg ) {
     if ( m_data_type == GC_NOTYPE ) set_vec_real();
     if ( m_data_type == GC_VEC_BOOL    ||
          m_data_type == GC_VEC_INTEGER ||
@@ -2278,13 +2277,13 @@ namespace GenericContainerNamespace {
   }
 
   vec_real_type const &
-  GenericContainer::get_vec_real( char const msg[] ) const {
+  GenericContainer::get_vec_real( char const * msg ) const {
     ck(msg,GC_VEC_REAL);
     return *m_data.v_r;
   }
 
   vec_complex_type &
-  GenericContainer::get_vec_complex( char const msg[] ) {
+  GenericContainer::get_vec_complex( char const * msg ) {
     if ( m_data_type == GC_NOTYPE ) set_vec_complex();
     if ( m_data_type == GC_VEC_BOOL    ||
          m_data_type == GC_VEC_INTEGER ||
@@ -2295,13 +2294,13 @@ namespace GenericContainerNamespace {
   }
 
   vec_complex_type const &
-  GenericContainer::get_vec_complex( char const msg[] ) const {
+  GenericContainer::get_vec_complex( char const * msg ) const {
     ck(msg,GC_VEC_COMPLEX);
     return *m_data.v_c;
   }
 
   mat_int_type &
-  GenericContainer::get_mat_int( char const msg[] ) {
+  GenericContainer::get_mat_int( char const * msg ) {
     if ( m_data_type == GC_NOTYPE ) set_mat_int();
     if ( m_data_type == GC_VEC_BOOL    ||
          m_data_type == GC_VEC_INTEGER ||
@@ -2312,13 +2311,13 @@ namespace GenericContainerNamespace {
   }
 
   mat_int_type const &
-  GenericContainer::get_mat_int( char const msg[] ) const {
+  GenericContainer::get_mat_int( char const * msg ) const {
     ck(msg,GC_MAT_INTEGER);
     return *m_data.m_i;
   }
 
   mat_long_type &
-  GenericContainer::get_mat_long( char const msg[] ) {
+  GenericContainer::get_mat_long( char const * msg ) {
     if ( m_data_type == GC_NOTYPE ) set_mat_long();
     if ( m_data_type == GC_VEC_BOOL    ||
          m_data_type == GC_VEC_INTEGER ||
@@ -2330,13 +2329,13 @@ namespace GenericContainerNamespace {
   }
 
   mat_long_type const &
-  GenericContainer::get_mat_long( char const msg[] ) const {
+  GenericContainer::get_mat_long( char const * msg ) const {
     ck(msg,GC_MAT_LONG);
     return *m_data.m_l;
   }
 
   mat_real_type &
-  GenericContainer::get_mat_real( char const msg[] ) {
+  GenericContainer::get_mat_real( char const * msg ) {
     if ( m_data_type == GC_NOTYPE ) set_mat_real();
     if ( m_data_type == GC_VEC_BOOL    ||
          m_data_type == GC_VEC_INTEGER ||
@@ -2349,13 +2348,13 @@ namespace GenericContainerNamespace {
   }
 
   mat_real_type const &
-  GenericContainer::get_mat_real( char const msg[] ) const {
+  GenericContainer::get_mat_real( char const * msg ) const {
     ck(msg,GC_MAT_REAL);
     return *m_data.m_r;
   }
 
   mat_complex_type &
-  GenericContainer::get_mat_complex( char const msg[] ) {
+  GenericContainer::get_mat_complex( char const * msg ) {
     if ( m_data_type == GC_NOTYPE ) set_mat_complex();
     if ( m_data_type == GC_VEC_BOOL    ||
          m_data_type == GC_VEC_INTEGER ||
@@ -2368,31 +2367,31 @@ namespace GenericContainerNamespace {
   }
 
   mat_complex_type const &
-  GenericContainer::get_mat_complex( char const msg[] ) const {
+  GenericContainer::get_mat_complex( char const * msg ) const {
     ck(msg,GC_MAT_COMPLEX);
     return *m_data.m_c;
   }
 
   vec_string_type &
-  GenericContainer::get_vec_string( char const msg[] ) {
+  GenericContainer::get_vec_string( char const * msg ) {
     ck(msg,GC_VEC_STRING);
     return *m_data.v_s;
   }
 
   vec_string_type const &
-  GenericContainer::get_vec_string( char const msg[] ) const {
+  GenericContainer::get_vec_string( char const * msg ) const {
     ck(msg,GC_VEC_STRING);
     return *m_data.v_s;
   }
 
   map_type &
-  GenericContainer::get_map( char const msg[] ) {
+  GenericContainer::get_map( char const * msg ) {
     ck(msg,GC_MAP);
     return *m_data.m;
   }
 
   map_type const &
-  GenericContainer::get_map( char const msg[] ) const {
+  GenericContainer::get_map( char const * msg ) const {
     ck(msg,GC_MAP);
     return *m_data.m;
   }
@@ -2400,7 +2399,7 @@ namespace GenericContainerNamespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_int( vec_int_type & v, char const msg[] ) const {
+  GenericContainer::copyto_vec_int( vec_int_type & v, char const * msg ) const {
     v.clear();
     unsigned ne = get_num_elements();
     v.reserve(ne);
@@ -2531,7 +2530,7 @@ namespace GenericContainerNamespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_uint( vec_uint_type & v, char const msg[] ) const {
+  GenericContainer::copyto_vec_uint( vec_uint_type & v, char const * msg ) const {
     v.clear();
     unsigned ne = get_num_elements();
     v.reserve(ne);
@@ -2681,7 +2680,7 @@ namespace GenericContainerNamespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_long( vec_long_type & v, char const msg[] ) const {
+  GenericContainer::copyto_vec_long( vec_long_type & v, char const * msg ) const {
     v.clear();
     unsigned ne = get_num_elements();
     v.reserve(ne);
@@ -2793,7 +2792,7 @@ namespace GenericContainerNamespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_ulong( vec_ulong_type & v, char const msg[] ) const {
+  GenericContainer::copyto_vec_ulong( vec_ulong_type & v, char const * msg ) const {
     v.clear();
     unsigned ne = get_num_elements();
     v.reserve(ne);
@@ -2944,7 +2943,7 @@ namespace GenericContainerNamespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_real( vec_real_type & v, char const msg[] ) const {
+  GenericContainer::copyto_vec_real( vec_real_type & v, char const * msg ) const {
     v.clear();
     unsigned ne = get_num_elements();
     v.reserve(ne);
@@ -3039,7 +3038,7 @@ namespace GenericContainerNamespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_complex( vec_complex_type & v, char const msg[] ) const {
+  GenericContainer::copyto_vec_complex( vec_complex_type & v, char const * msg ) const {
     v.clear();
     unsigned ne = get_num_elements();
     v.reserve(ne);
@@ -3108,7 +3107,7 @@ namespace GenericContainerNamespace {
   }
 
   void
-  GenericContainer::copyto_vec_string( vec_string_type & v, char const msg[] ) const {
+  GenericContainer::copyto_vec_string( vec_string_type & v, char const * msg ) const {
     v.clear();
     unsigned ne = get_num_elements();
     switch (m_data_type) {
@@ -3162,7 +3161,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], bool & value ) const {
+  GenericContainer::get_if_exists( char const * field, bool & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3172,7 +3171,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], int_type & value ) const {
+  GenericContainer::get_if_exists( char const * field, int_type & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3217,7 +3216,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], uint_type & value ) const {
+  GenericContainer::get_if_exists( char const * field, uint_type & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3264,7 +3263,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], long_type & value ) const {
+  GenericContainer::get_if_exists( char const * field, long_type & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3309,7 +3308,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], ulong_type & value ) const {
+  GenericContainer::get_if_exists( char const * field, ulong_type & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3356,7 +3355,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], real_type & value ) const {
+  GenericContainer::get_if_exists( char const * field, real_type & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3399,7 +3398,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], complex_type & value ) const {
+  GenericContainer::get_if_exists( char const * field, complex_type & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3441,7 +3440,7 @@ namespace GenericContainerNamespace {
   }
 
   bool
-  GenericContainer::get_if_exists( char const field[], string_type & value ) const {
+  GenericContainer::get_if_exists( char const * field, string_type & value ) const {
     if ( m_data_type != GC_MAP ) return false;
     map_type::iterator iv = (*m_data.m).find(field);
     if ( iv == (*m_data.m).end() ) return false;
@@ -3465,7 +3464,7 @@ namespace GenericContainerNamespace {
   }
 
   bool_type
-  GenericContainer::get_bool_at( unsigned i, char const msg[] ) const {
+  GenericContainer::get_bool_at( unsigned i, char const * msg ) const {
     ck(msg,GC_VEC_BOOL);
     GC_ASSERT(
       i < m_data.v_b->size(),
@@ -3491,7 +3490,7 @@ namespace GenericContainerNamespace {
   }
 
   int_type const &
-  GenericContainer::get_int_at( unsigned i, char const msg[] ) const {
+  GenericContainer::get_int_at( unsigned i, char const * msg ) const {
     ck(msg,GC_VEC_INTEGER);
     GC_ASSERT(
       i < m_data.v_i->size(),
@@ -3515,7 +3514,7 @@ namespace GenericContainerNamespace {
   }
 
   int_type const &
-  GenericContainer::get_int_at( unsigned i, unsigned j, char const msg[] ) const  {
+  GenericContainer::get_int_at( unsigned i, unsigned j, char const * msg ) const  {
     ck(msg,GC_MAT_INTEGER);
     GC_ASSERT(
       i < m_data.m_i->numRows() && j < m_data.m_i->numCols(),
@@ -3543,7 +3542,7 @@ namespace GenericContainerNamespace {
   }
 
   long_type const &
-  GenericContainer::get_long_at( unsigned i, char const msg[] ) const {
+  GenericContainer::get_long_at( unsigned i, char const * msg ) const {
     ck(msg,GC_VEC_LONG);
     GC_ASSERT(
       i < m_data.v_l->size(),
@@ -3568,7 +3567,7 @@ namespace GenericContainerNamespace {
   }
 
   long_type const &
-  GenericContainer::get_long_at( unsigned i, unsigned j, char const msg[] ) const  {
+  GenericContainer::get_long_at( unsigned i, unsigned j, char const * msg ) const  {
     ck(msg,GC_MAT_LONG);
     GC_ASSERT(
       i < m_data.m_l->numRows() && j < m_data.m_l->numCols(),
@@ -3594,7 +3593,7 @@ namespace GenericContainerNamespace {
   }
 
   real_type const &
-  GenericContainer::get_real_at( unsigned i, char const msg[] ) const  {
+  GenericContainer::get_real_at( unsigned i, char const * msg ) const  {
     ck(msg,GC_VEC_REAL);
     GC_ASSERT(
       i < m_data.v_r->size(),
@@ -3620,7 +3619,7 @@ namespace GenericContainerNamespace {
   }
 
   real_type const &
-  GenericContainer::get_real_at( unsigned i, unsigned j, char const msg[] ) const  {
+  GenericContainer::get_real_at( unsigned i, unsigned j, char const * msg ) const  {
     ck(msg,GC_MAT_REAL);
     GC_ASSERT(
       i < m_data.v_r->size(),
@@ -3647,7 +3646,7 @@ namespace GenericContainerNamespace {
   }
 
   complex_type const &
-  GenericContainer::get_complex_at( unsigned i, char const msg[] ) const  {
+  GenericContainer::get_complex_at( unsigned i, char const * msg ) const  {
     ck(msg,GC_VEC_COMPLEX);
     GC_ASSERT(
       i < m_data.v_c->size(),
@@ -3675,7 +3674,7 @@ namespace GenericContainerNamespace {
   }
 
   complex_type const &
-  GenericContainer::get_complex_at( unsigned i, unsigned j, char const msg[] ) const  {
+  GenericContainer::get_complex_at( unsigned i, unsigned j, char const * msg ) const  {
     ck(msg,GC_MAT_COMPLEX);
     return (*m_data.m_c)(i,j);
   }
@@ -3693,7 +3692,7 @@ namespace GenericContainerNamespace {
   }
 
   string_type const &
-  GenericContainer::get_string_at( unsigned i, char const msg[] ) const {
+  GenericContainer::get_string_at( unsigned i, char const * msg ) const {
     ck(msg,GC_VEC_STRING);
     GC_ASSERT(
       i < m_data.v_s->size(),
@@ -3707,7 +3706,7 @@ namespace GenericContainerNamespace {
   { return (*this)[i]; }
 
   GenericContainer const &
-  GenericContainer::get_gc_at( unsigned i, char const msg[] ) const {
+  GenericContainer::get_gc_at( unsigned i, char const * msg ) const {
     return (*this)(i,msg);
   }
 
@@ -3719,7 +3718,6 @@ namespace GenericContainerNamespace {
   //  |_|_| |_|_|  \___/
   */
 
-  //! Print to stream the kind of data stored
   GenericContainer const &
   GenericContainer::info( ostream_type & stream ) const {
     switch ( m_data_type ) {
@@ -3838,7 +3836,7 @@ namespace GenericContainerNamespace {
   */
 
   GenericContainer &
-  GenericContainer::operator () ( unsigned i, char const msg[] ) {
+  GenericContainer::operator () ( unsigned i, char const * msg ) {
     ck(msg,GC_VECTOR);
     GC_ASSERT(
       i < m_data.v->size(),
@@ -3848,7 +3846,7 @@ namespace GenericContainerNamespace {
   }
 
   GenericContainer const &
-  GenericContainer::operator () ( unsigned i, char const msg_in[] ) const {
+  GenericContainer::operator () ( unsigned i, char const * msg_in ) const {
     ck(msg_in,GC_VECTOR);
     char const * msg = msg_in == nullptr ? "" : msg_in;
     GC_ASSERT(
@@ -3859,25 +3857,35 @@ namespace GenericContainerNamespace {
   }
 
   GenericContainer &
-  GenericContainer::operator () ( std::string const & s, char const msg_in[] ) {
-    ck(msg_in,GC_MAP);
-    map_type::iterator iv = (*m_data.m) . find(s);
+  GenericContainer::operator () ( std::string const & s, char const * msg_in ) {
     char const * msg = msg_in == nullptr ? "" : msg_in;
     GC_ASSERT(
+      GC_MAP == m_data_type,
+      "operator (), with string argument ``" << s.c_str() << "''"
+      "\nexpect: " << typeName[GC_MAP] <<
+      "\nbut data stored is of type: " << typeName[m_data_type]
+    )
+    map_type::iterator iv = m_data.m->find(s);
+    GC_ASSERT(
       iv != m_data.m->end(),
-      msg << "\noperator(): Cannot find key '" << s.c_str() << "'!"
+      msg << "\nGenericContainer::operator(): Cannot find key '" << s.c_str() << "'!"
     )
     return iv->second;
   }
 
   GenericContainer const &
-  GenericContainer::operator () ( std::string const & s, char const msg_in[] ) const {
-    ck(msg_in,GC_MAP);
-    map_type::const_iterator iv = (*m_data.m) . find(s);
+  GenericContainer::operator () ( std::string const & s, char const * msg_in ) const {
     char const * msg = msg_in == nullptr ? "" : msg_in;
     GC_ASSERT(
+      GC_MAP == m_data_type,
+      "operator () const, with string argument ``" << s.c_str() << "''"
+      "\nexpect: " << typeName[GC_MAP] <<
+      "\nbut data stored is of type: " << typeName[m_data_type]
+    )
+    map_type::const_iterator iv = m_data.m->find(s);
+    GC_ASSERT(
       iv != m_data.m->end(),
-      msg << "\noperator(): Cannot find key '" << s.c_str() << "'!"
+      msg << "\nGenericContainer::operator() const: Cannot find key '" << s.c_str() << "'!"
     )
     return iv->second;
   }
@@ -4190,7 +4198,6 @@ namespace GenericContainerNamespace {
     return *this;
   }
 
-  //! If data contains vector of booleans or integer it is promoted to a vector of real.
   GenericContainer const &
   GenericContainer::promote_to_vec_real() {
     switch (m_data_type) {
@@ -4266,7 +4273,6 @@ namespace GenericContainerNamespace {
     return *this;
   }
 
-  //! If data contains vector of booleans or integer it is promoted to a vector of real.
   GenericContainer const &
   GenericContainer::promote_to_vec_complex() {
     switch (m_data_type) {
@@ -4354,7 +4360,6 @@ namespace GenericContainerNamespace {
     return *this;
   }
 
-  //! If data contains vector of booleans, integer or real it is promoted to a vector of integers.
   GenericContainer const &
   GenericContainer::promote_to_mat_int() {
     switch (m_data_type) {
@@ -4414,7 +4419,6 @@ namespace GenericContainerNamespace {
     return *this;
   }
 
-  //! If data contains vector of booleans, integer or real it is promoted to a vector of long.
   GenericContainer const &
   GenericContainer::promote_to_mat_long() {
     switch (m_data_type) {
@@ -4490,7 +4494,6 @@ namespace GenericContainerNamespace {
     return *this;
   }
 
-  //! If data contains vector of booleans, integer or real it is promoted to a vector of real.
   GenericContainer const &
   GenericContainer::promote_to_mat_real() {
     switch (m_data_type) {
@@ -4586,7 +4589,6 @@ namespace GenericContainerNamespace {
     return *this;
   }
 
-  //! If data contains vector of booleans, integer or real it is promoted to a vector of real.
   GenericContainer const &
   GenericContainer::promote_to_mat_complex() {
     switch (m_data_type) {
@@ -4694,7 +4696,6 @@ namespace GenericContainerNamespace {
     return *this;
   }
 
-  //! If data contains vector of someting it is promoted to a vector of `GenericContainer`.
   GenericContainer const &
   GenericContainer::promote_to_vector() {
     switch (m_data_type) {
@@ -5215,9 +5216,9 @@ namespace GenericContainerNamespace {
 
   GenericContainer &
   GenericContainer::readFormattedData(
-    char const fname[],
-    char const commentChars[],
-    char const delimiters[]
+    char const * fname,
+    char const * commentChars,
+    char const * delimiters
   ) {
     std::ifstream file( fname );
     GC_ASSERT(
@@ -5228,7 +5229,7 @@ namespace GenericContainerNamespace {
   }
 
   void
-  GenericContainer::exception( char const msg[] ) {
+  GenericContainer::exception( char const * msg ) {
     throw std::runtime_error(msg);
   }
 

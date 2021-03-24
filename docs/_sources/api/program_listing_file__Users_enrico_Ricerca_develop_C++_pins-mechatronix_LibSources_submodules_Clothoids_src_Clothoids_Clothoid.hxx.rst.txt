@@ -103,6 +103,7 @@ Program Listing for File Clothoid.hxx
          real_type           & ss2
        ) const;
    
+       #ifndef DOXYGEN_SHOULD_SKIP_THIS
        class T2D_approximate_collision {
          ClothoidCurve const * pC1;
          ClothoidCurve const * pC2;
@@ -149,12 +150,12 @@ Program Listing for File Clothoid.hxx
            return pC1->aabb_intersect_ISO( T1, m_offs1, pC2, T2, m_offs2, ss1, ss2 );
          }
        };
+       #endif
    
      public:
    
        #include "BaseCurve_using.hxx"
    
-       //explicit
        ClothoidCurve()
        : BaseCurve(G2LIB_CLOTHOID)
        , m_aabb_done(false)
@@ -167,7 +168,6 @@ Program Listing for File Clothoid.hxx
          m_L         = 0;
        }
    
-       //explicit
        ClothoidCurve( ClothoidCurve const & s )
        : BaseCurve(G2LIB_CLOTHOID)
        , m_aabb_done(false)
@@ -175,30 +175,30 @@ Program Listing for File Clothoid.hxx
    
        explicit
        ClothoidCurve(
-         real_type _x0,
-         real_type _y0,
-         real_type _theta0,
-         real_type _k,
-         real_type _dk,
-         real_type _L
+         real_type x0,
+         real_type y0,
+         real_type theta0,
+         real_type k,
+         real_type dk,
+         real_type L
        )
        : BaseCurve(G2LIB_CLOTHOID)
        , m_aabb_done(false)
        {
-         m_CD.x0     = _x0;
-         m_CD.y0     = _y0;
-         m_CD.theta0 = _theta0;
-         m_CD.kappa0 = _k;
-         m_CD.dk     = _dk;
-         m_L         = _L;
+         m_CD.x0     = x0;
+         m_CD.y0     = y0;
+         m_CD.theta0 = theta0;
+         m_CD.kappa0 = k;
+         m_CD.dk     = dk;
+         m_L         = L;
        }
    
        explicit
        ClothoidCurve(
-         real_type const P0[],
-         real_type       theta0,
-         real_type const P1[],
-         real_type       theta1
+         real_type const * P0,
+         real_type         theta0,
+         real_type const * P1,
+         real_type         theta1
        )
        : BaseCurve(G2LIB_CLOTHOID)
        , m_aabb_done(false)
@@ -254,12 +254,12 @@ Program Listing for File Clothoid.hxx
        \*/
        void
        build(
-         real_type _x0,
-         real_type _y0,
-         real_type _theta0,
-         real_type _k,
-         real_type _dk,
-         real_type _L
+         real_type x0,
+         real_type y0,
+         real_type theta0,
+         real_type k,
+         real_type dk,
+         real_type L
        );
    
        int
@@ -340,9 +340,7 @@ Program Listing for File Clothoid.hxx
        Pinfinity( real_type & x, real_type & y, bool plus = true ) const
        { m_CD.Pinfinity( x, y, plus ); }
    
-       real_type
-       dkappa() const
-       { return m_CD.dk; }
+       real_type dkappa() const { return m_CD.dk; }
    
        real_type
        thetaTotalVariation() const;
@@ -488,7 +486,7 @@ Program Listing for File Clothoid.hxx
          real_type                 max_angle = Utils::m_pi/6, // 30 degree
          real_type                 max_size  = 1e100,
          int_type                  icurve    = 0
-       ) const;
+       ) const override;
    
        void
        bbTriangles_SAE(
@@ -497,7 +495,7 @@ Program Listing for File Clothoid.hxx
          real_type                 max_angle = Utils::m_pi/6, // 30 degree
          real_type                 max_size  = 1e100,
          int_type                  icurve    = 0
-       ) const {
+       ) const override {
          this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
        }
    
@@ -507,7 +505,7 @@ Program Listing for File Clothoid.hxx
          real_type                 max_angle = Utils::m_pi/6, // 30 degree
          real_type                 max_size  = 1e100,
          int_type                  icurve    = 0
-       ) const {
+       ) const override {
          this->bbTriangles_ISO( 0, tvec, max_angle, max_size, icurve );
        }
    

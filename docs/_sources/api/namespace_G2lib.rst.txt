@@ -26,6 +26,8 @@ file: :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_s
 
 file: :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_AABBtree.hxx`
 
+file: BaseCurve.hh
+
 file: :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Biarc.hxx`
 
 file: BiarcList.hh
@@ -37,6 +39,8 @@ file: Clothoid.hh
 file: ClothoidList.hh
 
 file: :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Fresnel.hxx`
+
+file: G2lib.hh
 
 file: :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Line.hxx`
 
@@ -52,8 +56,6 @@ Classes
 -------
 
 
-- :ref:`exhale_struct_struct_g2lib_1_1_l__struct`
-
 - :ref:`exhale_class_class_g2lib_1_1_a_a_b_btree`
 
 - :ref:`exhale_class_class_g2lib_1_1_asy_plot`
@@ -66,21 +68,13 @@ Classes
 
 - :ref:`exhale_class_class_g2lib_1_1_biarc_list`
 
-- :ref:`exhale_class_class_g2lib_1_1_biarc_list_1_1_t2_d__collision__list___i_s_o`
-
 - :ref:`exhale_class_class_g2lib_1_1_circle_arc`
 
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_curve`
 
-- :ref:`exhale_class_class_g2lib_1_1_clothoid_curve_1_1_t2_d__approximate__collision`
-
-- :ref:`exhale_class_class_g2lib_1_1_clothoid_curve_1_1_t2_d__collision___i_s_o`
-
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_data`
 
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_list`
-
-- :ref:`exhale_class_class_g2lib_1_1_clothoid_list_1_1_t2_d__collision__list___i_s_o`
 
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_spline_g2`
 
@@ -120,27 +114,11 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1aa53cc452bfa99b0dd45c293908b249af`
 
-- :ref:`exhale_function_namespace_g2lib_1a381cfd8479ff4a14bdc4556166b2ceb6`
+- :ref:`exhale_function_namespace_g2lib_1a0bb0ba6a1535989f989ff35c858bfd26`
 
-- :ref:`exhale_function_namespace_g2lib_1ae4e052b0263a7a2446ad02bfa6b2b328`
+- :ref:`exhale_function_namespace_g2lib_1a33af202f949766ed84cf69aab3a30177`
 
-- :ref:`exhale_function_namespace_g2lib_1a2d45cc29039fad7437a291c6f11a40d6`
-
-- :ref:`exhale_function_namespace_g2lib_1ac37fc34bc27e327e7b51f3b1f0ba31d1`
-
-- :ref:`exhale_function_namespace_g2lib_1a559958c386dc5cc29c1d726dd6538b07`
-
-- :ref:`exhale_function_namespace_g2lib_1a1360daa77c1b32f65c9195e140e6fc75`
-
-- :ref:`exhale_function_namespace_g2lib_1a176443a6b8df3566b3313614eaa17aaf`
-
-- :ref:`exhale_function_namespace_g2lib_1aeb759b9547a3b75dd2e79479ff5725d8`
-
-- :ref:`exhale_function_namespace_g2lib_1a929fed6c39693ebc46a9ef1c08769453`
-
-- :ref:`exhale_function_namespace_g2lib_1a2d8029a2b6a851eed7612ac1a02eb507`
-
-- :ref:`exhale_function_namespace_g2lib_1af07c5fd5394d761c08c1297499507796`
+- :ref:`exhale_function_namespace_g2lib_1a8540d64742a9701f6974fc640b68b5d5`
 
 - :ref:`exhale_function_namespace_g2lib_1aa5b1fe23ac7694a14290b292fe657cd2`
 
@@ -152,65 +130,37 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1a89ccf86189fec419856197ea04e2c3a4`
 
-- :ref:`exhale_function_namespace_g2lib_1a71522e915c9606070b8ddf5297d7e1b2`
+- :ref:`exhale_function_namespace_g2lib_1aa22851ef8070178999a11f33d72b16be`
 
-- :ref:`exhale_function_namespace_g2lib_1abaebb139cf4fdc624b1ccb7dd4e89d3a`
-
-- :ref:`exhale_function_namespace_g2lib_1a107bd1d818f054cd9e549d363c758c5b`
-
-- :ref:`exhale_function_namespace_g2lib_1a7d90c6ed120392b31b52fe8bd9e0db5f`
-
-- :ref:`exhale_function_namespace_g2lib_1a76c7263fd1bf8a016391d3dc2c564f3c`
-
-- :ref:`exhale_function_namespace_g2lib_1a737cb704d1c89ab2225a49b93eb45e97`
-
-- :ref:`exhale_function_namespace_g2lib_1ac60e2aca66d163827dce4c91f99584b9`
-
-- :ref:`exhale_function_namespace_g2lib_1a20623a029977ac87bcf4fb3ff5d1b044`
-
-- :ref:`exhale_function_namespace_g2lib_1a8546dab6d8c2ac2db8e518ca8c0189b6`
+- :ref:`exhale_function_namespace_g2lib_1ac85e4190cc5dae8194e08fcf2fe16fba`
 
 - :ref:`exhale_function_namespace_g2lib_1aac7328b3a4cc85ef6e27524f3fbdcfa7`
 
-- :ref:`exhale_function_namespace_g2lib_1ae9bc88d2300abf2d8eceeddddb422bf4`
+- :ref:`exhale_function_namespace_g2lib_1a26b89008af7eb579057ebd9056625f05`
 
-- :ref:`exhale_function_namespace_g2lib_1ae20fb9f50c66bd0677fd9af8f9f38956`
+- :ref:`exhale_function_namespace_g2lib_1a72e4aead03fd8a133aa7b9bace759785`
 
-- :ref:`exhale_function_namespace_g2lib_1a592833ffa284d4724feea8f78a65e07b`
+- :ref:`exhale_function_namespace_g2lib_1a400185708fe33f311154b493e9ad537b`
 
 - :ref:`exhale_function_namespace_g2lib_1acdd344ff0a709df517956fc2e0545b2f`
 
-- :ref:`exhale_function_namespace_g2lib_1ab7b6fbe4ec0be674223208ff74d6fdf0`
+- :ref:`exhale_function_namespace_g2lib_1a180a3524e81293ce4e01d448f353ac57`
 
-- :ref:`exhale_function_namespace_g2lib_1a1d55faa262050bdb533c6e3c834ad4e5`
+- :ref:`exhale_function_namespace_g2lib_1a7db4e373a511742318109c96031c86a1`
 
-- :ref:`exhale_function_namespace_g2lib_1ac389d59744cdee548b6ac181e094b545`
-
-- :ref:`exhale_function_namespace_g2lib_1aa916fcc9a5e3c74d9a0530cd68e7cca4`
-
-- :ref:`exhale_function_namespace_g2lib_1a88de228b2a495966119d0f69c3c4b27a`
-
-- :ref:`exhale_function_namespace_g2lib_1ae553d72088277892693eb7a0ce5982a7`
-
-- :ref:`exhale_function_namespace_g2lib_1a43b76debcc6247f6af99f3c3c1f0c003`
-
-- :ref:`exhale_function_namespace_g2lib_1a4ded2a28c33f58b43f376df6661e48e9`
-
-- :ref:`exhale_function_namespace_g2lib_1a37163aa773926b21dec85ed79eade78b`
-
-- :ref:`exhale_function_namespace_g2lib_1a51ffa4f56f1d8a5a44e44bc9d1bf0409`
+- :ref:`exhale_function_namespace_g2lib_1a2327c7a3aa8132f1abc3c02d7436d029`
 
 - :ref:`exhale_function_namespace_g2lib_1adcb636fc9381075c0ce6750a07f15a41`
 
 - :ref:`exhale_function_namespace_g2lib_1adcfc7269a46eeddf3be4a593a7d45a38`
 
-- :ref:`exhale_function_namespace_g2lib_1a3b7b682cdd6cadfa9120f826946e15f3`
+- :ref:`exhale_function_namespace_g2lib_1a44688b8da06cbbc5707f30c5592bef68`
+
+- :ref:`exhale_function_namespace_g2lib_1a71b4db32cfdab9a94bf3706eb7ff8d25`
 
 - :ref:`exhale_function_namespace_g2lib_1a93332a83835beb3d4b71a5d46dc2342f`
 
 - :ref:`exhale_function_namespace_g2lib_1a41280286acf1693170e3fc04361e4596`
-
-- :ref:`exhale_function_namespace_g2lib_1a44688b8da06cbbc5707f30c5592bef68`
 
 - :ref:`exhale_function_namespace_g2lib_1aa57348d683f260251202e4fe1e7c6ff1`
 
@@ -224,27 +174,13 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1a55711e76ab48e7998d69dcbebb7577e9`
 
-- :ref:`exhale_function_namespace_g2lib_1a71b4db32cfdab9a94bf3706eb7ff8d25`
-
-- :ref:`exhale_function_namespace_g2lib_1a50255292803bae70bc617feeb8a4b2f4`
-
-- :ref:`exhale_function_namespace_g2lib_1ac2a2468c0efc1809385d32b0a81d8c2d`
-
 - :ref:`exhale_function_namespace_g2lib_1a787008f61e79e40319f40bdc503f3136`
-
-- :ref:`exhale_function_namespace_g2lib_1a3690ed005b0bb8ae171327db638475d6`
-
-- :ref:`exhale_function_namespace_g2lib_1add9cab2421632e3b5e561e85a54eef2f`
-
-- :ref:`exhale_function_namespace_g2lib_1a2b77e9f33f91a89080ef514e71b045b7`
 
 - :ref:`exhale_function_namespace_g2lib_1a5d9cfcb48d1668fa1242817c66be1fc6`
 
 - :ref:`exhale_function_namespace_g2lib_1aa92f4989ea2cf7a69ff29ac55c883376`
 
 - :ref:`exhale_function_namespace_g2lib_1abc9c3785c7a557566cf1545ada4449f5`
-
-- :ref:`exhale_function_namespace_g2lib_1a869afcaa69d20095b3a24e02a51e9c54`
 
 - :ref:`exhale_function_namespace_g2lib_1ac29a2a307e14741ba819a34c20042b19`
 
@@ -254,19 +190,11 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1a0786f69f32e0ebf3b2610176b11421f4`
 
-- :ref:`exhale_function_namespace_g2lib_1a24c7fa695bae2b0fa600f5222787f9f4`
+- :ref:`exhale_function_namespace_g2lib_1aaba8dbcbf7f3b224b8ce0143ac264022`
 
-- :ref:`exhale_function_namespace_g2lib_1aa5ff7885022c12377dc2368a29ec6300`
+- :ref:`exhale_function_namespace_g2lib_1a2803b73c7e117998c86b75389d9275d4`
 
-- :ref:`exhale_function_namespace_g2lib_1a5a2326602509847f39e72d38733a9bb4`
-
-- :ref:`exhale_function_namespace_g2lib_1a73f02c5ca90f9246dc5d39a8f12fff15`
-
-- :ref:`exhale_function_namespace_g2lib_1a1137f20520e6e81db677cea42582927d`
-
-- :ref:`exhale_function_namespace_g2lib_1a58f82818d25f746107ba97e6595e72af`
-
-- :ref:`exhale_function_namespace_g2lib_1a99605f1c8d283e9d153baccad8ea5d5e`
+- :ref:`exhale_function_namespace_g2lib_1a64d98ef06ccf08507e32af71e2152c2f`
 
 - :ref:`exhale_function_namespace_g2lib_1aa33f87b2d769488fe4d44977f483f91f`
 
@@ -287,8 +215,6 @@ Typedefs
 
 - :ref:`exhale_typedef_namespace_g2lib_1a49e3e5bd9229de6b3203d3b72eee2ef4`
 
-- :ref:`exhale_typedef_namespace_g2lib_1a064d224aea6b2fb81e1e88cca2b3b62f`
-
 - :ref:`exhale_typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa`
 
 
@@ -297,14 +223,6 @@ Variables
 
 
 - :ref:`exhale_variable_namespace_g2lib_1a751862146b0c324e5332dc1d2d857844`
-
-- :ref:`exhale_variable_namespace_g2lib_1a0aadafb02e925a06fe9e67ffc29fc52c`
-
-- :ref:`exhale_variable_namespace_g2lib_1ac805fb06cc3d7b2d17f3133870ca903f`
-
-- :ref:`exhale_variable_namespace_g2lib_1af62818905b5d95b6dd48cb87454e2a49`
-
-- :ref:`exhale_variable_namespace_g2lib_1ad5e2571d40de2574f0d5fa4387369fd5`
 
 - :ref:`exhale_variable_namespace_g2lib_1a9dffa46caf9c48cdcd999c622afc603b`
 
@@ -319,7 +237,5 @@ Variables
 - :ref:`exhale_variable_namespace_g2lib_1a46a2dec11af044795b66d1eb94c19eef`
 
 - :ref:`exhale_variable_namespace_g2lib_1aa13584dd376c58ca552840aee08ab83c`
-
-- :ref:`exhale_variable_namespace_g2lib_1a806fcbc60872c0ae0d05d05084cc5f52`
 
 - :ref:`exhale_variable_namespace_g2lib_1a1ef169ad1a593d65dbd27df6c01b3e47`

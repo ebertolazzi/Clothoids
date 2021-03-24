@@ -51,17 +51,5 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_namespace_g2lib_1a71522e915c9606070b8ddf5297d7e1b2`
-
-- :ref:`exhale_function_namespace_g2lib_1a1d55faa262050bdb533c6e3c834ad4e5`
-
-- :ref:`exhale_function_namespace_g2lib_1ac389d59744cdee548b6ac181e094b545`
-
 - :ref:`exhale_function_namespace_g2lib_1a44688b8da06cbbc5707f30c5592bef68`
-
-- :ref:`exhale_function_namespace_g2lib_1a50255292803bae70bc617feeb8a4b2f4`
-
-- :ref:`exhale_function_namespace_g2lib_1a1137f20520e6e81db677cea42582927d`
-
-- :ref:`exhale_function_namespace_g2lib_1a58f82818d25f746107ba97e6595e72af`
 

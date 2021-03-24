@@ -31,6 +31,8 @@ Includes
 
 - ``Clothoids/AABBtree.hxx`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_AABBtree.hxx`)
 
+- ``Clothoids/BaseCurve.hxx`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_BaseCurve.hxx`)
+
 - ``Clothoids/Biarc.hxx`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Biarc.hxx`)
 
 - ``Clothoids/BiarcList.hxx`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_BiarcList.hxx`)

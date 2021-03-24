@@ -118,8 +118,8 @@ namespace GenericContainerNamespace {
   GenericContainer &
   GenericContainer::readFormattedData(
     std::istream & stream,
-    char const     commentChars[],
-    char const     delimiters[]
+    char const   * commentChars,
+    char const   * delimiters
   ) {
     //read a line
     std::string line;

@@ -150,13 +150,6 @@ classdef ClothoidCurve < CurveBase
       L      = self.length();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [P1,P2,P3] = bbTriangles( self, varargin )
-      % bbTriangles( max_angle, max_size, offs );
-      [P1,P2,P3] = ClothoidCurveMexWrapper( ...
-        'bbTriangles', self.objectHandle, varargin{:} ...
-      );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function s = optimized_sample( self, npts, max_angle, offs )
       s = ClothoidCurveMexWrapper( ...
         'optimized_sample', self.objectHandle, npts, max_angle, offs ...

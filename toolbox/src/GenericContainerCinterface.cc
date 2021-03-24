@@ -21,6 +21,8 @@
 // file: GenericContainerCinterface.cc
 //
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 /*
  \file GenericContainerCinterface.cc
  This file contains the sources for the C interface to `GenericContainer`
@@ -42,7 +44,6 @@
 
 using namespace std;
 
-#define GC_EXTERN_C extern "C" GENERIC_CONTAINER_API_DLL
 #define GC_TRY(A) \
 try { A; } \
 catch(std::runtime_error & err) { \
@@ -60,9 +61,10 @@ typedef std::pair<std::string,GenericContainerExplorer*> MAP_DATA;
 static MAP                        gc_explorer;
 static GenericContainerExplorer * gc_active = nullptr;
 
-GC_EXTERN_C
+extern "C" {
+
 int
-GC_new( char const id[] ) {
+GC_new( char const * id ) {
   // ckeck if exists
   MAP::iterator pos = gc_explorer.find(id);
   if ( pos == gc_explorer.end() ) {
@@ -73,9 +75,8 @@ GC_new( char const id[] ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
-GC_select( char const id[] ) {
+GC_select( char const * id ) {
   // ckeck if exists
   MAP::iterator pos = gc_explorer.find(id);
   if ( pos == gc_explorer.end() ) {
@@ -86,24 +87,21 @@ GC_select( char const id[] ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 void *
-GC_mem_ptr( char const id[] ) {
+GC_mem_ptr( char const * id ) {
   GC_select( id );
   if ( gc_active == nullptr ) return nullptr;
   return gc_active->mem_ptr();
 }
 
-GC_EXTERN_C
 int
-GC_delete( char const id[] ) {
+GC_delete( char const * id ) {
   gc_explorer.erase(id);
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
-GC_fill_for_test( char const id[] ) {
+GC_fill_for_test( char const * id ) {
   // ckeck if exists
   GC_select( id );
   GenericContainer & gc =
@@ -168,21 +166,18 @@ GC_fill_for_test( char const id[] ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_pop_head() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   return gc_active->pop();
 }
 
-GC_EXTERN_C
 int
 GC_reset_head() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   return gc_active->reset();
 }
 
-GC_EXTERN_C
 int
 GC_print_content_types() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -190,7 +185,6 @@ GC_print_content_types() {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_dump() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -198,14 +192,12 @@ GC_dump() {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_get_type() {
   if ( gc_active == nullptr ) return -1;
   return gc_active->top()->get_type();
 }
 
-GC_EXTERN_C
 char const *
 GC_get_type_name() {
   static char const empty[] = "";
@@ -215,7 +207,6 @@ GC_get_type_name() {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
 GC_set_bool( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -223,7 +214,6 @@ GC_set_bool( int const a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_int( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -231,7 +221,6 @@ GC_set_int( int const a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_real( double const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -239,7 +228,6 @@ GC_set_real( double const a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_complex( c_complex_type const * a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -247,7 +235,6 @@ GC_set_complex( c_complex_type const * a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_complex2( double const re, real_type const im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -255,9 +242,8 @@ GC_set_complex2( double const re, real_type const im ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
-GC_set_string( char const a[] ) {
+GC_set_string( char const * a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->set_string(a) );
   return GENERIC_CONTAINER_OK;
@@ -265,35 +251,30 @@ GC_set_string( char const a[] ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
 GC_get_bool() {
   if ( gc_active == nullptr ) return 0;
   return gc_active->top()->get_bool() ? 1 : 0;
 }
 
-GC_EXTERN_C
 int
 GC_get_int() {
   if ( gc_active == nullptr ) return 0;
   return gc_active->top()->get_int();
 }
 
-GC_EXTERN_C
 long
 GC_get_long() {
   if ( gc_active == nullptr ) return 0;
   return long(gc_active->top()->get_long());
 }
 
-GC_EXTERN_C
 double
 GC_get_real( ) {
   if ( gc_active == nullptr ) return 0;
   return gc_active->top()->get_real();
 }
 
-GC_EXTERN_C
 c_complex_type
 GC_get_complex( ) {
   c_complex_type tmp = { 0, 0 };
@@ -305,21 +286,18 @@ GC_get_complex( ) {
   return tmp;
 }
 
-GC_EXTERN_C
 double
 GC_get_complex_re( ) {
   if ( gc_active != nullptr ) return gc_active->top()->get_complex() . real();
   return 0;
 }
 
-GC_EXTERN_C
 double
 GC_get_complex_im( ) {
   if ( gc_active != nullptr ) return gc_active->top()->get_complex() . imag();
   return 0;
 }
 
-GC_EXTERN_C
 char const *
 GC_get_string( ) {
   if ( gc_active == nullptr ) return nullptr;
@@ -328,7 +306,6 @@ GC_get_string( ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
 GC_push_bool( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -336,7 +313,6 @@ GC_push_bool( int const a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_push_int( int const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -344,7 +320,6 @@ GC_push_int( int const a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_push_real( double const a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -352,7 +327,6 @@ GC_push_real( double const a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_push_complex( c_complex_type const * a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -360,7 +334,6 @@ GC_push_complex( c_complex_type const * a ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_push_complex2( double const re, double const im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -368,9 +341,8 @@ GC_push_complex2( double const re, double const im ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
-GC_push_string( char const a[] ) {
+GC_push_string( char const * a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->push_string( a ) );
   return GENERIC_CONTAINER_OK;
@@ -378,7 +350,6 @@ GC_push_string( char const a[] ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
 GC_get_bool_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0;
@@ -386,21 +357,18 @@ GC_get_bool_at_pos( int pos ) {
   return val ? 1 : 0;
 }
 
-GC_EXTERN_C
 int
 GC_get_int_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0;
   return gc_active->top()->get_int_at( unsigned(pos) );
 }
 
-GC_EXTERN_C
 double
 GC_get_real_at_pos( int pos ) {
   if ( gc_active == nullptr ) return 0;
   return gc_active->top()->get_number_at( unsigned(pos) );
 }
 
-GC_EXTERN_C
 c_complex_type
 GC_get_complex_at_pos( int pos ) {
   c_complex_type tmp;
@@ -409,7 +377,6 @@ GC_get_complex_at_pos( int pos ) {
   return tmp;
 }
 
-GC_EXTERN_C
 double
 GC_get_complex_real_at_pos( int pos ) {
   real_type re = 0, im = 0;
@@ -417,7 +384,6 @@ GC_get_complex_real_at_pos( int pos ) {
   return re;
 }
 
-GC_EXTERN_C
 double
 GC_get_complex_imag_at_pos( int pos ) {
   real_type re = 0, im = 0;
@@ -425,7 +391,6 @@ GC_get_complex_imag_at_pos( int pos ) {
   return im;
 }
 
-GC_EXTERN_C
 char const *
 GC_get_string_at_pos( int pos ) {
   if ( gc_active == nullptr ) return nullptr;
@@ -434,14 +399,12 @@ GC_get_string_at_pos( int pos ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 double
 GC_get_real_at_coor( int i, int j ) {
   if ( gc_active == nullptr ) return 0;
   return gc_active->top()->get_real_at( unsigned(i), unsigned(j) );
 }
 
-GC_EXTERN_C
 c_complex_type
 GC_get_complex_at_coor( int i, int j ) {
   c_complex_type tmp;
@@ -454,7 +417,6 @@ GC_get_complex_at_coor( int i, int j ) {
   return tmp;
 }
 
-GC_EXTERN_C
 double
 GC_get_complex_real_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
@@ -464,7 +426,6 @@ GC_get_complex_real_at_coor( int i, int j ) {
   return 0;
 }
 
-GC_EXTERN_C
 double
 GC_get_complex_imag_at_coor( int i, int j ) {
   if ( gc_active != nullptr ) {
@@ -476,7 +437,6 @@ GC_get_complex_imag_at_coor( int i, int j ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
 GC_set_empty_vector_of_bool() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -484,7 +444,6 @@ GC_set_empty_vector_of_bool() {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_empty_vector_of_int() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -492,7 +451,6 @@ GC_set_empty_vector_of_int() {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_empty_vector_of_real() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -500,7 +458,6 @@ GC_set_empty_vector_of_real() {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_empty_vector_of_complex() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -508,7 +465,6 @@ GC_set_empty_vector_of_complex() {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_empty_vector_of_string() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -518,9 +474,8 @@ GC_set_empty_vector_of_string() {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
-GC_set_vector_of_bool( int const a[], int nelem ) {
+GC_set_vector_of_bool( int const * a, int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   vec_bool_type & v = gc_active->top()->set_vec_bool( unsigned(nelem) );
   for ( unsigned i = 0; i < unsigned(nelem); ++i ) v[i] = a[i] != 0;
@@ -529,36 +484,32 @@ GC_set_vector_of_bool( int const a[], int nelem ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
-GC_set_vector_of_int( int const a[], int nelem ) {
+GC_set_vector_of_int( int const * a, int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   vec_int_type & v = gc_active->top()->set_vec_int( unsigned(nelem) );
   std::copy( a, a + nelem, v.begin() );
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
-GC_set_vector_of_real( double const a[], int nelem ) {
+GC_set_vector_of_real( double const * a, int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   vec_real_type & v = gc_active->top()->set_vec_real( unsigned(nelem) );
   std::copy( a, a + nelem, v.begin() );
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
-GC_set_vector_of_complex( double const re[], double const im[], int nelem ) {
+GC_set_vector_of_complex( double const * re, double const * im, int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   vec_complex_type & v = gc_active->top()->set_vec_complex( unsigned(nelem) );
   for ( unsigned i = 0; i < unsigned(nelem); ++i ) v[i] = complex_type(re[i],im[i]);
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
-GC_set_vector_of_string( char const *a[], int nelem ) {
+GC_set_vector_of_string( char const ** a, int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   vec_string_type & v = gc_active->top()->set_vec_string( unsigned(nelem) );
   for ( unsigned i = 0; i < unsigned(nelem); ++i ) v[i] = a[i];
@@ -567,7 +518,6 @@ GC_set_vector_of_string( char const *a[], int nelem ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
 GC_set_vector( int nelem ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -575,7 +525,6 @@ GC_set_vector( int nelem ) {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_set_empty_vector() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -583,28 +532,24 @@ GC_set_empty_vector() {
   return GENERIC_CONTAINER_OK;
 }
 
-GC_EXTERN_C
 int
 GC_get_vector_size() {
   if ( gc_active == nullptr ) return 0;
   return int(gc_active->top()->get_num_elements());
 }
 
-GC_EXTERN_C
 int
 GC_get_matrix_num_rows() {
   if ( gc_active == nullptr ) return 0;
   return int(gc_active->top()->get_numRows());
 }
 
-GC_EXTERN_C
 int
 GC_get_matrix_num_cols() {
   if ( gc_active == nullptr ) return 0;
   return int(gc_active->top()->get_numCols());
 }
 
-GC_EXTERN_C
 int
 GC_push_vector_position( int pos ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -613,7 +558,6 @@ GC_push_vector_position( int pos ) {
 
 //..............................................................................
 
-GC_EXTERN_C
 int
 GC_set_map() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -621,18 +565,18 @@ GC_set_map() {
   return GENERIC_CONTAINER_OK;
 }
 
-/*! \brief
+/*!
+ *  \brief
  *  Set the position of insertion point is at the `pos` element
  *  of the actual map.
  */
-GC_EXTERN_C
+
 int
-GC_push_map_position( char const pos[] ) {
+GC_push_map_position( char const * pos ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   return gc_active->push_map_position( pos );
 }
 
-GC_EXTERN_C
 int
 GC_init_map_key() {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
@@ -640,12 +584,15 @@ GC_init_map_key() {
   return ok;
 }
 
-GC_EXTERN_C
 char const *
 GC_get_next_key() {
   if ( gc_active == nullptr ) return nullptr;
   return gc_active->next_map_key();
 }
+
+} // close extern "C"
+
+#endif // DOXYGEN_SHOULD_SKIP_THIS
 
 //
 // eof: GenericContainerCinterface.cc

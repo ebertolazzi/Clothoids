@@ -189,7 +189,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PolyLine::polygon( real_type x[], real_type y[]) const {
+  PolyLine::polygon( real_type * x, real_type * y) const {
     int_type n = int_type(m_polylineList.size());
     for ( size_t k = 0; k < size_t(n); ++k ) {
       x[k] = m_polylineList[k].xBegin();
@@ -198,6 +198,14 @@ namespace G2lib {
     x[size_t(n)] = m_polylineList[size_t(n-1)].xEnd();
     y[size_t(n)] = m_polylineList[size_t(n-1)].yEnd();
   }
+
+  /*\
+   |   _     _
+   |  | |__ | |__   _____  __
+   |  | '_ \| '_ \ / _ \ \/ /
+   |  | |_) | |_) | (_) >  <
+   |  |_.__/|_.__/ \___/_/\_\
+  \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -233,6 +241,41 @@ namespace G2lib {
       if      ( y < ymin ) ymin = y;
       else if ( y > ymax ) ymax = y;
     }
+  }
+
+  /*\
+   |  _    _   _____    _                _
+   | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+   | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+   | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+   |                               |___/
+  \*/
+
+  void
+  PolyLine::bbTriangles(
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    int_type             icurve
+  ) const {
+    vector<LineSegment>::const_iterator ic = m_polylineList.begin();
+    for ( int_type ipos = icurve; ic != m_polylineList.end(); ++ic, ++ipos )
+      ic->bbTriangles( tvec, max_angle, max_size, ipos );
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  PolyLine::bbTriangles_ISO(
+    real_type            offs,
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    int_type             icurve
+  ) const {
+    vector<LineSegment>::const_iterator ic = m_polylineList.begin();
+    for ( int_type ipos = icurve; ic != m_polylineList.end(); ++ic, ++ipos )
+      ic->bbTriangles_ISO( offs, tvec, max_angle, max_size, ipos );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -552,9 +595,9 @@ namespace G2lib {
 
   void
   PolyLine::build(
-    real_type const x[],
-    real_type const y[],
-    int_type        npts
+    real_type const * x,
+    real_type const * y,
+    int_type          npts
   ) {
     init( x[0], y[0] );
     for ( int_type k = 1; k < npts; ++k )

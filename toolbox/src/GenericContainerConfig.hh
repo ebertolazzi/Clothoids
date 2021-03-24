@@ -33,22 +33,6 @@
   #error "must use a compiler >= c++11"
 #endif
 
-#ifndef GENERIC_CONTAINER_API_DLL
-  #ifdef GENERIC_CONTAINER_ON_WINDOWS
-    #ifdef GENERIC_CONTAINER_EXPORT
-      #define GENERIC_CONTAINER_API_DLL __declspec(dllexport)
-    #elif defined(GENERIC_CONTAINER_IMPORT)
-      #define GENERIC_CONTAINER_API_DLL __declspec(dllimport)
-    #else
-      #define GENERIC_CONTAINER_API_DLL
-    #endif
-  #elif defined(__GNUC__) || defined(__clang__)
-    #define GENERIC_CONTAINER_API_DLL __attribute__((visibility("default")))
-  #else
-    #define GENERIC_CONTAINER_API_DLL
-  #endif
-#endif
-
 // Standard types
 #ifdef GENERIC_CONTAINER_ON_WINDOWS
   // se in windows includo PRIMA windows.h per evitare conflitti!

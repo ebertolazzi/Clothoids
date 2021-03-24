@@ -30,7 +30,6 @@ Program Listing for File ClothoidAsyPlot.hxx
     |                                                                          |
    \*--------------------------------------------------------------------------*/
    
-   
    namespace G2lib {
    
      using std::string;

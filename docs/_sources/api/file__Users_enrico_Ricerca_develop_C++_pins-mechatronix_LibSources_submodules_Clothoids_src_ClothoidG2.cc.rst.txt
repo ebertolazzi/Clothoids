@@ -51,9 +51,3 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1a61aab8843b4b24378f44f55b65dcb424`
 
-- :ref:`exhale_function_namespace_g2lib_1a3690ed005b0bb8ae171327db638475d6`
-
-- :ref:`exhale_function_namespace_g2lib_1add9cab2421632e3b5e561e85a54eef2f`
-
-- :ref:`exhale_function_namespace_g2lib_1a2b77e9f33f91a89080ef514e71b045b7`
-

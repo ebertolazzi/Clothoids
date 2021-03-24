@@ -62,6 +62,7 @@ namespace G2lib {
 
 #include "Clothoids/G2lib.hxx"
 #include "Clothoids/Triangle2D.hxx"
+#include "Clothoids/BaseCurve.hxx"
 #include "Clothoids/AABBtree.hxx"
 #include "Clothoids/Fresnel.hxx"
 #include "Clothoids/Line.hxx"

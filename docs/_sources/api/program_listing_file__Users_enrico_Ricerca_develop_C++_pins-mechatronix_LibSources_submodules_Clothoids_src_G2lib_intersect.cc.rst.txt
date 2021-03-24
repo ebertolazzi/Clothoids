@@ -55,6 +55,8 @@ Program Listing for File G2lib_intersect.cc
       |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
      \*/
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
+   
      typedef pair<CurveType,CurveType> Ppair;
    
      // check if compiler is C++11
@@ -164,6 +166,8 @@ Program Listing for File G2lib_intersect.cc
          promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ) ]      = G2LIB_POLYLINE;
          done = true;
        }
+     #endif
+   
      #endif
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

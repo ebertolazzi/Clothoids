@@ -805,8 +805,8 @@ namespace G2lib {
 
   void
   CircleArc::toNURBS(
-    real_type knots[],
-    real_type Poly[][3]
+    real_type * knots,
+    real_type   Poly[][3]
   ) const {
 
     real_type dtheta = m_L*m_k;

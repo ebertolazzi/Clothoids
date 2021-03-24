@@ -27,7 +27,9 @@
 
 namespace GenericContainerNamespace {
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   using namespace std;
+  #endif
 
   void
   writeTable(

@@ -21,7 +21,6 @@
 /// file: BiarcList.hh
 ///
 
-//! Clothoid computations routine
 namespace G2lib {
 
   using std::vector;
@@ -35,7 +34,11 @@ namespace G2lib {
    | | |_) | | (_| | | | (__| |___| \__ \ |_
    | |____/|_|\__,_|_|  \___|_____|_|___/\__|
   \*/
-  //! \brief Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
+  /*!
+   * Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
+   *
+   * \image html biarc_list.jpg
+   */
   class BiarcList : public BaseCurve {
 
     friend class ClothoidList;
@@ -52,6 +55,7 @@ namespace G2lib {
     mutable real_type          m_aabb_max_size;
     mutable vector<Triangle2D> m_aabb_tri;
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     class T2D_collision_list_ISO {
       BiarcList const * m_pList1;
       real_type const   m_offs1;
@@ -79,6 +83,7 @@ namespace G2lib {
         return C1.collision_ISO( m_offs1, C2, m_offs2 );
       }
     };
+    #endif
 
     void
     resetLastInterval() {
@@ -91,83 +96,149 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    //explicit
+    //! build an empty biarc spline
     BiarcList()
     : BaseCurve(G2LIB_BIARC_LIST)
     , m_aabb_done(false)
     { this->resetLastInterval(); }
 
-    virtual
-    ~BiarcList() UTILS_OVERRIDE {
+    ~BiarcList() override {
       m_s0.clear();
       m_biarcList.clear();
       m_aabb_tri.clear();
     }
 
-    //explicit
+    //! build a copy of another biarc spline
     BiarcList( BiarcList const & s )
     : BaseCurve(G2LIB_BIARC_LIST)
     , m_aabb_done(false)
     { this->resetLastInterval(); copy(s); }
 
+    //! empty the the biarc list
     void init();
+
+    //! reserve memory for `n` biarcs
     void reserve( int_type n );
+
+    //! copy another biarc spline
     void copy( BiarcList const & L );
 
+    //! copy another biarc spline
     BiarcList const & operator = ( BiarcList const & s )
     { copy(s); return *this; }
 
+    //! build a biarc list from a line segment
     explicit BiarcList( LineSegment const & LS );
+
+    //! build a biarc list from a single circle arc
     explicit BiarcList( CircleArc const & C );
+
+    //! build a biarc list from a single biarc
     explicit BiarcList( Biarc const & C );
+
+    //! build a biarc list from a single polyline
     explicit BiarcList( PolyLine const & pl );
+
+    //! build a biarc list from another curve
     explicit BiarcList( BaseCurve const & C );
 
+    //! append a line segment to the biarc list (transformed to a degenerate biarc)
     void push_back( LineSegment const & c );
+
+    //! append a line circle to the biarc list (transformed to a degenerate biarc)
     void push_back( CircleArc const & c );
+
+    //! append a biarc to the biarc list
     void push_back( Biarc const & c );
+
+    //! append a polyline to the biarc list (transformed to a list of degenerate biarc)
     void push_back( PolyLine const & c );
 
+    /*!
+     * construct a biarc passing from the points
+     * \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+     * with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
+     * and append the biarc to the tail of biarc list.
+     * The initial point and angle is taken from the tail of the biarc list.
+     *
+     * \param[in] x1      \f$ x_1 \f$
+     * \param[in] y1      \f$ y_1 \f$
+     * \param[in] theta1  \f$ \theta_1 \f$
+     */
     void push_back_G1( real_type x1, real_type y1, real_type theta1 );
-    void push_back_G1( real_type x0, real_type y0, real_type theta0,
-                       real_type x1, real_type y1, real_type theta1 );
 
-    bool
-    build_G1(
-      int_type        n,
-      real_type const x[],
-      real_type const y[]
+    /*!
+     * construct a biarc passing from the points
+     * \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+     * with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
+     * and append the biarc to the tail of biarc list.
+     *
+     * \param[in] x0      \f$ x_0 \f$
+     * \param[in] y0      \f$ y_0 \f$
+     * \param[in] theta0  \f$ \theta_0 \f$
+     * \param[in] x1      \f$ x_1 \f$
+     * \param[in] y1      \f$ y_1 \f$
+     * \param[in] theta1  \f$ \theta_1 \f$
+     */
+    void
+    push_back_G1(
+      real_type x0, real_type y0, real_type theta0,
+      real_type x1, real_type y1, real_type theta1
     );
 
+    /*!
+     * construct a biarc list passing to the points \f$ (x_i,y_i) \f$.
+     *
+     * \param[in] n number of points
+     * \param[in] x x-coordinates
+     * \param[in] y y-coordinates
+     */
     bool
     build_G1(
-      int_type        n,
-      real_type const x[],
-      real_type const y[],
-      real_type const theta[]
+      int_type          n,
+      real_type const * x,
+      real_type const * y
     );
 
+    /*!
+     * construct a biarc list passing to the points \f$ (x_i,y_i) \f$
+     * with angles  \f$ \theta_i \f$
+     *
+     * \param[in] n     number of points
+     * \param[in] x     x-coordinates
+     * \param[in] y     y-coordinates
+     * \param[in] theta angles at nodes
+     */
+    bool
+    build_G1(
+      int_type          n,
+      real_type const * x,
+      real_type const * y,
+      real_type const * theta
+    );
+
+    //! get the `idx`-th biarc
     Biarc const & get( int_type idx ) const;
+
+    //! get the biarc that contain the curvilinear coordinate `s`
     Biarc const & getAtS( real_type s ) const;
 
+    //! return the number of biarc in the biarc list
     int_type numSegment() const { return int_type(m_biarcList.size()); }
 
-    int_type
-    findAtS( real_type & s ) const;
+    //! get the of the biarc that contain the curvilinear coordinate `s`
+    int_type findAtS( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
-    real_type
-    length() const UTILS_OVERRIDE;
+    real_type length() const override;
+    real_type length_ISO( real_type offs ) const override;
 
-    virtual
-    real_type
-    length_ISO( real_type offs ) const UTILS_OVERRIDE;
-
+    //! the length of the `nseg`-th biarc
     real_type
     segment_length( int_type nseg ) const;
 
+    //! the length of the `nseg`-th biarc with offset `offs`
     real_type
     segment_length_ISO( int_type nseg, real_type offs ) const;
 
@@ -184,28 +255,34 @@ namespace G2lib {
       real_type                 offs,
       std::vector<Triangle2D> & tvec,
       real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100
-    ) const;
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override;
 
     void
     bbTriangles_SAE(
       real_type                 offs,
       std::vector<Triangle2D> & tvec,
       real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100
-    ) const {
-      bbTriangles_ISO( -offs, tvec, max_angle, max_size );
-    }
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override;
 
     void
     bbTriangles(
       std::vector<Triangle2D> & tvec,
       real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100
-    ) const {
-      bbTriangles_ISO( 0, tvec, max_angle, max_size );
-    }
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override;
 
+    /*!
+     * Build the internal AABB tree of the biarc list with offset (ISO)
+     *
+     * \param[out] offs      curve offset
+     * \param[out] max_angle maximum angle variation of the arc covered by a triangle
+     * \param[out] max_size  maximum admissible size of the covering tirnagles
+     */
     void
     build_AABBtree_ISO(
       real_type offs,
@@ -213,6 +290,13 @@ namespace G2lib {
       real_type max_size  = 1e100
     ) const;
 
+    /*!
+     * Build the internal AABB tree of the biarc list with offset (SAE)
+     *
+     * \param[out] offs      curve offset
+     * \param[out] max_angle maximum angle variation of the arc covered by a triangle
+     * \param[out] max_size  maximum admissible size of the covering tirnagles
+     */
     void
     build_AABBtree_SAE(
       real_type offs,
@@ -230,18 +314,16 @@ namespace G2lib {
      |  |_.__/|_.__/ \___/_/\_\
     \*/
 
-    virtual
     void
     bbox(
       real_type & xmin,
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE {
+    ) const override {
       bbox_ISO( 0, xmin, ymin, xmax, ymax );
     }
 
-    virtual
     void
     bbox_ISO(
       real_type   offs,
@@ -249,7 +331,7 @@ namespace G2lib {
       real_type & ymin,
       real_type & xmax,
       real_type & ymax
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     /*\
      |   ____             _          _______           _
@@ -260,94 +342,76 @@ namespace G2lib {
      |              |___/
     \*/
 
-    virtual
     real_type
-    thetaBegin() const UTILS_OVERRIDE
+    thetaBegin() const override
     { return m_biarcList.front().thetaBegin(); }
 
-    virtual
     real_type
-    thetaEnd() const UTILS_OVERRIDE
+    thetaEnd() const override
     { return m_biarcList.back().thetaEnd(); }
 
-    virtual
     real_type
-    xBegin() const UTILS_OVERRIDE
+    xBegin() const override
     { return m_biarcList.front().xBegin(); }
 
-    virtual
     real_type
-    yBegin() const UTILS_OVERRIDE
+    yBegin() const override
     { return m_biarcList.front().yBegin(); }
 
-    virtual
     real_type
-    xEnd() const UTILS_OVERRIDE
+    xEnd() const override
     { return m_biarcList.back().xEnd(); }
 
-    virtual
     real_type
-    yEnd() const UTILS_OVERRIDE
+    yEnd() const override
     { return m_biarcList.back().yEnd(); }
 
-    virtual
     real_type
-    xBegin_ISO( real_type offs ) const UTILS_OVERRIDE
+    xBegin_ISO( real_type offs ) const override
     { return m_biarcList.front().xBegin_ISO( offs ); }
 
-    virtual
     real_type
-    yBegin_ISO( real_type offs ) const UTILS_OVERRIDE
+    yBegin_ISO( real_type offs ) const override
     { return m_biarcList.front().yBegin_ISO( offs ); }
 
-    virtual
     real_type
-    xEnd_ISO( real_type offs ) const UTILS_OVERRIDE
+    xEnd_ISO( real_type offs ) const override
     { return m_biarcList.back().xEnd_ISO( offs ); }
 
-    virtual
     real_type
-    yEnd_ISO( real_type offs ) const UTILS_OVERRIDE
+    yEnd_ISO( real_type offs ) const override
     { return m_biarcList.back().yEnd_ISO( offs ); }
 
-    virtual
     real_type
-    tx_Begin() const UTILS_OVERRIDE
+    tx_Begin() const override
     { return m_biarcList.front().tx_Begin(); }
 
-    virtual
     real_type
-    ty_Begin() const UTILS_OVERRIDE
+    ty_Begin() const override
     { return m_biarcList.front().ty_Begin(); }
 
-    virtual
     real_type
-    tx_End() const UTILS_OVERRIDE
+    tx_End() const override
     { return m_biarcList.back().tx_End(); }
 
-    virtual
     real_type
-    ty_End() const UTILS_OVERRIDE
+    ty_End() const override
     { return m_biarcList.back().ty_End(); }
 
-    virtual
     real_type
-    nx_Begin_ISO() const UTILS_OVERRIDE
+    nx_Begin_ISO() const override
     { return m_biarcList.front().nx_Begin_ISO(); }
 
-    virtual
     real_type
-    ny_Begin_ISO() const UTILS_OVERRIDE
+    ny_Begin_ISO() const override
     { return m_biarcList.front().ny_Begin_ISO(); }
 
-    virtual
     real_type
-    nx_End_ISO() const UTILS_OVERRIDE
+    nx_End_ISO() const override
     { return m_biarcList.back().nx_End_ISO(); }
 
-    virtual
     real_type
-    ny_End_ISO() const UTILS_OVERRIDE
+    ny_End_ISO() const override
     { return m_biarcList.back().ny_End_ISO(); }
 
     /*\
@@ -358,10 +422,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual real_type theta( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type theta_D( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type theta_DD( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type theta_DDD( real_type s ) const UTILS_OVERRIDE;
+    real_type theta    ( real_type ) const override;
+    real_type theta_D  ( real_type ) const override;
+    real_type theta_DD ( real_type ) const override;
+    real_type theta_DDD( real_type ) const override;
 
     /*\
      |  _____                   _   _   _
@@ -371,52 +435,47 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    virtual real_type tx( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type ty( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type tx_D( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type ty_D( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type tx_DD( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type ty_DD( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type tx_DDD( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type ty_DDD( real_type s ) const UTILS_OVERRIDE;
+    real_type tx    ( real_type ) const override;
+    real_type ty    ( real_type ) const override;
+    real_type tx_D  ( real_type ) const override;
+    real_type ty_D  ( real_type ) const override;
+    real_type tx_DD ( real_type ) const override;
+    real_type ty_DD ( real_type ) const override;
+    real_type tx_DDD( real_type ) const override;
+    real_type ty_DDD( real_type ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     tg(
       real_type   s,
       real_type & tg_x,
       real_type & tg_y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     tg_D(
       real_type   s,
       real_type & tg_x_D,
       real_type & tg_y_D
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     tg_DD(
       real_type   s,
       real_type & tg_x_DD,
       real_type & tg_y_DD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     tg_DDD(
       real_type   s,
       real_type & tg_x_DDD,
       real_type & tg_y_DDD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     evaluate(
       real_type   s,
@@ -424,11 +483,10 @@ namespace G2lib {
       real_type & k,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     evaluate_ISO(
       real_type   s,
@@ -437,52 +495,48 @@ namespace G2lib {
       real_type & k,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual real_type X( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type Y( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type X_D( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type Y_D( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type X_DD( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type Y_DD( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type X_DDD( real_type s ) const UTILS_OVERRIDE;
-    virtual real_type Y_DDD( real_type s ) const UTILS_OVERRIDE;
+    real_type X    ( real_type ) const override;
+    real_type Y    ( real_type ) const override;
+    real_type X_D  ( real_type ) const override;
+    real_type Y_D  ( real_type ) const override;
+    real_type X_DD ( real_type ) const override;
+    real_type Y_DD ( real_type ) const override;
+    real_type X_DDD( real_type ) const override;
+    real_type Y_DDD( real_type ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     eval(
       real_type   s,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     eval_D(
       real_type   s,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     eval_DD(
       real_type   s,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     eval_DDD(
       real_type   s,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     /*\
      |         __  __          _
@@ -492,75 +546,48 @@ namespace G2lib {
      |  \___/|_| |_| |___/\___|\__|
     \*/
 
-    virtual
-    real_type
-    X_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE;
-
-    virtual
-    real_type
-    Y_ISO( real_type s, real_type offs ) const UTILS_OVERRIDE;
-
-    virtual
-    real_type
-    X_ISO_D( real_type s, real_type offs ) const UTILS_OVERRIDE;
-
-    virtual
-    real_type
-    Y_ISO_D( real_type s, real_type offs ) const UTILS_OVERRIDE;
-
-    virtual
-    real_type
-    X_ISO_DD( real_type s, real_type offs ) const UTILS_OVERRIDE;
-
-    virtual
-    real_type
-    Y_ISO_DD( real_type s, real_type offs ) const UTILS_OVERRIDE;
-
-    virtual
-    real_type
-    X_ISO_DDD( real_type s, real_type offs ) const UTILS_OVERRIDE;
-
-    virtual
-    real_type
-    Y_ISO_DDD( real_type s, real_type offs ) const UTILS_OVERRIDE;
+    real_type X_ISO    ( real_type s, real_type offs ) const override;
+    real_type Y_ISO    ( real_type s, real_type offs ) const override;
+    real_type X_ISO_D  ( real_type s, real_type offs ) const override;
+    real_type Y_ISO_D  ( real_type s, real_type offs ) const override;
+    real_type X_ISO_DD ( real_type s, real_type offs ) const override;
+    real_type Y_ISO_DD ( real_type s, real_type offs ) const override;
+    real_type X_ISO_DDD( real_type s, real_type offs ) const override;
+    real_type Y_ISO_DDD( real_type s, real_type offs ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     eval_ISO(
       real_type   s,
       real_type   offs,
       real_type & x,
       real_type & y
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     eval_ISO_D(
       real_type   s,
       real_type   offs,
       real_type & x_D,
       real_type & y_D
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     eval_ISO_DD(
       real_type   s,
       real_type   offs,
       real_type & x_DD,
       real_type & y_DD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
     eval_ISO_DDD(
       real_type   s,
       real_type   offs,
       real_type & x_DDD,
       real_type & y_DDD
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
     /*\
      |  _                        __
@@ -570,29 +597,12 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    virtual
-    void
-    translate( real_type tx, real_type ty ) UTILS_OVERRIDE;
-
-    virtual
-    void
-    rotate( real_type angle, real_type cx, real_type cy ) UTILS_OVERRIDE;
-
-    virtual
-    void
-    scale( real_type sc ) UTILS_OVERRIDE;
-
-    virtual
-    void
-    reverse() UTILS_OVERRIDE;
-
-    virtual
-    void
-    changeOrigin( real_type newx0, real_type newy0 ) UTILS_OVERRIDE;
-
-    virtual
-    void
-    trim( real_type s_begin, real_type s_end ) UTILS_OVERRIDE;
+    void translate( real_type tx, real_type ty ) override;
+    void rotate( real_type angle, real_type cx, real_type cy ) override;
+    void scale( real_type sc ) override;
+    void reverse() override;
+    void changeOrigin( real_type newx0, real_type newy0 ) override;
+    void trim( real_type s_begin, real_type s_end ) override;
 
     /*\
      |      _ _     _
@@ -602,19 +612,6 @@ namespace G2lib {
      |  \__,_|_|___/\__\__,_|_| |_|\___\___|
     \*/
 
-    /*!
-     * \param  qx  x-coordinate of the point
-     * \param  qy  y-coordinate of the point
-     * \param  x   x-coordinate of the projected point on the curve
-     * \param  y   y-coordinate of the projected point on the curve
-     * \param  s   parameter on the curve of the projection
-     * \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     * \param  dst distance point projected point
-     * \return 1 = point is projected orthogonal
-     *         0 = more than one projection (first returned)
-     *        -1 = minimum point is not othogonal projection to curve
-     */
-    virtual
     int_type
     closestPoint_ISO(
       real_type   qx,
@@ -624,22 +621,8 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    /*!
-     *  \param  qx  x-coordinate of the point
-     *  \param  qy  y-coordinate of the point
-     *  \param  offs offset of the curve
-     *  \param  x   x-coordinate of the projected point on the curve
-     *  \param  y   y-coordinate of the projected point on the curve
-     *  \param  s   parameter on the curve of the projection
-     *  \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-     *  \param  dst distance point projected point
-     *  \return 1 = point is projected orthogonal
-     *          0 = more than one projection (first returned)
-     *         -1 = minimum point is not othogonal projection to curve
-     */
-    virtual
     int_type // true if projection is unique and orthogonal
     closestPoint_ISO(
       real_type   qx,
@@ -650,26 +633,41 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst
-    ) const UTILS_OVERRIDE;
+    ) const override;
 
-    virtual
     void
-    info( ostream_type & stream ) const UTILS_OVERRIDE
+    info( ostream_type & stream ) const override
     { stream << "BiarcList\n" << *this << '\n'; }
 
+    //! pretty print the biarc list
     friend
     ostream_type &
     operator << ( ostream_type & stream, BiarcList const & CL );
 
+    /*!
+     * Return the biarc as a list of nodes angles and curvatures
+     *
+     * \param[out] s     nodes
+     * \param[out] theta angles
+     * \param[out] kappa curvature
+     *
+     */
     void
     getSTK(
-      real_type s[],
-      real_type theta[],
-      real_type kappa[]
+      real_type * s,
+      real_type * theta,
+      real_type * kappa
     ) const;
 
+    /*!
+     * Return the biarc XY nodes
+     *
+     * \param[out] x x-nodes
+     * \param[out] y y-nodes
+     *
+     */
     void
-    getXY( real_type x[], real_type y[] ) const;
+    getXY( real_type * x, real_type * y ) const;
 
     /*!
      *  \brief Find parametric coordinate.
@@ -720,9 +718,17 @@ namespace G2lib {
      |   \___\___/|_|_|_|___/_|\___/|_| |_|
     \*/
 
+    //! detect a collision with another biarc list
     bool
     collision( BiarcList const & C ) const;
 
+    /*!
+     * detect a collision with another biarc list with offset
+     *
+     * \param[in] offs   offset of first biarc
+     * \param[in] CL     second biarc
+     * \param[in] offs_C offset of second biarc
+     */
     bool
     collision_ISO(
       real_type         offs,
@@ -738,6 +744,14 @@ namespace G2lib {
      |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
     \*/
 
+    /*!
+     * intersect a biarc list with another biarc list
+     *
+     * \param[in]  CL          second biarc
+     * \param[out] ilist       list of the intersection (as parameter on the curves)
+     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+     *                         intersection
+     */
     void
     intersect(
       BiarcList const & CL,
@@ -747,6 +761,16 @@ namespace G2lib {
       intersect_ISO( 0, CL, 0, ilist, swap_s_vals );
     }
 
+    /*!
+     * intersect a biarc list with another biarc list with offset (ISO)
+     *
+     * \param[in]  offs        offset of first biarc
+     * \param[in]  CL          second biarc
+     * \param[in]  offs_obj    offset of second biarc
+     * \param[out] ilist       list of the intersection (as parameter on the curves)
+     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+     *                         intersection
+     */
     void
     intersect_ISO(
       real_type         offs,

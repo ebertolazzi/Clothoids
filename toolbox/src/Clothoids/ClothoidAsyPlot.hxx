@@ -18,8 +18,6 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//! Clothoid computations routine
-
 namespace G2lib {
 
   using std::string;

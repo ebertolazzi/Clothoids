@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a33af202f949766ed84cf69aab3a30177:
+
+Function G2lib::collision
+=========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib_intersect.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::collision(BaseCurve const&, BaseCurve const&)

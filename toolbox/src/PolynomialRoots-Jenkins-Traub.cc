@@ -49,9 +49,13 @@
 #include <cfloat>
 #include <limits>
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 using namespace std;
+#endif
 
 namespace PolynomialRoots {
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   using std::abs;
   using std::pow;
@@ -668,13 +672,15 @@ namespace PolynomialRoots {
     }
   }
 
+  #endif
+
   //============================================================================
   int
   roots(
-    valueType const op[],
-    indexType       Degree,
-    valueType       zeror[],
-    valueType       zeroi[]
+    valueType const * op,
+    indexType         Degree,
+    valueType       * zeror,
+    valueType       * zeroi
   ) {
 
     if ( Degree < 1 ) return -1;

@@ -66,6 +66,16 @@ namespace G2lib {
 
   public:
 
+    /*!
+     * Construct a bounding box with additional information
+     *
+     * \param[in] xmin x-minimimum box coordinate 
+     * \param[in] ymin y-minimimum box coordinate 
+     * \param[in] xmax x-maximum box coordinate 
+     * \param[in] ymax y-maximum box coordinate
+     * \param[in] id   identifier of the box
+     * \param[in] ipos ranking position of the box
+     */
     BBox(
       real_type xmin,
       real_type ymin,
@@ -82,6 +92,13 @@ namespace G2lib {
       m_ipos = ipos;
     }
 
+    /*!
+     * Build a buonding box that cover a list of bounding box
+     *
+     * \param[in] bboxes list of bounding box 
+     * \param[in] id     identifier of the box
+     * \param[in] ipos   ranking position of the box
+     */
     BBox(
       vector<PtrBBox> const & bboxes,
       int_type                id,
@@ -94,14 +111,15 @@ namespace G2lib {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    real_type Xmin() const { return m_xmin; }
-    real_type Ymin() const { return m_ymin; }
-    real_type Xmax() const { return m_xmax; }
-    real_type Ymax() const { return m_ymax; }
+    real_type Xmin() const { return m_xmin; } //!< x-minimum coordinate of the bbox
+    real_type Ymin() const { return m_ymin; } //!< y-minimum coordinate of the bbox
+    real_type Xmax() const { return m_xmax; } //!< x-maximum coordinate of the bbox
+    real_type Ymax() const { return m_ymax; } //!< y-maximum coordinate of the bbox
 
     int_type const & Id()   const { return m_id; }   //!< return BBOX id
     int_type const & Ipos() const { return m_ipos; } //!< return BBOX position
 
+    //! copy a bbox
     BBox const &
     operator = ( BBox const & rhs ) {
       m_xmin = rhs.m_xmin;
@@ -134,6 +152,7 @@ namespace G2lib {
     real_type
     maxDistance( real_type x, real_type y ) const;
 
+    //! pretty print a bbox
     void
     print( ostream_type & stream ) const {
       fmt::print( stream,
@@ -145,6 +164,7 @@ namespace G2lib {
     friend class AABBtree;
   };
 
+  //! pretty print a bbox
   inline
   ostream_type &
   operator << ( ostream_type & stream, BBox const & bb ) {
@@ -159,7 +179,16 @@ namespace G2lib {
    |   / ___ \  / ___ \| |_) | |_) | |_| | |  __/  __/
    |  /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
-  //! Class to manage AABB tree
+  /*!
+   *  Class to build and manage an AABB tree (Axis-Aligned Bounding Box Trees)
+   *
+   *  The class provides 2-dimensional aabb-tree construction and search
+   *  for arbitrary collections of spatial objects.
+   *  These tree-based indexing structures are useful when seeking to implement
+   *  efficient spatial queries, reducing the complexity of intersection tests
+   *  between collections of objects.
+   *
+   */
   class AABBtree {
   public:
 
@@ -185,7 +214,14 @@ namespace G2lib {
 
     /*!
      * Compute the minimum of the maximum distance
-     * between a point
+     * between a point and the bbox contained in the `AABBtree`
+     *
+     * \param[in] x      x-coordinate of the point
+     * \param[in] y      y-coordinate of the point
+     * \param[in] tree   `AABBtree` with the bboxes
+     * \param[in] mmDist initial value of the minimum of the maximum distance
+     *                   used in the recursive call. 
+     *
      */
     static
     real_type
@@ -197,7 +233,14 @@ namespace G2lib {
     );
 
     /*!
-     * Select the candidate which bbox have distance less than mmDist
+     * Select the candidate bboxes which have distance less than mmDist
+     *
+     * \param[in]  x      x-coordinate of the point
+     * \param[in]  y      y-coordinate of the point
+     * \param[in]  mmDist minimum distance used  for the selection of bboxes
+     * \param[in]  tree   `AABBtree` with the bbox's
+     * \param[out] candidateList  list of bbox which have minim distance less than `mmDist`
+     *
      */
     static
     void
@@ -211,14 +254,8 @@ namespace G2lib {
 
   public:
 
-    AABBtree();
-    ~AABBtree();
-
-    // copy contructor (recursive)
-    //AABBtree( PtrBBox const & pbox ) {
-    //  this -> pBBox = pbox;
-    //  children.clear();
-    //}
+    AABBtree(); //! Create an empty AABB tree
+    ~AABBtree(); //! destroy the stored AABB tree
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -226,6 +263,14 @@ namespace G2lib {
 
     bool empty() const; //!< check if AABB tree is empty
 
+    /*!
+     * Initialize the AABB tree woth a bbox
+     *
+     * \param[in] xmin x-minimimum box coordinate 
+     * \param[in] ymin y-minimimum box coordinate 
+     * \param[in] xmax x-maximum box coordinate 
+     * \param[in] ymax y-maximum box coordinate
+     */
     void
     bbox(
       real_type & xmin,
@@ -243,6 +288,7 @@ namespace G2lib {
     void
     build( vector<PtrBBox> const & bboxes );
 
+    //! pretty print the AABB tree
     void
     print( ostream_type & stream, int level = 0 ) const;
 
@@ -310,7 +356,6 @@ namespace G2lib {
      * \param[in]  swap_tree        if true exchange the tree in computation
      *
      */
-
     void
     intersect(
       AABBtree const & tree,
@@ -318,6 +363,14 @@ namespace G2lib {
       bool             swap_tree = false
     ) const;
 
+    /*!
+     * Select all the bboxes candidate to be at minimum distance
+     *
+     * \param[in]  x             x-coordinate of the point
+     * \param[in]  y             y-coordinate of the point
+     * \param[out] candidateList candidate list
+     *
+     */
     void
     min_distance(
       real_type    x,

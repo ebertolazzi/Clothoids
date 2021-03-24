@@ -1,268 +1,71 @@
-<!doctype html>
-<html class="no-js">
-  <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
-    <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
-        <title>File PolyLine.cc - Clothoids documentation</title>
-      <link rel="stylesheet" href="../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
-    <link rel="stylesheet" href="../_static/pygments.css">
-    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../_static/pygments_dark.css">
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File PolyLine.cc &#8212; Clothoids  documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
     
 
-
-<style>
-  :root {
-    --color-code-background: #eeffcc;
-  --color-code-foreground: black;
-  
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-    }
-  }
-
-  /* For allowing end-user-specific overrides */
-  .override-light {
-    --color-code-background: #eeffcc;
-  --color-code-foreground: black;
-  
-  }
-  .override-dark {
-    --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-  }
-</style><link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
-    <link rel="stylesheet" href="../_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
-  <body dir="">
     
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-  <symbol id="svg-toc" viewBox="0 0 24 24">
-    <title>Contents</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z"/>
-      <line x1="4" y1="6" x2="20" y2="6" />
-      <line x1="10" y1="12" x2="20" y2="12" />
-      <line x1="6" y1="18" x2="20" y2="18" />
-    </svg>
-  </symbol>
-  <symbol id="svg-menu" viewBox="0 0 24 24">
-    <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-      class="feather feather-menu">
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </symbol>
-  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
-    <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-      class="feather feather-chevron-right">
-      <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-  </symbol>
-</svg>
+     
+        <script src="../_static/cloud.base.js"></script>
+    
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
-<label class="overlay sidebar-overlay" for="__navigation"></label>
-<label class="overlay toc-overlay" for="__toc"></label>
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
 
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids  documentation</a> &#187;</li>
 
-
-<div class="page">
-  <header class="mobile-header">
-    <div class="header-left">
-      <label class="nav-overlay-icon" for="__navigation">
-        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
-      </label>
+        <li class="nav-item nav-item-this"><a href="">File PolyLine.cc</a></li> 
+      </ul>
     </div>
-    <div class="header-center">
-      <a href="../index.html"><div class="brand">Clothoids  documentation</div></a>
     </div>
-    <div class="header-right">
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
-      </label>
-    </div>
-  </header>
-  <aside class="sidebar-drawer">
-    <div class="sidebar-container">
-      
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
   
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
-  </div>
-  
-  <span class="sidebar-brand-text">Clothoids  documentation</span>
-  
-</a><form class="sidebar-search-container" method="get" action="../search.html">
-  <input class="sidebar-search" placeholder=Search name="q">
-  <input type="hidden" name="check_keywords" value="yes">
-  <input type="hidden" name="area" value="default">
-</form><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Clothoids</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../manual.html">Matlab Interface</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="library_root.html">Clothoids API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="namespace_G2lib.html">Namespace G2lib</a></li>
-<li class="toctree-l2"><a class="reference internal" href="struct_g2lib_1_1_l__struct.html">Struct L_struct</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_a_a_b_btree.html">Class AABBtree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_asy_plot.html">Class AsyPlot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_base_curve.html">Class BaseCurve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_b_box.html">Class BBox</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_biarc.html">Class Biarc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_biarc_list.html">Class BiarcList</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_biarc_list_1_1_t2_d__collision__list___i_s_o.html">Class BiarcList::T2D_collision_list_ISO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_circle_arc.html">Class CircleArc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_clothoid_curve.html">Class ClothoidCurve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_clothoid_curve_1_1_t2_d__approximate__collision.html">Class ClothoidCurve::T2D_approximate_collision</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_clothoid_curve_1_1_t2_d__collision___i_s_o.html">Class ClothoidCurve::T2D_collision_ISO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_clothoid_data.html">Class ClothoidData</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_clothoid_list.html">Class ClothoidList</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_clothoid_list_1_1_t2_d__collision__list___i_s_o.html">Class ClothoidList::T2D_collision_list_ISO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_clothoid_spline_g2.html">Class ClothoidSplineG2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_g2solve2arc.html">Class G2solve2arc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_g2solve3arc.html">Class G2solve3arc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_g2solve_c_l_c.html">Class G2solveCLC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_line_segment.html">Class LineSegment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_poly_line.html">Class PolyLine</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_poly_line_1_1_collision__list.html">Class PolyLine::Collision_list</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_solve2x2.html">Class Solve2x2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_g2lib_1_1_triangle2_d.html">Class Triangle2D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="enum_namespace_g2lib_1a007dea27057008224e9da69eaeca8606.html">Enum CurveType</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a183a0c583b28b354dfedd41c2315215d.html">Function G2lib::Atanc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a6ada25fa357745488e20ff7bd0255618.html">Function G2lib::Atanc_D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a55510725fbdbf64c08caf12f9d176c07.html">Function G2lib::Atanc_DD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa53cc452bfa99b0dd45c293908b249af.html">Function G2lib::Atanc_DDD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a381cfd8479ff4a14bdc4556166b2ceb6.html">Function G2lib::build_guess_theta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ae4e052b0263a7a2446ad02bfa6b2b328.html">Function G2lib::closestPoint1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a2d45cc29039fad7437a291c6f11a40d6.html">Function G2lib::closestPointQC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ac37fc34bc27e327e7b51f3b1f0ba31d1.html">Function G2lib::closestPointQC1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a559958c386dc5cc29c1d726dd6538b07.html">Function G2lib::closestPointQC2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a1360daa77c1b32f65c9195e140e6fc75.html">Function G2lib::closestPointStandard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a176443a6b8df3566b3313614eaa17aaf.html">Function G2lib::closestPointStandard2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aeb759b9547a3b75dd2e79479ff5725d8.html">Function G2lib::closestPointStandard3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a929fed6c39693ebc46a9ef1c08769453.html">Function G2lib::collision(BaseCurve const&amp;, BaseCurve const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a2d8029a2b6a851eed7612ac1a02eb507.html">Function G2lib::collision(real_type, L_struct const&amp;, L_struct const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1af07c5fd5394d761c08c1297499507796.html">Function G2lib::collision_ISO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa5b1fe23ac7694a14290b292fe657cd2.html">Function G2lib::collision_SAE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a82e764546334f9d2d80b1e521a4fe3a6.html">Function G2lib::Cosc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1af9de260759466230f940d53063897600.html">Function G2lib::Cosc_D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa8f28482bc67d4b6ce49530bb0078de3.html">Function G2lib::Cosc_DD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a89ccf86189fec419856197ea04e2c3a4.html">Function G2lib::Cosc_DDD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a71522e915c9606070b8ddf5297d7e1b2.html">Function G2lib::distSeg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1abaebb139cf4fdc624b1ccb7dd4e89d3a.html">Function G2lib::evalXYaLarge(real_type, real_type, real_type&amp;, real_type&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a107bd1d818f054cd9e549d363c758c5b.html">Function G2lib::evalXYaLarge(int_type, real_type, real_type, real_type, real_type)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a7d90c6ed120392b31b52fe8bd9e0db5f.html">Function G2lib::evalXYaSmall(real_type, real_type, int_type, real_type&amp;, real_type&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a76c7263fd1bf8a016391d3dc2c564f3c.html">Function G2lib::evalXYaSmall(int_type, real_type, real_type, int_type, real_type, real_type)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a737cb704d1c89ab2225a49b93eb45e97.html">Function G2lib::evalXYazero</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ac60e2aca66d163827dce4c91f99584b9.html">Function G2lib::FresnelCS(real_type, real_type&amp;, real_type&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a20623a029977ac87bcf4fb3ff5d1b044.html">Function G2lib::FresnelCS(int_type, real_type, real_type, real_type)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a8546dab6d8c2ac2db8e518ca8c0189b6.html">Function G2lib::GeneralizedFresnelCS(int_type, real_type, real_type, real_type, real_type, real_type)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aac7328b3a4cc85ef6e27524f3fbdcfa7.html">Function G2lib::GeneralizedFresnelCS(real_type, real_type, real_type, real_type&amp;, real_type&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ae9bc88d2300abf2d8eceeddddb422bf4.html">Function G2lib::intersect(BaseCurve const&amp;, BaseCurve const&amp;, IntersectList&amp;, bool)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ae20fb9f50c66bd0677fd9af8f9f38956.html">Function G2lib::intersect(real_type, L_struct const&amp;, L_struct const&amp;, real_type&amp;, real_type&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a592833ffa284d4724feea8f78a65e07b.html">Function G2lib::intersect_ISO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1acdd344ff0a709df517956fc2e0545b2f.html">Function G2lib::intersect_SAE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ab7b6fbe4ec0be674223208ff74d6fdf0.html">Function G2lib::intersectCircleCircle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a1d55faa262050bdb533c6e3c834ad4e5.html">Function G2lib::intersection_test_edge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ac389d59744cdee548b6ac181e094b545.html">Function G2lib::intersection_test_vertex</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa916fcc9a5e3c74d9a0530cd68e7cca4.html">Function G2lib::invCoscSinc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a88de228b2a495966119d0f69c3c4b27a.html">Function G2lib::isCounterClockwise</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ae553d72088277892693eb7a0ce5982a7.html">Function G2lib::isPointInTriangle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a43b76debcc6247f6af99f3c3c1f0c003.html">Function G2lib::kappa_fun</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a4ded2a28c33f58b43f376df6661e48e9.html">Function G2lib::load_segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a37163aa773926b21dec85ed79eade78b.html">Function G2lib::LommelReduced</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a51ffa4f56f1d8a5a44e44bc9d1bf0409.html">Function G2lib::maxabs3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1adcb636fc9381075c0ce6750a07f15a41.html">Function G2lib::minmax3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1adcfc7269a46eeddf3be4a593a7d45a38.html">Function G2lib::noAABBtree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a3b7b682cdd6cadfa9120f826946e15f3.html">Function G2lib::onSegment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa57348d683f260251202e4fe1e7c6ff1.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, Biarc const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aeb13c5c70ad2e0ba0935401b2b64fc0b.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, BiarcList const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aae7c4fbfe193e70d5dce17e0f2e177b6.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, CircleArc const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a9918cdf0f8b490f346237606e069d367.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, ClothoidCurve const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a61aab8843b4b24378f44f55b65dcb424.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, ClothoidSplineG2 const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a55711e76ab48e7998d69dcbebb7577e9.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, ClothoidList const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a71b4db32cfdab9a94bf3706eb7ff8d25.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, BBox const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a93332a83835beb3d4b71a5d46dc2342f.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, LineSegment const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a41280286acf1693170e3fc04361e4596.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, PolyLine const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a44688b8da06cbbc5707f30c5592bef68.html">Function G2lib::operator&lt;&lt;(ostream_type&amp;, Triangle2D const&amp;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a50255292803bae70bc617feeb8a4b2f4.html">Function G2lib::orient_2d</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ac2a2468c0efc1809385d32b0a81d8c2d.html">Function G2lib::orientation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a787008f61e79e40319f40bdc503f3136.html">Function G2lib::pointInsideCircle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a3690ed005b0bb8ae171327db638475d6.html">Function G2lib::power2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1add9cab2421632e3b5e561e85a54eef2f.html">Function G2lib::power3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a2b77e9f33f91a89080ef514e71b045b7.html">Function G2lib::power4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a5d9cfcb48d1668fa1242817c66be1fc6.html">Function G2lib::projectPointOnCircle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa92f4989ea2cf7a69ff29ac55c883376.html">Function G2lib::projectPointOnCircleArc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1abc9c3785c7a557566cf1545ada4449f5.html">Function G2lib::rangeSymm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a869afcaa69d20095b3a24e02a51e9c54.html">Function G2lib::save_segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ac29a2a307e14741ba819a34c20042b19.html">Function G2lib::Sinc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1ab7ac7a6362cda3cffee0380891e51dfe.html">Function G2lib::Sinc_D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a8fa380912bce49eb914ae7394189ceca.html">Function G2lib::Sinc_DD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a0786f69f32e0ebf3b2610176b11421f4.html">Function G2lib::Sinc_DDD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a24c7fa695bae2b0fa600f5222787f9f4.html">Function G2lib::solveLinearQuadratic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa5ff7885022c12377dc2368a29ec6300.html">Function G2lib::solveLinearQuadratic2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a5a2326602509847f39e72d38733a9bb4.html">Function G2lib::solveNLsysCircleCircle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a73f02c5ca90f9246dc5d39a8f12fff15.html">Function G2lib::theta_guess</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a1137f20520e6e81db677cea42582927d.html">Function G2lib::tri_tri_intersection_2d</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a58f82818d25f746107ba97e6595e72af.html">Function G2lib::tri_tri_overlap_test_2d</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1a99605f1c8d283e9d153baccad8ea5d5e.html">Function G2lib::xy_to_guess_angle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_g2lib_1aa33f87b2d769488fe4d44977f483f91f.html">Function G2lib::yesAABBtree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a751862146b0c324e5332dc1d2d857844.html">Variable G2lib::CurveType_name</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a0aadafb02e925a06fe9e67ffc29fc52c.html">Variable G2lib::fd</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1ac805fb06cc3d7b2d17f3133870ca903f.html">Variable G2lib::fn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1af62818905b5d95b6dd48cb87454e2a49.html">Variable G2lib::gd</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1ad5e2571d40de2574f0d5fa4387369fd5.html">Variable G2lib::gn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a9dffa46caf9c48cdcd999c622afc603b.html">Variable G2lib::intersect_with_AABBtree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a08f32c5c51c4a6b2b0efead3fb3e4c09.html">Variable G2lib::m_1_sqrt_pi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a52168d5b18a538ddc253a6312ad66dcc.html">Variable G2lib::machepsi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1acda98ce6a898c41b04dca92463d0ad36.html">Variable G2lib::machepsi10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1aa984f006d89005342e9f6980bc953a9f.html">Variable G2lib::machepsi100</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a46a2dec11af044795b66d1eb94c19eef.html">Variable G2lib::machepsi1000</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1aa13584dd376c58ca552840aee08ab83c.html">Variable G2lib::one_degree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a806fcbc60872c0ae0d05d05084cc5f52.html">Variable G2lib::promote_map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_namespace_g2lib_1a1ef169ad1a593d65dbd27df6c01b3e47.html">Variable G2lib::sqrtMachepsi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="define__fresnel_8cc_1a9be5412a42aadfc00a352f7055f73f54.html">Define A_SERIE_SIZE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="define__fresnel_8cc_1aeb6f1b8dbc03491de4146824ffe061ca.html">Define A_THRESOLD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="define__clothoids_8hh_1ad3b2b8f6737fe03a8b92631f17344d5b.html">Define CLOTHOIDS_dot_HH</a></li>
-<li class="toctree-l2"><a class="reference internal" href="define__clothoids_8hh_1a63bbd8df6d42adcde1ee08612a004742.html">Define G2LIB_USE_CXX11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1ac4de9d9335536ac22821171deec8d39e.html">Typedef G2lib::int_type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1adb39ffb3833d85c2ec1bdef7650f484f.html">Typedef G2lib::IntersectList</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1af3c8c0999280867543e48072869f0276.html">Typedef G2lib::Ipair</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1aac48718e563eca7cdb2998e651b02977.html">Typedef G2lib::istream_type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1a75cc52cbb842435c9019b9b48238b904.html">Typedef G2lib::LS_dist_type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1a49e3e5bd9229de6b3203d3b72eee2ef4.html">Typedef G2lib::ostream_type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1a064d224aea6b2fb81e1e88cca2b3b62f.html">Typedef G2lib::Ppair</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html">Typedef G2lib::real_type</a></li>
-</ul>
-</li>
-</ul>
 
-</div>
-</div>
-      </div>
-      
-    </div>
-  </aside>
-  <main class="main">
-    <div class="content">
-      <article role="main">
-        <label class="toc-overlay-icon toc-content-icon" for="__toc">
-          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
-        </label>
-        <div class="section" id="file-polyline-cc">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="file-polyline-cc">
 <span id="file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-clothoids-src-polyline-cc"></span><h1>File PolyLine.cc<a class="headerlink" href="#file-polyline-cc" title="Permalink to this headline">¶</a>
 </h1>
 <p>↰ <a class="reference internal" href="dir__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Clothoids_src.html#dir-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-clothoids-src"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src</span></code>)</p>
@@ -316,42 +119,19 @@
 </div>
 </div>
 
-      </article>
-      <footer>
-        
-        <div class="related-pages">
-          
-          
-        </div>
 
-        <div class="related-information">
-              Copyright &#169; 2021, Enrico Bertolazzi and Marco Frego
-            |
-            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
-              and
-              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
-              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
-            |
-            <a class="muted-link" href="../_sources/api/file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_PolyLine.cc.rst.txt"
-               rel="nofollow">
-              Show Source
-            </a>
+
+            <div class="clearer"></div>
+          </div>
         </div>
-        
-      </footer>
-    </div>
-    <aside class="toc-drawer">
-      
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            Contents
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">File PolyLine.cc</a><ul>
 <li><a class="reference internal" href="#definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-clothoids-src-polyline-cc">Definition (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src/PolyLine.cc</span></code>)</a></li>
 <li><a class="reference internal" href="#includes">Includes</a></li>
@@ -362,19 +142,67 @@
 </li>
 </ul>
 
-          </div>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_PolyLine.cc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
-      
-      
-    </aside>
-  </main>
-</div>
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
-    <script src="../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids  documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">File PolyLine.cc</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
 </html>

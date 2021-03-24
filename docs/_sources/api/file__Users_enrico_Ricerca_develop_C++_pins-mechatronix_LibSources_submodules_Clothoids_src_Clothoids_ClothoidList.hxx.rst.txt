@@ -55,8 +55,6 @@ Classes
 
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_list`
 
-- :ref:`exhale_class_class_g2lib_1_1_clothoid_list_1_1_t2_d__collision__list___i_s_o`
-
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_spline_g2`
 
 - :ref:`exhale_class_class_g2lib_1_1_g2solve2arc`

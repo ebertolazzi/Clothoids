@@ -862,10 +862,10 @@ namespace G2lib {
 
   bool
   build_guess_theta(
-    int_type        n,
-    real_type const x[],
-    real_type const y[],
-    real_type       theta[]
+    int_type          n,
+    real_type const * x,
+    real_type const * y,
+    real_type       * theta
   ) {
     UTILS_ASSERT0(
       n > 1, "build_guess_theta, at least 2 points are necessary\n"

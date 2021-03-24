@@ -25,6 +25,9 @@ for kkk=1:nFile
       fprintf('\n\n\n\n\n\n==============================================\n');
       fprintf('test file: %s\n',file);
       fprintf('==============================================\n\n');
+      pause;
+      disp(kkk);
+      close all;
       run(name);
       success(kkk) = true;
       fprintf('test file: %s done\n',file);

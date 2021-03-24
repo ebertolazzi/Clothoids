@@ -75,6 +75,7 @@ function test_2_Omega
     title('Biarc List test');
     axis equal;
   end
+  set(0,'DefaultFigureWindowStyle','normal')
 end
 %%%
 function [ res, G ] = Target( theta, omega, d )

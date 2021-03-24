@@ -59,6 +59,7 @@ Program Listing for File BiarcList.hxx
        mutable real_type          m_aabb_max_size;
        mutable vector<Triangle2D> m_aabb_tri;
    
+       #ifndef DOXYGEN_SHOULD_SKIP_THIS
        class T2D_collision_list_ISO {
          BiarcList const * m_pList1;
          real_type const   m_offs1;
@@ -86,6 +87,7 @@ Program Listing for File BiarcList.hxx
            return C1.collision_ISO( m_offs1, C2, m_offs2 );
          }
        };
+       #endif
    
        void
        resetLastInterval() {
@@ -98,79 +100,84 @@ Program Listing for File BiarcList.hxx
    
        #include "BaseCurve_using.hxx"
    
-       //explicit
        BiarcList()
        : BaseCurve(G2LIB_BIARC_LIST)
        , m_aabb_done(false)
        { this->resetLastInterval(); }
    
-       virtual
        ~BiarcList() override {
          m_s0.clear();
          m_biarcList.clear();
          m_aabb_tri.clear();
        }
    
-       //explicit
        BiarcList( BiarcList const & s )
        : BaseCurve(G2LIB_BIARC_LIST)
        , m_aabb_done(false)
        { this->resetLastInterval(); copy(s); }
    
        void init();
+   
        void reserve( int_type n );
+   
        void copy( BiarcList const & L );
    
        BiarcList const & operator = ( BiarcList const & s )
        { copy(s); return *this; }
    
        explicit BiarcList( LineSegment const & LS );
+   
        explicit BiarcList( CircleArc const & C );
+   
        explicit BiarcList( Biarc const & C );
+   
        explicit BiarcList( PolyLine const & pl );
+   
        explicit BiarcList( BaseCurve const & C );
    
        void push_back( LineSegment const & c );
+   
        void push_back( CircleArc const & c );
+   
        void push_back( Biarc const & c );
+   
        void push_back( PolyLine const & c );
    
        void push_back_G1( real_type x1, real_type y1, real_type theta1 );
-       void push_back_G1( real_type x0, real_type y0, real_type theta0,
-                          real_type x1, real_type y1, real_type theta1 );
    
-       bool
-       build_G1(
-         int_type        n,
-         real_type const x[],
-         real_type const y[]
+       void
+       push_back_G1(
+         real_type x0, real_type y0, real_type theta0,
+         real_type x1, real_type y1, real_type theta1
        );
    
        bool
        build_G1(
-         int_type        n,
-         real_type const x[],
-         real_type const y[],
-         real_type const theta[]
+         int_type          n,
+         real_type const * x,
+         real_type const * y
+       );
+   
+       bool
+       build_G1(
+         int_type          n,
+         real_type const * x,
+         real_type const * y,
+         real_type const * theta
        );
    
        Biarc const & get( int_type idx ) const;
+   
        Biarc const & getAtS( real_type s ) const;
    
        int_type numSegment() const { return int_type(m_biarcList.size()); }
    
-       int_type
-       findAtS( real_type & s ) const;
+       int_type findAtS( real_type & s ) const;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
-       real_type
-       length() const override;
-   
-       virtual
-       real_type
-       length_ISO( real_type offs ) const override;
+       real_type length() const override;
+       real_type length_ISO( real_type offs ) const override;
    
        real_type
        segment_length( int_type nseg ) const;
@@ -191,27 +198,26 @@ Program Listing for File BiarcList.hxx
          real_type                 offs,
          std::vector<Triangle2D> & tvec,
          real_type                 max_angle = Utils::m_pi/6, // 30 degree
-         real_type                 max_size  = 1e100
-       ) const;
+         real_type                 max_size  = 1e100,
+         int_type                  icurve    = 0
+       ) const override;
    
        void
        bbTriangles_SAE(
          real_type                 offs,
          std::vector<Triangle2D> & tvec,
          real_type                 max_angle = Utils::m_pi/6, // 30 degree
-         real_type                 max_size  = 1e100
-       ) const {
-         bbTriangles_ISO( -offs, tvec, max_angle, max_size );
-       }
+         real_type                 max_size  = 1e100,
+         int_type                  icurve    = 0
+       ) const override;
    
        void
        bbTriangles(
          std::vector<Triangle2D> & tvec,
          real_type                 max_angle = Utils::m_pi/6, // 30 degree
-         real_type                 max_size  = 1e100
-       ) const {
-         bbTriangles_ISO( 0, tvec, max_angle, max_size );
-       }
+         real_type                 max_size  = 1e100,
+         int_type                  icurve    = 0
+       ) const override;
    
        void
        build_AABBtree_ISO(
@@ -237,7 +243,6 @@ Program Listing for File BiarcList.hxx
         |  |_.__/|_.__/ \___/_/\_\
        \*/
    
-       virtual
        void
        bbox(
          real_type & xmin,
@@ -248,7 +253,6 @@ Program Listing for File BiarcList.hxx
          bbox_ISO( 0, xmin, ymin, xmax, ymax );
        }
    
-       virtual
        void
        bbox_ISO(
          real_type   offs,
@@ -267,92 +271,74 @@ Program Listing for File BiarcList.hxx
         |              |___/
        \*/
    
-       virtual
        real_type
        thetaBegin() const override
        { return m_biarcList.front().thetaBegin(); }
    
-       virtual
        real_type
        thetaEnd() const override
        { return m_biarcList.back().thetaEnd(); }
    
-       virtual
        real_type
        xBegin() const override
        { return m_biarcList.front().xBegin(); }
    
-       virtual
        real_type
        yBegin() const override
        { return m_biarcList.front().yBegin(); }
    
-       virtual
        real_type
        xEnd() const override
        { return m_biarcList.back().xEnd(); }
    
-       virtual
        real_type
        yEnd() const override
        { return m_biarcList.back().yEnd(); }
    
-       virtual
        real_type
        xBegin_ISO( real_type offs ) const override
        { return m_biarcList.front().xBegin_ISO( offs ); }
    
-       virtual
        real_type
        yBegin_ISO( real_type offs ) const override
        { return m_biarcList.front().yBegin_ISO( offs ); }
    
-       virtual
        real_type
        xEnd_ISO( real_type offs ) const override
        { return m_biarcList.back().xEnd_ISO( offs ); }
    
-       virtual
        real_type
        yEnd_ISO( real_type offs ) const override
        { return m_biarcList.back().yEnd_ISO( offs ); }
    
-       virtual
        real_type
        tx_Begin() const override
        { return m_biarcList.front().tx_Begin(); }
    
-       virtual
        real_type
        ty_Begin() const override
        { return m_biarcList.front().ty_Begin(); }
    
-       virtual
        real_type
        tx_End() const override
        { return m_biarcList.back().tx_End(); }
    
-       virtual
        real_type
        ty_End() const override
        { return m_biarcList.back().ty_End(); }
    
-       virtual
        real_type
        nx_Begin_ISO() const override
        { return m_biarcList.front().nx_Begin_ISO(); }
    
-       virtual
        real_type
        ny_Begin_ISO() const override
        { return m_biarcList.front().ny_Begin_ISO(); }
    
-       virtual
        real_type
        nx_End_ISO() const override
        { return m_biarcList.back().nx_End_ISO(); }
    
-       virtual
        real_type
        ny_End_ISO() const override
        { return m_biarcList.back().ny_End_ISO(); }
@@ -365,10 +351,10 @@ Program Listing for File BiarcList.hxx
         |  \__|_| |_|\___|\__\__,_|
        \*/
    
-       virtual real_type theta( real_type s ) const override;
-       virtual real_type theta_D( real_type s ) const override;
-       virtual real_type theta_DD( real_type s ) const override;
-       virtual real_type theta_DDD( real_type s ) const override;
+       real_type theta    ( real_type ) const override;
+       real_type theta_D  ( real_type ) const override;
+       real_type theta_DD ( real_type ) const override;
+       real_type theta_DDD( real_type ) const override;
    
        /*\
         |  _____                   _   _   _
@@ -378,18 +364,17 @@ Program Listing for File BiarcList.hxx
         |   |_|    \__,_|_| |_|\__,_| |_| \_|
        \*/
    
-       virtual real_type tx( real_type s ) const override;
-       virtual real_type ty( real_type s ) const override;
-       virtual real_type tx_D( real_type s ) const override;
-       virtual real_type ty_D( real_type s ) const override;
-       virtual real_type tx_DD( real_type s ) const override;
-       virtual real_type ty_DD( real_type s ) const override;
-       virtual real_type tx_DDD( real_type s ) const override;
-       virtual real_type ty_DDD( real_type s ) const override;
+       real_type tx    ( real_type ) const override;
+       real_type ty    ( real_type ) const override;
+       real_type tx_D  ( real_type ) const override;
+       real_type ty_D  ( real_type ) const override;
+       real_type tx_DD ( real_type ) const override;
+       real_type ty_DD ( real_type ) const override;
+       real_type tx_DDD( real_type ) const override;
+       real_type ty_DDD( real_type ) const override;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        tg(
          real_type   s,
@@ -397,7 +382,6 @@ Program Listing for File BiarcList.hxx
          real_type & tg_y
        ) const override;
    
-       virtual
        void
        tg_D(
          real_type   s,
@@ -405,7 +389,6 @@ Program Listing for File BiarcList.hxx
          real_type & tg_y_D
        ) const override;
    
-       virtual
        void
        tg_DD(
          real_type   s,
@@ -413,7 +396,6 @@ Program Listing for File BiarcList.hxx
          real_type & tg_y_DD
        ) const override;
    
-       virtual
        void
        tg_DDD(
          real_type   s,
@@ -423,7 +405,6 @@ Program Listing for File BiarcList.hxx
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        evaluate(
          real_type   s,
@@ -435,7 +416,6 @@ Program Listing for File BiarcList.hxx
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        evaluate_ISO(
          real_type   s,
@@ -448,18 +428,17 @@ Program Listing for File BiarcList.hxx
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual real_type X( real_type s ) const override;
-       virtual real_type Y( real_type s ) const override;
-       virtual real_type X_D( real_type s ) const override;
-       virtual real_type Y_D( real_type s ) const override;
-       virtual real_type X_DD( real_type s ) const override;
-       virtual real_type Y_DD( real_type s ) const override;
-       virtual real_type X_DDD( real_type s ) const override;
-       virtual real_type Y_DDD( real_type s ) const override;
+       real_type X    ( real_type ) const override;
+       real_type Y    ( real_type ) const override;
+       real_type X_D  ( real_type ) const override;
+       real_type Y_D  ( real_type ) const override;
+       real_type X_DD ( real_type ) const override;
+       real_type Y_DD ( real_type ) const override;
+       real_type X_DDD( real_type ) const override;
+       real_type Y_DDD( real_type ) const override;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        eval(
          real_type   s,
@@ -467,7 +446,6 @@ Program Listing for File BiarcList.hxx
          real_type & y
        ) const override;
    
-       virtual
        void
        eval_D(
          real_type   s,
@@ -475,7 +453,6 @@ Program Listing for File BiarcList.hxx
          real_type & y_D
        ) const override;
    
-       virtual
        void
        eval_DD(
          real_type   s,
@@ -483,7 +460,6 @@ Program Listing for File BiarcList.hxx
          real_type & y_DD
        ) const override;
    
-       virtual
        void
        eval_DDD(
          real_type   s,
@@ -499,41 +475,17 @@ Program Listing for File BiarcList.hxx
         |  \___/|_| |_| |___/\___|\__|
        \*/
    
-       virtual
-       real_type
-       X_ISO( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       X_ISO_D( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO_D( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       X_ISO_DD( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO_DD( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       X_ISO_DDD( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO_DDD( real_type s, real_type offs ) const override;
+       real_type X_ISO    ( real_type s, real_type offs ) const override;
+       real_type Y_ISO    ( real_type s, real_type offs ) const override;
+       real_type X_ISO_D  ( real_type s, real_type offs ) const override;
+       real_type Y_ISO_D  ( real_type s, real_type offs ) const override;
+       real_type X_ISO_DD ( real_type s, real_type offs ) const override;
+       real_type Y_ISO_DD ( real_type s, real_type offs ) const override;
+       real_type X_ISO_DDD( real_type s, real_type offs ) const override;
+       real_type Y_ISO_DDD( real_type s, real_type offs ) const override;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        eval_ISO(
          real_type   s,
@@ -542,7 +494,6 @@ Program Listing for File BiarcList.hxx
          real_type & y
        ) const override;
    
-       virtual
        void
        eval_ISO_D(
          real_type   s,
@@ -551,7 +502,6 @@ Program Listing for File BiarcList.hxx
          real_type & y_D
        ) const override;
    
-       virtual
        void
        eval_ISO_DD(
          real_type   s,
@@ -560,7 +510,6 @@ Program Listing for File BiarcList.hxx
          real_type & y_DD
        ) const override;
    
-       virtual
        void
        eval_ISO_DDD(
          real_type   s,
@@ -577,29 +526,12 @@ Program Listing for File BiarcList.hxx
         |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
        \*/
    
-       virtual
-       void
-       translate( real_type tx, real_type ty ) override;
-   
-       virtual
-       void
-       rotate( real_type angle, real_type cx, real_type cy ) override;
-   
-       virtual
-       void
-       scale( real_type sc ) override;
-   
-       virtual
-       void
-       reverse() override;
-   
-       virtual
-       void
-       changeOrigin( real_type newx0, real_type newy0 ) override;
-   
-       virtual
-       void
-       trim( real_type s_begin, real_type s_end ) override;
+       void translate( real_type tx, real_type ty ) override;
+       void rotate( real_type angle, real_type cx, real_type cy ) override;
+       void scale( real_type sc ) override;
+       void reverse() override;
+       void changeOrigin( real_type newx0, real_type newy0 ) override;
+       void trim( real_type s_begin, real_type s_end ) override;
    
        /*\
         |      _ _     _
@@ -609,7 +541,6 @@ Program Listing for File BiarcList.hxx
         |  \__,_|_|___/\__\__,_|_| |_|\___\___|
        \*/
    
-       virtual
        int_type
        closestPoint_ISO(
          real_type   qx,
@@ -621,7 +552,6 @@ Program Listing for File BiarcList.hxx
          real_type & dst
        ) const override;
    
-       virtual
        int_type // true if projection is unique and orthogonal
        closestPoint_ISO(
          real_type   qx,
@@ -634,7 +564,6 @@ Program Listing for File BiarcList.hxx
          real_type & dst
        ) const override;
    
-       virtual
        void
        info( ostream_type & stream ) const override
        { stream << "BiarcList\n" << *this << '\n'; }
@@ -645,13 +574,13 @@ Program Listing for File BiarcList.hxx
    
        void
        getSTK(
-         real_type s[],
-         real_type theta[],
-         real_type kappa[]
+         real_type * s,
+         real_type * theta,
+         real_type * kappa
        ) const;
    
        void
-       getXY( real_type x[], real_type y[] ) const;
+       getXY( real_type * x, real_type * y ) const;
    
        int_type
        findST1(

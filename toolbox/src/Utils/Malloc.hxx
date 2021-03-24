@@ -84,18 +84,19 @@ namespace Utils {
     Malloc( std::string const & name );
 
     //! malloc object destructor
-    ~Malloc();
+    ~Malloc() { hard_free(); }
 
-    //! allocate memory for `n` objects
-    void
-    allocate( size_t n ) {
-      if ( n > m_numTotReserved ) allocate_internal( n );
-      m_numTotValues = n;
-      m_numAllocated = 0;
-    }
+    //! allocate memory for `n` objects, raise an error if memory already allocated
+    void allocate( size_t n );
 
-    //! free memory
-    void free(void);
+    //! allocate memory for `n` objects, no matter if already allocated
+    void reallocate( size_t n );
+
+    //! free memory without deallocating pointer
+    void free(void) { m_numTotValues = m_numAllocated = 0; }
+
+    //! free memory deallocating pointer
+    void hard_free(void);
 
     //! number of objects allocated
     size_t size(void) const { return m_numTotValues; }
@@ -108,13 +109,8 @@ namespace Utils {
       return m_pMalloc + offs;
     }
 
-    T *
-    malloc( size_t n ) {
-      if ( n > m_numTotReserved ) allocate_internal( n );
-      m_numTotValues = n;
-      m_numAllocated = n;
-      return m_pMalloc;
-    }
+    T * malloc( size_t n );
+    T * realloc( size_t n );
 
     //! true if you cannot get more memory pointers
     bool is_empty() const { return m_numAllocated >= m_numTotValues; }

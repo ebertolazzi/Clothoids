@@ -43,13 +43,14 @@ SG.plot(1000,'--k','Linewidth',2);
 
 SS = ClothoidList();
 
-X = 0.1:0.02:2.2;
-Y = 0.1:0.02:2.2;
+X = 0.1:0.1:2.2;
+Y = 0.1:0.1:2.2;
 Z = zeros(length(X),length(Y));
 L = zeros(length(X),length(Y));
 K = zeros(length(X),length(Y));
 i = 0;
 for s0=X
+  fprintf('s0=%g\n',s0);
   i = i+1;
   j = 0;
   for s1=Y
@@ -65,7 +66,7 @@ for s0=X
     [ ~, ~, kappa ] = SS.getSTK();
     Z(i,j) = NaN;
 
-    iter
+    %iter
     if iter > 0 && SS0.length() > 0 && SS1.length() > 0 && SS2.length() > 0
       Z(i,j) = sum(sum(abs([SS0.dkappa(),SS1.dkappa(),SS2.dkappa()])));
       K(i,j) = max(max(abs(kappa)));

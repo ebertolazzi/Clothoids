@@ -70,8 +70,10 @@ namespace G2lib {
     while ( ang >  Utils::m_pi ) ang -= Utils::m_2pi;
   }
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static inline real_type power2( real_type a ) { return a*a; }
   static inline real_type power3( real_type a ) { return a*a*a; }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -199,6 +201,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   static
   real_type
   maxabs3( real_type A, real_type B, real_type C ) {
@@ -209,17 +212,18 @@ namespace G2lib {
     if ( res < absC ) res = absC;
     return res;
   }
+  #endif
 
   int_type
   solveLinearQuadratic(
-    real_type A,
-    real_type B,
-    real_type C,
-    real_type a,
-    real_type b,
-    real_type c,
-    real_type x[],
-    real_type y[]
+    real_type   A,
+    real_type   B,
+    real_type   C,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type * x,
+    real_type * y
   ) {
     real_type m1 = maxabs3(A,B,C);
     real_type m2 = maxabs3(a,b,c);
@@ -254,11 +258,11 @@ namespace G2lib {
 
   int_type
   solveLinearQuadratic2(
-    real_type A,
-    real_type B,
-    real_type C,
-    real_type x[],
-    real_type y[]
+    real_type   A,
+    real_type   B,
+    real_type   C,
+    real_type * x,
+    real_type * y
   ) {
     real_type m = maxabs3(A,B,C);
     A /= m; B /= m; C /= m;
@@ -286,6 +290,8 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   static
   int_type
@@ -344,18 +350,20 @@ namespace G2lib {
     return s;
   }
 
+  #endif
+
   int_type
   intersectCircleCircle(
-    real_type x1,
-    real_type y1,
-    real_type theta1,
-    real_type kappa1,
-    real_type x2,
-    real_type y2,
-    real_type theta2,
-    real_type kappa2,
-    real_type s1[],
-    real_type s2[]
+    real_type   x1,
+    real_type   y1,
+    real_type   theta1,
+    real_type   kappa1,
+    real_type   x2,
+    real_type   y2,
+    real_type   theta2,
+    real_type   kappa2,
+    real_type * s1,
+    real_type * s2
   ) {
     real_type dx    = x2 - x1;
     real_type dy    = y2 - y1;
@@ -417,14 +425,14 @@ namespace G2lib {
 
   void
   xy_to_guess_angle(
-    int_type        npts,
-    real_type const x[],
-    real_type const y[],
-    real_type       theta[],
-    real_type       theta_min[],
-    real_type       theta_max[],
-    real_type       omega[],
-    real_type       len[]
+    int_type          npts,
+    real_type const * x,
+    real_type const * y,
+    real_type       * theta,
+    real_type       * theta_min,
+    real_type       * theta_max,
+    real_type       * omega,
+    real_type       * len
   ) {
     //
     // Compute guess angles
@@ -544,9 +552,9 @@ namespace G2lib {
 
   int_type
   isCounterClockwise(
-    real_type const P1[2],
-    real_type const P2[2],
-    real_type const P3[2]
+    real_type const * P1,
+    real_type const * P2,
+    real_type const * P3
   ) {
     real_type dx1 = P2[0] - P1[0];
     real_type dy1 = P2[1] - P1[1];
@@ -640,10 +648,10 @@ namespace G2lib {
 
   int_type
   isPointInTriangle(
-    real_type const point[2],
-    real_type const p1[2],
-    real_type const p2[2],
-    real_type const p3[2]
+    real_type const * point,
+    real_type const * p1,
+    real_type const * p2,
+    real_type const * p3
   ) {
     int_type d = isCounterClockwise(p1, p2, p3);
     int_type a = isCounterClockwise(p1, p2, point);

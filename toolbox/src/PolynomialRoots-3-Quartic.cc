@@ -23,6 +23,8 @@
 #include <algorithm>
 #include <limits>
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 namespace PolynomialRoots {
 
   using std::abs;
@@ -55,6 +57,26 @@ namespace PolynomialRoots {
     if ( !cplx1() && r1 < 0 ) r[nr++] = r1;
     if ( !cplx2() && r2 < 0 ) r[nr++] = r2;
     if ( !cplx3() && r3 < 0 ) r[nr++] = r3;
+    return nr;
+  }
+
+  indexType
+  Quartic::getRootsInRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( !cplx0() && r0 >= a && r0 <= b ) r[nr++] = r0;
+    if ( !cplx1() && r1 >= a && r1 <= b ) r[nr++] = r1;
+    if ( !cplx2() && r2 >= a && r2 <= b ) r[nr++] = r2;
+    if ( !cplx3() && r3 >= a && r3 <= b ) r[nr++] = r3;
+    return nr;
+  }
+
+  indexType
+  Quartic::getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( !cplx0() && r0 > a && r0 < b ) r[nr++] = r0;
+    if ( !cplx1() && r1 > a && r1 < b ) r[nr++] = r1;
+    if ( !cplx2() && r2 > a && r2 < b ) r[nr++] = r2;
+    if ( !cplx3() && r3 > a && r3 < b ) r[nr++] = r3;
     return nr;
   }
 
@@ -736,5 +758,7 @@ namespace PolynomialRoots {
   }
 
 }
+
+#endif
 
 // EOF: PolynomialRoots-3-Quartic.cc

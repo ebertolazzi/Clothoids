@@ -21,7 +21,6 @@
 /// file: ClothoidList.hh
 ///
 
-//! Clothoid computations routine
 namespace G2lib {
 
   using std::vector;
@@ -585,6 +584,7 @@ namespace G2lib {
     mutable real_type          m_aabb_max_size;
     mutable vector<Triangle2D> m_aabb_tri;
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     class T2D_collision_list_ISO {
       ClothoidList const * pList1;
       real_type    const   m_offs1;
@@ -613,6 +613,7 @@ namespace G2lib {
         return C1.aabb_intersect_ISO( T1, m_offs1, &C2, T2, m_offs2, ss1, ss2 );
       }
     };
+    #endif
 
     void
     resetLastInterval() {
@@ -695,27 +696,27 @@ namespace G2lib {
 
     bool
     build_G1(
-      int_type        n,
-      real_type const x[],
-      real_type const y[]
+      int_type          n,
+      real_type const * x,
+      real_type const * y
     );
 
     bool
     build_G1(
-      int_type        n,
-      real_type const x[],
-      real_type const y[],
-      real_type const theta[]
+      int_type          n,
+      real_type const * x,
+      real_type const * y,
+      real_type const * theta
     );
 
     bool
     build(
-      real_type       x0,
-      real_type       y0,
-      real_type       theta0,
-      int_type        n,
-      real_type const s[],
-      real_type const kappa[]
+      real_type         x0,
+      real_type         y0,
+      real_type         theta0,
+      int_type          n,
+      real_type const * s,
+      real_type const * kappa
     );
 
     bool
@@ -736,12 +737,12 @@ namespace G2lib {
 
     bool
     build_raw(
-      int_type        n,
-      real_type const x[],
-      real_type const y[],
-      real_type const abscissa[],
-      real_type const theta[],
-      real_type const kappa[]
+      int_type          n,
+      real_type const * x,
+      real_type const * y,
+      real_type const * abscissa,
+      real_type const * theta,
+      real_type const * kappa
     );
 
     bool
@@ -802,30 +803,31 @@ namespace G2lib {
     \*/
 
     void
+    bbTriangles(
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override;
+
+    void
     bbTriangles_ISO(
       real_type                 offs,
       std::vector<Triangle2D> & tvec,
       real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100
-    ) const;
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override;
 
     void
     bbTriangles_SAE(
       real_type                 offs,
       std::vector<Triangle2D> & tvec,
       real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100
-    ) const {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size );
-    }
-
-    void
-    bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100
-    ) const {
-      bbTriangles_ISO( 0, tvec, max_angle, max_size );
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override {
+      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     void
@@ -1412,7 +1414,7 @@ namespace G2lib {
     operator << ( ostream_type & stream, ClothoidList const & CL );
 
     void
-    getSK( real_type s[], real_type kappa[] ) const;
+    getSK( real_type * s, real_type * kappa ) const;
 
     void
     getSK(
@@ -1426,9 +1428,9 @@ namespace G2lib {
 
     void
     getSTK(
-      real_type s[],
-      real_type theta[],
-      real_type kappa[]
+      real_type * s,
+      real_type * theta,
+      real_type * kappa
     ) const;
 
     void
@@ -1444,13 +1446,13 @@ namespace G2lib {
     }
 
     void
-    getXY( real_type x[], real_type y[] ) const;
+    getXY( real_type * x, real_type * y ) const;
 
     void
-    getDeltaTheta( real_type deltaTheta[] ) const;
+    getDeltaTheta( real_type * deltaTheta ) const;
 
     void
-    getDeltaKappa( real_type deltaKappa[] ) const;
+    getDeltaKappa( real_type * deltaKappa ) const;
 
     /*!
      *  \brief Find parametric coordinate.
@@ -1621,9 +1623,9 @@ namespace G2lib {
 
     void
     build(
-      real_type const xvec[],
-      real_type const yvec[],
-      int_type        npts
+      real_type const * xvec,
+      real_type const * yvec,
+      int_type          npts
     );
 
     int_type numPnts() const { return m_npts; }
@@ -1632,31 +1634,31 @@ namespace G2lib {
 
     void
     guess(
-      real_type theta_guess[],
-      real_type theta_min[],
-      real_type theta_max[]
+      real_type * theta_guess,
+      real_type * theta_min,
+      real_type * theta_max
     ) const;
 
     bool
-    objective( real_type const theta[], real_type & f ) const;
+    objective( real_type const * theta, real_type & f ) const;
 
     bool
-    gradient( real_type const theta[], real_type g[] ) const;
+    gradient( real_type const * theta, real_type * g ) const;
 
     bool
-    constraints( real_type const theta[], real_type c[] ) const;
+    constraints( real_type const * theta, real_type * c ) const;
 
     int_type
     jacobian_nnz() const;
 
     bool
-    jacobian_pattern( int_type i[], int_type j[] ) const;
+    jacobian_pattern( int_type * i, int_type * j ) const;
 
     bool
-    jacobian_pattern_matlab( real_type i[], real_type j[] ) const;
+    jacobian_pattern_matlab( real_type * i, real_type * j ) const;
 
     bool
-    jacobian( real_type const theta[], real_type vals[] ) const;
+    jacobian( real_type const * theta, real_type * vals ) const;
 
     void
     info( ostream_type & stream ) const

@@ -3,7 +3,7 @@
 Class BaseCurve
 ===============
 
-- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_G2lib.hxx`
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_BaseCurve.hxx`
 
 
 Inheritance Relationships

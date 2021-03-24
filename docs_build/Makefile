@@ -1,4 +1,7 @@
 github:
+	@rm -rf xml
+	@rm -rf sphinx/_build
+	@rm -rf sphinx/api
 	@cd sphinx; make clean; make html; cd ..
 	@make install
 

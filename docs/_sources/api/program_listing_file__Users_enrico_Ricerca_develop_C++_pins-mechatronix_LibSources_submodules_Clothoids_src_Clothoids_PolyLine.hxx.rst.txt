@@ -129,7 +129,7 @@ Program Listing for File PolyLine.hxx
        numPoints() const
        { return int_type(m_s0.size()); }
    
-       void polygon( real_type x[], real_type y[]) const;
+       void polygon( real_type * x, real_type * y) const;
        void init( real_type x0, real_type y0 );
        void push_back( real_type x, real_type y );
        void push_back( LineSegment const & C );
@@ -140,8 +140,8 @@ Program Listing for File PolyLine.hxx
    
        void
        build(
-         real_type const x[],
-         real_type const y[],
+         real_type const * x,
+         real_type const * y,
          int_type npts
        );
    
@@ -151,7 +151,6 @@ Program Listing for File PolyLine.hxx
        void build( ClothoidCurve const & C, real_type tol );
        void build( ClothoidList const & CL, real_type tol );
    
-       virtual
        void
        bbox(
          real_type & xmin,
@@ -160,7 +159,6 @@ Program Listing for File PolyLine.hxx
          real_type & ymax
        ) const override;
    
-       virtual
        void
        bbox_ISO(
          real_type   /* offs */,
@@ -170,6 +168,42 @@ Program Listing for File PolyLine.hxx
          real_type & /* ymax */
        ) const override {
          UTILS_ERROR0( "PolyLine::bbox( offs ... ) not available!\n" );
+       }
+   
+       /*\
+        |  _    _   _____    _                _
+        | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+        | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+        | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+        |                               |___/
+       \*/
+   
+       void
+       bbTriangles(
+         std::vector<Triangle2D> & tvec,
+         real_type                 max_angle = Utils::m_pi/6, // 30 degree
+         real_type                 max_size  = 1e100,
+         int_type                  icurve    = 0
+       ) const override;
+   
+       void
+       bbTriangles_ISO(
+         real_type                 offs,
+         std::vector<Triangle2D> & tvec,
+         real_type                 max_angle = Utils::m_pi/6, // 30 degree
+         real_type                 max_size  = 1e100,
+         int_type                  icurve    = 0
+       ) const override;
+   
+       void
+       bbTriangles_SAE(
+         real_type                 offs,
+         std::vector<Triangle2D> & tvec,
+         real_type                 max_angle = Utils::m_pi/6, // 30 degree
+         real_type                 max_size  = 1e100,
+         int_type                  icurve    = 0
+       ) const override {
+         this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
        }
    
        virtual

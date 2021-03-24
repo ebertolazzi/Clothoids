@@ -43,6 +43,8 @@ namespace G2lib {
    |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
   \*/
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   typedef pair<CurveType,CurveType> Ppair;
 
   // check if compiler is C++11
@@ -152,6 +154,8 @@ namespace G2lib {
       promote_map[ Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ) ]      = G2LIB_POLYLINE;
       done = true;
     }
+  #endif
+
   #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_g2lib_1a64d98ef06ccf08507e32af71e2152c2f:
+
+Function G2lib::xy_to_guess_angle
+=================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::xy_to_guess_angle(int_type, real_type const *, real_type const *, real_type *, real_type *, real_type *, real_type *, real_type *)

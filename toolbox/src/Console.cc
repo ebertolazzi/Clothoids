@@ -31,10 +31,10 @@
 namespace Utils {
 
   void
-  Console::changeLevel( int new_level ) {
+  Console::change_level( int new_level ) {
     UTILS_ASSERT(
       new_level >= -1 && new_level <= 4,
-      "Console::changeLevel( new_level = {})\n"
+      "Console::change_level( new_level = {})\n"
       "new_level must be in the range [-1,4]\n",
       new_level
     );
@@ -42,7 +42,7 @@ namespace Utils {
   }
 
   void
-  Console::changeStream( ostream_type * new_p_stream  ) {
+  Console::change_stream( ostream_type * new_p_stream  ) {
     m_stream = new_p_stream;
   }
 

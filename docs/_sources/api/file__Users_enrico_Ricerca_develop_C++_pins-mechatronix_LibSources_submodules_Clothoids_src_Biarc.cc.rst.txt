@@ -47,7 +47,7 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_namespace_g2lib_1a381cfd8479ff4a14bdc4556166b2ceb6`
+- :ref:`exhale_function_namespace_g2lib_1a0bb0ba6a1535989f989ff35c858bfd26`
 
 - :ref:`exhale_function_namespace_g2lib_1aa57348d683f260251202e4fe1e7c6ff1`
 

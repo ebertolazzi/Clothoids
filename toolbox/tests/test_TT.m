@@ -37,6 +37,6 @@ for offs=[-0.75,0,0.75]
           'red','FaceAlpha',0.1);
   end
 end
-%plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 2 );
+plot( XY(1,:), XY(2,:), '-b', 'LineWidth', 2 );
 
 axis equal;

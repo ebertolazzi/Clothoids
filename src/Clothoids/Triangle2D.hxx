@@ -21,7 +21,6 @@
 /// file: Triangle2D.hxx
 ///
 
-//! Clothoid computations routine
 namespace G2lib {
 
   /*\

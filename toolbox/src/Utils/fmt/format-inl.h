@@ -261,11 +261,19 @@ const uint64_t basic_data<T>::powers_of_10_64[] = {
     10000000000000000000ULL};
 
 template <typename T>
-const uint32_t basic_data<T>::zero_or_powers_of_10_32[] = {0, 0,
+const uint32_t basic_data<T>::zero_or_powers_of_10_32[] = {0,
                                                            FMT_POWERS_OF_10(1)};
-
 template <typename T>
 const uint64_t basic_data<T>::zero_or_powers_of_10_64[] = {
+    0, FMT_POWERS_OF_10(1), FMT_POWERS_OF_10(1000000000ULL),
+    10000000000000000000ULL};
+
+template <typename T>
+const uint32_t basic_data<T>::zero_or_powers_of_10_32_new[] = {
+    0, 0, FMT_POWERS_OF_10(1)};
+
+template <typename T>
+const uint64_t basic_data<T>::zero_or_powers_of_10_64_new[] = {
     0, 0, FMT_POWERS_OF_10(1), FMT_POWERS_OF_10(1000000000ULL),
     10000000000000000000ULL};
 
@@ -1626,8 +1634,10 @@ struct fixed_handler {
     }
     if (buf[0] > '9') {
       buf[0] = '1';
-      if (fixed) buf[size++] = '0';
-      else ++exp10;
+      if (fixed)
+        buf[size++] = '0';
+      else
+        ++exp10;
     }
     return digits::done;
   }
@@ -1754,7 +1764,7 @@ inline bool divisible_by_power_of_2(uint64_t x, int exp) FMT_NOEXCEPT {
 #ifdef FMT_BUILTIN_CTZLL
   return FMT_BUILTIN_CTZLL(x) >= exp;
 #else
-  return exp < num_bits<uint64_t>()) && x == ((x >> exp) << exp);
+  return exp < num_bits<uint64_t>() && x == ((x >> exp) << exp);
 #endif
 }
 
@@ -1899,7 +1909,7 @@ template <> struct cache_accessor<double> {
     uint64_t pow5 = data::powers_of_5_64[offset];
     uint128_wrapper recovered_cache = umul128(base_cache.high(), pow5);
     uint128_wrapper middle_low =
-        umul128(base_cache.low() - (kb < 0 ? 1 : 0), pow5);
+        umul128(base_cache.low() - (kb < 0 ? 1u : 0u), pow5);
 
     recovered_cache += middle_low.high();
 
@@ -2173,8 +2183,8 @@ FMT_SAFEBUFFERS decimal_fp<T> to_decimal(T x) FMT_NOEXCEPT {
   const carrier_uint significand_mask =
       (static_cast<carrier_uint>(1) << float_info<T>::significand_bits) - 1;
   carrier_uint significand = (br & significand_mask);
-  int exponent =
-      static_cast<int>((br & exponent_mask<T>()) >> float_info<T>::significand_bits);
+  int exponent = static_cast<int>((br & exponent_mask<T>()) >>
+                                  float_info<T>::significand_bits);
 
   if (exponent != 0) {  // Check if normal.
     exponent += float_info<T>::exponent_bias - float_info<T>::significand_bits;
@@ -2327,7 +2337,7 @@ void fallback_format(Double d, int num_digits, bool binary32, buffer<char>& buf,
       upper = &upper_store;
     }
     denominator.assign_pow10(exp10);
-    denominator <<= 1;
+    denominator <<= shift;
   } else if (exp10 < 0) {
     numerator.assign_pow10(-exp10);
     lower.assign(numerator);
@@ -2601,24 +2611,17 @@ int snprintf_float(T value, int precision, float_specs specs,
  * error, but it will always advance at least one byte.
  */
 inline const char* utf8_decode(const char* buf, uint32_t* c, int* e) {
-  static const char lengths[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                                 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 2, 2, 2, 2, 3, 3, 4, 0};
   static const int masks[] = {0x00, 0x7f, 0x1f, 0x0f, 0x07};
   static const uint32_t mins[] = {4194304, 0, 128, 2048, 65536};
   static const int shiftc[] = {0, 18, 12, 6, 0};
   static const int shifte[] = {0, 6, 4, 2, 0};
 
-  auto s = reinterpret_cast<const unsigned char*>(buf);
-  int len = lengths[s[0] >> 3];
-
-  // Compute the pointer to the next character early so that the next
-  // iteration can start working on the next character. Neither Clang
-  // nor GCC figure out this reordering on their own.
-  const char* next = buf + len + !len;
+  int len = code_point_length(buf);
+  const char* next = buf + len;
 
   // Assume a four-byte character and load four bytes. Unused bits are
   // shifted out.
+  auto s = reinterpret_cast<const unsigned char*>(buf);
   *c = uint32_t(s[0] & masks[len]) << 18;
   *c |= uint32_t(s[1] & 0x3f) << 12;
   *c |= uint32_t(s[2] & 0x3f) << 6;

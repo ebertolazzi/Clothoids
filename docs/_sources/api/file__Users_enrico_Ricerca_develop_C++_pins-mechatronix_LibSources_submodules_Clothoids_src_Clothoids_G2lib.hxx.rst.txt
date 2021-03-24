@@ -47,25 +47,12 @@ Classes
 -------
 
 
-- :ref:`exhale_class_class_g2lib_1_1_base_curve`
-
 - :ref:`exhale_class_class_g2lib_1_1_solve2x2`
-
-
-Enums
------
-
-
-- :ref:`exhale_enum_namespace_g2lib_1a007dea27057008224e9da69eaeca8606`
 
 
 Functions
 ---------
 
-
-- :ref:`exhale_function_namespace_g2lib_1aa5b1fe23ac7694a14290b292fe657cd2`
-
-- :ref:`exhale_function_namespace_g2lib_1acdd344ff0a709df517956fc2e0545b2f`
 
 - :ref:`exhale_function_namespace_g2lib_1adcb636fc9381075c0ce6750a07f15a41`
 
@@ -74,13 +61,4 @@ Functions
 - :ref:`exhale_function_namespace_g2lib_1a787008f61e79e40319f40bdc503f3136`
 
 - :ref:`exhale_function_namespace_g2lib_1aa33f87b2d769488fe4d44977f483f91f`
-
-
-Typedefs
---------
-
-
-- :ref:`exhale_typedef_namespace_g2lib_1adb39ffb3833d85c2ec1bdef7650f484f`
-
-- :ref:`exhale_typedef_namespace_g2lib_1af3c8c0999280867543e48072869f0276`
 

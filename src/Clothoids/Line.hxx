@@ -138,6 +138,77 @@ namespace G2lib {
     ) const override;
 
     /*\
+     |  _    _   _____    _                _
+     | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___
+     | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)
+     | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|
+     |                               |___/
+    \*/
+
+    void
+    bbTriangles(
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100, // unused
+      int_type                  icurve    = 0
+    ) const override {
+      real_type xmin, ymin, xmax, ymax;
+      this->bbox( xmin, ymin, xmax, ymax );
+      real_type xc = (xmax+xmin)/2;
+      real_type yc = (ymax+ymin)/2;
+      real_type nx = (ymax-ymin)/100;
+      real_type ny = (xmin-xmax)/100;
+      if ( xmax > xmin || ymax > ymin ) {
+        Triangle2D t( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
+        tvec.push_back( t );
+      } else {
+        UTILS_ERROR(
+          "LineSegment bbTriangles found a degenerate line\n"
+          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ] max_angle={} max_size={}\n",
+          xmin, ymin, xmax, ymax, max_angle, max_size
+        );
+      }
+    }
+
+    void
+    bbTriangles_ISO(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100, // unused
+      int_type                  icurve    = 0
+    ) const override {
+      real_type xmin, ymin, xmax, ymax;
+      this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
+      real_type xc = (xmax+xmin)/2;
+      real_type yc = (ymax+ymin)/2;
+      real_type nx = (ymax-ymin)/100;
+      real_type ny = (xmin-xmax)/100;
+      if ( xmax > xmin || ymax > ymin ) {
+        Triangle2D t( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
+        tvec.push_back( t );
+      } else {
+        UTILS_ERROR(
+          "LineSegment bbTriangles found a degenerate line\n"
+          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ]\n"
+          "offs={} max_angle={} max_size={}\n",
+          xmin, ymin, xmax, ymax, offs, max_angle, max_size
+        );
+      }
+    }
+
+    void
+    bbTriangles_SAE(
+      real_type                 offs,
+      std::vector<Triangle2D> & tvec,
+      real_type                 max_angle = Utils::m_pi/6, // 30 degree
+      real_type                 max_size  = 1e100,
+      int_type                  icurve    = 0
+    ) const override {
+      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+    }
+
+    /*\
      |   ____             _          _______           _
      |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |
      |  |  _ \ / _ \/ _` | | '_ \  / /|  _| | '_ \ / _` |
@@ -665,11 +736,11 @@ namespace G2lib {
     paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
 
     void
-    toNURBS( real_type knots[], real_type Poly[][3] ) const;
+    toNURBS( real_type * knots, real_type Poly[][3] ) const;
 
     virtual
     void
-    toBS( real_type knots[], real_type Poly[][2] ) const;
+    toBS( real_type * knots, real_type Poly[][2] ) const;
 
     friend
     ostream_type &

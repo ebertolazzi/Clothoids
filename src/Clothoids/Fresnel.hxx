@@ -21,7 +21,6 @@
 /// file: Fresnel.hxx
 ///
 
-//! Clothoid computations routine
 namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,14 +32,8 @@ namespace G2lib {
    |  |  _|| | |  __/\__ \ | | |  __/ |
    |  |_|  |_|  \___||___/_| |_|\___|_|
   \*/
-  /*!
-   * \brief Compute Fresnel integrals
-   *
-   * \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
-   *     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
-   * \param x the input abscissa
-   * \param S the value of \f$ S(x) \f$
-   * \param C the value of \f$ C(x) \f$
+  /*
+   * Compute Fresnel integrals
    */
   void
   FresnelCS(
@@ -61,10 +54,10 @@ namespace G2lib {
    */
   void
   FresnelCS(
-    int_type  nk,
-    real_type x,
-    real_type C[],
-    real_type S[]
+    int_type    nk,
+    real_type   x,
+    real_type * C,
+    real_type * S
   );
 
   /*!
@@ -84,12 +77,12 @@ namespace G2lib {
    */
   void
   GeneralizedFresnelCS(
-    int_type  nk,
-    real_type a,
-    real_type b,
-    real_type c,
-    real_type intC[],
-    real_type intS[]
+    int_type    nk,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type * intC,
+    real_type * intS
   );
 
   /*!

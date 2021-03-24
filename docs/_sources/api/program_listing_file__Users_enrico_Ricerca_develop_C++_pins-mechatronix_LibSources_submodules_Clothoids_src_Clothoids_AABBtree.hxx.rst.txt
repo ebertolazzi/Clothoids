@@ -102,10 +102,10 @@ Program Listing for File AABBtree.hxx
    
        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
-       real_type Xmin() const { return m_xmin; }
-       real_type Ymin() const { return m_ymin; }
-       real_type Xmax() const { return m_xmax; }
-       real_type Ymax() const { return m_ymax; }
+       real_type Xmin() const { return m_xmin; } 
+       real_type Ymin() const { return m_ymin; } 
+       real_type Xmax() const { return m_xmax; } 
+       real_type Ymax() const { return m_ymax; } 
    
        int_type const & Id()   const { return m_id; }   
        int_type const & Ipos() const { return m_ipos; } 
@@ -207,14 +207,8 @@ Program Listing for File AABBtree.hxx
    
      public:
    
-       AABBtree();
-       ~AABBtree();
-   
-       // copy contructor (recursive)
-       //AABBtree( PtrBBox const & pbox ) {
-       //  this -> pBBox = pbox;
-       //  children.clear();
-       //}
+       AABBtree(); 
+       ~AABBtree(); 
    
        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
