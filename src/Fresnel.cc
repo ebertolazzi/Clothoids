@@ -621,6 +621,8 @@ namespace G2lib {
     }
   }
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   // -------------------------------------------------------------------------
 
   void
@@ -1402,6 +1404,8 @@ namespace G2lib {
     return niter;
   }
 
+  #endif
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -1473,6 +1477,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   bool
   ClothoidData::build_forward(
     real_type   x0,
@@ -1541,7 +1546,8 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
+  #endif
 }
 
 // EOF: Fresnel.cc

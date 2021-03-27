@@ -20,6 +20,7 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
     
@@ -88,14 +89,22 @@
 <span id="_CPPv3N5G2lib10G2solveCLCE"></span><span id="_CPPv2N5G2lib10G2solveCLCE"></span><span id="G2lib::G2solveCLC"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">G2lib</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">G2solveCLC</span></code><a class="headerlink" href="#_CPPv4N5G2lib10G2solveCLCE" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>computation of the G2 fitting with 2 clothoid and one line segment </p>
+<p>Construct a piecewise clothoids <span class="math notranslate nohighlight">\( \G(s) \)</span> composed by 2 clothoid and one line segment that solve the G2 problem</p>
+<p></p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \textrm{endpoints:}\quad \begin{cases} G(0) = \mathbf{p}_0 &amp; \\ G(L) = \mathbf{p}_1 &amp; \end{cases} \qquad\textrm{angles:}\quad \begin{cases} \theta(0) = \theta_0 &amp; \\ \theta(L) = \theta_1 &amp; \end{cases} \qquad\textrm{curvature:}\quad \begin{cases} \kappa(0) = \kappa_0 &amp; \\ \kappa(L) = \kappa_1 &amp; \end{cases} \end{split}\]</div>
+
+<p><strong>note</strong></p>
+<p>The solution do not exist for all the combination of points/angle/curvature </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N5G2lib10G2solveCLC10G2solveCLCEv">
 <span id="_CPPv3N5G2lib10G2solveCLC10G2solveCLCEv"></span><span id="_CPPv2N5G2lib10G2solveCLC10G2solveCLCEv"></span><span id="G2lib::G2solveCLC::G2solveCLC"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1ab62cc80a8c2848cf7e2bab46a9f0285c"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">G2solveCLC</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib10G2solveCLC10G2solveCLCEv" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>build an empty clothoid list </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -109,49 +118,98 @@
 <dt id="_CPPv4N5G2lib10G2solveCLC5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type">
 <span id="_CPPv3N5G2lib10G2solveCLC5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib10G2solveCLC5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="G2lib::G2solveCLC::build__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1a41fe7df770b9d4dffc0eac3c28a4ff48"></span><span class="pre">int</span> <code class="sig-name descname"><span class="pre">build</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">x0</span></em>, <a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">y0</span></em>, <a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">theta0</span></em>, <a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">kappa0</span></em>, <a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">x1</span></em>, <a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">y1</span></em>, <a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">theta1</span></em>, <a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">kappa1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib10G2solveCLC5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Construct a piecewise clothoids <span class="math notranslate nohighlight">\( \G(s) \)</span> composed by two clothoids and one line segment that solve the G2 problem, with data</p>
+<p></p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T \]</div>
+ <div class="math notranslate nohighlight">
+\[ \theta_0, \qquad \theta_1, \qquad \kappa_0, \qquad \kappa_1 \]</div>
+
+<p></p>
+<dl class="simple">
+<dt><strong>Return</strong></dt>
+<dd>
+<p>number of iterations of -1 if failed </p>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd>
+<ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">x0</span></code>: <span class="math notranslate nohighlight">\( x_0 \)</span> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">y0</span></code>: <span class="math notranslate nohighlight">\( y_0 \)</span> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">theta0</span></code>: <span class="math notranslate nohighlight">\( \theta_0 \)</span> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">kappa0</span></code>: <span class="math notranslate nohighlight">\( \kappa_0 \)</span> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">x1</span></code>: <span class="math notranslate nohighlight">\( x_1 \)</span> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">y1</span></code>: <span class="math notranslate nohighlight">\( y_1 \)</span> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">theta1</span></code>: <span class="math notranslate nohighlight">\( \theta_1 \)</span> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">kappa1</span></code>: <span class="math notranslate nohighlight">\( \kappa_1 \)</span> </p></li>
+</ul>
+</dd>
+</dl>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N5G2lib10G2solveCLC12setToleranceE9real_type">
 <span id="_CPPv3N5G2lib10G2solveCLC12setToleranceE9real_type"></span><span id="_CPPv2N5G2lib10G2solveCLC12setToleranceE9real_type"></span><span id="G2lib::G2solveCLC::setTolerance__real_type"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1a07f74b5066c5740e34dc02a2e48414b9"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">setTolerance</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">tol</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib10G2solveCLC12setToleranceE9real_type" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>fix tolerance for the G2 problem </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N5G2lib10G2solveCLC10setMaxIterEi">
 <span id="_CPPv3N5G2lib10G2solveCLC10setMaxIterEi"></span><span id="_CPPv2N5G2lib10G2solveCLC10setMaxIterEi"></span><span id="G2lib::G2solveCLC::setMaxIter__i"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1a6e38258dad6b6b1d7253ea6e8861ee50"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">setMaxIter</span></code><span class="sig-paren">(</span><span class="pre">int</span> <em><span class="pre">tol</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib10G2solveCLC10setMaxIterEi" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>fix maximum number of iteration for the G2 problem </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N5G2lib10G2solveCLC5solveEv">
 <span id="_CPPv3N5G2lib10G2solveCLC5solveEv"></span><span id="_CPPv2N5G2lib10G2solveCLC5solveEv"></span><span id="G2lib::G2solveCLC::solve"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1a7ca154b901ce7bb4d4ee1e2cdf7f8a85"></span><span class="pre">int</span> <code class="sig-name descname"><span class="pre">solve</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib10G2solveCLC5solveEv" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>solve the G2 problem</p>
+<p></p>
+<dl class="simple">
+<dt><strong>Return</strong></dt>
+<dd>
+<p>number of iterations of -1 if failed </p>
+</dd>
+</dl>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4NK5G2lib10G2solveCLC5getS0Ev">
 <span id="_CPPv3NK5G2lib10G2solveCLC5getS0Ev"></span><span id="_CPPv2NK5G2lib10G2solveCLC5getS0Ev"></span><span id="G2lib::G2solveCLC::getS0C"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1a38a81bac2dd46c50554acf7ea33122e3"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="class_g2lib_1_1_clothoid_curve.html#_CPPv4N5G2lib13ClothoidCurveE" title="G2lib::ClothoidCurve"><span class="pre">ClothoidCurve</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">getS0</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK5G2lib10G2solveCLC5getS0Ev" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>return the first clothoid of the G2 clothoid list </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4NK5G2lib10G2solveCLC5getSMEv">
 <span id="_CPPv3NK5G2lib10G2solveCLC5getSMEv"></span><span id="_CPPv2NK5G2lib10G2solveCLC5getSMEv"></span><span id="G2lib::G2solveCLC::getSMC"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1a3d338c237741c603c8acabe0809a45b7"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="class_g2lib_1_1_clothoid_curve.html#_CPPv4N5G2lib13ClothoidCurveE" title="G2lib::ClothoidCurve"><span class="pre">ClothoidCurve</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">getSM</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK5G2lib10G2solveCLC5getSMEv" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>return the second segment (the line) as a clothoid </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4NK5G2lib10G2solveCLC5getS1Ev">
 <span id="_CPPv3NK5G2lib10G2solveCLC5getS1Ev"></span><span id="_CPPv2NK5G2lib10G2solveCLC5getS1Ev"></span><span id="G2lib::G2solveCLC::getS1C"></span><span class="target" id="class_g2lib_1_1_g2solve_c_l_c_1aa851793e109899a52e794b7b2ec07b54"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="class_g2lib_1_1_clothoid_curve.html#_CPPv4N5G2lib13ClothoidCurveE" title="G2lib::ClothoidCurve"><span class="pre">ClothoidCurve</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">getS1</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK5G2lib10G2solveCLC5getS1Ev" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>return the third clothoid of the G2 clothoid list </p>
+</dd>
 </dl>
 
 <dl class="cpp function">

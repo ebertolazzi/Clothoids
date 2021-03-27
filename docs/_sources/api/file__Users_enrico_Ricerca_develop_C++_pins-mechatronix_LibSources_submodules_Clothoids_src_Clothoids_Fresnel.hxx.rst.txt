@@ -42,10 +42,3 @@ Namespaces
 
 - :ref:`namespace_G2lib`
 
-
-Classes
--------
-
-
-- :ref:`exhale_class_class_g2lib_1_1_clothoid_data`
-

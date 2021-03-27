@@ -322,6 +322,8 @@ namespace G2lib {
    |  / ___ \  / ___ \| |_) | |_) | |_| | |  __/  __/
    | /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   void
   ClothoidCurve::build_AABBtree_ISO(
     real_type offs,
@@ -363,6 +365,7 @@ namespace G2lib {
     m_aabb_max_angle = max_angle;
     m_aabb_max_size  = max_size;
   }
+  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

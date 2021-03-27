@@ -1,4 +1,4 @@
-Copyright (c) 2020, Enrico Bertolazzi
+Copyright (c) 2020, Enrico Bertolazzi and Marco Frego
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

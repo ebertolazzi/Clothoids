@@ -39,7 +39,9 @@ namespace G2lib {
   using std::vector;
   using std::ceil;
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   typedef vector<LineSegment>::difference_type LS_dist_type;
+  #endif
 
   /*\
    |  ____       _       _     _

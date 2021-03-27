@@ -49,5 +49,3 @@ Classes
 
 - :ref:`exhale_class_class_g2lib_1_1_poly_line`
 
-- :ref:`exhale_class_class_g2lib_1_1_poly_line_1_1_collision__list`
-

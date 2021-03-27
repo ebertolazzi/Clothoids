@@ -80,6 +80,8 @@ Program Listing for File Fresnel.hxx
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
+   
      class ClothoidData {
      public:
    
@@ -402,6 +404,8 @@ Program Listing for File Fresnel.hxx
        info( ostream_type & s ) const;
    
      };
+   
+     #endif
    
    }
    

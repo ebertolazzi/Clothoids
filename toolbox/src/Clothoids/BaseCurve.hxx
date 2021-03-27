@@ -575,7 +575,7 @@ namespace G2lib {
     real_type kappa( real_type s ) const { return theta_D(s); }
 
     //! curvature derivative at curvilinear coodinate `s`
-    real_type kappa_D ( real_type s ) const { return theta_DD(s); }
+    real_type kappa_D( real_type s ) const { return theta_DD(s); }
 
     //! curvature second derivative at curvilinear coodinate `s`
     real_type kappa_DD( real_type s ) const { return theta_DDD(s); }

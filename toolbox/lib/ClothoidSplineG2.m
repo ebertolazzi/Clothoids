@@ -1,12 +1,22 @@
-%
-%  This class implement the algorithms described in the paper:
-%
-%  I nterpolating clothoid splines with curvature continuity
-%  by Enrico Bertolaziz and Marco frego
-%  Mathematical Methods in the Applied Science
-%  Volume 41, Issue 4, 2018
-%  DOI: 10.1002/mma.4700
-%
+%>  
+%>   Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+%>   n clothoids that solve the G2 problem
+%>  
+%>   **match points**
+%>  
+%>   \f[ G(s_k) = \mathbf{p}_k \f]
+%>   \f[ \lim_{s\to s_k^+} G'(s) = \lim_{s\to s_k^-} G'(s) \f]
+%>   \f[ \lim_{s\to s_k^+} G''(s) = \lim_{s\to s_k^-} G''(s) \f]
+%>  
+%>   **Reference**
+%>  
+%>   The solution algorithm is described in
+%>  
+%>   - **E.Bertolazzi, M.Frego**, Interpolating clothoid splines with curvature continuity
+%>     Mathematica Methods in the Applied Sciences, vol 41, N.4, pp. 1723-1737, 2018
+%>  
+%>   \imega html G2problem3arc.jpg
+%>  
 classdef ClothoidSplineG2 < handle
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)

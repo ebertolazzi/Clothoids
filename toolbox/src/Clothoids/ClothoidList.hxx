@@ -354,22 +354,22 @@ namespace G2lib {
       real_type kappa1
     );
 
-    //! \return get the first clothoid for the 3 arc G2 fitting
+    //! get the first clothoid for the 3 arc G2 fitting
     ClothoidCurve const & getS0() const { return S0; }
 
-    //! \return get the last clothoid for the 3 arc G2 fitting
+    //! get the last clothoid for the 3 arc G2 fitting
     ClothoidCurve const & getS1() const { return S1; }
 
-    //! \return get the middle clothoid for the 3 arc G2 fitting
+    //! get the middle clothoid for the 3 arc G2 fitting
     ClothoidCurve const & getSM() const { return SM; }
 
-    //! \return get the length of the 3 arc G2 fitting
+    //! get the length of the 3 arc G2 fitting
     real_type
     totalLength() const {
       return S0.length() + S1.length() + SM.length();
     }
 
-    //! \return get the total angle variation of the 3 arc G2 fitting
+    //! get the total angle variation of the 3 arc G2 fitting
     real_type
     thetaTotalVariation() const {
       return S0.thetaTotalVariation() +
@@ -377,7 +377,7 @@ namespace G2lib {
              SM.thetaTotalVariation();
     }
 
-    //! \return get the total curvature variation of the 3 arc G2 fitting
+    //! get the total curvature variation of the 3 arc G2 fitting
     real_type
     curvatureTotalVariation() const {
       return S0.curvatureTotalVariation() +
@@ -385,7 +385,7 @@ namespace G2lib {
              SM.curvatureTotalVariation();
     }
 
-    //! \return get the integral of the curvature squared of the 3 arc G2 fitting
+    //! get the integral of the curvature squared of the 3 arc G2 fitting
     real_type
     integralCurvature2() const {
       return S0.integralCurvature2() +
@@ -393,7 +393,7 @@ namespace G2lib {
              SM.integralCurvature2();
     }
 
-    //! \return get the integral of the jerk squared of the 3 arc G2 fitting
+    //! get the integral of the jerk squared of the 3 arc G2 fitting
     real_type
     integralJerk2() const {
       return S0.integralJerk2() +
@@ -401,7 +401,7 @@ namespace G2lib {
              SM.integralJerk2();
     }
 
-    //! \return get the integral of the snap squared of the 3 arc G2 fitting
+    //! get the integral of the snap squared of the 3 arc G2 fitting
     real_type
     integralSnap2() const {
       return S0.integralSnap2() +
@@ -418,7 +418,7 @@ namespace G2lib {
     thetaMinMax( real_type & thMin, real_type & thMax ) const;
 
     /*!
-     *  \return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
+     * the difference of maximum-minimum angle in the 3 arc G2 fitting curve
      */
     real_type
     deltaTheta() const
@@ -433,72 +433,72 @@ namespace G2lib {
     curvatureMinMax( real_type & kMin, real_type & kMax ) const;
 
     /*!
-     *  \return angle as a function of curvilinear coordinate
+     * return angle as a function of curvilinear coordinate
      */
     real_type theta( real_type s ) const;
 
     /*!
-     *  \return angle derivative (curvature) as a function of curvilinear coordinate
+     * return angle derivative (curvature) as a function of curvilinear coordinate
      */
     real_type theta_D( real_type s ) const;
 
     /*!
-     *  \return angle second derivative (curvature derivative) as a function of curvilinear coordinate
+     * return angle second derivative (curvature derivative) as a function of curvilinear coordinate
      */
     real_type theta_DD( real_type s ) const;
 
     /*!
-     *  \return angle third derivative as a function of curvilinear coordinate
+     * return angle third derivative as a function of curvilinear coordinate
     \*/
     real_type theta_DDD( real_type s ) const;
 
     /*!
-     *  \return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
+     * return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
      */
     real_type X( real_type s ) const;
 
     /*!
-     *  \return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
+     * return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
      */
     real_type Y( real_type s ) const;
 
     /*!
-     *  \return initial x coordinate of the 3 arc clothoid
+     * return initial x coordinate of the 3 arc clothoid
      */
     real_type xBegin() const { return S0.xBegin(); }
 
     /*!
-     *  \return initial y coordinate of the 3 arc clothoid
+     * return initial y coordinate of the 3 arc clothoid
      */
     real_type yBegin() const { return S0.yBegin(); }
 
     /*!
-     *  \return initial curvature of the 3 arc clothoid
+     * return initial curvature of the 3 arc clothoid
      */
     real_type kappaBegin() const { return S0.kappaBegin(); }
 
     /*!
-     *  \return initial angle of the 3 arc clothoid
+     * return initial angle of the 3 arc clothoid
      */
     real_type thetaBegin() const { return S0.thetaBegin(); }
 
     /*!
-     *  \return final x coordinate of the 3 arc clothoid
+     * return final x coordinate of the 3 arc clothoid
      */
     real_type xEnd()const { return S1.xEnd(); }
 
     /*!
-     *  \return final y coordinate of the 3 arc clothoid
+     * return final y coordinate of the 3 arc clothoid
      */
     real_type yEnd() const { return S1.yEnd(); }
 
     /*!
-     *  \return final curvature of the 3 arc clothoid
+     * return final curvature of the 3 arc clothoid
      */
     real_type kappaEnd() const { return S1.kappaEnd(); }
 
     /*!
-     *  \return final angle of the 3 arc clothoid
+     * return final angle of the 3 arc clothoid
      */
     real_type thetaEnd() const { return S1.thetaEnd(); }
 
@@ -520,33 +520,33 @@ namespace G2lib {
       real_type & y
     ) const;
 
-    void eval( real_type s, real_type & x, real_type & y ) const;
-    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const;
-    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const;
-    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
+    void eval( real_type s, real_type & x, real_type & y ) const override;
+    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const override;
+    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const override;
+    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const override;
 
     // offset curve
-    void eval_ISO( real_type s, real_type offs, real_type & x, real_type & y ) const;
-    void eval_ISO_D( real_type s, real_type offs, real_type & x_D, real_type & y_D ) const;
-    void eval_ISO_DD( real_type s, real_type offs, real_type & x_DD, real_type & y_DD ) const;
-    void eval_ISO_DDD( real_type s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const;
+    void eval_ISO( real_type s, real_type offs, real_type & x, real_type & y ) const override;
+    void eval_ISO_D( real_type s, real_type offs, real_type & x_D, real_type & y_D ) const override;
+    void eval_ISO_DD( real_type s, real_type offs, real_type & x_DD, real_type & y_DD ) const override;
+    void eval_ISO_DDD( real_type s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const override;
 
     void
-    rotate( real_type angle, real_type cx, real_type cy ) {
+    rotate( real_type angle, real_type cx, real_type cy ) override {
       S0.rotate( angle, cx, cy );
       S1.rotate( angle, cx, cy );
       SM.rotate( angle, cx, cy );
     }
 
     void
-    translate( real_type tx, real_type ty ){
+    translate( real_type tx, real_type ty ) override {
       S0.translate( tx, ty );
       S1.translate( tx, ty );
       SM.translate( tx, ty );
     }
 
     void
-    reverse() {
+    reverse() override {
       ClothoidCurve tmp(S0); S1 = S0; S0 = tmp;
       S0.reverse();
       S1.reverse();
@@ -557,6 +557,7 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
+    //! save clothoid list
     void save( ostream_type & stream ) const;
   };
 
@@ -830,12 +831,14 @@ namespace G2lib {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void
     build_AABBtree_ISO(
       real_type offs,
       real_type max_angle = Utils::m_pi/6, // 30 degree
       real_type max_size  = 1e100
     ) const;
+    #endif
 
     /*\
      |   _     _

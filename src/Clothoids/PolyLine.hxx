@@ -53,6 +53,7 @@ namespace G2lib {
     mutable bool     m_aabb_done;
     mutable AABBtree m_aabb_tree;
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     class Collision_list {
       PolyLine const * pPL1;
       PolyLine const * pPL2;
@@ -69,6 +70,7 @@ namespace G2lib {
         return LS1.collision( LS2 );
       }
     };
+    #endif
 
     void
     resetLastInterval() {

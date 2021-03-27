@@ -121,6 +121,7 @@
     <span class="k">mutable</span> <span class="kt">bool</span>     <span class="n">m_aabb_done</span><span class="p">;</span>
     <span class="k">mutable</span> <span class="n">AABBtree</span> <span class="n">m_aabb_tree</span><span class="p">;</span>
 
+    <span class="cp">#ifndef DOXYGEN_SHOULD_SKIP_THIS</span>
     <span class="k">class</span> <span class="nc">Collision_list</span> <span class="p">{</span>
       <span class="n">PolyLine</span> <span class="k">const</span> <span class="o">*</span> <span class="n">pPL1</span><span class="p">;</span>
       <span class="n">PolyLine</span> <span class="k">const</span> <span class="o">*</span> <span class="n">pPL2</span><span class="p">;</span>
@@ -137,6 +138,7 @@
         <span class="k">return</span> <span class="n">LS1</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span> <span class="n">LS2</span> <span class="p">);</span>
       <span class="p">}</span>
     <span class="p">};</span>
+    <span class="cp">#endif</span>
 
     <span class="kt">void</span>
     <span class="nf">resetLastInterval</span><span class="p">()</span> <span class="p">{</span>

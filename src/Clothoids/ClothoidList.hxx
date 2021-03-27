@@ -33,7 +33,34 @@ namespace G2lib {
    |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
   \*/
 
-  //! computation of the G2 fitting with 2 clothoid arc
+
+  /*!
+   * Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+   * two clothoids arc that solve the G2 problem
+   *
+   * \f[
+   *   \textrm{endpoints:}\quad
+   *   \begin{cases}
+   *     G(0) = \mathbf{p}_0 & \\
+   *     G(L) = \mathbf{p}_1 &
+   *   \end{cases}
+   *   \qquad\textrm{angles:}\quad
+   *   \begin{cases}
+   *     \theta(0) = \theta_0 & \\
+   *     \theta(L) = \theta_1 &
+   *   \end{cases}
+   *   \qquad\textrm{curvature:}\quad
+   *   \begin{cases}
+   *     \kappa(0) = \kappa_0 & \\
+   *     \kappa(L)  = \kappa_1 &
+   *   \end{cases}
+   * \f]
+   *
+   * **note**
+   *
+   * The solution do not exist for all the combination of points/angle/curvature 
+   *
+   */
   class G2solve2arc {
 
     real_type tolerance;
@@ -109,6 +136,7 @@ namespace G2lib {
 
   public:
 
+    //! build an empty clothoid list
     G2solve2arc()
     : tolerance(1e-10)
     , maxIter(20)
@@ -132,22 +160,47 @@ namespace G2lib {
 
     ~G2solve2arc() {}
 
+    /*!
+     * Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+     * two clothoids arc that solve the G2 problem, with data
+     *
+     * \f[ \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T \f]
+     * \f[ \theta_0, \qquad \theta_1, \qquad \kappa_0, \qquad \kappa_1 \f]
+     *
+     * \param[in] x0     \f$ x_0      \f$
+     * \param[in] y0     \f$ y_0      \f$
+     * \param[in] theta0 \f$ \theta_0 \f$
+     * \param[in] kappa0 \f$ \kappa_0 \f$
+     * \param[in] x1     \f$ x_1      \f$
+     * \param[in] y1     \f$ y_1      \f$
+     * \param[in] theta1 \f$ \theta_1 \f$
+     * \param[in] kappa1 \f$ \kappa_1 \f$
+     * \return number of iterations of -1 if failed
+     *
+     */
     int
     build(
       real_type x0, real_type y0, real_type theta0, real_type kappa0,
       real_type x1, real_type y1, real_type theta1, real_type kappa1
     );
 
-    void
-    setTolerance( real_type tol );
+    //! fix tolerance for the G2 problem
+    void setTolerance( real_type tol );
 
-    void
-    setMaxIter( int tol );
+    //! fix maximum number of iteration for the G2 problem
+    void setMaxIter( int tol );
 
-    int
-    solve();
+    /*!
+     * solve the G2 problem
+     *
+     * \return number of iterations of -1 if failed
+     */
+    int solve();
 
+    //! return the first clothoid of the G2 clothoid list
     ClothoidCurve const & getS0() const { return S0; }
+
+    //! return the second clothoid of the G2 clothoid list
     ClothoidCurve const & getS1() const { return S1; }
 
   };
@@ -160,7 +213,33 @@ namespace G2lib {
    |   \____|_____|___/\___/|_| \_/ \___|\____|_____\____|
   \*/
 
-  //! computation of the G2 fitting with 2 clothoid and one line segment
+  /*!
+   * Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+   * 2 clothoid and one line segment that solve the G2 problem
+   *
+   * \f[
+   *   \textrm{endpoints:}\quad
+   *   \begin{cases}
+   *     G(0) = \mathbf{p}_0 & \\
+   *     G(L) = \mathbf{p}_1 &
+   *   \end{cases}
+   *   \qquad\textrm{angles:}\quad
+   *   \begin{cases}
+   *     \theta(0) = \theta_0 & \\
+   *     \theta(L) = \theta_1 &
+   *   \end{cases}
+   *   \qquad\textrm{curvature:}\quad
+   *   \begin{cases}
+   *     \kappa(0) = \kappa_0 & \\
+   *     \kappa(L)  = \kappa_1 &
+   *   \end{cases}
+   * \f]
+   *
+   * **note**
+   *
+   * The solution do not exist for all the combination of points/angle/curvature 
+   *
+   */
   class G2solveCLC {
 
     real_type tolerance;
@@ -187,6 +266,7 @@ namespace G2lib {
 
   public:
 
+    //! build an empty clothoid list
     G2solveCLC()
     : tolerance(1e-10)
     , maxIter(20)
@@ -210,23 +290,50 @@ namespace G2lib {
 
     ~G2solveCLC() {}
 
+    /*!
+     * Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+     * two clothoids and one line segment that solve the G2 problem, with data
+     *
+     * \f[ \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T \f]
+     * \f[ \theta_0, \qquad \theta_1, \qquad \kappa_0, \qquad \kappa_1 \f]
+     *
+     * \param[in] x0     \f$ x_0      \f$
+     * \param[in] y0     \f$ y_0      \f$
+     * \param[in] theta0 \f$ \theta_0 \f$
+     * \param[in] kappa0 \f$ \kappa_0 \f$
+     * \param[in] x1     \f$ x_1      \f$
+     * \param[in] y1     \f$ y_1      \f$
+     * \param[in] theta1 \f$ \theta_1 \f$
+     * \param[in] kappa1 \f$ \kappa_1 \f$
+     * \return number of iterations of -1 if failed
+     *
+     */
     int
     build(
       real_type x0, real_type y0, real_type theta0, real_type kappa0,
       real_type x1, real_type y1, real_type theta1, real_type kappa1
     );
 
-    void
-    setTolerance( real_type tol );
+    //! fix tolerance for the G2 problem
+    void setTolerance( real_type tol );
 
-    void
-    setMaxIter( int tol );
+    //! fix maximum number of iteration for the G2 problem
+    void setMaxIter( int tol );
 
-    int
-    solve();
+    /*!
+     * solve the G2 problem
+     *
+     * \return number of iterations of -1 if failed
+     */
+    int solve();
 
+    //! return the first clothoid of the G2 clothoid list
     ClothoidCurve const & getS0() const { return S0; }
+
+    //! return the second segment (the line) as a clothoid
     ClothoidCurve const & getSM() const { return SM; }
+
+    //! return the third clothoid of the G2 clothoid list
     ClothoidCurve const & getS1() const { return S1; }
 
     void save( ostream_type & stream ) const;
@@ -239,8 +346,40 @@ namespace G2lib {
    |  | |_| |/ __/\__ \ (_) | |\ V /  __/___) | (_| | | | (__
    |   \____|_____|___/\___/|_| \_/ \___|____/ \__,_|_|  \___|
   \*/
-  // Clothoid-clothoid-clothoid with G2 continuity
-  //! computation of the G2 fitting with 3 clothoid arcs
+
+  /*!
+   * Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+   * 3 clothoid and one line segment that solve the G2 problem
+   *
+   * **match**
+   *
+   * \f[
+   *   \textrm{endpoints:}\quad
+   *   \begin{cases}
+   *     G(0) = \mathbf{p}_0 & \\
+   *     G(L) = \mathbf{p}_1 &
+   *   \end{cases}
+   *   \qquad\textrm{angles:}\quad
+   *   \begin{cases}
+   *     \theta(0) = \theta_0 & \\
+   *     \theta(L) = \theta_1 &
+   *   \end{cases}
+   *   \qquad\textrm{curvature:}\quad
+   *   \begin{cases}
+   *     \kappa(0) = \kappa_0 & \\
+   *     \kappa(L)  = \kappa_1 &
+   *   \end{cases}
+   * \f]
+   *
+   * **Reference**
+   *
+   * The solution algorithm is described in
+   *
+   * - **E.Bertolazzi, M.Frego**, On the G2 Hermite Interpolation Problem with clothoids
+   *   Journal of Computational and Applied Mathematics, vol 341, pp. 99-116, 2018
+   *
+   * \image html G2problem3arc.jpg
+   */
   class G2solve3arc {
 
     ClothoidCurve S0, SM, S1;
@@ -291,7 +430,10 @@ namespace G2lib {
 
     ~G2solve3arc() {}
 
+    //! fix tolerance for the G2 problem
     void setTolerance( real_type tol );
+
+    //! fix maximum number of iteration for the G2 problem
     void setMaxIter( int miter );
 
     /*!
@@ -418,7 +560,7 @@ namespace G2lib {
     thetaMinMax( real_type & thMin, real_type & thMax ) const;
 
     /*!
-     *  \return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
+     *  return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
      */
     real_type
     deltaTheta() const
@@ -433,72 +575,72 @@ namespace G2lib {
     curvatureMinMax( real_type & kMin, real_type & kMax ) const;
 
     /*!
-     *  \return angle as a function of curvilinear coordinate
+     *  return angle as a function of curvilinear coordinate
      */
     real_type theta( real_type s ) const;
 
     /*!
-     *  \return angle derivative (curvature) as a function of curvilinear coordinate
+     *  return angle derivative (curvature) as a function of curvilinear coordinate
      */
     real_type theta_D( real_type s ) const;
 
     /*!
-     *  \return angle second derivative (curvature derivative) as a function of curvilinear coordinate
+     *  return angle second derivative (curvature derivative) as a function of curvilinear coordinate
      */
     real_type theta_DD( real_type s ) const;
 
     /*!
-     *  \return angle third derivative as a function of curvilinear coordinate
+     *  return angle third derivative as a function of curvilinear coordinate
     \*/
     real_type theta_DDD( real_type s ) const;
 
     /*!
-     *  \return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
+     *  return x coordinate of the3 arc clothoid as a function of curvilinear coordinate
      */
     real_type X( real_type s ) const;
 
     /*!
-     *  \return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
+     *  return y coordinate of the3 arc clothoid as a function of curvilinear coordinate
      */
     real_type Y( real_type s ) const;
 
     /*!
-     *  \return initial x coordinate of the 3 arc clothoid
+     *  return initial x coordinate of the 3 arc clothoid
      */
     real_type xBegin() const { return S0.xBegin(); }
 
     /*!
-     *  \return initial y coordinate of the 3 arc clothoid
+     *  return initial y coordinate of the 3 arc clothoid
      */
     real_type yBegin() const { return S0.yBegin(); }
 
     /*!
-     *  \return initial curvature of the 3 arc clothoid
+     *  return initial curvature of the 3 arc clothoid
      */
     real_type kappaBegin() const { return S0.kappaBegin(); }
 
     /*!
-     *  \return initial angle of the 3 arc clothoid
+     *  return initial angle of the 3 arc clothoid
      */
     real_type thetaBegin() const { return S0.thetaBegin(); }
 
     /*!
-     *  \return final x coordinate of the 3 arc clothoid
+     *  return final x coordinate of the 3 arc clothoid
      */
     real_type xEnd()const { return S1.xEnd(); }
 
     /*!
-     *  \return final y coordinate of the 3 arc clothoid
+     *  return final y coordinate of the 3 arc clothoid
      */
     real_type yEnd() const { return S1.yEnd(); }
 
     /*!
-     *  \return final curvature of the 3 arc clothoid
+     *  return final curvature of the 3 arc clothoid
      */
     real_type kappaEnd() const { return S1.kappaEnd(); }
 
     /*!
-     *  \return final angle of the 3 arc clothoid
+     *  return final angle of the 3 arc clothoid
      */
     real_type thetaEnd() const { return S1.thetaEnd(); }
 
@@ -520,17 +662,37 @@ namespace G2lib {
       real_type & y
     ) const;
 
+    //! x and y-coordinate at curvilinear coordinate `s`
     void eval( real_type s, real_type & x, real_type & y ) const;
+
+    //! x and y-coordinate derivative at curvilinear coordinate `s`
     void eval_D( real_type s, real_type & x_D, real_type & y_D ) const;
+
+    //! x and y-coordinate second derivative at curvilinear coordinate `s`
     void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const;
+
+    //! x and y-coordinate third derivative at curvilinear coordinate `s`
     void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
 
-    // offset curve
+    //! x and y-coordinate at curvilinear coordinate `s` with offset
     void eval_ISO( real_type s, real_type offs, real_type & x, real_type & y ) const;
+
+    //! x and y-coordinate derivative at curvilinear coordinate `s` with offset
     void eval_ISO_D( real_type s, real_type offs, real_type & x_D, real_type & y_D ) const;
+
+    //! x and y-coordinate second derivative at curvilinear coordinate `s` with offset
     void eval_ISO_DD( real_type s, real_type offs, real_type & x_DD, real_type & y_DD ) const;
+
+    //! x and y-coordinate third derivative at curvilinear coordinate `s` with offset
     void eval_ISO_DDD( real_type s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const;
 
+    /*!
+     * rotate curve by angle \f$ theta \f$ centered at point  \f$ (c_x,c_y)\f$
+     * \param[in] angle angle  \f$ theta \f$
+     * \param[in] cx    \f$ c_x\f$
+     * \param[in] cy    \f$ c_y\f$
+     *
+     */
     void
     rotate( real_type angle, real_type cx, real_type cy ) {
       S0.rotate( angle, cx, cy );
@@ -538,6 +700,7 @@ namespace G2lib {
       SM.rotate( angle, cx, cy );
     }
 
+    //! translate curve by \f$ (t_x,t_y) \f$
     void
     translate( real_type tx, real_type ty ){
       S0.translate( tx, ty );
@@ -545,6 +708,7 @@ namespace G2lib {
       SM.translate( tx, ty );
     }
 
+    //! reverse curve parameterization
     void
     reverse() {
       ClothoidCurve tmp(S0); S1 = S0; S0 = tmp;
@@ -557,6 +721,7 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
+    //! save clothoid list of a file stream
     void save( ostream_type & stream ) const;
   };
 
@@ -568,7 +733,12 @@ namespace G2lib {
    |  \____|_|\___/ \__|_| |_|\___/|_|\__,_|_____|_|___/\__|
    |
   \*/
-  //! \brief Class to manage a list of clothoid curves (not necessarily G2 or G1 connected)
+  /*!
+   * Manage a piecewise clothoids \f$ \G(s) \f$ composed by
+   * n clothoids (not necessarily G2 or G1 connected)
+   *
+   * \image html G2problem3arc.jpg
+   */
   class ClothoidList : public BaseCurve {
 
     bool                  m_curve_is_closed;
@@ -626,7 +796,7 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    //explicit
+    //! build an empty clothoid list
     ClothoidList()
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , m_curve_is_closed(false)
@@ -640,52 +810,174 @@ namespace G2lib {
       m_aabb_tri.clear();
     }
 
-    //explicit
+    //! build a copy of an existing clothoid list
     ClothoidList( ClothoidList const & s )
     : BaseCurve(G2LIB_CLOTHOID_LIST)
     , m_curve_is_closed(false)
     , m_aabb_done(false)
     { this->resetLastInterval(); copy(s); }
 
+    //! initialize the clothois list
     void init();
+
+    //! reserve memory for `n` clothois
     void reserve( int_type n );
+
+    //! build a clothoid list copying an existing one
     void copy( ClothoidList const & L );
 
+    //! copy an existing clothoid list
     ClothoidList const & operator = ( ClothoidList const & s )
     { copy(s); return *this; }
 
+    //! build a clothoid from a line segment
     explicit ClothoidList( LineSegment const & LS );
+
+    //! build a clothoid from a circle arc
     explicit ClothoidList( CircleArc const & C );
+
+    //! build a clothoid from a biarc
     explicit ClothoidList( Biarc const & B );
+
+    //! build a clothoid from a list of biarc
     explicit ClothoidList( BiarcList const & BL );
+
+    //! build a clothoid from a clothoid curve
     explicit ClothoidList( ClothoidCurve const & CL );
+
+    //! build a clothoid from a list line segment
     explicit ClothoidList( PolyLine const & PL );
+
+    //! build a clothoid from a curve
     explicit ClothoidList( BaseCurve const & C );
 
-    void push_back( LineSegment   const & c );
-    void push_back( CircleArc     const & c );
-    void push_back( Biarc         const & c );
-    void push_back( BiarcList     const & c );
+    //! add a line segment to the tail of clothoid list
+    void push_back( LineSegment const & c );
+
+    //! add a circle arc to the tail of clothoid list
+    void push_back( CircleArc const & c );
+
+    //! add a biarc to the tail of clothoid list
+    void push_back( Biarc const & c );
+
+    //! add a biarc list to the tail of clothoid list
+    void push_back( BiarcList const & c );
+
+    //! add a clothoid curve to the tail of clothoid list
     void push_back( ClothoidCurve const & c );
-    void push_back( PolyLine      const & c );
 
-    void push_back( real_type kappa0, real_type dkappa, real_type L );
-    void push_back( real_type x0,     real_type y0,     real_type theta0,
-                    real_type kappa0, real_type dkappa, real_type L );
+    //! add a list of line segment to the tail of clothoid list
+    void push_back( PolyLine const & c );
 
-    void push_back_G1( real_type x1, real_type y1, real_type theta1 );
-    void push_back_G1( real_type x0, real_type y0, real_type theta0,
-                       real_type x1, real_type y1, real_type theta1 );
+    /*!
+     * 
+     * Add a clothoid to the tail of the clothoid list.
+     *
+     * \param kappa0 initial curvature
+     * \param dkappa derivative of the curvature
+     * \param L      length of the segment
+     *
+     */
+    void
+    push_back(
+      real_type kappa0,
+      real_type dkappa,
+      real_type L
+    );
 
+    /*!
+     * 
+     * Add a clothoid to the tail of the clothoid list.
+     * The builded clothoid is translated to the tail of the clothioid list.
+     *
+     * \param x0     initial x
+     * \param y0     initial y
+     * \param theta0 initial angle
+     * \param kappa0 initial curvature
+     * \param dkappa derivative of the curvature
+     * \param L      length of the segment
+     *
+     */
+    void
+    push_back(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type kappa0,
+      real_type dkappa,
+      real_type L
+    );
+
+    /*!
+     * 
+     * Add a clothoid to the tail of the clothoid list solving the G1 problem.
+     * The initial point and angle are taken from the tail of the clothoid list.
+     *
+     * \param x1     final x
+     * \param y1     final y
+     * \param theta1 final angle
+     *
+     */
+    void
+    push_back_G1(
+      real_type x1,
+      real_type y1,
+      real_type theta1
+    );
+
+    /*!
+     * 
+     * Add a clothoid to the tail of the clothoid list solving the G1 problem.
+     * The initial point and angle are taken from the tail of the clothoid list.
+     * The builded clothoid is translated to the tail of the clothioid list.
+     *
+     * \param x0     initial x
+     * \param y0     initial y
+     * \param theta0 initial angle
+     * \param x1     final x
+     * \param y1     final y
+     * \param theta1 final angle
+     *
+     */
+    void
+    push_back_G1(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type x1,
+      real_type y1,
+      real_type theta1
+    );
+
+    //! true if curve is closed
     bool is_closed() const { return m_curve_is_closed; }
-    void make_closed() { m_curve_is_closed = true; }
-    void make_open()   { m_curve_is_closed = false; }
 
+    //! set clousure flag to true
+    void make_closed() { m_curve_is_closed = true; }
+
+    //! set clousure flag to false
+    void make_open() { m_curve_is_closed = false; }
+
+    //! differece initial final point x component
     real_type closure_gap_x()  const { return this->xEnd() - this->xBegin(); }
+
+    //! differece initial final point y component
     real_type closure_gap_y()  const { return this->yEnd() - this->yBegin(); }
+
+    //! differece initial final tangent x component
     real_type closure_gap_tx() const { return this->tx_End() - this->tx_Begin(); }
+
+    //! differece initial final tangent y component
     real_type closure_gap_ty() const { return this->ty_End() - this->ty_Begin(); }
 
+    /*!
+     * check if clothois list is closed
+     *
+     * \param[in] tol_xy position tolerance
+     * \param[in] tol_tg angle (tangent) tolerance
+     *
+     * \return true if curve is closed
+     */
     bool
     closure_check( real_type tol_xy = 1e-6, real_type tol_tg = 1e-6 ) const {
       return std::abs(closure_gap_x())  < tol_xy &&
@@ -694,6 +986,17 @@ namespace G2lib {
              std::abs(closure_gap_ty()) < tol_tg;
     }
 
+    /*!
+     * Build clothoid list passing to a list of points
+     * solving a series of G1 fitting problems.
+     * The angle at points are estimated using the routine `xy_to_guess_angle`
+     *
+     * \param[in] n number of points
+     * \param[in] x x-coordinates
+     * \param[in] y y-coordinates
+     *
+     * \return false if routine fails
+     */
     bool
     build_G1(
       int_type          n,
@@ -701,6 +1004,17 @@ namespace G2lib {
       real_type const * y
     );
 
+    /*!
+     * Build clothoid list passing to a list of points
+     * solving a series of G1 fitting problems.
+     *
+     * \param[in] n     number of points
+     * \param[in] x     x-coordinates
+     * \param[in] y     y-coordinates
+     * \param[in] theta angles at the points
+     *
+     * \return false if routine fails
+     */
     bool
     build_G1(
       int_type          n,
@@ -709,6 +1023,20 @@ namespace G2lib {
       real_type const * theta
     );
 
+    /*!
+     * Build clothoid list with G2 continuity.
+     * The vector `s` contains the breakpoints of the curve.
+     * Between two breakpoint the curvature change linearly (is a clothoid) 
+     *
+     * \param[in] x0     initial x
+     * \param[in] y0     initial y
+     * \param[in] theta0 initial angle
+     * \param[in] n      number of segments
+     * \param[in] s      break point of the piecewise curve
+     * \param[in] kappa  curvature at the break point
+     *
+     * \return true if curve is closed
+     */
     bool
     build(
       real_type         x0,
@@ -719,6 +1047,19 @@ namespace G2lib {
       real_type const * kappa
     );
 
+    /*!
+     * Build clothoid list with G2 continuity.
+     * The vector `s` contains the breakpoints of the curve.
+     * Between two breakpoint the curvature change linearly (is a clothoid) 
+     *
+     * \param[in] x0     initial x
+     * \param[in] y0     initial y
+     * \param[in] theta0 initial angle
+     * \param[in] s      break point of the piecewise curve
+     * \param[in] kappa  curvature at the break point
+     *
+     * \return true if curve is closed
+     */
     bool
     build(
       real_type                 x0,
@@ -735,6 +1076,18 @@ namespace G2lib {
       );
     }
 
+    /*!
+     * Build clothoid listy using raw data.
+     *
+     * \param[in] n        number of points
+     * \param[in] x        x-coordinates
+     * \param[in] y        y-coordinates
+     * \param[in] abscissa break point of the piecewise curve
+     * \param[in] theta    angles at breakpoints
+     * \param[in] kappa    curvature at the break point
+     *
+     * \return false if fails
+     */
     bool
     build_raw(
       int_type          n,
@@ -745,6 +1098,17 @@ namespace G2lib {
       real_type const * kappa
     );
 
+    /*!
+     * Build clothoid listy using raw data.
+     *
+     * \param[in] x        x-coordinates
+     * \param[in] y        y-coordinates
+     * \param[in] abscissa break point of the piecewise curve
+     * \param[in] theta    angles at breakpoints
+     * \param[in] kappa    curvature at the break point
+     *
+     * \return false if fails
+     */
     bool
     build_raw(
       vector<real_type> const & x,
@@ -764,32 +1128,39 @@ namespace G2lib {
       );
     }
 
+    //! get the `idx`-th clothoid of the list
     ClothoidCurve const & get( int_type idx ) const;
+
+    //! get the `idx`-th clothoid of the list where `idx` is the clothoid at parameter `s`
     ClothoidCurve const & getAtS( real_type s ) const;
 
+    //! return the numbber of clothois of the list
     int_type numSegment() const { return int_type(m_clotoidList.size()); }
 
+    /*!
+     * The list of clothois has total length \f$ L \f$
+     * the parameter \f$ s \f$ us recomputed as \f$ s+kL\f$ in such a way 
+     * \f$ s+kL\in[0,L)\f$ with \f$ k\in\mathbb{Z} \f$.
+     */
     void wrap_in_range( real_type & s ) const;
 
-    int_type
-    findAtS( real_type & s ) const;
+    //! find the clothoid segment whose definiton range contains `s` 
+    int_type findAtS( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
-    real_type
-    length() const override;
+    real_type length() const override;
+    real_type length_ISO( real_type offs ) const override;
 
-    virtual
-    real_type
-    length_ISO( real_type offs ) const override;
-
+    //! return the length of the `nseg`-th clothoid of the list
     real_type
     segment_length( int_type nseg ) const;
 
+    //! return the length of the `nseg`-th clothoid of the list with offset
     real_type
     segment_length_ISO( int_type nseg, real_type offs ) const;
 
+    //! return the length of the `nseg`-th clothoid of the list with offset
     real_type
     segment_length_SAE( int_type nseg, real_type offs ) const
     { return segment_length_ISO( nseg, -offs ); }
@@ -830,12 +1201,14 @@ namespace G2lib {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void
     build_AABBtree_ISO(
       real_type offs,
       real_type max_angle = Utils::m_pi/6, // 30 degree
       real_type max_size  = 1e100
     ) const;
+    #endif
 
     /*\
      |   _     _
@@ -875,90 +1248,72 @@ namespace G2lib {
      |              |___/
     \*/
 
-    virtual
     real_type
     thetaBegin() const override
     { return m_clotoidList.front().thetaBegin(); }
 
-    virtual
     real_type
     thetaEnd() const override
     { return m_clotoidList.back().thetaEnd(); }
 
-    virtual
     real_type
     xBegin() const override
     { return m_clotoidList.front().xBegin(); }
 
-    virtual
     real_type
     yBegin() const override
     { return m_clotoidList.front().yBegin(); }
 
-    virtual
     real_type
     xEnd() const override
     { return m_clotoidList.back().xEnd(); }
 
-    virtual
     real_type
     yEnd() const override
     { return m_clotoidList.back().yEnd(); }
 
-    virtual
     real_type
     xBegin_ISO( real_type offs ) const override
     { return m_clotoidList.front().xBegin_ISO( offs ); }
 
-    virtual
     real_type
     yBegin_ISO( real_type offs ) const override
     { return m_clotoidList.front().yBegin_ISO( offs ); }
 
-    virtual
     real_type xEnd_ISO( real_type offs ) const override
     { return m_clotoidList.back().xEnd_ISO( offs ); }
 
-    virtual
     real_type
     yEnd_ISO( real_type offs ) const override
     { return m_clotoidList.back().yEnd_ISO( offs ); }
 
-    virtual
     real_type tx_Begin() const override
     { return m_clotoidList.front().tx_Begin(); }
 
-    virtual
     real_type
     ty_Begin() const override
     { return m_clotoidList.front().ty_Begin(); }
 
-    virtual
     real_type
     tx_End() const override
     { return m_clotoidList.back().tx_End(); }
 
-    virtual
     real_type
     ty_End() const override
     { return m_clotoidList.back().ty_End(); }
 
-    virtual
     real_type
     nx_Begin_ISO() const override
     { return m_clotoidList.front().nx_Begin_ISO(); }
 
-    virtual
     real_type
     ny_Begin_ISO() const override
     { return m_clotoidList.front().ny_Begin_ISO(); }
 
-    virtual
     real_type
     nx_End_ISO() const override
     { return m_clotoidList.back().nx_End_ISO(); }
 
-    virtual
     real_type
     ny_End_ISO() const override
     { return m_clotoidList.back().ny_End_ISO(); }
@@ -971,10 +1326,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual real_type theta( real_type s ) const override;
-    virtual real_type theta_D( real_type s ) const override;
-    virtual real_type theta_DD( real_type s ) const override;
-    virtual real_type theta_DDD( real_type s ) const override;
+    real_type theta    ( real_type s ) const override;
+    real_type theta_D  ( real_type s ) const override;
+    real_type theta_DD ( real_type s ) const override;
+    real_type theta_DDD( real_type s ) const override;
 
     /*\
      |  _____                   _   _   _
@@ -984,18 +1339,17 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    virtual real_type tx( real_type s ) const override;
-    virtual real_type ty( real_type s ) const override;
-    virtual real_type tx_D( real_type s ) const override;
-    virtual real_type ty_D( real_type s ) const override;
-    virtual real_type tx_DD( real_type s ) const override;
-    virtual real_type ty_DD( real_type s ) const override;
-    virtual real_type tx_DDD( real_type s ) const override;
-    virtual real_type ty_DDD( real_type s ) const override;
+    real_type tx    ( real_type s ) const override;
+    real_type ty    ( real_type s ) const override;
+    real_type tx_D  ( real_type s ) const override;
+    real_type ty_D  ( real_type s ) const override;
+    real_type tx_DD ( real_type s ) const override;
+    real_type ty_DD ( real_type s ) const override;
+    real_type tx_DDD( real_type s ) const override;
+    real_type ty_DDD( real_type s ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     tg(
       real_type   s,
@@ -1003,7 +1357,6 @@ namespace G2lib {
       real_type & tg_y
     ) const override;
 
-    virtual
     void
     tg_D(
       real_type   s,
@@ -1011,7 +1364,6 @@ namespace G2lib {
       real_type & tg_y_D
     ) const override;
 
-    virtual
     void
     tg_DD(
       real_type   s,
@@ -1019,7 +1371,6 @@ namespace G2lib {
       real_type & tg_y_DD
     ) const override;
 
-    virtual
     void
     tg_DDD(
       real_type   s,
@@ -1029,7 +1380,6 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     evaluate(
       real_type   s,
@@ -1041,7 +1391,6 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     evaluate_ISO(
       real_type   s,
@@ -1054,18 +1403,17 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual real_type X( real_type s ) const override;
-    virtual real_type Y( real_type s ) const override;
-    virtual real_type X_D( real_type s ) const override;
-    virtual real_type Y_D( real_type s ) const override;
-    virtual real_type X_DD( real_type s ) const override;
-    virtual real_type Y_DD( real_type s ) const override;
-    virtual real_type X_DDD( real_type s ) const override;
-    virtual real_type Y_DDD( real_type s ) const override;
+    real_type X    ( real_type s ) const override;
+    real_type Y    ( real_type s ) const override;
+    real_type X_D  ( real_type s ) const override;
+    real_type Y_D  ( real_type s ) const override;
+    real_type X_DD ( real_type s ) const override;
+    real_type Y_DD ( real_type s ) const override;
+    real_type X_DDD( real_type s ) const override;
+    real_type Y_DDD( real_type s ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     eval(
       real_type   s,
@@ -1073,7 +1421,6 @@ namespace G2lib {
       real_type & y
     ) const override;
 
-    virtual
     void
     eval_D(
       real_type   s,
@@ -1081,7 +1428,6 @@ namespace G2lib {
       real_type & y_D
     ) const override;
 
-    virtual
     void
     eval_DD(
       real_type   s,
@@ -1089,7 +1435,6 @@ namespace G2lib {
       real_type & y_DD
     ) const override;
 
-    virtual
     void
     eval_DDD(
       real_type   s,
@@ -1105,41 +1450,17 @@ namespace G2lib {
      |  \___/|_| |_| |___/\___|\__|
     \*/
 
-    virtual
-    real_type
-    X_ISO( real_type s, real_type offs ) const override;
-
-    virtual
-    real_type
-    Y_ISO( real_type s, real_type offs ) const override;
-
-    virtual
-    real_type
-    X_ISO_D( real_type s, real_type offs ) const override;
-
-    virtual
-    real_type
-    Y_ISO_D( real_type s, real_type offs ) const override;
-
-    virtual
-    real_type
-    X_ISO_DD( real_type s, real_type offs ) const override;
-
-    virtual
-    real_type
-    Y_ISO_DD( real_type s, real_type offs ) const override;
-
-    virtual
-    real_type
-    X_ISO_DDD( real_type s, real_type offs ) const override;
-
-    virtual
-    real_type
-    Y_ISO_DDD( real_type s, real_type offs ) const override;
+    real_type X_ISO    ( real_type s, real_type offs ) const override;
+    real_type Y_ISO    ( real_type s, real_type offs ) const override;
+    real_type X_ISO_D  ( real_type s, real_type offs ) const override;
+    real_type Y_ISO_D  ( real_type s, real_type offs ) const override;
+    real_type X_ISO_DD ( real_type s, real_type offs ) const override;
+    real_type Y_ISO_DD ( real_type s, real_type offs ) const override;
+    real_type X_ISO_DDD( real_type s, real_type offs ) const override;
+    real_type Y_ISO_DDD( real_type s, real_type offs ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     eval_ISO(
       real_type   s,
@@ -1148,7 +1469,6 @@ namespace G2lib {
       real_type & y
     ) const override;
 
-    virtual
     void
     eval_ISO_D(
       real_type   s,
@@ -1157,7 +1477,6 @@ namespace G2lib {
       real_type & y_D
     ) const override;
 
-    virtual
     void
     eval_ISO_DD(
       real_type   s,
@@ -1166,7 +1485,6 @@ namespace G2lib {
       real_type & y_DD
     ) const override;
 
-    virtual
     void
     eval_ISO_DDD(
       real_type   s,
@@ -1183,32 +1501,13 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    virtual
-    void
-    translate( real_type tx, real_type ty ) override;
-
-    virtual
-    void
-    rotate( real_type angle, real_type cx, real_type cy ) override;
-
-    virtual
-    void
-    scale( real_type sc ) override;
-
-    virtual
-    void
-    reverse() override;
-
-    virtual
-    void
-    changeOrigin( real_type newx0, real_type newy0 ) override;
-
-    virtual
-    void
-    trim( real_type s_begin, real_type s_end ) override;
-
-    void
-    trim( real_type s_begin, real_type s_end, ClothoidList & newCL ) const;
+    void translate( real_type tx, real_type ty ) override;
+    void rotate( real_type angle, real_type cx, real_type cy ) override;
+    void scale( real_type sc ) override;
+    void reverse() override;
+    void changeOrigin( real_type newx0, real_type newy0 ) override;
+    void trim( real_type s_begin, real_type s_end ) override;
+    void trim( real_type s_begin, real_type s_end, ClothoidList & newCL ) const;
 
     /*\
      |      _ _     _
@@ -1229,7 +1528,6 @@ namespace G2lib {
      *  \return n >= 0 point is projected orthogonal, n is the number of the segment at minimum distance<br>
      *         -(n+1)  minimum point is not othogonal projection to curve
      */
-    virtual
     int_type
     closestPoint_ISO(
       real_type   qx,
@@ -1253,8 +1551,7 @@ namespace G2lib {
      *  \return n > 0 point is projected orthogonal, n-1 is the number of the segment at minimum distance<br>
      *         -(n+1) minimum point is not othogonal projection to curve
      */
-    virtual
-    int_type // true if projection is unique and orthogonal
+    int_type
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -1404,7 +1701,6 @@ namespace G2lib {
       return res;
     }
 
-    virtual
     void
     info( ostream_type & stream ) const override
     { stream << "ClothoidList\n" << *this << '\n'; }
@@ -1413,9 +1709,23 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidList const & CL );
 
+    /*!
+     * Return the clothois list as a list of nodes and curvatures
+     *
+     * \param[out] s     nodes
+     * \param[out] kappa curvature
+     *
+     */
     void
     getSK( real_type * s, real_type * kappa ) const;
 
+    /*!
+     * Return the clothois list as a list of nodes and curvatures
+     *
+     * \param[out] s     nodes
+     * \param[out] kappa curvature
+     *
+     */
     void
     getSK(
       std::vector<real_type> & s,
@@ -1426,6 +1736,14 @@ namespace G2lib {
       getSK( &s.front(), &kappa.front() );
     }
 
+    /*!
+     * Return the clothois list as a list of nodes angles and curvatures
+     *
+     * \param[out] s     nodes
+     * \param[out] theta angles
+     * \param[out] kappa curvature
+     *
+     */
     void
     getSTK(
       real_type * s,
@@ -1433,6 +1751,14 @@ namespace G2lib {
       real_type * kappa
     ) const;
 
+    /*!
+     * Return the clothois list as a list of nodes angles and curvatures
+     *
+     * \param[out] s     nodes
+     * \param[out] theta angles
+     * \param[out] kappa curvature
+     *
+     */
     void
     getSTK(
       std::vector<real_type> & s,
@@ -1445,6 +1771,13 @@ namespace G2lib {
       getSTK( &s.front(), &theta.front(), &kappa.front() );
     }
 
+    /*!
+     * Return the points of the clothoid list at breakpoints
+     *
+     * \param[out] x x-coordinates
+     * \param[out] y y-coordinates
+     *
+     */
     void
     getXY( real_type * x, real_type * y ) const;
 
@@ -1503,9 +1836,17 @@ namespace G2lib {
      |   \___\___/|_|_|_|___/_|\___/|_| |_|
     \*/
 
+    //! detect a collision with another clothoid list
     bool
     collision( ClothoidList const & C ) const;
 
+    /*!
+     * detect a collision with another clothoid list with offset
+     *
+     * \param[in] offs   offset of first clothoid list
+     * \param[in] CL     second clothoid list
+     * \param[in] offs_C offset of second clothoid list
+     */
     bool
     collision_ISO(
       real_type            offs,
@@ -1521,6 +1862,14 @@ namespace G2lib {
      |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
     \*/
 
+    /*!
+     * intersect a clothoid list with another clothoid list
+     *
+     * \param[in]  CL          second clothoid list
+     * \param[out] ilist       list of the intersection (as parameter on the curves)
+     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+     *                         intersection
+     */
     void
     intersect(
       ClothoidList const & CL,
@@ -1530,6 +1879,16 @@ namespace G2lib {
       intersect_ISO( 0, CL, 0, ilist, swap_s_vals );
     }
 
+    /*!
+     * intersect a clothoid list with another clothoid list with offset (ISO)
+     *
+     * \param[in]  offs        offset of first clothoid list 
+     * \param[in]  CL          second clothoid list
+     * \param[in]  offs_obj    offset of second clothoid list 
+     * \param[out] ilist       list of the intersection (as parameter on the curves)
+     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+     *                         intersection
+     */
     void
     intersect_ISO(
       real_type            offs,
@@ -1553,7 +1912,28 @@ namespace G2lib {
     void
     export_ruby( ostream_type & stream ) const;
 
+    /*!
+     * Save the clothoid list on a stream.
+     * The data is saved as follows
+     *
+     *       # x y theta kappa
+     *       x0 y0 theta0 kappa0
+     *       x1 y1 theta1 kappa1
+     *       ...
+     *       xn yn thetan kappan
+     */
     void save( ostream_type & stream ) const;
+
+    /*!
+     * Read the clothoid list from a stream.
+     * The data is assumed to be saved as follows
+     *
+     *       # x y theta kappa
+     *       x0 y0 theta0 kappa0
+     *       x1 y1 theta1 kappa1
+     *       ...
+     *       xn yn thetan kappan
+     */
     void load( istream_type & stream, real_type epsi = 1e-8 );
 
   };

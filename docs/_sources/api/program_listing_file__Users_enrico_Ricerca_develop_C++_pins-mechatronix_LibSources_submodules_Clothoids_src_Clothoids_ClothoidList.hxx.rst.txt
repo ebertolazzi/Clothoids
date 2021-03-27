@@ -42,6 +42,7 @@ Program Listing for File ClothoidList.hxx
       |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
      \*/
    
+   
      class G2solve2arc {
    
        real_type tolerance;
@@ -146,16 +147,14 @@ Program Listing for File ClothoidList.hxx
          real_type x1, real_type y1, real_type theta1, real_type kappa1
        );
    
-       void
-       setTolerance( real_type tol );
+       void setTolerance( real_type tol );
    
-       void
-       setMaxIter( int tol );
+       void setMaxIter( int tol );
    
-       int
-       solve();
+       int solve();
    
        ClothoidCurve const & getS0() const { return S0; }
+   
        ClothoidCurve const & getS1() const { return S1; }
    
      };
@@ -223,17 +222,16 @@ Program Listing for File ClothoidList.hxx
          real_type x1, real_type y1, real_type theta1, real_type kappa1
        );
    
-       void
-       setTolerance( real_type tol );
+       void setTolerance( real_type tol );
    
-       void
-       setMaxIter( int tol );
+       void setMaxIter( int tol );
    
-       int
-       solve();
+       int solve();
    
        ClothoidCurve const & getS0() const { return S0; }
+   
        ClothoidCurve const & getSM() const { return SM; }
+   
        ClothoidCurve const & getS1() const { return S1; }
    
        void save( ostream_type & stream ) const;
@@ -246,7 +244,7 @@ Program Listing for File ClothoidList.hxx
       |  | |_| |/ __/\__ \ (_) | |\ V /  __/___) | (_| | | | (__
       |   \____|_____|___/\___/|_| \_/ \___|____/ \__,_|_|  \___|
      \*/
-     // Clothoid-clothoid-clothoid with G2 continuity
+   
      class G2solve3arc {
    
        ClothoidCurve S0, SM, S1;
@@ -298,6 +296,7 @@ Program Listing for File ClothoidList.hxx
        ~G2solve3arc() {}
    
        void setTolerance( real_type tol );
+   
        void setMaxIter( int miter );
    
        int
@@ -422,14 +421,19 @@ Program Listing for File ClothoidList.hxx
        ) const;
    
        void eval( real_type s, real_type & x, real_type & y ) const;
+   
        void eval_D( real_type s, real_type & x_D, real_type & y_D ) const;
+   
        void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const;
+   
        void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
    
-       // offset curve
        void eval_ISO( real_type s, real_type offs, real_type & x, real_type & y ) const;
+   
        void eval_ISO_D( real_type s, real_type offs, real_type & x_D, real_type & y_D ) const;
+   
        void eval_ISO_DD( real_type s, real_type offs, real_type & x_DD, real_type & y_DD ) const;
+   
        void eval_ISO_DDD( real_type s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const;
    
        void
@@ -526,7 +530,6 @@ Program Listing for File ClothoidList.hxx
    
        #include "BaseCurve_using.hxx"
    
-       //explicit
        ClothoidList()
        : BaseCurve(G2LIB_CLOTHOID_LIST)
        , m_curve_is_closed(false)
@@ -540,7 +543,6 @@ Program Listing for File ClothoidList.hxx
          m_aabb_tri.clear();
        }
    
-       //explicit
        ClothoidList( ClothoidList const & s )
        : BaseCurve(G2LIB_CLOTHOID_LIST)
        , m_curve_is_closed(false)
@@ -548,42 +550,86 @@ Program Listing for File ClothoidList.hxx
        { this->resetLastInterval(); copy(s); }
    
        void init();
+   
        void reserve( int_type n );
+   
        void copy( ClothoidList const & L );
    
        ClothoidList const & operator = ( ClothoidList const & s )
        { copy(s); return *this; }
    
        explicit ClothoidList( LineSegment const & LS );
+   
        explicit ClothoidList( CircleArc const & C );
+   
        explicit ClothoidList( Biarc const & B );
+   
        explicit ClothoidList( BiarcList const & BL );
+   
        explicit ClothoidList( ClothoidCurve const & CL );
+   
        explicit ClothoidList( PolyLine const & PL );
+   
        explicit ClothoidList( BaseCurve const & C );
    
-       void push_back( LineSegment   const & c );
-       void push_back( CircleArc     const & c );
-       void push_back( Biarc         const & c );
-       void push_back( BiarcList     const & c );
+       void push_back( LineSegment const & c );
+   
+       void push_back( CircleArc const & c );
+   
+       void push_back( Biarc const & c );
+   
+       void push_back( BiarcList const & c );
+   
        void push_back( ClothoidCurve const & c );
-       void push_back( PolyLine      const & c );
    
-       void push_back( real_type kappa0, real_type dkappa, real_type L );
-       void push_back( real_type x0,     real_type y0,     real_type theta0,
-                       real_type kappa0, real_type dkappa, real_type L );
+       void push_back( PolyLine const & c );
    
-       void push_back_G1( real_type x1, real_type y1, real_type theta1 );
-       void push_back_G1( real_type x0, real_type y0, real_type theta0,
-                          real_type x1, real_type y1, real_type theta1 );
+       void
+       push_back(
+         real_type kappa0,
+         real_type dkappa,
+         real_type L
+       );
+   
+       void
+       push_back(
+         real_type x0,
+         real_type y0,
+         real_type theta0,
+         real_type kappa0,
+         real_type dkappa,
+         real_type L
+       );
+   
+       void
+       push_back_G1(
+         real_type x1,
+         real_type y1,
+         real_type theta1
+       );
+   
+       void
+       push_back_G1(
+         real_type x0,
+         real_type y0,
+         real_type theta0,
+         real_type x1,
+         real_type y1,
+         real_type theta1
+       );
    
        bool is_closed() const { return m_curve_is_closed; }
+   
        void make_closed() { m_curve_is_closed = true; }
-       void make_open()   { m_curve_is_closed = false; }
+   
+       void make_open() { m_curve_is_closed = false; }
    
        real_type closure_gap_x()  const { return this->xEnd() - this->xBegin(); }
+   
        real_type closure_gap_y()  const { return this->yEnd() - this->yBegin(); }
+   
        real_type closure_gap_tx() const { return this->tx_End() - this->tx_Begin(); }
+   
        real_type closure_gap_ty() const { return this->ty_End() - this->ty_Begin(); }
    
        bool
@@ -665,24 +711,19 @@ Program Listing for File ClothoidList.hxx
        }
    
        ClothoidCurve const & get( int_type idx ) const;
+   
        ClothoidCurve const & getAtS( real_type s ) const;
    
        int_type numSegment() const { return int_type(m_clotoidList.size()); }
    
        void wrap_in_range( real_type & s ) const;
    
-       int_type
-       findAtS( real_type & s ) const;
+       int_type findAtS( real_type & s ) const;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
-       real_type
-       length() const override;
-   
-       virtual
-       real_type
-       length_ISO( real_type offs ) const override;
+       real_type length() const override;
+       real_type length_ISO( real_type offs ) const override;
    
        real_type
        segment_length( int_type nseg ) const;
@@ -730,12 +771,14 @@ Program Listing for File ClothoidList.hxx
          this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
        }
    
+       #ifndef DOXYGEN_SHOULD_SKIP_THIS
        void
        build_AABBtree_ISO(
          real_type offs,
          real_type max_angle = Utils::m_pi/6, // 30 degree
          real_type max_size  = 1e100
        ) const;
+       #endif
    
        /*\
         |   _     _
@@ -775,90 +818,72 @@ Program Listing for File ClothoidList.hxx
         |              |___/
        \*/
    
-       virtual
        real_type
        thetaBegin() const override
        { return m_clotoidList.front().thetaBegin(); }
    
-       virtual
        real_type
        thetaEnd() const override
        { return m_clotoidList.back().thetaEnd(); }
    
-       virtual
        real_type
        xBegin() const override
        { return m_clotoidList.front().xBegin(); }
    
-       virtual
        real_type
        yBegin() const override
        { return m_clotoidList.front().yBegin(); }
    
-       virtual
        real_type
        xEnd() const override
        { return m_clotoidList.back().xEnd(); }
    
-       virtual
        real_type
        yEnd() const override
        { return m_clotoidList.back().yEnd(); }
    
-       virtual
        real_type
        xBegin_ISO( real_type offs ) const override
        { return m_clotoidList.front().xBegin_ISO( offs ); }
    
-       virtual
        real_type
        yBegin_ISO( real_type offs ) const override
        { return m_clotoidList.front().yBegin_ISO( offs ); }
    
-       virtual
        real_type xEnd_ISO( real_type offs ) const override
        { return m_clotoidList.back().xEnd_ISO( offs ); }
    
-       virtual
        real_type
        yEnd_ISO( real_type offs ) const override
        { return m_clotoidList.back().yEnd_ISO( offs ); }
    
-       virtual
        real_type tx_Begin() const override
        { return m_clotoidList.front().tx_Begin(); }
    
-       virtual
        real_type
        ty_Begin() const override
        { return m_clotoidList.front().ty_Begin(); }
    
-       virtual
        real_type
        tx_End() const override
        { return m_clotoidList.back().tx_End(); }
    
-       virtual
        real_type
        ty_End() const override
        { return m_clotoidList.back().ty_End(); }
    
-       virtual
        real_type
        nx_Begin_ISO() const override
        { return m_clotoidList.front().nx_Begin_ISO(); }
    
-       virtual
        real_type
        ny_Begin_ISO() const override
        { return m_clotoidList.front().ny_Begin_ISO(); }
    
-       virtual
        real_type
        nx_End_ISO() const override
        { return m_clotoidList.back().nx_End_ISO(); }
    
-       virtual
        real_type
        ny_End_ISO() const override
        { return m_clotoidList.back().ny_End_ISO(); }
@@ -871,10 +896,10 @@ Program Listing for File ClothoidList.hxx
         |  \__|_| |_|\___|\__\__,_|
        \*/
    
-       virtual real_type theta( real_type s ) const override;
-       virtual real_type theta_D( real_type s ) const override;
-       virtual real_type theta_DD( real_type s ) const override;
-       virtual real_type theta_DDD( real_type s ) const override;
+       real_type theta    ( real_type s ) const override;
+       real_type theta_D  ( real_type s ) const override;
+       real_type theta_DD ( real_type s ) const override;
+       real_type theta_DDD( real_type s ) const override;
    
        /*\
         |  _____                   _   _   _
@@ -884,18 +909,17 @@ Program Listing for File ClothoidList.hxx
         |   |_|    \__,_|_| |_|\__,_| |_| \_|
        \*/
    
-       virtual real_type tx( real_type s ) const override;
-       virtual real_type ty( real_type s ) const override;
-       virtual real_type tx_D( real_type s ) const override;
-       virtual real_type ty_D( real_type s ) const override;
-       virtual real_type tx_DD( real_type s ) const override;
-       virtual real_type ty_DD( real_type s ) const override;
-       virtual real_type tx_DDD( real_type s ) const override;
-       virtual real_type ty_DDD( real_type s ) const override;
+       real_type tx    ( real_type s ) const override;
+       real_type ty    ( real_type s ) const override;
+       real_type tx_D  ( real_type s ) const override;
+       real_type ty_D  ( real_type s ) const override;
+       real_type tx_DD ( real_type s ) const override;
+       real_type ty_DD ( real_type s ) const override;
+       real_type tx_DDD( real_type s ) const override;
+       real_type ty_DDD( real_type s ) const override;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        tg(
          real_type   s,
@@ -903,7 +927,6 @@ Program Listing for File ClothoidList.hxx
          real_type & tg_y
        ) const override;
    
-       virtual
        void
        tg_D(
          real_type   s,
@@ -911,7 +934,6 @@ Program Listing for File ClothoidList.hxx
          real_type & tg_y_D
        ) const override;
    
-       virtual
        void
        tg_DD(
          real_type   s,
@@ -919,7 +941,6 @@ Program Listing for File ClothoidList.hxx
          real_type & tg_y_DD
        ) const override;
    
-       virtual
        void
        tg_DDD(
          real_type   s,
@@ -929,7 +950,6 @@ Program Listing for File ClothoidList.hxx
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        evaluate(
          real_type   s,
@@ -941,7 +961,6 @@ Program Listing for File ClothoidList.hxx
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        evaluate_ISO(
          real_type   s,
@@ -954,18 +973,17 @@ Program Listing for File ClothoidList.hxx
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual real_type X( real_type s ) const override;
-       virtual real_type Y( real_type s ) const override;
-       virtual real_type X_D( real_type s ) const override;
-       virtual real_type Y_D( real_type s ) const override;
-       virtual real_type X_DD( real_type s ) const override;
-       virtual real_type Y_DD( real_type s ) const override;
-       virtual real_type X_DDD( real_type s ) const override;
-       virtual real_type Y_DDD( real_type s ) const override;
+       real_type X    ( real_type s ) const override;
+       real_type Y    ( real_type s ) const override;
+       real_type X_D  ( real_type s ) const override;
+       real_type Y_D  ( real_type s ) const override;
+       real_type X_DD ( real_type s ) const override;
+       real_type Y_DD ( real_type s ) const override;
+       real_type X_DDD( real_type s ) const override;
+       real_type Y_DDD( real_type s ) const override;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        eval(
          real_type   s,
@@ -973,7 +991,6 @@ Program Listing for File ClothoidList.hxx
          real_type & y
        ) const override;
    
-       virtual
        void
        eval_D(
          real_type   s,
@@ -981,7 +998,6 @@ Program Listing for File ClothoidList.hxx
          real_type & y_D
        ) const override;
    
-       virtual
        void
        eval_DD(
          real_type   s,
@@ -989,7 +1005,6 @@ Program Listing for File ClothoidList.hxx
          real_type & y_DD
        ) const override;
    
-       virtual
        void
        eval_DDD(
          real_type   s,
@@ -1005,41 +1020,17 @@ Program Listing for File ClothoidList.hxx
         |  \___/|_| |_| |___/\___|\__|
        \*/
    
-       virtual
-       real_type
-       X_ISO( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       X_ISO_D( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO_D( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       X_ISO_DD( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO_DD( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       X_ISO_DDD( real_type s, real_type offs ) const override;
-   
-       virtual
-       real_type
-       Y_ISO_DDD( real_type s, real_type offs ) const override;
+       real_type X_ISO    ( real_type s, real_type offs ) const override;
+       real_type Y_ISO    ( real_type s, real_type offs ) const override;
+       real_type X_ISO_D  ( real_type s, real_type offs ) const override;
+       real_type Y_ISO_D  ( real_type s, real_type offs ) const override;
+       real_type X_ISO_DD ( real_type s, real_type offs ) const override;
+       real_type Y_ISO_DD ( real_type s, real_type offs ) const override;
+       real_type X_ISO_DDD( real_type s, real_type offs ) const override;
+       real_type Y_ISO_DDD( real_type s, real_type offs ) const override;
    
        // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
    
-       virtual
        void
        eval_ISO(
          real_type   s,
@@ -1048,7 +1039,6 @@ Program Listing for File ClothoidList.hxx
          real_type & y
        ) const override;
    
-       virtual
        void
        eval_ISO_D(
          real_type   s,
@@ -1057,7 +1047,6 @@ Program Listing for File ClothoidList.hxx
          real_type & y_D
        ) const override;
    
-       virtual
        void
        eval_ISO_DD(
          real_type   s,
@@ -1066,7 +1055,6 @@ Program Listing for File ClothoidList.hxx
          real_type & y_DD
        ) const override;
    
-       virtual
        void
        eval_ISO_DDD(
          real_type   s,
@@ -1083,32 +1071,13 @@ Program Listing for File ClothoidList.hxx
         |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
        \*/
    
-       virtual
-       void
-       translate( real_type tx, real_type ty ) override;
-   
-       virtual
-       void
-       rotate( real_type angle, real_type cx, real_type cy ) override;
-   
-       virtual
-       void
-       scale( real_type sc ) override;
-   
-       virtual
-       void
-       reverse() override;
-   
-       virtual
-       void
-       changeOrigin( real_type newx0, real_type newy0 ) override;
-   
-       virtual
-       void
-       trim( real_type s_begin, real_type s_end ) override;
-   
-       void
-       trim( real_type s_begin, real_type s_end, ClothoidList & newCL ) const;
+       void translate( real_type tx, real_type ty ) override;
+       void rotate( real_type angle, real_type cx, real_type cy ) override;
+       void scale( real_type sc ) override;
+       void reverse() override;
+       void changeOrigin( real_type newx0, real_type newy0 ) override;
+       void trim( real_type s_begin, real_type s_end ) override;
+       void trim( real_type s_begin, real_type s_end, ClothoidList & newCL ) const;
    
        /*\
         |      _ _     _
@@ -1118,7 +1087,6 @@ Program Listing for File ClothoidList.hxx
         |  \__,_|_|___/\__\__,_|_| |_|\___\___|
        \*/
    
-       virtual
        int_type
        closestPoint_ISO(
          real_type   qx,
@@ -1130,8 +1098,7 @@ Program Listing for File ClothoidList.hxx
          real_type & dst
        ) const override;
    
-       virtual
-       int_type // true if projection is unique and orthogonal
+       int_type
        closestPoint_ISO(
          real_type   qx,
          real_type   qy,
@@ -1222,7 +1189,6 @@ Program Listing for File ClothoidList.hxx
          return res;
        }
    
-       virtual
        void
        info( ostream_type & stream ) const override
        { stream << "ClothoidList\n" << *this << '\n'; }
@@ -1341,6 +1307,7 @@ Program Listing for File ClothoidList.hxx
        export_ruby( ostream_type & stream ) const;
    
        void save( ostream_type & stream ) const;
+   
        void load( istream_type & stream, real_type epsi = 1e-8 );
    
      };

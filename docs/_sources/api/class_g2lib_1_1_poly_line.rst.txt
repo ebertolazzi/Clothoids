@@ -6,16 +6,6 @@ Class PolyLine
 - Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_PolyLine.hxx`
 
 
-Nested Relationships
---------------------
-
-
-Nested Types
-************
-
-- :ref:`exhale_class_class_g2lib_1_1_poly_line_1_1_collision__list`
-
-
 Inheritance Relationships
 -------------------------
 

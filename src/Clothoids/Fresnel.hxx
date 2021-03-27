@@ -109,6 +109,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   //! data storage for clothoid type curve
   class ClothoidData {
   public:
@@ -434,6 +436,8 @@ namespace G2lib {
     info( ostream_type & s ) const;
 
   };
+
+  #endif
 
 }
 

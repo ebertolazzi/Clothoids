@@ -58,11 +58,6 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
-   class_g2lib_1_1_clothoid_data.rst
-
-.. toctree::
-   :maxdepth: 5
-
    class_g2lib_1_1_clothoid_list.rst
 
 .. toctree::
@@ -94,11 +89,6 @@ Classes and Structs
    :maxdepth: 5
 
    class_g2lib_1_1_poly_line.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   class_g2lib_1_1_poly_line_1_1_collision__list.rst
 
 .. toctree::
    :maxdepth: 5
@@ -395,11 +385,6 @@ Variables
 .. toctree::
    :maxdepth: 5
 
-   variable_namespace_g2lib_1aa13584dd376c58ca552840aee08ab83c.rst
-
-.. toctree::
-   :maxdepth: 5
-
    variable_namespace_g2lib_1a1ef169ad1a593d65dbd27df6c01b3e47.rst
 
 Defines
@@ -439,11 +424,6 @@ Typedefs
    :maxdepth: 5
 
    typedef_namespace_g2lib_1aac48718e563eca7cdb2998e651b02977.rst
-
-.. toctree::
-   :maxdepth: 5
-
-   typedef_namespace_g2lib_1a75cc52cbb842435c9019b9b48238b904.rst
 
 .. toctree::
    :maxdepth: 5

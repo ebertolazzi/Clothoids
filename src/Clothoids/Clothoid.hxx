@@ -1205,12 +1205,14 @@ namespace G2lib {
      |   \___\___/|_|_|_|___/_|\___/|_| |_|
     \*/
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void
     build_AABBtree_ISO(
       real_type offs,
       real_type max_angle = Utils::m_pi/18, // 10 degree
       real_type max_size  = 1e100
     ) const;
+    #endif
 
     // collision detection
     bool

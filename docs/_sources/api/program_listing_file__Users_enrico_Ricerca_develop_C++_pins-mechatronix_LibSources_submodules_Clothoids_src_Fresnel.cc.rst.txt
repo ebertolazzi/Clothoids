@@ -595,6 +595,8 @@ Program Listing for File Fresnel.cc
        }
      }
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
+   
      // -------------------------------------------------------------------------
    
      void
@@ -1376,6 +1378,8 @@ Program Listing for File Fresnel.cc
        return niter;
      }
    
+     #endif
+   
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
      #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -1447,6 +1451,7 @@ Program Listing for File Fresnel.cc
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    
+     #ifndef DOXYGEN_SHOULD_SKIP_THIS
      bool
      ClothoidData::build_forward(
        real_type   x0,
@@ -1515,7 +1520,8 @@ Program Listing for File Fresnel.cc
      }
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-   
+     
+     #endif
    }
    
    // EOF: Fresnel.cc

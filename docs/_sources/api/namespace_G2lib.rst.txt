@@ -72,8 +72,6 @@ Classes
 
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_curve`
 
-- :ref:`exhale_class_class_g2lib_1_1_clothoid_data`
-
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_list`
 
 - :ref:`exhale_class_class_g2lib_1_1_clothoid_spline_g2`
@@ -87,8 +85,6 @@ Classes
 - :ref:`exhale_class_class_g2lib_1_1_line_segment`
 
 - :ref:`exhale_class_class_g2lib_1_1_poly_line`
-
-- :ref:`exhale_class_class_g2lib_1_1_poly_line_1_1_collision__list`
 
 - :ref:`exhale_class_class_g2lib_1_1_solve2x2`
 
@@ -130,13 +126,13 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1a89ccf86189fec419856197ea04e2c3a4`
 
-- :ref:`exhale_function_namespace_g2lib_1aa22851ef8070178999a11f33d72b16be`
-
 - :ref:`exhale_function_namespace_g2lib_1ac85e4190cc5dae8194e08fcf2fe16fba`
 
-- :ref:`exhale_function_namespace_g2lib_1aac7328b3a4cc85ef6e27524f3fbdcfa7`
+- :ref:`exhale_function_namespace_g2lib_1aa22851ef8070178999a11f33d72b16be`
 
 - :ref:`exhale_function_namespace_g2lib_1a26b89008af7eb579057ebd9056625f05`
+
+- :ref:`exhale_function_namespace_g2lib_1aac7328b3a4cc85ef6e27524f3fbdcfa7`
 
 - :ref:`exhale_function_namespace_g2lib_1a72e4aead03fd8a133aa7b9bace759785`
 
@@ -154,13 +150,15 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1adcfc7269a46eeddf3be4a593a7d45a38`
 
+- :ref:`exhale_function_namespace_g2lib_1a93332a83835beb3d4b71a5d46dc2342f`
+
+- :ref:`exhale_function_namespace_g2lib_1a41280286acf1693170e3fc04361e4596`
+
 - :ref:`exhale_function_namespace_g2lib_1a44688b8da06cbbc5707f30c5592bef68`
 
 - :ref:`exhale_function_namespace_g2lib_1a71b4db32cfdab9a94bf3706eb7ff8d25`
 
-- :ref:`exhale_function_namespace_g2lib_1a93332a83835beb3d4b71a5d46dc2342f`
-
-- :ref:`exhale_function_namespace_g2lib_1a41280286acf1693170e3fc04361e4596`
+- :ref:`exhale_function_namespace_g2lib_1a55711e76ab48e7998d69dcbebb7577e9`
 
 - :ref:`exhale_function_namespace_g2lib_1aa57348d683f260251202e4fe1e7c6ff1`
 
@@ -171,8 +169,6 @@ Functions
 - :ref:`exhale_function_namespace_g2lib_1a9918cdf0f8b490f346237606e069d367`
 
 - :ref:`exhale_function_namespace_g2lib_1a61aab8843b4b24378f44f55b65dcb424`
-
-- :ref:`exhale_function_namespace_g2lib_1a55711e76ab48e7998d69dcbebb7577e9`
 
 - :ref:`exhale_function_namespace_g2lib_1a787008f61e79e40319f40bdc503f3136`
 
@@ -211,8 +207,6 @@ Typedefs
 
 - :ref:`exhale_typedef_namespace_g2lib_1aac48718e563eca7cdb2998e651b02977`
 
-- :ref:`exhale_typedef_namespace_g2lib_1a75cc52cbb842435c9019b9b48238b904`
-
 - :ref:`exhale_typedef_namespace_g2lib_1a49e3e5bd9229de6b3203d3b72eee2ef4`
 
 - :ref:`exhale_typedef_namespace_g2lib_1ac0b09ba58a37f5f3ca415be4a02ec7aa`
@@ -235,7 +229,5 @@ Variables
 - :ref:`exhale_variable_namespace_g2lib_1aa984f006d89005342e9f6980bc953a9f`
 
 - :ref:`exhale_variable_namespace_g2lib_1a46a2dec11af044795b66d1eb94c19eef`
-
-- :ref:`exhale_variable_namespace_g2lib_1aa13584dd376c58ca552840aee08ab83c`
 
 - :ref:`exhale_variable_namespace_g2lib_1a1ef169ad1a593d65dbd27df6c01b3e47`

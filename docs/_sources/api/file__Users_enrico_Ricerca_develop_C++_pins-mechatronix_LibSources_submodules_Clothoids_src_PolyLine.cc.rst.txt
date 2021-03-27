@@ -51,10 +51,3 @@ Functions
 
 - :ref:`exhale_function_namespace_g2lib_1a41280286acf1693170e3fc04361e4596`
 
-
-Typedefs
---------
-
-
-- :ref:`exhale_typedef_namespace_g2lib_1a75cc52cbb842435c9019b9b48238b904`
-

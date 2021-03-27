@@ -276,6 +276,7 @@ namespace G2lib {
       int_type                  icurve    = 0
     ) const override;
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     /*!
      * Build the internal AABB tree of the biarc list with offset (ISO)
      *
@@ -305,6 +306,7 @@ namespace G2lib {
     ) const {
       build_AABBtree_ISO( -offs, max_angle, max_size );
     }
+    #endif
 
     /*\
      |   _     _

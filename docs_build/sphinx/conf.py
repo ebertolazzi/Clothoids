@@ -137,13 +137,13 @@ html_theme_options = {
   "sectionbgcolor"    : "#75c47c",
   "sectiontrimcolor"  : "rgba(0,0,0,.1)",
   "rubricbgcolor"     : "#d2e7d0",
-  "rubric_trim_color" : "rgba(0,0,0,0.05)",
+  ##"rubric_trim_color" : "rgba(0,0,0,0.05)",
 
   "object_default_color"   : "#e4e4e4",
   "object_function_color"  : "#eefbff",
   "object_class_color"     : "#fff3df",
   "object_attribute_color  : "#ffd5ff",
-  "object_exception_color  : "#e9ffd0",
+  ##"object_exception_color  : "#e9ffd0",
 
   #styling for footer / html background
   "footerbgcolor" : "#6f6700", ## #565B57",

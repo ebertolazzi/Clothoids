@@ -32,7 +32,7 @@ endif
 ifneq (,$(findstring MINGW, $(OS)))
   LIB_CLOTHOID = Clothoids_mingw_x64
   LIBS         = -L./lib/lib -l$(LIB_CLOTHOID)_static
-  CXXFLAGS     = -std=c++11 $(WARN) -O2
+  CXXFLAGS     = -std=c++11 $(WARN) -O2 -Wsuggest-override
   AR           = ar rcs
   LDCONFIG     = sudo ldconfig
 endif

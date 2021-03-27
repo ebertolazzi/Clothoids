@@ -567,8 +567,8 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, PolyLine const & P );
 
-    void
-    build_AABBtree( AABBtree & aabb ) const;
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void build_AABBtree( AABBtree & aabb ) const;
 
     void
     build_AABBtree() const {
@@ -577,6 +577,7 @@ namespace G2lib {
         m_aabb_done = true;
       }
     }
+    #endif
 
   };
 

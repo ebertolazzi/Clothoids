@@ -55,18 +55,11 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_namespace_g2lib_1aa22851ef8070178999a11f33d72b16be`
-
 - :ref:`exhale_function_namespace_g2lib_1ac85e4190cc5dae8194e08fcf2fe16fba`
+
+- :ref:`exhale_function_namespace_g2lib_1aa22851ef8070178999a11f33d72b16be`
 
 - :ref:`exhale_function_namespace_g2lib_1aac7328b3a4cc85ef6e27524f3fbdcfa7`
 
 - :ref:`exhale_function_namespace_g2lib_1a26b89008af7eb579057ebd9056625f05`
-
-
-Variables
----------
-
-
-- :ref:`exhale_variable_namespace_g2lib_1aa13584dd376c58ca552840aee08ab83c`
 

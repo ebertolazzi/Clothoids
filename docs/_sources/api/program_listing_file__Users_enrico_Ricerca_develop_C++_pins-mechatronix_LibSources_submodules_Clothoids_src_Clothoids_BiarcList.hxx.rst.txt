@@ -219,6 +219,7 @@ Program Listing for File BiarcList.hxx
          int_type                  icurve    = 0
        ) const override;
    
+       #ifndef DOXYGEN_SHOULD_SKIP_THIS
        void
        build_AABBtree_ISO(
          real_type offs,
@@ -234,6 +235,7 @@ Program Listing for File BiarcList.hxx
        ) const {
          build_AABBtree_ISO( -offs, max_angle, max_size );
        }
+       #endif
    
        /*\
         |   _     _
