@@ -1,0 +1,13 @@
+.. _exhale_function_a00113_1a8829b54b63a6e1880f15ccdfe57c2ecb:
+
+Function G2lib::projectPointOnCircle
+====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::projectPointOnCircle(real_type, real_type, real_type, real_type, real_type, real_type)

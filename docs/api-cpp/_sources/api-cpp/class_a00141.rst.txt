@@ -1,0 +1,25 @@
+.. _exhale_class_a00141:
+
+Class ClothoidCurve
+===================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_Clothoid.hxx`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public G2lib::BaseCurve`` (:ref:`exhale_class_a00125`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: G2lib::ClothoidCurve
+   :members:
+   :protected-members:
+   :undoc-members:

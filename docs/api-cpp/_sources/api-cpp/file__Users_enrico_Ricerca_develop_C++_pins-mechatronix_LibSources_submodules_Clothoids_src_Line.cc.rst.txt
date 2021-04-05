@@ -1,0 +1,53 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Line.cc:
+
+File Line.cc
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src/Line.cc``)
+---------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Line.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``Clothoids.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids.hh`)
+
+- ``algorithm``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_G2lib`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_a00113_1a93332a83835beb3d4b71a5d46dc2342f`
+

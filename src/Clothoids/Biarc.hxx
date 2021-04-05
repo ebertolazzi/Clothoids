@@ -34,7 +34,13 @@ namespace G2lib {
   /*!
    * \brief Compute biarc fitting by Hemite data
    *
-   * \image html biarc.jpg
+   * \rst
+   * 
+   *   .. image:: ../../images/biarc.jpg
+   *      :width: 80%
+   *      :align: center
+   *
+   * \endrst
    */
 
   class Biarc : public BaseCurve {

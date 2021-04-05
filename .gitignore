@@ -22,3 +22,10 @@ Mugello.txt
 docs_build/sphinx/_build
 docs_build/sphinx/api
 docs_build/xml
+docs_build/sphinx_cpp/_build
+docs_build/sphinx_cpp/api-cpp
+docs_build/sphinx_matlab/_build
+docs_build/sphinx_matlab/api-matlab
+docs_build/xml-c
+docs_build/xml-cpp
+docs_build/xml-matlab

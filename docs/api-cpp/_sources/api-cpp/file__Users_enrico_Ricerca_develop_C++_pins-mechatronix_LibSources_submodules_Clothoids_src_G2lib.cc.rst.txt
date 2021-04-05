@@ -1,0 +1,116 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc:
+
+File G2lib.cc
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/src/G2lib.cc``)
+----------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``Clothoids.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids.hh`)
+
+- ``PolynomialRoots.hh``
+
+- ``algorithm``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_G2lib`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_a00113_1ac0bbd1b03ec89b9ed1874b35849a82e7`
+
+- :ref:`exhale_function_a00113_1a634e4fa7089193123ec9146bd8e05d2b`
+
+- :ref:`exhale_function_a00113_1ab4c21b2f3f1a20a134429dfeb129c423`
+
+- :ref:`exhale_function_a00113_1a448a0b9a486f6b9b16d74d80d133b10d`
+
+- :ref:`exhale_function_a00113_1ab3e73bcf98a8efc2749f2ad05a3fdc51`
+
+- :ref:`exhale_function_a00113_1a6a3e8c7ad85655c555cb6dc3825774c6`
+
+- :ref:`exhale_function_a00113_1ac10d1d52ae3cd16ef20171553d117b5b`
+
+- :ref:`exhale_function_a00113_1ae6868bffc32e5a0425f93e65c41bc6de`
+
+- :ref:`exhale_function_a00113_1ad2fbbd505c9e9e83b15a7b74aedd32a3`
+
+- :ref:`exhale_function_a00113_1aaf57a0b7127fcdb2ee4aaef288c4e527`
+
+- :ref:`exhale_function_a00113_1a8255221ca042d54056cb046fa8162f8e`
+
+- :ref:`exhale_function_a00113_1a8829b54b63a6e1880f15ccdfe57c2ecb`
+
+- :ref:`exhale_function_a00113_1acf4b8b1e2907ced4f4097f9dc5e301c3`
+
+- :ref:`exhale_function_a00113_1aeed539405134d26c4315fd644d5fa2ca`
+
+- :ref:`exhale_function_a00113_1a081bc3efca6442933577b14d6f3c2a06`
+
+- :ref:`exhale_function_a00113_1a70d38da7135fe9aa83b9e0d0e6ee7979`
+
+- :ref:`exhale_function_a00113_1a069d980b307edd06a1e9401e1a7bd5b4`
+
+- :ref:`exhale_function_a00113_1a698f23b0a8d2f0dd431c908ba7bce967`
+
+- :ref:`exhale_function_a00113_1a85c9fa5ae980772185e20e21e9c10d6c`
+
+- :ref:`exhale_function_a00113_1a753ce69800a98e59ce94300c441c2ed7`
+
+- :ref:`exhale_function_a00113_1aea24641ba4514e4557cd7e9a4ada946c`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_a00113_1ad9c31883e4f8e91c7138f23a22eafb47`
+
+- :ref:`exhale_variable_a00113_1a05bb4344e0f2418b6dad387247986617`
+
+- :ref:`exhale_variable_a00113_1ab7ae60f08d4dcaa2b289bdd7bb3dc4ee`
+
+- :ref:`exhale_variable_a00113_1a87e08bc343d60eadd2938d68ebc1f61b`
+
+- :ref:`exhale_variable_a00113_1a22dc08fd48bd175798c0120ad68126f6`
+
+- :ref:`exhale_variable_a00113_1a83d7ce40a3e4a860b91dd8df81408892`
+
+- :ref:`exhale_variable_a00113_1a4e46ee577d28382a45d279842036eb86`
+
+- :ref:`exhale_variable_a00113_1ae2356d66f8dc864eddfdd3ad1db95266`
+

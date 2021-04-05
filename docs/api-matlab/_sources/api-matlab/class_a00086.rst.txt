@@ -1,0 +1,37 @@
+.. _exhale_class_a00086:
+
+Class CurveBase
+===============
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_CurveBase.m`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public handle``
+
+
+Derived Types
+*************
+
+- ``public Biarc`` (:ref:`exhale_class_a00062`)
+- ``public BiarcList`` (:ref:`exhale_class_a00066`)
+- ``public CircleArc`` (:ref:`exhale_class_a00070`)
+- ``public ClothoidCurve`` (:ref:`exhale_class_a00074`)
+- ``public ClothoidList`` (:ref:`exhale_class_a00078`)
+- ``public LineSegment`` (:ref:`exhale_class_a00090`)
+- ``public PolyLine`` (:ref:`exhale_class_a00094`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: CurveBase
+   :members:
+   :protected-members:
+   :undoc-members:

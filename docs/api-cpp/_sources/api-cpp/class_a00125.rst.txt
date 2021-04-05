@@ -1,0 +1,31 @@
+.. _exhale_class_a00125:
+
+Class BaseCurve
+===============
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids_BaseCurve.hxx`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public G2lib::Biarc`` (:ref:`exhale_class_a00129`)
+- ``public G2lib::BiarcList`` (:ref:`exhale_class_a00133`)
+- ``public G2lib::CircleArc`` (:ref:`exhale_class_a00137`)
+- ``public G2lib::ClothoidCurve`` (:ref:`exhale_class_a00141`)
+- ``public G2lib::ClothoidList`` (:ref:`exhale_class_a00161`)
+- ``public G2lib::LineSegment`` (:ref:`exhale_class_a00173`)
+- ``public G2lib::PolyLine`` (:ref:`exhale_class_a00177`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: G2lib::BaseCurve
+   :members:
+   :protected-members:
+   :undoc-members:

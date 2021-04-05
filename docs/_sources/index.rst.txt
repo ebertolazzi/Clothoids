@@ -12,7 +12,7 @@ G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
 
 **by Enrico Bertolazzi and Marco Frego**
 
-`Github repository <https://github.com/ebertolazzi/Clothoids>`  
+`Github repository <https://github.com/ebertolazzi/Clothoids>`
 
 
 .. toctree::
@@ -20,14 +20,8 @@ G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
 
    readme.rst
    manual.rst
-   api/library_root.rst
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   api_cpp.rst
+   api_matlab.rst
 
 License
 -------

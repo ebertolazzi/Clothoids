@@ -1,0 +1,13 @@
+.. _exhale_typedef_a00113_1a80cc898bceffe2207e1a7ca34ccadfce:
+
+Typedef G2lib::int_type
+=======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids.hh`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: G2lib::int_type

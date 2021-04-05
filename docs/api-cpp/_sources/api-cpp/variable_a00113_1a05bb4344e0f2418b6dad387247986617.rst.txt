@@ -1,0 +1,13 @@
+.. _exhale_variable_a00113_1a05bb4344e0f2418b6dad387247986617:
+
+Variable G2lib::intersect_with_AABBtree
+=======================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: G2lib::intersect_with_AABBtree

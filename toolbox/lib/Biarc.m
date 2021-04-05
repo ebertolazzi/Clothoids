@@ -2,20 +2,25 @@ classdef Biarc < CurveBase
   %% MATLAB class wrapper for the underlying C++ class
 
   methods
+    %> Create a new C++ class instance for the clothoid arc object
+    %>
+    %> **Usage:**
+    %>
+    %>    ref = Biarc()
+    %>    ref = Biarc( x0, y0, theta0, x1, y1, theta1 )
+    %>
+    %> **On input:**
+    %>
+    %> - x0, y0: coordinate of initial point
+    %> - theta0: orientation of the clothoid at initial point
+    %> - x1, y1: coordinate of final point
+    %> - theta1: orientation of the clothoid at final point
+    %>
+    %> **On output:**
+    %>
+    %> - self: reference handle to the object instance
+    %>
     function self = Biarc( varargin )
-      %% Create a new C++ class instance for the clothoid arc object
-      % Usage:
-      %    ref = Biarc()
-      %    ref = Biarc( x0, y0, theta0, x1, y1, theta1 )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    theta0: orientation of the clothoid at initial point
-      %    x1, y1: coordinate of final point
-      %    theta1: orientation of the clothoid at final point
-      %
-      %  On output:
-      %    ref: reference handle to the object instance
       self@CurveBase( 'BiarcMexWrapper' );
       self.objectHandle = BiarcMexWrapper( 'new' );
       if nargin > 0

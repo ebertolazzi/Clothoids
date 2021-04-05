@@ -43,8 +43,13 @@ namespace G2lib {
    *   \end{cases}
    * \f]
    * 
-   * \image html G1problem.jpg
+   * \rst
+   * 
+   *   .. image:: ../../images/G1problem.jpg
+   *      :width: 80%
+   *      :align: center
    *
+   * \endrst
    */
   class ClothoidCurve : public BaseCurve {
     friend class ClothoidList;
@@ -440,7 +445,14 @@ namespace G2lib {
      *  \param[out] plus it true return \f$ \lim_{s\to+\infty} P(s) \f$
      *                   otherwise return \f$ \lim_{s\to-\infty} P(s) \f$
      *
-     * \image html Pinfinity.jpg
+     * \rst
+     * 
+     *   .. image:: ../../images/Pinfinity.jpg
+     *      :width: 80%
+     *      :align: center
+     *
+     * \endrst
+     *
      */
     void
     Pinfinity( real_type & x, real_type & y, bool plus = true ) const

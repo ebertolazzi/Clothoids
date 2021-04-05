@@ -378,7 +378,13 @@ namespace G2lib {
    * - **E.Bertolazzi, M.Frego**, On the G2 Hermite Interpolation Problem with clothoids
    *   Journal of Computational and Applied Mathematics, vol 341, pp. 99-116, 2018
    *
-   * \image html G2problem3arc.jpg
+   * \rst
+   * 
+   *   .. image:: ../../images/G2problem3arc.jpg
+   *      :width: 80%
+   *      :align: center
+   *
+   * \endrst
    */
   class G2solve3arc {
 
@@ -737,7 +743,13 @@ namespace G2lib {
    * Manage a piecewise clothoids \f$ \G(s) \f$ composed by
    * n clothoids (not necessarily G2 or G1 connected)
    *
-   * \image html G2problem3arc.jpg
+   * \rst
+   * 
+   *   .. image:: ../../images/G2problem3arc.jpg
+   *      :width: 80%
+   *      :align: center
+   *
+   * \endrst
    */
   class ClothoidList : public BaseCurve {
 

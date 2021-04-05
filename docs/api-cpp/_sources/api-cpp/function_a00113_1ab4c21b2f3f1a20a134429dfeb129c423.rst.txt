@@ -1,0 +1,13 @@
+.. _exhale_function_a00113_1ab4c21b2f3f1a20a134429dfeb129c423:
+
+Function G2lib::Atanc_DD
+========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::Atanc_DD(real_type)

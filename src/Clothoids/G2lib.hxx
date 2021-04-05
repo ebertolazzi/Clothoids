@@ -397,8 +397,13 @@ namespace G2lib {
    * \param[out] omega     angles of two consecutive points, with accumulated \f$ 2\pi \f$ angle rotation
    * \param[out] len       distance between two consecutive poijts
    *
-   * \image html node_angles.jpg
+   * \rst
+   * 
+   *   .. image:: ../../images/node_angles.jpg
+   *      :width: 80%
+   *      :align: center
    *
+   * \endrst
    */
   void
   xy_to_guess_angle(

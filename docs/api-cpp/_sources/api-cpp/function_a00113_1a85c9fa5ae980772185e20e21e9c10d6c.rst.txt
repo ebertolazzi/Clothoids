@@ -1,0 +1,13 @@
+.. _exhale_function_a00113_1a85c9fa5ae980772185e20e21e9c10d6c:
+
+Function G2lib::solveLinearQuadratic
+====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::solveLinearQuadratic(real_type, real_type, real_type, real_type, real_type, real_type, real_type *, real_type *)

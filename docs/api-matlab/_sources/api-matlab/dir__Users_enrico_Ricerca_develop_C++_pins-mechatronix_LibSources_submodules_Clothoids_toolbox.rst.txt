@@ -1,0 +1,16 @@
+.. _dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox:
+
+
+Directory toolbox
+=================
+
+
+*Directory path:* ``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Clothoids/toolbox``
+
+Subdirectories
+--------------
+
+- :ref:`dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib`
+
+
+

@@ -1,6 +1,6 @@
 
-Matlab Interface
-================
+Matlab Usage
+============
 
 [![Build Status](https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master)](https://travis-ci.org/ebertolazzi/Clothoids)
 [![View ebertolazzi/Clothoids on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://it.mathworks.com/matlabcentral/fileexchange/64849-ebertolazzi-clothoids)

@@ -1,0 +1,13 @@
+.. _exhale_function_a00113_1a67f7c38f4ad0d8256c2f4d0f92501bf2:
+
+Function G2lib::GeneralizedFresnelCS(real_type, real_type, real_type, real_type&, real_type&)
+=============================================================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Fresnel.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::GeneralizedFresnelCS(real_type, real_type, real_type, real_type&, real_type&)

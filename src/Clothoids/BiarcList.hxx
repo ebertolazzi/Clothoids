@@ -37,7 +37,13 @@ namespace G2lib {
   /*!
    * Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
    *
-   * \image html biarc_list.jpg
+   * \rst
+   * 
+   *   .. image:: ../../images/biarc_list.jpg
+   *      :width: 80%
+   *      :align: center
+   *
+   * \endrst
    */
   class BiarcList : public BaseCurve {
 

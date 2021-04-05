@@ -1,0 +1,430 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MATLAB API &#8212; Clothoids v2.0.5
+</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class Biarc" href="class_a00062.html" />
+    <link rel="prev" title="Splines MATLAB interface" href="../index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00062.html" title="Class Biarc"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="../index.html" title="Splines MATLAB interface"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">MATLAB API</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="matlab-api">
+<h1>MATLAB API<a class="headerlink" href="#matlab-api" title="Permalink to this headline">¶</a>
+</h1>
+<div class="section" id="class-hierarchy">
+<h2>Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Permalink to this headline">¶</a>
+</h2>
+<div id="class-treeView"></div>
+<script type="text/javascript">
+  function getClassHierarchyTree() {
+     return [
+      {text:"<span class=\"text-muted\">Class</span> Biarc",href:"class_a00062.html#exhale-class-a00062",selectable:false},{text:"<span class=\"text-muted\">Class</span> BiarcList",href:"class_a00066.html#exhale-class-a00066",selectable:false},{text:"<span class=\"text-muted\">Class</span> CircleArc",href:"class_a00070.html#exhale-class-a00070",selectable:false},{text:"<span class=\"text-muted\">Class</span> ClothoidCurve",href:"class_a00074.html#exhale-class-a00074",selectable:false},{text:"<span class=\"text-muted\">Class</span> ClothoidList",href:"class_a00078.html#exhale-class-a00078",selectable:false},{text:"<span class=\"text-muted\">Class</span> ClothoidSplineG2",href:"class_a00082.html#exhale-class-a00082",selectable:false},{text:"<span class=\"text-muted\">Class</span> CurveBase",href:"class_a00086.html#exhale-class-a00086",selectable:false},{text:"<span class=\"text-muted\">Class</span> LineSegment",href:"class_a00090.html#exhale-class-a00090",selectable:false},{text:"<span class=\"text-muted\">Class</span> PolyLine",href:"class_a00094.html#exhale-class-a00094",selectable:false},{text:"<span class=\"text-muted\">Class</span> Triangle2D",href:"class_a00098.html#exhale-class-a00098",selectable:false},
+     ]
+  }
+</script><!-- end getClassHierarchyTree() function -->
+</div>
+<div class="section" id="file-hierarchy">
+<h2>File Hierarchy<a class="headerlink" href="#file-hierarchy" title="Permalink to this headline">¶</a>
+</h2>
+<div id="file-treeView"></div>
+<script type="text/javascript">
+  function getFileHierarchyTree() {
+     return [
+      {text:"<span class=\"text-muted\">Directory</span> toolbox",href:"dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox.html#dir-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox",selectable:false,tags:['1'],nodes:[{text:"<span class=\"text-muted\">Directory</span> lib",href:"dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib.html#dir-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib",selectable:false,tags:['12'],nodes:[{text:"<span class=\"text-muted\">File</span> Biarc.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_Biarc.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-Biarc.m",selectable:false},{text:"<span class=\"text-muted\">File</span> BiarcList.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_BiarcList.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-BiarcList.m",selectable:false},{text:"<span class=\"text-muted\">File</span> CircleArc.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_CircleArc.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-CircleArc.m",selectable:false},{text:"<span class=\"text-muted\">File</span> ClothoidCurve.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_ClothoidCurve.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-ClothoidCurve.m",selectable:false},{text:"<span class=\"text-muted\">File</span> ClothoidList.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_ClothoidList.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-ClothoidList.m",selectable:false},{text:"<span class=\"text-muted\">File</span> ClothoidSplineG2.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_ClothoidSplineG2.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-ClothoidSplineG2.m",selectable:false},{text:"<span class=\"text-muted\">File</span> CompileOctave.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_CompileOctave.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-CompileOctave.m",selectable:false},{text:"<span class=\"text-muted\">File</span> CurveBase.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_CurveBase.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-CurveBase.m",selectable:false},{text:"<span class=\"text-muted\">File</span> LineSegment.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_LineSegment.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-LineSegment.m",selectable:false},{text:"<span class=\"text-muted\">File</span> PolyLine.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_PolyLine.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-PolyLine.m",selectable:false},{text:"<span class=\"text-muted\">File</span> Triangle2D.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_Triangle2D.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-Triangle2D.m",selectable:false},{text:"<span class=\"text-muted\">File</span> TriTriOverlap.m",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_TriTriOverlap.m.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Clothoids-toolbox-lib-TriTriOverlap.m",selectable:false}]}]},
+     ]
+  }
+</script><!-- end getFileHierarchyTree() function -->
+</div>
+<div class="section" id="full-api">
+<h2>Full API<a class="headerlink" href="#full-api" title="Permalink to this headline">¶</a>
+</h2>
+<div class="section" id="classes-and-structs">
+<h3>Classes and Structs<a class="headerlink" href="#classes-and-structs" title="Permalink to this headline">¶</a>
+</h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00062.html">Class Biarc</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00062.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00062.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00062.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00066.html">Class BiarcList</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00066.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00066.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00066.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00070.html">Class CircleArc</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00070.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00070.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00070.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00074.html">Class ClothoidCurve</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00074.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00074.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00074.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00078.html">Class ClothoidList</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00078.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00078.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00078.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00082.html">Class ClothoidSplineG2</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00082.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00082.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00082.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00086.html">Class CurveBase</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00086.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00086.html#base-type">Base Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_a00086.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00086.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00090.html">Class LineSegment</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00090.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00090.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00090.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00094.html">Class PolyLine</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00094.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00094.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00094.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="class_a00098.html">Class Triangle2D</a><ul>
+<li class="toctree-l2">
+<a class="reference internal" href="class_a00098.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_a00098.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_a00098.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a>
+</h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="function_a00056_1a1ab9fbe6bf4f16efdaef918d8d6e1bc8.html">Function TriTriOverlap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function_a00056_1a1ab9fbe6bf4f16efdaef918d8d6e1bc8.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<script type="text/javascript">
+    /* NOTE: if you are reading this, Exhale generated this directly. */
+    $(document).ready(function() {
+        /* Inspired by very informative answer to get color of links:
+           https://stackoverflow.com/a/2707837/3814202 */
+        var $fake_link = $('<a href="#"></a>').hide().appendTo("body");
+        var linkColor = $fake_link.css("color");
+        $fake_link.remove();
+
+        var $fake_p = $('<p class="text-muted"></p>').hide().appendTo("body");
+        var iconColor = $fake_p.css("color");
+        $fake_p.remove();
+
+        /* After much deliberation, using JavaScript directly to enforce that the
+         * link and glyphicon receive different colors is fruitless, because the
+         * bootstrap treeview library will overwrite the style every time.  Instead,
+         * leaning on the library code itself to append some styling to the head,
+         * I choose to mix a couple of things:
+         *
+         * 1. Set the `color` property of bootstrap treeview globally, this would
+         *    normally affect the color of both the link text and the icon.
+         * 2. Apply custom forced styling of the glyphicon itself in order to make
+         *    it a little more clear to the user (via different colors) that the
+         *    act of clicking the icon and the act of clicking the link text perform
+         *    different actions.  The icon expands, the text navigates to the page.
+         */
+         // Part 1: use linkColor as a parameter to bootstrap treeview
+
+         // apply the class view hierarchy
+         $("#class-treeView").treeview({
+             data: getClassHierarchyTree(),
+             enableLinks: true,
+             color: linkColor,
+             showTags: true,
+             collapseIcon: "glyphicon glyphicon-minus",
+             expandIcon: "glyphicon glyphicon-plus",
+             levels: 1,
+             onhoverColor: "#F5F5F5"
+         });
+
+         // apply the file view hierarchy
+         $("#file-treeView").treeview({
+             data: getFileHierarchyTree(),
+             enableLinks: true,
+             color: linkColor,
+             showTags: true,
+             collapseIcon: "glyphicon glyphicon-minus",
+             expandIcon: "glyphicon glyphicon-plus",
+             levels: 1,
+             onhoverColor: "#F5F5F5"
+         });
+
+         // Part 2: override the style of the glyphicons by injecting some CSS
+         $('<style type="text/css" id="exhaleTreeviewOverride">' +
+           '    .treeview span[class~=icon] { '                 +
+           '        color: ' + iconColor + ' ! important;'       +
+           '    }'                                              +
+           '</style>').appendTo('head');
+    });
+</script>
+</div>
+</div>
+</div>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../../index.html" title="../index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MATLAB API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="class_a00062.html">Class Biarc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00066.html">Class BiarcList</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00070.html">Class CircleArc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00074.html">Class ClothoidCurve</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00078.html">Class ClothoidList</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00082.html">Class ClothoidSplineG2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00086.html">Class CurveBase</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00090.html">Class LineSegment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00094.html">Class PolyLine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_a00098.html">Class Triangle2D</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="function_a00056_1a1ab9fbe6bf4f16efdaef918d8d6e1bc8.html">Function TriTriOverlap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00062.html" title="Class Biarc"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="../index.html" title="Splines MATLAB interface"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">MATLAB API</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

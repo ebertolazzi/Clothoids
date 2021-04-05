@@ -1,0 +1,13 @@
+.. _exhale_function_a00113_1a6df137b46ae2e3e57a1968424b2ceb04:
+
+Function G2lib::collision_ISO
+=============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib_intersect.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::collision_ISO(BaseCurve const&, real_type, BaseCurve const&, real_type)

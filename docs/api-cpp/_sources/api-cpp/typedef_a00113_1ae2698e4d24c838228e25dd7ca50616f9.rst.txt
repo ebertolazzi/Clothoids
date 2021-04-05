@@ -1,0 +1,13 @@
+.. _exhale_typedef_a00113_1ae2698e4d24c838228e25dd7ca50616f9:
+
+Typedef G2lib::istream_type
+===========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_Clothoids.hh`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: G2lib::istream_type

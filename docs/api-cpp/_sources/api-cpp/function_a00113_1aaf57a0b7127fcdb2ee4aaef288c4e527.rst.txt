@@ -1,0 +1,13 @@
+.. _exhale_function_a00113_1aaf57a0b7127fcdb2ee4aaef288c4e527:
+
+Function G2lib::isCounterClockwise
+==================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_src_G2lib.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: G2lib::isCounterClockwise(real_type const *, real_type const *, real_type const *)

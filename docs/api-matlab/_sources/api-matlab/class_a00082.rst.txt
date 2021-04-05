@@ -1,0 +1,25 @@
+.. _exhale_class_a00082:
+
+Class ClothoidSplineG2
+======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_ClothoidSplineG2.m`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public handle``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: ClothoidSplineG2
+   :members:
+   :protected-members:
+   :undoc-members:
