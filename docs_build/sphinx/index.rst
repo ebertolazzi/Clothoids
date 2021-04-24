@@ -19,7 +19,7 @@ G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
    :maxdepth: 2
 
    readme.rst
-   manual.rst
+   Matlab_interface.rst
    api_cpp.rst
    api_matlab.rst
 

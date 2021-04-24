@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
-from past.builtins import execfile
 
 # -- Project information -----------------------------------------------------
-execfile('../project_common.py')
+exec(open("../project_common.py").read())
 
 # Setup the breathe extension
 breathe_projects = { project+"_cpp": "../xml-cpp" }

@@ -7,10 +7,9 @@
 # pip3 install cloud_sptheme
 
 import os
-from past.builtins import execfile
 
 # -- Project information -----------------------------------------------------
-execfile('../project_common.py')
+exec(open("../project_common.py").read())
 
 #from project_common import *
 
