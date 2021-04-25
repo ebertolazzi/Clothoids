@@ -10,7 +10,7 @@
 *****************************************************/
 
 div.document.sidebar-hidden div.bodywrapper {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 div.sphinxsidebar
@@ -48,7 +48,7 @@ div.document.sidebar-hidden div.sphinxsidebar { display: none; }
 
 div.sphinxsidebarwrapper
 {
-  padding: 1em 0 0 10px;
+  padding: 10px 0 0 10px;
 }
 
 div.sphinxsidebar h3,
@@ -72,62 +72,60 @@ div.sphinxsidebar h4 a
 
 div.sphinxsidebar p
 {
-    color: #777777;
+  color: #777777;
 }
 
 div.sphinxsidebar p.topless
 {
-    margin: 5px 10px 10px 10px;
+  margin: 10px 10px 10px 10px;
 }
 
 div.sphinxsidebar ul
 {
-    margin:       10px;
-    margin-right: 0;
-    padding:      0;
-    color:        #777777;
+  margin:       10px;
+  margin-right: 0;
+  padding:      0;
+  color:        #777777;
 }
 
 div.sphinxsidebar a
 {
-    color: #003469;
-    border: 1px solid transparent;
-    border-width: 1px 0;
+  color: #003469;
+  border: 1px solid transparent;
+  border-width: 1px 0;
 }
 
 div.sphinxsidebar a:hover
 {
-    color: #d39110;
-    background: #fff9e4;
-    border-color: #F8D186;
-    text-decoration: none;
+  color: #d39110;
+  background: #fff9e4;
+  border-color: #F8D186;
+  text-decoration: none;
 }
 
 div.sphinxsidebar ul li a
 {
-    overflow: hidden;
-    white-space: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 div.sphinxsidebar ul li a:hover
 {
-
-    display: inline-table;
-    min-width: 98%;
-    min-width: calc(100% - 5px);
-
+  display: inline-table;
+  min-width: 98%;
+  min-width: calc(100% - 5px);
 }
 
 div.sphinxsidebar a:active
 {
-    color: #777777;
+  color: #777777;
 }
 
 div.sphinxsidebar p.logo
 {
-    margin: 10px 10px 10px 10px; /* centratura logo */
-    text-align: center;
-    max-width: 100%;
+  margin: 20px 6px 6px 6px; /* centratura logo */
+  text-align: center;
+  max-width: 92%;
 }
 
 div.sphinxsidebar p.logo a
@@ -146,7 +144,7 @@ div.sphinxsidebarwrapper > h4:first-child,
 div.sphinxsidebarwrapper > div:first-child > h3:first-child,
 div.sphinxsidebarwrapper > div:first-child > h4:first-child
 {
-    margin-top: .2em;
+  margin-top: .2em;
 }
 
 div.sphinxsidebar ul,
@@ -154,13 +152,13 @@ div.sphinxsidebar ul ul,
 div.sphinxprev p.topless,
 div.sphinxnext p.topless
 {
-    list-style: none;
-    margin-left: 0;
+  list-style: none;
+  margin-left: 0;
 }
 
 div.sphinxsidebar ul ul
 {
-    margin-left: 1.5em;
+  margin-left: 1.5em;
 }
 
 
@@ -168,27 +166,27 @@ div.sphinxsidebar ul a,
 div.sphinxprev a,
 div.sphinxnext a
 {
-    position: relative;
-    display: block;
-    padding: 1px 4px 3px 5px;
-    margin: 0 5px 0 0;
-    border: 1px solid transparent;
+  position: relative;
+  display: block;
+  padding: 1px 4px 3px 5px;
+  margin: 0 5px 0 0;
+  border: 1px solid transparent;
 
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -o-border-radius: 3px;
-    -ms-border-radius: 3px;
-    border-radius: 3px;
+  -moz-border-radius:    3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius:      3px;
+  -ms-border-radius:     3px;
+  border-radius:         3px;
 }
 
 div.sphinxsidebar ul a:hover,
 div.sphinxprev a:hover,
 div.sphinxnext a:hover
 {
-    background: #fff9e4;
-    border-color: #F8D186;
-    color: #d39110;
-    text-decoration: none;
+  background: #fff9e4;
+  border-color: #F8D186;
+  color: #d39110;
+  text-decoration: none;
 }
 
 div.sphinx-toc ul a:not([href^="#"]):hover
@@ -291,11 +289,11 @@ h1#search-documentation ~ form > input[type="submit"]
 {
   background: var(---tasto-go-bg);
 
-  -moz-border-radius: 0 5px 5px 0;
+  -moz-border-radius:    0 5px 5px 0;
   -webkit-border-radius: 0 5px 5px 0;
-  -o-border-radius: 0 5px 5px 0;
-  -ms-border-radius: 0 5px 5px 0;
-  border-radius: 0 5px 5px 0;
+  -o-border-radius:      0 5px 5px 0;
+  -ms-border-radius:     0 5px 5px 0;
+  border-radius:         0 5px 5px 0;
 }
 
 div#searchbox input[type="submit"]:hover,
@@ -312,7 +310,7 @@ button.sidebar-toggle#sidebar-show:hover,
 h1#search-documentation ~ form input[type="text"]:focus,
 div.sphinxsidebar input[type="text"]:focus
 {
-    border-color: #F8D186;
+  border-color: #F8D186;
 }
 
 div.sphinxsidebar button:hover:not(:active),
@@ -320,45 +318,45 @@ div.sphinxsidebar input[type="submit"]:hover:not(:active),
 h1#search-documentation ~ form input[type="submit"]:hover,
 button.sidebar-toggle:hover:not(:active)
 {
-  -moz-box-shadow: 1px 1px 2px -1px rgba(0,0,0,0.5);
+  -moz-box-shadow:    1px 1px 2px -1px rgba(0,0,0,0.5);
   -webkit-box-shadow: 1px 1px 2px -1px rgba(0,0,0,0.5);
-  -o-box-shadow: 1px 1px 2px -1px rgba(0,0,0,0.5);
-  -ms-box-shadow: 1px 1px 2px -1px rgba(0,0,0,0.5);
-  box-shadow: 1px 1px 2px -1px rgba(0,0,0,0.5);
+  -o-box-shadow:      1px 1px 2px -1px rgba(0,0,0,0.5);
+  -ms-box-shadow:     1px 1px 2px -1px rgba(0,0,0,0.5);
+  box-shadow:         1px 1px 2px -1px rgba(0,0,0,0.5);
 }
 
 button.sidebar-toggle::-moz-focus-inner
 {
-    border: 0;
+  border: 0;
 }
 
 div.sphinxsidebar .searchtip
 {
-    color: #999999;
+  color: #999999;
 }
 
 #searchbox .highlight-link a[href$="hideSearchWords()"]
 {
-    display: block;
-    padding: 0 1em;
-    font-size: 80%;
-    text-align: right;
+  display: block;
+  padding: 0 1em;
+  font-size: 80%;
+  text-align: right;
 }
 
 #searchbox .highlight-link a[href$="hideSearchWords()"]:before
 {
-    content: "\00D7";
-    font-weight: bold;
-    padding-right: 0.25em;
+  content: "\00D7";
+  font-weight: bold;
+  padding-right: 0.25em;
 }
 
 .sidebar-toggle-group
 {
-    position: absolute;
-    width: 3in;
-    top: 0;
-    left: 0;
-    z-index: 1;
+  position: absolute;
+  width: 3in;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .sidebar-toggle-group.no-js { display: none; }
@@ -375,22 +373,19 @@ div.document.document-hidden .sidebar-toggle-group
 
 button.sidebar-toggle
 {
-    margin: 0;
-    padding: 6px 12px;
+  margin: 0;
+  padding: 6px 12px;
 
-    color: #777777;
-    font-size: 1em;
-    white-space: nowrap;
+  color: #777777;
+  font-size: 1em;
+  white-space: nowrap;
 }
 
 button#sidebar-hide
 {
   position: absolute;
-
-  top: 16px;
+  top:   16px;
   right: 0;
-
-
   background: transparent;
   border: 1px solid rgba(0,0,0,.05);
   border-bottom-left-radius: 0.7em;

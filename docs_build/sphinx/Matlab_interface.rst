@@ -552,7 +552,6 @@ ClothoisSplineG2
 ----------------
 
 Implements the algorithm described in references [2] and [3].
-
 documentation will be available soon, see examples in
 ``tests`` for the moments
 
@@ -562,12 +561,19 @@ Triangle2D
 FresnelCS
 ---------
 
+.. list_table:: Authors
+   :header-rows: 0
+
 Authors
 -------
 
-| Enrico Bertolazzi (<enrico.bertolazzi@unitn.it>) and Marco Frego (<m.fregox@gmail.com>)
-| Department of Industrial Engineering
-| University of Trento
+- | Enrico Bertolazzi (enrico.bertolazzi@unitn.it)
+  | Department of Industrial Engineering
+  | University of Trento
+
+- | Marco Frego (marco.frego@unibz.it)
+  | Faculty of Science and Technology
+  | University of Bolzano
 
 References
 ----------

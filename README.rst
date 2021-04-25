@@ -6,11 +6,10 @@ Clothoids
 G1 and G2 fitting with clothoids, spline of clothods, circle arc and
 biarc
 
-*by Enrico Bertolazzi (*\ enrico.bertolazzi@unitn.it\ *) and Marco Frego
-(*\ m.fregox@gmail.com\ *)*
+*by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and
+Marco Frego (marco.frego@unibz.it)
 
-for the documentation see `online
-documentation <http://ebertolazzi.github.io/Clothoids/>`__
+for the documentation see `online documentation <http://ebertolazzi.github.io/Clothoids/>`__
 
 Installation
 ------------
@@ -71,37 +70,29 @@ using ``make`` you have the library and headers in the following tree
 
 where OSTYPE can be ``linux``, ``osx``, ``mingw_x64``, ``win_x64``
 
-Online Documentation
-~~~~~~~~~~~~~~~~~~~~
-
-Available at: http://ebertolazzi.github.io/Clothoids
-
 References
 ----------
 
 1. | *E. Bertolazzi, M. Frego*, **G1 fitting with clothoids**,
    | Mathematical Methods in the Applied Sciences,
    | John Wiley & Sons, 2014, vol. 38, n.5, pp. 881-897,
-   | [https://doi.org/10.1002/mma.3114]
-     (https://doi.org/10.1002/mma.3114)
+   | `https://doi.org/10.1002/mma.3114 <https://doi.org/10.1002/mma.3114>`__
 
 2. | *E. Bertolazzi, M. Frego*, **On the G2 Hermite interpolation
      problem with clothoids**,
    | Journal of Computational and Applied Mathematics,
    | 2018, vol. 15, n.341, pp. 99-116.
-   | [https://doi.org/10.1016/j.cam.2018.03.029]
-     (https://doi.org/10.1016/j.cam.2018.03.029)
+   | `https://doi.org/10.1016/j.cam.2018.03.029 <https://doi.org/10.1016/j.cam.2018.03.029>`__
 
 3. | *E. Bertolazzi, M. Frego*, **Interpolating clothoid splines with
      curvature continuity**,
    | Mathematical Methods in the Applied Sciences,
    | 2018, vol. 41, n.4, pp. 1099-1476.
-   | https://doi.org/10.1002/mma.4700
+   | `https://doi.org/10.1002/mma.4700 <https://doi.org/10.1002/mma.4700>`__
 
 4. | *E. Bertolazzi, M. Frego* **A Note on Robust Biarc Computation**,
    | Computer-Aided Design & Applications 16 (5), 822-835
-   | [http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf]
-     (http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf)
+   | `http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf <http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf>`__
 
 .. |Build Status| image:: https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master
    :target: https://travis-ci.org/ebertolazzi/Clothoids
