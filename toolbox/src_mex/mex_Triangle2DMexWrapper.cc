@@ -355,6 +355,26 @@ namespace G2lib {
 
   static
   void
+  do_overlap(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD "Triangle2DMexWrapper('overlap',OBJ,OBJ2): "
+    MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Triangle2D * ptr  = DATA_GET(arg_in_1);
+    Triangle2D * ptr2 = DATA_GET(arg_in_2);
+
+    setScalarBool( arg_out_0, ptr->overlap( * ptr2 ) ) ;
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
   do_points(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
@@ -410,6 +430,7 @@ namespace G2lib {
     {"distanceMin", do_distanceMin},
     {"distanceMax", do_distanceMax},
     {"isInside", do_isInside},
+    {"overlap", do_overlap},
     {"points", do_points},
     {"info", do_info}
   };

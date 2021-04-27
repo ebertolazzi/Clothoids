@@ -31,11 +31,17 @@ namespace G2lib {
    |  |____/|_|\__,_|_|  \___|
   \*/
 
-  /*!
-   * \brief Compute biarc fitting by Hemite data
-   *
-   * \image html biarc.jpg
-   */
+  //!
+  //! Compute biarc fitting by Hemite data
+  //!
+  //! \rst
+  //!
+  //!   .. image:: ../../images/biarc.jpg
+  //!      :width: 80%
+  //!      :align: center
+  //!
+  //! \endrst
+  //!
 
   class Biarc : public BaseCurve {
     CircleArc m_C0, m_C1;
@@ -61,23 +67,25 @@ namespace G2lib {
     : BaseCurve(G2LIB_BIARC)
     {}
 
-    //! make a copy of an existing biarc
+    //!
+    //! Make a copy of an existing biarc
+    //!
     Biarc( Biarc const & ba )
     : BaseCurve(G2LIB_BIARC)
     { copy(ba); }
 
-    /*!
-     * construct a biarc passing from the points
-     * \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
-     * with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
-     *
-     * \param[in] x0      \f$ x_0 \f$
-     * \param[in] y0      \f$ y_0 \f$
-     * \param[in] theta0  \f$ \theta_0 \f$
-     * \param[in] x1      \f$ x_1 \f$
-     * \param[in] y1      \f$ y_1 \f$
-     * \param[in] theta1  \f$ \theta_1 \f$
-     */
+    //!
+    //! Construct a biarc passing from the points
+    //! \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+    //! with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
+    //!
+    //! \param[in] x0      \f$ x_0 \f$
+    //! \param[in] y0      \f$ y_0 \f$
+    //! \param[in] theta0  \f$ \theta_0 \f$
+    //! \param[in] x1      \f$ x_1 \f$
+    //! \param[in] y1      \f$ y_1 \f$
+    //! \param[in] theta1  \f$ \theta_1 \f$
+    //!
     explicit
     Biarc(
       real_type x0,
@@ -100,7 +108,9 @@ namespace G2lib {
     explicit
     Biarc( BaseCurve const & C );
 
-    //! make a copy of an existing biarc
+    //!
+    //! Make a copy of an existing biarc
+    //!
     void
     copy( Biarc const & c ) {
       m_C0.copy(c.m_C0);
@@ -111,26 +121,30 @@ namespace G2lib {
     Biarc const & operator = ( Biarc const & ba )
     { copy(ba); return *this; }
 
-    //! return the first circle arc of the biarc
+    //!
+    //! Return the first circle arc of the biarc
+    //!
     CircleArc const & C0() const { return m_C0; }
 
-    //! return the first circle arc of the biarc
+    //!
+    //! Return the first circle arc of the biarc
+    //!
     CircleArc const & C1() const { return m_C1; }
 
-    /*!
-     * construct a biarc passing from the points
-     * \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
-     * with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
-     *
-     * \param[in] x0      \f$ x_0 \f$
-     * \param[in] y0      \f$ y_0 \f$
-     * \param[in] theta0  \f$ \theta_0 \f$
-     * \param[in] x1      \f$ x_1 \f$
-     * \param[in] y1      \f$ y_1 \f$
-     * \param[in] theta1  \f$ \theta_1 \f$
-     * \return false if biarc cannot be computed
-     *
-     */
+    //!
+    //! Construct a biarc passing from the points
+    //! \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+    //! with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
+    //!
+    //! \param[in] x0      \f$ x_0 \f$
+    //! \param[in] y0      \f$ y_0 \f$
+    //! \param[in] theta0  \f$ \theta_0 \f$
+    //! \param[in] x1      \f$ x_1 \f$
+    //! \param[in] y1      \f$ y_1 \f$
+    //! \param[in] theta1  \f$ \theta_1 \f$
+    //! \return false if biarc cannot be computed
+    //!
+    //!
     bool
     build(
       real_type x0,
@@ -141,12 +155,12 @@ namespace G2lib {
       real_type theta1
     );
 
-    /*!
-     *  construct a biarc by 3 point at "minimum energy"
-     *  - Planar point set fairing and fitting by arc splines
-     *  - Xunnian Yang and Guozhao Wang
-     *  - Computer-Aided Design, vol 33, 2001
-     */
+    //!
+    //! Construct a biarc by 3 point at "minimum energy"
+    //! - Planar point set fairing and fitting by arc splines
+    //! - Xunnian Yang and Guozhao Wang
+    //! - Computer-Aided Design, vol 33, 2001
+    //!
     bool
     build_3P(
       real_type x0,
@@ -416,28 +430,44 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    //! return the x-coordinate of the juction point of the biarc
+    //!
+    //! Return the x-coordinate of the juction point of the biarc
+    //!
     real_type xMiddle() const { return m_C1.xBegin(); }
 
-    //! return the y-coordinate of the juction point of the biarc
+    //!
+    //! Return the y-coordinate of the juction point of the biarc
+    //!
     real_type yMiddle() const { return m_C1.yBegin(); }
 
-    //! return the angle of the juction point of the biarc
+    //!
+    //! Return the angle of the juction point of the biarc
+    //!
     real_type thetaMiddle() const { return m_C1.thetaBegin(); }
 
-    //! return the curvature of the first arc of the biarc
+    //!
+    //! Return the curvature of the first arc of the biarc
+    //!
     real_type kappa0() const { return m_C0.curvature(); }
 
-    //! intial angle of the biarc
+    //!
+    //! Intial angle of the biarc
+    //!
     real_type length0() const { return m_C0.length(); }
 
-    //! return the curvature of the first arc of the biarc
+    //!
+    //! Return the curvature of the first arc of the biarc
+    //!
     real_type kappa1() const { return m_C1.curvature(); }
 
-    //! final angle of the biarc
+    //!
+    //! Final angle of the biarc
+    //!
     real_type length1() const { return m_C1.length(); }
 
-    //! change of the angle of the biarc (\f$ \theta_1-\theta_0 \f$ )
+    //!
+    //! Change of the angle of the biarc (\f$ \theta_1-\theta_0 \f$ )
+    //!
     real_type delta_theta() const { return m_C0.delta_theta() + m_C1.delta_theta(); }
 
     void
@@ -483,20 +513,22 @@ namespace G2lib {
      |   \___\___/|_|_|_|___/_|\___/|_| |_|
     \*/
 
-    //! detect a collision with another biarc
+    //!
+    //! Detect a collision with another biarc
+    //!
     bool
     collision( Biarc const & B ) const {
       return m_C0.collision( B.m_C0 ) || m_C0.collision( B.m_C1 ) ||
              m_C1.collision( B.m_C0 ) || m_C1.collision( B.m_C1 );
     }
 
-    /*!
-     * detect a collision with another biarc with offset
-     *
-     * \param[in] offs   offset of first biarc
-     * \param[in] B      second biarc
-     * \param[in] offs_B offset of second biarc
-     */
+    //!
+    //! Detect a collision with another biarc with offset
+    //!
+    //! \param[in] offs   offset of first biarc
+    //! \param[in] B      second biarc
+    //! \param[in] offs_B offset of second biarc
+    //!
     bool
     collision_ISO(
       real_type     offs,
@@ -517,14 +549,14 @@ namespace G2lib {
      |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
     \*/
 
-    /*!
-     * intersect a biarc with another biarc
-     *
-     * \param[in] B            second biarc
-     * \param[out] ilist       list of the intersection (as parameter on the curves)
-     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-     *                         intersection
-     */
+    //!
+    //! Intersect a biarc with another biarc
+    //!
+    //! \param[in] B            second biarc
+    //! \param[out] ilist       list of the intersection (as parameter on the curves)
+    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+    //!                         intersection
+    //!
     void
     intersect(
       Biarc const   & B,
@@ -532,16 +564,16 @@ namespace G2lib {
       bool            swap_s_vals
     ) const;
 
-    /*!
-     * intersect a biarc with another biarc with offset (ISO)
-     *
-     * \param[in]  offs        offset of first biarc
-     * \param[in]  B           second biarc
-     * \param[in]  offs_B      offset of second biarc
-     * \param[out] ilist       list of the intersection (as parameter on the curves)
-     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-     *                         intersection
-     */
+    //!
+    //! Intersect a biarc with another biarc with offset (ISO)
+    //!
+    //! \param[in]  offs        offset of first biarc
+    //! \param[in]  B           second biarc
+    //! \param[in]  offs_B      offset of second biarc
+    //! \param[out] ilist       list of the intersection (as parameter on the curves)
+    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+    //!                         intersection
+    //!
     void
     intersect_ISO(
       real_type       offs,
@@ -555,7 +587,9 @@ namespace G2lib {
     info( ostream_type & stream ) const override
     { stream << "BiArc\n" << *this << '\n'; }
 
-    //! pretty print of the biarc
+    //!
+    //! Pretty print of the biarc
+    //!
     friend
     ostream_type &
     operator << ( ostream_type & stream, Biarc const & bi );
@@ -564,15 +598,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /*!
-   * Given a list of points \f$ (x_i,y_i) \f$ build a guess of angles
-   * for a spline of biarc
-   *
-   * \param[in]  n     number of points
-   * \param[in]  x     x-coordinates
-   * \param[in]  y     y-coordinates
-   * \param[out] theta guessed angles
-   */
+  //! 
+  //! Given a list of points \f$ (x_i,y_i) \f$ build a guess of angles
+  //! for a spline of biarc
+  //! 
+  //! \param[in]  n     number of points
+  //! \param[in]  x     x-coordinates
+  //! \param[in]  y     y-coordinates
+  //! \param[out] theta guessed angles
+  //! 
   bool
   build_guess_theta(
     int_type          n,

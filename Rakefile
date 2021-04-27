@@ -146,7 +146,7 @@ task :osx_3rd do
   FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/quarticRootsFlocke/CMakeLists-cflags.txt'
   FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/GenericContainer/CMakeLists-cflags.txt'
   FileUtils.cd 'submodules'
-  puts "\n\nSUBMODULES (for SPLINES)\n\n".green
+  puts "\n\nSUBMODULES (for CLOTHOIDS)\n\n".green
   sh "rake build_osx"
   FileUtils.cd '..'
 end
@@ -159,7 +159,7 @@ task :linux_3rd do
   FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/quarticRootsFlocke/CMakeLists-cflags.txt'
   FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/GenericContainer/CMakeLists-cflags.txt'
   FileUtils.cd 'submodules'
-  puts "\n\nSUBMODULES (for SPLINES)\n\n".green
+  puts "\n\nSUBMODULES (for CLOTHOIDS)\n\n".green
   sh "rake build_linux"
   FileUtils.cd '..'
 end
@@ -173,7 +173,7 @@ task :win_3rd, [:year, :bits] do |t, args|
   FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/GenericContainer/CMakeLists-cflags.txt'
   args.with_defaults( :year => "2017", :bits => "x64" )
   FileUtils.cd 'submodules'
-  puts "\n\nSUBMODULES (for SPLINES)\n\n".green
+  puts "\n\nSUBMODULES (for CLOTHOIDS)\n\n".green
   sh "rake build_win[#{args.year},#{args.bits}]"
   FileUtils.cd '..'
 end

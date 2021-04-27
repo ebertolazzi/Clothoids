@@ -25,18 +25,17 @@
 #include <iomanip>
 #include <string>
 
-namespace GenericContainerNamespace {
+namespace GC_namespace {
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
   using namespace std;
-  #endif
 
   void
   writeTable(
     vec_string_type const & headers,
     vector_type     const & data,
     ostream_type          & stream,
-    char const              delimiter
+    char                    delimiter
   ) {
 
     unsigned ncol = unsigned(headers.size());
@@ -60,7 +59,7 @@ namespace GenericContainerNamespace {
     vec_string_type const & headers,
     mat_real_type   const & data,
     ostream_type          & stream,
-    char const              delimiter
+    char                    delimiter
   ) {
 
     unsigned ncol = unsigned(data.numCols());
@@ -155,6 +154,7 @@ namespace GenericContainerNamespace {
     stream << line.c_str() << '\n';
   }
 
+  #endif
 }
 
 //

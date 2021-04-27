@@ -53,7 +53,7 @@ catch(std::runtime_error & err) { \
   return GENERIC_CONTAINER_NO_DATA; \
 }
 
-using namespace ::GenericContainerNamespace;
+using namespace ::GC_namespace;
 
 typedef std::map<std::string,GenericContainerExplorer*>  MAP;
 typedef std::pair<std::string,GenericContainerExplorer*> MAP_DATA;
@@ -208,21 +208,21 @@ GC_get_type_name() {
 //..............................................................................
 
 int
-GC_set_bool( int const a ) {
+GC_set_bool( int a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->set_bool(a?true:false) );
   return GENERIC_CONTAINER_OK;
 }
 
 int
-GC_set_int( int const a ) {
+GC_set_int( int a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->set_int(a) );
   return GENERIC_CONTAINER_OK;
 }
 
 int
-GC_set_real( double const a ) {
+GC_set_real( double a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->set_real(a) );
   return GENERIC_CONTAINER_OK;
@@ -236,7 +236,7 @@ GC_set_complex( c_complex_type const * a ) {
 }
 
 int
-GC_set_complex2( double const re, real_type const im ) {
+GC_set_complex2( double re, double im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->set_complex(re,im) );
   return GENERIC_CONTAINER_OK;
@@ -307,21 +307,21 @@ GC_get_string( ) {
 //..............................................................................
 
 int
-GC_push_bool( int const a ) {
+GC_push_bool( int a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->push_bool( a != 0 ) );
   return GENERIC_CONTAINER_OK;
 }
 
 int
-GC_push_int( int const a ) {
+GC_push_int( int a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->push_int( a ) );
   return GENERIC_CONTAINER_OK;
 }
 
 int
-GC_push_real( double const a ) {
+GC_push_real( double a ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->push_real( a ) );
   return GENERIC_CONTAINER_OK;
@@ -335,7 +335,7 @@ GC_push_complex( c_complex_type const * a ) {
 }
 
 int
-GC_push_complex2( double const re, double const im ) {
+GC_push_complex2( double re, double im ) {
   if ( gc_active == nullptr ) return GENERIC_CONTAINER_BAD_HEAD;
   GC_TRY( gc_active->top()->push_complex( re, im ) );
   return GENERIC_CONTAINER_OK;
@@ -585,7 +585,7 @@ GC_init_map_key() {
 }
 
 char const *
-GC_get_next_key() {
+GC_get_next_key( void ) {
   if ( gc_active == nullptr ) return nullptr;
   return gc_active->next_map_key();
 }

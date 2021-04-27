@@ -6,7 +6,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Matlab Usage &#8212; Clothoids v2.0.5
 </title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -63,7 +64,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="matlab-usage">
+  <section id="matlab-usage">
 <h1>Matlab Usage<a class="headerlink" href="#matlab-usage" title="Permalink to this headline">¶</a>
 </h1>
 <p><a class="reference external" href="https://travis-ci.org/ebertolazzi/Clothoids"><img alt="Build Status" src="https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master"></a>
@@ -82,7 +83,7 @@ objects in the library:</p>
 <li><p>Triangle2D</p></li>
 <li><p>FresnelCS</p></li>
 </ul>
-<div class="section" id="installation-mex-matlab-interface">
+<section id="installation-mex-matlab-interface">
 <h2>Installation mex/MATLAB interface<a class="headerlink" href="#installation-mex-matlab-interface" title="Permalink to this headline">¶</a>
 </h2>
 <p>In directory <cite>src_mex</cite> you find the C++ implementation of
@@ -107,13 +108,13 @@ ruby populate_toolbox.rb
 </pre></div>
 </div>
 <p>then compile toolbox and install.</p>
-</div>
-<div class="section" id="linesegment">
+</section>
+<section id="linesegment">
 <h2>LineSegment<a class="headerlink" href="#linesegment" title="Permalink to this headline">¶</a>
 </h2>
 <p>The class <code class="docutils literal notranslate"><span class="pre">LineSegment</span></code> store a straight segment.</p>
-</div>
-<div class="section" id="constuctors">
+</section>
+<section id="constuctors">
 <h2>Constuctors<a class="headerlink" href="#constuctors" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -130,8 +131,8 @@ ruby populate_toolbox.rb
 <span class="n">L2</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="methods">
+</section>
+<section id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -176,8 +177,8 @@ ruby populate_toolbox.rb
 <span class="n">L1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="evaluation-methods">
+</section>
+<section id="evaluation-methods">
 <h2>Evaluation Methods<a class="headerlink" href="#evaluation-methods" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -198,13 +199,13 @@ ruby populate_toolbox.rb
 <span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="circlearc">
+</section>
+<section id="circlearc">
 <h2>CircleArc<a class="headerlink" href="#circlearc" title="Permalink to this headline">¶</a>
 </h2>
 <p>The class <code class="docutils literal notranslate"><span class="pre">CircleArc</span></code> store an arc of a circle.</p>
-</div>
-<div class="section" id="id1">
+</section>
+<section id="id1">
 <h2>Constuctors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -226,8 +227,8 @@ ruby populate_toolbox.rb
 <span class="n">C</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">]</span><span class="w">  </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h2>Methods<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -272,8 +273,8 @@ ruby populate_toolbox.rb
 <span class="n">C</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="distance-methods">
+</section>
+<section id="distance-methods">
 <h2>Distance Methods<a class="headerlink" href="#distance-methods" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -285,8 +286,8 @@ ruby populate_toolbox.rb
 <span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>Evaluation Methods<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -307,14 +308,14 @@ ruby populate_toolbox.rb
 <span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="biarc">
+</section>
+<section id="biarc">
 <h2>Biarc<a class="headerlink" href="#biarc" title="Permalink to this headline">¶</a>
 </h2>
 <p>The class <code class="docutils literal notranslate"><span class="pre">Biarc</span></code> store a biarc or two arc
 connected with G1 continuity.</p>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>Constuctors<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -334,8 +335,8 @@ connected with G1 continuity.</p>
 <span class="n">B</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">]</span><span class="w">  </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h2>Methods<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -396,8 +397,8 @@ connected with G1 continuity.</p>
 <span class="n">B</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="n">fmt1</span><span class="p">,</span><span class="n">fmt2</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h2>Distance Methods<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -410,8 +411,8 @@ connected with G1 continuity.</p>
 <span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">d</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id7">
+</section>
+<section id="id7">
 <h2>Evaluation Methods<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -432,8 +433,8 @@ connected with G1 continuity.</p>
 <span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="clothoidcurve">
+</section>
+<section id="clothoidcurve">
 <h2>ClothoidCurve<a class="headerlink" href="#clothoidcurve" title="Permalink to this headline">¶</a>
 </h2>
 <p>The class <code class="docutils literal notranslate"><span class="pre">ClothoidCurve</span></code> store a clothoid curve arc.
@@ -449,8 +450,8 @@ in such a way it pass to the points with the prescribed direction.
 The solution in general is not unique but chosing the one for
 which the angle direction variation is less than <code class="docutils literal notranslate"><span class="pre">2*pi</span></code>
 the solution is unique.</p>
-</div>
-<div class="section" id="id8">
+</section>
+<section id="id8">
 <h2>Constuctors<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -469,8 +470,8 @@ the solution is unique.</p>
 <span class="n">CL</span><span class="p">.</span><span class="n">build_G1</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">theta1</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id9">
+</section>
+<section id="id9">
 <h2>Methods<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -530,8 +531,8 @@ the solution is unique.</p>
 <span class="n">CL</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="distance-and-intersection-methods">
+</section>
+<section id="distance-and-intersection-methods">
 <h2>Distance and intersection Methods<a class="headerlink" href="#distance-and-intersection-methods" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -550,8 +551,8 @@ the solution is unique.</p>
 <span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">s1</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">CL1</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id10">
+</section>
+<section id="id10">
 <h2>Evaluation Methods<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a>
 </h2>
 <div class="highlight-matlab notranslate">
@@ -591,30 +592,30 @@ the solution is unique.</p>
 <span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="clothoislist">
+</section>
+<section id="clothoislist">
 <h2>ClothoisList<a class="headerlink" href="#clothoislist" title="Permalink to this headline">¶</a>
 </h2>
 <p>Store a list of clothoids to be used as a single spline.</p>
 <p>Documentation will be available soon, see examples in
 <code class="docutils literal notranslate"><span class="pre">tests</span></code> for the moments</p>
-</div>
-<div class="section" id="clothoissplineg2">
+</section>
+<section id="clothoissplineg2">
 <h2>ClothoisSplineG2<a class="headerlink" href="#clothoissplineg2" title="Permalink to this headline">¶</a>
 </h2>
 <p>Implements the algorithm described in references [2] and [3].
 documentation will be available soon, see examples in
 <code class="docutils literal notranslate"><span class="pre">tests</span></code> for the moments</p>
-</div>
-<div class="section" id="triangle2d">
+</section>
+<section id="triangle2d">
 <h2>Triangle2D<a class="headerlink" href="#triangle2d" title="Permalink to this headline">¶</a>
 </h2>
-</div>
-<div class="section" id="fresnelcs">
+</section>
+<section id="fresnelcs">
 <h2>FresnelCS<a class="headerlink" href="#fresnelcs" title="Permalink to this headline">¶</a>
 </h2>
-</div>
-<div class="section" id="authors">
+</section>
+<section id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a>
 </h2>
 <ul>
@@ -649,8 +650,8 @@ documentation will be available soon, see examples in
 </div>
 </li>
 </ul>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a>
 </h2>
 <ol class="arabic simple">
@@ -674,8 +675,8 @@ Mathematical Methods in the Applied Sciences,
 Computer-Aided Design &amp; Applications 16 (5), 822-835
 <a class="reference external" href="http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf">http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf</a></p></li>
 </ol>
-</div>
-</div>
+</section>
+</section>
 
 
 

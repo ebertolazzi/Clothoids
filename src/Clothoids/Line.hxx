@@ -31,7 +31,9 @@ namespace G2lib {
    |  |_____|_|_| |_|\___|
   \*/
 
+  //!
   //! Class to manage a straight segment
+  //!
   class LineSegment : public BaseCurve {
 
     friend class CircleArc;
@@ -68,7 +70,9 @@ namespace G2lib {
     explicit
     LineSegment( BaseCurve const & C );
 
-    //! construct a circle curve with the standard parameters
+    //!
+    //! Construct a circle curve with the standard parameters
+    //!
     explicit
     LineSegment(
       real_type _x0,
@@ -582,20 +586,20 @@ namespace G2lib {
      |  \__,_|_|___/\__\__,_|_| |_|\___\___|
     \*/
 
-    /*!
-     *  \brief compute the point at minimum distance from a point `[x,y]` and the line segment
-     *
-     *  \param qx  x-coordinate
-     *  \param qy  y-coordinate
-     *  \param x   x-coordinate of the closest point
-     *  \param y   y-coordinate of the closest point
-     *  \param s   param of the closest point
-     *  \param t   signed distance if projection is orthogonal to segment
-     *  \param dst signed distance from the segment
-     *  \return 1 = point is projected orthogonal
-     *          0 = more than one projection (first returned)
-     *         -1 = minimum point is not othogonal projection to curve
-     */
+    //!
+    //! Compute the point at minimum distance from a point `[x,y]` and the line segment
+    //!
+    //! \param[in]  qx  x-coordinate
+    //! \param[in]  qy  y-coordinate
+    //! \param[out] x   x-coordinate of the closest point
+    //! \param[out] y   y-coordinate of the closest point
+    //! \param[out] s   param of the closest point
+    //! \param[out] t   signed distance if projection is orthogonal to segment
+    //! \param[out] dst signed distance from the segment
+    //! \return 1 = point is projected orthogonal
+    //!         0 = more than one projection (first returned)
+    //!        -1 = minimum point is not othogonal projection to curve
+    //!
 
     virtual
     int_type
@@ -646,7 +650,9 @@ namespace G2lib {
       m_L      = L;
     }
 
-    //! construct a clothoid with the standard parameters
+    //!
+    //! Construct a clothoid with the standard parameters
+    //!
     void
     build_2P(
       real_type _x0,
@@ -655,7 +661,9 @@ namespace G2lib {
       real_type _y1
     );
 
-    //! construct a clothoid with the standard parameters
+    //!
+    //! Construct a clothoid with the standard parameters
+    //!
     void
     build_2P( real_type const p0[2], real_type const p1[2] )
     { build_2P( p0[0], p0[1], p1[0], p1[1] ); }

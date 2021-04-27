@@ -31,8 +31,9 @@ namespace G2lib {
    |    |_||_|  |_|\__,_|_| |_|\__, |_|\___|_____|____/
    |                           |___/
   \*/
-  //! \brief Class to manage Triangle for BB of clothoid curve
-
+  //!
+  //!  Class to manage Triangle for BB of clothoid curve
+  //!
   class Triangle2D {
     real_type m_p1[2], m_p2[2], m_p3[2];
     real_type m_s0;
@@ -177,21 +178,21 @@ namespace G2lib {
 
     bool overlap( Triangle2D const & ) const;
 
-    /*!
-     *  return +1 = CounterClockwise
-     *  return -1 = Clockwise
-     *  return  0 = degenerate triangle
-     */
+    //!
+    //! return +1 = CounterClockwise
+    //! return -1 = Clockwise
+    //! return  0 = degenerate triangle
+    //!
     int_type
     isCounterClockwise() const {
       return G2lib::isCounterClockwise( m_p1, m_p2, m_p3 );
     }
 
-    /*!
-     *  return +1 = inside
-     *  return -1 = outside
-     *  return  0 = on the border
-     */
+    //!
+    //! return +1 = inside
+    //! return -1 = outside
+    //! return  0 = on the border
+    //!
     int_type
     isInside( real_type x, real_type y ) const {
       real_type const pt[2] = {x,y};

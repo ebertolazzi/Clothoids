@@ -6,7 +6,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Class LineSegment &#8212; Clothoids v2.0.5
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -75,24 +76,24 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="class-linesegment">
+  <section id="class-linesegment">
 <span id="exhale-class-a00096"></span><h1>Class LineSegment<a class="headerlink" href="#class-linesegment" title="Permalink to this headline">¶</a>
 </h1>
 <ul class="simple">
 <li><p>Defined in <a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_LineSegment.m.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-clothoids-toolbox-lib-linesegment-m"><span class="std std-ref">File LineSegment.m</span></a></p></li>
 </ul>
-<div class="section" id="inheritance-relationships">
+<section id="inheritance-relationships">
 <h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a>
 </h2>
-<div class="section" id="base-type">
+<section id="base-type">
 <h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a>
 </h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">CurveBase</span></code> (<a class="reference internal" href="class_a00092.html#exhale-class-a00092"><span class="std std-ref">Class CurveBase</span></a>)</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="class-documentation">
+</section>
+</section>
+<section id="class-documentation">
 <h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
 </h2>
 <dl class="cpp class">
@@ -106,7 +107,34 @@
 <dt id="_CPPv4N11LineSegment11LineSegmentE2in">
 <span id="_CPPv3N11LineSegment11LineSegmentE2in"></span><span id="_CPPv2N11LineSegment11LineSegmentE2in"></span><span id="LineSegment::LineSegment__in"></span><span class="target" id="a00096_1a463945c8d3ec21632cc06f98e75238d6"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">LineSegment</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11LineSegment11LineSegmentE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>MATLAB class wrapper for the underlying C++ class. </p>
+<p>Create a new C++ class instance for the Segment object</p>
+<p><strong>Usage:</strong></p>
+<p>ref = <a class="reference internal" href="#a00096_1a463945c8d3ec21632cc06f98e75238d6"><span class="std std-ref">LineSegment()</span></a>; % (1) ref = <a class="reference internal" href="#a00096"><span class="std std-ref">LineSegment( x0, y0, theta0, L )</span></a>; % (2) ref = <a class="reference internal" href="#a00096"><span class="std std-ref">LineSegment( x0, y0, theta0, smin, smax )</span></a>; % (3) ref = <a class="reference internal" href="#a00096"><span class="std std-ref">LineSegment( p0, p1 )</span></a>; % (4)</p>
+<p></p>
+<ul class="simple">
+<li><p>(1) empty segment</p></li>
+<li><p>(2) line segment passing from (x0,y0) at angle theta0</p></li>
+<li><p>(3) line segment as in (2) with intial and final curvilinear coordinate respect to (x0,y0)</p></li>
+<li><p>(4) segment passing from 2 points</p></li>
+</ul>
+
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>x0, y0: coordinate of initial point</p></li>
+<li><p>theta0: orientation of the circle at initial point</p></li>
+<li><p>L: length of curve from initial to final point</p></li>
+<li><p>smin: initial curvilinear coordinate of the curve</p></li>
+<li><p>smax: final curvilinear coordinate of the curve</p></li>
+<li><p>p0: 2D point</p></li>
+<li><p>p1: 2D point</p></li>
+</ul>
+
+<p><strong>On output:</strong></p>
+<p>ref: reference handle to the object instance </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -127,7 +155,9 @@
 <dt id="_CPPv4N11LineSegment8to_nurbsE2in">
 <span id="_CPPv3N11LineSegment8to_nurbsE2in"></span><span id="_CPPv2N11LineSegment8to_nurbsE2in"></span><span id="LineSegment::to_nurbs__in"></span><span class="target" id="a00096_1a6e9d1d70c524dda56c7c1cde59799ac7"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">to_nurbs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11LineSegment8to_nurbsE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>return a nurbs representation of the circle arc </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -456,8 +486,8 @@
 </dd>
 </dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
 

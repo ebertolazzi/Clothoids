@@ -95,10 +95,14 @@ namespace Utils {
     //! free memory without deallocating pointer
     void free(void) { m_numTotValues = m_numAllocated = 0; }
 
-    //! free memory deallocating pointer
+    //!
+    //! Free memory deallocating pointer
+    //!
     void hard_free(void);
 
-    //! number of objects allocated
+    //!
+    //! Number of objects allocated
+    //!
     size_t size(void) const { return m_numTotValues; }
 
     //! get pointer of allocated memory for `sz` objets
@@ -112,10 +116,14 @@ namespace Utils {
     T * malloc( size_t n );
     T * realloc( size_t n );
 
-    //! true if you cannot get more memory pointers
+    //!
+    //! True if you cannot get more memory pointers
+    //!
     bool is_empty() const { return m_numAllocated >= m_numTotValues; }
 
-    //! return an error if memory is not complately used
+    //!
+    //! Return an error if memory is not complately used
+    //!
     void must_be_empty( char const where[] ) const;
   };
 

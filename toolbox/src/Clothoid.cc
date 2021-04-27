@@ -401,15 +401,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  /*!
-   * \brief  collision detection
-   * 
-   * \param[in] offs      curve offset
-   * \param[in] C         curve to compare for collision detection
-   * \param[in] offs_C    curve offset
-   * \param[in] max_angle maximum angle variation
-   * \param[in] max_size  if the segment is larger then this parameter is split
-   */
+  //! 
+  //! Collision detection
+  //! 
+  //! \param[in] offs      curve offset
+  //! \param[in] C         curve to compare for collision detection
+  //! \param[in] offs_C    curve offset
+  //! \param[in] max_angle maximum angle variation
+  //! \param[in] max_size  if the segment is larger then this parameter is split
+  //! 
   bool
   ClothoidCurve::approximate_collision_ISO(
     real_type             offs,

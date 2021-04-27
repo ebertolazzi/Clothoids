@@ -23,6 +23,8 @@
 #include <algorithm>
 #include <limits>
 
+#define MAX_ITER_SAFETY 50
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 namespace PolynomialRoots {
@@ -266,12 +268,13 @@ namespace PolynomialRoots {
     valueType t = p; // save p(x) for sign comparison
     x -= p/dp; // 1st improved root
 
-    indexType iter      = 1;
-    indexType oscillate = 0;
-    bool      bisection = false;
-    bool      converged = false;
+    indexType iter       = 1;
+    indexType oscillate  = 0;
+    indexType nconverged = 0;
+    bool      bisection  = false;
+    bool      converged  = false;
     valueType s(0), u(0); // to mute warning
-    while ( ! (converged||bisection) && iter < 50 ) {
+    while ( ! ( nconverged > 1 || bisection ) && iter < MAX_ITER_SAFETY ) {
       ++iter;
       valueType ddp;
       evalMonicQuartic( x, a, b, c, d, p, dp, ddp );
@@ -290,10 +293,11 @@ namespace PolynomialRoots {
       x -= dp; // new Newton root
       bisection = oscillate > 2; // activate bisection
       converged = std::abs(dp) <= (1+std::abs(x)) * machepsi; // Newton convergence indicator
+      if ( converged ) ++nconverged; else nconverged = 0;
     }
     if ( bisection || !converged ) {
       t = u - s; // initial bisection interval
-      while ( std::abs(t) > (1+std::abs(x)) * machepsi ) { // bisection iterates
+      while ( std::abs(t) > (1+std::abs(x)) * machepsi && iter < MAX_ITER_SAFETY ) { // bisection iterates
         ++iter;
         p = evalMonicQuartic( x, a, b, c, d );
         if ( p < 0 ) s = x;
@@ -521,17 +525,32 @@ namespace PolynomialRoots {
     if ( !qsolve.complexRoots() ) {
       valueType Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       valueType Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
-      valueType tmp = q0 >= 0 ? 0 : 2; // segno di A0??
+      bool q0pos = q0 > 0;
       nreal = 1;
       if ( Qs < 0 && Qu < 0 ) {
-        if ( Qs < Qu ) r3 = s < 0 ?  tmp :  2;
-        else           r3 = u > 0 ? -tmp : -2;
+        if ( Qs < Qu ) {
+          r3 = 2;
+          if ( q0pos && s < 0 ) r3 = 0;
+        } else {
+          r3 = -2;
+          if ( q0pos && u > 0 ) r3 = 0;
+        }
       } else if ( Qs < 0 ) {
-        r3 = s < 0 ? tmp : 2;
-        if ( 4*s < -q3 ) r3 = -r3;
+        if ( 4*s < -q3 ) {
+          r3 = -2;
+          if ( q0pos && s > 0 ) r3 = 0;
+        } else {
+          r3 = 2;
+          if ( q0pos && s < 0 ) r3 = 0;
+        }
       } else if ( Qu < 0 ) {
-        r3 = u < 0 ? tmp : 2;
-        if ( 4*u < -q3 ) r3 = -r3;
+        if ( 4*u < -q3 ) {
+          r3 = -2;
+          if ( q0pos && u > 0 ) r3 = 0;
+        } else {
+          r3 = 2;
+          if ( q0pos && u < 0 ) r3 = 0;
+        }
       } else {
         // check for astrological combination when s or u are root of the quartic
         /*
@@ -718,8 +737,11 @@ namespace PolynomialRoots {
     valueType const & D = ABCDE[3];
     valueType const & E = ABCDE[4];
     bool ok = true;
-    valueType epsi = 10 * ( std::abs(A) +
-                            std::abs(B)+std::abs(C)+std::abs(D)+std::abs(E))*machepsi;
+    valueType epsi = 1000 * ( ( std::abs(A) +
+                                std::abs(B) +
+                                std::abs(C) +
+                                std::abs(D) +
+                                std::abs(E) )*machepsi) ;
     if ( ncplx > 0 ) {
       valueType z0 = std::abs(eval( root0() ));
       valueType z1 = std::abs(eval( root1() ));

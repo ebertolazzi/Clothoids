@@ -561,9 +561,6 @@ Triangle2D
 FresnelCS
 ---------
 
-.. list_table:: Authors
-   :header-rows: 0
-
 Authors
 -------
 

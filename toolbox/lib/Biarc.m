@@ -1,5 +1,5 @@
 classdef Biarc < CurveBase
-  %% MATLAB class wrapper for the underlying C++ class
+  %> MATLAB class wrapper for the underlying C++ class
 
   methods
     %> Create a new C++ class instance for the clothoid arc object
@@ -31,18 +31,19 @@ classdef Biarc < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Build the interpolating G1 biarc
+    %>
+    %> **Usage:**
+    %>
+    %>     ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
+    %>
+    %> **On input:**
+    %> - x0, y0: coordinate of initial point
+    %> - theta0: orientation of the clothoid at initial point
+    %> - x1, y1: coordinate of final point
+    %> - theta1: orientation of the clothoid at final point
+    %>
     function ok = build( self, x0, y0, theta0, x1, y1, theta1 )
-      % Build the interpolating G1 biarc
-      %
-      % Usage:
-      %    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    theta0: orientation of the clothoid at initial point
-      %    x1, y1: coordinate of final point
-      %    theta1: orientation of the clothoid at final point
-      %
       ok = BiarcMexWrapper( 'build_G1', self.objectHandle, ...
                             x0, y0, theta0, x1, y1, theta1 );
     end
@@ -51,22 +52,25 @@ classdef Biarc < CurveBase
       str = 'BiArc';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Build the interpolating biarc by 3 points
+    %>
+    %> **Usage:**
+    %>
+    %>    ref.build_3P( x0, y0, x1, y1, x2, y2 )
+    %>    ref.build_3P( [x0, y0], [x1, y1], [x2, y2] )
+    %>
+    %> On input:
+    %>    x0, y0: coordinate of initial point
+    %>    x1, y1: coordinate of middle point
+    %>    x2, y2: coordinate of final point
+    %>
+    %> alternative
+    %>
+    %>    p0: coordinate of initial point
+    %>    p1: coordinate of middle point
+    %>    p2: coordinate of final point
+    %>
     function ok = build_3P( self, varargin )
-      % Build the interpolating biarc by 3 points
-      %
-      % Usage:
-      %    ref.build_3P( x0, y0, x1, y1, x2, y2 )
-      %    ref.build_3P( [x0, y0], [x1, y1], [x2, y2] )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    x1, y1: coordinate of middle point
-      %    x2, y2: coordinate of final point
-      % alternative
-      %    p0: coordinate of initial point
-      %    p1: coordinate of middle point
-      %    p2: coordinate of final point
-      %
       ok = BiarcMexWrapper( 'build_3P', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -113,10 +117,11 @@ classdef Biarc < CurveBase
       C1     = CircleArc( x0, y0, theta0, kappa0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> **Usage:**
+    %>
+    %>    ref.to_nurbs()
+    %>
     function [ arc0, arc1 ] = to_nurbs( self )
-      % Usage:
-      %    ref.to_nurbs()
-      %
       [ arc0, arc1 ] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

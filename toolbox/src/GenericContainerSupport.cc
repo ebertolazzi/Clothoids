@@ -24,7 +24,10 @@
 #include "GenericContainer.hh"
 #include <iomanip>
 
-namespace GenericContainerNamespace {
+namespace GC_namespace {
+ 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   /*
   //   _____     _              _
   //  |_   _|__ | | _____ _ __ (_)_______
@@ -88,6 +91,8 @@ namespace GenericContainerNamespace {
     } while ( line.find_first_of(commentchars) != std::string::npos ); // ????????????
     return nl;
   }
+
+  #endif
 
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)

@@ -6,7 +6,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Class ClothoidCurve &#8212; Clothoids v2.0.5
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -75,24 +76,24 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="class-clothoidcurve">
+  <section id="class-clothoidcurve">
 <span id="exhale-class-a00080"></span><h1>Class ClothoidCurve<a class="headerlink" href="#class-clothoidcurve" title="Permalink to this headline">¶</a>
 </h1>
 <ul class="simple">
 <li><p>Defined in <a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Clothoids_toolbox_lib_ClothoidCurve.m.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-clothoids-toolbox-lib-clothoidcurve-m"><span class="std std-ref">File ClothoidCurve.m</span></a></p></li>
 </ul>
-<div class="section" id="inheritance-relationships">
+<section id="inheritance-relationships">
 <h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a>
 </h2>
-<div class="section" id="base-type">
+<section id="base-type">
 <h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a>
 </h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">CurveBase</span></code> (<a class="reference internal" href="class_a00092.html#exhale-class-a00092"><span class="std std-ref">Class CurveBase</span></a>)</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="class-documentation">
+</section>
+</section>
+<section id="class-documentation">
 <h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
 </h2>
 <dl class="cpp class">
@@ -106,7 +107,26 @@
 <dt id="_CPPv4N13ClothoidCurve13ClothoidCurveE2in">
 <span id="_CPPv3N13ClothoidCurve13ClothoidCurveE2in"></span><span id="_CPPv2N13ClothoidCurve13ClothoidCurveE2in"></span><span id="ClothoidCurve::ClothoidCurve__in"></span><span class="target" id="a00080_1a09e3c14b4e95a5213f552c5617f73fc2"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">ClothoidCurve</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve13ClothoidCurveE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Create a new C++ class instance for the clothoid arc object</p>
+<p><strong>Usage:</strong></p>
+<p>ref = <a class="reference internal" href="#a00080_1a09e3c14b4e95a5213f552c5617f73fc2"><span class="std std-ref">ClothoidCurve()</span></a> ref = <a class="reference internal" href="#a00080"><span class="std std-ref">ClothoidCurve( x0, y0, theta0, k0, dk, L )</span></a></p>
+<p><strong>On input:</strong></p>
+<ul class="simple">
+<li><p>x0, y0: coordinate of initial point</p></li>
+<li><p>theta0: orientation of the clothoid at initial point</p></li>
+<li><p>k0: curvature of the clothoid at initial point</p></li>
+<li><p>dk: derivative of curvature respect to arclength</p></li>
+<li><p>L: length of curve from initial to final point</p></li>
+</ul>
+
+<p><strong>On output:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>ref: reference handle to the object instance </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -120,21 +140,63 @@
 <dt id="_CPPv4N13ClothoidCurve5buildE2in2in">
 <span id="_CPPv3N13ClothoidCurve5buildE2in2in"></span><span id="_CPPv2N13ClothoidCurve5buildE2in2in"></span><span id="ClothoidCurve::build__in.in"></span><span class="target" id="a00080_1abe5fb8b254c95cf2fc33b6d9210a04d7"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve5buildE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Build the clothoid from known parameters</p>
+<p><strong>Usage:</strong></p>
+<p>ref.build( x0, y0, theta0, k0, dk, L )</p>
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>x0, y0: coordinate of initial point</p></li>
+<li><p>theta0: orientation of the clothoid at initial point</p></li>
+<li><p>k0: curvature of the clothoid at initial point</p></li>
+<li><p>dk: derivative of curvature respect to arclength</p></li>
+<li><p>L : length of curve from initial to final point </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve8build_G1E2in2in2in2in2in2in2in">
 <span id="_CPPv3N13ClothoidCurve8build_G1E2in2in2in2in2in2in2in"></span><span id="_CPPv2N13ClothoidCurve8build_G1E2in2in2in2in2in2in2in"></span><span id="ClothoidCurve::build_G1__in.in.in.in.in.in.in"></span><span class="target" id="a00080_1a83f5a4d7781e7a4f820f14a14e421966"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build_G1</span></code><span class="sig-paren">(</span><em><span class="pre">x0</span></em>,<em><span class="pre">y0</span></em>,<em><span class="pre">theta0</span></em>,<em><span class="pre">x1</span></em>,<em><span class="pre">y1</span></em>,<em><span class="pre">theta1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve8build_G1E2in2in2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Build the interpolating G1 clothoid arc</p>
+<p><strong>Usage:</strong></p>
+<p>ref.build_G1( x0, y0, theta0, x1, y1, theta1 )</p>
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>x0, y0: coordinate of initial point</p></li>
+<li><p>theta0: orientation of the clothoid at initial point</p></li>
+<li><p>x1, y1: coordinate of final point</p></li>
+<li><p>theta1: orientation of the clothoid at final point </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve13build_forwardE2in2in2in2in2in2in2in">
 <span id="_CPPv3N13ClothoidCurve13build_forwardE2in2in2in2in2in2in2in"></span><span id="_CPPv2N13ClothoidCurve13build_forwardE2in2in2in2in2in2in2in"></span><span id="ClothoidCurve::build_forward__in.in.in.in.in.in.in"></span><span class="target" id="a00080_1af223de3c872e646c5450485398c81d27"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build_forward</span></code><span class="sig-paren">(</span><em><span class="pre">x0</span></em>,<em><span class="pre">y0</span></em>,<em><span class="pre">theta0</span></em>,<em><span class="pre">k0</span></em>,<em><span class="pre">x1</span></em>,<em><span class="pre">y1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve13build_forwardE2in2in2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Build the interpolating clothoid arc fixing initial position angle and curvature</p>
+<p><strong>Usage:</strong></p>
+<p>ok = ref.build_forward( x0, y0, theta0, k0, x1, y1 )</p>
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>x0, y0: coordinate of initial point</p></li>
+<li><p>theta0: orientation of the clothoid at initial point</p></li>
+<li><p>k0: curvature of the clothoid at initial point</p></li>
+<li><p>x1, y1: coordinate of final point</p></li>
+</ul>
+
+<p><strong>On output:</strong></p>
+<p>ok: true iff the interpolation was successful </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -183,7 +245,18 @@
 <dt id="_CPPv4N13ClothoidCurve23changeCurvilinearOriginE2in2in2in">
 <span id="_CPPv3N13ClothoidCurve23changeCurvilinearOriginE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve23changeCurvilinearOriginE2in2in2in"></span><span id="ClothoidCurve::changeCurvilinearOrigin__in.in.in"></span><span class="target" id="a00080_1a6f196d6323cd8e94c2e684bc22cf7b3f"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">changeCurvilinearOrigin</span></code><span class="sig-paren">(</span><em><span class="pre">s0</span></em>,<em><span class="pre">L</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve23changeCurvilinearOriginE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>change the origin of the clothoid curve to curviliear corrdinate <code class="docutils literal notranslate"><span class="pre">s0</span></code></p>
+<p><strong>Usage:</strong></p>
+<p>ref.changeOrigin(s0,L)</p>
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>s0: curvilinear coordinate of the origin of the new curve</p></li>
+<li><p>L: nel length of the curve </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -197,7 +270,11 @@
 <dt id="_CPPv4N13ClothoidCurve8infinityE2in">
 <span id="_CPPv3N13ClothoidCurve8infinityE2in"></span><span id="_CPPv2N13ClothoidCurve8infinityE2in"></span><span id="ClothoidCurve::infinity__in"></span><span class="target" id="a00080_1aa4e49b5233f4429c88a9a9ce3b51e62a"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">infinity</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve8infinityE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>point at infinity</p>
+<p><strong>Usage:</strong></p>
+<p>P = ref.infinity(); </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -561,8 +638,8 @@
 </dd>
 </dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
 

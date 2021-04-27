@@ -1,20 +1,25 @@
 classdef ClothoidCurve < CurveBase
   methods
+    %> Create a new C++ class instance for the 
+    %> clothoid arc object
+    %> 
+    %> **Usage:**
+    %>
+    %>    ref = ClothoidCurve()
+    %>    ref = ClothoidCurve( x0, y0, theta0, k0, dk, L )
+    %>
+    %> **On input:**
+    %> - x0, y0: coordinate of initial point
+    %> - theta0: orientation of the clothoid at initial point
+    %> - k0:     curvature of the clothoid at initial point
+    %> - dk:     derivative of curvature respect to arclength
+    %> - L:      length of curve from initial to final point
+    %>
+    %> **On output:**
+    %>
+    %> - ref: reference handle to the object instance
+    %>
     function self = ClothoidCurve( varargin )
-      %% Create a new C++ class instance for the clothoid arc object
-      % Usage:
-      %    ref = ClothoidCurve()
-      %    ref = ClothoidCurve( x0, y0, theta0, k0, dk, L )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    theta0: orientation of the clothoid at initial point
-      %    k0:     curvature of the clothoid at initial point
-      %    dk:     derivative of curvature respect to arclength
-      %    L:      length of curve from initial to final point
-      %
-      %  On output:
-      %    ref: reference handle to the object instance
       self@CurveBase( 'ClothoidCurveMexWrapper' );
       self.objectHandle = ClothoidCurveMexWrapper( 'new', varargin{:} );
     end
@@ -23,35 +28,39 @@ classdef ClothoidCurve < CurveBase
       str = 'ClothoidCurve';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Build the clothoid from known parameters
+    %>
+    %> **Usage:**
+    %>
+    %>    ref.build( x0, y0, theta0, k0, dk, L )
+    %>
+    %> **On input:**
+    %>
+    %> - x0, y0: coordinate of initial point
+    %> - theta0: orientation of the clothoid at initial point
+    %> - k0:     curvature of the clothoid at initial point
+    %> - dk:     derivative of curvature respect to arclength
+    %> - L :     length of curve from initial to final point
+    %>
     function build( self, varargin )
-      %
-      % Build the clothoid from known parameters
-      %
-      % Usage:
-      %    ref.build( x0, y0, theta0, k0, dk, L )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    theta0: orientation of the clothoid at initial point
-      %    k0:     curvature of the clothoid at initial point
-      %    dk:     derivative of curvature respect to arclength
-      %    L :     length of curve from initial to final point
-      %
       ClothoidCurveMexWrapper( 'build', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Build the interpolating G1 clothoid arc
+    %>
+    %> **Usage:**
+    %>
+    %>    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
+    %>
+    %> **On input:**
+    %>
+    %> - x0, y0: coordinate of initial point
+    %> - theta0: orientation of the clothoid at initial point
+    %> - x1, y1: coordinate of final point
+    %> - theta1: orientation of the clothoid at final point
+    %>
     function varargout = build_G1( self, x0, y0, theta0, x1, y1, theta1 )
-      % Build the interpolating G1 clothoid arc
-      %
-      % Usage:
-      %    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    theta0: orientation of the clothoid at initial point
-      %    x1, y1: coordinate of final point
-      %    theta1: orientation of the clothoid at final point
-      %
       if nargout > 1
         [ varargout{1:nargout} ] = ClothoidCurveMexWrapper( ...
           'build_G1_D', self.objectHandle, x0, y0, theta0, x1, y1, theta1 ...
@@ -63,21 +72,24 @@ classdef ClothoidCurve < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Build the interpolating clothoid arc fixing initial position angle and curvature
+    %>
+    %> **Usage:**
+    %>
+    %>    ok = ref.build_forward( x0, y0, theta0, k0, x1, y1 )
+    %>
+    %> **On input:**
+    %>
+    %> - x0, y0: coordinate of initial point
+    %> - theta0: orientation of the clothoid at initial point
+    %> - k0:     curvature of the clothoid at initial point
+    %> - x1, y1: coordinate of final point
+    %>
+    %> **On output:**
+    %>
+    %>    ok: true iff the interpolation was successful
+    %>
     function ok = build_forward( self, x0, y0, theta0, k0, x1, y1 )
-      % Build the interpolating clothoid arc fixing initial position angle and curvature
-      %
-      % Usage:
-      %    ok = ref.build_forward( x0, y0, theta0, k0, x1, y1 )
-      %
-      % On input:
-      %    x0, y0: coordinate of initial point
-      %    theta0: orientation of the clothoid at initial point
-      %    k0:     curvature of the clothoid at initial point
-      %    x1, y1: coordinate of final point
-      %
-      % On output:
-      %    ok: true iff the interpolation was successful
-      %
       ok = ClothoidCurveMexWrapper( ...
         'build_forward', self.objectHandle, x0, y0, theta0, k0, x1, y1 ...
       );
@@ -113,15 +125,18 @@ classdef ClothoidCurve < CurveBase
       res = ClothoidCurveMexWrapper( 'dkappa', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> change the origin of the clothoid curve to curviliear corrdinate `s0`
+    %>
+    %> **Usage:**
+    %>
+    %>    ref.changeOrigin(s0,L)
+    %>
+    %> **On input:**
+    %>
+    %> - s0: curvilinear coordinate of the origin of the new curve
+    %> - L:  nel length of the curve
+    %>
     function changeCurvilinearOrigin( self, s0, L )
-      % change the origin of the clothoid curve to curviliear corrdinate `s0`
-      % Usage:
-      %    ref.changeOrigin(s0,L)
-      %
-      % On input:
-      %    s0: curvilinear coordinate of the origin of the new curve
-      %    L:  nel length of the curve
-      %
       ClothoidCurveMexWrapper( ...
         'changeCurvilinearOrigin', self.objectHandle, s0, L ...
       );
@@ -133,11 +148,13 @@ classdef ClothoidCurve < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> point at infinity
+    %>
+    %> **Usage:**
+    %>
+    %>    P = ref.infinity();
+    %>
     function [xp,yp,xm,ym] = infinity( self )
-      % point at infinity
-      % Usage:
-      %    ref.reverse()
-      %
       [xp,yp,xm,ym] = ClothoidCurveMexWrapper( 'infinity', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

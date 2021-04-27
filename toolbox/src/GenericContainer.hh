@@ -46,7 +46,6 @@
 #ifndef GC_DO_ERROR
   #define GC_DO_ERROR(MSG) {                          \
     std::ostringstream ost;                           \
-    GenericContainerNamespace::backtrace( ost );      \
     ost << "in GenericContainer: " << MSG << '\n';    \
     GenericContainer::exception( ost.str().c_str() ); \
   }
@@ -71,11 +70,9 @@
   #define GC_NO_RETURN
 #endif
 
-namespace GenericContainerNamespace {
+namespace GC_namespace {
 
   typedef std::basic_ostream<char> ostream_type;
-
-  void backtrace( ostream_type & );
 
   #ifndef _MSC_VER
   using std::int32_t;
@@ -170,11 +167,13 @@ namespace GenericContainerNamespace {
   typedef mat_type<complex_type> mat_complex_type;
 
   // ---------------------------------------------------------------------------
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   template <typename TYPE>
   ostream_type & operator << ( ostream_type & s, std::vector<TYPE> const & v );
 
   template <typename TYPE>
   ostream_type & operator << ( ostream_type & s, mat_type<TYPE> const & );
+  #endif
   // ---------------------------------------------------------------------------
 
   //! Type allowed for the `GenericContainer`
@@ -237,30 +236,30 @@ namespace GenericContainerNamespace {
   class GenericContainer {
   public:
     // import type
-    typedef GenericContainerNamespace::pointer_type     pointer_type;
-    typedef GenericContainerNamespace::bool_type        bool_type;
-    typedef GenericContainerNamespace::int_type         int_type;
-    typedef GenericContainerNamespace::uint_type        uint_type;
-    typedef GenericContainerNamespace::long_type        long_type;
-    typedef GenericContainerNamespace::ulong_type       ulong_type;
-    typedef GenericContainerNamespace::real_type        real_type;
-    typedef GenericContainerNamespace::complex_type     complex_type;
-    typedef GenericContainerNamespace::string_type      string_type;
-    typedef GenericContainerNamespace::vec_pointer_type vec_pointer_type;
-    typedef GenericContainerNamespace::vec_bool_type    vec_bool_type;
-    typedef GenericContainerNamespace::vec_int_type     vec_int_type;
-    typedef GenericContainerNamespace::vec_uint_type    vec_uint_type;
-    typedef GenericContainerNamespace::vec_long_type    vec_long_type;
-    typedef GenericContainerNamespace::vec_ulong_type   vec_ulong_type;
-    typedef GenericContainerNamespace::vec_real_type    vec_real_type;
-    typedef GenericContainerNamespace::vec_complex_type vec_complex_type;
-    typedef GenericContainerNamespace::vec_string_type  vec_string_type;
-    typedef GenericContainerNamespace::vector_type      vector_type;
-    typedef GenericContainerNamespace::map_type         map_type;
-    typedef GenericContainerNamespace::mat_int_type     mat_int_type;
-    typedef GenericContainerNamespace::mat_long_type    mat_long_type;
-    typedef GenericContainerNamespace::mat_real_type    mat_real_type;
-    typedef GenericContainerNamespace::mat_complex_type mat_complex_type;
+    typedef GC_namespace::pointer_type     pointer_type;
+    typedef GC_namespace::bool_type        bool_type;
+    typedef GC_namespace::int_type         int_type;
+    typedef GC_namespace::uint_type        uint_type;
+    typedef GC_namespace::long_type        long_type;
+    typedef GC_namespace::ulong_type       ulong_type;
+    typedef GC_namespace::real_type        real_type;
+    typedef GC_namespace::complex_type     complex_type;
+    typedef GC_namespace::string_type      string_type;
+    typedef GC_namespace::vec_pointer_type vec_pointer_type;
+    typedef GC_namespace::vec_bool_type    vec_bool_type;
+    typedef GC_namespace::vec_int_type     vec_int_type;
+    typedef GC_namespace::vec_uint_type    vec_uint_type;
+    typedef GC_namespace::vec_long_type    vec_long_type;
+    typedef GC_namespace::vec_ulong_type   vec_ulong_type;
+    typedef GC_namespace::vec_real_type    vec_real_type;
+    typedef GC_namespace::vec_complex_type vec_complex_type;
+    typedef GC_namespace::vec_string_type  vec_string_type;
+    typedef GC_namespace::vector_type      vector_type;
+    typedef GC_namespace::map_type         map_type;
+    typedef GC_namespace::mat_int_type     mat_int_type;
+    typedef GC_namespace::mat_long_type    mat_long_type;
+    typedef GC_namespace::mat_real_type    mat_real_type;
+    typedef GC_namespace::mat_complex_type mat_complex_type;
 
   private:
 
@@ -2105,7 +2104,7 @@ namespace GenericContainerNamespace {
     vec_string_type const & headers,
     vector_type     const & data,
     ostream_type          & stream,
-    char const delimiter = '\t'
+    char delimiter = '\t'
   );
 
   /*!
@@ -2121,7 +2120,7 @@ namespace GenericContainerNamespace {
     vec_string_type const & headers,
     mat_real_type   const & data,
     ostream_type          & stream,
-    char const delimiter = '\t'
+    char delimiter = '\t'
   );
 
   /*!
@@ -2288,8 +2287,11 @@ namespace GenericContainerNamespace {
 
 // do not define alias GC if use X11
 #ifndef XlibSpecificationRelease
-namespace GC = GenericContainerNamespace;
+namespace GC = GC_namespace;
 #endif
+
+// for backward compatibility
+namespace GenericContainerNamespace = GC_namespace;
 
 #ifdef __clang__
 #pragma clang diagnostic pop

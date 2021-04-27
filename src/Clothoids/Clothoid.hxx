@@ -32,25 +32,25 @@ namespace G2lib {
    |  | |___| | (_) | |_| | | | (_) | | (_| | |__| |_| | |   \ V /  __/
    |   \____|_|\___/ \__|_| |_|\___/|_|\__,_|\____\__,_|_|    \_/ \___|
   \*/
-  /*!
-   * Class to manage Clothoid Curve.
-   * A clothoid curve is described by the following generalized Fresnel integrals
-   *
-   * \f[
-   *   \begin{cases}
-   *      x(s) = x_0 + \displaystyle\int_0^s \cos(as^2+bs+c) \mathrm{d}t \\[1em]
-   *      y(s) = y_0 + \displaystyle\int_0^s \sin(as^2+bs+c) \mathrm{d}t
-   *   \end{cases}
-   * \f]
-   * 
-   * \rst
-   * 
-   *   .. image:: ../../images/G1problem.jpg
-   *      :width: 80%
-   *      :align: center
-   *
-   * \endrst
-   */
+  //!
+  //! Class to manage Clothoid Curve.
+  //! A clothoid curve is described by the following generalized Fresnel integrals
+  //!
+  //! \f[
+  //!   \begin{cases}
+  //!      x(s) = x_0 + \displaystyle\int_0^s \cos(as^2+bs+c) \mathrm{d}t \\[1em]
+  //!      y(s) = y_0 + \displaystyle\int_0^s \sin(as^2+bs+c) \mathrm{d}t
+  //!   \end{cases}
+  //! \f]
+  //!
+  //! \rst
+  //!
+  //!   .. image:: ../../images/G1problem.jpg
+  //!      :width: 80%
+  //!      :align: center
+  //!
+  //! \endrst
+  //!
   class ClothoidCurve : public BaseCurve {
     friend class ClothoidList;
   private:
@@ -166,7 +166,9 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    //! build an empty clothoid curve
+    //!
+    //! Build an empty clothoid curve
+    //!
     ClothoidCurve()
     : BaseCurve(G2LIB_CLOTHOID)
     , m_aabb_done(false)
@@ -179,23 +181,25 @@ namespace G2lib {
       m_L         = 0;
     }
 
-    //! build a copy of an existing clothoid curve
+    //!
+    //! Build a copy of an existing clothoid curve
+    //!
     ClothoidCurve( ClothoidCurve const & s )
     : BaseCurve(G2LIB_CLOTHOID)
     , m_aabb_done(false)
     { copy(s); }
 
-    /*!
-     * Construct a clothoid with the standard parameters
-     *
-     * \param[in] x0     starting position x-coordinate
-     * \param[in] y0     starting position y-coordinate
-     * \param[in] theta0 initial angle
-     * \param[in] k      curvature
-     * \param[in] dk     curvature derivative
-     * \param[in] L      length
-     *
-     */
+    //!
+    //! Construct a clothoid with the standard parameters
+    //!
+    //! \param[in] x0     starting position x-coordinate
+    //! \param[in] y0     starting position y-coordinate
+    //! \param[in] theta0 initial angle
+    //! \param[in] k      curvature
+    //! \param[in] dk     curvature derivative
+    //! \param[in] L      length
+    //!
+    //!
     explicit
     ClothoidCurve(
       real_type x0,
@@ -216,24 +220,24 @@ namespace G2lib {
       m_L         = L;
     }
 
-    /*!
-     * Construct a clothoid \f$ \G(s) \f$ solving the G1 problem
-     *
-     * \f[
-     *   \begin{cases}
-     *     G(0) = \mathbf{p}_0 & \\[1em]
-     *     G(L) = \mathbf{p}_1 & \\[1em]
-     *     G'(0) = (\cos\theta_0,\sin\theta_0)^T & \\[1em]
-     *     G'(L) = (\cos\theta_1,\sin\theta_1)^T & \\[1em]
-     *   \end{cases}
-     * \f]
-     *
-     * \param[in] P0     initial point \f$ \mathbf{p}_0 \f$
-     * \param[in] theta0 initial angle \f$ \theta_0 \f$
-     * \param[in] P1     final point \f$ \mathbf{p}_1 \f$
-     * \param[in] theta1 final angle \f$ \theta_1 \f$
-     *
-     */
+    //!
+    //! Construct a clothoid \f$ \G(s) \f$ solving the G1 problem
+    //!
+    //! \f[
+    //!   \begin{cases}
+    //!     G(0) = \mathbf{p}_0 & \\[1em]
+    //!     G(L) = \mathbf{p}_1 & \\[1em]
+    //!     G'(0) = (\cos\theta_0,\sin\theta_0)^T & \\[1em]
+    //!     G'(L) = (\cos\theta_1,\sin\theta_1)^T & \\[1em]
+    //!   \end{cases}
+    //! \f]
+    //!
+    //! \param[in] P0     initial point \f$ \mathbf{p}_0 \f$
+    //! \param[in] theta0 initial angle \f$ \theta_0 \f$
+    //! \param[in] P1     final point \f$ \mathbf{p}_1 \f$
+    //! \param[in] theta1 final angle \f$ \theta_1 \f$
+    //!
+    //!
     explicit
     ClothoidCurve(
       real_type const * P0,
@@ -247,7 +251,9 @@ namespace G2lib {
       build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 );
     }
 
-    //! build a clothoid copying an existing one
+    //!
+    //! Build a clothoid copying an existing one
+    //!
     void
     copy( ClothoidCurve const & c ) {
       m_CD = c.m_CD;
@@ -256,7 +262,9 @@ namespace G2lib {
       m_aabb_tree.clear();
     }
 
-    //! build a clothoid copying an existing line segment
+    //!
+    //! Build a clothoid copying an existing line segment
+    //!
     explicit
     ClothoidCurve( LineSegment const & LS )
     : BaseCurve(G2LIB_CLOTHOID)
@@ -270,7 +278,9 @@ namespace G2lib {
       m_L         = LS.m_L;
     }
 
-    //! build a clothoid copying an existing circle arc
+    //!
+    //! Build a clothoid copying an existing circle arc
+    //!
     explicit
     ClothoidCurve( CircleArc const & C )
     : BaseCurve(G2LIB_CLOTHOID)
@@ -284,7 +294,9 @@ namespace G2lib {
       m_L         = C.m_L;
     }
 
-    //! build a clothoid copying an existing curve
+    //!
+    //! Build a clothoid copying an existing curve
+    //!
     explicit
     ClothoidCurve( BaseCurve const & C );
 
@@ -298,17 +310,17 @@ namespace G2lib {
      | | '_ \ || | | / _` |
      | |_.__/\_,_|_|_\__,_|
     \*/
-    /*!
-     * Build a clothoid with the standard parameters
-     *
-     * \param[in] x0     starting position x-coordinate
-     * \param[in] y0     starting position y-coordinate
-     * \param[in] theta0 initial angle
-     * \param[in] k      curvature
-     * \param[in] dk     curvature derivative
-     * \param[in] L      length
-     *
-     */
+    //!
+    //! Build a clothoid with the standard parameters
+    //!
+    //! \param[in] x0     starting position x-coordinate
+    //! \param[in] y0     starting position y-coordinate
+    //! \param[in] theta0 initial angle
+    //! \param[in] k      curvature
+    //! \param[in] dk     curvature derivative
+    //! \param[in] L      length
+    //!
+    //!
     void
     build(
       real_type x0,
@@ -319,18 +331,18 @@ namespace G2lib {
       real_type L
     );
 
-    /*!
-     *  build a clothoid by solving the hermite G1 problem
-     *
-     *  \param[in] x0     initial x position \f$ x_0      \f$
-     *  \param[in] y0     initial y position \f$ y_0      \f$
-     *  \param[in] theta0 initial angle      \f$ \theta_0 \f$
-     *  \param[in] x1     final x position   \f$ x_1      \f$
-     *  \param[in] y1     final y position   \f$ y_1      \f$
-     *  \param[in] theta1 final angle        \f$ \theta_1 \f$
-     *  \param[in] tol    tolerance
-     *  \return number of iteration performed
-     */
+    //!
+    //! Build a clothoid by solving the hermite G1 problem
+    //!
+    //! \param[in] x0     initial x position \f$ x_0      \f$
+    //! \param[in] y0     initial y position \f$ y_0      \f$
+    //! \param[in] theta0 initial angle      \f$ \theta_0 \f$
+    //! \param[in] x1     final x position   \f$ x_1      \f$
+    //! \param[in] y1     final y position   \f$ y_1      \f$
+    //! \param[in] theta1 final angle        \f$ \theta_1 \f$
+    //! \param[in] tol    tolerance
+    //! \return number of iteration performed
+    //!
     int
     build_G1(
       real_type x0,
@@ -346,21 +358,21 @@ namespace G2lib {
       return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L );
     }
 
-    /*!
-     *  build a clothoid by solving the hermite G1 problem
-     *
-     *  \param[in]  x0     initial x position \f$ x_0      \f$
-     *  \param[in]  y0     initial y position \f$ y_0      \f$
-     *  \param[in]  theta0 initial angle      \f$ \theta_0 \f$
-     *  \param[in]  x1     final x position   \f$ x_1      \f$
-     *  \param[in]  y1     final y position   \f$ y_1      \f$
-     *  \param[in]  theta1 final angle        \f$ \theta_1 \f$
-     *  \param[out] L_D    derivative of the length \f$ L(\theta_0,\theta_1) \f$ 
-     *  \param[out] k_D    derivative of the curvature \f$ \kappa(\theta_0,\theta_1) \f$ 
-     *  \param[out] dk_D   derivative of the curvature variation \f$ \kappa'(\theta_0,\theta_1) \f$ 
-     *  \param[out] tol = 1e-12
-     *  \return number of iteration performed
-     */
+    //!
+    //! Build a clothoid by solving the hermite G1 problem
+    //!
+    //! \param[in]  x0     initial x position \f$ x_0      \f$
+    //! \param[in]  y0     initial y position \f$ y_0      \f$
+    //! \param[in]  theta0 initial angle      \f$ \theta_0 \f$
+    //! \param[in]  x1     final x position   \f$ x_1      \f$
+    //! \param[in]  y1     final y position   \f$ y_1      \f$
+    //! \param[in]  theta1 final angle        \f$ \theta_1 \f$
+    //! \param[out] L_D    derivative of the length \f$ L(\theta_0,\theta_1) \f$
+    //! \param[out] k_D    derivative of the curvature \f$ \kappa(\theta_0,\theta_1) \f$
+    //! \param[out] dk_D   derivative of the curvature variation \f$ \kappa'(\theta_0,\theta_1) \f$
+    //! \param[out] tol = 1e-12
+    //! \return number of iteration performed
+    //!
     int
     build_G1_D(
       real_type x0,
@@ -381,17 +393,17 @@ namespace G2lib {
       );
     }
 
-    /*!
-     *  build a clothoid by solving the forward problem
-     *
-     *  \param[in] x0     initial x position \f$ x_0      \f$
-     *  \param[in] y0     initial y position \f$ y_0      \f$
-     *  \param[in] theta0 initial angle      \f$ \theta_0 \f$
-     *  \param[in] kappa0 initial curvature  \f$ \kappa_0 \f$
-     *  \param[in] x1     final x position   \f$ x_1      \f$
-     *  \param[in] y1     final y position   \f$ y_1      \f$
-     *  \param[in] tol    tolerance of the forward problem
-     */
+    //!
+    //! Build a clothoid by solving the forward problem
+    //!
+    //! \param[in] x0     initial x position \f$ x_0      \f$
+    //! \param[in] y0     initial y position \f$ y_0      \f$
+    //! \param[in] theta0 initial angle      \f$ \theta_0 \f$
+    //! \param[in] kappa0 initial curvature  \f$ \kappa_0 \f$
+    //! \param[in] x1     final x position   \f$ x_1      \f$
+    //! \param[in] y1     final y position   \f$ y_1      \f$
+    //! \param[in] tol    tolerance of the forward problem
+    //!
     bool
     build_forward(
       real_type x0,
@@ -407,9 +419,9 @@ namespace G2lib {
       return m_CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, m_L );
     }
 
-    /*!
-     *  build a clothoid from a line segment
-     */
+    //!
+    //! Build a clothoid from a line segment
+    //!
     void
     build( LineSegment const & LS ) {
       m_CD.x0     = LS.m_x0;
@@ -422,9 +434,9 @@ namespace G2lib {
       m_aabb_tree.clear();
     }
 
-    /*!
-     *  \brief build a clothoid from a circle arc
-     */
+    //!
+    //! Build a clothoid from a circle arc
+    //!
     void
     build( CircleArc const & C ) {
       m_CD.x0     = C.m_x0;
@@ -437,23 +449,23 @@ namespace G2lib {
       m_aabb_tree.clear();
     }
 
-    /*!
-     *  Return the point at infinity of the clothoids \f$ P(s) \f$
-     *
-     *  \param[out] x    x-coordinate of the infinity point
-     *  \param[out] y    y-coordinate of the infinity point
-     *  \param[out] plus it true return \f$ \lim_{s\to+\infty} P(s) \f$
-     *                   otherwise return \f$ \lim_{s\to-\infty} P(s) \f$
-     *
-     * \rst
-     * 
-     *   .. image:: ../../images/Pinfinity.jpg
-     *      :width: 80%
-     *      :align: center
-     *
-     * \endrst
-     *
-     */
+    //!
+    //!  Return the point at infinity of the clothoids \f$ P(s) \f$
+    //!
+    //!  \param[out] x    x-coordinate of the infinity point
+    //!  \param[out] y    y-coordinate of the infinity point
+    //!  \param[out] plus it true return \f$ \lim_{s\to+\infty} P(s) \f$
+    //!                   otherwise return \f$ \lim_{s\to-\infty} P(s) \f$
+    //!
+    //! \rst
+    //!
+    //!   .. image:: ../../images/Pinfinity.jpg
+    //!      :width: 80%
+    //!      :align: center
+    //!
+    //! \endrst
+    //!
+    //!
     void
     Pinfinity( real_type & x, real_type & y, bool plus = true ) const
     { m_CD.Pinfinity( x, y, plus ); }
@@ -461,72 +473,74 @@ namespace G2lib {
     //! derivative of the curvature of the clothoid
     real_type dkappa() const { return m_CD.dk; }
 
-    /*!
-     * clothoid curve total variation of the angle
-     */
+    //!
+    //! clothoid curve total variation of the angle
+    //!
     real_type
     thetaTotalVariation() const;
 
-    /*!
-     * max and min angle of the curve
-     */
+    //!
+    //! max and min angle of the curve
+    //!
     real_type
     thetaMinMax( real_type & thMin, real_type & thMax ) const;
 
-    /*!
-     * clothoid angle range
-     */
+    //!
+    //! clothoid angle range
+    //!
     real_type
     deltaTheta() const
     { real_type thMin, thMax; return thetaMinMax( thMin, thMax ); }
 
+    //!
     //! max and min of the curvatire of the clothoid curve
+    //!
     real_type
     curvatureMinMax( real_type & kMin, real_type & kMax ) const;
 
-    /*!
-     * clothoid total curvature variation
-     */
+    //!
+    //! clothoid total curvature variation
+    //!
     real_type curvatureTotalVariation() const;
 
-    /*!
-     *  Given the clothoid curve \f$ P(s) \f$ compute
-     *
-     *  \f[
-     *     \int_0^L |P''(s)|^2 \mathrm{d}s
-     *  \f]
-     *
-     */
+    //!
+    //!  Given the clothoid curve \f$ P(s) \f$ compute
+    //!
+    //!  \f[
+    //!     \int_0^L |P''(s)|^2 \mathrm{d}s
+    //!  \f]
+    //!
+    //!
     real_type integralCurvature2() const;
 
-    /*!
-     *  Given the clothoid curve \f$ P(s) \f$ compute
-     *
-     *  \f[
-     *     \int_0^L |P'''(s)|^2 \mathrm{d}s
-     *  \f]
-     *
-     */
+    //!
+    //! Given the clothoid curve \f$ P(s) \f$ compute
+    //!
+    //! \f[
+    //!    \int_0^L |P'''(s)|^2 \mathrm{d}s
+    //! \f]
+    //!
+    //!
     real_type integralJerk2() const;
 
-    /*!
-     *  Given the clothoid curve \f$ P(s) \f$ compute
-     *
-     *  \f[
-     *     \int_0^L |P''''(s)|^2 \mathrm{d}s
-     *  \f]
-     *
-     */
+    //!
+    //! Given the clothoid curve \f$ P(s) \f$ compute
+    //!
+    //! \f[
+    //!    \int_0^L |P''''(s)|^2 \mathrm{d}s
+    //! \f]
+    //!
+    //!
     real_type integralSnap2() const;
 
-    /*!
-     *  Return a vector of optimized sample parameters for plotting.
-     *  
-     *  \param offs      offset of the sampled curve
-     *  \param npts      suggested minimum number of sampled points
-     *  \param max_angle maximum angle variation between two sampled points
-     *  \param s         vector of computed parameters
-     */
+    //!
+    //! Return a vector of optimized sample parameters for plotting.
+    //!
+    //! \param offs      offset of the sampled curve
+    //! \param npts      suggested minimum number of sampled points
+    //! \param max_angle maximum angle variation between two sampled points
+    //! \param s         vector of computed parameters
+    //!
     void
     optimized_sample_ISO(
       real_type                offs,
@@ -535,14 +549,14 @@ namespace G2lib {
       std::vector<real_type> & s
     ) const;
 
-    /*!
-     *  Return a vector of optimized sample parameters for plotting.
-     *  
-     *  \param offs      offset of the sampled curve
-     *  \param npts      suggested minimum number of sampled points
-     *  \param max_angle maximum angle variation between two sampled points
-     *  \param s         vector of computed parameters
-     */
+    //!
+    //! Return a vector of optimized sample parameters for plotting.
+    //!
+    //! \param offs      offset of the sampled curve
+    //! \param npts      suggested minimum number of sampled points
+    //! \param max_angle maximum angle variation between two sampled points
+    //! \param s         vector of computed parameters
+    //!
     void
     optimized_sample_SAE(
       real_type                offs,
@@ -559,22 +573,22 @@ namespace G2lib {
      | / _` | (_-<  _/ _` | ' \/ _/ -_)
      | \__,_|_/__/\__\__,_|_||_\__\___|
     \*/
-    /*!
-     * Compute the point on clothoid at minimal distance from a given point
-     * using the optimized algorithm described in the publication:
-     * 
-     * - **E.Bertolazzi, M.Frego**, Point-Clothoid distance and projection computation
-     *   SIAM J. Scientific Computing, Vol. 41, No. 5, pp. A3326-A3353
-     *
-     * \param  ds sampling step
-     * \param  qx x-coordinate of the given point
-     * \param  qy y-coordinate of the given point
-     * \param  X  x-coordinate of the point on clothoid at minimal distance
-     * \param  Y  y-coordinate of the point on clothoid at minimal distance
-     * \param  S  curvilinear coordinate of the point (X,Y) on the clothoid
-     * \return the distance of the point from the clothoid
-     *
-     */
+    //!
+    //! Compute the point on clothoid at minimal distance from a given point
+    //! using the optimized algorithm described in the publication:
+    //!
+    //! - **E.Bertolazzi, M.Frego**, Point-Clothoid distance and projection computation
+    //!   SIAM J. Scientific Computing, Vol. 41, No. 5, pp. A3326-A3353
+    //!
+    //! \param  ds sampling step
+    //! \param  qx x-coordinate of the given point
+    //! \param  qy y-coordinate of the given point
+    //! \param  X  x-coordinate of the point on clothoid at minimal distance
+    //! \param  Y  y-coordinate of the point on clothoid at minimal distance
+    //! \param  S  curvilinear coordinate of the point (X,Y) on the clothoid
+    //! \return the distance of the point from the clothoid
+    //!
+    //!
     real_type
     closestPointBySample(
       real_type   ds,
@@ -585,17 +599,17 @@ namespace G2lib {
       real_type & S
     ) const;
 
-    /*!
-     * Approximate the point on clothoid at minimal distance from a given point
-     * using simple sampling.
-     *
-     * \param  ds sampling step
-     * \param  qx x-coordinate of the given point
-     * \param  qy y-coordinate of the given point
-     * \param  S  curvilinear coordinate of the point (X,Y) on the clothoid
-     * \return the distance of the point from the clothoid
-     *
-     */
+    //!
+    //! Approximate the point on clothoid at minimal distance from a given point
+    //! using simple sampling.
+    //!
+    //! \param  ds sampling step
+    //! \param  qx x-coordinate of the given point
+    //! \param  qy y-coordinate of the given point
+    //! \param  S  curvilinear coordinate of the point (X,Y) on the clothoid
+    //! \return the distance of the point from the clothoid
+    //!
+    //!
     real_type
     distanceBySample(
       real_type   ds,
@@ -607,16 +621,16 @@ namespace G2lib {
       return closestPointBySample( ds, qx, qy, X, Y, S );
     }
 
-    /*!
-     * Approximate the point on clothoid at minimal distance from a given point
-     * using simple sampling.
-     *
-     * \param  ds sampling step
-     * \param  qx x-coordinate of the given point
-     * \param  qy y-coordinate of the given point
-     * \return the distance of the point from the clothoid
-     *
-     */
+    //!
+    //! Approximate the point on clothoid at minimal distance from a given point
+    //! using simple sampling.
+    //!
+    //! \param  ds sampling step
+    //! \param  qx x-coordinate of the given point
+    //! \param  qy y-coordinate of the given point
+    //! \return the distance of the point from the clothoid
+    //!
+    //!
     real_type
     distanceBySample(
       real_type ds,
@@ -635,7 +649,9 @@ namespace G2lib {
      |                               |___/
     \*/
 
+    //!
     //! get the triangle bounding box (if angle variation less that pi/2)
+    //!
     bool
     bbTriangle(
       real_type & xx0, real_type & yy0,
@@ -645,7 +661,9 @@ namespace G2lib {
       return m_CD.bbTriangle( m_L, xx0, yy0, xx1, yy1, xx2, yy2 );
     }
 
+    //!
     //! get the triangle bounding box (if angle variation less that pi/2)
+    //!
     bool
     bbTriangle_ISO(
       real_type offs,
@@ -656,7 +674,9 @@ namespace G2lib {
       return m_CD.bbTriangle_ISO( m_L, offs, xx0, yy0, xx1, yy1, xx2, yy2 );
     }
 
+    //!
     //! get the triangle bounding box (if angle variation less that pi/2)
+    //!
     bool
     bbTriangle_SAE(
       real_type offs,
@@ -898,40 +918,40 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    /*!
-     * \brief get clothoid angle at curvilinear cooordinate `s`
-     *
-     * \param  s curvilinear cooordinate
-     * \return angle (radiant) at curvilinear cooordinate `s`
-     */
+    //!
+    //! get clothoid angle at curvilinear cooordinate `s`
+    //!
+    //! \param  s curvilinear cooordinate
+    //! \return angle (radiant) at curvilinear cooordinate `s`
+    //!
     real_type
     theta( real_type s ) const override
     { return m_CD.theta(s); }
 
-    /*!
-     * \brief get clothoid angle derivative (=curvature) at curvilinear cooordinate `s`
-     *
-     * \param  s curvilinear cooordinate
-     * \return angle derivative (radiant/s) at curvilinear cooordinate `s`
-     */
+    //!
+    //! get clothoid angle derivative (=curvature) at curvilinear cooordinate `s`
+    //!
+    //! \param  s curvilinear cooordinate
+    //! \return angle derivative (radiant/s) at curvilinear cooordinate `s`
+    //!
     real_type
     theta_D( real_type s ) const override
     { return m_CD.kappa(s); }
 
-    /*!
-     * \brief get clothoid angle second derivative at curvilinear cooordinate `s`
-     *
-     * \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
-     */
+    //!
+    //! Get clothoid angle second derivative at curvilinear cooordinate `s`
+    //!
+    //! \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
+    //!
     real_type
     theta_DD( real_type ) const override
     { return m_CD.dk; }
 
-    /*!
-     * \brief get clothoid angle third derivative at curvilinear cooordinate `s`
-     *
-     * \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
-     */
+    //!
+    //! Get clothoid angle third derivative at curvilinear cooordinate `s`
+    //!
+    //! \return angle third derivative (radiant/s^3) at curvilinear cooordinate `s`
+    //!
     real_type
     theta_DDD( real_type ) const override
     { return 0; }
@@ -953,11 +973,11 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    /*!
-     * \brief clothoid X coordinate at curvilinear coordinate `s`
-     * \param s curvilinear coordinate
-     * \return clothoid X coordinate
-     */
+    //!
+    //! Clothoid X coordinate at curvilinear coordinate `s`
+    //! \param s curvilinear coordinate
+    //! \return clothoid X coordinate
+    //!
     real_type
     X( real_type s ) const override
     { return m_CD.X(s); }
@@ -974,11 +994,11 @@ namespace G2lib {
     X_DDD( real_type s ) const override
     { return m_CD.X_DDD(s); }
 
-    /*!
-     * \brief clothoid Y coordinate at curvilinear coordinate `s`
-     * \param s curvilinear coordinate
-     * \return clothoid Y coordinate
-     */
+    //!
+    //! Clothoid Y coordinate at curvilinear coordinate `s`
+    //! \param s curvilinear coordinate
+    //! \return clothoid Y coordinate
+    //!
     real_type
     Y( real_type s ) const override
     { return m_CD.Y(s); }
@@ -995,12 +1015,12 @@ namespace G2lib {
     Y_DDD( real_type s ) const override
     { return m_CD.Y_DDD(s); }
 
-    /*!
-     * \brief clothoid X coordinate at curvilinear coordinate `s`
-     * \param s    curvilinear coordinate
-     * \param offs lateral offset
-     * \return     clothoid X coordinate
-     */
+    //!
+    //! Clothoid X coordinate at curvilinear coordinate `s`
+    //! \param s    curvilinear coordinate
+    //! \param offs lateral offset
+    //! \return     clothoid X coordinate
+    //!
     real_type
     X_ISO( real_type s, real_type offs ) const override
     { return m_CD.X_ISO(s,offs); }
@@ -1017,12 +1037,12 @@ namespace G2lib {
     X_ISO_DDD( real_type s, real_type offs ) const override
     { return m_CD.X_ISO_DDD(s,offs); }
 
-    /*!
-     * \brief clothoid Y coordinate at curvilinear coordinate `s`
-     * \param s curvilinear coordinate
-     * \param offs lateral offset
-     * \return clothoid Y coordinate
-     */
+    //!
+    //! Clothoid Y coordinate at curvilinear coordinate `s`
+    //! \param s curvilinear coordinate
+    //! \param offs lateral offset
+    //! \return clothoid Y coordinate
+    //!
     real_type
     Y_ISO( real_type s, real_type offs ) const override
     { return m_CD.Y_ISO(s,offs); }
@@ -1160,13 +1180,13 @@ namespace G2lib {
       m_L = s_end - s_begin;
     }
 
-    /*!
-     * change the origin of the clothoid at \f$ s_0 \f$
-     * and the length to  \f$ L \f$
-     *
-     * \param[in] s0   \f$ s_0 \f$
-     * \param[in] newL \f$ L \f$
-     */
+    //! 
+    //! change the origin of the clothoid at \f$ s_0 \f$
+    //! and the length to  \f$ L \f$
+    //! 
+    //! \param[in] s0   \f$ s_0 \f$
+    //! \param[in] newL \f$ L \f$
+    //! 
     void
     changeCurvilinearOrigin( real_type s0, real_type newL ) {
       m_CD.origin_at( s0 );

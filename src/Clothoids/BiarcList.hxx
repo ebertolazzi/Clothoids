@@ -34,17 +34,17 @@ namespace G2lib {
    | | |_) | | (_| | | | (__| |___| \__ \ |_
    | |____/|_|\__,_|_|  \___|_____|_|___/\__|
   \*/
-  /*!
-   * Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
-   *
-   * \rst
-   * 
-   *   .. image:: ../../images/biarc_list.jpg
-   *      :width: 80%
-   *      :align: center
-   *
-   * \endrst
-   */
+  //!
+  //! Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
+  //!
+  //! \rst
+  //!
+  //!   .. image:: ../../images/biarc_list.jpg
+  //!      :width: 80%
+  //!      :align: center
+  //!
+  //! \endrst
+  //!
   class BiarcList : public BaseCurve {
 
     friend class ClothoidList;
@@ -102,7 +102,9 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    //! build an empty biarc spline
+    //!
+    //! Build an empty biarc spline
+    //!
     BiarcList()
     : BaseCurve(G2LIB_BIARC_LIST)
     , m_aabb_done(false)
@@ -114,91 +116,117 @@ namespace G2lib {
       m_aabb_tri.clear();
     }
 
-    //! build a copy of another biarc spline
+    //!
+    //! Build a copy of another biarc spline
+    //!
     BiarcList( BiarcList const & s )
     : BaseCurve(G2LIB_BIARC_LIST)
     , m_aabb_done(false)
     { this->resetLastInterval(); copy(s); }
 
-    //! empty the the biarc list
+    //!
+    //! Empty the the biarc list
+    //!
     void init();
 
-    //! reserve memory for `n` biarcs
+    //!
+    //! Reserve memory for `n` biarcs
+    //!
     void reserve( int_type n );
 
-    //! copy another biarc spline
+    //!
+    //! Copy another biarc spline
+    //!
     void copy( BiarcList const & L );
 
     //! copy another biarc spline
     BiarcList const & operator = ( BiarcList const & s )
     { copy(s); return *this; }
 
-    //! build a biarc list from a line segment
+    //!
+    //! Build a biarc list from a line segment
+    //!
     explicit BiarcList( LineSegment const & LS );
 
-    //! build a biarc list from a single circle arc
+    //!
+    //! Build a biarc list from a single circle arc
+    //!
     explicit BiarcList( CircleArc const & C );
 
-    //! build a biarc list from a single biarc
+    //!
+    //! Build a biarc list from a single biarc
+    //!
     explicit BiarcList( Biarc const & C );
 
-    //! build a biarc list from a single polyline
+    //!
+    //! Build a biarc list from a single polyline
+    //!
     explicit BiarcList( PolyLine const & pl );
 
-    //! build a biarc list from another curve
+    //!
+    //! Build a biarc list from another curve
+    //!
     explicit BiarcList( BaseCurve const & C );
 
-    //! append a line segment to the biarc list (transformed to a degenerate biarc)
+    //!
+    //! Append a line segment to the biarc list (transformed to a degenerate biarc)
+    //!
     void push_back( LineSegment const & c );
 
-    //! append a line circle to the biarc list (transformed to a degenerate biarc)
+    //!
+    //! Append a line circle to the biarc list (transformed to a degenerate biarc)
+    //!
     void push_back( CircleArc const & c );
 
-    //! append a biarc to the biarc list
+    //!
+    //! Append a biarc to the biarc list
+    //!
     void push_back( Biarc const & c );
 
-    //! append a polyline to the biarc list (transformed to a list of degenerate biarc)
+    //!
+    //! Append a polyline to the biarc list (transformed to a list of degenerate biarc)
+    //!
     void push_back( PolyLine const & c );
 
-    /*!
-     * construct a biarc passing from the points
-     * \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
-     * with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
-     * and append the biarc to the tail of biarc list.
-     * The initial point and angle is taken from the tail of the biarc list.
-     *
-     * \param[in] x1      \f$ x_1 \f$
-     * \param[in] y1      \f$ y_1 \f$
-     * \param[in] theta1  \f$ \theta_1 \f$
-     */
+    //!
+    //! Construct a biarc passing from the points
+    //! \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+    //! with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
+    //! and append the biarc to the tail of biarc list.
+    //! The initial point and angle is taken from the tail of the biarc list.
+    //!
+    //! \param[in] x1      \f$ x_1 \f$
+    //! \param[in] y1      \f$ y_1 \f$
+    //! \param[in] theta1  \f$ \theta_1 \f$
+    //!
     void push_back_G1( real_type x1, real_type y1, real_type theta1 );
 
-    /*!
-     * construct a biarc passing from the points
-     * \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
-     * with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
-     * and append the biarc to the tail of biarc list.
-     *
-     * \param[in] x0      \f$ x_0 \f$
-     * \param[in] y0      \f$ y_0 \f$
-     * \param[in] theta0  \f$ \theta_0 \f$
-     * \param[in] x1      \f$ x_1 \f$
-     * \param[in] y1      \f$ y_1 \f$
-     * \param[in] theta1  \f$ \theta_1 \f$
-     */
+    //!
+    //! Construct a biarc passing from the points
+    //! \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+    //! with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
+    //! and append the biarc to the tail of biarc list.
+    //!
+    //! \param[in] x0      \f$ x_0 \f$
+    //! \param[in] y0      \f$ y_0 \f$
+    //! \param[in] theta0  \f$ \theta_0 \f$
+    //! \param[in] x1      \f$ x_1 \f$
+    //! \param[in] y1      \f$ y_1 \f$
+    //! \param[in] theta1  \f$ \theta_1 \f$
+    //!
     void
     push_back_G1(
       real_type x0, real_type y0, real_type theta0,
       real_type x1, real_type y1, real_type theta1
     );
 
-    /*!
-     * construct a biarc list passing to the points \f$ (x_i,y_i) \f$.
-     *
-     * \param[in] n number of points
-     * \param[in] x x-coordinates
-     * \param[in] y y-coordinates
-     */
+    //!
+    //! Construct a biarc list passing to the points \f$ (x_i,y_i) \f$.
+    //!
+    //! \param[in] n number of points
+    //! \param[in] x x-coordinates
+    //! \param[in] y y-coordinates
+    //!
     bool
     build_G1(
       int_type          n,
@@ -206,15 +234,15 @@ namespace G2lib {
       real_type const * y
     );
 
-    /*!
-     * construct a biarc list passing to the points \f$ (x_i,y_i) \f$
-     * with angles  \f$ \theta_i \f$
-     *
-     * \param[in] n     number of points
-     * \param[in] x     x-coordinates
-     * \param[in] y     y-coordinates
-     * \param[in] theta angles at nodes
-     */
+    //!
+    //! Construct a biarc list passing to the points \f$ (x_i,y_i) \f$
+    //! with angles  \f$ \theta_i \f$
+    //!
+    //! \param[in] n     number of points
+    //! \param[in] x     x-coordinates
+    //! \param[in] y     y-coordinates
+    //! \param[in] theta angles at nodes
+    //!
     bool
     build_G1(
       int_type          n,
@@ -223,16 +251,24 @@ namespace G2lib {
       real_type const * theta
     );
 
-    //! get the `idx`-th biarc
+    //!
+    //! Get the `idx`-th biarc
+    //!
     Biarc const & get( int_type idx ) const;
 
-    //! get the biarc that contain the curvilinear coordinate `s`
+    //!
+    //! Get the biarc that contain the curvilinear coordinate `s`
+    //!
     Biarc const & getAtS( real_type s ) const;
 
-    //! return the number of biarc in the biarc list
+    //!
+    //! Return the number of biarc in the biarc list
+    //!
     int_type numSegment() const { return int_type(m_biarcList.size()); }
 
-    //! get the of the biarc that contain the curvilinear coordinate `s`
+    //!
+    //! Get the of the biarc that contain the curvilinear coordinate `s`
+    //!
     int_type findAtS( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -240,11 +276,15 @@ namespace G2lib {
     real_type length() const override;
     real_type length_ISO( real_type offs ) const override;
 
-    //! the length of the `nseg`-th biarc
+    //!
+    //! The length of the `nseg`-th biarc
+    //!
     real_type
     segment_length( int_type nseg ) const;
 
-    //! the length of the `nseg`-th biarc with offset `offs`
+    //!
+    //! The length of the `nseg`-th biarc with offset `offs`
+    //!
     real_type
     segment_length_ISO( int_type nseg, real_type offs ) const;
 
@@ -283,13 +323,13 @@ namespace G2lib {
     ) const override;
 
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    /*!
-     * Build the internal AABB tree of the biarc list with offset (ISO)
-     *
-     * \param[out] offs      curve offset
-     * \param[out] max_angle maximum angle variation of the arc covered by a triangle
-     * \param[out] max_size  maximum admissible size of the covering tirnagles
-     */
+    //!
+    //! Build the internal AABB tree of the biarc list with offset (ISO)
+    //!
+    //! \param[out] offs      curve offset
+    //! \param[out] max_angle maximum angle variation of the arc covered by a triangle
+    //! \param[out] max_size  maximum admissible size of the covering tirnagles
+    //!
     void
     build_AABBtree_ISO(
       real_type offs,
@@ -297,13 +337,13 @@ namespace G2lib {
       real_type max_size  = 1e100
     ) const;
 
-    /*!
-     * Build the internal AABB tree of the biarc list with offset (SAE)
-     *
-     * \param[out] offs      curve offset
-     * \param[out] max_angle maximum angle variation of the arc covered by a triangle
-     * \param[out] max_size  maximum admissible size of the covering tirnagles
-     */
+    //!
+    //! Build the internal AABB tree of the biarc list with offset (SAE)
+    //!
+    //! \param[out] offs      curve offset
+    //! \param[out] max_angle maximum angle variation of the arc covered by a triangle
+    //! \param[out] max_size  maximum admissible size of the covering tirnagles
+    //!
     void
     build_AABBtree_SAE(
       real_type offs,
@@ -652,14 +692,14 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, BiarcList const & CL );
 
-    /*!
-     * Return the biarc as a list of nodes angles and curvatures
-     *
-     * \param[out] s     nodes
-     * \param[out] theta angles
-     * \param[out] kappa curvature
-     *
-     */
+    //!
+    //! Return the biarc as a list of nodes angles and curvatures
+    //!
+    //! \param[out] s     nodes
+    //! \param[out] theta angles
+    //! \param[out] kappa curvature
+    //!
+    //!
     void
     getSTK(
       real_type * s,
@@ -667,27 +707,27 @@ namespace G2lib {
       real_type * kappa
     ) const;
 
-    /*!
-     * Return the biarc XY nodes
-     *
-     * \param[out] x x-nodes
-     * \param[out] y y-nodes
-     *
-     */
+    //!
+    //! Return the biarc XY nodes
+    //!
+    //! \param[out] x x-nodes
+    //! \param[out] y y-nodes
+    //!
+    //!
     void
     getXY( real_type * x, real_type * y ) const;
 
-    /*!
-     *  \brief Find parametric coordinate.
-     *
-     *  \param  x    x-coordinate point
-     *  \param  y    y-coordinate point
-     *  \param  s    value \f$ s \f$
-     *  \param  t    value \f$ t \f$
-     *  \return idx  the segment with point at minimal distance, otherwise
-     *               -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-     *
-     */
+    //!
+    //! Find parametric coordinate.
+    //!
+    //! \param  x    x-coordinate point
+    //! \param  y    y-coordinate point
+    //! \param  s    value \f$ s \f$
+    //! \param  t    value \f$ t \f$
+    //! \return idx  the segment with point at minimal distance, otherwise
+    //!              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+    //!
+    //!
     int_type
     findST1(
       real_type   x,
@@ -696,18 +736,18 @@ namespace G2lib {
       real_type & t
     ) const;
 
-    /*!
-     *  \brief Find parametric coordinate.
-     *
-     *  \param  ibegin initial segment to compute the distance
-     *  \param  iend   final segment to compute the distance
-     *  \param  x      x-coordinate point
-     *  \param  y      y-coordinate point
-     *  \param  s      value \f$ s \f$
-     *  \param  t      value \f$ t \f$
-     *  \return idx    the segment with point at minimal distance, otherwise
-     *                 -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-     */
+    //!
+    //! Find parametric coordinate.
+    //!
+    //! \param  ibegin initial segment to compute the distance
+    //! \param  iend   final segment to compute the distance
+    //! \param  x      x-coordinate point
+    //! \param  y      y-coordinate point
+    //! \param  s      value \f$ s \f$
+    //! \param  t      value \f$ t \f$
+    //! \return idx    the segment with point at minimal distance, otherwise
+    //!                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+    //!
     int_type
     findST1(
       int_type    ibegin,
@@ -730,13 +770,13 @@ namespace G2lib {
     bool
     collision( BiarcList const & C ) const;
 
-    /*!
-     * detect a collision with another biarc list with offset
-     *
-     * \param[in] offs   offset of first biarc
-     * \param[in] CL     second biarc
-     * \param[in] offs_C offset of second biarc
-     */
+    //!
+    //! Detect a collision with another biarc list with offset
+    //!
+    //! \param[in] offs   offset of first biarc
+    //! \param[in] CL     second biarc
+    //! \param[in] offs_C offset of second biarc
+    //!
     bool
     collision_ISO(
       real_type         offs,
@@ -752,14 +792,14 @@ namespace G2lib {
      |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
     \*/
 
-    /*!
-     * intersect a biarc list with another biarc list
-     *
-     * \param[in]  CL          second biarc
-     * \param[out] ilist       list of the intersection (as parameter on the curves)
-     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-     *                         intersection
-     */
+    //!
+    //! intersect a biarc list with another biarc list
+    //!
+    //! \param[in]  CL          second biarc
+    //! \param[out] ilist       list of the intersection (as parameter on the curves)
+    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+    //!                         intersection
+    //!
     void
     intersect(
       BiarcList const & CL,
@@ -769,16 +809,16 @@ namespace G2lib {
       intersect_ISO( 0, CL, 0, ilist, swap_s_vals );
     }
 
-    /*!
-     * intersect a biarc list with another biarc list with offset (ISO)
-     *
-     * \param[in]  offs        offset of first biarc
-     * \param[in]  CL          second biarc
-     * \param[in]  offs_obj    offset of second biarc
-     * \param[out] ilist       list of the intersection (as parameter on the curves)
-     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-     *                         intersection
-     */
+    //!
+    //! Intersect a biarc list with another biarc list with offset (ISO)
+    //!
+    //! \param[in]  offs        offset of first biarc
+    //! \param[in]  CL          second biarc
+    //! \param[in]  offs_obj    offset of second biarc
+    //! \param[out] ilist       list of the intersection (as parameter on the curves)
+    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+    //!                         intersection
+    //!
     void
     intersect_ISO(
       real_type         offs,
