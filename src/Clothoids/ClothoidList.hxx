@@ -35,25 +35,29 @@ namespace G2lib {
 
 
   //!
-  //! Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+  //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
   //! two clothoids arc that solve the G2 problem
   //!
   //! \f[
-  //!   \textrm{endpoints:}\quad
-  //!   \begin{cases}
-  //!     G(0) = \mathbf{p}_0 & \\
-  //!     G(L) = \mathbf{p}_1 &
-  //!   \end{cases}
-  //!   \qquad\textrm{angles:}\quad
-  //!   \begin{cases}
-  //!     \theta(0) = \theta_0 & \\
-  //!     \theta(L) = \theta_1 &
-  //!   \end{cases}
-  //!   \qquad\textrm{curvature:}\quad
-  //!   \begin{cases}
-  //!     \kappa(0) = \kappa_0 & \\
-  //!     \kappa(L)  = \kappa_1 &
-  //!   \end{cases}
+  //! \begin{array}{ll}
+  //! \textrm{endpoints:}\quad &
+  //! \begin{cases}
+  //!   G(0) = \mathbf{p}_0 & \\[0.5em]
+  //!   G(L) = \mathbf{p}_1 &
+  //! \end{cases}
+  //! \\[1em]
+  //! \textrm{angles:}\quad &
+  //! \begin{cases}
+  //!   \theta(0) = \theta_0 & \\[0.5em]
+  //!   \theta(L) = \theta_1 &
+  //! \end{cases}
+  //! \\[1em]
+  //! \textrm{curvature:}\quad &
+  //! \begin{cases}
+  //!   \kappa(0) = \kappa_0 & \\[0.5em]
+  //!   \kappa(L) = \kappa_1 &
+  //! \end{cases}
+  //! \end{array}
   //! \f]
   //!
   //! **note**
@@ -163,7 +167,7 @@ namespace G2lib {
     ~G2solve2arc() {}
 
     //!
-    //! Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+    //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
     //! two clothoids arc that solve the G2 problem, with data
     //!
     //! \f[ \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T \f]
@@ -178,7 +182,6 @@ namespace G2lib {
     //! \param[in] theta1 \f$ \theta_1 \f$
     //! \param[in] kappa1 \f$ \kappa_1 \f$
     //! \return number of iterations of -1 if failed
-    //!
     //!
     int
     build(
@@ -224,25 +227,29 @@ namespace G2lib {
   \*/
 
   //!
-  //! Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+  //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
   //! 2 clothoid and one line segment that solve the G2 problem
   //!
   //! \f[
-  //!   \textrm{endpoints:}\quad
-  //!   \begin{cases}
-  //!     G(0) = \mathbf{p}_0 & \\
-  //!     G(L) = \mathbf{p}_1 &
-  //!   \end{cases}
-  //!   \qquad\textrm{angles:}\quad
-  //!   \begin{cases}
-  //!     \theta(0) = \theta_0 & \\
-  //!     \theta(L) = \theta_1 &
-  //!   \end{cases}
-  //!   \qquad\textrm{curvature:}\quad
-  //!   \begin{cases}
-  //!     \kappa(0) = \kappa_0 & \\
-  //!     \kappa(L)  = \kappa_1 &
-  //!   \end{cases}
+  //! \begin{array}{ll}
+  //! \textrm{endpoints:}\quad &
+  //! \begin{cases}
+  //!   G(0) = \mathbf{p}_0 & \\[0.5em]
+  //!   G(L) = \mathbf{p}_1 &
+  //! \end{cases}
+  //! \\[1em]
+  //! \textrm{angles:}\quad &
+  //! \begin{cases}
+  //!   \theta(0) = \theta_0 & \\[0.5em]
+  //!   \theta(L) = \theta_1 &
+  //! \end{cases}
+  //! \\[1em]
+  //! \textrm{curvature:}\quad &
+  //! \begin{cases}
+  //!   \kappa(0) = \kappa_0 & \\[0.5em]
+  //!   \kappa(L)  = \kappa_1 &
+  //! \end{cases}
+  //! \end{array}
   //! \f]
   //!
   //! **note**
@@ -302,7 +309,7 @@ namespace G2lib {
     ~G2solveCLC() {}
 
     //!
-    //! Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+    //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
     //! two clothoids and one line segment that solve the G2 problem, with data
     //!
     //! \f[ \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T \f]
@@ -317,7 +324,6 @@ namespace G2lib {
     //! \param[in] theta1 \f$ \theta_1 \f$
     //! \param[in] kappa1 \f$ \kappa_1 \f$
     //! \return number of iterations of -1 if failed
-    //!
     //!
     int
     build(
@@ -369,27 +375,31 @@ namespace G2lib {
   \*/
 
   //!
-  //! Construct a piecewise clothoids \f$ \G(s) \f$ composed by
+  //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
   //! 3 clothoid and one line segment that solve the G2 problem
   //!
   //! **match**
   //!
   //! \f[
-  //!   \textrm{endpoints:}\quad
-  //!   \begin{cases}
-  //!     G(0) = \mathbf{p}_0 & \\
-  //!     G(L) = \mathbf{p}_1 &
-  //!   \end{cases}
-  //!   \qquad\textrm{angles:}\quad
-  //!   \begin{cases}
-  //!     \theta(0) = \theta_0 & \\
-  //!     \theta(L) = \theta_1 &
-  //!   \end{cases}
-  //!   \qquad\textrm{curvature:}\quad
-  //!   \begin{cases}
-  //!     \kappa(0) = \kappa_0 & \\
-  //!     \kappa(L)  = \kappa_1 &
-  //!   \end{cases}
+  //! \begin{array}{ll}
+  //! \textrm{endpoints:}\quad&
+  //! \begin{cases}
+  //!   G(0) = \mathbf{p}_0 & \\[0.5em]
+  //!   G(L) = \mathbf{p}_1 &
+  //! \end{cases}
+  //! \\[1em]
+  //! \textrm{angles:}\quad&
+  //! \begin{cases}
+  //!   \theta(0) = \theta_0 & \\[0.5em]
+  //!   \theta(L) = \theta_1 &
+  //! \end{cases}
+  //! \\[1em]
+  //! \textrm{curvature:}\quad&
+  //! \begin{cases}
+  //!   \kappa(0) = \kappa_0 & \\[0.5em]
+  //!   \kappa(L)  = \kappa_1 &
+  //! \end{cases}
+  //! \end{array}
   //! \f]
   //!
   //! **Reference**
@@ -803,7 +813,7 @@ namespace G2lib {
    |
   \*/
   //!
-  //! Manage a piecewise clothoids \f$ \G(s) \f$ composed by
+  //! Manage a piecewise clothoids \f$ G(s) \f$ composed by
   //! n clothoids (not necessarily G2 or G1 connected)
   //!
   //! \rst

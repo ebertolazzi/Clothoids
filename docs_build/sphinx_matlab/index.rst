@@ -1,15 +1,23 @@
-.. Splines documentation master file, created by
-   sphinx-quickstart on Fri Mar 19 01:43:44 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. rst-class:: emphasize-children
 
-Splines MATLAB interface
-========================
+.. rst-class:: html-toggle
 
-Splines is a set of C++ classes (with MATLAB mex interface)
-which implements various spline interpolation.
+G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
+==========================================================================
+
+**by Enrico Bertolazzi and Marco Frego**
+
+`Github repository <https://github.com/ebertolazzi/Clothoids>`__
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   api-matlab/library_root.rst
+    readme.rst
+    api-cpp/root.rst
+    api-matlab/root.rst
+    Matlab_manual.rst
+
+License
+-------
+
+.. literalinclude:: ../../License.txt

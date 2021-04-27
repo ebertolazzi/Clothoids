@@ -6,8 +6,7 @@ Clothoids
 G1 and G2 fitting with clothoids, spline of clothods, circle arc and
 biarc
 
-*by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and
-Marco Frego (marco.frego@unibz.it)
+*by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and Marco Frego (marco.frego@unibz.it)*
 
 for the documentation see `online documentation <http://ebertolazzi.github.io/Clothoids/>`__
 

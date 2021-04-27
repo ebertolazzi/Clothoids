@@ -1,40 +1,30 @@
 # -*- coding: utf-8 -*-
-
-# pip3 install exhale
-# pip3 install breathe
-# pip3 install m2r2
-# pip3 install sphinxcontrib-email
-# pip3 install cloud_sptheme
-
 import os
+from pathlib import Path
 
 # -- Project information -----------------------------------------------------
 exec(open("../project_common.py").read())
 
-#from project_common import *
 
-# Setup the breathe extension
-breathe_projects        = { project+"_matlab": "../xml-matlab" }
-breathe_default_project = project+"_matlab"
+rst_prolog = ".. |xml| replace:: %s\n" % (project)
 
-extensions.append('exhale');
 extensions.append('breathe');
+extensions.append('exhale');
 
-# Setup the exhale extension
-exhale_args = {
-  # These arguments are required
-  "containmentFolder":     "./api-matlab",
-  "rootFileName":          "library_root.rst",
-  "rootFileTitle":         "MATLAB API",
-  "doxygenStripFromPath":  "..",
-  # Suggested optional arguments
-  "createTreeView":        True,
-  # TIP: if using the sphinx-bootstrap-theme, you need
-  "treeViewIsBootstrap":   False,
-  "exhaleExecutesDoxygen": True,
-  #"exhaleDoxygenStdin":    "INPUT = ../../src"
-  "exhaleDoxygenStdin":
-'''
+breathe_projects = {
+  "doc_matlab": "_doxygen/"+"doc_matlab/xml-matlab",
+  "doc_cpp":    "_doxygen/"+"doc_cpp/xml-cpp",
+}
+
+breathe_default_project = "doc_matlab"
+
+dir_path_cpp = os.path.dirname(os.path.realpath(__file__))+"../../../src"
+dir_path_cpp = Path(dir_path_cpp).resolve()
+
+dir_path_matlab = os.path.dirname(os.path.realpath(__file__))+"../../../toolbox/lib"
+dir_path_matlab = Path(dir_path_matlab).resolve()
+
+doxygen_common_stdin = """
         EXTRACT_ALL         = YES
         SOURCE_BROWSER      = YES
         EXTRACT_STATIC      = YES
@@ -43,9 +33,7 @@ exhale_args = {
         GRAPHICAL_HIERARCHY = YES
         HAVE_DOT            = YES
         QUIET               = NO
-        INPUT               = ../../toolbox/lib
         GENERATE_TREEVIEW   = YES
-        XML_OUTPUT          = xml-matlab
         SHORT_NAMES         = YES
         IMAGE_PATH          = ../images
 
@@ -60,13 +48,50 @@ exhale_args = {
         INLINE_INHERITED_MEMB = YES
         EXTRACT_PRIVATE       = YES
         PREDEFINED           += protected=private
-        EXTENSION_MAPPING     = .m=C++
-        FILE_PATTERNS         = *.m
-        FILTER_PATTERNS       = *.m=./m2cpp.pl
         GENERATE_HTML         = NO
-''',
-  "lexerMapping": { r".*\.m": "MATLAB" }
+"""
+
+exhale_projects_args = {
+  # Third Party Project Includes
+  "doc_matlab": {
+    'verboseBuild':          True,
+    "rootFileName":          "root.rst",
+    "createTreeView":        True,
+    "exhaleExecutesDoxygen": True,
+    "doxygenStripFromPath":  str(dir_path_matlab),
+    "exhaleDoxygenStdin":   '''
+        INPUT               = ../../toolbox/lib
+        PREDEFINED         += protected=private
+        XML_OUTPUT          = xml-matlab
+        EXTENSION_MAPPING   = .m=C++
+        FILE_PATTERNS       = *.m
+        FILTER_PATTERNS     = *.m=./m2cpp.pl
+'''+doxygen_common_stdin,
+    "containmentFolder":    os.path.realpath('./api-matlab'),
+    "rootFileTitle":        "MATLAB API",
+    "lexerMapping": { r".*\.m": "MATLAB" }
+  },
+
+  "doc_cpp": {
+    'verboseBuild':          True,
+    "rootFileName":          "root.rst",
+    "createTreeView":        True,
+    "exhaleExecutesDoxygen": True,
+    "doxygenStripFromPath":  str(dir_path_cpp),
+    "exhaleDoxygenStdin":   '''
+        INPUT               = ../../src
+        PREDEFINED         += protected=private
+        XML_OUTPUT          = xml-cpp
+'''+doxygen_common_stdin,
+    "containmentFolder":    os.path.realpath('./api-cpp'),
+    "rootFileTitle":        "C++ API",
+  }
 }
 
-html_theme_options['logotarget'] = "../index"
-html_theme_options['roottarget'] = "../index"
+cpp_index_common_prefix = ['Clothoids::']
+
+# If false, no module index is generated.
+html_domain_indices = True
+
+# If false, no index is generated.
+html_use_index = True

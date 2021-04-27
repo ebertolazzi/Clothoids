@@ -6,19 +6,24 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clothoids &#8212; Clothoids v2.0.5
 </title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
 
     
     
@@ -36,9 +41,10 @@
         <script src="_static/cloud.js"></script>
     
 
+    <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Matlab Usage" href="Matlab_interface.html" />
-    <link rel="prev" title="Clothoids" href="index.html" /> 
+    <link rel="next" title="C++ API" href="api-cpp/root.html" />
+    <link rel="prev" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc" href="index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head><body>
     <div class="relbar-top">
@@ -47,13 +53,16 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="index.html" title="Table Of Contents"
-             accesskey="C">toc</a></li>
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Matlab_interface.html" title="Matlab Usage"
+          <a href="genindex2.html" title="MATLAB index"
+             >MATLAB index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="api-cpp/root.html" title="C++ API"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="index.html" title="Clothoids"
+          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">Clothoids</a> &#187;</li>
 
@@ -68,32 +77,15 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="clothoids">
+  <div class="section" id="clothoids">
 <h1>Clothoids<a class="headerlink" href="#clothoids" title="Permalink to this headline">¶</a>
 </h1>
 <p><a class="reference external" href="https://travis-ci.org/ebertolazzi/Clothoids"><img alt="Build Status" src="https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master"></a> <a class="reference external" href="https://it.mathworks.com/matlabcentral/fileexchange/64849-ebertolazzi-clothoids"><img alt="View ebertolazzi/Clothoids on File Exchange" src="https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg"></a></p>
 <p>G1 and G2 fitting with clothoids, spline of clothods, circle arc and
 biarc</p>
-<p><a href="#id1"><span class="problematic" id="id2">*</span></a>by Enrico Bertolazzi (<script type="text/javascript">document.write(
-    "<n pynff=\"ersrerapr rkgreany\" uers=\"znvygb:raevpb\056oregbynmmv%40havga\056vg\">raevpb<fcna>\056<\057fcna>oregbynmmv<fcna>\100<\057fcna>havga<fcna>\056<\057fcna>vg<\057n>".replace(/[a-zA-Z]/g,
-        function(c){
-            return String.fromCharCode(
-                (c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26
-            );
-        }
-    )
-);</script>) and
-Marco Frego (<script type="text/javascript">document.write(
-    "<n pynff=\"ersrerapr rkgreany\" uers=\"znvygb:znepb\056sertb%40havom\056vg\">znepb<fcna>\056<\057fcna>sertb<fcna>\100<\057fcna>havom<fcna>\056<\057fcna>vg<\057n>".replace(/[a-zA-Z]/g,
-        function(c){
-            return String.fromCharCode(
-                (c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26
-            );
-        }
-    )
-);</script>)</p>
+<p><em>by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and Marco Frego (marco.frego@unibz.it)</em></p>
 <p>for the documentation see <a class="reference external" href="http://ebertolazzi.github.io/Clothoids/">online documentation</a></p>
-<section id="installation">
+<div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a>
 </h2>
 <p>Download the library</p>
@@ -146,8 +138,8 @@ rake build_win   <span class="c1"># on windows</span>
 </pre></div>
 </div>
 <p>where OSTYPE can be <code class="docutils literal notranslate"><span class="pre">linux</span></code>, <code class="docutils literal notranslate"><span class="pre">osx</span></code>, <code class="docutils literal notranslate"><span class="pre">mingw_x64</span></code>, <code class="docutils literal notranslate"><span class="pre">win_x64</span></code></p>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a>
 </h2>
 <ol class="arabic">
@@ -189,8 +181,8 @@ curvature continuity</strong>,</div>
 </div>
 </li>
 </ol>
-</section>
-</section>
+</div>
+</div>
 
 
 
@@ -221,9 +213,9 @@ curvature continuity</strong>,</div>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Matlab_interface.html">Matlab Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-matlab/root.html">MATLAB API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Matlab_manual.html">Matlab Interface Manual</a></li>
 </ul>
 </div>
         </div>
@@ -253,13 +245,16 @@ curvature continuity</strong>,</div>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="index.html" title="Table Of Contents"
-             >toc</a></li>
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
         <li class="right" >
-          <a href="Matlab_interface.html" title="Matlab Usage"
+          <a href="genindex2.html" title="MATLAB index"
+             >MATLAB index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="api-cpp/root.html" title="C++ API"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="index.html" title="Clothoids"
+          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
              >previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">Clothoids</a> &#187;</li>
 
@@ -270,7 +265,7 @@ curvature continuity</strong>,</div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

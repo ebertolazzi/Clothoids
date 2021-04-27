@@ -1,17 +1,21 @@
-INDEX = ./sphinx/_build/html/genindex.html
+FROMCPP    = ./sphinx_cpp/api-cpp/
+FROMMATLAB = ./sphinx_matlab/api-matlab/
+TOCPP      = ./sphinx/api-cpp/
+TOMATLAB   = ./sphinx/api-matlab/
 
 build:
 	make clean
-	@cd sphinx_cpp;    make html; cd ..
-	@cd sphinx_matlab; make html; cd ..
-	@cd sphinx;        make html; cd ..
-	@cp -rf sphinx_cpp/_build/html    sphinx/_build/html/api-cpp
-	@cd sphinx_matlab; ruby filter.rb; cd ..
-	@cp -rf sphinx_matlab/_build/html sphinx/_build/html/api-matlab
+	@cd sphinx; make html; cd ..
+	@cd sphinx_matlab; make html; ruby filter.rb; cd ..
 	@make install
 
 install:
-	@cd sphinx; rm -rf ../../docs/*; cp -a _build/html/. ../../docs; cd ..
+	@mv sphinx/_build/html/api-matlab/root.html sphinx/root.html
+	@rm -rf sphinx/_build/html/api-matlab
+	@cp -rf sphinx_matlab/_build/html/api-matlab sphinx/_build/html/api-matlab
+	@cp -f sphinx/root.html sphinx/_build/html/api-matlab/root.html
+	@cp -rf sphinx_matlab/_build/html/genindex.html sphinx/_build/html/genindex2.html
+	@rm -rf ../docs/*; cp -a sphinx/_build/html/. ../docs
 
 clean:
 	@rm -rf xml
@@ -19,6 +23,5 @@ clean:
 	@rm -rf xml-matlab
 	@rm -rf sphinx*/api-*
 	@rm -rf sphinx*/_build
-	@cd sphinx_cpp;    make clean; cd ..
 	@cd sphinx_matlab; make clean; cd ..
 	@cd sphinx;        make clean; cd ..

@@ -20,7 +20,7 @@ T1 = Triangle2D( x0, y0, x1, y1, x2, y2 );
 x0 = 0; y0 = 0;
 x1 = 6; y1 = 0;
 x2 = 6; y2 = 3;
-T2 = Triangle2D( x0, y0, x1, y1, x2, y2 );
+T2 = Triangle2D( x0, y0, x2, y2, x1, y1 );
 
 fmt1 = {'EdgeColor','red','Linewidth',2};
 fmt2 = {'EdgeColor','green','Linewidth',2};
