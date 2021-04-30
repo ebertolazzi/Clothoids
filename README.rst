@@ -3,7 +3,7 @@ Clothoids
 
 |Build Status| |View ebertolazzi/Clothoids on File Exchange|
 
-G1 and G2 fitting with clothoids, spline of clothods, circle arc and
+G1 and G2 fitting with clothoids, spline of clothoids, circle arc and
 biarc
 
 *by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and Marco Frego (marco.frego@unibz.it)*
