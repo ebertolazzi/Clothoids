@@ -32,6 +32,10 @@ def exhale_environment_ready(app):
     print("="*75)
 
     saved_exhale_environment_ready( app )
+
+    dir = app.config.exhale_args["containmentFolder"];
+    os.system("ruby ../filter_exhale_breathe.rb %s %s" % (dir, project));
+
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
   app.config.breathe_default_project = breathe_default_project
@@ -110,7 +114,7 @@ html_use_smartypants = True
 ##html_sidebars = {'**': ['searchbox.html', 'globaltoc.html']}
 html_sidebars = { '**': ['searchbox.html', 'globaltoc.html'] }
 
-relbar_links = [("genindex2","MATLAB index")]
+# relbar_links = [("genindex2","MATLAB index")]
 
 # If false, no module index is generated.
 # html_domain_indices = False
