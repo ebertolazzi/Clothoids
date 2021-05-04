@@ -5,19 +5,24 @@ classdef ClothoidCurve < CurveBase
     %> 
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref = ClothoidCurve()
     %>    ref = ClothoidCurve( x0, y0, theta0, k0, dk, L )
     %>
+    %> \endrst
+    %>
     %> **On input:**
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the clothoid at initial point
-    %> - k0:     curvature of the clothoid at initial point
-    %> - dk:     derivative of curvature respect to arclength
-    %> - L:      length of curve from initial to final point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the clothoid at initial point
+    %> - `k0`:       curvature of the clothoid at initial point
+    %> - `dk`:       derivative of curvature respect to arclength
+    %> - `L`:        length of curve from initial to final point
     %>
     %> **On output:**
     %>
-    %> - ref: reference handle to the object instance
+    %> - `ref`: reference handle to the object instance
     %>
     function self = ClothoidCurve( varargin )
       self@CurveBase( 'ClothoidCurveMexWrapper' );
@@ -33,15 +38,20 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref.build( x0, y0, theta0, k0, dk, L )
+    %>
+    %> \endrst
     %>
     %> **On input:**
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the clothoid at initial point
-    %> - k0:     curvature of the clothoid at initial point
-    %> - dk:     derivative of curvature respect to arclength
-    %> - L :     length of curve from initial to final point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the clothoid at initial point
+    %> - `k0`:       curvature of the clothoid at initial point
+    %> - `dk`:       derivative of curvature respect to arclength
+    %> - `L`:        length of curve from initial to final point
     %>
     function build( self, varargin )
       ClothoidCurveMexWrapper( 'build', self.objectHandle, varargin{:} );
@@ -51,14 +61,19 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
+    %>
+    %> \endrst
     %>
     %> **On input:**
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the clothoid at initial point
-    %> - x1, y1: coordinate of final point
-    %> - theta1: orientation of the clothoid at final point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the clothoid at initial point
+    %> - `x1`, `y1`: coordinate of final point
+    %> - `theta1`:   orientation of the clothoid at final point
     %>
     function varargout = build_G1( self, x0, y0, theta0, x1, y1, theta1 )
       if nargout > 1
@@ -76,18 +91,23 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %>    ok = ref.build_forward( x0, y0, theta0, k0, x1, y1 )
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ok = ref.build_forward( x0, y0, theta0, k0, x1, y1 );
+    %>
+    %> \endrst
     %>
     %> **On input:**
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the clothoid at initial point
-    %> - k0:     curvature of the clothoid at initial point
-    %> - x1, y1: coordinate of final point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the clothoid at initial point
+    %> - `k0`:       curvature of the clothoid at initial point
+    %> - `x1`, `y1`: coordinate of final point
     %>
     %> **On output:**
     %>
-    %>    ok: true iff the interpolation was successful
+    %> - `ok`: true iff the interpolation was successful
     %>
     function ok = build_forward( self, x0, y0, theta0, k0, x1, y1 )
       ok = ClothoidCurveMexWrapper( ...
@@ -129,12 +149,17 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %>    ref.changeOrigin(s0,L)
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.changeOrigin(s0,L);
+    %>
+    %> \endrst
     %>
     %> **On input:**
     %>
-    %> - s0: curvilinear coordinate of the origin of the new curve
-    %> - L:  nel length of the curve
+    %> - `s0`: curvilinear coordinate of the origin of the new curve
+    %> - `L`:  nel length of the curve
     %>
     function changeCurvilinearOrigin( self, s0, L )
       ClothoidCurveMexWrapper( ...
@@ -152,7 +177,13 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    P = ref.infinity();
+    %>
+    %> \endrst
     %>
     function [xp,yp,xm,ym] = infinity( self )
       [xp,yp,xm,ym] = ClothoidCurveMexWrapper( 'infinity', self.objectHandle );
@@ -199,7 +230,7 @@ classdef ClothoidCurve < CurveBase
       plot( S, kappa, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plotTheta( self, npts, varargin )
+    function plotAngle( self, npts, varargin )
       if nargin < 2
         npts = 1000;
       end

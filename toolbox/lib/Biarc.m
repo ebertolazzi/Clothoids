@@ -2,19 +2,24 @@ classdef Biarc < CurveBase
   %> MATLAB class wrapper for the underlying C++ class
 
   methods
-    %> Create a new C++ class instance for the clothoid arc object
+    %> Create a new C++ class instance for the Biarc object
     %>
     %> **Usage:**
     %>
-    %>    ref = Biarc()
-    %>    ref = Biarc( x0, y0, theta0, x1, y1, theta1 )
+    %> \rst
+    %> .. code-block:: matlab
     %>
-    %> **On input:**
+    %>   self = Biarc();
+    %>   self = Biarc( x0, y0, theta0, x1, y1, theta1 );
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the clothoid at initial point
-    %> - x1, y1: coordinate of final point
-    %> - theta1: orientation of the clothoid at final point
+    %> \endrst
+    %>
+    %> **Optinal Arguments:**
+    %>
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`    : orientation of the clothoid at initial point
+    %> - `x1`, `y1`: coordinate of final point
+    %> - `theta1`    : orientation of the clothoid at final point
     %>
     %> **On output:**
     %>
@@ -35,13 +40,19 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %>     ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.build_G1( x0, y0, theta0, x1, y1, theta1 );
+    %>
+    %> \endrst
     %>
     %> **On input:**
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the clothoid at initial point
-    %> - x1, y1: coordinate of final point
-    %> - theta1: orientation of the clothoid at final point
+    %>
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`    : orientation of the clothoid at initial point
+    %> - `x1`, `y1`: coordinate of final point
+    %> - `theta1`    : orientation of the clothoid at final point
     %>
     function ok = build( self, x0, y0, theta0, x1, y1, theta1 )
       ok = BiarcMexWrapper( 'build_G1', self.objectHandle, ...
@@ -56,13 +67,19 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %>    ref.build_3P( x0, y0, x1, y1, x2, y2 )
-    %>    ref.build_3P( [x0, y0], [x1, y1], [x2, y2] )
+    %> \rst
+    %> .. code-block:: matlab
     %>
-    %> On input:
-    %>    x0, y0: coordinate of initial point
-    %>    x1, y1: coordinate of middle point
-    %>    x2, y2: coordinate of final point
+    %>   ref.build_3P( x0, y0, x1, y1, x2, y2 );
+    %>   ref.build_3P( [x0, y0], [x1, y1], [x2, y2] );
+    %> 
+    %> \endrst
+    %>
+    %> **On input:**
+    %>
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `x1`, `y1`: coordinate of middle point
+    %> - `x2`, `y2`: coordinate of final point
     %>
     %> alternative
     %>
@@ -74,34 +91,147 @@ classdef Biarc < CurveBase
       ok = BiarcMexWrapper( 'build_3P', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get junction point of the biarc x-coordinate
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   x = ref.xMiddle();
+    %> 
+    %> \endrst
+    %>
     function res = xMiddle( self )
       res = BiarcMexWrapper( 'xMiddle', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get junction point of the biarc y-coordinate
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   x = ref.yMiddle();
+    %> 
+    %> \endrst
+    %>
     function res = yMiddle( self )
       res = BiarcMexWrapper( 'yMiddle', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get junction point angle of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   theta = ref.thetaMiddle();
+    %> 
+    %> \endrst
+    %>
     function res = thetaMiddle( self )
       res = BiarcMexWrapper( 'thetaMiddle', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get curvature of the first arc of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   kappa0 = ref.kappa0();
+    %> 
+    %> \endrst
+    %>
     function res = kappa0( self )
       res = BiarcMexWrapper( 'kappa0', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get curvature of the second arc of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   kappa1 = ref.kappa1();
+    %> 
+    %> \endrst
+    %>
     function res = kappa1( self )
       res = BiarcMexWrapper( 'kappa1', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get length of the first arc of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   length0 = ref.length0();
+    %> 
+    %> \endrst
+    %>
     function res = length0( self )
       res = BiarcMexWrapper( 'length0', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get length of the second arc of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   length1 = ref.length1();
+    %> 
+    %> \endrst
+    %>
     function res = length1( self )
       res = BiarcMexWrapper( 'length1', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get the biarc G1 data
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   [x0,y0,theta0,x1,y1,theta1] = ref.getData();
+    %> 
+    %> \endrst
+    %>
+    %> - `x0`, `y0`: initial point of the biarc
+    %> - `theta0`    : initial angle of the biarc
+    %> - `x1`, `y1`: final point of the biarc
+    %> - `theta1`    : final angle of the biarc
+    %>
+    function [ x0,y0,theta0,x1,y1,theta1] = getData( self )
+      x0     = self.xBegin();
+      y0     = self.yBegin();
+      theta0 = self.thetaBegin();
+      x1     = self.xEnd();
+      y1     = self.yEnd();
+      theta1 = self.thetaEnd();
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get the two circle arc composing a biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   [C0,C1] = ref.getCircles();
+    %> 
+    %> \endrst
+    %>
     function [ C0, C1 ] = getCircles( self )
       x0     = self.xBegin();
       y0     = self.yBegin();
@@ -117,18 +247,61 @@ classdef Biarc < CurveBase
       C1     = CircleArc( x0, y0, theta0, kappa0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Return the nurbs represantation of the two arc composing the biarc
+    %>
     %> **Usage:**
     %>
-    %>    ref.to_nurbs()
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   [arc0,arc1] = ref.to_nurbs();
+    %> 
+    %> \endrst
+    %>
+    %> - `arc0`: the nurbs of the first arc
+    %> - `arc1`: the nurbs of the second arc
     %>
     function [ arc0, arc1 ] = to_nurbs( self )
       [ arc0, arc1 ] = BiarcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Get the curvilinear coordinates of the point `(x,y)`
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   [s,t] = ref.find_coord( x, y );
+    %> 
+    %> \endrst
+    %>
+    %> - `s`: curvilinear coordinate along the curve
+    %> - `t`: curvilinear coordinate along the normal of the curve
+    %>
     function [ s, t ] = find_coord( self, x, y )
       [ s, t ] = BiarcMexWrapper( 'findST', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plot( npts );
+    %>
+    %>   fmt1 = {'Color','blue','Linewidth',2};
+    %>   fmt2 = {'Color','red','Linewidth',2};
+    %>   ref.plot( npts, fmt1, fmt2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt1`: format of the first arc
+    %> - `fmt2`: format of the second arc
+    %>
     function plot( self, npts, varargin )
       if nargin<2
         npts = 64;
@@ -149,6 +322,25 @@ classdef Biarc < CurveBase
       C1.plot(npts,fmt2);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the curvature of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plotCurvature( npts );
+    %>
+    %>   fmt1 = {'Color','blue','Linewidth',2};
+    %>   fmt2 = {'Color','red','Linewidth',2};
+    %>   ref.plotCurvature( npts, fmt1, fmt2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt1`: format of the first arc
+    %> - `fmt2`: format of the second arc
+    %>
     function plotCurvature( self, npts, varargin )
       if nargin < 2
         npts = 1000;
@@ -159,7 +351,26 @@ classdef Biarc < CurveBase
       plot( S, kappa, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function plotTheta( self, npts, varargin )
+    %> Plot the angle of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plotAngle( npts );
+    %>
+    %>   fmt1 = {'Color','blue','Linewidth',2};
+    %>   fmt2 = {'Color','red','Linewidth',2};
+    %>   ref.plotAngle( npts, fmt1, fmt2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt1`: format of the first arc
+    %> - `fmt2`: format of the second arc
+    %>
+    function plotAngle( self, npts, varargin )
       if nargin < 2
         npts = 1000;
       end
@@ -169,6 +380,20 @@ classdef Biarc < CurveBase
       plot( S, theta, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the normal of the biarc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plotNormal( step, len );
+    %> 
+    %> \endrst
+    %>
+    %> - `step`: number of sampling normals
+    %> - `len`:  length of the plotted normal
+    %>
     function plotNormal( self, step, len )
       for s=0:step:self.length()
         [ x, y, theta, ~ ] = self.evaluate(s);

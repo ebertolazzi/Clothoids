@@ -112,11 +112,18 @@
 <dd>
 <p>Create a new C++ class instance for the triangle object</p>
 <p><strong>Usage:</strong></p>
-<p>ref = <a class="reference internal" href="#a00104_1a281863bb5a2e1d42709c380ca7bb4764"><span class="std std-ref">Triangle2D()</span></a>; ref = <a class="reference internal" href="#a00104"><span class="std std-ref">Triangle2D( x0, y0, x1, y1, x2, y2 )</span></a>; ref = <a class="reference internal" href="#a00104"><span class="std std-ref">Triangle2D( p0, p1, p2 )</span></a>;</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Triangle2D</span><span class="p">();</span><span class="w"></span>
+<span class="n">ref</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Triangle2D</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Triangle2D</span><span class="p">(</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
 <p><strong>On output:</strong></p>
 <p></p>
 <ul class="simple">
-<li><p>ref: reference handle to the object instance </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ref</span></code>: reference handle to the object instance </p></li>
 </ul>
 
 </dd>
@@ -170,12 +177,17 @@
 <dd>
 <p>Rotate the triangle by angle with center of rotation <code class="docutils literal notranslate"><span class="pre">(cx,cy)</span></code></p>
 <p><strong>Usage:</strong></p>
-<p>ref.rotate(angle, cx, cy)</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="nb">angle</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">cy</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+
 <p><strong>On input:</strong></p>
 <p></p>
 <ul class="simple">
-<li><p>angle: the angle of rotation</p></li>
-<li><p>cx, cy: coordinates of the centre of rotation </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">angle</span></code>: the angle of rotation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cx</span></code>, <code class="docutils literal notranslate"><span class="pre">cy</span></code>: coordinates of the centre of rotation </p></li>
 </ul>
 
 </dd>

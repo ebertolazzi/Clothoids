@@ -10,13 +10,18 @@ classdef Triangle2D < handle
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref = Triangle2D();
     %>    ref = Triangle2D( x0, y0, x1, y1, x2, y2 );
     %>    ref = Triangle2D( p0, p1, p2 );
     %>
+    %> \endrst
+    %>
     %> **On output:**
     %>
-    %> - ref: reference handle to the object instance
+    %> - `ref`: reference handle to the object instance
     %>
     function self = Triangle2D( varargin )
       self.objectHandle = Triangle2DMexWrapper( 'new', varargin{:} );
@@ -53,12 +58,17 @@ classdef Triangle2D < handle
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref.rotate(angle, cx, cy)
-    %>    
+    %>
+    %> \endrst
+    %>
     %> **On input:**
     %>
-    %> - angle: the angle of rotation
-    %> - cx, cy: coordinates of the centre of rotation
+    %> - `angle`: the angle of rotation
+    %> - `cx`, `cy`: coordinates of the centre of rotation
     %>
     function rotate( self, angle, cx, cy )
       Triangle2DMexWrapper('rotate', self.objectHandle, angle, cx, cy );

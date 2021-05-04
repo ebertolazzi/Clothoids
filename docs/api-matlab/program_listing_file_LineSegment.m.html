@@ -81,10 +81,15 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref = LineSegment(); % (1)</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref = LineSegment( x0, y0, theta0, L ); % (2)</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref = LineSegment( x0, y0, theta0, smin, smax ); % (3)</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref = LineSegment( p0, p1 ); % (4)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - (1) empty segment</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - (2) line segment passing from (x0,y0) at angle theta0</span><span class="w"></span>
@@ -93,17 +98,17 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - x0, y0: coordinate of initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - theta0: orientation of the circle at initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - L:      length of curve from initial to final point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - smin:   initial curvilinear coordinate of the curve</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - smax:   final curvilinear coordinate of the curve</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - p0:     2D point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - p1:     2D point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `x0`, `y0`: coordinate of initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `theta0`:   orientation of the circle at initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `L`:        length of curve from initial to final point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `smin`:     initial curvilinear coordinate of the curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `smax`:     final curvilinear coordinate of the curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `p0`:       2D point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `p1`:       2D point</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    ref: reference handle to the object instance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ref`: reference handle to the object instance</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>self<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">LineSegment</span><span class="p">(</span> varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">self</span><span class="p">@</span><span class="n">CurveBase</span><span class="p">(</span><span class="w"> </span><span class="s">'LineSegmentMexWrapper'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -116,10 +121,15 @@
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%</span><span class="w"></span>
 <span class="w">    </span><span class="c">% **Usage:**</span><span class="w"></span>
-<span class="w">    </span><span class="c">%</span><span class="w"></span>
-<span class="w">    </span><span class="c">%    ref.build( x0, y0, theta0, L )</span><span class="w"></span>
-<span class="w">    </span><span class="c">%    ref.build( p0, p1 )</span><span class="w"></span>
-<span class="w">    </span><span class="c">%</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref.build( x0, y0, theta0, L );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref.build( p0, p1 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">LineSegmentMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'build'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>

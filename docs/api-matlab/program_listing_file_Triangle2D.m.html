@@ -86,13 +86,18 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref = Triangle2D();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref = Triangle2D( x0, y0, x1, y1, x2, y2 );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref = Triangle2D( p0, p1, p2 );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - ref: reference handle to the object instance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ref`: reference handle to the object instance</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>self<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">Triangle2D</span><span class="p">(</span> varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Triangle2DMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'new'</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -129,12 +134,17 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref.rotate(angle, cx, cy)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - angle: the angle of rotation</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - cx, cy: coordinates of the centre of rotation</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `angle`: the angle of rotation</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `cx`, `cy`: coordinates of the centre of rotation</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span> self, angle, cx, cy <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">Triangle2DMexWrapper</span><span class="p">(</span><span class="s">'rotate'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="nb">angle</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>

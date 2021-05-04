@@ -5,10 +5,15 @@ classdef LineSegment < CurveBase
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref = LineSegment(); % (1)
     %>    ref = LineSegment( x0, y0, theta0, L ); % (2)
     %>    ref = LineSegment( x0, y0, theta0, smin, smax ); % (3)
     %>    ref = LineSegment( p0, p1 ); % (4)
+    %>
+    %> \endrst
     %>
     %> - (1) empty segment
     %> - (2) line segment passing from (x0,y0) at angle theta0
@@ -17,17 +22,17 @@ classdef LineSegment < CurveBase
     %>
     %> **On input:**
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the circle at initial point
-    %> - L:      length of curve from initial to final point
-    %> - smin:   initial curvilinear coordinate of the curve
-    %> - smax:   final curvilinear coordinate of the curve
-    %> - p0:     2D point
-    %> - p1:     2D point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the circle at initial point
+    %> - `L`:        length of curve from initial to final point
+    %> - `smin`:     initial curvilinear coordinate of the curve
+    %> - `smax`:     final curvilinear coordinate of the curve
+    %> - `p0`:       2D point
+    %> - `p1`:       2D point
     %>
     %> **On output:**
     %>
-    %>    ref: reference handle to the object instance
+    %> - `ref`: reference handle to the object instance
     %>
     function self = LineSegment( varargin )
       self@CurveBase( 'LineSegmentMexWrapper' );
@@ -40,10 +45,15 @@ classdef LineSegment < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %
     % **Usage:**
-    %
-    %    ref.build( x0, y0, theta0, L )
-    %    ref.build( p0, p1 )
-    %
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.build( x0, y0, theta0, L );
+    %>    ref.build( p0, p1 );
+    %>
+    %> \endrst
+    %>
     function build( self, varargin )
       LineSegmentMexWrapper( 'build', self.objectHandle, varargin{:} );
     end

@@ -6,21 +6,26 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %>    ref = CircleArc() % create empty circle
-    %>    ref = CircleArc( x0, y0, theta0, k0, L ) % circle passing from (x0,y0) 
-    %>                                             % at angle theta0 with curvature k0
-    %>                                             % and length L
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref = CircleArc() % create empty circle
+    %>   ref = CircleArc( x0, y0, theta0, k0, L ) % circle passing from (x0,y0) 
+    %>                                            % at angle theta0 with curvature k0
+    %>                                            % and length L
+    %>
+    %> \endrst
     %>
     %> **On input:**
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the circle at initial point
-    %> - k0:     curvature of the circle at initial point
-    %> - L:      length of curve from initial to final point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the circle at initial point
+    %> - `k0`:       curvature of the circle at initial point
+    %> - `L`:        length of curve from initial to final point
     %>
     %> **On output:**
     %>
-    %>    ref: reference handle to the object instance
+    %> - ref: reference handle to the object instance
     %>
     function self = CircleArc( varargin )
       self@CurveBase( 'CircleArcMexWrapper' );
@@ -36,16 +41,21 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref.build( x0, y0, theta0, k0, L )
+    %>
+    %> \endrst
     %>
     %> build a circle passing from (x0,y0) at angle theta0 with curvature and length
     %>
     %> **On input:**
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the circle at initial point
-    %> - k0:     curvature of the circle at initial point
-    %> - L:      length of curve from initial to final point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the circle at initial point
+    %> - `k0`:       curvature of the circle at initial point
+    %> - `L`:        length of curve from initial to final point
     %>
     function build( self, x0, y0, theta0, k0, L )
       CircleArcMexWrapper( 'build', self.objectHandle, x0, y0, theta0, k0, L );
@@ -56,18 +66,23 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref.build( x0, y0, theta0, x1, y1 ); % circle passing to [x0,y0] and [x1,y1]
     %>                                         % with angle theta0 at [x0,y0]
     %>    ref.build( p0, theta0, p1 ); % circle passing to p0 and p1 with angle theta0 at p0
     %>
+    %> \endrst
+    %>
     %> **On input:**
     %>
-    %> - x0, y0: coordinate of initial point
-    %> - theta0: orientation of the circle at initial point
-    %> - k0:     curvature of the circle at initial point
-    %> - L:      length of curve from initial to final point
-    %> - p0:     2D point
-    %> - p1:     2D point
+    %> - `x0`, `y0`: coordinate of initial point
+    %> - `theta0`:   orientation of the circle at initial point
+    %> - `k0`:       curvature of the circle at initial point
+    %> - `L`:        length of curve from initial to final point
+    %> - `p0`:       2D point
+    %> - `p1`:       2D point
     %>
     function ok = build_G1( self, varargin )
       ok = CircleArcMexWrapper( 'build_G1', self.objectHandle, varargin{:} );
@@ -78,8 +93,12 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
     %>    ref.build( x0, y0, x1, y1, x2, y2 )
     %>    ref.build( p0, p1, p2 )
+    %> \endrst
     %>
     function ok = build_3P( self, varargin )
       ok = CircleArcMexWrapper( 'build_3P', self.objectHandle, varargin{:} );

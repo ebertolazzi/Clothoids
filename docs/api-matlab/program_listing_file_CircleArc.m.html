@@ -82,21 +82,26 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    ref = CircleArc() % create empty circle</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    ref = CircleArc( x0, y0, theta0, k0, L ) % circle passing from (x0,y0)</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;                                             % at angle theta0 with curvature k0</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;                                             % and length L</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref = CircleArc() % create empty circle</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref = CircleArc( x0, y0, theta0, k0, L ) % circle passing from (x0,y0)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;                                            % at angle theta0 with curvature k0</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;                                            % and length L</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - x0, y0: coordinate of initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - theta0: orientation of the circle at initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - k0:     curvature of the circle at initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - L:      length of curve from initial to final point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `x0`, `y0`: coordinate of initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `theta0`:   orientation of the circle at initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `k0`:       curvature of the circle at initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `L`:        length of curve from initial to final point</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    ref: reference handle to the object instance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - ref: reference handle to the object instance</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>self<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">CircleArc</span><span class="p">(</span> varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">self</span><span class="p">@</span><span class="n">CurveBase</span><span class="p">(</span><span class="w"> </span><span class="s">'CircleArcMexWrapper'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -112,16 +117,21 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref.build( x0, y0, theta0, k0, L )</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; build a circle passing from (x0,y0) at angle theta0 with curvature and length</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - x0, y0: coordinate of initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - theta0: orientation of the circle at initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - k0:     curvature of the circle at initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - L:      length of curve from initial to final point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `x0`, `y0`: coordinate of initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `theta0`:   orientation of the circle at initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `k0`:       curvature of the circle at initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `L`:        length of curve from initial to final point</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span> self, x0, y0, theta0, k0, L <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">CircleArcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'build'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">k0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -132,18 +142,23 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref.build( x0, y0, theta0, x1, y1 ); % circle passing to [x0,y0] and [x1,y1]</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;                                         % with angle theta0 at [x0,y0]</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref.build( p0, theta0, p1 ); % circle passing to p0 and p1 with angle theta0 at p0</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - x0, y0: coordinate of initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - theta0: orientation of the circle at initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - k0:     curvature of the circle at initial point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - L:      length of curve from initial to final point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - p0:     2D point</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; - p1:     2D point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `x0`, `y0`: coordinate of initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `theta0`:   orientation of the circle at initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `k0`:       curvature of the circle at initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `L`:        length of curve from initial to final point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `p0`:       2D point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `p1`:       2D point</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>ok<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">build_G1</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'build_G1'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -154,8 +169,12 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref.build( x0, y0, x1, y1, x2, y2 )</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;    ref.build( p0, p1, p2 )</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>ok<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">build_3P</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'build_3P'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
