@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class ClothoidList &#8212; Clothoids v2.0.5
+    <title>Class ClothoidList &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -156,42 +156,158 @@
 <dt id="_CPPv4N12ClothoidList4saveE2in2in">
 <span id="_CPPv3N12ClothoidList4saveE2in2in"></span><span id="_CPPv2N12ClothoidList4saveE2in2in"></span><span id="ClothoidList::save__in.in"></span><span class="target" id="a00084_1a0814dd36d3d54091c84cffc19f118dc2"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em><span class="pre">fname</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList4saveE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Save the clothoid list to a file </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList4loadE2in2in">
 <span id="_CPPv3N12ClothoidList4loadE2in2in"></span><span id="_CPPv2N12ClothoidList4loadE2in2in"></span><span id="ClothoidList::load__in.in"></span><span class="target" id="a00084_1a58446348ba25413874473173106e687f"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">load</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList4loadE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Load the clothoid list from a file (check consistency of the readed segments)</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><code class="docutils literal notranslate"><span class="pre">filename</span></code> : file name to be read <code class="docutils literal notranslate"><span class="pre">tol</span></code> : tolerance used to check consistency </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList9push_backE2in2in">
 <span id="_CPPv3N12ClothoidList9push_backE2in2in"></span><span id="_CPPv2N12ClothoidList9push_backE2in2in"></span><span id="ClothoidList::push_back__in.in"></span><span class="target" id="a00084_1a729c5e4b4a2985e48af32d54e597c85a"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">push_back</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList9push_backE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Append a curve to the clothoid list</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% mode 1</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">dkappa</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% mode 2</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">dkappa</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% mode 3</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Mode 1</strong></p>
+<p></p>
+<ul class="simple">
+<li>
+<p><code class="docutils literal notranslate"><span class="pre">obj</span></code> : curve to be appended can be one of</p>
+<ul>
+<li><p><em><a class="reference internal" href="class_a00096.html#a00096"><span class="std std-ref">LineSegment</span></a></em></p></li>
+<li><p><em>BiArc</em></p></li>
+<li><p><em><a class="reference internal" href="class_a00072.html#a00072"><span class="std std-ref">BiarcList</span></a></em></p></li>
+<li><p><em><a class="reference internal" href="class_a00076.html#a00076"><span class="std std-ref">CircleArc</span></a></em></p></li>
+<li><p><em><a class="reference internal" href="class_a00080.html#a00080"><span class="std std-ref">ClothoidCurve</span></a></em></p></li>
+<li><p><em><a class="reference internal" href="#a00084"><span class="std std-ref">ClothoidList</span></a></em></p></li>
+<li><p><em><a class="reference internal" href="class_a00100.html#a00100"><span class="std std-ref">PolyLine</span></a></em></p></li>
+</ul>
+</li>
+</ul>
+
+<p><strong>Mode 2</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">kappa0</span></code> : initial curvature of the appended clothoid</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dkappa</span></code> : derivative of the curvature of the appended clothoid</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code> : length of the the appended clothoid</p></li>
+</ul>
+
+<p><strong>Mode 3</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code> : initial position of the appended clothoid, the builded clothoid will be translated to the and of the actual clothoid list</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code> : initial curvature of the appended clothoid</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kappa0</span></code> : initial curvature of the appended clothoid</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dkappa</span></code> : derivative of the curvature of the appended clothoid</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code> : length of the the appended clothoid </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList12push_back_G1E2in2in">
 <span id="_CPPv3N12ClothoidList12push_back_G1E2in2in"></span><span id="_CPPv2N12ClothoidList12push_back_G1E2in2in"></span><span id="ClothoidList::push_back_G1__in.in"></span><span class="target" id="a00084_1abd33319f2c2ad501c9e010934df51f3f"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">push_back_G1</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList12push_back_G1E2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Append a curve to the clothoid list</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">theta1</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% mode 1</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">theta0</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">theta1</span><span class="p">);</span><span class="w"> </span><span class="c">% mode 2</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Mode 1</strong></p>
+<p>Build a clothoid arc using final point and angle of the clothoid list and</p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">y1</span></code> : final point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta1</span></code> : final angle</p></li>
+</ul>
+
+<p>the builded clothoid is appended to the list</p>
+<p><strong>Mode 2</strong></p>
+<p>Build a clothoid arc using the data</p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code> : initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code> : initial angle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">y1</span></code> : final point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta1</span></code> : final angle</p></li>
+</ul>
+
+<p>the builded clothoid is appended to the list </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList3getE2in2in">
 <span id="_CPPv3N12ClothoidList3getE2in2in"></span><span id="_CPPv2N12ClothoidList3getE2in2in"></span><span id="ClothoidList::get__in.in"></span><span class="target" id="a00084_1aebd52d92fb9db159adffcda7a74ec600"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em><span class="pre">k</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList3getE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Get the clothoid at position <code class="docutils literal notranslate"><span class="pre">k</span></code>. The biarc is returned as a clothoid object or the data defining the clothoid.</p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">dkappa</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">);</span><span class="w"></span>
+<span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList6appendE2in2in">
 <span id="_CPPv3N12ClothoidList6appendE2in2in"></span><span id="_CPPv2N12ClothoidList6appendE2in2in"></span><span id="ClothoidList::append__in.in"></span><span class="target" id="a00084_1af0be676b6e44a281c3505144e0c5547d"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">append</span></code><span class="sig-paren">(</span><em><span class="pre">lst</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList6appendE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Append a curve to a clothoid list.</p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">LineSegment</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="c"> );</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Biarc</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="c"> );</span><span class="w"></span>
+<span class="k">...</span><span class="w"></span>
+<span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArc</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="c"> );</span><span class="w"></span>
+<span class="c">% ....</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">C</span><span class="p">);</span><span class="w"> </span><span class="c">% append biarc</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -397,8 +513,8 @@
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fmt1</span></code>: format of the first arc</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fmt2</span></code>: format of the second arc </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt1</span></code>: format of the odd clothoids</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt2</span></code>: format of the even clothoids </p></li>
 </ul>
 
 </dd>

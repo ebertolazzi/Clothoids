@@ -26,9 +26,6 @@
 #ifndef UTILS_dot_HXX
 #define UTILS_dot_HXX
 
-// must be the first header included
-#include "rang.hpp"
-
 // select computer architecture
 #if defined(__APPLE__) && defined(__MACH__)
   // osx architecture
@@ -49,21 +46,10 @@
 #elif defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
   // windows architecture
   #define UTILS_OS_WINDOWS 1
-  #if defined(_M_X64) || defined(_M_AMD64)
+  #if defined(_M_X64) || defined(_M_AMD64) || defined(_WIN64) || defined(WIN64)
     #define UTILS_ARCH64 1
   #else
     #define UTILS_ARCH32 1
-  #endif
-  #ifndef WIN32_LEAN_AND_MEAN
-    #define WIN32_LEAN_AND_MEAN
-  #endif
-  #include <windows.h>
-  // workaround for windows that may define min and max as macros
-  #ifdef min
-    #undef min
-  #endif
-  #ifdef max
-    #undef max
   #endif
 #else
   #error "unsupported OS!"
@@ -105,6 +91,7 @@
 #include <mutex>
 #include <atomic>
 
+#include "rang.hxx"
 #include "Trace.hxx"
 #include "Console.hxx"
 #include "Malloc.hxx"

@@ -127,7 +127,7 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('push_back',OBJ,CLOT|[kappa0,dkappa,L]|[x0,y0,theta0,kappa0,dkappa,L]): "
+    #define CMD "ClothoidListMexWrapper('push_back',OBJ,[type,OBJIN]|[kappa0,dkappa,L]|[x0,y0,theta0,kappa0,dkappa,L]): "
 
     MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
@@ -146,11 +146,35 @@ namespace G2lib {
       real_type dkappa = getScalarValue( arg_in_3, CMD "Error in reading dkappa" );
       real_type L      = getScalarValue( arg_in_4, CMD "Error in reading L" );
       ptr->push_back( kappa0, dkappa, L );
-    } else if ( nrhs == 3 ) {
-      ClothoidCurve * cc = convertMat2Ptr<ClothoidCurve>(arg_in_2);
-      ptr->push_back( *cc );
+    } else if ( nrhs == 4 ) {
+      MEX_ASSERT( mxIsChar(arg_in_2), "Third argument must be a string" );
+      string type = mxArrayToString(arg_in_2);
+      if ( type == "LineSegment" ) {
+        LineSegment * cc = convertMat2Ptr<LineSegment>(arg_in_3);
+        ptr->push_back( *cc );
+      } else if ( type == "BiArc" ) {
+        Biarc * cc = convertMat2Ptr<Biarc>(arg_in_3);
+        ptr->push_back( *cc );
+      } else if ( type == "BiarcList" ) {
+        BiarcList * cc = convertMat2Ptr<BiarcList>(arg_in_3);
+        ptr->push_back( *cc );
+      } else if ( type == "CircleArc" ) {
+        CircleArc * cc = convertMat2Ptr<CircleArc>(arg_in_3);
+        ptr->push_back( *cc );
+      } else if ( type == "ClothoidCurve" ) {
+        ClothoidCurve const * cc = convertMat2Ptr<ClothoidCurve>(arg_in_3);
+        ptr->push_back( *cc );
+      } else if ( type == "ClothoidList" ) {
+        ClothoidList const * cc = convertMat2Ptr<ClothoidList>(arg_in_3);
+        ptr->push_back( *cc );
+      } else if ( type == "PolyLine" ) {
+        PolyLine const * cc = convertMat2Ptr<PolyLine>(arg_in_3);
+        ptr->push_back( *cc );
+      } else {
+        MEX_ASSERT2( false, CMD "unknown type = {}\n", type );
+      }
     } else {
-      MEX_ASSERT2( false, CMD "expected 3, 5 or 8 inputs nrhs = {}\n", nrhs );
+      MEX_ASSERT2( false, CMD "expected 4, 5 or 8 inputs nrhs = {}\n", nrhs );
     }
 
     #undef CMD
@@ -165,7 +189,7 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[CLOT]): "
+    #define CMD "ClothoidListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[x1,y1,theta1]): "
 
     MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 

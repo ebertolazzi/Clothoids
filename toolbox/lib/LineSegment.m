@@ -43,8 +43,10 @@ classdef LineSegment < CurveBase
       str = 'LineSegment';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %
-    % **Usage:**
+    %>
+    %> Buil aline segment suing two points or an origin and a direction
+    %>
+    %> **Usage:**
     %>
     %> \rst
     %> .. code-block:: matlab
@@ -54,19 +56,44 @@ classdef LineSegment < CurveBase
     %>
     %> \endrst
     %>
+    %> **Build 1:**
+    %>
+    %> - `x0`, `y0` : initial point
+    %> - `theta0` : direction of the segment (angle direction)
+    %> - `L` : length of the segment
+    %>
+    %> **Build 2:**
+    %>
+    %> - `p0` : initial point of the segment
+    %> - `p1` : final point of the segment
+    %>
     function build( self, varargin )
       LineSegmentMexWrapper( 'build', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> return a nurbs representation of the circle arc
+    %> Return a nurbs representation of the circle segment
     function nurbs = to_nurbs( self )
       nurbs = LineSegmentMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Return initial and final point of the segment
     function [p1,p2] = points( self )
       [p1,p2] = LineSegmentMexWrapper('points', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the segment
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plot();
+    %>   ref.plot( 'Color','blue','Linewidth',2);
+    %> 
+    %> \endrst
+    %>
+    %>
     function plot( self, varargin )
       [ p1, p2 ] = self.points();
       plot( [ p1(1), p2(1) ], [ p1(2), p2(2) ], varargin{:} );

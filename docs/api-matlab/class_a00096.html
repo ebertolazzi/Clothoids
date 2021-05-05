@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class LineSegment &#8212; Clothoids v2.0.5
+    <title>Class LineSegment &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -163,7 +163,8 @@
 <span id="_CPPv3N11LineSegment5buildE2in2in"></span><span id="_CPPv2N11LineSegment5buildE2in2in"></span><span id="LineSegment::build__in.in"></span><span class="target" id="a00096_1a708195b51266a589aac90d260d788fe6"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11LineSegment5buildE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p></p>
+<p>Buil aline segment suing two points or an origin and a direction</p>
+<p><strong>Usage:</strong></p>
 <p></p>
 <div class="highlight-matlab notranslate">
 <div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -171,7 +172,21 @@
 </pre></div>
 </div>
 
- 
+<p><strong>Build 1:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code> : initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code> : direction of the segment (angle direction)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code> : length of the segment</p></li>
+</ul>
+
+<p><strong>Build 2:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p0</span></code> : initial point of the segment</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p1</span></code> : final point of the segment </p></li>
+</ul>
+
 </dd>
 </dl>
 
@@ -180,7 +195,7 @@
 <span id="_CPPv3N11LineSegment8to_nurbsE2in"></span><span id="_CPPv2N11LineSegment8to_nurbsE2in"></span><span id="LineSegment::to_nurbs__in"></span><span class="target" id="a00096_1a6e9d1d70c524dda56c7c1cde59799ac7"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">to_nurbs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11LineSegment8to_nurbsE2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>return a nurbs representation of the circle arc </p>
+<p>Return a nurbs representation of the circle segment. </p>
 </dd>
 </dl>
 
@@ -188,14 +203,28 @@
 <dt id="_CPPv4N11LineSegment6pointsE2in">
 <span id="_CPPv3N11LineSegment6pointsE2in"></span><span id="_CPPv2N11LineSegment6pointsE2in"></span><span id="LineSegment::points__in"></span><span class="target" id="a00096_1a7ebc602994b9fca0ea49e4d9f5eb35e8"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">points</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11LineSegment6pointsE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Return initial and final point of the segment. </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N11LineSegment4plotE2in2in">
 <span id="_CPPv3N11LineSegment4plotE2in2in"></span><span id="_CPPv2N11LineSegment4plotE2in2in"></span><span id="LineSegment::plot__in.in"></span><span class="target" id="a00096_1a9665412ad70b4fd3ed941912ca6d6d5e"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plot</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11LineSegment4plotE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the segment</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">

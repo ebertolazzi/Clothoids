@@ -40,6 +40,13 @@
   #include <pthread.h>
 #endif
 
+#ifdef max
+  #undef max
+#endif
+#ifdef min
+  #undef min
+#endif
+
 namespace Utils {
 
   /*\
@@ -399,13 +406,7 @@ namespace Utils {
     #if defined(UTILS_OS_WINDOWS)
     void
     setup() {
-      for ( auto & w: m_workers ) {
-        w.start();
-        #ifdef _MSC_VER
-          std::thread & t = w.m_running_thread;
-          SetThreadPriority( t.native_handle(), THREAD_PRIORITY_HIGHEST );
-        #endif
-      }
+      for ( auto & w: m_workers ) w.start();
     }
     #elif defined(UTILS_OS_LINUX)
     void

@@ -200,39 +200,32 @@ namespace G2lib {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
-    virtual
     real_type
     length() const override
     { return m_s0.back(); }
 
-    virtual
     real_type
     length_ISO( real_type ) const override {
       UTILS_ERROR0( "PolyLine::length( offs ) not available!\n" );
       return 0;
     }
 
-    virtual
     real_type
     xBegin() const override
     { return m_polylineList.front().xBegin(); }
 
-    virtual
     real_type
     yBegin() const override
     { return m_polylineList.front().yBegin(); }
 
-    virtual
     real_type
     xEnd() const override
     { return m_polylineList.back().xEnd(); }
 
-    virtual
     real_type
     yEnd() const override
     { return m_polylineList.back().yEnd(); }
 
-    virtual
     real_type
     X( real_type s ) const override {
       int_type idx = this->findAtS( s );
@@ -240,24 +233,20 @@ namespace G2lib {
       return m_polylineList[size_t(idx)].X(s-ss);
     }
 
-    virtual
     real_type
     X_D( real_type s ) const override {
       int_type idx = this->findAtS( s );
       return m_polylineList[size_t(idx)].m_c0;
     }
 
-    virtual
     real_type
     X_DD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     X_DDD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     Y( real_type s ) const override {
       int_type idx = this->findAtS( s );
@@ -265,40 +254,32 @@ namespace G2lib {
       return m_polylineList[size_t(idx)].Y(s-ss);
     }
 
-    virtual
     real_type
     Y_D( real_type s ) const override {
       int_type idx = this->findAtS( s );
       return m_polylineList[size_t(idx)].m_s0;
     }
 
-    virtual
     real_type
     Y_DD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     Y_DDD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     theta( real_type s ) const override;
 
-    virtual
     real_type
     theta_D( real_type s ) const override;
 
-    virtual
     real_type
     theta_DD( real_type s ) const override;
 
-    virtual
     real_type
     theta_DDD( real_type s ) const override;
 
-    virtual
     void
     eval(
       real_type   s,
@@ -310,7 +291,6 @@ namespace G2lib {
       m_polylineList[size_t(idx)].eval( s-ss, x, y );
     }
 
-    virtual
     void
     eval_D(
       real_type   s,
@@ -322,7 +302,6 @@ namespace G2lib {
       m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
 
-    virtual
     void
     eval_DD(
       real_type,
@@ -331,7 +310,6 @@ namespace G2lib {
     ) const override
     { x_DD = y_DD = 0; }
 
-    virtual
     void
     eval_DDD(
       real_type,
@@ -342,7 +320,6 @@ namespace G2lib {
 
     // ---
 
-    virtual
     void
     eval_ISO(
       real_type   s,
@@ -355,7 +332,6 @@ namespace G2lib {
       m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
-    virtual
     void
     eval_ISO_D(
       real_type   s,
@@ -368,7 +344,6 @@ namespace G2lib {
       m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 
-    virtual
     void
     eval_ISO_DD(
       real_type,
@@ -378,7 +353,6 @@ namespace G2lib {
     ) const override
     { x_DD = y_DD = 0; }
 
-    virtual
     void
     eval_ISO_DDD(
       real_type,
@@ -396,7 +370,6 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    virtual
     void
     translate( real_type tx, real_type ty ) override {
       std::vector<LineSegment>::iterator il;
@@ -404,7 +377,6 @@ namespace G2lib {
         il->translate( tx, ty );
     }
 
-    virtual
     void
     rotate(
       real_type angle,
@@ -416,19 +388,15 @@ namespace G2lib {
         il->rotate( angle, cx, cy );
     }
 
-    virtual
     void
     reverse() override;
 
-    virtual
     void
     scale( real_type sc ) override;
 
-    virtual
     void
     changeOrigin( real_type newx0, real_type newy0 ) override;
 
-    virtual
     void
     trim( real_type s_begin, real_type s_end ) override;
 
@@ -447,7 +415,6 @@ namespace G2lib {
     //! \param[out] DST the distance point-segment
     //! \return the distance point-segment
     //!
-    virtual
     int_type
     closestPoint_ISO(
       real_type   x,
@@ -459,7 +426,6 @@ namespace G2lib {
       real_type & DST
     ) const override;
 
-    virtual
     int_type
     closestPoint_ISO(
       real_type   /* x    */,
@@ -560,7 +526,6 @@ namespace G2lib {
       this->intersect( pl, ilist, swap_s_vals );
     }
 
-    virtual
     void
     info( ostream_type & stream ) const override
     { stream << "PolyLine\n" << *this << '\n'; }

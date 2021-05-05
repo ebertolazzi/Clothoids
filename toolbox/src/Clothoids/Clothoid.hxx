@@ -743,7 +743,6 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     bbox(
       real_type & xmin,
@@ -754,7 +753,6 @@ namespace G2lib {
       bbox_ISO( 0, xmin, ymin, xmax, ymax );
     }
 
-    virtual
     void
     bbox_ISO(
       real_type   offs,
@@ -766,67 +764,26 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     real_type
     length() const override
     { return m_L; }
 
-    virtual
     real_type
     length_ISO( real_type ) const override {
       UTILS_ERROR0( "Offset length not available for Clothoids\n" );
       return 0;
     }
 
-    virtual
-    real_type
-    thetaBegin() const override
-    { return m_CD.theta0; }
-
-    virtual
-    real_type
-    kappaBegin() const override
-    { return m_CD.kappa0; }
-
-    virtual
-    real_type
-    xBegin() const override
-    { return m_CD.x0; }
-
-    virtual
-    real_type
-    xEnd() const override
-    { return m_CD.X(m_L); }
-
-    virtual
-    real_type
-    yBegin() const override
-    { return m_CD.y0; }
-
-    virtual
-    real_type
-    yEnd() const override
-    { return m_CD.Y(m_L); }
-
-    virtual
-    real_type
-    tx_Begin() const override
-    { return m_CD.tg0_x(); }
-
-    virtual
-    real_type
-    ty_Begin() const override
-    { return m_CD.tg0_y(); }
-
-    virtual
-    real_type
-    nx_Begin_ISO() const override
-    { return m_CD.nor0_x_ISO(); }
-
-    virtual
-    real_type
-    ny_Begin_ISO() const override
-    { return m_CD.nor0_y_ISO(); }
+    real_type thetaBegin()   const override { return m_CD.theta0; }
+    real_type kappaBegin()   const override { return m_CD.kappa0; }
+    real_type xBegin()       const override { return m_CD.x0; }
+    real_type xEnd()         const override { return m_CD.X(m_L); }
+    real_type yBegin()       const override { return m_CD.y0; }
+    real_type yEnd()         const override { return m_CD.Y(m_L); }
+    real_type tx_Begin()     const override { return m_CD.tg0_x(); }
+    real_type ty_Begin()     const override { return m_CD.tg0_y(); }
+    real_type nx_Begin_ISO() const override { return m_CD.nor0_x_ISO(); }
+    real_type ny_Begin_ISO() const override { return m_CD.nor0_y_ISO(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -838,49 +795,17 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    virtual
-    real_type
-    tx( real_type s ) const override
-    { return m_CD.tg_x( s ); }
-
-    virtual
-    real_type
-    ty( real_type s ) const override
-    { return m_CD.tg_y( s ); }
-
-    virtual
-    real_type
-    tx_D( real_type s ) const override
-    { return m_CD.tg_x_D( s ); }
-
-    virtual
-    real_type
-    ty_D( real_type s ) const override
-    { return m_CD.tg_y_D( s ); }
-
-    virtual
-    real_type
-    tx_DD( real_type s ) const override
-    { return m_CD.tg_x_DD( s ); }
-
-    virtual
-    real_type
-    ty_DD( real_type s ) const override
-    { return m_CD.tg_y_DD( s ); }
-
-    virtual
-    real_type
-    tx_DDD( real_type s ) const override
-    { return m_CD.tg_x_DDD( s ); }
-
-    virtual
-    real_type
-    ty_DDD( real_type s ) const override
-    { return m_CD.tg_y_DDD( s ); }
+    real_type tx( real_type s ) const override { return m_CD.tg_x( s ); }
+    real_type ty( real_type s ) const override { return m_CD.tg_y( s ); }
+    real_type tx_D( real_type s ) const override { return m_CD.tg_x_D( s ); }
+    real_type ty_D( real_type s ) const override { return m_CD.tg_y_D( s ); }
+    real_type tx_DD( real_type s ) const override { return m_CD.tg_x_DD( s ); }
+    real_type ty_DD( real_type s ) const override { return m_CD.tg_y_DD( s ); }
+    real_type tx_DDD( real_type s ) const override { return m_CD.tg_x_DDD( s ); }
+    real_type ty_DDD( real_type s ) const override { return m_CD.tg_y_DDD( s ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     tg(
       real_type   s,
@@ -889,7 +814,6 @@ namespace G2lib {
     ) const override
     { m_CD.tg( s, tx, ty ); }
 
-    virtual
     void
     tg_D(
       real_type   s,
@@ -898,7 +822,6 @@ namespace G2lib {
     ) const override
     { m_CD.tg_D( s, tx_D, ty_D ); }
 
-    virtual
     void
     tg_DD(
       real_type   s,
@@ -907,7 +830,6 @@ namespace G2lib {
     ) const override
     { m_CD.tg_DD( s, tx_DD, ty_DD ); }
 
-    virtual
     void
     tg_DDD(
       real_type   s,
@@ -959,7 +881,6 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     #ifdef G2LIB_COMPATIBILITY_MODE
-    virtual
     void
     evaluate(
       real_type   s,
@@ -1061,7 +982,6 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     eval(
       real_type   s,
@@ -1070,7 +990,6 @@ namespace G2lib {
     ) const override
     { m_CD.eval( s, x, y ); }
 
-    virtual
     void
     eval_D(
       real_type   s,
@@ -1079,7 +998,6 @@ namespace G2lib {
     ) const override
     { m_CD.eval_D( s, x_D, y_D ); }
 
-    virtual
     void
     eval_DD(
       real_type   s,
@@ -1088,7 +1006,6 @@ namespace G2lib {
     ) const override
     { m_CD.eval_DD( s, x_DD, y_DD ); }
 
-    virtual
     void
     eval_DDD(
       real_type   s,
@@ -1097,7 +1014,6 @@ namespace G2lib {
     ) const override
     { m_CD.eval_DDD( s, x_DDD, y_DDD ); }
 
-    virtual
     void
     eval_ISO(
       real_type   s,
@@ -1107,7 +1023,6 @@ namespace G2lib {
     ) const override
     { m_CD.eval_ISO( s, offs, x, y ); }
 
-    virtual
     void
     eval_ISO_D(
       real_type   s,
@@ -1117,7 +1032,6 @@ namespace G2lib {
     ) const override
     { m_CD.eval_ISO_D( s, offs, x_D, y_D ); }
 
-    virtual
     void
     eval_ISO_DD(
       real_type   s,
@@ -1127,7 +1041,6 @@ namespace G2lib {
     ) const override
     { m_CD.eval_ISO_DD( s, offs, x_DD, y_DD ); }
 
-    virtual
     void
     eval_ISO_DDD(
       real_type   s,
@@ -1145,17 +1058,14 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    virtual
     void
     translate( real_type tx, real_type ty ) override
     { m_CD.x0 += tx; m_CD.y0 += ty; }
 
-    virtual
     void
     rotate( real_type angle, real_type cx, real_type cy ) override
     { m_CD.rotate( angle, cx, cy ); }
 
-    virtual
     void
     scale( real_type s ) override {
       m_CD.kappa0 /= s;
@@ -1163,17 +1073,14 @@ namespace G2lib {
       m_L         *= s;
     }
 
-    virtual
     void
     reverse() override
     { m_CD.reverse(m_L); }
 
-    virtual
     void
     changeOrigin( real_type newx0, real_type newy0 ) override
     { m_CD.x0 = newx0; m_CD.y0 = newy0; }
 
-    virtual
     void
     trim( real_type s_begin, real_type s_end ) override {
       m_CD.origin_at( s_begin );
@@ -1201,7 +1108,6 @@ namespace G2lib {
      |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
     \*/
 
-    virtual
     int_type
     closestPoint_ISO(
       real_type   qx,
@@ -1213,7 +1119,6 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    virtual
     int_type
     closestPoint_ISO(
       real_type   qx,

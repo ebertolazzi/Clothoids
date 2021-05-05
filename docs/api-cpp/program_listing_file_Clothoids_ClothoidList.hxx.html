@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File ClothoidList.hxx &#8212; Clothoids v2.0.5
+    <title>Program Listing for File ClothoidList.hxx &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -600,7 +600,6 @@
     <span class="p">,</span> <span class="n">m_aabb_done</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span>
     <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="o">~</span><span class="n">ClothoidList</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
       <span class="n">m_s0</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
       <span class="n">m_clotoidList</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
@@ -645,6 +644,8 @@
     <span class="kt">void</span> <span class="nf">push_back</span><span class="p">(</span> <span class="n">BiarcList</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">c</span> <span class="p">);</span>
 
     <span class="kt">void</span> <span class="nf">push_back</span><span class="p">(</span> <span class="n">ClothoidCurve</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">c</span> <span class="p">);</span>
+
+    <span class="kt">void</span> <span class="nf">push_back</span><span class="p">(</span> <span class="n">ClothoidList</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">c</span> <span class="p">);</span>
 
     <span class="kt">void</span> <span class="nf">push_back</span><span class="p">(</span> <span class="n">PolyLine</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">c</span> <span class="p">);</span>
 
@@ -852,9 +853,8 @@
 <span class="cm">     |  |_.__/|_.__/ \___/_/\_\</span>
 <span class="cm">    \*/</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">bbox</span><span class="p">(</span>
+    <span class="nf">bbox</span><span class="p">(</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">xmin</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ymin</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">xmax</span><span class="p">,</span>
@@ -863,9 +863,8 @@
       <span class="n">bbox_ISO</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">bbox_ISO</span><span class="p">(</span>
+    <span class="nf">bbox_ISO</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">xmin</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ymin</span><span class="p">,</span>

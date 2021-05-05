@@ -890,7 +890,6 @@ namespace G2lib {
     , m_aabb_done(false)
     { this->resetLastInterval(); }
 
-    virtual
     ~ClothoidList() override {
       m_s0.clear();
       m_clotoidList.clear();
@@ -986,6 +985,11 @@ namespace G2lib {
     //! Add a clothoid curve to the tail of clothoid list
     //!
     void push_back( ClothoidCurve const & c );
+
+    //!
+    //! Add a clothoid list to the tail of clothoid list
+    //!
+    void push_back( ClothoidList const & c );
 
     //!
     //! Add a list of line segment to the tail of clothoid list
@@ -1361,7 +1365,6 @@ namespace G2lib {
      |  |_.__/|_.__/ \___/_/\_\
     \*/
 
-    virtual
     void
     bbox(
       real_type & xmin,
@@ -1372,7 +1375,6 @@ namespace G2lib {
       bbox_ISO( 0, xmin, ymin, xmax, ymax );
     }
 
-    virtual
     void
     bbox_ISO(
       real_type   offs,

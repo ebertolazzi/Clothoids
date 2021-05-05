@@ -2,8 +2,7 @@ classdef ClothoidList < CurveBase
 
   methods
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Create a new C++ class instance for the 
-    %> clothoid list object
+    %> Create a new C++ class instance for the clothoid list object
     %> 
     %> **Usage:**
     %>
@@ -42,47 +41,169 @@ classdef ClothoidList < CurveBase
       ClothoidListMexWrapper( 'reserve', self.objectHandle, N );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Save the clothoid list to a file
+    %>
     function save( self, fname )
       ClothoidListMexWrapper( 'save', self.objectHandle, fname );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Load the clothoid list from a file (check consistency of the readed segments)
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.load( filename );
+    %>    ref.load( filename, tol );
+    %>
+    %> \endrst
+    %>
+    %> `filename` : file name to be read
+    %> `tol`      : tolerance used to check consistency
+    %>
     function load( self, varargin ) % file, tol
       ClothoidListMexWrapper( 'load', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Append a curve to the clothoid list
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.push_back( obj ); % mode 1
+    %>    ref.push_back( kappa0, dkappa, L ); % mode 2
+    %>    ref.push_back( x0, y0, theta0, kappa0, dkappa, L ); % mode 3
+    %>
+    %> \endrst
+    %>
+    %> **Mode 1**
+    %>
+    %> - `obj` : curve to be appended can be one of
+    %>   - *LineSegment*
+    %>   - *BiArc*
+    %>   - *BiarcList*
+    %>   - *CircleArc*
+    %>   - *ClothoidCurve*
+    %>   - *ClothoidList*
+    %>   - *PolyLine*
+    %>
+    %> **Mode 2**
+    %>
+    %> - `kappa0` : initial curvature of the appended clothoid
+    %> - `dkappa` : derivative of the curvature of the appended clothoid
+    %> - `L`      : length of the the appended clothoid
+    %>
+    %> **Mode 3**
+    %>
+    %> - `x0`, `y0` : initial position of the appended clothoid,
+    %>                the builded clothoid will be translated to
+    %>                the and of the actual clothoid list
+    %> - `theta0` : initial curvature of the appended clothoid
+    %> - `kappa0` : initial curvature of the appended clothoid
+    %> - `dkappa` : derivative of the curvature of the appended clothoid
+    %> - `L`      : length of the the appended clothoid
+    %>
     function push_back( self, varargin )
       if nargin == 2
         ClothoidListMexWrapper( ...
-          'push_back', self.objectHandle, varargin{1}.obj_handle() ...
+          'push_back', self.objectHandle, varargin{1}.is_type(), varargin{1}.obj_handle() ...
         );
       else
-        ClothoidListMexWrapper( ...
-          'push_back', self.objectHandle, varargin{:} ...
-        );
+        ClothoidListMexWrapper( 'push_back', self.objectHandle, varargin{:} );
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Append a curve to the clothoid list
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.push_back( x1,y1,theta1 ); % mode 1
+    %>    ref.push_back( x0,y0,theta0,x1,y1,theta1); % mode 2
+    %>
+    %> \endrst
+    %>
+    %> **Mode 1**
+    %> 
+    %> Build a clothoid arc using final point and angle of the 
+    %> clothoid list and
+    %>
+    %> - `x1`, `y1` : final point
+    %> - `theta1`   : final angle
+    %>
+    %> the builded clothoid is appended to the list
+    %>
+    %> **Mode 2**
+    %>
+    %> Build a clothoid arc using the data
+    %>
+    %> - `x0`, `y0` : initial point
+    %> - `theta0`   : initial angle
+    %> - `x1`, `y1` : final point
+    %> - `theta1`   : final angle
+    %>
+    %> the builded clothoid is appended to the list
+    %>
     function push_back_G1( self, varargin )
-      ClothoidListMexWrapper( ...
-        'push_back_G1', self.objectHandle, varargin{:} ...
-      );
+      ClothoidListMexWrapper( 'push_back_G1', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function C = get( self, k )
-      [ x0, y0, theta0, k0, dk, L ] = ...
-        ClothoidListMexWrapper( 'get', self.objectHandle, k );
-      C = ClothoidCurve( x0, y0, theta0, k0, dk, L );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function append( self, lst )
-      for k=1:lst.numSegment()
-        self.push_back( lst.get(k) );
+    %> Get the clothoid at position `k`.
+    %> The biarc is returned as a clothoid object or the data
+    %> defining the clothoid.
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   [ x0, y0, theta0, kappa0, dkappa, L ] = ref.get(k);
+    %>   C = ref.get(k);
+    %> \endrst
+    %>
+    function varargout = get( self, k )
+      [ x0, y0, theta0, k0, dk, L ] = ClothoidListMexWrapper( 'get', self.objectHandle, k );
+      if nargout == 1
+        varargout{1} = ClothoidCurve( x0, y0, theta0, k0, dk, L );
+      elseif nargout == 6
+        varargout{1} = x0;
+        varargout{2} = y0;
+        varargout{3} = theta0;
+        varargout{4} = k0;
+        varargout{5} = dk;
+        varargout{6} = L;
+      else
+        error('expected 1 or 6 outout arguments');
       end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Append a curve to a clothoid list.
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   C = LineSegment( ... );
+    %>   ...
+    %>   C = Biarc( ... );
+    %>   ...
+    %>   C = CircleArc( ... );
+    %>   % ....
+    %>   ref.append(C); % append biarc
+    %> \endrst
+    %>
+    function append( self, lst )
+      ClothoidListMexWrapper( 'push_back', self.objectHandle, lst.is_type(), lst.obj_handle() );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ s, theta, kappa ] = getSTK( self )
-      [ s, theta, kappa ] = ...
-        ClothoidListMexWrapper( 'getSTK', self.objectHandle );
+      [ s, theta, kappa ] = ClothoidListMexWrapper( 'getSTK', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y ] = getXY( self )
@@ -143,8 +264,7 @@ classdef ClothoidList < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [theta,ok] = build_theta( self, x, y )
-      [theta,ok] = ...
-        ClothoidListMexWrapper( 'build_theta', self.objectHandle, x, y );
+      [theta,ok] = ClothoidListMexWrapper( 'build_theta', self.objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_raw( self, x, y, abscissa, theta, kappa )
@@ -246,8 +366,8 @@ classdef ClothoidList < CurveBase
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
-    %> - `fmt1`: format of the first arc
-    %> - `fmt2`: format of the second arc
+    %> - `fmt1`: format of the odd clothoids
+    %> - `fmt2`: format of the even clothoids
     %>
     function plot( self, varargin )
       if nargin > 1

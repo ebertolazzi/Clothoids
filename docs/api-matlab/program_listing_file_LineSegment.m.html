@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File LineSegment.m &#8212; Clothoids v2.0.5
+    <title>Program Listing for File LineSegment.m &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -119,8 +119,10 @@
 <span class="w">      </span><span class="n">str</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'LineSegment'</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="c">%</span><span class="w"></span>
-<span class="w">    </span><span class="c">% **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Buil aline segment suing two points or an origin and a direction</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
@@ -130,19 +132,44 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Build 1:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `x0`, `y0` : initial point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `theta0` : direction of the segment (angle direction)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `L` : length of the segment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Build 2:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `p0` : initial point of the segment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `p1` : final point of the segment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">LineSegmentMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'build'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; return a nurbs representation of the circle arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Return a nurbs representation of the circle segment</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>nurbs<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">to_nurbs</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">nurbs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">LineSegmentMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'to_nurbs'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Return initial and final point of the segment</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>[p1,p2]<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">points</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">LineSegmentMexWrapper</span><span class="p">(</span><span class="s">'points'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the segment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot( 'Color','blue','Linewidth',2);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">points</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">p1</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">p2</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">p1</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">p2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">],</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>

@@ -50,8 +50,6 @@ classdef BiarcList < CurveBase
     %> the biarc list.
     %> Another possibility is to push a biarc is obtained 
     %> by passing initial and final positions, initial and final angles.
-    %> The resulting biarc is translated to match the final position
-    %> of the last biarc in the list. 
     %>
     %> **Usage:**
     %>

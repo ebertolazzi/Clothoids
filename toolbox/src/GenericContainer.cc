@@ -438,6 +438,18 @@ namespace GC_namespace {
     m_data_type = GC_NOTYPE;
   }
 
+  // distruttore
+  void
+  GenericContainer::erase( char const * name ) {
+    GC_ASSERT(
+      GC_MAP == m_data_type,
+      "erase('" << name << "') bad data type\nexpect: " <<
+      typeName[GC_POINTER] <<
+      "\nbut data stored is of type: " << typeName[m_data_type]
+    )
+    m_data.m->erase(name);
+  }
+
   char const *
   GenericContainer::get_type_name() const {
     return typeName[m_data_type];

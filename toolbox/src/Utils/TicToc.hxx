@@ -27,9 +27,7 @@
 #ifndef TIC_TOC_dot_HH
 #define TIC_TOC_dot_HH
 
-#ifdef UTILS_OS_WINDOWS
-  #include <windows.h>
-#else
+#ifndef UTILS_OS_WINDOWS
   #include <chrono>
   #include <thread>
 #endif
@@ -40,50 +38,28 @@ namespace Utils {
   class TicToc {
 
     typedef double real_type;
-    LARGE_INTEGER m_frequency;   // ticks per second
-    LARGE_INTEGER m_t1, m_t2;    // ticks
-    real_type     m_elapsed_time;
+    int64_t   m_frequency;   // ticks per second
+    int64_t   m_t1, m_t2;    // ticks
+    real_type m_elapsed_time;
 
     TicToc( TicToc const & ) = delete;
     TicToc const & operator = ( TicToc const & ) const = delete;
 
   public:
 
-    TicToc()
-    : m_elapsed_time(0)
-    { QueryPerformanceFrequency(&m_frequency); tic(); }
-
+    TicToc();
     ~TicToc() {}
 
-    void
-    tic()
-    { QueryPerformanceCounter(&m_t1); }
+    void tic();
+    void toc();
 
-    void
-    toc() {
-      QueryPerformanceCounter(&m_t2);
-      m_elapsed_time = (m_t2.QuadPart - m_t1.QuadPart) * 1000.0 / m_frequency.QuadPart;;
-    }
-
-    real_type
-    elapsed_s() const
-    { return 1e-3*m_elapsed_time; }
-
-    real_type
-    elapsed_ms() const
-    { return m_elapsed_time; }
+    real_type elapsed_s()  const { return 1e-3*m_elapsed_time; }
+    real_type elapsed_ms() const { return m_elapsed_time; }
 
   };
 
-  inline
-  void
-  sleep_for_seconds( unsigned s )
-  { Sleep(DWORD(s)*1000); }
-
-  inline
-  void
-  sleep_for_milliseconds( unsigned ms )
-  { Sleep(DWORD(ms)); }
+  void sleep_for_seconds( unsigned s );
+  void sleep_for_milliseconds( unsigned ms );
 
 #else
 

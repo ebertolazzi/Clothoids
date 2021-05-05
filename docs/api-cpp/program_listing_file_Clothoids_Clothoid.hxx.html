@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File Clothoid.hxx &#8212; Clothoids v2.0.5
+    <title>Program Listing for File Clothoid.hxx &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -575,9 +575,8 @@
 
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">bbox</span><span class="p">(</span>
+    <span class="nf">bbox</span><span class="p">(</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">xmin</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ymin</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">xmax</span><span class="p">,</span>
@@ -586,9 +585,8 @@
       <span class="n">bbox_ISO</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">bbox_ISO</span><span class="p">(</span>
+    <span class="nf">bbox_ISO</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">xmin</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ymin</span><span class="p">,</span>
@@ -598,67 +596,26 @@
 
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
-    <span class="k">virtual</span>
     <span class="n">real_type</span>
-    <span class="n">length</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">length</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_L</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="n">real_type</span>
-    <span class="n">length_ISO</span><span class="p">(</span> <span class="n">real_type</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="nf">length_ISO</span><span class="p">(</span> <span class="n">real_type</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
       <span class="n">UTILS_ERROR0</span><span class="p">(</span> <span class="s">"Offset length not available for Clothoids</span><span class="se">\n</span><span class="s">"</span> <span class="p">);</span>
       <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">thetaBegin</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">theta0</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">kappaBegin</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">kappa0</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">xBegin</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">x0</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">xEnd</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">m_L</span><span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">yBegin</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">y0</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">yEnd</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">m_L</span><span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">tx_Begin</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg0_x</span><span class="p">();</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">ty_Begin</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg0_y</span><span class="p">();</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">nx_Begin_ISO</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">nor0_x_ISO</span><span class="p">();</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">ny_Begin_ISO</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">nor0_y_ISO</span><span class="p">();</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">thetaBegin</span><span class="p">()</span>   <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">theta0</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">kappaBegin</span><span class="p">()</span>   <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">kappa0</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">xBegin</span><span class="p">()</span>       <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">x0</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">xEnd</span><span class="p">()</span>         <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">m_L</span><span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">yBegin</span><span class="p">()</span>       <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">y0</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">yEnd</span><span class="p">()</span>         <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">m_L</span><span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">tx_Begin</span><span class="p">()</span>     <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg0_x</span><span class="p">();</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">ty_Begin</span><span class="p">()</span>     <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg0_y</span><span class="p">();</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">nx_Begin_ISO</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">nor0_x_ISO</span><span class="p">();</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">ny_Begin_ISO</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">nor0_y_ISO</span><span class="p">();</span> <span class="p">}</span>
 
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
@@ -670,78 +627,43 @@
 <span class="cm">     |   |_|    \__,_|_| |_|\__,_| |_| \_|</span>
 <span class="cm">    \*/</span>
 
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">tx</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">ty</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">tx_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x_D</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">ty_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y_D</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">tx_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x_DD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">ty_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y_DD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">tx_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x_DDD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
-
-    <span class="k">virtual</span>
-    <span class="n">real_type</span>
-    <span class="n">ty_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
-    <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y_DDD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">tx</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">ty</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">tx_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x_D</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">ty_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y_D</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">tx_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x_DD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">ty_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y_DD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">tx_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_x_DDD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
+    <span class="n">real_type</span> <span class="nf">ty_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_y_DDD</span><span class="p">(</span> <span class="n">s</span> <span class="p">);</span> <span class="p">}</span>
 
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">tg</span><span class="p">(</span>
+    <span class="nf">tg</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">tx</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ty</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">tg_D</span><span class="p">(</span>
+    <span class="nf">tg_D</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">tx_D</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ty_D</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_D</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">tx_D</span><span class="p">,</span> <span class="n">ty_D</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">tg_DD</span><span class="p">(</span>
+    <span class="nf">tg_DD</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">tx_DD</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ty_DD</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">tg_DD</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">tx_DD</span><span class="p">,</span> <span class="n">ty_DD</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">tg_DDD</span><span class="p">(</span>
+    <span class="nf">tg_DDD</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">tx_DDD</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">ty_DDD</span>
@@ -751,27 +673,26 @@
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
     <span class="n">real_type</span>
-    <span class="n">theta</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">theta</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">theta</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">theta_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">theta_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">kappa</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">theta_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">theta_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">dk</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">theta_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">theta_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
     <span class="cp">#ifdef G2LIB_COMPATIBILITY_MODE</span>
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">evaluate</span><span class="p">(</span>
+    <span class="nf">evaluate</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">th</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">k</span><span class="p">,</span>
@@ -784,110 +705,105 @@
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
     <span class="n">real_type</span>
-    <span class="n">X</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">X_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X_D</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">X_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X_DD</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">X_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X_DDD</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y_D</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y_DD</span> <span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y_DD</span> <span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y_DD</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y_DDD</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">X_ISO</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X_ISO</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X_ISO</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">X_ISO_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X_ISO_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X_ISO_D</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">X_ISO_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X_ISO_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X_ISO_DD</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">X_ISO_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">X_ISO_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">X_ISO_DDD</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y_ISO</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y_ISO</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y_ISO</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y_ISO_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y_ISO_D</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y_ISO_D</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y_ISO_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y_ISO_DD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y_ISO_DD</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="n">real_type</span>
-    <span class="n">Y_ISO_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+    <span class="nf">Y_ISO_DDD</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">offs</span> <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">Y_ISO_DDD</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span> <span class="p">}</span>
 
     <span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval</span><span class="p">(</span>
+    <span class="nf">eval</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">y</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval_D</span><span class="p">(</span>
+    <span class="nf">eval_D</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x_D</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">y_D</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">x_D</span><span class="p">,</span> <span class="n">y_D</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval_DD</span><span class="p">(</span>
+    <span class="nf">eval_DD</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x_DD</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">y_DD</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">x_DD</span><span class="p">,</span> <span class="n">y_DD</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval_DDD</span><span class="p">(</span>
+    <span class="nf">eval_DDD</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x_DDD</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">y_DDD</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">x_DDD</span><span class="p">,</span> <span class="n">y_DDD</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval_ISO</span><span class="p">(</span>
+    <span class="nf">eval_ISO</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span>
@@ -895,9 +811,8 @@
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">eval_ISO</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">offs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval_ISO_D</span><span class="p">(</span>
+    <span class="nf">eval_ISO_D</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x_D</span><span class="p">,</span>
@@ -905,9 +820,8 @@
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">eval_ISO_D</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">offs</span><span class="p">,</span> <span class="n">x_D</span><span class="p">,</span> <span class="n">y_D</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval_ISO_DD</span><span class="p">(</span>
+    <span class="nf">eval_ISO_DD</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x_DD</span><span class="p">,</span>
@@ -915,9 +829,8 @@
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">eval_ISO_DD</span><span class="p">(</span> <span class="n">s</span><span class="p">,</span> <span class="n">offs</span><span class="p">,</span> <span class="n">x_DD</span><span class="p">,</span> <span class="n">y_DD</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">eval_ISO_DDD</span><span class="p">(</span>
+    <span class="nf">eval_ISO_DDD</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x_DDD</span><span class="p">,</span>
@@ -933,43 +846,37 @@
 <span class="cm">     |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|</span>
 <span class="cm">    \*/</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">translate</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">tx</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">ty</span> <span class="p">)</span> <span class="k">override</span>
+    <span class="nf">translate</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">tx</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">ty</span> <span class="p">)</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">x0</span> <span class="o">+=</span> <span class="n">tx</span><span class="p">;</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">y0</span> <span class="o">+=</span> <span class="n">ty</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">rotate</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">angle</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">cx</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">cy</span> <span class="p">)</span> <span class="k">override</span>
+    <span class="nf">rotate</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">angle</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">cx</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">cy</span> <span class="p">)</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span> <span class="n">angle</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">scale</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="nf">scale</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s</span> <span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
       <span class="n">m_CD</span><span class="p">.</span><span class="n">kappa0</span> <span class="o">/=</span> <span class="n">s</span><span class="p">;</span>
       <span class="n">m_CD</span><span class="p">.</span><span class="n">dk</span>     <span class="o">/=</span> <span class="n">s</span><span class="o">*</span><span class="n">s</span><span class="p">;</span>
       <span class="n">m_L</span>         <span class="o">*=</span> <span class="n">s</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">reverse</span><span class="p">()</span> <span class="k">override</span>
+    <span class="nf">reverse</span><span class="p">()</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">reverse</span><span class="p">(</span><span class="n">m_L</span><span class="p">);</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">changeOrigin</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">newx0</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">newy0</span> <span class="p">)</span> <span class="k">override</span>
+    <span class="nf">changeOrigin</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">newx0</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">newy0</span> <span class="p">)</span> <span class="k">override</span>
     <span class="p">{</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">newx0</span><span class="p">;</span> <span class="n">m_CD</span><span class="p">.</span><span class="n">y0</span> <span class="o">=</span> <span class="n">newy0</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="k">virtual</span>
     <span class="kt">void</span>
-    <span class="n">trim</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s_begin</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">s_end</span> <span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="nf">trim</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s_begin</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">s_end</span> <span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
       <span class="n">m_CD</span><span class="p">.</span><span class="n">origin_at</span><span class="p">(</span> <span class="n">s_begin</span> <span class="p">);</span>
       <span class="n">m_L</span> <span class="o">=</span> <span class="n">s_end</span> <span class="o">-</span> <span class="n">s_begin</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="kt">void</span>
-    <span class="n">changeCurvilinearOrigin</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s0</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">newL</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nf">changeCurvilinearOrigin</span><span class="p">(</span> <span class="n">real_type</span> <span class="n">s0</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">newL</span> <span class="p">)</span> <span class="p">{</span>
       <span class="n">m_CD</span><span class="p">.</span><span class="n">origin_at</span><span class="p">(</span> <span class="n">s0</span> <span class="p">);</span>
       <span class="n">m_L</span> <span class="o">=</span> <span class="n">newL</span><span class="p">;</span>
     <span class="p">}</span>
@@ -982,9 +889,8 @@
 <span class="cm">     |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|</span>
 <span class="cm">    \*/</span>
 
-    <span class="k">virtual</span>
     <span class="n">int_type</span>
-    <span class="n">closestPoint_ISO</span><span class="p">(</span>
+    <span class="nf">closestPoint_ISO</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">qx</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">qy</span><span class="p">,</span>
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span>
@@ -994,9 +900,8 @@
       <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">dst</span>
     <span class="p">)</span> <span class="k">const</span> <span class="k">override</span><span class="p">;</span>
 
-    <span class="k">virtual</span>
     <span class="n">int_type</span>
-    <span class="n">closestPoint_ISO</span><span class="p">(</span>
+    <span class="nf">closestPoint_ISO</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">qx</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">qy</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>

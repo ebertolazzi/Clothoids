@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------*\
  |                                                                          |
- |  Copyright (C) 2013                                                      |
+ |  Copyright (C) 2017                                                      |
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
@@ -13,46 +13,61 @@
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
  |      Universita` degli Studi di Trento                                   |
+ |      Via Sommarive 9, I-38123 Povo, Trento, Italy                        |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: GenericContainerConfig.hh
-//
+///
+/// file: TicToc.cc
+///
 
-#pragma once
+#include "Utils.hh"
 
-#ifndef GENERIC_CONTAINER_CONFIG_HH
-#define GENERIC_CONTAINER_CONFIG_HH
+#ifdef UTILS_OS_WINDOWS
 
-// check if compiler is C++11
-#if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
-    (defined(__cplusplus) && __cplusplus >= 201103L)
-#else
-  #error "must use a compiler >= c++11"
+#include <windows.h>
+
+namespace Utils {
+
+  #define TOINT64(A) (static_cast<int64_t>(A.HighPart) << 32) | A.LowPart
+
+  TicToc::TicToc() : m_elapsed_time(0) {
+    LARGE_INTEGER frequency;
+    QueryPerformanceFrequency(&frequency);
+    m_frequency = frequency.QuadPart;
+    tic();
+  }
+
+  void
+  TicToc::tic() {
+    LARGE_INTEGER t1;
+    QueryPerformanceCounter(&t1);
+    m_t1 = t1.QuadPart;
+  }
+
+  void
+  TicToc::toc() {
+    LARGE_INTEGER t2;
+    QueryPerformanceCounter(&t2);
+    m_t2 = t2.QuadPart;
+    m_elapsed_time = (m_t2 - m_t1) * 1000.0 / m_frequency;
+    ;
+  }
+
+  void
+  sleep_for_seconds(unsigned s) {
+    Sleep(DWORD(s) * 1000);
+  }
+
+  void
+  sleep_for_milliseconds(unsigned ms) {
+    Sleep(DWORD(ms));
+  }
+}
+
 #endif
 
-// Standard types
-#ifdef GENERIC_CONTAINER_ON_WINDOWS
-  #ifdef _MSC_VER
-    #include <stdint.h>
-  #else
-    typedef          __int8  int8_t;
-    typedef          __int16 int16_t;
-    typedef          __int32 int32_t;
-    typedef          __int64 int64_t;
-    typedef unsigned __int8  uint8_t;
-    typedef unsigned __int16 uint16_t;
-    typedef unsigned __int32 uint32_t;
-    typedef unsigned __int64 uint64_t;
-  #endif
-#else
-  #include <cstdint>
-#endif
-
-#endif
-
-//
-// eof: GenericContainerConfig.hh
-//
+///
+/// eof: TicToc.cc
+///

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class PolyLine &#8212; Clothoids v2.0.5
+    <title>Class PolyLine &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -111,6 +111,20 @@
 </dt>
 <dd>
 <p>MATLAB class wrapper for the underlying C++ class. </p>
+<p>Create a new C++ class instance for the polyline object</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PolyLine</span><span class="p">()</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>On output:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ref</span></code>: reference handle to the object instance </p></li>
+</ul>
+
 </dd>
 </dl>
 
@@ -125,35 +139,98 @@
 <dt id="_CPPv4N8PolyLine5buildE2in2in2in">
 <span id="_CPPv3N8PolyLine5buildE2in2in2in"></span><span id="_CPPv2N8PolyLine5buildE2in2in2in"></span><span id="PolyLine::build__in.in.in"></span><span class="target" id="a00100_1a54ecc8f3f3e8c551b6a7fc948fe76950"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build</span></code><span class="sig-paren">(</span><em><span class="pre">x</span></em>,<em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8PolyLine5buildE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Build a polyline object given a list of points</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: vector of x-coordinates of the points</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: vector of y-coordinates of the points </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8PolyLine6approxE2in2in2in">
 <span id="_CPPv3N8PolyLine6approxE2in2in2in"></span><span id="_CPPv2N8PolyLine6approxE2in2in2in"></span><span id="PolyLine::approx__in.in.in"></span><span class="target" id="a00100_1a842e2e17fa381c49e35cc69512c7f483"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">approx</span></code><span class="sig-paren">(</span><em><span class="pre">obj</span></em>,<em><span class="pre">tol</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8PolyLine6approxE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Approximate a curve of type</p>
+<p></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="class_a00096.html#a00096"><span class="std std-ref">LineSegment</span></a></p></li>
+<li><p><a class="reference internal" href="class_a00076.html#a00076"><span class="std std-ref">CircleArc</span></a></p></li>
+<li><p><a class="reference internal" href="class_a00068.html#a00068"><span class="std std-ref">Biarc</span></a></p></li>
+<li><p><a class="reference internal" href="class_a00080.html#a00080"><span class="std std-ref">ClothoidCurve</span></a></p></li>
+<li><p>ClothoisList</p></li>
+</ul>
+
+<p>with a polyline</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">approx</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">obj</span></code>: object storing the curve</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tol</span></code>: tolerance admitted </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8PolyLine7polygonE2in">
 <span id="_CPPv3N8PolyLine7polygonE2in"></span><span id="_CPPv2N8PolyLine7polygonE2in"></span><span id="PolyLine::polygon__in"></span><span class="target" id="a00100_1ae42aa9c4ff22fe8e0394239804aa99b7"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">polygon</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8PolyLine7polygonE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Return the points of the polyline (the polygon) </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8PolyLine10s_to_indexE2in2in">
 <span id="_CPPv3N8PolyLine10s_to_indexE2in2in"></span><span id="_CPPv2N8PolyLine10s_to_indexE2in2in"></span><span id="PolyLine::s_to_index__in.in"></span><span class="target" id="a00100_1aac050ea465a94fc88aba7bf8218c7023"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">s_to_index</span></code><span class="sig-paren">(</span><em><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8PolyLine10s_to_indexE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Return the index of the segment containing <code class="docutils literal notranslate"><span class="pre">s</span></code> curvilinear abscissa </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N8PolyLine4plotE2in2in">
 <span id="_CPPv3N8PolyLine4plotE2in2in"></span><span id="_CPPv2N8PolyLine4plotE2in2in"></span><span id="PolyLine::plot__in.in"></span><span class="target" id="a00100_1a6e32b674a0045efd8fd56229242ef1e0"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plot</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8PolyLine4plotE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the polyline</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+
+<span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"> </span><span class="c">% first arc of the biarc</span><span class="w"></span>
+<span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w">  </span><span class="c">% second arc of the biarc</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">fmt1</span><span class="p">,</span><span class="w"> </span><span class="n">fmt2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt1</span></code>: format of the odd segment</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt2</span></code>: format of the even segment </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">

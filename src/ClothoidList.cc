@@ -290,6 +290,22 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  ClothoidList::push_back( ClothoidList const & c ) {
+    m_s0.reserve( m_s0.size() + c.m_clotoidList.size() + 1 );
+    m_clotoidList.reserve( m_clotoidList.size() + c.m_clotoidList.size() );
+
+    if ( m_s0.empty() ) m_s0.push_back(0);
+
+    vector<ClothoidCurve>::const_iterator ip = c.m_clotoidList.begin();
+    for (; ip != c.m_clotoidList.end(); ++ip ) {
+      m_s0.push_back(m_s0.back()+ip->length());
+      m_clotoidList.push_back(*ip);
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   ClothoidList::push_back(
     real_type kappa0,
     real_type dkappa,

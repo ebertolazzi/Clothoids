@@ -40,9 +40,7 @@ namespace PolynomialRoots {
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-  //!
-  //! Check if cloating point number `x` is zero
-  //!
+  //! check if cloating point number `x` is zero
   static
   inline
   bool
@@ -56,18 +54,14 @@ namespace PolynomialRoots {
   isInfinite( valueType x )
   { return FP_INFINITE == std::fpclassify(x); }
 
-  //!
-  //! Check if cloating point number `x` is Not A Number
-  //!
+  //! check if cloating point number `x` is Not A Number
   static
   inline
   bool
   isNaN( valueType x )
   { return FP_NAN == std::fpclassify(x); }
 
-  //!
-  //! Check if cloating point number `x` is regural (i.e. finite and not NaN)
-  //!
+  //! check if cloating point number `x` is regural (i.e. finite and not NaN)
   static
   inline
   bool
@@ -75,9 +69,7 @@ namespace PolynomialRoots {
   { return !( FP_INFINITE == std::fpclassify(x) ||
               FP_NAN      == std::fpclassify(x) ); }
 
-  //!
-  //! Evaluate real polynomial
-  //!
+  //! evaluate real polynomial
   valueType
   evalPoly(
     valueType const op[],
@@ -101,9 +93,7 @@ namespace PolynomialRoots {
     valueType     & x
   );
 
-  //!
-  //! Evaluate real polynomial with complex value
-  //!
+  //! evaluate real polynomial with complex value
   std::complex<valueType>
   evalPolyC(
     valueType const                 op[],
@@ -306,10 +296,8 @@ namespace PolynomialRoots {
      */
     indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
 
-    //!
     //! the first real root
-    //!
-    valueType real_root0() const { return r0; }
+    valueType real_root0() const { return r0; } 
 
     //! the second real root
     valueType real_root1() const { return r1; }

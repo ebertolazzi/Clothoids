@@ -565,11 +565,10 @@ GC_set_map() {
   return GENERIC_CONTAINER_OK;
 }
 
-/*!
- *  \brief
- *  Set the position of insertion point is at the `pos` element
- *  of the actual map.
- */
+//!
+//! Set the position of insertion point is at the `pos` element
+//! of the actual map.
+//!
 
 int
 GC_push_map_position( char const * pos ) {

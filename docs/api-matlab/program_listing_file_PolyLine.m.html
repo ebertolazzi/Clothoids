@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File PolyLine.m &#8212; Clothoids v2.0.5
+    <title>Program Listing for File PolyLine.m &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -77,6 +77,22 @@
 <div class="highlight"><pre><span></span><span class="k">classdef</span><span class="w"> </span><span class="n">PolyLine</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">CurveBase</span><span class="w"></span>
 <span class="w">  </span><span class="c">%&gt; MATLAB class wrapper for the underlying C++ class</span><span class="w"></span>
 <span class="w">  </span><span class="k">methods</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Create a new C++ class instance for the</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; polyline object</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref = PolyLine()</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ref`: reference handle to the object instance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>self<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">PolyLine</span><span class="p">(</span> <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">self</span><span class="p">@</span><span class="n">CurveBase</span><span class="p">(</span><span class="w"> </span><span class="s">'PolyLineMexWrapper'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PolyLineMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'new'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -86,24 +102,84 @@
 <span class="w">      </span><span class="n">str</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'PolyLine'</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Build a polyline object given a list of points</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref.build( x, y );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `x`:  vector of x-coordinates of the points</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `y`:  vector of y-coordinates of the points</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">PolyLineMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'build'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Approximate a curve of type</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - LineSegment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - CircleArc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - Biarc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - ClothoidCurve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - ClothoisList</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; with a polyline</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref.approx( obj, tol );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `obj`:  object storing the curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `tol`:  tolerance admitted</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">approx</span><span class="p">(</span> self, obj, tol <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">PolyLineMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'approx'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="p">,</span><span class="w"> </span><span class="n">obj</span><span class="p">.</span><span class="n">is_type</span><span class="p">()</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Return the points of the polyline (the polygon)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x, y ] = polygon</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PolyLineMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'polygon'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Return the index of the segment containing `s` curvilinear abscissa</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>idx<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">s_to_index</span><span class="p">(</span> self, s <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">idx</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">PolyLineMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'s_to_index'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the polyline</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot( fmt1, fmt2 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt1`: format of the odd segment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt2`: format of the even segment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="w">        </span><span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
