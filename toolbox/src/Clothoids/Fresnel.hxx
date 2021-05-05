@@ -42,16 +42,16 @@ namespace G2lib {
     real_type & S
   );
 
-  /*!
-   * \brief Compute Fresnel integrals and its derivatives
-   *
-   * \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
-   *     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
-   * \param nk maximum order of the derivative
-   * \param x  the input abscissa
-   * \param S  S[0]=\f$ S(x) \f$, S[1]=\f$ S'(x) \f$, S[2]=\f$ S''(x) \f$
-   * \param C  C[0]=\f$ C(x) \f$, C[1]=\f$ C'(x) \f$, C[2]=\f$ C''(x) \f$
-   */
+  //!
+  //! Compute Fresnel integrals and its derivatives
+  //!
+  //! \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
+  //!     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
+  //! \param nk maximum order of the derivative
+  //! \param x  the input abscissa
+  //! \param S  S[0]=\f$ S(x) \f$, S[1]=\f$ S'(x) \f$, S[2]=\f$ S''(x) \f$
+  //! \param C  C[0]=\f$ C(x) \f$, C[1]=\f$ C'(x) \f$, C[2]=\f$ C''(x) \f$
+  //!
   void
   FresnelCS(
     int_type    nk,
@@ -60,21 +60,21 @@ namespace G2lib {
     real_type * S
   );
 
-  /*!
-   * \brief Compute the Fresnel integrals
-   * 
-   * \f[
-   *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
-   *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
-   * \f]
-   * 
-   * \param nk   number of momentae to compute
-   * \param a    parameter \f$ a \f$
-   * \param b    parameter \f$ b \f$
-   * \param c    parameter \f$ c \f$
-   * \param intC cosine integrals,
-   * \param intS sine integrals
-   */
+  //!
+  //! Compute the Fresnel integrals
+  //!
+  //! \f[
+  //!   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
+  //!   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
+  //! \f]
+  //!
+  //! \param nk   number of momentae to compute
+  //! \param a    parameter \f$ a \f$
+  //! \param b    parameter \f$ b \f$
+  //! \param c    parameter \f$ c \f$
+  //! \param intC cosine integrals,
+  //! \param intS sine integrals
+  //!
   void
   GeneralizedFresnelCS(
     int_type    nk,
@@ -85,19 +85,19 @@ namespace G2lib {
     real_type * intS
   );
 
-  /*!
-   * \brief Compute the Fresnel integrals
-   * 
-   * \f[
-   *   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
-   *   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
-   * \f]
-   * \param a      parameter \f$ a \f$
-   * \param b      parameter \f$ b \f$
-   * \param c      parameter \f$ c \f$
-   * \param intC   cosine integrals,
-   * \param intS   sine integrals
-   */
+  //!
+  //! Compute the Fresnel integrals
+  //!
+  //! \f[
+  //!   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
+  //!   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
+  //! \f]
+  //! \param a      parameter \f$ a \f$
+  //! \param b      parameter \f$ b \f$
+  //! \param c      parameter \f$ c \f$
+  //! \param intC   cosine integrals,
+  //! \param intS   sine integrals
+  //!
   void
   GeneralizedFresnelCS(
     real_type   a,
@@ -109,7 +109,11 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  //! data storage for clothoid type curve
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+  //!
+  //! Data storage for clothoid type curve
+  //!
   class ClothoidData {
   public:
 
@@ -131,7 +135,9 @@ namespace G2lib {
     deltaTheta( real_type s ) const
     { return s*(kappa0 + 0.5*s*dk); }
 
-    //! return angle at curvilinear coordinate `s`
+    //!
+    //! Return angle at curvilinear coordinate `s`
+    //!
     real_type theta
     ( real_type s ) const
     { return theta0 + s*(kappa0 + 0.5*s*dk); }
@@ -140,7 +146,9 @@ namespace G2lib {
     real_type theta_DD ( real_type   ) const { return dk; }
     real_type theta_DDD( real_type   ) const { return 0; }
 
-    //! return curvature at curvilinear coordinate `s`
+    //!
+    //! Return curvature at curvilinear coordinate `s`
+    //!
     real_type kappa    ( real_type s ) const { return kappa0 + s*dk; }
     real_type kappa_D  ( real_type   ) const { return dk; }
     real_type kappa_DD ( real_type   ) const { return 0; }
@@ -434,6 +442,8 @@ namespace G2lib {
     info( ostream_type & s ) const;
 
   };
+
+  #endif
 
 }
 

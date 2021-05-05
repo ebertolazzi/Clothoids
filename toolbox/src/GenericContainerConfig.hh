@@ -35,11 +35,6 @@
 
 // Standard types
 #ifdef GENERIC_CONTAINER_ON_WINDOWS
-  // se in windows includo PRIMA windows.h per evitare conflitti!
-  #ifndef WIN32_LEAN_AND_MEAN
-    #define WIN32_LEAN_AND_MEAN
-  #endif
-  #include <windows.h>
   #ifdef _MSC_VER
     #include <stdint.h>
   #else

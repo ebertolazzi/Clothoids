@@ -1,18 +1,18 @@
-%======================================================================%
-%  TriTriOverlap:  Check if two triangles overlap                      %
-%                                                                      %
-%  USAGE:                                                              %
-%    intersect = TriTriOverlap( p0, p1, p2, q0, q1, q2 );             %
-%                                                                      %
-%  On input:                                                           %
-%                                                                      %
-%    p0, p1, p2 = coodinates of first triangle                         %
-%    q0, q1, q2 = coodinates of second triangle                        %
-%                                                                      %
-%  On output:                                                          %
-%                                                                      %
-%    intersect = true if the triangle overlap                          %
-%                                                                      %
+%> TriTriOverlap:  Check if two triangles overlap
+%>
+%> **Usage:**
+%>
+%>     intersect = TriTriOverlap( p0, p1, p2, q0, q1, q2 );
+%>
+%> **On input:**
+%>
+%> - p0, p1, p2 = coordinates of first triangle
+%> - q0, q1, q2 = coordinates of second triangle
+%>
+%> **On output:**
+%>
+%> - intersect = true if the triangle overlap
+%>
 %======================================================================%
 %                                                                      %
 %  Autor: Enrico Bertolazzi                                            %
@@ -22,5 +22,5 @@
 %                                                                      %
 %======================================================================%
 function intersect = TriTriOverlap( p0, p1, p2, q0, q1, q2 )
-  error('this function is mex only. Run CompileLib.m script to build')
+  error('this function is mex only. Run CompileClothoidsLib.m script to build')
 end

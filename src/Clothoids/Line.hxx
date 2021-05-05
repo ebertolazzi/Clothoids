@@ -31,7 +31,9 @@ namespace G2lib {
    |  |_____|_|_| |_|\___|
   \*/
 
+  //!
   //! Class to manage a straight segment
+  //!
   class LineSegment : public BaseCurve {
 
     friend class CircleArc;
@@ -68,7 +70,9 @@ namespace G2lib {
     explicit
     LineSegment( BaseCurve const & C );
 
-    //! construct a circle curve with the standard parameters
+    //!
+    //! Construct a circle curve with the standard parameters
+    //!
     explicit
     LineSegment(
       real_type _x0,
@@ -100,12 +104,10 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     real_type
     length() const override
     { return m_L; }
 
-    virtual
     real_type
     length_ISO( real_type ) const override
     { return m_L; }
@@ -118,7 +120,6 @@ namespace G2lib {
      |  |_.__/|_.__/ \___/_/\_\
     \*/
 
-    virtual
     void
     bbox(
       real_type & xmin,
@@ -127,7 +128,6 @@ namespace G2lib {
       real_type & ymax
     ) const override;
 
-    virtual
     void
     bbox_ISO(
       real_type   offs,
@@ -217,37 +217,33 @@ namespace G2lib {
      |              |___/
     \*/
 
-    virtual real_type tx_Begin() const override { return m_c0; }
-    virtual real_type ty_Begin() const override { return m_s0; }
-    virtual real_type tx_End()   const override { return m_c0; }
-    virtual real_type ty_End()   const override { return m_s0; }
+    real_type tx_Begin() const override { return m_c0; }
+    real_type ty_Begin() const override { return m_s0; }
+    real_type tx_End()   const override { return m_c0; }
+    real_type ty_End()   const override { return m_s0; }
 
-    virtual real_type nx_Begin_ISO() const override { return -m_s0; }
-    virtual real_type ny_Begin_ISO() const override { return m_c0; }
-    virtual real_type nx_End_ISO()   const override { return -m_s0; }
-    virtual real_type ny_End_ISO()   const override { return m_c0; }
+    real_type nx_Begin_ISO() const override { return -m_s0; }
+    real_type ny_Begin_ISO() const override { return m_c0; }
+    real_type nx_End_ISO()   const override { return -m_s0; }
+    real_type ny_End_ISO()   const override { return m_c0; }
 
-    virtual real_type xBegin() const override { return m_x0; }
-    virtual real_type yBegin() const override { return m_y0; }
-    virtual real_type xEnd()   const override { return m_x0+m_L*m_c0; }
-    virtual real_type yEnd()   const override { return m_y0+m_L*m_s0; }
+    real_type xBegin() const override { return m_x0; }
+    real_type yBegin() const override { return m_y0; }
+    real_type xEnd()   const override { return m_x0+m_L*m_c0; }
+    real_type yEnd()   const override { return m_y0+m_L*m_s0; }
 
-    virtual
     real_type
     xBegin_ISO( real_type offs ) const override
     { return m_x0+offs*nx_Begin_ISO(); }
 
-    virtual
     real_type
     yBegin_ISO( real_type offs ) const override
     { return m_y0+offs*ny_Begin_ISO(); }
 
-    virtual
     real_type
     xEnd_ISO( real_type offs ) const override
     { return xEnd()+offs*nx_Begin_ISO(); }
 
-    virtual
     real_type
     yEnd_ISO( real_type offs ) const override
     { return yEnd()+offs*ny_Begin_ISO(); }
@@ -260,22 +256,18 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    virtual
     real_type
     theta( real_type ) const override
     { return m_theta0; }
 
-    virtual
     real_type
     theta_D( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     theta_DD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     theta_DDD( real_type ) const override
     { return 0; }
@@ -289,113 +281,69 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    virtual
-    real_type
-    tx( real_type ) const override
-    { return m_c0; }
-
-    virtual
-    real_type
-    ty( real_type ) const override
-    { return m_s0; }
-
-    virtual
-    real_type
-    tx_D( real_type ) const override
-    { return 0; }
-
-    virtual
-    real_type
-    ty_D( real_type ) const override
-    { return 0; }
-
-    virtual
-    real_type
-    tx_DD( real_type ) const override
-    { return 0; }
-
-    virtual
-    real_type
-    ty_DD( real_type ) const override
-    { return 0; }
-
-    virtual
-    real_type
-    tx_DDD( real_type ) const override
-    { return 0; }
-
-    virtual
-    real_type
-    ty_DDD( real_type ) const override
-    { return 0; }
+    real_type tx( real_type ) const override { return m_c0; }
+    real_type ty( real_type ) const override { return m_s0; }
+    real_type tx_D( real_type ) const override { return 0; }
+    real_type ty_D( real_type ) const override { return 0; }
+    real_type tx_DD( real_type ) const override { return 0; }
+    real_type ty_DD( real_type ) const override { return 0; }
+    real_type tx_DDD( real_type ) const override { return 0; }
+    real_type ty_DDD( real_type ) const override { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     tg( real_type, real_type & tx, real_type & ty ) const override
     { tx = m_c0; ty = m_s0; }
 
-    virtual
     void
     tg_D( real_type, real_type & tx_D, real_type & ty_D ) const override
     { tx_D = ty_D = 0; }
 
-    virtual
     void
     tg_DD( real_type, real_type & tx_DD, real_type & ty_DD ) const override
     { tx_DD = ty_DD = 0; }
 
-    virtual
     void
     tg_DDD( real_type, real_type & tx_DDD, real_type & ty_DDD ) const override
     { tx_DDD = ty_DDD = 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     real_type
     X( real_type s ) const override
     { return m_x0+s*m_c0; }
 
-    virtual
     real_type
     Y( real_type s ) const override
     { return m_y0+s*m_s0; }
 
-    virtual
     real_type
     X_D( real_type ) const override
     { return m_c0; }
 
-    virtual
     real_type
     Y_D( real_type ) const override
     { return m_s0; }
 
-    virtual
     real_type
     X_DD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     Y_DD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     X_DDD( real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     Y_DDD( real_type ) const override
     { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     eval(
       real_type   s,
@@ -406,7 +354,6 @@ namespace G2lib {
       y = m_y0+s*m_s0;
     }
 
-    virtual
     void
     eval_D(
       real_type,
@@ -417,7 +364,6 @@ namespace G2lib {
       y_D = m_s0;
     }
 
-    virtual
     void
     eval_DD(
       real_type,
@@ -428,7 +374,6 @@ namespace G2lib {
       y_DD = 0;
     }
 
-    virtual
     void
     eval_DDD(
       real_type,
@@ -447,49 +392,40 @@ namespace G2lib {
      |  \___/|_| |_| |___/\___|\__|
     \*/
 
-    virtual
     real_type
     X_ISO( real_type s, real_type offs ) const override
     { return m_x0 + s*m_c0 + offs*nx_Begin_ISO(); }
 
-    virtual
     real_type
     Y_ISO( real_type s, real_type offs ) const override
     { return m_y0 + s*m_s0 + offs*ny_Begin_ISO(); }
 
-    virtual
     real_type
     X_ISO_D( real_type, real_type ) const override
     { return m_c0; }
 
-    virtual
     real_type
     Y_ISO_D( real_type, real_type ) const override
     { return m_s0; }
 
-    virtual
     real_type
     X_ISO_DD( real_type, real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     Y_ISO_DD( real_type, real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     X_ISO_DDD( real_type, real_type ) const override
     { return 0; }
 
-    virtual
     real_type
     Y_ISO_DDD( real_type, real_type ) const override
     { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    virtual
     void
     eval_ISO(
       real_type   s,
@@ -501,7 +437,6 @@ namespace G2lib {
       y = m_y0 + s*m_s0 + offs*ny_Begin_ISO();
     }
 
-    virtual
     void
     eval_ISO_D(
       real_type,
@@ -513,7 +448,6 @@ namespace G2lib {
       y_D = m_s0;
     }
 
-    virtual
     void
     eval_ISO_DD(
       real_type,
@@ -524,7 +458,6 @@ namespace G2lib {
       x_DD = y_DD = 0;
     }
 
-    virtual
     void
     eval_ISO_DDD(
       real_type,
@@ -543,30 +476,24 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    virtual
     void
     translate( real_type tx, real_type ty ) override
     { m_x0 += tx; m_y0 += ty; }
 
-    virtual
     void
     rotate( real_type angle, real_type cx, real_type cy ) override;
 
-    virtual
     void
     reverse() override;
 
-    virtual
     void
     changeOrigin( real_type newx0, real_type newy0 ) override
     { m_x0 = newx0; m_y0 = newy0; }
 
-    virtual
     void
     scale( real_type sc ) override
     { m_L *= sc; }
 
-    virtual
     void
     trim( real_type s_begin, real_type s_end ) override {
       m_x0 += m_c0 * s_begin;
@@ -582,22 +509,21 @@ namespace G2lib {
      |  \__,_|_|___/\__\__,_|_| |_|\___\___|
     \*/
 
-    /*!
-     *  \brief compute the point at minimum distance from a point `[x,y]` and the line segment
-     *
-     *  \param qx  x-coordinate
-     *  \param qy  y-coordinate
-     *  \param x   x-coordinate of the closest point
-     *  \param y   y-coordinate of the closest point
-     *  \param s   param of the closest point
-     *  \param t   signed distance if projection is orthogonal to segment
-     *  \param dst signed distance from the segment
-     *  \return 1 = point is projected orthogonal
-     *          0 = more than one projection (first returned)
-     *         -1 = minimum point is not othogonal projection to curve
-     */
+    //!
+    //! Compute the point at minimum distance from a point `[x,y]` and the line segment
+    //!
+    //! \param[in]  qx  x-coordinate
+    //! \param[in]  qy  y-coordinate
+    //! \param[out] x   x-coordinate of the closest point
+    //! \param[out] y   y-coordinate of the closest point
+    //! \param[out] s   param of the closest point
+    //! \param[out] t   signed distance if projection is orthogonal to segment
+    //! \param[out] dst signed distance from the segment
+    //! \return 1 = point is projected orthogonal
+    //!         0 = more than one projection (first returned)
+    //!        -1 = minimum point is not othogonal projection to curve
+    //!
 
-    virtual
     int_type
     closestPoint_ISO(
       real_type   qx,
@@ -609,7 +535,6 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    virtual
     int_type
     closestPoint_ISO(
       real_type   qx,
@@ -622,7 +547,6 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    virtual
     void
     info( ostream_type & stream ) const override
     { stream << "LineSegment\n" << *this << '\n'; }
@@ -646,7 +570,9 @@ namespace G2lib {
       m_L      = L;
     }
 
-    //! construct a clothoid with the standard parameters
+    //!
+    //! Construct a clothoid with the standard parameters
+    //!
     void
     build_2P(
       real_type _x0,
@@ -655,7 +581,9 @@ namespace G2lib {
       real_type _y1
     );
 
-    //! construct a clothoid with the standard parameters
+    //!
+    //! Construct a clothoid with the standard parameters
+    //!
     void
     build_2P( real_type const p0[2], real_type const p1[2] )
     { build_2P( p0[0], p0[1], p1[0], p1[1] ); }

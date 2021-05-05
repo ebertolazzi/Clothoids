@@ -19,7 +19,9 @@
 
 #include "Utils.hh"
 
-#ifndef UTILS_OS_WINDOWS
+#ifdef UTILS_OS_WINDOWS
+#include <windows.h>
+#else
 #include <execinfo.h> // for backtrace
 #include <dlfcn.h>    // for dladdr
 #include <cxxabi.h>   // for __cxa_demangle

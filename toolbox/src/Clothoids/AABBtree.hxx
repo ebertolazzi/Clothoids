@@ -45,7 +45,9 @@ namespace G2lib {
    |  | |_) | |_) | (_) >  <
    |  |____/|____/ \___/_/\_\
   \*/
+  //!
   //! Class to manipulate bounding box
+  //!
   class BBox {
   public:
     #ifdef G2LIB_USE_CXX11
@@ -66,16 +68,16 @@ namespace G2lib {
 
   public:
 
-    /*!
-     * Construct a bounding box with additional information
-     *
-     * \param[in] xmin x-minimimum box coordinate 
-     * \param[in] ymin y-minimimum box coordinate 
-     * \param[in] xmax x-maximum box coordinate 
-     * \param[in] ymax y-maximum box coordinate
-     * \param[in] id   identifier of the box
-     * \param[in] ipos ranking position of the box
-     */
+    //!
+    //! Construct a bounding box with additional information
+    //!
+    //! \param[in] xmin x-minimimum box coordinate
+    //! \param[in] ymin y-minimimum box coordinate
+    //! \param[in] xmax x-maximum box coordinate
+    //! \param[in] ymax y-maximum box coordinate
+    //! \param[in] id   identifier of the box
+    //! \param[in] ipos ranking position of the box
+    //!
     BBox(
       real_type xmin,
       real_type ymin,
@@ -92,13 +94,13 @@ namespace G2lib {
       m_ipos = ipos;
     }
 
-    /*!
-     * Build a buonding box that cover a list of bounding box
-     *
-     * \param[in] bboxes list of bounding box 
-     * \param[in] id     identifier of the box
-     * \param[in] ipos   ranking position of the box
-     */
+    //!
+    //! Build a buonding box that cover a list of bounding box
+    //!
+    //! \param[in] bboxes list of bounding box
+    //! \param[in] id     identifier of the box
+    //! \param[in] ipos   ranking position of the box
+    //!
     BBox(
       vector<PtrBBox> const & bboxes,
       int_type                id,
@@ -119,7 +121,9 @@ namespace G2lib {
     int_type const & Id()   const { return m_id; }   //!< return BBOX id
     int_type const & Ipos() const { return m_ipos; } //!< return BBOX position
 
+    //!
     //! copy a bbox
+    //!
     BBox const &
     operator = ( BBox const & rhs ) {
       m_xmin = rhs.m_xmin;
@@ -131,7 +135,9 @@ namespace G2lib {
       return *this;
     }
 
+    //!
     //! detect if two bbox collide
+    //!
     bool
     collision( BBox const & box ) const {
       return !( (box.m_xmin > m_xmax ) ||
@@ -140,19 +146,27 @@ namespace G2lib {
                 (box.m_ymax < m_ymin ) );
     }
 
+    //!
     //! Build bbox for a list of bbox
+    //!
     void
     join( vector<PtrBBox> const & bboxes );
 
+    //!
     //! distance of the point `(x,y)` to the bbox
+    //!
     real_type
     distance( real_type x, real_type y ) const;
 
-    //! maximum distance of the point `(x,y)` to the point of bbox
+    //!
+    //! Maximum distance of the point `(x,y)` to the point of bbox
+    //!
     real_type
     maxDistance( real_type x, real_type y ) const;
 
-    //! pretty print a bbox
+    //!
+    //! Pretty print a bbox
+    //!
     void
     print( ostream_type & stream ) const {
       fmt::print( stream,
@@ -164,7 +178,9 @@ namespace G2lib {
     friend class AABBtree;
   };
 
-  //! pretty print a bbox
+  //!
+  //! Pretty print a bbox
+  //!
   inline
   ostream_type &
   operator << ( ostream_type & stream, BBox const & bb ) {
@@ -179,16 +195,16 @@ namespace G2lib {
    |   / ___ \  / ___ \| |_) | |_) | |_| | |  __/  __/
    |  /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
-  /*!
-   *  Class to build and manage an AABB tree (Axis-Aligned Bounding Box Trees)
-   *
-   *  The class provides 2-dimensional aabb-tree construction and search
-   *  for arbitrary collections of spatial objects.
-   *  These tree-based indexing structures are useful when seeking to implement
-   *  efficient spatial queries, reducing the complexity of intersection tests
-   *  between collections of objects.
-   *
-   */
+  //!
+  //! Class to build and manage an AABB tree (Axis-Aligned Bounding Box Trees)
+  //!
+  //! The class provides 2-dimensional aabb-tree construction and search
+  //! for arbitrary collections of spatial objects.
+  //! These tree-based indexing structures are useful when seeking to implement
+  //! efficient spatial queries, reducing the complexity of intersection tests
+  //! between collections of objects.
+  //!
+  //!
   class AABBtree {
   public:
 
@@ -212,17 +228,17 @@ namespace G2lib {
 
     AABBtree( AABBtree const & tree );
 
-    /*!
-     * Compute the minimum of the maximum distance
-     * between a point and the bbox contained in the `AABBtree`
-     *
-     * \param[in] x      x-coordinate of the point
-     * \param[in] y      y-coordinate of the point
-     * \param[in] tree   `AABBtree` with the bboxes
-     * \param[in] mmDist initial value of the minimum of the maximum distance
-     *                   used in the recursive call. 
-     *
-     */
+    //!
+    //! Compute the minimum of the maximum distance
+    //! between a point and the bbox contained in the `AABBtree`
+    //!
+    //! \param[in] x      x-coordinate of the point
+    //! \param[in] y      y-coordinate of the point
+    //! \param[in] tree   `AABBtree` with the bboxes
+    //! \param[in] mmDist initial value of the minimum of the maximum distance
+    //!                   used in the recursive call.
+    //!
+    //!
     static
     real_type
     min_maxdist(
@@ -232,16 +248,16 @@ namespace G2lib {
       real_type        mmDist
     );
 
-    /*!
-     * Select the candidate bboxes which have distance less than mmDist
-     *
-     * \param[in]  x      x-coordinate of the point
-     * \param[in]  y      y-coordinate of the point
-     * \param[in]  mmDist minimum distance used  for the selection of bboxes
-     * \param[in]  tree   `AABBtree` with the bbox's
-     * \param[out] candidateList  list of bbox which have minim distance less than `mmDist`
-     *
-     */
+    //!
+    //! Select the candidate bboxes which have distance less than mmDist
+    //!
+    //! \param[in]  x      x-coordinate of the point
+    //! \param[in]  y      y-coordinate of the point
+    //! \param[in]  mmDist minimum distance used  for the selection of bboxes
+    //! \param[in]  tree   `AABBtree` with the bbox's
+    //! \param[out] candidateList  list of bbox which have minim distance less than `mmDist`
+    //!
+    //!
     static
     void
     min_maxdist_select(
@@ -263,14 +279,14 @@ namespace G2lib {
 
     bool empty() const; //!< check if AABB tree is empty
 
-    /*!
-     * Initialize the AABB tree woth a bbox
-     *
-     * \param[in] xmin x-minimimum box coordinate 
-     * \param[in] ymin y-minimimum box coordinate 
-     * \param[in] xmax x-maximum box coordinate 
-     * \param[in] ymax y-maximum box coordinate
-     */
+    //!
+    //! Initialize the AABB tree woth a bbox
+    //!
+    //! \param[in] xmin x-minimimum box coordinate
+    //! \param[in] ymin y-minimimum box coordinate
+    //! \param[in] xmax x-maximum box coordinate
+    //! \param[in] ymax y-maximum box coordinate
+    //!
     void
     bbox(
       real_type & xmin,
@@ -284,23 +300,26 @@ namespace G2lib {
       ymax = pBBox->m_ymax;
     }
 
-    //! build AABB tree given a list of bbox
+    //!
+    //! Build AABB tree given a list of bbox
+    //!
     void
     build( vector<PtrBBox> const & bboxes );
 
-    //! pretty print the AABB tree
+    //!
+    //! Pretty print the AABB tree
+    //!
     void
     print( ostream_type & stream, int level = 0 ) const;
 
-    /*!
-     * Check if two AABB tree collide
-     *
-     * \param[in] tree      an AABB tree that is used to check collision
-     * \param[in] ifun      function the check if the contents of two bbox (curve) collide
-     * \param[in] swap_tree if true exchange the tree in computation
-     * \return true if the two tree collides
-     *
-     */
+    //!
+    //! Check if two AABB tree collide
+    //!
+    //! \param[in] tree      an AABB tree that is used to check collision
+    //! \param[in] ifun      function the check if the contents of two bbox (curve) collide
+    //! \param[in] swap_tree if true exchange the tree in computation
+    //! \return true if the two tree collides
+    //!
     template <typename COLLISION_fun>
     bool
     collision(
@@ -348,14 +367,14 @@ namespace G2lib {
       return false;
     }
 
-    /*!
-     * Compute all the intersection of AABB trees
-     *
-     * \param[in]  tree             an AABB tree that is used to check collision
-     * \param[out] intersectionList list of pair bbox that overlaps
-     * \param[in]  swap_tree        if true exchange the tree in computation
-     *
-     */
+    //!
+    //! Compute all the intersection of AABB trees
+    //!
+    //! \param[in]  tree             an AABB tree that is used to check collision
+    //! \param[out] intersectionList list of pair bbox that overlaps
+    //! \param[in]  swap_tree        if true exchange the tree in computation
+    //!
+    //!
     void
     intersect(
       AABBtree const & tree,
@@ -363,14 +382,14 @@ namespace G2lib {
       bool             swap_tree = false
     ) const;
 
-    /*!
-     * Select all the bboxes candidate to be at minimum distance
-     *
-     * \param[in]  x             x-coordinate of the point
-     * \param[in]  y             y-coordinate of the point
-     * \param[out] candidateList candidate list
-     *
-     */
+    //! 
+    //! Select all the bboxes candidate to be at minimum distance
+    //! 
+    //! \param[in]  x             x-coordinate of the point
+    //! \param[in]  y             y-coordinate of the point
+    //! \param[out] candidateList candidate list
+    //! 
+    //! 
     void
     min_distance(
       real_type    x,

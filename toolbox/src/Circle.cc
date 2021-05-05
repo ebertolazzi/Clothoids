@@ -396,7 +396,6 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  //! get the bounding box triangle (if angle variation less that pi/3)
   bool
   CircleArc::bbTriangle(
     real_type & xx0, real_type & yy0,
@@ -422,7 +421,6 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  //! get the bounding box triangle (if angle variation less that pi/3)
   bool
   CircleArc::bbTriangle_ISO(
     real_type   offs,

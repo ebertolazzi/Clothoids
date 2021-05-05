@@ -31,7 +31,7 @@
  *
  *
  *  Other information are available from the Web page
- *  http:<i>//www.acm.org/jgt/papers/GuigueDevillers03/
+ *  http://www.acm.org/jgt/papers/GuigueDevillers03/
  *
  */
 /*

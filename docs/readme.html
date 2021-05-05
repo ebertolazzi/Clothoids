@@ -7,17 +7,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clothoids &#8212; Clothoids  documentation</title>
+    <title>Clothoids &#8212; Clothoids v2.0.5
+</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" type="text/css" href="_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
     <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
 
@@ -39,8 +43,8 @@
 
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Matlab Interface" href="manual.html" />
-    <link rel="prev" title="Clothoids" href="index.html" /> 
+    <link rel="next" title="C++ API" href="api-cpp/root.html" />
+    <link rel="prev" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc" href="index.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head><body>
     <div class="relbar-top">
@@ -55,12 +59,12 @@
           <a href="index.html" title="Table Of Contents"
              accesskey="C">toc</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="manual.html" title="Matlab Interface"
+          <a href="api-cpp/root.html" title="C++ API"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="index.html" title="Clothoids"
+          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">Clothoids  documentation</a> &#187;</li>
+    <li><a href="index.html">Clothoids</a> &#187;</li>
 
         <li class="nav-item nav-item-this"><a href="">Clothoids</a></li> 
       </ul>
@@ -76,12 +80,11 @@
   <div class="section" id="clothoids">
 <h1>Clothoids<a class="headerlink" href="#clothoids" title="Permalink to this headline">¶</a>
 </h1>
-<a class="reference external image-reference" href="https://travis-ci.org/ebertolazzi/Clothoids"><img alt="Build Status" src="https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master"></a>
-<a class="reference external image-reference" href="https://it.mathworks.com/matlabcentral/fileexchange/64849-ebertolazzi-clothoids"><img alt="View ebertolazzi/Clothoids on File Exchange" src="https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg"></a>
-<p>G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc</p>
-<p><em>by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and Marco Frego (m.fregox@gmail.com)</em></p>
-<p>for the documentation see
-<a class="reference external" href="http://ebertolazzi.github.io/Clothoids/">online documentation</a></p>
+<p><a class="reference external" href="https://travis-ci.org/ebertolazzi/Clothoids"><img alt="Build Status" src="https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master"></a> <a class="reference external" href="https://it.mathworks.com/matlabcentral/fileexchange/64849-ebertolazzi-clothoids"><img alt="View ebertolazzi/Clothoids on File Exchange" src="https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg"></a></p>
+<p>G1 and G2 fitting with clothoids, spline of clothoids, circle arc and
+biarc</p>
+<p><em>by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and Marco Frego (marco.frego@unibz.it)</em></p>
+<p>for the documentation see <a class="reference external" href="http://ebertolazzi.github.io/Clothoids/">online documentation</a></p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a>
 </h2>
@@ -90,7 +93,8 @@
 <div class="highlight"><pre><span></span>git clone git@github.com:ebertolazzi/Clothoids.git —recurse-submodules
 </pre></div>
 </div>
-<p>if you forget <code class="docutils literal notranslate"><span class="pre">—recurse-submodules</span></code> you must load the submdule quarticRootsFlocke next. To compile the library you can use <code class="docutils literal notranslate"><span class="pre">make</span></code></p>
+<p>if you forget <code class="docutils literal notranslate"><span class="pre">—recurse-submodules</span></code> you must load the submdule
+quarticRootsFlocke next. To compile the library you can use <code class="docutils literal notranslate"><span class="pre">make</span></code></p>
 <div class="highlight-sh notranslate">
 <div class="highlight"><pre><span></span>make
 </pre></div>
@@ -134,38 +138,57 @@ rake build_win   <span class="c1"># on windows</span>
 </pre></div>
 </div>
 <p>where OSTYPE can be <code class="docutils literal notranslate"><span class="pre">linux</span></code>, <code class="docutils literal notranslate"><span class="pre">osx</span></code>, <code class="docutils literal notranslate"><span class="pre">mingw_x64</span></code>, <code class="docutils literal notranslate"><span class="pre">win_x64</span></code></p>
-<div class="section" id="id1">
-<h3>Online Documentation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a>
-</h3>
-<p>Available at: <a class="reference external" href="http://ebertolazzi.github.io/Clothoids">http://ebertolazzi.github.io/Clothoids</a></p>
-</div>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a>
 </h2>
-<ol class="arabic simple">
-<li><p><em>E. Bertolazzi, M. Frego</em>,
-<strong>G1 fitting with clothoids</strong>,<span class="raw-html-m2r"><br></span>
-Mathematical Methods in the Applied Sciences,<span class="raw-html-m2r"><br></span>
-John Wiley &amp; Sons, 2014, vol. 38, n.5, pp. 881-897,<span class="raw-html-m2r"><br></span>
-[<a class="reference external" href="https://doi.org/10.1002/mma.3114">https://doi.org/10.1002/mma.3114</a>]
-(<a class="reference external" href="https://doi.org/10.1002/mma.3114">https://doi.org/10.1002/mma.3114</a>)</p></li>
-<li><p><em>E. Bertolazzi, M. Frego</em>,
-<strong>On the G2 Hermite interpolation problem with clothoids</strong>,<span class="raw-html-m2r"><br></span>
-Journal of Computational and Applied Mathematics,<span class="raw-html-m2r"><br></span>
-2018, vol. 15, n.341, pp. 99-116.<span class="raw-html-m2r"><br></span>
-[<a class="reference external" href="https://doi.org/10.1016/j.cam.2018.03.029">https://doi.org/10.1016/j.cam.2018.03.029</a>]
-(<a class="reference external" href="https://doi.org/10.1016/j.cam.2018.03.029">https://doi.org/10.1016/j.cam.2018.03.029</a>)</p></li>
-<li><p><em>E. Bertolazzi, M. Frego</em>,
-<strong>Interpolating clothoid splines with curvature continuity</strong>,<span class="raw-html-m2r"><br></span>
-Mathematical Methods in the Applied Sciences,<span class="raw-html-m2r"><br></span>
-2018, vol. 41, n.4, pp. 1099-1476.<span class="raw-html-m2r"><br></span>
-<a class="reference external" href="https://doi.org/10.1002/mma.4700">https://doi.org/10.1002/mma.4700</a></p></li>
-<li><p><em>E. Bertolazzi, M. Frego</em>
-<strong>A Note on Robust Biarc Computation</strong>,<span class="raw-html-m2r"><br></span>
-Computer-Aided Design &amp; Applications 16 (5), 822-835<span class="raw-html-m2r"><br></span>
-[<a class="reference external" href="http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf">http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf</a>]
-(<a class="reference external" href="http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf">http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf</a>)</p></li>
+<ol class="arabic">
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>G1 fitting with clothoids</strong>,</div>
+<div class="line">Mathematical Methods in the Applied Sciences,</div>
+<div class="line">John Wiley &amp; Sons, 2014, vol. 38, n.5, pp. 881-897,</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1002/mma.3114">https://doi.org/10.1002/mma.3114</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>On the G2 Hermite interpolation
+problem with clothoids</strong>,</div>
+<div class="line">Journal of Computational and Applied Mathematics,</div>
+<div class="line">2018, vol. 15, n.341, pp. 99-116.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1016/j.cam.2018.03.029">https://doi.org/10.1016/j.cam.2018.03.029</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>Interpolating clothoid splines with
+curvature continuity</strong>,</div>
+<div class="line">Mathematical Methods in the Applied Sciences,</div>
+<div class="line">2018, vol. 41, n.4, pp. 1099-1476.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1002/mma.4700">https://doi.org/10.1002/mma.4700</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em> <strong>Point-Clothoid Distance and Projection Computation</strong>,</div>
+<div class="line">SIAM Journal on Scientific Computing,</div>
+<div class="line">2019, 41(5), A3326–A3353.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1137/18M1200439">https://doi.org/10.1137/18M1200439</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em> <strong>A Note on Robust Biarc Computation</strong>,</div>
+<div class="line">Computer-Aided Design &amp; Applications 16 (5), 822-835</div>
+<div class="line"><a class="reference external" href="http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf">http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf</a></div>
+</div>
+</li>
 </ol>
 </div>
 </div>
@@ -180,37 +203,7 @@ Computer-Aided Design &amp; Applications 16 (5), 822-835<span class="raw-html-m2
         <div class="sphinxsidebarwrapper">
         <p class="logo"><a href="index.html" title="index">
           <img class="logo" src="_static/logo.png" alt="Logo"/>
-        </a></p><div class="sphinx-toc sphinxlocaltoc">
-    <h3><a href="index.html">Page contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">Clothoids</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a><ul>
-<li><a class="reference internal" href="#id1">Online Documentation</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
-  <div class="sphinxprev">
-    <h4>Previous page</h4>
-    <p class="topless"><a href="index.html"
-                          title="Previous page">&larr; Clothoids</a></p>
-  </div>
-  <div class="sphinxnext">
-    <h4>Next page</h4>
-    <p class="topless"><a href="manual.html"
-                          title="Next page">&rarr; Matlab Interface</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/readme.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+        </a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -221,6 +214,19 @@ Computer-Aided Design &amp; Applications 16 (5), 822-835<span class="raw-html-m2
     </div>
 </div>
 <script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clothoids</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-matlab/root.html">MATLAB API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Matlab_manual.html">Matlab Interface Manual</a></li>
+</ul>
+</div>
         </div>
       </div>
     
@@ -254,12 +260,12 @@ Computer-Aided Design &amp; Applications 16 (5), 822-835<span class="raw-html-m2
           <a href="index.html" title="Table Of Contents"
              >toc</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="manual.html" title="Matlab Interface"
+          <a href="api-cpp/root.html" title="C++ API"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="index.html" title="Clothoids"
+          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
              >previous</a> &nbsp; &nbsp;</li>
-    <li><a href="index.html">Clothoids  documentation</a> &#187;</li>
+    <li><a href="index.html">Clothoids</a> &#187;</li>
 
         <li class="nav-item nav-item-this"><a href="">Clothoids</a></li> 
       </ul>
@@ -268,7 +274,7 @@ Computer-Aided Design &amp; Applications 16 (5), 822-835<span class="raw-html-m2
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

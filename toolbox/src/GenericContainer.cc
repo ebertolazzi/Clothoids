@@ -48,12 +48,11 @@
 
 #include <fstream>
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define CHECK_RESIZE(pV,I) if ( pV->size() <= (I) ) pV->resize((I)+1)
 
 using std::fpclassify;
-using GenericContainerNamespace::real_type;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+using GC_namespace::real_type;
 
 static
 inline
@@ -82,48 +81,9 @@ bool isUnsigned64( real_type x )
 
 #endif
 
-namespace GenericContainerNamespace {
+namespace GC_namespace {
 
-  /*
-   backtrace() from:
-   https://eli.thegreenplace.net/2015/programmatic-access-to-the-call-stack-in-c/
-
-   to get the line from address
-   addr2line 0x400968 -e libunwind_backtrace
-  */
-
-  #ifndef SPLINES_OS_OSX
-  void backtrace( ostream_type & ) {}
-  #else
-  void
-  backtrace( ostream_type & ost ) {
-    unw_cursor_t cursor;
-    unw_context_t context;
-
-    // Initialize cursor to current frame for local unwinding.
-    unw_getcontext(&context);
-    unw_init_local(&cursor, &context);
-
-    // Unwind frames one by one, going up the frame stack.
-    while ( unw_step(&cursor) > 0 ) {
-      unw_word_t offset, pc;
-      unw_get_reg(&cursor, UNW_REG_IP, &pc);
-      if ( pc == 0 ) break;
-      ost << "0x" << std::hex << pc << ":" << std::dec;
-      char sym[256];
-      if ( unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
-        char* nameptr = sym;
-        int status;
-        char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
-        if ( status == 0 ) nameptr = demangled;
-        ost << " (" << nameptr << "+0x" << std::hex << offset << ")\n" << std::dec;
-        std::free(demangled);
-      } else {
-        ost << " -- error: unable to obtain symbol name for this frame\n";
-      }
-    }
-  }
-  #endif
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   template <typename TYPE>
   ostream_type &
@@ -166,7 +126,6 @@ namespace GenericContainerNamespace {
     return s;
   }
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   template ostream_type & operator << ( ostream_type & s, vec_int_type const & v );
   template ostream_type & operator << ( ostream_type & s, vec_long_type const & v );
   template ostream_type & operator << ( ostream_type & s, vec_real_type const & v );
@@ -257,6 +216,7 @@ namespace GenericContainerNamespace {
       << '\n';
   }
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   template <typename TYPE>
   ostream_type &
   operator << ( ostream_type & s, mat_type<TYPE> const & m ) {
@@ -281,7 +241,6 @@ namespace GenericContainerNamespace {
     return s;
   }
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   template ostream_type & operator << ( ostream_type & s, mat_type<int_type> const & m );
   template ostream_type & operator << ( ostream_type & s, mat_type<long_type> const & m );
   template ostream_type & operator << ( ostream_type & s, mat_type<real_type> const & m );
@@ -477,6 +436,18 @@ namespace GenericContainerNamespace {
       break;
     }
     m_data_type = GC_NOTYPE;
+  }
+
+  // distruttore
+  void
+  GenericContainer::erase( char const * name ) {
+    GC_ASSERT(
+      GC_MAP == m_data_type,
+      "erase('" << name << "') bad data type\nexpect: " <<
+      typeName[GC_POINTER] <<
+      "\nbut data stored is of type: " << typeName[m_data_type]
+    )
+    m_data.m->erase(name);
   }
 
   char const *

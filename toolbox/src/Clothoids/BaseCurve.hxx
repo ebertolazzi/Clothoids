@@ -356,7 +356,13 @@ namespace G2lib {
      * \param[out] max_size  maximum admissible size of the covering tirnagles
      * \param[out] icurve    index of the covering triangles
      *
-     * \image html biarc_cover.jpg
+     * \rst
+     * 
+     *   .. image:: ../../images/biarc_cover.jpg
+     *      :width: 80%
+     *      :align: center
+     *
+     * \endrst
      */
     virtual
     void
@@ -575,7 +581,7 @@ namespace G2lib {
     real_type kappa( real_type s ) const { return theta_D(s); }
 
     //! curvature derivative at curvilinear coodinate `s`
-    real_type kappa_D( real_type s ) const { return theta_DD(s); }
+    real_type kappa_D ( real_type s ) const { return theta_DD(s); }
 
     //! curvature second derivative at curvilinear coodinate `s`
     real_type kappa_DD( real_type s ) const { return theta_DDD(s); }

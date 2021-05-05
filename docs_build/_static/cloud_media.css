@@ -1,0 +1,117 @@
+/*****************************************************
+* cloud.css_t
+* ~~~~~~~~~~~
+*
+* stylesheet for "Cloud" theme for Sphinx.
+*
+* :copyright: Copyright 2011-2012 by Assurance Technologies
+* :license: BSD
+*
+*****************************************************/
+
+@media only screen and (min-device-width: 16in)
+{
+}
+
+@media only screen and (min-width: 11.5in)
+{
+}
+
+@media only screen and (min-width: 700px)
+{
+  .show-for-small { display: none !important; }
+}
+
+
+@media only screen and (max-width: 11.5in),
+       only screen and (max-width: 700px),
+       only screen and (max-device-width: 700px),
+       handheld
+{
+  div.relbar-top, div.relbar-bottom
+  {
+    padding: 0;
+  }
+
+  button.sidebar-toggle#sidebar-show
+  {
+    left: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+
+@media only screen and (max-width: 700px),
+       only screen and (max-device-width: 700px),
+       handheld
+{
+  body {
+    font-size: 75%;
+  }
+  div.related > ul > li.right + li:not(.right) { font-weight: bold; }
+  div.related > ul > li:not(.right) + li { display: none; }
+
+  div.bodywrapper
+  {
+    margin-left: 0;
+  }
+
+  div.document.document-hidden div.documentwrapper
+  {
+    display: none;
+  }
+
+  div.body h2,
+  div.body p.rubric,
+  .section.emphasize-children > .section > h3
+  {
+    padding-top: 0.25em;
+    padding-bottom: .25em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+  }
+  .hide-for-small { display: none; }
+}
+
+@media print
+{
+  div.body {
+    border: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -o-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .sidebar-toggle-group { display: none; }
+  div.body h1,
+  div.body h2,
+  div.body p.rubric,
+  div.body h3,
+  div.body h4,
+  div.body h5,
+  div.body h6
+  {
+    color: #333 !important;
+    text-shadow: none !important;
+    border: none !important;
+    padding: 0;
+  }
+
+  .html-toggle.expanded > .html-toggle-button:after
+  {
+    display: none;
+  }
+
+  .html-toggle.collapsed > .html-toggle-button:after
+  {
+    content: "[not printed]" !important;
+  }
+
+}
+
+@import url("cloud_media.css");
