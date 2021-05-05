@@ -847,38 +847,6 @@ namespace G2lib {
 
   static
   void
-  do_aabb_true(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD "ClothoidListMexWrapper('aabb_true',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
-    G2lib::yesAABBtree();
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_aabb_false(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD "ClothoidListMexWrapper('aabb_false',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
-    G2lib::noAABBtree();
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
   do_closestSegment(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
@@ -1183,8 +1151,6 @@ namespace G2lib {
     {"export_table",do_export_table},
     {"export_ruby",do_export_ruby},
     {"findST1",do_findST1},
-    {"aabb_true",do_aabb_true},
-    {"aabb_false",do_aabb_false},
     {"closestSegment",do_closestSegment},
     {"closestPointInRange",do_closestPointInRange},
     {"closestPointInSRange",do_closestPointInSRange},

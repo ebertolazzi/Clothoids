@@ -2,32 +2,20 @@
 
 .. rst-class:: html-toggle
 
-*********
-Clothoids
-*********
-
-==========================================================================
 G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc
 ==========================================================================
 
 **by Enrico Bertolazzi and Marco Frego**
 
-`Github repository <https://github.com/ebertolazzi/Clothoids>`  
-
+`Github repository <https://github.com/ebertolazzi/Clothoids>`__
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   readme.rst
-   manual.rst
-   api/library_root.rst
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    readme.rst
+    api-cpp/root.rst
+    api-matlab/root.rst
+    Matlab_manual.rst
 
 License
 -------

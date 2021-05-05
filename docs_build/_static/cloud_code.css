@@ -1,0 +1,154 @@
+/*****************************************************
+* cloud.css_t
+* ~~~~~~~~~~~
+*
+* stylesheet for "Cloud" theme for Sphinx.
+*
+* :copyright: Copyright 2011-2012 by Assurance Technologies
+* :license: BSD
+*
+*****************************************************/
+
+div.highlight
+{
+  background: none;
+  margin: 1.5em 0;
+}
+
+div.highlight pre,
+td.linenos pre
+{
+  padding: 10px;
+
+  font-family: "Roboto Mono", monospace;
+  font-size: 85%;
+  line-height: 1.5em;
+}
+
+div.highlight pre
+{
+  background-color: #FEFFE2;
+  border: 1px solid #C4CF00;
+  border-style: solid solid solid solid;
+
+  -moz-border-radius:    6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius:      6px;
+  -ms-border-radius:     6px;
+  border-radius:         6px;
+  color: #111111;
+}
+
+div[class|="highlight"] + div[class|="highlight"]
+{
+  margin-top: -1.5em;
+}
+
+code
+{
+  font-family: "Roboto Mono", monospace;
+  font-size: 90%;
+}
+
+code.literal
+{
+  background-color: rgba(0,0,0,.075);
+  border: 1px solid rgba(0,0,0,.05);
+  padding: 0px 4px;
+  margin: 1px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+}
+
+p code.literal { white-space: nowrap; }
+
+code.samp.literal > em
+{
+  font-family: "Roboto Mono", monospace;
+  padding: 0 1px;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6;
+}
+
+code.samp.literal > em:before { content: "{"; }
+code.samp.literal > em:after { content: "}"; }
+
+h1 code.literal
+{
+  font-size: 80%;
+}
+
+h1 code.samp.literal > em
+{
+  font-weight: normal;
+}
+
+a.reference code.literal,
+div.related a code.literal,
+code.literal.xref
+{
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.viewcode-back
+{
+  font-family: var(---font0), sans-serif;
+}
+
+div.viewcode-block:target
+{
+  background-color: #f4debf;
+  border-top: 1px solid #ac9;
+  border-bottom: 1px solid #ac9;
+}
+
+.highlight .copybutton
+{
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  margin: 0;
+  padding: 0 6px;
+
+  background: transparent;
+  border: 1px solid transparent;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+
+  font-size: 75%;
+  color: #777777;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.highlight .copybutton.active
+{
+  text-decoration: line-through;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
+}
+
+.highlight:not(:hover) .copybutton:not(.active)
+{
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+
+.viewcode-link
+{
+  position: absolute;
+  right: 0;
+  margin-right: 1.5em;
+  margin-right: calc(1em + 10px);
+}

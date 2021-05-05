@@ -356,7 +356,13 @@ namespace G2lib {
      * \param[out] max_size  maximum admissible size of the covering tirnagles
      * \param[out] icurve    index of the covering triangles
      *
-     * \image html biarc_cover.jpg
+     * \rst
+     * 
+     *   .. image:: ../../images/biarc_cover.jpg
+     *      :width: 80%
+     *      :align: center
+     *
+     * \endrst
      */
     virtual
     void

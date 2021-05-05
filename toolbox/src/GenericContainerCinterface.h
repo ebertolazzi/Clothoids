@@ -86,42 +86,42 @@ int GC_fill_for_test( char const * id );
  * 
  * \return error code, 0 = OK
  */
-int GC_pop_head(void);
+int GC_pop_head();
 
 /*!
  * Move `head` to the first level
  * 
  * \return error code, 0 = OK
  */
-int GC_reset_head(void);
+int GC_reset_head();
 
 /*!
  * Print the actual `GenericContainer`
  *
  * \return error code, 0 = OK
  */
-int GC_dump(void);
+int GC_dump();
 
 /*!
  * Print the actual `GenericContainer`
  * 
  * \return error code, 0 = OK
  */
-int GC_print_content_types(void);
+int GC_print_content_types();
 
 /*!
  * Get type of actual pointed element of `GenericContainer`
  * 
  * \return error code, 0 = OK
  */
-int GC_get_type(void);
+int GC_get_type();
 
 /*!
  * Get type of actual pointed element of `GenericContainer`
  * 
  * \return id name of the `GenericContainer`
  */
-char const * GC_get_type_name(void);
+char const * GC_get_type_name();
 
 /*!
  * Get pointer to the internal `GenericContainer` object 'id'
@@ -139,7 +139,7 @@ void * GC_mem_ptr( char const * id );
  * \param[in] a boolean to be stored
  * \return error code, 0 = OK
  */
-int GC_set_bool( int const a );
+int GC_set_bool( int a );
 
 /*!
  * Set actual pointed element of `GenericContainer` to `int` with value `a`
@@ -147,7 +147,7 @@ int GC_set_bool( int const a );
  * \param[in] a integer to be stored
  * \return error code, 0 = OK
  */
-int GC_set_int( int const a );
+int GC_set_int( int a );
 
 /*! 
  * Set actual pointed element of `GenericContainer` to `real_type` with value `a`
@@ -155,7 +155,7 @@ int GC_set_int( int const a );
  * \param[in] a double to be stored
  * \return error code, 0 = OK
  */
-int GC_set_real( double const a );
+int GC_set_real( double a );
 
 /*!
  * Set actual pointed element of `GenericContainer` to `complex` with value `a`
@@ -172,7 +172,7 @@ int GC_set_complex( c_complex_type const * a );
  * \param[in] im complex number to be stored, imaginary part
  * \return error code, 0 = OK
  */
-int GC_set_complex2( double const re, double const im );
+int GC_set_complex2( double re, double im );
 
 /*!
  * Set actual pointed element of `GenericContainer` to `string` with value `a`
@@ -189,56 +189,56 @@ int GC_set_string( char const * a );
  * 
  * \return the value
  */
-int GC_get_bool(void);
+int GC_get_bool();
 
 /*!
  * Get actual pointed element of `GenericContainer` of type `int`
  * 
  * \return the value
  */
-int GC_get_int(void);
+int GC_get_int();
 
 /*!
  * Get actual pointed element of `GenericContainer` of type `int`
  * 
  * \return the value
  */
-long GC_get_long(void);
+long GC_get_long();
 
 /*!
  * Get actual pointed element of `GenericContainer` of type `real_type`
  * 
  * \return the value
  */
-double GC_get_real(void);
+double GC_get_real();
 
 /*!
  * Get actual pointed element of `GenericContainer` of type `complex`
  * 
  * \return the value
  */
-c_complex_type GC_get_complex(void);
+c_complex_type GC_get_complex();
 
 /*!
  * Get actual pointed element of `GenericContainer` of type `complex`
  * 
  * \return the value 
  */
-double GC_get_complex_re(void);
+double GC_get_complex_re();
 
 /*!
  * Get actual pointed element of `GenericContainer` of type `complex`
  * 
  * \return the value
  */
-double GC_get_complex_im(void);
+double GC_get_complex_im();
 
 /*!
  * Get actual pointed element of `GenericContainer` of type `string`
  *
  * \return the value
  */
-char const * GC_get_string(void);
+char const * GC_get_string();
 
 // -----------------------------------------------------------------------------
 
@@ -248,7 +248,7 @@ char const * GC_get_string(void);
  * \param[in] a the value to be stored
  * \return error code, 0 = OK
  */
-int GC_push_bool( int const a );
+int GC_push_bool( int a );
 
 /*!
  * Push `a` to a vector of `integer`
@@ -256,7 +256,7 @@ int GC_push_bool( int const a );
  * \param[in] a the value to be stored
  * \return error code, 0 = OK
  */
-int GC_push_int( int const a );
+int GC_push_int( int a );
 
 /*!
  * Push `a` to a vector of `real_type`
@@ -264,7 +264,7 @@ int GC_push_int( int const a );
  * \param[in] a the value to be stored
  * \return error code, 0 = OK
  */
-int GC_push_real( double const a );
+int GC_push_real( double a );
 
 /*!
  * Push `a` to a vector of `complex`
@@ -281,7 +281,7 @@ int GC_push_complex( c_complex_type const * a );
  * \param[in] im the value to be stored, imaginary part
  * \return error code, 0 = OK
  */
-int GC_push_complex2( double const re, double const im );
+int GC_push_complex2( double re, double im );
 
 /*!
  * Push `a` to a vector of string
@@ -394,35 +394,35 @@ double GC_get_complex_imag_at_coor( int i, int j );
  * 
  * \return error code, 0 = OK
  */
-int GC_set_empty_vector_of_bool(void);
+int GC_set_empty_vector_of_bool();
 
 /*!
  * Set actual pointed element of `GenericContainer` to a vector of `integer` of size `0`. 
  * 
  * \return error code, 0 = OK
  */
-int GC_set_empty_vector_of_int(void);
+int GC_set_empty_vector_of_int();
 
 /*!
  * Set actual pointed element of `GenericContainer` to a vector of `real_type` of size `0`.
  * 
  * \return error code, 0 = OK
  */
-int GC_set_empty_vector_of_real(void);
+int GC_set_empty_vector_of_real();
 
 /*!
  * Set actual pointed element of `GenericContainer` to a vector of `complex` of size `0`.
  * 
  * \return error code, 0 = OK
  */
-int GC_set_empty_vector_of_complex(void);
+int GC_set_empty_vector_of_complex();
 
 /*!
  * Set actual pointed element of `GenericContainer` to a vector of string of size `0`.
  * 
  * \return error code, 0 = OK
  */
-int GC_set_empty_vector_of_string(void);
+int GC_set_empty_vector_of_string();
 
 // -----------------------------------------------------------------------------
 
@@ -506,7 +506,7 @@ int GC_set_vector( int nelem );
  *
  *  \return error code, 0 = OK
  */
-int GC_set_empty_vector(void);
+int GC_set_empty_vector();
 
 /*!
  *  \brief
@@ -514,7 +514,7 @@ int GC_set_empty_vector(void);
  * 
  *  \return error code, 0 = OK
  */
-int GC_get_vector_size(void);
+int GC_get_vector_size();
 
 /*!
  *  \brief
@@ -522,7 +522,7 @@ int GC_get_vector_size(void);
  * 
  *  \return error code, 0 = OK
  */
-int GC_get_matrix_num_rows(void);
+int GC_get_matrix_num_rows();
 
 /*!
  *  \brief
@@ -530,7 +530,7 @@ int GC_get_matrix_num_rows(void);
  * 
  *  \return error code, 0 = OK
  */
-int GC_get_matrix_num_cols(void);
+int GC_get_matrix_num_cols();
 
 /*!
  *  \brief
@@ -551,7 +551,7 @@ int GC_push_vector_position( int pos );
  * 
  *  \return error code, 0 = OK
  */
-int GC_set_map(void);
+int GC_set_map();
 
 /*!
  *  \brief
@@ -560,7 +560,7 @@ int GC_set_map(void);
  * 
  *  \return error code, 0 = OK
  */
-int GC_init_map_key(void);
+int GC_init_map_key();
 
 /*!
  *  \brief
@@ -568,7 +568,7 @@ int GC_init_map_key(void);
  * 
  *  \return error code, 0 = OK
  */
-char const * GC_get_next_key(void);
+char const * GC_get_next_key( void );
 
 /*!
  *  \brief

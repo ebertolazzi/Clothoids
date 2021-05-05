@@ -144,44 +144,43 @@ namespace G2lib {
   //  #       #    # ######  ####  #    # ###### ######
   */
 
-  /*!
-   *  **Purpose:**
-   * 
-   *  Compute Fresnel integrals C(x) and S(x)
-   * 
-   *  \f[
-   *    S(x) = \int_0^x \sin t^2 \,\mathrm{d} t, \qquad
-   *    C(x) = \int_0^x \cos t^2 \,\mathrm{d} t
-   *  \f]
-   * 
-   *  **Example:**
-   * 
-   *  | \f$ x \f$ | \f$ C(x) \f$  |  \f$ S(x) \f$ | 
-   *  | :-------: | :-----------: | :-----------: |
-   *  | 0.0       | 0.00000000    |  0.00000000   |
-   *  | 0.5       | 0.49234423    |  0.06473243   |
-   *  | 1.0       | 0.77989340    |  0.43825915   |
-   *  | 1.5       | 0.44526118    |  0.69750496   |
-   *  | 2.0       | 0.48825341    |  0.34341568   |
-   *  | 2.5       | 0.45741301    |  0.61918176   |
-   *
-   *  **Adapted from:**
-   * 
-   *  - *William J. Thompson*, Atlas for computing mathematical functions : 
-   *    an illustrated guide for practitioners, with programs in C and Mathematica,
-   *    Wiley, 1997.
-   * 
-   *  **Author:**
-   * 
-   *  - *Venkata Sivakanth Telasula*,
-   *    email: sivakanth.telasula@gmail.com,
-   *    date: August 11, 2005
-   *
-   *  \param[in]  y Argument of \f$ C(y) \f$ and \f$ S(y) \f$ 
-   *  \param[out] C \f$ C(x) \f$ 
-   *  \param[out] S \f$ S(x) \f$
-   */
-
+  //!
+  //! **Purpose:**
+  //!
+  //! Compute Fresnel integrals C(x) and S(x)
+  //!
+  //! \f[
+  //!   S(x) = \int_0^x \sin t^2 \,\mathrm{d} t, \qquad
+  //!   C(x) = \int_0^x \cos t^2 \,\mathrm{d} t
+  //! \f]
+  //!
+  //! **Example:**
+  //!
+  //! | \f$ x \f$ | \f$ C(x) \f$  |  \f$ S(x) \f$ |
+  //! | :-------: | :-----------: | :-----------: |
+  //! | 0.0       | 0.00000000    |  0.00000000   |
+  //! | 0.5       | 0.49234423    |  0.06473243   |
+  //! | 1.0       | 0.77989340    |  0.43825915   |
+  //! | 1.5       | 0.44526118    |  0.69750496   |
+  //! | 2.0       | 0.48825341    |  0.34341568   |
+  //! | 2.5       | 0.45741301    |  0.61918176   |
+  //!
+  //! **Adapted from:**
+  //!
+  //! - *William J. Thompson*, Atlas for computing mathematical functions :
+  //!   an illustrated guide for practitioners, with programs in C and Mathematica,
+  //!   Wiley, 1997.
+  //!
+  //! **Author:**
+  //!
+  //! - *Venkata Sivakanth Telasula*,
+  //!   email: sivakanth.telasula@gmail.com,
+  //!   date: August 11, 2005
+  //!
+  //! \param[in]  y Argument of \f$ C(y) \f$ and \f$ S(y) \f$
+  //! \param[out] C \f$ C(x) \f$
+  //! \param[out] S \f$ S(x) \f$
+  //!
   void
   FresnelCS( real_type y, real_type & C, real_type & S ) {
 
@@ -620,6 +619,8 @@ namespace G2lib {
       intS[k] = xx * sinc + yy * cosc;
     }
   }
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   // -------------------------------------------------------------------------
 
@@ -1402,6 +1403,8 @@ namespace G2lib {
     return niter;
   }
 
+  #endif
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -1473,6 +1476,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   bool
   ClothoidData::build_forward(
     real_type   x0,
@@ -1541,7 +1545,8 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
+  #endif
 }
 
 // EOF: Fresnel.cc

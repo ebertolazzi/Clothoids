@@ -53,6 +53,7 @@ namespace G2lib {
     mutable bool     m_aabb_done;
     mutable AABBtree m_aabb_tree;
 
+    #ifndef DOXYGEN_SHOULD_SKIP_THIS
     class Collision_list {
       PolyLine const * pPL1;
       PolyLine const * pPL2;
@@ -69,6 +70,7 @@ namespace G2lib {
         return LS1.collision( LS2 );
       }
     };
+    #endif
 
     void
     resetLastInterval() {
@@ -433,18 +435,18 @@ namespace G2lib {
     void
     trim( real_type s_begin, real_type s_end, PolyLine & newPL ) const;
 
-    /*!
-     * \brief compute the point at minimum distance from a point `[x,y]` and the line segment
-     *
-     * \param[in]  x   x-coordinate
-     * \param[in]  y   y-coordinate
-     * \param[out] X   x-coordinate of the closest point
-     * \param[out] Y   y-coordinate of the closest point
-     * \param[out] S   s-param of the closest point
-     * \param[out] T   t-param of the closest point
-     * \param[out] DST the distance point-segment
-     * \return the distance point-segment
-     */
+    //!
+    //! Compute the point at minimum distance from a point `[x,y]` and the line segment
+    //!
+    //! \param[in]  x   x-coordinate
+    //! \param[in]  y   y-coordinate
+    //! \param[out] X   x-coordinate of the closest point
+    //! \param[out] Y   y-coordinate of the closest point
+    //! \param[out] S   s-param of the closest point
+    //! \param[out] T   t-param of the closest point
+    //! \param[out] DST the distance point-segment
+    //! \return the distance point-segment
+    //!
     virtual
     int_type
     closestPoint_ISO(
@@ -504,13 +506,13 @@ namespace G2lib {
      |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
     \*/
 
-    /*!
-     * intersect PolyLine with another PolyLine
-     * 
-     * \param[in]  pl  other PolyLine
-     * \param[out] ss0 list of the paramter of intersection
-     * \param[out] ss1 list of the paramter of intersection of the other Polyline
-     */
+    //!
+    //! Intersect PolyLine with another PolyLine
+    //!
+    //! \param[in]  pl  other PolyLine
+    //! \param[out] ss0 list of the paramter of intersection
+    //! \param[out] ss1 list of the paramter of intersection of the other Polyline
+    //!
     void
     intersect(
       PolyLine const    & pl,
@@ -518,14 +520,14 @@ namespace G2lib {
       vector<real_type> & ss1
     ) const;
 
-    /*!
-     * intersect PolyLine with another PolyLine
-     * 
-     * \param[in]  pl          other PolyLine
-     * \param[out] ilist       list of the intersection (as parameter on the curves)
-     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-     *                         intersection
-     */
+    //!
+    //! Intersect PolyLine with another PolyLine
+    //!
+    //! \param[in]  pl          other PolyLine
+    //! \param[out] ilist       list of the intersection (as parameter on the curves)
+    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+    //!                         intersection
+    //!
     void
     intersect(
       PolyLine const & pl,
@@ -533,16 +535,16 @@ namespace G2lib {
       bool             swap_s_vals
     ) const;
 
-    /*!
-     * intersect PolyLine with another PolyLine (not yet available)
-     * 
-     * \param[in]  offs        Poliline offset
-     * \param[in]  pl          other PolyLine
-     * \param[in]  offs_pl     Other Poliline offset
-     * \param[out] ilist       list of the intersection (as parameter on the curves)
-     * \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-     *                         intersection
-     */
+    //!
+    //! Intersect PolyLine with another PolyLine (not yet available)
+    //!
+    //! \param[in]  offs        Polyline offset
+    //! \param[in]  pl          other PolyLine
+    //! \param[in]  offs_pl     Other Poliline offset
+    //! \param[out] ilist       list of the intersection (as parameter on the curves)
+    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
+    //!                         intersection
+    //!
     void
     intersect_ISO(
       real_type        offs,
@@ -567,8 +569,8 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, PolyLine const & P );
 
-    #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void build_AABBtree( AABBtree & aabb ) const;
+    void
+    build_AABBtree( AABBtree & aabb ) const;
 
     void
     build_AABBtree() const {
@@ -577,7 +579,6 @@ namespace G2lib {
         m_aabb_done = true;
       }
     }
-    #endif
 
   };
 

@@ -23,6 +23,8 @@
 #include <algorithm>
 #include <limits>
 
+#define MAX_ITER_SAFETY 50
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 namespace PolynomialRoots {
@@ -250,12 +252,13 @@ namespace PolynomialRoots {
     valueType t = p; // save p(x) for sign comparison
     x -= p/dp; // 1st improved root
 
-    indexType iter      = 1;
-    indexType oscillate = 0;
-    bool      bisection = false;
-    bool      converged = false;
+    indexType iter       = 1;
+    indexType oscillate  = 0;
+    indexType nconverged = 0;
+    bool      bisection  = false;
+    bool      converged  = false;
     valueType s(0), u(0); // to mute warning
-    while ( ! (converged||bisection) ) {
+    while ( ! ( nconverged > 1 || bisection ) && iter < MAX_ITER_SAFETY ) {
       ++iter;
       evalMonicCubic( x, a, b, c, p, dp );
       if ( p*t < 0 ) { // does Newton start oscillating ?
@@ -271,10 +274,11 @@ namespace PolynomialRoots {
       x -= dp;   // new Newton root
       bisection = oscillate > 2; // activate bisection
       converged = std::abs(dp) <= (1+std::abs(x)) * machepsi; // Newton convergence indicator
+      if ( converged ) ++nconverged; else nconverged = 0;
     }
     if ( bisection ) {
       t = u - s; // initial bisection interval
-      while ( std::abs(t) > (1+std::abs(x)) * machepsi ) { // bisection iterates
+      while ( std::abs(t) > (1+std::abs(x)) * machepsi && iter < MAX_ITER_SAFETY ) { // bisection iterates
         ++iter;
         p = evalMonicCubic( x, a, b, c );
         if ( p < 0 ) s = x;
@@ -318,6 +322,7 @@ namespace PolynomialRoots {
       if ( !cplx ) { // reorder
         if ( r2 < r1 ) std::swap( r1, r2 );
         if ( r1 < r0 ) std::swap( r0, r1 );
+        if ( r2 < r1 ) std::swap( r1, r2 );
       }
       return;
     }
@@ -462,6 +467,7 @@ namespace PolynomialRoots {
     if ( !cplx ) { // if real roots sort it!
       if ( r1 > r2 ) std::swap(r1,r2);
       if ( r0 > r1 ) std::swap(r0,r1);
+      if ( r1 > r2 ) std::swap(r1,r2);
     }
 
   }

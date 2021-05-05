@@ -2,6 +2,22 @@ classdef ClothoidList < CurveBase
 
   methods
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Create a new C++ class instance for the 
+    %> clothoid list object
+    %> 
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref = ClothoidCurve()
+    %>
+    %> \endrst
+    %>
+    %> **On output:**
+    %>
+    %> - `ref`: reference handle to the object instance
+    %>
     function self = ClothoidList()
       self@CurveBase( 'ClothoidListMexWrapper' );
       self.objectHandle = ClothoidListMexWrapper( 'new' );
@@ -11,14 +27,17 @@ classdef ClothoidList < CurveBase
       str = 'ClothoidList';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function aabb_true( self )
-      ClothoidListMexWrapper( 'aabb_true', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function aabb_false( self )
-      ClothoidListMexWrapper( 'aabb_false', self.objectHandle );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Reserve memory for `N` segments
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.reserve( N );
+    %>
+    %> \endrst
+    %>
     function reserve( self, N )
       ClothoidListMexWrapper( 'reserve', self.objectHandle, N );
     end
@@ -210,6 +229,26 @@ classdef ClothoidList < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the clothoid list
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plot();
+    %>   ref.plot( npts );
+    %>
+    %>   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc
+    %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
+    %>   ref.plot( npts, fmt1, fmt2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt1`: format of the first arc
+    %> - `fmt2`: format of the second arc
+    %>
     function plot( self, varargin )
       if nargin > 1
         npts = varargin{1};
@@ -237,6 +276,26 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the clothoid list with offset
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plot_offs( offs, npts );
+    %>
+    %>   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc
+    %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
+    %>   ref.plot_offs( offs, npts, fmt1, fmt2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt1`: format of the first arc
+    %> - `fmt2`: format of the second arc
+    %> - `offs`: offset used in the plotting
+    %>
     function plot_offs( self, offs, npts, varargin )
       if nargin > 3
         fmt1 = varargin{1};
@@ -259,6 +318,25 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the curvature of the clothoid list
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plotCurvature( npts );
+    %>
+    %>   fmt1 = {'Color','blue','Linewidth',2};
+    %>   fmt2 = {'Color','red','Linewidth',2};
+    %>   ref.plotCurvature( npts, fmt1, fmt2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt1`: format of the first arc
+    %> - `fmt2`: format of the second arc
+    %>
     function plotCurvature( self, npts, varargin )
       if nargin > 2
         fmt1 = varargin{1};
@@ -285,6 +363,25 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the angle of the clothoid list
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plotAngle( npts );
+    %>
+    %>   fmt1 = {'Color','blue','Linewidth',2};
+    %>   fmt2 = {'Color','red','Linewidth',2};
+    %>   ref.plotAngle( npts, fmt1, fmt2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt1`: format of the first arc
+    %> - `fmt2`: format of the second arc
+    %>
     function plotAngle( self, npts, varargin )
       if nargin > 2
         fmt1 = varargin{1};
@@ -311,6 +408,20 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the normal of the clothoid list
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plotNormal( step, len );
+    %> 
+    %> \endrst
+    %>
+    %> - `step`: number of sampling normals
+    %> - `len`:  length of the plotted normal
+    %>
     function plotNormal( self, step, len )
       for k=1:self.numSegment()
         C = self.get(k);
@@ -318,6 +429,31 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Save the clothoid list sampled on a file
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.saveSampled( filename, ds );
+    %> 
+    %> \endrst
+    %>
+    %> - `filename`: file name
+    %> - `ds`:       sample point every `ds`
+    %>
+    %> the file is of the form
+    %> \rst
+    %> .. code-block:: text
+    %>
+    %>   X Y THETA
+    %>   0 0 1.2
+    %>   ...
+    %>   ...
+    %>
+    %> \endrst
+    %>
     function saveSampled( self, filename, ds )
       fd = fopen( filename, 'w' );
       L  = self.length();
@@ -331,6 +467,31 @@ classdef ClothoidList < CurveBase
       fclose(fd);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Save the clothoid list on a file as a list of segments
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.saveClothoids( filename, ds );
+    %> 
+    %> \endrst
+    %>
+    %> - `filename`: file name
+    %> - `ds`:       sample point every `ds`
+    %>
+    %> the file is of the form
+    %> \rst
+    %> .. code-block:: text
+    %>
+    %>   x0 y0 theta0 kappa0 dk  L
+    %>   0  0  1.2    0.0    0.1 2
+    %>   ...
+    %>   ...
+    %>
+    %> \endrst
+    %>
     function saveClothoids( self, filename )
       fd = fopen( filename, 'w' );
       fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n');

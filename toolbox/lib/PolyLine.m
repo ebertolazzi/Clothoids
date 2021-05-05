@@ -1,5 +1,5 @@
 classdef PolyLine < CurveBase
-  %% MATLAB class wrapper for the underlying C++ class
+  %> MATLAB class wrapper for the underlying C++ class
   methods
     function self = PolyLine( )
       self@CurveBase( 'PolyLineMexWrapper' );

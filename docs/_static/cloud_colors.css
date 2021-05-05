@@ -1,0 +1,56 @@
+/*****************************************************
+* cloud.css_t
+* ~~~~~~~~~~~
+*
+* stylesheet for "Cloud" theme for Sphinx.
+*
+* :copyright: Copyright 2011-2012 by Assurance Technologies
+* :license: BSD
+*
+*****************************************************/
+
+:root {
+
+  ---font0: "Roboto"; /* Open Sans, Oxygen, Montserrat Alternates */
+  ---font1: "Open Sans";
+  ---font2: "Roboto Mono"; /* Open Sans, Oxygen, Montserrat Alternates */
+
+  ---nested-section-color: #F00;
+  ---nested-subsection-color: #F0F;
+
+  ---object-color-bg: #FEF6F7;
+  ---object-color-bg2: #FDECEF;
+  ---function-color-bg: #F0F8FD;
+  ---function-color-bg2: #D2EAFA;
+  ---class-color-bg: #F4FDF9;
+  ---class-color-bg2: #DEF9EE;
+  ---exception-color-bg: #F0F;
+
+  ---barra-top-bottom-bg: #606060;
+  ---barra-top-bottom-bg2: #FFF;
+  ---barra-top-bottom-bg3: #808080;
+  ---barra-top-bottom-ray: 15px;
+  ---barra-top-bottom-buttom-color: #000;
+  ---barra-top-bottom-buttom-ray: 8px;
+
+  ---footer-color: #B0B0B0;
+  ---footer-color-bg: #FFF;
+  ---footer-color-text: #000;
+
+  ---pannello-principale-bg: #FFF;
+  ---pannello-destro-bg: #GGG;
+  ---pannello-destro-colore-testo: #000;
+
+  ---pannello-sinistro-bg: #F0F0F0;
+  ---pannello-sinistro-bordo: #000;
+  ---pannello-sinistro-ray: 8px;
+
+  ---colore-quick-search: #777;
+  ---colore-toc:          #777;
+  ---tasto-go-bg:         #F2F2F2;
+  ---highlight_color: #F2DE37;
+
+  ---pre-bg: #FCFDF7;
+  ---pre-border: #EAEFBD;
+  ---pre-text: color: #111111;
+}

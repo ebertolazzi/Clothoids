@@ -39,7 +39,9 @@ namespace G2lib {
   using std::vector;
   using std::ceil;
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   typedef vector<LineSegment>::difference_type LS_dist_type;
+  #endif
 
   /*\
    |  ____       _       _     _
@@ -444,7 +446,6 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   void
   PolyLine::build_AABBtree( AABBtree & aabbtree ) const {
     #ifdef G2LIB_USE_CXX11
@@ -468,7 +469,6 @@ namespace G2lib {
     }
     aabbtree.build(bboxes);
   }
-  #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
