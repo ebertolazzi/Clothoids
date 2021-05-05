@@ -80,7 +80,7 @@ FOREACH (F ${S})
   LIST( APPEND HEADERS ${RF} )
 ENDFOREACH (F ${S})
 
-INCLUDE_DIRECTORIES( src src/Utils src/Clothois )
+INCLUDE_DIRECTORIES( src src/Utils src/Clothoids )
 
 SET( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib )
 

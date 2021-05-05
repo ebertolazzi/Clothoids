@@ -477,7 +477,7 @@ XY_DD       = CL.eval_DD( s, offs );
 XY_DDD        = CL.eval_DDD( s, offs );
 ~~~~~
 
-ClothoisList
+ClothoidList
 ------------
 
 Store a list of clothoids to be used as a single spline.
@@ -485,7 +485,7 @@ Store a list of clothoids to be used as a single spline.
 Documentation will be available soon, see examples in `tests` for the moments
 
 
-ClothoisSplineG2
+ClothoidSplineG2
 ----------------
 
 Implements the algorithm described in references [2] and [3].
