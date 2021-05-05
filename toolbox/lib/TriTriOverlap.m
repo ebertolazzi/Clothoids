@@ -22,5 +22,5 @@
 %                                                                      %
 %======================================================================%
 function intersect = TriTriOverlap( p0, p1, p2, q0, q1, q2 )
-  error('this function is mex only. Run CompileLib.m script to build')
+  error('this function is mex only. Run CompileClothoidsLib.m script to build')
 end

@@ -262,11 +262,11 @@ classdef BiarcList < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   ref.plot( offs, npts );
+    %>   ref.plot_offs( offs, npts );
     %>
     %>   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
-    %>   ref.plot( offs, npts, fmt1, fmt2 );
+    %>   ref.plot_offs( offs, npts, fmt1, fmt2 );
     %> 
     %> \endrst
     %>
@@ -404,7 +404,7 @@ classdef BiarcList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Save the biarc list sampled on a fils
+    %> Save the biarc list sampled on a file
     %>
     %> **Usage:**
     %>

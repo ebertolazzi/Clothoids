@@ -191,32 +191,102 @@
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">aabb_true</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'aabb_true'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">aabb_false</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'aabb_false'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Find the closest point to a clothoid curve using the</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; algorithm described in</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;  \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;  | *E. Bertolazzi, M. Frego*, **Point-Clothoid Distance and Projection Computation**,</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;  | SIAM Journal on Scientific Computing, 2019, 41(5).</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;  | https://doi.org/10.1137/18M1200439</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;  \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    [ X, Y, S, DST ] = ref.closestPoint( qx, qy );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `qx`, `qx`: coordinate of the point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `X`, `Y` : coordinate of the pojected point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S`      : curvilinear coordinate along the clothoid of the projection</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `DST`    : point clothoid distance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closestPoint</span><span class="p">(</span> self, qx, qy <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w">  </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">        </span><span class="s">'closestPoint'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Find the closest point to a clothoid by sampling points</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    [ X, Y, S, DST ] = ref.closestPointBySample( qx, qy, ds );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `qx`, `qx`: coordinate of the point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ds`:       sampling distance  coordinate of the point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `X`, `Y` : coordinate of the pojected point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S`      : curvilinear coordinate along the clothoid of the projection</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `DST`    : point clothoid distance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closestPointBySample</span><span class="p">(</span> self, qx, qy, ds <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">        </span><span class="s">'closestPointBySample'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Find the distance between a point and a clothoid by sampling</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    [ DST, S ] = ref.distanceBySample( qx, qy, ds );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On input:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `qx`, `qx`: coordinate of the point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ds`:       sampling distance  coordinate of the point</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S`   : curvilinear coordinate along the clothoid of the projection</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `DST` : point clothoid distance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ DST, S ] = distanceBySample</span><span class="p">(</span> self, qx, qy, ds <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">DST</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">        </span><span class="s">'distanceBySample'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Return curvature derivatve of the clothoid</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    dk = ref.dkappa(s0,L);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>res<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">dkappa</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'dkappa'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
@@ -242,29 +312,48 @@
 <span class="w">        </span><span class="s">'changeCurvilinearOrigin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ s1, s2 ] = intersect</span><span class="p">(</span> self, C, varargin <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
-<span class="w">        </span><span class="s">'intersect'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">obj_handle</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">is_type</span><span class="p">(),</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
-<span class="w">      </span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">%% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%function [ s1, s2 ] = intersect( self, C, varargin )</span><span class="w"></span>
+<span class="w">    </span><span class="c">%  [ s1, s2 ] = ClothoidCurveMexWrapper( ...</span><span class="w"></span>
+<span class="w">    </span><span class="c">%    'intersect', self.objectHandle, C.obj_handle(), C.is_type(), varargin{:} ...</span><span class="w"></span>
+<span class="w">    </span><span class="c">%  );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; point at infinity</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    P = ref.infinity();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    [xp,yp,xm,ym] = ref.infinity();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `xp`, `yp`: point at infinity (positive arc)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `xm`, `ym`: point at infinity (negative arc)</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>[xp,yp,xm,ym]<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">infinity</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="n">xp</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">xm</span><span class="p">,</span><span class="n">ym</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'infinity'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Get clothoid parameters</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    [ x0, y0, theta0, k0, dk, L ] = ref.getPars();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `x0`, `y0`: initial point of the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `theta0`:   initial angle of the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `kappa0`:   initial curvature of the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `dk`:       curvature derivative</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `L`:        length of the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x0, y0, theta0, k0, dk, L ] = getPars</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
@@ -274,12 +363,51 @@
 <span class="w">      </span><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Get an optimized sampling of curviliear coordinates on the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    S = ref.optimized_sample(npts,max_angle,offs);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    S = ref.optimized_sample(npts,max_angle,offs,'ISO');</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    S = ref.optimized_sample(npts,max_angle,offs,'SAE');</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Input:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`:      total number of sampling points</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `max_angle`: initial angle of the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `offs`:      offset of the curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ISO`:       use ISO orientation of the normal for offset</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `SAE`:       use SAE orientation of the normal for offset</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Output:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S`: the vector with the sampled curvilinear coordinates</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>s<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">optimized_sample</span><span class="p">(</span> self, npts, max_angle, offs <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">        </span><span class="s">'optimized_sample'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot( npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot( npts, 'Color','blue','Linewidth',2);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">        </span><span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
@@ -289,12 +417,42 @@
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the clothoid arc with offset</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_offs( offs );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_offs( offs, npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.pplot_offslot( offs, npts, 'Color','blue','Linewidth',2);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `offs`:      offset of the curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_offs</span><span class="p">(</span> self, offs, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">optimized_sample</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="nb">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'eval'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the curvature of the clothoid curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotCurvature( npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotCurvature( npts, 'Color','blue','Linewidth',2);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotCurvature</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">        </span><span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
@@ -306,6 +464,20 @@
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the angle of the clothoid curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotAngle( npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotAngle( npts, 'Color','blue','Linewidth',2);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotAngle</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">        </span><span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
@@ -317,6 +489,20 @@
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the normal of the clothoid curve</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotNormal( step, len );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `step`: number of sampling normals</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `len`:  length of the plotted normal</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotNormal</span><span class="p">(</span> self, step, len <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">s</span><span class="p">=</span><span class="mi">0</span><span class="p">:</span><span class="nb">step</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"></span>
 <span class="w">        </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w"></span>

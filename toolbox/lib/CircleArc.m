@@ -89,27 +89,47 @@ classdef CircleArc < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Build the circle from known parameters
+    %> Build the circle arc given 3 points. The point can be alingned
+    %> in this case a degenerate straight arc if build.
     %>
     %> **Usage:**
     %>
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>    ref.build( x0, y0, x1, y1, x2, y2 )
-    %>    ref.build( p0, p1, p2 )
+    %>    ref.build_3P( x0, y0, x1, y1, x2, y2 )
+    %>    ref.build_3P( p0, p1, p2 )
     %> \endrst
     %>
     function ok = build_3P( self, varargin )
       ok = CircleArcMexWrapper( 'build_3P', self.objectHandle, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
     %> Scale circle by `sc` factor
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.scale( sc );
+    %> \endrst
+    %> 
     function scale( self, sc )
       CircleArcMexWrapper( 'scale', self.objectHandle, sc );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> change the origin of the circle curve to `s0`
+    %> Change the origin of the circle curve to `s0` and set arc lenght to `L`
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    ref.changeCurvilinearOrigin( s0, L );
+    %> \endrst
+    %> 
     function changeCurvilinearOrigin( self, s0, L )
       CircleArcMexWrapper( 'changeCurvilinearOrigin', self.objectHandle, s0, L );
     end
@@ -119,6 +139,23 @@ classdef CircleArc < CurveBase
       nurbs = CircleArcMexWrapper( 'to_nurbs', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the arc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plot( npts );
+    %>
+    %>   fmt = {'Color','blue','Linewidth',2};
+    %>   ref.plot( npts, fmt );
+    %> 
+    %> \endrst
+    %>
+    %> - `npts`: number of sampling points for plotting
+    %> - `fmt` : format of the arc
+    %>
     function plot( self, npts, fmt )
       if nargin<2
         npts = 128;
@@ -132,6 +169,20 @@ classdef CircleArc < CurveBase
       plot(X,Y,fmt{:});
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the polygon of the NURBS for the arc
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   ref.plotPolygon();
+    %>   ref.plotPolygon( 'Color','blue','Linewidth',2 );
+    %> 
+    %> \endrst
+    %>
+    %> - `fmt` : format of the arc
+    %>
     function plotPolygon( self, varargin )
       arc = self.to_nurbs();
       xx  = arc.coefs(1,:)./arc.coefs(3,:);

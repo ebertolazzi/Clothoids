@@ -36,6 +36,10 @@ classdef Triangle2D < handle
       obj = self.objectHandle;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function str = is_type( ~ )
+      str = 'Triangle2D';
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function build( self, varargin )
       Triangle2DMexWrapper( 'build', self.objectHandle, varargin{:} );
     end

@@ -6,8 +6,25 @@
 
 import exhale
 import os
+import re
+import glob
 import os.path
 from pprint import pprint
+
+def do_filter(project, dir, filter = "/**/*.rst", regex=None):
+  if regex is None:
+    regex = re.compile(r"^(\s*\.\.\s*doxygen.*::.*)$", flags=re.IGNORECASE)
+  for fl in glob.glob(dir+filter,recursive=True):
+    #print(fl)
+    with open(fl) as fp:
+      file_data = fp.read()
+    with open(fl, "w") as fp:
+      for line in file_data.splitlines():
+        match = regex.match(line)
+        if match:
+          fp.write(f"{match.group(1)}\n   :project: {project}\n")
+        else:
+          fp.write(line+'\n')
 
 saved_exhale_environment_ready = exhale.environment_ready
 
@@ -34,7 +51,8 @@ def exhale_environment_ready(app):
     saved_exhale_environment_ready( app )
 
     dir = app.config.exhale_args["containmentFolder"];
-    os.system("ruby ../filter_exhale_breathe.rb %s %s" % (dir, project));
+    ##os.system("ruby ../filter_exhale_breathe.rb %s %s" % (dir, project));
+    do_filter(project,dir)
 
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 

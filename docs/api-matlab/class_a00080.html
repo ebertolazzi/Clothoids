@@ -227,45 +227,118 @@
 </dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N13ClothoidCurve9aabb_trueE2in">
-<span id="_CPPv3N13ClothoidCurve9aabb_trueE2in"></span><span id="_CPPv2N13ClothoidCurve9aabb_trueE2in"></span><span id="ClothoidCurve::aabb_true__in"></span><span class="target" id="a00080_1abb509fa5ae7da1d42379d3555b6e5a5e"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">aabb_true</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve9aabb_trueE2in" title="Permalink to this definition">¶</a><br>
-</dt>
-<dd></dd>
-</dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N13ClothoidCurve10aabb_falseE2in">
-<span id="_CPPv3N13ClothoidCurve10aabb_falseE2in"></span><span id="_CPPv2N13ClothoidCurve10aabb_falseE2in"></span><span id="ClothoidCurve::aabb_false__in"></span><span class="target" id="a00080_1a07f2a7820a643b73ba29690673bc9880"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">aabb_false</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve10aabb_falseE2in" title="Permalink to this definition">¶</a><br>
-</dt>
-<dd></dd>
-</dl>
-
-<dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve12closestPointE2in2in2in">
 <span id="_CPPv3N13ClothoidCurve12closestPointE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve12closestPointE2in2in2in"></span><span id="ClothoidCurve::closestPoint__in.in.in"></span><span class="target" id="a00080_1a036b13d181c0da4b94d4c045b98843b2"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">closestPoint</span></code><span class="sig-paren">(</span><em><span class="pre">qx</span></em>,<em><span class="pre">qy</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve12closestPointE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Find the closest point to a clothoid curve using the algorithm described in</p>
+<p></p>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>Point-Clothoid Distance and Projection Computation</strong>,</div>
+<div class="line">SIAM Journal on Scientific Computing, 2019, 41(5).</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1137/18M1200439">https://doi.org/10.1137/18M1200439</a></div>
+</div>
+
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qx</span></code>, <code class="docutils literal notranslate"><span class="pre">qx</span></code>: coordinate of the point</p></li>
+</ul>
+
+<p><strong>On output:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>, <code class="docutils literal notranslate"><span class="pre">Y</span></code> : coordinate of the pojected point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code> : curvilinear coordinate along the clothoid of the projection</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DST</span></code> : point clothoid distance </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve20closestPointBySampleE2in2in2in2in">
 <span id="_CPPv3N13ClothoidCurve20closestPointBySampleE2in2in2in2in"></span><span id="_CPPv2N13ClothoidCurve20closestPointBySampleE2in2in2in2in"></span><span id="ClothoidCurve::closestPointBySample__in.in.in.in"></span><span class="target" id="a00080_1a6e59e3924fcd9f6a986b0006d31f9b1c"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">closestPointBySample</span></code><span class="sig-paren">(</span><em><span class="pre">qx</span></em>,<em><span class="pre">qy</span></em>,<em><span class="pre">ds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve20closestPointBySampleE2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Find the closest point to a clothoid by sampling points</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPointBySample</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qx</span></code>, <code class="docutils literal notranslate"><span class="pre">qx</span></code>: coordinate of the point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ds</span></code>: sampling distance coordinate of the point</p></li>
+</ul>
+
+<p><strong>On output:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>, <code class="docutils literal notranslate"><span class="pre">Y</span></code> : coordinate of the pojected point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code> : curvilinear coordinate along the clothoid of the projection</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DST</span></code> : point clothoid distance </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve16distanceBySampleE2in2in2in2in">
 <span id="_CPPv3N13ClothoidCurve16distanceBySampleE2in2in2in2in"></span><span id="_CPPv2N13ClothoidCurve16distanceBySampleE2in2in2in2in"></span><span id="ClothoidCurve::distanceBySample__in.in.in.in"></span><span class="target" id="a00080_1ab3dc3fb328bb66b9fd74458731b75932"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">distanceBySample</span></code><span class="sig-paren">(</span><em><span class="pre">qx</span></em>,<em><span class="pre">qy</span></em>,<em><span class="pre">ds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve16distanceBySampleE2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Find the distance between a point and a clothoid by sampling</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">DST</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">distanceBySample</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qx</span></code>, <code class="docutils literal notranslate"><span class="pre">qx</span></code>: coordinate of the point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ds</span></code>: sampling distance coordinate of the point</p></li>
+</ul>
+
+<p><strong>On output:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code> : curvilinear coordinate along the clothoid of the projection</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DST</span></code> : point clothoid distance </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve6dkappaE2in">
 <span id="_CPPv3N13ClothoidCurve6dkappaE2in"></span><span id="_CPPv2N13ClothoidCurve6dkappaE2in"></span><span id="ClothoidCurve::dkappa__in"></span><span class="target" id="a00080_1a150dddcba9d9706682d16d94660cf5b5"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">dkappa</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve6dkappaE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Return curvature derivatve of the clothoid</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">dk</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">dkappa</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span><span class="n">L</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -292,13 +365,6 @@
 </dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N13ClothoidCurve9intersectE2in2in2in">
-<span id="_CPPv3N13ClothoidCurve9intersectE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve9intersectE2in2in2in"></span><span id="ClothoidCurve::intersect__in.in.in"></span><span class="target" id="a00080_1ad173f6c07db4f8e0bc5b5e7ea9923b0e"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">intersect</span></code><span class="sig-paren">(</span><em><span class="pre">C</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve9intersectE2in2in2in" title="Permalink to this definition">¶</a><br>
-</dt>
-<dd></dd>
-</dl>
-
-<dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve8infinityE2in">
 <span id="_CPPv3N13ClothoidCurve8infinityE2in"></span><span id="_CPPv2N13ClothoidCurve8infinityE2in"></span><span id="ClothoidCurve::infinity__in"></span><span class="target" id="a00080_1aa4e49b5233f4429c88a9a9ce3b51e62a"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">infinity</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve8infinityE2in" title="Permalink to this definition">¶</a><br>
 </dt>
@@ -306,13 +372,17 @@
 <p>point at infinity</p>
 <p><strong>Usage:</strong></p>
 <p></p>
-<p></p>
 <div class="highlight-matlab notranslate">
-<div class="highlight"><pre><span></span><span class="n">P</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">infinity</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">xp</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">xm</span><span class="p">,</span><span class="n">ym</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">infinity</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 
- 
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xp</span></code>, <code class="docutils literal notranslate"><span class="pre">yp</span></code>: point at infinity (positive arc)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xm</span></code>, <code class="docutils literal notranslate"><span class="pre">ym</span></code>: point at infinity (negative arc) </p></li>
+</ul>
+
 </dd>
 </dl>
 
@@ -320,49 +390,171 @@
 <dt id="_CPPv4N13ClothoidCurve7getParsE2in">
 <span id="_CPPv3N13ClothoidCurve7getParsE2in"></span><span id="_CPPv2N13ClothoidCurve7getParsE2in"></span><span id="ClothoidCurve::getPars__in"></span><span class="target" id="a00080_1aaa2b17a30e6d0f9f8b06eb3fe9091ce2"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">getPars</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve7getParsE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Get clothoid parameters</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">k0</span><span class="p">,</span><span class="w"> </span><span class="n">dk</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">getPars</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code>: initial point of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code>: initial angle of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kappa0</span></code>: initial curvature of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dk</span></code>: curvature derivative</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code>: length of the clothoid arc </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve16optimized_sampleE2in2in2in2in">
 <span id="_CPPv3N13ClothoidCurve16optimized_sampleE2in2in2in2in"></span><span id="_CPPv2N13ClothoidCurve16optimized_sampleE2in2in2in2in"></span><span id="ClothoidCurve::optimized_sample__in.in.in.in"></span><span class="target" id="a00080_1ad2fbc2581528046b084a640ac7acc4b7"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">optimized_sample</span></code><span class="sig-paren">(</span><em><span class="pre">npts</span></em>,<em><span class="pre">max_angle</span></em>,<em><span class="pre">offs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve16optimized_sampleE2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Get an optimized sampling of curviliear coordinates on the clothoid arc</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">optimized_sample</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="n">max_angle</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span><span class="w"></span>
+<span class="n">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">optimized_sample</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="n">max_angle</span><span class="p">,</span><span class="n">offs</span><span class="p">,</span><span class="s">'ISO'</span><span class="p">);</span><span class="w"></span>
+<span class="n">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">optimized_sample</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="n">max_angle</span><span class="p">,</span><span class="n">offs</span><span class="p">,</span><span class="s">'SAE'</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: total number of sampling points</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_angle</span></code>: initial angle of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ISO</span></code>: use ISO orientation of the normal for offset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SAE</span></code>: use SAE orientation of the normal for offset</p></li>
+</ul>
+
+<p><strong>Output:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: the vector with the sampled curvilinear coordinates </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve4plotE2in2in2in">
 <span id="_CPPv3N13ClothoidCurve4plotE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve4plotE2in2in2in"></span><span id="ClothoidCurve::plot__in.in.in"></span><span class="target" id="a00080_1a97a13714d97293723cda25cc063fdd37"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plot</span></code><span class="sig-paren">(</span><em><span class="pre">npts</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve4plotE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the clothoid arc</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve9plot_offsE2in2in2in2in">
 <span id="_CPPv3N13ClothoidCurve9plot_offsE2in2in2in2in"></span><span id="_CPPv2N13ClothoidCurve9plot_offsE2in2in2in2in"></span><span id="ClothoidCurve::plot_offs__in.in.in.in"></span><span class="target" id="a00080_1a276f828f0734e8822037e5cc9fc94ca8"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plot_offs</span></code><span class="sig-paren">(</span><em><span class="pre">offs</span></em>,<em><span class="pre">npts</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve9plot_offsE2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the clothoid arc with offset</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot_offs</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot_offs</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">pplot_offslot</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve13plotCurvatureE2in2in2in">
 <span id="_CPPv3N13ClothoidCurve13plotCurvatureE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve13plotCurvatureE2in2in2in"></span><span id="ClothoidCurve::plotCurvature__in.in.in"></span><span class="target" id="a00080_1af451db1717b2924096a98fb1bc5a9b82"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotCurvature</span></code><span class="sig-paren">(</span><em><span class="pre">npts</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve13plotCurvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the curvature of the clothoid curve</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotCurvature</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotCurvature</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve9plotAngleE2in2in2in">
 <span id="_CPPv3N13ClothoidCurve9plotAngleE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve9plotAngleE2in2in2in"></span><span id="ClothoidCurve::plotAngle__in.in.in"></span><span class="target" id="a00080_1aeef2a03801601b6d3d93afe951509b9a"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotAngle</span></code><span class="sig-paren">(</span><em><span class="pre">npts</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve9plotAngleE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the angle of the clothoid curve</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotAngle</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotAngle</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N13ClothoidCurve10plotNormalE2in2in2in">
 <span id="_CPPv3N13ClothoidCurve10plotNormalE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve10plotNormalE2in2in2in"></span><span id="ClothoidCurve::plotNormal__in.in.in"></span><span class="target" id="a00080_1a704e6560ad28afcde8df99460756e135"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotNormal</span></code><span class="sig-paren">(</span><em><span class="pre">step</span></em>,<em><span class="pre">len</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve10plotNormalE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the normal of the clothoid curve</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotNormal</span><span class="p">(</span><span class="w"> </span><span class="nb">step</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">step</span></code>: number of sampling normals</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">len</span></code>: length of the plotted normal </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -1065,7 +1257,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">max_angle</span></code>: maximum curve angle variation admitted in a triangle</p></li>
@@ -1101,7 +1293,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p>offs: offset of the curve used in computation</p></li>
@@ -1136,7 +1328,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
@@ -1161,6 +1353,38 @@
 <span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>, <code class="docutils literal notranslate"><span class="pre">offs1</span></code>: offset of the curves used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for the offsets </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N13ClothoidCurve9intersectE2in2in2in">
+<span id="_CPPv3N13ClothoidCurve9intersectE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve9intersectE2in2in2in"></span><span id="ClothoidCurve::intersect__in.in.in"></span><span class="target" id="a00092_1a76563ee1040c154c4b1b14383fed424f"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">intersect</span></code><span class="sig-paren">(</span><em><span class="pre">OBJ</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve9intersectE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Intersect two curves.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s1</span></code>: curvilinear coordinates of the intersections on the first curve</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s2</span></code>: curvilinear coordinates of the intersections on the second curve</p></li>
+</ul>
 
 <p><strong>Optional Argument</strong></p>
 <p></p>
@@ -1254,7 +1478,7 @@
 <span id="_CPPv3N13ClothoidCurve8plotBBoxE2in2in"></span><span id="_CPPv2N13ClothoidCurve8plotBBoxE2in2in"></span><span id="ClothoidCurve::plotBBox__in.in"></span><span class="target" id="a00092_1a59acec48078144adab8084fa3813a47b"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotBBox</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve8plotBBoxE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Plot the BBOX of the curve</p>
+<p>Plot the bounding box of the curve</p>
 <p><strong>Usage:</strong></p>
 <p></p>
 <p></p>

@@ -109,7 +109,22 @@
 <dt id="_CPPv4N12ClothoidList12ClothoidListEv">
 <span id="_CPPv3N12ClothoidList12ClothoidListEv"></span><span id="_CPPv2N12ClothoidList12ClothoidListEv"></span><span id="ClothoidList::ClothoidList"></span><span class="target" id="a00084_1a9f9dd13c2646b4694b384590f451e63e"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">ClothoidList</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList12ClothoidListEv" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Create a new C++ class instance for the clothoid list object</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="p">()</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>On output:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ref</span></code>: reference handle to the object instance </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -120,24 +135,21 @@
 </dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N12ClothoidList9aabb_trueE2in">
-<span id="_CPPv3N12ClothoidList9aabb_trueE2in"></span><span id="_CPPv2N12ClothoidList9aabb_trueE2in"></span><span id="ClothoidList::aabb_true__in"></span><span class="target" id="a00084_1a094848e90a81bfb4b05a3a32e9221e71"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">aabb_true</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList9aabb_trueE2in" title="Permalink to this definition">¶</a><br>
-</dt>
-<dd></dd>
-</dl>
-
-<dl class="cpp function">
-<dt id="_CPPv4N12ClothoidList10aabb_falseE2in">
-<span id="_CPPv3N12ClothoidList10aabb_falseE2in"></span><span id="_CPPv2N12ClothoidList10aabb_falseE2in"></span><span id="ClothoidList::aabb_false__in"></span><span class="target" id="a00084_1a596e2ff561530df12b4b6407ed4273f1"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">aabb_false</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList10aabb_falseE2in" title="Permalink to this definition">¶</a><br>
-</dt>
-<dd></dd>
-</dl>
-
-<dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList7reserveE2in2in">
 <span id="_CPPv3N12ClothoidList7reserveE2in2in"></span><span id="_CPPv2N12ClothoidList7reserveE2in2in"></span><span id="ClothoidList::reserve__in.in"></span><span class="target" id="a00084_1aabf8f4ec32867841c363eca1782beb8a"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">reserve</span></code><span class="sig-paren">(</span><em><span class="pre">N</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList7reserveE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Reserve memory for <code class="docutils literal notranslate"><span class="pre">N</span></code> segments</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -368,49 +380,198 @@
 <dt id="_CPPv4N12ClothoidList4plotE2in2in">
 <span id="_CPPv3N12ClothoidList4plotE2in2in"></span><span id="_CPPv2N12ClothoidList4plotE2in2in"></span><span id="ClothoidList::plot__in.in"></span><span class="target" id="a00084_1a6a7014381c7fb6247ab71f7ee03e1fb0"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plot</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList4plotE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the clothoid list</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"> </span><span class="c">% first arc of the biarc</span><span class="w"></span>
+<span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w">  </span><span class="c">% second arc of the biarc</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">fmt1</span><span class="p">,</span><span class="w"> </span><span class="n">fmt2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt1</span></code>: format of the first arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt2</span></code>: format of the second arc </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList9plot_offsE2in2in2in2in">
 <span id="_CPPv3N12ClothoidList9plot_offsE2in2in2in2in"></span><span id="_CPPv2N12ClothoidList9plot_offsE2in2in2in2in"></span><span id="ClothoidList::plot_offs__in.in.in.in"></span><span class="target" id="a00084_1a723bc88fa07102fa18c4d32ad03a3f29"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plot_offs</span></code><span class="sig-paren">(</span><em><span class="pre">offs</span></em>,<em><span class="pre">npts</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList9plot_offsE2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the clothoid list with offset</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot_offs</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"> </span><span class="c">% first arc of the biarc</span><span class="w"></span>
+<span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w">  </span><span class="c">% second arc of the biarc</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot_offs</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">fmt1</span><span class="p">,</span><span class="w"> </span><span class="n">fmt2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt1</span></code>: format of the first arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt2</span></code>: format of the second arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset used in the plotting </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList13plotCurvatureE2in2in2in">
 <span id="_CPPv3N12ClothoidList13plotCurvatureE2in2in2in"></span><span id="_CPPv2N12ClothoidList13plotCurvatureE2in2in2in"></span><span id="ClothoidList::plotCurvature__in.in.in"></span><span class="target" id="a00084_1ab3733fca14f33632b4f4cd8e28b1e176"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotCurvature</span></code><span class="sig-paren">(</span><em><span class="pre">npts</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList13plotCurvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the curvature of the clothoid list</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotCurvature</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"></span>
+<span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotCurvature</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">fmt1</span><span class="p">,</span><span class="w"> </span><span class="n">fmt2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt1</span></code>: format of the first arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt2</span></code>: format of the second arc </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList9plotAngleE2in2in2in">
 <span id="_CPPv3N12ClothoidList9plotAngleE2in2in2in"></span><span id="_CPPv2N12ClothoidList9plotAngleE2in2in2in"></span><span id="ClothoidList::plotAngle__in.in.in"></span><span class="target" id="a00084_1a89bd52d16b1cb857b52e634e7be95fe4"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotAngle</span></code><span class="sig-paren">(</span><em><span class="pre">npts</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList9plotAngleE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the angle of the clothoid list</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotAngle</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"></span>
+<span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotAngle</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">fmt1</span><span class="p">,</span><span class="w"> </span><span class="n">fmt2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt1</span></code>: format of the first arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt2</span></code>: format of the second arc </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList10plotNormalE2in2in2in">
 <span id="_CPPv3N12ClothoidList10plotNormalE2in2in2in"></span><span id="_CPPv2N12ClothoidList10plotNormalE2in2in2in"></span><span id="ClothoidList::plotNormal__in.in.in"></span><span class="target" id="a00084_1a0205e28080b78060880d6030a569f632"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotNormal</span></code><span class="sig-paren">(</span><em><span class="pre">step</span></em>,<em><span class="pre">len</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList10plotNormalE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Plot the normal of the clothoid list</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotNormal</span><span class="p">(</span><span class="w"> </span><span class="nb">step</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">step</span></code>: number of sampling normals</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">len</span></code>: length of the plotted normal </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList11saveSampledE2in2in2in">
 <span id="_CPPv3N12ClothoidList11saveSampledE2in2in2in"></span><span id="_CPPv2N12ClothoidList11saveSampledE2in2in2in"></span><span id="ClothoidList::saveSampled__in.in.in"></span><span class="target" id="a00084_1a75583cdff2824a246f471063094e94f2"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">saveSampled</span></code><span class="sig-paren">(</span><em><span class="pre">filename</span></em>,<em><span class="pre">ds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList11saveSampledE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Save the clothoid list sampled on a file</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">saveSampled</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code>: file name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ds</span></code>: sample point every <code class="docutils literal notranslate"><span class="pre">ds</span></code></p></li>
+</ul>
+
+<p>the file is of the form </p>
+<p></p>
+<div class="highlight-text notranslate">
+<div class="highlight"><pre><span></span>X Y THETA
+0 0 1.2
+...
+...
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList13saveClothoidsE2in2in">
 <span id="_CPPv3N12ClothoidList13saveClothoidsE2in2in"></span><span id="_CPPv2N12ClothoidList13saveClothoidsE2in2in"></span><span id="ClothoidList::saveClothoids__in.in"></span><span class="target" id="a00084_1aa2103f4bb4b0bdd1841f0dd648b0affb"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">saveClothoids</span></code><span class="sig-paren">(</span><em><span class="pre">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList13saveClothoidsE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Save the clothoid list on a file as a list of segments</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">saveClothoids</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code>: file name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ds</span></code>: sample point every <code class="docutils literal notranslate"><span class="pre">ds</span></code></p></li>
+</ul>
+
+<p>the file is of the form </p>
+<p></p>
+<div class="highlight-text notranslate">
+<div class="highlight"><pre><span></span>x0 y0 theta0 kappa0 dk  L
+0  0  1.2    0.0    0.1 2
+...
+...
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -1113,7 +1274,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">max_angle</span></code>: maximum curve angle variation admitted in a triangle</p></li>
@@ -1149,7 +1310,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p>offs: offset of the curve used in computation</p></li>
@@ -1184,7 +1345,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
@@ -1210,7 +1371,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>, <code class="docutils literal notranslate"><span class="pre">offs1</span></code>: offset of the curves used in computation</p></li>
@@ -1316,7 +1477,7 @@
 <span id="_CPPv3N12ClothoidList8plotBBoxE2in2in"></span><span id="_CPPv2N12ClothoidList8plotBBoxE2in2in"></span><span id="ClothoidList::plotBBox__in.in"></span><span class="target" id="a00092_1a59acec48078144adab8084fa3813a47b"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotBBox</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList8plotBBoxE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Plot the BBOX of the curve</p>
+<p>Plot the bounding box of the curve</p>
 <p><strong>Usage:</strong></p>
 <p></p>
 <p></p>

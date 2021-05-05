@@ -78,6 +78,22 @@
 
 <span class="w">  </span><span class="k">methods</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Create a new C++ class instance for the</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; clothoid list object</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref = ClothoidCurve()</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **On output:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ref`: reference handle to the object instance</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>self<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">ClothoidList</span><span class="p">()</span><span class="w"></span>
 <span class="w">      </span><span class="n">self</span><span class="p">@</span><span class="n">CurveBase</span><span class="p">(</span><span class="w"> </span><span class="s">'ClothoidListMexWrapper'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidListMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'new'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -87,14 +103,17 @@
 <span class="w">      </span><span class="n">str</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'ClothoidList'</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">aabb_true</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">ClothoidListMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'aabb_true'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">aabb_false</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">ClothoidListMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'aabb_false'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="w"></span>
-<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Reserve memory for `N` segments</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref.reserve( N );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">reserve</span><span class="p">(</span> self, N <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">ClothoidListMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'reserve'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
@@ -286,6 +305,26 @@
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the clothoid list</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot( npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot( npts, fmt1, fmt2 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt1`: format of the first arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt2`: format of the second arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="w">        </span><span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
@@ -313,6 +352,26 @@
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the clothoid list with offset</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_offs( offs, npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_offs( offs, npts, fmt1, fmt2 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt1`: format of the first arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt2`: format of the second arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `offs`: offset used in the plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_offs</span><span class="p">(</span> self, offs, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
 <span class="w">        </span><span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
@@ -335,6 +394,25 @@
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the curvature of the clothoid list</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotCurvature( npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt1 = {'Color','blue','Linewidth',2};</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt2 = {'Color','red','Linewidth',2};</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotCurvature( npts, fmt1, fmt2 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt1`: format of the first arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt2`: format of the second arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotCurvature</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">        </span><span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
@@ -361,6 +439,25 @@
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the angle of the clothoid list</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotAngle( npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt1 = {'Color','blue','Linewidth',2};</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   fmt2 = {'Color','red','Linewidth',2};</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotAngle( npts, fmt1, fmt2 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `npts`: number of sampling points for plotting</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt1`: format of the first arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `fmt2`: format of the second arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotAngle</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">        </span><span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
@@ -387,6 +484,20 @@
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Plot the normal of the clothoid list</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plotNormal( step, len );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `step`: number of sampling normals</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `len`:  length of the plotted normal</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotNormal</span><span class="p">(</span> self, step, len <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">numSegment</span><span class="p">()</span><span class="w"></span>
 <span class="w">        </span><span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">);</span><span class="w"></span>
@@ -394,6 +505,31 @@
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Save the clothoid list sampled on a file</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.saveSampled( filename, ds );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `filename`: file name</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ds`:       sample point every `ds`</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; the file is of the form</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: text</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   X Y THETA</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   0 0 1.2</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ...</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ...</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">saveSampled</span><span class="p">(</span> self, filename, ds <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">fd</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fopen</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="s">'w'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">L</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
@@ -407,6 +543,31 @@
 <span class="w">      </span><span class="nb">fclose</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Save the clothoid list on a file as a list of segments</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.saveClothoids( filename, ds );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `filename`: file name</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `ds`:       sample point every `ds`</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; the file is of the form</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: text</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   x0 y0 theta0 kappa0 dk  L</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   0  0  1.2    0.0    0.1 2</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ...</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ...</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">saveClothoids</span><span class="p">(</span> self, filename <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">fd</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fopen</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="s">'w'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="nb">fprintf</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="s">'x0\ty0\ttheta0\tkappa0\tdk\tL\n'</span><span class="p">);</span><span class="w"></span>

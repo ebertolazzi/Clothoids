@@ -368,11 +368,11 @@
 <p><strong>Usage:</strong></p>
 <p></p>
 <div class="highlight-matlab notranslate">
-<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot_offs</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 
 <span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"> </span><span class="c">% first arc of the biarc</span><span class="w"></span>
 <span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w">  </span><span class="c">% second arc of the biarc</span><span class="w"></span>
-<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">fmt1</span><span class="p">,</span><span class="w"> </span><span class="n">fmt2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot_offs</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">fmt1</span><span class="p">,</span><span class="w"> </span><span class="n">fmt2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 
@@ -468,7 +468,7 @@
 <span id="_CPPv3N9BiarcList4saveE2in2in2in"></span><span id="_CPPv2N9BiarcList4saveE2in2in2in"></span><span id="BiarcList::save__in.in.in"></span><span class="target" id="a00072_1a11d2d278ddba7acf511596c5e08a34ec"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em><span class="pre">filename</span></em>,<em><span class="pre">ds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9BiarcList4saveE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Save the biarc list sampled on a fils</p>
+<p>Save the biarc list sampled on a file</p>
 <p><strong>Usage:</strong></p>
 <p></p>
 <div class="highlight-matlab notranslate">
@@ -1196,7 +1196,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">max_angle</span></code>: maximum curve angle variation admitted in a triangle</p></li>
@@ -1232,7 +1232,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p>offs: offset of the curve used in computation</p></li>
@@ -1267,7 +1267,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
@@ -1293,7 +1293,7 @@
 </pre></div>
 </div>
 
-<p><strong>Optional Argument</strong></p>
+<p><strong>Optional Arguments</strong></p>
 <p></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>, <code class="docutils literal notranslate"><span class="pre">offs1</span></code>: offset of the curves used in computation</p></li>
@@ -1399,7 +1399,7 @@
 <span id="_CPPv3N9BiarcList8plotBBoxE2in2in"></span><span id="_CPPv2N9BiarcList8plotBBoxE2in2in"></span><span id="BiarcList::plotBBox__in.in"></span><span class="target" id="a00092_1a59acec48078144adab8084fa3813a47b"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">plotBBox</span></code><span class="sig-paren">(</span><em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9BiarcList8plotBBoxE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Plot the BBOX of the curve</p>
+<p>Plot the bounding box of the curve</p>
 <p><strong>Usage:</strong></p>
 <p></p>
 <p></p>

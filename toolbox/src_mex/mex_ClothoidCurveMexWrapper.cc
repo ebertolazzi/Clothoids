@@ -569,38 +569,6 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  static
-  void
-  do_aabb_true(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD "ClothoidCurveMexWrapper('aabb_true',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
-    G2lib::yesAABBtree();
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_aabb_false(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD "ClothoidCurveMexWrapper('aabb_false',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
-    G2lib::noAABBtree();
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
   static std::map<std::string,DO_CMD> cmd_to_fun = {
     {"new",do_new},
     {"build",do_build},
@@ -613,8 +581,6 @@ namespace G2lib {
     {"distanceBySample",do_distance_by_sample},
     {"closestPointBySample",do_closest_by_sample},
     {"optimized_sample",do_optimized_sample},
-    {"aabb_true",do_aabb_true},
-    {"aabb_false",do_aabb_false},
     CMD_MAP_FUN
   };
 

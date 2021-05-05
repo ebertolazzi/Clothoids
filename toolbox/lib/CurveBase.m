@@ -647,7 +647,7 @@ classdef CurveBase < handle
     %> 
     %> \endrst
     %>
-    %> **Optional Argument**
+    %> **Optional Arguments**
     %>
     %> - `max_angle`: maximum curve angle variation admitted in a triangle
     %> - `max_size`: maximum triangles size
@@ -681,7 +681,7 @@ classdef CurveBase < handle
     %> 
     %> \endrst
     %>
-    %> **Optional Argument**
+    %> **Optional Arguments**
     %>
     %> - offs: offset of the curve used in computation
     %> - 'ISO'/'SAE': use ISO or SAE orientation of the normal for the offset
@@ -716,7 +716,7 @@ classdef CurveBase < handle
     %> 
     %> \endrst
     %>
-    %> **Optional Argument**
+    %> **Optional Arguments**
     %>
     %> - `offs`: offset of the curve used in computation
     %> - 'ISO'/'SAE': use ISO or SAE orientation of the normal for the offset
@@ -741,7 +741,7 @@ classdef CurveBase < handle
     %> 
     %> \endrst
     %>
-    %> **Optional Argument**
+    %> **Optional Arguments**
     %>
     %> - `offs`, `offs1`: offset of the curves used in computation
     %> - 'ISO'/'SAE': use ISO or SAE orientation of the normal for the offsets
@@ -850,7 +850,7 @@ classdef CurveBase < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Plot the BBOX of the curve
+    %> Plot the bounding box of the curve
     %>
     %> **Usage:**
     %>
