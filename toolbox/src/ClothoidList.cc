@@ -1913,18 +1913,18 @@ namespace G2lib {
   void
   save_segment( ostream_type & stream, ClothoidCurve const & c ) {
     fmt::print( stream,
-      "{:<16}\t{:<16}\t{:<16}\t{:<16}\n"
-      "{:<16}\t{:<16}\t{:<16}\t{:<16}\n",
+      "{:<24}\t{:<24}\t{:<24}\t{:<24}\n"
+      "{:<24}\t{:<24}\t{:<24}\t{:<24}\n",
       //------------------
-      fmt::format("{:.12}",c.xBegin()),
-      fmt::format("{:.12}",c.yBegin()),
-      fmt::format("{:.12}",c.thetaBegin()),
-      fmt::format("{:.12}",c.kappaBegin()),
+      fmt::format("{:.20}",c.xBegin()),
+      fmt::format("{:.20}",c.yBegin()),
+      fmt::format("{:.20}",c.thetaBegin()),
+      fmt::format("{:.20}",c.kappaBegin()),
       //------------------
-      fmt::format("{:.12}",c.xEnd()),
-      fmt::format("{:.12}",c.yEnd()),
-      fmt::format("{:.12}",c.thetaEnd()),
-      fmt::format("{:.12}",c.kappaEnd())
+      fmt::format("{:.20}",c.xEnd()),
+      fmt::format("{:.20}",c.yEnd()),
+      fmt::format("{:.20}",c.thetaEnd()),
+      fmt::format("{:.20}",c.kappaEnd())
     );
   }
   #endif
