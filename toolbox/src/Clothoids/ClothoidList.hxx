@@ -906,12 +906,12 @@ namespace G2lib {
     { this->resetLastInterval(); copy(s); }
 
     //!
-    //! Initialize the clothois list
+    //! Initialize the clothoid list
     //!
     void init();
 
     //!
-    //! Reserve memory for `n` clothois
+    //! Reserve memory for `n` clothoid
     //!
     void reserve( int_type n );
 
@@ -1104,7 +1104,7 @@ namespace G2lib {
     real_type closure_gap_ty() const { return this->ty_End() - this->ty_Begin(); }
 
     //!
-    //! check if clothois list is closed
+    //! check if clothoid list is closed
     //!
     //! \param[in] tol_xy position tolerance
     //! \param[in] tol_tg angle (tangent) tolerance
@@ -1272,12 +1272,12 @@ namespace G2lib {
     ClothoidCurve const & getAtS( real_type s ) const;
 
     //!
-    //! Return the numbber of clothois of the list
+    //! Return the numbber of clothoid of the list
     //!
     int_type numSegment() const { return int_type(m_clotoidList.size()); }
 
     //!
-    //! The list of clothois has total length \f$ L \f$
+    //! The list of clothoid has total length \f$ L \f$
     //! the parameter \f$ s \f$ us recomputed as \f$ s+kL\f$ in such a way
     //! \f$ s+kL\in[0,L)\f$ with \f$ k\in\mathbb{Z} \f$.
     //!
@@ -1855,7 +1855,7 @@ namespace G2lib {
     operator << ( ostream_type & stream, ClothoidList const & CL );
 
     //!
-    //! Return the clothois list as a list of nodes and curvatures
+    //! Return the clothoid list as a list of nodes and curvatures
     //!
     //! \param[out] s     nodes
     //! \param[out] kappa curvature
@@ -1865,7 +1865,7 @@ namespace G2lib {
     getSK( real_type * s, real_type * kappa ) const;
 
     //!
-    //! Return the clothois list as a list of nodes and curvatures
+    //! Return the clothoid list as a list of nodes and curvatures
     //!
     //! \param[out] s     nodes
     //! \param[out] kappa curvature
@@ -1882,7 +1882,7 @@ namespace G2lib {
     }
 
     //!
-    //! Return the clothois list as a list of nodes angles and curvatures
+    //! Return the clothoid list as a list of nodes angles and curvatures
     //!
     //! \param[out] s     nodes
     //! \param[out] theta angles
@@ -1897,7 +1897,7 @@ namespace G2lib {
     ) const;
 
     //!
-    //! Return the clothois list as a list of nodes angles and curvatures
+    //! Return the clothoid list as a list of nodes angles and curvatures
     //!
     //! \param[out] s     nodes
     //! \param[out] theta angles
