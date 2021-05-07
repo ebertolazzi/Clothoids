@@ -50,7 +50,7 @@ classdef PolyLine < CurveBase
     %> - CircleArc
     %> - Biarc
     %> - ClothoidCurve
-    %> - ClothoisList
+    %> - ClothoidList
     %>
     %> with a polyline
     %> 
