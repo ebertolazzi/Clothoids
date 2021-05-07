@@ -16,8 +16,8 @@ objects in the library:
 - Biarc
 - ClothoidCurve
 - PolyLine
-- ClothoisList
-- ClothoisSplineG2
+- ClothoidList
+- ClothoidSplineG2
 - Triangle2D
 - FresnelCS
 
@@ -531,7 +531,7 @@ an offset respect to the normal of the curve can be used
   XY_DDD        = CL.eval_DDD( s, offs );
 
 
-ClothoisList
+ClothoidList
 ------------
 
 
@@ -541,7 +541,7 @@ Documentation will be available soon, see examples in
 ``tests`` for the moments
 
 
-ClothoisSplineG2
+ClothoidSplineG2
 ----------------
 
 Implements the algorithm described in references [2] and [3].
