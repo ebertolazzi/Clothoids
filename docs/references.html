@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clothoids &#8212; Clothoids v2.0.6
+    <title>References &#8212; Clothoids v2.0.6
 </title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
@@ -42,9 +42,7 @@
     
 
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="C++ API" href="api-cpp/root.html" />
-    <link rel="prev" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc" href="index.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head><body>
     <div class="relbar-top">
@@ -58,15 +56,9 @@
         <li class="right" >
           <a href="index.html" title="Table Of Contents"
              accesskey="C">toc</a> &nbsp; &nbsp;</li>
-        <li class="right" >
-          <a href="api-cpp/root.html" title="C++ API"
-             accesskey="N">next</a> &nbsp; &nbsp;</li>
-        <li class="right" >
-          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
-             accesskey="P">previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">Clothoids</a> &#187;</li>
 
-        <li class="nav-item nav-item-this"><a href="">Clothoids</a></li> 
+        <li class="nav-item nav-item-this"><a href="">References</a></li> 
       </ul>
     </div>
     </div>
@@ -77,71 +69,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="clothoids">
-<h1>Clothoids<a class="headerlink" href="#clothoids" title="Permalink to this headline">¶</a>
+  <div class="section" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a>
 </h1>
-<p><a class="reference external" href="https://travis-ci.org/ebertolazzi/Clothoids"><img alt="Build Status" src="https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master"></a> <a class="reference external" href="https://it.mathworks.com/matlabcentral/fileexchange/64849-ebertolazzi-clothoids"><img alt="View ebertolazzi/Clothoids on File Exchange" src="https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg"></a></p>
-<p>G1 and G2 fitting with clothoids, spline of clothoids, circle arc and
-biarc</p>
-<p><em>by Enrico Bertolazzi (enrico.bertolazzi@unitn.it) and Marco Frego (marco.frego@unibz.it)</em></p>
-<p>for the documentation see <a class="reference external" href="http://ebertolazzi.github.io/Clothoids/">online documentation</a></p>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a>
-</h2>
-<p>Download the library</p>
-<div class="highlight-sh notranslate">
-<div class="highlight"><pre><span></span>git clone git@github.com:ebertolazzi/Clothoids.git —recurse-submodules
-</pre></div>
-</div>
-<p>if you forget <code class="docutils literal notranslate"><span class="pre">—recurse-submodules</span></code> you must load the submdule
-quarticRootsFlocke next. To compile the library you can use <code class="docutils literal notranslate"><span class="pre">make</span></code></p>
-<div class="highlight-sh notranslate">
-<div class="highlight"><pre><span></span>make
-</pre></div>
-</div>
-<p>or <code class="docutils literal notranslate"><span class="pre">cmake</span></code></p>
-<div class="highlight-sh notranslate">
-<div class="highlight"><pre><span></span>mkdir build
-<span class="nb">cd</span> build
-cmake ..
-make
-</pre></div>
-</div>
-<p>of <code class="docutils literal notranslate"><span class="pre">rake</span></code></p>
-<div class="highlight-sh notranslate">
-<div class="highlight"><pre><span></span>rake build_osx   <span class="c1"># on mac</span>
-rake build_linux <span class="c1"># on linux</span>
-rake build_win   <span class="c1"># on windows</span>
-</pre></div>
-</div>
-<p>using <code class="docutils literal notranslate"><span class="pre">make</span></code> you have the library and headers in the following tree</p>
-<div class="highlight-text notranslate">
-<div class="highlight"><pre><span></span>`-- lib
-    |-- include
-    |   |-- AABBtree.hh
-    |   |-- Biarc.hh
-    |   |-- BiarcList.hh
-    |   |-- Circle.hh
-    |   |-- Clothoid.hh
-    |   |-- ClothoidAsyPlot.hh
-    |   |-- ClothoidList.hh
-    |   |-- Fresnel.hh
-    |   |-- G2lib.hh
-    |   |-- Line.hh
-    |   |-- PolyLine.hh
-    |   |-- PolynomialRoots-Utils.hh
-    |   |-- PolynomialRoots.hh
-    |   `-- Triangle2D.hh
-    `-- lib
-        |-- libClothoids_OSTYPE.dylib
-        `-- libClothoids_OSTYPE_static.a
-</pre></div>
-</div>
-<p>where OSTYPE can be <code class="docutils literal notranslate"><span class="pre">linux</span></code>, <code class="docutils literal notranslate"><span class="pre">osx</span></code>, <code class="docutils literal notranslate"><span class="pre">mingw_x64</span></code>, <code class="docutils literal notranslate"><span class="pre">win_x64</span></code></p>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a>
-</h2>
 <ol class="arabic">
 <li>
 <div class="line-block">
@@ -191,7 +121,6 @@ curvature continuity</strong>,</div>
 </li>
 </ol>
 </div>
-</div>
 
 
 
@@ -216,15 +145,10 @@ curvature continuity</strong>,</div>
 <script>$('#searchbox').show(0);</script>
 <div class="sphinx-toc sphinxglobaltoc">
 <h3><a href="index.html">Table of Contents</a></h3>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Clothoids</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Matlab_manual.html">Matlab Interface Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api-cpp/root.html">C++ API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api-matlab/root.html">MATLAB API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Matlab_manual.html">Matlab Interface Manual</a></li>
 </ul>
 </div>
         </div>
@@ -259,15 +183,9 @@ curvature continuity</strong>,</div>
         <li class="right" >
           <a href="index.html" title="Table Of Contents"
              >toc</a> &nbsp; &nbsp;</li>
-        <li class="right" >
-          <a href="api-cpp/root.html" title="C++ API"
-             >next</a> &nbsp; &nbsp;</li>
-        <li class="right" >
-          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
-             >previous</a> &nbsp; &nbsp;</li>
     <li><a href="index.html">Clothoids</a> &#187;</li>
 
-        <li class="nav-item nav-item-this"><a href="">Clothoids</a></li> 
+        <li class="nav-item nav-item-this"><a href="">References</a></li> 
       </ul>
     </div>
     </div>
