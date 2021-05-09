@@ -89,19 +89,10 @@ Contents
     api-cpp/root.rst
     api-matlab/root.rst
 
-Authors
-~~~~~~~
 
-- | Enrico Bertolazzi
-  | Dipartimento di Ingegneria Industriale
-  | Università degli Studi di Trento
-  | email: enrico.bertolazzi@unitn.it
-  | homepage: https://e.bertolazzi.dii.unitn.it
+.. include:: authors.rst
 
-- | Marco Frego
-  | Faculty of Science and Technology
-  | Free University of Bozen-Bolzano
-  | email: marco.frego@unibz.it
+.. include:: references.rst
 
 License
 ~~~~~~~
