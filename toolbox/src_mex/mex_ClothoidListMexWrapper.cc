@@ -253,7 +253,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type n = ptr->numSegment();
+    int_type n = ptr->numSegments();
 
     real_type * s     = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * theta = createMatrixValue( arg_out_1, 1, n+1 );
@@ -280,7 +280,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type    n = ptr->numSegment();
+    int_type    n = ptr->numSegments();
     real_type * x = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * y = createMatrixValue( arg_out_1, 1, n+1 );
 
@@ -674,8 +674,8 @@ namespace G2lib {
     int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
     MEX_ASSERT2(
-      n > 0 && n <= ptr->numSegment(),
-      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->numSegment()
+      n > 0 && n <= ptr->numSegments(),
+      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->numSegments()
     );
 
     ClothoidCurve const & c = ptr->get(n-1);
@@ -694,18 +694,18 @@ namespace G2lib {
 
   static
   void
-  do_numSegment(
+  do_numSegments(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD "ClothoidListMexWrapper('numSegment', OBJ): "
+    #define CMD "ClothoidListMexWrapper('numSegments', OBJ): "
 
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    setScalarInt( arg_out_0, ptr->numSegment() );
+    setScalarInt( arg_out_0, ptr->numSegments() );
 
     #undef CMD
   }
@@ -726,7 +726,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type nseg = ptr->numSegment();
+    int_type nseg = ptr->numSegments();
 
     real_type * dtheta = createMatrixValue( arg_out_0, nseg, 1 );
     ptr->getDeltaTheta( dtheta );
@@ -750,7 +750,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type nseg = ptr->numSegment();
+    int_type nseg = ptr->numSegments();
 
     real_type * dkappa = createMatrixValue( arg_out_0, nseg, 1 );
     ptr->getDeltaKappa( dkappa );
@@ -924,7 +924,7 @@ namespace G2lib {
       arg_in_3, CMD "`qx` expected to be a real scalar"
     );
     int64_t icurve_begin = 0;
-    int64_t icurve_end   = ptr->numSegment()-1;
+    int64_t icurve_end   = ptr->numSegments()-1;
 
     if ( nrhs >= 6 ) {
       icurve_begin = getInt(
@@ -1169,7 +1169,7 @@ namespace G2lib {
     {"make_open",do_make_open},
     {"is_closed",do_is_closed},
     {"get",do_get},
-    {"numSegment",do_numSegment},
+    {"numSegments",do_numSegments},
     {"deltaTheta",do_deltaTheta},
     {"deltaKappa",do_deltaKappa},
     {"export_table",do_export_table},

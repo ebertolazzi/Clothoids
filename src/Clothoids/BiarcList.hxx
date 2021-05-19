@@ -264,7 +264,7 @@ namespace G2lib {
     //!
     //! Return the number of biarc in the biarc list
     //!
-    int_type numSegment() const { return int_type(m_biarcList.size()); }
+    int_type numSegments() const { return int_type(m_biarcList.size()); }
 
     //!
     //! Get the of the biarc that contain the curvilinear coordinate `s`

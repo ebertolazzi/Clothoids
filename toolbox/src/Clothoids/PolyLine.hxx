@@ -116,7 +116,7 @@ namespace G2lib {
     getSegment( int_type n ) const;
 
     int_type
-    numSegment() const
+    numSegments() const
     { return int_type(m_polylineList.size()); }
 
     int_type

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File PolyLine.cc &#8212; Clothoids v2.0.6
+    <title>Program Listing for File PolyLine.cc &#8212; Clothoids v2.0.7
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -661,7 +661,7 @@
 
   <span class="kt">void</span>
   <span class="n">PolyLine</span><span class="o">::</span><span class="n">push_back</span><span class="p">(</span> <span class="n">ClothoidList</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">L</span><span class="p">,</span> <span class="n">real_type</span> <span class="n">tol</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">int_type</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">L</span><span class="p">.</span><span class="n">numSegment</span><span class="p">();</span>
+    <span class="n">int_type</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">L</span><span class="p">.</span><span class="n">numSegments</span><span class="p">();</span>
     <span class="k">for</span> <span class="p">(</span> <span class="n">int_type</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="n">ns</span><span class="p">;</span> <span class="o">++</span><span class="n">idx</span> <span class="p">)</span> <span class="p">{</span>
       <span class="n">ClothoidCurve</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">C</span> <span class="o">=</span> <span class="n">L</span><span class="p">.</span><span class="n">get</span><span class="p">(</span> <span class="n">idx</span> <span class="p">);</span>
       <span class="n">push_back</span><span class="p">(</span> <span class="n">C</span><span class="p">,</span> <span class="n">tol</span> <span class="p">);</span>
@@ -880,7 +880,7 @@
       <span class="s">"xEnd   = {}</span><span class="se">\n</span><span class="s">"</span>
       <span class="s">"yEnd   = {}</span><span class="se">\n</span><span class="s">"</span>
       <span class="s">"length = {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
-      <span class="n">P</span><span class="p">.</span><span class="n">numSegment</span><span class="p">(),</span>
+      <span class="n">P</span><span class="p">.</span><span class="n">numSegments</span><span class="p">(),</span>
       <span class="n">P</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span>
       <span class="n">P</span><span class="p">.</span><span class="n">yBegin</span><span class="p">(),</span>
       <span class="n">P</span><span class="p">.</span><span class="n">xEnd</span><span class="p">(),</span>

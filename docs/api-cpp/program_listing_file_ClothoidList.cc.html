@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File ClothoidList.cc &#8212; Clothoids v2.0.6
+    <title>Program Listing for File ClothoidList.cc &#8212; Clothoids v2.0.7
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -1643,7 +1643,7 @@
       <span class="o">!</span><span class="n">m_clotoidList</span><span class="p">.</span><span class="n">empty</span><span class="p">(),</span>
       <span class="s">"ClothoidList::closestPointInRange_ISO, empty list</span><span class="se">\n</span><span class="s">"</span>
     <span class="p">);</span>
-    <span class="n">int_type</span> <span class="n">nsegs</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">numSegment</span><span class="p">();</span>
+    <span class="n">int_type</span> <span class="n">nsegs</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">numSegments</span><span class="p">();</span>
     <span class="k">if</span> <span class="p">(</span> <span class="n">nsegs</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">{</span>
       <span class="n">icurve</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
       <span class="n">int_type</span> <span class="n">res</span> <span class="o">=</span> <span class="n">m_clotoidList</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">closestPoint_ISO</span><span class="p">(</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">dst</span> <span class="p">);</span>
@@ -1707,8 +1707,8 @@
     <span class="c1">// put in range</span>
     <span class="k">while</span> <span class="p">(</span> <span class="n">s_begin</span> <span class="o">&lt;</span> <span class="mi">0</span>              <span class="p">)</span> <span class="n">s_begin</span> <span class="o">+=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span>
     <span class="k">while</span> <span class="p">(</span> <span class="n">s_begin</span> <span class="o">&gt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">()</span> <span class="p">)</span> <span class="n">s_begin</span> <span class="o">-=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span>
-    <span class="k">while</span> <span class="p">(</span> <span class="n">s_end</span> <span class="o">&lt;</span> <span class="mi">0</span>                <span class="p">)</span> <span class="n">s_end</span>   <span class="o">+=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span>
-    <span class="k">while</span> <span class="p">(</span> <span class="n">s_end</span> <span class="o">&gt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">()</span>   <span class="p">)</span> <span class="n">s_end</span>   <span class="o">-=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="n">s_end</span>   <span class="o">&lt;</span> <span class="mi">0</span>              <span class="p">)</span> <span class="n">s_end</span>   <span class="o">+=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="n">s_end</span>   <span class="o">&gt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">()</span> <span class="p">)</span> <span class="n">s_end</span>   <span class="o">-=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span>
 
     <span class="c1">// get initial and final segment</span>
     <span class="n">int_type</span> <span class="n">i_begin</span> <span class="o">=</span> <span class="n">findAtS</span><span class="p">(</span> <span class="n">s_begin</span> <span class="p">);</span>
@@ -1720,32 +1720,33 @@
       <span class="n">ClothoidCurve</span> <span class="n">C</span>   <span class="o">=</span> <span class="n">m_clotoidList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span> <span class="c1">// crea copia</span>
       <span class="n">C</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span> <span class="n">s_begin</span><span class="o">-</span><span class="n">ss0</span><span class="p">,</span> <span class="n">s_end</span><span class="o">-</span><span class="n">ss0</span> <span class="p">);</span>
       <span class="n">res</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">closestPoint_ISO</span><span class="p">(</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">dst</span> <span class="p">);</span>
-      <span class="n">s</span> <span class="o">+=</span> <span class="n">ss0</span><span class="p">;</span>
+      <span class="n">s</span> <span class="o">+=</span> <span class="n">s_begin</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
       <span class="c1">// segmenti consecutivi</span>
-      <span class="n">real_type</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">dst1</span><span class="p">;</span>
+      <span class="n">real_type</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">res1</span><span class="p">,</span> <span class="n">dst1</span><span class="p">;</span>
 
-      <span class="n">real_type</span>     <span class="n">ss0</span>  <span class="o">=</span> <span class="n">m_s0</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span>
-      <span class="n">real_type</span>     <span class="n">ss1</span>  <span class="o">=</span> <span class="n">m_s0</span><span class="p">[</span><span class="n">i_end</span><span class="p">];</span>
-      <span class="n">ClothoidCurve</span> <span class="n">C0</span>   <span class="o">=</span> <span class="n">m_clotoidList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span> <span class="c1">// crea copia</span>
-      <span class="n">ClothoidCurve</span> <span class="n">C1</span>   <span class="o">=</span> <span class="n">m_clotoidList</span><span class="p">[</span><span class="n">i_end</span><span class="p">];</span>   <span class="c1">// crea copia</span>
+      <span class="n">real_type</span>     <span class="n">ss0</span> <span class="o">=</span> <span class="n">m_s0</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span>
+      <span class="n">real_type</span>     <span class="n">ss1</span> <span class="o">=</span> <span class="n">m_s0</span><span class="p">[</span><span class="n">i_end</span><span class="p">];</span>
+      <span class="n">ClothoidCurve</span> <span class="n">C0</span>  <span class="o">=</span> <span class="n">m_clotoidList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span> <span class="c1">// crea copia</span>
+      <span class="n">ClothoidCurve</span> <span class="n">C1</span>  <span class="o">=</span> <span class="n">m_clotoidList</span><span class="p">[</span><span class="n">i_end</span><span class="p">];</span>   <span class="c1">// crea copia</span>
 
-      <span class="c1">// taglia i segmenti</span>
+      <span class="c1">// taglia il segmenti</span>
       <span class="n">C0</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span> <span class="n">s_begin</span><span class="o">-</span><span class="n">ss0</span><span class="p">,</span> <span class="n">C0</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="p">);</span>
-      <span class="n">C1</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s_end</span><span class="o">-</span><span class="n">ss1</span> <span class="p">);</span>
 
       <span class="c1">// calcolo closest point</span>
-      <span class="n">res</span>    <span class="o">=</span> <span class="n">C0</span><span class="p">.</span><span class="n">closestPoint_ISO</span><span class="p">(</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">dst</span> <span class="p">);</span>
-      <span class="n">s</span>     <span class="o">+=</span> <span class="n">ss0</span><span class="p">;</span>
+      <span class="n">res</span> <span class="o">=</span> <span class="n">C0</span><span class="p">.</span><span class="n">closestPoint_ISO</span><span class="p">(</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">dst</span> <span class="p">);</span>
+      <span class="n">s</span>  <span class="o">+=</span> <span class="n">s_begin</span><span class="p">;</span>
       <span class="n">icurve</span> <span class="o">=</span> <span class="n">i_begin</span><span class="p">;</span>
 
-      <span class="n">int_type</span> <span class="n">res1</span> <span class="o">=</span> <span class="n">C0</span><span class="p">.</span><span class="n">closestPoint_ISO</span><span class="p">(</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">dst1</span> <span class="p">);</span>
+      <span class="n">C1</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s_end</span><span class="o">-</span><span class="n">ss1</span> <span class="p">);</span>
+      <span class="n">res1</span> <span class="o">=</span> <span class="n">C1</span><span class="p">.</span><span class="n">closestPoint_ISO</span><span class="p">(</span> <span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">dst1</span> <span class="p">);</span>
       <span class="n">s1</span> <span class="o">+=</span> <span class="n">ss1</span><span class="p">;</span>
 
       <span class="k">if</span> <span class="p">(</span> <span class="n">dst1</span> <span class="o">&lt;</span> <span class="n">dst</span> <span class="p">)</span> <span class="p">{</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x1</span><span class="p">;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y1</span><span class="p">;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">s1</span><span class="p">;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">t1</span><span class="p">;</span>
         <span class="n">dst</span> <span class="o">=</span> <span class="n">dst1</span><span class="p">;</span> <span class="n">res</span> <span class="o">=</span> <span class="n">res1</span><span class="p">;</span> <span class="n">icurve</span> <span class="o">=</span> <span class="n">i_end</span><span class="p">;</span>
       <span class="p">}</span>
+
       <span class="c1">// ci sono altri segmenti?</span>
       <span class="k">if</span> <span class="p">(</span> <span class="n">i_end</span> <span class="o">&lt;</span> <span class="n">i_begin</span> <span class="p">)</span> <span class="n">i_end</span> <span class="o">+=</span> <span class="n">int_type</span><span class="p">(</span><span class="n">m_clotoidList</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
       <span class="o">++</span><span class="n">i_begin</span><span class="p">;</span>

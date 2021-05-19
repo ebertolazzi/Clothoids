@@ -202,16 +202,48 @@ classdef ClothoidList < CurveBase
       ClothoidListMexWrapper( 'push_back', self.objectHandle, lst.is_type(), lst.obj_handle() );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Return curvilinear coordinates, angle and curvature
+    %> at node point for the clothoid list
+    %>
+    %> \rst
+    %>
+    %> .. code-block:: matlab
+    %>
+    %>  [ s, theta, kappa ] = ref.getSTK();
+    %>
+    %> \endrst
+    %>
+    %> - `s`     curvilinear coordinates nodes
+    %> - `theta` angles at nodes
+    %> - `kappa` curvature at nodes
+    %>
     function [ s, theta, kappa ] = getSTK( self )
       [ s, theta, kappa ] = ClothoidListMexWrapper( 'getSTK', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Return xy-coordinates at node points for the clothoid list
+    %>
+    %> \rst
+    %>
+    %> .. code-block:: matlab
+    %>
+    %>  [ x, y ] = ref.getXY();
+    %>
+    %> \endrst
+    %>
+    %> - `x` x-coordinates at nodes
+    %> - `y` y-coordinates at nodes
+    %>
     function [ x, y ] = getXY( self )
       [ x, y ] = ClothoidListMexWrapper( 'getXY', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function N = numSegment( self )
-      N = ClothoidListMexWrapper( 'numSegment', self.objectHandle );
+    % Number of segments of the clothoid list
+    %
+    function N = numSegments( self )
+      N = ClothoidListMexWrapper( 'numSegments', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_3arcG2( self, x0, y0, theta0, kappa0, ...
@@ -251,18 +283,69 @@ classdef ClothoidList < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Given a list of xy-coordinates at node points build a clothoid list.
+    %> If third argument (`angle`) is not present angles are estimated internally.
+    %>
+    %> \rst
+    %>
+    %> .. code-block:: matlab
+    %>
+    %>  ref.build_G1( x, y );
+    %>  ref.build_G1( x, y, theta );
+    %>
+    %> \endrst
+    %>
+    %> - `x` x-coordinates at nodes
+    %> - `y` y-coordinates at nodes
+    %> - `theta` angle at nodes
+    %>
     function ok = build_G1( self, x, y, varargin )
       ok = ClothoidListMexWrapper( ...
         'build_G1', self.objectHandle, x, y, varargin{:} ...
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Given a list of curvilinear coordinated and curvatures 
+    %> at nodes build a G2 clothoid list.
+    %> Initial position and angle must be set to determine a unique clothoid list.
+    %>
+    %> \rst
+    %>
+    %> .. code-block:: matlab
+    %>
+    %>  ref.build( x0, y0, theta0, s, kappa );
+    %>
+    %> \endrst
+    %>
+    %> - `x0`     initial x-coordinates
+    %> - `y0`     initial y-coordinates at nodes
+    %> - `theta0` initial angle
+    %> - `s`      list of curvilinear coordinates
+    %> - `kappa`  list of curvatures at nodes
+    %>
     function ok = build( self, x0, y0, theta0, s, kappa )
       ok = ClothoidListMexWrapper( ...
         'build', self.objectHandle, x0, y0, theta0, s, kappa ...
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Given a list of xy-coordinates at node points build a guess of angles
+    %> for the clothoid list.
+    %>
+    %> \rst
+    %>
+    %> .. code-block:: matlab
+    %>
+    %>  theta = ref.build_theta( x, y );
+    %>
+    %> \endrst
+    %>
+    %> - `x` x-coordinates at nodes
+    %> - `y` y-coordinates at nodes
+    %>
     function [theta,ok] = build_theta( self, x, y )
       [theta,ok] = ClothoidListMexWrapper( 'build_theta', self.objectHandle, x, y );
     end
@@ -320,10 +403,43 @@ classdef ClothoidList < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Find closest point of a Clothoid list given a s-range
+    %>
+    %> \rst
+    %>
+    %> .. code-block:: matlab
+    %>
+    %>  [ icurve, x, y, s, t, iflag, dst ] = ...
+    %>     ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin );
+    %>
+    %>  [ icurve, x, y, s, t, iflag, dst ] = ...
+    %>     ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'ISO' );
+    %>
+    %>  [ icurve, x, y, s, t, iflag, dst ] = ...
+    %>     ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'SAE' );
+    %>
+    %>  res = ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin );
+    %>  res = ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'ISO' );
+    %>  res = ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'SAE' );
+    %>
+    %>  %
+    %>  % res is a struct with field
+    %>  %
+    %>  % res.icurve = number of the segment with the projected point
+    %>  % res.x      = projected x
+    %>  % res.y      = projected y
+    %>  % res.s      = curvilinear coordinate of the projection
+    %>  % res.t      = normal curvilinear coordinate ('ISO' or 'SAE' convenction)
+    %>  % res.iflag  = 1 OK -1 projection failed
+    %>  % res.dst    = point curve distance
+    %>  %
+    %>
+    %> \endrst
+    %>
     function varargout = closestPointInSRange( self, qx, qy, s_begin, s_end, varargin )
       [ varargout{1:nargout} ] = ClothoidListMexWrapper( ...
-        'closestPointInSRange', self.objectHandle, ...
-         qx, qy, s_begin, s_end, varargin{:} ...
+        'closestPointInSRange', self.objectHandle, qx, qy, s_begin, s_end, varargin{:} ...
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -385,7 +501,7 @@ classdef ClothoidList < CurveBase
       else
         fmt2 = {'Color','blue','LineWidth',3};
       end
-      for k=1:self.numSegment()
+      for k=1:self.numSegments()
         C = self.get(k);
         if mod(k,2) == 0
           C.plot( npts, fmt1{:} );
@@ -427,7 +543,7 @@ classdef ClothoidList < CurveBase
       else
         fmt2 = {'Color','blue','LineWidth',3};
       end
-      for k=1:self.numSegment()
+      for k=1:self.numSegments()
         C = self.get(k);
         if mod(k,2) == 0
           C.plot_offs( offs, npts, fmt1{:} );
@@ -469,7 +585,7 @@ classdef ClothoidList < CurveBase
         fmt2 = {'Color','blue','LineWidth',3};
       end
       s0 = 0;
-      for k=1:self.numSegment()
+      for k=1:self.numSegments()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
         [~,~,~,kappa] = C.evaluate(ss);
@@ -514,7 +630,7 @@ classdef ClothoidList < CurveBase
         fmt2 = {'Color','blue','LineWidth',3};
       end
       s0 = 0;
-      for k=1:self.numSegment()
+      for k=1:self.numSegments()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
         [~,~,theta,~] = C.evaluate(ss);
@@ -543,7 +659,7 @@ classdef ClothoidList < CurveBase
     %> - `len`:  length of the plotted normal
     %>
     function plotNormal( self, step, len )
-      for k=1:self.numSegment()
+      for k=1:self.numSegments()
         C = self.get(k);
         C.plotNormal( step, len );
       end
@@ -615,7 +731,7 @@ classdef ClothoidList < CurveBase
     function saveClothoids( self, filename )
       fd = fopen( filename, 'w' );
       fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n');
-      for k=1:self.numSegment()
+      for k=1:self.numSegments()
         C = self.get(k);
         [x0,y0,theta0,k0,dk,L] = C.getPars();
         fprintf(fd,'%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\n',x0,y0,theta0,k0,dk,L);

@@ -23,9 +23,9 @@
 #include <algorithm>
 #include <limits>
 
-#define MAX_ITER_SAFETY 50
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+#define MAX_ITER_SAFETY 50
 
 namespace PolynomialRoots {
 

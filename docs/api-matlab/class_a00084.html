@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class ClothoidList &#8212; Clothoids v2.0.6
+    <title>Class ClothoidList &#8212; Clothoids v2.0.7
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -314,19 +314,48 @@
 <dt id="_CPPv4N12ClothoidList6getSTKE2in">
 <span id="_CPPv3N12ClothoidList6getSTKE2in"></span><span id="_CPPv2N12ClothoidList6getSTKE2in"></span><span id="ClothoidList::getSTK__in"></span><span class="target" id="a00084_1a945a1b267d4cfddafa94ded3101f38c4"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">getSTK</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList6getSTKE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Return curvilinear coordinates, angle and curvature at node point for the clothoid list</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">getSTK</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code> curvilinear coordinates nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta</span></code> angles at nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kappa</span></code> curvature at nodes </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList5getXYE2in">
 <span id="_CPPv3N12ClothoidList5getXYE2in"></span><span id="_CPPv2N12ClothoidList5getXYE2in"></span><span id="ClothoidList::getXY__in"></span><span class="target" id="a00084_1a48622f7ce94d0d22fbe89829c2a3085a"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">getXY</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList5getXYE2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Return xy-coordinates at node points for the clothoid list</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">getXY</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> x-coordinates at nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> y-coordinates at nodes </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N12ClothoidList10numSegmentE2in">
-<span id="_CPPv3N12ClothoidList10numSegmentE2in"></span><span id="_CPPv2N12ClothoidList10numSegmentE2in"></span><span id="ClothoidList::numSegment__in"></span><span class="target" id="a00084_1a13695f1ef5921c6a92f87186ba7ced0b"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">numSegment</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList10numSegmentE2in" title="Permalink to this definition">¶</a><br>
+<dt id="_CPPv4N12ClothoidList11numSegmentsE2in">
+<span id="_CPPv3N12ClothoidList11numSegmentsE2in"></span><span id="_CPPv2N12ClothoidList11numSegmentsE2in"></span><span id="ClothoidList::numSegments__in"></span><span class="target" id="a00084_1a8f7654ed05215d88fbe7be611f192e67"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">numSegments</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList11numSegmentsE2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd></dd>
 </dl>
@@ -363,21 +392,68 @@
 <dt id="_CPPv4N12ClothoidList8build_G1E2in2in2in2in">
 <span id="_CPPv3N12ClothoidList8build_G1E2in2in2in2in"></span><span id="_CPPv2N12ClothoidList8build_G1E2in2in2in2in"></span><span id="ClothoidList::build_G1__in.in.in.in"></span><span class="target" id="a00084_1ae4b358042eab2ffb5d39ba773ea1bcad"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build_G1</span></code><span class="sig-paren">(</span><em><span class="pre">x</span></em>,<em><span class="pre">y</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList8build_G1E2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Given a list of xy-coordinates at node points build a clothoid list. If third argument (<code class="docutils literal notranslate"><span class="pre">angle</span></code>) is not present angles are estimated internally.</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">build_G1</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">build_G1</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> x-coordinates at nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> y-coordinates at nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta</span></code> angle at nodes </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList5buildE2in2in2in2in2in2in">
 <span id="_CPPv3N12ClothoidList5buildE2in2in2in2in2in2in"></span><span id="_CPPv2N12ClothoidList5buildE2in2in2in2in2in2in"></span><span id="ClothoidList::build__in.in.in.in.in.in"></span><span class="target" id="a00084_1a415fd347059e4bc81000441d104c4ea6"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build</span></code><span class="sig-paren">(</span><em><span class="pre">x0</span></em>,<em><span class="pre">y0</span></em>,<em><span class="pre">theta0</span></em>,<em><span class="pre">s</span></em>,<em><span class="pre">kappa</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList5buildE2in2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Given a list of curvilinear coordinated and curvatures at nodes build a G2 clothoid list. Initial position and angle must be set to determine a unique clothoid list.</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code> initial x-coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y0</span></code> initial y-coordinates at nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code> initial angle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code> list of curvilinear coordinates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kappa</span></code> list of curvatures at nodes </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N12ClothoidList11build_thetaE2in2in2in">
 <span id="_CPPv3N12ClothoidList11build_thetaE2in2in2in"></span><span id="_CPPv2N12ClothoidList11build_thetaE2in2in2in"></span><span id="ClothoidList::build_theta__in.in.in"></span><span class="target" id="a00084_1a8869d6f71746b980f928177942fb6362"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">build_theta</span></code><span class="sig-paren">(</span><em><span class="pre">x</span></em>,<em><span class="pre">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList11build_thetaE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Given a list of xy-coordinates at node points build a guess of angles for the clothoid list.</p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">build_theta</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> x-coordinates at nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> y-coordinates at nodes </p></li>
+</ul>
+
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -454,7 +530,40 @@
 <dt id="_CPPv4N12ClothoidList20closestPointInSRangeE2in2in2in2in2in2in">
 <span id="_CPPv3N12ClothoidList20closestPointInSRangeE2in2in2in2in2in2in"></span><span id="_CPPv2N12ClothoidList20closestPointInSRangeE2in2in2in2in2in2in"></span><span id="ClothoidList::closestPointInSRange__in.in.in.in.in.in"></span><span class="target" id="a00084_1a310ff5fdf933479ca9a6146df4bfc882"></span><span class="pre">function</span> <code class="sig-name descname"><span class="pre">closestPointInSRange</span></code><span class="sig-paren">(</span><em><span class="pre">qx</span></em>,<em><span class="pre">qy</span></em>,<em><span class="pre">s_begin</span></em>,<em><span class="pre">s_end</span></em>,<em><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList20closestPointInSRangeE2in2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Find closest point of a Clothoid list given a s-range</p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">icurve</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">   </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPointInSRange</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="p">[</span><span class="w"> </span><span class="n">icurve</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">   </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPointInSRange</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="p">[</span><span class="w"> </span><span class="n">icurve</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">   </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPointInSRange</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPointInSRange</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPointInSRange</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPointInSRange</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">%</span><span class="w"></span>
+<span class="c">% res is a struct with field</span><span class="w"></span>
+<span class="c">%</span><span class="w"></span>
+<span class="c">% res.icurve = number of the segment with the projected point</span><span class="w"></span>
+<span class="c">% res.x      = projected x</span><span class="w"></span>
+<span class="c">% res.y      = projected y</span><span class="w"></span>
+<span class="c">% res.s      = curvilinear coordinate of the projection</span><span class="w"></span>
+<span class="c">% res.t      = normal curvilinear coordinate ('ISO' or 'SAE' convenction)</span><span class="w"></span>
+<span class="c">% res.iflag  = 1 OK -1 projection failed</span><span class="w"></span>
+<span class="c">% res.dst    = point curve distance</span><span class="w"></span>
+<span class="c">%</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
 </dl>
 
 <dl class="cpp function">

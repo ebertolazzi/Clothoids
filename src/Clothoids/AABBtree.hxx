@@ -270,15 +270,20 @@ namespace G2lib {
 
   public:
 
-    AABBtree(); //! Create an empty AABB tree
-    ~AABBtree(); //! destroy the stored AABB tree
+    //! Create an empty AABB tree.
+    AABBtree();  
+
+    //! destroy the stored AABB tree.
+    ~AABBtree();
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    void clear(); //!< initialized AABB tree
+    //! Initialized AABB tree.
+    void clear();
 
-    bool empty() const; //!< check if AABB tree is empty
-
+    //! Check if AABB tree is empty.
+    bool empty() const;
+    
     //!
     //! Initialize the AABB tree woth a bbox
     //!
@@ -368,12 +373,11 @@ namespace G2lib {
     }
 
     //!
-    //! Compute all the intersection of AABB trees
+    //! Compute all the intersection of AABB trees.
     //!
     //! \param[in]  tree             an AABB tree that is used to check collision
     //! \param[out] intersectionList list of pair bbox that overlaps
     //! \param[in]  swap_tree        if true exchange the tree in computation
-    //!
     //!
     void
     intersect(
@@ -383,12 +387,11 @@ namespace G2lib {
     ) const;
 
     //! 
-    //! Select all the bboxes candidate to be at minimum distance
+    //! Select all the bboxes candidate to be at minimum distance.
     //! 
     //! \param[in]  x             x-coordinate of the point
     //! \param[in]  y             y-coordinate of the point
     //! \param[out] candidateList candidate list
-    //! 
     //! 
     void
     min_distance(

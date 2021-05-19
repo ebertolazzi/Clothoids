@@ -181,7 +181,7 @@ namespace G2lib {
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
-    int_type n = ptr->numSegment();
+    int_type n = ptr->numSegments();
 
     real_type * s     = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * theta = createMatrixValue( arg_out_1, 1, n+1 );
@@ -208,7 +208,7 @@ namespace G2lib {
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
-    int_type    n = ptr->numSegment();
+    int_type    n = ptr->numSegments();
     real_type * x = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * y = createMatrixValue( arg_out_1, 1, n+1 );
 
@@ -311,8 +311,8 @@ namespace G2lib {
     int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
     MEX_ASSERT2(
-      n > 0 && n <= ptr->numSegment(),
-      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->numSegment()
+      n > 0 && n <= ptr->numSegments(),
+      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->numSegments()
     );
 
     Biarc const & c = ptr->get(n-1);
@@ -331,18 +331,18 @@ namespace G2lib {
 
   static
   void
-  do_numSegment(
+  do_numSegments(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD "BiarcListMexWrapper('numSegment', OBJ): "
+    #define CMD "BiarcListMexWrapper('numSegments', OBJ): "
 
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
-    setScalarInt( arg_out_0, ptr->numSegment() );
+    setScalarInt( arg_out_0, ptr->numSegments() );
 
     #undef CMD
   }
@@ -413,7 +413,7 @@ namespace G2lib {
     {"build_G1",do_build_G1},
     {"build_theta",do_build_theta},
     {"get",do_get},
-    {"numSegment",do_numSegment},
+    {"numSegments",do_numSegments},
     {"findST1",do_findST1},
     CMD_MAP_FUN
   };

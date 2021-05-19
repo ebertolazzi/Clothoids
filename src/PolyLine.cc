@@ -585,7 +585,7 @@ namespace G2lib {
 
   void
   PolyLine::push_back( ClothoidList const & L, real_type tol ) {
-    int_type ns = L.numSegment();
+    int_type ns = L.numSegments();
     for ( int_type idx = 0; idx < ns; ++idx ) {
       ClothoidCurve const & C = L.get( idx );
       push_back( C, tol );
@@ -804,7 +804,7 @@ namespace G2lib {
       "xEnd   = {}\n"
       "yEnd   = {}\n"
       "length = {}\n",
-      P.numSegment(),
+      P.numSegments(),
       P.xBegin(),
       P.yBegin(),
       P.xEnd(),

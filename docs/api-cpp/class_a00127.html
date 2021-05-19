@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class AABBtree &#8212; Clothoids v2.0.6
+    <title>Class AABBtree &#8212; Clothoids v2.0.7
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -138,7 +138,9 @@
 <dt id="_CPPv4N5G2lib8AABBtree8AABBtreeEv">
 <span id="_CPPv3N5G2lib8AABBtree8AABBtreeEv"></span><span id="_CPPv2N5G2lib8AABBtree8AABBtreeEv"></span><span id="G2lib::AABBtree::AABBtree"></span><span class="target" id="a00127_1aea0b59f92a9f5a05ddde35a8aa793f8c"></span><code class="sig-name descname"><span class="pre">AABBtree</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree8AABBtreeEv" title="Permalink to this definition">¶</a><br>
 </dt>
-<dd></dd>
+<dd>
+<p>Create an empty AABB tree. </p>
+</dd>
 </dl>
 
 <dl class="cpp function">
@@ -146,7 +148,7 @@
 <span id="_CPPv3N5G2lib8AABBtreeD0Ev"></span><span id="_CPPv2N5G2lib8AABBtreeD0Ev"></span><span id="G2lib::AABBtree::~AABBtree"></span><span class="target" id="a00127_1a9821d11ed3f2df3ee65a2dc62e185a2c"></span><code class="sig-name descname"><span class="pre">~AABBtree</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtreeD0Ev" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Create an empty AABB tree. </p>
+<p>destroy the stored AABB tree. </p>
 </dd>
 </dl>
 
@@ -155,8 +157,7 @@
 <span id="_CPPv3N5G2lib8AABBtree5clearEv"></span><span id="_CPPv2N5G2lib8AABBtree5clearEv"></span><span id="G2lib::AABBtree::clear"></span><span class="target" id="a00127_1a050439a72f941cb5dac7f7fe57c02b89"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">clear</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree5clearEv" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>destroy the stored AABB tree </p>
-<p>initialized AABB tree </p>
+<p>Initialized AABB tree. </p>
 </dd>
 </dl>
 
@@ -165,7 +166,7 @@
 <span id="_CPPv3NK5G2lib8AABBtree5emptyEv"></span><span id="_CPPv2NK5G2lib8AABBtree5emptyEv"></span><span id="G2lib::AABBtree::emptyC"></span><span class="target" id="a00127_1a94449a0c61075c09ea5da28060bcad84"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">empty</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree5emptyEv" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>check if AABB tree is empty </p>
+<p>Check if AABB tree is empty. </p>
 </dd>
 </dl>
 
@@ -235,7 +236,7 @@
 <span id="_CPPv3NK5G2lib8AABBtree9intersectERK8AABBtreeR14VecPairPtrBBoxb"></span><span id="_CPPv2NK5G2lib8AABBtree9intersectERK8AABBtreeR14VecPairPtrBBoxb"></span><span id="G2lib::AABBtree::intersect__AABBtreeCR.VecPairPtrBBoxR.bC"></span><span class="target" id="a00127_1af6d4320a6649e63c6ec6d8ccf828b626"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">intersect</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtreeE" title="G2lib::AABBtree"><span class="pre">AABBtree</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">tree</span></em>, <a class="reference internal" href="#_CPPv4N5G2lib8AABBtree14VecPairPtrBBoxE" title="G2lib::AABBtree::VecPairPtrBBox"><span class="pre">VecPairPtrBBox</span></a> <span class="pre">&amp;</span><em><span class="pre">intersectionList</span></em>, <span class="pre">bool</span> <em><span class="pre">swap_tree</span></em> <span class="pre">=</span> <span class="pre">false</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree9intersectERK8AABBtreeR14VecPairPtrBBoxb" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Compute all the intersection of AABB trees</p>
+<p>Compute all the intersection of AABB trees.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -254,7 +255,7 @@
 <span id="_CPPv3NK5G2lib8AABBtree12min_distanceE9real_type9real_typeR10VecPtrBBox"></span><span id="_CPPv2NK5G2lib8AABBtree12min_distanceE9real_type9real_typeR10VecPtrBBox"></span><span id="G2lib::AABBtree::min_distance__real_type.real_type.VecPtrBBoxRC"></span><span class="target" id="a00127_1ac16f1d3006c9512be8a30de0e8e9aab3"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">min_distance</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">x</span></em>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="pre">real_type</span></a> <em><span class="pre">y</span></em>, <a class="reference internal" href="#_CPPv4N5G2lib8AABBtree10VecPtrBBoxE" title="G2lib::AABBtree::VecPtrBBox"><span class="pre">VecPtrBBox</span></a> <span class="pre">&amp;</span><em><span class="pre">candidateList</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree12min_distanceE9real_type9real_typeR10VecPtrBBox" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Select all the bboxes candidate to be at minimum distance</p>
+<p>Select all the bboxes candidate to be at minimum distance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">

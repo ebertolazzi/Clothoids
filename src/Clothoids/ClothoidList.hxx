@@ -1274,7 +1274,7 @@ namespace G2lib {
     //!
     //! Return the numbber of clothoid of the list
     //!
-    int_type numSegment() const { return int_type(m_clotoidList.size()); }
+    int_type numSegments() const { return int_type(m_clotoidList.size()); }
 
     //!
     //! The list of clothoid has total length \f$ L \f$
@@ -1800,6 +1800,8 @@ namespace G2lib {
     //! \param  dst     distance point projected point
     //! \param  icurve  number of the segment with the projected point
     //!
+    //! \return 1 ok -1 projection failed
+    //!
     int_type
     closestPointInSRange_ISO(
       real_type   qx,
@@ -1825,6 +1827,8 @@ namespace G2lib {
     //! \param  t       curvilinear coordinate of the point x,y (if orthogonal projection)
     //! \param  dst     distance point projected point
     //! \param  icurve  number of the segment with the projected point
+    //!
+    //! \return 1 ok -1 projection failed
     //!
     int_type
     closestPointInSRange_SAE(
@@ -1860,7 +1864,6 @@ namespace G2lib {
     //! \param[out] s     nodes
     //! \param[out] kappa curvature
     //!
-    //!
     void
     getSK( real_type * s, real_type * kappa ) const;
 
@@ -1869,7 +1872,6 @@ namespace G2lib {
     //!
     //! \param[out] s     nodes
     //! \param[out] kappa curvature
-    //!
     //!
     void
     getSK(
@@ -1888,7 +1890,6 @@ namespace G2lib {
     //! \param[out] theta angles
     //! \param[out] kappa curvature
     //!
-    //!
     void
     getSTK(
       real_type * s,
@@ -1902,7 +1903,6 @@ namespace G2lib {
     //! \param[out] s     nodes
     //! \param[out] theta angles
     //! \param[out] kappa curvature
-    //!
     //!
     void
     getSTK(
@@ -1922,7 +1922,6 @@ namespace G2lib {
     //! \param[out] x x-coordinates
     //! \param[out] y y-coordinates
     //!
-    //!
     void
     getXY( real_type * x, real_type * y ) const;
 
@@ -1941,7 +1940,6 @@ namespace G2lib {
     //! \param  t    value \f$ t \f$
     //! \return idx  the segment with point at minimal distance, otherwise
     //!              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-    //!
     //!
     int_type
     findST1(
