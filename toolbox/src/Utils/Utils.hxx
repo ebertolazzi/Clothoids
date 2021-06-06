@@ -89,11 +89,12 @@
 #include <cstdint>
 #include <stdexcept>
 
-#if defined(MINGW) || defined(__MINGW32__)
-  //#include "mingw-std-threads/mingw.future.h"
+// disable mingw-std-threads for mingw on MATLAB
+#if (defined(MINGW) || defined(__MINGW32__)) && !defined(MATLAB_MEX_FILE )
+  #include "mingw-std-threads/mingw.future.h"
   #include "mingw-std-threads/mingw.mutex.h"
-  //#include "mingw-std-threads/mingw.invoke.h"
-  //#include "mingw-std-threads/mingw.shared_mutex.h"
+  #include "mingw-std-threads/mingw.invoke.h"
+  #include "mingw-std-threads/mingw.shared_mutex.h"
   #include "mingw-std-threads/mingw.thread.h"
   #include "mingw-std-threads/mingw.condition_variable.h"
 #else
