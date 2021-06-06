@@ -7,6 +7,7 @@ FileUtils.mkdir_p "src"
 FileUtils.mkdir_p "src/Clothoids"
 FileUtils.mkdir_p "src/Utils/fmt"
 FileUtils.mkdir_p "src/Utils/zstream"
+FileUtils.mkdir_p "src/Utils/mingw-std-threads"
 
 FileUtils.rm_rf   "bin"
 FileUtils.mkdir_p "bin"
@@ -70,6 +71,15 @@ lst = Dir["../submodules/Utils/src/Utils/zstream/*.h*"]
 lst.each do |filename|
   FileUtils.cp filename, "./src/Utils/zstream/" + File.basename(filename);
 end
+lst = Dir["../submodules/Utils/src/Utils/mingw-std-threads/*.h*"]
+lst.each do |filename|
+  FileUtils.cp filename, "./src/Utils/mingw-std-threads/" + File.basename(filename);
+end
+
+FileUtils.cp "../submodules/Utils/src/Utils/mingw-std-threads/LICENSE",
+             "./src/Utils/mingw-std-threads/LICENSE";
+             FileUtils.cp "../submodules/Utils/src/Utils/mingw-std-threads/README.md",
+             "./src/Utils/mingw-std-threads/README.md";
 
 lst = Dir["../doc/*"]
 lst.each do |filename|

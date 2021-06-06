@@ -35,6 +35,9 @@
 namespace Utils {
 
 #ifdef UTILS_OS_WINDOWS
+  //!
+  //! Class for timing code execution.
+  //!
   class TicToc {
 
     typedef double real_type;
@@ -50,10 +53,24 @@ namespace Utils {
     TicToc();
     ~TicToc() {}
 
+    //!
+    //! Start timing
+    //!
     void tic();
+
+    //!
+    //! End timing
+    //!
     void toc();
 
+    //!
+    //! Return elapsed time (between tic-toc) in seconds
+    //!
     real_type elapsed_s()  const { return 1e-3*m_elapsed_time; }
+
+    //!
+    //! Return elapsed time (between tic-toc) in milliseconds
+    //!
     real_type elapsed_ms() const { return m_elapsed_time; }
 
   };
@@ -63,6 +80,9 @@ namespace Utils {
 
 #else
 
+  //!
+  //! Class for timing code execution.
+  //!
   class TicToc {
 
     typedef double real_type;
@@ -90,20 +110,32 @@ namespace Utils {
 
     ~TicToc() {}
 
+    //!
+    //! Start timing
+    //!
     void
     tic()
     { m_start_time = clock::now(); }
 
+    //!
+    //! End timing
+    //!
     void
     toc() {
       m_stop_time    = clock::now();
       m_elapsed_time = std::chrono::duration_cast<elapsed_resolution>(m_stop_time - m_start_time);
     }
 
+    //!
+    //! Return elapsed time (between tic-toc) in seconds
+    //!
     real_type
     elapsed_s() const
     { return 1e-6*m_elapsed_time.count(); }
 
+    //!
+    //! Return elapsed time (between tic-toc) in milliseconds
+    //!
     real_type
     elapsed_ms() const
     { return 1e-3*m_elapsed_time.count(); }
@@ -111,13 +143,15 @@ namespace Utils {
 
   inline
   void
-  sleep_for_seconds( unsigned s )
-  { std::this_thread::sleep_for(std::chrono::seconds(s)); }
+  sleep_for_seconds( unsigned s ) {
+    std::this_thread::sleep_for(std::chrono::seconds(s));
+  }
 
   inline
   void
-  sleep_for_milliseconds( unsigned ms )
-  { std::this_thread::sleep_for(std::chrono::milliseconds(ms)); }
+  sleep_for_milliseconds( unsigned ms ) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+  }
 
 #endif
 

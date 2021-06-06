@@ -36,16 +36,20 @@
 
 namespace Utils {
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   using std::int64_t;
   using std::string;
+  using std::mutex;
+  #endif
 
-  extern std::mutex MallocMutex;
 
-  extern int64_t    CountAlloc;
-  extern int64_t    CountFreed;
-  extern int64_t    AllocatedBytes;
-  extern int64_t    MaximumAllocatedBytes;
-  extern bool       MallocDebug;
+  extern mutex MallocMutex;
+
+  extern int64_t CountAlloc;
+  extern int64_t CountFreed;
+  extern int64_t AllocatedBytes;
+  extern int64_t MaximumAllocatedBytes;
+  extern bool    MallocDebug;
 
   string outBytes( size_t nb );
 
@@ -57,7 +61,9 @@ namespace Utils {
   :|:  |_|  |_|\__,_|_|_|\___/ \___|
   \*/
 
-  //! Allocate memory
+  //!
+  //! Class manafin memory allocation.
+  //!
   template <typename T>
   class Malloc {
   public:
@@ -65,7 +71,7 @@ namespace Utils {
 
   private:
 
-    std::string m_name;
+    string      m_name;
     size_t      m_numTotValues;
     size_t      m_numTotReserved;
     size_t      m_numAllocated;
@@ -79,29 +85,47 @@ namespace Utils {
 
   public:
 
-    //! malloc object constructor
+    //!
+    //! Malloc object constructor
+    //!
     explicit
-    Malloc( std::string const & name );
+    Malloc( string const & name );
 
-    //! malloc object destructor
+    //!
+    //! Malloc object destructor.
+    //!
     ~Malloc() { hard_free(); }
 
-    //! allocate memory for `n` objects, raise an error if memory already allocated
+    //!
+    //! Allocate memory for `n` objects,
+    //! raise an error if memory already allocated.
+    //!
     void allocate( size_t n );
 
-    //! allocate memory for `n` objects, no matter if already allocated
+    //!
+    //! Allocate memory for `n` objects,
+    //! no matter if already allocated.
+    //!
     void reallocate( size_t n );
 
-    //! free memory without deallocating pointer
+    //!
+    //! Free memory without deallocating pointer.
+    //!
     void free(void) { m_numTotValues = m_numAllocated = 0; }
 
-    //! free memory deallocating pointer
+    //!
+    //! Free memory deallocating pointer.
+    //!
     void hard_free(void);
 
-    //! number of objects allocated
+    //!
+    //! Number of objects allocated.
+    //!
     size_t size(void) const { return m_numTotValues; }
 
-    //! get pointer of allocated memory for `sz` objets
+    //!
+    //! Get pointer of allocated memory for `sz` objets.
+    //!
     T * operator () ( size_t sz ) {
       size_t offs = m_numAllocated;
       m_numAllocated += sz;
@@ -112,11 +136,15 @@ namespace Utils {
     T * malloc( size_t n );
     T * realloc( size_t n );
 
-    //! true if you cannot get more memory pointers
+    //!
+    //! `true` if you cannot get more memory pointers.
+    //!
     bool is_empty() const { return m_numAllocated >= m_numTotValues; }
 
-    //! return an error if memory is not complately used
-    void must_be_empty( char const where[] ) const;
+    //!
+    //! return an error if memory is not completely used.
+    //!
+    void must_be_empty( char const * const where ) const;
   };
 
   extern template class Malloc<char>;
@@ -145,5 +173,5 @@ namespace Utils {
 #endif
 
 ///
-/// eof: Utils.hxx
+/// eof: Malloc.hxx
 ///

@@ -22,6 +22,8 @@
 ///
 #pragma once
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 #ifndef UTILS_dot_HH
 #define UTILS_dot_HH
 
@@ -51,6 +53,8 @@
 
 #ifdef __clang__
 #pragma clang diagnostic pop
+#endif
+
 #endif
 
 #endif

@@ -21,6 +21,8 @@
 /// file: Console.cc
 ///
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 #include "Utils.hh"
 
 #ifdef __clang__
@@ -29,6 +31,12 @@
 #endif
 
 namespace Utils {
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  using std::string;
+  using std::lock_guard;
+  using std::mutex;
+  #endif
 
   void
   Console::change_level( int new_level ) {
@@ -42,77 +50,77 @@ namespace Utils {
   }
 
   void
-  Console::change_stream( ostream_type * new_p_stream  ) {
+  Console::change_stream( ostream_type * new_p_stream ) {
     m_stream = new_p_stream;
   }
 
   Console const &
-  Console::black( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::black( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::black << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::red( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::red( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::red << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::green( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::green( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::green << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::yellow( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::yellow( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::yellow << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::blue( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::blue( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::blue << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::magenta( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::magenta( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::magenta << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::cyan( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::cyan( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::cyan << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::gray( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::gray( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::gray << msg << rang::fg::reset;
     return *this;
   }
 
   Console const &
-  Console::black_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::black_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::black << rang::style::reversed
@@ -121,8 +129,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::red_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::red_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::red << rang::style::reversed
@@ -131,8 +139,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::green_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::green_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::green << rang::style::reversed
@@ -141,8 +149,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::yellow_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::yellow_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::yellow << rang::style::reversed
@@ -151,8 +159,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::blue_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::blue_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::blue << rang::style::reversed
@@ -161,8 +169,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::magenta_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::magenta_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::magenta << rang::style::reversed
@@ -171,8 +179,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::cyan_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::cyan_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::cyan << rang::style::reversed
@@ -181,8 +189,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::gray_reversed( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::gray_reversed( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::gray << rang::style::reversed
@@ -214,10 +222,10 @@ namespace Utils {
   Console const &
   Console::semaphore(
     unsigned            rvg,
-    std::string const & msg,
+    string const & msg,
     int                 msg_level
   ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+    lock_guard<mutex> lock_access(m_message_mutex);
     static rang::fg rvg_color[3] = {
       rang::fg::red, rang::fg::yellow, rang::fg::green
     };
@@ -232,8 +240,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::message( std::string const & msg, int msg_level ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::message( string const & msg, int msg_level ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << m_message_style.s
@@ -247,8 +255,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::warning( std::string const & msg ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::warning( string const & msg ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( m_level >= 2 )
       (*m_stream)
         << m_warning_style.s
@@ -262,8 +270,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::error( std::string const & msg ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::error( string const & msg ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     if ( m_level >= 1 )
       (*m_stream)
         << m_error_style.s
@@ -277,8 +285,8 @@ namespace Utils {
   }
 
   Console const &
-  Console::fatal( std::string const & msg ) const {
-    std::lock_guard<std::mutex> lock_access(m_message_mutex);
+  Console::fatal( string const & msg ) const {
+    lock_guard<mutex> lock_access(m_message_mutex);
     (*m_stream)
       << m_fatal_style.s
       << m_fatal_style.f
@@ -291,6 +299,8 @@ namespace Utils {
   }
 
 }
+
+#endif
 
 ///
 /// eof: Console.cc

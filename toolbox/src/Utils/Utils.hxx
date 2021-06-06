@@ -88,8 +88,22 @@
 #include <cmath>
 #include <cstdint>
 #include <stdexcept>
-#include <mutex>
-#include <atomic>
+
+#if defined(MINGW) || defined(__MINGW32__)
+  //#include "mingw-std-threads/mingw.future.h"
+  #include "mingw-std-threads/mingw.mutex.h"
+  //#include "mingw-std-threads/mingw.invoke.h"
+  //#include "mingw-std-threads/mingw.shared_mutex.h"
+  #include "mingw-std-threads/mingw.thread.h"
+  #include "mingw-std-threads/mingw.condition_variable.h"
+#else
+  //#include <future>
+  #include <mutex>
+  //#include <shared_mutex>
+  #include <thread>
+  #include <condition_variable>
+  #include <atomic>
+#endif
 
 #include "rang.hxx"
 #include "Trace.hxx"
@@ -98,58 +112,64 @@
 #include "Numbers.hxx"
 #include "TicToc.hxx"
 #include "ThreadPool.hxx"
+#include "Quaternion.hxx"
 
 namespace Utils {
 
-  std::string basename( char const filename[] );
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  using std::string;
+  #endif
+
+  string basename( char const * const filename );
 
   template <typename T_int, typename T_real>
   void
   searchInterval(
-    T_int        npts,
-    T_real const X[],
-    T_real     & x,
-    T_int      & lastInterval,
-    bool         closed,
-    bool         can_extend
+    T_int                npts,
+    T_real const * const X,
+    T_real             & x,
+    T_int              & lastInterval,
+    bool                 closed,
+    bool                 can_extend
+  );
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  extern template void searchInterval(
+    int32_t             npts,
+    float const * const X,
+    float             & x,
+    int32_t           & lastInterval,
+    bool                closed,
+    bool                can_extend
   );
 
   extern template void searchInterval(
-    int32_t     npts,
-    float const X[],
-    float     & x,
-    int32_t   & lastInterval,
-    bool        closed,
-    bool        can_extend
+    int32_t              npts,
+    double const * const X,
+    double             & x,
+    int32_t            & lastInterval,
+    bool                 closed,
+    bool                 can_extend
   );
 
   extern template void searchInterval(
-    int32_t      npts,
-    double const X[],
-    double     & x,
-    int32_t    & lastInterval,
-    bool         closed,
-    bool         can_extend
+    int64_t             npts,
+    float const * const X,
+    float             & x,
+    int64_t           & lastInterval,
+    bool                closed,
+    bool                can_extend
   );
 
   extern template void searchInterval(
-    int64_t     npts,
-    float const X[],
-    float     & x,
-    int64_t   & lastInterval,
-    bool        closed,
-    bool        can_extend
+    int64_t              npts,
+    double const * const X,
+    double             & x,
+    int64_t            & lastInterval,
+    bool                 closed,
+    bool                 can_extend
   );
-
-  extern template void searchInterval(
-    int64_t      npts,
-    double const X[],
-    double     & x,
-    int64_t    & lastInterval,
-    bool         closed,
-    bool         can_extend
-  );
-
+  #endif
 }
 
 #endif

@@ -17,6 +17,8 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 #include "Utils.hh"
 
 #ifdef __clang__
@@ -34,7 +36,7 @@ namespace Utils {
   */
   //! check if the vector `pv` os size `DIM` contains only regular floats
   bool
-  foundNaN( double const pv[], int DIM ) {
+  foundNaN( double const * const pv, int DIM ) {
     for ( int i = 0; i < DIM; ++i )
       if ( !isRegular(pv[i]) )
         return true;
@@ -42,7 +44,7 @@ namespace Utils {
   }
 
   bool
-  foundNaN( float const pv[], int DIM ) {
+  foundNaN( float const * const pv, int DIM ) {
     for ( int i = 0; i < DIM; ++i )
       if ( !isRegular(pv[i]) )
         return true;
@@ -61,11 +63,11 @@ namespace Utils {
   //! check if the vector `pv` os size `DIM` contains only regular floats. If not an error is issued
   void
   checkNaN(
-    double const pv[],
-    char   const v_name[],
-    int          DIM,
-    int          line,
-    char   const file[]
+    double const * const pv,
+    char   const * const v_name,
+    int                  DIM,
+    int                  line,
+    char   const * const file
   ) {
     for ( int i = 0; i < DIM; ++i ) {
       if ( isInfinite(pv[i]) ) {
@@ -88,11 +90,11 @@ namespace Utils {
 
   void
   checkNaN(
-    float const pv[],
-    char  const v_name[],
-    int         DIM,
-    int         line,
-    char const  file[]
+    float const * const pv,
+    char  const * const v_name,
+    int                 DIM,
+    int                 line,
+    char  const * const file
   ) {
     for ( int i = 0; i < DIM; ++i ) {
       if ( isInfinite(pv[i]) ) {
@@ -113,6 +115,8 @@ namespace Utils {
     }
   }
 }
+
+#endif
 
 ///
 /// eof: Numbers.cc

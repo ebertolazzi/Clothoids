@@ -123,11 +123,17 @@ namespace GC_namespace {
     , m_numCols(0)
     {}
 
+    //!
+    //! Create a matrix of size `nr x nc`
+    //!
     mat_type( unsigned nr, unsigned nc )
     : m_numRows(nr)
     , m_numCols(nc)
     { std::vector<TYPE>::resize(size_type(nr*nc)); }
 
+    //!
+    //! Resize the matrix to size `nr x nc`
+    //!
     void
     resize( unsigned nr, unsigned nc ) {
       m_numRows = nr;
@@ -135,15 +141,44 @@ namespace GC_namespace {
       std::vector<TYPE>::resize(size_type(nr*nc));
     }
 
+    //!
+    //! Get the `nc`-th column of the matrix and store to vector `C`.
+    //!
     void getColumn( unsigned nc, std::vector<TYPE> & C ) const;
+
+    //!
+    //! Get the `nr`-th row of the matrix and store to vector `R`.
+    //!
     void getRow( unsigned nr, std::vector<TYPE> & R ) const;
+
+    //!
+    //! Get the `nc`-th column of the matrix and store to memory pointed by `C`.
+    //!
     void getColumn( unsigned nc, TYPE * C ) const;
+
+    //!
+    //! Get the `nr`-th row of the matrix and store to memory pointed by `R`.
+    //!
     void getRow( unsigned nr, TYPE * R ) const;
 
+    //!
+    //! Get the number of rows of the matrix
+    //!
     unsigned numRows() const { return m_numRows; }
+
+    //!
+    //! Get the number of columns of the matrix
+    //!
     unsigned numCols() const { return m_numCols; }
 
+    //!
+    //! Access to the element `A(i,j)` og the matrix
+    //!
     TYPE const & operator () ( unsigned i, unsigned j ) const;
+
+    //!
+    //! Access to the element `A(i,j)` og the matrix
+    //!
     TYPE       & operator () ( unsigned i, unsigned j );
 
     void info( ostream_type & stream ) const;
@@ -155,7 +190,14 @@ namespace GC_namespace {
       return ostr.str();
     }
 
+    //!
+    //! Access the memory block used by the matrix object
+    //!
     TYPE       * data()       { return &std::vector<TYPE>::front(); }
+
+    //!
+    //! Access the memory block used by the matrix object
+    //!
     TYPE const * data() const { return &std::vector<TYPE>::front(); }
   };
 
@@ -2145,7 +2187,7 @@ namespace GC_namespace {
 
     ///@}
 
-    //! \name I/O for `GenericContainer` objects
+    //! \name I/O for GenericContainer objects
     ///@{
 
     //!

@@ -1,3 +1,5 @@
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 #include "Utils.hh"
 
 #if defined(UTILS_OS_LINUX) || defined(UTILS_OS_OSX)
@@ -16,6 +18,24 @@
 #endif
 
 namespace rang {
+
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  using std::string;
+  using std::wstring;
+  using std::getenv;
+  using std::any_of;
+  using std::begin;
+  using std::end;
+  using std::strstr;
+  using std::unique_ptr;
+  using std::nothrow;
+  using std::clog;
+  using std::cerr;
+  using std::cout;
+  using std::ostream;
+  using std::streambuf;
+  #endif
+
   namespace rang_implementation {
 
     bool
@@ -27,11 +47,11 @@ namespace rang {
           "konsole", "kterm",  "linux",   "msys",   "putty",
           "rxvt",    "screen", "vt100",   "xterm"
         };
-        char const *env_p = std::getenv("TERM");
+        char const *env_p = getenv("TERM");
         if ( env_p == nullptr ) return false;
-        return std::any_of(
-          std::begin(Terms), std::end(Terms),
-          [&](const char *term) { return std::strstr(env_p, term) != nullptr; }
+        return any_of(
+          begin(Terms), end(Terms),
+          [&](const char *term) { return strstr(env_p, term) != nullptr; }
         );
       }();
       #elif defined(UTILS_OS_WINDOWS)
@@ -70,8 +90,8 @@ namespace rang {
         WCHAR FileName[MAX_PATH];
       };
 
-      auto pNameInfo = std::unique_ptr<MY_FILE_NAME_INFO>(
-        new (std::nothrow) MY_FILE_NAME_INFO()
+      auto pNameInfo = unique_ptr<MY_FILE_NAME_INFO>(
+        new (nothrow) MY_FILE_NAME_INFO()
       );
       if (!pNameInfo) return false;
 
@@ -79,10 +99,10 @@ namespace rang {
       // {"cygwin-","msys-"}XXXXXXXXXXXXXXX-ptyX-XX
       if ( !ptrGetFileInformationByHandleEx( h, FileNameInfo, pNameInfo.get(), sizeof(MY_FILE_NAME_INFO)) ) return false;
 
-      std::wstring name(pNameInfo->FileName, pNameInfo->FileNameLength / sizeof(WCHAR));
+      wstring name(pNameInfo->FileName, pNameInfo->FileNameLength / sizeof(WCHAR));
       
-      if ( ( name.find(L"msys-") == std::wstring::npos && name.find(L"cygwin-") == std::wstring::npos )
-            || name.find(L"-pty") == std::wstring::npos) return false;
+      if ( ( name.find(L"msys-") == wstring::npos && name.find(L"cygwin-") == wstring::npos )
+            || name.find(L"-pty") == wstring::npos) return false;
 
       return true;
     }
@@ -90,10 +110,7 @@ namespace rang {
     #endif
 
     bool
-    isTerminal( std::streambuf const * osbuf ) noexcept {
-      using std::cerr;
-      using std::clog;
-      using std::cout;
+    isTerminal( streambuf const * osbuf ) noexcept {
       #if defined(UTILS_OS_LINUX) || defined(UTILS_OS_OSX)
       if ( osbuf == cout.rdbuf() ) {
         static const bool cout_term = isatty(fileno(stdout)) != 0;
@@ -137,11 +154,11 @@ namespace rang {
     };
 
     HANDLE
-    getConsoleHandle( std::streambuf const * osbuf ) noexcept {
-      if ( osbuf == std::cout.rdbuf() ) {
+    getConsoleHandle( streambuf const * osbuf ) noexcept {
+      if ( osbuf == cout.rdbuf() ) {
         static const HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
         return hStdout;
-      } else if ( osbuf == std::cerr.rdbuf() || osbuf == std::clog.rdbuf() ) {
+      } else if ( osbuf == cerr.rdbuf() || osbuf == clog.rdbuf() ) {
         static const HANDLE hStderr = GetStdHandle(STD_ERROR_HANDLE);
         return hStderr;
       }
@@ -149,7 +166,7 @@ namespace rang {
     }
 
     bool
-    setWinTermAnsiColors( std::streambuf const *osbuf ) noexcept {
+    setWinTermAnsiColors( streambuf const *osbuf ) noexcept {
       HANDLE h = getConsoleHandle(osbuf);
       if ( h == INVALID_HANDLE_VALUE )  return false;
       DWORD dwMode = 0;
@@ -160,10 +177,7 @@ namespace rang {
     }
 
     bool
-    supportsAnsi( std::streambuf const * osbuf ) noexcept {
-      using std::cerr;
-      using std::clog;
-      using std::cout;
+    supportsAnsi( streambuf const * osbuf ) noexcept {
       if ( osbuf == cout.rdbuf() ) {
         static const bool cout_ansi = (isMsysPty(_fileno(stdout)) || setWinTermAnsiColors(osbuf));
         return cout_ansi;
@@ -283,7 +297,7 @@ namespace rang {
     template <typename T>
     inline
     void
-    setWinColorNative_tmpl( std::ostream &os, T const value ) {
+    setWinColorNative_tmpl( ostream &os, T const value ) {
       HANDLE const h = getConsoleHandle(os.rdbuf());
       if ( h != INVALID_HANDLE_VALUE ) {
         setWinSGR(value, current_state());
@@ -293,10 +307,10 @@ namespace rang {
       }
     }
 
-    #define DO_INSTANTIATION(A) \
-    void \
-    setWinColorNative( std::ostream &os, A value ) { \
-      setWinColorNative_tmpl<A>( os, value ); \
+    #define DO_INSTANTIATION(A)                 \
+    void                                        \
+    setWinColorNative( ostream &os, A value ) { \
+      setWinColorNative_tmpl<A>( os, value );   \
     }
 
     DO_INSTANTIATION( enum rang::style );
@@ -309,3 +323,5 @@ namespace rang {
   }  // namespace rang_implementation
 
 }  // namespace rang
+
+#endif

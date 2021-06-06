@@ -17,9 +17,14 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 #include "Utils.hh"
 
 namespace Utils {
+
+  using std::string;
+  using std::lower_bound;
 
   /*\
   :|:  _
@@ -30,8 +35,8 @@ namespace Utils {
   \*/
 
   #ifdef UTILS_OS_WINDOWS
-    std::string
-    basename( char const path[] ) {
+    string
+    basename( char const * const path ) {
       static char drive[100];
       static char dir[1024];
       static char fname[256];
@@ -47,24 +52,24 @@ namespace Utils {
       return fname;
     }
   #else
-    std::string
-    basename( char const path[] ) {
+    string
+    basename( char const * const path ) {
 
-      if ( path[0] == '\0' ) return std::string("");
+      if ( path[0] == '\0' ) return string("");
 
-      std::string filename(path);
+      string filename(path);
 
       size_t len   = filename.length();
       size_t index = filename.find_last_of("/\\");
 
-      if ( index == std::string::npos ) return filename;
+      if ( index == string::npos ) return filename;
       if ( index + 1 >= len ) {
         --len;
         index = filename.substr(0, len).find_last_of("/\\");
 
         if ( len   == 0 ) return filename;
         if ( index == 0 ) return filename.substr(1, len - 1);
-        if ( index == std::string::npos ) return filename.substr(0, len);
+        if ( index == string::npos ) return filename.substr(0, len);
         return filename.substr(index + 1, len - index - 1);
       }
       return filename.substr(index + 1, len - index);
@@ -82,12 +87,12 @@ namespace Utils {
   template <typename T_int, typename T_real>
   void
   searchInterval(
-    T_int        npts,
-    T_real const X[],
-    T_real     & x,
-    T_int      & lastInterval,
-    bool         closed,
-    bool         can_extend
+    T_int                npts,
+    T_real const * const X,
+    T_real             & x,
+    T_int              & lastInterval,
+    bool                 closed,
+    bool                 can_extend
   ) {
 
     // check points
@@ -126,7 +131,7 @@ namespace Utils {
         ++lastInterval;
       } else { // x >= XL[2] search the right interval
         T_real const * XE = X+n;
-        lastInterval += T_int(std::lower_bound( XL, XE, x )-XL);
+        lastInterval += T_int(lower_bound( XL, XE, x )-XL);
         T_real const * XX = X+lastInterval;
         if ( x < XX[0] || Utils::isZero(XX[0]-XX[1]) ) --lastInterval;
       }
@@ -136,7 +141,7 @@ namespace Utils {
       } else if ( XL[-1] <= x ) { // x in [XL[-1],XL[0])
         --lastInterval;
       } else {
-        lastInterval = T_int(std::lower_bound( X+1, XL, x )-X);
+        lastInterval = T_int(lower_bound( X+1, XL, x )-X);
         T_real const * XX = X+lastInterval;
         if ( x < XX[0] || Utils::isZero(XX[0]-XX[1]) ) --lastInterval;
       }
@@ -153,44 +158,44 @@ namespace Utils {
 
   }
 
-
   extern template void searchInterval(
-    int32_t     npts,
-    float const X[],
-    float     & x,
-    int32_t   & lastInterval,
-    bool        closed,
-    bool        can_extend
+    int32_t             npts,
+    float const * const X,
+    float             & x,
+    int32_t           & lastInterval,
+    bool                closed,
+    bool                can_extend
   );
 
   template void searchInterval(
-    int32_t      npts,
-    double const X[],
-    double     & x,
-    int32_t    & lastInterval,
-    bool         closed,
-    bool         can_extend
+    int32_t              npts,
+    double const * const X,
+    double             & x,
+    int32_t            & lastInterval,
+    bool                 closed,
+    bool                 can_extend
   );
 
   template void searchInterval(
-    int64_t     npts,
-    float const X[],
-    float     & x,
-    int64_t   & lastInterval,
-    bool        closed,
-    bool        can_extend
+    int64_t             npts,
+    float const * const X,
+    float             & x,
+    int64_t           & lastInterval,
+    bool                closed,
+    bool                can_extend
   );
 
   template void searchInterval(
-    int64_t      npts,
-    double const X[],
-    double     & x,
-    int64_t    & lastInterval,
-    bool         closed,
-    bool         can_extend
+    int64_t              npts,
+    double const * const X,
+    double             & x,
+    int64_t            & lastInterval,
+    bool                 closed,
+    bool                 can_extend
   );
-
 }
+
+#endif
 
 ///
 /// eof: Utils.cc

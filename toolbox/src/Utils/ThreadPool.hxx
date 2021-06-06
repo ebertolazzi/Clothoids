@@ -49,6 +49,25 @@
 
 namespace Utils {
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  using std::pair;
+  using std::vector;
+  using std::atomic;
+  using std::mutex;
+  using std::condition_variable;
+  using std::unique_lock;
+  using std::thread;
+  using std::function;
+  using std::move;
+  using std::bind;
+  using std::forward;
+  using std::memory_order_relaxed;
+  using std::memory_order_acquire;
+  using std::memory_order_release;
+  using std::max;
+  using std::min;
+  #endif
+
   /*\
    |   _____ _                        _
    |  |_   _| |__  _ __ ___  __ _  __| |___
@@ -60,23 +79,23 @@ namespace Utils {
   class SpinLock {
     // see https://geidav.wordpress.com/2016/03/23/test-and-set-spinlocks/
   private:
-    std::atomic<bool> m_locked = {false};
+    atomic<bool> m_locked = {false};
   public:
     SpinLock() {}
 
     void
     wait() {
-      while (m_locked.load(std::memory_order_relaxed) == true);
+      while (m_locked.load(memory_order_relaxed) == true);
     }
 
     void
     lock() {
-      do { wait(); } while (m_locked.exchange(true, std::memory_order_acquire) == true);
+      do { wait(); } while (m_locked.exchange(true, memory_order_acquire) == true);
     }
 
     void
     unlock() {
-      m_locked.store(false, std::memory_order_release);
+      m_locked.store(false, memory_order_release);
     }
   };
 
@@ -85,9 +104,9 @@ namespace Utils {
   class WaitWorker {
   private:
     #ifdef UTILS_OS_WINDOWS
-    std::atomic<int> n_worker;
+    atomic<int> n_worker;
     #else
-    std::atomic<int> n_worker = {0};
+    atomic<int> n_worker = {0};
     #endif
   public:
     #ifdef UTILS_OS_WINDOWS
@@ -98,7 +117,7 @@ namespace Utils {
 
     void
     wait() {
-      while (n_worker.load(std::memory_order_relaxed) != 0 );
+      while (n_worker.load(memory_order_relaxed) != 0 );
     }
 
     void enter() { ++n_worker; }
@@ -110,10 +129,10 @@ namespace Utils {
   template <typename DATA>
   class BinarySearch {
   private:
-    typedef std::pair<std::thread::id,DATA*> DATA_TYPE;
-    mutable std::vector<DATA_TYPE>           m_data;
-    mutable SpinLock                         m_spin_write;
-    mutable WaitWorker                       m_worker_read;
+    typedef pair<thread::id,DATA*> DATA_TYPE;
+    mutable vector<DATA_TYPE>      m_data;
+    mutable SpinLock               m_spin_write;
+    mutable WaitWorker             m_worker_read;
 
   public:
 
@@ -138,7 +157,7 @@ namespace Utils {
     }
 
     DATA *
-    search( std::thread::id const & id, bool & ok ) const {
+    search( thread::id const & id, bool & ok ) const {
       m_spin_write.wait(); // wait writing finished
       m_worker_read.enter();
       ok = true;
@@ -162,7 +181,7 @@ namespace Utils {
       size_t L = 0;
       while ( U-L > 1 ) {
         size_t pos = (L+U)>>1;
-        std::thread::id const & id_pos = m_data[pos].first;
+        thread::id const & id_pos = m_data[pos].first;
         if ( id_pos < id ) L = pos; else U = pos;
       }
       DATA_TYPE & dL = m_data[L];
@@ -196,12 +215,12 @@ namespace Utils {
 
   class SpinLock_barrier {
   private:
-    std::atomic<unsigned> m_count;
-    std::atomic<unsigned> m_generation;
-    unsigned              m_count_reset_value;
+    atomic<unsigned> m_count;
+    atomic<unsigned> m_generation;
+    unsigned         m_count_reset_value;
   public:
-    SpinLock_barrier(const SpinLock_barrier&) = delete;
-    SpinLock_barrier& operator=(const SpinLock_barrier&) = delete;
+    SpinLock_barrier( SpinLock_barrier const & ) = delete;
+    SpinLock_barrier& operator=( SpinLock_barrier const & ) = delete;
 
     explicit
     SpinLock_barrier()
@@ -246,10 +265,10 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   class Barrier {
-    int                     m_to_be_done;
-    int                     m_usedThread;
-    std::mutex              m_mtx;
-    std::condition_variable m_cond;
+    int                m_to_be_done;
+    int                m_usedThread;
+    mutex              m_mtx;
+    condition_variable m_cond;
   public:
     Barrier() : m_to_be_done(0) {}
 
@@ -259,19 +278,19 @@ namespace Utils {
 
     void
     count_down() {
-      std::unique_lock<std::mutex> lck(m_mtx);
+      unique_lock<mutex> lck(m_mtx);
       if ( --m_to_be_done <= 0 ) m_cond.notify_all() ; // wake up all tread
     }
 
     void
     wait() {
-      std::unique_lock<std::mutex> lck(m_mtx);
+      unique_lock<mutex> lck(m_mtx);
       m_cond.wait(lck);
     }
 
     void
     count_down_and_wait() {
-      std::unique_lock<std::mutex> lck(m_mtx);
+      unique_lock<mutex> lck(m_mtx);
       if ( --m_to_be_done <= 0 ) {
         m_cond.notify_all() ; // wake up all tread
         m_to_be_done = m_usedThread ;
@@ -285,27 +304,27 @@ namespace Utils {
 
   class SimpleSemaphore {
   private:
-    bool                    m_go;
-    std::mutex              m_mutex;
-    std::condition_variable m_cv;
+    bool               m_go;
+    mutex              m_mutex;
+    condition_variable m_cv;
   public:
     SimpleSemaphore() noexcept : m_go(true) {}
 
     void
     green() noexcept {
-      { std::unique_lock<std::mutex> lock(m_mutex); m_go = true; }
+      { unique_lock<mutex> lock(m_mutex); m_go = true; }
       m_cv.notify_one();
     }
 
     void
     red() noexcept {
-      { std::unique_lock<std::mutex> lock(m_mutex); m_go = false; }
+      { unique_lock<mutex> lock(m_mutex); m_go = false; }
       m_cv.notify_one();
     }
 
     void
     wait() noexcept {
-      std::unique_lock<std::mutex> lock(m_mutex);
+      unique_lock<mutex> lock(m_mutex);
       m_cv.wait(lock, [this]()->bool { return this->m_go; });
     }
 
@@ -322,11 +341,11 @@ namespace Utils {
   class Worker {
     friend class ThreadPool;
 
-    bool                  m_active;
-    SimpleSemaphore       m_is_running;
-    SimpleSemaphore       m_job_done;
-    std::thread           m_running_thread;
-    std::function<void()> m_job;
+    bool             m_active;
+    SimpleSemaphore  m_is_running;
+    SimpleSemaphore  m_job_done;
+    thread           m_running_thread;
+    function<void()> m_job;
 
     //disable copy
     Worker( Worker const & ) = delete;
@@ -350,7 +369,7 @@ namespace Utils {
     Worker( Worker && rhs ) {
       m_active         = rhs.m_active;
       m_job            = rhs.m_job;
-      m_running_thread = std::move(rhs.m_running_thread);
+      m_running_thread = move(rhs.m_running_thread);
     }
 
     void
@@ -359,7 +378,7 @@ namespace Utils {
         m_active = true;
         m_is_running.red();
         m_job_done.green();
-        m_running_thread = std::thread( [this] () -> void { this->loop(); } );
+        m_running_thread = thread( [this] () -> void { this->loop(); } );
       }
     }
 
@@ -377,9 +396,9 @@ namespace Utils {
     template < class Func, class... Args >
     void
     run( Func && func, Args && ... args ) {
-      //launch( std::bind(std::forward<Func>(func), std::forward<Args>(args)...) );
+      //launch( bind(forward<Func>(func), forward<Args>(args)...) );
       m_job_done.wait(); // se gia occupato in task aspetta
-      m_job = std::bind(std::forward<Func>(func), std::forward<Args>(args)...);
+      m_job = bind(forward<Func>(func),forward<Args>(args)...);
       m_job_done.red();
       m_is_running.green(); // activate computation
     }
@@ -396,7 +415,7 @@ namespace Utils {
 
   class ThreadPool {
     // need to keep track of threads so we can join them
-    std::vector<Worker> m_workers;
+    vector<Worker> m_workers;
 
     //disable copy
     ThreadPool() = delete;
@@ -415,7 +434,7 @@ namespace Utils {
       int         policy;
       for ( auto & w: m_workers ) {
         w.start();
-        std::thread & t = w.m_running_thread;
+        thread & t = w.m_running_thread;
         pthread_getschedparam( t.native_handle(), &policy, &sch );
         sch.sched_priority = sched_get_priority_max( SCHED_RR );
         pthread_setschedparam( t.native_handle(), SCHED_RR, &sch );
@@ -431,9 +450,9 @@ namespace Utils {
   public:
 
     ThreadPool(
-      unsigned nthread = std::max(
+      unsigned nthread = max(
         unsigned(1),
-        unsigned(std::thread::hardware_concurrency()-1)
+        unsigned(thread::hardware_concurrency()-1)
       )
     ) {
       m_workers.resize( size_t( nthread ) );
@@ -453,15 +472,15 @@ namespace Utils {
 
     unsigned size() const { return unsigned(m_workers.size()); }
 
-    std::thread::id
+    thread::id
     get_id( unsigned i ) const
     { return m_workers[size_t(i)].m_running_thread.get_id(); }
 
-    std::thread const &
+    thread const &
     get_thread( unsigned i ) const
     { return m_workers[size_t(i)].m_running_thread; }
 
-    std::thread &
+    thread &
     get_thread( unsigned i )
     { return m_workers[size_t(i)].m_running_thread; }
 
