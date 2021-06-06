@@ -1647,7 +1647,8 @@ namespace G2lib {
       s += s_begin;
     } else {
       // segmenti consecutivi
-      real_type x1, y1, s1, t1, res1, dst1;
+      int_type  res1;
+      real_type x1, y1, s1, t1, dst1;
 
       real_type     ss0 = m_s0[i_begin];
       real_type     ss1 = m_s0[i_end];

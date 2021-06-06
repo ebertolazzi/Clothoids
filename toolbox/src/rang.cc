@@ -67,6 +67,10 @@ namespace rang {
 
     bool
     isMsysPty( int fd ) noexcept {
+      // disable for mingw on MATLAB
+      #if (defined(MINGW) || defined(__MINGW32__)) && defined(MATLAB_MEX_FILE )
+      return false;
+      #else
       // Dynamic load for binary compability with old Windows
       auto const ptrGetFileInformationByHandleEx = reinterpret_cast<decltype(&GetFileInformationByHandleEx)>(
         GetProcAddress(
@@ -105,6 +109,7 @@ namespace rang {
             || name.find(L"-pty") == wstring::npos) return false;
 
       return true;
+      #endif
     }
 
     #endif
