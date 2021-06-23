@@ -57,11 +57,14 @@ LIB_NAMES = { ...
 };
 
 MROOT = matlabroot;
+%DEFS  = '-DG2LIB_DEBUG ';
+DEFS  = ' ';
 
-CMDBASE = 'mex -c -largeArrayDims -Isrc -Isrc/Utils ';
+CMDBASE = [ 'mex -c -largeArrayDims -Isrc -Isrc/Utils ', DEFS];
 if isunix
   CMDBASE = [CMDBASE, 'CXXFLAGS="\$CXXFLAGS -Wall -O2 -g" '];
 elseif ispc
+  CMDBASE = [CMDBASE, 'COMPFLAGS="\$COMPFLAGS -O2" '];
 end
 
 LIB_OBJS = '';
@@ -87,7 +90,7 @@ for k=1:length(NAMES)
   CMD = [ 'while mislocked(''' N '''); munlock(''' N '''); end;'];
   eval(CMD);
 
-  CMD = [ 'mex -Isrc -output bin/', N ];
+  CMD = [ 'mex ', DEFS, ' -Isrc -output bin/', N ];
   CMD = [ CMD, ' -largeArrayDims src_mex/mex_', N ];
   CMD = [ CMD, '.cc ', LIB_OBJS ];
 
@@ -105,6 +108,7 @@ for k=1:length(NAMES)
       ' LINKLIBS="-ldl -L\$MATLABROOT/bin/\$ARCH -L\$MATLABROOT/extern/bin/\$ARCH -lMatlabDataArray -lmx -lmex -lmat -lm "' ...
     ];
   elseif ispc
+    CMD = [CMD, 'COMPFLAGS="\$COMPFLAGS -O2" '];
   end
 
   disp(CMD);

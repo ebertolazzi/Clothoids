@@ -53,6 +53,16 @@
 #include <memory>  // shared_ptr
 #endif
 
+#ifdef G2LIB_DEBUG
+  #define G2LIB_DEBUG_MESSAGE(...) std::cout << fmt::format(__VA_ARGS__) << std::flush
+#else
+  #define G2LIB_DEBUG_MESSAGE(...)
+#endif
+
+#ifndef GLIB2_TOL_ANGLE
+  #define GLIB2_TOL_ANGLE 1e-8
+#endif
+
 namespace G2lib {
   typedef std::basic_istream<char> istream_type;
   typedef std::basic_ostream<char> ostream_type;

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File ClothoidList.hxx &#8212; Clothoids v2.0.7
+    <title>Program Listing for File ClothoidList.hxx &#8212; Clothoids v2.0.8
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -589,6 +589,17 @@
       <span class="n">int_type</span> <span class="o">&amp;</span> <span class="n">lastInterval</span> <span class="o">=</span> <span class="o">*</span><span class="n">m_lastInterval</span><span class="p">.</span><span class="n">search</span><span class="p">(</span> <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">get_id</span><span class="p">(),</span> <span class="n">ok</span> <span class="p">);</span>
       <span class="n">lastInterval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="p">}</span>
+
+    <span class="n">int_type</span>
+    <span class="nf">closestPoint_internal</span><span class="p">(</span>
+      <span class="n">real_type</span>   <span class="n">qx</span><span class="p">,</span>
+      <span class="n">real_type</span>   <span class="n">qy</span><span class="p">,</span>
+      <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">DST</span>
+    <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
   <span class="k">public</span><span class="o">:</span>
 

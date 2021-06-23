@@ -559,7 +559,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidCurve::closestPoint_internal_ISO(
+  ClothoidCurve::closestPoint_internal(
     real_type   s_begin,
     real_type   s_end,
     real_type   qx,
@@ -618,15 +618,14 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
-  ClothoidCurve::closestPoint_ISO(
+  void
+  ClothoidCurve::closestPoint_internal(
     real_type   qx,
     real_type   qy,
     real_type   offs,
     real_type & x,
     real_type & y,
     real_type & s,
-    real_type & t,
     real_type & DST
   ) const {
     DST = numeric_limits<real_type>::infinity();
@@ -646,7 +645,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        closestPoint_internal_ISO(
+        closestPoint_internal(
           T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -657,13 +656,37 @@ namespace G2lib {
         }
       }
     }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  ClothoidCurve::closestPoint_ISO(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & DST
+  ) const {
+    
+    this->closestPoint_internal( qx, qy, offs, x, y, s, DST ); 
+
+    // check if projection is orthogonal
     real_type nx, ny;
     nor_ISO( s, nx, ny );
-    t = (qx-x) * nx + (qy-y) * ny - offs;
-    real_type err = abs( abs(t) - DST );
-    real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
-    if ( err > tol ) return -1;
-    return 1;
+    real_type qxx = qx - x;
+    real_type qyy = qy - y;
+    t = qxx * nx + qyy * ny - offs; // signed distance
+    real_type pt = abs(qxx * ny - qyy * nx);
+    G2LIB_DEBUG_MESSAGE(
+      "Clothoid::closestPoint_ISO\n"
+      "||P-P0|| = {} and {}, |(P-P0).T| = {}\n",
+      DST, hypot(qxx,qyy), pt
+    );
+    return pt > GLIB2_TOL_ANGLE*hypot(qxx,qyy) ? -1 : 1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

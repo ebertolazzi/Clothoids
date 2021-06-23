@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File Clothoids.hh &#8212; Clothoids v2.0.7
+    <title>Program Listing for File Clothoids.hh &#8212; Clothoids v2.0.8
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -124,6 +124,16 @@
 
 <span class="cp">#ifdef G2LIB_USE_CXX11</span>
 <span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="c1">  // shared_ptr</span><span class="cp"></span>
+<span class="cp">#endif</span>
+
+<span class="cp">#ifdef G2LIB_DEBUG</span>
+  <span class="cp">#define G2LIB_DEBUG_MESSAGE(...) std::cout &lt;&lt; fmt::format(__VA_ARGS__) &lt;&lt; std::flush</span>
+<span class="cp">#else</span>
+  <span class="cp">#define G2LIB_DEBUG_MESSAGE(...)</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#ifndef GLIB2_TOL_ANGLE</span>
+  <span class="cp">#define GLIB2_TOL_ANGLE 1e-8</span>
 <span class="cp">#endif</span>
 
 <span class="k">namespace</span> <span class="n">G2lib</span> <span class="p">{</span>

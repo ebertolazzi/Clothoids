@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File G2lib_intersect.cc &#8212; Clothoids v2.0.7
+    <title>Program Listing for File G2lib_intersect.cc &#8212; Clothoids v2.0.8
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -238,14 +238,12 @@
 
   <span class="kt">bool</span>
   <span class="n">collision</span><span class="p">(</span> <span class="n">BaseCurve</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">obj1</span><span class="p">,</span> <span class="n">BaseCurve</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">obj2</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="cp">#ifdef DEBUG</span>
-    <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span>
+    <span class="n">G2LIB_DEBUG_MESSAGE</span><span class="p">(</span>
       <span class="s">"collision {} with {} using {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))]</span>
     <span class="p">);</span>
-    <span class="cp">#endif</span>
 
     <span class="kt">bool</span> <span class="n">ok</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="k">switch</span> <span class="p">(</span> <span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))</span> <span class="p">)</span> <span class="p">{</span>
@@ -315,14 +313,12 @@
     <span class="n">init_promote_map</span><span class="p">();</span>
     <span class="cp">#endif</span>
 
-    <span class="cp">#ifdef DEBUG</span>
-    <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span>
+    <span class="n">G2LIB_DEBUG_MESSAGE</span><span class="p">(</span>
       <span class="s">"collision (offs) {} with {} using {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))]</span>
     <span class="p">);</span>
-    <span class="cp">#endif</span>
 
     <span class="kt">bool</span> <span class="n">ok</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="k">switch</span> <span class="p">(</span> <span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))</span> <span class="p">)</span> <span class="p">{</span>
@@ -391,14 +387,12 @@
     <span class="n">init_promote_map</span><span class="p">();</span>
     <span class="cp">#endif</span>
 
-    <span class="cp">#ifdef DEBUG</span>
-    <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span>
+    <span class="n">G2LIB_DEBUG_MESSAGE</span><span class="p">(</span>
       <span class="s">"intersect {} with {} using {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))]</span>
     <span class="p">);</span>
-    <span class="cp">#endif</span>
 
     <span class="k">switch</span> <span class="p">(</span> <span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))</span> <span class="p">)</span> <span class="p">{</span>
     <span class="k">case</span> <span class="nl">G2LIB_LINE</span><span class="p">:</span>
@@ -468,14 +462,12 @@
     <span class="n">init_promote_map</span><span class="p">();</span>
     <span class="cp">#endif</span>
 
-    <span class="cp">#ifdef DEBUG</span>
-    <span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span>
+    <span class="n">G2LIB_DEBUG_MESSAGE</span><span class="p">(</span>
       <span class="s">"intersect (offs) {} with {} using {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()],</span>
       <span class="n">CurveType_name</span><span class="p">[</span><span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))]</span>
     <span class="p">);</span>
-    <span class="cp">#endif</span>
 
     <span class="k">switch</span> <span class="p">(</span> <span class="n">promote_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">Ppair</span><span class="p">(</span><span class="n">obj1</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span><span class="n">obj2</span><span class="p">.</span><span class="n">type</span><span class="p">()))</span> <span class="p">)</span> <span class="p">{</span>
     <span class="k">case</span> <span class="nl">G2LIB_LINE</span><span class="p">:</span>

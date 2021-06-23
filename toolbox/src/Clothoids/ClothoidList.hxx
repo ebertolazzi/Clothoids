@@ -877,6 +877,17 @@ namespace G2lib {
       lastInterval = 0;
     }
 
+    int_type
+    closestPoint_internal(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & DST
+    ) const;
+
   public:
 
     #include "BaseCurve_using.hxx"

@@ -535,14 +535,18 @@ namespace G2lib {
         dst = d0;
       }
     }
+    // check if projection is orthogonal
     real_type nx, ny;
     nor_ISO( S, nx, ny );
-    real_type dx = qx-X;
-    real_type dy = qy-Y;
-    T = dx * nx + dy * ny;
-    real_type tol = (dst > 1 ? dst*machepsi1000 : machepsi1000);
-    if ( abs(abs(T)-dst) < tol ) return 1;
-    return -1;
+    real_type qxx = qx - X;
+    real_type qyy = qy - Y;
+    T = qxx * nx + qyy * ny; // signed distance
+    real_type pt = abs(qxx * ny - qyy * nx);
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidCurve::closestPoint_ISO: ||P-P0|| = {}, |(P-P0).T| = {}\n",
+      dst, pt
+    );
+    return pt > GLIB2_TOL_ANGLE*dst ? -1 : 1;
   }
 
 /*

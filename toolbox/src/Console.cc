@@ -221,9 +221,9 @@ namespace Utils {
 
   Console const &
   Console::semaphore(
-    unsigned            rvg,
+    unsigned       rvg,
     string const & msg,
-    int                 msg_level
+    int            msg_level
   ) const {
     lock_guard<mutex> lock_access(m_message_mutex);
     static rang::fg rvg_color[3] = {

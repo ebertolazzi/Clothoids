@@ -162,14 +162,12 @@ namespace G2lib {
 
   bool
   collision( BaseCurve const & obj1, BaseCurve const & obj2 ) {
-    #ifdef DEBUG
-    fmt::print(
+    G2LIB_DEBUG_MESSAGE(
       "collision {} with {} using {}\n",
       CurveType_name[obj1.type()],
       CurveType_name[obj2.type()],
       CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
     );
-    #endif
 
     bool ok = false;
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
@@ -239,14 +237,12 @@ namespace G2lib {
     init_promote_map();
     #endif
 
-    #ifdef DEBUG
-    fmt::print(
+    G2LIB_DEBUG_MESSAGE(
       "collision (offs) {} with {} using {}\n",
       CurveType_name[obj1.type()],
       CurveType_name[obj2.type()],
       CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
     );
-    #endif
 
     bool ok = false;
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
@@ -315,14 +311,12 @@ namespace G2lib {
     init_promote_map();
     #endif
 
-    #ifdef DEBUG
-    fmt::print(
+    G2LIB_DEBUG_MESSAGE(
       "intersect {} with {} using {}\n",
       CurveType_name[obj1.type()],
       CurveType_name[obj2.type()],
       CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
     );
-    #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:
@@ -392,14 +386,12 @@ namespace G2lib {
     init_promote_map();
     #endif
 
-    #ifdef DEBUG
-    fmt::print(
+    G2LIB_DEBUG_MESSAGE(
       "intersect (offs) {} with {} using {}\n",
       CurveType_name[obj1.type()],
       CurveType_name[obj2.type()],
       CurveType_name[promote_map.at(Ppair(obj1.type(),obj2.type()))]
     );
-    #endif
 
     switch ( promote_map.at(Ppair(obj1.type(),obj2.type())) ) {
     case G2LIB_LINE:

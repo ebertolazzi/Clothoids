@@ -1444,14 +1444,13 @@ namespace G2lib {
   \*/
 
   int_type
-  ClothoidList::closestPoint_ISO(
+  ClothoidList::closestPoint_internal(
     real_type   qx,
     real_type   qy,
     real_type   offs,
     real_type & x,
     real_type & y,
     real_type & s,
-    real_type & t,
     real_type & DST
   ) const {
 
@@ -1472,7 +1471,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        m_clotoidList[T.Icurve()].closestPoint_internal_ISO(
+        m_clotoidList[T.Icurve()].closestPoint_internal(
           T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -1484,14 +1483,38 @@ namespace G2lib {
         }
       }
     }
+    return icurve;
+  }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  int_type
+  ClothoidList::closestPoint_ISO(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & DST
+  ) const {
+
+    int_type icurve = this->closestPoint_internal( qx, qy, offs, x, y, s, DST );
+
+    // check if projection is orthogonal
     real_type nx, ny;
     m_clotoidList[icurve].nor_ISO( s - m_s0[icurve], nx, ny );
-    t = (qx-x) * nx + (qy-y) * ny - offs;
-    real_type err = abs( abs(t) - DST );
-    real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
-    if ( err > tol ) return -(icurve+1);
-    return icurve;
+    real_type qxx = qx - x;
+    real_type qyy = qy - y;
+    t = qxx * nx + qyy * ny - offs; // signed distance
+    real_type pt = abs(qxx * ny - qyy * nx);
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidList::closestPoint_ISO\n"
+      "||P-P0|| = {} and {}, |(P-P0).T| = {}\n",
+      DST, hypot(qxx,qyy), pt
+    );
+    return pt > GLIB2_TOL_ANGLE*hypot(qxx,qyy) ? -(icurve+1) : icurve;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1536,7 +1559,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        m_clotoidList[T.Icurve()].closestPoint_internal_ISO(
+        m_clotoidList[T.Icurve()].closestPoint_internal(
           T.S0(), T.S1(), qx, qy, 0, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -1568,7 +1591,7 @@ namespace G2lib {
       "ClothoidList::closestPointInRange_ISO, empty list\n"
     );
     int_type nsegs = this->numSegments();
-    if ( nsegs == 1 ) {
+    if ( nsegs == 1 ) { // only 1 segment to check
       icurve = 0;
       int_type res = m_clotoidList.front().closestPoint_ISO( qx, qy, x, y, s, t, dst );
       s += m_s0[0];
@@ -1589,21 +1612,36 @@ namespace G2lib {
     int_type res = m_clotoidList[icurve].closestPoint_ISO( qx, qy, x, y, s, t, dst );
     s += m_s0[icurve];
 
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidList::closestPointInRange_ISO\n"
+      "first segment #{} dst = {} res = {}\n",
+      icurve, dst, res
+    );
+
     if ( ib == ie ) return res; // only one segment to check
 
     int_type iseg = ib;
     do {
       if ( ++iseg >= nsegs ) iseg -= nsegs; // next segment
       real_type C_x, C_y, C_s, C_t, C_dst;
-      int_type C_res = m_clotoidList[iseg].closestPoint_ISO( qx, qy, C_x, C_y, C_s, C_t, C_dst );
-      if ( res < 0 || (C_res >= 0 && C_dst < dst) ) {
+      int_type C_res = m_clotoidList[iseg].closestPoint_ISO(
+        qx, qy, C_x, C_y, C_s, C_t, C_dst
+      );
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closestPointInRange_ISO: segment #{} dst = {} res = {}\n",
+        iseg, C_dst, C_res
+      );
+      if ( C_dst < dst ) {
         dst    = C_dst;
         x      = C_x;
         y      = C_y;
-        s      = C_s+m_s0[iseg];
+        s      = C_s + m_s0[iseg];
         t      = C_t;
         icurve = iseg;
         res    = C_res;
+        G2LIB_DEBUG_MESSAGE(
+          "ClothoidList::closestPointInRange_ISO, new min at s = {}, res = {}\n", s, res
+        );
       }
     } while ( iseg != ie );
     return res;
@@ -1655,7 +1693,7 @@ namespace G2lib {
       ClothoidCurve C0  = m_clotoidList[i_begin]; // crea copia
       ClothoidCurve C1  = m_clotoidList[i_end];   // crea copia
 
-      // taglia il segmenti
+      // taglia il segmento
       C0.trim( s_begin-ss0, C0.length() );
 
       // calcolo closest point
@@ -1663,9 +1701,19 @@ namespace G2lib {
       s  += s_begin;
       icurve = i_begin;
 
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closestPointInSRange_ISO: first segment {} dst = {} res = {}\n",
+        i_begin, dst, res
+      );
+
       C1.trim( 0, s_end-ss1 );
       res1 = C1.closestPoint_ISO( qx, qy, x1, y1, s1, t1, dst1 );
       s1 += ss1;
+
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closestPointInSRange_ISO: last segment {} dst = {} res = {}\n",
+        i_end, dst1, res1
+      );
 
       if ( dst1 < dst ) {
         x = x1; y = y1; s = s1; t = t1;
@@ -1680,7 +1728,11 @@ namespace G2lib {
         res1 = this->closestPointInRange_ISO(
           qx, qy, i_begin, i_end, x1, y1, s1, t1, dst1, icurve1
         );
-        if ( res < 0 || (res1 >= 0 && dst1 < dst)  ) {
+        G2LIB_DEBUG_MESSAGE(
+          "ClothoidList::closestPointInSRange_ISO: range [{},{}] dst = {} res = {}\n",
+          i_begin, i_end, dst1, res1
+        );
+        if ( dst1 < dst ) {
           x      = x1;
           y      = y1;
           s      = s1;
@@ -1688,6 +1740,9 @@ namespace G2lib {
           dst    = dst1;
           res    = res1;
           icurve = icurve1;
+          G2LIB_DEBUG_MESSAGE(
+            "ClothoidList::closestPointInSRange_ISO: new min at s = {}, res = {}\n", s, res
+          );
         }
       }
     }

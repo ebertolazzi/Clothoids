@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Program Listing for File Clothoid.hxx &#8212; Clothoids v2.0.7
+    <title>Program Listing for File Clothoid.hxx &#8212; Clothoids v2.0.8
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -134,9 +134,20 @@
     <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
     <span class="kt">void</span>
-    <span class="nf">closestPoint_internal_ISO</span><span class="p">(</span>
+    <span class="nf">closestPoint_internal</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">s_begin</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">s_end</span><span class="p">,</span>
+      <span class="n">real_type</span>   <span class="n">qx</span><span class="p">,</span>
+      <span class="n">real_type</span>   <span class="n">qy</span><span class="p">,</span>
+      <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span>
+      <span class="n">real_type</span> <span class="o">&amp;</span> <span class="n">dst</span>
+    <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span>
+    <span class="nf">closestPoint_internal</span><span class="p">(</span>
       <span class="n">real_type</span>   <span class="n">qx</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">qy</span><span class="p">,</span>
       <span class="n">real_type</span>   <span class="n">offs</span><span class="p">,</span>

@@ -98,12 +98,23 @@ namespace G2lib {
       lastInterval = 0;
     }
 
+    int_type
+    closestPoint_internal(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & dst
+    ) const;
+
   public:
 
     #include "BaseCurve_using.hxx"
 
     //!
-    //! Build an empty biarc spline
+    //! Build an empty biarc spline.
     //!
     BiarcList()
     : BaseCurve(G2LIB_BIARC_LIST)
@@ -117,7 +128,7 @@ namespace G2lib {
     }
 
     //!
-    //! Build a copy of another biarc spline
+    //! Build a copy of another biarc spline.
     //!
     BiarcList( BiarcList const & s )
     : BaseCurve(G2LIB_BIARC_LIST)
@@ -125,66 +136,71 @@ namespace G2lib {
     { this->resetLastInterval(); copy(s); }
 
     //!
-    //! Empty the the biarc list
+    //! Empty the the biarc list.
     //!
     void init();
 
     //!
-    //! Reserve memory for `n` biarcs
+    //! Reserve memory for `n` biarcs.
     //!
     void reserve( int_type n );
 
     //!
-    //! Copy another biarc spline
+    //! Copy another biarc spline.
     //!
     void copy( BiarcList const & L );
 
-    //! copy another biarc spline
+    //!
+    //! Copy another biarc spline.
+    //!
     BiarcList const & operator = ( BiarcList const & s )
     { copy(s); return *this; }
 
     //!
-    //! Build a biarc list from a line segment
+    //! Build a biarc list from a line segment.
     //!
     explicit BiarcList( LineSegment const & LS );
 
     //!
-    //! Build a biarc list from a single circle arc
+    //! Build a biarc list from a single circle arc.
     //!
     explicit BiarcList( CircleArc const & C );
 
     //!
-    //! Build a biarc list from a single biarc
+    //! Build a biarc list from a single biarc.
     //!
     explicit BiarcList( Biarc const & C );
 
     //!
-    //! Build a biarc list from a single polyline
+    //! Build a biarc list from a single polyline.
     //!
     explicit BiarcList( PolyLine const & pl );
 
     //!
-    //! Build a biarc list from another curve
+    //! Build a biarc list from another curve.
     //!
     explicit BiarcList( BaseCurve const & C );
 
     //!
-    //! Append a line segment to the biarc list (transformed to a degenerate biarc)
+    //! Append a line segment to the biarc list
+    //! (transformed to a degenerate biarc).
     //!
     void push_back( LineSegment const & c );
 
     //!
-    //! Append a line circle to the biarc list (transformed to a degenerate biarc)
+    //! Append a line circle to the biarc 
+    //! list (transformed to a degenerate biarc).
     //!
     void push_back( CircleArc const & c );
 
     //!
-    //! Append a biarc to the biarc list
+    //! Append a biarc to the biarc list.
     //!
     void push_back( Biarc const & c );
 
     //!
-    //! Append a polyline to the biarc list (transformed to a list of degenerate biarc)
+    //! Append a polyline to the biarc list
+    //! (transformed to a list of degenerate biarc).
     //!
     void push_back( PolyLine const & c );
 
@@ -236,7 +252,7 @@ namespace G2lib {
 
     //!
     //! Construct a biarc list passing to the points \f$ (x_i,y_i) \f$
-    //! with angles  \f$ \theta_i \f$
+    //! with angles  \f$ \theta_i \f$.
     //!
     //! \param[in] n     number of points
     //! \param[in] x     x-coordinates
@@ -252,22 +268,23 @@ namespace G2lib {
     );
 
     //!
-    //! Get the `idx`-th biarc
+    //! Get the `idx`-th biarc.
     //!
     Biarc const & get( int_type idx ) const;
 
     //!
-    //! Get the biarc that contain the curvilinear coordinate `s`
+    //! Get the biarc that contain the curvilinear coordinate `s`.
     //!
     Biarc const & getAtS( real_type s ) const;
 
     //!
-    //! Return the number of biarc in the biarc list
+    //! Return the number of biarc in the biarc list.
     //!
     int_type numSegments() const { return int_type(m_biarcList.size()); }
 
     //!
-    //! Get the of the biarc that contain the curvilinear coordinate `s`
+    //! Get the of the biarc that contain
+    //! the curvilinear coordinate `s`.
     //!
     int_type findAtS( real_type & s ) const;
 
@@ -277,13 +294,13 @@ namespace G2lib {
     real_type length_ISO( real_type offs ) const override;
 
     //!
-    //! The length of the `nseg`-th biarc
+    //! The length of the `nseg`-th biarc.
     //!
     real_type
     segment_length( int_type nseg ) const;
 
     //!
-    //! The length of the `nseg`-th biarc with offset `offs`
+    //! The length of the `nseg`-th biarc with offset `offs`.
     //!
     real_type
     segment_length_ISO( int_type nseg, real_type offs ) const;
@@ -693,12 +710,11 @@ namespace G2lib {
     operator << ( ostream_type & stream, BiarcList const & CL );
 
     //!
-    //! Return the biarc as a list of nodes angles and curvatures
+    //! Return the biarc as a list of nodes angles and curvatures.
     //!
     //! \param[out] s     nodes
     //! \param[out] theta angles
     //! \param[out] kappa curvature
-    //!
     //!
     void
     getSTK(
@@ -713,7 +729,6 @@ namespace G2lib {
     //! \param[out] x x-nodes
     //! \param[out] y y-nodes
     //!
-    //!
     void
     getXY( real_type * x, real_type * y ) const;
 
@@ -726,7 +741,6 @@ namespace G2lib {
     //! \param  t    value \f$ t \f$
     //! \return idx  the segment with point at minimal distance, otherwise
     //!              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
-    //!
     //!
     int_type
     findST1(
@@ -766,12 +780,14 @@ namespace G2lib {
      |   \___\___/|_|_|_|___/_|\___/|_| |_|
     \*/
 
-    //! detect a collision with another biarc list
+    //!
+    //! Detect a collision with another biarc list.
+    //!
     bool
     collision( BiarcList const & C ) const;
 
     //!
-    //! Detect a collision with another biarc list with offset
+    //! Detect a collision with another biarc list with offset.
     //!
     //! \param[in] offs   offset of first biarc
     //! \param[in] CL     second biarc
@@ -810,7 +826,7 @@ namespace G2lib {
     }
 
     //!
-    //! Intersect a biarc list with another biarc list with offset (ISO)
+    //! Intersect a biarc list with another biarc list with offset (ISO).
     //!
     //! \param[in]  offs        offset of first biarc
     //! \param[in]  CL          second biarc

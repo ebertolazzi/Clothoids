@@ -1165,14 +1165,13 @@ namespace G2lib {
   \*/
 
   int_type
-  BiarcList::closestPoint_ISO(
+  BiarcList::closestPoint_internal(
     real_type   qx,
     real_type   qy,
     real_type   offs,
     real_type & x,
     real_type & y,
     real_type & s,
-    real_type & t,
     real_type & DST
   ) const {
 
@@ -1193,8 +1192,8 @@ namespace G2lib {
       real_type dst = T.distMin( qx, qy );
       if ( dst < DST ) {
         // refine distance
-        real_type xx, yy, ss;
-        m_biarcList[T.Icurve()].closestPoint_ISO( qx, qy, offs, xx, yy, ss, dst );
+        real_type xx, yy, ss, tt;
+        m_biarcList[T.Icurve()].closestPoint_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
         if ( dst < DST ) {
           DST    = dst;
           s      = ss + m_s0[T.Icurve()];
@@ -1204,14 +1203,36 @@ namespace G2lib {
         }
       }
     }
+    return icurve;
+  }
 
+  int_type
+  BiarcList::closestPoint_ISO(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & DST
+  ) const {
+
+    int_type icurve = this->closestPoint_internal( qx, qy, offs, x, y, s, DST );
+
+    // check if projection is orthogonal
     real_type nx, ny;
     m_biarcList[icurve].nor_ISO( s - m_s0[icurve], nx, ny );
-    t = (qx-x) * nx + (qy-y) * ny - offs;
-    real_type err = abs( abs(t) - DST );
-    real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
-    if ( err > tol ) return -(icurve+1);
-    return icurve;
+    real_type qxx = qx - x;
+    real_type qyy = qy - y;
+    t = qxx * nx + qyy * ny - offs; // signed distance
+    real_type pt = abs(qxx * ny - qyy * nx);
+    G2LIB_DEBUG_MESSAGE(
+      "BiarcList::closestPoint_ISO\n"
+      "||P-P0|| = {} and {}, |(P-P0).T| = {}\n",
+      DST, hypot(qxx,qyy), pt
+    );
+    return pt > GLIB2_TOL_ANGLE*hypot(qxx,qyy) ? -(icurve+1) : icurve;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

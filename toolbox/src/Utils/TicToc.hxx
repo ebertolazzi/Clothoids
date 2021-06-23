@@ -113,32 +113,22 @@ namespace Utils {
     //!
     //! Start timing
     //!
-    void
-    tic()
-    { m_start_time = clock::now(); }
+    void tic();
 
     //!
     //! End timing
     //!
-    void
-    toc() {
-      m_stop_time    = clock::now();
-      m_elapsed_time = std::chrono::duration_cast<elapsed_resolution>(m_stop_time - m_start_time);
-    }
+    void toc();
 
     //!
     //! Return elapsed time (between tic-toc) in seconds
     //!
-    real_type
-    elapsed_s() const
-    { return 1e-6*m_elapsed_time.count(); }
+    real_type elapsed_s() const;
 
     //!
     //! Return elapsed time (between tic-toc) in milliseconds
     //!
-    real_type
-    elapsed_ms() const
-    { return 1e-3*m_elapsed_time.count(); }
+    real_type elapsed_ms() const;
   };
 
   inline

@@ -66,21 +66,20 @@ namespace G2lib {
     {}
 
     //!
-    //! Build a copy of an existing circle arc
+    //! Build a copy of an existing circle arc.
     //!
     CircleArc( CircleArc const & s )
     : BaseCurve(G2LIB_CIRCLE)
     { copy(s); }
 
     //!
-    //! Construct a circle arc with the standard parameters
+    //! Construct a circle arc with the standard parameters.
     //!
     //! \param[in] x0     starting position x-coordinate
     //! \param[in] y0     starting position y-coordinate
     //! \param[in] theta0 initial angle
     //! \param[in] k      curvature
     //! \param[in] L      length
-    //!
     //!
     explicit
     CircleArc(
@@ -100,7 +99,10 @@ namespace G2lib {
     , m_L(L)
     {}
 
-    //! construct a circle arc from a line segment (degenerate circle)
+    //!
+    //! Construct a circle arc from a line
+    //! segment (degenerate circle).
+    //!
     explicit
     CircleArc( LineSegment const & LS )
     : BaseCurve(G2LIB_CIRCLE)
@@ -114,7 +116,7 @@ namespace G2lib {
     {}
 
     //!
-    //! make a copy of an existing circle arc
+    //! Make a copy of an existing circle arc.
     //!
     void
     copy( CircleArc const & c ) {
@@ -128,20 +130,20 @@ namespace G2lib {
     }
 
     //!
-    //! Build a circle arc from a generic curve (if possibile)
+    //! Build a circle arc from a generic curve (if possibile).
     //!
     explicit
     CircleArc( BaseCurve const & C );
 
     //!
-    //! make a copy of an existing circle arc
+    //! Make a copy of an existing circle arc.
     //!
     CircleArc const &
     operator = ( CircleArc const & s )
     { copy(s); return *this; }
 
     //!
-    //! Construct a circle arc with the standard parameters
+    //! Construct a circle arc with the standard parameters.
     //!
     //! \param[in] x0     starting position x-coordinate
     //! \param[in] y0     starting position y-coordinate
@@ -165,7 +167,7 @@ namespace G2lib {
     }
 
     //!
-    //! Build a circle by solving the hermite G1 problem
+    //! Build a circle by solving the hermite G1 problem.
     //!
     //! \param[in] x0     starting position x-coordinate
     //! \param[in] y0     starting position y-coordinate
@@ -184,7 +186,7 @@ namespace G2lib {
     );
 
     //!
-    //! Build a circle passing by 3 points
+    //! Build a circle passing by 3 points.
     //!
     //! \param[in] x0 starting point x-coordinate
     //! \param[in] y0 starting point y-coordinate
@@ -207,7 +209,7 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
-    //! Get the bounding box triangle (if angle variation less that pi/3)
+    //! Get the bounding box triangle (if angle variation less that pi/3).
     //!
     //! \param[out] x0 first triangle point x-coordinate
     //! \param[out] y0 first triangle point y-coordinate
@@ -226,7 +228,7 @@ namespace G2lib {
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
-    //! (if angle variation less that \f$ \pi/3 \f$)
+    //! (if angle variation less that \f$ \pi/3 \f$).
     //!
     //! \param[in]  offs offset
     //! \param[out] x0   first triangle point x-coordinate
@@ -247,7 +249,7 @@ namespace G2lib {
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
-    //! if angle variation less that \f$ \pi/3 \f$)
+    //! if angle variation less that \f$ \pi/3 \f$).
     //!
     //! \param[in]  offs offset
     //! \param[out] x0   first triangle point x-coordinate
@@ -270,7 +272,7 @@ namespace G2lib {
 
     //!
     //! Get the bounding box triangle of the circle
-    //! (if angle variation less that \f$ \pi/3 \f$)
+    //! (if angle variation less that \f$ \pi/3 \f$).
     //!
     //! \param[out] p0 first triangle point
     //! \param[out] p1 second triangle point
@@ -288,7 +290,7 @@ namespace G2lib {
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
-    //! (if angle variation less that \f$ \pi/3 \f$)
+    //! (if angle variation less that \f$ \pi/3 \f$).
     //!
     //! \param[in]  offs offset
     //! \param[out] p0   first triangle point
@@ -308,7 +310,7 @@ namespace G2lib {
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
-    //! (if angle variation less that \f$ \pi/3 \f$)
+    //! (if angle variation less that \f$ \pi/3 \f$).
     //!
     //! \param[in]  offs offset
     //! \param[out] p0   first triangle point
@@ -327,7 +329,7 @@ namespace G2lib {
     }
 
     //!
-    //! Get the bounding box triangle list of the circle arc
+    //! Get the bounding box triangle list of the circle arc.
     //!
     //! \param[out] t      the bounding triangle
     //! \param[in]  ss0    `s0` stored in the triangle class
@@ -349,7 +351,8 @@ namespace G2lib {
     }
 
     //!
-    //! Get the bounding box triangle list of the circle arc with offset
+    //! Get the bounding box triangle list
+    //! of the circle arc with offset.
     //!
     //! \param[in]  offs   offset
     //! \param[out] t      the bounding triangle
@@ -373,7 +376,8 @@ namespace G2lib {
     }
 
     //!
-    //! Get the bounding box triangle list of the circle arc with offset
+    //! Get the bounding box triangle list of
+    //! the circle arc with offset.
     //!
     //! \param[in]  offs   offset
     //! \param[out] t      the bounding triangle
@@ -394,7 +398,7 @@ namespace G2lib {
     }
 
     //!
-    //! Get the bounding box triangle list of the circle arc with offset
+    //! Get the bounding box triangle list of the circle arc with offset.
     //!
     //! \param[out] tvec      the bounding triangle list
     //! \param[in]  max_angle maximum angle variation admitted for all splitted segment
@@ -410,7 +414,7 @@ namespace G2lib {
     ) const override; // 10 degree
 
     //!
-    //! Get the bounding box triangle list of the circle arc with offset
+    //! Get the bounding box triangle list of the circle arc with offset.
     //!
     //! \param[in]  offs      offset
     //! \param[out] tvec      the bounding triangle list
@@ -428,7 +432,7 @@ namespace G2lib {
     ) const override; // 10 degree
 
     //!
-    //! Get the bounding box triangle list of the circle arc with offset
+    //! Get the bounding box triangle list of the circle arc with offset.
     //!
     //! \param[in]  offs      offset
     //! \param[out] tvec      the bounding triangle list
@@ -669,12 +673,14 @@ namespace G2lib {
      |   \___\___/|_|_|_|___/_|\___/|_| |_|
     \*/
 
-    //! detect a collision with another circle arc
+    //!
+    //! Detect a collision with another circle arc.
+    //!
     bool
     collision( CircleArc const & ) const;
 
     //!
-    //! Detect a collision with another circle arc with offset
+    //! Detect a collision with another circle arc with offset.
     //!
     //! \param[in] offs     offset of first circle arc
     //! \param[in] C        second circle arc
@@ -696,7 +702,7 @@ namespace G2lib {
     \*/
 
     //!
-    //! Intersect a circle arc with another circle arc
+    //! Intersect a circle arc with another circle arc.
     //!
     //! \param[in]  obj         second biarc
     //! \param[out] ilist       list of the intersection (as parameter on the curves)
@@ -711,7 +717,7 @@ namespace G2lib {
     ) const;
 
     //!
-    //! Intersect a circle arc with another circle arc with offset (ISO)
+    //! Intersect a circle arc with another circle arc with offset (ISO).
     //!
     //! \param[in]  offs        offset of first circle arc
     //! \param[in]  C           second circle arc
@@ -730,37 +736,41 @@ namespace G2lib {
     ) const;
 
     //!
-    //! Return \f$ \sin \theta_0 \f$ where \f$ \theta_0 \f$ is the initial tangent angle
+    //! Return \f$ \sin \theta_0 \f$ where 
+    //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
     real_type sinTheta0() const { return sin(m_theta0); }
 
     //!
-    //! Return \f$ \cos \theta_0 \f$ where \f$ \theta_0 \f$ is the initial tangent angle
+    //! Return \f$ \cos \theta_0 \f$ where
+    //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
     real_type cosTheta0() const { return cos(m_theta0); }
 
     //!
-    //! Return curvature of the circle arc
+    //! Return curvature of the circle arc.
     //!
     real_type curvature() const { return m_k; }
 
     //!
-    //! Return the length of the arc that can approximated by a line segment
+    //! Return the length of the arc that 
+    //! can approximated by a line segment.
     //!
     real_type lenTolerance( real_type tol ) const;
 
     //!
-    //! Return the tangent angle variation in the circle arc
+    //! Return the tangent angle variation in the circle arc.
     //!
     real_type delta_theta() const { return m_L*m_k; }
 
     //!
-    //! Return the absolute value of the tangent angle variation in the circle arc
+    //! Return the absolute value of the tangent
+    //! angle variation in the circle arc.
     //!
     real_type thetaTotalVariation() const { return std::abs(m_L*m_k); }
 
     //!
-    //! Minimum and maximum tangent angle
+    //! Minimum and maximum tangent angle.
     //!
     //! \param[out] thMin mimimum tangent angle
     //! \param[out] thMax maximum tangent angle
@@ -770,7 +780,7 @@ namespace G2lib {
     thetaMinMax( real_type & thMin, real_type & thMax ) const;
 
     //!
-    //! Minimum and maximum tangent angle
+    //! Minimum and maximum tangent angle.
     //!
     //! \param[out] thMin mimimum tangent angle
     //! \param[out] thMax maximum tangent angle
@@ -782,7 +792,7 @@ namespace G2lib {
 
     //!
     //! Change the origin of the circle arc at \f$ s_0 \f$
-    //! and the length of the arc to  \f$ L \f$
+    //! and the length of the arc to  \f$ L \f$.
     //!
     //! \param[in] s0   \f$ s_0 \f$
     //! \param[in] newL \f$ L \f$
@@ -791,7 +801,7 @@ namespace G2lib {
     changeCurvilinearOrigin( real_type s0, real_type newL );
 
     //!
-    //! Get the center of the circle arc \f$ (c_x,c_y) \f$
+    //! Get the center of the circle arc \f$ (c_x,c_y) \f$.
     //!
     //! \param[in] cx \f$ c_x \f$
     //! \param[in] cy \f$ c_y \f$
@@ -800,7 +810,7 @@ namespace G2lib {
     center( real_type & cx, real_type & cy ) const;
 
     //!
-    //! Get the ray of the circle arc
+    //! Get the ray of the circle arc.
     //!
     real_type ray() const { return 1/std::abs(m_k); }
 
@@ -813,7 +823,7 @@ namespace G2lib {
     \*/
 
     //!
-    //! Get the parameters to build a NURBS for the circle ars
+    //! Get the parameters to build a NURBS for the circle ars.
     //!
     //! \param[out] n_knots number of knots for the NURBS
     //! \param[out] n_pnts  number of point of the polygon of the NURBS
@@ -822,7 +832,7 @@ namespace G2lib {
     paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
 
     //!
-    //! Get the parameters to build a NURBS for the circle ars
+    //! Get the parameters to build a NURBS for the circle ars.
     //!
     //! \param[out] knots vector of the knots
     //! \param[out] Poly  points of the polygon of the NURBS
@@ -831,7 +841,7 @@ namespace G2lib {
     toNURBS( real_type * knots, real_type Poly[][3] ) const;
 
     //!
-    //! pretty print circle arc
+    //! Pretty print circle arc.
     //!
     friend
     ostream_type &
