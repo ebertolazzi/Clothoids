@@ -128,7 +128,7 @@ S.push_back_G1( x0, y0, theta0 ); % first segment
 S.plot();
 axis equal
 
-S.save('Mugello.txt',10);
+S.save('Mugello.txt');
 
 
 

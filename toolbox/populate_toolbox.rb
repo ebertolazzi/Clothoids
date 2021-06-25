@@ -75,10 +75,14 @@ lst = Dir["../submodules/Utils/src/Utils/mingw-std-threads/*.h*"]
 lst.each do |filename|
   FileUtils.cp filename, "./src/Utils/mingw-std-threads/" + File.basename(filename);
 end
+lst = Dir["../submodules/Utils/lib3rd/include/*.h*"]
+lst.each do |filename|
+  FileUtils.cp filename, "./src/" + File.basename(filename);
+end
 
 FileUtils.cp "../submodules/Utils/src/Utils/mingw-std-threads/LICENSE",
              "./src/Utils/mingw-std-threads/LICENSE";
-             FileUtils.cp "../submodules/Utils/src/Utils/mingw-std-threads/README.md",
+FileUtils.cp "../submodules/Utils/src/Utils/mingw-std-threads/README.md",
              "./src/Utils/mingw-std-threads/README.md";
 
 lst = Dir["../doc/*"]

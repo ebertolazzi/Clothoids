@@ -75,6 +75,7 @@ namespace GC_namespace {
   typedef std::basic_ostream<char> ostream_type;
 
   #ifndef _MSC_VER
+  using std::uint8_t;
   using std::int32_t;
   using std::int64_t;
   using std::uint32_t;
@@ -179,7 +180,7 @@ namespace GC_namespace {
     //!
     //! Access to the element `A(i,j)` og the matrix
     //!
-    TYPE       & operator () ( unsigned i, unsigned j );
+    TYPE & operator () ( unsigned i, unsigned j );
 
     void info( ostream_type & stream ) const;
 
@@ -193,7 +194,7 @@ namespace GC_namespace {
     //!
     //! Access the memory block used by the matrix object
     //!
-    TYPE       * data()       { return &std::vector<TYPE>::front(); }
+    TYPE * data() { return &std::vector<TYPE>::front(); }
 
     //!
     //! Access the memory block used by the matrix object
@@ -2328,6 +2329,31 @@ namespace GC_namespace {
       char const * commentChars = "#%",
       char const * delimiters   = " \t"
     );
+
+    ///@}
+
+    //! \name Serialization
+    ///@{
+
+    //!
+    //! Dimension in byte of the serialized generic container.
+    //!
+    int32_t mem_size() const;
+
+    //!
+    //! Fill the buffer with the serialized version of the GenericContainer.
+    //!
+    int32_t serialize( int32_t buffer_dim, uint8_t * buffer ) const;
+    int32_t serialize( std::vector<uint8_t> & buffer ) const;
+
+    //!
+    //! Build the generic container from the serialized version
+    //! of the GenericContainer conrined in buffer.
+    //!
+    int32_t de_serialize( int32_t buffer_dim, uint8_t const * buffer );
+    int32_t de_serialize( std::vector<uint8_t> const & buffer );
+
+    ///@}
 
     //!
     //! Do an exception

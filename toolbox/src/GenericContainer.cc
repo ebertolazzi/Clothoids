@@ -317,11 +317,11 @@ namespace GC_namespace {
   #ifdef GENERIC_CONTAINER_ON_WINDOWS
   bool
   GenericContainer::simple_data() const {
-    return _data_type <= GC_STRING;
+    return m_data_type <= GC_STRING;
   }
   bool
   GenericContainer::simple_vec_data() const {
-    return _data_type <= GC_VEC_STRING;
+    return m_data_type <= GC_VEC_STRING;
   }
   #endif
 
@@ -2157,7 +2157,7 @@ namespace GC_namespace {
 
   complex_type const &
   GenericContainer::get_complex( char const * msg ) const {
-    ck(msg,GC_REAL);
+    ck(msg,GC_COMPLEX);
     return *m_data.c;
   }
 

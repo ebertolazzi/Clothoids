@@ -70,7 +70,7 @@ end
 LIB_OBJS = '';
 for k=1:length(LIB_NAMES)
   [filepath,bname,ext] = fileparts(LIB_NAMES{k});
-  NAME = [' src/', filepath, '/', bname, ext ];
+  NAME = [' src', filepath, '/', bname, ext ];
   if isunix
     LIB_OBJS = [ LIB_OBJS, bname, '.o ' ];
   elseif ispc

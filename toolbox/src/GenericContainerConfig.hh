@@ -26,6 +26,28 @@
 #ifndef GENERIC_CONTAINER_CONFIG_HH
 #define GENERIC_CONTAINER_CONFIG_HH
 
+// select computer architecture
+#if defined(__APPLE__) && defined(__MACH__)
+  // osx architecture
+  #define GENERIC_CONTAINER_ON_OSX 1
+#elif defined(__unix__)
+  // linux architecture
+  #define GENERIC_CONTAINER_ON_LINUX 1
+#elif defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
+  // windows architecture
+  #define GENERIC_CONTAINER_ON_WINDOWS
+#else
+  #warning "unsupported OS!"
+#endif
+
+// check if compiler is C++11
+#if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
+    (defined(__cplusplus) && __cplusplus > 199711L)
+#else
+  #error "Lapack Wrapper must be compiled using C++ >= C++11"
+#endif
+
+
 // check if compiler is C++11
 #if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
     (defined(__cplusplus) && __cplusplus >= 201103L)
