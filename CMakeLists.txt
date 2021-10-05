@@ -83,6 +83,15 @@ ENDFOREACH (F ${S})
 #  LIST( APPEND HEADERS ${RF} )
 #ENDFOREACH (F ${S})
 
+#----------------------------------------
+# added as suggested by Martin Gaudreault
+FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/submodules/Utils/src/
+     DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include/Utils/)
+
+FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/submodules/quarticRootsFlocke/src/
+     DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include/)
+#----------------------------------------
+
 INCLUDE_DIRECTORIES( src lib3rd/include lib3rd/include/Utils )
 
 SET( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib )
