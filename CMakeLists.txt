@@ -83,7 +83,7 @@ ENDFOREACH (F ${S})
 #  LIST( APPEND HEADERS ${RF} )
 #ENDFOREACH (F ${S})
 
-INCLUDE_DIRECTORIES( src lib3rd/include lib3rd/include/Utils )
+INCLUDE_DIRECTORIES( src submodules/Utils/src/ submodules/quarticRootsFlocke/src/ lib3rd/include lib3rd/include/Utils )
 
 SET( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib )
 
