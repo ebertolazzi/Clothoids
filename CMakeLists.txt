@@ -104,18 +104,30 @@ IF ( BUILD_SHARED )
   ADD_LIBRARY( ${TARGETS} STATIC ${SOURCES} ${HEADERS} )
   ADD_LIBRARY( ${TARGET}  SHARED ${SOURCES} ${HEADERS} )
   INSTALL(
-    TARGETS ${TARGET} ${TARGETS}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    TARGETS ${TARGET} ${TARGETS} EXPORT ClothoidsTargets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    INCLUDES DESTINATION include
+  )
+  INSTALL(
+    EXPORT ClothoidsTargets
+    FILE ClothoidsTargets.cmake
+    DESTINATION lib/cmake/Clothoids
   )
 ELSE()
   ADD_LIBRARY( ${TARGETS} STATIC ${SOURCES} ${HEADERS} )
   INSTALL(
-    TARGETS ${TARGETS}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    TARGETS ${TARGETS} EXPORT ClothoidsTargets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    INCLUDES DESTINATION include
+  )
+  INSTALL(
+    EXPORT ClothoidsTargets
+    FILE ClothoidsTargets.cmake
+    DESTINATION lib/cmake/Clothoids
   )
 ENDIF()
 
@@ -134,17 +146,27 @@ ENDIF()
 
 SET_PROPERTY( TARGET ${TARGETS} PROPERTY POSITION_INDEPENDENT_CODE ON )
 
+set(INCLUDE_INSTALL_DIR include/ CACHE STRING "Include install directory")
+set(LIBRARIES_INSTALL_DIR lib/ CACHE STRING "Libraries install directory")
+set(LIBRARIES lib/libClothoids_linux_static.a CACHE STRING "Libraries directory")
 
 include(CMakePackageConfigHelpers)
+configure_package_config_file(ClothoidsConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake
+                              INSTALL_DESTINATION lib/Clothoids/cmake
+                              PATH_VARS INCLUDE_INSTALL_DIR LIBRARIES_INSTALL_DIR LIBRARIES
+  )
+
 write_basic_package_version_file("ClothoidsConfigVersion.cmake"
   VERSION 1
   COMPATIBILITY SameMajorVersion
   )
 
-install(FILES "ClothoidsConfig.cmake" ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfigVersion.cmake
-  DESTINATION lib/cmake/Clothoids
+install(FILES 
+          ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake
+          ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfigVersion.cmake
+        DESTINATION 
+          lib/cmake/Clothoids
   )
-
 
 INSTALL( FILES ${HEADERS}  DESTINATION ${CMAKE_INSTALL_PREFIX}/include )
 INSTALL( FILES ${HEADERS1} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/Clothoids )
