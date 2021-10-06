@@ -134,6 +134,18 @@ ENDIF()
 
 SET_PROPERTY( TARGET ${TARGETS} PROPERTY POSITION_INDEPENDENT_CODE ON )
 
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file("ClothoidsConfigVersion.cmake"
+  VERSION 1
+  COMPATIBILITY SameMajorVersion
+  )
+
+install(FILES "ClothoidsConfig.cmake" ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfigVersion.cmake
+  DESTINATION lib/cmake/Clothoids
+  )
+
+
 INSTALL( FILES ${HEADERS}  DESTINATION ${CMAKE_INSTALL_PREFIX}/include )
 INSTALL( FILES ${HEADERS1} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/Clothoids )
 
