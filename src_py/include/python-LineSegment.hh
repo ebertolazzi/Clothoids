@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <pybind11/pybind11.h>
+#include "pybind11/pybind11.h"
 #include "python-G2libHeaders.hh"
 
 namespace py = pybind11;

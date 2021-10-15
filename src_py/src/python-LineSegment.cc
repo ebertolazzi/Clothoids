@@ -7,7 +7,7 @@
  */
 
 #include "python-LineSegment.hh"
-#include <pybind11/stl.h>
+#include "pybind11/stl.h"
 
 namespace G2lib {
   namespace python {
@@ -99,22 +99,22 @@ namespace G2lib {
         .def(py::init<ClothoidCurve const &, real_type>())
         .def(py::init<ClothoidList const &, real_type>())
         .def("getSegment", &PolyLine::getSegment)
-        .def("numSegment", &PolyLine::numSegment)
+        .def("numSegments", &PolyLine::numSegments)
         .def("numPoints", &PolyLine::numPoints)
         .def("polygon", [](PolyLine * self) {
           std::vector<std::tuple<real_type, real_type>> ret;
-          int_type numSegment = self->numSegment();
-          real_type * x = new real_type[numSegment];
-          real_type * y = new real_type[numSegment];
+          int_type numSegments = self->numSegments();
+          real_type * x = new real_type[numSegments];
+          real_type * y = new real_type[numSegments];
           self->polygon(x, y);
-          for (int_type i = 0; i < numSegment; i++) {
+          for (int_type i = 0; i < numSegments; i++) {
             ret.push_back(std::make_tuple(x[i], y[i]));
           }
           delete[] x;
           delete[] y;
           return ret;
         })
-        .def("init", &PolyLine::init)
+        // .def("init", &PolyLine::init) // FIXME: Maybe this one was deleted?
         .def("push_back", py::overload_cast<real_type, real_type>(&PolyLine::push_back))
         .def("push_back", py::overload_cast<LineSegment const &>(&PolyLine::push_back))
         .def("push_back", py::overload_cast<CircleArc const &, real_type>(&PolyLine::push_back))

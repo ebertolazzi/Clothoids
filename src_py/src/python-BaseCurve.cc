@@ -7,10 +7,7 @@
  */
 
 #include "python-BaseCurve.hh"
-#include "Line.hh"
-#include "Circle.hh"
-#include "Biarc.hh"
-#include "BiarcList.hh"
+
 
 namespace G2lib {
   namespace python {

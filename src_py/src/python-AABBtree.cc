@@ -7,7 +7,7 @@
  */
 
 #include "python-AABBtree.hh"
-#include <pybind11/stl.h>
+#include "pybind11/stl.h"
 #include <memory>
 #include <string>
 #include <sstream>
@@ -52,7 +52,15 @@ namespace G2lib {
         });
 
 
-      py::class_<AABBtree>(m, "AABBtree")
+      py::class_<AABBtree>(m, "AABBtree", R"STR(
+        Class to build and manage an AABB tree (Axis-Aligned Bounding Box Trees)
+        
+        The class provides 2-dimensional aabb-tree construction and search
+        for arbitrary collections of spatial objects.
+        These tree-based indexing structures are useful when seeking to implement
+        efficient spatial queries, reducing the complexity of intersection tests
+        between collections of objects.
+      )STR")
         .def(py::init<>())
         .def("clear", &AABBtree::clear)
         .def("empty", &AABBtree::empty)

@@ -34,3 +34,6 @@ docs_build/sphinx/api-cpp
 docs_build/sphinx/api-matlab
 docs_build/sphinx_matlab/_doxygen
 docs_build/sphinx_matlab/api-cpp
+
+__pycache__
+*.pyc

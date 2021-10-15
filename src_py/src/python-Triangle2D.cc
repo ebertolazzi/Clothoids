@@ -7,7 +7,7 @@
  */
 
 #include "python-Triangle2D.hh"
-#include <pybind11/stl.h>
+#include "pybind11/stl.h"
 
 namespace G2lib {
   namespace python {
