@@ -30,12 +30,6 @@
 #ifndef OUTPUT_ZIP_STREAM_HPP
 #define OUTPUT_ZIP_STREAM_HPP
 
-#include <vector>
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <zlib.h>
-
 #include "zstream_common.hpp"
 
 namespace zstream {
@@ -78,10 +72,10 @@ public:
     size_t            buffer_size_
   );
 
-  ~basic_zip_streambuf();
+  ~basic_zip_streambuf() override;
 
-  int sync();
-  int_type overflow(int_type c);
+  int sync() override;
+  int_type overflow( int_type c ) override;
 
   //!
   //! Flushes the zip buffer and output buffer.
@@ -241,7 +235,7 @@ public:
     add_header();
   }
 
-  ~basic_gzip_ostream() { close(); }
+  ~basic_gzip_ostream() override { close(); }
 
   void
   close() {

@@ -17,7 +17,19 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#pragma clang diagnostic ignored "-Wvla-extension"
+#pragma clang diagnostic ignored "-Wvla"
+#pragma clang diagnostic ignored "-Wunused-function"
+#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
+#endif
+
 #include "PolynomialRoots.hh"
+
 #include <cmath>
 #include <iostream>
 #include <algorithm>
@@ -444,17 +456,38 @@ namespace PolynomialRoots {
     // scale root
     r2 *= scale;
 
+    /*
     // deflate
     // x^3 + aa*x^2 + bb*x + cc
     //    = (x-r2)*(x^2+b1*x+b0)
     //    = x^3 + x^2 * ( b1 - r2 ) + x * ( b0 - b1*r2 ) - r2 * b0
     //
-    //    aa == b1 - r2        -> b1 = aa+r2
-    //    bb == b0 - b1*r2     -> b1 = (b0-bb)/r2
-    //    cc == -r2 * b0       -> b0 = -cc/r2
+    //    aa == b1 - r2
+    //    bb == b0 - b1*r2
+    //    cc == -r2 * b0
+    //
+    //  Solve the overdetermined linear system:
+    //
+    //  / 0    1  \            / aa + r2 \
+    //  |         |  / b0 \    |         |
+    //  | 1   -r2 |  |    |  = |   bb    |
+    //  |         |  \ b1 /    |         |
+    //  \ -r2  0  /            \   cc    /
+    //
+    //  if |r2| < 1 then solve 
+    //
+    //  / 0    1  \  / b0 \    / aa + r2 \
+    //  |         |  |    | =  |         |
+    //  \ -r2  0  /  \ b1 /    \   cc    /
+    //
+    //  otherwise solve
+    //
+    //  / 1   -r2 \  / b0 \   / bb \
+    //  |         |  |    | = |    |
+    //  \ -r2  0  /  \ b1 /   \ cc /
+    */
     valueType b0 = -cc/r2;
-    //valueType b1 = aa+r2; // changed deflaction, seems more accurate
-    valueType b1 = (b0-bb)/r2;
+    valueType b1 = std::abs(r2) < 1 ? aa+r2 : -(cc/r2+bb)/r2;
 
     // solve quadratic polynomial
     Quadratic qsolve( 1.0, b1, b0 );

@@ -1,0 +1,85 @@
+require "rake"
+require "colorize"
+
+task :default => [:install_osx]
+
+task :copy_submodules, [:arg] do |t, args|
+  args.with_defaults(:arg => "osx")
+  FileUtils.mkdir_p "../lib3rd/"
+  FileUtils.mkdir_p "../lib3rd/lib/"
+  FileUtils.mkdir_p "../lib3rd/dll/"
+  FileUtils.mkdir_p "../lib3rd/bin/"
+  FileUtils.mkdir_p "../lib3rd/include/"
+  tmp = '_' + args.arg
+  ["Utils","quarticRootsFlocke"].each do |base|
+    puts "copy submodule: #{base}".yellow
+    FileUtils.cp_r "./#{base}/lib/lib/.",     "../lib3rd/lib" if Dir.exist?("./#{base}/lib/lib")
+    FileUtils.cp_r "./#{base}/lib/dll/.",     "../lib3rd/dll" if Dir.exist?("./#{base}/lib/dll")
+    FileUtils.cp_r "./#{base}/lib/bin/.",     "../lib3rd/bin" if Dir.exist?("./#{base}/lib/bin")
+    FileUtils.cp_r "./#{base}/lib/include/.", "../lib3rd/include"
+  end
+end
+
+desc "build for OSX"
+task :build_osx do
+  FileUtils.cd "Utils"
+  sh "rake clean_osx"
+  sh "rake build_osx"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_osx"
+  sh "rake build_osx"
+  FileUtils.cd ".."
+  Rake::Task[:copy_submodules].invoke("osx")
+end
+
+desc "build for LINUX"
+task :build_linux do
+  FileUtils.cd "Utils"
+  sh "rake clean_linux"
+  sh "rake build_linux"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_linux"
+  sh "rake build_linux"
+  FileUtils.cd ".."
+  Rake::Task[:copy_submodules].invoke("linux")
+end
+
+desc "build for Visual Studio [default year=2017, bits=x64]"
+task :build_win, [:year, :bits, :lapack] do |t, args|
+  args.with_defaults( :year => "2017", :bits => "x64" )
+  FileUtils.cd "Utils"
+  sh "rake clean_win"
+  sh "rake build_win[#{args.year},#{args.bits}]"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_win"
+  sh "rake build_win[#{args.year},#{args.bits}]"
+  FileUtils.cd ".."
+  Rake::Task[:copy_submodules].invoke("win")
+end
+
+desc "clean for OSX"
+task :clean_osx do
+  FileUtils.cd "Utils"
+  sh "rake clean_osx"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_osx"
+  FileUtils.cd ".."
+end
+
+desc "clean for LINUX"
+task :clean_linux do
+  FileUtils.cd "Utils"
+  sh "rake clean_linux"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_linux"
+  FileUtils.cd ".."
+end
+
+desc "clean for WINDOWS"
+task :clean_win do |t, args|
+  FileUtils.cd "Utils"
+  sh "rake clean_win"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_win"
+  FileUtils.cd ".."
+end

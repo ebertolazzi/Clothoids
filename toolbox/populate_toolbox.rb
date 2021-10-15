@@ -25,15 +25,6 @@ lst.each do |filename|
   FileUtils.cp filename, "./src/Clothoids/" + File.basename(filename);
 end
 
-lst = Dir["../submodules/GenericContainer/src/*.cc"]
-lst.each do |filename|
-  FileUtils.cp filename, "./src/" + File.basename(filename);
-end
-lst = Dir["../submodules/GenericContainer/src/*.h*"]
-lst.each do |filename|
-  FileUtils.cp filename, "./src/" + File.basename(filename);
-end
-
 lst = Dir["../submodules/quarticRootsFlocke/src/*.cc"]
 lst.each do |filename|
   FileUtils.cp filename, "./src/" + File.basename(filename);
