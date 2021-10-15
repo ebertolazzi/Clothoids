@@ -1,3 +1,9 @@
 [submodule "submodules/quarticRootsFlocke"]
 	path = submodules/quarticRootsFlocke
 	url = https://github.com/ebertolazzi/quarticRootsFlocke
+[submodule "submodules/GenericContainer"]
+	path = submodules/GenericContainer
+	url = https://github.com/ebertolazzi/GenericContainer.git
+[submodule "submodules/Utils"]
+	path = submodules/Utils
+	url = https://github.com/ebertolazzi/Utils.git

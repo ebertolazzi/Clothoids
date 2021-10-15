@@ -1,7 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "ClothoidList.hh"
-#include <cmath>
-#include <iostream>
+#include "Clothoids.hh"
 
 using G2lib::real_type;
 using namespace std;
@@ -54,6 +52,12 @@ main() {
     << "\ny  = " << S1.yBegin()     << " " << SM.yEnd()       << " err = " << S1.yBegin()-SM.yEnd()
     << "\nth = " << S1.thetaBegin() << " " << SM.thetaEnd()   << " err = " << S1.thetaBegin()-SM.thetaEnd()
     << '\n';
+
+  G2lib::ClothoidList S;
+  ifstream file("G2_test.txt");
+  S.load(file);
+  file.close();
+  S.info( cout );
 
   cout << "\n\nALL DONE FOLKS!!!\n";
 

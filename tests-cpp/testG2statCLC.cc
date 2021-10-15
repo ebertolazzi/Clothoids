@@ -1,10 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "ClothoidList.hh"
-#include "ClothoidAsyPlot.hh"
-#include "TicToc.hh"
-#include <cmath>
-#include <iostream>
-#include <map>
+#include "Clothoids.hh"
 
 using G2lib::real_type;
 using namespace std;
@@ -16,7 +11,7 @@ main() {
   map<int,int> stats;
 
   G2lib::G2solveCLC g2solveCLC;
-  TicToc            tictoc;
+  Utils::TicToc     tictoc;
 
   int NMAX = 32/8;
   int nkur = 32/8;

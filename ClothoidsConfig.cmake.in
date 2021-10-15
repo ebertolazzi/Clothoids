@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+# See https://cmake.org/cmake/help/latest/module/CMakePackageConfigHelpers.html for more info
+
+set_and_check(Clothoids_INCLUDE_DIRS "@PACKAGE_INCLUDE_INSTALL_DIR@")
+set_and_check(Clothoids_LIB_DIR "@PACKAGE_LIBRARIES_INSTALL_DIR@")
+set_and_check(Clothoids_LIBRARIES "@PACKAGE_LIBRARIES@")
+
+include(${CMAKE_CURRENT_LIST_DIR}/ClothoidsTargets.cmake)

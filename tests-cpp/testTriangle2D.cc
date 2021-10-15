@@ -1,8 +1,5 @@
 //#define _USE_MATH_DEFINES
-#include "Triangle2D.hh"
-#include "Clothoid.hh"
-#include <cmath>
-#include <iostream>
+#include "Clothoids.hh"
 
 using G2lib::real_type;
 using G2lib::int_type;

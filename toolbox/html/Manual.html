@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Manual</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<p>Clothoids <a href="https://travis-ci.org/ebertolazzi/Clothoids"><img src="https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master" alt="Build Status"></a></p>
+
+<h1 id="toc_0">Clothoids, a library for clothoids computation and more</h1>
+
+<p><strong>by Enrico Bertolazzi and Marco Frego</strong></p>
+
+<h2 id="toc_1">Mex files for fast computation</h2>
+
+<p>In directory <code>src_mex</code> you find the C++ implementation of the proposed algorithm 
+with <code>mex</code> interface. To compile run <code>CompileClothoidsLib</code> from MATLAB window.
+After compilation the compiled version of the scripts
+are available in the <code>bin</code> directory.</p>
+
+<h2 id="toc_2">LineSegment</h2>
+
+<p>The class <code>LineSegment</code> store a straight segment.</p>
+
+<p><strong>Constuctors</strong></p>
+
+<div><pre><code class="language-none">% build segment given initial position, angle and length
+L1 = LineSegment( x0, y0, theta0, L );
+
+% build segment given initial and final point
+L2 = LineSegment( [x0, y0], [x1, y1] );
+
+% re-build segment given initial position, angle and length
+L1.build( x0, y0, theta0, L );
+
+% re-build segment given initial and final point
+L2.build( [x0, y0], [x1, y1] );</code></pre></div>
+
+<p><strong>Methods</strong></p>
+
+<div><pre><code class="language-none">% translate a segment by `[tx,ty]`
+L1.translate( tx, ty );
+
+% rotate a segment by angle `ang` around center `[cx,cy]`
+L1.rotate( ang, cx, cy );
+
+% change the orgin of a segment to `[ox,oy]`
+L1.changeOrigin( ox, oy );
+
+% cut or extend the segment at curvilinear coordinates `smin` and `smax`
+L1.trim( smin, smax );
+
+% return a structure containing description of the object as a MATLAB NURBS
+bs = L1.to_nurbs();
+
+% initial and final coordinates
+x = L1.xBegin(); x = L1.xEnd();
+y = L1.yBegin(); y = L1.yEnd();
+
+% segment angle direction
+ang = L1.theta();
+
+% segment length
+L = L1.length();
+
+% segment initial and final point
+[p1,p2] = L1.points();
+
+% distance point `[x,y]` to the segment
+% d = distance, s = parameter of the point of segment at minimum distance
+[d,s] = L1.distance(x,y);
+
+% print descrition of the segment
+L1.info();
+
+% plot the segment
+L1.plot();
+% some options may be passed to plot command
+L1.plot(&#39;Color&#39;,&#39;red&#39;);
+</code></pre></div>
+
+<p><strong>Evaluation Methods</strong></p>
+
+<div><pre><code class="language-none">% evaluate the segment at curvilinear coordinate `s` (may be a vector)
+[X,Y] = L1.eval( s ); % return separate vector for X and Y coodinates
+XY    = L1.eval( s ); % return 2xN matrix, N = length(s)
+
+% first derivative respect to s
+[X_D,Y_D] = L1.eval_D( s );
+XY_D      = L1.eval_D( s );
+
+% second derivative respect to s (alwais 0)
+[X_DD,Y_DD] = L1.eval_DD( s );
+XY_DD       = L1.eval_DD( s );
+
+% third derivative respect to s (alwais 0)
+[X_DDD,Y_DDD] = L1.eval_DDD( s );
+XY_DDD        = L1.eval_DDD( s );</code></pre></div>
+
+<h2 id="toc_3">CircleArc</h2>
+
+<p>The class <code>CircleArc</code> store an arc of a circle.</p>
+
+<p><strong>Constuctors</strong></p>
+
+<div><pre><code class="language-none">% build a circle arc given initial position, angle, curvature and length
+C = CircleArc( x0, y0, theta0, k, L );
+
+% build an empty circle
+C = CircleArc();
+
+% re-build circle arc given initial position, angle, curvature and length
+C.build( x0, y0, theta0, k, L );
+
+% re-build circle arc given initial position, angle and final position
+C.build_G1( x0, y0, theta0, x1, y1 );
+C.build_G1( [x0, y0], theta0, [x1, y1] );
+
+% re-build circle arc passing by 3 points
+C.build_3P( x0, y0, x1, y1, x2, y2 );
+C.build_3P( [x0, y0], [x1, y1], [x2, y2]  );</code></pre></div>
+
+<p><strong>Methods</strong></p>
+
+<div><pre><code class="language-none">% translate a circle arc by `[tx,ty]`
+C.translate( tx, ty );
+
+% rotate a circle arc by angle `ang` around center `[cx,cy]`
+C.rotate( ang, cx, cy );
+
+% change the orgin of a circle arc to `[ox,oy]`
+C.changeOrigin( ox, oy );
+
+% cut or extend the circle arc at curvilinear coordinates `smin` and `smax`
+C.trim( smin, smax );
+
+% scale the circle arc by `fact` factor
+C.scale( fact );
+
+% return a structure containing description of the object as a MATLAB NURBS
+bs = C.to_nurbs();
+
+% initial and final coordinates
+x = C.xBegin(); x = C.xEnd();
+y = C.yBegin(); y = C.yEnd();
+
+% intial and final angle
+ang = C.thetaBegin(); ang = C.thetaEnd();
+
+% circle arc length
+L = C.length();
+
+% circle curvature
+kappa = C.kappa();
+
+% print descrition of the segment
+C.info();
+
+% plot the circle arc
+C.plot();
+% some options may be passed to plot command
+% npts = number of points unsed to plot the circle
+C.plot(npts,&#39;Color&#39;,&#39;red&#39;);</code></pre></div>
+
+<p><strong>Distance Methods</strong></p>
+
+<div><pre><code class="language-none">% return the bounding box triangle
+[p1,p2,p3] = C.bbTriangle( fact );
+
+% distance point `[x,y]` to the circle arc
+% d = distance, s = parameter of the point of segment at minimum distance
+[d,s] = C.distance(x,y);</code></pre></div>
+
+<p><strong>Evaluation Methods</strong></p>
+
+<div><pre><code class="language-none">% evaluate the circle arc at curvilinear coordinate `s` (may be a vector)
+[X,Y] = L1.eval( s ); % return separate vector for X and Y coodinates
+XY    = L1.eval( s ); % return 2xN matrix, N = length(s)
+
+% first derivative respect to s
+[X_D,Y_D] = L1.eval_D( s );
+XY_D      = L1.eval_D( s );
+
+% second derivative respect to s
+[X_DD,Y_DD] = L1.eval_DD( s );
+XY_DD       = L1.eval_DD( s );
+
+% third derivative respect to s
+[X_DDD,Y_DDD] = L1.eval_DDD( s );
+XY_DDD        = L1.eval_DDD( s );</code></pre></div>
+
+<h2 id="toc_4">Biarc</h2>
+
+<p>The class <code>Biarc</code> store a biarc or two arc connected with G1 continuity.</p>
+
+<p><strong>Constuctors</strong></p>
+
+<div><pre><code class="language-none">% build a biarc fitting intial `[x0,y0]` and final `[x1,y1]` with
+% assigned initial `theta0` and final `theta0` angle.
+B = Biarc( x0, y0, theta0, x1, y1, theta1 );
+
+% build an empty biarc
+B = Biarc();
+
+% re-build a biarc
+B.build( x0, y0, theta0, x1, y1, theta1);
+
+% re-build a biarc circle arc passing by 3 points
+% That minimize the weighted sum of the curvature
+B.build_3P( x0, y0, x1, y1, x2, y2 );
+B.build_3P( [x0, y0], [x1, y1], [x2, y2]  );</code></pre></div>
+
+<p><strong>Methods</strong></p>
+
+<div><pre><code class="language-none">% translate a biarc by `[tx,ty]`
+B.translate( tx, ty );
+
+% rotate a biarc by angle `ang` around center `[cx,cy]`
+B.rotate( ang, cx, cy );
+
+% change the orgin of the biarc to `[ox,oy]`
+B.changeOrigin( ox, oy );
+
+% scale the biarc by `fact` factor
+B.scale( fact );
+
+% reverse curvilinear coordinate of the biarc
+B.reverse( fact );
+
+% return the circle arcs forming the biarc
+[C1,C2] = B.getCircles();
+
+% return a structure containing description of the object as a MATLAB NURBS
+bs = B.to_nurbs();
+
+% initial and final coordinates of first circle
+x = B.xBegin0(); x = B.xEnd0();
+y = B.yBegin0(); y = B.yEnd0();
+
+% initial and final coordinates of second circle
+x = B.xBegin1(); x = B.xEnd1();
+y = B.yBegin1(); y = B.yEnd1();
+
+% intial and final angle of first circle
+ang = B.thetaBegin0(); ang = B.thetaEnd0();
+
+% intial and final angle of second circle
+ang = B.thetaBegin1(); ang = B.thetaEnd1();
+
+% circle arc length for first and second circle
+L0 = B.length0(); L1 = B.length0();
+% total length of biarc
+L = B.length();
+
+% circle curvature for first and second circle
+kappa0 = B.kappa0(); kappa1 = B.kappa1();
+
+% print descrition of the segment
+B.info();
+
+% plot the circle arc
+B.plot();
+% some options may be passed to plot command
+% npts   = number of points unsed to plot the circle
+% fmt1/2 = cell array with formatting command for first and second cicle
+npts = 100;
+fmt1 = {&#39;Color&#39;,&#39;red&#39;};
+fmt2 = {&#39;Color&#39;,&#39;blue&#39;};
+B.plot(npts,fmt1,fmt2);</code></pre></div>
+
+<p><strong>Distance Methods</strong></p>
+
+<div><pre><code class="language-none">% distance point `[x,y]` to the biarc
+% d = distance, s = parameter of the point of segment at minimum distance
+[d,s] = B.distance(x,y);
+
+% closest point to `[x,y]` onto the biarc
+% d = distance, s = parameter of the point of segment at minimum distance
+[x,y,s,d] = B.closestPoint(x,y);</code></pre></div>
+
+<p><strong>Evaluation Methods</strong></p>
+
+<div><pre><code class="language-none">% evaluate the biarc at curvilinear coordinate `s` (may be a vector)
+[X,Y]             = B.evaluate( s ); % return separate vector for X and Y coodinates
+[X,Y,theta,kappa] = B.evaluate( s ); % return also angle and curvature
+
+% first derivative respect to s
+[X_D,Y_D] = B.eval_D( s );
+XY_D      = B.eval_D( s );
+
+% second derivative respect to s
+[X_DD,Y_DD] = B.eval_DD( s );
+XY_DD       = B.eval_DD( s );
+
+% third derivative respect to s
+[X_DDD,Y_DDD] = B.eval_DDD( s );
+XY_DDD        = B.eval_DDD( s );</code></pre></div>
+
+<h2 id="toc_5">ClothoidCurve</h2>
+
+<p>The class <code>ClothoidCurve</code> store a clothoid curve arc.
+A clothoid curve is curve where curvature change linearly respect to the
+curviliear abscissa. The circle arc and the line segment are particular
+case when curvature is constant and 0.</p>
+
+<p>The G1 fitting problem of method <code>build_G1</code> implements the algorithm described
+in reference [1].
+Given two points and two direction associated with the points, 
+a clothoid, i.e. a curve with linear varying curvature is computed
+in such a way it pass to the points with the prescribed direction.
+The solution in general is not unique but chosing the one for
+which the angle direction variation is less than <code>2*pi</code> the solution
+is unique.</p>
+
+<p><strong>Constuctors</strong></p>
+
+<div><pre><code class="language-none">% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature 
+% `kappa0` the curvature derivative is `dk` while `L` is the curve length.
+CL = ClothoidCurve( x0, y0, theta0, kappa0, dk, L );
+
+% build an empty clothoid curve
+CL = ClothoidCurve();
+
+% re-build a clothoid curve
+CL.build( x0, y0, theta0, kappa0, dk, L );
+
+% re-build a clothoid passing from point `[x0,y0]` with angle `theta0`
+% to `[x1,y1]` with angle `theta1` (G1 fitting problem)
+CL.build_G1( x0, y0, theta0, x1, y1, theta1);</code></pre></div>
+
+<p><strong>Methods</strong></p>
+
+<div><pre><code class="language-none">% translate a clothoid curve by `[tx,ty]`
+CL.translate( tx, ty );
+
+% rotate a clothoid curve by angle `ang` around center `[cx,cy]`
+CL.rotate( ang, cx, cy );
+
+% change the orgin of the clothoid curve to `[ox,oy]`
+CL.changeOrigin( ox, oy );
+
+% scale the clothoid curve by `fact` factor
+CL.scale( fact );
+
+% cut or extend the clothoid curve at curvilinear coordinates `smin` and `smax`
+CL.trim( smin, smax );
+
+% reverse curvilinear coordinate of the clothoid curve
+CL.reverse( fact );
+
+% return a structure containing description of the object as a MATLAB NURBS
+bs = CL.to_nurbs();
+
+% initial and final coordinates of the clothoid curve
+x = CL.xBegin(); x = CL.xEnd();
+y = CL.yBegin(); y = CL.yEnd();
+
+% intial and final angle of the clothoid curve
+ang = CL.thetaBegin(); ang = CL.thetaEnd();
+
+% intial and final curvature of the clothoid curve
+k0 = CL.kappaBegin(); ang = CL.kappaEnd();
+
+% derivative of curvature of the clothoid curve
+dk = CL.kappa_D();
+
+% length of the clothoid curve
+L = CL.length();
+
+% point at infinity of the clothoid
+% `[xp,yp]` point at curvilinear coordinate +infinity 
+% `[xm,ym]` point at curvilinear coordinate -infinity
+[xp,yp,xm,ym] = CL.infinity();
+
+% print descrition of the clothoid curve
+CL.info();
+
+% return the parameters defining the clothoid curve
+[x0,y0,theta0,k0,dk,L] = CL.getPars();
+
+% plot the clothoid curve
+CL.plot();
+% some options may be passed to plot command
+% npts = number of points unsed to plot the circle
+npts = 100;
+CL.plot(npts,&#39;Color&#39;,&#39;red&#39;);</code></pre></div>
+
+<p><strong>Distance and intersection Methods</strong></p>
+
+<div><pre><code class="language-none">% distance point `[x,y]` to the clothoid curve
+% d = distance, s = parameter of the point of segment at minimum distance
+[d,s] = CL.distance(x,y);
+
+% closest point to `[x,y]` onto the clothoid curve
+% d = distance, s = parameter of the point of segment at minimum distance
+[x,y,s,d] = CL.closestPoint(x,y);
+
+% compute all the intersection of curve CL with curve CL1.
+% CL1 may be a ClothoidCurve a CircleArc or a LineSegment object
+% s  = vector of curvilinear coordinates on CL of the intersection
+% s1 = vector of curvilinear coordinates on CL1 of the intersection
+[s,s1] = CL.intersect(CL1);</code></pre></div>
+
+<p><strong>Evaluation Methods</strong></p>
+
+<div><pre><code class="language-none">% evaluate the clothoid curve at curvilinear coordinate `s` (may be a vector)
+[X,Y]             = CL.evaluate( s ); % return separate vector for X and Y coodinates
+[X,Y,theta,kappa] = CL.evaluate( s ); % return also angle and curvature
+
+% first derivative respect to s
+[X_D,Y_D] = CL.eval_D( s );
+XY_D      = CL.eval_D( s );
+
+% second derivative respect to s
+[X_DD,Y_DD] = CL.eval_DD( s );
+XY_DD       = CL.eval_DD( s );
+
+% third derivative respect to s
+[X_DDD,Y_DDD] = CL.eval_DDD( s );
+XY_DDD        = CL.eval_DDD( s );</code></pre></div>
+
+<p>an offset respect to the normal of the curve can be used</p>
+
+<div><pre><code class="language-none">% evaluate the clothoid curve at curvilinear coordinate `s` (may be a vector)
+[X,Y]             = CL.evaluate( s, offs ); % return separate vector for X and Y coodinates
+[X,Y,theta,kappa] = CL.evaluate( s, offs ); % return also angle and curvature
+
+% first derivative respect to s
+[X_D,Y_D] = CL.eval_D( s, offs );
+XY_D      = CL.eval_D( s, offs );
+
+% second derivative respect to s
+[X_DD,Y_DD] = CL.eval_DD( s, offs );
+XY_DD       = CL.eval_DD( s, offs );
+
+% third derivative respect to s
+[X_DDD,Y_DDD] = CL.eval_DDD( s, offs );
+XY_DDD        = CL.eval_DDD( s, offs );</code></pre></div>
+
+<h2 id="toc_6">ClothoidList</h2>
+
+<p>Store a list of clothoids to be used as a single spline.</p>
+
+<p>Documentation will be available soon, see examples in <code>tests</code> for the moments</p>
+
+<h2 id="toc_7">ClothoidSplineG2</h2>
+
+<p>Implements the algorithm described in references [2] and [3].</p>
+
+<p>documentation will be available soon, see examples in <code>tests</code> for the moments</p>
+
+<h2 id="toc_8">Authors</h2>
+
+<div><pre><code class="language-none">Enrico Bertolazzi and Marco Frego
+Department of Industrial Engineering
+University of Trento
+enrico.bertolazzi@unitn.it
+m.fregox@gmail.com</code></pre></div>
+
+<h2 id="toc_9">References</h2>
+
+<ol>
+<li><p>E. Bertolazzi, M. Frego,
+<strong>G1 fitting with clothoids</strong>,<br>
+Mathematical Methods in the Applied Sciences,
+John Wiley &amp; Sons, 2014, vol. 38, n.5, pp. 881-897,<br>
+https://doi.org/10.1002/mma.3114</p></li>
+<li><p>E. Bertolazzi, M. Frego,
+<strong>On the G2 Hermite interpolation problem with clothoids</strong>,<br>
+Journal of Computational and Applied Mathematics, 2018, vol. 15, n.341, pp. 99-116.<br>
+https://doi.org/10.1016/j.cam.2018.03.029</p></li>
+<li><p>E. Bertolazzi, M. Frego,
+<strong>Interpolating clothoid splines with curvature continuity</strong>,<br>
+Mathematical Methods in the Applied Sciences, 2018, vol. 41, n.4, pp. 1099-1476.<br>
+https://doi.org/10.1002/mma.4700</p></li>
+<li><p>E. Bertolazzi, M. Frego
+<strong>A Note on Robust Biarc Computation</strong>,<br>
+Computer-Aided Design &amp; Applications 16 (5), 822-835</p></li>
+</ol>
+
+
+
+
+</body>
+
+</html>

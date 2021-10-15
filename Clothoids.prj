@@ -1,14 +1,14 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="2575816791" file="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/Clothoids.prj" location="/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids" name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="2125207707" file="C:\Users\NUC2\pins-mechatronix\LibSources\submodules\Clothoids\Clothoids.prj" location="C:\Users\NUC2\pins-mechatronix\LibSources\submodules\Clothoids" name="Clothoids" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Clothoids</param.appname>
     <param.authnamewatermark>Enrico Bertolazzi</param.authnamewatermark>
     <param.email>enrico.bertolazzi@unitn.it</param.email>
     <param.company>Unversità degli Studi di Trento</param.company>
     <param.summary>Clothoids, a library for clothoids computation and more</param.summary>
     <param.description>A library for clothoids computation and more.</param.description>
-    <param.screenshot>${PROJECT_ROOT}/toolbox/logo.png</param.screenshot>
-    <param.version>1.0.0</param.version>
-    <param.output>${PROJECT_ROOT}/Clothoids.mltbx</param.output>
+    <param.screenshot>${PROJECT_ROOT}\toolbox\logo.png</param.screenshot>
+    <param.version>2.0.8</param.version>
+    <param.output>${PROJECT_ROOT}\Clothoids.mltbx</param.output>
     <param.products.name />
     <param.products.id />
     <param.products.version />
@@ -41,8 +41,8 @@ setup.m
     <param.demosxml />
     <param.apps />
     <param.registered.apps />
-    <param.docs>${PROJECT_ROOT}/toolbox/info.xml</param.docs>
-    <param.getting.started.guide>${PROJECT_ROOT}/toolbox/doc/GettingStarted.mlx</param.getting.started.guide>
+    <param.docs>${PROJECT_ROOT}\toolbox\info.xml</param.docs>
+    <param.getting.started.guide>${PROJECT_ROOT}\toolbox\doc\GettingStarted.mlx</param.getting.started.guide>
     <param.matlabpath.excludes />
     <param.javaclasspath.excludes />
     <param.exported.on.package>false</param.exported.on.package>
@@ -63,8 +63,6 @@ setup.m
     <param.additional.sw.mac.url />
     <param.additional.sw.linux.url />
     <unset>
-      <param.authnamewatermark />
-      <param.email />
       <param.output />
       <param.products.name />
       <param.products.id />
@@ -95,47 +93,48 @@ setup.m
       <param.additional.sw.linux.url />
     </unset>
     <fileset.rootdir>
-      <file>${PROJECT_ROOT}/toolbox</file>
+      <file>${PROJECT_ROOT}\toolbox</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}/toolbox/CompileClothoidsLib.m</file>
-      <file>${PROJECT_ROOT}/toolbox/bin</file>
-      <file>${PROJECT_ROOT}/toolbox/demos.xml</file>
-      <file>${PROJECT_ROOT}/toolbox/doc</file>
-      <file>${PROJECT_ROOT}/toolbox/helptoc.xml</file>
-      <file>${PROJECT_ROOT}/toolbox/html</file>
-      <file>${PROJECT_ROOT}/toolbox/info.xml</file>
-      <file>${PROJECT_ROOT}/toolbox/lib</file>
-      <file>${PROJECT_ROOT}/toolbox/license.txt</file>
-      <file>${PROJECT_ROOT}/toolbox/logo.png</file>
-      <file>${PROJECT_ROOT}/toolbox/src</file>
-      <file>${PROJECT_ROOT}/toolbox/src_mex</file>
-      <file>${PROJECT_ROOT}/toolbox/tests</file>
+      <file>${PROJECT_ROOT}\toolbox\bin</file>
+      <file>${PROJECT_ROOT}\toolbox\CompileClothoidsLib.m</file>
+      <file>${PROJECT_ROOT}\toolbox\demos.xml</file>
+      <file>${PROJECT_ROOT}\toolbox\doc</file>
+      <file>${PROJECT_ROOT}\toolbox\helptoc.xml</file>
+      <file>${PROJECT_ROOT}\toolbox\html</file>
+      <file>${PROJECT_ROOT}\toolbox\info.xml</file>
+      <file>${PROJECT_ROOT}\toolbox\lib</file>
+      <file>${PROJECT_ROOT}\toolbox\license.txt</file>
+      <file>${PROJECT_ROOT}\toolbox\logo.png</file>
+      <file>${PROJECT_ROOT}\toolbox\src</file>
+      <file>${PROJECT_ROOT}\toolbox\src_mex</file>
+      <file>${PROJECT_ROOT}\toolbox\tests</file>
+      <file>${PROJECT_ROOT}\toolbox\tests_mlx</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
     <fileset.depfun.excluded />
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">/Users/enrico/Ricerca/develop/myGitProjetcs/Clothoids/Clothoids.mltbx</file>
+      <file location="${PROJECT_ROOT}" name="Clothoids.mltbx" optional="false">C:\Users\NUC2\pins-mechatronix\LibSources\submodules\Clothoids\Clothoids.mltbx</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>/Applications/MATLAB_R2020a.app</root>
+      <root>C:\Program Files\MATLAB\R2021a</root>
       <toolboxes />
     </matlab>
     <platform>
-      <unix>true</unix>
-      <mac>true</mac>
-      <windows>false</windows>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
       <win2k>false</win2k>
       <winxp>false</winxp>
       <vista>false</vista>
       <linux>false</linux>
       <solaris>false</solaris>
-      <osver>10.15.6</osver>
+      <osver>10.0</osver>
       <os32>false</os32>
       <os64>true</os64>
-      <arch>maci64</arch>
+      <arch>win64</arch>
       <matlab>true</matlab>
     </platform>
   </configuration>
