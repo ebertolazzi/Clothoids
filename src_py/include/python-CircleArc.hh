@@ -9,7 +9,7 @@
 #pragma once
 
 #include <pybind11/pybind11.h>
-#include "Clothoids.hh"
+#include "python-G2libHeaders.hh"
 
 namespace py = pybind11;
 

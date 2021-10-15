@@ -1,0 +1,41 @@
+macro(target_assign_flags target)
+  if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  
+    target_compile_options(${target} PRIVATE 
+      -std=c++14 -Wall -Wno-float-equal -Wno-padded
+      $<$<CONFIG:Release>: -funroll-loops -O2 -g0 >
+      $<$<CONFIG:Debug>: -O0 -g3 >)
+  
+    target_compile_definitions(${target} PRIVATE
+      $<$<CONFIG:Debug>: MECHATRONIX_DEBUG DEBUG >)
+  
+  elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  
+    target_compile_options(${target} PRIVATE
+      -std=c++14 -stdlib=libc++  -Weverything -Wno-weak-vtables 
+      -Wno-implicit-fallthrough -Wno-documentation-unknown-command 
+      -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic 
+      -Wno-padded -Wno-reserved-id-macro -Wno-documentation
+      $<$<CONFIG:Release>: -funroll-loops -O2 -g0 >
+      $<$<CONFIG:Debug>: -O0 -g3 >)
+  
+    target_compile_definitions(${target} PRIVATE
+      $<$<CONFIG:Debug>: " MECHATRONIX_DEBUG DEBUG " >)
+  
+  elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  
+    target_compile_options(${target} PRIVATE
+      /nologo /GS /W3 /WX- /Gm- /fp:precise /EHsc 
+      $<$<CONFIG:Release>: /O2 /MD >
+      $<$<CONFIG:Debug>: /Od /Ob0 /MDd /Z7 /RTC1 >)
+  
+    target_compile_definitions(${target} PRIVATE
+      _WINDOWS _SCL_SECURE_NO_WARNINGS HAVE_STRING_H NO_GETTIMEOFDAY
+      $<$<CONFIG:Debug>: _DEBUG MECHATRONIX_DEBUG >)
+  
+  else()
+    
+  	message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
+  
+  endif()
+endmacro()

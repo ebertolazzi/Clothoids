@@ -7,7 +7,7 @@
  */
 
 #include "python-CircleArc.hh"
-#include <pybind11/stl.h>
+#include "pybind11/stl.h"
 
 namespace G2lib {
   namespace python {
@@ -46,12 +46,12 @@ namespace G2lib {
           bool v = self->bbTriangle_SAE(offs, t, ss0, ss1, icurve);
           return std::make_tuple(v, t);
         }, py::arg("offs"), py::arg("ss0") = 0, py::arg("ss1") = 0, py::arg("icurve") = 0)
-        .def("bbTriangles", [](CircleArc * self, real_type max_angle = m_pi/18, 
+        .def("bbTriangles", [](CircleArc * self, real_type max_angle = Utils::m_pi/18, 
                                     real_type max_size  = 1e100, int_type icurve = 0) {
           std::vector<Triangle2D> tvec;
           self->bbTriangles(tvec, max_angle, max_size, icurve);
           return tvec;
-        }, py::arg("max_angle") = m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
+        }, py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
         .def("bbTriangles_ISO", [](CircleArc * self, real_type offs, real_type max_angle, 
                                     real_type max_size, int_type icurve) {
           std::vector<Triangle2D> tvec;

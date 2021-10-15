@@ -10,9 +10,7 @@
 
 #include <stdexcept>
 
-#include <G2lib.hh>
-#include <Clothoid.hh>
-#include <ClothoidList.hh>
+#include "python-G2libHeaders.hh"
 
 namespace G2lib {
   namespace Interpolation {
@@ -29,7 +27,7 @@ namespace G2lib {
 
      public:
       Interpolator(const std::vector<real_type> & xs, const std::vector<real_type> & ys)
-          : m_xs(xs), m_ys(ys), m_spline(ClothoidSplineG2()) {}
+          : m_xs(xs), m_ys(ys), m_spline() {}
 
 #ifdef LMSOLVE_CLOTHOID_SPLINE
       void buildP1(real_type theta_0, real_type theta_1, ClothoidList & result);

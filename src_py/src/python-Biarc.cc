@@ -7,7 +7,7 @@
  */
 
 #include "python-Biarc.hh"
-#include <pybind11/stl.h>
+#include "pybind11/stl.h"
 
 #ifdef _WIN32
 #ifdef max
@@ -39,24 +39,24 @@ namespace G2lib {
         .def("length0", &Biarc::length0)
         .def("length1", &Biarc::length1)
         .def("delta_theta", &Biarc::delta_theta)
-        .def("bbTriangles", [](Biarc * self, real_type max_angle = m_pi/18, 
+        .def("bbTriangles", [](Biarc * self, real_type max_angle = Utils::m_pi/18, 
                                     real_type max_size  = 1e100, int_type icurve = 0) {
           std::vector<Triangle2D> tvec;
           self->bbTriangles(tvec, max_angle, max_size, icurve);
           return tvec;
-        }, py::arg("max_angle") = m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
-        .def("bbTriangles_ISO", [](Biarc * self, real_type offs, real_type max_angle = m_pi/18, 
+        }, py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
+        .def("bbTriangles_ISO", [](Biarc * self, real_type offs, real_type max_angle = Utils::m_pi/18, 
                                     real_type max_size  = 1e100, int_type icurve = 0) {
           std::vector<Triangle2D> tvec;
           self->bbTriangles_ISO(offs, tvec, max_angle, max_size, icurve);
           return tvec;
-        }, py::arg("offs"), py::arg("max_angle") = m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
-        .def("bbTriangles_SAE", [](Biarc * self, real_type offs, real_type max_angle = m_pi/18, 
+        }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
+        .def("bbTriangles_SAE", [](Biarc * self, real_type offs, real_type max_angle = Utils::m_pi/18, 
                                     real_type max_size  = 1e100, int_type icurve = 0) {
           std::vector<Triangle2D> tvec;
           self->bbTriangles_SAE(offs, tvec, max_angle, max_size, icurve);
           return tvec;
-        }, py::arg("offs"), py::arg("max_angle") = m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
+        }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
         .def("collision", &Biarc::collision)
         .def("collision_ISO", &Biarc::collision_ISO)
         .def("intersect", [](Biarc * self, Biarc const & B, bool swap_s_vals) {
@@ -120,30 +120,30 @@ namespace G2lib {
           return ret;
         })
         .def("getAtS", &BiarcList::getAtS)
-        .def("numSegment", &BiarcList::numSegment)
+        .def("numSegments", &BiarcList::numSegments)
         .def("findAtS", &BiarcList::findAtS)
         .def("segment_length", &BiarcList::segment_length)
         .def("segment_length_ISO", &BiarcList::segment_length_ISO)
-        .def("bbTriangles", [](BiarcList * self, real_type max_angle = m_pi/6, real_type max_size  = 1e100) {
+        .def("bbTriangles", [](BiarcList * self, real_type max_angle = Utils::m_pi/6, real_type max_size  = 1e100) {
           std::vector<Triangle2D> tvec;
           self->bbTriangles(tvec, max_angle, max_size);
           return tvec;
-        }, py::arg("max_angle") = m_pi/6, py::arg("max_size") = 1e100)
+        }, py::arg("max_angle") = Utils::m_pi/6, py::arg("max_size") = 1e100)
         .def("bbTriangles_ISO", [](BiarcList * self, real_type offs, real_type max_angle, real_type max_size) {
           std::vector<Triangle2D> tvec;
           self->bbTriangles_ISO(offs, tvec, max_angle, max_size);
           return tvec;
         })
-        .def("bbTriangles_SAE", [](BiarcList * self, real_type offs, real_type max_angle = m_pi/18, real_type max_size  = 1e100) {
+        .def("bbTriangles_SAE", [](BiarcList * self, real_type offs, real_type max_angle = Utils::m_pi/18, real_type max_size  = 1e100) {
           std::vector<Triangle2D> tvec;
           self->bbTriangles_SAE(offs, tvec, max_angle, max_size);
           return tvec;
-        }, py::arg("offs"), py::arg("max_angle") = m_pi/18, py::arg("max_size") = 1e100)
+        }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100)
         .def("build_AABBtree_ISO", &BiarcList::build_AABBtree_ISO)
         .def("build_AABBtree_SAE", &BiarcList::build_AABBtree_SAE, 
-          py::arg("offs"), py::arg("max_angle") = m_pi/6, py::arg("max_size") = 1e100)
+          py::arg("offs"), py::arg("max_angle") = Utils::m_pi/6, py::arg("max_size") = 1e100)
         .def("getSTK", [](BiarcList * self) {
-          int_type n = self->numSegment();
+          int_type n = self->numSegments();
           std::vector<real_type> s, t, k;
           real_type * s_ = new real_type[n];
           real_type * t_ = new real_type[n];
@@ -160,7 +160,7 @@ namespace G2lib {
           return std::make_tuple(s, t, k);
         })
         .def("getXY", [](BiarcList * self) {
-          int_type n = self->numSegment();
+          int_type n = self->numSegments();
           std::vector<real_type> x, y;
           real_type * x_ = new real_type[n];
           real_type * y_ = new real_type[n];

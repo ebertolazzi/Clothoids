@@ -10,9 +10,7 @@
 
 #include <vector>
 
-#include <G2lib.hh>
-#include <Clothoid.hh>
-#include <ClothoidList.hh>
+#include "python-G2libHeaders.hh"
 
 namespace G2lib {
   namespace Interpolation {

@@ -6,7 +6,7 @@
  *      Enrico Bertolazzi, Marco Frego
  */
 
-#include <pybind11/pybind11.h>
+#include "pybind11/pybind11.h"
 #include "python-BaseCurve.hh"
 #include "python-LineSegment.hh"
 #include "python-CircleArc.hh"

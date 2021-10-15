@@ -12,8 +12,7 @@
 
 #include "python-ClothoidSpline-Solver.hh"
 
-#include <Clothoid.hh>
-#include <ClothoidList.hh>
+#include "python-G2libHeaders.hh"
 #include <IpTNLP.hpp>
 #include <vector>
 

@@ -11,7 +11,7 @@
 #include <tuple>
 
 #include <pybind11/pybind11.h>
-#include "Clothoids.hh"
+#include "python-G2libHeaders.hh"
 
 namespace py = pybind11;
 
@@ -165,6 +165,21 @@ namespace G2lib {
       void
       info(ostream_type & stream) const override {
         PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, info, stream);
+      }
+
+      void
+      bbTriangles(vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, int_type icurve) const override {
+        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bbTriangles, tvec, max_angle, max_size, icurve);
+      }
+      
+      void
+      bbTriangles_ISO(real_type offs, vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, int_type icurve) const override {
+        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bbTriangles_ISO, offs, tvec, max_angle, max_size, icurve);
+      }
+
+      void
+      bbTriangles_SAE(real_type offs, vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, int_type icurve) const override {
+        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bbTriangles_SAE, offs, tvec, max_angle, max_size, icurve);
       }
     };
 
