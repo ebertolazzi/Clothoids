@@ -42,9 +42,24 @@ if(BUILD_SHARED)
   ebertolazzi_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
 endif()
 
-# DEPENDENCIES
-add_subdirectory(./submodules/Utils)
-add_subdirectory(./submodules/quarticRootsFlocke)
+# DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
+set(UPDIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
+set(DIRUTILS "${CMAKE_CURRENT_SOURCE_DIR}/extern/Utils")
+set(DIRROOTS "${CMAKE_CURRENT_SOURCE_DIR}/extern/Flocke")
+if(FALSE AND EXISTS "${UPDIR}/Utils")
+  add_subdirectory("${UPDIR}/Utils" "${DIRUTILS}")
+else()
+  #add_subdirectory(./submodules/Utils "${DIRUTILS}") # NON FUNZIONA
+  add_subdirectory(./submodules/Utils)
+endif()
+if(FALSE AND EXISTS "${UPDIR}/quarticRootsFlocke")
+  add_subdirectory("${UPDIR}/quarticRootsFlocke" "${DIRROOTS}")
+else()
+  #add_subdirectory(./submodules/quarticRootsFlocke "${DIRROOTS}") # NON FUNZIONA
+  add_subdirectory(./submodules/quarticRootsFlocke)
+endif()
+
+include_directories(lib3rd/include)
 
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
 set(CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
@@ -79,7 +94,6 @@ target_include_directories(
   "$<BUILD_INTERFACE:${Clothoids_DIR}>"
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
 )
-target_link_libraries(${STATIC_PROJECT} PUBLIC QuarticStatic UtilsStatic)
 set_target_properties(
   ${STATIC_PROJECT} PROPERTIES
   OUTPUT_NAME "${PROJECT_NAME}${ARTIFACTS_STATIC_SUFFIX}"
@@ -102,11 +116,7 @@ if(BUILD_SHARED)
     "$<BUILD_INTERFACE:${Clothoids_DIR}>"
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
   )
-  target_link_libraries(
-    ${DYNAMIC_PROJECT} PUBLIC 
-    UtilsStatic 
-    QuarticStatic
-  )
+  target_link_libraries( ${DYNAMIC_PROJECT} PUBLIC UtilsStatic QuarticStatic )
   if(WIN32)
     set_target_properties(
       ${DYNAMIC_PROJECT} PROPERTIES 
@@ -143,6 +153,14 @@ if(BUILD_EXECUTABLE OR ENABLE_CTEST)
 endif()
 
 # INSTALL TARGETS
+
+set(INSTALL_TARGETS ${STATIC_PROJECT})
+add_dependencies( ${STATIC_PROJECT} UtilsStatic QuarticStatic )
+if(BUILD_SHARED)
+  add_dependencies( ${STATIC_PROJECT} UtilsStatic QuarticStatic )
+  set(INSTALL_TARGETS ${INSTALL_TARGETS} ${DYNAMIC_PROJECT})
+endif()
+
 include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeInstall.txt")
 
 message(STATUS "Using ${SSE_FLAGS} extensions")

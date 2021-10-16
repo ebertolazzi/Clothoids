@@ -1,21 +1,24 @@
 if(INSTALL_HERE) 
-  set(INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/lib")
-  set(PROJECT_PUBLIC_HEADER_DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/include")
+  # install in the home of the whole project
+  if ( ${CMAKE_HOME_DIRECTORY} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
+    set(INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/lib")
+  else()
+    set(INSTALL_PREFIX "${CMAKE_HOME_DIRECTORY}/lib3rd")
+  endif()
+  set(PROJECT_PUBLIC_HEADER_DESTINATION "${INSTALL_PREFIX}/include")
 else()
-  set(INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/lib")
+  set(INSTALL_TARGETS ${INSTALL_TARGETS} UtilsStatic QuarticStatic)
+  set(INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
   set(PROJECT_PUBLIC_HEADER_DESTINATION "${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}")
 endif()
 
-set(INSTALL_TARGETS ${STATIC_PROJECT})
-add_dependencies( ${STATIC_PROJECT} UtilsStatic QuarticStatic )
-if(BUILD_SHARED)
-  add_dependencies( ${STATIC_PROJECT} UtilsStatic QuarticStatic )
-  set(INSTALL_TARGETS ${INSTALL_TARGETS} ${DYNAMIC_PROJECT})
-endif()
+#MESSAGE( STATUS "\n\n\nCMAKE_HOME_DIRECTORY     = ${CMAKE_HOME_DIRECTORY}\n\n\n")
+#MESSAGE( STATUS "\n\n\nCMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}\n\n\n")
+#MESSAGE( STATUS "\n\n\nINSTALL_PREFIX           = ${INSTALL_PREFIX}\n\n\n")
 
 # Installing Dependencies
 install(
-  TARGETS ${INSTALL_TARGETS} UtilsStatic QuarticStatic
+  TARGETS ${INSTALL_TARGETS}
   EXPORT ClothoidsTargets
   RUNTIME DESTINATION "${INSTALL_PREFIX}/bin"
   ARCHIVE DESTINATION "${INSTALL_PREFIX}/lib"
@@ -27,23 +30,6 @@ install(
 install(FILES "${Clothoids_DIR}/Clothoids.hh" DESTINATION "${PROJECT_PUBLIC_HEADER_DESTINATION}")
 install(DIRECTORY "${Clothoids_DIR}/Clothoids" DESTINATION "${PROJECT_PUBLIC_HEADER_DESTINATION}")
 
-# FIXME: We are forced to do so for how the headers are included in Utils...
-# but this is just another symptom that something is wrong in header handling
-# **Quartic** headers are handled correctly though...
-#----------------------------------------
-# added as suggested by Martin Gaudreault
-if(INSTALL_HERE)
-  install(
-    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/submodules/Utils/lib/" 
-    DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/" 
-    #FILES_MATCHING PATTERN "*.h*"
-  )
-  install(
-    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/submodules/quarticRootsFlocke/lib/" 
-    DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/" 
-    #FILES_MATCHING PATTERN "*.h*"
-  )
-endif()
 #----------------------------------------
 
 install(
@@ -84,3 +70,10 @@ install(
   ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfigVersion.cmake
   DESTINATION lib/cmake/Clothoids
 )
+
+if(INSTALL_HERE)
+  add_custom_command(
+    TARGET ${STATIC_PROJECT} POST_BUILD
+    COMMAND cmake --build . --config Release  --target install
+  )
+endif()
