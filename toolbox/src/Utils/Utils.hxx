@@ -74,8 +74,6 @@
 #include "fmt/printf.h"
 #include "fmt/chrono.h"
 #include "fmt/ostream.h"
-#include "zstream/izstream.hpp"
-#include "zstream/ozstream.hpp"
 
 #include <string>
 #include <iostream>

@@ -31,8 +31,6 @@
 #define INPUT_ZIP_STREAM_IMPL_HPP
 
 #include "izstream.hpp"
-#include <sstream>
-#include <cstring>
 
 namespace zstream {
 

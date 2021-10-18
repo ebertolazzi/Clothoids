@@ -14,9 +14,19 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 # set(CMAKE_INSTALL_MESSAGE NEVER)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-project(Clothoids
-  VERSION 2.0.9
-  HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/")
+if(ENABLE_CTEST)
+  enable_testing()
+endif()
+
+# get version from the git tag
+execute_process(COMMAND git describe --tags --abbrev=0 OUTPUT_VARIABLE VERSION)
+string(REGEX REPLACE "\n$" "" VERSION "${VERSION}")
+
+project(
+  Clothoids
+  VERSION ${VERSION}
+  HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/"
+)
 
 # NOTE: Predictable target name
 set(STATIC_PROJECT "${PROJECT_NAME}Static")
@@ -32,10 +42,24 @@ if(BUILD_SHARED)
   ebertolazzi_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
 endif()
 
-# DEPENDENCIES
-add_subdirectory(./submodules/Utils)
-add_subdirectory(./submodules/quarticRootsFlocke)
-# add_subdirectory(./submodules/GenericContainer)
+# DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
+set(UPDIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
+set(DIRUTILS "${CMAKE_CURRENT_SOURCE_DIR}/extern/Utils")
+set(DIRROOTS "${CMAKE_CURRENT_SOURCE_DIR}/extern/Flocke")
+if(FALSE AND EXISTS "${UPDIR}/Utils")
+  add_subdirectory("${UPDIR}/Utils" "${DIRUTILS}")
+else()
+  #add_subdirectory(./submodules/Utils "${DIRUTILS}") # NON FUNZIONA
+  add_subdirectory(./submodules/Utils)
+endif()
+if(FALSE AND EXISTS "${UPDIR}/quarticRootsFlocke")
+  add_subdirectory("${UPDIR}/quarticRootsFlocke" "${DIRROOTS}")
+else()
+  #add_subdirectory(./submodules/quarticRootsFlocke "${DIRROOTS}") # NON FUNZIONA
+  add_subdirectory(./submodules/quarticRootsFlocke)
+endif()
+
+include_directories(lib3rd/include)
 
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
 set(CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
@@ -60,49 +84,52 @@ set(SOURCES
   "${Clothoids_DIR}/G2lib.cc"
   "${Clothoids_DIR}/Line.cc"
   "${Clothoids_DIR}/PolyLine.cc"
-  "${Clothoids_DIR}/Triangle2D.cc")
-file(GLOB_RECURSE HEADERS "${Clothoids_DIR}/*.h*")
+  "${Clothoids_DIR}/Triangle2D.cc"
+)
+#file(GLOB_RECURSE HEADERS "${Clothoids_DIR}/*.h*")
 
 add_library(${STATIC_PROJECT} STATIC ${SOURCES})
-target_include_directories(${STATIC_PROJECT} PUBLIC 
+target_include_directories(
+  ${STATIC_PROJECT} PUBLIC 
   "$<BUILD_INTERFACE:${Clothoids_DIR}>"
-  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-target_link_libraries(${STATIC_PROJECT} PUBLIC 
-  QuarticStatic 
-  # TODO: Unused for now...
-  # GenericContainerStatic
-  UtilsStatic)
-set_target_properties(${STATIC_PROJECT} PROPERTIES
+  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+)
+set_target_properties(
+  ${STATIC_PROJECT} PROPERTIES
   OUTPUT_NAME "${PROJECT_NAME}${ARTIFACTS_STATIC_SUFFIX}"
   # FIXME: I'm not sure if this is required for OSX Framework
-  # PUBLIC_HEADER "${HEADERS}"
-  POSITION_INDEPENDENT_CODE ON)
+  #PUBLIC_HEADER "${HEADERS}"
+  POSITION_INDEPENDENT_CODE ON
+)
 
 if(BUILD_SHARED)
   add_library(${DYNAMIC_PROJECT} SHARED ${SOURCES})
-  set_target_properties(${DYNAMIC_PROJECT} PROPERTIES
+  set_target_properties(
+    ${DYNAMIC_PROJECT} PROPERTIES
     OUTPUT_NAME "${PROJECT_NAME}${ARTIFACTS_DYNAMIC_SUFFIX}"
     # FIXME: I'm not sure if this is required for OSX Framework
     # PUBLIC_HEADER "${HEADERS}"
-    POSITION_INDEPENDENT_CODE ON)
-  target_include_directories(${DYNAMIC_PROJECT} PUBLIC 
+    POSITION_INDEPENDENT_CODE ON
+  )
+  target_include_directories(
+    ${DYNAMIC_PROJECT} PUBLIC 
     "$<BUILD_INTERFACE:${Clothoids_DIR}>"
-    "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-  target_link_libraries(${DYNAMIC_PROJECT} PUBLIC 
-    # TODO: Unused for now
-    # GenericContainerStatic
-    UtilsStatic 
-    QuarticStatic)
+    "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+  )
+  target_link_libraries( ${DYNAMIC_PROJECT} PUBLIC UtilsStatic QuarticStatic )
   if(WIN32)
-    set_target_properties(${DYNAMIC_PROJECT} PROPERTIES 
-      WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set_target_properties(
+      ${DYNAMIC_PROJECT} PROPERTIES 
+      WINDOWS_EXPORT_ALL_SYMBOLS TRUE
+    )
   endif()
 endif()
 
-if(BUILD_EXECUTABLE)
+if(BUILD_EXECUTABLE OR ENABLE_CTEST)
   enable_testing()
   set(TEST_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-  set(EXECUTABLES 
+  set(
+    EXECUTABLES 
     testBiarc 
     testDistance 
     testG2 
@@ -112,86 +139,29 @@ if(BUILD_EXECUTABLE)
     testG2statCLC 
     testIntersect 
     testPolyline 
-    testTriangle2D)
+    testTriangle2D
+  )
   foreach(EXE ${EXECUTABLES})
     add_executable(${EXE} tests-cpp/${EXE}.cc)
     target_link_libraries(${EXE} PRIVATE ${STATIC_PROJECT} Utils ${CMAKE_DL_LIBS})
-    set_target_properties(${EXE} PROPERTIES
-      RUNTIME_OUTPUT_DIRECTORY "${TEST_OUTPUT_PATH}")
+    set_target_properties(
+      ${EXE} PROPERTIES
+      RUNTIME_OUTPUT_DIRECTORY "${TEST_OUTPUT_PATH}"
+    )
     add_test(${EXE} "${CMAKE_CURRENT_SOURCE_DIR}/bin/${EXE}")
   endforeach()
 endif()
 
 # INSTALL TARGETS
 
-# FIXME: CMakeLists should not override CMAKE_INSTALL_PREFIX
-# ref: https://gitlab.kitware.com/cmake/cmake/-/issues/19322
-# but as for now this is a solution
-if(INSTALL_HERE) 
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/lib")
-  set(CLOTHOIDS_HEADER_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/include")
-else()
-  set(CLOTHOIDS_HEADER_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}")
-endif()
-
 set(INSTALL_TARGETS ${STATIC_PROJECT})
+add_dependencies( ${STATIC_PROJECT} UtilsStatic QuarticStatic )
 if(BUILD_SHARED)
+  add_dependencies( ${STATIC_PROJECT} UtilsStatic QuarticStatic )
   set(INSTALL_TARGETS ${INSTALL_TARGETS} ${DYNAMIC_PROJECT})
 endif()
 
-# Installing Dependencies
-
-install(TARGETS ${INSTALL_TARGETS} UtilsStatic QuarticStatic
-  EXPORT ClothoidsTargets
-  RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
-  ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
-  LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/dll"
-  PUBLIC_HEADER DESTINATION "${CLOTHOIDS_HEADER_INSTALL_DIR}")
-# FIXME: The header structure forces me to do this... And this will create issues!
-install(FILES "${Clothoids_DIR}/Clothoids.hh" DESTINATION "${CLOTHOIDS_HEADER_INSTALL_DIR}")
-install(DIRECTORY "${Clothoids_DIR}/Clothoids" DESTINATION "${CLOTHOIDS_HEADER_INSTALL_DIR}")
-
-# FIXME: We are forced to do so for how the headers are included in Utils...
-# but this is just another symptom that something is wrong in header handling
-# **Quartic** headers are handled correctly though...
-#----------------------------------------
-# added as suggested by Martin Gaudreault
-if(INSTALL_HERE)
-  file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/submodules/Utils/src/
-      DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include/Utils/)
-endif()
-#----------------------------------------
-
-install(EXPORT ClothoidsTargets
-  FILE ClothoidsTargets.cmake 
-  DESTINATION lib/cmake/Clothoids)
-
-# CPACK INSTALL TARGETS (Leaving almost as it is...)
-
-set(INCLUDE_INSTALL_DIR include/ CACHE STRING "Include install directory")
-set(LIBRARIES_INSTALL_DIR lib/ CACHE STRING "Libraries install directory")
-get_target_property(CLOTHOIDS_LIB_OUTPUT_NAME ${STATIC_PROJECT} OUTPUT_NAME)
-if(UNIX)
-  set(CLOTHOIDS_LIB_PREFIX lib)
-  set(CLOTHOIDS_LIB_SUFFIX .a)
-else()
-  set(CLOTHOIDS_LIB_PREFIX "")
-  set(CLOTHOIDS_LIB_SUFFIX .lib)
-endif()
-set(CLOTHOIDS_LIB_NAME "${CLOTHOIDS_LIB_PREFIX}${CLOTHOIDS_LIB_OUTPUT_NAME}${CLOTHOIDS_LIB_SUFFIX}")
-set(LIBRARIES lib/${CLOTHOIDS_LIB_NAME} CACHE STRING "Libraries directory")
-
-include(CMakePackageConfigHelpers)
-configure_package_config_file(ClothoidsConfig.cmake.in 
-  "${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake"
-  INSTALL_DESTINATION "lib/Clothoids/cmake"
-  PATH_VARS INCLUDE_INSTALL_DIR LIBRARIES_INSTALL_DIR LIBRARIES)
-write_basic_package_version_file("ClothoidsConfigVersion.cmake"
-  COMPATIBILITY SameMajorVersion)
-install(FILES 
-  ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake
-  ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfigVersion.cmake
-  DESTINATION lib/cmake/Clothoids)
+include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeInstall.txt")
 
 message(STATUS "Using ${SSE_FLAGS} extensions")
 message(STATUS "C compiler                  = ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER}")

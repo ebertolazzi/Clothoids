@@ -285,7 +285,7 @@ namespace G2lib {
     bool empty() const;
     
     //!
-    //! Initialize the AABB tree woth a bbox
+    //! Get the Bounding Box of the whole AABB tree
     //!
     //! \param[in] xmin x-minimimum box coordinate
     //! \param[in] ymin y-minimimum box coordinate

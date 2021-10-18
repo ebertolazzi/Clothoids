@@ -17,14 +17,19 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "PolynomialRoots.hh"
-#include "PolynomialRoots-Utils.hh"
-
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wvla-extension"
+#pragma clang diagnostic ignored "-Wvla"
 #pragma clang diagnostic ignored "-Wunused-function"
+#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
 #endif
+
+#include "PolynomialRoots.hh"
+#include "PolynomialRoots-Utils.hh"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 

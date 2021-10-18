@@ -31,9 +31,6 @@
 #define OUTPUT_ZIP_STREAM_IMPL_HPP
 
 #include "ozstream.hpp"
-#include <zlib.h>
-#include <sstream>
-#include <cstring>
 
 #ifndef OS_CODE
 #  define OS_CODE  0x03  /* assume Unix */
@@ -123,7 +120,7 @@ basic_zip_streambuf<Elem, Tr, ElemA, ByteT, ByteAT>::overflow(
   int w = static_cast<int>(this->pptr() - this->pbase());
   if (w > 0) {
     if (zip_to_stream(this->pbase(), w)) {
-	  this->setp(this->pbase(), this->epptr());
+      this->setp(this->pbase(), this->epptr());
     } else {
       return EOF;
     }
@@ -154,25 +151,24 @@ basic_zip_streambuf<Elem, Tr, ElemA, ByteT, ByteAT>::zip_write( int flag ) {
 
   if ( m_err == Z_OK || m_err == Z_STREAM_END ) {
 	std::streamsize written_byte_size =
-	  static_cast<std::streamsize>(m_output_buffer.size())
-      - m_zip_stream.avail_out;
+	  static_cast<std::streamsize>(m_output_buffer.size()) - m_zip_stream.avail_out;
     if (written_byte_size > 0) {
       total_written_byte_size += written_byte_size;
       // ouput buffer is full, dumping to ostream
       m_ostream.write(
-		(const char_type*) &(m_output_buffer[0]),
+		    (const char_type*) &(m_output_buffer[0]),
         static_cast<std::streamsize>(written_byte_size/sizeof(char_type))
-	  );
+      );
 
-	  // checking if some bytes were not written.
-	  size_t remainder = written_byte_size % sizeof(char_type);
-	  if ( remainder != 0 ) {
-	    // copy to the beginning of the stream
-		memcpy(
-		  &(m_output_buffer[0]),
-		  &(m_output_buffer[written_byte_size - remainder]),
-		  remainder
-		);
+      // checking if some bytes were not written.
+      size_t remainder = written_byte_size % sizeof(char_type);
+	    if ( remainder != 0 ) {
+	      // copy to the beginning of the stream
+        memcpy(
+          &(m_output_buffer[0]),
+          &(m_output_buffer[written_byte_size - remainder]),
+          remainder
+        );
       }
 
       m_zip_stream.avail_out = static_cast<uInt>(m_output_buffer.size() - remainder);
