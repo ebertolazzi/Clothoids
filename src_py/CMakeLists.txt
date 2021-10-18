@@ -40,7 +40,7 @@ set(G2LIB_SOURCES
   "src/python-ClothoidSpline-IpoptSolver.cc"
   "src/python-ClothoidSpline-Interpolation.cc")
 
-pybind11_add_module(${PROJECT_NAME} MODULE ${G2LIB_SOURCES} NO_EXTRAS)
+pybind11_add_module(${PROJECT_NAME} MODULE ${G2LIB_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
@@ -56,8 +56,6 @@ if (TARGET Eigen3::Eigen)
   target_link_libraries(${PROJECT_NAME} PRIVATE Eigen3::Eigen)
 endif()
 target_assign_flags(${PROJECT_NAME})
-
-
 
 set(INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/../lib/lib)
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_PREFIX})
