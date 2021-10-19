@@ -283,7 +283,7 @@ namespace G2lib {
   ) {
     size_t nn = size_t(n);
     Utils::Malloc<real_type> mem( "BiarcList::build_G1" );
-    mem.allocate( 4 * nn );
+    mem.allocate( 5 * nn );
     real_type * theta     = mem( nn );
     real_type * theta_min = mem( nn );
     real_type * theta_max = mem( nn );
