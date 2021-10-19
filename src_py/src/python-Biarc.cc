@@ -53,13 +53,16 @@ namespace G2lib {
         py::arg("x1"), py::arg("y1"), py::arg("theta1"))
       .def(py::init<BaseCurve const &>(), py::arg("curve"))
       
-      .def("copy", &Biarc::copy, py::arg("curve"),
+      .def("copy", [](const Biarc & self) {
+        Biarc other;
+        other.copy(self);
+        return other;
+      }, py::arg("curve"),
       R"S(
-        Copy onto this object another biarc parameters
+        Create a copy of the current biarc curve
 
-        :param Biarc curve: another biarc
-        :return: nothing, works in place
-        :rtype: NoneType
+        :return: a new copy of the current biarc
+        :rtype: Biarc
       )S")
 
       .def("build", &Biarc::build, 
