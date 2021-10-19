@@ -1327,76 +1327,338 @@ namespace G2lib {
     
       .def("translate", &BaseCurve::translate, py::arg("tx"), py::arg("ty"),
       R"S(
-        Translate the curve by :math:`(t_x, t_y)`. This method works in place
+        Translate the curve by :math:`(t_x, t_y)`. This method works in place,
+        and forces the recalculation of the AABBtree of the curve
 
         :param float tx: **x** coordinates offset
         :param float ty: **y** coordinates offset
-        :return: Nothing
+        :return: nothing, works in place
         :rtype: NoneType
       )S")
 
       .def("rotate", &BaseCurve::rotate, py::arg("angle"), py::arg("cx"), py::arg("cy"),
       R"S(
-
+        Rotate curve by angle :math:`\theta` centered at point  :math:`(c_x, c_y)`.
+        This method works in place and forces the recalculation of the AABBtree 
+        of the curve
+        
+        :param float angle: angle :math:`\theta`
+        :param float cx: center origin coordinate :math:`c_x`
+        :param float cy: center origin coordinate :math:`c_y`
+        :return: nothing, works in place
+        :rtype: NoneType
       )S")
       
-      .def("scale", &BaseCurve::scale)
-      .def("reverse", &BaseCurve::reverse)
-      .def("changeOrigin", &BaseCurve::changeOrigin)
-      .def("trim", &BaseCurve::trim)
-      .def("collision", &BaseCurve::collision)
-      .def("collision_ISO", &BaseCurve::collision_ISO)
-      .def("collision_SAE", &BaseCurve::collision_SAE)
+      .def("scale", &BaseCurve::scale, py::arg("scale"),
+      R"S(
+        Scale a curve by the factor provided as input. This method works in place
+        and forces the recalculation of the AABBtree of the curve.
 
-      // intersect
-      // intersect_ISO
-      // itersect_SAE
-
-      .def("closestPoint_ISO", [](BaseCurve * self, real_type qx, real_type qy) {
-        real_type x, y, s, t, dst;
-        self->closestPoint_ISO(qx, qy, x, y, s, t, dst);
-        return std::make_tuple(x, y, s, t, dst);
-      })  
-      .def("closestPoint_ISO", [](BaseCurve * self, real_type qx, real_type qy, real_type offs) {
-        real_type x, y, s, t, dst;
-        self->closestPoint_ISO(qx, qy, offs, x, y, s, t, dst);
-        return std::make_tuple(x, y, s, t, dst);
-      })   
-      .def("closestPoint_SAE", [](BaseCurve * self, real_type qx, real_type qy) {
-        real_type x, y, s, t, dst;
-        self->closestPoint_SAE(qx, qy, x, y, s, t, dst);
-        return std::make_tuple(x, y, s, t, dst);
-      })  
-      .def("closestPoint_SAE", [](BaseCurve * self, real_type qx, real_type qy, real_type offs) {
-        real_type x, y, s, t, dst;
-        self->closestPoint_SAE(qx, qy, offs, x, y, s, t, dst);
-        return std::make_tuple(x, y, s, t, dst);
-      })
-
-      .def("distance", &BaseCurve::distance)
-      .def("distance_ISO", &BaseCurve::distance_ISO)
-      .def("distance_SAE", &BaseCurve::distance_SAE)
-      .def("info", &BaseCurve::info)
-        
+        :param float sc: the scaling factor
+        :return: nothing, works in place
+        :rtype: NoneType
+      )S")
       
+      .def("reverse", &BaseCurve::reverse,
+      R"S(
+        Reverses the curve parametrization. This method works in place and
+        forces the recalculation of the AABBtree of the curve
 
+        :return: nothing, works in place
+        :rtype: NoneType
+      )S")
+
+      .def("changeOrigin", &BaseCurve::changeOrigin, py::arg("newx0"), py::arg("newy0"),
+      R"S(
+        Translate the curve so that the origin will be :math:`(x_{0,new}, y_{0,new})`.
+        This method works in place and forces the recalculation of the AABBtree of the
+        curve.
+
+        :param float newx0: new origin **x** coordinate
+        :param float newy0: new origin **y** coordinate
+        :return: nothing, works in place
+        :rtype: NoneType
+      )S")
       
+      .def("trim", &BaseCurve::trim, py::arg("s_begin"), py::arg("s_end"),
+      R"S(
+        Cuts the curve between parametric curvilinear abscissa range 
+        :math:`(s_{begin}, s_{end})`. This method works in place and forces
+        the recalculation of the AABBtree of the curve
+
+        :param float s_begin: starting curvilinear abscissa
+        :param float e_sen: ending curvilinear abscissa
+        :return: nothing, works in place
+        :rtype: NoneType
+      )S")
+
+      .def("collision", &BaseCurve::collision, py::arg("curve"),
+      R"S(
+        Checks collisions with another curve
+
+        :param BaseCurve curve: the other curve to check
+        :return: true if curves collide
+        :rtype: bool
+      )S")
+
+      .def("collision_ISO", &BaseCurve::collision_ISO, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"),
+      R"S(
+        Checks collisions with another curve, considering offset on both 
+        curves. Uses ISO standard references
+
+        :param float offs: offset on the current curve
+        :param BaseCurve curve: the other curve to check
+        :param float curve_offs: offset on the other curve
+        :return: true if curves collide
+        :rtype: bool
+      )S")
+
+      .def("collision_SAE", &BaseCurve::collision_SAE, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"),
+      R"S(
+        Checks collisions with another curve, considering offset on both 
+        curves. Uses SAE standard references
+
+        :param float offs: offset on the current curve
+        :param BaseCurve curve: the other curve to check
+        :param float curve_offs: offset on the other curve
+        :return: true if curves collide
+        :rtype: bool
+      )S")
+
+      .def("intersect", [](const BaseCurve & self, const BaseCurve & curve, bool swap_s_vals) {
+        IntersectList ilist;
+        self.intersect(curve, ilist, swap_s_vals);
+        return ilist;
+      }, py::arg("curve"), py::arg("swap_s_vals") = false,
+      R"S(
+        Intersect the curve with another curve. The result is a list of pairs, where 
+        each element of the pair represents the ascissa coordinate at which intersection
+        occurs
         
+        :param BaseCurve curve: second curve intersect
+        :param bool swap_s_vals: if true store `(s2,s1)` instead of `(s1,s2)` for each
+                                 intersection. Default false.
+        :return: a list of pair with intersection coordinates on both curves
+        :rtype: List[Tuple[float, float]]
+      )S")
+
+      .def("intersect_ISO", [](const BaseCurve & self, real_type offs, const BaseCurve & curve, 
+        real_type curve_offs, bool swap_s_vals) {
+        IntersectList ilist;
+        self.intersect_ISO(offs, curve, curve_offs, ilist, swap_s_vals);
+        return ilist;
+      }, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"), py::arg("swap_s_vals") = false,
+      R"S(
+        Intersect the curve with another curve. The result is a list of pairs, where 
+        each element of the pair represents the ascissa coordinate at which intersection
+        occurs. Version with offset in ISO standard reference
         
-      .def("findST_ISO", [](BaseCurve * self, real_type x, real_type y) {
+        :param float offs: offset on the curve
+        :param BaseCurve curve: second curve intersect
+        :param float curve_offs: offset on the second curve
+        :param bool swap_s_vals: if true store `(s2,s1)` instead of `(s1,s2)` for each
+                                 intersection. Default false.
+        :return: a list of pair with intersection coordinates on both curves
+        :rtype: List[Tuple[float, float]]
+      )S")
+      
+      .def("intersect_SAE", [](const BaseCurve & self, real_type offs, const BaseCurve & curve, 
+        real_type curve_offs, bool swap_s_vals) {
+        IntersectList ilist;
+        self.intersect_SAE(offs, curve, curve_offs, ilist, swap_s_vals);
+        return ilist;
+      }, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"), py::arg("swap_s_vals") = false,
+      R"S(
+        Intersect the curve with another curve. The result is a list of pairs, where 
+        each element of the pair represents the ascissa coordinate at which intersection
+        occurs. Version with offset in ISO standard reference
+        
+        :param float offs: offset on the curve
+        :param BaseCurve curve: second curve intersect
+        :param float curve_offs: offset on the second curve
+        :param bool swap_s_vals: if true store `(s2,s1)` instead of `(s1,s2)` for each
+                                 intersection. Default false.
+        :return: a list of pair with intersection coordinates on both curves
+        :rtype: List[Tuple[float, float]]
+      )S")
+
+      .def("closestPoint", [](const BaseCurve & self, real_type qx, real_type qy) {
+        int_type ret;
+        real_type x, y, s, t, dst;
+        ret = self.closestPoint_ISO(qx, qy, x, y, s, t, dst);
+        return std::make_tuple(ret, x, y, s, t, dst);
+      }, py::arg("qx"), py::arg("qy"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the curve.
+
+        There are 6 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :return: a tuple of results as described
+        :rtype: Tuple[float, float, float, float, float, float]
+      )S")
+
+      .def("closestPoint_ISO", [](const BaseCurve & self, real_type qx, real_type qy) {
+        int_type ret;
+        real_type x, y, s, t, dst;
+        ret = self.closestPoint_ISO(qx, qy, x, y, s, t, dst);
+        return std::make_tuple(ret, x, y, s, t, dst);
+      }, py::arg("qx"), py::arg("qy"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the curve. This
+        function uses the ISO standard.
+
+        There are 6 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :return: a tuple of results as described
+        :rtype: Tuple[float, float, float, float, float, float]
+      )S")
+
+      .def("closestPoint_SAE", [](const BaseCurve & self, real_type qx, real_type qy) {
+        int_type ret;
+        real_type x, y, s, t, dst;
+        ret = self.closestPoint_SAE(qx, qy, x, y, s, t, dst);
+        return std::make_tuple(ret, x, y, s, t, dst);
+      }, py::arg("qx"), py::arg("qy"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the curve. This
+        function uses SAE standard.
+
+        There are 6 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :return: a tuple of results as described
+        :rtype: Tuple[float, float, float, float, float, float]
+      )S")
+
+      .def("distance", &BaseCurve::distance, py::arg("qx"), py::arg("qy"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the distance between the point and the
+        curve.
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :return: the distance of the point
+        :rtype: float
+      )S")
+
+      .def("distance_ISO", &BaseCurve::distance_ISO, py::arg("qx"), py::arg("qy"), py::arg("offs"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the distance between the point and the
+        curve, even with an offset. It uses ISO standard reference frame.
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param float offs: offset from the curve
+        :return: the distance of the point
+        :rtype: float
+      )S")
+
+      .def("distance_SAE", &BaseCurve::distance_SAE, py::arg("qx"), py::arg("qy"), py::arg("offs"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the distance between the point and the
+        curve, even with an offset. It uses SAE standard reference frame.
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param float offs: offset from the curve
+        :return: the distance of the point
+        :rtype: float
+      )S")
+        
+      .def("findST", [](const BaseCurve & self, real_type x, real_type y) {
         real_type s, t;
-        self->findST_ISO(x, y, s, t);
-        return std::make_tuple(s, t);
-      })
-      .def("findST_SAE", [](BaseCurve * self, real_type x, real_type y) {
+        bool ret = self.findST_ISO(x, y, s, t);
+        return std::make_tuple(ret, s, t);
+      }, py::arg("x"), py::arg("y"), 
+      R"S(
+        Find the curvilinear coordinate of point :math:`P = (x, y)`
+        with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
+        where :math:`C(s)` is the curve position respect to the curvilinear 
+        coordinates and :math:`t` is the normal :math:`N(s)` at the point.
+       
+        :param float x: **x** component
+        :param float y: **y** component
+        :return: a tuple with a boolean value (projection found or not) and
+                 the **s** and **t** coordinates on the curve.
+        :rtype: Tuple[bool, float, float]
+      )S")
+
+      .def("findST_ISO", [](const BaseCurve & self, real_type x, real_type y) {
         real_type s, t;
-        self->findST_SAE(x, y, s, t);
-        return std::make_tuple(s, t);
-      })
+        bool ret = self.findST_ISO(x, y, s, t);
+        return std::make_tuple(ret, s, t);
+      }, py::arg("x"), py::arg("y"), 
+      R"S(
+        Find the curvilinear coordinate of point :math:`P = (x, y)`
+        with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
+        where :math:`C(s)` is the curve position respect to the curvilinear 
+        coordinates and :math:`t` is the normal :math:`N(s)` at the point.
+        It uses the ISO reference frame.
+       
+        :param float x: **x** component
+        :param float y: **y** component
+        :return: a tuple with a boolean value (projection found or not) and
+                 the **s** and **t** coordinates on the curve.
+        :rtype: Tuple[bool, float, float]
+      )S")
+
+      .def("findST_SAE", [](const BaseCurve & self, real_type x, real_type y) {
+        real_type s, t;
+        bool ret = self.findST_SAE(x, y, s, t);
+        return std::make_tuple(ret, s, t);
+      }, py::arg("x"), py::arg("y"), 
+      R"S(
+        Find the curvilinear coordinate of point :math:`P = (x, y)`
+        with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
+        where :math:`C(s)` is the curve position respect to the curvilinear 
+        coordinates and :math:`t` is the normal :math:`N(s)` at the point.
+        It uses the SAE reference frame.
+       
+        :param float x: **x** component
+        :param float y: **y** component
+        :return: a tuple with a boolean value (projection found or not) and
+                 the **s** and **t** coordinates on the curve.
+        :rtype: Tuple[bool, float, float]
+      )S")
       
-      .def("__str__", [](BaseCurve * self) {
+      .def("__str__", [](const BaseCurve & self) {
         std::ostringstream str;
-        self->info(str);
+        self.info(str);
         return str.str();
       });
     }
