@@ -21,54 +21,163 @@
 namespace G2lib {
   namespace python {
     void wrap_Biarc(py::module & m) {
-      py::class_<Biarc, BaseCurve>(m, "Biarc")
-        .def(py::init())
-        .def(py::init<Biarc const &>())
-        .def(py::init<real_type, real_type, real_type, real_type, real_type, real_type>())
-        .def(py::init<BaseCurve const &>())
-        .def("copy", &Biarc::copy)
-        .def("build", &Biarc::build)
-        .def("build_3P", &Biarc::build_3P)
-        .def("getC0", &Biarc::C0)
-        .def("getC1", &Biarc::C1)
-        .def("xMiddle", &Biarc::xMiddle)
-        .def("yMiddle", &Biarc::yMiddle)
-        .def("thetaMiddle", &Biarc::thetaMiddle)
-        .def("kappa0", &Biarc::kappa0)
-        .def("kappa1", &Biarc::kappa1)
-        .def("length0", &Biarc::length0)
-        .def("length1", &Biarc::length1)
-        .def("delta_theta", &Biarc::delta_theta)
-        .def("bbTriangles", [](Biarc * self, real_type max_angle = Utils::m_pi/18, 
-                                    real_type max_size  = 1e100, int_type icurve = 0) {
-          std::vector<Triangle2D> tvec;
-          self->bbTriangles(tvec, max_angle, max_size, icurve);
-          return tvec;
-        }, py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
-        .def("bbTriangles_ISO", [](Biarc * self, real_type offs, real_type max_angle = Utils::m_pi/18, 
-                                    real_type max_size  = 1e100, int_type icurve = 0) {
-          std::vector<Triangle2D> tvec;
-          self->bbTriangles_ISO(offs, tvec, max_angle, max_size, icurve);
-          return tvec;
-        }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
-        .def("bbTriangles_SAE", [](Biarc * self, real_type offs, real_type max_angle = Utils::m_pi/18, 
-                                    real_type max_size  = 1e100, int_type icurve = 0) {
-          std::vector<Triangle2D> tvec;
-          self->bbTriangles_SAE(offs, tvec, max_angle, max_size, icurve);
-          return tvec;
-        }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0)
-        .def("collision", &Biarc::collision)
-        .def("collision_ISO", &Biarc::collision_ISO)
-        .def("intersect", [](Biarc * self, Biarc const & B, bool swap_s_vals) {
-          IntersectList ilist;
-          self->intersect(B, ilist, swap_s_vals);
-          return ilist;
-        })
-        .def("intersect_ISO", [](Biarc * self, real_type offs, Biarc const & B, real_type Coffs, bool swap_s_vals) {
-          IntersectList ilist;
-          self->intersect_ISO(offs, B, Coffs, ilist, swap_s_vals);
-          return ilist;
-        });
+      py::class_<Biarc, BaseCurve>(m, "Biarc",
+      R"S(
+        Compute biarc fitting by Hermite data
+
+        There are several possible constructors for this class:
+
+         * Empty constructor
+         * Copy contructor
+         * Constructor from data
+         * Explicit constructor from another base curve (unused)
+
+        For the copy constructor
+
+        :param Biarc curve: curve for copy
+
+        For the data constructor:
+
+        :param float x0: **x** coordinate of the origin
+        :param float y0: **y** coordinate of the origin
+        :param float theta0: tangent in the origin
+        :param float x1: **x** coordinate of the destination
+        :param float y1: **y** coordinate of the destination
+        :param float theta1: tangent in the destination
+      )S")
+
+      .def(py::init())
+      .def(py::init<Biarc const &>(), py::arg("curve"))
+      .def(py::init<real_type, real_type, real_type, real_type, real_type, real_type>(),
+        py::arg("x0"), py::arg("y0"), py::arg("theta0"), 
+        py::arg("x1"), py::arg("y1"), py::arg("theta1"))
+      .def(py::init<BaseCurve const &>(), py::arg("curve"))
+      
+      .def("copy", &Biarc::copy, py::arg("curve"),
+      R"S(
+        Copy onto this object another biarc parameters
+
+        :param Biarc curve: another biarc
+        :return: nothing, works in place
+        :rtype: NoneType
+      )S")
+
+      .def("build", &Biarc::build, 
+        py::arg("x0"), py::arg("y0"), py::arg("theta0"), 
+        py::arg("x1"), py::arg("y1"), py::arg("theta1"),
+      R"S(
+         Construct a biarc passing from the points
+         :math:`(x_0,y_0)` to the point  :math:`(x_1,y_1)`
+         with initial angle :math:`\theta_0` and final angle :math:`\theta_1`
+        
+        :param float x0: **x** coordinate of the origin
+        :param float y0: **y** coordinate of the origin
+        :param float theta0: tangent in the origin
+        :param float x1: **x** coordinate of the destination
+        :param float y1: **y** coordinate of the destination
+        :param float theta1: tangent in the destination
+        :return: false if biarc cannot be computed
+        :rtype: bool
+      )S")
+
+      .def("c0", &Biarc::C0, 
+      R"S(
+        Returns the first circle arc of the biarc
+
+        :return: circle arc of the biarc
+        :rtype: CircleArc
+      )S")
+
+      .def("c1", &Biarc::C1, 
+      R"S(
+        Returns the second circle arc of the biarc
+
+        :return: circle arc of the biarc
+        :rtype: CircleArc
+      )S")
+
+      .def("build_3P", &Biarc::build_3P,
+        py::arg("x0"), py::arg("y0"), py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
+      R"S(
+        Construct a biarc by 3 point at "minimum energy"
+        
+         * Planar point set fairing and fitting by arc splines
+         * Xunnian Yang and Guozhao Wang
+         * Computer-Aided Design, vol 33, 2001
+        
+        :param float x0: **x** coordinate of initial point
+        :param float y0: **y** coordinate of initial point
+        :param float x1: **x** coordinate of central point
+        :param float y1: **y** coordinate of central point
+        :param float x2: **x** coordinate of final point
+        :param float y2: **y** coordinate of final point
+        :return: false if biarc cannot be computed
+        :rtype: bool
+      )S")
+      
+      .def("xMiddle", &Biarc::xMiddle, 
+      R"S(
+        Returns the **x** coordinate of the junction point of the biarc
+
+        :return: **x** coordinates of the junction
+        :rtype: float
+      )S")
+      
+      .def("yMiddle", &Biarc::yMiddle,
+      R"S(
+        Returns the **y** coordinate of the junction point of the biarc
+
+        :return: **y** coordinates of the junction
+        :rtype: float
+      )S")
+
+      .def("thetaMiddle", &Biarc::thetaMiddle,
+      R"S(
+        Returns the **x** coordinate of the junction point of the biarc
+
+        :return: **x** coordinates of the junction
+        :rtype: float
+      )S")
+      
+      .def("kappa0", &Biarc::kappa0, 
+      R"S(
+        Curvature of the first circle arc
+
+        :return: curvature of the first circle arc
+        :rtype: float
+      )S")
+
+      .def("kappa1", &Biarc::kappa1, 
+      R"S(
+        Curvature of the second circle arc
+
+        :return: curvature of the second circle arc
+        :rtype: float
+      )S")
+
+      .def("length0", &Biarc::length0, 
+      R"S(
+        Length of the first circle arc
+
+        :return: length of the first circle arc
+        :rtype: float
+      )S")
+
+      .def("length1", &Biarc::length1, 
+      R"S(
+        Length of the second circle arc
+
+        :return: length of the second circle arc
+        :rtype: float
+      )S")
+      
+      .def("delta_theta", &Biarc::delta_theta,
+      R"S(
+        Change of angle of the biarc :math:`\theta_1 - \theta_0`
+
+        :return: the angle difference
+        :rtype: float
+      )S");
     }
 
     void wrap_BiarcList(py::module & m) {
@@ -124,21 +233,6 @@ namespace G2lib {
         .def("findAtS", &BiarcList::findAtS)
         .def("segment_length", &BiarcList::segment_length)
         .def("segment_length_ISO", &BiarcList::segment_length_ISO)
-        .def("bbTriangles", [](BiarcList * self, real_type max_angle = Utils::m_pi/6, real_type max_size  = 1e100) {
-          std::vector<Triangle2D> tvec;
-          self->bbTriangles(tvec, max_angle, max_size);
-          return tvec;
-        }, py::arg("max_angle") = Utils::m_pi/6, py::arg("max_size") = 1e100)
-        .def("bbTriangles_ISO", [](BiarcList * self, real_type offs, real_type max_angle, real_type max_size) {
-          std::vector<Triangle2D> tvec;
-          self->bbTriangles_ISO(offs, tvec, max_angle, max_size);
-          return tvec;
-        })
-        .def("bbTriangles_SAE", [](BiarcList * self, real_type offs, real_type max_angle = Utils::m_pi/18, real_type max_size  = 1e100) {
-          std::vector<Triangle2D> tvec;
-          self->bbTriangles_SAE(offs, tvec, max_angle, max_size);
-          return tvec;
-        }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100)
         .def("build_AABBtree_ISO", &BiarcList::build_AABBtree_ISO)
         .def("build_AABBtree_SAE", &BiarcList::build_AABBtree_SAE, 
           py::arg("offs"), py::arg("max_angle") = Utils::m_pi/6, py::arg("max_size") = 1e100)
