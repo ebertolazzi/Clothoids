@@ -245,6 +245,7 @@ namespace G2lib {
       R"S(
         Reserve memory for **n** biarc in the list
 
+        :param int n: number of element to reserve
         :return: nothing, works in place
         :rtype: NoneType
       )S")
@@ -273,7 +274,7 @@ namespace G2lib {
       R"S(
         Append a biarc to the current biarc list.
 
-        :param BiarcList c: the biarc
+        :param Biarc c: the biarc
         :return: nothing, works in place
         :rtype: NoneType
       )S")
