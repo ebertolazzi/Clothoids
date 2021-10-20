@@ -10,5 +10,6 @@ import unittest
 
 
 if __name__ == "__main__":
-    suite = unittest.defaultTestLoader.discover(".")    
+    test_path = os.path.normpath(os.path.join(__file__, ".."))
+    suite = unittest.defaultTestLoader.discover(test_path)    
     unittest.TextTestRunner(verbosity=2).run(suite)
