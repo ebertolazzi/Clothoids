@@ -184,7 +184,7 @@ namespace G2lib {
           :rtype: NoneType
         )S")
 
-        .def("bbox", [](Triangle2D & self) {
+        .def("bbox", [](const Triangle2D & self) {
           real_type x_min, y_min, x_max, y_max;
           self.bbox(x_min, y_min, x_max, y_max);
           return std::make_tuple(
@@ -289,7 +289,7 @@ namespace G2lib {
           :rtype: int
         )S")
 
-        .def("isInside", [](Triangle2D & self, std::tuple<real_type, real_type> p) {
+        .def("isInside", [](const Triangle2D & self, std::tuple<real_type, real_type> p) {
           real_type _p[2] = {std::get<0>(p), std::get<1>(p)};
           return self.isInside(_p);
         },
