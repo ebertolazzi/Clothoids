@@ -143,7 +143,7 @@ if(BUILD_EXECUTABLE OR ENABLE_CTEST)
   )
   foreach(EXE ${EXECUTABLES})
     add_executable(${EXE} tests-cpp/${EXE}.cc)
-    target_link_libraries(${EXE} PRIVATE ${STATIC_PROJECT} Utils ${CMAKE_DL_LIBS})
+    target_link_libraries(${EXE} PRIVATE ${STATIC_PROJECT} UtilsStatic QuarticStatic ${CMAKE_DL_LIBS})
     set_target_properties(
       ${EXE} PROPERTIES
       RUNTIME_OUTPUT_DIRECTORY "${TEST_OUTPUT_PATH}"

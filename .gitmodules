@@ -1,6 +1,6 @@
-[submodule "submodules/quarticRootsFlocke"]
-	path = submodules/quarticRootsFlocke
-	url = https://github.com/ebertolazzi/quarticRootsFlocke
 [submodule "submodules/Utils"]
 	path = submodules/Utils
-	url = https://github.com/ebertolazzi/Utils.git
+	url = git@github.com:ebertolazzi/Utils.git
+[submodule "submodules/quarticRootsFlocke"]
+	path = submodules/quarticRootsFlocke
+	url = git@github.com:ebertolazzi/quarticRootsFlocke.git
