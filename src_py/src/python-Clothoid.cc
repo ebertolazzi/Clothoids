@@ -1123,7 +1123,7 @@ namespace G2lib {
 
       .def("load", [](const ClothoidList & self, const std::string & csv, real_type epsi) {
         std::istringstream str(csv);
-        self.load(str, espi);
+        self.load(str, epsi);
       }, py::arg("csv"), py::arg("espi") = 1e-8,
       R"S(
         Load the clothoid from a csv. Data is assumed to be saved as follows:
