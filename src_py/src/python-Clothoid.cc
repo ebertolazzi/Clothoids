@@ -1121,7 +1121,7 @@ namespace G2lib {
         :rtype: str
       )S")
 
-      .def("load", [](const ClothoidList & self, const std::string & csv, real_type epsi) {
+      .def("load", [](ClothoidList & self, const std::string & csv, real_type epsi) {
         std::istringstream str(csv);
         self.load(str, epsi);
       }, py::arg("csv"), py::arg("espi") = 1e-8,
