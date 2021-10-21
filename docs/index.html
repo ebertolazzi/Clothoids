@@ -1,0 +1,401 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Matlab Interface Manual" href="Matlab_manual.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="#" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="Matlab_manual.html" title="Matlab Interface Manual"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+    <li><a href="#">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section class="emphasize-children html-toggle" id="g1-and-g2-fitting-with-clothoids-spline-of-clothods-circle-arc-and-biarc">
+<h1>G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc<a class="headerlink" href="#g1-and-g2-fitting-with-clothoids-spline-of-clothods-circle-arc-and-biarc" title="Permalink to this headline">¶</a>
+</h1>
+<p><strong>Github repository</strong> <a class="reference external" href="https://github.com/ebertolazzi/Clothoids">https://github.com/ebertolazzi/Clothoids</a></p>
+<p><strong>Matlab TOOLBOX</strong> <a class="reference external" href="https://github.com/ebertolazzi/Clothoids/releases">https://github.com/ebertolazzi/Clothoids/releases</a></p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a>
+</h2>
+<section id="matlab">
+<h3>Matlab<a class="headerlink" href="#matlab" title="Permalink to this headline">¶</a>
+</h3>
+<p>Download the toolbox and install as usual.
+Run <code class="docutils literal notranslate"><span class="pre">CompileClothoidsLib</span></code> on Matlab console windows
+to compile the <code class="docutils literal notranslate"><span class="pre">mex</span></code> of the library.</p>
+</section>
+<section id="c">
+<h3>C++<a class="headerlink" href="#c" title="Permalink to this headline">¶</a>
+</h3>
+<p>Download the library</p>
+<div class="highlight-sh notranslate">
+<div class="highlight"><pre><span></span>git clone git@github.com:ebertolazzi/Clothoids.git —recurse-submodules
+</pre></div>
+</div>
+<p>if you forget <code class="docutils literal notranslate"><span class="pre">—recurse-submodules</span></code> you must load the submdule
+quarticRootsFlocke next. To compile the library you can use <code class="docutils literal notranslate"><span class="pre">make</span></code></p>
+<div class="highlight-sh notranslate">
+<div class="highlight"><pre><span></span>make
+</pre></div>
+</div>
+<p>or <code class="docutils literal notranslate"><span class="pre">cmake</span></code></p>
+<div class="highlight-sh notranslate">
+<div class="highlight"><pre><span></span>mkdir build
+<span class="nb">cd</span> build
+cmake ..
+make
+</pre></div>
+</div>
+<p>of <code class="docutils literal notranslate"><span class="pre">rake</span></code></p>
+<div class="highlight-sh notranslate">
+<div class="highlight"><pre><span></span>rake build_osx   <span class="c1"># on mac</span>
+rake build_linux <span class="c1"># on linux</span>
+rake build_win   <span class="c1"># on windows</span>
+</pre></div>
+</div>
+<p>using <code class="docutils literal notranslate"><span class="pre">make</span></code> you have the library and headers in the following tree</p>
+<div class="highlight-text notranslate">
+<div class="highlight"><pre><span></span>`-- lib
+    |-- include
+    |   |-- AABBtree.hh
+    |   |-- Biarc.hh
+    |   |-- BiarcList.hh
+    |   |-- Circle.hh
+    |   |-- Clothoid.hh
+    |   |-- ClothoidAsyPlot.hh
+    |   |-- ClothoidList.hh
+    |   |-- Fresnel.hh
+    |   |-- G2lib.hh
+    |   |-- Line.hh
+    |   |-- PolyLine.hh
+    |   |-- PolynomialRoots-Utils.hh
+    |   |-- PolynomialRoots.hh
+    |   `-- Triangle2D.hh
+    `-- lib
+        |-- libClothoids_OSTYPE.dylib
+        `-- libClothoids_OSTYPE_static.a
+</pre></div>
+</div>
+<p>where OSTYPE can be <code class="docutils literal notranslate"><span class="pre">linux</span></code>, <code class="docutils literal notranslate"><span class="pre">osx</span></code>, <code class="docutils literal notranslate"><span class="pre">mingw_x64</span></code>, <code class="docutils literal notranslate"><span class="pre">win_x64</span></code></p>
+</section>
+</section>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a>
+</h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1">
+<a class="reference internal" href="Matlab_manual.html">Matlab Interface Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#installation-mex-matlab-interface">Installation mex/MATLAB interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#linesegment">LineSegment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#constuctors">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#evaluation-methods">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#circlearc">CircleArc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id1">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id2">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#distance-methods">Distance Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id3">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#biarc">Biarc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id4">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id5">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id6">Distance Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id7">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#clothoidcurve">ClothoidCurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id8">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id9">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#distance-and-intersection-methods">Distance and intersection Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#id10">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#clothoidlist">ClothoidList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#clothoidsplineg2">ClothoidSplineG2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#triangle2d">Triangle2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Matlab_manual.html#fresnelcs">FresnelCS</a></li>
+</ul>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="api-cpp/root.html">C++ API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-cpp/root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-cpp/root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-cpp/root.html#full-api">Full API</a></li>
+</ul>
+</li>
+<li class="toctree-l1">
+<a class="reference internal" href="api-matlab/root.html">MATLAB API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-matlab/root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-matlab/root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-matlab/root.html#full-api">Full API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a>
+</h3>
+<ul>
+<li>
+<div class="line-block">
+<div class="line">Enrico Bertolazzi</div>
+<div class="line">Dipartimento di Ingegneria Industriale</div>
+<div class="line">Università degli Studi di Trento</div>
+<div class="line">email: <script type="text/javascript">document.write(
+    "<n pynff=\"ersrerapr rkgreany\" uers=\"znvygb:raevpb\056oregbynmmv%40havga\056vg\">raevpb<fcna>\056<\057fcna>oregbynmmv<fcna>\100<\057fcna>havga<fcna>\056<\057fcna>vg<\057n>".replace(/[a-zA-Z]/g,
+        function(c){
+            return String.fromCharCode(
+                (c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26
+            );
+        }
+    )
+);</script>
+</div>
+<div class="line">homepage: <a class="reference external" href="https://e.bertolazzi.dii.unitn.it">https://e.bertolazzi.dii.unitn.it</a>
+</div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">Marco Frego</div>
+<div class="line">Faculty of Science and Technology</div>
+<div class="line">Free University of Bozen-Bolzano</div>
+<div class="line">email: <script type="text/javascript">document.write(
+    "<n pynff=\"ersrerapr rkgreany\" uers=\"znvygb:znepb\056sertb%40havom\056vg\">znepb<fcna>\056<\057fcna>sertb<fcna>\100<\057fcna>havom<fcna>\056<\057fcna>vg<\057n>".replace(/[a-zA-Z]/g,
+        function(c){
+            return String.fromCharCode(
+                (c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26
+            );
+        }
+    )
+);</script>
+</div>
+</div>
+</li>
+</ul>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a>
+</h3>
+<ol class="arabic">
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>G1 fitting with clothoids</strong>,</div>
+<div class="line">Mathematical Methods in the Applied Sciences,</div>
+<div class="line">John Wiley &amp; Sons, 2014, vol. 38, n.5, pp. 881-897,</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1002/mma.3114">https://doi.org/10.1002/mma.3114</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>On the G2 Hermite interpolation
+problem with clothoids</strong>,</div>
+<div class="line">Journal of Computational and Applied Mathematics,</div>
+<div class="line">2018, vol. 15, n.341, pp. 99-116.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1016/j.cam.2018.03.029">https://doi.org/10.1016/j.cam.2018.03.029</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>Interpolating clothoid splines with
+curvature continuity</strong>,</div>
+<div class="line">Mathematical Methods in the Applied Sciences,</div>
+<div class="line">2018, vol. 41, n.4, pp. 1099-1476.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1002/mma.4700">https://doi.org/10.1002/mma.4700</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em> <strong>Point-Clothoid Distance and Projection Computation</strong>,</div>
+<div class="line">SIAM Journal on Scientific Computing,</div>
+<div class="line">2019, 41(5), A3326–A3353.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1137/18M1200439">https://doi.org/10.1137/18M1200439</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em> <strong>A Note on Robust Biarc Computation</strong>,</div>
+<div class="line">Computer-Aided Design &amp; Applications 16 (5), 822-835</div>
+<div class="line"><a class="reference external" href="http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf">http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf</a></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="license">
+<h3>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a>
+</h3>
+<div class="highlight-none notranslate">
+<div class="highlight"><pre><span></span>Copyright (c) 2020, Enrico Bertolazzi and Marco Frego
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in
+      the documentation and/or other materials provided with the distribution
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="#" title="index">
+          <img class="logo" src="_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="#">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="#" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="Matlab_manual.html" title="Matlab Interface Manual"
+             >next</a> &nbsp; &nbsp;</li>
+    <li><a href="#">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

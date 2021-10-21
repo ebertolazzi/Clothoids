@@ -1,0 +1,440 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Class ClothoidSplineG2 &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class G2solve2arc" href="class_a00155.html" />
+    <link rel="prev" title="Class ClothoidList" href="class_a00167.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00155.html" title="Class G2solve2arc"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00167.html" title="Class ClothoidList"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class ClothoidSplineG2</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="class-clothoidsplineg2">
+<span id="exhale-class-a00171"></span><h1>Class ClothoidSplineG2<a class="headerlink" href="#class-clothoidsplineg2" title="Permalink to this headline">¶</a>
+</h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_Clothoids_ClothoidList.hxx.html#file-clothoids-clothoidlist-hxx"><span class="std std-ref">File ClothoidList.hxx</span></a></p></li>
+</ul>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
+</h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG2E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG2E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG2E"></span><span id="G2lib::ClothoidSplineG2"></span><span class="target" id="a00171"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">G2lib</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">ClothoidSplineG2</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG2E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Class for the computation of G2 spljne of clothoids </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetTypeE">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetTypeE"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetTypeE"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TargetType</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetTypeE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P1E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P1E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P1E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306a96c8925e7e8398d6449445c5c22f0c7e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P1</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P1E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P2E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P2E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P2E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306a27c24533ac6217091300afe14959c32f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P2</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P2E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P3E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P3E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P3E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306ad091781116a85773010a7eaf6292f0ac"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P3</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P3E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P4E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P4E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P4E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306aa912721d00686641efb5e9c9771e0ea5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P4</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P4E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P5E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P5E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P5E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306a0f13bac32f285121ccb3b12dd0b13cd6"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P5</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P5E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P6E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P6E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P6E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306a7d991f16708653cee7e9258a8da5e7fb"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P6</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P6E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P7E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P7E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P7E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306a484109ee0ab647a89f1385986eff67c3"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P7</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P7E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P8E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P8E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P8E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306a3bbeb7a5a4bb74f86c8e0bea0ec626fe"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P8</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P8E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG210TargetType2P9E">
+<span id="_CPPv3N5G2lib16ClothoidSplineG210TargetType2P9E"></span><span id="_CPPv2N5G2lib16ClothoidSplineG210TargetType2P9E"></span><span class="target" id="a00171_1a2bdca5a9963b0328e34ff7c5563d4306a2f6341b70844fee2f58f134d79283e06"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P9</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG210TargetType2P9E" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+</dd>
+</dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG216ClothoidSplineG2Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG216ClothoidSplineG2Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG216ClothoidSplineG2Ev"></span><span id="G2lib::ClothoidSplineG2::ClothoidSplineG2"></span><span class="target" id="a00171_1ac8c1efbe73e1b580edf5a20762926f95"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClothoidSplineG2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG216ClothoidSplineG2Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG2D0Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG2D0Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG2D0Ev"></span><span id="G2lib::ClothoidSplineG2::~ClothoidSplineG2"></span><span class="target" id="a00171_1a142b6b1010a62b93f952729d9b8975c7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~ClothoidSplineG2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG2D0Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP1E9real_type9real_type">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP1E9real_type9real_type"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP1E9real_type9real_type"></span><span id="G2lib::ClothoidSplineG2::setP1__real_type.real_type"></span><span class="target" id="a00171_1aa394296e02348f3d0c5832137336dea6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP1</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetaN</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP1E9real_type9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP2Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP2Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP2Ev"></span><span id="G2lib::ClothoidSplineG2::setP2"></span><span class="target" id="a00171_1ada7bb1a21e1e10020a70ef0a28093689"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP2Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP3Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP3Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP3Ev"></span><span id="G2lib::ClothoidSplineG2::setP3"></span><span class="target" id="a00171_1a90a14f610581691a6bb61b42f47d6aeb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP3</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP3Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP4Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP4Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP4Ev"></span><span id="G2lib::ClothoidSplineG2::setP4"></span><span class="target" id="a00171_1a990c69a26c3976e2eb0126a022e9ffc3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP4</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP4Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP5Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP5Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP5Ev"></span><span id="G2lib::ClothoidSplineG2::setP5"></span><span class="target" id="a00171_1a6acc5f9bae89dc7d89701247698210bc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP5</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP5Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP6Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP6Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP6Ev"></span><span id="G2lib::ClothoidSplineG2::setP6"></span><span class="target" id="a00171_1a9466df9804270455bbb25c222f43c0dc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP6</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP6Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP7Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP7Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP7Ev"></span><span id="G2lib::ClothoidSplineG2::setP7"></span><span class="target" id="a00171_1aefa91d946d697665c74e171da05b1d6b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP7</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP7Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP8Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP8Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP8Ev"></span><span id="G2lib::ClothoidSplineG2::setP8"></span><span class="target" id="a00171_1aaccf933b3fde6c0703334dd744e1f986"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP8</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP8Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25setP9Ev">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25setP9Ev"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25setP9Ev"></span><span id="G2lib::ClothoidSplineG2::setP9"></span><span class="target" id="a00171_1a6a6a6bcd9cf0d0605ddb28399b091f60"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setP9</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25setP9Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG25buildEPK9real_typePK9real_type8int_type">
+<span id="_CPPv3N5G2lib16ClothoidSplineG25buildEPK9real_typePK9real_type8int_type"></span><span id="_CPPv2N5G2lib16ClothoidSplineG25buildEPK9real_typePK9real_type8int_type"></span><span id="G2lib::ClothoidSplineG2::build__real_typeCP.real_typeCP.int_type"></span><span class="target" id="a00171_1a8e5dda9dadc3f76e4e45cfd0fbb0789a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">xvec</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">yvec</span></span>, <a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG25buildEPK9real_typePK9real_type8int_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG27numPntsEv">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG27numPntsEv"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG27numPntsEv"></span><span id="G2lib::ClothoidSplineG2::numPntsC"></span><span class="target" id="a00171_1a0c5cc5fa5476f98bc38318b3e945a4bc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numPnts</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG27numPntsEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG28numThetaEv">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG28numThetaEv"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG28numThetaEv"></span><span id="G2lib::ClothoidSplineG2::numThetaC"></span><span class="target" id="a00171_1a13dc6e8f638e6b08815cf14240874dea"></span><a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numTheta</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG28numThetaEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG214numConstraintsEv">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG214numConstraintsEv"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG214numConstraintsEv"></span><span id="G2lib::ClothoidSplineG2::numConstraintsC"></span><span class="target" id="a00171_1acc698a11de52edc47e34262926b00a8d"></span><a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numConstraints</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG214numConstraintsEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG25guessEP9real_typeP9real_typeP9real_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG25guessEP9real_typeP9real_typeP9real_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG25guessEP9real_typeP9real_typeP9real_type"></span><span id="G2lib::ClothoidSplineG2::guess__real_typeP.real_typeP.real_typePC"></span><span class="target" id="a00171_1a5cd0b8baccba41e544d8687ef34bce41"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">guess</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">theta_guess</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">theta_min</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">theta_max</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG25guessEP9real_typeP9real_typeP9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG29objectiveEPK9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG29objectiveEPK9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG29objectiveEPK9real_typeR9real_type"></span><span id="G2lib::ClothoidSplineG2::objective__real_typeCP.real_typeRC"></span><span class="target" id="a00171_1a735f99f185c36bbd9d10dbea6e7fc0f1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">objective</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">theta</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">f</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG29objectiveEPK9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG28gradientEPK9real_typeP9real_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG28gradientEPK9real_typeP9real_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG28gradientEPK9real_typeP9real_type"></span><span id="G2lib::ClothoidSplineG2::gradient__real_typeCP.real_typePC"></span><span class="target" id="a00171_1ad0b86f23ff7efa862686999208ac1073"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">gradient</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">theta</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">g</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG28gradientEPK9real_typeP9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG211constraintsEPK9real_typeP9real_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG211constraintsEPK9real_typeP9real_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG211constraintsEPK9real_typeP9real_type"></span><span id="G2lib::ClothoidSplineG2::constraints__real_typeCP.real_typePC"></span><span class="target" id="a00171_1a51903c96352d561b8864964de7f9fb8f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">constraints</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">theta</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">c</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG211constraintsEPK9real_typeP9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG212jacobian_nnzEv">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG212jacobian_nnzEv"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG212jacobian_nnzEv"></span><span id="G2lib::ClothoidSplineG2::jacobian_nnzC"></span><span class="target" id="a00171_1ae600b0abe7b107dabfaa35adfbb33506"></span><a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jacobian_nnz</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG212jacobian_nnzEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG216jacobian_patternEP8int_typeP8int_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG216jacobian_patternEP8int_typeP8int_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG216jacobian_patternEP8int_typeP8int_type"></span><span id="G2lib::ClothoidSplineG2::jacobian_pattern__int_typeP.int_typePC"></span><span class="target" id="a00171_1aae8bcfddb546fe487493c9530831ecb2"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jacobian_pattern</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">i</span></span>, <a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">j</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG216jacobian_patternEP8int_typeP8int_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG223jacobian_pattern_matlabEP9real_typeP9real_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG223jacobian_pattern_matlabEP9real_typeP9real_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG223jacobian_pattern_matlabEP9real_typeP9real_type"></span><span id="G2lib::ClothoidSplineG2::jacobian_pattern_matlab__real_typeP.real_typePC"></span><span class="target" id="a00171_1a1fe549e70fd7fd95d103b0b9269ec06a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jacobian_pattern_matlab</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">i</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">j</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG223jacobian_pattern_matlabEP9real_typeP9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG28jacobianEPK9real_typeP9real_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG28jacobianEPK9real_typeP9real_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG28jacobianEPK9real_typeP9real_type"></span><span id="G2lib::ClothoidSplineG2::jacobian__real_typeCP.real_typePC"></span><span class="target" id="a00171_1a90a6be1c4ce4650b20bbd5536dae39c9"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">jacobian</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">theta</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">vals</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG28jacobianEPK9real_typeP9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib16ClothoidSplineG24infoER12ostream_type">
+<span id="_CPPv3NK5G2lib16ClothoidSplineG24infoER12ostream_type"></span><span id="_CPPv2NK5G2lib16ClothoidSplineG24infoER12ostream_type"></span><span id="G2lib::ClothoidSplineG2::info__ostream_typeRC"></span><span class="target" id="a00171_1a396c89c48d7611f4c4b5ee250022489c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">info</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib16ClothoidSplineG24infoER12ostream_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16ClothoidSplineG2lsER12ostream_typeRK16ClothoidSplineG2">
+<span id="_CPPv3N5G2lib16ClothoidSplineG2lsER12ostream_typeRK16ClothoidSplineG2"></span><span id="_CPPv2N5G2lib16ClothoidSplineG2lsER12ostream_typeRK16ClothoidSplineG2"></span><span id="G2lib::ClothoidSplineG2::lshift-operator__ostream_typeR.ClothoidSplineG2CR"></span><span class="target" id="a00171_1a406f0cfa3728ce21b7345fb7af2a3738"></span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <a class="reference internal" href="#_CPPv4N5G2lib16ClothoidSplineG2E" title="G2lib::ClothoidSplineG2"><span class="n"><span class="pre">ClothoidSplineG2</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">c</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib16ClothoidSplineG2lsER12ostream_typeRK16ClothoidSplineG2" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+</div>
+</dd>
+</dl>
+
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00155.html" title="Class G2solve2arc"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00167.html" title="Class ClothoidList"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" >C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class ClothoidSplineG2</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

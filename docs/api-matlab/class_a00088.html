@@ -1,0 +1,396 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Class ClothoidSplineG2 &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class CurveBase" href="class_a00092.html" />
+    <link rel="prev" title="Class ClothoidList" href="class_a00084.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00092.html" title="Class CurveBase"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00084.html" title="Class ClothoidList"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">MATLAB API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class ClothoidSplineG2</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="class-clothoidsplineg2">
+<span id="exhale-class-a00088"></span><h1>Class ClothoidSplineG2<a class="headerlink" href="#class-clothoidsplineg2" title="Permalink to this headline">¶</a>
+</h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_ClothoidSplineG2.m.html#file-clothoidsplineg2-m"><span class="std std-ref">File ClothoidSplineG2.m</span></a></p></li>
+</ul>
+<section id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a>
+</h2>
+<section id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a>
+</h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">handle</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
+</h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv416ClothoidSplineG2">
+<span id="_CPPv316ClothoidSplineG2"></span><span id="_CPPv216ClothoidSplineG2"></span><span id="ClothoidSplineG2"></span><span class="target" id="a00088"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClothoidSplineG2</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">handle</span></span><a class="headerlink" href="#_CPPv416ClothoidSplineG2" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Construct a piecewise clothoids <span class="math notranslate nohighlight">\( \G(s) \)</span> composed by n clothoids that solve the G2 problem</p>
+<p><strong>match points</strong></p>
+<p></p>
+<div class="math notranslate nohighlight">
+\[ G(s_k) = \mathbf{p}_k \]</div>
+ <div class="math notranslate nohighlight">
+\[ \lim_{s\to s_k^+} G'(s) = \lim_{s\to s_k^-} G'(s) \]</div>
+ <div class="math notranslate nohighlight">
+\[ \lim_{s\to s_k^+} G''(s) = \lim_{s\to s_k^-} G''(s) \]</div>
+
+<p><strong>Reference</strong></p>
+<p>The solution algorithm is described in</p>
+<p></p>
+<ul class="simple">
+<li><p><strong>E.Bertolazzi, M.Frego</strong>, Interpolating clothoid splines with curvature continuity Mathematica Methods in the Applied Sciences, vol 41, N.4, pp. 1723-1737, 2018</p></li>
+</ul>
+
+<p></p>
+<p><a class="reference internal" href="../_images/G2problem3arc.jpg"><img alt="../_images/G2problem3arc.jpg" class="align-center" src="../_images/G2problem3arc.jpg" style="width: 80%;"></a></p>
+ 
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG25nlsysE2in2in">
+<span id="_CPPv3N16ClothoidSplineG25nlsysE2in2in"></span><span id="_CPPv2N16ClothoidSplineG25nlsysE2in2in"></span><span id="ClothoidSplineG2::nlsys__in.in"></span><span class="target" id="a00088_1a23863fb79ab4badbbff2744bd2e2b1b2"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nlsys</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG25nlsysE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG23conE2in2in">
+<span id="_CPPv3N16ClothoidSplineG23conE2in2in"></span><span id="_CPPv2N16ClothoidSplineG23conE2in2in"></span><span id="ClothoidSplineG2::con__in.in"></span><span class="target" id="a00088_1a7f2f8f77d7a70bf60d10d3387a27ce15"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">con</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG23conE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG23objE2in2in">
+<span id="_CPPv3N16ClothoidSplineG23objE2in2in"></span><span id="_CPPv2N16ClothoidSplineG23objE2in2in"></span><span id="ClothoidSplineG2::obj__in.in"></span><span class="target" id="a00088_1aeb56e6775df917374e7e0f812db15052"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">obj</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG23objE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG25buildE2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG25buildE2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG25buildE2in2in2in"></span><span id="ClothoidSplineG2::build__in.in.in"></span><span class="target" id="a00088_1ad0df07724eebc3db7918b588d63395e8"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG25buildE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Call C++ setup for the problem solver. Check that consecutive points are distinct </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG214build_internalE2in2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG214build_internalE2in2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG214build_internalE2in2in2in2in"></span><span id="ClothoidSplineG2::build_internal__in.in.in.in"></span><span class="target" id="a00088_1a3f9bfcaf7695ba75be352924498a82c6"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_internal</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG214build_internalE2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG215build_internal2E2in2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG215build_internal2E2in2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG215build_internal2E2in2in2in2in"></span><span id="ClothoidSplineG2::build_internal2__in.in.in.in"></span><span class="target" id="a00088_1a5918a7f3299ff54d3b1b1331f35fc14b"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_internal2</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG215build_internal2E2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG216ClothoidSplineG2Ev">
+<span id="_CPPv3N16ClothoidSplineG216ClothoidSplineG2Ev"></span><span id="_CPPv2N16ClothoidSplineG216ClothoidSplineG2Ev"></span><span id="ClothoidSplineG2::ClothoidSplineG2"></span><span class="target" id="a00088_1adc6f053313c042944b53930d42664ba9"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ClothoidSplineG2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG216ClothoidSplineG2Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27verboseE2in2in">
+<span id="_CPPv3N16ClothoidSplineG27verboseE2in2in"></span><span id="_CPPv2N16ClothoidSplineG27verboseE2in2in"></span><span id="ClothoidSplineG2::verbose__in.in"></span><span class="target" id="a00088_1a61015212c8db8a5ef5b6b23332801035"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">verbose</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">yes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27verboseE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG25ipoptE2in2in">
+<span id="_CPPv3N16ClothoidSplineG25ipoptE2in2in"></span><span id="_CPPv2N16ClothoidSplineG25ipoptE2in2in"></span><span id="ClothoidSplineG2::ipopt__in.in"></span><span class="target" id="a00088_1a86fddca2491aa32bd1f71e398caa945c"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ipopt</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">yesno</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG25ipoptE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG211ipopt_checkE2in2in">
+<span id="_CPPv3N16ClothoidSplineG211ipopt_checkE2in2in"></span><span id="_CPPv2N16ClothoidSplineG211ipopt_checkE2in2in"></span><span id="ClothoidSplineG2::ipopt_check__in.in"></span><span class="target" id="a00088_1af17ef2f4927a68268e1e3bdf620d1760"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ipopt_check</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">yesno</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG211ipopt_checkE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG24dimsE2in">
+<span id="_CPPv3N16ClothoidSplineG24dimsE2in"></span><span id="_CPPv2N16ClothoidSplineG24dimsE2in"></span><span id="ClothoidSplineG2::dims__in"></span><span class="target" id="a00088_1a2b496f62258a819f09a78d2cba357e3a"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dims</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG24dimsE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG25guessE2in">
+<span id="_CPPv3N16ClothoidSplineG25guessE2in"></span><span id="_CPPv2N16ClothoidSplineG25guessE2in"></span><span id="ClothoidSplineG2::guess__in"></span><span class="target" id="a00088_1a9286d3d4391e0228e91d2097e508d5a5"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">guess</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG25guessE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP1E2in2in2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP1E2in2in2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP1E2in2in2in2in2in"></span><span id="ClothoidSplineG2::buildP1__in.in.in.in.in"></span><span class="target" id="a00088_1a6a22d4bc755c1eafce685cff185ebbe3"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP1</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP1E2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points (x(i),y(i)) with initial angle theta0 (radiants) and final angle theta1 (radiants) </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP2E2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP2E2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP2E2in2in2in"></span><span id="ClothoidSplineG2::buildP2__in.in.in"></span><span class="target" id="a00088_1a15a7e45218aaa9c90d01ef9f5cab4aac"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP2</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP2E2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points (x(i),y(i)) with cyclic condition (tangent and curvature meet)</p>
+<p></p>
+<ul class="simple">
+<li><p>theta(1) = theta(end) mod 2*pi</p></li>
+<li><p>kappa(1) = kappa(end) </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP3E2in2in2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP3E2in2in2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP3E2in2in2in2in2in"></span><span id="ClothoidSplineG2::buildP3__in.in.in.in.in"></span><span class="target" id="a00088_1a13176077f5e00fcc6f872f63471554c9"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP3</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">kappa0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP3E2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points (x(i),y(i)) with assignede initial angle and survature NB: this target is not reccomended (its unstable), used only for debugging </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP4E2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP4E2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP4E2in2in2in"></span><span id="ClothoidSplineG2::buildP4__in.in.in"></span><span class="target" id="a00088_1a802e2698f1858619079ae35ce65729af"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP4</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP4E2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points <span class="math notranslate nohighlight">\( (x_i,y_i)\)</span> and minimizing derivative of the curvature al the extrema</p>
+<p>minimize <span class="math notranslate nohighlight">\( k'(0)^2 + k'(L)^2 \)</span> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP5E2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP5E2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP5E2in2in2in"></span><span id="ClothoidSplineG2::buildP5__in.in.in"></span><span class="target" id="a00088_1aec54d7e3764a278a2555cdd5857827f4"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP5</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP5E2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points <span class="math notranslate nohighlight">\( (x_i,y_i)\)</span> and minimizing the length of the first and last segment</p>
+<p>minimize <span class="math notranslate nohighlight">\( (s_1-s_0)+(s_n - s_{n-1}) \)</span> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP6E2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP6E2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP6E2in2in2in"></span><span id="ClothoidSplineG2::buildP6__in.in.in"></span><span class="target" id="a00088_1a10d47e175fae2a81bcb638bc48c16304"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP6</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP6E2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points <span class="math notranslate nohighlight">\( (x_i,y_i)\)</span> and minimizing the total length of the spline</p>
+<p><span class="math notranslate nohighlight">\( L = s_n-s_0 \)</span> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP7E2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP7E2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP7E2in2in2in"></span><span id="ClothoidSplineG2::buildP7__in.in.in"></span><span class="target" id="a00088_1afb74b4cc700e8d4d46c49d0dff9d2f6d"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP7</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP7E2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points <span class="math notranslate nohighlight">\( (x_i,y_i)\)</span> and minimizing the integral of the square of the curvature:</p>
+<p>minimize: <span class="math notranslate nohighlight">\( \displaystyle \int_0^L k(s)^2 \mathrm{d}s \)</span> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP8E2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP8E2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP8E2in2in2in"></span><span id="ClothoidSplineG2::buildP8__in.in.in"></span><span class="target" id="a00088_1a09dea5eee15b916076bfc4b75fc97534"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP8</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP8E2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points <span class="math notranslate nohighlight">\( (x_i,y_i)\)</span> and minimizing the integral of the square of the curvature derivative:</p>
+<p>minimize: <span class="math notranslate nohighlight">\( \displaystyle \int_0^L k'(s)^2 \mathrm{d}s \)</span> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16ClothoidSplineG27buildP9E2in2in2in">
+<span id="_CPPv3N16ClothoidSplineG27buildP9E2in2in2in"></span><span id="_CPPv2N16ClothoidSplineG27buildP9E2in2in2in"></span><span id="ClothoidSplineG2::buildP9__in.in.in"></span><span class="target" id="a00088_1a875f47e8330f772a747ee09fd8f047b4"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildP9</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16ClothoidSplineG27buildP9E2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the clothoid spline passing to the points <span class="math notranslate nohighlight">\( (x_i,y_i)\)</span> and minimizing the integral of the jerk squared </p>
+</dd>
+</dl>
+
+</div>
+</dd>
+</dl>
+
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00092.html" title="Class CurveBase"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00084.html" title="Class ClothoidList"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" >MATLAB API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class ClothoidSplineG2</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

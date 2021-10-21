@@ -1,0 +1,832 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Matlab Interface Manual &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="C++ API" href="api-cpp/root.html" />
+    <link rel="prev" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc" href="index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="api-cpp/root.html" title="C++ API"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Matlab Interface Manual</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section class="emphasize-children html-toggle" id="matlab-interface-manual">
+<h1>Matlab Interface Manual<a class="headerlink" href="#matlab-interface-manual" title="Permalink to this headline">¶</a>
+</h1>
+<a class="reference internal image-reference" href="_images/Art_Figure_1.png"><img alt="_images/Art_Figure_1.png" src="_images/Art_Figure_1.png" style="width: 300px;"></a>
+<p>The interface is Object Oriented and you find the following
+objects in the library:</p>
+<ul class="simple">
+<li><p>LineSegment</p></li>
+<li><p>CircleArc</p></li>
+<li><p>Biarc</p></li>
+<li><p>ClothoidCurve</p></li>
+<li><p>PolyLine</p></li>
+<li><p>ClothoidList</p></li>
+<li><p>ClothoidSplineG2</p></li>
+<li><p>Triangle2D</p></li>
+<li><p>FresnelCS</p></li>
+</ul>
+<section id="installation-mex-matlab-interface">
+<h2>Installation mex/MATLAB interface<a class="headerlink" href="#installation-mex-matlab-interface" title="Permalink to this headline">¶</a>
+</h2>
+<p>In directory <cite>src_mex</cite> you find the C++ implementation of
+the proposed algorithm with <cite>mex</cite> interface.
+The easy way to build mexx/MATLAB interface is to download
+the compiled Toolbox at
+<a class="reference external" href="https://github.com/ebertolazzi/Clothoids/releases">https://github.com/ebertolazzi/Clothoids/releases</a>
+and install it.
+After installation in Matlab run the command <code class="docutils literal notranslate"><span class="pre">CompileClothoidsLib</span></code>.</p>
+<p>If you want to compile the Toolbox by yourself</p>
+<div class="highlight-bash notranslate">
+<div class="highlight"><pre><span></span><span class="nb">cd</span> toolbox
+ruby populate_toolbox.rb
+</pre></div>
+</div>
+<p>run Matlab and from the comand windows of MATLAB:</p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="n">toolbox</span><span class="w"></span>
+<span class="nb">setup</span><span class="w"></span>
+<span class="n">CompileClothoidsLib</span><span class="w"></span>
+<span class="s">open('../Clothoids.prj')</span><span class="w"></span>
+</pre></div>
+</div>
+<p>then compile toolbox and install.</p>
+</section>
+<section id="linesegment">
+<h2>LineSegment<a class="headerlink" href="#linesegment" title="Permalink to this headline">¶</a>
+</h2>
+<p>The class <code class="docutils literal notranslate"><span class="pre">LineSegment</span></code> store a straight segment.</p>
+</section>
+<section id="constuctors">
+<h2>Constuctors<a class="headerlink" href="#constuctors" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% build segment given initial position, angle and length</span><span class="w"></span>
+<span class="n">L1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">LineSegment</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% build segment given initial and final point</span><span class="w"></span>
+<span class="n">L2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">LineSegment</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% re-build segment given initial position, angle and length</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% re-build segment given initial and final point</span><span class="w"></span>
+<span class="n">L2</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% translate a segment by `[tx,ty]`</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% rotate a segment by angle `ang` around center `[cx,cy]`</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="w"> </span><span class="n">ang</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% change the orgin of a segment to `[ox,oy]`</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">ox</span><span class="p">,</span><span class="w"> </span><span class="n">oy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% cut or extend the segment at curvilinear coordinates `smin` and `smax`</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">smin</span><span class="p">,</span><span class="w"> </span><span class="n">smax</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% return a structure containing description of the object as a MATLAB NURBS</span><span class="w"></span>
+<span class="n">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">to_nurbs</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% initial and final coordinates</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% segment angle direction</span><span class="w"></span>
+<span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">theta</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% segment length</span><span class="w"></span>
+<span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% segment initial and final point</span><span class="w"></span>
+<span class="p">[</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">points</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% distance point `[x,y]` to the segment</span><span class="w"></span>
+<span class="c">% d = distance, s = parameter of the point of segment at minimum distance</span><span class="w"></span>
+<span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% print descrition of the segment</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">info</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% plot the segment</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+<span class="c">% some options may be passed to plot command</span><span class="w"></span>
+<span class="n">L1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="evaluation-methods">
+<h2>Evaluation Methods<a class="headerlink" href="#evaluation-methods" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% evaluate the segment at curvilinear coordinate `s` (may be a vector)</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return separate vector for X and Y coodinates</span><span class="w"></span>
+<span class="n">XY</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return 2xN matrix, N = length(s)</span><span class="w"></span>
+
+<span class="c">% first derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_D</span><span class="p">,</span><span class="n">Y_D</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_D</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% second derivative respect to s (alwais 0)</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DD</span><span class="p">,</span><span class="n">Y_DD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DD</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% third derivative respect to s (alwais 0)</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DDD</span><span class="p">,</span><span class="n">Y_DDD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="circlearc">
+<h2>CircleArc<a class="headerlink" href="#circlearc" title="Permalink to this headline">¶</a>
+</h2>
+<p>The class <code class="docutils literal notranslate"><span class="pre">CircleArc</span></code> store an arc of a circle.</p>
+</section>
+<section id="id1">
+<h2>Constuctors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% build a circle arc given initial position, angle, curvature and length</span><span class="w"></span>
+<span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArc</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% build an empty circle</span><span class="w"></span>
+<span class="n">C</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArc</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% re-build circle arc given initial position, angle, curvature and length</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% re-build circle arc given initial position, angle and final position</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">build_G1</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">build_G1</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% re-build circle arc passing by 3 points</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">]</span><span class="w">  </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>Methods<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% translate a circle arc by `[tx,ty]`</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% rotate a circle arc by angle `ang` around center `[cx,cy]`</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="w"> </span><span class="n">ang</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% change the orgin of a circle arc to `[ox,oy]`</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">ox</span><span class="p">,</span><span class="w"> </span><span class="n">oy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% cut or extend the circle arc at curvilinear coordinates `smin` and `smax`</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">smin</span><span class="p">,</span><span class="w"> </span><span class="n">smax</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% scale the circle arc by `fact` factor</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% return a structure containing description of the object as a MATLAB NURBS</span><span class="w"></span>
+<span class="n">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">to_nurbs</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% initial and final coordinates</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% intial and final angle</span><span class="w"></span>
+<span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"> </span><span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">thetaEnd</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% circle arc length</span><span class="w"></span>
+<span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% circle curvature</span><span class="w"></span>
+<span class="n">kappa</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">kappa</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% print descrition of the segment</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">info</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% plot the circle arc</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+<span class="c">% some options may be passed to plot command</span><span class="w"></span>
+<span class="c">% npts = number of points unsed to plot the circle</span><span class="w"></span>
+<span class="n">C</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="distance-methods">
+<h2>Distance Methods<a class="headerlink" href="#distance-methods" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% return the bounding box triangle</span><span class="w"></span>
+<span class="p">[</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">bbTriangle</span><span class="p">(</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% distance point `[x,y]` to the circle arc</span><span class="w"></span>
+<span class="c">% d = distance, s = parameter of the point of segment at minimum distance</span><span class="w"></span>
+<span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Evaluation Methods<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% evaluate the circle arc at curvilinear coordinate `s` (may be a vector)</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return separate vector for X and Y coodinates</span><span class="w"></span>
+<span class="n">XY</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return 2xN matrix, N = length(s)</span><span class="w"></span>
+
+<span class="c">% first derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_D</span><span class="p">,</span><span class="n">Y_D</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_D</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% second derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DD</span><span class="p">,</span><span class="n">Y_DD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DD</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% third derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DDD</span><span class="p">,</span><span class="n">Y_DDD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">L1</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="biarc">
+<h2>Biarc<a class="headerlink" href="#biarc" title="Permalink to this headline">¶</a>
+</h2>
+<p>The class <code class="docutils literal notranslate"><span class="pre">Biarc</span></code> store a biarc or two arc
+connected with G1 continuity.</p>
+</section>
+<section id="id4">
+<h2>Constuctors<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% build a biarc fitting intial `[x0,y0]` and final `[x1,y1]` with</span><span class="w"></span>
+<span class="c">% assigned initial `theta0` and final `theta0` angle.</span><span class="w"></span>
+<span class="n">B</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Biarc</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">theta1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% build an empty biarc</span><span class="w"></span>
+<span class="n">B</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Biarc</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% re-build a biarc</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">theta1</span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% re-build a biarc circle arc passing by 3 points</span><span class="w"></span>
+<span class="c">% That minimize the weighted sum of the curvature</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">]</span><span class="w">  </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>Methods<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% translate a biarc by `[tx,ty]`</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% rotate a biarc by angle `ang` around center `[cx,cy]`</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="w"> </span><span class="n">ang</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% change the orgin of the biarc to `[ox,oy]`</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">ox</span><span class="p">,</span><span class="w"> </span><span class="n">oy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% scale the biarc by `fact` factor</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% reverse curvilinear coordinate of the biarc</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">reverse</span><span class="p">(</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% return the circle arcs forming the biarc</span><span class="w"></span>
+<span class="p">[</span><span class="n">C1</span><span class="p">,</span><span class="n">C2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">getCircles</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% return a structure containing description of the object as a MATLAB NURBS</span><span class="w"></span>
+<span class="n">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">to_nurbs</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% initial and final coordinates of first circle</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">xBegin0</span><span class="p">();</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">xEnd0</span><span class="p">();</span><span class="w"></span>
+<span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">yBegin0</span><span class="p">();</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">yEnd0</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% initial and final coordinates of second circle</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">xBegin1</span><span class="p">();</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">xEnd1</span><span class="p">();</span><span class="w"></span>
+<span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">yBegin1</span><span class="p">();</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">yEnd1</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% intial and final angle of first circle</span><span class="w"></span>
+<span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">thetaBegin0</span><span class="p">();</span><span class="w"> </span><span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">thetaEnd0</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% intial and final angle of second circle</span><span class="w"></span>
+<span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">thetaBegin1</span><span class="p">();</span><span class="w"> </span><span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">thetaEnd1</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% circle arc length for first and second circle</span><span class="w"></span>
+<span class="n">L0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">length0</span><span class="p">();</span><span class="w"> </span><span class="n">L1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">length0</span><span class="p">();</span><span class="w"></span>
+<span class="c">% total length of biarc</span><span class="w"></span>
+<span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% circle curvature for first and second circle</span><span class="w"></span>
+<span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">kappa0</span><span class="p">();</span><span class="w"> </span><span class="n">kappa1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">kappa1</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% print descrition of the segment</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">info</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% plot the circle arc</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+<span class="c">% some options may be passed to plot command</span><span class="w"></span>
+<span class="c">% npts   = number of points unsed to plot the circle</span><span class="w"></span>
+<span class="c">% fmt1/2 = cell array with formatting command for first and second cicle</span><span class="w"></span>
+<span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="n">fmt1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">};</span><span class="w"></span>
+<span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">};</span><span class="w"></span>
+<span class="n">B</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="n">fmt1</span><span class="p">,</span><span class="n">fmt2</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Distance Methods<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% distance point `[x,y]` to the biarc</span><span class="w"></span>
+<span class="c">% d = distance, s = parameter of the point of segment at minimum distance</span><span class="w"></span>
+<span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% closest point to `[x,y]` onto the biarc</span><span class="w"></span>
+<span class="c">% d = distance, s = parameter of the point of segment at minimum distance</span><span class="w"></span>
+<span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">d</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>Evaluation Methods<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% evaluate the biarc at curvilinear coordinate `s` (may be a vector)</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w">             </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return separate vector for X and Y coodinates</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">kappa</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return also angle and curvature</span><span class="w"></span>
+
+<span class="c">% first derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_D</span><span class="p">,</span><span class="n">Y_D</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_D</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% second derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DD</span><span class="p">,</span><span class="n">Y_DD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DD</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% third derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DDD</span><span class="p">,</span><span class="n">Y_DDD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="clothoidcurve">
+<h2>ClothoidCurve<a class="headerlink" href="#clothoidcurve" title="Permalink to this headline">¶</a>
+</h2>
+<p>The class <code class="docutils literal notranslate"><span class="pre">ClothoidCurve</span></code> store a clothoid curve arc.
+A clothoid curve is curve where curvature change linearly
+respect to the curvilinear abscissa.
+The circle arc and the line segment are particular
+case when curvature is constant and 0.</p>
+<p>The G1 fitting problem of method <code class="docutils literal notranslate"><span class="pre">build_G1</span></code> implements
+the algorithm described in reference [1].
+Given two points and two direction associated with the points,
+a clothoid, i.e. a curve with linear varying curvature is computed
+in such a way it pass to the points with the prescribed direction.
+The solution in general is not unique but chosing the one for
+which the angle direction variation is less than <code class="docutils literal notranslate"><span class="pre">2*pi</span></code>
+the solution is unique.</p>
+</section>
+<section id="id8">
+<h2>Constuctors<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature</span><span class="w"></span>
+<span class="c">% `kappa0` the curvature derivative is `dk` while `L` is the curve length.</span><span class="w"></span>
+<span class="n">CL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">dk</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% build an empty clothoid curve</span><span class="w"></span>
+<span class="n">CL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% re-build a clothoid curve</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">dk</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% re-build a clothoid passing from point `[x0,y0]` with angle `theta0`</span><span class="w"></span>
+<span class="c">% to `[x1,y1]` with angle `theta1` (G1 fitting problem)</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">build_G1</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">theta1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2>Methods<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% translate a clothoid curve by `[tx,ty]`</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% rotate a clothoid curve by angle `ang` around center `[cx,cy]`</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="w"> </span><span class="n">ang</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% change the orgin of the clothoid curve to `[ox,oy]`</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">ox</span><span class="p">,</span><span class="w"> </span><span class="n">oy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% scale the clothoid curve by `fact` factor</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% cut or extend the clothoid curve at curvilinear coordinates `smin` and `smax`</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">smin</span><span class="p">,</span><span class="w"> </span><span class="n">smax</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% reverse curvilinear coordinate of the clothoid curve</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">reverse</span><span class="p">(</span><span class="w"> </span><span class="n">fact</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% return a structure containing description of the object as a MATLAB NURBS</span><span class="w"></span>
+<span class="n">bs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">to_nurbs</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% initial and final coordinates of the clothoid curve</span><span class="w"></span>
+<span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% intial and final angle of the clothoid curve</span><span class="w"></span>
+<span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"> </span><span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">thetaEnd</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% intial and final curvature of the clothoid curve</span><span class="w"></span>
+<span class="n">k0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">kappaBegin</span><span class="p">();</span><span class="w"> </span><span class="n">ang</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">kappaEnd</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% derivative of curvature of the clothoid curve</span><span class="w"></span>
+<span class="n">dk</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">kappa_D</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% length of the clothoid curve</span><span class="w"></span>
+<span class="n">L</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% point at infinity of the clothoid</span><span class="w"></span>
+<span class="c">% `[xp,yp]` point at curvilinear coordinate +infinity</span><span class="w"></span>
+<span class="c">% `[xm,ym]` point at curvilinear coordinate -infinity</span><span class="w"></span>
+<span class="p">[</span><span class="n">xp</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">xm</span><span class="p">,</span><span class="n">ym</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">infinity</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% print descrition of the clothoid curve</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">info</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% return the parameters defining the clothoid curve</span><span class="w"></span>
+<span class="p">[</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">theta0</span><span class="p">,</span><span class="n">k0</span><span class="p">,</span><span class="n">dk</span><span class="p">,</span><span class="n">L</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">getPars</span><span class="p">();</span><span class="w"></span>
+
+<span class="c">% plot the clothoid curve</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">plot</span><span class="p">();</span><span class="w"></span>
+<span class="c">% some options may be passed to plot command</span><span class="w"></span>
+<span class="c">% npts = number of points unsed to plot the circle</span><span class="w"></span>
+<span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="n">CL</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="distance-and-intersection-methods">
+<h2>Distance and intersection Methods<a class="headerlink" href="#distance-and-intersection-methods" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% distance point `[x,y]` to the clothoid curve</span><span class="w"></span>
+<span class="c">% d = distance, s = parameter of the point of segment at minimum distance</span><span class="w"></span>
+<span class="p">[</span><span class="n">d</span><span class="p">,</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% closest point to `[x,y]` onto the clothoid curve</span><span class="w"></span>
+<span class="c">% d = distance, s = parameter of the point of segment at minimum distance</span><span class="w"></span>
+<span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">d</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% compute all the intersection of curve CL with curve CL1.</span><span class="w"></span>
+<span class="c">% CL1 may be a ClothoidCurve a CircleArc or a LineSegment object</span><span class="w"></span>
+<span class="c">% s  = vector of curvilinear coordinates on CL of the intersection</span><span class="w"></span>
+<span class="c">% s1 = vector of curvilinear coordinates on CL1 of the intersection</span><span class="w"></span>
+<span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">s1</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">CL1</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h2>Evaluation Methods<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a>
+</h2>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% evaluate the clothoid curve at curvilinear coordinate `s` (may be a vector)</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w">             </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return separate vector for X and Y coodinates</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">kappa</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return also angle and curvature</span><span class="w"></span>
+
+<span class="c">% first derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_D</span><span class="p">,</span><span class="n">Y_D</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_D</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% second derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DD</span><span class="p">,</span><span class="n">Y_DD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DD</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% third derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DDD</span><span class="p">,</span><span class="n">Y_DDD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>an offset respect to the normal of the curve can be used</p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="c">% evaluate the clothoid curve at curvilinear coordinate `s` (may be a vector)</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w">             </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return separate vector for X and Y coodinates</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">kappa</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% return also angle and curvature</span><span class="w"></span>
+
+<span class="c">% first derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_D</span><span class="p">,</span><span class="n">Y_D</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_D</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% second derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DD</span><span class="p">,</span><span class="n">Y_DD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DD</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% third derivative respect to s</span><span class="w"></span>
+<span class="p">[</span><span class="n">X_DDD</span><span class="p">,</span><span class="n">Y_DDD</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY_DDD</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="n">CL</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="clothoidlist">
+<h2>ClothoidList<a class="headerlink" href="#clothoidlist" title="Permalink to this headline">¶</a>
+</h2>
+<p>Store a list of clothoids to be used as a single spline.</p>
+<p>Documentation will be available soon, see examples in
+<code class="docutils literal notranslate"><span class="pre">tests</span></code> for the moments</p>
+</section>
+<section id="clothoidsplineg2">
+<h2>ClothoidSplineG2<a class="headerlink" href="#clothoidsplineg2" title="Permalink to this headline">¶</a>
+</h2>
+<p>Implements the algorithm described in references [2] and [3].
+documentation will be available soon, see examples in
+<code class="docutils literal notranslate"><span class="pre">tests</span></code> for the moments</p>
+</section>
+<section id="triangle2d">
+<h2>Triangle2D<a class="headerlink" href="#triangle2d" title="Permalink to this headline">¶</a>
+</h2>
+</section>
+<section id="fresnelcs">
+<h2>FresnelCS<a class="headerlink" href="#fresnelcs" title="Permalink to this headline">¶</a>
+</h2>
+<section id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a>
+</h3>
+<ul>
+<li>
+<div class="line-block">
+<div class="line">Enrico Bertolazzi</div>
+<div class="line">Dipartimento di Ingegneria Industriale</div>
+<div class="line">Università degli Studi di Trento</div>
+<div class="line">email: <script type="text/javascript">document.write(
+    "<n pynff=\"ersrerapr rkgreany\" uers=\"znvygb:raevpb\056oregbynmmv%40havga\056vg\">raevpb<fcna>\056<\057fcna>oregbynmmv<fcna>\100<\057fcna>havga<fcna>\056<\057fcna>vg<\057n>".replace(/[a-zA-Z]/g,
+        function(c){
+            return String.fromCharCode(
+                (c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26
+            );
+        }
+    )
+);</script>
+</div>
+<div class="line">homepage: <a class="reference external" href="https://e.bertolazzi.dii.unitn.it">https://e.bertolazzi.dii.unitn.it</a>
+</div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">Marco Frego</div>
+<div class="line">Faculty of Science and Technology</div>
+<div class="line">Free University of Bozen-Bolzano</div>
+<div class="line">email: <script type="text/javascript">document.write(
+    "<n pynff=\"ersrerapr rkgreany\" uers=\"znvygb:znepb\056sertb%40havom\056vg\">znepb<fcna>\056<\057fcna>sertb<fcna>\100<\057fcna>havom<fcna>\056<\057fcna>vg<\057n>".replace(/[a-zA-Z]/g,
+        function(c){
+            return String.fromCharCode(
+                (c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26
+            );
+        }
+    )
+);</script>
+</div>
+</div>
+</li>
+</ul>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a>
+</h3>
+<ol class="arabic">
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>G1 fitting with clothoids</strong>,</div>
+<div class="line">Mathematical Methods in the Applied Sciences,</div>
+<div class="line">John Wiley &amp; Sons, 2014, vol. 38, n.5, pp. 881-897,</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1002/mma.3114">https://doi.org/10.1002/mma.3114</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>On the G2 Hermite interpolation
+problem with clothoids</strong>,</div>
+<div class="line">Journal of Computational and Applied Mathematics,</div>
+<div class="line">2018, vol. 15, n.341, pp. 99-116.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1016/j.cam.2018.03.029">https://doi.org/10.1016/j.cam.2018.03.029</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em>, <strong>Interpolating clothoid splines with
+curvature continuity</strong>,</div>
+<div class="line">Mathematical Methods in the Applied Sciences,</div>
+<div class="line">2018, vol. 41, n.4, pp. 1099-1476.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1002/mma.4700">https://doi.org/10.1002/mma.4700</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em> <strong>Point-Clothoid Distance and Projection Computation</strong>,</div>
+<div class="line">SIAM Journal on Scientific Computing,</div>
+<div class="line">2019, 41(5), A3326–A3353.</div>
+<div class="line"><a class="reference external" href="https://doi.org/10.1137/18M1200439">https://doi.org/10.1137/18M1200439</a></div>
+</div>
+</li>
+<li>
+<div class="line-block">
+<div class="line">
+<em>E. Bertolazzi, M. Frego</em> <strong>A Note on Robust Biarc Computation</strong>,</div>
+<div class="line">Computer-Aided Design &amp; Applications 16 (5), 822-835</div>
+<div class="line"><a class="reference external" href="http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf">http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf</a></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="index.html" title="index">
+          <img class="logo" src="_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Matlab Interface Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation-mex-matlab-interface">Installation mex/MATLAB interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linesegment">LineSegment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#constuctors">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluation-methods">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#circlearc">CircleArc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distance-methods">Distance Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#biarc">Biarc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Distance Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clothoidcurve">ClothoidCurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Constuctors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distance-and-intersection-methods">Distance and intersection Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">Evaluation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clothoidlist">ClothoidList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clothoidsplineg2">ClothoidSplineG2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#triangle2d">Triangle2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fresnelcs">FresnelCS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="api-cpp/root.html" title="C++ API"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="index.html" title="G1 and G2 fitting with clothoids, spline of clothods, circle arc and biarc"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Matlab Interface Manual</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

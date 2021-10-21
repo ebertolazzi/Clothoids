@@ -1,0 +1,510 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Program Listing for File ClothoidSplineG2.m &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File ClothoidSplineG2.m</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="program-listing-for-file-clothoidsplineg2-m">
+<span id="program-listing-file-clothoidsplineg2-m"></span><h1>Program Listing for File ClothoidSplineG2.m<a class="headerlink" href="#program-listing-for-file-clothoidsplineg2-m" title="Permalink to this headline">¶</a>
+</h1>
+<p>↰ <a class="reference internal" href="file_ClothoidSplineG2.m.html#file-clothoidsplineg2-m"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">ClothoidSplineG2.m</span></code>)</p>
+<div class="highlight-MATLAB notranslate">
+<div class="highlight"><pre><span></span><span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; Construct a piecewise clothoids \f$ \G(s) \f$ composed by</span><span class="w"></span>
+<span class="c">%&gt; n clothoids that solve the G2 problem</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; **match points**</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; \f[ G(s_k) = \mathbf{p}_k \f]</span><span class="w"></span>
+<span class="c">%&gt; \f[ \lim_{s\to s_k^+} G'(s) = \lim_{s\to s_k^-} G'(s) \f]</span><span class="w"></span>
+<span class="c">%&gt; \f[ \lim_{s\to s_k^+} G''(s) = \lim_{s\to s_k^-} G''(s) \f]</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; **Reference**</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; The solution algorithm is described in</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; - **E.Bertolazzi, M.Frego**, Interpolating clothoid splines with curvature continuity</span><span class="w"></span>
+<span class="c">%&gt;   Mathematica Methods in the Applied Sciences, vol 41, N.4, pp. 1723-1737, 2018</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt;   .. image:: ../../images/G2problem3arc.jpg</span><span class="w"></span>
+<span class="c">%&gt;      :width: 80%</span><span class="w"></span>
+<span class="c">%&gt;      :align: center</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="c">%&gt;</span><span class="w"></span>
+<span class="k">classdef</span><span class="w"> </span><span class="n">ClothoidSplineG2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">handle</span><span class="w"></span>
+<span class="w">  </span><span class="c">%% MATLAB class wrapper for the underlying C++ class</span><span class="w"></span>
+<span class="w">  </span><span class="k">properties</span><span class="w"> </span><span class="p">(</span><span class="nb">SetAccess</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">private</span><span class="p">,</span><span class="w"> </span><span class="nb">Hidden</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">objectHandle</span><span class="p">;</span><span class="w"> </span><span class="c">% Handle to the underlying C++ class instance</span><span class="w"></span>
+<span class="w">    </span><span class="n">use_Ipopt</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">iter_opt</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">ipopt_check_gradient</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">isOctave</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">methods</span><span class="w"> </span><span class="p">(</span><span class="n">Hidden</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>[ceq,jaceq]<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">nlsys</span><span class="p">(</span> self, theta <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ceq</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'constraints'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">jaceq</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'jacobian'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>[c,ceq,jac,jaceq]<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">con</span><span class="p">(</span> self, theta <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">c</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">ceq</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'constraints'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">jac</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="nb">sparse</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">jaceq</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'jacobian'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w">  </span><span class="p">).</span><span class="o">'</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>[o,g]<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">obj</span><span class="p">(</span> self, theta <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">o</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'objective'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">g</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'gradient'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Call C++ setup for the problem solver.</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Check that consecutive points are distinct</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">chk</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="o">+</span><span class="nb">diff</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.^</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="n">mi</span><span class="p">,</span><span class="n">idx1</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">min</span><span class="p">(</span><span class="n">chk</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="n">ma</span><span class="p">,</span><span class="n">idx2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">chk</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">mi</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">mi</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">1e-10</span><span class="o">*</span><span class="n">ma</span><span class="w"></span>
+<span class="w">        </span><span class="nb">error</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="p">[</span><span class="w"> </span><span class="s">'ClothoidSplineG2, build failed: minimum distance between '</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'two consecutive points [min dist=%g, max dist=%g] is 0 or too small!\n'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'index of points at minimum distance is %d\n'</span><span class="p">],</span><span class="w"> </span><span class="n">mi</span><span class="p">,</span><span class="w"> </span><span class="n">ma</span><span class="p">,</span><span class="w"> </span><span class="n">idx1</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'build'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">build_internal</span><span class="p">(</span> self, x, y, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="c">% Compute guess angles</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">theta_guess</span><span class="p">,</span><span class="w"> </span><span class="n">theta_min</span><span class="p">,</span><span class="w"> </span><span class="n">theta_max</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">guess</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">nc</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">dims</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">use_Ipopt</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">options</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ub</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">theta_max</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">lb</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">theta_min</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">% The constraint functions are bounded to zero</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">cl</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c">%  constraints</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">cu</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">zeros</span><span class="p">(</span><span class="n">nc</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">% Set the IPOPT options.</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">jac_d_constant</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">'no'</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">hessian_constant</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">'no'</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">mu_strategy</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">'adaptive'</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">max_iter</span><span class="w">            </span><span class="p">=</span><span class="w"> </span><span class="mi">400</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">tol</span><span class="w">                 </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-10</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">derivative_test_tol</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-5</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">ipopt_check_gradient</span><span class="w"></span>
+<span class="w">          </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">derivative_test</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'first-order'</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">          </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">derivative_test</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'none'</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="c">%options.ipopt.derivative_test_perturbation = 1e-8;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">% The callback functions.</span><span class="w"></span>
+<span class="w">        </span><span class="n">funcs</span><span class="p">.</span><span class="n">objective</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'objective'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">funcs</span><span class="p">.</span><span class="n">constraints</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'constraints'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">funcs</span><span class="p">.</span><span class="n">gradient</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'gradient'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">funcs</span><span class="p">.</span><span class="n">jacobian</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'jacobian'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">funcs</span><span class="p">.</span><span class="n">jacobianstructure</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">@()</span><span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'jacobian_pattern'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="c">%options.ipopt.jacobian_approximation = 'finite-difference-values';</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">hessian_approximation</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="s">'limited-memory'</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c">%options.ipopt.limited_memory_update_type = 'bfgs'; % {bfgs}, sr1 = 6; % {6}</span><span class="w"></span>
+<span class="w">        </span><span class="c">%options.ipopt.limited_memory_update_type = 'sr1';</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">ipopt</span><span class="p">.</span><span class="n">limited_memory_update_type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'bfgs'</span><span class="p">;</span><span class="w"> </span><span class="c">% {bfgs}, sr1 = 6; % {6}</span><span class="w"></span>
+
+<span class="w">        </span><span class="nb">tic</span><span class="w"></span>
+<span class="w">        </span><span class="p">[</span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">info</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ipopt</span><span class="p">(</span><span class="n">theta_guess</span><span class="p">,</span><span class="n">funcs</span><span class="p">,</span><span class="n">options</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">stats</span><span class="p">.</span><span class="n">elapsed</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">toc</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">info</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="c">% 'interior-point'</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">isOctave</span><span class="w"></span>
+<span class="w">          </span><span class="n">options</span><span class="p">.</span><span class="n">TolX</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-10</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="n">options</span><span class="p">.</span><span class="n">TolFun</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-20</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">          </span><span class="n">options</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">optimoptions</span><span class="p">(</span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'fmincon'</span><span class="p">,</span><span class="s">'Display'</span><span class="p">,</span><span class="n">self</span><span class="p">.</span><span class="n">iter_opt</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'CheckGradients'</span><span class="p">,</span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'FiniteDifferenceType'</span><span class="p">,</span><span class="s">'central'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'Algorithm'</span><span class="p">,</span><span class="s">'sqp'</span><span class="p">,</span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'SpecifyConstraintGradient'</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'SpecifyObjectiveGradient'</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'OptimalityTolerance'</span><span class="p">,</span><span class="mf">1e-20</span><span class="p">,</span><span class="k">...</span><span class="w"></span>
+<span class="w">            </span><span class="s">'ConstraintTolerance'</span><span class="p">,</span><span class="mf">1e-10</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">        </span><span class="n">obj</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">obj</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">con</span><span class="w">   </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">con</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">fmincon</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="n">theta_guess</span><span class="p">,[],[],[],[],</span><span class="n">theta_min</span><span class="p">,</span><span class="n">theta_max</span><span class="p">,</span><span class="n">con</span><span class="p">,</span><span class="n">options</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c">%options = optimset(varargin{:});</span><span class="w"></span>
+<span class="w">        </span><span class="c">%[theta,resnorm,~,~,output,~,~] = lsqnonlin( @target, theta, [], [], options );</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="c">% Compute spline parameters</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidList</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">N</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="nb">length</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="nb">j</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">clots</span><span class="p">.</span><span class="n">push_back_G1</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">build_internal2</span><span class="p">(</span> self, x, y, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="c">% Compute guess angles</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">theta_guess</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">guess</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="c">% 'interior-point'</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">isOctave</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">TolX</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">1e-20</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="n">options</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">optimoptions</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="s">'fsolve'</span><span class="p">,</span><span class="w"> </span><span class="s">'Display'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">iter_opt</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="s">'CheckGradients'</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="s">'FiniteDifferenceType'</span><span class="p">,</span><span class="w"> </span><span class="s">'central'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="s">'Algorithm'</span><span class="p">,</span><span class="w"> </span><span class="s">'levenberg-marquardt'</span><span class="p">,</span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="s">'SpecifyObjectiveGradient'</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="k">...</span><span class="w"></span>
+<span class="w">          </span><span class="s">'OptimalityTolerance'</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-20</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">      </span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">@(</span><span class="n">theta</span><span class="p">)</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">nlsys</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="n">theta</span><span class="p">,</span><span class="o">~</span><span class="p">,</span><span class="n">exitflag</span><span class="p">,</span><span class="o">~</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">fsolve</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="n">theta_guess</span><span class="p">,</span><span class="n">options</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">exitflag</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="nb">error</span><span class="p">(</span><span class="s">'ClothoidSplineG2, fsolve failed exitflag = %d\n'</span><span class="p">,</span><span class="n">exitflag</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="c">% Compute spline parameters</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidList</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">N</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="nb">length</span><span class="p">(</span><span class="n">theta</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="nb">j</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="w"></span>
+<span class="w">        </span><span class="n">clots</span><span class="p">.</span><span class="n">push_back_G1</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">theta</span><span class="p">(</span><span class="nb">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">methods</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>self<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">ClothoidSplineG2</span><span class="p">()</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'new'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">use_Ipopt</span><span class="w">             </span><span class="p">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">iter_opt</span><span class="w">              </span><span class="p">=</span><span class="w"> </span><span class="s">'iter'</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">ipopt_check_gradient</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">isOctave</span><span class="w">              </span><span class="p">=</span><span class="w"> </span><span class="nb">exist</span><span class="p">(</span><span class="s">'OCTAVE_VERSION'</span><span class="p">,</span><span class="w"> </span><span class="s">'builtin'</span><span class="p">)</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'delete'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">verbose</span><span class="p">(</span> self, yes <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">yes</span><span class="w"></span>
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">iter_opt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'iter'</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">iter_opt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'none'</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">ipopt</span><span class="p">(</span> self, yesno <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">use_Ipopt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">yesno</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">ipopt_check</span><span class="p">(</span> self, yesno <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">ipopt_check_gradient</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">yesno</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>[n,nc]<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">dims</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="n">nc</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'dims'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ theta, theta_min, theta_max ] = guess</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">theta_min</span><span class="p">,</span><span class="w"> </span><span class="n">theta_max</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'guess'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points (x(i),y(i))</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; with initial angle theta0 (radiants) and final angle theta1 (radiants)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP1</span><span class="p">(</span> self, x, y, theta0, theta1 <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P1'</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">theta1</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal2</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points (x(i),y(i))</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; with cyclic condition (tangent and curvature meet)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - theta(1) = theta(end) mod 2*pi</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - kappa(1) = kappa(end)</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP2</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P2'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal2</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points (x(i),y(i))</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; with assignede initial angle and survature</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; NB: this target is not reccomended (its unstable), used only for debugging</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP3</span><span class="p">(</span> self, x, y, theta0, kappa0 <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P3'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="c">% Compute spline parameters</span><span class="w"></span>
+<span class="w">      </span><span class="c">%</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidList</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">N</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="nb">length</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">c</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">build_forward</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">ok</span><span class="w"></span>
+<span class="w">        </span><span class="n">clots</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"></span>
+<span class="w">        </span><span class="nb">warning</span><span class="p">(</span><span class="s">'buildP3 failed'</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="nb">j</span><span class="p">=</span><span class="mi">3</span><span class="p">:</span><span class="n">N</span><span class="w"></span>
+<span class="w">        </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">thetaEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">kappaEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">build_forward</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="nb">j</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="nb">j</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">ok</span><span class="w"></span>
+<span class="w">          </span><span class="n">clots</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"></span>
+<span class="w">          </span><span class="nb">warning</span><span class="p">(</span><span class="s">'buildP3 failed'</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; and minimizing derivative of the curvature al the extrema</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; minimize \f$ k'(0)^2 + k'(L)^2 \f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP4</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P4'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; and minimizing the length of the first and last segment</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; minimize \f$ (s_1-s_0)+(s_n - s_{n-1}) \f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP5</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P5'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; and minimizing the total length of the spline</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \f$ L = s_n-s_0 \f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP6</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P6'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; and minimizing the integral of the square of the curvature:</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; minimize: \f$ \displaystyle \int_0^L k(s)^2 \mathrm{d}s \f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP7</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P7'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; and minimizing the integral of the square of the curvature derivative:</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; minimize:  \f$ \displaystyle \int_0^L k'(s)^2 \mathrm{d}s \f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP8</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P8'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; and minimizing the integral of the jerk squared</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>clots<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">buildP9</span><span class="p">(</span> self, x, y <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidSplineG2MexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'target'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="s">'P9'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">clots</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">build_internal</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">%</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File ClothoidSplineG2.m</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

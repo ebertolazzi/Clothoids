@@ -1,0 +1,650 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Program Listing for File Biarc.hxx &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File Biarc.hxx</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="program-listing-for-file-biarc-hxx">
+<span id="program-listing-file-clothoids-biarc-hxx"></span><h1>Program Listing for File Biarc.hxx<a class="headerlink" href="#program-listing-for-file-biarc-hxx" title="Permalink to this headline">¶</a>
+</h1>
+<p>↰ <a class="reference internal" href="file_Clothoids_Biarc.hxx.html#file-clothoids-biarc-hxx"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">Clothoids/Biarc.hxx</span></code>)</p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="cm">/*--------------------------------------------------------------------------*\</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |  Copyright (C) 2017                                                      |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |         , __                 , __                                        |</span>
+<span class="cm"> |        /|/  \               /|/  \                                       |</span>
+<span class="cm"> |         | __/ _   ,_         | __/ _   ,_                                |</span>
+<span class="cm"> |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |</span>
+<span class="cm"> |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |</span>
+<span class="cm"> |                           /|                   /|                        |</span>
+<span class="cm"> |                           \|                   \|                        |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |      Enrico Bertolazzi                                                   |</span>
+<span class="cm"> |      Dipartimento di Ingegneria Industriale                              |</span>
+<span class="cm"> |      Universita` degli Studi di Trento                                   |</span>
+<span class="cm"> |      email: enrico.bertolazzi@unitn.it                                   |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm">\*--------------------------------------------------------------------------*/</span><span class="w"></span>
+
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">G2lib</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |   ____  _</span>
+<span class="cm">   |  | __ )(_) __ _ _ __ ___</span>
+<span class="cm">   |  |  _ \| |/ _` | '__/ __|</span>
+<span class="cm">   |  | |_) | | (_| | | | (__</span>
+<span class="cm">   |  |____/|_|\__,_|_|  \___|</span>
+<span class="cm">  \*/</span><span class="w"></span>
+
+
+<span class="w">  </span><span class="k">class</span> <span class="nc">Biarc</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">BaseCurve</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">CircleArc</span><span class="w"> </span><span class="n">m_C0</span><span class="p">,</span><span class="w"> </span><span class="n">m_C1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">gfun</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">so</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">alpha</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">co</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">oco</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="o">*</span><span class="n">co</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oco</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">co</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">alpha</span><span class="o">*</span><span class="n">so</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">g</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-3</span><span class="o">*</span><span class="n">so</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">oco</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"BaseCurve_using.hxx"</span><span class="cp"></span>
+
+<span class="w">    </span><span class="o">~</span><span class="n">Biarc</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">Biarc</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_BIARC</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">Biarc</span><span class="p">(</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ba</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_BIARC</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">ba</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">explicit</span><span class="w"></span>
+<span class="w">    </span><span class="n">Biarc</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">theta1</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_BIARC</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">theta1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">UTILS_ASSERT</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">ok</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">"Biarc( x0={}, y0={}, theta0={}, x1={}, y1={}, theta1={}) cannot be computed</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">theta1</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">explicit</span><span class="w"></span>
+<span class="w">    </span><span class="n">Biarc</span><span class="p">(</span><span class="w"> </span><span class="n">BaseCurve</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">copy</span><span class="p">(</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C0</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">m_C0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C1</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">m_C1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ba</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">copy</span><span class="p">(</span><span class="n">ba</span><span class="p">);</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">CircleArc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C0</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">CircleArc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C1</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">    </span><span class="n">build</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">theta1</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">    </span><span class="nf">build_3P</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y2</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">bbox</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymax</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">bbox_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymax</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">length</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">+</span><span class="n">m_C1</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">length_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">length_ISO</span><span class="p">(</span><span class="n">offs</span><span class="p">)</span><span class="o">+</span><span class="n">m_C1</span><span class="p">.</span><span class="n">length_ISO</span><span class="p">(</span><span class="n">offs</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">thetaBegin</span><span class="p">()</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">thetaEnd</span><span class="p">()</span><span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">thetaEnd</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">kappaBegin</span><span class="p">()</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">kappaBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">kappaEnd</span><span class="p">()</span><span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">kappaEnd</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">xBegin</span><span class="p">()</span><span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">xEnd</span><span class="p">()</span><span class="w">         </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">yBegin</span><span class="p">()</span><span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">yEnd</span><span class="p">()</span><span class="w">         </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">tx_Begin</span><span class="p">()</span><span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">tx_Begin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">tx_End</span><span class="p">()</span><span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">tx_End</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ty_Begin</span><span class="p">()</span><span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">ty_Begin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ty_End</span><span class="p">()</span><span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">ty_End</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">nx_Begin_ISO</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">nx_Begin_ISO</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">nx_End_ISO</span><span class="p">()</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">nx_End_ISO</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ny_Begin_ISO</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">ny_Begin_ISO</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ny_End_ISO</span><span class="p">()</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">ny_End_ISO</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">theta</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">theta_D</span><span class="w">  </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">theta_DD</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">theta_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">evaluate</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">th</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X_D</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y_D</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X_DD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y_DD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X_ISO_D</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y_ISO_D</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X_ISO_DD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y_ISO_DD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">X_ISO_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">Y_ISO_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval_D</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x_D</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y_D</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval_DD</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x_DD</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y_DD</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval_DDD</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x_DDD</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y_DDD</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval_ISO_D</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x_D</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y_D</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval_ISO_DD</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x_DD</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y_DD</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">eval_ISO_DDD</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x_DDD</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y_DDD</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/*\</span>
+<span class="cm">     |  _____                   _   _   _</span>
+<span class="cm">     | |_   _|   __ _ _ __   __| | | \ | |</span>
+<span class="cm">     |   | |    / _` | '_ \ / _` | |  \| |</span>
+<span class="cm">     |   | |   | (_| | | | | (_| | | |\  |</span>
+<span class="cm">     |   |_|    \__,_|_| |_|\__,_| |_| \_|</span>
+<span class="cm">    \*/</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">tx</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">tx_D</span><span class="w">  </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">tx_DD</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">tx_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ty</span><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ty_D</span><span class="w">  </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ty_DD</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">ty_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">tg</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ty</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">tg_D</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tx_D</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ty_D</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">tg_DD</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tx_DD</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ty_DD</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">tg_DDD</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tx_DDD</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ty_DDD</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/*\</span>
+<span class="cm">     |  _                        __</span>
+<span class="cm">     | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___</span>
+<span class="cm">     | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \</span>
+<span class="cm">     | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |</span>
+<span class="cm">     |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|</span>
+<span class="cm">    \*/</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">translate</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span><span class="n">ty</span><span class="p">);</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span><span class="n">ty</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">rotate</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">angle</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span><span class="n">cx</span><span class="p">,</span><span class="n">cy</span><span class="p">);</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span><span class="n">cx</span><span class="p">,</span><span class="n">cy</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">reverse</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newx0</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">trim</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">scale</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/*\</span>
+<span class="cm">     |        _                     _   ____       _       _</span>
+<span class="cm">     |    ___| | ___  ___  ___  ___| |_|  _ \ ___ (_)_ __ | |_</span>
+<span class="cm">     |   / __| |/ _ \/ __|/ _ \/ __| __| |_) / _ \| | '_ \| __|</span>
+<span class="cm">     |  | (__| | (_) \__ \  __/\__ \ |_|  __/ (_) | | | | | |_</span>
+<span class="cm">     |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|</span>
+<span class="cm">    \*/</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">int_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">closestPoint_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">qx</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">qy</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">dst</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">int_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">closestPoint_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">qx</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">qy</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">dst</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+<span class="w">    </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">xMiddle</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">yMiddle</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">thetaMiddle</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">kappa0</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">curvature</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">length0</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">kappa1</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">curvature</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">length1</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">delta_theta</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">delta_theta</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">delta_theta</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">bbTriangles</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Triangle2D</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">max_angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Utils</span><span class="o">::</span><span class="n">m_pi</span><span class="o">/</span><span class="mi">18</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">max_size</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1e100</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">int_type</span><span class="w">                  </span><span class="n">icurve</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C0</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">(</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">icurve</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C1</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">(</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">icurve</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">bbTriangles_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Triangle2D</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">max_angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Utils</span><span class="o">::</span><span class="n">m_pi</span><span class="o">/</span><span class="mi">18</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">max_size</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1e100</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">int_type</span><span class="w">                  </span><span class="n">icurve</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C0</span><span class="p">.</span><span class="n">bbTriangles_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">icurve</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C1</span><span class="p">.</span><span class="n">bbTriangles_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">icurve</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">bbTriangles_SAE</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Triangle2D</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">max_angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Utils</span><span class="o">::</span><span class="n">m_pi</span><span class="o">/</span><span class="mi">18</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">                 </span><span class="n">max_size</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">1e100</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">int_type</span><span class="w">                  </span><span class="n">icurve</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C0</span><span class="p">.</span><span class="n">bbTriangles_SAE</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">icurve</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_C1</span><span class="p">.</span><span class="n">bbTriangles_SAE</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">icurve</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/*\</span>
+<span class="cm">     |             _ _ _     _</span>
+<span class="cm">     |    ___ ___ | | (_)___(_) ___  _ __</span>
+<span class="cm">     |   / __/ _ \| | | / __| |/ _ \| '_ \</span>
+<span class="cm">     |  | (_| (_) | | | \__ \ | (_) | | | |</span>
+<span class="cm">     |   \___\___/|_|_|_|___/_|\___/|_| |_|</span>
+<span class="cm">    \*/</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">    </span><span class="nf">collision</span><span class="p">(</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">             </span><span class="n">m_C1</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">m_C1</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">    </span><span class="nf">collision_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">     </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">     </span><span class="n">offs_B</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">m_C0</span><span class="p">.</span><span class="n">collision_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C0</span><span class="p">,</span><span class="w"> </span><span class="n">offs_B</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">             </span><span class="n">m_C0</span><span class="p">.</span><span class="n">collision_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C1</span><span class="p">,</span><span class="w"> </span><span class="n">offs_B</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">             </span><span class="n">m_C1</span><span class="p">.</span><span class="n">collision_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C0</span><span class="p">,</span><span class="w"> </span><span class="n">offs_B</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">             </span><span class="n">m_C1</span><span class="p">.</span><span class="n">collision_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">m_C1</span><span class="p">,</span><span class="w"> </span><span class="n">offs_B</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/*\</span>
+<span class="cm">     |   _       _                          _</span>
+<span class="cm">     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_</span>
+<span class="cm">     |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|</span>
+<span class="cm">     |  | | | | | ||  __/ |  \__ \  __/ (__| |_</span>
+<span class="cm">     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|</span>
+<span class="cm">    \*/</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">intersect</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">IntersectList</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ilist</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w">            </span><span class="n">swap_s_vals</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">intersect_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">       </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w">   </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">       </span><span class="n">offs_B</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">IntersectList</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ilist</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w">            </span><span class="n">swap_s_vals</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">info</span><span class="p">(</span><span class="w"> </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"BiArc</span><span class="se">\n</span><span class="s">"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">'\n'</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"></span>
+<span class="w">    </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="k">operator</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">bi</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">  </span><span class="nf">build_guess_theta</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">          </span><span class="n">n</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">       </span><span class="o">*</span><span class="w"> </span><span class="n">theta</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File Biarc.hxx</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Function G2lib::intersect_SAE &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Function G2lib::intersectCircleCircle" href="function_a00119_1ad2fbbd505c9e9e83b15a7b74aedd32a3.html" />
+    <link rel="prev" title="Function G2lib::intersect_ISO" href="function_a00119_1a83b624f8b3552db66851e8ac7f899da5.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="function_a00119_1ad2fbbd505c9e9e83b15a7b74aedd32a3.html" title="Function G2lib::intersectCircleCircle"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="function_a00119_1a83b624f8b3552db66851e8ac7f899da5.html" title="Function G2lib::intersect_ISO"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Function G2lib::intersect_SAE</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="function-g2lib-intersect-sae">
+<span id="exhale-function-a00119-1acdd344ff0a709df517956fc2e0545b2f"></span><h1>Function G2lib::intersect_SAE<a class="headerlink" href="#function-g2lib-intersect-sae" title="Permalink to this headline">¶</a>
+</h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_Clothoids_BaseCurve.hxx.html#file-clothoids-basecurve-hxx"><span class="std std-ref">File BaseCurve.hxx</span></a></p></li>
+</ul>
+<section id="function-documentation">
+<h2>Function Documentation<a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a>
+</h2>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib13intersect_SAEERK9BaseCurve9real_typeRK9BaseCurve9real_typeR13IntersectListb">
+<span id="_CPPv3N5G2lib13intersect_SAEERK9BaseCurve9real_typeRK9BaseCurve9real_typeR13IntersectListb"></span><span id="_CPPv2N5G2lib13intersect_SAEERK9BaseCurve9real_typeRK9BaseCurve9real_typeR13IntersectListb"></span><span id="G2lib::intersect_SAE__BaseCurveCR.real_type.BaseCurveCR.real_type.IntersectListR.b"></span><span class="target" id="a00119_1acdd344ff0a709df517956fc2e0545b2f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">G2lib</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">intersect_SAE</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="class_a00131.html#_CPPv4N5G2lib9BaseCurveE" title="G2lib::BaseCurve"><span class="n"><span class="pre">BaseCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">C1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs_C1</span></span>, <a class="reference internal" href="class_a00131.html#_CPPv4N5G2lib9BaseCurveE" title="G2lib::BaseCurve"><span class="n"><span class="pre">BaseCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">C2</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs_C2</span></span>, <a class="reference internal" href="typedef_a00119_1a509a7c586eaab4159b0ecdf0bf213771.html#_CPPv4N5G2lib13IntersectListE" title="G2lib::IntersectList"><span class="n"><span class="pre">IntersectList</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ilist</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">swap_s_vals</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib13intersect_SAEERK9BaseCurve9real_typeRK9BaseCurve9real_typeR13IntersectListb" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Collect the intersections of the two curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>C1</strong> – <strong>[in]</strong> first curve </p></li>
+<li><p><strong>offs_C1</strong> – <strong>[in]</strong> offset of the first curve </p></li>
+<li><p><strong>C2</strong> – <strong>[in]</strong> second curve </p></li>
+<li><p><strong>offs_C2</strong> – <strong>[in]</strong> offset of the second curve </p></li>
+<li><p><strong>ilist</strong> – <strong>[out]</strong> list of the intersection (as parameter on the curves) </p></li>
+<li><p><strong>swap_s_vals</strong> – <strong>[out]</strong> if true store <code class="docutils literal notranslate"><span class="pre">(s2,s1)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">(s1,s2)</span></code> for each intersection </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="function_a00119_1ad2fbbd505c9e9e83b15a7b74aedd32a3.html" title="Function G2lib::intersectCircleCircle"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="function_a00119_1a83b624f8b3552db66851e8ac7f899da5.html" title="Function G2lib::intersect_ISO"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" >C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Function G2lib::intersect_SAE</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

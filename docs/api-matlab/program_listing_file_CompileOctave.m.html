@@ -1,0 +1,249 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Program Listing for File CompileOctave.m &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File CompileOctave.m</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="program-listing-for-file-compileoctave-m">
+<span id="program-listing-file-compileoctave-m"></span><h1>Program Listing for File CompileOctave.m<a class="headerlink" href="#program-listing-for-file-compileoctave-m" title="Permalink to this headline">¶</a>
+</h1>
+<p>↰ <a class="reference internal" href="file_CompileOctave.m.html#file-compileoctave-m"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">CompileOctave.m</span></code>)</p>
+<div class="highlight-MATLAB notranslate">
+<div class="highlight"><pre><span></span><span class="nb">clc</span><span class="p">;</span><span class="w"></span>
+<span class="n">clear</span><span class="w"> </span><span class="s">functions</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">NAMES</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'FresnelCS'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'XY_to_angle'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'CircleArcMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'BiarcMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'BiarcListMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'LineSegmentMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'PolyLineMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'Triangle2DMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'ClothoidCurveMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'ClothoidListMexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'ClothoidSplineG2MexWrapper'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'TriTriOverlap'</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="n">LIB_NAMES</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'G2lib'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'G2lib_intersect'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'AABBtree'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'Line'</span><span class="p">,</span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'PolyLine'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'Circle'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'Biarc'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'BiarcList'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'Clothoid'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'ClothoidList'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'ClothoidDistance'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'ClothoidG2'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'Fresnel'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'Triangle2D'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="n">LIB_NAMES2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'PolynomialRoots-1-Quadratic'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'PolynomialRoots-2-Cubic'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">  </span><span class="s">'PolynomialRoots-Utils'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="k">if</span><span class="w"> </span><span class="nb">isunix</span><span class="w"></span>
+<span class="w">  </span><span class="n">MEX</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'mkoctfile --mex -O2'</span><span class="p">;</span><span class="w"></span>
+<span class="k">elseif</span><span class="w"> </span><span class="nb">ispc</span><span class="w"></span>
+<span class="w">  </span><span class="n">MEX</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">'mkoctfile --mex'</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="n">INC</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">' -I../submodules/quarticRootsFlocke/src -I../src '</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">LIB_SRCS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">''</span><span class="p">;</span><span class="w"></span>
+<span class="n">LIB_OBJS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">''</span><span class="p">;</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">LIB_NAMES</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">LIB_SRCS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">LIB_SRCS</span><span class="p">,</span><span class="w"> </span><span class="s">' ../src/'</span><span class="p">,</span><span class="w"> </span><span class="n">LIB_NAMES</span><span class="p">{</span><span class="n">k</span><span class="p">},</span><span class="w"> </span><span class="s">'.cc'</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">LIB_OBJS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">LIB_OBJS</span><span class="p">,</span><span class="w"> </span><span class="n">LIB_NAMES</span><span class="p">{</span><span class="n">k</span><span class="p">},</span><span class="w"> </span><span class="s">'.o '</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">CMD</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">MEX</span><span class="p">,</span><span class="w"> </span><span class="s">' -c '</span><span class="p">,</span><span class="w"> </span><span class="n">INC</span><span class="p">,</span><span class="w"> </span><span class="s">'../src/'</span><span class="p">,</span><span class="w"> </span><span class="n">LIB_NAMES</span><span class="p">{</span><span class="n">k</span><span class="p">},</span><span class="w"> </span><span class="s">'.cc'</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="nb">disp</span><span class="p">(</span><span class="n">CMD</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="nb">eval</span><span class="p">(</span><span class="n">CMD</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">LIB_NAMES2</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">LIB_SRCS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">LIB_SRCS</span><span class="p">,</span><span class="w"> </span><span class="s">' ../submodules/quarticRootsFlocke/src/'</span><span class="p">,</span><span class="w"> </span><span class="n">LIB_NAMES2</span><span class="p">{</span><span class="n">k</span><span class="p">},</span><span class="w"> </span><span class="s">'.cc'</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">LIB_OBJS</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">LIB_OBJS</span><span class="p">,</span><span class="w"> </span><span class="n">LIB_NAMES2</span><span class="p">{</span><span class="n">k</span><span class="p">},</span><span class="w"> </span><span class="s">'.o '</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">CMD</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">MEX</span><span class="p">,</span><span class="w"> </span><span class="s">' -c '</span><span class="p">,</span><span class="w"> </span><span class="n">INC</span><span class="p">,</span><span class="w"> </span><span class="s">'../submodules/quarticRootsFlocke/src/'</span><span class="p">,</span><span class="w"> </span><span class="n">LIB_NAMES2</span><span class="p">{</span><span class="n">k</span><span class="p">},</span><span class="w"> </span><span class="s">'.cc'</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="nb">disp</span><span class="p">(</span><span class="n">CMD</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="nb">eval</span><span class="p">(</span><span class="n">CMD</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="nb">disp</span><span class="p">(</span><span class="s">'---------------------------------------------------------'</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">NAMES</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">N</span><span class="p">=</span><span class="n">NAMES</span><span class="p">{</span><span class="n">k</span><span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="nb">disp</span><span class="p">(</span><span class="s">'---------------------------------------------------------'</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="nb">fprintf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">'Compiling: %s\n'</span><span class="p">,</span><span class="n">N</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">CMD</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">MEX</span><span class="w"> </span><span class="s">' -output ../matlab/'</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="s">' -I../src ../src_mex/mex_'</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="s">'.cc '</span><span class="p">,</span><span class="w"> </span><span class="n">LIB_OBJS</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nb">isunix</span><span class="w"></span>
+<span class="w">    </span><span class="n">CMD</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="n">CMD</span><span class="p">,</span><span class="w"> </span><span class="s">' -lstdc++ -O2'</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="k">elseif</span><span class="w"> </span><span class="nb">ispc</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="nb">disp</span><span class="p">(</span><span class="n">CMD</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="nb">eval</span><span class="p">(</span><span class="n">CMD</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">LIB_NAMES</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="nb">delete</span><span class="p">([</span><span class="w"> </span><span class="n">LIB_NAMES</span><span class="p">{</span><span class="n">k</span><span class="p">},</span><span class="w"> </span><span class="s">'.o'</span><span class="w"> </span><span class="p">]);</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="nb">disp</span><span class="p">(</span><span class="s">'Install struct, io, statistics, optim package, it may take long time'</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">pkg</span><span class="w"> </span><span class="s">install</span><span class="w"> </span><span class="o">-</span><span class="n">forge</span><span class="w"> </span><span class="nb">struct</span><span class="w"></span>
+<span class="n">pkg</span><span class="w"> </span><span class="s">install</span><span class="w"> </span><span class="o">-</span><span class="n">forge</span><span class="w"> </span><span class="n">io</span><span class="w"></span>
+<span class="n">pkg</span><span class="w"> </span><span class="s">install</span><span class="w"> </span><span class="o">-</span><span class="n">forge</span><span class="w"> </span><span class="n">statistics</span><span class="w"></span>
+<span class="n">pkg</span><span class="w"> </span><span class="s">install</span><span class="w"> </span><span class="o">-</span><span class="n">forge</span><span class="w"> </span><span class="n">optim</span><span class="w"></span>
+
+<span class="nb">disp</span><span class="p">(</span><span class="s">'----------------------- DONE ----------------------------'</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File CompileOctave.m</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

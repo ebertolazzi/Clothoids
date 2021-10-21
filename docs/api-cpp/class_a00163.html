@@ -1,0 +1,747 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Class G2solve3arc &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class G2solveCLC" href="class_a00159.html" />
+    <link rel="prev" title="Class G2solve2arc" href="class_a00155.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00159.html" title="Class G2solveCLC"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00155.html" title="Class G2solve2arc"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class G2solve3arc</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="class-g2solve3arc">
+<span id="exhale-class-a00163"></span><h1>Class G2solve3arc<a class="headerlink" href="#class-g2solve3arc" title="Permalink to this headline">¶</a>
+</h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_Clothoids_ClothoidList.hxx.html#file-clothoids-clothoidlist-hxx"><span class="std std-ref">File ClothoidList.hxx</span></a></p></li>
+</ul>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
+</h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arcE">
+<span id="_CPPv3N5G2lib11G2solve3arcE"></span><span id="_CPPv2N5G2lib11G2solve3arcE"></span><span id="G2lib::G2solve3arc"></span><span class="target" id="a00163"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">G2lib</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">G2solve3arc</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arcE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Construct a piecewise clothoids <span class="math notranslate nohighlight">\( G(s) \)</span> composed by 3 clothoid and one line segment that solve the G2 problem</p>
+<p><strong>match</strong></p>
+<p></p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{array}{ll} \textrm{endpoints:}\quad&amp; \begin{cases} G(0) = \mathbf{p}_0 &amp; \\[0.5em] G(L) = \mathbf{p}_1 &amp; \end{cases} \\[1em] \textrm{angles:}\quad&amp; \begin{cases} \theta(0) = \theta_0 &amp; \\[0.5em] \theta(L) = \theta_1 &amp; \end{cases} \\[1em] \textrm{curvature:}\quad&amp; \begin{cases} \kappa(0) = \kappa_0 &amp; \\[0.5em] \kappa(L) = \kappa_1 &amp; \end{cases} \end{array} \end{split}\]</div>
+
+<p><strong>Reference</strong></p>
+<p>The solution algorithm is described in</p>
+<p></p>
+<ul class="simple">
+<li><p><strong>E.Bertolazzi, M.Frego</strong>, On the G2 Hermite Interpolation Problem with clothoids Journal of Computational and Applied Mathematics, vol 341, pp. 99-116, 2018</p></li>
+</ul>
+
+<p></p>
+<p><a class="reference internal" href="../_images/G2problem3arc.jpg"><img alt="../_images/G2problem3arc.jpg" class="align-center" src="../_images/G2problem3arc.jpg" style="width: 80%;"></a></p>
+ 
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc11G2solve3arcEv">
+<span id="_CPPv3N5G2lib11G2solve3arc11G2solve3arcEv"></span><span id="_CPPv2N5G2lib11G2solve3arc11G2solve3arcEv"></span><span id="G2lib::G2solve3arc::G2solve3arc"></span><span class="target" id="a00163_1acf724d20dee9b625d5a2551e70de58f1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">G2solve3arc</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc11G2solve3arcEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arcD0Ev">
+<span id="_CPPv3N5G2lib11G2solve3arcD0Ev"></span><span id="_CPPv2N5G2lib11G2solve3arcD0Ev"></span><span id="G2lib::G2solve3arc::~G2solve3arc"></span><span class="target" id="a00163_1a0678c9313ecdafaeb66ae9dd91477fa1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~G2solve3arc</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arcD0Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc12setToleranceE9real_type">
+<span id="_CPPv3N5G2lib11G2solve3arc12setToleranceE9real_type"></span><span id="_CPPv2N5G2lib11G2solve3arc12setToleranceE9real_type"></span><span id="G2lib::G2solve3arc::setTolerance__real_type"></span><span class="target" id="a00163_1a1622392f7495ff9bc00f8738e63545f1"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setTolerance</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tol</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc12setToleranceE9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Fix tolerance for the G2 problem </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc10setMaxIterEi">
+<span id="_CPPv3N5G2lib11G2solve3arc10setMaxIterEi"></span><span id="_CPPv2N5G2lib11G2solve3arc10setMaxIterEi"></span><span id="G2lib::G2solve3arc::setMaxIter__i"></span><span class="target" id="a00163_1a198dc5b55fd7df44e3fea7a119511004"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setMaxIter</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">miter</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc10setMaxIterEi" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Fix maximum number of iteration for the G2 problem </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib11G2solve3arc5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib11G2solve3arc5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="G2lib::G2solve3arc::build__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type"></span><span class="target" id="a00163_1a43cbe9c1211e489d995f3013aaa60872"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kappa0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kappa1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Dmax</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">dmax</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the 3 arc clothoid spline that fit the data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>x0</strong> – <strong>[in]</strong> initial <code class="docutils literal notranslate"><span class="pre">x</span></code> position </p></li>
+<li><p><strong>y0</strong> – <strong>[in]</strong> initial <code class="docutils literal notranslate"><span class="pre">y</span></code> position </p></li>
+<li><p><strong>theta0</strong> – <strong>[in]</strong> initial angle </p></li>
+<li><p><strong>kappa0</strong> – <strong>[in]</strong> initial curvature </p></li>
+<li><p><strong>x1</strong> – <strong>[in]</strong> final <code class="docutils literal notranslate"><span class="pre">x</span></code> position </p></li>
+<li><p><strong>y1</strong> – <strong>[in]</strong> final <code class="docutils literal notranslate"><span class="pre">y</span></code> position </p></li>
+<li><p><strong>theta1</strong> – <strong>[in]</strong> final angle </p></li>
+<li><p><strong>kappa1</strong> – <strong>[in]</strong> final curvature </p></li>
+<li><p><strong>Dmax</strong> – <strong>[in]</strong> rough desidered maximum angle variation, if 0 computed automatically </p></li>
+<li><p><strong>dmax</strong> – <strong>[in]</strong> rough desidered maximum angle divergence from guess, if 0 computed automatically </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
+<p>number of iteration, -1 if fails </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc18build_fixed_lengthE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib11G2solve3arc18build_fixed_lengthE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib11G2solve3arc18build_fixed_lengthE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="G2lib::G2solve3arc::build_fixed_length__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type"></span><span class="target" id="a00163_1a601b8a5d0f81385c909f10e1d2b6cc40"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_fixed_length</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kappa0</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta1</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kappa1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc18build_fixed_lengthE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute the 3 arc clothoid spline that fit the data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>s0</strong> – <strong>[in]</strong> length of the first segment </p></li>
+<li><p><strong>x0</strong> – <strong>[in]</strong> initial <code class="docutils literal notranslate"><span class="pre">x</span></code> position </p></li>
+<li><p><strong>y0</strong> – <strong>[in]</strong> initial <code class="docutils literal notranslate"><span class="pre">y</span></code> position </p></li>
+<li><p><strong>theta0</strong> – <strong>[in]</strong> initial angle </p></li>
+<li><p><strong>kappa0</strong> – <strong>[in]</strong> initial curvature </p></li>
+<li><p><strong>s1</strong> – <strong>[in]</strong> length of the last segment </p></li>
+<li><p><strong>x1</strong> – <strong>[in]</strong> final <code class="docutils literal notranslate"><span class="pre">x</span></code> position </p></li>
+<li><p><strong>y1</strong> – <strong>[in]</strong> final <code class="docutils literal notranslate"><span class="pre">y</span></code> position </p></li>
+<li><p><strong>theta1</strong> – <strong>[in]</strong> final angle </p></li>
+<li><p><strong>kappa1</strong> – <strong>[in]</strong> final curvature </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
+<p>number of iteration, -1 if fails </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc5getS0Ev">
+<span id="_CPPv3NK5G2lib11G2solve3arc5getS0Ev"></span><span id="_CPPv2NK5G2lib11G2solve3arc5getS0Ev"></span><span id="G2lib::G2solve3arc::getS0C"></span><span class="target" id="a00163_1a539864e54e6078a60890dda96a8a21f8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_a00147.html#_CPPv4N5G2lib13ClothoidCurveE" title="G2lib::ClothoidCurve"><span class="n"><span class="pre">ClothoidCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getS0</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc5getS0Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the first clothoid for the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc5getS1Ev">
+<span id="_CPPv3NK5G2lib11G2solve3arc5getS1Ev"></span><span id="_CPPv2NK5G2lib11G2solve3arc5getS1Ev"></span><span id="G2lib::G2solve3arc::getS1C"></span><span class="target" id="a00163_1a77bbc8e57ba3f93585af4b6dacad152b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_a00147.html#_CPPv4N5G2lib13ClothoidCurveE" title="G2lib::ClothoidCurve"><span class="n"><span class="pre">ClothoidCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getS1</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc5getS1Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the last clothoid for the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc5getSMEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc5getSMEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc5getSMEv"></span><span id="G2lib::G2solve3arc::getSMC"></span><span class="target" id="a00163_1a15b1a9ff5d931657c99e8725bde8e483"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_a00147.html#_CPPv4N5G2lib13ClothoidCurveE" title="G2lib::ClothoidCurve"><span class="n"><span class="pre">ClothoidCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getSM</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc5getSMEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the middle clothoid for the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc11totalLengthEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc11totalLengthEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc11totalLengthEv"></span><span id="G2lib::G2solve3arc::totalLengthC"></span><span class="target" id="a00163_1aa1a4d37f05de3eab2bd61eb429c7dfc3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">totalLength</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc11totalLengthEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the length of the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc19thetaTotalVariationEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc19thetaTotalVariationEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc19thetaTotalVariationEv"></span><span id="G2lib::G2solve3arc::thetaTotalVariationC"></span><span class="target" id="a00163_1a5ba78af28c93adb2a20684694e364905"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thetaTotalVariation</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc19thetaTotalVariationEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the total angle variation of the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc23curvatureTotalVariationEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc23curvatureTotalVariationEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc23curvatureTotalVariationEv"></span><span id="G2lib::G2solve3arc::curvatureTotalVariationC"></span><span class="target" id="a00163_1a546a10664d1ea8d9e5078113e1cc44de"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">curvatureTotalVariation</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc23curvatureTotalVariationEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the total curvature variation of the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc18integralCurvature2Ev">
+<span id="_CPPv3NK5G2lib11G2solve3arc18integralCurvature2Ev"></span><span id="_CPPv2NK5G2lib11G2solve3arc18integralCurvature2Ev"></span><span id="G2lib::G2solve3arc::integralCurvature2C"></span><span class="target" id="a00163_1a7d64669124be63ab8c8d9bc092ad3956"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">integralCurvature2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc18integralCurvature2Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the integral of the curvature squared of the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc13integralJerk2Ev">
+<span id="_CPPv3NK5G2lib11G2solve3arc13integralJerk2Ev"></span><span id="_CPPv2NK5G2lib11G2solve3arc13integralJerk2Ev"></span><span id="G2lib::G2solve3arc::integralJerk2C"></span><span class="target" id="a00163_1a1af307129ab4626cfed0331845734ebe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">integralJerk2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc13integralJerk2Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the integral of the jerk squared of the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc13integralSnap2Ev">
+<span id="_CPPv3NK5G2lib11G2solve3arc13integralSnap2Ev"></span><span id="_CPPv2NK5G2lib11G2solve3arc13integralSnap2Ev"></span><span id="G2lib::G2solve3arc::integralSnap2C"></span><span class="target" id="a00163_1a2fe47d885181f923dd5637ed38ed76ec"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">integralSnap2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc13integralSnap2Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
+<p>get the integral of the snap squared of the 3 arc G2 fitting </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc11thetaMinMaxER9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc11thetaMinMaxER9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc11thetaMinMaxER9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::thetaMinMax__real_typeR.real_typeRC"></span><span class="target" id="a00163_1a1d84829e5b2205ac90f8e20be4dd27f9"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thetaMinMax</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">thMin</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">thMax</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc11thetaMinMaxER9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>thMin</strong> – <strong>[out]</strong> minimum angle in the 3 arc G2 fitting curve </p></li>
+<li><p><strong>thMax</strong> – <strong>[out]</strong> maximum angle in the 3 arc G2 fitting curve </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
+<p>the difference of <code class="docutils literal notranslate"><span class="pre">thMax</span></code> and <code class="docutils literal notranslate"><span class="pre">thMin</span></code> </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc10deltaThetaEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc10deltaThetaEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc10deltaThetaEv"></span><span id="G2lib::G2solve3arc::deltaThetaC"></span><span class="target" id="a00163_1ab8fedcaee86845efcd3b5f25aed3e4ed"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deltaTheta</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc10deltaThetaEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return the difference of maximum-minimum angle in the 3 arc G2 fitting curve </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc15curvatureMinMaxER9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc15curvatureMinMaxER9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc15curvatureMinMaxER9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::curvatureMinMax__real_typeR.real_typeRC"></span><span class="target" id="a00163_1a4270e2364557bd978e23701074c179d9"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">curvatureMinMax</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">kMin</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">kMax</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc15curvatureMinMaxER9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>kMin</strong> – <strong>[out]</strong> minimum curvature in the 3 arc G2 fitting curve </p></li>
+<li><p><strong>kMax</strong> – <strong>[out]</strong> maximum curvature in the 3 arc G2 fitting curve </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
+<p>the difference of <code class="docutils literal notranslate"><span class="pre">kMax</span></code> and <code class="docutils literal notranslate"><span class="pre">kMin</span></code> </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc5thetaE9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc5thetaE9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc5thetaE9real_type"></span><span id="G2lib::G2solve3arc::theta__real_typeC"></span><span class="target" id="a00163_1aa88a7c8f1e0f17c94520d37702e2f4ff"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc5thetaE9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return angle as a function of curvilinear coordinate </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc7theta_DE9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc7theta_DE9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc7theta_DE9real_type"></span><span id="G2lib::G2solve3arc::theta_D__real_typeC"></span><span class="target" id="a00163_1af14619058799ed10619b242c6f81e42c"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc7theta_DE9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return angle derivative (curvature) as a function of curvilinear coordinate </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc8theta_DDE9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc8theta_DDE9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc8theta_DDE9real_type"></span><span id="G2lib::G2solve3arc::theta_DD__real_typeC"></span><span class="target" id="a00163_1af78faf667efc8e8e32e39e9f6a8744e5"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc8theta_DDE9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return angle second derivative (curvature derivative) as a function of curvilinear coordinate </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc9theta_DDDE9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc9theta_DDDE9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc9theta_DDDE9real_type"></span><span id="G2lib::G2solve3arc::theta_DDD__real_typeC"></span><span class="target" id="a00163_1aa828d4a8f22fb064ca542db282342c05"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc9theta_DDDE9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return angle third derivative as a function of curvilinear coordinate </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc1XE9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc1XE9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc1XE9real_type"></span><span id="G2lib::G2solve3arc::X__real_typeC"></span><span class="target" id="a00163_1a2f6da8479c22bc26905312c93d1984ba"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">X</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc1XE9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return x coordinate of the3 arc clothoid as a function of curvilinear coordinate </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc1YE9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc1YE9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc1YE9real_type"></span><span id="G2lib::G2solve3arc::Y__real_typeC"></span><span class="target" id="a00163_1a43da3fe986f4af4a7d85b40081954dcd"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Y</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc1YE9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return y coordinate of the3 arc clothoid as a function of curvilinear coordinate </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc6xBeginEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc6xBeginEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc6xBeginEv"></span><span id="G2lib::G2solve3arc::xBeginC"></span><span class="target" id="a00163_1a36a0f785736a1aaa4cc2170387d6eac1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xBegin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc6xBeginEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return initial x coordinate of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc6yBeginEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc6yBeginEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc6yBeginEv"></span><span id="G2lib::G2solve3arc::yBeginC"></span><span class="target" id="a00163_1af189c0325e92e753129ea4df58928ad6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">yBegin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc6yBeginEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return initial y coordinate of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc10kappaBeginEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc10kappaBeginEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc10kappaBeginEv"></span><span id="G2lib::G2solve3arc::kappaBeginC"></span><span class="target" id="a00163_1ac7882ab98e3e8a4def89d21fdc8a2521"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappaBegin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc10kappaBeginEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return initial curvature of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc10thetaBeginEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc10thetaBeginEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc10thetaBeginEv"></span><span id="G2lib::G2solve3arc::thetaBeginC"></span><span class="target" id="a00163_1a3f915172363f04278ae295f93ff3e5a3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thetaBegin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc10thetaBeginEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return initial angle of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc4xEndEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc4xEndEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc4xEndEv"></span><span id="G2lib::G2solve3arc::xEndC"></span><span class="target" id="a00163_1a99cdf8cbd315f0e7ee73596f2935ce71"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xEnd</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc4xEndEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return final x coordinate of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc4yEndEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc4yEndEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc4yEndEv"></span><span id="G2lib::G2solve3arc::yEndC"></span><span class="target" id="a00163_1af662ea4e4bfbc3bd35ff7e67def7f6a4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">yEnd</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc4yEndEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return final y coordinate of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc8kappaEndEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc8kappaEndEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc8kappaEndEv"></span><span id="G2lib::G2solve3arc::kappaEndC"></span><span class="target" id="a00163_1afdf06c1e6fb7510fdff049a640f310fd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappaEnd</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc8kappaEndEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return final curvature of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc8thetaEndEv">
+<span id="_CPPv3NK5G2lib11G2solve3arc8thetaEndEv"></span><span id="_CPPv2NK5G2lib11G2solve3arc8thetaEndEv"></span><span id="G2lib::G2solve3arc::thetaEndC"></span><span class="target" id="a00163_1a736478ca6344c91d1d5e314b2762ff15"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thetaEnd</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc8thetaEndEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return final angle of the 3 arc clothoid </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval__real_type.real_typeR.real_typeR.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a91a6f596e2e61dcb6bf389eb676dbea7"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">theta</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">kappa</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute parameters of 3 arc clothoid at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>s</strong> – <strong>[in]</strong> curvilinear coordinate of where curve is computed </p></li>
+<li><p><strong>theta</strong> – <strong>[out]</strong> the curve angle </p></li>
+<li><p><strong>kappa</strong> – <strong>[out]</strong> the curve curvature </p></li>
+<li><p><strong>x</strong> – <strong>[out]</strong> the curve x-coordinate </p></li>
+<li><p><strong>y</strong> – <strong>[out]</strong> the curve y-coordinate </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval__real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a545b9a5630c34ae9f6b27f107d8f116d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc4evalE9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc6eval_DE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc6eval_DE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc6eval_DE9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval_D__real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a9df8fb48e41f63b0fc7111da8190be85"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_D</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_D</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc6eval_DE9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc7eval_DDE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc7eval_DDE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc7eval_DDE9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval_DD__real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a3173c746a1026ebabe9bcb9be379755e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DD</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc7eval_DDE9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate second derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc8eval_DDDE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc8eval_DDDE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc8eval_DDDE9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval_DDD__real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a5ba695ce5ce75bfc10cf994069a69c0d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DDD</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DDD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc8eval_DDDE9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate third derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc8eval_ISOE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc8eval_ISOE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc8eval_ISOE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval_ISO__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a9d2d1d91f80544c83262860b21e3847d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc8eval_ISOE9real_type9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval_ISO_D__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a2dcc810b0107898ce835e169f5bdcba9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_D</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_D</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval_ISO_DD__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a0b0254bea33ccea476aed8d5de024fc3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DD</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate second derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::G2solve3arc::eval_ISO_DDD__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="a00163_1a46259ad727904a611d6e5c84df61da8a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DDD</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DDD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x and y-coordinate third derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc6rotateE9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib11G2solve3arc6rotateE9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib11G2solve3arc6rotateE9real_type9real_type9real_type"></span><span id="G2lib::G2solve3arc::rotate__real_type.real_type.real_type"></span><span class="target" id="a00163_1a1b277d082fc14ca5fd2251b0f10a407c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rotate</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">angle</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">cx</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">cy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc6rotateE9real_type9real_type9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Rotate curve by angle <span class="math notranslate nohighlight">\( theta \)</span> centered at point <span class="math notranslate nohighlight">\( (c_x,c_y)\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>angle</strong> – <strong>[in]</strong> angle <span class="math notranslate nohighlight">\( theta \)</span> </p></li>
+<li><p><strong>cx</strong> – <strong>[in]</strong> <span class="math notranslate nohighlight">\( c_x\)</span> </p></li>
+<li><p><strong>cy</strong> – <strong>[in]</strong> <span class="math notranslate nohighlight">\( c_y\)</span> </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc9translateE9real_type9real_type">
+<span id="_CPPv3N5G2lib11G2solve3arc9translateE9real_type9real_type"></span><span id="_CPPv2N5G2lib11G2solve3arc9translateE9real_type9real_type"></span><span id="G2lib::G2solve3arc::translate__real_type.real_type"></span><span class="target" id="a00163_1a04c75a4ceb73f23cb1d7c55f0b65363d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">translate</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tx</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ty</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc9translateE9real_type9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Translate curve by <span class="math notranslate nohighlight">\( (t_x,t_y) \)</span> </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arc7reverseEv">
+<span id="_CPPv3N5G2lib11G2solve3arc7reverseEv"></span><span id="_CPPv2N5G2lib11G2solve3arc7reverseEv"></span><span id="G2lib::G2solve3arc::reverse"></span><span class="target" id="a00163_1a7b616b7448a72665c358dff83a142e8a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reverse</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arc7reverseEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Reverse curve parameterization </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib11G2solve3arc4saveER12ostream_type">
+<span id="_CPPv3NK5G2lib11G2solve3arc4saveER12ostream_type"></span><span id="_CPPv2NK5G2lib11G2solve3arc4saveER12ostream_type"></span><span id="G2lib::G2solve3arc::save__ostream_typeRC"></span><span class="target" id="a00163_1abc928c951e9246babe4c340483c5cdf0"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">save</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib11G2solve3arc4saveER12ostream_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>save clothoid list of a file stream </p>
+</dd>
+</dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11G2solve3arclsER12ostream_typeRK13ClothoidCurve">
+<span id="_CPPv3N5G2lib11G2solve3arclsER12ostream_typeRK13ClothoidCurve"></span><span id="_CPPv2N5G2lib11G2solve3arclsER12ostream_typeRK13ClothoidCurve"></span><span id="G2lib::G2solve3arc::lshift-operator__ostream_typeR.ClothoidCurveCR"></span><span class="target" id="a00163_1a470660b667ef8bd2b0f1a41b4d17f54a"></span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <a class="reference internal" href="class_a00147.html#_CPPv4N5G2lib13ClothoidCurveE" title="G2lib::ClothoidCurve"><span class="n"><span class="pre">ClothoidCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">c</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11G2solve3arclsER12ostream_typeRK13ClothoidCurve" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+</div>
+</dd>
+</dl>
+
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00159.html" title="Class G2solveCLC"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00155.html" title="Class G2solve2arc"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" >C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class G2solve3arc</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

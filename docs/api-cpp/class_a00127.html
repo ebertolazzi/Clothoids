@@ -1,0 +1,361 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Class AABBtree &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class AsyPlot" href="class_a00151.html" />
+    <link rel="prev" title="Namespace G2lib" href="namespace_G2lib.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00151.html" title="Class AsyPlot"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="namespace_G2lib.html" title="Namespace G2lib"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class AABBtree</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="class-aabbtree">
+<span id="exhale-class-a00127"></span><h1>Class AABBtree<a class="headerlink" href="#class-aabbtree" title="Permalink to this headline">¶</a>
+</h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_Clothoids_AABBtree.hxx.html#file-clothoids-aabbtree-hxx"><span class="std std-ref">File AABBtree.hxx</span></a></p></li>
+</ul>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
+</h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtreeE">
+<span id="_CPPv3N5G2lib8AABBtreeE"></span><span id="_CPPv2N5G2lib8AABBtreeE"></span><span id="G2lib::AABBtree"></span><span class="target" id="a00127"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">G2lib</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">AABBtree</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtreeE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Class to build and manage an AABB tree (Axis-Aligned Bounding Box Trees)</p>
+<p>The class provides 2-dimensional aabb-tree construction and search for arbitrary collections of spatial objects. These tree-based indexing structures are useful when seeking to implement efficient spatial queries, reducing the complexity of intersection tests between collections of objects. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree7PtrBBoxE">
+<span id="_CPPv3N5G2lib8AABBtree7PtrBBoxE"></span><span id="_CPPv2N5G2lib8AABBtree7PtrBBoxE"></span><span id="G2lib::AABBtree::PtrBBox"></span><span class="target" id="a00127_1af7d99b64c7a632f319980ab856faafda"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="class_a00123.html#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PtrBBox</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree7PtrBBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree7PtrAABBE">
+<span id="_CPPv3N5G2lib8AABBtree7PtrAABBE"></span><span id="_CPPv2N5G2lib8AABBtree7PtrAABBE"></span><span id="G2lib::AABBtree::PtrAABB"></span><span class="target" id="a00127_1a87689a75d795ef1df0b488225feb8692"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtreeE" title="G2lib::AABBtree"><span class="n"><span class="pre">AABBtree</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PtrAABB</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree7PtrAABBE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree11PairPtrBBoxE">
+<span id="_CPPv3N5G2lib8AABBtree11PairPtrBBoxE"></span><span id="_CPPv2N5G2lib8AABBtree11PairPtrBBoxE"></span><span id="G2lib::AABBtree::PairPtrBBox"></span><span class="target" id="a00127_1a99e876370aa0e018c9552df954c3bc4d"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">pair</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtree7PtrBBoxE" title="G2lib::AABBtree::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtree7PtrBBoxE" title="G2lib::AABBtree::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PairPtrBBox</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree11PairPtrBBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree10VecPtrBBoxE">
+<span id="_CPPv3N5G2lib8AABBtree10VecPtrBBoxE"></span><span id="_CPPv2N5G2lib8AABBtree10VecPtrBBoxE"></span><span id="G2lib::AABBtree::VecPtrBBox"></span><span class="target" id="a00127_1a95f7d48f6cd9795a294d9fbb7d44f288"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtree7PtrBBoxE" title="G2lib::AABBtree::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VecPtrBBox</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree10VecPtrBBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree14VecPairPtrBBoxE">
+<span id="_CPPv3N5G2lib8AABBtree14VecPairPtrBBoxE"></span><span id="_CPPv2N5G2lib8AABBtree14VecPairPtrBBoxE"></span><span id="G2lib::AABBtree::VecPairPtrBBox"></span><span class="target" id="a00127_1ac10a57ee54241702493483427cb76b63"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtree11PairPtrBBoxE" title="G2lib::AABBtree::PairPtrBBox"><span class="n"><span class="pre">PairPtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VecPairPtrBBox</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree14VecPairPtrBBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree8AABBtreeEv">
+<span id="_CPPv3N5G2lib8AABBtree8AABBtreeEv"></span><span id="_CPPv2N5G2lib8AABBtree8AABBtreeEv"></span><span id="G2lib::AABBtree::AABBtree"></span><span class="target" id="a00127_1aea0b59f92a9f5a05ddde35a8aa793f8c"></span><span class="sig-name descname"><span class="n"><span class="pre">AABBtree</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree8AABBtreeEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Create an empty AABB tree. </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtreeD0Ev">
+<span id="_CPPv3N5G2lib8AABBtreeD0Ev"></span><span id="_CPPv2N5G2lib8AABBtreeD0Ev"></span><span id="G2lib::AABBtree::~AABBtree"></span><span class="target" id="a00127_1a9821d11ed3f2df3ee65a2dc62e185a2c"></span><span class="sig-name descname"><span class="n"><span class="pre">~AABBtree</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtreeD0Ev" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>destroy the stored AABB tree. </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree5clearEv">
+<span id="_CPPv3N5G2lib8AABBtree5clearEv"></span><span id="_CPPv2N5G2lib8AABBtree5clearEv"></span><span id="G2lib::AABBtree::clear"></span><span class="target" id="a00127_1a050439a72f941cb5dac7f7fe57c02b89"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">clear</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree5clearEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Initialized AABB tree. </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8AABBtree5emptyEv">
+<span id="_CPPv3NK5G2lib8AABBtree5emptyEv"></span><span id="_CPPv2NK5G2lib8AABBtree5emptyEv"></span><span id="G2lib::AABBtree::emptyC"></span><span class="target" id="a00127_1a94449a0c61075c09ea5da28060bcad84"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">empty</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree5emptyEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Check if AABB tree is empty. </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8AABBtree4bboxER9real_typeR9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8AABBtree4bboxER9real_typeR9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8AABBtree4bboxER9real_typeR9real_typeR9real_typeR9real_type"></span><span id="G2lib::AABBtree::bbox__real_typeR.real_typeR.real_typeR.real_typeRC"></span><span class="target" id="a00127_1a13015f514fabf00789f3710d029b1a5a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bbox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xmin</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ymin</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xmax</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ymax</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree4bboxER9real_typeR9real_typeR9real_typeR9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Get the Bounding Box of the whole AABB tree</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>xmin</strong> – <strong>[in]</strong> x-minimimum box coordinate </p></li>
+<li><p><strong>ymin</strong> – <strong>[in]</strong> y-minimimum box coordinate </p></li>
+<li><p><strong>xmax</strong> – <strong>[in]</strong> x-maximum box coordinate </p></li>
+<li><p><strong>ymax</strong> – <strong>[in]</strong> y-maximum box coordinate </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABBtree5buildERK6vectorI7PtrBBoxE">
+<span id="_CPPv3N5G2lib8AABBtree5buildERK6vectorI7PtrBBoxE"></span><span id="_CPPv2N5G2lib8AABBtree5buildERK6vectorI7PtrBBoxE"></span><span id="G2lib::AABBtree::build__vector:PtrBBox:CR"></span><span class="target" id="a00127_1a6d2d27b9e14f63ee054b9b3fc8b58390"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtree7PtrBBoxE" title="G2lib::AABBtree::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bboxes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8AABBtree5buildERK6vectorI7PtrBBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Build AABB tree given a list of bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8AABBtree5printER12ostream_typei">
+<span id="_CPPv3NK5G2lib8AABBtree5printER12ostream_typei"></span><span id="_CPPv2NK5G2lib8AABBtree5printER12ostream_typei"></span><span id="G2lib::AABBtree::print__ostream_typeR.iC"></span><span class="target" id="a00127_1abe2e272a314a873fe012f9ae05b5f8fd"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">level</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree5printER12ostream_typei" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Pretty print the AABB tree </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0ENK5G2lib8AABBtree9collisionEbRK8AABBtree13COLLISION_funb">
+<span id="_CPPv3I0ENK5G2lib8AABBtree9collisionERK8AABBtree13COLLISION_funb"></span><span id="_CPPv2I0ENK5G2lib8AABBtree9collisionERK8AABBtree13COLLISION_funb"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COLLISION_fun</span></span></span><span class="p"><span class="pre">&gt;</span></span><br><span class="target" id="a00127_1aa5f2407ae49df344ebac998fcdbed61a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtreeE" title="G2lib::AABBtree"><span class="n"><span class="pre">AABBtree</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tree</span></span>, <a class="reference internal" href="#_CPPv4I0ENK5G2lib8AABBtree9collisionEbRK8AABBtree13COLLISION_funb" title="G2lib::AABBtree::collision::COLLISION_fun"><span class="n"><span class="pre">COLLISION_fun</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ifun</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">swap_tree</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I0ENK5G2lib8AABBtree9collisionEbRK8AABBtree13COLLISION_funb" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Check if two AABB tree collide</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>tree</strong> – <strong>[in]</strong> an AABB tree that is used to check collision </p></li>
+<li><p><strong>ifun</strong> – <strong>[in]</strong> function the check if the contents of two bbox (curve) collide </p></li>
+<li><p><strong>swap_tree</strong> – <strong>[in]</strong> if true exchange the tree in computation </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
+<p>true if the two tree collides </p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8AABBtree9intersectERK8AABBtreeR14VecPairPtrBBoxb">
+<span id="_CPPv3NK5G2lib8AABBtree9intersectERK8AABBtreeR14VecPairPtrBBoxb"></span><span id="_CPPv2NK5G2lib8AABBtree9intersectERK8AABBtreeR14VecPairPtrBBoxb"></span><span id="G2lib::AABBtree::intersect__AABBtreeCR.VecPairPtrBBoxR.bC"></span><span class="target" id="a00127_1af6d4320a6649e63c6ec6d8ccf828b626"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersect</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib8AABBtreeE" title="G2lib::AABBtree"><span class="n"><span class="pre">AABBtree</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tree</span></span>, <a class="reference internal" href="#_CPPv4N5G2lib8AABBtree14VecPairPtrBBoxE" title="G2lib::AABBtree::VecPairPtrBBox"><span class="n"><span class="pre">VecPairPtrBBox</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">intersectionList</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">swap_tree</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree9intersectERK8AABBtreeR14VecPairPtrBBoxb" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Compute all the intersection of AABB trees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>tree</strong> – <strong>[in]</strong> an AABB tree that is used to check collision </p></li>
+<li><p><strong>intersectionList</strong> – <strong>[out]</strong> list of pair bbox that overlaps </p></li>
+<li><p><strong>swap_tree</strong> – <strong>[in]</strong> if true exchange the tree in computation </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8AABBtree12min_distanceE9real_type9real_typeR10VecPtrBBox">
+<span id="_CPPv3NK5G2lib8AABBtree12min_distanceE9real_type9real_typeR10VecPtrBBox"></span><span id="_CPPv2NK5G2lib8AABBtree12min_distanceE9real_type9real_typeR10VecPtrBBox"></span><span id="G2lib::AABBtree::min_distance__real_type.real_type.VecPtrBBoxRC"></span><span class="target" id="a00127_1ac16f1d3006c9512be8a30de0e8e9aab3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">min_distance</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="#_CPPv4N5G2lib8AABBtree10VecPtrBBoxE" title="G2lib::AABBtree::VecPtrBBox"><span class="n"><span class="pre">VecPtrBBox</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">candidateList</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8AABBtree12min_distanceE9real_type9real_typeR10VecPtrBBox" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Select all the bboxes candidate to be at minimum distance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>x</strong> – <strong>[in]</strong> x-coordinate of the point </p></li>
+<li><p><strong>y</strong> – <strong>[in]</strong> y-coordinate of the point </p></li>
+<li><p><strong>candidateList</strong> – <strong>[out]</strong> candidate list </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+</div>
+</dd>
+</dl>
+
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00151.html" title="Class AsyPlot"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="namespace_G2lib.html" title="Namespace G2lib"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" >C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class AABBtree</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

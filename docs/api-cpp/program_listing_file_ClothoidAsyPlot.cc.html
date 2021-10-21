@@ -1,0 +1,311 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Program Listing for File ClothoidAsyPlot.cc &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File ClothoidAsyPlot.cc</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="program-listing-for-file-clothoidasyplot-cc">
+<span id="program-listing-file-clothoidasyplot-cc"></span><h1>Program Listing for File ClothoidAsyPlot.cc<a class="headerlink" href="#program-listing-for-file-clothoidasyplot-cc" title="Permalink to this headline">¶</a>
+</h1>
+<p>↰ <a class="reference internal" href="file_ClothoidAsyPlot.cc.html#file-clothoidasyplot-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">ClothoidAsyPlot.cc</span></code>)</p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"Clothoids.hh"</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">G2lib</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">AsyPlot</span><span class="p">(</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="n">_filename</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_showAxes</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">filename</span><span class="p">(</span><span class="n">_filename</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">showAxes</span><span class="p">(</span><span class="n">_showAxes</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTILS_ASSERT</span><span class="p">(</span><span class="w"> </span><span class="n">openFile</span><span class="p">(),</span><span class="w"> </span><span class="s">"Failed to open file {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">initFile</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::~</span><span class="n">AsyPlot</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">showAxes</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">displayAxes</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">closeFile</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">compileFile</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">compileFile</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">cmdComp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"asy -f pdf "</span><span class="o">+</span><span class="w"> </span><span class="n">filename</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">system</span><span class="p">(</span><span class="n">cmdComp</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">pdfFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filename</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">filename</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">".asy"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">".pdf"</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">pdfFile</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">string</span><span class="w"> </span><span class="n">cmdOpen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"(okular "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pdfFile</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" &amp;&gt; /dev/null )&amp;"</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">system</span><span class="p">(</span><span class="n">cmdOpen</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">initFile</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"// File generated automatically from C++ </span><span class="se">\n\n\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"import graph;</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"include </span><span class="se">\"</span><span class="s">clothoidLib.asylib</span><span class="se">\"</span><span class="s">;</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"size(14cm,7cm);</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">drawClothoid</span><span class="p">(</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"></span>
+<span class="w">                         </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">penna</span><span class="p">,</span><span class="w"></span>
+<span class="w">                         </span><span class="n">real_type</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">file</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"path pclot = clothoidPoints(("</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">xBegin</span><span class="p">()</span><span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"),"</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">()</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">kappaBegin</span><span class="p">()</span><span class="w">  </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">dkappa</span><span class="p">()</span><span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"100,0);</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"pen penna = "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">";</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"draw(pclot, penna);</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">file</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"path pclot = clothoidOffset(("</span><span class="w"></span>
+<span class="w">            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">xBegin</span><span class="p">()</span><span class="w">     </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w">     </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"),"</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">          </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">kappaBegin</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">dkappa</span><span class="p">()</span><span class="w">     </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w">     </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"100,"</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">offset</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"); </span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"pen penna = "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">";</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"draw(pclot, penna);</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">dot</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"dot(("</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">","</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"),"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">");</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">triangle</span><span class="p">(</span><span class="w"> </span><span class="n">Triangle2D</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"draw(("</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">x1</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">","</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">y1</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- "</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">'('</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">x2</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">y2</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- "</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">'('</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">x3</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">y3</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- cycle, "</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">");</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">drawRect</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">real_type</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">real_type</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">real_type</span><span class="w"> </span><span class="n">x3</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y3</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="w"></span>
+<span class="w">    </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"fill(("</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">","</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- "</span><span class="w"></span>
+<span class="w">    </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">'('</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- "</span><span class="w"></span>
+<span class="w">    </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">'('</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- "</span><span class="w"></span>
+<span class="w">    </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">'('</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">','</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y3</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- cycle, "</span><span class="w"></span>
+<span class="w">    </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">");</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">displayAxes</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"xaxis(</span><span class="se">\"</span><span class="s">$x$</span><span class="se">\"</span><span class="s">, black+fontsize(7pt),xmin=0,xmax=5,Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"yaxis(</span><span class="se">\"</span><span class="s">$y$</span><span class="se">\"</span><span class="s">, black+fontsize(7pt),ymin=0,ymax=5,Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">displayAxes</span><span class="p">(</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">labX</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">labY</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">real_type</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">real_type</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">real_type</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">real_type</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">file</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"xaxis(</span><span class="se">\"</span><span class="s">"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">labX</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\"</span><span class="s">, black+fontsize(7pt),xmin="</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">",xmax="</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">xmax</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">",Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"yaxis(</span><span class="se">\"</span><span class="s">"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">labY</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\"</span><span class="s">, black+fontsize(7pt),ymin="</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ymin</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">",ymax="</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ymax</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">",Ticks(Step=2,step=1,NoZero,Size=.8mm, size=.4mm));</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">drawLine</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">real_type</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"draw(("</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">","</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">") -- "</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"("</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">","</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"), "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">");</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">label</span><span class="p">(</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">text</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="n">real_type</span><span class="w">      </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="n">real_type</span><span class="w">      </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">placement</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="n">string</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"label(</span><span class="se">\"</span><span class="s">"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\"</span><span class="s">, ("</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">", "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"), "</span><span class="w"></span>
+<span class="w">      </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">placement</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">placement</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">", "</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">""</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">penna</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">");</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">openFile</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">  </span><span class="n">AsyPlot</span><span class="o">::</span><span class="n">closeFile</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File ClothoidAsyPlot.cc</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

@@ -1,0 +1,355 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Class BBox &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class Biarc" href="class_a00135.html" />
+    <link rel="prev" title="Class BaseCurve" href="class_a00131.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00135.html" title="Class Biarc"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00131.html" title="Class BaseCurve"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class BBox</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="class-bbox">
+<span id="exhale-class-a00123"></span><h1>Class BBox<a class="headerlink" href="#class-bbox" title="Permalink to this headline">¶</a>
+</h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_Clothoids_AABBtree.hxx.html#file-clothoids-aabbtree-hxx"><span class="std std-ref">File AABBtree.hxx</span></a></p></li>
+</ul>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
+</h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBoxE">
+<span id="_CPPv3N5G2lib4BBoxE"></span><span id="_CPPv2N5G2lib4BBoxE"></span><span id="G2lib::BBox"></span><span class="target" id="a00123"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">G2lib</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Class to manipulate bounding box </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox7PtrBBoxE">
+<span id="_CPPv3N5G2lib4BBox7PtrBBoxE"></span><span id="_CPPv2N5G2lib4BBox7PtrBBoxE"></span><span id="G2lib::BBox::PtrBBox"></span><span class="target" id="a00123_1a7620667d1a97de76475ad674a3a53e3e"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PtrBBox</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type8int_type8int_type">
+<span id="_CPPv3N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type8int_type8int_type"></span><span id="_CPPv2N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type8int_type8int_type"></span><span id="G2lib::BBox::BBox__real_type.real_type.real_type.real_type.int_type.int_type"></span><span class="target" id="a00123_1aba12c169aa47bfda016c1aeb5ffb6738"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xmin</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ymin</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xmax</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ymax</span></span>, <a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ipos</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type8int_type8int_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Construct a bounding box with additional information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>xmin</strong> – <strong>[in]</strong> x-minimimum box coordinate </p></li>
+<li><p><strong>ymin</strong> – <strong>[in]</strong> y-minimimum box coordinate </p></li>
+<li><p><strong>xmax</strong> – <strong>[in]</strong> x-maximum box coordinate </p></li>
+<li><p><strong>ymax</strong> – <strong>[in]</strong> y-maximum box coordinate </p></li>
+<li><p><strong>id</strong> – <strong>[in]</strong> identifier of the box </p></li>
+<li><p><strong>ipos</strong> – <strong>[in]</strong> ranking position of the box </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE8int_type8int_type">
+<span id="_CPPv3N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE8int_type8int_type"></span><span id="_CPPv2N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE8int_type8int_type"></span><span id="G2lib::BBox::BBox__vector:PtrBBox:CR.int_type.int_type"></span><span class="target" id="a00123_1acf4f3c640726a485db4565cb8dbc5840"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="G2lib::BBox::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bboxes</span></span>, <a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ipos</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE8int_type8int_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Build a buonding box that cover a list of bounding box</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>bboxes</strong> – <strong>[in]</strong> list of bounding box </p></li>
+<li><p><strong>id</strong> – <strong>[in]</strong> identifier of the box </p></li>
+<li><p><strong>ipos</strong> – <strong>[in]</strong> ranking position of the box </p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox4XminEv">
+<span id="_CPPv3NK5G2lib4BBox4XminEv"></span><span id="_CPPv2NK5G2lib4BBox4XminEv"></span><span id="G2lib::BBox::XminC"></span><span class="target" id="a00123_1a12a0e7d4f02100e12143fd625c109b5c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Xmin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox4XminEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x-minimum coordinate of the bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox4YminEv">
+<span id="_CPPv3NK5G2lib4BBox4YminEv"></span><span id="_CPPv2NK5G2lib4BBox4YminEv"></span><span id="G2lib::BBox::YminC"></span><span class="target" id="a00123_1a20ad6e8bf9d52fb40566f9fdc36d467b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Ymin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox4YminEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>y-minimum coordinate of the bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox4XmaxEv">
+<span id="_CPPv3NK5G2lib4BBox4XmaxEv"></span><span id="_CPPv2NK5G2lib4BBox4XmaxEv"></span><span id="G2lib::BBox::XmaxC"></span><span class="target" id="a00123_1a9b23ddc80fedf38a50969dddb53d587a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Xmax</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox4XmaxEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>x-maximum coordinate of the bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox4YmaxEv">
+<span id="_CPPv3NK5G2lib4BBox4YmaxEv"></span><span id="_CPPv2NK5G2lib4BBox4YmaxEv"></span><span id="G2lib::BBox::YmaxC"></span><span class="target" id="a00123_1ab875e88426e04a73d5e37a0a2975c3e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Ymax</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox4YmaxEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>y-maximum coordinate of the bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox2IdEv">
+<span id="_CPPv3NK5G2lib4BBox2IdEv"></span><span id="_CPPv2NK5G2lib4BBox2IdEv"></span><span id="G2lib::BBox::IdC"></span><span class="target" id="a00123_1a0ef4a188357a4e3ab07647e7261553e0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">Id</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox2IdEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>return BBOX id </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox4IposEv">
+<span id="_CPPv3NK5G2lib4BBox4IposEv"></span><span id="_CPPv2NK5G2lib4BBox4IposEv"></span><span id="G2lib::BBox::IposC"></span><span class="target" id="a00123_1aeec1dafc04aaf56aa553c9c80f1dc295"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="typedef_a00119_1a80cc898bceffe2207e1a7ca34ccadfce.html#_CPPv4N5G2lib8int_typeE" title="G2lib::int_type"><span class="n"><span class="pre">int_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">Ipos</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox4IposEv" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>return BBOX position </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBoxaSERK4BBox">
+<span id="_CPPv3N5G2lib4BBoxaSERK4BBox"></span><span id="_CPPv2N5G2lib4BBoxaSERK4BBox"></span><span id="G2lib::BBox::assign-operator__BBoxCR"></span><span class="target" id="a00123_1a06ca2872d9b80f275a8f755243375656"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rhs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBoxaSERK4BBox" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>copy a bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox9collisionERK4BBox">
+<span id="_CPPv3NK5G2lib4BBox9collisionERK4BBox"></span><span id="_CPPv2NK5G2lib4BBox9collisionERK4BBox"></span><span id="G2lib::BBox::collision__BBoxCRC"></span><span class="target" id="a00123_1a3b98db48add6859ab67fb00a0710a21e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">box</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox9collisionERK4BBox" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>detect if two bbox collide </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4joinERK6vectorI7PtrBBoxE">
+<span id="_CPPv3N5G2lib4BBox4joinERK6vectorI7PtrBBoxE"></span><span id="_CPPv2N5G2lib4BBox4joinERK6vectorI7PtrBBoxE"></span><span id="G2lib::BBox::join__vector:PtrBBox:CR"></span><span class="target" id="a00123_1ad0aaba5511ff29c7e0fd0049ea0da67b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">join</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="G2lib::BBox::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bboxes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4joinERK6vectorI7PtrBBoxE" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Build bbox for a list of bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox8distanceE9real_type9real_type">
+<span id="_CPPv3NK5G2lib4BBox8distanceE9real_type9real_type"></span><span id="_CPPv2NK5G2lib4BBox8distanceE9real_type9real_type"></span><span id="G2lib::BBox::distance__real_type.real_typeC"></span><span class="target" id="a00123_1ac6fc969999b473220bc8ef684108ab74"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">distance</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox8distanceE9real_type9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>distance of the point <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> to the bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox11maxDistanceE9real_type9real_type">
+<span id="_CPPv3NK5G2lib4BBox11maxDistanceE9real_type9real_type"></span><span id="_CPPv2NK5G2lib4BBox11maxDistanceE9real_type9real_type"></span><span id="G2lib::BBox::maxDistance__real_type.real_typeC"></span><span class="target" id="a00123_1a9e35474d66ca0ff168dff368476066d5"></span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">maxDistance</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="typedef_a00119_1a14cdbec831d7b0dcbeb9623e8c7e33ea.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox11maxDistanceE9real_type9real_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Maximum distance of the point <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> to the point of bbox </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox5printER12ostream_type">
+<span id="_CPPv3NK5G2lib4BBox5printER12ostream_type"></span><span id="_CPPv2NK5G2lib4BBox5printER12ostream_type"></span><span id="G2lib::BBox::print__ostream_typeRC"></span><span class="target" id="a00123_1a67cd88140fdf70d4de76bacdf7396cd5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00119_1af80b04d28d25f23d455e73bb584f3397.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib4BBox5printER12ostream_type" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Pretty print a bbox </p>
+</dd>
+</dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl>
+<dt class="sig sig-object cpp">
+<em class="property"><span class="pre">friend</span> <span class="pre">class</span></em> <span class="pre">AABBtree</span>
+</dt>
+</dl>
+
+</div>
+</dd>
+</dl>
+
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00135.html" title="Class Biarc"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00131.html" title="Class BaseCurve"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" >C++ API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class BBox</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

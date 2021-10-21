@@ -1,0 +1,446 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Program Listing for File AABBtree.hxx &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File AABBtree.hxx</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="program-listing-for-file-aabbtree-hxx">
+<span id="program-listing-file-clothoids-aabbtree-hxx"></span><h1>Program Listing for File AABBtree.hxx<a class="headerlink" href="#program-listing-for-file-aabbtree-hxx" title="Permalink to this headline">¶</a>
+</h1>
+<p>↰ <a class="reference internal" href="file_Clothoids_AABBtree.hxx.html#file-clothoids-aabbtree-hxx"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">Clothoids/AABBtree.hxx</span></code>)</p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="cm">/*--------------------------------------------------------------------------*\</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |  Copyright (C) 2018                                                      |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |         , __                 , __                                        |</span>
+<span class="cm"> |        /|/  \               /|/  \                                       |</span>
+<span class="cm"> |         | __/ _   ,_         | __/ _   ,_                                |</span>
+<span class="cm"> |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |</span>
+<span class="cm"> |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |</span>
+<span class="cm"> |                           /|                   /|                        |</span>
+<span class="cm"> |                           \|                   \|                        |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |      Paolo Bevilacqua and Enrico Bertolazzi                              |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |      (1) Dipartimento di Ingegneria e Scienza dell'Informazione          |</span>
+<span class="cm"> |      (2) Dipartimento di Ingegneria Industriale                          |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |      Universita` degli Studi di Trento                                   |</span>
+<span class="cm"> |      email: paolo.bevilacqua@unitn.it                                    |</span>
+<span class="cm"> |      email: enrico.bertolazzi@unitn.it                                   |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm">\*--------------------------------------------------------------------------*/</span><span class="w"></span>
+
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">G2lib</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">setw</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cp">#ifdef G2LIB_USE_CXX11</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// promemoria shared_ptr&lt;Foo&gt;(&amp;foo, [](void*){});</span>
+<span class="w">  </span><span class="cp">#endif</span>
+
+<span class="w">  </span><span class="k">class</span> <span class="nc">AABBtree</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |   ____  ____</span>
+<span class="cm">   |  | __ )| __ )  _____  __</span>
+<span class="cm">   |  |  _ \|  _ \ / _ \ \/ /</span>
+<span class="cm">   |  | |_) | |_) | (_) &gt;  &lt;</span>
+<span class="cm">   |  |____/|____/ \___/_/\_\</span>
+<span class="cm">  \*/</span><span class="w"></span>
+<span class="w">  </span><span class="k">class</span> <span class="nc">BBox</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#ifdef G2LIB_USE_CXX11</span>
+<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PtrBBox</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#else</span>
+<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PtrBBox</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#endif</span>
+
+<span class="w">  </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">m_xmin</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">m_ymin</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">m_xmax</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">m_ymax</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">  </span><span class="n">m_id</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">  </span><span class="n">m_ipos</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">BBox</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">BBox</span><span class="p">(</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">BBox</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">ymax</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">int_type</span><span class="w">  </span><span class="n">id</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">int_type</span><span class="w">  </span><span class="n">ipos</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmin</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymin</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmax</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymax</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_id</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipos</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">BBox</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">PtrBBox</span><span class="o">&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">bboxes</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">int_type</span><span class="w">                </span><span class="n">id</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">int_type</span><span class="w">                </span><span class="n">ipos</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_id</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ipos</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">this</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">join</span><span class="p">(</span><span class="w"> </span><span class="n">bboxes</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">Xmin</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_xmin</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">Ymin</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_ymin</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">Xmax</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_xmax</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">Ymax</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_ymax</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Id</span><span class="p">()</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_id</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Ipos</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_ipos</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="k">operator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">m_xmin</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">m_ymin</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">m_xmax</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">m_ymax</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_id</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">m_id</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">m_ipos</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">    </span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">box</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">box</span><span class="p">.</span><span class="n">m_xmin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">m_xmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="n">box</span><span class="p">.</span><span class="n">m_xmax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m_xmin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="n">box</span><span class="p">.</span><span class="n">m_ymin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">m_ymax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">                </span><span class="p">(</span><span class="n">box</span><span class="p">.</span><span class="n">m_ymax</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m_ymin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="n">join</span><span class="p">(</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">PtrBBox</span><span class="o">&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">bboxes</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">distance</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">maxDistance</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="w"> </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">"BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">m_xmin</span><span class="p">,</span><span class="w"> </span><span class="n">m_ymin</span><span class="p">,</span><span class="w"> </span><span class="n">m_xmax</span><span class="p">,</span><span class="w"> </span><span class="n">m_ymax</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="k">class</span> <span class="nc">AABBtree</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="kr">inline</span><span class="w"></span>
+<span class="w">  </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">  </span><span class="k">operator</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">bb</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">bb</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stream</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |      _        _    ____  ____  _</span>
+<span class="cm">   |     / \      / \  | __ )| __ )| |_ _ __ ___  ___</span>
+<span class="cm">   |    / _ \    / _ \ |  _ \|  _ \| __| '__/ _ \/ _ \</span>
+<span class="cm">   |   / ___ \  / ___ \| |_) | |_) | |_| | |  __/  __/</span>
+<span class="cm">   |  /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|</span>
+<span class="cm">  \*/</span><span class="w"></span>
+<span class="w">  </span><span class="k">class</span> <span class="nc">AABBtree</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">  </span><span class="cp">#ifdef G2LIB_USE_CXX11</span>
+<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PtrBBox</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">AABBtree</span><span class="o">&gt;</span><span class="w">   </span><span class="n">PtrAABB</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="cp">#else</span>
+<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="w">           </span><span class="n">PtrBBox</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">AABBtree</span><span class="w"> </span><span class="o">*</span><span class="w">             </span><span class="n">PtrAABB</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="cp">#endif</span>
+
+<span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="n">pair</span><span class="o">&lt;</span><span class="n">PtrBBox</span><span class="p">,</span><span class="n">PtrBBox</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PairPtrBBox</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">PtrBBox</span><span class="o">&gt;</span><span class="w">       </span><span class="n">VecPtrBBox</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">PairPtrBBox</span><span class="o">&gt;</span><span class="w">   </span><span class="n">VecPairPtrBBox</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// bbox of the tree</span>
+<span class="w">    </span><span class="n">PtrBBox</span><span class="w">         </span><span class="n">pBBox</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">PtrAABB</span><span class="o">&gt;</span><span class="w"> </span><span class="n">children</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">AABBtree</span><span class="p">(</span><span class="w"> </span><span class="n">AABBtree</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">min_maxdist</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">        </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">        </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">AABBtree</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tree</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">        </span><span class="n">mmDist</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">min_maxdist_select</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">        </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">        </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">        </span><span class="n">mmDist</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">AABBtree</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tree</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">VecPtrBBox</span><span class="w">     </span><span class="o">&amp;</span><span class="w"> </span><span class="n">candidateList</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">AABBtree</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="o">~</span><span class="n">AABBtree</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">clear</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">empty</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">bbox</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymax</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pBBox</span><span class="o">-&gt;</span><span class="n">m_xmin</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pBBox</span><span class="o">-&gt;</span><span class="n">m_ymin</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pBBox</span><span class="o">-&gt;</span><span class="n">m_xmax</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pBBox</span><span class="o">-&gt;</span><span class="n">m_ymax</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">build</span><span class="p">(</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">PtrBBox</span><span class="o">&gt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">bboxes</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="w"> </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">COLLISION_fun</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">    </span><span class="n">collision</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">AABBtree</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tree</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">COLLISION_fun</span><span class="w">    </span><span class="n">ifun</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w">             </span><span class="n">swap_tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// check bbox with</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">tree</span><span class="p">.</span><span class="n">pBBox</span><span class="o">-&gt;</span><span class="n">collision</span><span class="p">(</span><span class="o">*</span><span class="n">pBBox</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">icase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">children</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
+<span class="w">                  </span><span class="p">(</span><span class="n">tree</span><span class="p">.</span><span class="n">children</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="o">?</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">icase</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="mi">0</span><span class="o">:</span><span class="w"> </span><span class="c1">// both leaf, use GeomPrimitive intersection algorithm</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">swap_tree</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">ifun</span><span class="p">(</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">pBBox</span><span class="p">,</span><span class="w"> </span><span class="n">pBBox</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w">             </span><span class="k">return</span><span class="w"> </span><span class="n">ifun</span><span class="p">(</span><span class="w"> </span><span class="n">pBBox</span><span class="p">,</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">pBBox</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="c1">// first is a tree, second is a leaf</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="k">typename</span> <span class="nc">vector</span><span class="o">&lt;</span><span class="n">PtrAABB</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">it</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">children</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">children</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="o">**</span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="n">ifun</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">swap_tree</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="c1">// first leaf, second is a tree</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="k">typename</span> <span class="nc">vector</span><span class="o">&lt;</span><span class="n">PtrAABB</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">it</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">children</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">children</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="o">**</span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="n">ifun</span><span class="p">,</span><span class="w"> </span><span class="n">swap_tree</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="c1">// first is a tree, second is a tree</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="k">typename</span> <span class="nc">vector</span><span class="o">&lt;</span><span class="n">PtrAABB</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">c1</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">typename</span> <span class="nc">vector</span><span class="o">&lt;</span><span class="n">PtrAABB</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">c2</span><span class="p">;</span><span class="w"></span>
+<span class="w">          </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">children</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">children</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">c1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">children</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">                  </span><span class="n">c2</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="n">children</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">c2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">c1</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="o">**</span><span class="n">c2</span><span class="p">,</span><span class="w"> </span><span class="n">ifun</span><span class="p">,</span><span class="w"> </span><span class="n">swap_tree</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="n">intersect</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">AABBtree</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tree</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">VecPairPtrBBox</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">intersectionList</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w">             </span><span class="n">swap_tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"></span>
+<span class="w">    </span><span class="nf">min_distance</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">    </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">VecPtrBBox</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">candidateList</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File AABBtree.hxx</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

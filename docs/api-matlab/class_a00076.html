@@ -1,0 +1,1340 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Class CircleArc &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class ClothoidCurve" href="class_a00080.html" />
+    <link rel="prev" title="Class BiarcList" href="class_a00072.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00080.html" title="Class ClothoidCurve"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00072.html" title="Class BiarcList"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">MATLAB API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class CircleArc</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="class-circlearc">
+<span id="exhale-class-a00076"></span><h1>Class CircleArc<a class="headerlink" href="#class-circlearc" title="Permalink to this headline">¶</a>
+</h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_CircleArc.m.html#file-circlearc-m"><span class="std std-ref">File CircleArc.m</span></a></p></li>
+</ul>
+<section id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a>
+</h2>
+<section id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a>
+</h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">CurveBase</span></code> (<a class="reference internal" href="class_a00092.html#exhale-class-a00092"><span class="std std-ref">Class CurveBase</span></a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
+</h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv49CircleArc">
+<span id="_CPPv39CircleArc"></span><span id="_CPPv29CircleArc"></span><span id="CircleArc"></span><span class="target" id="a00076"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CircleArc</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="class_a00092.html#_CPPv49CurveBase" title="CurveBase"><span class="n"><span class="pre">CurveBase</span></span></a><a class="headerlink" href="#_CPPv49CircleArc" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc9CircleArcE2in">
+<span id="_CPPv3N9CircleArc9CircleArcE2in"></span><span id="_CPPv2N9CircleArc9CircleArcE2in"></span><span id="CircleArc::CircleArc__in"></span><span class="target" id="a00076_1a9dc797f40718d1cdf8a50185d02a592e"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CircleArc</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc9CircleArcE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Create a new C++ class instance for the circle arc object</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArc</span><span class="p">()</span><span class="w"> </span><span class="c">% create empty circle</span><span class="w"></span>
+<span class="n">ref</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArc</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">k0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="c">% circle passing from (x0,y0) </span><span class="w"></span>
+<span class="w">                                         </span><span class="c">% at angle theta0 with curvature k0</span><span class="w"></span>
+<span class="w">                                         </span><span class="c">% and length L</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code>: coordinate of initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code>: orientation of the circle at initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k0</span></code>: curvature of the circle at initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code>: length of curve from initial to final point</p></li>
+</ul>
+
+<p><strong>On output:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>ref: reference handle to the object instance </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc7is_typeE2in">
+<span id="_CPPv3N9CircleArc7is_typeE2in"></span><span id="_CPPv2N9CircleArc7is_typeE2in"></span><span id="CircleArc::is_type__in"></span><span class="target" id="a00076_1a8e73b1d2c14f612aa05a2b5e20c3e247"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">is_type</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">ignoredArg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc7is_typeE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc5buildE2in2in2in2in2in2in">
+<span id="_CPPv3N9CircleArc5buildE2in2in2in2in2in2in"></span><span id="_CPPv2N9CircleArc5buildE2in2in2in2in2in2in"></span><span id="CircleArc::build__in.in.in.in.in.in"></span><span class="target" id="a00076_1a1ecee01f37d4ac344945a1e51ed2bc70"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">theta0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">k0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">L</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc5buildE2in2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Build the circle from known parameters</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">k0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p>build a circle passing from (x0,y0) at angle theta0 with curvature and length</p>
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code>: coordinate of initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code>: orientation of the circle at initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k0</span></code>: curvature of the circle at initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code>: length of curve from initial to final point </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8build_G1E2in2in">
+<span id="_CPPv3N9CircleArc8build_G1E2in2in"></span><span id="_CPPv2N9CircleArc8build_G1E2in2in"></span><span id="CircleArc::build_G1__in.in"></span><span class="target" id="a00076_1af4488c0f7bf5adef2c613aa7a9607a6a"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_G1</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8build_G1E2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Build the circle from known parameters</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% circle passing to [x0,y0] and [x1,y1]</span><span class="w"></span>
+<span class="w">                                     </span><span class="c">% with angle theta0 at [x0,y0]</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="c">% circle passing to p0 and p1 with angle theta0 at p0</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>On input:</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code>: coordinate of initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">theta0</span></code>: orientation of the circle at initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k0</span></code>: curvature of the circle at initial point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code>: length of curve from initial to final point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p0</span></code>: 2D point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p1</span></code>: 2D point </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8build_3PE2in2in">
+<span id="_CPPv3N9CircleArc8build_3PE2in2in"></span><span id="_CPPv2N9CircleArc8build_3PE2in2in"></span><span id="CircleArc::build_3P__in.in"></span><span class="target" id="a00076_1a72f9119b23ab1e42f2ae928871bbd97e"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_3P</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8build_3PE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Build the circle arc given 3 points. The point can be alingned in this case a degenerate straight arc if build.</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">build_3P</span><span class="p">(</span><span class="w"> </span><span class="n">p0</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc5scaleE2in2in">
+<span id="_CPPv3N9CircleArc5scaleE2in2in"></span><span id="_CPPv2N9CircleArc5scaleE2in2in"></span><span id="CircleArc::scale__in.in"></span><span class="target" id="a00076_1ab7e35d3eed366e323bd44daf4a90a757"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scale</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">sc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc5scaleE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Scale circle by <code class="docutils literal notranslate"><span class="pre">sc</span></code> factor</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc23changeCurvilinearOriginE2in2in2in">
+<span id="_CPPv3N9CircleArc23changeCurvilinearOriginE2in2in2in"></span><span id="_CPPv2N9CircleArc23changeCurvilinearOriginE2in2in2in"></span><span id="CircleArc::changeCurvilinearOrigin__in.in.in"></span><span class="target" id="a00076_1a8cd8f44807d84722b3fa5dffa1c5471d"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">changeCurvilinearOrigin</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">L</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc23changeCurvilinearOriginE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Change the origin of the circle curve to <code class="docutils literal notranslate"><span class="pre">s0</span></code> and set arc lenght to <code class="docutils literal notranslate"><span class="pre">L</span></code></p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">changeCurvilinearOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8to_nurbsE2in">
+<span id="_CPPv3N9CircleArc8to_nurbsE2in"></span><span id="_CPPv2N9CircleArc8to_nurbsE2in"></span><span id="CircleArc::to_nurbs__in"></span><span class="target" id="a00076_1a2bb17a8dd9684833fda8543c05454dab"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_nurbs</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8to_nurbsE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>return a nurbs representation of the circle arc </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4plotE2in2in2in">
+<span id="_CPPv3N9CircleArc4plotE2in2in2in"></span><span id="_CPPv2N9CircleArc4plotE2in2in2in"></span><span id="CircleArc::plot__in.in.in"></span><span class="target" id="a00076_1a0762f328b30fe19843412ff7a6aa2ca3"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">fmt</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4plotE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Plot the arc</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="n">fmt</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="n">fmt</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">npts</span></code>: number of sampling points for plotting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt</span></code> : format of the arc </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc11plotPolygonE2in2in">
+<span id="_CPPv3N9CircleArc11plotPolygonE2in2in"></span><span id="_CPPv2N9CircleArc11plotPolygonE2in2in"></span><span id="CircleArc::plotPolygon__in.in"></span><span class="target" id="a00076_1a801cd2ae5a0ccc6d346e23228d8c48c9"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotPolygon</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc11plotPolygonE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Plot the polygon of the NURBS for the arc</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotPolygon</span><span class="p">();</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotPolygon</span><span class="p">(</span><span class="w"> </span><span class="s">'Color'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fmt</span></code> : format of the arc </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc10obj_handleE2in">
+<span id="_CPPv3N9CircleArc10obj_handleE2in"></span><span id="_CPPv2N9CircleArc10obj_handleE2in"></span><span id="CircleArc::obj_handle__in"></span><span class="target" id="a00092_1a1453250354e19f9d9fe16a0deef75c18"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">obj_handle</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc10obj_handleE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return the <code class="docutils literal notranslate"><span class="pre">pointer</span></code> of the interbal stored c++ object</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">obj_handle</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4copyE2in2in">
+<span id="_CPPv3N9CircleArc4copyE2in2in"></span><span id="_CPPv2N9CircleArc4copyE2in2in"></span><span id="CircleArc::copy__in.in"></span><span class="target" id="a00092_1ad6ec72b704427d6f37875b67733947c8"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">copy</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">C</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4copyE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Make of copy of a curve object</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p>where <code class="docutils literal notranslate"><span class="pre">C</span></code> id the curve object to be copied. </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4bboxE2in2in">
+<span id="_CPPv3N9CircleArc4bboxE2in2in"></span><span id="_CPPv2N9CircleArc4bboxE2in2in"></span><span id="CircleArc::bbox__in.in"></span><span class="target" id="a00092_1afb7d6a660cd3a44e2876b1cc1f976f12"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bbox</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4bboxE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return the bounding box of the curve object</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbox</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbox</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbox</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbox</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p>xmin: x minimum coordinate of the bounding box</p></li>
+<li><p>ymin: y minimum coordinate of the bounding box</p></li>
+<li><p>xmax: x maximum coordinate of the bounding box</p></li>
+<li><p>ymax: y maximum coordinate of the bounding box</p></li>
+</ul>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>offs: offset of the curve used in the bbox computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for offset computation </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc9translateE2in2in2in">
+<span id="_CPPv3N9CircleArc9translateE2in2in2in"></span><span id="_CPPv2N9CircleArc9translateE2in2in2in"></span><span id="CircleArc::translate__in.in.in"></span><span class="target" id="a00092_1a72fc0cdd9c31f5ffb583146fbe203dcf"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">translate</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">tx</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">ty</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc9translateE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Translate the curve by <code class="docutils literal notranslate"><span class="pre">(tx,ty)</span></code></p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4trimE2in2in2in">
+<span id="_CPPv3N9CircleArc4trimE2in2in2in"></span><span id="_CPPv2N9CircleArc4trimE2in2in2in"></span><span id="CircleArc::trim__in.in.in"></span><span class="target" id="a00092_1a89c01df85b041077157d9bfe5743ea0a"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">smin</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">smax</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4trimE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Cut the curve at the curvilinear parameter <code class="docutils literal notranslate"><span class="pre">smin</span></code> up to <code class="docutils literal notranslate"><span class="pre">smax</span></code></p>
+<p><strong>Usage</strong></p>
+<p>ref.trim( smin, smax ); </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc6rotateE2in2in2in2in">
+<span id="_CPPv3N9CircleArc6rotateE2in2in2in2in"></span><span id="_CPPv2N9CircleArc6rotateE2in2in2in2in"></span><span id="CircleArc::rotate__in.in.in.in"></span><span class="target" id="a00092_1a524a9c870aef837dfd9009a93fdfbf2a"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rotate</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">angle</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">cx</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">cy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc6rotateE2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Rotate the curve by angle <code class="docutils literal notranslate"><span class="pre">angle</span></code> around point <code class="docutils literal notranslate"><span class="pre">(cx,</span> <span class="pre">cy)</span></code></p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="w"> </span><span class="nb">angle</span><span class="p">,</span><span class="w"> </span><span class="n">cx</span><span class="p">,</span><span class="w"> </span><span class="n">cy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc7reverseE2in">
+<span id="_CPPv3N9CircleArc7reverseE2in"></span><span id="_CPPv2N9CircleArc7reverseE2in"></span><span id="CircleArc::reverse__in"></span><span class="target" id="a00092_1abb94c933007695f005928d0dcac14cdf"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reverse</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc7reverseE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Reverse the direction of travel of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">reverse</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc12changeOriginE2in2in2in">
+<span id="_CPPv3N9CircleArc12changeOriginE2in2in2in"></span><span id="_CPPv2N9CircleArc12changeOriginE2in2in2in"></span><span id="CircleArc::changeOrigin__in.in.in"></span><span class="target" id="a00092_1a0a0012fd549eb2653f43e2c03839ecec"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">changeOrigin</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">newX0</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">newY0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc12changeOriginE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Translate the curve in such a way the origin is at <code class="docutils literal notranslate"><span class="pre">(newX0,newY0</span></code>.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">newX0</span><span class="p">,</span><span class="w"> </span><span class="n">newY0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8evaluateE2in2in2in">
+<span id="_CPPv3N9CircleArc8evaluateE2in2in2in"></span><span id="_CPPv2N9CircleArc8evaluateE2in2in2in"></span><span id="CircleArc::evaluate__in.in.in"></span><span class="target" id="a00092_1a288e0542951a0688cf986ab5a77f3909"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">evaluate</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8evaluateE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>offs: offset of the curve used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for offset computation </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4evalE2in2in">
+<span id="_CPPv3N9CircleArc4evalE2in2in"></span><span id="_CPPv2N9CircleArc4evalE2in2in"></span><span id="CircleArc::eval__in.in"></span><span class="target" id="a00092_1ace84ba94906e2f8cb6ccbff57cb40c83"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4evalE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>offs: offset of the curve used compiutation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for offset computation</p></li>
+</ul>
+
+<p><strong>Output</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>XY: matrix <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code> of the evaluated points</p></li>
+<li><p>X: vector of the x-coordinates of the evaluated points</p></li>
+<li><p>Y: vector of the y-coordinates of the evaluated points </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc6eval_DE2in2in">
+<span id="_CPPv3N9CircleArc6eval_DE2in2in"></span><span id="_CPPv2N9CircleArc6eval_DE2in2in"></span><span id="CircleArc::eval_D__in.in"></span><span class="target" id="a00092_1a988c5660ecb7806775fe0a8df9213d47"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_D</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc6eval_DE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the first derivatives of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for offset computation</p></li>
+</ul>
+
+<p><strong>Output</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">XY</span></code>: matrix <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code> of the evaluated points</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: vector of the x-coordinates of the evaluated point derivatives</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Y</span></code>: vector of the y-coordinates of the evaluated point derivatives </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc7eval_DDE2in2in">
+<span id="_CPPv3N9CircleArc7eval_DDE2in2in"></span><span id="_CPPv2N9CircleArc7eval_DDE2in2in"></span><span id="CircleArc::eval_DD__in.in"></span><span class="target" id="a00092_1a09e63f53bc95899d7529a924dd16f427"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_DD</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc7eval_DDE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the second derivatives of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for offset computation</p></li>
+</ul>
+
+<p><strong>Output</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">XY</span></code>: matrix <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code> of the evaluated points</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: vector of the x-coordinates of the evaluated point derivatives</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Y</span></code>: vector of the y-coordinates of the evaluated point derivatives </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8eval_DDDE2in2in">
+<span id="_CPPv3N9CircleArc8eval_DDDE2in2in"></span><span id="_CPPv2N9CircleArc8eval_DDDE2in2in"></span><span id="CircleArc::eval_DDD__in.in"></span><span class="target" id="a00092_1a97c153ccdd0fbd09cb405c6f53ed939e"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_DDD</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8eval_DDDE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the third derivatives of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">XY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">eval_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for offset computation</p></li>
+</ul>
+
+<p><strong>Output</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">XY</span></code>: matrix <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code> of the evaluated points</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code>: vector of the x-coordinates of the evaluated point derivatives</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Y</span></code>: vector of the y-coordinates of the evaluated point derivatives </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc5thetaE2in2in">
+<span id="_CPPv3N9CircleArc5thetaE2in2in"></span><span id="_CPPv2N9CircleArc5thetaE2in2in"></span><span id="CircleArc::theta__in.in"></span><span class="target" id="a00092_1a2737beff5b4fa9653f7015ffd1cd37a8"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc5thetaE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the angle of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">theta</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc7theta_DE2in2in">
+<span id="_CPPv3N9CircleArc7theta_DE2in2in"></span><span id="_CPPv2N9CircleArc7theta_DE2in2in"></span><span id="CircleArc::theta_D__in.in"></span><span class="target" id="a00092_1a45af03eef0ae38e7f39a2bbe2a53150a"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_D</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc7theta_DE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the angle derivatives (curvature) of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">theta_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8theta_DDE2in2in">
+<span id="_CPPv3N9CircleArc8theta_DDE2in2in"></span><span id="_CPPv2N9CircleArc8theta_DDE2in2in"></span><span id="CircleArc::theta_DD__in.in"></span><span class="target" id="a00092_1a63b753018b8ccffd2b1c2378770f8a0d"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_DD</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8theta_DDE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the angle second derivatuve of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">theta_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc9theta_DDDE2in2in">
+<span id="_CPPv3N9CircleArc9theta_DDDE2in2in"></span><span id="_CPPv2N9CircleArc9theta_DDDE2in2in"></span><span id="CircleArc::theta_DDD__in.in"></span><span class="target" id="a00092_1a1543fbc2744e6798776f1bfc92efc891"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_DDD</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc9theta_DDDE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the angle third derivative of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">theta_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc5kappaE2in2in">
+<span id="_CPPv3N9CircleArc5kappaE2in2in"></span><span id="_CPPv2N9CircleArc5kappaE2in2in"></span><span id="CircleArc::kappa__in.in"></span><span class="target" id="a00092_1af9299e0a4f6ba27785c2ea28f4e2e8cf"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappa</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc5kappaE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the curvature of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">kappa</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc7kappa_DE2in2in">
+<span id="_CPPv3N9CircleArc7kappa_DE2in2in"></span><span id="_CPPv2N9CircleArc7kappa_DE2in2in"></span><span id="CircleArc::kappa_D__in.in"></span><span class="target" id="a00092_1a85489b8d48a85e621ea3b22506a1e859"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappa_D</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc7kappa_DE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the curvature derivative of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">kappa_D</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8kappa_DDE2in2in">
+<span id="_CPPv3N9CircleArc8kappa_DDE2in2in"></span><span id="_CPPv2N9CircleArc8kappa_DDE2in2in"></span><span id="CircleArc::kappa_DD__in.in"></span><span class="target" id="a00092_1acc8104f92805d378e8b2306ba54064b5"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappa_DD</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8kappa_DDE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the curvature second derivative of the curve at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. Argument <code class="docutils literal notranslate"><span class="pre">s</span></code> may be a vector for multiple evaluations.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">kappa_DD</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc7xyBeginE2in">
+<span id="_CPPv3N9CircleArc7xyBeginE2in"></span><span id="_CPPv2N9CircleArc7xyBeginE2in"></span><span id="CircleArc::xyBegin__in"></span><span class="target" id="a00092_1a7472254e4d4d33895efb42af712e79ff"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xyBegin</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc7xyBeginE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate initial point of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">xyBegin</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc5xyEndE2in">
+<span id="_CPPv3N9CircleArc5xyEndE2in"></span><span id="_CPPv2N9CircleArc5xyEndE2in"></span><span id="CircleArc::xyEnd__in"></span><span class="target" id="a00092_1aad64122209f71187d9710b1e03ba9e08"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xyEnd</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc5xyEndE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate final point of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">xyEnd</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc6xBeginE2in">
+<span id="_CPPv3N9CircleArc6xBeginE2in"></span><span id="_CPPv2N9CircleArc6xBeginE2in"></span><span id="CircleArc::xBegin__in"></span><span class="target" id="a00092_1af0112d88f91a2ce47de67aade29c7785"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xBegin</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc6xBeginE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate initial x-coordinate of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">x0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4xEndE2in">
+<span id="_CPPv3N9CircleArc4xEndE2in"></span><span id="_CPPv2N9CircleArc4xEndE2in"></span><span id="CircleArc::xEnd__in"></span><span class="target" id="a00092_1a920ba7285e158c3448daccfd2cdc2bcc"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xEnd</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4xEndE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate final x-coordinate of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">x1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc6yBeginE2in">
+<span id="_CPPv3N9CircleArc6yBeginE2in"></span><span id="_CPPv2N9CircleArc6yBeginE2in"></span><span id="CircleArc::yBegin__in"></span><span class="target" id="a00092_1af30cb9956277fcd8c9beb91c06f667d5"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">yBegin</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc6yBeginE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate initial y-coordinate of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">y0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4yEndE2in">
+<span id="_CPPv3N9CircleArc4yEndE2in"></span><span id="_CPPv2N9CircleArc4yEndE2in"></span><span id="CircleArc::yEnd__in"></span><span class="target" id="a00092_1ae3fab8b50b2af4b2dfd4d7f6770c5df3"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">yEnd</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4yEndE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate final y-coordinate of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">y1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc10thetaBeginE2in">
+<span id="_CPPv3N9CircleArc10thetaBeginE2in"></span><span id="_CPPv2N9CircleArc10thetaBeginE2in"></span><span id="CircleArc::thetaBegin__in"></span><span class="target" id="a00092_1a2341de8ad257521c910f78577663247c"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thetaBegin</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc10thetaBeginE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate initial angle of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8thetaEndE2in">
+<span id="_CPPv3N9CircleArc8thetaEndE2in"></span><span id="_CPPv2N9CircleArc8thetaEndE2in"></span><span id="CircleArc::thetaEnd__in"></span><span class="target" id="a00092_1ac4868d7d8f46bc8d61b6f31271e63a41"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">thetaEnd</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8thetaEndE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate final angle of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">theta</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">thetaEnd</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc10kappaBeginE2in">
+<span id="_CPPv3N9CircleArc10kappaBeginE2in"></span><span id="_CPPv2N9CircleArc10kappaBeginE2in"></span><span id="CircleArc::kappaBegin__in"></span><span class="target" id="a00092_1aa5388c8571e8b782af658890c28c9ba7"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappaBegin</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc10kappaBeginE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate initial curvature of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">kappaBegin</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8kappaEndE2in">
+<span id="_CPPv3N9CircleArc8kappaEndE2in"></span><span id="_CPPv2N9CircleArc8kappaEndE2in"></span><span id="CircleArc::kappaEnd__in"></span><span class="target" id="a00092_1a5e9c99136558125699be44751885c3f0"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappaEnd</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8kappaEndE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate final curvature of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">kappa1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">kappaEnd</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc6lengthE2in2in">
+<span id="_CPPv3N9CircleArc6lengthE2in2in"></span><span id="_CPPv2N9CircleArc6lengthE2in2in"></span><span id="CircleArc::length__in.in"></span><span class="target" id="a00092_1a71fe78bbbf98ab12481e4c1224585e15"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">length</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc6lengthE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Return the length of the curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="nb">length</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc6pointsE2in">
+<span id="_CPPv3N9CircleArc6pointsE2in"></span><span id="_CPPv2N9CircleArc6pointsE2in"></span><span id="CircleArc::points__in"></span><span class="target" id="a00092_1a32b0b9a4a2ee5e0e1ffdb8cbda4ba782"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">points</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc6pointsE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc11bbTrianglesE2in2in">
+<span id="_CPPv3N9CircleArc11bbTrianglesE2in2in"></span><span id="_CPPv2N9CircleArc11bbTrianglesE2in2in"></span><span id="CircleArc::bbTriangles__in.in"></span><span class="target" id="a00092_1aaa400df7ce766246d06ae21207a1c626"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bbTriangles</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc11bbTrianglesE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the bounding box triangles of curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">P1</span><span class="p">,</span><span class="n">P2</span><span class="p">,</span><span class="n">P3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">();</span><span class="w"></span>
+<span class="p">[</span><span class="n">P1</span><span class="p">,</span><span class="n">P2</span><span class="p">,</span><span class="n">P3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">(</span><span class="n">max_angle</span><span class="p">,</span><span class="n">max_size</span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">P1</span><span class="p">,</span><span class="n">P2</span><span class="p">,</span><span class="n">P3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">(</span><span class="n">max_angle</span><span class="p">,</span><span class="n">max_size</span><span class="p">,</span><span class="n">offs</span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">P1</span><span class="p">,</span><span class="n">P2</span><span class="p">,</span><span class="n">P3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">(</span><span class="n">max_angle</span><span class="p">,</span><span class="n">max_size</span><span class="p">,</span><span class="n">offs</span><span class="p">,</span><span class="s">'ISO'</span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">P1</span><span class="p">,</span><span class="n">P2</span><span class="p">,</span><span class="n">P3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">(</span><span class="n">max_angle</span><span class="p">,</span><span class="n">max_size</span><span class="p">,</span><span class="n">offs</span><span class="p">,</span><span class="s">'SAE'</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_angle</span></code>: maximum curve angle variation admitted in a triangle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_size</span></code>: maximum triangles size</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for the offset</p></li>
+</ul>
+
+<p><strong>Output</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">P1</span></code>: <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code> matrix with the first points of the triangles</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">P2</span></code>: <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code> matrix with the second points of the triangles</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">P3</span></code>: <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code> matrix with the third points of the triangles </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc12closestPointE2in2in2in2in">
+<span id="_CPPv3N9CircleArc12closestPointE2in2in2in2in"></span><span id="_CPPv2N9CircleArc12closestPointE2in2in2in2in"></span><span id="CircleArc::closestPoint__in.in.in.in"></span><span class="target" id="a00092_1a9f9c42653a38cc5b028b7a889eca354e"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">closestPoint</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">qx</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">qy</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc12closestPointE2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the point at minimum distance of another point on the curve. <code class="docutils literal notranslate"><span class="pre">qx</span></code> and <code class="docutils literal notranslate"><span class="pre">qy</span></code> may be vectors so that the return values are vectors too.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">iflag</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">closestPoint</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p>offs: offset of the curve used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for the offset</p></li>
+</ul>
+
+<p><strong>Output</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>: Point at minimum distance from <code class="docutils literal notranslate"><span class="pre">(qx,qy)</span></code> on the curve.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>: Curvilinear coordinates of the point <code class="docutils literal notranslate"><span class="pre">(qx,qy)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iflag</span></code>: <code class="docutils literal notranslate"><span class="pre">iflag</span> <span class="pre">&lt;</span> <span class="pre">0</span></code> some error in computation, iflag &gt;0 is the numer of segment containing the point at minimum distance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dst</span></code>: point curve distance. </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8distanceE2in2in2in2in">
+<span id="_CPPv3N9CircleArc8distanceE2in2in2in2in"></span><span id="_CPPv2N9CircleArc8distanceE2in2in2in2in"></span><span id="CircleArc::distance__in.in.in.in"></span><span class="target" id="a00092_1a995541e2da9997cad68133cfd9fd6f76"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">distance</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">qx</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">qy</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8distanceE2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Evaluate the distance of a point <code class="docutils literal notranslate"><span class="pre">(qx,qy)</span></code> to the curve. <code class="docutils literal notranslate"><span class="pre">qx</span></code> and <code class="docutils literal notranslate"><span class="pre">qy</span></code> may be vectors so that the return values are vectors too.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">dst</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">dst</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">dst</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">dst</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>: offset of the curve used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for the offset </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc9collisionE2in2in2in">
+<span id="_CPPv3N9CircleArc9collisionE2in2in2in"></span><span id="_CPPv2N9CircleArc9collisionE2in2in2in"></span><span id="CircleArc::collision__in.in.in"></span><span class="target" id="a00092_1a3af6ed231aa1e5eb4092833138c92ee9"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">OBJ</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc9collisionE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Check if two curve collide.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ok</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p><strong>Optional Arguments</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>, <code class="docutils literal notranslate"><span class="pre">offs1</span></code>: offset of the curves used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for the offsets </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc9intersectE2in2in2in">
+<span id="_CPPv3N9CircleArc9intersectE2in2in2in"></span><span id="_CPPv2N9CircleArc9intersectE2in2in2in"></span><span id="CircleArc::intersect__in.in.in"></span><span class="target" id="a00092_1a76563ee1040c154c4b1b14383fed424f"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersect</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">OBJ</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc9intersectE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Intersect two curves.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="p">,</span><span class="w"> </span><span class="s">'ISO'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="p">[</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">offs1</span><span class="p">,</span><span class="w"> </span><span class="s">'SAE'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s1</span></code>: curvilinear coordinates of the intersections on the first curve</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s2</span></code>: curvilinear coordinates of the intersections on the second curve</p></li>
+</ul>
+
+<p><strong>Optional Argument</strong></p>
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">offs</span></code>, <code class="docutils literal notranslate"><span class="pre">offs1</span></code>: offset of the curves used in computation</p></li>
+<li><p>’ISO’/’SAE’: use ISO or SAE orientation of the normal for the offsets </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc4infoE2in">
+<span id="_CPPv3N9CircleArc4infoE2in"></span><span id="_CPPv2N9CircleArc4infoE2in"></span><span id="CircleArc::info__in"></span><span class="target" id="a00092_1aa0b8d69de7c0df5962c8ba2d22350a9c"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">info</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc4infoE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Print on the console some information on the stored curve.</p>
+<p><strong>Usage</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">info</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc10find_coordE2in2in2in">
+<span id="_CPPv3N9CircleArc10find_coordE2in2in2in"></span><span id="_CPPv2N9CircleArc10find_coordE2in2in2in"></span><span id="CircleArc::find_coord__in.in.in"></span><span class="target" id="a00092_1aee7315c2b8b883404d7efa74c51b702f"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">find_coord</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc10find_coordE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Get the curvilinear coordinates of the point <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code></p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">find_coord</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: curvilinear coordinate along the curve</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: curvilinear coordinate along the normal of the curve </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc11yesAABBtreeE2in">
+<span id="_CPPv3N9CircleArc11yesAABBtreeE2in"></span><span id="_CPPv2N9CircleArc11yesAABBtreeE2in"></span><span id="CircleArc::yesAABBtree__in"></span><span class="target" id="a00092_1a0a189e9b5f75026098c616b855613a71"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">yesAABBtree</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc11yesAABBtreeE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Activate the use of AABB three in intersection/collision computations </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc10noAABBtreeE2in">
+<span id="_CPPv3N9CircleArc10noAABBtreeE2in"></span><span id="_CPPv2N9CircleArc10noAABBtreeE2in"></span><span id="CircleArc::noAABBtree__in"></span><span class="target" id="a00092_1a324d0bd2548f6d56ae58764a98071e12"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">noAABBtree</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc10noAABBtreeE2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Deactivate the use of AABB three in intersection/collision computations </p>
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8plotTBoxE2in2in2in2in2in">
+<span id="_CPPv3N9CircleArc8plotTBoxE2in2in2in2in2in"></span><span id="_CPPv2N9CircleArc8plotTBoxE2in2in2in2in2in"></span><span id="CircleArc::plotTBox__in.in.in.in.in"></span><span class="target" id="a00092_1a424731565309e427755c873a03b39274"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotTBox</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">P1</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">P2</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">P3</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8plotTBoxE2in2in2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Plot a triangle BBOX</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotTBox</span><span class="p">(</span><span class="w"> </span><span class="n">P1</span><span class="p">,</span><span class="w"> </span><span class="n">P2</span><span class="p">,</span><span class="w"> </span><span class="n">P3</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotTBox</span><span class="p">(</span><span class="w"> </span><span class="n">P1</span><span class="p">,</span><span class="w"> </span><span class="n">P2</span><span class="p">,</span><span class="w"> </span><span class="n">P3</span><span class="p">,</span><span class="w"> </span><span class="s">'Color'</span><span class="p">,</span><span class="w"> </span><span class="s">'red'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc8plotBBoxE2in2in">
+<span id="_CPPv3N9CircleArc8plotBBoxE2in2in"></span><span id="_CPPv2N9CircleArc8plotBBoxE2in2in"></span><span id="CircleArc::plotBBox__in.in"></span><span class="target" id="a00092_1a59acec48078144adab8084fa3813a47b"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotBBox</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc8plotBBoxE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Plot the bounding box of the curve</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotBBox</span><span class="p">();</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotBBox</span><span class="p">(</span><span class="s">'Color'</span><span class="p">,</span><span class="w"> </span><span class="s">'red'</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9CircleArc13plotTrianglesE2in2in">
+<span id="_CPPv3N9CircleArc13plotTrianglesE2in2in"></span><span id="_CPPv2N9CircleArc13plotTrianglesE2in2in"></span><span id="CircleArc::plotTriangles__in.in"></span><span class="target" id="a00092_1a72b1ff3c010bff3b2d422e6198273c1d"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotTriangles</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CircleArc13plotTrianglesE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd>
+<p>Plot the covering triangles of the curve</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">ref</span><span class="p">.</span><span class="n">plotTriangles</span><span class="p">()</span><span class="w"></span>
+<span class="n">ref</span><span class="p">.</span><span class="n">plotTriangles</span><span class="p">(</span><span class="s">'red'</span><span class="p">,</span><span class="s">'FaceAlpha'</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+
+ 
+</dd>
+</dl>
+
+</div>
+</dd>
+</dl>
+
+</section>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-cpp/root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00080.html" title="Class ClothoidCurve"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="class_a00072.html" title="Class BiarcList"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="root.html" >MATLAB API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Class CircleArc</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

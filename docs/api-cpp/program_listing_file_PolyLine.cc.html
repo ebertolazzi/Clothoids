@@ -1,0 +1,977 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Program Listing for File PolyLine.cc &#8212; Clothoids v2.0.9
+</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File PolyLine.cc</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="program-listing-for-file-polyline-cc">
+<span id="program-listing-file-polyline-cc"></span><h1>Program Listing for File PolyLine.cc<a class="headerlink" href="#program-listing-for-file-polyline-cc" title="Permalink to this headline">¶</a>
+</h1>
+<p>↰ <a class="reference internal" href="file_PolyLine.cc.html#file-polyline-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">PolyLine.cc</span></code>)</p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="cm">/*--------------------------------------------------------------------------*\</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |  Copyright (C) 2017                                                      |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |         , __                 , __                                        |</span>
+<span class="cm"> |        /|/  \               /|/  \                                       |</span>
+<span class="cm"> |         | __/ _   ,_         | __/ _   ,_                                |</span>
+<span class="cm"> |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |</span>
+<span class="cm"> |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |</span>
+<span class="cm"> |                           /|                   /|                        |</span>
+<span class="cm"> |                           \|                   \|                        |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm"> |      Enrico Bertolazzi                                                   |</span>
+<span class="cm"> |      Dipartimento di Ingegneria Industriale                              |</span>
+<span class="cm"> |      Universita` degli Studi di Trento                                   |</span>
+<span class="cm"> |      email: enrico.bertolazzi@unitn.it                                   |</span>
+<span class="cm"> |                                                                          |</span>
+<span class="cm">\*--------------------------------------------------------------------------*/</span><span class="w"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">"Clothoids.hh"</span><span class="cp"></span>
+
+<span class="c1">// Workaround for Visual Studio</span>
+<span class="cp">#ifdef min</span>
+<span class="w">  </span><span class="cp">#undef min</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#ifdef max</span>
+<span class="w">  </span><span class="cp">#undef max</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">G2lib</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ceil</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="cp">#ifndef DOXYGEN_SHOULD_SKIP_THIS</span>
+<span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">difference_type</span><span class="w"> </span><span class="n">LS_dist_type</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="cp">#endif</span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |  ____       _       _     _</span>
+<span class="cm">   | |  _ \ ___ | |_   _| |   (_)_ __   ___</span>
+<span class="cm">   | | |_) / _ \| | | | | |   | | '_ \ / _ \</span>
+<span class="cm">   | |  __/ (_) | | |_| | |___| | | | |  __/</span>
+<span class="cm">   | |_|   \___/|_|\__, |_____|_|_| |_|\___|</span>
+<span class="cm">   |               |___/</span>
+<span class="cm">  \*/</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">PolyLine</span><span class="p">(</span><span class="w"> </span><span class="n">BaseCurve</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_POLYLINE</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">m_aabb_done</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">type</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">G2LIB_LINE</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">G2LIB_POLYLINE</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">copy</span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">PolyLine</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">G2LIB_CIRCLE</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">G2LIB_CLOTHOID</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">G2LIB_BIARC</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">G2LIB_BIARC_LIST</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nl">G2LIB_CLOTHOID_LIST</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">UTILS_ERROR</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="s">"PolyLine constructor cannot convert from: {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">CurveType_name</span><span class="p">[</span><span class="n">C</span><span class="p">.</span><span class="n">type</span><span class="p">()]</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">PolyLine</span><span class="p">(</span><span class="w"> </span><span class="n">LineSegment</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">LS</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_POLYLINE</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">m_aabb_done</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">LS</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">LS</span><span class="p">.</span><span class="n">xBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">LS</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">PolyLine</span><span class="p">(</span><span class="w"> </span><span class="n">CircleArc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_POLYLINE</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">m_aabb_done</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">PolyLine</span><span class="p">(</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_POLYLINE</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">m_aabb_done</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">xBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">PolyLine</span><span class="p">(</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_POLYLINE</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">m_aabb_done</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">PolyLine</span><span class="p">(</span><span class="w"> </span><span class="n">ClothoidList</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">PL</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">BaseCurve</span><span class="p">(</span><span class="n">G2LIB_POLYLINE</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="n">m_aabb_done</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">PL</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">PL</span><span class="p">.</span><span class="n">xBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">PL</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">int_type</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">findAtS</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">lastInterval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">m_lastInterval</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">get_id</span><span class="p">(),</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Utils</span><span class="o">::</span><span class="n">searchInterval</span><span class="o">&lt;</span><span class="n">int_type</span><span class="p">,</span><span class="n">real_type</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">int_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">m_s0</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span><span class="w"></span>
+<span class="w">      </span><span class="o">&amp;</span><span class="n">m_s0</span><span class="p">.</span><span class="n">front</span><span class="p">(),</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">lastInterval</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">lastInterval</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="w"> </span><span class="n">PolyLine</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">PL</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="w"> </span><span class="n">PL</span><span class="p">.</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">PL</span><span class="p">.</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="n">PL</span><span class="p">.</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="n">back_inserter</span><span class="p">(</span><span class="n">m_polylineList</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="w"> </span><span class="n">PL</span><span class="p">.</span><span class="n">m_s0</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="w"> </span><span class="n">PL</span><span class="p">.</span><span class="n">m_s0</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">PL</span><span class="p">.</span><span class="n">m_s0</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">back_inserter</span><span class="p">(</span><span class="n">m_s0</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">LineSegment</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">getSegment</span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTILS_ASSERT0</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="o">!</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">empty</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="s">"PolyLine::getSegment(...) empty PolyLine</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTILS_ASSERT</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">n</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span><span class="w"></span>
+<span class="w">      </span><span class="s">"PolyLine::getSegment( {} ) out of range [0,{}]</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="mi">-1</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="kt">size_t</span><span class="p">(</span><span class="n">n</span><span class="p">)];</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">polygon</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="n">n</span><span class="p">);</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">y</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span><span class="p">[</span><span class="kt">size_t</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="kt">size_t</span><span class="p">(</span><span class="n">n</span><span class="mi">-1</span><span class="p">)].</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span><span class="p">[</span><span class="kt">size_t</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="kt">size_t</span><span class="p">(</span><span class="n">n</span><span class="mi">-1</span><span class="p">)].</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |   _     _</span>
+<span class="cm">   |  | |__ | |__   _____  __</span>
+<span class="cm">   |  | '_ \| '_ \ / _ \ \/ /</span>
+<span class="cm">   |  | |_) | |_) | (_) &gt;  &lt;</span>
+<span class="cm">   |  |_.__/|_.__/ \___/_/\_\</span>
+<span class="cm">  \*/</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">bbox</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ymax</span><span class="w"></span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">UTILS_ASSERT0</span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">empty</span><span class="p">(),</span><span class="w"> </span><span class="s">"PolyLine::bbox, empty list</span><span class="se">\n</span><span class="s">"</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_aabb_tree</span><span class="p">.</span><span class="n">bbox</span><span class="p">(</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">real_type</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">real_type</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w">      </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w">      </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ymin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="o">--</span><span class="n">ic</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w">      </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w">      </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ymin</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |  _    _   _____    _                _</span>
+<span class="cm">   | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___</span>
+<span class="cm">   | | '_ \ '_ \| || '_| / _` | ' \/ _` | / -_)</span>
+<span class="cm">   | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|</span>
+<span class="cm">   |                               |___/</span>
+<span class="cm">  \*/</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">bbTriangles</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Triangle2D</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">            </span><span class="n">max_angle</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">            </span><span class="n">max_size</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">             </span><span class="n">icurve</span><span class="w"></span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icurve</span><span class="p">;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">ipos</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">bbTriangles</span><span class="p">(</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">ipos</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">bbTriangles_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">            </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Triangle2D</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">            </span><span class="n">max_angle</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">            </span><span class="n">max_size</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">             </span><span class="n">icurve</span><span class="w"></span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icurve</span><span class="p">;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">ipos</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">bbTriangles_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">tvec</span><span class="p">,</span><span class="w"> </span><span class="n">max_angle</span><span class="p">,</span><span class="w"> </span><span class="n">max_size</span><span class="p">,</span><span class="w"> </span><span class="n">ipos</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">theta</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">findAtS</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">idx</span><span class="p">].</span><span class="n">m_theta0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">theta_D</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">theta_DD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">real_type</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">theta_DDD</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |  _                        __</span>
+<span class="cm">   | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___</span>
+<span class="cm">   | | __| '__/ _` | '_ \/ __| |_ / _ \| '__| '_ ` _ \</span>
+<span class="cm">   | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |</span>
+<span class="cm">   |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|</span>
+<span class="cm">  \*/</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">scale</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">sfactor</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">newx0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">scale</span><span class="p">(</span><span class="w"> </span><span class="n">sfactor</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">newx0</span><span class="p">,</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">newx0</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">newy0</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_s0</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">reverse</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">reverse</span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">reverse</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">newx0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">reverse</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">newx0</span><span class="p">,</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">newx0</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">newy0</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_s0</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newx0</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">newx0</span><span class="p">,</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">newx0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">newy0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTILS_ASSERT</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">s_begin</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">.</span><span class="n">front</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">.</span><span class="n">back</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">"void::trim( s_begin={}, s_end={} ) bad range, must be in [{},{}]</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="n">m_s0</span><span class="p">.</span><span class="n">front</span><span class="p">(),</span><span class="w"> </span><span class="n">m_s0</span><span class="p">.</span><span class="n">back</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i_begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="n">findAtS</span><span class="p">(</span><span class="n">s_begin</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i_end</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="n">findAtS</span><span class="p">(</span><span class="n">s_end</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">].</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="o">-</span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_begin</span><span class="p">],</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_begin</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_end</span><span class="p">].</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_end</span><span class="p">],</span><span class="w"> </span><span class="n">s_end</span><span class="o">-</span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_end</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">LS_dist_type</span><span class="p">(</span><span class="n">i_end</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="o">+</span><span class="n">LS_dist_type</span><span class="p">(</span><span class="n">i_begin</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">m_s0</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">resetLastInterval</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="n">PolyLine</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">newPL</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">newPL</span><span class="p">.</span><span class="n">init</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// put in range</span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">L</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">L</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s_end</span><span class="w">   </span><span class="o">&gt;</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">s_end</span><span class="w">   </span><span class="o">-=</span><span class="w"> </span><span class="n">L</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s_end</span><span class="w">   </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">s_end</span><span class="w">   </span><span class="o">+=</span><span class="w"> </span><span class="n">L</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">n_seg</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">i_begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findAtS</span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">i_end</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">findAtS</span><span class="p">(</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// get initial and final segment</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i_begin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">i_end</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// stesso segmento</span>
+<span class="w">        </span><span class="n">real_type</span><span class="w">   </span><span class="n">ss0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="n">LineSegment</span><span class="w"> </span><span class="n">LL</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="n">LL</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="o">-</span><span class="n">ss0</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="o">-</span><span class="n">ss0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">LL</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">LineSegment</span><span class="w"> </span><span class="n">L0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="n">L0</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_begin</span><span class="p">],</span><span class="w"> </span><span class="n">L0</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">L0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">++</span><span class="n">i_begin</span><span class="p">;</span><span class="w"> </span><span class="n">i_begin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i_end</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i_begin</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">LineSegment</span><span class="w"> </span><span class="n">L1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_end</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="n">L1</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_end</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">L1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">LineSegment</span><span class="w"> </span><span class="n">L0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">L0</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="n">s_begin</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_begin</span><span class="p">],</span><span class="w"> </span><span class="n">L0</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">L0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">++</span><span class="n">i_begin</span><span class="p">;</span><span class="w"> </span><span class="n">i_begin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n_seg</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i_begin</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i_begin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i_begin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i_end</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i_begin</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_begin</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">LineSegment</span><span class="w"> </span><span class="n">L1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">i_end</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">L1</span><span class="p">.</span><span class="n">trim</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="n">i_end</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">newPL</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">L1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">build_AABBtree</span><span class="p">(</span><span class="w"> </span><span class="n">AABBtree</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">aabbtree</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#ifdef G2LIB_USE_CXX11</span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">bboxes</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#else</span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*&gt;</span><span class="w"> </span><span class="n">bboxes</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#endif</span>
+<span class="w">    </span><span class="n">bboxes</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">it</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">ipos</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">it</span><span class="o">-&gt;</span><span class="n">bbox</span><span class="p">(</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="cp">#ifdef G2LIB_USE_CXX11</span>
+<span class="w">      </span><span class="n">bboxes</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="p">,</span><span class="w"> </span><span class="n">G2LIB_LINE</span><span class="p">,</span><span class="w"> </span><span class="n">ipos</span><span class="w"></span>
+<span class="w">      </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="cp">#else</span>
+<span class="w">      </span><span class="n">bboxes</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BBox</span><span class="p">(</span><span class="w"> </span><span class="n">xmin</span><span class="p">,</span><span class="w"> </span><span class="n">ymin</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="p">,</span><span class="w"> </span><span class="n">G2LIB_LINE</span><span class="p">,</span><span class="w"> </span><span class="n">ipos</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="cp">#endif</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">aabbtree</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="n">bboxes</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_xe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_ye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">LineSegment</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">s</span><span class="p">.</span><span class="n">build_2P</span><span class="p">(</span><span class="w"> </span><span class="n">m_xe</span><span class="p">,</span><span class="w"> </span><span class="n">m_ye</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">slast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">.</span><span class="n">back</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">slast</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_xe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_ye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">LineSegment</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">LineSegment</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">back</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">S</span><span class="p">.</span><span class="n">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">m_xe</span><span class="p">,</span><span class="w"> </span><span class="n">m_ye</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">slast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">.</span><span class="n">back</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_s0</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">slast</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_xe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_ye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">CircleArc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">L</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">  </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">lenTolerance</span><span class="p">(</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_xe</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_ye</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">/</span><span class="n">ns</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xEnd</span><span class="p">(),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yEnd</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_xe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_ye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">CircleArc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">C0</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">CircleArc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">.</span><span class="n">C1</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">L0</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">C0</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">L1</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">  </span><span class="n">ns0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="w"> </span><span class="n">L0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">C0</span><span class="p">.</span><span class="n">lenTolerance</span><span class="p">(</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">  </span><span class="n">ns1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="w"> </span><span class="n">L1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">lenTolerance</span><span class="p">(</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_xe</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">C0</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_ye</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">C0</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ns0</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">L0</span><span class="p">)</span><span class="o">/</span><span class="n">ns0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C0</span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C0</span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ns1</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">L1</span><span class="p">)</span><span class="o">/</span><span class="n">ns1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">xEnd</span><span class="p">(),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">yEnd</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_xe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_ye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C1</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">L</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">absk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">abs</span><span class="p">(</span><span class="n">C</span><span class="p">.</span><span class="n">kappaBegin</span><span class="p">()),</span><span class="w"> </span><span class="n">abs</span><span class="p">(</span><span class="n">C</span><span class="p">.</span><span class="n">kappaEnd</span><span class="p">()));</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">tmp</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">absk</span><span class="o">*</span><span class="n">tol</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="w"> </span><span class="n">ceil</span><span class="p">(</span><span class="w"> </span><span class="n">L</span><span class="o">*</span><span class="n">absk</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Utils</span><span class="o">::</span><span class="n">m_pi</span><span class="o">-</span><span class="n">acos</span><span class="p">(</span><span class="n">tmp</span><span class="p">)))</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_xe</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_ye</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">/</span><span class="n">ns</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xEnd</span><span class="p">(),</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yEnd</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_xe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_ye</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ty</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">ClothoidList</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">ns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">numSegments</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">idx</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">ClothoidCurve</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// aabb_done = false;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">build</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w">          </span><span class="n">npts</span><span class="w"></span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">npts</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="w"> </span><span class="n">y</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">LineSegment</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xEnd</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yEnd</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">CircleArc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">Biarc</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">ClothoidCurve</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">build</span><span class="p">(</span><span class="w"> </span><span class="n">ClothoidList</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">init</span><span class="p">(</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">yBegin</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">int_type</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">closestPoint_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">   </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w">   </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">DST</span><span class="w"></span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTILS_ASSERT0</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="o">!</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">empty</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="s">"PolyLine::closestPoint, empty list</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">real_type</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w">   </span><span class="n">is</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_s0</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">closestPoint_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="n">ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">is</span><span class="p">;</span><span class="w"> </span><span class="n">ic</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ic</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">is</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">X1</span><span class="p">,</span><span class="w"> </span><span class="n">Y1</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">T1</span><span class="p">,</span><span class="w"> </span><span class="n">DST1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">ic</span><span class="o">-&gt;</span><span class="n">closestPoint_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">X1</span><span class="p">,</span><span class="w"> </span><span class="n">Y1</span><span class="p">,</span><span class="w"> </span><span class="n">S1</span><span class="p">,</span><span class="w"> </span><span class="n">T1</span><span class="p">,</span><span class="w"> </span><span class="n">DST1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">DST1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">DST</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">DST1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">X</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">X1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">Y</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">Y1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">S</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">is</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">S1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">T</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">T1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">ipos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="n">ic</span><span class="o">-</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_polylineList</span><span class="p">[</span><span class="kt">size_t</span><span class="p">(</span><span class="n">ipos</span><span class="p">)].</span><span class="n">eval_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">m_s0</span><span class="p">[</span><span class="kt">size_t</span><span class="p">(</span><span class="n">ipos</span><span class="p">)],</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hypot</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">yy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DST</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">DST</span><span class="o">*</span><span class="nl">machepsi1000</span> <span class="p">:</span><span class="w"> </span><span class="n">machepsi1000</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="n">ipos</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ipos</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |             _ _ _     _</span>
+<span class="cm">   |    ___ ___ | | (_)___(_) ___  _ __</span>
+<span class="cm">   |   / __/ _ \| | | / __| |/ _ \| '_ \</span>
+<span class="cm">   |  | (_| (_) | | | \__ \ | (_) | | | |</span>
+<span class="cm">   |   \___\___/|_|_|_|___/_|\___/|_| |_|</span>
+<span class="cm">  \*/</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">bool</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">PolyLine</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">build_AABBtree</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">C</span><span class="p">.</span><span class="n">build_AABBtree</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">Collision_list</span><span class="w"> </span><span class="nf">fun</span><span class="p">(</span><span class="w"> </span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">C</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m_aabb_tree</span><span class="p">.</span><span class="n">collision</span><span class="p">(</span><span class="w"> </span><span class="n">C</span><span class="p">.</span><span class="n">m_aabb_tree</span><span class="p">,</span><span class="w"> </span><span class="n">fun</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/*\</span>
+<span class="cm">   |   _       _                          _</span>
+<span class="cm">   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_</span>
+<span class="cm">   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|</span>
+<span class="cm">   |  | | | | | ||  __/ |  \__ \  __/ (__| |_</span>
+<span class="cm">   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|</span>
+<span class="cm">  \*/</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">intersect</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">PolyLine</span><span class="w"> </span><span class="k">const</span><span class="w">    </span><span class="o">&amp;</span><span class="w"> </span><span class="n">pl</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">real_type</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ss0</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">real_type</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ss1</span><span class="w"></span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTILS_ASSERT0</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="o">!</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">empty</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="s">"PolyLine::intersect, empty list</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">UTILS_ASSERT</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="o">!</span><span class="n">pl</span><span class="p">.</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">empty</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="s">"PolyLine::intersect, empty secondary list</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+
+<span class="cp">#if 1</span>
+<span class="w">    </span><span class="n">build_AABBtree</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">pl</span><span class="p">.</span><span class="n">build_AABBtree</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">AABBtree</span><span class="o">::</span><span class="n">VecPairPtrBBox</span><span class="w"> </span><span class="n">intersectionList</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">m_aabb_tree</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">pl</span><span class="p">.</span><span class="n">m_aabb_tree</span><span class="p">,</span><span class="w"> </span><span class="n">intersectionList</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">AABBtree</span><span class="o">::</span><span class="n">VecPairPtrBBox</span><span class="o">::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">ip</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">intersectionList</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">intersectionList</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">ip</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">ipos0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="n">ip</span><span class="o">-&gt;</span><span class="n">first</span><span class="o">-&gt;</span><span class="n">Ipos</span><span class="p">());</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">ipos1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">size_t</span><span class="p">(</span><span class="n">ip</span><span class="o">-&gt;</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">Ipos</span><span class="p">());</span><span class="w"></span>
+<span class="w">      </span><span class="n">UTILS_ASSERT</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">ipos0</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="s">"Bad ipos0 = {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">ipos0</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">UTILS_ASSERT</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">ipos1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">pl</span><span class="p">.</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="s">"Bad ipos1 = {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">ipos1</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">sss0</span><span class="p">,</span><span class="w"> </span><span class="n">sss1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">ipos0</span><span class="p">].</span><span class="n">intersect</span><span class="p">(</span><span class="n">pl</span><span class="p">.</span><span class="n">m_polylineList</span><span class="p">[</span><span class="n">ipos1</span><span class="p">],</span><span class="n">sss0</span><span class="p">,</span><span class="n">sss1</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">ss0</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">sss0</span><span class="o">+</span><span class="n">m_s0</span><span class="p">[</span><span class="n">ipos0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">        </span><span class="n">ss1</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">sss1</span><span class="o">+</span><span class="n">pl</span><span class="p">.</span><span class="n">m_s0</span><span class="p">[</span><span class="n">ipos1</span><span class="p">]);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="cp">#else</span>
+<span class="w">    </span><span class="n">ss0</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">ss1</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">ic0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lvec</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">real_type</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w">   </span><span class="n">is0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s0</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ic0</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">lvec</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LineSegment</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w"> </span><span class="n">ic1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pl</span><span class="p">.</span><span class="n">lvec</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">real_type</span><span class="o">&gt;::</span><span class="n">const_iterator</span><span class="w">   </span><span class="n">is1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pl</span><span class="p">.</span><span class="n">s0</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ic1</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">pl</span><span class="p">.</span><span class="n">lvec</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">real_type</span><span class="w"> </span><span class="n">a0</span><span class="p">,</span><span class="w"> </span><span class="n">a1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ic0</span><span class="o">-&gt;</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="o">*</span><span class="n">ic1</span><span class="p">,</span><span class="w"> </span><span class="n">a0</span><span class="p">,</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="n">ss0</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">is0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="n">ss1</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">is1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="o">++</span><span class="n">ic1</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="o">++</span><span class="n">is1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="o">++</span><span class="n">ic0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="o">++</span><span class="n">is0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="cp">#endif</span>
+
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="kt">void</span><span class="w"></span>
+<span class="w">  </span><span class="n">PolyLine</span><span class="o">::</span><span class="n">intersect</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">PolyLine</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">pl</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">IntersectList</span><span class="w">  </span><span class="o">&amp;</span><span class="w"> </span><span class="n">ilist</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w">             </span><span class="n">swap_s_vals</span><span class="w"></span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">real_type</span><span class="o">&gt;</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="o">-&gt;</span><span class="n">intersect</span><span class="p">(</span><span class="w"> </span><span class="n">pl</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">ilist</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="w"> </span><span class="n">ilist</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">ss1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="n">ss2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">swap_s_vals</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="w"> </span><span class="n">ss1</span><span class="p">,</span><span class="w"> </span><span class="n">ss2</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">ilist</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="w"> </span><span class="n">Ipair</span><span class="p">(</span><span class="n">ss1</span><span class="p">,</span><span class="n">ss2</span><span class="p">)</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="w">  </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">  </span><span class="k">operator</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ostream_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="n">PolyLine</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">fmt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">"nseg   = {}</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="s">"xBegin = {}</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="s">"ybegin = {}</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="s">"xEnd   = {}</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="s">"yEnd   = {}</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">      </span><span class="s">"length = {}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">P</span><span class="p">.</span><span class="n">numSegments</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="n">P</span><span class="p">.</span><span class="n">xBegin</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="n">P</span><span class="p">.</span><span class="n">yBegin</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="n">P</span><span class="p">.</span><span class="n">xEnd</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="n">P</span><span class="p">.</span><span class="n">yEnd</span><span class="p">(),</span><span class="w"></span>
+<span class="w">      </span><span class="n">P</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stream</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span>
+
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// EOF: PolyLine.cc</span>
+</pre></div>
+</div>
+</section>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="../index.html" title="index">
+          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+        </a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<div class="sphinx-toc sphinxglobaltoc">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Matlab_manual.html">Matlab Interface Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-matlab/root.html">MATLAB API</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">Clothoids</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Program Listing for File PolyLine.cc</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Enrico Bertolazzi and Marco Frego.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>
