@@ -457,7 +457,7 @@ namespace G2lib {
           return make_tuple(std::vector<real_type>(), 
                             std::vector<real_type>());
         }
-        std::vector<real_type> x(n), y(n);
+        std::vector<real_type> x(n+1), y(n+1);
         self.getXY(x.data(), y.data());
         return std::make_tuple(x, y);
       },
