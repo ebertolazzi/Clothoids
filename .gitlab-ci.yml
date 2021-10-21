@@ -1,38 +1,129 @@
-linux_builds:
+linux_python3_7:
   tags: 
   - linux
   only:
   - develop
   image: matteoragni/clothoids.build.antemotion.com:latest
+  before_script:
+  - apt install -y --no-install-recommends --no-install-suggests python3-pytest
   script:
   - |
     cd src_py
-    mkdir build3.6
-    cd build3.6
-    cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.6 ..
+    mkdir build
+    cd build
+    cmake -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON_BIN ..
     make
-    cd ..
-    /usr/bin/python3.6 test
-    mkdir -p $CI_PROJECT_DIR/releases/linux/python3.6
-    cp build3.6/G2lib.cpython-36m-x86_64-linux-gnu.so $CI_PROJECT_DIR/releases/linux/python3.6
-    mkdir build3.7
-    cd build3.7
-    cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.7 ..
-    make
-    cd ..
-    /usr/bin/python3.7 test
-    mkdir -p $CI_PROJECT_DIR/releases/linux/python3.7
-    cp build3.7/G2lib.cpython-37m-x86_64-linux-gnu.so $CI_PROJECT_DIR/releases/linux/python3.7
-    mkdir build2.7
-    cd build2.7
-    cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python2.7 ..
-    make
-    cd ..
-    /usr/bin/python2.7 test
-    mkdir -p $CI_PROJECT_DIR/releases/linux/python2.7
-    cp build2.7/G2lib.so $CI_PROJECT_DIR/releases/linux/python2.7
+    $PYTHON_BIN -m pytest --junitxml=$TEST_REPORT $CI_PROJECT_DIR/src_py/test
+    cp $PRODUCT_NAME $CI_PROJECT_DIR
   artifacts:
     paths:
-    - releases
+    - $PRODUCT_NAME
+    reports:
+      junit: $TEST_REPORT
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+    PYTHON_BIN: /usr/bin/python3.7
+    PRODUCT_NAME: G2lib.cpython-37m-x86_64-linux-gnu.so
+    TEST_REPORT: $CI_PROJECT_DIR/test_report.xml
+
+linux_python3_6:
+  tags: 
+  - linux
+  only:
+  - develop
+  image: matteoragni/clothoids.build.antemotion.com:latest
+  before_script:
+  - apt install -y --no-install-recommends --no-install-suggests python3-pytest
+  script:
+  - |
+    cd src_py
+    mkdir build
+    cd build
+    cmake -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON_BIN ..
+    make
+    $PYTHON_BIN -m pytest --junitxml=$TEST_REPORT $CI_PROJECT_DIR/src_py/test
+    cp $PRODUCT_NAME $CI_PROJECT_DIR
+  artifacts:
+    paths:
+    - $PRODUCT_NAME
+    reports:
+      junit: $TEST_REPORT
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    PYTHON_BIN: /usr/bin/python3.6
+    PRODUCT_NAME: G2lib.cpython-36m-x86_64-linux-gnu.so
+    TEST_REPORT: $CI_PROJECT_DIR/test_report.xml
+
+linux_python2_7:
+  tags: 
+  - linux
+  only:
+  - develop
+  image: matteoragni/clothoids.build.antemotion.com:latest
+  before_script:
+  - apt install -y --no-install-recommends --no-install-suggests python-pytest
+  script:
+  - |
+    cd src_py
+    mkdir build
+    cd build
+    cmake -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON_BIN ..
+    make
+    $PYTHON_BIN -m pytest --junitxml=$TEST_REPORT $CI_PROJECT_DIR/src_py/test
+    cp $PRODUCT_NAME $CI_PROJECT_DIR
+  artifacts:
+    paths:
+    - $PRODUCT_NAME
+    reports:
+      junit: $TEST_REPORT
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    PYTHON_BIN: /usr/bin/python2.7
+    PRODUCT_NAME: G2lib.so
+    TEST_REPORT: $CI_PROJECT_DIR/test_report.xml
+
+windows_python3_7:
+  tags: 
+  - win
+  only:
+  - develop
+  script:
+  - |
+    cd src_py
+    mkdir build
+    cd build
+    cmake -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON_BIN -A x64 ..
+    cmake --build . --config Release
+    py.exe -3 -m pytest --junitxml=$TEST_REPORT $CI_PROJECT_DIR/src_py/test
+    cp Release/$PRODUCT_NAME $CI_PROJECT_DIR
+  artifacts:
+    paths:
+    - $PRODUCT_NAME
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    PYTHON_BIN: C:\Python37\python.exe
+    PRODUCT_NAME: G2lib.cp37-win_amd64.pyd
+    TEST_REPORT: $CI_PROJECT_DIR/test_report.xml
+
+windows_python2_7:
+  tags: 
+  - win
+  only:
+  - develop
+  script:
+  - |
+    cd src_py
+    mkdir build
+    cd build
+    cmake -DPYTHON_EXECUTABLE:FILEPATH=$PYTHON_BIN -A x64 ..
+    cmake --build . --config Release
+    py.exe -2 -m pytest --junitxml=$TEST_REPORT $CI_PROJECT_DIR/src_py/test
+    cp Release/$PRODUCT_NAME $CI_PROJECT_DIR
+  artifacts:
+    paths:
+    - $PRODUCT_NAME
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    PYTHON_BIN: C:\Python27\python.exe
+    PRODUCT_NAME: G2lib.pyd
+    TEST_REPORT: $CI_PROJECT_DIR/test_report.xml

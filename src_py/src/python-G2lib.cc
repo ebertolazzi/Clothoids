@@ -33,6 +33,8 @@ PYBIND11_MODULE(G2lib, m) {
   wrap_ClothoidList(m);
   wrap_ClothoidSplineG2(m);
 
+  m.attr("__version__") = py::str("2.0.9");
+
   py::class_<Solve2x2>(m, "Solve2x2")
     .def(py::init())
     .def("factorize", [](Solve2x2 * self, std::tuple<std::tuple<real_type, real_type>, std::tuple<real_type, real_type>> A) {
