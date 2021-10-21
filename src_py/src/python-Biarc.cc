@@ -483,6 +483,27 @@ namespace G2lib {
         :return: a tuple with index, **s** coordinates and **t** coordinates
         :rtype: Tuple[int, float, float]
       )S")
+
+      .def("findST1", [](const BiarcList & self, const std::vector<real_type> & x, const std::vector<real_type> & y) {
+        const size_t n = std::min(x.size(), y.size());
+        std::vector<real_type> s(n), t(n);
+        std::vector<int_type> idx(n);
+        for(size_t i = 0; i < n; i++) {
+          idx[i] = self.findST1(x[i], y[i], s[i], t[i]);
+        }
+        return std::make_tuple(idx, s, t);
+      }, py::arg("x"), py::arg("y"),
+      R"S(
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        classic `findST`, this version returns as first return value the index
+        of the segment.
+        Vectorial Version.
+
+        :param List[float] x: **x** coordinates of the point
+        :param List[float] y: **y** coordinates of the point
+        :return: a tuple with index, **s** coordinates and **t** coordinates
+        :rtype: Tuple[List[bool], List[float], List[float]]
+      )S")
       
       .def("findST1", [](const BiarcList & self, int_type ibegin, int_type iend, real_type x, real_type y) {
         real_type s, t;

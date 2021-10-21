@@ -31,6 +31,7 @@ namespace G2lib {
         :param l: length
       )S")
 
+      .def(py::init<>())
       .def(py::init<BaseCurve const &>(), py::arg("c"))
       .def(py::init<LineSegment const &>(), py::arg("c"))
       .def(py::init<CircleArc const &>(), py::arg("c"))

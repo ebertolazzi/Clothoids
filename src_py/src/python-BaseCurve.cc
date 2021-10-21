@@ -7,6 +7,7 @@
  */
 
 #include "python-BaseCurve.hh"
+#include "pybind11/stl.h"
 
 
 namespace G2lib {
@@ -193,6 +194,20 @@ namespace G2lib {
         :rtype: float
       )S")
 
+      .def("theta", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.theta(s[i]);
+        return ret;
+      }, py::arg("s"),
+      R"S(
+        Angle of the curve at curvilinear value **s**. Vectorial Version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: the angle of the curve at **s**
+        :rtype: List[float]
+      )S")
+
       .def("thetaEnd", &BaseCurve::thetaEnd,
       R"S(
         Final angle of the curve
@@ -216,6 +231,20 @@ namespace G2lib {
         :param float s: curvilinear abscissa
         :return: the curvature angle of the curve
         :rtype: float
+      )S")
+
+      .def("kappa", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.kappa(s[i]);
+        return ret;
+      }, py::arg("s"),
+      R"S(
+        Curvature of the curve at curvilinear value **s**. Vectorial Version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: the curvature of the curve at **s**
+        :rtype: List[float]
       )S")
 
       .def("kappaEnd", &BaseCurve::kappaEnd, 
@@ -243,6 +272,20 @@ namespace G2lib {
         :rtype: float
       )S")
 
+      .def("X", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.X(s[i]);
+        return ret;
+      }, py::arg("s"), 
+      R"S(
+        Coordinate **x** of the curve at curvilinear value **s**. Vectorial Version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: coordinate **x** of the curve
+        :rtype: List[float]
+      )S")
+
       .def("xEnd", &BaseCurve::xEnd, 
       R"S(
         Final coordinate **x** of the curve
@@ -266,6 +309,20 @@ namespace G2lib {
         :param float s: curvilinear abscissa
         :return: coordinate **y** of the curve
         :rtype: float
+      )S")
+
+      .def("Y", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.Y(s[i]);
+        return ret;
+      }, py::arg("s"), 
+      R"S(
+        Coordinate **y** of the curve at curvilinear value **s**. Vectorial Version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: coordinate **y** of the curve
+        :rtype: List[float]
       )S")
 
       .def("yEnd", &BaseCurve::yEnd, 
@@ -295,6 +352,24 @@ namespace G2lib {
         :rtype: float
       )S")
 
+      .def("X_ISO", [](const BaseCurve & self, std::vector<real_type> s, std::vector<real_type> offs) {
+        const size_t n = std::min(s.size(), offs.size());
+        std::vector<real_type> x(n);
+        for (size_t i = 0; i < n; i++) {
+          x[i] = self.X_ISO(s[i], offs[i]);
+        }
+        return x;
+      }, py::arg("s"), py::arg("offs"),
+      R"S(
+        Coordinate **x** of the curve at curvilinear value **s**.
+        Vectorial version.
+
+        :param List[float] s: curvilinear abscissa
+        :param List[float] offs: curve ISO offset
+        :return: coordinate **x** of the curve
+        :rtype: List[float]
+      )S")
+
       .def("xEnd_ISO", &BaseCurve::xEnd_ISO, py::arg("offs"),
       R"S(
         Final coordinate **x** of the curve, with ISO offset
@@ -322,6 +397,24 @@ namespace G2lib {
         :param float offs: curve ISO offset
         :return: coordinate **y** of the curve
         :rtype: float
+      )S")
+
+      .def("Y_ISO", [](const BaseCurve & self, std::vector<real_type> s, std::vector<real_type> offs) {
+        const size_t n = std::min(s.size(), offs.size());
+        std::vector<real_type> y(n);
+        for (size_t i = 0; i < n; i++) {
+          y[i] = self.Y_ISO(s[i], offs[i]);
+        }
+        return y;
+      }, py::arg("s"), py::arg("offs"),
+      R"S(
+        Coordinate **y** of the curve at curvilinear value **s**.
+        Vectorial version.
+
+        :param List[float] s: curvilinear abscissa
+        :param List[float] offs: curve ISO offset
+        :return: coordinate **y** of the curve
+        :rtype: List[float]
       )S")
 
       .def("yEnd_ISO", &BaseCurve::yEnd_ISO, py::arg("offs"), 
@@ -407,6 +500,21 @@ namespace G2lib {
         :rtype: float
       )S")
 
+      .def("tx", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.tx(s[i]);
+        return ret;
+      }, py::arg("s"),
+      R"S(
+        Tangent **x** coordinate for the curvilinear abscissa **s**.
+        Vectorial version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: the tangent **x** coordinate
+        :rtype: List[float]
+      )S")
+
       .def("tx_End", &BaseCurve::tx_End, 
       R"S(
         Final tangent **x** coordinate
@@ -430,6 +538,21 @@ namespace G2lib {
         :param float s: curvilinear abscissa
         :return: the tangent **y** coordinate
         :rtype: float
+      )S")
+
+      .def("ty", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.ty(s[i]);
+        return ret;
+      }, py::arg("s"),
+      R"S(
+        Tangent **y** coordinate for the curvilinear abscissa **s**.
+        Vectorial version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: the tangent **y** coordinate
+        :rtype: List[float]
       )S")
 
       .def("ty_End", &BaseCurve::ty_End,
@@ -509,8 +632,23 @@ namespace G2lib {
         Angle derivative (curvature) at curvilinear abscissa **s**
 
         :param float s: curvilinear abscissa
-        :return: the curvature at **s**
+        :return: the angle derivative at **s**
         :rtype: float
+      )S")
+
+      .def("theta_D", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.theta_D(s[i]);
+        return ret;
+      }, py::arg("s"),
+      R"S(
+        Angle derivative (curvature) at curvilinear abscissa **s**.
+        Vectorial version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: the angle derivative at **s**
+        :rtype: List[float]
       )S")
 
       .def("theta_DD", &BaseCurve::theta_DD, py::arg("s"),
@@ -523,6 +661,21 @@ namespace G2lib {
         :rtype: float
       )S")
 
+      .def("theta_DD", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.theta_DD(s[i]);
+        return ret;
+      }, py::arg("s"),
+      R"S(
+        Angle second derivative (curvature derivative) at curvilinear abscissa **s**.
+        Vectorial version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: the curvature derivative at **s**
+        :rtype: List[float]
+      )S")
+
       .def("theta_DDD", &BaseCurve::theta_DDD, py::arg("s"),
       R"S(
         Angle third derivative (second derivative of curvature) at 
@@ -531,6 +684,21 @@ namespace G2lib {
         :param float s: curvilinear abscissa
         :return: the second derivative of curvature at **s**
         :rtype: float
+      )S")
+
+      .def("theta_DDD", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> ret(n);
+        for (size_t i = 0; i < n; i++) ret[i] = self.theta_DDD(s[i]);
+        return ret;
+      }, py::arg("s"),
+      R"S(
+        Angle third derivative (curvature second derivative) at 
+        curvilinear abscissa **s**. Vectorial version.
+
+        :param List[float] s: curvilinear abscissa
+        :return: the curvature second derivative at **s**
+        :rtype: List[float]
       )S")
 
       .def("kappa_D", &BaseCurve::kappa_D, py::arg("s"),
@@ -935,6 +1103,22 @@ namespace G2lib {
         :rtype: Tuple[float, float, float, float]
       )S")
 
+      .def("evaluate", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> th(s), k(s), x(s), y(s);
+        for (size_t i = 0; i < n; i++) {
+          self.evaluate(s[i], th[i], k[i], x[i], y[i]);
+        }
+        return std::make_tuple(th, k, x, y);
+      }, py::arg("s"),
+      R"S(
+        Evaluate curve at curvilinear coordinate `s`.
+        
+        :param float s:  curvilinear coordinate
+        :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[float, float, float, float]
+      )S")
+
       .def("eval", [](const BaseCurve & self, real_type s) {
         real_type x, y;
         self.eval(s, x, y);
@@ -944,8 +1128,24 @@ namespace G2lib {
         Evaluate curve at curvilinear coordinate `s`.
         
         :param float s:  curvilinear coordinate
-        :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
-        :rtype: Tuple[float, float, float, float]
+        :return: a tuple with x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[float, float]
+      )S")
+
+      .def("eval", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> x(n), y(n);
+        for (size_t i = 0; i < n; i++) {
+          self.eval(s[i], x[i], y[i]);
+        }
+        return std::make_tuple(x, y);
+      }, py::arg("s"),
+      R"S(
+        Evaluate curve at curvilinear coordinate `s`.
+        
+        :param List[float] s: list of curvilinear coordinate
+        :return: a tuple of lists with x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[List[float], List[float]]
       )S")
 
       .def("evaluate_ISO", [](const BaseCurve & self, real_type s, real_type offs) {
@@ -963,6 +1163,24 @@ namespace G2lib {
         :rtype: Tuple[float, float, float, float]
       )S")
 
+      .def("evaluate_ISO", [](const BaseCurve & self, const std::vector<real_type> & s, const std::vector<real_type> & offs) {
+        const size_t n = std::min(s.size(), offs.size());
+        std::vector<real_type> th(n), k(n), x(n), y(n);
+        for (size_t i = 0; i < n; i++) {
+          self.evaluate_ISO(s[i], offs[i], th[i], k[i], x[i], y[i]);
+        }
+        return std::make_tuple(th, k, x, y);
+      }, py::arg("s"), py::arg("offs"),
+      R"S(
+        Evaluate curve at curvilinear coordinate `s`, with an additional offset
+        that follows the ISO standard.
+        
+        :param List[float] s:  curvilinear coordinate
+        :param List[float] offs:
+        :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[List[float], List[float], List[float], List[float]]
+      )S")
+
       .def("eval_ISO", [](const BaseCurve & self, real_type s, real_type offs) {
         real_type x, y;
         self.eval_ISO(s, offs, x, y);
@@ -976,6 +1194,25 @@ namespace G2lib {
         :param float offs:
         :return: a tuple with x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float]
+      )S")
+
+      .def("eval_ISO", [](const BaseCurve & self, const std::vector<real_type> & s, const std::vector<real_type> & offs) {
+        const size_t n = std::min(s.size(), offs.size());
+        std::vector<real_type> x(n), y(n);
+        for (size_t i = 0; i < n; i++) {
+          self.eval_ISO(s[i], offs[i], x[i], y[i]);
+        }
+        return std::make_tuple(x, y);
+      }, py::arg("s"), py::arg("offs"),
+      R"S(
+        Evaluate curve at curvilinear coordinate `s`, with an additional offset
+        that follows the ISO standard.
+        Vector version.
+        
+        :param List[float] s:  curvilinear coordinate
+        :param List[float] offs:
+        :return: a tuple with x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[List[float], List[float]]
       )S")
 
       .def("evaluate_SAE", [](const BaseCurve & self, real_type s, real_type offs) {
@@ -1072,7 +1309,24 @@ namespace G2lib {
         
         :param float s:  curvilinear coordinate
         :return: a tuple with derivative x-coordinate and y-coordinate at **s**
-        :rtype: Tuple[float, float, float, float]
+        :rtype: Tuple[float, float]
+      )S")
+
+      .def("eval_D", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> x(n), y(n);
+        for (size_t i = 0; i < n; i++) {
+          self.eval_D(s[i], x[i], y[i]);
+        }
+        return std::make_tuple(x, y);
+      }, py::arg("s"),
+      R"S(
+        Evaluate curve first derivative at curvilinear coordinate `s`.
+        Vector version.
+        
+        :param List[float] s:  curvilinear coordinate
+        :return: a tuple with derivative x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[List[float], List[float]]
       )S")
 
       .def("eval_DD", [](const BaseCurve & self, real_type s) {
@@ -1085,7 +1339,24 @@ namespace G2lib {
         
         :param float s:  curvilinear coordinate
         :return: a tuple with second derivative x-coordinate and y-coordinate at **s**
-        :rtype: Tuple[float, float, float, float]
+        :rtype: Tuple[float, float]
+      )S")
+
+      .def("eval_DD", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> x(n), y(n);
+        for (size_t i = 0; i < n; i++) {
+          self.eval_DD(s[i], x[i], y[i]);
+        }
+        return std::make_tuple(x, y);
+      }, py::arg("s"),
+      R"S(
+        Evaluate curve second derivative at curvilinear coordinate `s`.
+        Vector version
+        
+        :param List[float] s:  curvilinear coordinate
+        :return: a tuple with second derivative x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[List[float], List[float]]
       )S")
       
       .def("eval_DDD", [](const BaseCurve & self, real_type s) {
@@ -1098,7 +1369,24 @@ namespace G2lib {
         
         :param float s:  curvilinear coordinate
         :return: a tuple with third derivative x-coordinate and y-coordinate at **s**
-        :rtype: Tuple[float, float, float, float]
+        :rtype: Tuple[float, float]
+      )S")
+
+      .def("eval_DDD", [](const BaseCurve & self, const std::vector<real_type> & s) {
+        const size_t n = s.size();
+        std::vector<real_type> x(n), y(n);
+        for (size_t i = 0; i < n; i++) {
+          self.eval_DDD(s[i], x[i], y[i]);
+        }
+        return std::make_tuple(x, y);
+      }, py::arg("s"),
+      R"S(
+        Evaluate curve third derivative at curvilinear coordinate `s`.
+        Vector version.
+        
+        :param List[float] s:  curvilinear coordinate
+        :return: a tuple with third derivative x-coordinate and y-coordinate at **s**
+        :rtype: Tuple[List[float], List[float]]
       )S")
 
       .def("X_ISO_D", &BaseCurve::X_ISO_D, py::arg("s"), py::arg("offs"),
@@ -1506,7 +1794,38 @@ namespace G2lib {
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
         :return: a tuple of results as described
-        :rtype: Tuple[float, float, float, float, float, float]
+        :rtype: Tuple[int, float, float, float, float, int]
+      )S")
+
+      .def("closestPoint", [](const BaseCurve & self, const std::vector<real_type> & qx, const std::vector<real_type> & qy) {
+        const size_t n = std::min(qx.size(), qy.size());
+        std::vector<int_type> ret(n);
+        std::vector<real_type> x(n), y(n), s(n), t(n), dst(n);
+        for (size_t i = 0; i < n; i++) {
+          ret[i] = self.closestPoint_ISO(qx[i], qy[i], x[i], y[i], s[i], t[i], dst[i]);
+        }
+        return std::make_tuple(ret, x, y, s, t, dst);
+      }, py::arg("qx"), py::arg("qy"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the curve.
+        Vectorial version.
+
+        There are 6 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+
+        :param List[float] qx: x coordinates of the point
+        :param List[float] qy: y coordinates of the point
+        :return: a tuple of results as described
+        :rtype: Tuple[List[int], List[float], List[float], List[float], List[float], List[int]]
       )S")
 
       .def("closestPoint_ISO", [](const BaseCurve & self, real_type qx, real_type qy) {
@@ -1534,7 +1853,7 @@ namespace G2lib {
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
         :return: a tuple of results as described
-        :rtype: Tuple[float, float, float, float, float, float]
+        :rtype: Tuple[int, float, float, float, float, int]
       )S")
 
       .def("closestPoint_SAE", [](const BaseCurve & self, real_type qx, real_type qy) {
@@ -1562,7 +1881,7 @@ namespace G2lib {
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
         :return: a tuple of results as described
-        :rtype: Tuple[float, float, float, float, float, float]
+        :rtype: Tuple[int, float, float, float, float, int]
       )S")
 
       .def("distance", &BaseCurve::distance, py::arg("qx"), py::arg("qy"),
@@ -1616,6 +1935,29 @@ namespace G2lib {
         :return: a tuple with a boolean value (projection found or not) and
                  the **s** and **t** coordinates on the curve.
         :rtype: Tuple[bool, float, float]
+      )S")
+
+      .def("findST", [](const BaseCurve & self, const std::vector<real_type> & x, const std::vector<real_type> & y) {
+        const size_t n = std::min(x.size(), y.size());
+        std::vector<real_type> s(n), t(n);
+        std::vector<bool> ret(n);
+        for (size_t i = 0; i < n; i++) {
+          ret[i] = self.findST_ISO(x[i], y[i], s[i], t[i]);
+        }
+        return std::make_tuple(ret, s, t);
+      }, py::arg("x"), py::arg("y"), 
+      R"S(
+        Find the curvilinear coordinate of point :math:`P = (x, y)`
+        with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
+        where :math:`C(s)` is the curve position respect to the curvilinear 
+        coordinates and :math:`t` is the normal :math:`N(s)` at the point.
+        Vectorial version.
+       
+        :param List[float] x: **x** component
+        :param List[float] y: **y** component
+        :return: a tuple with a boolean value (projection found or not) and
+                 the **s** and **t** coordinates on the curve.
+        :rtype: Tuple[List[bool], List[float], List[float]]
       )S")
 
       .def("findST_ISO", [](const BaseCurve & self, real_type x, real_type y) {

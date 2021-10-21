@@ -28,6 +28,7 @@ namespace G2lib {
         :param float theta0: initial angle
         :param float l: length
       )S")
+        .def(py::init<>())
         .def(py::init<G2lib::BaseCurve const &>(), py::arg("c"))
         .def(py::init<G2lib::LineSegment const &>(), py::arg("s"))
         .def(py::init<real_type, real_type, real_type, real_type>(),
@@ -200,6 +201,14 @@ namespace G2lib {
         )S")
 
         .def("numSegments", &PolyLine::numSegments,
+        R"S(
+          Returns the amount of segments of the poly line
+
+          :return: amount of segments of the poly line
+          :rtype: int
+        )S")
+
+        .def("__len__", &PolyLine::numSegments,
         R"S(
           Returns the amount of segments of the poly line
 

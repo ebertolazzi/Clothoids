@@ -176,7 +176,7 @@ namespace G2lib {
         :rtype: NoneType
       )S")
 
-      .def("Pinfinity", [](const ClothoidCurve & self, bool plus = true) {
+      .def("Pinfinity", [](const ClothoidCurve & self, bool plus) {
         real_type x, y;
         self.Pinfinity(x, y, plus);
         return std::make_tuple(x, y);
@@ -949,6 +949,20 @@ namespace G2lib {
         :rtype: int
       )S")
 
+      .def("wrap_in_range", [](const ClothoidList & self, real_type s) {
+        self.wrap_in_range(s);
+        return s;
+      }, py::arg("s"),
+      R"S(
+        The list of clothoid has total length :math:`L`
+        the parameter :math:`s` is recomputed as :math:`s+kL` in such a way
+        :math:`s+kL\in[0,L)` with :math:`k\in\mathbb{Z}`
+
+        :param float s: the wrapping input s
+        :return: the wrapped s
+        :rtype: float 
+      )S")
+
       .def("findAtS", &ClothoidList::findAtS, py::arg("s"),
       R"S(
         Find the clothoid segment whose definition range contains `s`
@@ -987,6 +1001,288 @@ namespace G2lib {
         :param float offs: offset from the segmente
         :return: the length of the segment
         :rtype: float
+      )S")
+
+      .def("closestSegment", &ClothoidList::closestSegment, py::arg("qx"), py::arg("qy"),
+      R"S(
+        Given a point, returns the index of the closest segment to that point
+
+        :param float qx: **x** coordinates of the point
+        :param float qy: **y** coordinates of the point
+        :return: the index of the closest segment
+        :rtype: int
+      )S")
+
+      .def("closestPointInRange", [](const ClothoidList & self, real_type qx, real_type qy, int_type icurve_begin, int_type icurve_end) {
+        real_type x, y, s, t, dst;
+        int_type icurve;
+        int_type ret = self.closestPointInRange_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+        return std::make_tuple(ret, x, y, s, t, dst, icurve);
+      }, 
+        py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range of segment ``icurve_begin..icurve_end``.
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param int icurve_begin: first segment of the range
+        :param int icurve_end: last segment of the range
+        :return: a tuple of results as described
+        :rtype: Tuple[int, float, float, float, float, float, int]
+      )S")
+
+      .def("closestPointInRange", [](const ClothoidList & self, const std::vector<real_type> & qx, 
+        const std::vector<real_type> & qy, int_type icurve_begin, int_type icurve_end) {
+        const size_t n = std::min(qx.size(), qy.size());
+        std::vector<std::tuple<int_type, real_type, real_type, real_type, real_type, real_type, int_type>> data(n);
+        for (size_t i = 0; i < n; i++) {
+          real_type x, y, s, t, dst;
+          int_type icurve;
+          int_type ret = self.closestPointInRange_ISO(qx[i], qy[i], icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+          data[i] = std::make_tuple(ret, x, y, s, t, dst, icurve);
+        } 
+        return data;
+      }, 
+        py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range of segment ``icurve_begin..icurve_end``.
+        Vectorial version.
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param List[float] qx: x coordinates of the point
+        :param List[float] qy: y coordinates of the point
+        :param int icurve_begin: first segment of the range
+        :param int icurve_end: last segment of the range
+        :return: a tuple of results as described
+        :rtype: List[Tuple[int, float, float, float, float, float, int]]
+      )S")
+
+      .def("closestPointInRange_ISO", [](const ClothoidList & self, real_type qx, real_type qy, int_type icurve_begin, int_type icurve_end) {
+        real_type x, y, s, t, dst;
+        int_type icurve;
+        int_type ret = self.closestPointInRange_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+        return std::make_tuple(ret, x, y, s, t, dst, icurve);
+      }, 
+        py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range of segment ``icurve_begin..icurve_end``.
+        It uses the ISO reference frame
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param int icurve_begin: first segment of the range
+        :param int icurve_end: last segment of the range
+        :return: a tuple of results as described
+        :rtype: Tuple[int, float, float, float, float, float, int]
+      )S")
+
+      .def("closestPointInRange_SAE", [](const ClothoidList & self, real_type qx, real_type qy, int_type icurve_begin, int_type icurve_end) {
+        real_type x, y, s, t, dst;
+        int_type icurve;
+        int_type ret = self.closestPointInRange_SAE(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+        return std::make_tuple(ret, x, y, s, t, dst, icurve);
+      }, 
+        py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range of segment ``icurve_begin..icurve_end``.
+        It uses the SAE reference frame.
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param int icurve_begin: first segment of the range
+        :param int icurve_end: last segment of the range
+        :return: a tuple of results as described
+        :rtype: Tuple[int, float, float, float, float, float, int]
+      )S")
+
+      .def("closestPointInSRange", [](const ClothoidList & self, real_type qx, real_type qy, real_type s_begin, real_type s_end) {
+        real_type x, y, s, t, dst;
+        int_type icurve;
+        int_type ret = self.closestPointInSRange_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
+        return std::make_tuple(ret, x, y, s, t, dst, icurve);
+      }, 
+        py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range provided as curvilinear abscissa :math:`[s_{start}, s_{end}]`
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param float s_begin: initial curvilinear abscissa
+        :param float s_end: final curvilinear abscissa
+        :return: a tuple of results as described
+        :rtype: Tuple[int, float, float, float, float, float, int]
+      )S")
+
+      .def("closestPointInSRange", [](const ClothoidList & self, const std::vector<real_type> & qx, 
+        const std::vector<real_type> & qy, real_type s_begin, real_type s_end) {
+        const size_t n = std::min(qx.size(), qy.size());
+        std::vector<std::tuple<int_type, real_type, real_type, real_type, real_type, real_type, int_type>> data(n);
+        for (size_t i = 0; i < n; i++) {
+          real_type x, y, s, t, dst;
+          int_type icurve;
+          int_type ret = self.closestPointInSRange_ISO(qx[i], qy[i], s_begin, s_end, x, y, s, t, dst, icurve);
+          data[i] = std::make_tuple(ret, x, y, s, t, dst, icurve);
+        } 
+        return data;
+      }, py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range provided as curvilinear abscissa :math:`[s_{start}, s_{end}]`
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param List[float] qx: x coordinates of the point
+        :param List[float] qy: y coordinates of the point
+        :param float s_begin: initial curvilinear abscissa
+        :param float s_end: final curvilinear abscissa
+        :return: a tuple of results as described
+        :rtype: List[Tuple[int, float, float, float, float, float, int]]
+      )S")
+
+      .def("closestPointInSRange_ISO", [](const ClothoidList & self, real_type qx, real_type qy, real_type s_begin, real_type s_end) {
+        real_type x, y, s, t, dst;
+        int_type icurve;
+        int_type ret = self.closestPointInSRange_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
+        return std::make_tuple(ret, x, y, s, t, dst, icurve);
+      }, 
+        py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range provided as curvilinear abscissa :math:`[s_{start}, s_{end}]`
+        It uses the ISO reference frame
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param float s_begin: initial curvilinear abscissa
+        :param float s_end: final curvilinear abscissa
+        :return: a tuple of results as described
+        :rtype: Tuple[int, float, float, float, float, float, int]
+      )S")
+
+      .def("closestPointInSRange_SAE", [](const ClothoidList & self, real_type qx, real_type qy, real_type s_begin, real_type s_end) {
+        real_type x, y, s, t, dst;
+        int_type icurve;
+        int_type ret = self.closestPointInSRange_SAE(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
+        return std::make_tuple(ret, x, y, s, t, dst, icurve);
+      }, 
+        py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
+      R"S(
+        Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
+        inside the range provided as curvilinear abscissa :math:`[s_{start}, s_{end}]`.
+        It uses the SAE reference frame
+
+        There are 7 values in the response tuple:
+
+         1. result of the projection. If the value is 1 the projection is unique and 
+            orthogonal, if the value is 0 there is more than one orthogonal projection
+            and only the first is returned, if the value is -1 the minimum distance point 
+            has a projection which is not orthogonal
+         2. **x** coordinate of the point on the clothoid
+         3. **y** coordinate of the point on the clothoid
+         4. **s** curvilinear abscissa of the point
+         5. **t** normal distance of the point on curvilinear abscissa
+         6. **dst** distance of the point from the curve
+         7. **index** of the closest segment 
+
+        :param float qx: x coordinates of the point
+        :param float qy: y coordinates of the point
+        :param float s_begin: initial curvilinear abscissa
+        :param float s_end: final curvilinear abscissa
+        :return: a tuple of results as described
+        :rtype: Tuple[int, float, float, float, float, float, int]
       )S")
 
       .def("build_AABBtree_ISO", &ClothoidList::build_AABBtree_ISO,
@@ -1091,6 +1387,27 @@ namespace G2lib {
         :rtype: Tuple[int, float, float]
       )S")
 
+      .def("findST1", [](const ClothoidList & self, const std::vector<real_type> & x, const std::vector<real_type> & y) {
+        const size_t n = std::min(x.size(), y.size());
+        std::vector<real_type> s(n), t(n);
+        std::vector<int_type> idx(n);
+        for (size_t i = 0; i < n; i++) {
+          idx[i] = self.findST1(x[i], y[i], s[i], t[i]);
+        }
+        return std::make_tuple(idx, s, t);
+      }, py::arg("x"), py::arg("y"),
+      R"S(
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        classic `findST`, this version returns as first return value the index
+        of the segment.
+        Vectorial version
+
+        :param List[float] x: **x** coordinates of the point
+        :param List[float] y: **y** coordinates of the point
+        :return: a tuple with index, **s** coordinates and **t** coordinates
+        :rtype: Tuple[List[int], List[float], List[float]]
+      )S")
+
       .def("findST1", [](const ClothoidList & self, int_type ibegin, int_type iend, real_type x, real_type y) {
         real_type s, t;
         int_type idx = self.findST1(ibegin, iend, x, y, s, t);
@@ -1109,6 +1426,29 @@ namespace G2lib {
         :rtype: Tuple[int, float, float]
       )S")
 
+      .def("findST1", [](const ClothoidList & self, int_type ibegin, int_type iend, const std::vector<real_type> & x, const std::vector<real_type> & y) {
+        const size_t n = std::min(x.size(), y.size());
+        std::vector<real_type> s(n), t(n);
+        std::vector<int_type> idx(n);
+        for (size_t i = 0; i < n; i++) {
+          idx[i] = self.findST1(ibegin, iend, x[i], y[i], s[i], t[i]);
+        }
+        return std::make_tuple(idx, s, t);
+      }, py::arg("ibegin"), py::arg("iend"), py::arg("x"), py::arg("y"),
+      R"S(
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        classic `findST`, this version returns as first return value the index
+        of the segment. The search is done only between elements ``ibegin..iend``.
+        Vectorial version.
+
+        :param int ibegin: initial index
+        :param int iend: final index
+        :param List[float] x: **x** coordinates of the point
+        :param List[float] y: **y** coordinates of the point
+        :return: a tuple with index, **s** coordinates and **t** coordinates
+        :rtype: Tuple[List[int], List[float], List[float]]
+      )S")
+
       .def("save", [](const ClothoidList & self) {
         std::ostringstream str;
         self.save(str);
@@ -1118,6 +1458,18 @@ namespace G2lib {
         Export the current clothoid list in a CSV
 
         :return: the CSV string
+        :rtype: str
+      )S")
+
+      .def("export_table", [](const ClothoidList & self) {
+        std::ostringstream str;
+        self.export_table(str);
+        return str.str();
+      },
+      R"S(
+        Export the current clothoid list in a table
+
+        :return: the table string
         :rtype: str
       )S")
 
@@ -1140,6 +1492,22 @@ namespace G2lib {
         :param float epsi: precision
         :return: nothing, works in place
         :rtype: NoneType
+      )S")
+
+      .def("as_list", [](const ClothoidList & self) {
+        const size_t n = self.numSegments();
+        std::vector<ClothoidCurve> list;
+        list.reserve(n);
+        for (size_t i = 0; i < n; i++) {
+          list.push_back(self.get(i));
+        }
+        return list;
+      }, 
+      R"S(
+        Return the clothoid list as a python list
+
+        :return: a list with ClothoidCurve objects
+        :rtype: List[ClothoidCurve]
       )S");
     }
   }
