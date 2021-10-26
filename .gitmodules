@@ -4,6 +4,3 @@
 [submodule "submodules/quarticRootsFlocke"]
 	path = submodules/quarticRootsFlocke
 	url = https://github.com/ebertolazzi/quarticRootsFlocke.git
-[submodule "submodules/GenericContainer"]
-	path = submodules/GenericContainer
-	url = https://github.com/ebertolazzi/GenericContainer.git

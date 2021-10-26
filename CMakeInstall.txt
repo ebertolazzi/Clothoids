@@ -32,45 +32,48 @@ install(DIRECTORY "${Clothoids_DIR}/Clothoids" DESTINATION "${PROJECT_PUBLIC_HEA
 
 #----------------------------------------
 
-install(
-  EXPORT ClothoidsTargets
-  FILE ClothoidsTargets.cmake 
-  DESTINATION lib/cmake/Clothoids
-)
-
 # CPACK INSTALL TARGETS (Leaving almost as it is...)
 
-set(INCLUDE_INSTALL_DIR include/ CACHE STRING "Include install directory")
-set(LIBRARIES_INSTALL_DIR lib/ CACHE STRING "Libraries install directory")
-get_target_property(CLOTHOIDS_LIB_OUTPUT_NAME ${STATIC_PROJECT} OUTPUT_NAME)
-if(UNIX)
-  set(CLOTHOIDS_LIB_PREFIX lib)
-  set(CLOTHOIDS_LIB_SUFFIX .a)
-else()
-  set(CLOTHOIDS_LIB_PREFIX "")
-  set(CLOTHOIDS_LIB_SUFFIX .lib)
-endif()
-set(CLOTHOIDS_LIB_NAME "${CLOTHOIDS_LIB_PREFIX}${CLOTHOIDS_LIB_OUTPUT_NAME}${CLOTHOIDS_LIB_SUFFIX}")
-set(LIBRARIES lib/${CLOTHOIDS_LIB_NAME} CACHE STRING "Libraries directory")
+IF ( APPLE OR LINUX OR UNIX )
 
-include(CMakePackageConfigHelpers)
-configure_package_config_file(
-  ClothoidsConfig.cmake.in 
-  "${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake"
-  INSTALL_DESTINATION "lib/Clothoids/cmake"
-  PATH_VARS INCLUDE_INSTALL_DIR LIBRARIES_INSTALL_DIR LIBRARIES
-)
-write_basic_package_version_file(
-  "ClothoidsConfigVersion.cmake"
-  VERSION 2.0.9
-  COMPATIBILITY SameMajorVersion
-)
-install(
-  FILES 
-  ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake
-  ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfigVersion.cmake
-  DESTINATION lib/cmake/Clothoids
-)
+  install(
+    EXPORT ClothoidsTargets
+    FILE ClothoidsTargets.cmake 
+    DESTINATION lib/cmake/Clothoids
+  )
+
+  set(INCLUDE_INSTALL_DIR include/ CACHE STRING "Include install directory")
+  set(LIBRARIES_INSTALL_DIR lib/ CACHE STRING "Libraries install directory")
+  get_target_property(CLOTHOIDS_LIB_OUTPUT_NAME ${STATIC_PROJECT} OUTPUT_NAME)
+  if(UNIX)
+    set(CLOTHOIDS_LIB_PREFIX lib)
+    set(CLOTHOIDS_LIB_SUFFIX .a)
+  else()
+    set(CLOTHOIDS_LIB_PREFIX "")
+    set(CLOTHOIDS_LIB_SUFFIX .lib)
+  endif()
+  set(CLOTHOIDS_LIB_NAME "${CLOTHOIDS_LIB_PREFIX}${CLOTHOIDS_LIB_OUTPUT_NAME}${CLOTHOIDS_LIB_SUFFIX}")
+  set(LIBRARIES lib/${CLOTHOIDS_LIB_NAME} CACHE STRING "Libraries directory")
+
+  include(CMakePackageConfigHelpers)
+  configure_package_config_file(
+    ClothoidsConfig.cmake.in 
+    "${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake"
+    INSTALL_DESTINATION "lib/Clothoids/cmake"
+    PATH_VARS INCLUDE_INSTALL_DIR LIBRARIES_INSTALL_DIR LIBRARIES
+  )
+  write_basic_package_version_file(
+    "ClothoidsConfigVersion.cmake"
+    VERSION 2.0.9
+    COMPATIBILITY SameMajorVersion
+  )
+  install(
+    FILES 
+    ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/ClothoidsConfigVersion.cmake
+    DESTINATION lib/cmake/Clothoids
+  )
+endif()
 
 if(INSTALL_HERE)
   add_custom_command(

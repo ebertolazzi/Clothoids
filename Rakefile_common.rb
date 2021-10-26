@@ -137,32 +137,37 @@ end
 
 def win_vs( bits, year )
 
-  tmp = " -DBITS=#{bits} -DYEAR=#{year} "
+  tmp = " -DBITS:VAR=#{bits} -DYEAR:VAR=#{year} "
 
-  win32_64  = ''
-  win32_64_ = '-A Win32'
-  case bits
-  when /x64/
-    win32_64  = ' Win64'
-    win32_64_ = ' -A x64'
-  end
-
-  case year
-  when "2010"
-    tmp = 'cmake -G "Visual Studio 10 2010' + win32_64 +'" ' + tmp
-  when "2012"
-    tmp = 'cmake -G "Visual Studio 11 2012' + win32_64 +'" ' + tmp
-  when "2013"
-    tmp = 'cmake -G "Visual Studio 12 2013' + win32_64 +'" ' + tmp
-  when "2015"
-    tmp = 'cmake -G "Visual Studio 14 2015' + win32_64 +'" ' + tmp
-  when "2017"
-    tmp = 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
-  when "2019"
-    tmp = 'cmake -G "Visual Studio 16 2019"' + win32_64_ + tmp
+  if USE_NMAKE then
+    tmp = 'cmake -G "NMake Makefiles" ' + tmp
   else
-    puts "Visual Studio year #{year} not supported!\n";
-    return ""
+
+    win32_64  = ''
+    win32_64_ = '-A Win32'
+    case bits
+    when /x64/
+      win32_64  = ' Win64'
+      win32_64_ = ' -A x64'
+    end
+
+    case year
+    when "2010"
+      tmp = 'cmake -G "Visual Studio 10 2010' + win32_64 +'" ' + tmp
+    when "2012"
+      tmp = 'cmake -G "Visual Studio 11 2012' + win32_64 +'" ' + tmp
+    when "2013"
+      tmp = 'cmake -G "Visual Studio 12 2013' + win32_64 +'" ' + tmp
+    when "2015"
+      tmp = 'cmake -G "Visual Studio 14 2015' + win32_64 +'" ' + tmp
+    when "2017"
+      tmp = 'cmake -G "Visual Studio 15 2017' + win32_64 +'" ' + tmp
+    when "2019"
+      tmp = 'cmake -G "Visual Studio 16 2019"' + win32_64_ + tmp
+    else
+      puts "Visual Studio year #{year} not supported!\n";
+      return ""
+    end
   end
   return tmp
 end

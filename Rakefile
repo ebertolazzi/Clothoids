@@ -81,8 +81,7 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  #cmd_cmake = win_vs(args.bits,args.year) + cmd_cmake_build
-  cmd_cmake = 'cmake -G "NMake Makefiles" ' + cmd_cmake_build
+  cmd_cmake = win_vs(args.bits,args.year) + cmd_cmake_build
 
   puts "run CMAKE for CLOTHOIDS".yellow
   sh cmd_cmake + ' ..'
@@ -90,7 +89,7 @@ task :build_win, [:year, :bits] do |t, args|
   if COMPILE_DEBUG then
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
+    sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
   end
 
   FileUtils.cd '..'
