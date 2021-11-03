@@ -34,7 +34,7 @@ install(DIRECTORY "${Clothoids_DIR}/Clothoids" DESTINATION "${PROJECT_PUBLIC_HEA
 
 # CPACK INSTALL TARGETS (Leaving almost as it is...)
 
-IF ( APPLE OR LINUX OR UNIX )
+IF ( (APPLE OR LINUX OR UNIX) AND NOT ${INSTALL_HERE} )
 
   install(
     EXPORT ClothoidsTargets
