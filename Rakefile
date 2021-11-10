@@ -7,6 +7,15 @@
   end
 end
 
+case RUBY_PLATFORM
+when /darwin/
+  OS = :mac
+when /linux/
+  OS = :linux
+when /cygwin|mswin|mingw|bccwin|wince|emx/
+  OS = :win
+end
+
 require_relative "./Rakefile_common.rb"
 
 file_base = File.expand_path(File.dirname(__FILE__)).to_s+'/lib'
@@ -29,6 +38,9 @@ else
 end
 cmd_cmake_build += " -DINSTALL_HERE:VAR=true "
 
+desc "default task --> build"
+task :default => :build
+
 FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/Utils/CMakeLists-cflags.txt'
 FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/quarticRootsFlocke/CMakeLists-cflags.txt'
 
@@ -50,14 +62,14 @@ TESTS = [
 "run tests on linux/osx"
 task :run do
   TESTS.each do |cmd|
-    sh "./bin/#{cmd}"
+    sh "./bin/#{cmd}" if File.exist?( "./bin/#{cmd}" )
   end
 end
 
 desc "run tests (Release) on windows"
 task :run_win do
   TESTS.each do |cmd|
-    sh "bin\\Release\\#{cmd}.exe"
+    sh "bin\\Release\\#{cmd}.exe" if File.exist?( "bin\\Release\\#{cmd}.exe" )
   end
 end
 
@@ -65,6 +77,19 @@ desc "run tests (Debug) on windows"
 task :run_win_debug do
   TESTS.each do |cmd|
     sh "bin\\Debug\\#{cmd}.exe"
+  end
+end
+
+desc "build lib"
+task :build do
+  puts "UTILS build".green
+  case OS
+  when :mac
+    Rake::Task[:build_osx].invoke
+  when :linux
+    Rake::Task[:build_linux].invoke
+  when :win
+    Rake::Task[:build_win].invoke
   end
 end
 
@@ -96,9 +121,7 @@ task :build_win, [:year, :bits] do |t, args|
 end
 
 desc "compile for OSX"
-task :build, [:os] do |t, args|
-
-  args.with_defaults( :os => "osx" )
+task :build_osx do
 
   dir = "build"
 
@@ -121,26 +144,12 @@ task :build, [:os] do |t, args|
 end
 
 desc "compile for LINUX"
-task :build_linux do
-  Rake::Task[:build].invoke("linux")
-end
-
-desc "compile for OSX"
-task :build_osx do
-  Rake::Task[:build].invoke("osx")
-end
+task :build_linux => :build_osx
 
 task :clean_osx do
   FileUtils.rm_rf 'lib'
   FileUtils.rm_rf 'lib3rd'
 end
 
-task :clean_linux do
-  FileUtils.rm_rf 'lib'
-  FileUtils.rm_rf 'lib3rd'
-end
-
-task :clean_win do
-  FileUtils.rm_rf 'lib'
-  FileUtils.rm_rf 'lib3rd'
-end
+task :clean_linux => :clean_osx
+task :clean_win => :clean_osx

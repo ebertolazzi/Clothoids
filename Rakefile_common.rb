@@ -12,17 +12,6 @@ end
 
 require_relative "./Rakefile_conf.rb"
 
-if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil then
-  #linux
-  task :default => [:install_linux]
-elsif (/darwin/ =~ RUBY_PLATFORM) != nil then
-  #osx
-  task :default => [:install_osx]
-else
-  #windows
-  task :default => [:install_windows]
-end
-
 #
 # https://stackoverflow.com/questions/6934185/ruby-net-http-following-redirects/6934503
 #

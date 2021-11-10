@@ -45,7 +45,11 @@ endif()
 # DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
 set(UPDIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
 set(DEPEND_TARGETS)
-find_library( UTILS Utils${ARTIFACTS_STATIC_SUFFIX} HINTS ${UPDIR}/Utils/lib/lib )
+find_library(
+  UTILS Utils${ARTIFACTS_STATIC_SUFFIX}
+  HINTS ${UPDIR}/Utils/lib/lib
+  NO_DEFAULT_PATH
+)
 if( UTILS )
   include_directories(${UPDIR}/Utils/lib/include)
 else()
@@ -53,7 +57,11 @@ else()
   set( UTILS UtilsStatic )
   set( DEPEND_TARGETS ${DEPEND_TARGETS} UtilsStatic )
 endif()
-find_library( QUARTIC quartic${ARTIFACTS_STATIC_SUFFIX} HINTS ${UPDIR}/quarticRootsFlocke/lib/lib )
+find_library(
+  QUARTIC quartic${ARTIFACTS_STATIC_SUFFIX}
+  HINTS ${UPDIR}/quarticRootsFlocke/lib/lib
+  NO_DEFAULT_PATH 
+)
 if( QUARTIC )
   include_directories(${UPDIR}/quarticRootsFlocke/lib/include)
 else()
