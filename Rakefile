@@ -32,19 +32,26 @@ else
   cmd_cmake_build += ' -DBUILD_SHARED:VAR=false '
 end
 if COMPILE_DEBUG then
-  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING '
+  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=STATUS '
 else
-  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING '
+  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=STATUS '
 end
-cmd_cmake_build += " -DINSTALL_HERE:VAR=true "
+cmd_cmake_build += " -DEB_INSTALL_LOCAL=ON "
 
 desc "default task --> build"
 task :default => :build
 
-FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/Utils/CMakeLists-cflags.txt'
-FileUtils.cp 'CMakeLists-cflags.txt', 'submodules/quarticRootsFlocke/CMakeLists-cflags.txt'
+FileUtils.cp './cmake/CMakeLists-cflags.txt', 'submodules/Utils/cmake/CMakeLists-cflags.txt'
+FileUtils.cp './cmake/CMakeLists-cflags.txt', 'submodules/quarticRootsFlocke/cmake/CMakeLists-cflags.txt'
 
 task :default => [:build]
+
+desc "run tests"
+task :test do
+  FileUtils.cd "build"
+  sh 'ctest --output-on-failure'
+  FileUtils.cd '..'
+end
 
 TESTS = [
   "testBiarc",
@@ -98,9 +105,7 @@ task :build_win, [:year, :bits] do |t, args|
 
   args.with_defaults( :year => "2017", :bits => "x64" )
 
-  ##Rake::Task[:win_3rd].invoke(args.year,args.bits,args.lapack)
-
-  dir = "vs_#{args.year}_#{args.bits}"
+  dir = "build"
 
   FileUtils.rm_rf   dir
   FileUtils.mkdir_p dir
@@ -145,6 +150,15 @@ end
 
 desc "compile for LINUX"
 task :build_linux => :build_osx
+
+desc 'pack for OSX/LINUX/WINDOWS'
+task :cpack do
+  FileUtils.cd "build"
+  puts "run CPACK for ROOTS".yellow
+  sh 'cpack -C CPackConfig.cmake'
+  sh 'cpack -C CPackSourceConfig.cmake'
+  FileUtils.cd ".."
+end
 
 task :clean_osx do
   FileUtils.rm_rf 'lib'
