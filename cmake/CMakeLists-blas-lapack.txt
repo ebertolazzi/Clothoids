@@ -1,0 +1,88 @@
+############################################################################
+#                                                                          #
+#  file: CMakeLists.txt                                                    #
+#  Copyright (C) 2016                                                      #
+#      Enrico Bertolazzi                                                   #
+#      Dipartimento di Ingegneria Industriale                              #
+#      Universita` degli Studi di Trento                                   #
+#      email: enrico.bertolazzi@ing.unitn.it                               #
+#                                                                          #
+############################################################################
+
+if( APPLE )
+  if( LAPACK_WRAPPER_USE_OPENBLAS OR LAPACK_WRAPPER_USE_BLASFEO )
+    execute_process( COMMAND gfortran -print-libgcc-file-name OUTPUT_VARIABLE GFORTRANDIR )
+    get_filename_component( GFORTRANDIR1 ${GFORTRANDIR} DIRECTORY )
+    message( STATUS ${GFORTRANDIR1} )
+    find_library( GFORTRAN gfortran HINTS ${GFORTRANDIR1}/../../.. )
+    find_library( OPENBLAS openblas HINTS /usr/local/opt/openblas/lib )
+    set( lapackblas_libraries ${OPENBLAS} ${GFORTRAN} )
+    include_directories( /usr/local/opt/openblas/include )
+    if( LAPACK_WRAPPER_USE_BLASFEO )
+      find_library( BLASFEO blasfeo HINTS /opt/blasfeo/lib/ )
+      set( lapackblas_libraries ${lapackblas_libraries} ${BLASFEO} )
+      include_directories( /opt/blasfeo/include/ )
+    endif()
+  elseif( LAPACK_WRAPPER_USE_MKL )
+    find_library( MKL_CORE  mkl_core         HINTS /opt/intel/mkl/lib )
+    find_library( MKL_INTEL mkl_intel_thread HINTS /opt/intel/mkl/lib )
+    find_library( MKL_RT    mkl_rt           HINTS /opt/intel/mkl/lib )
+    find_library( MKL_IOMP5 iomp5            HINTS /opt/intel/lib     )
+    set( lapackblas_libraries  ${MKL_CORE} ${MKL_INTEL} ${MKL_RT} ${MKL_IOMP5} )
+    include_directories( /opt/intel/mkl/include/ )
+  else()
+    find_package(BLAS)
+    find_package(LAPACK)
+    if( LAPACK_FOUND AND BLAS_FOUND )
+      set( lapackblas_libraries ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} )
+    endif()
+  endif()
+elseif( UNIX OR LINUX )
+  execute_process(COMMAND uname -m OUTPUT_VARIABLE ARCH)
+  set(THREADS_PREFER_PTHREAD_FLAG ON)
+  find_package(Threads REQUIRED)
+  if( LAPACK_WRAPPER_USE_OPENBLAS OR LAPACK_WRAPPER_USE_BLASFEO )
+    execute_process( COMMAND gfortran -print-libgcc-file-name OUTPUT_VARIABLE LIBGCC )
+    get_filename_component( GFORTRANDIR ${LIBGCC} DIRECTORY )
+    message( STATUS "GFORTRANDIR = ${GFORTRANDIR}" )
+    find_library( GFORTRAN gfortran HINTS ${GFORTRANDIR} )
+    include_directories( /usr/include/${ARCH}-linux-gnu )
+    find_library( OPENBLAS openblas HINTS /usr/lib /usr/local/lib /usr/lib/${ARCH}-linux-gnu/openblas )
+    find_library( OPENMP   gomp     HINTS /usr/lib /usr/local/lib /usr/lib/${ARCH}-linux-gnu ${GFORTRANDIR} )
+    find_library( DL       dl       HINTS /usr/lib /usr/local/lib /usr/lib/${ARCH}-linux-gnu )
+    set( lapackblas_libraries ${OPENBLAS} ${OPENMP} ${DL} ${GFORTRAN} )
+  elseif( LAPACK_WRAPPER_USE_MKL )
+    set( MKLBITS intel64 )
+    find_library( MKL_CORE  mkl_core         HINTS /opt/intel/mkl/lib/${MKLBITS}  )
+    find_library( MKL_INTEL mkl_intel_thread HINTS /opt/intel/mkl/lib/${MKLBITS}  )
+    find_library( MKL_RT    mkl_rt           HINTS /opt/intel/mkl/lib/${MKLBITS}  )
+    find_library( MKL_IOMP5 iomp5            HINTS /opt/intel/lib/${MKLBITS}      )
+    set( lapackblas_libraries ${MKL_CORE} ${MKL_INTEL} ${MKL_RT} ${MKL_IOMP5} )
+    include_directories( /opt/intel/mkl/include/ )
+  else()
+    find_package(BLAS)
+    find_package(LAPACK)
+    if( LAPACK_FOUND AND BLAS_FOUND )
+      set( lapackblas_libraries ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} )
+    endif()
+  endif()
+  include_directories( /usr/local/include /opt/intel/mkl/include )
+  if( LAPACK_WRAPPER_USE_BLASFEO )
+    find_library( BLASFEO blasfeo HINTS /opt/blasfeo/lib/ )
+    set( lapackblas_libraries ${lapackblas_libraries} ${BLASFEO} )
+    include_directories( /opt/blasfeo/include/ )
+  endif()
+else()
+  if( BITS MATCHES "x64" )
+    find_library(
+      OPENBLAS_LIB openblas_x64.lib
+      HINTS ${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/lib
+    )
+  else()
+    find_library(
+      OPENBLAS_LIB openblas_x86.lib
+      HINTS ${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/lib
+    )
+  endif()
+  set( lapackblas_libraries ${OPENBLAS_LIB} )
+endif()

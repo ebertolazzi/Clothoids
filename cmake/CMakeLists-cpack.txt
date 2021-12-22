@@ -1,0 +1,52 @@
+############################################################################
+#                                                                          #
+#  file: CMakeLists.txt                                                    #
+#  Copyright (C) 2016                                                      #
+#      Enrico Bertolazzi                                                   #
+#      Dipartimento di Ingegneria Industriale                              #
+#      Universita` degli Studi di Trento                                   #
+#      email: enrico.bertolazzi@ing.unitn.it                               #
+#                                                                          #
+############################################################################
+
+#   ___         _
+#  | _ \__ _ __| |____ _ __ _ ___
+#  |  _/ _` / _| / / _` / _` / -_)
+#  |_| \__,_\__|_\_\__,_\__, \___|
+#                       |___/
+#
+set(
+  PROJECT_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+  CACHE STRING "Path To ${PROJECT_NAME} Cmake Files"
+)
+
+configure_file(
+  "cmake/${PROJECT_NAME}-config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" @ONLY
+)
+
+# Set the name of the generated installation package
+set(CPACK_PACKAGE_NAME "${EB_NAMESPACE}-${PROJECT_NAME}")
+# Set the control that supports the specified installation directory to on
+if ( WIN32 )
+  set(CPACK_GENERATOR "NSIS64")
+  set(CPACK_SET_DESTDIR OFF)
+  SET(CPACK_NSIS_MODIFY_PATH ON)
+  set(CPACK_PACKAGE_INSTALL_DIRECTORY "CPack Component Example")
+elseif(APPLE)
+  set(CPACK_GENERATOR "productbuild")
+  set(CPACK_SET_DESTDIR ON)
+elseif(UNIX)
+  set(CPACK_GENERATOR "DEB")
+  set(CPACK_SET_DESTDIR ON)
+endif()
+# Set the directory path to install to
+# This is the version number information for the generated installation
+set(CPACK_PACKAGE_VERSION "${EB_PROJECT_VERSION}")
+
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_NAME} - CPack Component Installation")
+# Set vendor name
+set(CPACK_PACKAGE_VENDOR "Enrico Bertolazzi")
+
+# Must be after the last CPACK macros
+include(CPack)

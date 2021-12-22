@@ -1,0 +1,30 @@
+# /Gd Uses the __cdecl calling convention (x86 only).
+# /Gr Uses the __fastcall calling convention (x86 only).
+# /Gv Uses the __vectorcall calling convention. (x86 and x64 only)
+# /Gz Uses the __stdcall calling convention (x86 only).
+
+set( CXX_WARN   "-Wall -Wno-float-equal -Wno-padded -Wno-comment ")
+set( CLANG_WARN "-Weverything -Wno-alloca -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-c++2a-compat -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-format-nonliteral -Wno-implicit-fallthrough -Wno-documentation -Wno-float-equal -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-unused-macros -Wno-switch-enum -Wno-sign-conversion -Wno-signed-enum-bitfield -Wno-weak-vtables -Wno-documentation-unknown-command -Wno-missing-noreturn")
+set( VS_WARN    "")
+
+message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
+
+if ( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )
+  set( CMAKE_CXX_FLAGS         "-std=c++11   ${CXX_WARN}" )
+  set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -fopenmp -O2 -g -floop-interchange -floop-block -funroll-loops " )
+  set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -fopenmp -O0 -ggdb -DMECHATRONIX_DEBUG -DDEBUG " )
+elseif ( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
+  set( CMAKE_CXX_FLAGS         "-std=c++11 -stdlib=libc++  ${CLANG_WARN}" )
+  set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics " )
+  set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -gfull -fcolor-diagnostics -DMECHATRONIX_DEBUG -DDEBUG " )
+elseif( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
+  set( CMAKE_CXX_FLAGS         " ${VS_WARN}" )
+  set( CMAKE_CXX_FLAGS_RELEASE "/nologo /GS /W3 /WX- /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /O2 /MD " )
+  set( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /W3 /WX- /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /RTC1 /guard:cf /Zi /D_DEBUG /DMECHATRONIX_DEBUG " )
+else()
+  message( FATAL_ERROR "Unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
+endif()
+
+set( CMAKE_C_FLAGS         "" )
+set( CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} )
+set( CMAKE_C_FLAGS_DEBUG   ${CMAKE_CXX_FLAGS_DEBUG} )
