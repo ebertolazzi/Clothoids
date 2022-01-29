@@ -31,7 +31,7 @@ http://www.codeproject.com/info/cpol10.aspx
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
-#include "CPUinfo.hh"
+#include "Utils_CPU_info.hh"
 #include <map>
 
 

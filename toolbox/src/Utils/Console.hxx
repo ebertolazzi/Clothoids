@@ -23,8 +23,10 @@
 
 #pragma once
 
-#ifndef CONSOLE_dot_HXX
-#define CONSOLE_dot_HXX
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef UTILS_CONSOLE_dot_HXX
+#define UTILS_CONSOLE_dot_HXX
+#endif
 
 namespace Utils {
 

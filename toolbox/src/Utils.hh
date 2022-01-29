@@ -47,6 +47,7 @@
 #pragma clang diagnostic ignored "-Wunused-template"
 #pragma clang diagnostic ignored "-Wnon-virtual-dtor"
 #pragma clang diagnostic ignored "-Wpadded"
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 #endif
 
 #include "Utils/Utils.hxx"

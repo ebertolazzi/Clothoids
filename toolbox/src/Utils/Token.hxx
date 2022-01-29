@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -16,34 +16,54 @@
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
+
 ///
-/// file: fmt.cc
+/// file: Token.hxx
 ///
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wpadded"
-#endif
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wsign-conversion"
-#pragma clang diagnostic ignored "-Wweak-template-vtables"
-#pragma clang diagnostic ignored "-Wc++98-compat"
-#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
-#pragma clang diagnostic ignored "-Wpadded"
-#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
-#pragma clang diagnostic ignored "-Wnon-virtual-dtor"
-#pragma clang diagnostic ignored "-Wsigned-enum-bitfield"
-#pragma clang diagnostic ignored "-Wpoison-system-directories"
-#pragma clang diagnostic ignored "-Wexit-time-destructors"
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wshadow-field-in-constructor"
-#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#pragma once
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef UTILS_TOKEN_dot_HXX
+#define UTILS_TOKEN_dot_HXX
 #endif
 
-#include "Utils/fmt/os.cc"
-#include "Utils/fmt/format.cc"
+//
+// https://stackoverflow.com/questions/53849/how-do-i-tokenize-a-string-in-c
+//
+
+namespace Utils {
+
+  class Tokenizer {
+  protected:
+    size_t       m_offset;
+    string const m_string;
+    string       m_token;
+    string const m_delimiters;
+  public:
+    Tokenizer( string const & str, string const & delimiters )
+    : m_offset(0)
+    , m_string(str)
+    , m_delimiters(delimiters)
+    { }
+
+    string get_token() const { return m_token; }
+
+    bool next_token();
+  };
+
+  void
+  split_string(
+    string const   & str,
+    string const   & sep,
+    vector<string> & arr
+  );
+
+}
+
+
+#endif
 
 ///
-/// eof: fmt.cc
+/// eof: Token.hxx
 ///
-

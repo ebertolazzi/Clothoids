@@ -24,12 +24,14 @@
 
 #pragma once
 
-#ifndef TIC_TOC_dot_HH
-#define TIC_TOC_dot_HH
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef UTILS_TIC_TOC_dot_HH
+#define UTILS_TIC_TOC_dot_HH
 
 #ifndef UTILS_OS_WINDOWS
   #include <chrono>
   #include <thread>
+#endif
 #endif
 
 namespace Utils {

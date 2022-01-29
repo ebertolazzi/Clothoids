@@ -23,8 +23,10 @@
 
 #pragma once
 
-#ifndef THREADPOOL_dot_HH
-#define THREADPOOL_dot_HH
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef UTILS_THREADPOOL_dot_HH
+#define UTILS_THREADPOOL_dot_HH
+#endif
 
 #include <algorithm>
 #include <utility>

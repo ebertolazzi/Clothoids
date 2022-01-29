@@ -82,12 +82,15 @@ if ( EB_INSTALL_LOCAL )
     set( INSTALL_PREFIX "lib3rd" )
   endif()
   set( PROJECT_PUBLIC_HEADER_DESTINATION "${INSTALL_PREFIX}/include" )
-  add_custom_target( post_build_Splines )
+  add_custom_target( post_build_${PROJECT_NAME} )
   add_custom_command(
-    TARGET post_build_Splines POST_BUILD
+    TARGET post_build_${PROJECT_NAME} POST_BUILD
     COMMAND cmake --build . --config ${CMAKE_BUILD_TYPE} --target install
   )
+  set( CMAKE_INSTALL_PREFIX ${CMAKE_HOME_DIRECTORY} )
 else()
   set( INSTALL_PREFIX                    "lib" )
   set( PROJECT_PUBLIC_HEADER_DESTINATION "${INSTALL_PREFIX}/include/${PROJECT_NAME}" )
 endif()
+
+message("${PROJECT_NAME} current version = v${EB_PROJECT_VERSION}")

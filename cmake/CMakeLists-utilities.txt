@@ -4,6 +4,8 @@
 function(ebertolazzi_artifacts_suffix VAR_NAME BUILD_STATIC)
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(suffix "_debug")
+  else()
+    set(suffix "")
   endif()
   if (${BUILD_STATIC})
     set(suffix "_static${suffix}")
@@ -28,8 +30,8 @@ function(
   IS_STATIC
   SOURCE_DIR
   SOURCE_LIST
-  HEADERS_PUBLIC
-  HEADERS_PRIVATE
+  HEADER_DIR
+  HEADERS_LIST
 )
 
   if ( ${IS_STATIC} )
@@ -38,33 +40,15 @@ function(
     set( TARGET_S ${EB_NAMESPACE}_${TARGET_NAME} )
   endif()
 
-  foreach (F ${HEADERS_PUBLIC})
+  foreach (F ${HEADERS_LIST})
     get_filename_component(DIR ${F} DIRECTORY)
-    install( FILES ${SOURCE_DIR}/${F} DESTINATION ${PROJECT_PUBLIC_HEADER_DESTINATION}/${DIR})
+    install( FILES ${HEADER_DIR}/${F} DESTINATION ${PROJECT_PUBLIC_HEADER_DESTINATION}/${DIR})
   endforeach()
-
-  # DO NOT WORK
-  #set( HDR )
-  #foreach (F ${HEADERS_PUBLIC})
-  #  # Position of the header after installation
-  #  list( APPEND HDR $<BUILD_INTERFACE:${SOURCE_DIR}/${F}> )
-  #  list( APPEND HDR $<INSTALL_INTERFACE:include/${F}> )
-  #endforeach()
-  #set( HDR2 )
-  #foreach (F ${HEADERS_PRIVATE})
-  #  # Position of the header after installation
-  #  list( APPEND HDR2 $<BUILD_INTERFACE:${SOURCE_DIR}/${F}> )
-  #  list( APPEND HDR2 $<INSTALL_INTERFACE:include/${F}> )
-  #endforeach()
 
   set( SRC )
   foreach (F ${SOURCE_LIST})
     list( APPEND SRC $<BUILD_INTERFACE:${SOURCE_DIR}/${F}> )
   endforeach()
-
-  #message( STATUS "HDR  = ${HDR}")
-  #message( STATUS "HDR2 = ${HDR2}")
-  #message( STATUS "SRC  = ${SRC}")
 
   # lib and ALIASES
   if ( ${IS_STATIC} )
@@ -77,21 +61,19 @@ function(
     add_library( "${EB_NAMESPACE}::${TARGET_NAME}" ALIAS ${TARGET_S} )
   endif()
 
-  target_sources( ${TARGET_S} PRIVATE ${SRC} ${HDR2} PUBLIC ${HDR} )
+  target_sources( ${TARGET_S} PRIVATE ${SRC} )
   # where to search headers by default
   target_include_directories( ${TARGET_S} PUBLIC "$<BUILD_INTERFACE:${SOURCE_DIR}>" )
   set_target_properties(
     ${TARGET_S} PROPERTIES
     OUTPUT_NAME "${TARGET_NAME}${SUFFIX}"
     POSITION_INDEPENDENT_CODE ON
-    #PUBLIC_HEADER  "${HDR}"
-    #PRIVATE_HEADER "${HDR2}"
   )
 
   set( TARGETS_TO_BE_INSTALLED ${TARGETS_TO_BE_INSTALLED} ${TARGET_S} PARENT_SCOPE )
 
   if ( EQ_INSTALL_LOCAL )
-    add_dependencies( post_build_Splines ${TARGET_S} )
+    add_dependencies( post_build_${PROJECT_NAME} ${TARGET_S} )
   endif()
 
 endfunction()

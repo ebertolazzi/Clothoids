@@ -23,8 +23,10 @@
 
 #pragma once
 
-#ifndef TRACE_dot_HH
-#define TRACE_dot_HH
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+#ifndef UTILS_TRACE_dot_HH
+#define UTILS_TRACE_dot_HH
 
 #ifndef UTILS_ERROR0
   #define UTILS_ERROR0(MSG) \
@@ -84,6 +86,8 @@
   #ifndef UTILS_ASSERT_DEBUG
     #define UTILS_ASSERT_DEBUG(COND,...) UTILS_ASSERT(COND,__VA_ARGS__)
   #endif
+#endif
+
 #endif
 
 #ifdef __GNUC__

@@ -18,13 +18,15 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Utils.hh
+/// file: Utils.hxx
 ///
 
 #pragma once
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #ifndef UTILS_dot_HXX
 #define UTILS_dot_HXX
+#endif
 
 // select computer architecture
 #if defined(__APPLE__) && defined(__MACH__)
@@ -71,9 +73,11 @@
   #define UTILS_CONSTEXPR
 #endif
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #include "fmt/printf.h"
 #include "fmt/chrono.h"
 #include "fmt/ostream.h"
+#endif
 
 #include <string>
 #include <iostream>
@@ -110,6 +114,7 @@
 #include "ThreadPool.hxx"
 #include "Quaternion.hxx"
 #include "Table.hxx"
+#include "Token.hxx"
 
 namespace Utils {
 
@@ -172,5 +177,5 @@ namespace Utils {
 #endif
 
 ///
-/// eof: Utils.hh
+/// eof: Utils.hxx
 ///

@@ -558,7 +558,10 @@ namespace G2lib {
 
   real_type
   ClothoidList::length() const
-  { return m_s0.back() - m_s0.front(); }
+  { 
+    if ( m_clotoidList.empty() ) return 0.0;
+    return m_s0.back() - m_s0.front(); 
+  }
 
   real_type
   ClothoidList::length_ISO( real_type offs ) const {

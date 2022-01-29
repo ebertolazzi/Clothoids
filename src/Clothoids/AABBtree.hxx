@@ -63,8 +63,15 @@ namespace G2lib {
     real_type m_ymax; //!< right top
     int_type  m_id;   //!< id of the bbox
     int_type  m_ipos; //!< rank of the bounding box used in external algorithms
+
     BBox();
+
+    #ifdef G2LIB_USE_CXX11
+    BBox( BBox const & ) = default;
+    BBox( BBox && ) = default;
+    #else
     BBox( BBox const & );
+    #endif
 
   public:
 

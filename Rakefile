@@ -22,14 +22,14 @@ file_base = File.expand_path(File.dirname(__FILE__)).to_s+'/lib'
 
 cmd_cmake_build = ""
 if COMPILE_EXECUTABLE then
-  cmd_cmake_build += ' -DBUILD_EXECUTABLE:VAR=true '
+  cmd_cmake_build += ' -DEB_ENABLE_TESTS:VAR=ON '
 else
-  cmd_cmake_build += ' -DBUILD_EXECUTABLE:VAR=false '
+  cmd_cmake_build += ' -DEB_ENABLE_TESTS:VAR=OFF '
 end
 if COMPILE_DYNAMIC then
-  cmd_cmake_build += ' -DBUILD_SHARED:VAR=true '
+  cmd_cmake_build += ' -DEB_BUILD_SHARED:VAR=ON '
 else
-  cmd_cmake_build += ' -DBUILD_SHARED:VAR=false '
+  cmd_cmake_build += ' -DEB_BUILD_SHARED:VAR=OFF '
 end
 if COMPILE_DEBUG then
   cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=STATUS '
@@ -38,13 +38,11 @@ else
 end
 cmd_cmake_build += " -DEB_INSTALL_LOCAL=ON "
 
-desc "default task --> build"
-task :default => :build
-
 FileUtils.cp './cmake/CMakeLists-cflags.txt', 'submodules/Utils/cmake/CMakeLists-cflags.txt'
 FileUtils.cp './cmake/CMakeLists-cflags.txt', 'submodules/quarticRootsFlocke/cmake/CMakeLists-cflags.txt'
 
-task :default => [:build]
+desc "default task --> build"
+task :default => :build
 
 desc "run tests"
 task :test do
@@ -122,6 +120,12 @@ task :build_win, [:year, :bits] do |t, args|
     sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
   end
 
+  if RUN_CPACK then
+    puts "run CPACK for ROOTS".yellow
+    sh 'cpack -C CPackConfig.cmake'
+    sh 'cpack -C CPackSourceConfig.cmake'
+  end
+
   FileUtils.cd '..'
 end
 
@@ -145,20 +149,17 @@ task :build_osx do
     sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
   end
 
+  if RUN_CPACK then
+    puts "run CPACK for ROOTS".yellow
+    sh 'cpack -C CPackConfig.cmake'
+    sh 'cpack -C CPackSourceConfig.cmake'
+  end
+
   FileUtils.cd '..'
 end
 
 desc "compile for LINUX"
 task :build_linux => :build_osx
-
-desc 'pack for OSX/LINUX/WINDOWS'
-task :cpack do
-  FileUtils.cd "build"
-  puts "run CPACK for ROOTS".yellow
-  sh 'cpack -C CPackConfig.cmake'
-  sh 'cpack -C CPackSourceConfig.cmake'
-  FileUtils.cd ".."
-end
 
 task :clean_osx do
   FileUtils.rm_rf 'lib'
