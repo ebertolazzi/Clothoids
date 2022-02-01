@@ -26,7 +26,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   obj = ref.obj_handle();
-    %> 
+    %>
     %> \endrst
     %>
     function obj = obj_handle( self )
@@ -41,7 +41,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   ref.copy( C );
-    %> 
+    %>
     %> \endrst
     %>
     %> where `C` id the curve object to be copied.
@@ -61,7 +61,7 @@ classdef CurveBase < handle
     %>   [ xmin, ymin, xmax, ymax ] = ref.bbox( C, offs );
     %>   [ xmin, ymin, xmax, ymax ] = ref.bbox( C, offs, 'ISO' );
     %>   [ xmin, ymin, xmax, ymax ] = ref.bbox( C, offs, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> - xmin: x minimum coordinate of the bounding box
@@ -88,7 +88,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   ref.translate( tx, ty );
-    %> 
+    %>
     %> \endrst
     %>
     function translate( self, tx, ty )
@@ -115,7 +115,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   ref.rotate( angle, cx, cy );
-    %> 
+    %>
     %> \endrst
     %>
     function rotate( self, angle, cx, cy )
@@ -131,7 +131,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   ref.reverse();
-    %> 
+    %>
     %> \endrst
     %>
     function reverse( self )
@@ -147,7 +147,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   ref.scale( sc );
-    %> 
+    %>
     %> \endrst
     %>
     function scale( self, sc )
@@ -155,20 +155,24 @@ classdef CurveBase < handle
       feval( self.mexName, 'scale', self.objectHandle, sc );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Translate the curve in such a way the origin is at `(newX0,newY0`.
+    %> Translate the curve in such a way the origin is at `(newX0,newY0)`.
     %>
     %> **Usage**
     %>
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   ref.changeOrigin( newX0, newY0 );
-    %> 
+    %>   ref.change_origin( newX0, newY0 );
+    %>
     %> \endrst
     %>
-    function changeOrigin( self, newX0, newY0 )
+    function change_origin( self, newX0, newY0 )
       % change the origgin or the curve to `(newX0,newY0)`
-      feval( self.mexName, 'changeOrigin', self.objectHandle, newX0, newY0 );
+      feval( self.mexName, 'change_origin', self.objectHandle, newX0, newY0 );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function changeOrigin( self, newX0, newY0 )
+      self.change_origin(newX0, newY0);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate the curve at curvilinear coordinate `s`.
@@ -183,7 +187,7 @@ classdef CurveBase < handle
     %>   [ x, y, theta, kappa ] = ref.evaluate( s, offs );
     %>   [ x, y, theta, kappa ] = ref.evaluate( s, offs, 'ISO' );
     %>   [ x, y, theta, kappa ] = ref.evaluate( s, offs, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -214,7 +218,7 @@ classdef CurveBase < handle
     %>   [X,Y] = ref.eval( s, offs );
     %>   [X,Y] = ref.eval( s, offs, 'ISO' );
     %>   [X,Y] = ref.eval( s, offs, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -250,7 +254,7 @@ classdef CurveBase < handle
     %>   [X,Y] = ref.eval_D( s, offs );
     %>   [X,Y] = ref.eval_D( s, offs, 'ISO' );
     %>   [X,Y] = ref.eval_D( s, offs, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -289,7 +293,7 @@ classdef CurveBase < handle
     %>   [X,Y] = ref.eval_DD( s, offs );
     %>   [X,Y] = ref.eval_DD( s, offs, 'ISO' );
     %>   [X,Y] = ref.eval_DD( s, offs, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -325,7 +329,7 @@ classdef CurveBase < handle
     %>   [X,Y] = ref.eval_DDD( s, offs );
     %>   [X,Y] = ref.eval_DDD( s, offs, 'ISO' );
     %>   [X,Y] = ref.eval_DDD( s, offs, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -353,7 +357,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   theta = ref.theta( s );
-    %> 
+    %>
     %> \endrst
     %>
     function th = theta(self, s)
@@ -369,7 +373,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   theta = ref.theta_D( s );
-    %> 
+    %>
     %> \endrst
     %>
     function th = theta_D(self, s)
@@ -386,7 +390,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   theta = ref.theta_DD( s );
-    %> 
+    %>
     %> \endrst
     %>
     function th = theta_DD(self, s)
@@ -403,7 +407,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   theta = ref.theta_DDD( s );
-    %> 
+    %>
     %> \endrst
     %>
     function th = theta_DDD(self, s)
@@ -420,7 +424,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   theta = ref.kappa( s );
-    %> 
+    %>
     %> \endrst
     %>
     function th = kappa(self, s)
@@ -437,7 +441,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   theta = ref.kappa_D( s );
-    %> 
+    %>
     %> \endrst
     %>
     function th = kappa_D(self, s)
@@ -454,7 +458,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   theta = ref.kappa_DD( s );
-    %> 
+    %>
     %> \endrst
     %>
     %>
@@ -470,12 +474,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   [ x0, y0 ] = ref.xyBegin();
-    %> 
+    %>   [ x0, y0 ] = ref.xy_begin();
+    %>
     %> \endrst
     %>
+    function [ x, y ] = xy_begin( self )
+      [ x, y ] = feval( self.mexName, 'xy_begin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y ] = xyBegin( self )
-      [ x, y ] = feval( self.mexName, 'xyBegin', self.objectHandle );
+      [ x, y ] = self.xy_begin();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate final point of the curve.
@@ -485,12 +493,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   [ x1, y1 ] = ref.xyEnd();
-    %> 
+    %>   [ x1, y1 ] = ref.xy_end();
+    %>
     %> \endrst
     %>
+    function [ x, y ] = xy_end( self )
+      [ x, y ] = feval( self.mexName, 'xy_end', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ x, y ] = xyEnd( self )
-      [ x, y ] = feval( self.mexName, 'xyEnd', self.objectHandle );
+      [ x, y ] = self.xy_end();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate initial x-coordinate of the curve.
@@ -500,12 +512,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   x0 = ref.xBegin();
-    %> 
+    %>   x0 = ref.x_begin();
+    %>
     %> \endrst
     %>
+    function X0 = x_begin( self )
+      X0 = feval( self.mexName, 'x_begin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X0 = xBegin( self )
-      X0 = feval( self.mexName, 'xBegin', self.objectHandle );
+      X0 = self.x_begin();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate final x-coordinate of the curve.
@@ -515,12 +531,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   x1 = ref.xEnd();
-    %> 
+    %>   x1 = ref.x_end();
+    %>
     %> \endrst
     %>
+    function X1 = x_end( self )
+      X1 = feval( self.mexName, 'x_end', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function X1 = xEnd( self )
-      X1 = feval( self.mexName, 'xEnd', self.objectHandle );
+      X1 = self.x_end();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate initial y-coordinate of the curve.
@@ -530,12 +550,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   y0 = ref.yBegin();
-    %> 
+    %>   y0 = ref.y_begin();
+    %>
     %> \endrst
     %>
+    function Y0 = y_begin( self )
+      Y0 = feval( self.mexName, 'y_begin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function Y0 = yBegin( self )
-      Y0 = feval( self.mexName, 'yBegin', self.objectHandle );
+      Y0 = self.y_begin();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate final y-coordinate of the curve.
@@ -545,12 +569,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   y1 = ref.yEnd();
-    %> 
+    %>   y1 = ref.y_end();
+    %>
     %> \endrst
     %>
+    function Y1 = y_end( self )
+      Y1 = feval( self.mexName, 'y_end', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function Y1 = yEnd( self )
-      Y1 = feval( self.mexName, 'yEnd', self.objectHandle );
+      Y1 = self.y_end();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate initial angle of the curve.
@@ -560,12 +588,15 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   theta = ref.thetaBegin();
-    %> 
+    %>   theta = ref.theta_begin();
+    %>
     %> \endrst
     %>
+    function th0 = theta_begin( self )
+      th0 = feval( self.mexName, 'theta_begin', self.objectHandle );
+    end
     function th0 = thetaBegin( self )
-      th0 = feval( self.mexName, 'thetaBegin', self.objectHandle );
+      th0 = self.theta_begin();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate final angle of the curve.
@@ -575,12 +606,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   theta = ref.thetaEnd();
-    %> 
+    %>   theta = ref.theta_end();
+    %>
     %> \endrst
     %>
+    function th1 = theta_end( self )
+      th1 = feval( self.mexName, 'theta_end', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function th1 = thetaEnd( self )
-      th1 = feval( self.mexName, 'thetaEnd', self.objectHandle );
+      th1 = self.theta_end();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate initial curvature of the curve.
@@ -590,12 +625,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   kappa0 = ref.kappaBegin();
-    %> 
+    %>   kappa0 = ref.kappa_begin();
+    %>
     %> \endrst
     %>
+    function kappa0 = kappa_begin( self )
+      kappa0 = feval( self.mexName, 'kappa_begin', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function kappa0 = kappaBegin( self )
-      kappa0 = feval( self.mexName, 'kappaBegin', self.objectHandle );
+      kappa0 = self.kappa_begin();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate final curvature of the curve.
@@ -605,12 +644,16 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   kappa1 = ref.kappaEnd();
-    %> 
+    %>   kappa1 = ref.kappa_end();
+    %>
     %> \endrst
     %>
+    function kappa1 = kappa_end( self )
+      kappa1 = feval( self.mexName, 'kappa_end', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function kappa1 = kappaEnd( self )
-      kappa1 = feval( self.mexName, 'kappaEnd', self.objectHandle );
+      kappa1 = self.kappa_end();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return the length of the curve.
@@ -621,7 +664,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   length = ref.length();
-    %> 
+    %>
     %> \endrst
     %>
     function res = length( self, varargin )
@@ -644,7 +687,7 @@ classdef CurveBase < handle
     %>   [P1,P2,P3] = ref.bbTriangles(max_angle,max_size,offs);
     %>   [P1,P2,P3] = ref.bbTriangles(max_angle,max_size,offs,'ISO');
     %>   [P1,P2,P3] = ref.bbTriangles(max_angle,max_size,offs,'SAE');
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -674,11 +717,11 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy );
-    %>   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy, offs );
-    %>   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy, offs, 'ISO' );
-    %>   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy, offs, 'SAE' );
-    %> 
+    %>   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy );
+    %>   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs );
+    %>   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs, 'ISO' );
+    %>   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs, 'SAE' );
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -694,11 +737,16 @@ classdef CurveBase < handle
     %>   containing the point at minimum distance.
     %> - `dst`: point curve distance.
     %>
-    function varargout = closestPoint( self, qx, qy, varargin )
+    function varargout = closest_point( self, qx, qy, varargin )
       % iflag > 0 = segment number
-      [ varargout{1:nargout} ] = feval( self.mexName, 'closestPoint', ...
+      [ varargout{1:nargout} ] = feval( self.mexName, 'closest_point', ...
         self.objectHandle, qx, qy, varargin{:} ...
       );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function varargout = closestPoint( self, qx, qy, varargin )
+      % iflag > 0 = segment number
+      [ varargout{1:nargout} ] = self.closest_point( qx, qy, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Evaluate the distance of a point `(qx,qy)` to the curve.
@@ -713,7 +761,7 @@ classdef CurveBase < handle
     %>   dst = ref.distance( qx, qy, offs );
     %>   dst = ref.distance( qx, qy, offs, 'ISO' );
     %>   dst = ref.distance( qx, qy, offs, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -738,7 +786,7 @@ classdef CurveBase < handle
     %>   ok = ref.collision( obj, offs, offs1 );
     %>   ok = ref.collision( obj, offs, offs1, 'ISO' );
     %>   ok = ref.collision( obj, offs, offs1, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> **Optional Arguments**
@@ -763,7 +811,7 @@ classdef CurveBase < handle
     %>   [s1,s2] = ref.intersect( obj, offs, offs1 );
     %>   [s1,s2] = ref.intersect( obj, offs, offs1, 'ISO' );
     %>   [s1,s2] = ref.intersect( obj, offs, offs1, 'SAE' );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `s1`: curvilinear coordinates of the intersections on the first curve
@@ -788,7 +836,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   ref.info();
-    %> 
+    %>
     %> \endrst
     %>
     function info( self )
@@ -803,7 +851,7 @@ classdef CurveBase < handle
     %> .. code-block:: matlab
     %>
     %>   [s,t] = ref.find_coord( x, y );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `s`: curvilinear coordinate along the curve
@@ -834,13 +882,13 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   ref.plotTBox( P1, P2, P3 );
-    %>   ref.plotTBox( P1, P2, P3, 'Color', 'red' );
-    %> 
+    %>   ref.plot_tbox( P1, P2, P3 );
+    %>   ref.plot_tbox( P1, P2, P3, 'Color', 'red' );
+    %>
     %> \endrst
     %>
     %>
-    function plotTBox( self, P1, P2, P3, varargin )
+    function plot_tbox( self, P1, P2, P3, varargin )
       for k=1:size(P1,2)
         pp1 = P1(:,k);
         pp2 = P2(:,k);
@@ -850,6 +898,10 @@ classdef CurveBase < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTBox( self, P1, P2, P3, varargin )
+      self.plot_tbox( P1, P2, P3, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the bounding box of the curve
     %>
     %> **Usage:**
@@ -857,12 +909,12 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   ref.plotBBox();
-    %>   ref.plotBBox('Color', 'red' );
-    %> 
+    %>   ref.plot_bbox();
+    %>   ref.plot_bbox( 'Color', 'red' );
+    %>
     %> \endrst
     %>
-    function plotBBox( self, varargin )
+    function plot_bbox( self, varargin )
       if nargin > 1
         offs = varargin{1};
         [xmin,ymin,xmax,ymax] = self.bbox( offs );
@@ -878,6 +930,10 @@ classdef CurveBase < handle
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotBBox( self, varargin )
+      self.plot_bbox( varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the covering triangles of the curve
     %>
     %> **Usage:**
@@ -885,12 +941,12 @@ classdef CurveBase < handle
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   ref.plotTriangles()
-    %>   ref.plotTriangles('red','FaceAlpha', 0.5);
-    %> 
+    %>   ref.plot_triangles()
+    %>   ref.plot_triangles('red','FaceAlpha', 0.5);
+    %>
     %> \endrst
     %>
-    function plotTriangles( self, varargin )
+    function plot_triangles( self, varargin )
       [p1,p2,p3] = self.bbTriangles();
       for k=1:size(p1,2)
         x = [ p1(1,k), p2(1,k), p3(1,k), p1(1,k) ];
@@ -898,6 +954,10 @@ classdef CurveBase < handle
         %fill( x, y, 'red','FaceAlpha', 0.5 );
         fill( x, y, varargin{:});
       end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotTriangles( self, varargin )
+      self.plot_triangles( varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   end

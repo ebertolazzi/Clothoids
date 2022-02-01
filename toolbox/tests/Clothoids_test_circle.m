@@ -37,10 +37,10 @@ L3.plot(100,fmt2);
 L1.translate(1,1);
 L1.plot();
 
-L2.changeCurvilinearOrigin(4,10);
+L2.change_curvilinear_origin(4,10);
 L2.plot(100,fmt1);
 
-L2.changeOrigin(1,2);
+L2.change_origin(1,2);
 L2.plot(100,fmt1);
 
 L3.trim(2,7);

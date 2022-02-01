@@ -47,19 +47,22 @@ main() {
 	G2lib::ClothoidCurve const & S1 = g2sol.getS1();
 
 	cout << "\n\nS0 (NEW)\n" << S0;
-
 	cout << "\n\nS1 (NEW)\n" << S1;
 
-  cout << "\n\n\n";
-
-  cout << "x1     = " << S0.xEnd()   << "\n";
-  cout << "x0     = " << S1.xBegin() << "\n\n";
-
-  cout << "y1     = " << S0.yEnd()   << "\n";
-  cout << "y0     = " << S1.yBegin() << "\n\n";
-
-  cout << "theta1 = " << S0.thetaEnd()   << "\n";
-  cout << "theta0 = " << S1.thetaBegin() << "\n\n";
-
+  fmt::print(
+    "\n\n\n"
+    "x1     = {}\n"
+    "x0     = {}\n\n"
+    "y1     = {}\n"
+    "y0     = {}\n\n"
+    "theta1 = {}\n"
+    "theta0 = {}\n\n",
+    S0.x_end(),
+    S1.x_begin(),
+    S0.y_end(),
+    S1.y_begin(),
+    S0.theta_end(),
+    S1.theta_begin()
+	);
 	return 0;
 }

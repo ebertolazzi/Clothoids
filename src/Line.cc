@@ -272,8 +272,8 @@ namespace G2lib {
   ) const {
     real_type dx = offs*nx_Begin_ISO();
     real_type dy = offs*ny_Begin_ISO();
-    xmin = m_x0+dx; xmax = xEnd()+dx;
-    ymin = m_y0+dy; ymax = yEnd()+dy;
+    xmin = m_x0+dx; xmax = x_end()+dx;
+    ymin = m_y0+dy; ymax = y_end()+dy;
     if ( xmin > xmax ) swap( xmin, xmax );
     if ( ymin > ymax ) swap( ymin, ymax );
   }
@@ -354,18 +354,18 @@ namespace G2lib {
     L_struct L1;
     L_struct L2;
 
-    L1.p[0] = xBegin();
-    L1.p[1] = yBegin();
-    L1.q[0] = xEnd();
-    L1.q[1] = yEnd();
+    L1.p[0] = x_begin();
+    L1.p[1] = y_begin();
+    L1.q[0] = x_end();
+    L1.q[1] = y_end();
     L1.c    = m_c0;
     L1.s    = m_s0;
     L1.L    = m_L;
 
-    L2.p[0] = S.xBegin();
-    L2.p[1] = S.yBegin();
-    L2.q[0] = S.xEnd();
-    L2.q[1] = S.yEnd();
+    L2.p[0] = S.x_begin();
+    L2.p[1] = S.y_begin();
+    L2.q[0] = S.x_end();
+    L2.q[1] = S.y_end();
     L2.c    = S.m_c0;
     L2.s    = S.m_s0;
     L2.L    = S.m_L;
@@ -389,18 +389,18 @@ namespace G2lib {
     L_struct L1;
     L_struct L2;
 
-    L1.p[0] = xBegin_ISO(offs);
-    L1.p[1] = yBegin_ISO(offs);
-    L1.q[0] = xEnd_ISO(offs);
-    L1.q[1] = yEnd_ISO(offs);
+    L1.p[0] = x_begin_ISO(offs);
+    L1.p[1] = y_begin_ISO(offs);
+    L1.q[0] = x_end_ISO(offs);
+    L1.q[1] = y_end_ISO(offs);
     L1.c    = m_c0;
     L1.s    = m_s0;
     L1.L    = m_L;
 
-    L2.p[0] = S.xBegin_ISO(S_offs);
-    L2.p[1] = S.yBegin_ISO(S_offs);
-    L2.q[0] = S.xEnd_ISO(S_offs);
-    L2.q[1] = S.yEnd_ISO(S_offs);
+    L2.p[0] = S.x_begin_ISO(S_offs);
+    L2.p[1] = S.y_begin_ISO(S_offs);
+    L2.q[0] = S.x_end_ISO(S_offs);
+    L2.q[1] = S.y_end_ISO(S_offs);
     L2.c    = S.m_c0;
     L2.s    = S.m_s0;
     L2.L    = S.m_L;
@@ -419,18 +419,18 @@ namespace G2lib {
     L_struct L1;
     L_struct L2;
 
-    L1.p[0] = xBegin();
-    L1.p[1] = yBegin();
-    L1.q[0] = xEnd();
-    L1.q[1] = yEnd();
+    L1.p[0] = x_begin();
+    L1.p[1] = y_begin();
+    L1.q[0] = x_end();
+    L1.q[1] = y_end();
     L1.c    = m_c0;
     L1.s    = m_s0;
     L1.L    = m_L;
 
-    L2.p[0] = S.xBegin();
-    L2.p[1] = S.yBegin();
-    L2.q[0] = S.xEnd();
-    L2.q[1] = S.yEnd();
+    L2.p[0] = S.x_begin();
+    L2.p[1] = S.y_begin();
+    L2.q[0] = S.x_end();
+    L2.q[1] = S.y_end();
     L2.c    = S.m_c0;
     L2.s    = S.m_s0;
     L2.L    = S.m_L;
@@ -453,18 +453,18 @@ namespace G2lib {
     L_struct L1;
     L_struct L2;
 
-    L1.p[0] = xBegin_ISO(offs);
-    L1.p[1] = yBegin_ISO(offs);
-    L1.q[0] = xEnd_ISO(offs);
-    L1.q[1] = yEnd_ISO(offs);
+    L1.p[0] = x_begin_ISO(offs);
+    L1.p[1] = y_begin_ISO(offs);
+    L1.q[0] = x_end_ISO(offs);
+    L1.q[1] = y_end_ISO(offs);
     L1.c    = m_c0;
     L1.s    = m_s0;
     L1.L    = m_L;
 
-    L2.p[0] = S.xBegin_ISO(S_offs);
-    L2.p[1] = S.yBegin_ISO(S_offs);
-    L2.q[0] = S.xEnd_ISO(S_offs);
-    L2.q[1] = S.yEnd_ISO(S_offs);
+    L2.p[0] = S.x_begin_ISO(S_offs);
+    L2.p[1] = S.y_begin_ISO(S_offs);
+    L2.q[0] = S.x_end_ISO(S_offs);
+    L2.q[1] = S.y_end_ISO(S_offs);
     L2.c    = S.m_c0;
     L2.s    = S.m_s0;
     L2.L    = S.m_L;
@@ -491,7 +491,7 @@ namespace G2lib {
   \*/
 
   int_type
-  LineSegment::closestPoint_ISO(
+  LineSegment::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -529,7 +529,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  LineSegment::closestPoint_ISO(
+  LineSegment::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,

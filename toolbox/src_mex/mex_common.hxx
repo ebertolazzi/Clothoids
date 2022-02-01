@@ -207,7 +207,7 @@ do_change_origin(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('changeOrigin',OBJ,x0,y0): "
+  #define CMD CMD_BASE "('change_origin',OBJ,x0,y0): "
   MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
@@ -215,7 +215,7 @@ do_change_origin(
   new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
   new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
 
-  ptr->changeOrigin( new_x0, new_y0 );
+  ptr->change_origin( new_x0, new_y0 );
 
   #undef CMD
 }
@@ -332,14 +332,14 @@ do_trim(
 
 static
 void
-do_closestPoint(
+do_closest_point(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('closestPoint',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
+  #define CMD CMD_BASE "('closest_point',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
 
   MEX_ASSERT2(
     nrhs >= 4 || nrhs <= 6,
@@ -422,18 +422,18 @@ do_closestPoint(
     if ( nrhs == 6 ) ISO = do_is_ISO( arg_in_5, CMD " last argument must be a string");
     if ( ISO ) {
       for ( mwSize i = 0; i < size; ++i )
-        *iflag++ = ptr->closestPoint_ISO(
+        *iflag++ = ptr->closest_point_ISO(
           *qx++,  *qy++, offs, *x++, *y++, *s++, *t++, *dst++
         );
     } else {
       for ( mwSize i = 0; i < size; ++i )
-        *iflag++ = ptr->closestPoint_SAE(
+        *iflag++ = ptr->closest_point_SAE(
           *qx++,  *qy++, offs, *x++, *y++, *s++, *t++, *dst++
         );
     }
   } else {
     for ( mwSize i = 0; i < size; ++i )
-      *iflag++ = ptr->closestPoint_ISO(
+      *iflag++ = ptr->closest_point_ISO(
         *qx++, *qy++, *x++, *y++, *s++, *t++, *dst++
       );
   }
@@ -1353,12 +1353,12 @@ do_xy_begin(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('xyBegin',OBJ): "
+  #define CMD CMD_BASE "('xy_begin',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->xBegin() );
-  setScalarValue( arg_out_1, ptr->yBegin() );
+  setScalarValue( arg_out_0, ptr->x_begin() );
+  setScalarValue( arg_out_1, ptr->y_begin() );
 
   #undef CMD
 }
@@ -1374,11 +1374,11 @@ do_x_begin(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('xBegin',OBJ): "
+  #define CMD CMD_BASE "('x_begin',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->xBegin() );
+  setScalarValue( arg_out_0, ptr->x_begin() );
 
   #undef CMD
 }
@@ -1394,11 +1394,11 @@ do_y_begin(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('yBegin',OBJ): "
+  #define CMD CMD_BASE "('y_begin',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->yBegin() );
+  setScalarValue( arg_out_0, ptr->y_begin() );
 
   #undef CMD
 }
@@ -1414,11 +1414,11 @@ do_theta_begin(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('thetaBegin',OBJ): "
+  #define CMD CMD_BASE "('theta_begin',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->thetaBegin() );
+  setScalarValue( arg_out_0, ptr->theta_begin() );
 
   #undef CMD
 }
@@ -1434,11 +1434,11 @@ do_kappa_begin(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('kappaBegin',OBJ): "
+  #define CMD CMD_BASE "('kappa_begin',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->kappaBegin() );
+  setScalarValue( arg_out_0, ptr->kappa_begin() );
 
   #undef CMD
 }
@@ -1454,12 +1454,12 @@ do_xy_end(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('xyEnd',OBJ): "
+  #define CMD CMD_BASE "('xy_end',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->xEnd() );
-  setScalarValue( arg_out_1, ptr->yEnd() );
+  setScalarValue( arg_out_0, ptr->x_end() );
+  setScalarValue( arg_out_1, ptr->y_end() );
 
   #undef CMD
 }
@@ -1475,11 +1475,11 @@ do_x_end(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('xEnd',OBJ): "
+  #define CMD CMD_BASE "('x_end',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->xEnd() );
+  setScalarValue( arg_out_0, ptr->x_end() );
 
   #undef CMD
 }
@@ -1495,11 +1495,11 @@ do_y_end(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('yEnd',OBJ): "
+  #define CMD CMD_BASE "('y_end',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->yEnd() );
+  setScalarValue( arg_out_0, ptr->y_end() );
 
   #undef CMD
 }
@@ -1515,11 +1515,11 @@ do_theta_end(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('thetaEnd',OBJ): "
+  #define CMD CMD_BASE "('theta_end',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->thetaEnd() );
+  setScalarValue( arg_out_0, ptr->theta_end() );
 
   #undef CMD
 }
@@ -1535,11 +1535,11 @@ do_kappa_end(
 
   G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
 
-  #define CMD CMD_BASE "('kappaEnd',OBJ): "
+  #define CMD CMD_BASE "('kappa_end',OBJ): "
   MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
   MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->kappaEnd() );
+  setScalarValue( arg_out_0, ptr->kappa_end() );
 
   #undef CMD
 }
@@ -1582,14 +1582,14 @@ do_noAABBtree(
 {"copy",do_copy},                   \
 {"bbox",do_bbox},                   \
 {"bbTriangles",do_bbTriangles},     \
-{"changeOrigin",do_change_origin},  \
+{"change_origin",do_change_origin}, \
 {"translate",do_translate},         \
 {"rotate",do_rotate},               \
 {"scale",do_scale},                 \
 {"reverse",do_reverse},             \
 {"trim",do_trim},                   \
 {"distance",do_distance},           \
-{"closestPoint",do_closestPoint},   \
+{"closest_point",do_closest_point}, \
 {"collision",do_collision},         \
 {"intersect",do_intersect},         \
 {"findST",do_findST},               \
@@ -1606,16 +1606,16 @@ do_noAABBtree(
 {"kappa",do_kappa},                 \
 {"kappa_D",do_kappa_D},             \
 {"kappa_DD",do_kappa_DD},           \
-{"xyBegin",do_xy_begin},            \
-{"xBegin",do_x_begin},              \
-{"yBegin",do_y_begin},              \
-{"thetaBegin",do_theta_begin},      \
-{"kappaBegin",do_kappa_begin},      \
-{"xyEnd",do_xy_end},                \
-{"xEnd",do_x_end},                  \
-{"yEnd",do_y_end},                  \
-{"thetaEnd",do_theta_end},          \
-{"kappaEnd",do_kappa_end},          \
+{"xy_begin",do_xy_begin},           \
+{"x_begin",do_x_begin},             \
+{"y_begin",do_y_begin},             \
+{"theta_begin",do_theta_begin},     \
+{"kappa_begin",do_kappa_begin},     \
+{"xy_end",do_xy_end},               \
+{"x_end",do_x_end},                 \
+{"y_end",do_y_end},                 \
+{"theta_end",do_theta_end},         \
+{"kappa_end",do_kappa_end},         \
 {"yesAABBtree",do_yesAABBtree},     \
 {"noAABBtree",do_noAABBtree}
 

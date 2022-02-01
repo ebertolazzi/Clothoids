@@ -189,7 +189,7 @@
 <span class="w">    </span><span class="n">getSegment</span><span class="p">(</span><span class="w"> </span><span class="n">int_type</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">int_type</span><span class="w"></span>
-<span class="w">    </span><span class="nf">numSegments</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
+<span class="w">    </span><span class="nf">num_segments</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">int_type</span><span class="p">(</span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">int_type</span><span class="w"></span>
@@ -284,20 +284,20 @@
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">real_type</span><span class="w"></span>
-<span class="w">    </span><span class="nf">xBegin</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">xBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nf">x_begin</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">x_begin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">real_type</span><span class="w"></span>
-<span class="w">    </span><span class="nf">yBegin</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">yBegin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nf">y_begin</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">y_begin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">real_type</span><span class="w"></span>
-<span class="w">    </span><span class="nf">xEnd</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">xEnd</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nf">x_end</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">x_end</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">real_type</span><span class="w"></span>
-<span class="w">    </span><span class="nf">yEnd</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">yEnd</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nf">y_end</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m_polylineList</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">y_end</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">real_type</span><span class="w"></span>
 <span class="w">    </span><span class="nf">X</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -468,7 +468,7 @@
 <span class="w">    </span><span class="nf">scale</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">    </span><span class="kt">void</span><span class="w"></span>
-<span class="w">    </span><span class="nf">changeOrigin</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newx0</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nf">change_origin</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newx0</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">newy0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">    </span><span class="kt">void</span><span class="w"></span>
 <span class="w">    </span><span class="nf">trim</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_end</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
@@ -477,7 +477,7 @@
 <span class="w">    </span><span class="nf">trim</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_begin</span><span class="p">,</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">s_end</span><span class="p">,</span><span class="w"> </span><span class="n">PolyLine</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">newPL</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">int_type</span><span class="w"></span>
-<span class="w">    </span><span class="nf">closestPoint_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nf">closest_point_ISO</span><span class="p">(</span><span class="w"></span>
 <span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
 <span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
 <span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"></span>
@@ -488,7 +488,7 @@
 <span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">int_type</span><span class="w"></span>
-<span class="w">    </span><span class="nf">closestPoint_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nf">closest_point_ISO</span><span class="p">(</span><span class="w"></span>
 <span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="cm">/* x    */</span><span class="p">,</span><span class="w"></span>
 <span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="cm">/* y    */</span><span class="p">,</span><span class="w"></span>
 <span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="cm">/* offs */</span><span class="p">,</span><span class="w"></span>
@@ -498,7 +498,7 @@
 <span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/* T    */</span><span class="p">,</span><span class="w"></span>
 <span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="cm">/* DST  */</span><span class="w"></span>
 <span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">UTILS_ERROR</span><span class="p">(</span><span class="w"> </span><span class="s">"PolyLine::closestPoint( ... offs ... ) not available!</span><span class="se">\n</span><span class="s">"</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">UTILS_ERROR</span><span class="p">(</span><span class="w"> </span><span class="s">"PolyLine::closest_point_ISO( ... offs ... ) not available!</span><span class="se">\n</span><span class="s">"</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 
 <span class="w">    </span><span class="cm">/*\</span>
@@ -580,7 +580,50 @@
 <span class="w">        </span><span class="n">m_aabb_done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="p">}</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//@@@@ BACK COMPATIBILITY</span>
+<span class="w">    </span><span class="cp">#ifdef CLOTHOIDS_BACK_COMPATIBILITY</span>
 
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">thetaBegin</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">theta_begin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">thetaEnd</span><span class="p">()</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">theta_end</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">xBegin</span><span class="p">()</span><span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x_begin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">yBegin</span><span class="p">()</span><span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">y_begin</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">xEnd</span><span class="p">()</span><span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x_end</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">yEnd</span><span class="p">()</span><span class="w">       </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">y_end</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">xBegin_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x_begin_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">yBegin_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">y_Begin_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">xEnd_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x_end_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="nf">yEnd_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">real_type</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">)</span><span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">y_end_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">int_type</span><span class="w"> </span><span class="nf">numSegments</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">num_segments</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">int_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">closestPoint_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">DST</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">closest_point_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">int_type</span><span class="w"></span>
+<span class="w">    </span><span class="nf">closest_point_ISO</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w">   </span><span class="n">offs</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">real_type</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">DST</span><span class="w"></span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">closest_point_ISO</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">offs</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cp">#endif</span>
 <span class="w">  </span><span class="p">};</span><span class="w"></span>
 
 <span class="p">}</span><span class="w"></span>

@@ -106,8 +106,8 @@ namespace G2lib {
     explicit
     CircleArc( LineSegment const & LS )
     : BaseCurve(G2LIB_CIRCLE)
-    , m_x0(LS.xBegin())
-    , m_y0(LS.yBegin())
+    , m_x0(LS.x_begin())
+    , m_y0(LS.y_begin())
     , m_theta0(LS.m_theta0)
     , m_c0(LS.m_c0)
     , m_s0(LS.m_s0)
@@ -480,11 +480,11 @@ namespace G2lib {
     length_ISO( real_type offs ) const override
     { return m_L*(1+m_k*offs); }
 
-    real_type thetaBegin()   const override { return m_theta0; }
-    real_type kappaBegin()   const override { return m_k; }
-    real_type kappaEnd()     const override { return m_k; }
-    real_type xBegin()       const override { return m_x0; }
-    real_type yBegin()       const override { return m_y0; }
+    real_type theta_begin()  const override { return m_theta0; }
+    real_type kappa_begin()  const override { return m_k; }
+    real_type kappa_end()    const override { return m_k; }
+    real_type x_begin()      const override { return m_x0; }
+    real_type y_begin()      const override { return m_y0; }
     real_type tx_Begin()     const override { return m_c0; }
     real_type ty_Begin()     const override { return m_s0; }
     real_type nx_Begin_ISO() const override { return m_s0; }
@@ -619,7 +619,7 @@ namespace G2lib {
     void reverse() override;
 
     void
-    changeOrigin( real_type newx0, real_type newy0 ) override
+    change_origin( real_type newx0, real_type newy0 ) override
     { m_x0 = newx0; m_y0 = newy0; }
 
     void scale( real_type s ) override;
@@ -635,7 +635,7 @@ namespace G2lib {
     \*/
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -646,7 +646,7 @@ namespace G2lib {
     ) const override;
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -767,7 +767,7 @@ namespace G2lib {
     //! Return the absolute value of the tangent
     //! angle variation in the circle arc.
     //!
-    real_type thetaTotalVariation() const { return std::abs(m_L*m_k); }
+    real_type theta_total_variation() const { return std::abs(m_L*m_k); }
 
     //!
     //! Minimum and maximum tangent angle.
@@ -777,8 +777,8 @@ namespace G2lib {
     //! \return `thMax`-`thMin`
     //!
     real_type
-    thetaMinMax( real_type & thMin, real_type & thMax ) const;
-
+    theta_min_max( real_type & thMin, real_type & thMax ) const;
+  
     //!
     //! Minimum and maximum tangent angle.
     //!
@@ -788,7 +788,7 @@ namespace G2lib {
     //!
     real_type
     deltaTheta() const
-    { real_type thMin, thMax; return thetaMinMax( thMin, thMax ); }
+    { real_type thMin, thMax; return theta_min_max( thMin, thMax ); }
 
     //!
     //! Change the origin of the circle arc at \f$ s_0 \f$
@@ -798,7 +798,7 @@ namespace G2lib {
     //! \param[in] newL \f$ L \f$
     //!
     void
-    changeCurvilinearOrigin( real_type s0, real_type newL );
+    change_curvilinear_origin( real_type s0, real_type newL );
 
     //!
     //! Get the center of the circle arc \f$ (c_x,c_y) \f$.
@@ -849,6 +849,66 @@ namespace G2lib {
 
     friend class ClothoidCurve;
 
+    //@@@@ BACK COMPATIBILITY
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+
+    real_type
+    thetaTotalVariation() const
+    { return theta_total_variation(); }
+    
+    real_type
+    thetaMinMax( real_type & thMin, real_type & thMax ) const
+    { return theta_min_max(thMin,thMax); }
+
+    void
+    changeOrigin( real_type newx0, real_type newy0 )
+    { change_origin( newx0, newy0 ); }
+
+    void
+    changeCurvilinearOrigin( real_type s0, real_type newL )
+    { change_curvilinear_origin( s0, newL ); }
+
+    real_type thetaBegin() const { return theta_begin(); }
+    real_type thetaEnd()   const { return theta_end(); }
+    real_type kappaBegin() const { return kappa_begin(); }
+    real_type kappaEnd()   const { return kappa_end(); }
+    real_type xBegin()     const { return x_begin(); }
+    real_type yBegin()     const { return y_begin(); }
+    real_type xEnd()       const { return x_end(); }
+    real_type yEnd()       const { return y_end(); }
+    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
+    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
+    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
+    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+    }
+
+    #endif
   };
 
 }

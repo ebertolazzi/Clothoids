@@ -39,11 +39,11 @@ L3.plot(npts,'Color','black','LineWidth',3);
 L1.translate(1,1);
 L1.plot();
 
-L2.changeCurvilinearOrigin(-4,10);
+L2.change_curvilinear_origin(-4,10);
 L2.plot(npts,'Color','red','LineWidth',3);
 
 
-L2.changeCurvilinearOrigin(1,2);
+L2.change_curvilinear_origin(1,2);
 L2.plot(npts,'Color','red','LineWidth',3);
 
 L3.trim(2,7);

@@ -44,8 +44,8 @@ namespace G2lib {
       {
         LineSegment const & LS = *static_cast<LineSegment const *>(&C);
         bool ok = this->build(
-          LS.xBegin(), LS.yBegin(), LS.thetaBegin(),
-          LS.xEnd(),   LS.yEnd(),   LS.thetaEnd()
+          LS.x_begin(), LS.y_begin(), LS.theta_begin(),
+          LS.x_end(),   LS.y_end(),   LS.theta_end()
         );
         UTILS_ASSERT(
           ok,
@@ -58,8 +58,8 @@ namespace G2lib {
       {
         CircleArc const & LS = *static_cast<CircleArc const *>(&C);
         bool ok = this->build(
-          LS.xBegin(), LS.yBegin(), LS.thetaBegin(),
-          LS.xEnd(),   LS.yEnd(),   LS.thetaEnd()
+          LS.x_begin(), LS.y_begin(), LS.theta_begin(),
+          LS.x_end(),   LS.y_end(),   LS.theta_end()
         );
         UTILS_ASSERT(
           ok,
@@ -246,17 +246,17 @@ namespace G2lib {
 
   void
   Biarc::scale( real_type scl ) {
-    real_type newx0 = m_C0.xBegin() + scl*(m_C1.xBegin()-m_C0.xBegin());
-    real_type newy0 = m_C0.yBegin() + scl*(m_C1.yBegin()-m_C0.yBegin());
-    m_C1.changeOrigin( newx0, newy0 );
+    real_type newx0 = m_C0.x_begin() + scl*(m_C1.x_begin()-m_C0.x_begin());
+    real_type newy0 = m_C0.y_begin() + scl*(m_C1.y_begin()-m_C0.y_begin());
+    m_C1.change_origin( newx0, newy0 );
     m_C1.scale( scl );
     m_C0.scale( scl );
   }
 
   void
-  Biarc::changeOrigin( real_type newx0, real_type newy0 ) {
-    m_C0.changeOrigin(newx0,newy0);
-    m_C1.changeOrigin(m_C0.xEnd(),m_C0.yEnd());
+  Biarc::change_origin( real_type newx0, real_type newy0 ) {
+    m_C0.change_origin(newx0,newy0);
+    m_C1.change_origin(m_C0.x_end(),m_C0.y_end());
   }
 
   void
@@ -808,7 +808,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  Biarc::closestPoint_ISO(
+  Biarc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -818,8 +818,8 @@ namespace G2lib {
     real_type & dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    int_type res  = m_C0.closestPoint_ISO( qx, qy, x,  y,  s,  t,  dst  );
-    int_type res1 = m_C1.closestPoint_ISO( qx, qy, x1, y1, s1, t1, dst1 );
+    int_type res  = m_C0.closest_point_ISO( qx, qy, x,  y,  s,  t,  dst  );
+    int_type res1 = m_C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 );
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -834,7 +834,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  Biarc::closestPoint_ISO(
+  Biarc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -845,8 +845,8 @@ namespace G2lib {
     real_type & dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    int_type res  = m_C0.closestPoint_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
-    int_type res1 = m_C1.closestPoint_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
+    int_type res  = m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
+    int_type res1 = m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -878,14 +878,14 @@ namespace G2lib {
       if ( ciclic ) {
         ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] );
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
-        theta[0] = theta[n-1] = b.thetaMiddle();
+        theta[0] = theta[n-1] = b.theta_middle();
       }
       for ( int_type k = 1; k < n-1; ++k ) {
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
-        theta[k] = b.thetaMiddle();
-        if ( k == 1   && !ciclic ) theta[0]   = b.thetaBegin();
-        if ( k == n-2 && !ciclic ) theta[n-1] = b.thetaEnd();
+        theta[k] = b.theta_middle();
+        if ( k == 1   && !ciclic ) theta[0]   = b.theta_begin();
+        if ( k == n-2 && !ciclic ) theta[n-1] = b.theta_end();
       }
     }
     return true;

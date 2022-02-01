@@ -98,12 +98,16 @@ classdef Biarc < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   x = ref.xMiddle();
+    %>   x = ref.x_middle();
     %> 
     %> \endrst
     %>
+    function res = x_middle( self )
+      res = BiarcMexWrapper( 'x_middle', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = xMiddle( self )
-      res = BiarcMexWrapper( 'xMiddle', self.objectHandle );
+      res = self.x_middle();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Get junction point of the biarc y-coordinate
@@ -113,12 +117,16 @@ classdef Biarc < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   x = ref.yMiddle();
+    %>   x = ref.y_middle();
     %> 
     %> \endrst
     %>
+    function res = y_middle( self )
+      res = BiarcMexWrapper( 'y_middle', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = yMiddle( self )
-      res = BiarcMexWrapper( 'yMiddle', self.objectHandle );
+      res = self.y_middle();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Get junction point angle of the biarc
@@ -128,12 +136,16 @@ classdef Biarc < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   theta = ref.thetaMiddle();
+    %>   theta = ref.theta_middle();
     %> 
     %> \endrst
     %>
+    function res = theta_middle( self )
+      res = BiarcMexWrapper( 'theta_middle', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = thetaMiddle( self )
-      res = BiarcMexWrapper( 'thetaMiddle', self.objectHandle );
+      res = self.theta_middle();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Get curvature of the first arc of the biarc
@@ -204,7 +216,7 @@ classdef Biarc < CurveBase
     %> .. code-block:: matlab
     %>
     %>   [x0,y0,theta0,x1,y1,theta1] = ref.getData();
-    %> 
+    %>
     %> \endrst
     %>
     %> - `x0`, `y0`: initial point of the biarc
@@ -213,12 +225,12 @@ classdef Biarc < CurveBase
     %> - `theta1`    : final angle of the biarc
     %>
     function [ x0,y0,theta0,x1,y1,theta1] = getData( self )
-      x0     = self.xBegin();
-      y0     = self.yBegin();
-      theta0 = self.thetaBegin();
-      x1     = self.xEnd();
-      y1     = self.yEnd();
-      theta1 = self.thetaEnd();
+      x0     = self.x_begin();
+      y0     = self.y_begin();
+      theta0 = self.theta_begin();
+      x1     = self.x_end();
+      y1     = self.y_end();
+      theta1 = self.theta_end();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Get the two circle arc composing a biarc
@@ -228,23 +240,27 @@ classdef Biarc < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   [C0,C1] = ref.getCircles();
-    %> 
+    %>   [C0,C1] = ref.get_circles();
+    %>
     %> \endrst
     %>
-    function [ C0, C1 ] = getCircles( self )
-      x0     = self.xBegin();
-      y0     = self.yBegin();
-      theta0 = self.thetaBegin();
+    function [ C0, C1 ] = get_circles( self )
+      x0     = self.x_begin();
+      y0     = self.y_begin();
+      theta0 = self.theta_begin();
       kappa0 = self.kappa0();
       L      = self.length0();
       C0     = CircleArc( x0, y0, theta0, kappa0, L );
-      x0     = self.xMiddle();
-      y0     = self.yMiddle();
-      theta0 = self.thetaMiddle();
+      x0     = self.x_middle();
+      y0     = self.y_middle();
+      theta0 = self.theta_middle();
       kappa0 = self.kappa1();
       L      = self.length1();
       C1     = CircleArc( x0, y0, theta0, kappa0, L );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ C0, C1 ] = getCircles( self )
+      [ C0, C1 ] = self.get_circles();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return the nurbs represantation of the two arc composing the biarc
@@ -255,7 +271,7 @@ classdef Biarc < CurveBase
     %> .. code-block:: matlab
     %>
     %>   [arc0,arc1] = ref.to_nurbs();
-    %> 
+    %>
     %> \endrst
     %>
     %> - `arc0`: the nurbs of the first arc
@@ -316,7 +332,7 @@ classdef Biarc < CurveBase
       else
         fmt2 = {'Color','red','Linewidth',2};
       end
-      [C0,C1] = self.getCircles();
+      [C0,C1] = self.get_circles();
       C0.plot(npts,fmt1);
       hold on;
       C1.plot(npts,fmt2);
@@ -333,7 +349,7 @@ classdef Biarc < CurveBase
     %>
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
-    %>   ref.plotCurvature( npts, fmt1, fmt2 );
+    %>   ref.plot_curvature( npts, fmt1, fmt2 );
     %> 
     %> \endrst
     %>
@@ -341,7 +357,7 @@ classdef Biarc < CurveBase
     %> - `fmt1`: format of the first arc
     %> - `fmt2`: format of the second arc
     %>
-    function plotCurvature( self, npts, varargin )
+    function plot_curvature( self, npts, varargin )
       if nargin < 2
         npts = 1000;
       end
@@ -351,6 +367,10 @@ classdef Biarc < CurveBase
       plot( S, kappa, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, npts, varargin )
+      self.plot_curvature( npts, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the angle of the biarc
     %>
     %> **Usage:**
@@ -358,11 +378,11 @@ classdef Biarc < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   ref.plotAngle( npts );
+    %>   ref.plot_angle( npts );
     %>
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
-    %>   ref.plotAngle( npts, fmt1, fmt2 );
+    %>   ref.plot_angle( npts, fmt1, fmt2 );
     %> 
     %> \endrst
     %>
@@ -370,7 +390,7 @@ classdef Biarc < CurveBase
     %> - `fmt1`: format of the first arc
     %> - `fmt2`: format of the second arc
     %>
-    function plotAngle( self, npts, varargin )
+    function plot_angle( self, npts, varargin )
       if nargin < 2
         npts = 1000;
       end
@@ -380,6 +400,10 @@ classdef Biarc < CurveBase
       plot( S, theta, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotAngle( self, npts, varargin )
+      self.plot_angle( npts, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the normal of the biarc
     %>
     %> **Usage:**
@@ -387,14 +411,15 @@ classdef Biarc < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   ref.plotNormal( step, len );
+    %>   ref.plot_normal( step, len );
     %> 
     %> \endrst
     %>
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
     %>
-    function plotNormal( self, step, len )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plot_normal( self, step, len )
       for s=0:step:self.length()
         [ x, y, theta, ~ ] = self.evaluate(s);
         n = [sin(theta),-cos(theta)];
@@ -403,5 +428,10 @@ classdef Biarc < CurveBase
         plot(A,B);
       end
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotNormal( self, step, len )
+      self.plot_normal( step, len );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   end
 end

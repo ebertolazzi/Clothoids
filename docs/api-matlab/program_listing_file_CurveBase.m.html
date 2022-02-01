@@ -232,20 +232,24 @@
 <span class="w">      </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'scale'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt; Translate the curve in such a way the origin is at `(newX0,newY0`.</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Translate the curve in such a way the origin is at `(newX0,newY0)`.</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage**</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.changeOrigin( newX0, newY0 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.change_origin( newX0, newY0 );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">changeOrigin</span><span class="p">(</span> self, newX0, newY0 <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">change_origin</span><span class="p">(</span> self, newX0, newY0 <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="c">% change the origgin or the curve to `(newX0,newY0)`</span><span class="w"></span>
-<span class="w">      </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'changeOrigin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">newX0</span><span class="p">,</span><span class="w"> </span><span class="n">newY0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'change_origin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">newX0</span><span class="p">,</span><span class="w"> </span><span class="n">newY0</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">changeOrigin</span><span class="p">(</span> self, newX0, newY0 <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">change_origin</span><span class="p">(</span><span class="n">newX0</span><span class="p">,</span><span class="w"> </span><span class="n">newY0</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate the curve at curvilinear coordinate `s`.</span><span class="w"></span>
@@ -547,12 +551,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   [ x0, y0 ] = ref.xyBegin();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   [ x0, y0 ] = ref.xy_begin();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x, y ] = xy_begin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'xy_begin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x, y ] = xyBegin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'xyBegin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xy_begin</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate final point of the curve.</span><span class="w"></span>
@@ -562,12 +570,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   [ x1, y1 ] = ref.xyEnd();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   [ x1, y1 ] = ref.xy_end();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x, y ] = xy_end</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'xy_end'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x, y ] = xyEnd</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'xyEnd'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xy_end</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate initial x-coordinate of the curve.</span><span class="w"></span>
@@ -577,12 +589,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   x0 = ref.xBegin();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   x0 = ref.x_begin();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>X0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">x_begin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">X0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'x_begin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>X0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">xBegin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">X0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'xBegin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">X0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_begin</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate final x-coordinate of the curve.</span><span class="w"></span>
@@ -592,12 +608,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   x1 = ref.xEnd();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   x1 = ref.x_end();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>X1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">x_end</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">X1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'x_end'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>X1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">xEnd</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">X1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'xEnd'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">X1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_end</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate initial y-coordinate of the curve.</span><span class="w"></span>
@@ -607,12 +627,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   y0 = ref.yBegin();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   y0 = ref.y_begin();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>Y0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">y_begin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">Y0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'y_begin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>Y0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">yBegin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">Y0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'yBegin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">Y0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_begin</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate final y-coordinate of the curve.</span><span class="w"></span>
@@ -622,12 +646,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   y1 = ref.yEnd();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   y1 = ref.y_end();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>Y1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">y_end</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">Y1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'y_end'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>Y1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">yEnd</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">Y1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'yEnd'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">Y1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_end</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate initial angle of the curve.</span><span class="w"></span>
@@ -637,12 +665,15 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   theta = ref.thetaBegin();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   theta = ref.theta_begin();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>th0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">theta_begin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">th0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'theta_begin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>th0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">thetaBegin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">th0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'thetaBegin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">th0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_begin</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate final angle of the curve.</span><span class="w"></span>
@@ -652,12 +683,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   theta = ref.thetaEnd();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   theta = ref.theta_end();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>th1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">theta_end</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">th1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'theta_end'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>th1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">thetaEnd</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">th1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'thetaEnd'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">th1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_end</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate initial curvature of the curve.</span><span class="w"></span>
@@ -667,12 +702,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   kappa0 = ref.kappaBegin();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   kappa0 = ref.kappa_begin();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>kappa0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">kappa_begin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'kappa_begin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>kappa0<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">kappaBegin</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'kappaBegin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappa_begin</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate final curvature of the curve.</span><span class="w"></span>
@@ -682,12 +721,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   kappa1 = ref.kappaEnd();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   kappa1 = ref.kappa_end();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>kappa1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">kappa_end</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">kappa1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'kappa_end'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>kappa1<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">kappaEnd</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">kappa1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'kappaEnd'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">kappa1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappa_end</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Return the length of the curve.</span><span class="w"></span>
@@ -751,10 +794,10 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy );</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy, offs );</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy, offs, 'ISO' );</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closestPoint( qx, qy, offs, 'SAE' );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs, 'ISO' );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   [ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs, 'SAE' );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
@@ -771,11 +814,16 @@
 <span class="w">    </span><span class="c">%&gt;   containing the point at minimum distance.</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `dst`: point curve distance.</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span>varargout<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">closestPoint</span><span class="p">(</span> self, qx, qy, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>varargout<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">closest_point</span><span class="p">(</span> self, qx, qy, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="c">% iflag &gt; 0 = segment number</span><span class="w"></span>
-<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="nb">varargout</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="nb">nargout</span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'closestPoint'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="nb">varargout</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="nb">nargout</span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">feval</span><span class="p">(</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">mexName</span><span class="p">,</span><span class="w"> </span><span class="s">'closest_point'</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>varargout<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">closestPoint</span><span class="p">(</span> self, qx, qy, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="c">% iflag &gt; 0 = segment number</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="nb">varargout</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="nb">nargout</span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">closest_point</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Evaluate the distance of a point `(qx,qy)` to the curve.</span><span class="w"></span>
@@ -911,13 +959,13 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotTBox( P1, P2, P3 );</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotTBox( P1, P2, P3, 'Color', 'red' );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_tbox( P1, P2, P3 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_tbox( P1, P2, P3, 'Color', 'red' );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotTBox</span><span class="p">(</span> self, P1, P2, P3, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_tbox</span><span class="p">(</span> self, P1, P2, P3, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">P1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="n">pp1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">P1</span><span class="p">(:,</span><span class="n">k</span><span class="p">);</span><span class="w"></span>
 <span class="w">        </span><span class="n">pp2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">P2</span><span class="p">(:,</span><span class="n">k</span><span class="p">);</span><span class="w"></span>
@@ -927,6 +975,10 @@
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotTBox</span><span class="p">(</span> self, P1, P2, P3, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">plot_tbox</span><span class="p">(</span><span class="w"> </span><span class="n">P1</span><span class="p">,</span><span class="w"> </span><span class="n">P2</span><span class="p">,</span><span class="w"> </span><span class="n">P3</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Plot the bounding box of the curve</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
@@ -934,12 +986,12 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotBBox();</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotBBox('Color', 'red' );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_bbox();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_bbox( 'Color', 'red' );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotBBox</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_bbox</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
 <span class="w">        </span><span class="n">offs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
 <span class="w">        </span><span class="p">[</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="n">ymax</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">bbox</span><span class="p">(</span><span class="w"> </span><span class="n">offs</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
@@ -955,6 +1007,10 @@
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotBBox</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">plot_bbox</span><span class="p">(</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Plot the covering triangles of the curve</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
@@ -962,12 +1018,12 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotTriangles()</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotTriangles('red','FaceAlpha', 0.5);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_triangles()</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_triangles('red','FaceAlpha', 0.5);</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotTriangles</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_triangles</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">bbTriangles</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">k</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">p1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">p2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">p3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">),</span><span class="w"> </span><span class="n">p1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">];</span><span class="w"></span>
@@ -975,6 +1031,10 @@
 <span class="w">        </span><span class="c">%fill( x, y, 'red','FaceAlpha', 0.5 );</span><span class="w"></span>
 <span class="w">        </span><span class="nb">fill</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:});</span><span class="w"></span>
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotTriangles</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">plot_triangles</span><span class="p">(</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">  </span><span class="k">end</span><span class="w"></span>

@@ -49,7 +49,7 @@ S2.push_back(S);
 S2.plot();
 
 subplot(2,1,2)
-S.changeOrigin(S2.xEnd(),S2.yEnd());
+S.change_origin(S2.xEnd(),S2.yEnd());
 S2.push_back(S);
 S2.plot();
 

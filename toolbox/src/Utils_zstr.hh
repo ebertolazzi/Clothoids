@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Utils_zstream.hh
+/// file: Utils_zstr.hh
 ///
 #pragma once
 
@@ -50,15 +50,7 @@
 #endif
 
 #include "Utils/Utils.hxx"
-
-#ifdef UTILS_OS_WINDOWS
-  #include "zlib.h"
-#else
-  #include <zlib.h>
-#endif
-
-#include "Utils/zstream/izstream.hpp"
-#include "Utils/zstream/ozstream.hpp"
+#include "Utils/zstr/zstr.hpp"
 
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -69,5 +61,5 @@
 #endif
 
 ///
-/// eof: Utils_zstream.hh
+/// eof: Utils_zstr.hh
 ///

@@ -369,6 +369,7 @@ L1.rotate( ang, cx, cy );
 
 % change the orgin of a segment to `[ox,oy]`
 L1.changeOrigin( ox, oy );
+L1.change_origin( ox, oy );
 
 % cut or extend the segment at curvilinear coordinates `smin` and `smax`
 L1.trim( smin, smax );
@@ -379,6 +380,9 @@ bs = L1.to_nurbs();
 % initial and final coordinates
 x = L1.xBegin(); x = L1.xEnd();
 y = L1.yBegin(); y = L1.yEnd();
+
+x = L1.x_begin(); x = L1.x_end();
+y = L1.y_begin(); y = L1.y_end();
 
 % segment angle direction
 ang = L1.theta();
@@ -680,6 +684,7 @@ y = CL.yBegin(); y = CL.yEnd();
 
 % intial and final angle of the clothoid curve
 ang = CL.thetaBegin(); ang = CL.thetaEnd();
+ang = CL.theta_begin(); ang = CL.theta_end();
 
 % intial and final curvature of the clothoid curve
 k0 = CL.kappaBegin(); ang = CL.kappaEnd();

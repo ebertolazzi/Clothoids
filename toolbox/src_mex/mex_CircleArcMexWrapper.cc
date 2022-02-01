@@ -286,14 +286,14 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "CircleArcMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
+    #define CMD "CircleArcMexWrapper('change_curvilinear_origin',OBJ,s0,L): "
     MEX_ASSERT2(nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
 
     CircleArc * ptr = DATA_GET(arg_in_1);
 
     real_type s0 = getScalarValue(arg_in_2,CMD "Error in reading s0");
     real_type L  = getScalarValue(arg_in_3,CMD "Error in reading L");
-    ptr->changeCurvilinearOrigin(s0,L);
+    ptr->change_curvilinear_origin(s0,L);
     #undef CMD
   }
 
@@ -341,7 +341,7 @@ namespace G2lib {
     {"build",do_build},
     {"build_3P",do_build_3P},
     {"build_G1",do_build_G1},
-    {"changeCurvilinearOrigin",do_change_curvilinear_origin},
+    {"change_curvilinear_origin",do_change_curvilinear_origin},
     {"to_nurbs",do_to_nurbs},
     CMD_MAP_FUN
   };

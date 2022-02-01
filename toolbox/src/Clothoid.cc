@@ -559,7 +559,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidCurve::closestPoint_internal(
+  ClothoidCurve::closest_point_internal(
     real_type   s_begin,
     real_type   s_end,
     real_type   qx,
@@ -619,7 +619,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidCurve::closestPoint_internal(
+  ClothoidCurve::closest_point_internal(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -636,7 +636,7 @@ namespace G2lib {
     AABBtree::VecPtrBBox::const_iterator ic;
     UTILS_ASSERT0(
       candidateList.size() > 0,
-      "ClothoidCurve::closestPoint no candidate\n"
+      "ClothoidCurve::closest_point_internal no candidate\n"
     );
     for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
       size_t ipos = size_t((*ic)->Ipos());
@@ -645,7 +645,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        closestPoint_internal(
+        closest_point_internal(
           T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -661,7 +661,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidCurve::closestPoint_ISO(
+  ClothoidCurve::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -672,7 +672,7 @@ namespace G2lib {
     real_type & DST
   ) const {
     
-    this->closestPoint_internal( qx, qy, offs, x, y, s, DST ); 
+    this->closest_point_internal( qx, qy, offs, x, y, s, DST ); 
 
     // check if projection is orthogonal
     real_type nx, ny;
@@ -682,7 +682,7 @@ namespace G2lib {
     t = qxx * nx + qyy * ny - offs; // signed distance
     real_type pt = abs(qxx * ny - qyy * nx);
     G2LIB_DEBUG_MESSAGE(
-      "Clothoid::closestPoint_ISO\n"
+      "Clothoid::closest_point_ISO\n"
       "||P-P0|| = {} and {}, |(P-P0).T| = {}\n",
       DST, hypot(qxx,qyy), pt
     );
@@ -692,7 +692,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::thetaTotalVariation() const {
+  ClothoidCurve::theta_total_variation() const {
     // cerco punto minimo parabola
     // root = -k/dk;
     real_type kL  = m_CD.kappa0;
@@ -712,7 +712,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::thetaMinMax( real_type & thMin, real_type & thMax ) const {
+  ClothoidCurve::theta_min_max( real_type & thMin, real_type & thMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk;
     real_type kL  = m_CD.kappa0;
@@ -812,14 +812,14 @@ namespace G2lib {
       "theta0 = {:<12} theta1 = {:<12}\n"
       "kappa0 = {:<12} kappa1 = {:<12}\n"
       "dk     = {:<12} L      = {:<12}\n",
-      fmt::format("{:.6}",c.xBegin()),
-      fmt::format("{:.6}",c.xEnd()),
-      fmt::format("{:.6}",c.yBegin()),
-      fmt::format("{:.6}",c.yEnd()),
-      fmt::format("{:.6}",c.thetaBegin()),
-      fmt::format("{:.6}",c.thetaEnd()),
-      fmt::format("{:.6}",c.kappaBegin()),
-      fmt::format("{:.6}",c.kappaEnd()),
+      fmt::format("{:.6}",c.x_begin()),
+      fmt::format("{:.6}",c.x_end()),
+      fmt::format("{:.6}",c.y_begin()),
+      fmt::format("{:.6}",c.y_end()),
+      fmt::format("{:.6}",c.theta_begin()),
+      fmt::format("{:.6}",c.theta_end()),
+      fmt::format("{:.6}",c.kappa_begin()),
+      fmt::format("{:.6}",c.kappa_end()),
       fmt::format("{:.6}",c.m_CD.dk),
       fmt::format("{:.6}",c.m_L)
     );

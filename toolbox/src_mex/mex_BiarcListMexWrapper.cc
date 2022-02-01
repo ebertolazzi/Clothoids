@@ -181,7 +181,7 @@ namespace G2lib {
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
-    int_type n = ptr->numSegments();
+    int_type n = ptr->num_segments();
 
     real_type * s     = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * theta = createMatrixValue( arg_out_1, 1, n+1 );
@@ -208,7 +208,7 @@ namespace G2lib {
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
-    int_type    n = ptr->numSegments();
+    int_type    n = ptr->num_segments();
     real_type * x = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * y = createMatrixValue( arg_out_1, 1, n+1 );
 
@@ -311,18 +311,18 @@ namespace G2lib {
     int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
     MEX_ASSERT2(
-      n > 0 && n <= ptr->numSegments(),
-      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->numSegments()
+      n > 0 && n <= ptr->num_segments(),
+      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->num_segments()
     );
 
     Biarc const & c = ptr->get(n-1);
 
-    setScalarValue(arg_out_0, c.xBegin());
-    setScalarValue(arg_out_1, c.yBegin());
-    setScalarValue(arg_out_2, c.thetaBegin());
-    setScalarValue(arg_out_3, c.xEnd());
-    setScalarValue(arg_out_4, c.yEnd());
-    setScalarValue(arg_out_5, c.thetaEnd());
+    setScalarValue(arg_out_0, c.x_begin());
+    setScalarValue(arg_out_1, c.y_begin());
+    setScalarValue(arg_out_2, c.theta_begin());
+    setScalarValue(arg_out_3, c.x_end());
+    setScalarValue(arg_out_4, c.y_end());
+    setScalarValue(arg_out_5, c.theta_end());
 
     #undef CMD
   }
@@ -331,18 +331,18 @@ namespace G2lib {
 
   static
   void
-  do_numSegments(
+  do_num_segments(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD "BiarcListMexWrapper('numSegments', OBJ): "
+    #define CMD "BiarcListMexWrapper('num_segments', OBJ): "
 
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = DATA_GET(arg_in_1);
 
-    setScalarInt( arg_out_0, ptr->numSegments() );
+    setScalarInt( arg_out_0, ptr->num_segments() );
 
     #undef CMD
   }
@@ -413,7 +413,7 @@ namespace G2lib {
     {"build_G1",do_build_G1},
     {"build_theta",do_build_theta},
     {"get",do_get},
-    {"numSegments",do_numSegments},
+    {"num_segments",do_num_segments},
     {"findST1",do_findST1},
     CMD_MAP_FUN
   };

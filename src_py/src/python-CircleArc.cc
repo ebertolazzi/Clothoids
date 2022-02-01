@@ -135,7 +135,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("thetaTotalVariation", &CircleArc::thetaTotalVariation,
+      .def("thetaTotalVariation", &CircleArc::theta_total_variation,
       R"S(
         Return the absolute value of the tangent angle variation in the circle arc.
 
@@ -145,7 +145,7 @@ namespace G2lib {
 
       .def("thetaMinMax", [](const CircleArc & self) {
         real_type th_min, th_max;
-        self.thetaMinMax(th_min, th_max);
+        self.theta_min_max(th_min, th_max);
         return std::make_tuple(th_min, th_max);
       }, 
       R"S(

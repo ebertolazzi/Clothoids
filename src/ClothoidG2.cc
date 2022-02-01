@@ -311,7 +311,7 @@ namespace G2lib {
     // transform solution from (-1,0)--(1,0) to (x0,y0)--(x1,y1)
     //S0.build( -1, 0, th0, k0, dk0, s0 );
     //S1.build(  1, 0, th1, k1, dk1, s1 );
-    //S1.changeCurvilinearOrigin( -s1, s1 );
+    //S1.change_curvilinear_origin( -s1, s1 );
     s0  *= lambda;
     s1  *= lambda;
     dk0 /= lambda*lambda;
@@ -319,7 +319,7 @@ namespace G2lib {
 
     S0.build( x0, y0, theta0, kappa0, dk0, s0 );
     S1.build( x1, y1, theta1, kappa1, dk1, s1 );
-    S1.changeCurvilinearOrigin( -s1, s1 );
+    S1.change_curvilinear_origin( -s1, s1 );
   }
 
   /*\
@@ -466,8 +466,8 @@ namespace G2lib {
 
     S0.build( x0, y0, theta0, kappa0, dk0, L0 );
     S1.build( x1, y1, theta1, kappa1, dk1, L1 );
-    S1.changeCurvilinearOrigin( -L1, L1 );
-    SM.build( S0.xEnd(), S0.yEnd(), S0.thetaEnd(), 0, 0, 2*sM*lambda );
+    S1.change_curvilinear_origin( -L1, L1 );
+    SM.build( S0.x_end(), S0.y_end(), S0.theta_end(), 0, 0, 2*sM*lambda );
 
     return true;
   }
@@ -552,8 +552,8 @@ namespace G2lib {
       ClothoidCurve SG;
       SG.build_G1( -1, 0, th0, 1, 0, th1 );
 
-      real_type kA = SG.kappaBegin();
-      real_type kB = SG.kappaEnd();
+      real_type kA = SG.kappa_begin();
+      real_type kB = SG.kappa_end();
       real_type dk = abs(SG.dkappa());
       real_type L3 = SG.length()/3;
 
@@ -576,8 +576,8 @@ namespace G2lib {
 
       real_type L   = (3*L3-s0-s1)/2;
       real_type thM = SG.theta(s0+L);
-      th0 = SG.thetaBegin();
-      th1 = SG.thetaEnd();
+      th0 = SG.theta_begin();
+      th1 = SG.theta_end();
 
       // setup
 
@@ -660,8 +660,8 @@ namespace G2lib {
 
       real_type L   = (SG.length()-s0-s1)/2;
       real_type thM = SG.theta(s0+L);
-      th0 = SG.thetaBegin();
-      th1 = SG.thetaEnd();
+      th0 = SG.theta_begin();
+      th1 = SG.theta_end();
 
       // setup
 
@@ -889,7 +889,7 @@ namespace G2lib {
     //th1 = theta1 - phi;
     S0.build( x0, y0, phi+th0, kappa0, dK0, L0 );
     S1.build( x1, y1, phi+th1, kappa1, dK1, L1 );
-    S1.changeCurvilinearOrigin( -L1, L1 );
+    S1.change_curvilinear_origin( -L1, L1 );
 
     // la trasformazione inversa da [-1,1] a (x0,y0)-(x1,y1)
     // g(x,y) = RotInv(phi)*(1/lambda*[X;Y] - [xbar;ybar]) = [x;y]
@@ -903,19 +903,19 @@ namespace G2lib {
       y0 + C * dy + S * dx,
       thM + phi, KM, dKM, 2*LM
     );
-    SM.changeCurvilinearOrigin( -LM, 2*LM );
+    SM.change_curvilinear_origin( -LM, 2*LM );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  G2solve3arc::thetaMinMax( real_type & thMin, real_type & thMax ) const {
+  G2solve3arc::theta_min_max( real_type & thMin, real_type & thMax ) const {
     real_type thMin1, thMax1;
-    S0.thetaMinMax( thMin,  thMax );
-    S1.thetaMinMax( thMin1, thMax1 );
+    S0.theta_min_max( thMin,  thMax );
+    S1.theta_min_max( thMin1, thMax1 );
     if ( thMin > thMin1 ) thMin = thMin1;
     if ( thMax < thMax1 ) thMax = thMax1;
-    SM.thetaMinMax( thMin1, thMax1 );
+    SM.theta_min_max( thMin1, thMax1 );
     if ( thMin > thMin1 ) thMin = thMin1;
     if ( thMax < thMax1 ) thMax = thMax1;
     return thMax-thMin;
@@ -1310,7 +1310,7 @@ namespace G2lib {
       for ( int_type j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
-        real_type kur  = c.kappaBegin();
+        real_type kur  = c.kappa_begin();
         real_type dkur = c.dkappa();
         f = f + Len * ( Len * ( dkur*( (dkur*Len)/3 + kur) ) + kur*kur );
       }
@@ -1329,7 +1329,7 @@ namespace G2lib {
       for ( int_type j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
-        real_type kur  = c.kappaBegin();
+        real_type kur  = c.kappa_begin();
         real_type k2   = kur*kur;
         real_type k3   = k2*kur;
         real_type k4   = k2*k2;
@@ -1421,7 +1421,7 @@ namespace G2lib {
         real_type Len  = c.length();
         real_type L2   = Len*Len;
         real_type L3   = Len*L2;
-        real_type kur  = c.kappaBegin();
+        real_type kur  = c.kappa_begin();
         real_type k2   = kur*kur;
         real_type dkur = c.dkappa();
         real_type dk2  = dkur*dkur;
@@ -1464,7 +1464,7 @@ namespace G2lib {
           L_D, k_D, dk_D
         );
         real_type Len  = c.length();
-        real_type kur  = c.kappaBegin();
+        real_type kur  = c.kappa_begin();
         real_type k2   = kur*kur;
         real_type k3   = kur*k2;
         real_type dkur = c.dkappa();
@@ -1494,7 +1494,7 @@ namespace G2lib {
 
     for ( int_type j = 0; j < ne; ++j ) {
       cc.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
-      m_k[j]  = cc.kappaBegin();
+      m_k[j]  = cc.kappa_begin();
       m_dk[j] = cc.dkappa();
       m_L[j]  = cc.length();
       m_kL[j] = m_k[j]+m_dk[j]*m_L[j];
@@ -1624,7 +1624,7 @@ namespace G2lib {
         m_x[j+1], m_y[j+1], theta[j+1],
         L_D, k_D, dk_D
       );
-      m_k[j]    = cc.kappaBegin();
+      m_k[j]    = cc.kappa_begin();
       m_dk[j]   = cc.dkappa();
       m_L[j]    = cc.length();
       m_kL[j]   = m_k[j]+m_dk[j]*m_L[j];

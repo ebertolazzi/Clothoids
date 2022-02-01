@@ -242,8 +242,12 @@ classdef ClothoidList < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     % Number of segments of the clothoid list
     %
+    function N = num_segments( self )
+      N = ClothoidListMexWrapper( 'num_segments', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function N = numSegments( self )
-      N = ClothoidListMexWrapper( 'numSegments', self.objectHandle );
+      N = self.num_segments();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ok = build_3arcG2( self, x0, y0, theta0, kappa0, ...
@@ -376,11 +380,15 @@ classdef ClothoidList < CurveBase
       dkappa = ClothoidListMexWrapper( 'deltaKappa', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [X,Y,S,DST] = closestPointBySample( self, qx, qy, ds )
+    function [X,Y,S,DST] = closest_point_by_sample( self, qx, qy, ds )
       [ X, Y, S, DST ] = ...
         ClothoidListMexWrapper( ...
-          'closestPointBySample', self.objectHandle, qx, qy, ds ...
+          'closest_point_by_sample', self.objectHandle, qx, qy, ds ...
         );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [X,Y,S,DST] = closestPointBySample( self, qx, qy, ds )
+      [ X, Y, S, DST ] = self.closest_point_by_sample( qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [DST,S] = distanceBySample( self, qx, qy, ds )
@@ -390,15 +398,25 @@ classdef ClothoidList < CurveBase
         );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function iseg = closestSegment( self, qx, qy )
+    function iseg = closest_segment( self, qx, qy )
       iseg = ClothoidListMexWrapper( ...
-        'closestSegment', self.objectHandle, qx, qy ...
+        'closest_segment', self.objectHandle, qx, qy ...
+      );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function iseg = closestSegment( self, qx, qy )
+      iseg = self.closest_segment( qx, qy );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function varargout = closest_point_in_range( self, qx, qy, ibegin, iend, varargin )
+      [ varargout{1:nargout} ] = ClothoidListMexWrapper( ...
+        'closest_point_in_range', self.objectHandle, ...
+        qx, qy, ibegin, iend, varargin{:} ...
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = closestPointInRange( self, qx, qy, ibegin, iend, varargin )
-      [ varargout{1:nargout} ] = ClothoidListMexWrapper( ...
-        'closestPointInRange', self.objectHandle, ...
+      [ varargout{1:nargout} ] = self.closest_point_in_range( ...
         qx, qy, ibegin, iend, varargin{:} ...
       );
     end
@@ -411,17 +429,17 @@ classdef ClothoidList < CurveBase
     %> .. code-block:: matlab
     %>
     %>  [ icurve, x, y, s, t, iflag, dst ] = ...
-    %>     ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin );
+    %>     ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin );
     %>
     %>  [ icurve, x, y, s, t, iflag, dst ] = ...
-    %>     ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'ISO' );
+    %>     ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, 'ISO' );
     %>
     %>  [ icurve, x, y, s, t, iflag, dst ] = ...
-    %>     ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'SAE' );
+    %>     ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, 'SAE' );
     %>
-    %>  res = ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin );
-    %>  res = ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'ISO' );
-    %>  res = ref.closestPointInSRange( qx, qy, s_begin, s_end, varargin, 'SAE' );
+    %>  res = ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin );
+    %>  res = ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, 'ISO' );
+    %>  res = ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, 'SAE' );
     %>
     %>  %
     %>  % res is a struct with field
@@ -437,9 +455,15 @@ classdef ClothoidList < CurveBase
     %>
     %> \endrst
     %>
-    function varargout = closestPointInSRange( self, qx, qy, s_begin, s_end, varargin )
+    function varargout = closest_point_in_s_range( self, qx, qy, s_begin, s_end, varargin )
       [ varargout{1:nargout} ] = ClothoidListMexWrapper( ...
-        'closestPointInSRange', self.objectHandle, qx, qy, s_begin, s_end, varargin{:} ...
+        'closest_point_in_s_range', self.objectHandle, qx, qy, s_begin, s_end, varargin{:} ...
+      );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function varargout = closestPointInSRange( self, qx, qy, s_begin, s_end, varargin )
+      [ varargout{1:nargout} ] = self.closest_point_in_s_range( ...
+        qx, qy, s_begin, s_end, varargin{:} ...
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -501,7 +525,7 @@ classdef ClothoidList < CurveBase
       else
         fmt2 = {'Color','blue','LineWidth',3};
       end
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C = self.get(k);
         if mod(k,2) == 0
           C.plot( npts, fmt1{:} );
@@ -543,7 +567,7 @@ classdef ClothoidList < CurveBase
       else
         fmt2 = {'Color','blue','LineWidth',3};
       end
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C = self.get(k);
         if mod(k,2) == 0
           C.plot_offs( offs, npts, fmt1{:} );
@@ -585,7 +609,7 @@ classdef ClothoidList < CurveBase
         fmt2 = {'Color','blue','LineWidth',3};
       end
       s0 = 0;
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
         [~,~,~,kappa] = C.evaluate(ss);
@@ -630,7 +654,7 @@ classdef ClothoidList < CurveBase
         fmt2 = {'Color','blue','LineWidth',3};
       end
       s0 = 0;
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
         [~,~,theta,~] = C.evaluate(ss);
@@ -659,7 +683,7 @@ classdef ClothoidList < CurveBase
     %> - `len`:  length of the plotted normal
     %>
     function plotNormal( self, step, len )
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C = self.get(k);
         C.plotNormal( step, len );
       end
@@ -731,7 +755,7 @@ classdef ClothoidList < CurveBase
     function saveClothoids( self, filename )
       fd = fopen( filename, 'w' );
       fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n');
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C = self.get(k);
         [x0,y0,theta0,k0,dk,L] = C.getPars();
         fprintf(fd,'%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\n',x0,y0,theta0,k0,dk,L);

@@ -40,31 +40,22 @@ namespace G2lib {
                          string const & penna,
                          real_type offset ) const {
   	if (offset == 0.) {
-      file
-        << "path pclot = clothoidPoints(("
-        << c.xBegin()      << ','
-        << c.yBegin()      << "),"
-        << c.thetaBegin()  << ','
-        << c.kappaBegin()  << ','
-        << c.dkappa()      << ','
-        << c.length()      << ','
-        << "100,0);\n"
-        << "pen penna = " << penna << ";\n"
-        << "draw(pclot, penna);\n\n";
+      fmt::print( file,
+        "path pclot = clothoidPoints(({},{}),{},{},{},{},100,0);\n"
+        "pen  penna = {};\n"
+        "draw(pclot, penna);\n\n",
+        c.x_begin(), c.y_begin(),
+        c.theta_begin(), c.kappa_begin(), c.dkappa(), c.length()
+      );
 	  } else {
-      file
-        << "path pclot = clothoidOffset(("
-		    << c.xBegin()     << ','
-        << c.yBegin()     << "),"
-        << c.thetaBegin() << ','
-	      << c.kappaBegin() << ','
-        << c.dkappa()     << ','
-        << c.length()     << ','
-        << "100,"
-        << offset
-        << "); \n"
-        << "pen penna = " << penna << ";\n"
-        << "draw(pclot, penna);\n\n";
+      fmt::print( file,
+        "path pclot = clothoidOffset(({},{}),{},{},{},{},100,{});\n"
+        "pen  penna = {};\n"
+        "draw(pclot, penna);\n\n",
+		    c.x_begin(), c.y_begin(),
+        c.theta_begin(), c.kappa_begin(), c.dkappa(), c.length(),
+        offset
+      );
     }
   }
 

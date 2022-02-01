@@ -15,13 +15,13 @@
 "  " CMD "( 'copy', OBJ, OBJ1 );\n" \
 "\n" \
 "    [ xmin, ymin, xmax, ymax ] = " CMD "('bbox', varargin );\n" \
-"  " CMD "( 'changeOrigin', OBJ, x0, y0 );\n" \
+"  " CMD "( 'change_origin', OBJ, x0, y0 );\n" \
 "  " CMD "( 'translate', OBJ, tx, ty );\n" \
 "  " CMD "( 'trim', OBJ, smin, smax );\n" \
 "  " CMD "( 'rotate', OBJ, angle, cx, cy );\n" \
 "  " CMD "( 'scale', OBJ, scale );\n" \
 "  " CMD "( 'reverse', OBJ );\n" \
-"  " CMD "( 'changeOrigin', OBJ, newX0, newY0 );\n" \
+"  " CMD "( 'change_origin', OBJ, newX0, newY0 );\n" \
 "\n" \
 "  [x,y,theta,kappa] = " CMD "( 'evaluate', OBJ, ss );\n" \
 "  [X,Y] = " CMD "( 'eval', OBJ, s [,t] );\n" \
@@ -36,20 +36,20 @@
 "  res = " CMD "( 'kappa_D', OBJ, s );\n" \
 "  res = " CMD "( 'kappa_DD', OBJ, s );\n" \
 "\n" \
-"  res   = " CMD "( 'xBegin', OBJ );\n" \
-"  res   = " CMD "( 'yBegin', OBJ );\n" \
-"  [x,y] = " CMD "( 'xyBegin', OBJ );\n" \
-"  res   = " CMD "( 'thetaBegin', OBJ );\n" \
-"  res   = " CMD "( 'kappaBegin', OBJ );\n" \
-"  res   = " CMD "( 'xEnd', OBJ );\n" \
-"  res   = " CMD "( 'yEnd', OBJ );\n" \
-"  [x,y] = " CMD "( 'xyEnd', OBJ );\n" \
-"  res   = " CMD "( 'thetaEnd', OBJ );\n" \
-"  res   = " CMD "( 'kappaEnd', OBJ );\n" \
+"  res   = " CMD "( 'x_begin', OBJ );\n" \
+"  res   = " CMD "( 'y_begin', OBJ );\n" \
+"  [x,y] = " CMD "( 'xy_begin', OBJ );\n" \
+"  res   = " CMD "( 'theta_begin', OBJ );\n" \
+"  res   = " CMD "( 'kappa_begin', OBJ );\n" \
+"  res   = " CMD "( 'x_end', OBJ );\n" \
+"  res   = " CMD "( 'y_end', OBJ );\n" \
+"  [x,y] = " CMD "( 'xy_end', OBJ );\n" \
+"  res   = " CMD "( 'theta_end', OBJ );\n" \
+"  res   = " CMD "( 'kappa_end', OBJ );\n" \
 "  res   = " CMD "( 'length', OBJ [,offs] );\n" \
 "\n" \
 "\n" \
-"  [x, y, s, t, iflag, dst] = " CMD "( 'closestPoint', OBJ, x, y [,offs] );\n" \
+"  [x, y, s, t, iflag, dst] = " CMD "( 'closest_point', OBJ, x, y [,offs] );\n" \
 "  dst = " CMD "( 'distance', OBJ, x, y [,offs] );\n" \
 "  [s,t] = " CMD "( 'findST', OBJ, x, y );\n" \
 "\n" \

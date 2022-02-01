@@ -198,10 +198,10 @@ namespace G2lib {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "BiarcMexWrapper('xMiddle',OBJ): "
+    #define CMD "BiarcMexWrapper('x_middle',OBJ): "
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    setScalarValue( arg_out_0, ptr->xMiddle());
+    setScalarValue( arg_out_0, ptr->x_middle());
     #undef CMD
   }
 
@@ -214,10 +214,10 @@ namespace G2lib {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "BiarcMexWrapper('yMiddle',OBJ): "
+    #define CMD "BiarcMexWrapper('y_middle',OBJ): "
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    setScalarValue( arg_out_0, ptr->yMiddle());
+    setScalarValue( arg_out_0, ptr->y_middle());
     #undef CMD
   }
 
@@ -230,10 +230,10 @@ namespace G2lib {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "BiarcMexWrapper('thetaMiddle',OBJ): "
+    #define CMD "BiarcMexWrapper('theta_middle',OBJ): "
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    setScalarValue( arg_out_0, ptr->thetaMiddle());
+    setScalarValue( arg_out_0, ptr->theta_middle());
     #undef CMD
   }
 
@@ -246,7 +246,7 @@ namespace G2lib {
 
     Biarc * ptr = DATA_GET(arg_in_1);
 
-    #define CMD "BiarcMexWrapper('sMiddle',OBJ): "
+    #define CMD "BiarcMexWrapper('s_middle',OBJ): "
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     setScalarValue( arg_out_0, ptr->length0());
@@ -384,10 +384,10 @@ namespace G2lib {
     //{"build",do_build},
     {"build_3P",do_build_3P},
     {"build_G1",do_build_G1},
-    {"xMiddle",do_x_middle},
-    {"yMiddle",do_y_middle},
-    {"thetaMiddle",do_theta_middle},
-    {"sMiddle",do_s_middle},
+    {"x_middle",do_x_middle},
+    {"y_middle",do_y_middle},
+    {"theta_middle",do_theta_middle},
+    {"s_middle",do_s_middle},
     {"kappa0",do_kappa0},
     {"kappa1",do_kappa1},
     {"length0",do_length0},

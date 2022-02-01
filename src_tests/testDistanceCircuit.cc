@@ -68,14 +68,14 @@ main() {
   //real_type qx2 = 2.965952244000000e+02;
   //real_type qy2 = 16.475130419999999;
 
-  int_type idx = C.closestSegment( qx1, qy1 );
+  int_type idx = C.closest_segment( qx1, qy1 );
   cout << "idx = " << idx << '\n';
 
   real_type x, y, s, t, dst;
   int_type  icurve;
   int_type  icurve_begin = 140;
   int_type  icurve_end   = 200;
-  idx = C.closestPointInRange_ISO(
+  idx = C.closest_point_in_range_ISO(
     qx1, qy1, icurve_begin, icurve_end, x, y, s, t, dst, icurve
   );
 
@@ -92,7 +92,7 @@ main() {
 
   int_type s_begin = 200;
   int_type s_end   = 300;
-  idx = C.closestPointInSRange_ISO(
+  idx = C.closest_point_in_s_range_ISO(
     qx1, qy1, s_begin, s_end, x, y, s, t, dst, icurve
   );
 

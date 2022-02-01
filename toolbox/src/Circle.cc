@@ -58,8 +58,8 @@ namespace G2lib {
     case G2LIB_LINE:
       {
         LineSegment const & LS = *static_cast<LineSegment const *>(&C);
-        m_x0     = LS.xBegin();
-        m_y0     = LS.yBegin();
+        m_x0     = LS.x_begin();
+        m_y0     = LS.y_begin();
         m_theta0 = LS.m_theta0;
         m_c0     = LS.m_c0;
         m_s0     = LS.m_s0;
@@ -148,7 +148,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  CircleArc::thetaMinMax( real_type & thMin, real_type & thMax ) const  {
+  CircleArc::theta_min_max( real_type & thMin, real_type & thMax ) const  {
     thMin = m_theta0;
     thMax = m_theta0 + m_L * m_k;
     if ( thMax < thMin ) swap( thMin, thMax );
@@ -385,7 +385,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::changeCurvilinearOrigin( real_type new_s0, real_type newL ) {
+  CircleArc::change_curvilinear_origin( real_type new_s0, real_type newL ) {
     real_type new_x0, new_y0;
     eval( new_s0,  new_x0, new_y0 );
     m_x0      = new_x0;
@@ -698,7 +698,7 @@ namespace G2lib {
   \*/
 
   int_type
-  CircleArc::closestPoint_ISO(
+  CircleArc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -741,7 +741,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  CircleArc::closestPoint_ISO(
+  CircleArc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,

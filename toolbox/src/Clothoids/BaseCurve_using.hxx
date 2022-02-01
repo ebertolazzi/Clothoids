@@ -25,23 +25,23 @@
 /// file: BaseCurve_using.hxx
 ///
 
-using BaseCurve::thetaBegin;
-using BaseCurve::thetaEnd;
+using BaseCurve::theta_begin;
+using BaseCurve::theta_end;
 
-using BaseCurve::xBegin;
-using BaseCurve::yBegin;
-using BaseCurve::xEnd;
-using BaseCurve::yEnd;
+using BaseCurve::x_begin;
+using BaseCurve::y_begin;
+using BaseCurve::x_end;
+using BaseCurve::y_end;
 
-using BaseCurve::xBegin_ISO;
-using BaseCurve::yBegin_ISO;
-using BaseCurve::xEnd_ISO;
-using BaseCurve::yEnd_ISO;
+using BaseCurve::x_begin_ISO;
+using BaseCurve::y_begin_ISO;
+using BaseCurve::x_end_ISO;
+using BaseCurve::y_end_ISO;
 
-using BaseCurve::xBegin_SAE;
-using BaseCurve::yBegin_SAE;
-using BaseCurve::xEnd_SAE;
-using BaseCurve::yEnd_SAE;
+using BaseCurve::x_begin_SAE;
+using BaseCurve::y_begin_SAE;
+using BaseCurve::x_end_SAE;
+using BaseCurve::y_end_SAE;
 
 using BaseCurve::tx_Begin;
 using BaseCurve::ty_Begin;
@@ -118,11 +118,11 @@ using BaseCurve::eval_SAE_DD;
 using BaseCurve::eval_SAE_DDD;
 
 #ifdef G2LIB_COMPATIBILITY_MODE
-using BaseCurve::closestPoint;
+using BaseCurve::closest_point;
 using BaseCurve::distance;
 #endif
-using BaseCurve::closestPoint_ISO;
-using BaseCurve::closestPoint_SAE;
+using BaseCurve::closest_point_ISO;
+using BaseCurve::closest_point_SAE;
 using BaseCurve::distance_ISO;
 using BaseCurve::distance_SAE;
 

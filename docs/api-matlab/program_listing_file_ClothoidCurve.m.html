@@ -206,7 +206,7 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    [ X, Y, S, DST ] = ref.closestPoint( qx, qy );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    [ X, Y, S, DST ] = ref.closest_point( qx, qy );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
@@ -220,10 +220,13 @@
 <span class="w">    </span><span class="c">%&gt; - `S`      : curvilinear coordinate along the clothoid of the projection</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `DST`    : point clothoid distance</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closestPoint</span><span class="p">(</span> self, qx, qy <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closest_point</span><span class="p">(</span> self, qx, qy <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w">  </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
-<span class="w">        </span><span class="s">'closestPoint'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="s">'closest_point'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closestPoint</span><span class="p">(</span> self, qx, qy <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">closest_point</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Find the closest point to a clothoid by sampling points</span><span class="w"></span>
@@ -231,7 +234,7 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    [ X, Y, S, DST ] = ref.closestPointBySample( qx, qy, ds );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    [ X, Y, S, DST ] = ref.closest_point_by_sample( qx, qy, ds );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
@@ -246,10 +249,14 @@
 <span class="w">    </span><span class="c">%&gt; - `S`      : curvilinear coordinate along the clothoid of the projection</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `DST`    : point clothoid distance</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closestPointBySample</span><span class="p">(</span> self, qx, qy, ds <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closest_point_by_sample</span><span class="p">(</span> self, qx, qy, ds <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
-<span class="w">        </span><span class="s">'closestPointBySample'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="s">'closest_point_by_sample'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ X, Y, S, DST ] = closestPointBySample</span><span class="p">(</span> self, qx, qy, ds <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">DST</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">closest_point_by_sample</span><span class="p">(</span><span class="w"> </span><span class="n">qx</span><span class="p">,</span><span class="w"> </span><span class="n">qy</span><span class="p">,</span><span class="w"> </span><span class="n">ds</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Find the distance between a point and a clothoid by sampling</span><span class="w"></span>
@@ -299,7 +306,7 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    ref.changeOrigin(s0,L);</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref.change_curvilinear_origin(s0,L);</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
@@ -308,10 +315,14 @@
 <span class="w">    </span><span class="c">%&gt; - `s0`: curvilinear coordinate of the origin of the new curve</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `L`:  nel length of the curve</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">changeCurvilinearOrigin</span><span class="p">(</span> self, s0, L <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">change_curvilinear_origin</span><span class="p">(</span> self, s0, L <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">ClothoidCurveMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
-<span class="w">        </span><span class="s">'changeCurvilinearOrigin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
+<span class="w">        </span><span class="s">'change_curvilinear_origin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="k">...</span><span class="w"></span>
 <span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">changeCurvilinearOrigin</span><span class="p">(</span> self, s0, L <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">change_curvilinear_origin</span><span class="p">(</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">%% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%function [ s1, s2 ] = intersect( self, C, varargin )</span><span class="w"></span>
@@ -356,10 +367,10 @@
 <span class="w">    </span><span class="c">%&gt; - `L`:        length of the clothoid arc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x0, y0, theta0, k0, dk, L ] = getPars</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">k0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappaBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">k0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappa_begin</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">dk</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappa_D</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>

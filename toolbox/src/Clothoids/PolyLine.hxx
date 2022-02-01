@@ -116,7 +116,7 @@ namespace G2lib {
     getSegment( int_type n ) const;
 
     int_type
-    numSegments() const
+    num_segments() const
     { return int_type(m_polylineList.size()); }
 
     int_type
@@ -211,20 +211,20 @@ namespace G2lib {
     }
 
     real_type
-    xBegin() const override
-    { return m_polylineList.front().xBegin(); }
+    x_begin() const override
+    { return m_polylineList.front().x_begin(); }
 
     real_type
-    yBegin() const override
-    { return m_polylineList.front().yBegin(); }
+    y_begin() const override
+    { return m_polylineList.front().y_begin(); }
 
     real_type
-    xEnd() const override
-    { return m_polylineList.back().xEnd(); }
+    x_end() const override
+    { return m_polylineList.back().x_end(); }
 
     real_type
-    yEnd() const override
-    { return m_polylineList.back().yEnd(); }
+    y_end() const override
+    { return m_polylineList.back().y_end(); }
 
     real_type
     X( real_type s ) const override {
@@ -395,7 +395,7 @@ namespace G2lib {
     scale( real_type sc ) override;
 
     void
-    changeOrigin( real_type newx0, real_type newy0 ) override;
+    change_origin( real_type newx0, real_type newy0 ) override;
 
     void
     trim( real_type s_begin, real_type s_end ) override;
@@ -416,7 +416,7 @@ namespace G2lib {
     //! \return the distance point-segment
     //!
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   x,
       real_type   y,
       real_type & X,
@@ -427,7 +427,7 @@ namespace G2lib {
     ) const override;
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   /* x    */,
       real_type   /* y    */,
       real_type   /* offs */,
@@ -437,7 +437,7 @@ namespace G2lib {
       real_type & /* T    */,
       real_type & /* DST  */
     ) const override {
-      UTILS_ERROR( "PolyLine::closestPoint( ... offs ... ) not available!\n" );
+      UTILS_ERROR( "PolyLine::closest_point_ISO( ... offs ... ) not available!\n" );
     }
 
     /*\
@@ -544,7 +544,50 @@ namespace G2lib {
         m_aabb_done = true;
       }
     }
+    //@@@@ BACK COMPATIBILITY
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 
+    real_type thetaBegin() const { return theta_begin(); }
+    real_type thetaEnd()   const { return theta_end(); }
+    real_type xBegin()     const { return x_begin(); }
+    real_type yBegin()     const { return y_begin(); }
+    real_type xEnd()       const { return x_end(); }
+    real_type yEnd()       const { return y_end(); }
+    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
+    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
+    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
+    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
+
+    int_type numSegments() const { return num_segments(); }
+
+    int_type
+    closestPoint_ISO(
+      real_type   x,
+      real_type   y,
+      real_type & X,
+      real_type & Y,
+      real_type & S,
+      real_type & T,
+      real_type & DST
+    ) const {
+      return closest_point_ISO( x, y, X, Y, S, T, DST );
+    }
+
+    int_type
+    closest_point_ISO(
+      real_type   x,
+      real_type   y,
+      real_type   offs,
+      real_type & X,
+      real_type & Y,
+      real_type & S,
+      real_type & T,
+      real_type & DST 
+    ) const {
+      return closest_point_ISO( x, y, offs, X, Y, S, T, DST );
+    }
+
+    #endif
   };
 
 }

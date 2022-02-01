@@ -44,14 +44,21 @@ main() {
   cout << "\n\nSM (NEW)\n" << SM;
   cout << "\n\nS1 (NEW)\n" << S1;
 
-  cout
-    << "\nx  = " << S0.xEnd()       << " " << SM.xBegin()     << " err = " << S0.xEnd()-SM.xBegin()
-    << "\ny  = " << S0.yEnd()       << " " << SM.yBegin()     << " err = " << S0.yEnd()-SM.yBegin()
-    << "\nth = " << S0.thetaEnd()   << " " << SM.thetaBegin() << " err = " << S0.thetaEnd()-SM.thetaBegin()
-    << "\nx  = " << S1.xBegin()     << " " << SM.xEnd()       << " err = " << S1.xBegin()-SM.xEnd()
-    << "\ny  = " << S1.yBegin()     << " " << SM.yEnd()       << " err = " << S1.yBegin()-SM.yEnd()
-    << "\nth = " << S1.thetaBegin() << " " << SM.thetaEnd()   << " err = " << S1.thetaBegin()-SM.thetaEnd()
-    << '\n';
+  fmt::print(
+    "\n"
+    "x  = {} {} err = {}\n"
+    "y  = {} {} err = {}\n"
+    "th = {} {} err = {}\n"
+    "x  = {} {} err = {}\n"
+    "y  = {} {} err = {}\n"
+    "th = {} {} err = {}\n",
+    S0.x_end(),       SM.x_begin(),     S0.x_end()-SM.x_begin(),
+    S0.y_end(),       SM.y_begin(),     S0.y_end()-SM.y_begin(),
+    S0.theta_end(),   SM.theta_begin(), S0.theta_end()-SM.theta_begin(),
+    S1.x_begin(),     SM.x_end(),       S1.x_begin()-SM.x_end(),
+    S1.y_begin(),     SM.y_end(),       S1.y_begin()-SM.y_end(),
+    S1.theta_begin(), SM.theta_end(),   S1.theta_begin()-SM.theta_end()
+  );
 
   G2lib::ClothoidList S;
   ifstream file("G2_test.txt");

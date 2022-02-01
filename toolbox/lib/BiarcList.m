@@ -112,7 +112,7 @@ classdef BiarcList < CurveBase
     %>
     function append( self, lst )
       if lst.is_type() == 'BiarcList'
-        for k=1:lst.numSegments()
+        for k=1:lst.num_segments()
           [ x0, y0, theta0, x1, y1, theta1 ] = lst.get(k);
           self.push_back( x0, y0, theta0, x1, y1, theta1 );
         end
@@ -141,11 +141,15 @@ classdef BiarcList < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   nseg = ref.numSegments();
+    %>   nseg = ref.num_segments();
     %> \endrst
     %>
+    function N = num_segments( self )
+      N = BiarcListMexWrapper( 'num_segments', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function N = numSegments( self )
-      N = BiarcListMexWrapper( 'numSegments', self.objectHandle );
+      N = self.num_segments();
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Build a biarc list given a set of points and if available
@@ -246,7 +250,7 @@ classdef BiarcList < CurveBase
       else
         fmt2 = {'Color','blue','LineWidth',3};
       end
-      for k=1:1:self.numSegments()
+      for k=1:1:self.num_segments()
         C = self.get(k);
         C.plot( npts, fmt1, fmt2 );
         hold on;
@@ -284,7 +288,7 @@ classdef BiarcList < CurveBase
       else
         fmt2 = {'Color','blue','LineWidth',3};
       end
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C = self.get(k);
         C.plot_offs( offs, npts, fmt1, fmt2 );
         hold on;
@@ -322,7 +326,7 @@ classdef BiarcList < CurveBase
         fmt2 = {'Color','blue','LineWidth',3};
       end
       s0 = 0;
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
         [~,~,~,kappa] = C.evaluate(ss);
@@ -367,7 +371,7 @@ classdef BiarcList < CurveBase
         fmt2 = {'Color','blue','LineWidth',3};
       end
       s0 = 0;
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C  = self.get(k);
         ss = 0:C.length()/npts:C.length();
         [~,~,theta,~] = C.evaluate(ss);
@@ -396,7 +400,7 @@ classdef BiarcList < CurveBase
     %> - `len`:  length of the plotted normal
     %>
     function plotNormal( self, step, len )
-      for k=1:self.numSegments()
+      for k=1:self.num_segments()
         C = self.get(k);
         C.plotNormal( step, len );
       end

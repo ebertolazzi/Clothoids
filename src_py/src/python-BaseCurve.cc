@@ -1656,7 +1656,7 @@ namespace G2lib {
         :rtype: NoneType
       )S")
 
-      .def("changeOrigin", &BaseCurve::changeOrigin, py::arg("newx0"), py::arg("newy0"),
+      .def("changeOrigin", &BaseCurve::change_origin, py::arg("newx0"), py::arg("newy0"),
       R"S(
         Translate the curve so that the origin will be :math:`(x_{0,new}, y_{0,new})`.
         This method works in place and forces the recalculation of the AABBtree of the
@@ -1773,7 +1773,7 @@ namespace G2lib {
       .def("closestPoint", [](const BaseCurve & self, real_type qx, real_type qy) {
         int_type ret;
         real_type x, y, s, t, dst;
-        ret = self.closestPoint_ISO(qx, qy, x, y, s, t, dst);
+        ret = self.closest_point_ISO(qx, qy, x, y, s, t, dst);
         return std::make_tuple(ret, x, y, s, t, dst);
       }, py::arg("qx"), py::arg("qy"),
       R"S(
@@ -1802,7 +1802,7 @@ namespace G2lib {
         std::vector<int_type> ret(n);
         std::vector<real_type> x(n), y(n), s(n), t(n), dst(n);
         for (size_t i = 0; i < n; i++) {
-          ret[i] = self.closestPoint_ISO(qx[i], qy[i], x[i], y[i], s[i], t[i], dst[i]);
+          ret[i] = self.closest_point_ISO(qx[i], qy[i], x[i], y[i], s[i], t[i], dst[i]);
         }
         return std::make_tuple(ret, x, y, s, t, dst);
       }, py::arg("qx"), py::arg("qy"),
@@ -1831,7 +1831,7 @@ namespace G2lib {
       .def("closestPoint_ISO", [](const BaseCurve & self, real_type qx, real_type qy) {
         int_type ret;
         real_type x, y, s, t, dst;
-        ret = self.closestPoint_ISO(qx, qy, x, y, s, t, dst);
+        ret = self.closest_point_ISO(qx, qy, x, y, s, t, dst);
         return std::make_tuple(ret, x, y, s, t, dst);
       }, py::arg("qx"), py::arg("qy"),
       R"S(
@@ -1859,7 +1859,7 @@ namespace G2lib {
       .def("closestPoint_SAE", [](const BaseCurve & self, real_type qx, real_type qy) {
         int_type ret;
         real_type x, y, s, t, dst;
-        ret = self.closestPoint_SAE(qx, qy, x, y, s, t, dst);
+        ret = self.closest_point_SAE(qx, qy, x, y, s, t, dst);
         return std::make_tuple(ret, x, y, s, t, dst);
       }, py::arg("qx"), py::arg("qy"),
       R"S(

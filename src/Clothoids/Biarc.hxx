@@ -204,14 +204,14 @@ namespace G2lib {
     length_ISO( real_type offs ) const override
     { return m_C0.length_ISO(offs)+m_C1.length_ISO(offs); }
 
-    real_type thetaBegin()   const override { return m_C0.thetaBegin(); }
-    real_type thetaEnd()     const override { return m_C1.thetaEnd(); }
-    real_type kappaBegin()   const override { return m_C0.kappaBegin(); }
-    real_type kappaEnd()     const override { return m_C1.kappaEnd(); }
-    real_type xBegin()       const override { return m_C0.xBegin(); }
-    real_type xEnd()         const override { return m_C1.xEnd(); }
-    real_type yBegin()       const override { return m_C0.yBegin(); }
-    real_type yEnd()         const override { return m_C1.yEnd(); }
+    real_type theta_begin()  const override { return m_C0.theta_begin(); }
+    real_type theta_end()    const override { return m_C1.theta_end(); }
+    real_type kappa_begin()  const override { return m_C0.kappa_begin(); }
+    real_type kappa_end()    const override { return m_C1.kappa_end(); }
+    real_type x_begin()      const override { return m_C0.x_begin(); }
+    real_type x_end()        const override { return m_C1.x_end(); }
+    real_type y_begin()      const override { return m_C0.y_begin(); }
+    real_type y_end()        const override { return m_C1.y_end(); }
     real_type tx_Begin()     const override { return m_C0.tx_Begin(); }
     real_type tx_End()       const override { return m_C1.tx_End(); }
     real_type ty_Begin()     const override { return m_C0.ty_Begin(); }
@@ -392,7 +392,7 @@ namespace G2lib {
     reverse() override;
 
     void
-    changeOrigin( real_type newx0, real_type newy0 ) override;
+    change_origin( real_type newx0, real_type newy0 ) override;
 
     void
     trim( real_type s_begin, real_type s_end ) override;
@@ -409,7 +409,7 @@ namespace G2lib {
     \*/
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -420,7 +420,7 @@ namespace G2lib {
     ) const override;
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -437,17 +437,17 @@ namespace G2lib {
     //!
     //! Return the x-coordinate of the juction point of the biarc.
     //!
-    real_type xMiddle() const { return m_C1.xBegin(); }
+    real_type x_middle() const { return m_C1.x_begin(); }
 
     //!
     //! Return the y-coordinate of the juction point of the biarc.
     //!
-    real_type yMiddle() const { return m_C1.yBegin(); }
+    real_type y_middle() const { return m_C1.y_begin(); }
 
     //!
     //! Return the angle of the juction point of the biarc.
     //!
-    real_type thetaMiddle() const { return m_C1.thetaBegin(); }
+    real_type theta_middle() const { return m_C1.theta_begin(); }
 
     //!
     //! Return the curvature of the first arc of the biarc.
@@ -597,6 +597,55 @@ namespace G2lib {
     friend
     ostream_type &
     operator << ( ostream_type & stream, Biarc const & bi );
+
+    //@@@@ BACK COMPATIBILITY
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+
+    real_type thetaBegin() const { return theta_begin(); }
+    real_type thetaEnd()   const { return theta_end(); }
+    real_type kappaBegin() const { return kappa_begin(); }
+    real_type kappaEnd()   const { return kappa_end(); }
+    real_type xBegin()     const { return x_begin(); }
+    real_type yBegin()     const { return y_begin(); }
+    real_type xEnd()       const { return x_end(); }
+    real_type yEnd()       const { return y_end(); }
+    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
+    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
+    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
+    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
+
+    real_type xMiddle()     const { return x_middle(); }
+    real_type yMiddle()     const { return y_middle(); }
+    real_type thetaMiddle() const { return theta_middle(); }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+    }
+
+    #endif
 
   };
 

@@ -253,7 +253,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type n = ptr->numSegments();
+    int_type n = ptr->num_segments();
 
     real_type * s     = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * theta = createMatrixValue( arg_out_1, 1, n+1 );
@@ -280,7 +280,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type    n = ptr->numSegments();
+    int_type    n = ptr->num_segments();
     real_type * x = createMatrixValue( arg_out_0, 1, n+1 );
     real_type * y = createMatrixValue( arg_out_1, 1, n+1 );
 
@@ -674,18 +674,18 @@ namespace G2lib {
     int64_t n = getInt( arg_in_2, CMD "Error in reading n" );
 
     MEX_ASSERT2(
-      n > 0 && n <= ptr->numSegments(),
-      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->numSegments()
+      n > 0 && n <= ptr->num_segments(),
+      CMD "n = {} must be >= 1 and <= {}\n", n, ptr->num_segments()
     );
 
     ClothoidCurve const & c = ptr->get(n-1);
 
-    setScalarValue( arg_out_0, c.xBegin()     );
-    setScalarValue( arg_out_1, c.yBegin()     );
-    setScalarValue( arg_out_2, c.thetaBegin() );
-    setScalarValue( arg_out_3, c.kappaBegin() );
-    setScalarValue( arg_out_4, c.dkappa()     );
-    setScalarValue( arg_out_5, c.length()     );
+    setScalarValue( arg_out_0, c.x_begin()     );
+    setScalarValue( arg_out_1, c.y_begin()     );
+    setScalarValue( arg_out_2, c.theta_begin() );
+    setScalarValue( arg_out_3, c.kappa_begin() );
+    setScalarValue( arg_out_4, c.dkappa()      );
+    setScalarValue( arg_out_5, c.length()      );
 
     #undef CMD
   }
@@ -694,18 +694,18 @@ namespace G2lib {
 
   static
   void
-  do_numSegments(
+  do_num_segments(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
-    #define CMD "ClothoidListMexWrapper('numSegments', OBJ): "
+    #define CMD "ClothoidListMexWrapper('num_segments', OBJ): "
 
     MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    setScalarInt( arg_out_0, ptr->numSegments() );
+    setScalarInt( arg_out_0, ptr->num_segments() );
 
     #undef CMD
   }
@@ -726,7 +726,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type nseg = ptr->numSegments();
+    int_type nseg = ptr->num_segments();
 
     real_type * dtheta = createMatrixValue( arg_out_0, nseg, 1 );
     ptr->getDeltaTheta( dtheta );
@@ -750,7 +750,7 @@ namespace G2lib {
 
     ClothoidList * ptr = DATA_GET(arg_in_1);
 
-    int_type nseg = ptr->numSegments();
+    int_type nseg = ptr->num_segments();
 
     real_type * dkappa = createMatrixValue( arg_out_0, nseg, 1 );
     ptr->getDeltaKappa( dkappa );
@@ -871,12 +871,12 @@ namespace G2lib {
 
   static
   void
-  do_closestSegment(
+  do_closest_segment(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('closestSegment',OBJ,qx,qy): "
+    #define CMD "ClothoidListMexWrapper('closest_segment',OBJ,qx,qy): "
 
     MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
@@ -890,7 +890,7 @@ namespace G2lib {
       arg_in_3, CMD "`qx` expected to be a real scalar"
     );
 
-    setScalarInt( arg_out_0, ptr->closestSegment( qx, qy ) );
+    setScalarInt( arg_out_0, ptr->closest_segment( qx, qy ) );
 
     #undef CMD
   }
@@ -899,12 +899,12 @@ namespace G2lib {
 
   static
   void
-  do_closestPointInRange(
+  do_closest_point_in_range(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('closestPointInRange',OBJ,qx,qy,[ibegin,iend],['ISO'/'SAE']): "
+    #define CMD "ClothoidListMexWrapper('closest_point_in_range',OBJ,qx,qy,[ibegin,iend],['ISO'/'SAE']): "
 
     MEX_ASSERT2(
       4 <= nrhs && nrhs <= 7,
@@ -924,7 +924,7 @@ namespace G2lib {
       arg_in_3, CMD "`qx` expected to be a real scalar"
     );
     int64_t icurve_begin = 0;
-    int64_t icurve_end   = ptr->numSegments()-1;
+    int64_t icurve_end   = ptr->num_segments()-1;
 
     if ( nrhs >= 6 ) {
       icurve_begin = getInt(
@@ -942,11 +942,11 @@ namespace G2lib {
     int_type  iflag, icurve;
     real_type x, y, s, t, dst;
     if ( ISO ) {
-      iflag = ptr->closestPointInRange_ISO(
+      iflag = ptr->closest_point_in_range_ISO(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
       );
     } else {
-      iflag = ptr->closestPointInRange_SAE(
+      iflag = ptr->closest_point_in_range_SAE(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
       );
     }
@@ -985,12 +985,12 @@ namespace G2lib {
 
   static
   void
-  do_closestPointInSRange(
+  do_closest_point_in_s_range(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('closestPointInSRange',OBJ,qx,qy,s_begin,s_end,['ISO'/'SAE']): "
+    #define CMD "ClothoidListMexWrapper('closest_point_in_s_range',OBJ,qx,qy,s_begin,s_end,['ISO'/'SAE']): "
 
     MEX_ASSERT2(
       4 <= nrhs && nrhs <= 7,
@@ -1028,11 +1028,11 @@ namespace G2lib {
     int_type  iflag, icurve;
     real_type x, y, s, t, dst;
     if ( ISO ) {
-      iflag = ptr->closestPointInSRange_ISO(
+      iflag = ptr->closest_point_in_s_range_ISO(
         qx, qy, s_curve_begin, s_curve_end, x, y, s, t, dst, icurve
       );
     } else {
-      iflag = ptr->closestPointInSRange_SAE(
+      iflag = ptr->closest_point_in_s_range_SAE(
         qx, qy, s_curve_begin, s_curve_end, x, y, s, t, dst, icurve
       );
     }
@@ -1169,15 +1169,15 @@ namespace G2lib {
     {"make_open",do_make_open},
     {"is_closed",do_is_closed},
     {"get",do_get},
-    {"numSegments",do_numSegments},
+    {"num_segments",do_num_segments},
     {"deltaTheta",do_deltaTheta},
     {"deltaKappa",do_deltaKappa},
     {"export_table",do_export_table},
     {"export_ruby",do_export_ruby},
     {"findST1",do_findST1},
-    {"closestSegment",do_closestSegment},
-    {"closestPointInRange",do_closestPointInRange},
-    {"closestPointInSRange",do_closestPointInSRange},
+    {"closest_segment",do_closest_segment},
+    {"closest_point_in_range",do_closest_point_in_range},
+    {"closest_point_in_s_range",do_closest_point_in_s_range},
     {"s_to_index",do_s_to_index},
     {"save",do_save},
     {"load",do_load},

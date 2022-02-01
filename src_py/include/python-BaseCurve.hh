@@ -144,7 +144,7 @@ namespace G2lib {
 
       void 
       changeOrigin(real_type newx0, real_type newy0) override {
-        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, changeOrigin, newx0, newy0);
+        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, change_origin, newx0, newy0);
       }
 
       void 
@@ -154,12 +154,12 @@ namespace G2lib {
 
       int_type
       closestPoint_ISO(real_type qx, real_type qy, real_type & x, real_type & y, real_type & s, real_type & t, real_type & dst) const override {
-        PYBIND11_OVERLOAD_PURE(int_type, G2lib::BaseCurve, closestPoint_ISO, qx, qy, x, y, s, t, dst);
+        PYBIND11_OVERLOAD_PURE(int_type, G2lib::BaseCurve, closest_point_ISO, qx, qy, x, y, s, t, dst);
       }
 
       int_type
       closestPoint_ISO(real_type qx, real_type qy, real_type offs, real_type & x, real_type & y, real_type & s, real_type & t, real_type & dst) const override {
-        PYBIND11_OVERLOAD_PURE(int_type, G2lib::BaseCurve, closestPoint_ISO, qx, qy, offs, x, y, s, t, dst);
+        PYBIND11_OVERLOAD_PURE(int_type, G2lib::BaseCurve, closest_point_ISO, qx, qy, offs, x, y, s, t, dst);
       }
 
       void

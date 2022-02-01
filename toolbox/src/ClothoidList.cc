@@ -316,9 +316,9 @@ namespace G2lib {
       "ClothoidList::push_back_G1(...) empty list!\n"
     );
     ClothoidCurve c;
-    real_type x0     = m_clotoidList.back().xEnd();
-    real_type y0     = m_clotoidList.back().yEnd();
-    real_type theta0 = m_clotoidList.back().thetaEnd();
+    real_type x0     = m_clotoidList.back().x_end();
+    real_type y0     = m_clotoidList.back().y_end();
+    real_type theta0 = m_clotoidList.back().theta_end();
     c.build( x0, y0, theta0, kappa0, dkappa, L );
     push_back( c );
   }
@@ -351,9 +351,9 @@ namespace G2lib {
       "ClothoidList::push_back_G1(...) empty list!\n"
     );
     ClothoidCurve c;
-    real_type x0     = m_clotoidList.back().xEnd();
-    real_type y0     = m_clotoidList.back().yEnd();
-    real_type theta0 = m_clotoidList.back().thetaEnd();
+    real_type x0     = m_clotoidList.back().x_end();
+    real_type y0     = m_clotoidList.back().y_end();
+    real_type theta0 = m_clotoidList.back().theta_end();
     c.build_G1( x0, y0, theta0, x1, y1, theta1 );
     push_back( c );
   }
@@ -404,27 +404,26 @@ namespace G2lib {
       if ( ciclic ) {
         ok = b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] );
         UTILS_ASSERT0( ok, "ClothoidList::build_G1, failed\n" );
-        thetaC = b.thetaMiddle();
+        thetaC = b.theta_middle();
       }
       ok = b.build_3P( x[0], y[0], x[1], y[1], x[2], y[2] );
       UTILS_ASSERT0( ok, "ClothoidList::build_G1, failed\n" );
-      real_type theta0 = ciclic ? thetaC : b.thetaBegin();
-      real_type theta1 = b.thetaMiddle();
+      real_type theta0 = ciclic ? thetaC : b.theta_begin();
+      real_type theta1 = b.theta_middle();
       c.build_G1( x[0], y[0], theta0, x[1], y[1], theta1 );
       push_back(c);
       for ( int_type k = 2; k < n-1; ++k ) {
         theta0 = theta1;
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
         UTILS_ASSERT0( ok, "ClothoidList::build_G1, failed\n" );
-        theta1 = b.thetaMiddle();
+        theta1 = b.theta_middle();
         c.build_G1( x[k-1], y[k-1], theta0, x[k], y[k], theta1 );
         push_back(c);
       }
       theta0 = theta1;
-      theta1 = ciclic ? thetaC : b.thetaEnd();
+      theta1 = ciclic ? thetaC : b.theta_end();
       c.build_G1( x[n-2], y[n-2], theta0, x[n-1], y[n-1], theta1 );
       push_back(c);
-
     }
     return true;
   }
@@ -1145,14 +1144,14 @@ namespace G2lib {
   void
   ClothoidList::scale( real_type sfactor ) {
     vector<ClothoidCurve>::iterator ic = m_clotoidList.begin();
-    real_type newx0 = ic->xBegin();
-    real_type newy0 = ic->yBegin();
+    real_type newx0 = ic->x_begin();
+    real_type newy0 = ic->y_begin();
     m_s0[0] = 0;
     for ( size_t k=0; ic != m_clotoidList.end(); ++ic, ++k ) {
       ic->scale( sfactor );
-      ic->changeOrigin( newx0, newy0 );
-      newx0     = ic->xEnd();
-      newy0     = ic->yEnd();
+      ic->change_origin( newx0, newy0 );
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
       m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
@@ -1164,16 +1163,16 @@ namespace G2lib {
     std::reverse( m_clotoidList.begin(), m_clotoidList.end() );
     vector<ClothoidCurve>::iterator ic = m_clotoidList.begin();
     ic->reverse();
-    real_type newx0 = ic->xEnd();
-    real_type newy0 = ic->yEnd();
+    real_type newx0 = ic->x_end();
+    real_type newy0 = ic->y_end();
     m_s0[0] = 0;
     m_s0[1] = ic->length();
     size_t k = 1;
     for ( ++ic; ic != m_clotoidList.end(); ++ic, ++k ) {
       ic->reverse();
-      ic->changeOrigin( newx0, newy0 );
-      newx0     = ic->xEnd();
-      newy0     = ic->yEnd();
+      ic->change_origin( newx0, newy0 );
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
       m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
@@ -1181,12 +1180,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::changeOrigin( real_type newx0, real_type newy0 ) {
+  ClothoidList::change_origin( real_type newx0, real_type newy0 ) {
     vector<ClothoidCurve>::iterator ic = m_clotoidList.begin();
     for (; ic != m_clotoidList.end(); ++ic ) {
-      ic->changeOrigin( newx0, newy0 );
-      newx0 = ic->xEnd();
-      newy0 = ic->yEnd();
+      ic->change_origin( newx0, newy0 );
+      newx0 = ic->x_end();
+      newy0 = ic->y_end();
     }
   }
 
@@ -1447,7 +1446,7 @@ namespace G2lib {
   \*/
 
   int_type
-  ClothoidList::closestPoint_internal(
+  ClothoidList::closest_point_internal(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -1463,7 +1462,7 @@ namespace G2lib {
     m_aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
     UTILS_ASSERT0(
-      candidateList.size() > 0, "ClothoidList::closestPoint no candidate\n"
+      candidateList.size() > 0, "ClothoidList::closest_point_internal no candidate\n"
     );
     int_type icurve = 0;
     DST = numeric_limits<real_type>::infinity();
@@ -1474,7 +1473,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        m_clotoidList[T.Icurve()].closestPoint_internal(
+        m_clotoidList[T.Icurve()].closest_point_internal(
           T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -1492,7 +1491,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::closestPoint_ISO(
+  ClothoidList::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -1503,7 +1502,7 @@ namespace G2lib {
     real_type & DST
   ) const {
 
-    int_type icurve = this->closestPoint_internal( qx, qy, offs, x, y, s, DST );
+    int_type icurve = this->closest_point_internal( qx, qy, offs, x, y, s, DST );
 
     // check if projection is orthogonal
     real_type nx, ny;
@@ -1513,7 +1512,7 @@ namespace G2lib {
     t = qxx * nx + qyy * ny - offs; // signed distance
     real_type pt = abs(qxx * ny - qyy * nx);
     G2LIB_DEBUG_MESSAGE(
-      "ClothoidList::closestPoint_ISO\n"
+      "ClothoidList::closest_point_ISO\n"
       "||P-P0|| = {} and {}, |(P-P0).T| = {}\n",
       DST, hypot(qxx,qyy), pt
     );
@@ -1523,7 +1522,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::closestPoint_ISO(
+  ClothoidList::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -1532,7 +1531,7 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    return closestPoint_ISO( qx, qy, 0, x, y, s, t, dst );
+    return closest_point_ISO( qx, qy, 0, x, y, s, t, dst );
   }
 
   /*\
@@ -1544,14 +1543,14 @@ namespace G2lib {
   \*/
 
   int_type
-  ClothoidList::closestSegment( real_type qx, real_type qy ) const {
+  ClothoidList::closest_segment( real_type qx, real_type qy ) const {
     this->build_AABBtree_ISO( 0 );
 
     AABBtree::VecPtrBBox candidateList;
     m_aabb_tree.min_distance( qx, qy, candidateList );
     AABBtree::VecPtrBBox::const_iterator ic;
     UTILS_ASSERT0(
-      candidateList.size() > 0, "ClothoidList::closestSegment no candidate\n"
+      candidateList.size() > 0, "ClothoidList::closest_segment no candidate\n"
     );
     int_type icurve = 0;
     real_type DST = numeric_limits<real_type>::infinity();
@@ -1562,7 +1561,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss;
-        m_clotoidList[T.Icurve()].closestPoint_internal(
+        m_clotoidList[T.Icurve()].closest_point_internal(
           T.S0(), T.S1(), qx, qy, 0, xx, yy, ss, dst
         );
         if ( dst < DST ) {
@@ -1577,7 +1576,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::closestPointInRange_ISO(
+  ClothoidList::closest_point_in_range_ISO(
     real_type   qx,
     real_type   qy,
     int_type    icurve_begin,
@@ -1591,12 +1590,12 @@ namespace G2lib {
   ) const {
     UTILS_ASSERT0(
       !m_clotoidList.empty(),
-      "ClothoidList::closestPointInRange_ISO, empty list\n"
+      "ClothoidList::closest_point_in_range_ISO, empty list\n"
     );
-    int_type nsegs = this->numSegments();
+    int_type nsegs = this->num_segments();
     if ( nsegs == 1 ) { // only 1 segment to check
       icurve = 0;
-      int_type res = m_clotoidList.front().closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      int_type res = m_clotoidList.front().closest_point_ISO( qx, qy, x, y, s, t, dst );
       s += m_s0[0];
       return res;
     }
@@ -1607,16 +1606,16 @@ namespace G2lib {
     if ( ie < 0 ) ie += nsegs;
     UTILS_ASSERT(
       ib >= 0 && ie >= 0,
-      "ClothoidList::closestPointInRange_ISO, ib = {} ie = {}\n",
+      "ClothoidList::closest_point_in_range_ISO, ib = {} ie = {}\n",
       ib, ie
     );
 
     icurve = ib;
-    int_type res = m_clotoidList[icurve].closestPoint_ISO( qx, qy, x, y, s, t, dst );
+    int_type res = m_clotoidList[icurve].closest_point_ISO( qx, qy, x, y, s, t, dst );
     s += m_s0[icurve];
 
     G2LIB_DEBUG_MESSAGE(
-      "ClothoidList::closestPointInRange_ISO\n"
+      "ClothoidList::closest_point_in_range_ISO\n"
       "first segment #{} dst = {} res = {}\n",
       icurve, dst, res
     );
@@ -1627,11 +1626,11 @@ namespace G2lib {
     do {
       if ( ++iseg >= nsegs ) iseg -= nsegs; // next segment
       real_type C_x, C_y, C_s, C_t, C_dst;
-      int_type C_res = m_clotoidList[iseg].closestPoint_ISO(
+      int_type C_res = m_clotoidList[iseg].closest_point_ISO(
         qx, qy, C_x, C_y, C_s, C_t, C_dst
       );
       G2LIB_DEBUG_MESSAGE(
-        "ClothoidList::closestPointInRange_ISO: segment #{} dst = {} res = {}\n",
+        "ClothoidList::closest_point_in_range_ISO: segment #{} dst = {} res = {}\n",
         iseg, C_dst, C_res
       );
       if ( C_dst < dst ) {
@@ -1643,7 +1642,7 @@ namespace G2lib {
         icurve = iseg;
         res    = C_res;
         G2LIB_DEBUG_MESSAGE(
-          "ClothoidList::closestPointInRange_ISO, new min at s = {}, res = {}\n", s, res
+          "ClothoidList::closest_point_in_range_ISO, new min at s = {}, res = {}\n", s, res
         );
       }
     } while ( iseg != ie );
@@ -1653,7 +1652,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  ClothoidList::closestPointInSRange_ISO(
+  ClothoidList::closest_point_in_s_range_ISO(
     real_type   qx,
     real_type   qy,
     real_type   s_begin,
@@ -1667,7 +1666,7 @@ namespace G2lib {
   ) const {
     UTILS_ASSERT0(
       !m_clotoidList.empty(),
-      "ClothoidList::closestPointInSRange_ISO, empty list\n"
+      "ClothoidList::closest_point_in_s_range_ISO, empty list\n"
     );
     // put in range
     while ( s_begin < 0              ) s_begin += this->length();
@@ -1684,7 +1683,7 @@ namespace G2lib {
       real_type     ss0 = m_s0[i_begin];
       ClothoidCurve C   = m_clotoidList[i_begin]; // crea copia
       C.trim( s_begin-ss0, s_end-ss0 );
-      res = C.closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      res = C.closest_point_ISO( qx, qy, x, y, s, t, dst );
       s += s_begin;
     } else {
       // segmenti consecutivi
@@ -1700,21 +1699,21 @@ namespace G2lib {
       C0.trim( s_begin-ss0, C0.length() );
 
       // calcolo closest point
-      res = C0.closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      res = C0.closest_point_ISO( qx, qy, x, y, s, t, dst );
       s  += s_begin;
       icurve = i_begin;
 
       G2LIB_DEBUG_MESSAGE(
-        "ClothoidList::closestPointInSRange_ISO: first segment {} dst = {} res = {}\n",
+        "ClothoidList::closest_point_in_s_range_ISO: first segment {} dst = {} res = {}\n",
         i_begin, dst, res
       );
 
       C1.trim( 0, s_end-ss1 );
-      res1 = C1.closestPoint_ISO( qx, qy, x1, y1, s1, t1, dst1 );
+      res1 = C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 );
       s1 += ss1;
 
       G2LIB_DEBUG_MESSAGE(
-        "ClothoidList::closestPointInSRange_ISO: last segment {} dst = {} res = {}\n",
+        "ClothoidList::closest_point_in_s_range_ISO: last segment {} dst = {} res = {}\n",
         i_end, dst1, res1
       );
 
@@ -1728,11 +1727,11 @@ namespace G2lib {
       ++i_begin;
       if ( i_begin < i_end ) {
         int_type icurve1;
-        res1 = this->closestPointInRange_ISO(
+        res1 = this->closest_point_in_range_ISO(
           qx, qy, i_begin, i_end, x1, y1, s1, t1, dst1, icurve1
         );
         G2LIB_DEBUG_MESSAGE(
-          "ClothoidList::closestPointInSRange_ISO: range [{},{}] dst = {} res = {}\n",
+          "ClothoidList::closest_point_in_s_range_ISO: range [{},{}] dst = {} res = {}\n",
           i_begin, i_end, dst1, res1
         );
         if ( dst1 < dst ) {
@@ -1744,7 +1743,7 @@ namespace G2lib {
           res    = res1;
           icurve = icurve1;
           G2LIB_DEBUG_MESSAGE(
-            "ClothoidList::closestPointInSRange_ISO: new min at s = {}, res = {}\n", s, res
+            "ClothoidList::closest_point_in_s_range_ISO: new min at s = {}, res = {}\n", s, res
           );
         }
       }
@@ -1764,14 +1763,14 @@ namespace G2lib {
     real_type ss = 0;
     while ( ic != m_clotoidList.end() ) {
       s[k]     = ss;
-      kappa[k] = ic->kappaBegin();
+      kappa[k] = ic->kappa_begin();
       ss      += ic->length();
       ++k;
       ++ic;
     }
     --ic; // last element
     s[k]     = ss;
-    kappa[k] = ic->kappaEnd();
+    kappa[k] = ic->kappa_end();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1790,16 +1789,16 @@ namespace G2lib {
     real_type ss = 0;
     while ( ic != m_clotoidList.end() ) {
       s[k]     = ss;
-      theta[k] = ic->thetaBegin();
-      kappa[k] = ic->kappaBegin();
+      theta[k] = ic->theta_begin();
+      kappa[k] = ic->kappa_begin();
       ss      += ic->length();
       ++k;
       ++ic;
     }
     --ic; // last element
     s[k]     = ss;
-    theta[k] = ic->thetaEnd();
-    kappa[k] = ic->kappaEnd();
+    theta[k] = ic->theta_end();
+    kappa[k] = ic->kappa_end();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1809,13 +1808,13 @@ namespace G2lib {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type k  = 0;
     while ( ic != m_clotoidList.end() ) {
-      x[k] = ic->xBegin();
-      y[k] = ic->yBegin();
+      x[k] = ic->x_begin();
+      y[k] = ic->y_begin();
       ++k; ++ic;
     }
     --ic;
-    x[k] = ic->xEnd();
-    y[k] = ic->yEnd();
+    x[k] = ic->x_end();
+    y[k] = ic->y_end();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1825,7 +1824,7 @@ namespace G2lib {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type k = 0;
     for ( ++ic; ic != m_clotoidList.end(); ++ic, ++k ) {
-      real_type tmp = ic->thetaBegin()-ic[-1].thetaEnd();
+      real_type tmp = ic->theta_begin()-ic[-1].theta_end();
       if      ( tmp >  Utils::m_pi ) tmp -= Utils::m_2pi;
       else if ( tmp < -Utils::m_pi ) tmp += Utils::m_2pi;
       deltaTheta[k] = tmp;
@@ -1839,7 +1838,7 @@ namespace G2lib {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     int_type k = 0;
     for ( ++ic; ic != m_clotoidList.end(); ++ic, ++k  )
-      deltaKappa[k] = ic->kappaBegin()-ic[-1].kappaEnd();
+      deltaKappa[k] = ic->kappa_begin()-ic[-1].kappa_end();
 
   }
 
@@ -1930,13 +1929,15 @@ namespace G2lib {
     stream << "x\ty\ttheta0\tkappa0\tdkappa\tL\n";
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     for (; ic != m_clotoidList.end(); ++ic )
-      stream
-        << ic->xBegin()     << '\t'
-        << ic->yBegin()     << '\t'
-        << ic->thetaBegin() << '\t'
-        << ic->kappaBegin() << '\t'
-        << ic->dkappa()     << '\t'
-        << ic->length()     << '\n';
+      fmt::print( stream,
+        "{}\t{}\t{}\t{}\t{}\t{}\n",
+        ic->x_begin(),
+        ic->y_begin(),
+        ic->theta_begin(),
+        ic->kappa_begin(),
+        ic->dkappa(),
+        ic->length()
+      );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1946,13 +1947,15 @@ namespace G2lib {
     stream << "data = {\n";
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     for (; ic != m_clotoidList.end(); ++ic )
-      stream
-        << ic->xBegin()     << '\t'
-        << ic->yBegin()     << '\t'
-        << ic->thetaBegin() << '\t'
-        << ic->kappaBegin() << '\t'
-        << ic->dkappa()     << '\t'
-        << ic->length()     << '\n';
+      fmt::print( stream,
+        "{}\t{}\t{}\t{}\t{}\t{}\n",
+        ic->x_begin(),
+        ic->y_begin(),
+        ic->theta_begin(),
+        ic->kappa_begin(),
+        ic->dkappa(),
+        ic->length()
+      );
     stream << "}\n";
   }
 
@@ -1976,15 +1979,15 @@ namespace G2lib {
       "{:<24}\t{:<24}\t{:<24}\t{:<24}\n"
       "{:<24}\t{:<24}\t{:<24}\t{:<24}\n",
       //------------------
-      fmt::format("{:.20}",c.xBegin()),
-      fmt::format("{:.20}",c.yBegin()),
-      fmt::format("{:.20}",c.thetaBegin()),
-      fmt::format("{:.20}",c.kappaBegin()),
+      fmt::format("{:.20}",c.x_begin()),
+      fmt::format("{:.20}",c.y_begin()),
+      fmt::format("{:.20}",c.theta_begin()),
+      fmt::format("{:.20}",c.kappa_begin()),
       //------------------
-      fmt::format("{:.20}",c.xEnd()),
-      fmt::format("{:.20}",c.yEnd()),
-      fmt::format("{:.20}",c.thetaEnd()),
-      fmt::format("{:.20}",c.kappaEnd())
+      fmt::format("{:.20}",c.x_end()),
+      fmt::format("{:.20}",c.y_end()),
+      fmt::format("{:.20}",c.theta_end()),
+      fmt::format("{:.20}",c.kappa_end())
     );
   }
   #endif
@@ -2017,8 +2020,8 @@ namespace G2lib {
     iss2 >> x1 >> y1 >> theta1 >> kappa1;
     c.build_G1( x0, y0, theta0, x1, y1, theta1 );
     // check segment
-    real_type err1 = std::abs( kappa0 - c.kappaBegin() ) * c.length();
-    real_type err2 = std::abs( kappa1 - c.kappaEnd() ) * c.length();
+    real_type err1 = std::abs( kappa0 - c.kappa_begin() ) * c.length();
+    real_type err2 = std::abs( kappa1 - c.kappa_end() ) * c.length();
     UTILS_ASSERT(
       err1 < epsi && err2 < epsi,
       "load_segment, failed tolerance on curvature\n"

@@ -172,6 +172,63 @@ namespace Utils {
     bool                 can_extend
   );
   #endif
+
+  static
+  inline
+  void
+  to_upper( std::string & s ) {
+    std::transform( s.begin(), s.end(), s.begin(), toupper );
+  }
+
+  static
+  inline
+  void
+  to_lower( std::string & s ) {
+    std::transform( s.begin(), s.end(), s.begin(), tolower );
+  }
+
+  static
+  inline
+  bool
+  is_lower( std::string const & s ) {
+    return std::all_of( s.begin(), s.end(), islower );
+  }
+
+  static
+  inline
+  bool
+  is_upper( std::string const & s ) {
+    return std::all_of( s.begin(), s.end(), isupper );
+  }
+
+  static
+  inline
+  bool
+  is_alpha( std::string const & s ) {
+    return std::all_of( s.begin(), s.end(), isalpha );
+  }
+
+  static
+  inline
+  bool
+  is_alphanum( std::string const & s ) {
+    return std::all_of( s.begin(), s.end(), isalnum );
+  }
+
+  static
+  inline
+  bool
+  is_digits( std::string const & s ) {
+    return std::all_of( s.begin(), s.end(), isdigit );
+  }
+
+  static
+  inline
+  bool
+  is_xdigits( std::string const & s ) {
+    return std::all_of( s.begin(), s.end(), isxdigit );
+  }
+
 }
 
 #endif

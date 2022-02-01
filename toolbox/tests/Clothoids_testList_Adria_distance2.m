@@ -65,7 +65,7 @@ qx = 200;
 qy = -100;
 s_begin = 1000;
 s_end   = 10000;
-[ icurve, x, y, s, t, iflag, dst ] = S.closestPointInSRange( qx, qy, s_begin, s_end );
+[ icurve, x, y, s, t, iflag, dst ] = S.closest_point_in_s_range( qx, qy, s_begin, s_end );
 plot( [qx,x],[qy,y]);
 fprintf('s=%g, t=%g, dst=%g iflag=%d\n',s,t,dst,iflag);
 

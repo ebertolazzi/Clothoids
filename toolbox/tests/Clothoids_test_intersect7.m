@@ -566,8 +566,8 @@ SPL2 = S2.buildP2( XY(:,1), XY(:,2) );
 
 SPL2.scale(80000);
 
-SPL2.changeOrigin(0,0);
-SPL1.changeOrigin(0,0);
+SPL2.change_origin(0,0);
+SPL1.change_origin(0,0);
 SPL2.rotate(pi/3,0,0);
 SPL2.reverse();
 SPL2.translate(920,-250);

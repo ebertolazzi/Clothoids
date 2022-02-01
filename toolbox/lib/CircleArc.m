@@ -115,7 +115,7 @@ classdef CircleArc < CurveBase
     %>
     %>    ref.scale( sc );
     %> \endrst
-    %> 
+    %>
     function scale( self, sc )
       CircleArcMexWrapper( 'scale', self.objectHandle, sc );
     end
@@ -127,11 +127,15 @@ classdef CircleArc < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>    ref.changeCurvilinearOrigin( s0, L );
+    %>    ref.change_curvilinear_origin( s0, L );
     %> \endrst
-    %> 
+    %>
+    function change_curvilinear_origin( self, s0, L )
+      CircleArcMexWrapper( 'change_curvilinear_origin', self.objectHandle, s0, L );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function changeCurvilinearOrigin( self, s0, L )
-      CircleArcMexWrapper( 'changeCurvilinearOrigin', self.objectHandle, s0, L );
+      self.change_curvilinear_origin( s0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> return a nurbs representation of the circle arc

@@ -227,26 +227,26 @@ namespace G2lib {
     real_type nx_End_ISO()   const override { return -m_s0; }
     real_type ny_End_ISO()   const override { return m_c0; }
 
-    real_type xBegin() const override { return m_x0; }
-    real_type yBegin() const override { return m_y0; }
-    real_type xEnd()   const override { return m_x0+m_L*m_c0; }
-    real_type yEnd()   const override { return m_y0+m_L*m_s0; }
+    real_type x_begin() const override { return m_x0; }
+    real_type y_begin() const override { return m_y0; }
+    real_type x_end()   const override { return m_x0+m_L*m_c0; }
+    real_type y_end()   const override { return m_y0+m_L*m_s0; }
 
     real_type
-    xBegin_ISO( real_type offs ) const override
+    x_begin_ISO( real_type offs ) const override
     { return m_x0+offs*nx_Begin_ISO(); }
 
     real_type
-    yBegin_ISO( real_type offs ) const override
+    y_begin_ISO( real_type offs ) const override
     { return m_y0+offs*ny_Begin_ISO(); }
 
     real_type
-    xEnd_ISO( real_type offs ) const override
-    { return xEnd()+offs*nx_Begin_ISO(); }
+    x_end_ISO( real_type offs ) const override
+    { return x_end()+offs*nx_Begin_ISO(); }
 
     real_type
-    yEnd_ISO( real_type offs ) const override
-    { return yEnd()+offs*ny_Begin_ISO(); }
+    y_end_ISO( real_type offs ) const override
+    { return y_end()+offs*ny_Begin_ISO(); }
 
     /*\
      |  _   _          _
@@ -487,7 +487,7 @@ namespace G2lib {
     reverse() override;
 
     void
-    changeOrigin( real_type newx0, real_type newy0 ) override
+    change_origin( real_type newx0, real_type newy0 ) override
     { m_x0 = newx0; m_y0 = newy0; }
 
     void
@@ -525,7 +525,7 @@ namespace G2lib {
     //!
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -536,7 +536,7 @@ namespace G2lib {
     ) const override;
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -675,6 +675,52 @@ namespace G2lib {
     operator << ( ostream_type & stream, LineSegment const & c );
 
     friend class ClothoidCurve;
+
+    //@@@@ BACK COMPATIBILITY
+
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+
+    void
+    changeOrigin( real_type newx0, real_type newy0 )
+    { change_origin( newx0, newy0 ); }
+
+    real_type xBegin()     const { return x_begin(); }
+    real_type yBegin()     const { return y_begin(); }
+    real_type xEnd()       const { return x_end(); }
+    real_type yEnd()       const { return y_end(); }
+    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
+    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
+    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
+    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+    }
+
+    #endif
 
   };
 

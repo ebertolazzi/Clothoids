@@ -134,8 +134,15 @@
 <span class="w">    </span><span class="n">real_type</span><span class="w"> </span><span class="n">m_ymax</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">int_type</span><span class="w">  </span><span class="n">m_id</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">int_type</span><span class="w">  </span><span class="n">m_ipos</span><span class="p">;</span><span class="w"></span>
+
 <span class="w">    </span><span class="n">BBox</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="cp">#ifdef G2LIB_USE_CXX11</span>
+<span class="w">    </span><span class="n">BBox</span><span class="p">(</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">BBox</span><span class="p">(</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#else</span>
 <span class="w">    </span><span class="n">BBox</span><span class="p">(</span><span class="w"> </span><span class="n">BBox</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#endif</span>
 
 <span class="w">  </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
 

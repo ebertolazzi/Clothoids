@@ -175,12 +175,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   x = ref.xMiddle();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   x = ref.x_middle();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>res<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">x_middle</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">BiarcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'x_middle'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>res<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">xMiddle</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">BiarcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'xMiddle'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_middle</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Get junction point of the biarc y-coordinate</span><span class="w"></span>
@@ -190,12 +194,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   x = ref.yMiddle();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   x = ref.y_middle();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>res<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">y_middle</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">BiarcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'y_middle'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>res<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">yMiddle</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">BiarcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'yMiddle'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_middle</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Get junction point angle of the biarc</span><span class="w"></span>
@@ -205,12 +213,16 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   theta = ref.thetaMiddle();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   theta = ref.theta_middle();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>res<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">theta_middle</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">BiarcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'theta_middle'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span>res<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">thetaMiddle</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">BiarcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'thetaMiddle'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">res</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_middle</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Get curvature of the first arc of the biarc</span><span class="w"></span>
@@ -290,12 +302,12 @@
 <span class="w">    </span><span class="c">%&gt; - `theta1`    : final angle of the biarc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ x0,y0,theta0,x1,y1,theta1] = getData</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">x1</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xEnd</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">y1</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">yEnd</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">theta1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">thetaEnd</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">x1</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_end</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">y1</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_end</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">theta1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_end</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Get the two circle arc composing a biarc</span><span class="w"></span>
@@ -305,23 +317,27 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   [C0,C1] = ref.getCircles();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   [C0,C1] = ref.get_circles();</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ C0, C1 ] = getCircles</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">yBegin</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">thetaBegin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ C0, C1 ] = get_circles</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_begin</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappa0</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">length0</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">C0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArc</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">xMiddle</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">yMiddle</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">thetaMiddle</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_middle</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_middle</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_middle</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">kappa0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappa1</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">length1</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">C1</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">CircleArc</span><span class="p">(</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">y0</span><span class="p">,</span><span class="w"> </span><span class="n">theta0</span><span class="p">,</span><span class="w"> </span><span class="n">kappa0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">[ C0, C1 ] = getCircles</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="w"> </span><span class="n">C0</span><span class="p">,</span><span class="w"> </span><span class="n">C1</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">get_circles</span><span class="p">();</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Return the nurbs represantation of the two arc composing the biarc</span><span class="w"></span>
@@ -393,7 +409,7 @@
 <span class="w">      </span><span class="k">else</span><span class="w"></span>
 <span class="w">        </span><span class="n">fmt2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="s">'Color'</span><span class="p">,</span><span class="s">'red'</span><span class="p">,</span><span class="s">'Linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span><span class="w"></span>
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
-<span class="w">      </span><span class="p">[</span><span class="n">C0</span><span class="p">,</span><span class="n">C1</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">getCircles</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="n">C0</span><span class="p">,</span><span class="n">C1</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">get_circles</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">C0</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="n">fmt1</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">hold</span><span class="w"> </span><span class="s">on</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="n">C1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">npts</span><span class="p">,</span><span class="n">fmt2</span><span class="p">);</span><span class="w"></span>
@@ -410,7 +426,7 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;   fmt1 = {'Color','blue','Linewidth',2};</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;   fmt2 = {'Color','red','Linewidth',2};</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotCurvature( npts, fmt1, fmt2 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_curvature( npts, fmt1, fmt2 );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
@@ -418,7 +434,7 @@
 <span class="w">    </span><span class="c">%&gt; - `fmt1`: format of the first arc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `fmt2`: format of the second arc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotCurvature</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_curvature</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">        </span><span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
@@ -428,6 +444,10 @@
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotCurvature</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">plot_curvature</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Plot the angle of the biarc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
@@ -435,11 +455,11 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotAngle( npts );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_angle( npts );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;   fmt1 = {'Color','blue','Linewidth',2};</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;   fmt2 = {'Color','red','Linewidth',2};</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotAngle( npts, fmt1, fmt2 );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_angle( npts, fmt1, fmt2 );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
@@ -447,7 +467,7 @@
 <span class="w">    </span><span class="c">%&gt; - `fmt1`: format of the first arc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `fmt2`: format of the second arc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotAngle</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_angle</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="nb">nargin</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
 <span class="w">        </span><span class="n">npts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
@@ -457,6 +477,10 @@
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="w"> </span><span class="n">S</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotAngle</span><span class="p">(</span> self, npts, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">plot_angle</span><span class="p">(</span><span class="w"> </span><span class="n">npts</span><span class="p">,</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Plot the normal of the biarc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
@@ -464,14 +488,15 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;   ref.plotNormal( step, len );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;   ref.plot_normal( step, len );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `step`: number of sampling normals</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `len`:  length of the plotted normal</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotNormal</span><span class="p">(</span> self, step, len <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_normal</span><span class="p">(</span> self, step, len <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="n">s</span><span class="p">=</span><span class="mi">0</span><span class="p">:</span><span class="nb">step</span><span class="p">:</span><span class="n">self</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"></span>
 <span class="w">        </span><span class="p">[</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w"></span>
 <span class="w">        </span><span class="n">n</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="nb">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span><span class="o">-</span><span class="nb">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)];</span><span class="w"></span>
@@ -480,6 +505,11 @@
 <span class="w">        </span><span class="nb">plot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotNormal</span><span class="p">(</span> self, step, len <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">plot_normal</span><span class="p">(</span><span class="w"> </span><span class="nb">step</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">  </span><span class="k">end</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
 </pre></div>

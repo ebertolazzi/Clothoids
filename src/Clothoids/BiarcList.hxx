@@ -99,7 +99,7 @@ namespace G2lib {
     }
 
     int_type
-    closestPoint_internal(
+    closest_point_internal(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -280,7 +280,7 @@ namespace G2lib {
     //!
     //! Return the number of biarc in the biarc list.
     //!
-    int_type numSegments() const { return int_type(m_biarcList.size()); }
+    int_type num_segments() const { return int_type(m_biarcList.size()); }
 
     //!
     //! Get the of the biarc that contain
@@ -408,44 +408,44 @@ namespace G2lib {
     \*/
 
     real_type
-    thetaBegin() const override
-    { return m_biarcList.front().thetaBegin(); }
+    theta_begin() const override
+    { return m_biarcList.front().theta_begin(); }
 
     real_type
-    thetaEnd() const override
-    { return m_biarcList.back().thetaEnd(); }
+    theta_end() const override
+    { return m_biarcList.back().theta_end(); }
 
     real_type
-    xBegin() const override
-    { return m_biarcList.front().xBegin(); }
+    x_begin() const override
+    { return m_biarcList.front().x_begin(); }
 
     real_type
-    yBegin() const override
-    { return m_biarcList.front().yBegin(); }
+    y_begin() const override
+    { return m_biarcList.front().y_begin(); }
 
     real_type
-    xEnd() const override
-    { return m_biarcList.back().xEnd(); }
+    x_end() const override
+    { return m_biarcList.back().x_end(); }
 
     real_type
-    yEnd() const override
-    { return m_biarcList.back().yEnd(); }
+    y_end() const override
+    { return m_biarcList.back().y_end(); }
 
     real_type
-    xBegin_ISO( real_type offs ) const override
-    { return m_biarcList.front().xBegin_ISO( offs ); }
+    x_begin_ISO( real_type offs ) const override
+    { return m_biarcList.front().x_begin_ISO( offs ); }
 
     real_type
-    yBegin_ISO( real_type offs ) const override
-    { return m_biarcList.front().yBegin_ISO( offs ); }
+    y_begin_ISO( real_type offs ) const override
+    { return m_biarcList.front().y_begin_ISO( offs ); }
 
     real_type
-    xEnd_ISO( real_type offs ) const override
-    { return m_biarcList.back().xEnd_ISO( offs ); }
+    x_end_ISO( real_type offs ) const override
+    { return m_biarcList.back().x_end_ISO( offs ); }
 
     real_type
-    yEnd_ISO( real_type offs ) const override
-    { return m_biarcList.back().yEnd_ISO( offs ); }
+    y_end_ISO( real_type offs ) const override
+    { return m_biarcList.back().y_end_ISO( offs ); }
 
     real_type
     tx_Begin() const override
@@ -666,7 +666,7 @@ namespace G2lib {
     void rotate( real_type angle, real_type cx, real_type cy ) override;
     void scale( real_type sc ) override;
     void reverse() override;
-    void changeOrigin( real_type newx0, real_type newy0 ) override;
+    void change_origin( real_type newx0, real_type newy0 ) override;
     void trim( real_type s_begin, real_type s_end ) override;
 
     /*\
@@ -678,7 +678,7 @@ namespace G2lib {
     \*/
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -689,7 +689,7 @@ namespace G2lib {
     ) const override;
 
     int_type // true if projection is unique and orthogonal
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -843,6 +843,51 @@ namespace G2lib {
       IntersectList   & ilist,
       bool              swap_s_vals
     ) const;
+
+    //@@@@ BACK COMPATIBILITY
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+
+    real_type thetaBegin() const { return theta_begin(); }
+    real_type thetaEnd()   const { return theta_end(); }
+    real_type xBegin()     const { return x_begin(); }
+    real_type yBegin()     const { return y_begin(); }
+    real_type xEnd()       const { return x_end(); }
+    real_type yEnd()       const { return y_end(); }
+    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
+    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
+    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
+    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
+
+    int_type numSegments() const { return num_segments(); }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+    }
+
+    #endif
 
   };
 

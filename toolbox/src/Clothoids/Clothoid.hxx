@@ -80,7 +80,7 @@ namespace G2lib {
     ) const;
 
     void
-    closestPoint_internal(
+    closest_point_internal(
       real_type   s_begin,
       real_type   s_end,
       real_type   qx,
@@ -93,7 +93,7 @@ namespace G2lib {
     ) const;
 
     void
-    closestPoint_internal(
+    closest_point_internal(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -488,20 +488,20 @@ namespace G2lib {
     //! Clothoid curve total variation of the angle.
     //!
     real_type
-    thetaTotalVariation() const;
+    theta_total_variation() const;
 
     //!
     //! Max and min angle of the curve.
     //!
     real_type
-    thetaMinMax( real_type & thMin, real_type & thMax ) const;
+    theta_min_max( real_type & thMin, real_type & thMax ) const;
 
     //!
     //! Clothoid angle range.
     //!
     real_type
     deltaTheta() const
-    { real_type thMin, thMax; return thetaMinMax( thMin, thMax ); }
+    { real_type thMin, thMax; return theta_min_max( thMin, thMax ); }
 
     //!
     //! Max and min of the curvatire of the clothoid curve.
@@ -597,7 +597,7 @@ namespace G2lib {
     //! \return the distance of the point from the clothoid
     //!
     real_type
-    closestPointBySample(
+    closest_point_by_sample(
       real_type   ds,
       real_type   qx,
       real_type   qy,
@@ -624,7 +624,7 @@ namespace G2lib {
       real_type & S
     ) const {
       real_type X, Y;
-      return closestPointBySample( ds, qx, qy, X, Y, S );
+      return closest_point_by_sample( ds, qx, qy, X, Y, S );
     }
 
     //!
@@ -643,7 +643,7 @@ namespace G2lib {
       real_type qy
     ) const {
       real_type X, Y, S;
-      return closestPointBySample( ds, qx, qy, X, Y, S );
+      return closest_point_by_sample( ds, qx, qy, X, Y, S );
     }
 
     /*\
@@ -782,12 +782,12 @@ namespace G2lib {
       return 0;
     }
 
-    real_type thetaBegin()   const override { return m_CD.theta0; }
-    real_type kappaBegin()   const override { return m_CD.kappa0; }
-    real_type xBegin()       const override { return m_CD.x0; }
-    real_type xEnd()         const override { return m_CD.X(m_L); }
-    real_type yBegin()       const override { return m_CD.y0; }
-    real_type yEnd()         const override { return m_CD.Y(m_L); }
+    real_type theta_begin()  const override { return m_CD.theta0; }
+    real_type kappa_begin()  const override { return m_CD.kappa0; }
+    real_type x_begin()      const override { return m_CD.x0; }
+    real_type x_end()        const override { return m_CD.X(m_L); }
+    real_type y_begin()      const override { return m_CD.y0; }
+    real_type y_end()        const override { return m_CD.Y(m_L); }
     real_type tx_Begin()     const override { return m_CD.tg0_x(); }
     real_type ty_Begin()     const override { return m_CD.tg0_y(); }
     real_type nx_Begin_ISO() const override { return m_CD.nor0_x_ISO(); }
@@ -1093,7 +1093,7 @@ namespace G2lib {
     { m_CD.reverse(m_L); }
 
     void
-    changeOrigin( real_type newx0, real_type newy0 ) override
+    change_origin( real_type newx0, real_type newy0 ) override
     { m_CD.x0 = newx0; m_CD.y0 = newy0; }
 
     void
@@ -1110,7 +1110,7 @@ namespace G2lib {
     //! \param[in] newL \f$ L \f$
     //! 
     void
-    changeCurvilinearOrigin( real_type s0, real_type newL ) {
+    change_curvilinear_origin( real_type s0, real_type newL ) {
       m_CD.origin_at( s0 );
       m_L = newL;
     }
@@ -1124,7 +1124,7 @@ namespace G2lib {
     \*/
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -1135,7 +1135,7 @@ namespace G2lib {
     ) const override;
 
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -1220,6 +1220,78 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
+    //@@@@ BACK COMPATIBILITY
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+
+    real_type
+    thetaTotalVariation() const
+    { return theta_total_variation(); }
+    
+    real_type
+    thetaMinMax( real_type & thMin, real_type & thMax ) const
+    { return theta_min_max(thMin,thMax); }
+
+    void
+    changeOrigin( real_type newx0, real_type newy0 )
+    { change_origin( newx0, newy0 ); }
+
+    void
+    changeCurvilinearOrigin( real_type s0, real_type newL )
+    { change_curvilinear_origin( s0, newL ); }
+
+    real_type thetaBegin() const { return theta_begin(); }
+    real_type thetaEnd()   const { return theta_end(); }
+    real_type kappaBegin() const { return kappa_begin(); }
+    real_type kappaEnd()   const { return kappa_end(); }
+    real_type xBegin()     const { return x_begin(); }
+    real_type yBegin()     const { return y_begin(); }
+    real_type xEnd()       const { return x_end(); }
+    real_type yEnd()       const { return y_end(); }
+    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
+    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
+    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
+    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
+
+    real_type
+    closestPointBySample(
+      real_type   ds,
+      real_type   qx,
+      real_type   qy,
+      real_type & X,
+      real_type & Y,
+      real_type & S
+    ) const {
+      return closest_point_by_sample( ds, qx, qy, X, Y, S );
+    }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+    }
+
+    #endif
   };
 
 }

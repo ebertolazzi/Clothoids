@@ -29,8 +29,8 @@ S = ClothoidList();
 
 iter = C.build_G1(x0,y0,theta0,x1,y1,theta1);
 
-kappa0 = C.kappaBegin();
-kappa1 = C.kappaEnd();
+kappa0 = C.kappa_begin();
+kappa1 = C.kappa_end();
 
 iter = S.build_3arcG2(x0,y0,theta0,kappa0,x1,y1,theta1,kappa1);
 

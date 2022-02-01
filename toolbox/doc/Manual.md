@@ -47,6 +47,7 @@ L1.rotate( ang, cx, cy );
 
 % change the orgin of a segment to `[ox,oy]`
 L1.changeOrigin( ox, oy );
+L1.change_origin( ox, oy );
 
 % cut or extend the segment at curvilinear coordinates `smin` and `smax`
 L1.trim( smin, smax );
@@ -57,6 +58,9 @@ bs = L1.to_nurbs();
 % initial and final coordinates
 x = L1.xBegin(); x = L1.xEnd();
 y = L1.yBegin(); y = L1.yEnd();
+
+x = L1.x_begin(); x = L1.x_end();
+y = L1.y_begin(); y = L1.y_end();
 
 % segment angle direction
 ang = L1.theta();
@@ -141,6 +145,7 @@ C.rotate( ang, cx, cy );
 
 % change the orgin of a circle arc to `[ox,oy]`
 C.changeOrigin( ox, oy );
+C.change_origin( ox, oy );
 
 % cut or extend the circle arc at curvilinear coordinates `smin` and `smax`
 C.trim( smin, smax );
@@ -154,6 +159,9 @@ bs = C.to_nurbs();
 % initial and final coordinates
 x = C.xBegin(); x = C.xEnd();
 y = C.yBegin(); y = C.yEnd();
+
+x = C.x_begin(); x = C.x_end();
+y = C.y_begin(); y = C.y_end();
 
 % intial and final angle
 ang = C.thetaBegin(); ang = C.thetaEnd();
@@ -242,6 +250,7 @@ B.rotate( ang, cx, cy );
 
 % change the orgin of the biarc to `[ox,oy]`
 B.changeOrigin( ox, oy );
+B.change_origin( ox, oy );
 
 % scale the biarc by `fact` factor
 B.scale( fact );
@@ -259,15 +268,23 @@ bs = B.to_nurbs();
 x = B.xBegin0(); x = B.xEnd0();
 y = B.yBegin0(); y = B.yEnd0();
 
+x = B.x_begin0(); x = B.x_end0();
+y = B.y_begin0(); y = B.y_end0();
+
 % initial and final coordinates of second circle
 x = B.xBegin1(); x = B.xEnd1();
 y = B.yBegin1(); y = B.yEnd1();
 
+x = B.x_begin1(); x = B.x_end1();
+y = B.y_begin1(); y = B.y_end1();
+
 % intial and final angle of first circle
-ang = B.thetaBegin0(); ang = B.thetaEnd0();
+ang = B.thetaBegin0();  ang = B.thetaEnd0();
+ang = B.theta_begin0(); ang = B.theta_end0();
 
 % intial and final angle of second circle
-ang = B.thetaBegin1(); ang = B.thetaEnd1();
+ang = B.thetaBegin1();  ang = B.thetaEnd1();
+ang = B.theta_begin1(); ang = B.theta_end1();
 
 % circle arc length for first and second circle
 L0 = B.length0(); L1 = B.length0();
@@ -301,6 +318,7 @@ B.plot(npts,fmt1,fmt2);
 % closest point to `[x,y]` onto the biarc
 % d = distance, s = parameter of the point of segment at minimum distance
 [x,y,s,d] = B.closestPoint(x,y);
+[x,y,s,d] = B.closest_point(x,y);
 ~~~~
 
 **Evaluation Methods**
@@ -371,6 +389,7 @@ CL.rotate( ang, cx, cy );
 
 % change the orgin of the clothoid curve to `[ox,oy]`
 CL.changeOrigin( ox, oy );
+CL.change_origin( ox, oy );
 
 % scale the clothoid curve by `fact` factor
 CL.scale( fact );
@@ -388,11 +407,16 @@ bs = CL.to_nurbs();
 x = CL.xBegin(); x = CL.xEnd();
 y = CL.yBegin(); y = CL.yEnd();
 
+x = CL.x_begin(); x = CL.x_end();
+y = CL.y_begin(); y = CL.y_end();
+
 % intial and final angle of the clothoid curve
-ang = CL.thetaBegin(); ang = CL.thetaEnd();
+ang = CL.thetaBegin();  ang = CL.thetaEnd();
+ang = CL.theta_begin(); ang = CL.theta_end();
 
 % intial and final curvature of the clothoid curve
-k0 = CL.kappaBegin(); ang = CL.kappaEnd();
+k0 = CL.kappaBegin();  ang = CL.kappaEnd();
+k0 = CL.kappa_begin(); ang = CL.kappa_end();
 
 % derivative of curvature of the clothoid curve
 dk = CL.kappa_D();
@@ -410,6 +434,7 @@ CL.info();
 
 % return the parameters defining the clothoid curve
 [x0,y0,theta0,k0,dk,L] = CL.getPars();
+[x0,y0,theta0,k0,dk,L] = CL.get_pars();
 
 % plot the clothoid curve
 CL.plot();
@@ -429,6 +454,7 @@ CL.plot(npts,'Color','red');
 % closest point to `[x,y]` onto the clothoid curve
 % d = distance, s = parameter of the point of segment at minimum distance
 [x,y,s,d] = CL.closestPoint(x,y);
+[x,y,s,d] = CL.closest_point(x,y);
 
 % compute all the intersection of curve CL with curve CL1.
 % CL1 may be a ClothoidCurve a CircleArc or a LineSegment object

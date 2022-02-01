@@ -227,9 +227,9 @@ namespace G2lib {
       "BiarcList::push_back_G1(...) empty list!\n"
     );
     Biarc c;
-    real_type x0     = m_biarcList.back().xEnd();
-    real_type y0     = m_biarcList.back().yEnd();
-    real_type theta0 = m_biarcList.back().thetaEnd();
+    real_type x0     = m_biarcList.back().x_end();
+    real_type y0     = m_biarcList.back().y_end();
+    real_type theta0 = m_biarcList.back().theta_end();
     c.build( x0, y0, theta0, x1, y1, theta1 );
     push_back( c );
   }
@@ -924,14 +924,14 @@ namespace G2lib {
   void
   BiarcList::scale( real_type sfactor ) {
     vector<Biarc>::iterator ic = m_biarcList.begin();
-    real_type newx0 = ic->xBegin();
-    real_type newy0 = ic->yBegin();
+    real_type newx0 = ic->x_begin();
+    real_type newy0 = ic->y_begin();
     m_s0[0] = 0;
     for ( size_t k=0; ic != m_biarcList.end(); ++ic, ++k ) {
       ic->scale( sfactor );
-      ic->changeOrigin( newx0, newy0 );
-      newx0     = ic->xEnd();
-      newy0     = ic->yEnd();
+      ic->change_origin( newx0, newy0 );
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
       m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
@@ -943,16 +943,16 @@ namespace G2lib {
     std::reverse( m_biarcList.begin(), m_biarcList.end() );
     vector<Biarc>::iterator ic = m_biarcList.begin();
     ic->reverse();
-    real_type newx0 = ic->xEnd();
-    real_type newy0 = ic->yEnd();
+    real_type newx0 = ic->x_end();
+    real_type newy0 = ic->y_end();
     m_s0[0] = 0;
     m_s0[1] = ic->length();
     size_t k = 1;
     for ( ++ic; ic != m_biarcList.end(); ++ic, ++k ) {
       ic->reverse();
-      ic->changeOrigin( newx0, newy0 );
-      newx0     = ic->xEnd();
-      newy0     = ic->yEnd();
+      ic->change_origin( newx0, newy0 );
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
       m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
@@ -960,12 +960,12 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BiarcList::changeOrigin( real_type newx0, real_type newy0 ) {
+  BiarcList::change_origin( real_type newx0, real_type newy0 ) {
     vector<Biarc>::iterator ic = m_biarcList.begin();
     for (; ic != m_biarcList.end(); ++ic ) {
-      ic->changeOrigin( newx0, newy0 );
-      newx0 = ic->xEnd();
-      newy0 = ic->yEnd();
+      ic->change_origin( newx0, newy0 );
+      newx0 = ic->x_end();
+      newy0 = ic->y_end();
     }
   }
 
@@ -1165,7 +1165,7 @@ namespace G2lib {
   \*/
 
   int_type
-  BiarcList::closestPoint_internal(
+  BiarcList::closest_point_internal(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -1182,7 +1182,7 @@ namespace G2lib {
     AABBtree::VecPtrBBox::const_iterator ic;
     UTILS_ASSERT0(
       candidateList.size() > 0,
-      "BiarcList::closestPoint no candidate\n"
+      "BiarcList::closest_point_internal no candidate\n"
     );
     int_type icurve = 0;
     DST = numeric_limits<real_type>::infinity();
@@ -1193,7 +1193,7 @@ namespace G2lib {
       if ( dst < DST ) {
         // refine distance
         real_type xx, yy, ss, tt;
-        m_biarcList[T.Icurve()].closestPoint_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
+        m_biarcList[T.Icurve()].closest_point_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
         if ( dst < DST ) {
           DST    = dst;
           s      = ss + m_s0[T.Icurve()];
@@ -1207,7 +1207,7 @@ namespace G2lib {
   }
 
   int_type
-  BiarcList::closestPoint_ISO(
+  BiarcList::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type   offs,
@@ -1218,7 +1218,7 @@ namespace G2lib {
     real_type & DST
   ) const {
 
-    int_type icurve = this->closestPoint_internal( qx, qy, offs, x, y, s, DST );
+    int_type icurve = this->closest_point_internal( qx, qy, offs, x, y, s, DST );
 
     // check if projection is orthogonal
     real_type nx, ny;
@@ -1228,7 +1228,7 @@ namespace G2lib {
     t = qxx * nx + qyy * ny - offs; // signed distance
     real_type pt = abs(qxx * ny - qyy * nx);
     G2LIB_DEBUG_MESSAGE(
-      "BiarcList::closestPoint_ISO\n"
+      "BiarcList::closest_point_ISO\n"
       "||P-P0|| = {} and {}, |(P-P0).T| = {}\n",
       DST, hypot(qxx,qyy), pt
     );
@@ -1238,7 +1238,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  BiarcList::closestPoint_ISO(
+  BiarcList::closest_point_ISO(
     real_type   qx,
     real_type   qy,
     real_type & x,
@@ -1247,7 +1247,7 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    return closestPoint_ISO( qx, qy, 0, x, y, s, t, dst );
+    return closest_point_ISO( qx, qy, 0, x, y, s, t, dst );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1266,16 +1266,16 @@ namespace G2lib {
     real_type ss = 0;
     while ( ic != m_biarcList.end() ) {
       s[k]     = ss;
-      theta[k] = ic->thetaBegin();
-      kappa[k] = ic->kappaBegin();
+      theta[k] = ic->theta_begin();
+      kappa[k] = ic->kappa_begin();
       ss      += ic->length();
       ++k;
       ++ic;
     }
     --ic;
     s[k]     = ss;
-    theta[k] = ic->thetaEnd();
-    kappa[k] = ic->kappaEnd();
+    theta[k] = ic->theta_end();
+    kappa[k] = ic->kappa_end();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1285,13 +1285,13 @@ namespace G2lib {
     vector<Biarc>::const_iterator ic = m_biarcList.begin();
     int_type k  = 0;
     while ( ic != m_biarcList.end() ) {
-      x[k] = ic->xBegin();
-      y[k] = ic->yBegin();
+      x[k] = ic->x_begin();
+      y[k] = ic->y_begin();
       ++k; ++ic;
     }
     --ic;
-    x[k] = ic->xEnd();
-    y[k] = ic->yEnd();
+    x[k] = ic->x_end();
+    y[k] = ic->y_end();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

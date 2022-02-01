@@ -30,7 +30,7 @@ L3.plot('Color','blue','Linewidth',3);
 L1.translate(1,1);
 L1.plot();
 
-L2.changeOrigin(1,2);
+L2.change_origin(1,2);
 L2.plot('Color','red','Linewidth',3);
 
 
@@ -56,9 +56,9 @@ L3.eval(1)
 L3.eval_D(1)
 L3.eval_DD(1)
 L3.eval_DDD(1)
-L3.xBegin()
-L3.yBegin()
-L3.thetaBegin()
+L3.x_begin()
+L3.y_begin()
+L3.theta_begin()
 L3.length()
 
 L1.delete();

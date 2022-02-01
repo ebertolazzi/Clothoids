@@ -204,11 +204,15 @@
 <span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">%&gt;    ref.changeCurvilinearOrigin( s0, L );</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    ref.change_curvilinear_origin( s0, L );</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">change_curvilinear_origin</span><span class="p">(</span> self, s0, L <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">CircleArcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'change_curvilinear_origin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">changeCurvilinearOrigin</span><span class="p">(</span> self, s0, L <span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">CircleArcMexWrapper</span><span class="p">(</span><span class="w"> </span><span class="s">'changeCurvilinearOrigin'</span><span class="p">,</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">objectHandle</span><span class="p">,</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">change_curvilinear_origin</span><span class="p">(</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; return a nurbs representation of the circle arc</span><span class="w"></span>

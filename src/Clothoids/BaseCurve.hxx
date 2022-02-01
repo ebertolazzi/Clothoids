@@ -439,82 +439,82 @@ namespace G2lib {
     //!
     //! Initial angle of the curve.
     //!
-    virtual real_type thetaBegin() const { return this->theta(0); }
+    virtual real_type theta_begin() const { return this->theta(0); }
 
     //!
     //! Final angle of the curve.
     //!
-    virtual real_type thetaEnd() const { return this->theta(this->length()); }
+    virtual real_type theta_end() const { return this->theta(this->length()); }
 
     //!
     //! Initial curvature.
     //!
-    virtual real_type kappaBegin() const { return this->kappa(0); }
+    virtual real_type kappa_begin() const { return this->kappa(0); }
 
     //!
     //! Final curvature.
     //!
-    virtual real_type kappaEnd() const { return this->kappa(this->length()); }
+    virtual real_type kappa_end() const { return this->kappa(this->length()); }
 
     //!
     //! Initial x-coordinate.
     //!
-    virtual real_type xBegin() const { return this->X(0); }
+    virtual real_type x_begin() const { return this->X(0); }
 
     //!
     //! Initial y-coordinate.
     //!
-    virtual real_type yBegin() const { return this->Y(0); }
+    virtual real_type y_begin() const { return this->Y(0); }
 
     //!
     //! Final x-coordinate.
     //!
-    virtual real_type xEnd() const { return this->X(this->length()); }
+    virtual real_type x_end() const { return this->X(this->length()); }
 
     //!
     //! Final y-coordinate.
     //!
-    virtual real_type yEnd() const { return this->Y(this->length()); }
+    virtual real_type y_end() const { return this->Y(this->length()); }
 
     //!
     //! Initial x-coordinate with offset (ISO standard).
     //!
-    virtual real_type xBegin_ISO( real_type offs ) const { return this->X_ISO(0,offs); }
+    virtual real_type x_begin_ISO( real_type offs ) const { return this->X_ISO(0,offs); }
 
     //!
     //! Initial y-coordinate with offset (ISO standard).
     //!
-    virtual real_type yBegin_ISO( real_type offs ) const { return this->Y_ISO(0,offs); }
+    virtual real_type y_begin_ISO( real_type offs ) const { return this->Y_ISO(0,offs); }
 
     //!
     //! Final x-coordinate with offset (ISO standard).
     //!
-    virtual real_type xEnd_ISO( real_type offs ) const { return this->X_ISO(this->length(),offs); }
+    virtual real_type x_end_ISO( real_type offs ) const { return this->X_ISO(this->length(),offs); }
 
     //!
     //! Final y-coordinate with offset (ISO standard).
     //!
-    virtual real_type yEnd_ISO( real_type offs ) const { return this->Y_ISO(this->length(),offs); }
+    virtual real_type y_end_ISO( real_type offs ) const { return this->Y_ISO(this->length(),offs); }
 
     //!
     //! Initial x-coordinate with offset (SAE standard).
     //!
-    real_type xBegin_SAE( real_type offs ) const { return this->xBegin_ISO(-offs); }
+    real_type x_begin_SAE( real_type offs ) const { return this->x_begin_ISO(-offs); }
 
     //!
     //! Initial y-coordinate with offset (SAE standard).
     //!
-    real_type yBegin_SAE( real_type offs ) const { return this->yBegin_ISO(-offs); }
+    real_type y_begin_SAE( real_type offs ) const { return this->y_begin_ISO(-offs); }
  
     //!
     //! Final y-coordinate with offset (SAE standard).
     //!
-    real_type xEnd_SAE( real_type offs ) const { return this->xEnd_ISO(-offs); }
+    real_type x_end_SAE( real_type offs ) const { return this->x_end_ISO(-offs); }
 
     //!
     //! Final y-coordinate with offset (ISO standard).
     //!
-    real_type yEnd_SAE( real_type offs ) const { return this->yEnd_ISO(-offs); }
+    real_type y_end_SAE( real_type offs ) const { return this->y_end_ISO(-offs); }
 
     #ifdef G2LIB_COMPATIBILITY_MODE
     //!
@@ -522,28 +522,28 @@ namespace G2lib {
     //!
     real_type
     xBegin( real_type offs ) const
-    { return G2lib::use_ISO ? this->xBegin_ISO(offs) : this->xBegin_SAE(offs); }
+    { return G2lib::use_ISO ? this->x_begin_ISO(offs) : this->x_begin_SAE(offs); }
 
     //!
     //! Initial y-coordinate with offset (ISO or SAE).
     //!
     real_type
     yBegin( real_type offs ) const
-    { return G2lib::use_ISO ? this->yBegin_ISO(offs) : this->yBegin_SAE(offs); }
+    { return G2lib::use_ISO ? this->y_begin_ISO(offs) : this->y_begin_SAE(offs); }
 
     //!
     //! Final x-coordinate with offset (ISO or SAE).
     //!
     real_type
     xEnd( real_type offs ) const
-    { return G2lib::use_ISO ? this->xEnd_ISO(offs) : this->xEnd_SAE(offs); }
+    { return G2lib::use_ISO ? this->x_end_ISO(offs) : this->x_end_SAE(offs); }
 
     //!
     //! Final y-coordinate with offset (ISO or SAE).
     //!
     real_type
     yEnd( real_type offs ) const
-    { return G2lib::use_ISO ? this->yEnd_ISO(offs) : this->yEnd_SAE(offs); }
+    { return G2lib::use_ISO ? this->y_end_ISO(offs) : this->y_end_SAE(offs); }
     #endif
 
     //!
@@ -681,7 +681,7 @@ namespace G2lib {
     //!
     //! Curvature derivative at curvilinear coodinate `s`.
     //!
-    real_type kappa_D ( real_type s ) const { return theta_DD(s); }
+    real_type kappa_D( real_type s ) const { return theta_DD(s); }
 
     //!
     //! Curvature second derivative at curvilinear coodinate `s`.
@@ -1594,7 +1594,7 @@ namespace G2lib {
     //!
     virtual
     void
-    changeOrigin( real_type newx0, real_type newy0 ) = 0;
+    change_origin( real_type newx0, real_type newy0 ) = 0;
 
     //!
     //! Cut curve at parametrix coordinate `s_begin` and `s_end`.
@@ -1783,7 +1783,7 @@ namespace G2lib {
     //!
     virtual
     int_type
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -1808,7 +1808,7 @@ namespace G2lib {
     //!        -1 = minimum point is not othogonal projection to curve
     //! 
     int_type
-    closestPoint_SAE(
+    closest_point_SAE(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -1817,7 +1817,7 @@ namespace G2lib {
       real_type & t,
       real_type & dst
     ) const {
-      int_type res = this->closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      int_type res = this->closest_point_ISO( qx, qy, x, y, s, t, dst );
       t = -t;
       return res;
     }
@@ -1838,7 +1838,7 @@ namespace G2lib {
     //!        -1 = minimum point is not othogonal projection to curve
     //! 
     int_type
-    closestPoint(
+    closest_point(
       real_type   qx,
       real_type   qy,
       real_type & x,
@@ -1848,9 +1848,9 @@ namespace G2lib {
       real_type & dst
     ) const {
       if ( G2lib::use_ISO )
-        return this->closestPoint_ISO( qx, qy, x, y, s, t, dst );
+        return this->closest_point_ISO( qx, qy, x, y, s, t, dst );
       else
-        return this->closestPoint_SAE( qx, qy, x, y, s, t, dst );
+        return this->closest_point_SAE( qx, qy, x, y, s, t, dst );
     }
     #endif
 
@@ -1871,7 +1871,7 @@ namespace G2lib {
     //! 
     virtual
     int_type // true if projection is unique and orthogonal
-    closestPoint_ISO(
+    closest_point_ISO(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -1898,7 +1898,7 @@ namespace G2lib {
     //!        -1 = minimum point is not othogonal projection to curve
     //! 
     int_type
-    closestPoint_SAE(
+    closest_point_SAE(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -1908,7 +1908,7 @@ namespace G2lib {
       real_type & t,
       real_type & dst
     ) const {
-      int_type res = this->closestPoint_ISO( qx, qy, -offs, x, y, s, t, dst );
+      int_type res = this->closest_point_ISO( qx, qy, -offs, x, y, s, t, dst );
       t = -t;
       return res;
     }
@@ -1930,7 +1930,7 @@ namespace G2lib {
     //!        -1 = minimum point is not othogonal projection to curve
     //! 
     int_type
-    closestPoint(
+    closest_point(
       real_type   qx,
       real_type   qy,
       real_type   offs,
@@ -1941,9 +1941,9 @@ namespace G2lib {
       real_type & dst
     ) const {
       if ( G2lib::use_ISO )
-        return this->closestPoint_ISO( qx, qy, offs, x, y, s, t, dst );
+        return this->closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
       else
-        return this->closestPoint_SAE( qx, qy, offs, x, y, s, t, dst );
+        return this->closest_point_SAE( qx, qy, offs, x, y, s, t, dst );
     }
     #endif
 
@@ -1958,7 +1958,7 @@ namespace G2lib {
     real_type
     distance( real_type qx, real_type qy ) const {
       real_type x, y, s, t, dst;
-      closestPoint_ISO( qx, qy, x, y, s, t, dst );
+      closest_point_ISO( qx, qy, x, y, s, t, dst );
       return dst;
     }
 
@@ -1977,7 +1977,7 @@ namespace G2lib {
       real_type offs
     ) const {
       real_type x, y, s, t, dst;
-      this->closestPoint_ISO( qx, qy, offs, x, y, s, t, dst );
+      this->closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
       return dst;
     }
 
@@ -1996,7 +1996,7 @@ namespace G2lib {
       real_type offs
     ) const {
       real_type x, y, s, t, dst;
-      this->closestPoint_SAE( qx, qy, offs, x, y, s, t, dst );
+      this->closest_point_SAE( qx, qy, offs, x, y, s, t, dst );
       return dst;
     }
 
@@ -2017,7 +2017,7 @@ namespace G2lib {
       real_type offs
     ) const {
       real_type x, y, s, t, dst;
-      this->closestPoint( qx, qy, offs, x, y, s, t, dst );
+      this->closest_point( qx, qy, offs, x, y, s, t, dst );
       return dst;
     }
     #endif
@@ -2055,7 +2055,7 @@ namespace G2lib {
       real_type & t
     ) const {
       real_type X, Y, dst;
-      int_type icode = this->closestPoint_ISO( x, y, X, Y, s, t, dst );
+      int_type icode = this->closest_point_ISO( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
 
@@ -2084,7 +2084,7 @@ namespace G2lib {
       real_type & t
     ) const {
       real_type X, Y, dst;
-      int_type icode = this->closestPoint_SAE( x, y, X, Y, s, t, dst );
+      int_type icode = this->closest_point_SAE( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
 
@@ -2114,7 +2114,7 @@ namespace G2lib {
       real_type & t
     ) const {
       real_type X, Y, dst;
-      int_type icode = this->closestPoint( x, y, X, Y, s, t, dst );
+      int_type icode = this->closest_point( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
     #endif
@@ -2127,6 +2127,86 @@ namespace G2lib {
     virtual
     void
     info( ostream_type & stream ) const = 0;
+
+    //@@@@ BACK COMPATIBILITY
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+
+    void
+    changeOrigin( real_type newx0, real_type newy0 )
+    { change_origin( newx0, newy0 ); }
+
+    real_type thetaBegin() const { return this->theta_begin(); }
+    real_type thetaEnd()   const { return this->theta_end(); }
+    real_type kappaBegin() const { return this->kappa_begin(); }
+    real_type kappaEnd()   const { return this->kappa_end(); }
+    real_type xBegin()     const { return this->x_begin(); }
+    real_type yBegin()     const { return this->y_begin(); }
+    real_type xEnd()       const { return this->x_end(); }
+    real_type yEnd()       const { return this->y_end(); }
+    real_type xBegin_ISO( real_type offs ) const { return this->x_begin_ISO(offs); }
+    real_type yBegin_ISO( real_type offs ) const { return this->y_begin_ISO(offs); }
+    real_type xEnd_ISO( real_type offs )   const { return this->x_end_ISO(offs); }
+    real_type yEnd_ISO( real_type offs )   const { return this->y_end_ISO(offs); }
+    real_type xBegin_SAE( real_type offs ) const { return this->x_begin_SAE(offs); }
+    real_type yBegin_SAE( real_type offs ) const { return this->y_begin_SAE(offs); }
+    real_type xEnd_SAE( real_type offs )   const { return this->x_end_SAE(offs); }
+    real_type yEnd_SAE( real_type offs )   const { return this->y_end_SAE(offs); }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_SAE(
+      real_type   qx,
+      real_type   qy,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_SAE( qx, qy, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_ISO(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+    }
+
+    int_type
+    closestPoint_SAE(
+      real_type   qx,
+      real_type   qy,
+      real_type   offs,
+      real_type & x,
+      real_type & y,
+      real_type & s,
+      real_type & t,
+      real_type & dst
+    ) const {
+      return closest_point_SAE( qx, qy, offs, x, y, s, t, dst );
+    }
+
+    #endif
 
   };
 

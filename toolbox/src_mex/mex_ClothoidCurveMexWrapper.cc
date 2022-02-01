@@ -354,7 +354,7 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidCurveMexWrapper('changeCurvilinearOrigin',OBJ,s0,L): "
+    #define CMD "ClothoidCurveMexWrapper('change_curvilinear_origin',OBJ,s0,L): "
     MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
     MEX_ASSERT2( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
 
@@ -362,7 +362,7 @@ namespace G2lib {
 
     real_type s0 = getScalarValue( arg_in_2, CMD "Error in reading s0" );
     real_type L  = getScalarValue( arg_in_3, CMD "Error in reading L"  );
-    ptr->changeCurvilinearOrigin(s0,L);
+    ptr->change_curvilinear_origin(s0,L);
 
     #undef CMD
   }
@@ -453,12 +453,12 @@ namespace G2lib {
 
   static
   void
-  do_closest_by_sample(
+  do_closest_point_by_sample(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidCurveMexWrapper('closestPointBySample',OBJ,x,y,ds): "
+    #define CMD "ClothoidCurveMexWrapper('closest_point_by_sample',OBJ,x,y,ds): "
     MEX_ASSERT2( nrhs == 5, CMD "expected 5 input, nrhs = {}\n", nrhs);
     MEX_ASSERT2( nlhs == 4, CMD "expected 4 outputs, nlhs = {}\n", nlhs );
 
@@ -492,7 +492,7 @@ namespace G2lib {
 
     mwSize size = nrx*ncx;
     for ( mwSize i = 0; i < size; ++i )
-      *dst++ = ptr->closestPointBySample( ds, *x++, *y++, *X++, *Y++, *S++ );
+      *dst++ = ptr->closest_point_by_sample( ds, *x++, *y++, *X++, *Y++, *S++ );
 
     #undef CMD
   }
@@ -575,11 +575,11 @@ namespace G2lib {
     {"build_G1",do_build_G1},
     {"build_G1_D",do_build_G1_D},
     {"build_forward",do_build_forward},
-    {"changeCurvilinearOrigin",do_change_curvilinear_origin},
+    {"change_curvilinear_origin",do_change_curvilinear_origin},
     {"dkappa",do_dkappa},
     {"infinity",do_infinity},
     {"distanceBySample",do_distance_by_sample},
-    {"closestPointBySample",do_closest_by_sample},
+    {"closest_point_by_sample",do_closest_point_by_sample},
     {"optimized_sample",do_optimized_sample},
     CMD_MAP_FUN
   };

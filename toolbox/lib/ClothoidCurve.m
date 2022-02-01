@@ -129,7 +129,7 @@ classdef ClothoidCurve < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>    [ X, Y, S, DST ] = ref.closestPoint( qx, qy );
+    %>    [ X, Y, S, DST ] = ref.closest_point( qx, qy );
     %>
     %> \endrst
     %>
@@ -143,10 +143,13 @@ classdef ClothoidCurve < CurveBase
     %> - `S`      : curvilinear coordinate along the clothoid of the projection
     %> - `DST`    : point clothoid distance
     %>
-    function [ X, Y, S, DST ] = closestPoint( self, qx, qy )
+    function [ X, Y, S, DST ] = closest_point( self, qx, qy )
       [ X, Y, S, ~, ~, DST ] =  ClothoidCurveMexWrapper( ...
-        'closestPoint', self.objectHandle, qx, qy ...
+        'closest_point', self.objectHandle, qx, qy ...
       );
+    end
+    function [ X, Y, S, DST ] = closestPoint( self, qx, qy )
+      [ X, Y, S, DST ] = self.closest_point( qx, qy );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Find the closest point to a clothoid by sampling points
@@ -154,7 +157,7 @@ classdef ClothoidCurve < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>    [ X, Y, S, DST ] = ref.closestPointBySample( qx, qy, ds );
+    %>    [ X, Y, S, DST ] = ref.closest_point_by_sample( qx, qy, ds );
     %>
     %> \endrst
     %>
@@ -169,10 +172,14 @@ classdef ClothoidCurve < CurveBase
     %> - `S`      : curvilinear coordinate along the clothoid of the projection
     %> - `DST`    : point clothoid distance
     %>
-    function [ X, Y, S, DST ] = closestPointBySample( self, qx, qy, ds )
+    function [ X, Y, S, DST ] = closest_point_by_sample( self, qx, qy, ds )
       [ X, Y, S, DST ] = ClothoidCurveMexWrapper( ...
-        'closestPointBySample', self.objectHandle, qx, qy, ds ...
+        'closest_point_by_sample', self.objectHandle, qx, qy, ds ...
       );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ X, Y, S, DST ] = closestPointBySample( self, qx, qy, ds )
+      [ X, Y, S, DST ] = self.closest_point_by_sample( qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Find the distance between a point and a clothoid by sampling
@@ -222,7 +229,7 @@ classdef ClothoidCurve < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>    ref.changeOrigin(s0,L);
+    %>    ref.change_curvilinear_origin(s0,L);
     %>
     %> \endrst
     %>
@@ -231,10 +238,14 @@ classdef ClothoidCurve < CurveBase
     %> - `s0`: curvilinear coordinate of the origin of the new curve
     %> - `L`:  nel length of the curve
     %>
-    function changeCurvilinearOrigin( self, s0, L )
+    function change_curvilinear_origin( self, s0, L )
       ClothoidCurveMexWrapper( ...
-        'changeCurvilinearOrigin', self.objectHandle, s0, L ...
+        'change_curvilinear_origin', self.objectHandle, s0, L ...
       );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function changeCurvilinearOrigin( self, s0, L )
+      self.change_curvilinear_origin( s0, L );
     end
     %% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %function [ s1, s2 ] = intersect( self, C, varargin )
@@ -255,7 +266,7 @@ classdef ClothoidCurve < CurveBase
     %> \endrst
     %>
     %> - `xp`, `yp`: point at infinity (positive arc)
-    %> - `xm`, `ym`: point at infinity (negative arc) 
+    %> - `xm`, `ym`: point at infinity (negative arc)
     %>
     function [xp,yp,xm,ym] = infinity( self )
       [xp,yp,xm,ym] = ClothoidCurveMexWrapper( 'infinity', self.objectHandle );
@@ -274,15 +285,15 @@ classdef ClothoidCurve < CurveBase
     %>
     %> - `x0`, `y0`: initial point of the clothoid arc
     %> - `theta0`:   initial angle of the clothoid arc
-    %> - `kappa0`:   initial curvature of the clothoid arc 
-    %> - `dk`:       curvature derivative 
-    %> - `L`:        length of the clothoid arc 
+    %> - `kappa0`:   initial curvature of the clothoid arc
+    %> - `dk`:       curvature derivative
+    %> - `L`:        length of the clothoid arc
     %>
     function [ x0, y0, theta0, k0, dk, L ] = getPars( self )
-      x0     = self.xBegin();
-      y0     = self.yBegin();
-      theta0 = self.thetaBegin();
-      k0     = self.kappaBegin();
+      x0     = self.x_begin();
+      y0     = self.y_begin();
+      theta0 = self.theta_begin();
+      k0     = self.kappa_begin();
       dk     = self.kappa_D(0);
       L      = self.length();
     end
