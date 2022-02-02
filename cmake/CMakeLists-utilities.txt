@@ -80,6 +80,18 @@ endfunction()
 #
 # ------------------------------------------------------------------------
 #
+function( ebertolazzi_copy_directory FROM TO )
+  file( GLOB_RECURSE S "${FROM}/*" )
+  foreach(F ${S})
+    # build relative path respect to source directory
+    file( RELATIVE_PATH RF ${FROM} ${F} )
+    get_filename_component( DIR "${TO}/${RF}" DIRECTORY )
+    file( COPY ${F} DESTINATION ${DIR} )
+  endforeach(F ${S})
+endfunction()
+#
+# ------------------------------------------------------------------------
+#
 function(ebertolazzi_final_messages)
   if(SSE_FLAGS)
     message(STATUS "Using ${SSE_FLAGS} extensions")
@@ -103,7 +115,7 @@ function(ebertolazzi_final_messages)
   message(STATUS "CMAKE_HOME_DIRECTORY     = ${CMAKE_HOME_DIRECTORY}")
   message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
   message(STATUS "CMAKE_INSTALL_PREFIX     = ${CMAKE_INSTALL_PREFIX}")
-  
+
   message(STATUS "EB_GIT_VERSION   = ${EB_GIT_VERSION}")
   message(STATUS "EB_ENABLE_TESTS  = ${EB_ENABLE_TESTS}")
   message(STATUS "EB_BUILD_SHARED  = ${EB_BUILD_SHARED}")
