@@ -62,7 +62,7 @@ namespace Utils {
   #ifdef UTILS_OS_WINDOWS
 
   void
-  printTrace(
+  print_trace(
     int                 line,
     char const * const  file,
     string const      & msg,
@@ -119,7 +119,7 @@ namespace Utils {
 
   //! print a trace stack used in debug
   void
-  printTrace(
+  print_trace(
     int                line,
     char const * const file,
     string const     & reason,
@@ -178,7 +178,7 @@ namespace Utils {
     int                line
   ) const {
     ostringstream ost;
-    printTrace( line, file, reason, ost );
+    print_trace( line, file, reason, ost );
     return ost.str();
   }
   #endif

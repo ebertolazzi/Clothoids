@@ -275,7 +275,7 @@
 <span id="_CPPv3N12ClothoidList3getE2in2in"></span><span id="_CPPv2N12ClothoidList3getE2in2in"></span><span id="ClothoidList::get__in.in"></span><span class="target" id="a00084_1aebd52d92fb9db159adffcda7a74ec600"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">k</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList3getE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Get the clothoid at position <code class="docutils literal notranslate"><span class="pre">k</span></code>. The biarc is returned as a clothoid object or the data defining the clothoid.</p>
+<p>Get the clothoid at position <code class="docutils literal notranslate"><span class="pre">k</span></code>. The clothoid is returned as a clothoid object or the data defining the clothoid.</p>
 <p></p>
 <p></p>
 <div class="highlight-matlab notranslate">
@@ -638,6 +638,32 @@
 </dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="a00084_1a599ac679cb3489ea0662809d4877b661"></span><span class="sig-name descname"><span class="pre">function</span> <span class="pre">export</span> <span class="pre">(in</span> <span class="sig-paren">)</span></span>
+</dt>
+<dd>
+<p>Export list of clothoids</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">export</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">S.x0</span></code>: vector of initial point x-coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.y0</span></code>: vector of initial point y-coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.theta0</span></code>: vector of initial angles</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.kappa0</span></code>: vector of initial curvatures</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.dkappa</span></code>: vector of curvature derivative of the segments</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.L</span></code>: vector of segment length </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList4plotE2in2in">
 <span id="_CPPv3N12ClothoidList4plotE2in2in"></span><span id="_CPPv2N12ClothoidList4plotE2in2in"></span><span id="ClothoidList::plot__in.in"></span><span class="target" id="a00084_1a6a7014381c7fb6247ab71f7ee03e1fb0"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList4plotE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
@@ -694,8 +720,8 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList13plotCurvatureE2in2in2in">
-<span id="_CPPv3N12ClothoidList13plotCurvatureE2in2in2in"></span><span id="_CPPv2N12ClothoidList13plotCurvatureE2in2in2in"></span><span id="ClothoidList::plotCurvature__in.in.in"></span><span class="target" id="a00084_1ab3733fca14f33632b4f4cd8e28b1e176"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotCurvature</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList13plotCurvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList14plot_curvatureE2in2in2in">
+<span id="_CPPv3N12ClothoidList14plot_curvatureE2in2in2in"></span><span id="_CPPv2N12ClothoidList14plot_curvatureE2in2in2in"></span><span id="ClothoidList::plot_curvature__in.in.in"></span><span class="target" id="a00084_1ac160b1ab185ed2357f3a4e10a4368124"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot_curvature</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList14plot_curvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Plot the curvature of the clothoid list</p>
@@ -721,8 +747,15 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList9plotAngleE2in2in2in">
-<span id="_CPPv3N12ClothoidList9plotAngleE2in2in2in"></span><span id="_CPPv2N12ClothoidList9plotAngleE2in2in2in"></span><span id="ClothoidList::plotAngle__in.in.in"></span><span class="target" id="a00084_1a89bd52d16b1cb857b52e634e7be95fe4"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotAngle</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList9plotAngleE2in2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList13plotCurvatureE2in2in2in">
+<span id="_CPPv3N12ClothoidList13plotCurvatureE2in2in2in"></span><span id="_CPPv2N12ClothoidList13plotCurvatureE2in2in2in"></span><span id="ClothoidList::plotCurvature__in.in.in"></span><span class="target" id="a00084_1ab3733fca14f33632b4f4cd8e28b1e176"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotCurvature</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList13plotCurvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList10plot_angleE2in2in2in">
+<span id="_CPPv3N12ClothoidList10plot_angleE2in2in2in"></span><span id="_CPPv2N12ClothoidList10plot_angleE2in2in2in"></span><span id="ClothoidList::plot_angle__in.in.in"></span><span class="target" id="a00084_1a186e486ed0c87cdf924daf9810b6daee"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot_angle</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList10plot_angleE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Plot the angle of the clothoid list</p>
@@ -748,8 +781,15 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList10plotNormalE2in2in2in">
-<span id="_CPPv3N12ClothoidList10plotNormalE2in2in2in"></span><span id="_CPPv2N12ClothoidList10plotNormalE2in2in2in"></span><span id="ClothoidList::plotNormal__in.in.in"></span><span class="target" id="a00084_1a0205e28080b78060880d6030a569f632"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotNormal</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">step</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList10plotNormalE2in2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList9plotAngleE2in2in2in">
+<span id="_CPPv3N12ClothoidList9plotAngleE2in2in2in"></span><span id="_CPPv2N12ClothoidList9plotAngleE2in2in2in"></span><span id="ClothoidList::plotAngle__in.in.in"></span><span class="target" id="a00084_1a89bd52d16b1cb857b52e634e7be95fe4"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotAngle</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList9plotAngleE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList11plot_normalE2in2in2in">
+<span id="_CPPv3N12ClothoidList11plot_normalE2in2in2in"></span><span id="_CPPv2N12ClothoidList11plot_normalE2in2in2in"></span><span id="ClothoidList::plot_normal__in.in.in"></span><span class="target" id="a00084_1aaefda80875d5a4674f61e32a425a1ab4"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot_normal</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">step</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList11plot_normalE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Plot the normal of the clothoid list</p>
@@ -770,8 +810,15 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList11saveSampledE2in2in2in">
-<span id="_CPPv3N12ClothoidList11saveSampledE2in2in2in"></span><span id="_CPPv2N12ClothoidList11saveSampledE2in2in2in"></span><span id="ClothoidList::saveSampled__in.in.in"></span><span class="target" id="a00084_1a75583cdff2824a246f471063094e94f2"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">saveSampled</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">filename</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList11saveSampledE2in2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList10plotNormalE2in2in2in">
+<span id="_CPPv3N12ClothoidList10plotNormalE2in2in2in"></span><span id="_CPPv2N12ClothoidList10plotNormalE2in2in2in"></span><span id="ClothoidList::plotNormal__in.in.in"></span><span class="target" id="a00084_1a0205e28080b78060880d6030a569f632"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotNormal</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">step</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList10plotNormalE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList12save_sampledE2in2in2in">
+<span id="_CPPv3N12ClothoidList12save_sampledE2in2in2in"></span><span id="_CPPv2N12ClothoidList12save_sampledE2in2in2in"></span><span id="ClothoidList::save_sampled__in.in.in"></span><span class="target" id="a00084_1a9e3d7c39aa046a7fbdd04d39025fc77c"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">save_sampled</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">filename</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList12save_sampledE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Save the clothoid list sampled on a file</p>
@@ -803,8 +850,15 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList13saveClothoidsE2in2in">
-<span id="_CPPv3N12ClothoidList13saveClothoidsE2in2in"></span><span id="_CPPv2N12ClothoidList13saveClothoidsE2in2in"></span><span id="ClothoidList::saveClothoids__in.in"></span><span class="target" id="a00084_1aa2103f4bb4b0bdd1841f0dd648b0affb"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">saveClothoids</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">filename</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList13saveClothoidsE2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList11saveSampledE2in2in2in">
+<span id="_CPPv3N12ClothoidList11saveSampledE2in2in2in"></span><span id="_CPPv2N12ClothoidList11saveSampledE2in2in2in"></span><span id="ClothoidList::saveSampled__in.in.in"></span><span class="target" id="a00084_1a75583cdff2824a246f471063094e94f2"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">saveSampled</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">filename</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">ds</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList11saveSampledE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList14save_clothoidsE2in2in">
+<span id="_CPPv3N12ClothoidList14save_clothoidsE2in2in"></span><span id="_CPPv2N12ClothoidList14save_clothoidsE2in2in"></span><span id="ClothoidList::save_clothoids__in.in"></span><span class="target" id="a00084_1a30e66a1d18abe347110c8e42200dad7f"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">save_clothoids</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">filename</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList14save_clothoidsE2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Save the clothoid list on a file as a list of segments</p>
@@ -833,6 +887,13 @@
 
  
 </dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12ClothoidList13saveClothoidsE2in2in">
+<span id="_CPPv3N12ClothoidList13saveClothoidsE2in2in"></span><span id="_CPPv2N12ClothoidList13saveClothoidsE2in2in"></span><span id="ClothoidList::saveClothoids__in.in"></span><span class="target" id="a00084_1aa2103f4bb4b0bdd1841f0dd648b0affb"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">saveClothoids</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">filename</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12ClothoidList13saveClothoidsE2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
 </dl>
 
 <dl class="cpp function">

@@ -84,10 +84,13 @@ find_library(
   NO_DEFAULT_PATH
 )
 if( UTILS )
-  message("Found Utils${ARTIFACTS_STATIC_SUFFIX}")
-  include_directories(${UPDIR}/Utils/lib/include)
+  message(STATUS "Found Utils${ARTIFACTS_STATIC_SUFFIX}")
+  ebertolazzi_copy_directory(
+    "${UPDIR}/Utils/lib"
+    "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd"
+  )
 else()
-  message("NOT Found Utils${ARTIFACTS_STATIC_SUFFIX}")
+  message(STATUS "NOT Found Utils${ARTIFACTS_STATIC_SUFFIX} use submodule")
   add_subdirectory(./submodules/Utils)
   include_directories(./submodules/Utils/src)
   set( UTILS ebertolazzi_Utils_Static )
@@ -101,10 +104,10 @@ find_library(
   NO_DEFAULT_PATH
 )
 if( ROOTS )
-  message("Found quarticRootsFlocke${ARTIFACTS_STATIC_SUFFIX}")
+  message(STATUS "Found quarticRootsFlocke${ARTIFACTS_STATIC_SUFFIX}")
   include_directories(${UPDIR}/quarticRootsFlocke/lib/include)
 else()
-  message("NOT Found quarticRootsFlocke${ARTIFACTS_STATIC_SUFFIX}")
+  message(STATUS "NOT Found quarticRootsFlocke${ARTIFACTS_STATIC_SUFFIX}")
   add_subdirectory(./submodules/quarticRootsFlocke)
   include_directories(./submodules/quarticRootsFlocke/src)
   set( ROOTS ebertolazzi_quarticRootsFlocke_Static )

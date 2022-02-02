@@ -80,22 +80,22 @@ namespace Utils {
     Cell::Cell(
       Table*         table,
       string const & val,
-      integer        colSpan
+      integer        col_span
     )
     : m_Table(table)
     , m_Value(val)
-    , m_ColSpan(colSpan)
+    , m_col_span(col_span)
     {
       m_Width = integer(val.length());
     }
 
     integer
     Cell::width( integer col ) const {
-      integer padding    = (m_ColSpan - 1) * m_Table->cellSpacing();
+      integer padding    = (m_col_span - 1) * m_Table->cell_spacing();
       integer innerWidth = 0;
 
-      for( integer i = 0; i < m_ColSpan; ++i )
-        innerWidth += m_Table->columnWidth(col + i);
+      for( integer i = 0; i < m_col_span; ++i )
+        innerWidth += m_Table->column_width(col + i);
 
       return innerWidth + padding;
     }
@@ -106,7 +106,7 @@ namespace Utils {
     }
 
     integer
-    Cell::maxLineWidth() const {
+    Cell::maximum_line_width() const {
       integer maxlen = 0;
       string  line;
       istringstream stream( m_Value );
@@ -123,14 +123,14 @@ namespace Utils {
         istringstream stream(m_Value);
         string line;
         for( integer i = 0; i <= idx; ++i) getline(stream, line);
-        this->trimLine(line);
+        this->trim_line(line);
         return line;
       }
       return "";
     }
 
     void
-    Cell::trimLine( string & line ) const {
+    Cell::trim_line( string & line ) const {
       auto fun = [] ( char c ) -> bool { return isspace(int(c)) == 0; };
       line.erase( line.begin(), find_if( line.begin(), line.end(), fun ) );
       line.erase( find_if( line.rbegin(), line.rend(), fun ).base(), line.end() );
@@ -140,8 +140,8 @@ namespace Utils {
     Cell::render( integer line, integer col ) const {
       stringstream ss;
       integer width = this->width(col);
-      integer pL    = m_Table->style().paddingLeft();
-      integer pR    = m_Table->style().paddingRight();
+      integer pL    = m_Table->style().padding_left();
+      integer pR    = m_Table->style().padding_right();
 
       switch( m_Align ) {
       case Alignment::LEFT:
@@ -157,7 +157,7 @@ namespace Utils {
       case Alignment::CENTER:
         {
           string  val        = this->line(line);
-          integer innerWidth = width + m_Table->cellPadding();
+          integer innerWidth = width + m_Table->cell_padding();
           integer spaceLeft  = (innerWidth-integer(val.length()))/2;
           ss << string(spaceLeft, ' ')
              << setw(innerWidth - spaceLeft) << left << setfill(' ') << this->line(line);
@@ -192,14 +192,14 @@ namespace Utils {
     }
 
     integer
-    Row::cellWidth( integer idx ) const {
-      if ( idx < this->numCells() ) return m_Cells[idx].maxLineWidth();
+    Row::cell_width( integer idx ) const {
+      if ( idx < this->num_cells() ) return m_Cells[idx].maximum_line_width();
       return 0;
     }
 
     void
-    Row::cellColSpan( integer idx, integer span ) {
-      if ( span > 0 && idx < this->numCells() ) m_Cells[idx].colSpan(span);
+    Row::cell_col_span( integer idx, integer span ) {
+      if ( span > 0 && idx < this->num_cells() ) m_Cells[idx].col_span(span);
     }
 
     void
@@ -221,66 +221,66 @@ namespace Utils {
 
     string
     Row::render() const {
-      integer numColumns = m_Table->numColumns();
-      integer paddingLR  = m_Table->style().paddingLeft()+
-                           m_Table->style().paddingRight();
-      integer numLines   = this->height();
+      integer num_columns = m_Table->num_columns();
+      integer paddingLR   = m_Table->style().padding_left()+
+                            m_Table->style().padding_right();
+      integer numLines    = this->height();
       stringstream ss;
 
       Style style = m_Table->style();
       integer nc = integer(m_Cells.size());
 
       for ( integer l = 0; l < numLines; ++l ) {
-        ss << style.borderLeft();
-        for( integer c = 0; c < numColumns; ++c ) {
+        ss << style.border_left();
+        for( integer c = 0; c < num_columns; ++c ) {
           if ( c < nc ) {
             Cell const & C = m_Cells[c];
             ss << C.render(l, c);
-            if ( C.colSpan() > 1 ) c += C.colSpan() - 1;
+            if ( C.col_span() > 1 ) c += C.col_span() - 1;
           } else {
-            ss << string(m_Table->columnWidth(c)+paddingLR,' ');
+            ss << string(m_Table->column_width(c)+paddingLR,' ');
           }
-          if ( c < numColumns-1 ) ss << style.borderMiddle();
+          if ( c < num_columns-1 ) ss << style.border_middle();
         }
-        ss << style.borderRight() << '\n';
+        ss << style.border_right() << '\n';
       }
       return ss.str();
     }
 
     void
-    Table::alignColumn( integer n, Alignment align ) {
-      if ( n > this->numColumns() )
+    Table::align_column( integer n, Alignment align ) {
+      if ( n > this->num_columns() )
         throw out_of_range(
-          "Table error: The table just has " + to_string(this->numColumns()) + " columns."
+          "Table error: The table just has " + to_string(this->num_columns()) + " columns."
         );
       for_each(
         m_Rows.begin(), m_Rows.end(), 
         [n, align]( Row & row ) -> void {
-          if ( n < row.numCells() ) row[n].alignment(align);
+          if ( n < row.num_cells() ) row[n].alignment(align);
         }
       );
     }
 
     void
-    Table::addRow( vecstr const & row ) {
+    Table::add_row( vecstr const & row ) {
       m_Rows.push_back( Row(this, row) );
     }
 
     integer
-    Table::cellSpacing() const {
-      return this->cellPadding() + 1;
+    Table::cell_spacing() const {
+      return this->cell_padding() + 1;
     }
 
     integer
-    Table::cellPadding() const {
-      return m_Style.paddingLeft() + m_Style.paddingRight();
+    Table::cell_padding() const {
+      return m_Style.padding_left() + m_Style.padding_right();
     }
 
     typename Table::vecCell
     Table::column( integer n ) const {
-      if ( n > this->numColumns() )
+      if ( n > this->num_columns() )
         throw out_of_range(
-          "Table error: The table just has " + to_string(this->numColumns()) + " columns."
+          "Table error: The table just has " + to_string(this->num_columns()) + " columns."
         );
 
       vecCell column(m_Rows.size());
@@ -294,15 +294,15 @@ namespace Utils {
     }
 
     integer
-    Table::columnWidth( integer n ) const {
-      if ( n > this->numColumns() )
+    Table::column_width( integer n ) const {
+      if ( n > this->num_columns() )
         throw out_of_range(
-          "Table error: The table just has " + to_string(this->numColumns()) + " columns."
+          "Table error: The table just has " + to_string(this->num_columns()) + " columns."
         );
       integer maxlen = 0;
       auto fun = [&maxlen, n]( Row const & row ) -> void {
-        if ( n < row.numCells() ) {
-          integer cw = row.cellWidth(n);
+        if ( n < row.num_cells() ) {
+          integer cw = row.cell_width(n);
           if ( cw > maxlen ) maxlen = cw;
         }
       };
@@ -312,10 +312,10 @@ namespace Utils {
     }
 
     integer
-    Table::numColumns() const {
-      integer maxlen = m_Headings.numCells();
+    Table::num_columns() const {
+      integer maxlen = m_Headings.num_cells();
       auto fun = [&maxlen]( Row const & row ) -> void {
-        integer nc = row.numCells();
+        integer nc = row.num_cells();
         if ( nc > maxlen ) maxlen = nc;
       };
       for_each( m_Rows.begin(), m_Rows.end(), fun );
@@ -357,7 +357,7 @@ namespace Utils {
     }
 
     string
-    Table::renderSeparator(
+    Table::render_separator(
       char left,
       char mid,
       char right,
@@ -365,10 +365,10 @@ namespace Utils {
     ) const {
       stringstream ss;
       ss << left;
-      integer padding_LR = m_Style.paddingLeft() + m_Style.paddingRight();
-      integer nc         = this->numColumns();
+      integer padding_LR = m_Style.padding_left() + m_Style.padding_right();
+      integer nc         = this->num_columns();
       for ( integer i = 0; i < nc; ++i ) {
-        integer width = this->columnWidth(i) + padding_LR;
+        integer width = this->column_width(i) + padding_LR;
         for ( integer j = 0 ; j < width; ++j ) ss << sep;
         if ( i+1 < nc ) ss << mid;
         else            ss << right;
@@ -380,56 +380,56 @@ namespace Utils {
     string
     Table::render() const {
       stringstream ss;
-      string sep = this->renderSeparator(
-        m_Style.borderLeftMid(),
-        m_Style.borderMidMid(), 
-        m_Style.borderRightMid(),
-        m_Style.borderMid()
+      string sep = this->render_separator(
+        m_Style.border_left_mid(),
+        m_Style.border_mid_mid(), 
+        m_Style.border_right_mid(),
+        m_Style.border_mid()
       );
 
       if ( m_Title.length() > 0 ) {
-        integer innerWidth = (this->numColumns() - 1) * this->cellSpacing() + this->cellPadding();
-        for ( integer c = 0; c < this->numColumns(); ++c )
-          innerWidth += this->columnWidth(c);
+        integer innerWidth = (this->num_columns() - 1) * this->cell_spacing() + this->cell_padding();
+        for ( integer c = 0; c < this->num_columns(); ++c )
+          innerWidth += this->column_width(c);
 
         integer spaceLeft = (innerWidth - integer(m_Title.length())) / 2;
 
-        ss << m_Style.borderTopLeft() 
-           << string(innerWidth, m_Style.borderTop())
-           << m_Style.borderTopRight()
+        ss << m_Style.border_top_left() 
+           << string(innerWidth, m_Style.border_top())
+           << m_Style.border_top_right()
            << '\n'
-           << m_Style.borderLeft() 
+           << m_Style.border_left() 
            << string(spaceLeft, ' ')
            << left << setw(innerWidth - spaceLeft) << setfill(' ') << m_Title
-           << m_Style.borderRight()
+           << m_Style.border_right()
            << '\n' << sep;
       } else {
-        ss << renderSeparator(
-          m_Style.borderTopLeft(),
-          m_Style.borderTopMid(), 
-          m_Style.borderTopRight(),
-          m_Style.borderTop()
+        ss << render_separator(
+          m_Style.border_top_left(),
+          m_Style.border_top_mid(), 
+          m_Style.border_top_right(),
+          m_Style.border_top()
         );
       }
 
-      if ( m_Headings.numCells() > 0 )
+      if ( m_Headings.num_cells() > 0 )
         ss << m_Headings.render() << sep;
 
       if ( m_Rows.size() > 0 ) {
         for_each(
           m_Rows.begin(), --m_Rows.end(),
           [&ss, sep]( Row const & row ) -> void {
-            if ( row.numCells() > 0 ) ss << row.render() << sep;
+            if ( row.num_cells() > 0 ) ss << row.render() << sep;
           }
         );
         ss << m_Rows.back().render();
       }
 
-      ss << this->renderSeparator(
-              m_Style.borderBottomLeft(),
-              m_Style.borderBottomMid(),
-              m_Style.borderBottomRight(),
-              m_Style.borderBottom()
+      ss << this->render_separator(
+              m_Style.border_bottom_left(),
+              m_Style.border_bottom_mid(),
+              m_Style.border_bottom_right(),
+              m_Style.border_bottom()
             );
       return ss.str();
     }

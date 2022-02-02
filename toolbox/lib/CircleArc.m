@@ -173,6 +173,35 @@ classdef CircleArc < CurveBase
       plot(X,Y,fmt{:});
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Export circle parameters
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    S = ref.export();
+    %>
+    %> \endrst
+    %>
+    %> - `S.x0`, `S.y0`: initial point of the circle arc
+    %> - `S.x1`, `S.y1`: final point of the circle arc
+    %> - `S.theta0`:     initial angle of the circle arc
+    %> - `S.theta1`:     final angle of the circle arc
+    %> - `S.kappa`:      curvature of the circle arc
+    %> - `S.L`:          length of the clothoid arc
+    %>
+    function S = export( self )
+      S.x0     = self.x_begin();
+      S.y0     = self.y_begin();
+      S.theta0 = self.theta_begin();
+      S.kappa  = self.kappa_begin();
+      S.x1     = self.x_end();
+      S.y1     = self.y_end();
+      S.theta1 = self.theta_end();
+      S.L      = self.length();
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the polygon of the NURBS for the arc
     %>
     %> **Usage:**
@@ -187,7 +216,7 @@ classdef CircleArc < CurveBase
     %>
     %> - `fmt` : format of the arc
     %>
-    function plotPolygon( self, varargin )
+    function plot_polygon( self, varargin )
       arc = self.to_nurbs();
       xx  = arc.coefs(1,:)./arc.coefs(3,:);
       yy  = arc.coefs(2,:)./arc.coefs(3,:);
@@ -197,5 +226,10 @@ classdef CircleArc < CurveBase
         plot(xx,yy,':ok');
       end
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotPolygon( self, varargin )
+      self.plot_polygon( varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   end
 end

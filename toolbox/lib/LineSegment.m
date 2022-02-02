@@ -81,6 +81,31 @@ classdef LineSegment < CurveBase
       [p1,p2] = LineSegmentMexWrapper('points', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Export circle parameters
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    S = ref.export();
+    %>
+    %> \endrst
+    %>
+    %> - `S.x0`, `S.y0`: initial point of the line segment
+    %> - `S.x1`, `S.y1`: final point of the line segment
+    %> - `S.theta`:      initial/final angle of the line segment
+    %> - `S.L`:          length of the line segment
+    %>
+    function S = export( self )
+      S.x0    = self.x_begin();
+      S.y0    = self.y_begin();
+      S.theta = self.theta_begin();
+      S.x1    = self.x_end();
+      S.y1    = self.y_end();
+      S.L     = self.length();
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the segment
     %>
     %> **Usage:**
@@ -98,5 +123,6 @@ classdef LineSegment < CurveBase
       [ p1, p2 ] = self.points();
       plot( [ p1(1), p2(1) ], [ p1(2), p2(2) ], varargin{:} );
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   end
 end

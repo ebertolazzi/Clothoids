@@ -66,29 +66,29 @@ namespace Utils {
     class Style {
     private:
 
-      char m_BorderTop         = '-';
-      char m_BorderTopMid      = '+';
-      char m_BorderTopLeft     = '+';
-      char m_BorderTopRight    = '+';
+      char m_border_top          = '-';
+      char m_border_top_mid      = '+';
+      char m_border_top_left     = '+';
+      char m_border_top_right    = '+';
 
-      char m_BorderBottom      = '-';
-      char m_BorderBottomMid   = '+';
-      char m_BorderBottomLeft  = '+';
-      char m_BorderBottomRight = '+';
+      char m_border_bottom       = '-';
+      char m_border_bottom_mid   = '+';
+      char m_border_bottom_left  = '+';
+      char m_border_bottom_right = '+';
 
-      char m_BorderLeft        = '|';
-      char m_BorderLeftMid     = '+';
+      char m_border_left         = '|';
+      char m_border_left_mid     = '+';
 
-      char m_BorderMid         = '-';
-      char m_BorderMidMid      = '+';
+      char m_border_mid          = '-';
+      char m_border_mid_mid      = '+';
 
-      char m_BorderRight       = '|';
-      char m_BorderRightMid    = '+';
+      char m_border_right        = '|';
+      char m_border_right_mid    = '+';
 
-      char m_BorderMiddle      = '|';
+      char m_border_middle       = '|';
 
-      integer m_PaddingLeft    = 1;
-      integer m_PaddingRight   = 1;
+      integer m_padding_left     = 1;
+      integer m_padding_right    = 1;
 
       Alignment m_Align = Alignment::LEFT;
 
@@ -98,71 +98,71 @@ namespace Utils {
 
       Style() {}
 
-      char borderTop() const { return m_BorderTop; }
-      void borderTop( char borderStyle ) { m_BorderTop = borderStyle; }
+      char border_top() const { return m_border_top; }
+      void border_top( char borderStyle ) { m_border_top = borderStyle; }
 
-      char borderTopMid() const { return m_BorderTopMid; }
-      void borderTopMid( char borderStyle ) { m_BorderTopMid = borderStyle; }
+      char border_top_mid() const { return m_border_top_mid; }
+      void border_top_mid( char borderStyle ) { m_border_top_mid = borderStyle; }
 
-      char borderTopLeft() const { return m_BorderTopLeft; }
-      void borderTopLeft( char borderStyle ) { m_BorderTopLeft = borderStyle; }
+      char border_top_left() const { return m_border_top_left; }
+      void border_top_left( char borderStyle ) { m_border_top_left = borderStyle; }
 
-      char borderTopRight() const { return m_BorderTopRight; }
-      void borderTopRight( char borderStyle ) { m_BorderTopRight = borderStyle; }
+      char border_top_right() const { return m_border_top_right; }
+      void border_top_right( char borderStyle ) { m_border_top_right = borderStyle; }
 
-      char borderBottom() const { return m_BorderBottom; }
-      void borderBottom( char borderStyle ) { m_BorderBottom = borderStyle; }
+      char border_bottom() const { return m_border_bottom; }
+      void border_bottom( char borderStyle ) { m_border_bottom = borderStyle; }
 
-      char borderBottomMid() const { return m_BorderBottomMid; }
-      void borderBottomMid( char borderStyle ) { m_BorderBottomMid = borderStyle; }
+      char border_bottom_mid() const { return m_border_bottom_mid; }
+      void border_bottom_mid( char borderStyle ) { m_border_bottom_mid = borderStyle; }
 
-      char borderBottomLeft() const { return m_BorderBottomLeft; }
-      void borderBottomLeft( char borderStyle ) { m_BorderBottomLeft = borderStyle; }
+      char border_bottom_left() const { return m_border_bottom_left; }
+      void border_bottom_left( char borderStyle ) { m_border_bottom_left = borderStyle; }
 
-      char borderBottomRight() const { return m_BorderBottomRight; }
-      void borderBottomRight( char borderStyle) { m_BorderBottomRight = borderStyle; }
+      char border_bottom_right() const { return m_border_bottom_right; }
+      void border_bottom_right( char borderStyle) { m_border_bottom_right = borderStyle; }
 
-      char borderLeft() const { return m_BorderLeft; }
-      void borderLeft( char borderStyle ) { m_BorderLeft = borderStyle; }
+      char border_left() const { return m_border_left; }
+      void border_left( char borderStyle ) { m_border_left = borderStyle; }
 
-      char borderLeftMid() const { return m_BorderLeftMid; }
-      void borderLeftMid( char borderStyle ) { m_BorderLeftMid = borderStyle; }
+      char border_left_mid() const { return m_border_left_mid; }
+      void border_left_mid( char borderStyle ) { m_border_left_mid = borderStyle; }
 
-      char borderMid() const { return m_BorderMid; }
-      void borderMid( char borderStyle ) { m_BorderMid = borderStyle; }
+      char border_mid() const { return m_border_mid; }
+      void border_mid( char borderStyle ) { m_border_mid = borderStyle; }
 
-      char borderMidMid() const { return m_BorderMidMid; }
-      void borderMidMid( char borderStyle ) { m_BorderMidMid = borderStyle; }
+      char border_mid_mid() const { return m_border_mid_mid; }
+      void border_mid_mid( char borderStyle ) { m_border_mid_mid = borderStyle; }
 
-      char borderRight() const { return m_BorderRight; }
-      void borderRight( char borderStyle ) { m_BorderRight = borderStyle; }
+      char border_right() const { return m_border_right; }
+      void border_right( char borderStyle ) { m_border_right = borderStyle; }
 
-      char borderRightMid() const { return m_BorderRightMid; }
-      void borderRightMid( char borderStyle ) { m_BorderRightMid = borderStyle; }
+      char border_right_mid() const { return m_border_right_mid; }
+      void border_right_mid( char borderStyle ) { m_border_right_mid = borderStyle; }
 
-      char borderMiddle() const { return m_BorderMiddle; }
-      void borderMiddle( char borderStyle ) { m_BorderMiddle = borderStyle; }
+      char border_middle() const { return m_border_middle; }
+      void border_middle( char borderStyle ) { m_border_middle = borderStyle; }
 
-      integer paddingLeft() const { return m_PaddingLeft; }
-      void paddingLeft( integer padding ) { m_PaddingLeft = padding; }
+      integer padding_left() const { return m_padding_left; }
+      void    padding_left( integer padding ) { m_padding_left = padding; }
 
-      integer paddingRight() const { return m_PaddingRight; }
-      void paddingRight( integer padding ) { m_PaddingRight = padding; }
+      integer padding_right() const { return m_padding_right; }
+      void    padding_right( integer padding ) { m_padding_right = padding; }
 
       Alignment alignment() const { return m_Align; }
-      void alignment( Alignment align ) { m_Align = align; }
+      void      alignment( Alignment align ) { m_Align = align; }
 
       integer width() const { return m_Width; }
-      void width( integer width ) { m_Width = width; }
+      void    width( integer width ) { m_Width = width; }
     };
 
     class Cell {
     private:
-      Table *   m_Table   = nullptr;
-      string    m_Value   = "";
-      Alignment m_Align   = Alignment::LEFT;
-      integer   m_ColSpan = 1;
-      integer   m_Width   = 0;
+      Table *   m_Table    = nullptr;
+      string    m_Value    = "";
+      Alignment m_Align    = Alignment::LEFT;
+      integer   m_col_span = 1;
+      integer   m_Width    = 0;
 
     public:
 
@@ -170,8 +170,8 @@ namespace Utils {
 
       Cell(
         Table*         table,
-        string const & val = "",
-        integer        colSpan = 1
+        string const & val      = "",
+        integer        col_span = 1
       );
 
       string const & value() const { return m_Value; }
@@ -180,16 +180,16 @@ namespace Utils {
       Alignment alignment() const { return m_Align; }
       void alignment( Alignment align ) { m_Align = align; }
 
-      integer colSpan() const { return m_ColSpan; }
-      void colSpan( integer colSpan ) { m_ColSpan = colSpan; }
+      integer col_span() const { return m_col_span; }
+      void col_span( integer col_span ) { m_col_span = col_span; }
 
       integer width( integer col ) const;
       integer height() const;
 
-      integer maxLineWidth() const;
+      integer maximum_line_width() const;
 
       string line( integer idx ) const;
-      void trimLine( string & line ) const;
+      void trim_line( string & line ) const;
 
       string render( integer line, integer col ) const;
     };
@@ -216,9 +216,9 @@ namespace Utils {
       //vecCell & cells() { return m_Cells; }
       void cells( vecstr const & cells );
 
-      integer numCells() const { return integer(m_Cells.size()); }
-      integer cellWidth( integer idx ) const;
-      void cellColSpan( integer idx, integer span );
+      integer num_cells() const { return integer(m_Cells.size()); }
+      integer cell_width( integer idx ) const;
+      void cell_col_span( integer idx, integer span );
 
       void cell( string const & value );
       //Cell& cell( integer idx ) { return m_Cells[idx]; }
@@ -266,15 +266,15 @@ namespace Utils {
         this->rows(rows);
       }
 
-      void alignColumn( integer n, Alignment align );
-      void addRow( vecstr const & row );
+      void align_column( integer n, Alignment align );
+      void add_row( vecstr const & row );
 
-      integer cellSpacing() const;
-      integer cellPadding() const;
+      integer cell_spacing() const;
+      integer cell_padding() const;
 
       vecCell column( integer n ) const;
-      integer columnWidth( integer n ) const;
-      integer numColumns() const;
+      integer column_width( integer n ) const;
+      integer num_columns() const;
 
       Style const & style() const { return m_Style; }
 
@@ -301,7 +301,7 @@ namespace Utils {
       void rows( vecvecstr const & rows );
 
       string
-      renderSeparator(
+      render_separator(
         char const left,
         char const mid,
         char const right,

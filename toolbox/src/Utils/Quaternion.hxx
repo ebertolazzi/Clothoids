@@ -201,7 +201,7 @@ namespace Utils {
     //! and inversion.
     //!
     real_type
-    toAxis( real_type axis[3] ) const {
+    to_axis( real_type axis[3] ) const {
       real_type sin_phi = sqrt( m_Q[1]*m_Q[1] + m_Q[2]*m_Q[2] + m_Q[3]*m_Q[3] );
       real_type cos_phi = m_Q[0];
       real_type angle   = 2 * atan2( sin_phi, cos_phi );
@@ -219,9 +219,9 @@ namespace Utils {
     //! Converts a rotation from quaternion to rotation matrix.
     //!
     void
-    toMatrix( real_type mat[3][3] ) const {
+    to_matrix( real_type mat[3][3] ) const {
       real_type axis[3];
-      real_type angle = toAxis( axis );
+      real_type angle = to_axis( axis );
       real_type ca    = cos( angle );
       real_type sa    = sin( angle );
 

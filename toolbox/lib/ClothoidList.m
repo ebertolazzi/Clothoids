@@ -158,7 +158,7 @@ classdef ClothoidList < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Get the clothoid at position `k`.
-    %> The biarc is returned as a clothoid object or the data
+    %> The clothoid is returned as a clothoid object or the data
     %> defining the clothoid.
     %>
     %> \rst
@@ -489,6 +489,43 @@ classdef ClothoidList < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Export list of clothoids
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    S = ref.export();
+    %>
+    %> \endrst
+    %>
+    %> - `S.x0`:     vector of initial point x-coordinate
+    %> - `S.y0`:     vector of initial point y-coordinate
+    %> - `S.theta0`: vector of initial angles
+    %> - `S.kappa0`: vector of initial curvatures
+    %> - `S.dkappa`: vector of curvature derivative of the segments
+    %> - `S.L`:      vector of segment length
+    %>
+    function S = export( self )
+      N        = ClothoidListMexWrapper( 'num_segments', self.objectHandle );
+      S.x0     = zeros(1,N);
+      S.y0     = zeros(1,N);
+      S.theta0 = zeros(1,N);
+      S.kappa0 = zeros(1,N);
+      S.dkappa = zeros(1,N);
+      S.L      = zeros(1,N);
+      for k=1:N
+        [ x, y, th, k0, dk, ell ] = ClothoidListMexWrapper( 'get', self.objectHandle, k );
+        S.x0(k)     = x;
+        S.y0(k)     = y;
+        S.theta0(k) = th;
+        S.kappa0(k) = k0;
+        S.dkappa(k) = dk;
+        S.L(k)      = ell;
+      end  
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the clothoid list
     %>
     %> **Usage:**
@@ -597,7 +634,7 @@ classdef ClothoidList < CurveBase
     %> - `fmt1`: format of the first arc
     %> - `fmt2`: format of the second arc
     %>
-    function plotCurvature( self, npts, varargin )
+    function plot_curvature( self, npts, varargin )
       if nargin > 2
         fmt1 = varargin{1};
       else
@@ -623,6 +660,10 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, npts, varargin )
+      self.plot_curvature( npts, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the angle of the clothoid list
     %>
     %> **Usage:**
@@ -642,7 +683,7 @@ classdef ClothoidList < CurveBase
     %> - `fmt1`: format of the first arc
     %> - `fmt2`: format of the second arc
     %>
-    function plotAngle( self, npts, varargin )
+    function plot_angle( self, npts, varargin )
       if nargin > 2
         fmt1 = varargin{1};
       else
@@ -668,6 +709,10 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotAngle( self, npts, varargin )
+      self.plot_angle( npts, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the normal of the clothoid list
     %>
     %> **Usage:**
@@ -682,11 +727,15 @@ classdef ClothoidList < CurveBase
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
     %>
-    function plotNormal( self, step, len )
+    function plot_normal( self, step, len )
       for k=1:self.num_segments()
         C = self.get(k);
         C.plotNormal( step, len );
       end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotNormal( self, step, len )
+      self.plot_normal( step, len );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Save the clothoid list sampled on a file
@@ -714,7 +763,7 @@ classdef ClothoidList < CurveBase
     %>
     %> \endrst
     %>
-    function saveSampled( self, filename, ds )
+    function save_sampled( self, filename, ds )
       fd = fopen( filename, 'w' );
       L  = self.length();
       n  = ceil( L / ds );
@@ -725,6 +774,10 @@ classdef ClothoidList < CurveBase
         fprintf(fd,'%20.10g\t%20.10g\t%20.10g\n',x,y,theta);
       end
       fclose(fd);
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function saveSampled( self, filename, ds )
+      self.save_sampled( filename, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Save the clothoid list on a file as a list of segments
@@ -752,7 +805,7 @@ classdef ClothoidList < CurveBase
     %>
     %> \endrst
     %>
-    function saveClothoids( self, filename )
+    function save_clothoids( self, filename )
       fd = fopen( filename, 'w' );
       fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n');
       for k=1:self.num_segments()
@@ -762,7 +815,11 @@ classdef ClothoidList < CurveBase
       end
       fclose(fd);
     end
-
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function saveClothoids( self, filename )
+      self.save_clothoids( filename );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   end
 
 end

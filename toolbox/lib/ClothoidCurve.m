@@ -297,6 +297,39 @@ classdef ClothoidCurve < CurveBase
       dk     = self.kappa_D(0);
       L      = self.length();
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Export clothoid parameters
+    %>
+    %> **Usage:**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>    S = ref.export();
+    %>
+    %> \endrst
+    %>
+    %> - `S.x0`, `S.y0`: initial point of the clothoid arc
+    %> - `S.x1`, `S.y1`: final point of the clothoid arc
+    %> - `S.theta0`:     initial angle of the clothoid arc
+    %> - `S.theta1`:     final angle of the clothoid arc
+    %> - `S.kappa0`:     initial curvature of the clothoid arc
+    %> - `S.kappa1`:     final curvature of the clothoid arc
+    %> - `S.dk`:         curvature derivative
+    %> - `S.L`:          length of the clothoid arc
+    %>
+    function S = export( self )
+      S.x0     = self.x_begin();
+      S.y0     = self.y_begin();
+      S.theta0 = self.theta_begin();
+      S.kappa0 = self.kappa_begin();
+      S.x1     = self.x_end();
+      S.y1     = self.y_end();
+      S.theta1 = self.theta_end();
+      S.kappa1 = self.kappa_end();
+      S.dk     = self.kappa_D(0);
+      S.L      = self.length();
+    end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Get an optimized sampling of curviliear coordinates on the clothoid arc
     %>
@@ -388,7 +421,8 @@ classdef ClothoidCurve < CurveBase
     %>
     %> - `npts`: number of sampling points for plotting
     %>
-    function plotCurvature( self, npts, varargin )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plot_curvature( self, npts, varargin )
       if nargin < 2
         npts = 1000;
       end
@@ -397,6 +431,10 @@ classdef ClothoidCurve < CurveBase
       [ ~, ~, ~, kappa ] = ...
         ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
       plot( S, kappa, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotCurvature( self, npts, varargin )
+      self.plot_curvature( npts, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the angle of the clothoid curve
@@ -413,7 +451,8 @@ classdef ClothoidCurve < CurveBase
     %>
     %> - `npts`: number of sampling points for plotting
     %>
-    function plotAngle( self, npts, varargin )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plot_angle( self, npts, varargin )
       if nargin < 2
         npts = 1000;
       end
@@ -422,6 +461,10 @@ classdef ClothoidCurve < CurveBase
       [ ~, ~, theta, ~ ] = ...
         ClothoidCurveMexWrapper( 'evaluate', self.objectHandle, S );
       plot( S, theta, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotAngle( self, npts, varargin )
+      self.plot_angle( nots, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the normal of the clothoid curve
@@ -438,7 +481,8 @@ classdef ClothoidCurve < CurveBase
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
     %>
-    function plotNormal( self, step, len )
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plot_normal( self, step, len )
       for s=0:step:self.length()
         [ x, y, theta, ~ ] = self.evaluate(s);
         n = [sin(theta),-cos(theta)];
@@ -446,6 +490,10 @@ classdef ClothoidCurve < CurveBase
         B = [y,y+len*n(2)];
         plot(A,B);
       end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function plotNormal( self, step, len )
+      self.plot_normal( step, len );
     end
   end
 end

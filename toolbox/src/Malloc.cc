@@ -122,14 +122,14 @@ namespace Utils {
         "Memory allocation failed: {}\nTry to allocate {} bytes for {}\n",
         exc.what(), n, m_name
       );
-      printTrace( __LINE__, __FILE__, reason, cerr );
+      print_trace( __LINE__, __FILE__, reason, cerr );
       exit(0);
     }
     catch (...) {
       string reason = fmt::format(
         "Memory allocation failed for {}: memory exausted\n", m_name
       );
-      printTrace( __LINE__, __FILE__, reason, cerr );
+      print_trace( __LINE__, __FILE__, reason, cerr );
       exit(0);
     }
     m_numTotValues = n;
@@ -218,7 +218,7 @@ namespace Utils {
     string reason = fmt::format(
       "nMalloc<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz
     );
-    printTrace( __LINE__, __FILE__, reason, cerr );
+    print_trace( __LINE__, __FILE__, reason, cerr );
     exit(0);
   }
 
@@ -232,14 +232,14 @@ namespace Utils {
         "in {} {}: not fully used!\nUnused: {} values\n",
         m_name, where, m_numTotValues - m_numAllocated
       );
-      printTrace( __LINE__,__FILE__, tmp, cerr );
+      print_trace( __LINE__,__FILE__, tmp, cerr );
     }
     if ( m_numAllocated > m_numTotValues ) {
       string tmp = fmt::format(
         "in {} {}: too much used!\nMore used: {} values\n",
         m_name, where, m_numAllocated - m_numTotValues
       );
-      printTrace( __LINE__,__FILE__, tmp, cerr );
+      print_trace( __LINE__,__FILE__, tmp, cerr );
     }
   }
 

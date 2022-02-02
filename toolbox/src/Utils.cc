@@ -86,7 +86,7 @@ namespace Utils {
 
   template <typename T_int, typename T_real>
   void
-  searchInterval(
+  search_interval(
     T_int                npts,
     T_real const * const X,
     T_real             & x,
@@ -99,7 +99,7 @@ namespace Utils {
     T_int n  = npts-1;
     UTILS_ASSERT(
       npts > 1 && lastInterval >= 0 && lastInterval < n,
-      "In searchInterval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
+      "In search_interval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
       "npts musrt be >= 2 and lastInterval must be in [0,npts-2]\n",
       npts, lastInterval, closed, can_extend
     );
@@ -116,7 +116,7 @@ namespace Utils {
     } else {
       UTILS_ASSERT(
         can_extend || (x >= xl && x <= xr),
-        "In searchInterval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
+        "In search_interval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
         "out of range: [{},{}]\n",
         npts, lastInterval, closed, can_extend, xl, xr
       );
@@ -151,14 +151,14 @@ namespace Utils {
     // check computed interval
     UTILS_ASSERT(
       lastInterval >= 0 && lastInterval < n,
-      "In searchInterval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
+      "In search_interval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
       "computed lastInterval of range: [{},{}]\n",
       npts, lastInterval, closed, can_extend, xl, xr
     );
 
   }
 
-  extern template void searchInterval(
+  extern template void search_interval(
     int32_t             npts,
     float const * const X,
     float             & x,
@@ -167,7 +167,7 @@ namespace Utils {
     bool                can_extend
   );
 
-  template void searchInterval(
+  template void search_interval(
     int32_t              npts,
     double const * const X,
     double             & x,
@@ -176,7 +176,7 @@ namespace Utils {
     bool                 can_extend
   );
 
-  template void searchInterval(
+  template void search_interval(
     int64_t             npts,
     float const * const X,
     float             & x,
@@ -185,7 +185,7 @@ namespace Utils {
     bool                can_extend
   );
 
-  template void searchInterval(
+  template void search_interval(
     int64_t              npts,
     double const * const X,
     double             & x,

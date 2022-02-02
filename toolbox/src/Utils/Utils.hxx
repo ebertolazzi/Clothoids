@@ -126,7 +126,7 @@ namespace Utils {
 
   template <typename T_int, typename T_real>
   void
-  searchInterval(
+  search_interval(
     T_int                npts,
     T_real const * const X,
     T_real             & x,
@@ -136,7 +136,7 @@ namespace Utils {
   );
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  extern template void searchInterval(
+  extern template void search_interval(
     int32_t             npts,
     float const * const X,
     float             & x,
@@ -145,7 +145,7 @@ namespace Utils {
     bool                can_extend
   );
 
-  extern template void searchInterval(
+  extern template void search_interval(
     int32_t              npts,
     double const * const X,
     double             & x,
@@ -154,7 +154,7 @@ namespace Utils {
     bool                 can_extend
   );
 
-  extern template void searchInterval(
+  extern template void search_interval(
     int64_t             npts,
     float const * const X,
     float             & x,
@@ -163,7 +163,7 @@ namespace Utils {
     bool                can_extend
   );
 
-  extern template void searchInterval(
+  extern template void search_interval(
     int64_t              npts,
     double const * const X,
     double             & x,
@@ -172,6 +172,20 @@ namespace Utils {
     bool                 can_extend
   );
   #endif
+
+  template <typename T_int, typename T_real>
+  inline
+  void
+  searchInterval(
+    T_int                npts,
+    T_real const * const X,
+    T_real             & x,
+    T_int              & lastInterval,
+    bool                 closed,
+    bool                 can_extend
+  ) {
+    search_interval( npts, X, x, lastInterval, closed, can_extend );
+  }
 
   static
   inline

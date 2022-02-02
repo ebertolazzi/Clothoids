@@ -380,7 +380,7 @@ public:
     {
         exceptions(std::ios_base::badbit);
     }
-    virtual ~istream()
+    ~istream() override
     {
         delete rdbuf();
     }
@@ -401,7 +401,7 @@ public:
     {
         exceptions(std::ios_base::badbit);
     }
-    virtual ~ostream()
+    ~ostream() override
     {
         delete rdbuf();
     }

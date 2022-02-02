@@ -110,12 +110,23 @@ namespace Utils {
   typedef basic_ostream<char> ostream_type;
 
   void
-  printTrace(
+  print_trace(
     int                line,
     char const * const file,
     string const     & msg,
     ostream_type     & stream
   );
+
+  inline
+  void
+  printTrace(
+    int                line,
+    char const * const file,
+    string const     & msg,
+    ostream_type     & stream
+  ) {
+    print_trace( line, file, msg, stream );
+  }
 
   class Runtime_TraceError : public runtime_error {
   private:

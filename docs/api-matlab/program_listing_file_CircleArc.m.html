@@ -250,6 +250,35 @@
 <span class="w">      </span><span class="nb">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">fmt</span><span class="p">{:});</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; Export circle parameters</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \rst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; .. code-block:: matlab</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;    S = ref.export();</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; \endrst</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S.x0`, `S.y0`: initial point of the circle arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S.x1`, `S.y1`: final point of the circle arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S.theta0`:     initial angle of the circle arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S.theta1`:     final angle of the circle arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S.kappa`:      curvature of the circle arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt; - `S.L`:          length of the clothoid arc</span><span class="w"></span>
+<span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span>S<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">export</span><span class="p">(</span> self <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">x0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">y0</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">theta0</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">kappa</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">kappa_begin</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">x1</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">x_end</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">y1</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">y_end</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">theta1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">theta_end</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="n">S</span><span class="p">.</span><span class="n">L</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; Plot the polygon of the NURBS for the arc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; **Usage:**</span><span class="w"></span>
@@ -264,7 +293,7 @@
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt; - `fmt` : format of the arc</span><span class="w"></span>
 <span class="w">    </span><span class="c">%&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotPolygon</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plot_polygon</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
 <span class="w">      </span><span class="n">arc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">to_nurbs</span><span class="p">();</span><span class="w"></span>
 <span class="w">      </span><span class="n">xx</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">arc</span><span class="p">.</span><span class="n">coefs</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span><span class="o">./</span><span class="n">arc</span><span class="p">.</span><span class="n">coefs</span><span class="p">(</span><span class="mi">3</span><span class="p">,:);</span><span class="w"></span>
 <span class="w">      </span><span class="n">yy</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="n">arc</span><span class="p">.</span><span class="n">coefs</span><span class="p">(</span><span class="mi">2</span><span class="p">,:)</span><span class="o">./</span><span class="n">arc</span><span class="p">.</span><span class="n">coefs</span><span class="p">(</span><span class="mi">3</span><span class="p">,:);</span><span class="w"></span>
@@ -274,6 +303,11 @@
 <span class="w">        </span><span class="nb">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">,</span><span class="s">':ok'</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="k">end</span><span class="w"></span>
 <span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
+<span class="w">    </span><span class="k">function</span><span class="w"> </span><span class="nf">plotPolygon</span><span class="p">(</span> self, varargin <span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">self</span><span class="p">.</span><span class="n">plot_polygon</span><span class="p">(</span><span class="w"> </span><span class="nb">varargin</span><span class="p">{:}</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="c">% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span><span class="w"></span>
 <span class="w">  </span><span class="k">end</span><span class="w"></span>
 <span class="k">end</span><span class="w"></span>
 </pre></div>

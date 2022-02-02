@@ -434,6 +434,34 @@
 </dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="a00080_1ad444276e907a48e917982e06b69945e7"></span><span class="sig-name descname"><span class="pre">function</span> <span class="pre">export</span> <span class="pre">(in</span> <span class="sig-paren">)</span></span>
+</dt>
+<dd>
+<p>Export clothoid parameters</p>
+<p><strong>Usage:</strong></p>
+<p></p>
+<div class="highlight-matlab notranslate">
+<div class="highlight"><pre><span></span><span class="n">S</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ref</span><span class="p">.</span><span class="n">export</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+
+<p></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">S.x0</span></code>, <code class="docutils literal notranslate"><span class="pre">S.y0</span></code>: initial point of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.x1</span></code>, <code class="docutils literal notranslate"><span class="pre">S.y1</span></code>: final point of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.theta0</span></code>: initial angle of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.theta1</span></code>: final angle of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.kappa0</span></code>: initial curvature of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.kappa1</span></code>: final curvature of the clothoid arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.dk</span></code>: curvature derivative</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S.L</span></code>: length of the clothoid arc </p></li>
+</ul>
+
+</dd>
+</dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve16optimized_sampleE2in2in2in2in">
 <span id="_CPPv3N13ClothoidCurve16optimized_sampleE2in2in2in2in"></span><span id="_CPPv2N13ClothoidCurve16optimized_sampleE2in2in2in2in"></span><span id="ClothoidCurve::optimized_sample__in.in.in.in"></span><span class="target" id="a00080_1ad2fbc2581528046b084a640ac7acc4b7"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">optimized_sample</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">max_angle</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve16optimized_sampleE2in2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
@@ -514,8 +542,8 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve13plotCurvatureE2in2in2in">
-<span id="_CPPv3N13ClothoidCurve13plotCurvatureE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve13plotCurvatureE2in2in2in"></span><span id="ClothoidCurve::plotCurvature__in.in.in"></span><span class="target" id="a00080_1af451db1717b2924096a98fb1bc5a9b82"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotCurvature</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve13plotCurvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve14plot_curvatureE2in2in2in">
+<span id="_CPPv3N13ClothoidCurve14plot_curvatureE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve14plot_curvatureE2in2in2in"></span><span id="ClothoidCurve::plot_curvature__in.in.in"></span><span class="target" id="a00080_1acebfcf5160f01883c59c14388da9ea3e"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot_curvature</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve14plot_curvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Plot the curvature of the clothoid curve</p>
@@ -536,8 +564,15 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve9plotAngleE2in2in2in">
-<span id="_CPPv3N13ClothoidCurve9plotAngleE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve9plotAngleE2in2in2in"></span><span id="ClothoidCurve::plotAngle__in.in.in"></span><span class="target" id="a00080_1aeef2a03801601b6d3d93afe951509b9a"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotAngle</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve9plotAngleE2in2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve13plotCurvatureE2in2in2in">
+<span id="_CPPv3N13ClothoidCurve13plotCurvatureE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve13plotCurvatureE2in2in2in"></span><span id="ClothoidCurve::plotCurvature__in.in.in"></span><span class="target" id="a00080_1af451db1717b2924096a98fb1bc5a9b82"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotCurvature</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve13plotCurvatureE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve10plot_angleE2in2in2in">
+<span id="_CPPv3N13ClothoidCurve10plot_angleE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve10plot_angleE2in2in2in"></span><span id="ClothoidCurve::plot_angle__in.in.in"></span><span class="target" id="a00080_1a944df8f2dbf0259a9da9baf89a3b0cb3"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot_angle</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve10plot_angleE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Plot the angle of the clothoid curve</p>
@@ -558,8 +593,15 @@
 </dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve10plotNormalE2in2in2in">
-<span id="_CPPv3N13ClothoidCurve10plotNormalE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve10plotNormalE2in2in2in"></span><span id="ClothoidCurve::plotNormal__in.in.in"></span><span class="target" id="a00080_1a704e6560ad28afcde8df99460756e135"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotNormal</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">step</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve10plotNormalE2in2in2in" title="Permalink to this definition">¶</a><br>
+<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve9plotAngleE2in2in2in">
+<span id="_CPPv3N13ClothoidCurve9plotAngleE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve9plotAngleE2in2in2in"></span><span id="ClothoidCurve::plotAngle__in.in.in"></span><span class="target" id="a00080_1aeef2a03801601b6d3d93afe951509b9a"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotAngle</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">varargin</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve9plotAngleE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve11plot_normalE2in2in2in">
+<span id="_CPPv3N13ClothoidCurve11plot_normalE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve11plot_normalE2in2in2in"></span><span id="ClothoidCurve::plot_normal__in.in.in"></span><span class="target" id="a00080_1aec896630ffdd737e3bc61d318901f5b0"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plot_normal</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">step</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve11plot_normalE2in2in2in" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
 <p>Plot the normal of the clothoid curve</p>
@@ -577,6 +619,13 @@
 </ul>
 
 </dd>
+</dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N13ClothoidCurve10plotNormalE2in2in2in">
+<span id="_CPPv3N13ClothoidCurve10plotNormalE2in2in2in"></span><span id="_CPPv2N13ClothoidCurve10plotNormalE2in2in2in"></span><span id="ClothoidCurve::plotNormal__in.in.in"></span><span class="target" id="a00080_1a704e6560ad28afcde8df99460756e135"></span><span class="n"><span class="pre">function</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">plotNormal</span></span></span><span class="sig-paren">(</span><span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">self</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">step</span></span>, <span class="n"></span><span class="w"> </span><span class="n sig-param"><span class="pre">len</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N13ClothoidCurve10plotNormalE2in2in2in" title="Permalink to this definition">¶</a><br>
+</dt>
+<dd></dd>
 </dl>
 
 <dl class="cpp function">
