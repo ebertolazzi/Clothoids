@@ -9,7 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoids.hh"
-#include "mex_utils.hh"
+#include "Utils_mex.hh"
 
 #define MEX_ERROR_MESSAGE \
 "======================================================================\n" \
@@ -48,23 +48,23 @@ namespace G2lib {
       if ( nrhs == 2 ) {
 
         mwSize nx, ny;
-        real_type const * x = getVectorPointer( arg_in_0, nx, "XY_to_angle: argument `x` expected to be a real scalar/vector");
-        real_type const * y = getVectorPointer( arg_in_1, ny, "XY_to_angle: argument `y` expected to be a real scalar/vector");
+        real_type const * x = Utils::mex_vector_pointer( arg_in_0, nx, "XY_to_angle: argument `x` expected to be a real scalar/vector");
+        real_type const * y = Utils::mex_vector_pointer( arg_in_1, ny, "XY_to_angle: argument `y` expected to be a real scalar/vector");
 
-        MEX_ASSERT2(
+        UTILS_MEX_ASSERT(
           nx == ny,
           "XY_to_angle( x, y ), size(x) [{}] != size(y) [{}]\n", nx, ny
         );
 
-        real_type * theta     = createMatrixValue( arg_out_0, 1, nx );
-        real_type * theta_min = createMatrixValue( arg_out_1, 1, nx );
-        real_type * theta_max = createMatrixValue( arg_out_2, 1, nx );
-        real_type * omega     = createMatrixValue( arg_out_3, 1, nx );
-        real_type * len       = createMatrixValue( arg_out_4, 1, nx );
+        real_type * theta     = Utils::mex_create_matrix_value( arg_out_0, 1, nx );
+        real_type * theta_min = Utils::mex_create_matrix_value( arg_out_1, 1, nx );
+        real_type * theta_max = Utils::mex_create_matrix_value( arg_out_2, 1, nx );
+        real_type * omega     = Utils::mex_create_matrix_value( arg_out_3, 1, nx );
+        real_type * len       = Utils::mex_create_matrix_value( arg_out_4, 1, nx );
         xy_to_guess_angle( nx, x, y, theta, theta_min, theta_max, omega, len );
 
       } else {
-        MEX_ASSERT( false, "XY_to_angle: expected 2 arguments" );
+        UTILS_MEX_ASSERT0( false, "XY_to_angle: expected 2 arguments" );
       }
 
     } catch ( std::exception const & e ) {

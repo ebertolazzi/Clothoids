@@ -21,13 +21,6 @@
 /// file: Numbers.hxx
 ///
 
-#pragma once
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#ifndef UTILS_NUMBERS_dot_HXX
-#define UTILS_NUMBERS_dot_HXX
-#endif
-
 namespace Utils {
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -253,8 +246,6 @@ namespace Utils {
   static double const m_1_sqrt2 = 0.7071067811865475244008443621048490392850;
 
 }
-
-#endif
 
 ///
 /// eof: Number.hxx

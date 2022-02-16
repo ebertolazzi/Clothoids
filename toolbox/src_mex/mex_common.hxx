@@ -7,7 +7,7 @@ typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs
 static
 bool
 do_is_ISO( mxArray const * plhs, char const msg[] ) {
-  MEX_ASSERT( mxIsChar(plhs), msg );
+  UTILS_MEX_ASSERT0( mxIsChar(plhs), msg );
   string cmd = mxArrayToString( plhs );
   return cmd == "ISO";
 }
@@ -21,30 +21,30 @@ do_length(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('length',OBJ[,offs,'ISO'/'SAE']): "
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrhs == 2 || nrhs == 3 || nrhs == 4,
     CMD "expected 2, 3 or 4 inputs, nrhs = {}\n", nrhs
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nlhs == 1,
     CMD "expected 1 output, nlhs = {}\n", nlhs
   );
 
   if ( nrhs == 2 ) {
-    setScalarValue( arg_out_0, ptr->length() );
+    Utils::mex_set_scalar_value( arg_out_0, ptr->length() );
   } else {
     real_type offs;
-    offs = getScalarValue(
+    offs = Utils::mex_get_scalar_value(
       arg_in_2,
       CMD "`offs` expected to be a real scalar"
     );
     bool ISO = true;
     if ( nrhs == 4 ) ISO = do_is_ISO( arg_in_3, CMD " last argument must be a string");
     real_type len = ISO ? ptr->length_ISO( offs ) : ptr->length_SAE( offs );
-    setScalarValue( arg_out_0, len );
+    Utils::mex_set_scalar_value( arg_out_0, len );
   }
 
   #undef CMD
@@ -59,13 +59,13 @@ do_copy(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('copy',OBJ,OBJ1): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
-  G2LIB_CLASS const * CC = convertMat2Ptr<G2LIB_CLASS>(arg_in_2);
+  G2LIB_CLASS const * CC = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_2);
   ptr->copy(*CC);
 
   #undef CMD
@@ -78,10 +78,10 @@ do_delete(
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD CMD_BASE "('delete',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
   // Destroy the C++ object
-  destroyObject<G2LIB_CLASS>( arg_in_1 );
+  Utils::mex_destroy_object<G2LIB_CLASS>( arg_in_1 );
   #undef CMD
 }
 
@@ -95,20 +95,20 @@ do_bbox(
 ) {
 
   #define CMD CMD_BASE "('bbox',OBJ[,offs,'ISO'/'SAE']): "
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrhs >= 2 && nrhs <= 4,
     CMD "expected 2, 3 or 4 inputs, nrhs = {}\n", nrhs
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nlhs == 4,
     CMD "expected 4 output, nlhs = {}\n", nlhs
   );
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   real_type xmin, ymin, xmax, ymax;
   if ( nrhs >= 3 ) {
-    real_type offs = getScalarValue(
+    real_type offs = Utils::mex_get_scalar_value(
       arg_in_2, CMD "`offs` expected to be a real scalar"
     );
     bool ISO = true;
@@ -119,10 +119,10 @@ do_bbox(
     ptr->bbox( xmin, ymin, xmax, ymax );
   }
 
-  setScalarValue( arg_out_0, xmin );
-  setScalarValue( arg_out_1, ymin );
-  setScalarValue( arg_out_2, xmax );
-  setScalarValue( arg_out_3, ymax );
+  Utils::mex_set_scalar_value( arg_out_0, xmin );
+  Utils::mex_set_scalar_value( arg_out_1, ymin );
+  Utils::mex_set_scalar_value( arg_out_2, xmax );
+  Utils::mex_set_scalar_value( arg_out_3, ymax );
 
   #undef CMD
 }
@@ -136,13 +136,13 @@ do_bbTriangles( int nlhs, mxArray       * plhs[],
 
   #define CMD CMD_BASE "('bbTriangles',OBJ[,max_angle,max_size,offs,'ISO'/'SAE']): "
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrhs >= 2 && nrhs <= 6,
     CMD "expected 2 up to 6 inputs, nrhs = {}\n", nrhs
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nlhs == 3,
     CMD "expected 3 output, nlhs = {}\n", nlhs
   );
@@ -151,15 +151,15 @@ do_bbTriangles( int nlhs, mxArray       * plhs[],
   real_type max_size  = 1e100;
   real_type offs      = 0;
   if ( nrhs >= 3 )
-    max_angle = getScalarValue(
+    max_angle = Utils::mex_get_scalar_value(
       arg_in_2, CMD "`max_angle` expected to be a real scalar"
     );
   if ( nrhs >= 4 )
-    max_size = getScalarValue(
+    max_size = Utils::mex_get_scalar_value(
       arg_in_3, CMD "`max_size` expected to be a real scalar"
     );
   if ( nrhs >= 5 )
-    offs = getScalarValue(
+    offs = Utils::mex_get_scalar_value(
       arg_in_4, CMD "`offs` expected to be a real scalar"
     );
 
@@ -179,9 +179,9 @@ do_bbTriangles( int nlhs, mxArray       * plhs[],
 
   mwSize nt = tvec.size();
 
-  double * p0 = createMatrixValue( arg_out_0, 2, nt );
-  double * p1 = createMatrixValue( arg_out_1, 2, nt );
-  double * p2 = createMatrixValue( arg_out_2, 2, nt );
+  double * p0 = Utils::mex_create_matrix_value( arg_out_0, 2, nt );
+  double * p1 = Utils::mex_create_matrix_value( arg_out_1, 2, nt );
+  double * p2 = Utils::mex_create_matrix_value( arg_out_2, 2, nt );
 
   for ( mwSize i = 0; i < nt; ++i ) {
     Triangle2D const & t = tvec[i];
@@ -205,15 +205,15 @@ do_change_origin(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('change_origin',OBJ,x0,y0): "
-  MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type new_x0, new_y0;
-  new_x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
-  new_y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
+  new_x0 = Utils::mex_get_scalar_value( arg_in_2, CMD "`x0` expected to be a real scalar" );
+  new_y0 = Utils::mex_get_scalar_value( arg_in_3, CMD "`y0` expected to be a real scalar" );
 
   ptr->change_origin( new_x0, new_y0 );
 
@@ -229,15 +229,15 @@ do_translate(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('translate',OBJ,t0,t0): "
-  MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type tx, ty;
-  tx = getScalarValue( arg_in_2, CMD "`tx` expected to be a real scalar" );
-  ty = getScalarValue( arg_in_3, CMD "`ty` expected to be a real scalar" );
+  tx = Utils::mex_get_scalar_value( arg_in_2, CMD "`tx` expected to be a real scalar" );
+  ty = Utils::mex_get_scalar_value( arg_in_3, CMD "`ty` expected to be a real scalar" );
 
   ptr->translate( tx, ty );
   #undef CMD
@@ -252,16 +252,16 @@ do_rotate(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('rotate',OBJ,angle,cx,cy): "
-  MEX_ASSERT2( nrhs == 5, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 5, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type angle, cx, cy;
-  angle = getScalarValue( arg_in_2, CMD "`angle` expected to be a real scalar" );
-  cx    = getScalarValue( arg_in_3, CMD "`cx` expected to be a real scalar" );
-  cy    = getScalarValue( arg_in_4, CMD "`cy` expected to be a real scalar" );
+  angle = Utils::mex_get_scalar_value( arg_in_2, CMD "`angle` expected to be a real scalar" );
+  cx    = Utils::mex_get_scalar_value( arg_in_3, CMD "`cx` expected to be a real scalar" );
+  cy    = Utils::mex_get_scalar_value( arg_in_4, CMD "`cy` expected to be a real scalar" );
 
   ptr->rotate( angle, cx, cy );
   #undef CMD
@@ -276,12 +276,12 @@ do_scale(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('scale',OBJ,sc): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
-  real_type sc = getScalarValue( arg_in_2, CMD "`sc` expected to be a real scalar" );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  real_type sc = Utils::mex_get_scalar_value( arg_in_2, CMD "`sc` expected to be a real scalar" );
   ptr->scale(sc);
   #undef CMD
 }
@@ -295,11 +295,11 @@ do_reverse(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('reverse',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   ptr->reverse();
   #undef CMD
@@ -314,15 +314,15 @@ do_trim(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('trim',OBJ,s_begin,s_end): "
-  MEX_ASSERT2( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type s_begin, s_end;
-  s_begin = getScalarValue( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
-  s_end   = getScalarValue( arg_in_3, CMD "`s_end` expected to be a real scalar" );
+  s_begin = Utils::mex_get_scalar_value( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
+  s_end   = Utils::mex_get_scalar_value( arg_in_3, CMD "`s_end` expected to be a real scalar" );
 
   ptr->trim( s_begin, s_end );
   #undef CMD
@@ -337,15 +337,15 @@ do_closest_point(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('closest_point',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
 
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrhs >= 4 || nrhs <= 6,
     CMD "expected 4, 5 or 6 input, nrhs = {}\n", nrhs
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nlhs == 1 || nlhs == 6,
     CMD "expected 1 pr 6 outputs, nlhs = {}\n", nlhs
   );
@@ -353,16 +353,16 @@ do_closest_point(
   mwSize nrx, ncx, nry, ncy;
   real_type const * qx;
   real_type const * qy;
-  qx = getMatrixPointer(
+  qx = Utils::mex_matrix_pointer(
     arg_in_2, nrx, ncx,
     CMD "`qx` expected to be a real vector/matrix"
   );
-  qy = getMatrixPointer(
+  qy = Utils::mex_matrix_pointer(
     arg_in_3, nry, ncy,
     CMD "`qy` expected to be a real vector/matrix"
   );
 
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrx == nry && ncx == ncy,
     CMD "`qx` and `qy` expected to be of the same size, found\n"
     "size(qx) = {} x {} size(qy) = {} x {}\n",
@@ -385,12 +385,12 @@ do_closest_point(
     mxArray * mx_iflag;
     mxArray * mx_dst;
 
-    x      = createMatrixValue( mx_x,     nrx, ncx );
-    y      = createMatrixValue( mx_y,     nrx, ncx );
-    s      = createMatrixValue( mx_s,     nrx, ncx );
-    t      = createMatrixValue( mx_t,     nrx, ncx );
-    iflag  = createMatrixInt32( mx_iflag, nrx, ncx );
-    dst    = createMatrixValue( mx_dst,   nrx, ncx );
+    x      = Utils::mex_create_matrix_value( mx_x,     nrx, ncx );
+    y      = Utils::mex_create_matrix_value( mx_y,     nrx, ncx );
+    s      = Utils::mex_create_matrix_value( mx_s,     nrx, ncx );
+    t      = Utils::mex_create_matrix_value( mx_t,     nrx, ncx );
+    iflag  = Utils::mex_create_matrix_int32( mx_iflag, nrx, ncx );
+    dst    = Utils::mex_create_matrix_value( mx_dst,   nrx, ncx );
 
     static char const * fieldnames[] = {
       "x", "y", "s", "t", "iflag", "dst"
@@ -405,17 +405,17 @@ do_closest_point(
     mxSetFieldByNumber( arg_out_0, 0, 5, mx_dst   );
 
   } else {
-    x     = createMatrixValue( arg_out_0, nrx, ncx );
-    y     = createMatrixValue( arg_out_1, nrx, ncx );
-    s     = createMatrixValue( arg_out_2, nrx, ncx );
-    t     = createMatrixValue( arg_out_3, nrx, ncx );
-    iflag = createMatrixInt32( arg_out_4, nrx, ncx );
-    dst   = createMatrixValue( arg_out_5, nrx, ncx );
+    x     = Utils::mex_create_matrix_value( arg_out_0, nrx, ncx );
+    y     = Utils::mex_create_matrix_value( arg_out_1, nrx, ncx );
+    s     = Utils::mex_create_matrix_value( arg_out_2, nrx, ncx );
+    t     = Utils::mex_create_matrix_value( arg_out_3, nrx, ncx );
+    iflag = Utils::mex_create_matrix_int32( arg_out_4, nrx, ncx );
+    dst   = Utils::mex_create_matrix_value( arg_out_5, nrx, ncx );
   }
 
   mwSize size = nrx * ncx;
   if ( nrhs >= 5 ) {
-    real_type offs = getScalarValue(
+    real_type offs = Utils::mex_get_scalar_value(
       arg_in_4, CMD "`offs` expected to be a real scalar"
     );
     bool ISO = true;
@@ -450,15 +450,15 @@ do_distance(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('distance',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
 
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrhs >= 4 || nrhs <= 6,
     CMD "expected 4, 5 or 6 input, nrhs = {}\n", nrhs
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nlhs == 1,
     CMD "expected 1 output, nlhs = {}\n", nlhs
   );
@@ -466,27 +466,27 @@ do_distance(
   mwSize nrx, ncx, nry, ncy;
   real_type const * qx;
   real_type const * qy;
-  qx = getMatrixPointer(
+  qx = Utils::mex_matrix_pointer(
     arg_in_2, nrx, ncx,
     CMD "`qx` expected to be a real vector/matrix"
   );
-  qy = getMatrixPointer(
+  qy = Utils::mex_matrix_pointer(
     arg_in_3, nry, ncy,
     CMD "`qy` expected to be a real vector/matrix"
   );
 
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrx == nry && ncx == ncy,
     CMD "`qx` and `qy` expected to be of the same size, found\n"
     "size(qx) = {} x {} size(qy) = {} x {}\n",
     nrx, ncx, nry, ncy
   );
 
-  real_type * dst = createMatrixValue( arg_out_0, nrx, ncx );
+  real_type * dst = Utils::mex_create_matrix_value( arg_out_0, nrx, ncx );
 
   mwSize size = nrx * ncx;
   if ( nrhs >= 5 ) {
-    real_type offs = getScalarValue(
+    real_type offs = Utils::mex_get_scalar_value(
       arg_in_4, CMD "`offs` expected to be a real scalar"
     );
     bool ISO = true;
@@ -516,39 +516,39 @@ do_collision(
 ) {
 
   #define CMD CMD_BASE "('collision',OBJ,OBJ1,type[,offs,offs1,'ISO'/'SAE']): "
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrhs >= 4 || nrhs <= 7,
     CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nlhs == 1,
     CMD "expected 1 output, nlhs = {}\n", nlhs
   );
 
-  MEX_ASSERT( mxIsChar(arg_in_3), CMD "'type' argument must be a string" );
+  UTILS_MEX_ASSERT0( mxIsChar(arg_in_3), CMD "'type' argument must be a string" );
   string kind = mxArrayToString( arg_in_3 );
 
-  G2LIB_CLASS * ptr  = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr  = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
   BaseCurve   * ptr1 = nullptr;
 
-  if      ( kind == "LineSegment"   ) ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
-  else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
-  else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
-  else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
-  else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
-  else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
+  if      ( kind == "LineSegment"   ) ptr1 = Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_2);
+  else if ( kind == "CircleArc"     ) ptr1 = Utils::mex_convert_mx_to_ptr<CircleArc>(arg_in_2);
+  else if ( kind == "BiArc"         ) ptr1 = Utils::mex_convert_mx_to_ptr<Biarc>(arg_in_2);
+  else if ( kind == "ClothoidCurve" ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg_in_2);
+  else if ( kind == "ClothoidList"  ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_2);
+  else if ( kind == "PolyLine"      ) ptr1 = Utils::mex_convert_mx_to_ptr<PolyLine>(arg_in_2);
   else {
-    MEX_ASSERT2( false, CMD "'type '{}' unsupported\n", kind );
+    UTILS_MEX_ASSERT( false, CMD "'type '{}' unsupported\n", kind );
   }
 
   if ( nrhs == 4 ) {
-    setScalarBool( arg_out_0, collision( *ptr, *ptr1 ) );
+    Utils::mex_set_scalar_bool( arg_out_0, collision( *ptr, *ptr1 ) );
   } else {
     real_type offs, offs_obj;
-    offs = getScalarValue(
+    offs = Utils::mex_get_scalar_value(
       arg_in_4, CMD "`offs` expected to be a real scalar"
     );
-    offs_obj = getScalarValue(
+    offs_obj = Utils::mex_get_scalar_value(
       arg_in_5, CMD "`offs_obj` expected to be a real scalar"
     );
     bool ISO = true;
@@ -556,7 +556,7 @@ do_collision(
     bool ok;
     if ( ISO ) ok = collision_ISO( *ptr, offs, *ptr1, offs_obj );
     else       ok = collision_SAE( *ptr, offs, *ptr1, offs_obj );
-    setScalarBool( arg_out_0, ok );
+    Utils::mex_set_scalar_bool( arg_out_0, ok );
   }
 
   #undef CMD
@@ -572,29 +572,29 @@ do_intersect(
 ) {
 
   #define CMD CMD_BASE "('intersect',OBJ,OBJ1,type,[,offs,offs1,'ISO'/'SAE']): "
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrhs >= 4 || nrhs <= 7,
     CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nlhs == 2,
     CMD "expected 2 output, nlhs = {}\n", nlhs
   );
 
-  MEX_ASSERT( mxIsChar(arg_in_3), CMD "'type' argument must be a string" );
+  UTILS_MEX_ASSERT0( mxIsChar(arg_in_3), CMD "'type' argument must be a string" );
   string kind = mxArrayToString( arg_in_3 );
 
-  G2LIB_CLASS * ptr  = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr  = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
   BaseCurve   * ptr1 = nullptr;
 
-  if      ( kind == "LineSegment"   ) ptr1 = convertMat2Ptr<LineSegment>(arg_in_2);
-  else if ( kind == "CircleArc"     ) ptr1 = convertMat2Ptr<CircleArc>(arg_in_2);
-  else if ( kind == "BiArc"         ) ptr1 = convertMat2Ptr<Biarc>(arg_in_2);
-  else if ( kind == "ClothoidCurve" ) ptr1 = convertMat2Ptr<ClothoidCurve>(arg_in_2);
-  else if ( kind == "ClothoidList"  ) ptr1 = convertMat2Ptr<ClothoidList>(arg_in_2);
-  else if ( kind == "PolyLine"      ) ptr1 = convertMat2Ptr<PolyLine>(arg_in_2);
+  if      ( kind == "LineSegment"   ) ptr1 = Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_2);
+  else if ( kind == "CircleArc"     ) ptr1 = Utils::mex_convert_mx_to_ptr<CircleArc>(arg_in_2);
+  else if ( kind == "BiArc"         ) ptr1 = Utils::mex_convert_mx_to_ptr<Biarc>(arg_in_2);
+  else if ( kind == "ClothoidCurve" ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg_in_2);
+  else if ( kind == "ClothoidList"  ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_2);
+  else if ( kind == "PolyLine"      ) ptr1 = Utils::mex_convert_mx_to_ptr<PolyLine>(arg_in_2);
   else {
-    MEX_ASSERT2( false, CMD "'type '{}' unsupported\n", kind );
+    UTILS_MEX_ASSERT( false, CMD "'type '{}' unsupported\n", kind );
   }
 
   IntersectList ilist;
@@ -602,10 +602,10 @@ do_intersect(
     intersect( *ptr, *ptr1, ilist, false );
   } else {
     real_type offs, offs_obj;
-    offs = getScalarValue(
+    offs = Utils::mex_get_scalar_value(
       arg_in_4, CMD "`offs` expected to be a real scalar"
     );
-    offs_obj = getScalarValue(
+    offs_obj = Utils::mex_get_scalar_value(
       arg_in_5, CMD "`offs_obj` expected to be a real scalar"
     );
     bool ISO = true;
@@ -614,8 +614,8 @@ do_intersect(
     else       intersect_SAE( *ptr, offs, *ptr1, offs_obj, ilist, false );
   }
 
-  double * pS1 = createMatrixValue( arg_out_0, ilist.size(), 1 );
-  double * pS2 = createMatrixValue( arg_out_1, ilist.size(), 1 );
+  double * pS1 = Utils::mex_create_matrix_value( arg_out_0, ilist.size(), 1 );
+  double * pS2 = Utils::mex_create_matrix_value( arg_out_1, ilist.size(), 1 );
   for ( mwSize i=0; i < ilist.size(); ++i ) {
     Ipair const & ip = ilist[i];
     *pS1++ = ip.first;
@@ -634,31 +634,31 @@ do_findST(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('findST',OBJ,x,y[,'ISO'/'SAE']): "
-  MEX_ASSERT2( nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
   mwSize nrx, ncx, nry, ncy;
   real_type const * x;
   real_type const * y;
-  x = getMatrixPointer(
+  x = Utils::mex_matrix_pointer(
     arg_in_2, nrx, ncx,
     CMD "`x` expected to be a real vector/matrix"
   );
-  y = getMatrixPointer(
+  y = Utils::mex_matrix_pointer(
     arg_in_3, nry, ncy,
     CMD "`y` expected to be a real vector/matrix"
   );
-  MEX_ASSERT2(
+  UTILS_MEX_ASSERT(
     nrx == nry && ncx == ncy,
     CMD "`x` and `y` expected to be of the same size, found\n"
     "size(x) = {} x {} size(y) = {} x {}\n",
     nrx, ncx, nry, ncy
   );
 
-  real_type * s = createMatrixValue( arg_out_0, nrx, ncx );
-  real_type * t = createMatrixValue( arg_out_1, nrx, ncx );
+  real_type * s = Utils::mex_create_matrix_value( arg_out_0, nrx, ncx );
+  real_type * t = Utils::mex_create_matrix_value( arg_out_1, nrx, ncx );
 
   bool ISO = true;
   if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
@@ -683,11 +683,11 @@ do_info(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('info',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
   ptr->info( std::cout );
   #undef CMD
 }
@@ -701,7 +701,7 @@ do_eval(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   if ( nrhs >= 4 ) {
 
@@ -710,13 +710,13 @@ do_eval(
     mwSize size, sizet;
     real_type const * s;
     real_type const * t;
-    s = getVectorPointer( arg_in_2, size,  CMD "`s` expected to be a real vector" );
-    t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, size,  CMD "`s` expected to be a real vector" );
+    t = Utils::mex_vector_pointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
 
     bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
 
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       size == sizet || size == 1 || sizet ==1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size, sizet
@@ -730,22 +730,22 @@ do_eval(
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2, size );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2, size );
       if ( ISO ) {
         LOOPXY1 ptr->eval_ISO( *s, *t, pXY[0], pXY[1] );
       } else {
         LOOPXY1 ptr->eval_SAE( *s, *t, pXY[0], pXY[1] );
       }
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1, size );
-      real_type *pY = createMatrixValue( arg_out_1, 1, size );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1, size );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1, size );
       if ( ISO ) {
         LOOPXY2 ptr->eval_ISO( *s, *t, *pX, *pY );
       } else {
         LOOPXY2 ptr->eval_SAE( *s, *t, *pX, *pY );
       }
     } else {
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs
       );
     }
@@ -760,20 +760,20 @@ do_eval(
 
     mwSize npts;
     real_type const * s;
-    s = getVectorPointer( arg_in_2, npts, CMD "`s` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, npts, CMD "`s` expected to be a real vector" );
 
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, ++s, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2, npts );
       LOOPXY1 ptr->eval( *s, pXY[0], pXY[1] );
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
-      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1, npts );
       LOOPXY2 ptr->eval( *s, *pX, *pY );
     } else {
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs
       );
     }
@@ -793,7 +793,7 @@ do_eval_D(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   if ( nrhs == 4 || nrhs == 5 ) {
 
@@ -802,13 +802,13 @@ do_eval_D(
     mwSize size, sizet;
     real_type const * s;
     real_type const * t;
-    s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
-    t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+    t = Utils::mex_vector_pointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
 
     bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       size == sizet || size == 1 || sizet ==1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size, sizet
@@ -822,22 +822,22 @@ do_eval_D(
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, s += incs, t += inct, ++pX, ++pY )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2,size );
       if ( ISO ) {
         LOOPXY1 ptr->eval_ISO_D( *s, *t, pXY[0], pXY[1] );
       } else {
         LOOPXY1 ptr->eval_SAE_D( *s, *t, pXY[0], pXY[1] );
       }
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1,size );
-      real_type *pY = createMatrixValue( arg_out_1, 1,size );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1,size );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1,size );
       if ( ISO ) {
         LOOPXY2 ptr->eval_ISO_D( *s, *t, *pX, *pY );
       } else {
         LOOPXY2 ptr->eval_SAE_D( *s, *t, *pX, *pY );
       }
     } else {
-      MEX_ASSERT2( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
     #undef LOOPXY1
     #undef LOOPXY2
@@ -850,7 +850,7 @@ do_eval_D(
 
     mwSize npts;
     real_type const * s;
-    s = getVectorPointer(
+    s = Utils::mex_vector_pointer(
       arg_in_2, npts, CMD "`s` expected to be a real vector"
     );
 
@@ -858,14 +858,14 @@ do_eval_D(
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2, npts );
       LOOPXY1 ptr->eval_D( *s, pXY[0], pXY[1] );
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
-      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1, npts );
       LOOPXY2 ptr->eval_D( *s, *pX, *pY );
     } else {
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs
       );
     }
@@ -885,7 +885,7 @@ do_eval_DD(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   if ( nrhs == 4 || nrhs == 5 ) {
 
@@ -894,10 +894,10 @@ do_eval_DD(
     mwSize size, sizet;
     real_type const * s;
     real_type const * t;
-    s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
-    t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+    t = Utils::mex_vector_pointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
 
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       size == sizet || size == 1 || sizet ==1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size, sizet
@@ -914,22 +914,22 @@ do_eval_DD(
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2,size );
       if ( ISO ) {
         LOOPXY1 ptr->eval_ISO_DD( *s, *t, pXY[0], pXY[1] );
       } else {
         LOOPXY1 ptr->eval_SAE_DD( *s, *t, pXY[0], pXY[1] );
       }
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1,size );
-      real_type *pY = createMatrixValue( arg_out_1, 1,size );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1,size );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1,size );
       if ( ISO ) {
         LOOPXY2 ptr->eval_ISO_DD( *s, *t, *pX, *pY );
       } else {
         LOOPXY2 ptr->eval_SAE_DD( *s, *t, *pX, *pY );
       }
     } else {
-      MEX_ASSERT2( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
     #undef LOOPXY1
     #undef LOOPXY2
@@ -942,7 +942,7 @@ do_eval_DD(
 
     mwSize npts;
     real_type const * s;
-    s = getVectorPointer(
+    s = Utils::mex_vector_pointer(
       arg_in_2, npts, CMD "`s` expected to be a real vector"
     );
 
@@ -950,14 +950,14 @@ do_eval_DD(
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2, npts );
       LOOPXY1 ptr->eval_DD( *s, pXY[0], pXY[1] );
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
-      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1, npts );
       LOOPXY2 ptr->eval_DD( *s, *pX, *pY );
     } else {
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs
       );
     }
@@ -977,7 +977,7 @@ do_eval_DDD(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   if ( nrhs == 4 || nrhs == 5 ) {
 
@@ -986,10 +986,10 @@ do_eval_DDD(
     mwSize size, sizet;
     real_type const * s;
     real_type const * t;
-    s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
-    t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+    t = Utils::mex_vector_pointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
 
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       size == sizet || size == 1 || sizet ==1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size, sizet
@@ -1006,22 +1006,22 @@ do_eval_DDD(
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2,size );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2,size );
       if ( ISO ) {
         LOOPXY1 ptr->eval_ISO_DDD( *s, *t, pXY[0], pXY[1] );
       } else {
         LOOPXY1 ptr->eval_SAE_DDD( *s, *t, pXY[0], pXY[1] );
       }
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1,size );
-      real_type *pY = createMatrixValue( arg_out_1, 1,size );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1,size );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1,size );
       if ( ISO ) {
         LOOPXY2 ptr->eval_ISO_DDD( *s, *t, *pX, *pY );
       } else {
         LOOPXY2 ptr->eval_SAE_DDD( *s, *t, *pX, *pY );
       }
     } else {
-      MEX_ASSERT2( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
     #undef LOOPXY1
     #undef LOOPXY2
@@ -1034,20 +1034,20 @@ do_eval_DDD(
 
     mwSize npts;
     real_type const * s;
-    s = getVectorPointer( arg_in_2, npts, CMD "`s` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, npts, CMD "`s` expected to be a real vector" );
 
     #define LOOPXY1 for ( mwSize i = 0; i < npts; ++i, ++s, pXY += 2 )
     #define LOOPXY2 for ( mwSize i = 0; i < npts; ++i, ++s, ++pX, ++pY )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 2, npts );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 2, npts );
       LOOPXY1 ptr->eval_DDD( *s, pXY[0], pXY[1] );
     } else if ( nlhs == 2 ) {
-      real_type *pX = createMatrixValue( arg_out_0, 1, npts );
-      real_type *pY = createMatrixValue( arg_out_1, 1, npts );
+      real_type *pX = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+      real_type *pY = Utils::mex_create_matrix_value( arg_out_1, 1, npts );
       LOOPXY2 ptr->eval_DDD( *s, *pX, *pY );
     } else {
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs
       );
     }
@@ -1068,7 +1068,7 @@ do_evaluate(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   if ( nrhs >= 4 && nrhs <= 5) {
 
@@ -1077,12 +1077,12 @@ do_evaluate(
     mwSize size, sizet;
     real_type const * s;
     real_type const * t;
-    s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
-    t = getVectorPointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+    t = Utils::mex_vector_pointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
     bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string");
 
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       size == sizet || size == 1 || sizet ==1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size, sizet
@@ -1100,24 +1100,24 @@ do_evaluate(
             ++i, s += incs, t += inct, ++pTH, ++pK, ++pX, ++pY  )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 4, size );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 4, size );
       if ( ISO ) {
         LOOPXY1 ptr->evaluate_ISO( *s, *t, pXY[0], pXY[1], pXY[2], pXY[3] );
       } else {
         LOOPXY1 ptr->evaluate_SAE( *s, *t, pXY[0], pXY[1], pXY[2], pXY[3] );
       }
     } else if ( nlhs == 4 ) {
-      real_type *pX  = createMatrixValue( arg_out_0, 1, size );
-      real_type *pY  = createMatrixValue( arg_out_1, 1, size );
-      real_type *pTH = createMatrixValue( arg_out_2, 1, size );
-      real_type *pK  = createMatrixValue( arg_out_3, 1, size );
+      real_type *pX  = Utils::mex_create_matrix_value( arg_out_0, 1, size );
+      real_type *pY  = Utils::mex_create_matrix_value( arg_out_1, 1, size );
+      real_type *pTH = Utils::mex_create_matrix_value( arg_out_2, 1, size );
+      real_type *pK  = Utils::mex_create_matrix_value( arg_out_3, 1, size );
       if ( ISO ) {
         LOOPXY2 ptr->evaluate_ISO( *s, *t, *pTH, *pK, *pX, *pY );
       } else {
         LOOPXY2 ptr->evaluate_SAE( *s, *t, *pTH, *pK, *pX, *pY );
       }
     } else {
-      MEX_ASSERT2( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
     #undef LOOPXY1
     #undef LOOPXY2
@@ -1126,7 +1126,7 @@ do_evaluate(
 
     mwSize npts;
     real_type const * s;
-    s = getVectorPointer( arg_in_2, npts, CMD "`s` expected to be a real vector" );
+    s = Utils::mex_vector_pointer( arg_in_2, npts, CMD "`s` expected to be a real vector" );
 
     #define LOOPXY1 \
       for ( mwSize i = 0; i < npts;  \
@@ -1136,16 +1136,16 @@ do_evaluate(
             ++i, ++s, ++pTH, ++pK, ++pX, ++pY )
 
     if ( nlhs == 1 ) {
-      real_type *pXY = createMatrixValue( arg_out_0, 4, npts );
+      real_type *pXY = Utils::mex_create_matrix_value( arg_out_0, 4, npts );
       LOOPXY1 ptr->evaluate( *s, pXY[0], pXY[1], pXY[2], pXY[3] );
     } else if ( nlhs == 4 ) {
-      real_type *pX  = createMatrixValue( arg_out_0, 1, npts );
-      real_type *pY  = createMatrixValue( arg_out_1, 1, npts );
-      real_type *pTH = createMatrixValue( arg_out_2, 1, npts );
-      real_type *pK  = createMatrixValue( arg_out_3, 1, npts );
+      real_type *pX  = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+      real_type *pY  = Utils::mex_create_matrix_value( arg_out_1, 1, npts );
+      real_type *pTH = Utils::mex_create_matrix_value( arg_out_2, 1, npts );
+      real_type *pK  = Utils::mex_create_matrix_value( arg_out_3, 1, npts );
       LOOPXY2 ptr->evaluate( *s, *pTH, *pK, *pX, *pY );
     } else {
-      MEX_ASSERT2( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 
     #undef LOOPXY1
@@ -1163,17 +1163,17 @@ do_theta(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('theta',OBJ,s): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize size;
   real_type const * s;
-  s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+  s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
 
-  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+  real_type *theta = Utils::mex_create_matrix_value( arg_out_0, 1, size );
 
   for ( mwSize i = 0; i < size; ++i )  *theta++ = ptr->theta( *s++ );
 
@@ -1189,17 +1189,17 @@ do_theta_D(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('theta_D',OBJ,s): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize size;
   real_type const * s;
-  s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+  s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
 
-  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+  real_type *theta = Utils::mex_create_matrix_value( arg_out_0, 1, size );
 
   for ( mwSize i = 0; i < size; ++i ) *theta++ = ptr->theta_D( *s++ );
 
@@ -1215,17 +1215,17 @@ do_theta_DD(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('theta_DD',OBJ,s): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize size;
   real_type const * s;
-  s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+  s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
 
-  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+  real_type *theta = Utils::mex_create_matrix_value( arg_out_0, 1, size );
 
   for ( mwSize i = 0; i < size; ++i )
     *theta++ = ptr->theta_DD( *s++ );
@@ -1242,17 +1242,17 @@ do_theta_DDD(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('theta_DDD',OBJ,s): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize size;
   real_type const * s;
-  s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+  s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
 
-  real_type *theta = createMatrixValue( arg_out_0, 1, size );
+  real_type *theta = Utils::mex_create_matrix_value( arg_out_0, 1, size );
 
   for ( mwSize i = 0; i < size; ++i )  *theta++ = ptr->theta_DDD( *s++ );
 
@@ -1268,17 +1268,17 @@ do_kappa(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('kappa',OBJ,s): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize size;
   real_type const * s;
-  s = getVectorPointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
+  s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
 
-  real_type *kappa = createMatrixValue( arg_out_0, 1, size );
+  real_type *kappa = Utils::mex_create_matrix_value( arg_out_0, 1, size );
 
   for ( mwSize i = 0; i < size; ++i ) *kappa++ = ptr->kappa( *s++ );
   #undef CMD
@@ -1293,19 +1293,19 @@ do_kappa_D(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('kappa_D',OBJ,s): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize size;
   real_type const * s;
-  s = getVectorPointer(
+  s = Utils::mex_vector_pointer(
     arg_in_2, size, CMD "`s` expected to be a real vector"
   );
 
-  real_type *kappa_D = createMatrixValue( arg_out_0, 1, size );
+  real_type *kappa_D = Utils::mex_create_matrix_value( arg_out_0, 1, size );
 
   for ( mwSize i = 0; i < size; ++i ) *kappa_D++ = ptr->kappa_D( *s++ );
 
@@ -1321,19 +1321,19 @@ do_kappa_DD(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('kappa_DD',OBJ,s): "
-  MEX_ASSERT2( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize size;
   real_type const * s;
-  s = getVectorPointer(
+  s = Utils::mex_vector_pointer(
     arg_in_2, size, CMD "`s` expected to be a real vector"
   );
 
-  real_type *kappa_DD = createMatrixValue( arg_out_0, 1, size );
+  real_type *kappa_DD = Utils::mex_create_matrix_value( arg_out_0, 1, size );
 
   for ( mwSize i = 0; i < size; ++i )
     *kappa_DD++ = ptr->kappa_DD( *s++ );
@@ -1351,14 +1351,14 @@ do_xy_begin(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('xy_begin',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->x_begin() );
-  setScalarValue( arg_out_1, ptr->y_begin() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->x_begin() );
+  Utils::mex_set_scalar_value( arg_out_1, ptr->y_begin() );
 
   #undef CMD
 }
@@ -1372,13 +1372,13 @@ do_x_begin(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('x_begin',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->x_begin() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->x_begin() );
 
   #undef CMD
 }
@@ -1392,13 +1392,13 @@ do_y_begin(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('y_begin',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->y_begin() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->y_begin() );
 
   #undef CMD
 }
@@ -1412,13 +1412,13 @@ do_theta_begin(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('theta_begin',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->theta_begin() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->theta_begin() );
 
   #undef CMD
 }
@@ -1432,13 +1432,13 @@ do_kappa_begin(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('kappa_begin',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->kappa_begin() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->kappa_begin() );
 
   #undef CMD
 }
@@ -1452,14 +1452,14 @@ do_xy_end(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('xy_end',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->x_end() );
-  setScalarValue( arg_out_1, ptr->y_end() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->x_end() );
+  Utils::mex_set_scalar_value( arg_out_1, ptr->y_end() );
 
   #undef CMD
 }
@@ -1473,13 +1473,13 @@ do_x_end(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('x_end',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->x_end() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->x_end() );
 
   #undef CMD
 }
@@ -1493,13 +1493,13 @@ do_y_end(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('y_end',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->y_end() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->y_end() );
 
   #undef CMD
 }
@@ -1513,13 +1513,13 @@ do_theta_end(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('theta_end',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->theta_end() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->theta_end() );
 
   #undef CMD
 }
@@ -1533,13 +1533,13 @@ do_kappa_end(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = convertMat2Ptr<G2LIB_CLASS>(arg_in_1);
+  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
 
   #define CMD CMD_BASE "('kappa_end',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  setScalarValue( arg_out_0, ptr->kappa_end() );
+  Utils::mex_set_scalar_value( arg_out_0, ptr->kappa_end() );
 
   #undef CMD
 }
@@ -1552,8 +1552,8 @@ do_yesAABBtree(
 ) {
 
   #define CMD CMD_BASE "('yesAABBtree',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
   G2lib::yesAABBtree();
 
@@ -1568,8 +1568,8 @@ do_noAABBtree(
 ) {
 
   #define CMD CMD_BASE "('noAABBtree',OBJ): "
-  MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
   G2lib::noAABBtree();
 

@@ -43,13 +43,6 @@
 
 \*/
 
-#pragma once
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#ifndef UTILS_TABLE_dot_HXX
-#define UTILS_TABLE_dot_HXX
-#endif
-
 namespace Utils {
 
   namespace Table {
@@ -324,8 +317,6 @@ Utils::ostream_type&
 operator << ( Utils::ostream_type& stream, Utils::Table::Table const & table ) {
   return stream << table.render();
 }
-
-#endif
 
 ///
 /// eof: Table.hxx

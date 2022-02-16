@@ -22,11 +22,7 @@
 /// file: TicToc.hxx
 ///
 
-#pragma once
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#ifndef UTILS_TIC_TOC_dot_HH
-#define UTILS_TIC_TOC_dot_HH
 
 #ifndef UTILS_OS_WINDOWS
   #include <chrono>
@@ -148,8 +144,6 @@ namespace Utils {
 #endif
 
 }
-
-#endif
 
 ///
 /// eof: TicToc.hxx

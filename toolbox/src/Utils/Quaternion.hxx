@@ -21,13 +21,6 @@
 /// file: Quaternion.hxx
 ///
 
-#pragma once
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#ifndef UTILS_QUATERNION_dot_HH
-#define UTILS_QUATERNION_dot_HH
-#endif
-
 namespace Utils {
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -267,8 +260,6 @@ namespace Utils {
     return os;
   }
 }
-
-#endif
 
 ///
 /// eof: Quaternion.hxx

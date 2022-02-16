@@ -9,7 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoids.hh"
-#include "mex_utils.hh"
+#include "Utils_mex.hh"
 
 #include <vector>
 #include <sstream>

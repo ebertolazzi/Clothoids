@@ -43,14 +43,12 @@
 
 namespace Utils {
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   using std::string;
   using std::mutex;
   using std::lock_guard;
   using std::exception;
   using std::exit;
   using std::cerr;
-  #endif
 
   mutex MallocMutex;
 

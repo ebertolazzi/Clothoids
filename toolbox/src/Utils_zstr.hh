@@ -49,7 +49,7 @@
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-#include "Utils/Utils.hxx"
+#include "Utils.hh"
 #include "Utils/zstr/zstr.hpp"
 
 #ifdef __clang__

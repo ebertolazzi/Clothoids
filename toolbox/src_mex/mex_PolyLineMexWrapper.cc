@@ -9,7 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoids.hh"
-#include "mex_utils.hh"
+#include "Utils_mex.hh"
 #include "mex_info.hxx"
 
 #include <vector>
@@ -58,21 +58,6 @@ namespace G2lib {
    |
   \*/
 
-  static
-  PolyLine *
-  DATA_NEW( mxArray * & mx_id ) {
-    PolyLine * ptr = new PolyLine();
-    mx_id = convertPtr2Mat<PolyLine>(ptr);
-    return ptr;
-  }
-
-  static
-  inline
-  PolyLine *
-  DATA_GET( mxArray const * & mx_id ) {
-    return convertMat2Ptr<PolyLine>(mx_id);
-  }
-
   /*\
    *                      _____                 _   _
    *  _ __ ___   _____  _|  ___|   _ _ __   ___| |_(_) ___  _ __
@@ -91,9 +76,9 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "PolyLineMexWrapper('new'): "
-    MEX_ASSERT2( nlhs == 1, "expected 1 input, nlhs = {}\n", nlhs );
-    MEX_ASSERT2( nrhs == 1, "expected 1 output, nrhs = {}\n", nrhs );
-    DATA_NEW( arg_out_0 );
+    UTILS_MEX_ASSERT( nlhs == 1, "expected 1 input, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 1, "expected 1 output, nrhs = {}\n", nrhs );
+    arg_out_0 = Utils::mex_convert_ptr_to_mx<PolyLine>(new PolyLine());
     #undef CMD
   }
 
@@ -107,26 +92,26 @@ namespace G2lib {
   ) {
 
     #define CMD "PolyLineMexWrapper('build',OBJ,x,y): "
-    MEX_ASSERT2( nlhs == 0, "expected no output, nlhs = {}\n", nlhs );
-    MEX_ASSERT2( nrhs == 4, "expected 4 input, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 0, "expected no output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 4, "expected 4 input, nrhs = {}\n", nrhs );
 
     mwSize size0, size1;
 
-    real_type const * x = getVectorPointer(
+    real_type const * x = Utils::mex_vector_pointer(
       arg_in_2, size0,
       CMD "`x` expected to be a real vector"
     );
-    real_type const * y = getVectorPointer(
+    real_type const * y = Utils::mex_vector_pointer(
       arg_in_3, size1,
       CMD "`y` expected to be a real vector"
     );
 
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       size0 == size1,
       CMD "expected size(x) = {}, size(y) = {}\n", size0,  size1
     );
 
-    PolyLine * ptr = DATA_GET( arg_in_1 );
+    PolyLine * ptr = Utils::mex_convert_mx_to_ptr<PolyLine>( arg_in_1 );
     ptr->build( x, y, size0 );
     #undef CMD
   }
@@ -141,12 +126,12 @@ namespace G2lib {
   ) {
 
     #define CMD "PolyLineMexWrapper('polygon',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
-    PolyLine * ptr = DATA_GET( arg_in_1 );
-    real_type * x = createMatrixValue( arg_out_0, ptr->numPoints(), 1 );
-    real_type * y = createMatrixValue( arg_out_1, ptr->numPoints(), 1 );
+    PolyLine * ptr = Utils::mex_convert_mx_to_ptr<PolyLine>( arg_in_1 );
+    real_type * x = Utils::mex_create_matrix_value( arg_out_0, ptr->numPoints(), 1 );
+    real_type * y = Utils::mex_create_matrix_value( arg_out_1, ptr->numPoints(), 1 );
     ptr->polygon( x, y );
     #undef CMD
   }
@@ -161,29 +146,29 @@ namespace G2lib {
   ) {
 
     #define CMD "PolyLineMexWrapper('approx',OBJ,OBJ1,tol,type): "
-    MEX_ASSERT2( nrhs == 5, CMD "expected 5 input, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
-    real_type tol = getScalarValue(
+    real_type tol = Utils::mex_get_scalar_value(
       arg_in_3, CMD "`tol` expected to be a real scalar"
     );
 
-    MEX_ASSERT( mxIsChar(arg_in_4), CMD "'type' argument must be a string" );
+    UTILS_MEX_ASSERT0( mxIsChar(arg_in_4), CMD "'type' argument must be a string" );
     string kind = mxArrayToString( arg_in_4 );
 
-    PolyLine * ptr = DATA_GET( arg_in_1 );
+    PolyLine * ptr = Utils::mex_convert_mx_to_ptr<PolyLine>( arg_in_1 );
     if ( kind == "LineSegment" ) {
-      ptr->build( *convertMat2Ptr<LineSegment>(arg_in_2) );
+      ptr->build( *Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_2) );
     } else if ( kind == "CircleArc" ) {
-      ptr->build( *convertMat2Ptr<CircleArc>(arg_in_2), tol );
+      ptr->build( *Utils::mex_convert_mx_to_ptr<CircleArc>(arg_in_2), tol );
     } else if ( kind == "BiArc" ) {
-      ptr->build( *convertMat2Ptr<Biarc>(arg_in_2), tol );
+      ptr->build( *Utils::mex_convert_mx_to_ptr<Biarc>(arg_in_2), tol );
     } else if ( kind == "ClothoidCurve" ) {
-      ptr->build( *convertMat2Ptr<ClothoidCurve>(arg_in_2), tol );
+      ptr->build( *Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg_in_2), tol );
     } else if ( kind == "ClothoidList" ) {
-      ptr->build( *convertMat2Ptr<ClothoidList>(arg_in_2), tol );
+      ptr->build( *Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_2), tol );
     } else {
-      MEX_ASSERT2( false, CMD "'type' = '{}' unsupported\n", kind );
+      UTILS_MEX_ASSERT( false, CMD "'type' = '{}' unsupported\n", kind );
     }
     #undef CMD
   }
@@ -198,16 +183,16 @@ namespace G2lib {
   ) {
     #define CMD "ClothoidListMexWrapper('s_to_index',OBJ,s): "
 
-    MEX_ASSERT2( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-    PolyLine * ptr = DATA_GET(arg_in_1);
+    PolyLine * ptr = Utils::mex_convert_mx_to_ptr<PolyLine>( arg_in_1 );
 
-    real_type s = getScalarValue(
+    real_type s = Utils::mex_get_scalar_value(
       arg_in_2, CMD "`s` expected to be a real scalar"
     );
 
-    setScalarInt( arg_out_0, ptr->findAtS( s ) );
+    Utils::mex_set_scalar_int32( arg_out_0, ptr->findAtS( s ) );
     #undef CMD
   }
 
@@ -238,7 +223,7 @@ namespace G2lib {
     }
 
     try {
-      MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
+      UTILS_MEX_ASSERT0( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
       DO_CMD pfun = cmd_to_fun.at(cmd);
       pfun( nlhs, plhs, nrhs, prhs );

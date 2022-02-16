@@ -9,7 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoids.hh"
-#include "mex_utils.hh"
+#include "Utils_mex.hh"
 #include "mex_info.hxx"
 
 #include <vector>
@@ -57,21 +57,6 @@ namespace G2lib {
    |
   \*/
 
-  static
-  LineSegment *
-  DATA_NEW( mxArray * & mx_id ) {
-    LineSegment * ptr = new LineSegment();
-    mx_id = convertPtr2Mat<LineSegment>(ptr);
-    return ptr;
-  }
-
-  static
-  inline
-  LineSegment *
-  DATA_GET( mxArray const * & mx_id ) {
-    return convertMat2Ptr<LineSegment>(mx_id);
-  }
-
   /*\
    *                      _____                 _   _
    *  _ __ ___   _____  _|  ___|   _ _ __   ___| |_(_) ___  _ __
@@ -91,33 +76,34 @@ namespace G2lib {
   ) {
 
     #define CMD "LineSegmentMexWrapper('new',...): "
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nlhs == 1,
       CMD "expected 1 output, nlhs = {}\n", nlhs
     );
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nrhs == 1 || nrhs == 3 || nrhs == 5,
       CMD "expected 1, 3 or 5 inputs, nrhs = {}\n", nrhs
     );
     #undef CMD
 
-    LineSegment * ptr = DATA_NEW( arg_out_0 );
+    LineSegment * ptr = new LineSegment();
+    arg_out_0 = Utils::mex_convert_ptr_to_mx<LineSegment>(ptr);
 
     if ( nrhs == 5 ) {
 
       real_type x0, y0, th0, L;
       #define CMD "LineSegmentMexWrapper('new',x0,y0,theta0,L): "
 
-      x0 = getScalarValue(
+      x0 = Utils::mex_get_scalar_value(
         arg_in_1, CMD "`x0` expected to be a real scalar"
       );
-      y0 = getScalarValue(
+      y0 = Utils::mex_get_scalar_value(
         arg_in_2, CMD "`y0` expected to be a real scalar"
       );
-      th0 = getScalarValue(
+      th0 = Utils::mex_get_scalar_value(
         arg_in_3, CMD "`theta0` expected to be a real scalar"
       );
-      L = getScalarValue(
+      L = Utils::mex_get_scalar_value(
         arg_in_4, CMD "`L` expected to be a real scalar"
       );
       ptr->build( x0, y0, th0, L );
@@ -131,16 +117,16 @@ namespace G2lib {
       #define CMD "LineSegmentMexWrapper('new',OBJ,p0,p1): "
 
       mwSize size0, size1;
-      p0 = getVectorPointer(
+      p0 = Utils::mex_vector_pointer(
         arg_in_1, size0,
         CMD "`p0` expected to be a real vector"
       );
-      p1 = getVectorPointer(
+      p1 = Utils::mex_vector_pointer(
         arg_in_2, size1,
         CMD "`p1` expected to be a real vector"
       );
 
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         size0 == 2 && size1 == 2,
         CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1
       );
@@ -160,32 +146,32 @@ namespace G2lib {
   ) {
 
     #define CMD "LineSegmentMexWrapper('build',OBJ,...): "
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nlhs == 0,
       CMD "expected NO output, nlhs = {}\n", nlhs
     );
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nrhs == 4 || nrhs == 6,
       CMD "expected 4 or 6 inputs, nrhs = {}\n", nrhs
     );
     #undef CMD
 
-    LineSegment * ptr = DATA_GET(arg_in_1);
+    LineSegment * ptr = Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_1);
 
     if ( nrhs == 6 ) {
       real_type x0, y0, th0, L;
 
       #define CMD "LineSegmentMexWrapper('build',OBJ,x0,y0,theta0,L): "
-      x0 = getScalarValue(
+      x0 = Utils::mex_get_scalar_value(
         arg_in_2, CMD "`x0` expected to be a real scalar"
       );
-      y0 = getScalarValue(
+      y0 = Utils::mex_get_scalar_value(
         arg_in_3, CMD "`y0` expected to be a real scalar"
       );
-      th0 = getScalarValue(
+      th0 = Utils::mex_get_scalar_value(
         arg_in_4, CMD "`theta0` expected to be a real scalar"
       );
-      L = getScalarValue(
+      L = Utils::mex_get_scalar_value(
         arg_in_5, CMD "`L` expected to be a real scalar"
       );
 
@@ -200,16 +186,16 @@ namespace G2lib {
       #define CMD "LineSegmentMexWrapper('build',OBJ,p0,p1): "
 
       mwSize size0, size1;
-      p0 = getVectorPointer(
+      p0 = Utils::mex_vector_pointer(
         arg_in_2, size0,
         CMD "`p0` expected to be a real vector"
       );
-      p1 = getVectorPointer(
+      p1 = Utils::mex_vector_pointer(
         arg_in_3, size1,
         CMD "`p1` expected to be a real vector"
       );
 
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         size0 == 2 && size1 == 2,
         CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1
       );
@@ -228,11 +214,11 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    LineSegment * ptr = DATA_GET(arg_in_1);
+    LineSegment * ptr = Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_1);
 
     #define CMD "LineSegmentMexWrapper('to_nurbs',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     int_type npts, nknots;
     ptr->paramNURBS( nknots, npts );
@@ -283,14 +269,14 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    LineSegment * ptr = DATA_GET(arg_in_1);
+    LineSegment * ptr = Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_1);
 
     #define CMD "LineSegmentMexWrapper('points',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
-    real_type * p1 = createMatrixValue( arg_out_0, 2, 1 );
-    real_type * p2 = createMatrixValue( arg_out_1, 2, 1 );
+    real_type * p1 = Utils::mex_create_matrix_value( arg_out_0, 2, 1 );
+    real_type * p2 = Utils::mex_create_matrix_value( arg_out_1, 2, 1 );
 
     ptr->p1p2(p1,p2);
 
@@ -323,7 +309,7 @@ namespace G2lib {
     }
 
     try {
-      MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
+      UTILS_MEX_ASSERT0( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
       DO_CMD pfun = cmd_to_fun.at(cmd);
       pfun( nlhs, plhs, nrhs, prhs );

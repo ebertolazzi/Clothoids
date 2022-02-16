@@ -21,13 +21,6 @@
 /// file: Malloc.hxx
 ///
 
-#pragma once
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#ifndef UTILS_MALLOC_dot_HXX
-#define UTILS_MALLOC_dot_HXX
-#endif
-
 /*\
 :|:    ____            _       _             __
 :|:   / ___| _     _  (_)_ __ | |_ ___ _ __ / _| __ _  ___ ___
@@ -171,8 +164,6 @@ namespace Utils {
   extern template class Malloc<double*>;
 
 }
-
-#endif
 
 ///
 /// eof: Malloc.hxx

@@ -32,11 +32,9 @@
 
 namespace Utils {
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   using std::string;
   using std::lock_guard;
   using std::mutex;
-  #endif
 
   void
   Console::change_level( int new_level ) {

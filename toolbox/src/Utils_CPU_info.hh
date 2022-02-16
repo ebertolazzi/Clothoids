@@ -16,9 +16,10 @@
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
+#pragma once
 
-#ifndef UTILS_CPU_INFO_HH
-#define UTILS_CPU_INFO_HH
+#ifndef UTILS_CPU_INFO_dot_HH
+#define UTILS_CPU_INFO_dot_HH
 
 #include <string>
 
@@ -31,8 +32,8 @@ namespace Utils {
 
   /*!
    * Get info of Intel CPU
-   * 
-   * 
+   *
+   *
    * \param[out] bMMX      booelan, support MMX instruction set
    * \param[out] bMMXplus  booelan, support MMXplus instruction set
    * \param[out] bSSE      booelan, support SSE instruction set

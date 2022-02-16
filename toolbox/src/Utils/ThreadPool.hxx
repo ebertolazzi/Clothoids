@@ -21,13 +21,6 @@
 /// eof: ThreadPool.hxx
 ///
 
-#pragma once
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#ifndef UTILS_THREADPOOL_dot_HH
-#define UTILS_THREADPOOL_dot_HH
-#endif
-
 #include <algorithm>
 #include <utility>
 #include <vector>
@@ -424,12 +417,7 @@ namespace Utils {
     ThreadPool( ThreadPool const & ) = delete;
     ThreadPool & operator = ( ThreadPool const & ) = delete;
 
-    #if defined(UTILS_OS_WINDOWS)
-    void
-    setup() {
-      for ( auto & w: m_workers ) w.start();
-    }
-    #elif defined(UTILS_OS_LINUX)
+    #ifdef UTILS_OS_LINUX
     void
     setup() {
       sched_param sch;
@@ -497,8 +485,6 @@ namespace Utils {
   };
 
 }
-
-#endif
 
 ///
 /// eof: ThreadPool.hxx

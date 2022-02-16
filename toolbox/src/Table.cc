@@ -76,7 +76,7 @@ namespace Utils {
     using std::out_of_range;
     using std::to_string;
     using std::transform;
-    
+
     Cell::Cell(
       Table*         table,
       string const & val,
@@ -170,7 +170,7 @@ namespace Utils {
     Row::Row( Table * table, vecstr const & cells )
     : m_Table(table) {
       for_each(
-        cells.begin(), cells.end(), 
+        cells.begin(), cells.end(),
         bind(
           static_cast<void(Row::*)(string const &)>(&Row::cell),
           this,
@@ -182,7 +182,7 @@ namespace Utils {
     void
     Row::cells( vecstr const & cells ) {
       for_each(
-        cells.begin(), cells.end(), 
+        cells.begin(), cells.end(),
         bind(
           static_cast<void(Row::*)(string const &)>(&Row::cell),
           this,
@@ -254,7 +254,7 @@ namespace Utils {
           "Table error: The table just has " + to_string(this->num_columns()) + " columns."
         );
       for_each(
-        m_Rows.begin(), m_Rows.end(), 
+        m_Rows.begin(), m_Rows.end(),
         [n, align]( Row & row ) -> void {
           if ( n < row.num_cells() ) row[n].alignment(align);
         }
@@ -349,8 +349,8 @@ namespace Utils {
     Table::rows( vecvecstr const & rows ) {
       m_Rows = vecRow();
       for_each(
-        rows.begin(), rows.end(), 
-        [this]( vecstr const & row ) { 
+        rows.begin(), rows.end(),
+        [this]( vecstr const & row ) {
           m_Rows.push_back( Row(this, row) );
         }
       );
@@ -382,7 +382,7 @@ namespace Utils {
       stringstream ss;
       string sep = this->render_separator(
         m_Style.border_left_mid(),
-        m_Style.border_mid_mid(), 
+        m_Style.border_mid_mid(),
         m_Style.border_right_mid(),
         m_Style.border_mid()
       );
@@ -394,11 +394,11 @@ namespace Utils {
 
         integer spaceLeft = (innerWidth - integer(m_Title.length())) / 2;
 
-        ss << m_Style.border_top_left() 
+        ss << m_Style.border_top_left()
            << string(innerWidth, m_Style.border_top())
            << m_Style.border_top_right()
            << '\n'
-           << m_Style.border_left() 
+           << m_Style.border_left()
            << string(spaceLeft, ' ')
            << left << setw(innerWidth - spaceLeft) << setfill(' ') << m_Title
            << m_Style.border_right()
@@ -406,7 +406,7 @@ namespace Utils {
       } else {
         ss << render_separator(
           m_Style.border_top_left(),
-          m_Style.border_top_mid(), 
+          m_Style.border_top_mid(),
           m_Style.border_top_right(),
           m_Style.border_top()
         );

@@ -9,7 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoids.hh"
-#include "mex_utils.hh"
+#include "Utils_mex.hh"
 #include "mex_info.hxx"
 
 #include <vector>
@@ -57,21 +57,6 @@ namespace G2lib {
    |
   \*/
 
-  static
-  CircleArc *
-  DATA_NEW( mxArray * & mx_id ) {
-    CircleArc * ptr = new CircleArc();
-    mx_id = convertPtr2Mat<CircleArc>(ptr);
-    return ptr;
-  }
-
-  static
-  inline
-  CircleArc *
-  DATA_GET( mxArray const * & mx_id ) {
-    return convertMat2Ptr<CircleArc>(mx_id);
-  }
-
   /*\
    *                      _____                 _   _
    *  _ __ ___   _____  _|  ___|   _ _ __   ___| |_(_) ___  _ __
@@ -91,26 +76,27 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('new',...): "
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nrhs == 1 || nrhs == 6,
       CMD "expected 1 or 6 inputs, nrhs = {}\n", nrhs
     );
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nlhs == 1,
       CMD "expected 1 output, nlhs = {}\n", nlhs
     );
     #undef CMD
 
-    CircleArc * ptr = DATA_NEW( arg_out_0 );
+    CircleArc * ptr = new CircleArc();
+    arg_out_0 = Utils::mex_convert_ptr_to_mx<CircleArc>(ptr);
 
     if ( nrhs == 6 ) {
       #define CMD "CircleArcMexWrapper('new',x0,y0,theta0,k0,L): "
       real_type x0, y0, theta0, k0, L;
-      x0     = getScalarValue( arg_in_1, CMD "`x0` expected to be a real scalar" );
-      y0     = getScalarValue( arg_in_2, CMD "`y0` expected to be a real scalar" );
-      theta0 = getScalarValue( arg_in_3, CMD "`theta0` expected to be a real scalar" );
-      k0     = getScalarValue( arg_in_4, CMD "`k0` expected to be a real scalar" );
-      L      = getScalarValue( arg_in_5, CMD "`L` expected to be a real scalar" );
+      x0     = Utils::mex_get_scalar_value( arg_in_1, CMD "`x0` expected to be a real scalar" );
+      y0     = Utils::mex_get_scalar_value( arg_in_2, CMD "`y0` expected to be a real scalar" );
+      theta0 = Utils::mex_get_scalar_value( arg_in_3, CMD "`theta0` expected to be a real scalar" );
+      k0     = Utils::mex_get_scalar_value( arg_in_4, CMD "`k0` expected to be a real scalar" );
+      L      = Utils::mex_get_scalar_value( arg_in_5, CMD "`L` expected to be a real scalar" );
 
       ptr->build( x0, y0, theta0, k0, L );
       #undef CMD
@@ -127,21 +113,21 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('build',OBJ,x0,y0,theta0,k0,L): "
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nrhs == 7, CMD "expected 7 inputs, nrhs = {}\n", nrhs
     );
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs
     );
 
-    CircleArc * ptr = DATA_GET( arg_in_1 );
+    CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
     real_type x0, y0, theta0, k0, L;
-    x0     = getScalarValue( arg_in_2, CMD "`x0` expected to be a real scalar" );
-    y0     = getScalarValue( arg_in_3, CMD "`y0` expected to be a real scalar" );
-    theta0 = getScalarValue( arg_in_4, CMD "`theta0` expected to be a real scalar" );
-    k0     = getScalarValue( arg_in_5, CMD "`k0` expected to be a real scalar" );
-    L      = getScalarValue( arg_in_6, CMD "`L` expected to be a real scalar" );
+    x0     = Utils::mex_get_scalar_value( arg_in_2, CMD "`x0` expected to be a real scalar" );
+    y0     = Utils::mex_get_scalar_value( arg_in_3, CMD "`y0` expected to be a real scalar" );
+    theta0 = Utils::mex_get_scalar_value( arg_in_4, CMD "`theta0` expected to be a real scalar" );
+    k0     = Utils::mex_get_scalar_value( arg_in_5, CMD "`k0` expected to be a real scalar" );
+    L      = Utils::mex_get_scalar_value( arg_in_6, CMD "`L` expected to be a real scalar" );
 
     ptr->build( x0, y0, theta0, k0, L );
     #undef CMD
@@ -157,13 +143,13 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('build_3P',...): "
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nlhs == 0 || nlhs ==1,
       CMD " expected 1 or no output, nlhs = {}\n", nlhs
     );
     #undef CMD
 
-    CircleArc * ptr = DATA_GET(arg_in_1);
+    CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
     real_type x0(0), y0(0), x1(0), y1(0), x2(0), y2(0);
     if ( nrhs == 5 ) {
@@ -174,17 +160,17 @@ namespace G2lib {
       real_type const * p2;
       mwSize size0, size1, size2;
 
-      p0 = getVectorPointer(
+      p0 = Utils::mex_vector_pointer(
         arg_in_2, size0, CMD "`p0` expected to be a real vector"
       );
-      p1 = getVectorPointer(
+      p1 = Utils::mex_vector_pointer(
         arg_in_3, size1, CMD "`p1` expected to be a real vector"
       );
-      p2 = getVectorPointer(
+      p2 = Utils::mex_vector_pointer(
         arg_in_4, size2, CMD "`p2` expected to be a real vector"
       );
 
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         size0 == 2 && size1 == 2 && size2 == 2,
         CMD "bad dimension size(p0) = {}, size(p1) = {}, size(p2) = {}\n",
         size0, size1, size2
@@ -198,19 +184,19 @@ namespace G2lib {
     } else if ( nrhs == 8 ) {
 
       #define CMD "CircleArcMexWrapper('build_G1',OBJ,x0,x1,x1,y1,x2,y2): "
-      x0 = getScalarValue( arg_in_2, CMD "`x0` expected to be a scalar value" );
-      y0 = getScalarValue( arg_in_3, CMD "`y0` expected to be a scalar value" );
-      x1 = getScalarValue( arg_in_4, CMD "`x1` expected to be a scalar value" );
-      y1 = getScalarValue( arg_in_5, CMD "`y1` expected to be a scalar value" );
-      x2 = getScalarValue( arg_in_6, CMD "`x2` expected to be a scalar value" );
-      y2 = getScalarValue( arg_in_7, CMD "`y2` expected to be a scalar value" );
+      x0 = Utils::mex_get_scalar_value( arg_in_2, CMD "`x0` expected to be a scalar value" );
+      y0 = Utils::mex_get_scalar_value( arg_in_3, CMD "`y0` expected to be a scalar value" );
+      x1 = Utils::mex_get_scalar_value( arg_in_4, CMD "`x1` expected to be a scalar value" );
+      y1 = Utils::mex_get_scalar_value( arg_in_5, CMD "`y1` expected to be a scalar value" );
+      x2 = Utils::mex_get_scalar_value( arg_in_6, CMD "`x2` expected to be a scalar value" );
+      y2 = Utils::mex_get_scalar_value( arg_in_7, CMD "`y2` expected to be a scalar value" );
       #undef CMD
     } else {
-      MEX_ASSERT2(false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
+      UTILS_MEX_ASSERT(false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
     }
 
     bool ok = ptr->build_3P( x0, y0, x1, y1, x2, y2 );
-    if ( nlhs == 1 ) setScalarBool( arg_out_0, ok );
+    if ( nlhs == 1 ) Utils::mex_set_scalar_bool( arg_out_0, ok );
 
     #undef CMD
   }
@@ -225,13 +211,13 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('build_G1',...): "
-    MEX_ASSERT2(
+    UTILS_MEX_ASSERT(
       nlhs == 0 || nlhs ==1,
       CMD "expected 1 or no output, nlhs = {}\n", nlhs
     );
     #undef CMD
 
-    CircleArc * ptr = DATA_GET(arg_in_1);
+    CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
     real_type x0(0), y0(0), x1(0), y1(0), theta0(0);
     if ( nrhs == 5 ) {
@@ -240,17 +226,17 @@ namespace G2lib {
       real_type const * p0;
       real_type const * p1;
       mwSize size0, size1;
-      p0 = getVectorPointer(
+      p0 = Utils::mex_vector_pointer(
         arg_in_2, size0, CMD "`p0` expected to be a real vector"
       );
-      p1 = getVectorPointer(
+      p1 = Utils::mex_vector_pointer(
         arg_in_4, size1, CMD "`p1` expected to be a real vector"
       );
-      theta0 = getScalarValue(
+      theta0 = Utils::mex_get_scalar_value(
         arg_in_3, CMD "`theta0` expected to be a real vector"
       );
 
-      MEX_ASSERT2(
+      UTILS_MEX_ASSERT(
         size0 == 2 && size1 == 2,
         CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1
       );
@@ -262,18 +248,18 @@ namespace G2lib {
     } else if ( nrhs == 7 ) {
 
       #define CMD "CircleArcMexWrapper('build_G1',OBJ,x0,x1,theta0,x1,y1): "
-      x0     = getScalarValue( arg_in_2, CMD "`x0` expected to be a scalar value" );
-      y0     = getScalarValue( arg_in_3, CMD "`y0` expected to be a scalar value" );
-      theta0 = getScalarValue( arg_in_4, CMD "`theta0` expected to be a scalar value" );
-      x1     = getScalarValue( arg_in_5, CMD "`x1` expected to be a scalar value" );
-      y1     = getScalarValue( arg_in_6, CMD "`y1` expected to be a scalar value" );
+      x0     = Utils::mex_get_scalar_value( arg_in_2, CMD "`x0` expected to be a scalar value" );
+      y0     = Utils::mex_get_scalar_value( arg_in_3, CMD "`y0` expected to be a scalar value" );
+      theta0 = Utils::mex_get_scalar_value( arg_in_4, CMD "`theta0` expected to be a scalar value" );
+      x1     = Utils::mex_get_scalar_value( arg_in_5, CMD "`x1` expected to be a scalar value" );
+      y1     = Utils::mex_get_scalar_value( arg_in_6, CMD "`y1` expected to be a scalar value" );
       #undef CMD
     } else {
-      MEX_ASSERT2(false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
+      UTILS_MEX_ASSERT(false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
     }
 
     bool ok = ptr->build_G1( x0, y0, theta0, x1, y1 );
-    if ( nlhs == 1 ) setScalarBool( arg_out_0, ok );
+    if ( nlhs == 1 ) Utils::mex_set_scalar_bool( arg_out_0, ok );
     #undef CMD
   }
 
@@ -287,12 +273,12 @@ namespace G2lib {
   ) {
 
     #define CMD "CircleArcMexWrapper('change_curvilinear_origin',OBJ,s0,L): "
-    MEX_ASSERT2(nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
 
-    CircleArc * ptr = DATA_GET(arg_in_1);
+    CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
-    real_type s0 = getScalarValue(arg_in_2,CMD "Error in reading s0");
-    real_type L  = getScalarValue(arg_in_3,CMD "Error in reading L");
+    real_type s0 = Utils::mex_get_scalar_value(arg_in_2,CMD "Error in reading s0");
+    real_type L  = Utils::mex_get_scalar_value(arg_in_3,CMD "Error in reading L");
     ptr->change_curvilinear_origin(s0,L);
     #undef CMD
   }
@@ -306,18 +292,18 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    CircleArc * ptr = DATA_GET(arg_in_1);
+    CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
     #define CMD "CircleArcMexWrapper('to_nurbs',OBJ): "
-    MEX_ASSERT2( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    MEX_ASSERT2( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     int_type npts, nknots;
     ptr->paramNURBS( nknots, npts );
 
     mxArray * mx_knots, * mx_Poly;
-    double * knots = createMatrixValue( mx_knots, 1, nknots );
-    double * poly  = createMatrixValue( mx_Poly,  3, npts );
+    double * knots = Utils::mex_create_matrix_value( mx_knots, 1, nknots );
+    double * poly  = Utils::mex_create_matrix_value( mx_Poly,  3, npts );
 
     ptr->toNURBS( knots, reinterpret_cast<real_type (*)[3]>(poly) );
 
@@ -359,7 +345,7 @@ namespace G2lib {
     }
 
     try {
-      MEX_ASSERT( mxIsChar(arg_in_0), "First argument must be a string" );
+      UTILS_MEX_ASSERT0( mxIsChar(arg_in_0), "First argument must be a string" );
       string cmd = mxArrayToString(arg_in_0);
       DO_CMD pfun = cmd_to_fun.at(cmd);
       pfun( nlhs, plhs, nrhs, prhs );

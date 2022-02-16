@@ -313,7 +313,7 @@ public:
         return 0;
     }
 
-    virtual ~ostreambuf()
+    ~ostreambuf() override
     {
         // flush the zlib stream
         //

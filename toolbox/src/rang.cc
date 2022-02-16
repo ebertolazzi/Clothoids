@@ -19,7 +19,6 @@
 
 namespace rang {
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   using std::string;
   using std::wstring;
   using std::getenv;
@@ -34,7 +33,6 @@ namespace rang {
   using std::cout;
   using std::ostream;
   using std::streambuf;
-  #endif
 
   namespace rang_implementation {
 
