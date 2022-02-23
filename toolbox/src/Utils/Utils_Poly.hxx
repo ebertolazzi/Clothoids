@@ -212,8 +212,8 @@ namespace Utils {
   template <typename Real>
   Poly<Real> &
   Poly<Real>::operator += ( Poly<Real> const & b ) {
-    Integer max_order = max( m_order, b.m_order );
-    Integer min_order = min( m_order, b.m_order );
+    Integer max_order = std::max( m_order, b.m_order );
+    Integer min_order = std::min( m_order, b.m_order );
 
     // ridimensiona vettore coefficienti senza distruggere il contenuto
     this->conservativeResize( max_order );
@@ -247,8 +247,8 @@ namespace Utils {
   template <typename Real>
   Poly<Real> &
   Poly<Real>::operator -= ( Poly<Real> const & b ) {
-    Integer max_order = max( m_order, b.m_order );
-    Integer min_order = min( m_order, b.m_order );
+    Integer max_order = std::max( m_order, b.m_order );
+    Integer min_order = std::min( m_order, b.m_order );
 
     // ridimensiona vettore coefficienti senza distruggere il contenuto
     this->conservativeResize( max_order );
@@ -310,8 +310,8 @@ namespace Utils {
   Poly<Real>
   operator + ( Poly<Real> const & a, Poly<Real> const & b ) {
     typedef typename Poly<Real>::Integer Integer;
-    Integer max_order = max( a.order(), b.order() );
-    Integer min_order = min( a.order(), b.order() );
+    Integer max_order = std::max( a.order(), b.order() );
+    Integer min_order = std::min( a.order(), b.order() );
     Poly<Real> sum( max_order ); // nuovo polinomio contenente la somma
 
     // somma i coefficienti fino al grado comune ad entrambi i polinomi
@@ -331,7 +331,7 @@ namespace Utils {
   Poly<Real>
   operator + ( Poly<Real> const & a, Real b ) {
     typedef typename Poly<Real>::Integer Integer;
-    Integer max_order = max( a.order(), 1 );
+    Integer max_order = std::max( a.order(), 1 );
     Poly<Real> sum( max_order ); // nuovo polinomio contenente la somma
 
     // somma i coefficienti fino al grado comune ad entrambi i polinomi
@@ -351,7 +351,7 @@ namespace Utils {
   Poly<Real>
   operator + ( Real a, Poly<Real> const & b ) {
     typedef typename Poly<Real>::Integer Integer;
-    Integer max_order = max( b.order(), 1 );
+    Integer max_order = std::max( b.order(), 1 );
     Poly<Real> sum( max_order ); // nuovo polinomio contenente la somma
 
     // somma i coefficienti fino al grado comune ad entrambi i polinomi
@@ -371,8 +371,8 @@ namespace Utils {
   Poly<Real>
   operator - ( Poly<Real> const & a, Poly<Real> const & b ) {
     typedef typename Poly<Real>::Integer Integer;
-    Integer max_order = max( a.order(), b.order() );
-    Integer min_order = min( a.order(), b.order() );
+    Integer max_order = std::max( a.order(), b.order() );
+    Integer min_order = std::min( a.order(), b.order() );
     Poly<Real> sum( max_order ); // nuovo polinomio contenente la somma
 
     // somma i coefficienti fino al grado comune ad entrambi i polinomi
@@ -392,7 +392,7 @@ namespace Utils {
   Poly<Real>
   operator - ( Poly<Real> const & a, Real b ) {
     typedef typename Poly<Real>::Integer Integer;
-    Integer max_order = max( a.order(), 1 );
+    Integer max_order = std::max( a.order(), 1 );
     Poly<Real> sum( max_order ); // nuovo polinomio contenente la somma
 
     // somma i coefficienti fino al grado comune ad entrambi i polinomi
@@ -412,7 +412,7 @@ namespace Utils {
   Poly<Real>
   operator - ( Real a, Poly<Real> const & b ) {
     typedef typename Poly<Real>::Integer Integer;
-    Integer max_order = max( b.order(), 1 );
+    Integer max_order = std::max( b.order(), 1 );
     Poly<Real> sum( max_order ); // nuovo polinomio contenente la somma
 
     // somma i coefficienti fino al grado comune ad entrambi i polinomi

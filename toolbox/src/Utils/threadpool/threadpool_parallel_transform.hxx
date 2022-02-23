@@ -88,11 +88,11 @@ namespace threadpool {
         Last const     & last,
         OutputIterator & result,
         Function       & fun,
-        int              thread_count,
-        std::size_t      maxpart
+        unsigned         thread_count,
+        unsigned         maxpart
       )
       : m_queue( first, last, result, fun, maxpart )
-      , m_pool( m_queue, thread_count )
+      , m_pool( &m_queue, thread_count )
       { }
 
       /**
@@ -152,8 +152,7 @@ namespace threadpool {
      *         single-object processing.
      */
     template<
-      int thread_count    = -1,
-      std::size_t maxpart = 1,
+      int   thread_count,
       class InputIterator,
       class Last,
       class OutputIterator,
@@ -170,19 +169,11 @@ namespace threadpool {
       OutputIterator result,
       Function&&     fun
     ) {
-      typedef ForEach_Queue<
-        InputIterator,
-        Last,
-        Function,
-        is_forward_iterator<InputIterator>::value
-      > Queue;
-      unsigned tc = GenericThreadPool<Queue>::determine_thread_count(thread_count);
-      if (tc <= 1) {
+      if (thread_count <= 1) {
         return std::transform(first, last, result, fun);
       } else {
         Transform_ThreadPool<InputIterator, Last, OutputIterator, Function>(
-          first, last, result, fun, thread_count,
-          maxpart != 1 ? maxpart : 3 * (tc + 1)
+          first, last, result, fun, thread_count, 3 * (thread_count + 1)
         );
         return result;
       }
@@ -233,9 +224,11 @@ namespace threadpool {
      *         single-object processing.
      */
     template<
-      int thread_count =-1,
-      unsigned maxpart = 1,
-      class InputIterator, class Last, class OutputIterator, class Function,
+      int   thread_count,
+      class InputIterator,
+      class Last,
+      class OutputIterator,
+      class Function,
       class = typename std::enable_if<!std::is_same<InputIterator,Last>::value &&
               std::is_integral<InputIterator>::value &&
               std::is_integral<Last>::value
@@ -258,11 +251,12 @@ namespace threadpool {
       typedef typename std::common_type<InputIterator, Last>::type common_type;
       typedef IntegralIterator<common_type> CommonIterator;
 
-      return transform<thread_count, maxpart>(
+      return transform<thread_count>(
         CommonIterator(std::forward<InputIterator>(first)),
         CommonIterator(last),
         std::forward<OutputIterator>(result),
-        std::forward<Function>(fun));
+        std::forward<Function>(fun)
+      );
     }
 
     /**
@@ -309,8 +303,7 @@ namespace threadpool {
      *         single-object processing.
      */
     template<
-      int         thread_count = -1,
-      std::size_t maxpart      = 1,
+      int   thread_count,
       class Container,
       class OutputIterator,
       class Function
@@ -321,7 +314,7 @@ namespace threadpool {
       OutputIterator && result,
       Function       && fun
     ) {
-      return transform<thread_count, maxpart>(
+      return transform<thread_count>(
         std::begin(container),
         std::end(container),
         std::forward<OutputIterator>(result),
@@ -373,8 +366,7 @@ namespace threadpool {
      *         single-object processing.
      */
     template<
-      int         thread_count = -1,
-      std::size_t maxpart      = 1,
+      int   thread_count,
       class Container,
       class OutputIterator,
       class Function,
@@ -386,7 +378,7 @@ namespace threadpool {
       OutputIterator && result,
       Function       && fun
     ) {
-      return transform<thread_count, maxpart>(
+      return transform<thread_count>(
         std::make_move_iterator(std::begin(container)),
         std::make_move_iterator(std::end(container)),
         std::forward<OutputIterator>(result),

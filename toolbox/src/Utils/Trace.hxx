@@ -99,40 +99,44 @@ namespace Utils {
   using std::string;
   using std::runtime_error;
 
-  typedef basic_ostream<char> ostream_type;
+  typedef std::basic_ostream<char> ostream_type;
 
   void
   print_trace(
-    int                line,
-    char const * const file,
-    string const     & msg,
-    ostream_type     & stream
+    int                 line,
+    char const * const  file,
+    std::string const & msg,
+    ostream_type      & stream
   );
 
   inline
   void
   printTrace(
-    int                line,
-    char const * const file,
-    string const     & msg,
-    ostream_type     & stream
+    int                 line,
+    char const * const  file,
+    std::string const & msg,
+    ostream_type      & stream
   ) {
     print_trace( line, file, msg, stream );
   }
 
   class Runtime_TraceError : public runtime_error {
   private:
-    string
+    std::string
     grab_backtrace(
-      string const &     reason,
-      char const * const file,
-      int                line
+      std::string const & reason,
+      char const * const  file,
+      int                 line
     ) const;
 
   public:
     explicit
-    Runtime_TraceError( string const & reason, char const * const file, int line )
-    : runtime_error( grab_backtrace( reason, file, line ) )
+    Runtime_TraceError(
+      std::string const & reason,
+      char const * const  file,
+      int                 line
+    )
+    : std::runtime_error( grab_backtrace( reason, file, line ) )
     { }
 
     virtual const char* what() const noexcept override;
@@ -141,13 +145,21 @@ namespace Utils {
   class Runtime_Error : public runtime_error {
   public:
     explicit
-    Runtime_Error( string const & reason, char const * const file, int line )
-    : runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
+    Runtime_Error(
+      std::string const & reason,
+      char const * const  file,
+      int                 line
+    )
+    : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
     { }
 
     explicit
-    Runtime_Error( char const * const reason, char const * const file, int line )
-    : runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
+    Runtime_Error(
+      char const * const reason,
+      char const * const file,
+      int                line
+    )
+    : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
     { }
 
     virtual const char* what() const noexcept override;

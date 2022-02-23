@@ -119,7 +119,7 @@ namespace threadpool {
       bool value_valid = false;
       FunctionPtr<Function> fun;
       ref_value<typename Base::value_type> value;
-      explicit Values(FunctionPtr<Function>& fun) : fun(fun) { }
+      explicit Values(FunctionPtr<Function>& _fun) : fun(_fun) { }
       Values(const Values& x) = default;
     };
 
@@ -187,7 +187,7 @@ namespace threadpool {
   class FunctionInputIteratorRange {
     FunctionPtr<Function> fun;
   public:
-    template <class Fun> explicit FunctionInputIteratorRange(Fun&& fun) : fun(std::forward<Fun>(fun)) { }
+    template <class Fun> explicit FunctionInputIteratorRange(Fun&& _fun) : fun(std::forward<Fun>(_fun)) { }
     FunctionInputIterator<Function> begin() { return FunctionInputIterator<Function>(fun); }
     FunctionInputIterator<Function> end() { return FunctionInputIterator<Function>(); }
   };

@@ -107,16 +107,16 @@ namespace rang {
     using std::streambuf;
 
     inline
-    atomic<control> &
+    std::atomic<control> &
     controlMode() noexcept {
-      static atomic<control> value(control::Auto);
+      static std::atomic<control> value(control::Auto);
       return value;
     }
 
     inline
-    atomic<winTerm> &
+    std::atomic<winTerm> &
     winTermMode() noexcept {
-      static atomic<winTerm> termMode(winTerm::Auto);
+      static std::atomic<winTerm> termMode(winTerm::Auto);
       return termMode;
     }
 

@@ -27,29 +27,36 @@
 
 namespace Utils {
 
+  using std::size_t;
+  using std::string;
+  using std::vector;
+
   class Tokenizer {
   protected:
-    size_t       m_offset;
-    string const m_string;
-    string       m_token;
-    string const m_delimiters;
+    size_t            m_offset;
+    std::string const m_string;
+    std::string       m_token;
+    std::string const m_delimiters;
   public:
-    Tokenizer( string const & str, string const & delimiters )
+    Tokenizer(
+      std::string const & str,
+      std::string const & delimiters
+    )
     : m_offset(0)
     , m_string(str)
     , m_delimiters(delimiters)
     { }
 
-    string get_token() const { return m_token; }
+    std::string get_token() const { return m_token; }
 
     bool next_token();
   };
 
   void
   split_string(
-    string const   & str,
-    string const   & sep,
-    vector<string> & arr
+    std::string const        & str,
+    std::string const        & sep,
+    std::vector<std::string> & arr
   );
 
 }

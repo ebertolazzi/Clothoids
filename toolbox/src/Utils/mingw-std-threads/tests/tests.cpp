@@ -232,9 +232,9 @@ void test_future ()
           return T(test_int);
       });
     log("\tLetting the implementation decide...");
-    auto async_either = async([] (thread::id other_id) -> T
+    auto async_either = async([] (std::thread::id other_id) -> T
       {
-        std::hash<thread::id> hasher;
+        std::hash<std::thread::id> hasher;
         log("\t\tFunction called on thread %zu. Implementation chose %s execution.", hasher(this_thread::get_id()), (this_thread::get_id() == other_id) ? "deferred" : "asynchronous");
         if (!is_void<T>::value)
           return T(test_int);

@@ -14,7 +14,7 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 /*
-  Original code by Thomas Nagler 
+  Original code by Thomas Nagler
 
 
 
@@ -137,35 +137,13 @@ namespace quickpool {
 
       inline
       void*
-      alloc( size_t alignment, size_t size ) noexcept {
-        // Make sure alignment is at least that of void*.
-        alignment = (alignment >= alignof(void*)) ? alignment : alignof(void*);
-
-        // Allocate enough space required for object and a void*.
-        size_t space = size + alignment + sizeof(void*);
-        void * p = std::malloc(space);
-        if ( p == nullptr ) return nullptr;
-
-        // Shift pointer to leave space for void*.
-        void * p_algn = static_cast<char*>(p) + sizeof(void*);
-        space -= sizeof(void*);
-
-        // Shift pointer further to ensure proper alignment.
-        (void) std::align(alignment, size, p_algn, space);
-
-        // Store unaligned pointer with offset sizeof(void*) before aligned
-        // location. Later we'll know where to look for the pointer telling
-        // us where to free what we malloc()'ed above.
-        *(static_cast<void**>(p_algn) - 1) = p;
-
-        return p_algn;
-      }
+      alloc( size_t alignment, size_t size ) noexcept
+      { return aligned_alloc( alignment, size ); }
 
       inline
       void
-      free( void * ptr ) noexcept {
-        if ( ptr ) std::free(*(static_cast<void**>(ptr) - 1));
-      }
+      free( void * ptr ) noexcept
+      { if ( ptr ) std::free( ptr ); ptr = nullptr; }
 
       //! short version of
       //! https://www.boost.org/doc/libs/1_65_0/boost/align/aligned_allocator.hpp
@@ -278,7 +256,8 @@ namespace quickpool {
       {}
 
       Worker(Worker&& other)
-      : state{ other.state.load() }, f{ std::forward<Function>(other.f) }
+      : state{ other.state.load() }
+      , f{ std::forward<Function>(other.f) }
       {}
 
       size_t
@@ -718,7 +697,7 @@ namespace quickpool {
       mem::aligned::atomic<int> todo_{ 0 };
 
       //! synchronization variables
-      const std::thread::id owner_id_;
+      std::thread::id const owner_id_;
       enum class Status { running, errored, stopped };
       mem::aligned::atomic<Status> status_{ Status::running };
       std::mutex mtx_;
@@ -737,7 +716,7 @@ namespace quickpool {
     //! @param threads number of worker threads to create; defaults to
     //! number of available (virtual) hardware cores.
     explicit
-    ThreadPool( size_t threads = std::thread::hardware_concurrency() )
+    ThreadPool( std::size_t threads = std::thread::hardware_concurrency() )
     : task_manager_{ threads }
     {
       set_active_threads(threads);

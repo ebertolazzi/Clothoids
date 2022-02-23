@@ -151,24 +151,24 @@ namespace Utils {
 
     class Cell {
     private:
-      Table *   m_Table    = nullptr;
-      string    m_Value    = "";
-      Alignment m_Align    = Alignment::LEFT;
-      integer   m_col_span = 1;
-      integer   m_Width    = 0;
+      Table *     m_Table    = nullptr;
+      std::string m_Value    = "";
+      Alignment   m_Align    = Alignment::LEFT;
+      integer     m_col_span = 1;
+      integer     m_Width    = 0;
 
     public:
 
       Cell() {}
 
       Cell(
-        Table*         table,
-        string const & val      = "",
-        integer        col_span = 1
+        Table*              table,
+        std::string const & val      = "",
+        integer             col_span = 1
       );
 
-      string const & value() const { return m_Value; }
-      void value( string const & val ) { m_Value = val; }
+      std::string const & value() const { return m_Value; }
+      void value( std::string const & val ) { m_Value = val; }
 
       Alignment alignment() const { return m_Align; }
       void alignment( Alignment align ) { m_Align = align; }
@@ -181,15 +181,15 @@ namespace Utils {
 
       integer maximum_line_width() const;
 
-      string line( integer idx ) const;
-      void trim_line( string & line ) const;
+      std::string line( integer idx ) const;
+      void trim_line( std::string & line ) const;
 
-      string render( integer line, integer col ) const;
+      std::string render( integer line, integer col ) const;
     };
 
     class Row {
     protected:
-      typedef vector<Cell>             vecCell;
+      typedef std::vector<Cell>        vecCell;
       typedef std::vector<std::string> vecstr;
 
       Table * m_Table = nullptr;
@@ -213,7 +213,7 @@ namespace Utils {
       integer cell_width( integer idx ) const;
       void cell_col_span( integer idx, integer span );
 
-      void cell( string const & value );
+      void cell( std::string const & value );
       //Cell& cell( integer idx ) { return m_Cells[idx]; }
 
       Cell const & operator [] ( integer idx ) const { return m_Cells[idx]; }
@@ -221,22 +221,22 @@ namespace Utils {
 
       integer height() const;
 
-      string render() const;
+      std::string render() const;
     };
 
     class Table {
     public:
-      typedef vector<Row>    vecRow;
-      typedef vector<Cell>   vecCell;
-      typedef vector<string> vecstr;
-      typedef vector<vecstr> vecvecstr;
+      typedef std::vector<Row>    vecRow;
+      typedef std::vector<Cell>   vecCell;
+      typedef std::vector<string> vecstr;
+      typedef std::vector<vecstr> vecvecstr;
       typedef int integer;
 
     private:
-      Style  m_Style;
-      string m_Title;
-      Row    m_Headings;
-      vecRow m_Rows;
+      Style       m_Style;
+      std::string m_Title;
+      Row         m_Headings;
+      vecRow      m_Rows;
 
     public:
 
@@ -273,9 +273,9 @@ namespace Utils {
 
       void style( Style const & style ) { m_Style = style; }
 
-      string const & title() const { return m_Title; }
+      std::string const & title() const { return m_Title; }
 
-      void title( string const & title ) { m_Title = title; }
+      void title( std::string const & title ) { m_Title = title; }
 
       Row const & headings() const { return m_Headings; }
 
@@ -293,7 +293,7 @@ namespace Utils {
       vecRow const & rows() const { return m_Rows; }
       void rows( vecvecstr const & rows );
 
-      string
+      std::string
       render_separator(
         char const left,
         char const mid,
@@ -301,7 +301,7 @@ namespace Utils {
         char const sep
       ) const;
 
-      string render() const;
+      std::string render() const;
     };
   }
 }

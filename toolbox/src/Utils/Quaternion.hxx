@@ -97,7 +97,7 @@ namespace Utils {
     //! Print a quaternion to stream.
     //!
     void
-    print( ostream & os) const {
+    print( ostream_type & os) const {
       os << "[ "
          << m_Q[0] << ", "
          << m_Q[1] << "i, "
@@ -255,7 +255,7 @@ namespace Utils {
 
   template <typename T>
   inline
-  ostream& operator << ( ostream & os,  Quaternion<T> const & Q ) {
+  ostream_type& operator << ( ostream_type & os,  Quaternion<T> const & Q ) {
     Q.print(os);
     return os;
   }

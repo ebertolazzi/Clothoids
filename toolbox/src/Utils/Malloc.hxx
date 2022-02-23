@@ -37,8 +37,7 @@ namespace Utils {
   using std::mutex;
   #endif
 
-
-  extern mutex MallocMutex;
+  extern std::mutex MallocMutex;
 
   extern int64_t CountAlloc;
   extern int64_t CountFreed;
@@ -46,7 +45,7 @@ namespace Utils {
   extern int64_t MaximumAllocatedBytes;
   extern bool    MallocDebug;
 
-  string outBytes( size_t nb );
+  std::string outBytes( size_t nb );
 
   /*\
   :|:   __  __       _ _
@@ -66,17 +65,17 @@ namespace Utils {
 
   private:
 
-    string      m_name;
-    size_t      m_numTotValues;
-    size_t      m_numTotReserved;
-    size_t      m_numAllocated;
+    std::string m_name;
+    std::size_t m_numTotValues;
+    std::size_t m_numTotReserved;
+    std::size_t m_numAllocated;
     valueType * m_pMalloc;
 
     Malloc(Malloc<T> const &) = delete; // blocco costruttore di copia
     Malloc<T> const & operator = (Malloc<T> &) const = delete; // blocco copia
 
-    void allocate_internal( size_t n );
-    void memory_exausted( size_t sz );
+    void allocate_internal( std::size_t n );
+    void memory_exausted( std::size_t sz );
 
   public:
 
@@ -84,7 +83,7 @@ namespace Utils {
     //! Malloc object constructor
     //!
     explicit
-    Malloc( string const & name );
+    Malloc( std::string const & name );
 
     //!
     //! Malloc object destructor.
@@ -95,13 +94,13 @@ namespace Utils {
     //! Allocate memory for `n` objects,
     //! raise an error if memory already allocated.
     //!
-    void allocate( size_t n );
+    void allocate( std::size_t n );
 
     //!
     //! Allocate memory for `n` objects,
     //! no matter if already allocated.
     //!
-    void reallocate( size_t n );
+    void reallocate( std::size_t n );
 
     //!
     //! Free memory without deallocating pointer.
@@ -121,15 +120,15 @@ namespace Utils {
     //!
     //! Get pointer of allocated memory for `sz` objets.
     //!
-    T * operator () ( size_t sz ) {
+    T * operator () ( std::size_t sz ) {
       size_t offs = m_numAllocated;
       m_numAllocated += sz;
       if ( m_numAllocated > m_numTotValues ) memory_exausted( sz );
       return m_pMalloc + offs;
     }
 
-    T * malloc( size_t n );
-    T * realloc( size_t n );
+    T * malloc( std::size_t n );
+    T * realloc( std::size_t n );
 
     //!
     //! `true` if you cannot get more memory pointers.

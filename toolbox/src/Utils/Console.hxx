@@ -23,22 +23,14 @@
 
 namespace Utils {
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  using std::string;
-  using std::mutex;
-  using std::basic_istream;
-  using std::basic_ostream;
-  using std::cout;
-  #endif
+  typedef std::basic_istream<char> istream_type;
+  typedef std::basic_ostream<char> ostream_type;
 
-  typedef basic_istream<char> istream_type;
-  typedef basic_ostream<char> ostream_type;
-
-  string basename( char const * const filename );
+  std::string basename( char const * const filename );
 
   class Console {
 
-    mutable mutex m_message_mutex; // mutex for critical section
+    mutable std::mutex m_message_mutex; // mutex for critical section
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
   public:
@@ -69,7 +61,7 @@ namespace Utils {
 
   public:
 
-    Console( ostream_type * stream = &cout, int level = 4 );
+    Console( ostream_type * stream = &std::cout, int level = 4 );
 
     void change_level( int new_level );
     void change_stream( ostream_type * new_stream );
@@ -86,37 +78,37 @@ namespace Utils {
     Console const & flush() const { m_stream->flush(); return *this; }
 
     Console const &
-    message( string const & msg, int msg_level = 4 ) const;
+    message( std::string const & msg, int msg_level = 4 ) const;
 
     Console const &
-    semaphore( unsigned ryg, string const & msg, int msg_level = 0 ) const;
+    semaphore( unsigned ryg, std::string const & msg, int msg_level = 0 ) const;
 
     Console const &
-    warning( string const & msg ) const; // level >= 2
+    warning( std::string const & msg ) const; // level >= 2
 
     Console const &
-    error( string const & msg ) const; // level >= 1
+    error( std::string const & msg ) const; // level >= 1
 
     Console const &
-    fatal( string const & msg ) const; // level >= 0
+    fatal( std::string const & msg ) const; // level >= 0
 
-    Console const & black   ( string const & msg, int msg_level = 0 ) const;
-    Console const & red     ( string const & msg, int msg_level = 0 ) const;
-    Console const & green   ( string const & msg, int msg_level = 0 ) const;
-    Console const & yellow  ( string const & msg, int msg_level = 0 ) const;
-    Console const & blue    ( string const & msg, int msg_level = 0 ) const;
-    Console const & magenta ( string const & msg, int msg_level = 0 ) const;
-    Console const & cyan    ( string const & msg, int msg_level = 0 ) const;
-    Console const & gray    ( string const & msg, int msg_level = 0 ) const;
+    Console const & black   ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & red     ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & green   ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & yellow  ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & blue    ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & magenta ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & cyan    ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & gray    ( std::string const & msg, int msg_level = 0 ) const;
 
-    Console const & black_reversed   ( string const & msg, int msg_level = 0 ) const;
-    Console const & red_reversed     ( string const & msg, int msg_level = 0 ) const;
-    Console const & green_reversed   ( string const & msg, int msg_level = 0 ) const;
-    Console const & yellow_reversed  ( string const & msg, int msg_level = 0 ) const;
-    Console const & blue_reversed    ( string const & msg, int msg_level = 0 ) const;
-    Console const & magenta_reversed ( string const & msg, int msg_level = 0 ) const;
-    Console const & cyan_reversed    ( string const & msg, int msg_level = 0 ) const;
-    Console const & gray_reversed    ( string const & msg, int msg_level = 0 ) const;
+    Console const & black_reversed   ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & red_reversed     ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & green_reversed   ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & yellow_reversed  ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & blue_reversed    ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & magenta_reversed ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & cyan_reversed    ( std::string const & msg, int msg_level = 0 ) const;
+    Console const & gray_reversed    ( std::string const & msg, int msg_level = 0 ) const;
 
     void
     set_message_style(
