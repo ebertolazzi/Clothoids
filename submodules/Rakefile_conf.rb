@@ -2,13 +2,8 @@
 if File.exists?(File.expand_path('../Rakefile_conf.rb', File.dirname(__FILE__))) then
   require_relative '../Rakefile_conf.rb'
 else
-  COMPILE_DEBUG      = false
-  COMPILE_DYNAMIC    = false
-  COMPILE_EXECUTABLE = false
-  USE_NMAKE          = true
-
   case RUBY_PLATFORM
-  when /mingw|mswin/
+  when /mingw|mswin|aarch64-linux-gnu/ # dont paralellize on raspberry
     PARALLEL = ''
     QUIET    = ''
   else
@@ -24,3 +19,9 @@ else
     end
   end
 end
+
+COMPILE_DEBUG      = false unless defined?(COMPILE_DEBUG)
+COMPILE_DYNAMIC    = true  unless defined?(COMPILE_DYNAMIC)
+COMPILE_EXECUTABLE = true  unless defined?(COMPILE_EXECUTABLE)
+USE_NMAKE          = true  unless defined?(USE_NMAKE)
+RUN_CPACK          = false unless defined?(RUN_CPACK)

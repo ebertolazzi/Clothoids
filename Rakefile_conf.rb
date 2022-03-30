@@ -3,7 +3,7 @@ if File.exists?(File.expand_path('../Rakefile_conf.rb', File.dirname(__FILE__)))
   require_relative '../Rakefile_conf.rb'
 else
   case RUBY_PLATFORM
-  when /mingw|mswin/
+  when /mingw|mswin|aarch64-linux-gnu/ # dont paralellize on raspberry
     PARALLEL = ''
     QUIET    = ''
   else
