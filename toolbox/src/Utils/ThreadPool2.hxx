@@ -66,7 +66,7 @@ namespace Utils {
      * shrinks to `return_if_idle` tasks.
      */
     void
-    help(std::ptrdiff_t return_if_idle) {
+    help(int return_if_idle) {
 
       unsigned min_queue_size = return_if_idle < 0 ? 0 : return_if_idle;
 
@@ -88,7 +88,7 @@ namespace Utils {
 
         // Try to get the next task(s)
         while ((queue_size = m_queue.size()) <= min_queue_size) {
-          if (static_cast<std::ptrdiff_t>(queue_size) <= return_if_idle) return;
+          if ( int(queue_size) <= return_if_idle) return;
           if ( queue_size > 0 ) break;
           // The queue is empty, wait for more tasks to be put()
           lock.unlock();
@@ -124,7 +124,7 @@ namespace Utils {
      * Help, and shut down if an exception escapes.
      */
     void
-    try_help(std::ptrdiff_t return_if_idle) {
+    try_help(int return_if_idle) {
       try {
         help(return_if_idle);
       } catch (...) {
@@ -238,7 +238,7 @@ namespace Utils {
     /**
      * Destroy the task object
      */
-    virtual ~VirtualTask() {}
+    virtual ~VirtualTask() = default;
   };
 
   /**
@@ -268,13 +268,13 @@ namespace Utils {
     //! The main function of the thread.
     void work() { do_work(false); }
 
+  public:
+
     // Copying and moving are not supported.
     GenericThreadPool( GenericThreadPool const & )             = delete;
     GenericThreadPool( GenericThreadPool && )                  = delete;
     GenericThreadPool& operator = (GenericThreadPool const & ) = delete;
     GenericThreadPool& operator = (GenericThreadPool && )      = delete;
-
-	public:
 
     /**
      * Generic thread pool.
@@ -377,15 +377,15 @@ namespace Utils {
   class QueueElement {
     VirtualTask * m_task;
 
+  public:
+
     QueueElement()                                     = delete;
     QueueElement( QueueElement const & )               = delete;
     QueueElement & operator = ( QueueElement const & ) = delete;
     QueueElement & operator = ( QueueElement && )      = delete;
 
-  public:
-
     QueueElement( VirtualTask * t ) : m_task(t) { }
-    QueueElement( QueueElement && x ) : m_task(x.m_task) { x.m_task = nullptr; }
+    QueueElement( QueueElement && x ) noexcept : m_task(x.m_task) { x.m_task = nullptr; }
     void operator()() { (*m_task)(); m_task = nullptr; }
     ~QueueElement() { if (m_task) delete m_task; }
   };
@@ -439,6 +439,7 @@ namespace Utils {
       class WrappedFunction : public VirtualTask {
         std::function<void()> m_f;
       public:
+        explicit
         WrappedFunction( std::function<void()> && f ) : m_f(std::move(f)) { }
         virtual void operator()() override { m_f(); delete this; }
       };
@@ -463,7 +464,7 @@ namespace Utils {
      */
 
     void
-    join() {
+    join() override {
       wait();
       m_queue->shutdown();
       m_pool->join();

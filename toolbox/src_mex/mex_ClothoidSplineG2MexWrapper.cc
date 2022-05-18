@@ -10,7 +10,7 @@
 
 #include "Clothoids.hh"
 #include "Utils_mex.hh"
-#include "mex_Workaround.hxx"
+#include "mex_info.hxx"
 
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \

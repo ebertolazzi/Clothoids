@@ -14,8 +14,6 @@
 
 #include <vector>
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "==========================================================================\n" \
 "Compute polyline\n" \
@@ -73,7 +71,7 @@ namespace G2lib {
   void
   do_new(
     int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
+    int nrhs, mxArray const *[]
   ) {
     #define CMD "PolyLineMexWrapper('new'): "
     UTILS_MEX_ASSERT( nlhs == 1, "expected 1 input, nlhs = {}\n", nlhs );
@@ -87,7 +85,7 @@ namespace G2lib {
   static
   void
   do_build(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -141,7 +139,7 @@ namespace G2lib {
   static
   void
   do_approx(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 

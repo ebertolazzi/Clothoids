@@ -71,14 +71,21 @@
 #define arg_out_19 plhs[19]
 
 
-#define UTILS_MEX_ASSERT0( COND, MSG ) if ( !(COND) ) mexErrMsgTxt( MSG )
+#define UTILS_MEX_ASSERT0( COND, MSG ) if ( !(COND) ) Utils::mex_error_message( MSG )
 
 #define UTILS_MEX_ASSERT( COND, FMT, ... ) \
-  UTILS_MEX_ASSERT0( COND, fmt::format( FMT,__VA_ARGS__).c_str() )
+  UTILS_MEX_ASSERT0( COND, fmt::format( FMT,__VA_ARGS__) )
 
 // -----------------------------------------------------------------------------
 
 namespace Utils {
+
+  static
+  inline
+  void
+  mex_error_message( std::string msg ) {
+    mexErrMsgTxt( msg.c_str() );
+  }
 
   static
   inline
@@ -88,6 +95,13 @@ namespace Utils {
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
     mwSize const * dims = mxGetDimensions(arg);
     return dims[0] == 1 && dims[1] == 1;
+  }
+
+  static
+  inline
+  bool
+  mex_is_scalar( mxArray const * arg, std::string msg ) {
+    return mex_is_scalar( arg, msg.c_str() );
   }
 
   static
@@ -107,10 +121,24 @@ namespace Utils {
 
   static
   inline
+  double
+  mex_get_scalar_value( mxArray const * arg, std::string msg ) {
+    return mex_get_scalar_value( arg, msg.c_str() );
+  }
+
+  static
+  inline
   bool
   mex_get_bool( mxArray const * arg, char const msg[] ) {
     UTILS_MEX_ASSERT0( mxIsLogicalScalar(arg), msg );
     return mxIsLogicalScalarTrue(arg);
+  }
+
+  static
+  inline
+  bool
+  mex_get_bool( mxArray const * arg, std::string msg ) {
+    return mex_get_bool( arg, msg.c_str() );
   }
 
   static
@@ -139,19 +167,13 @@ namespace Utils {
       case mxUINT64_CLASS: res = *static_cast<uint64_t*>(ptr); break;
       case mxDOUBLE_CLASS:
         { double tmp = *static_cast<double*>(ptr);
-          UTILS_MEX_ASSERT(
-            tmp == std::floor(tmp),
-            "{} expected int, found {}\n", msg, tmp
-          );
+          UTILS_MEX_ASSERT( tmp == std::floor(tmp), "{} expected int, found {}\n", msg, tmp );
           res = static_cast<int64_t>(tmp);
         }
         break;
       case mxSINGLE_CLASS:
         { float tmp = *static_cast<float*>(ptr);
-          UTILS_MEX_ASSERT(
-            tmp == std::floor(tmp),
-            "{} expected int, found {}\n", msg, tmp
-          );
+          UTILS_MEX_ASSERT( tmp == std::floor(tmp), "{} expected int, found {}\n", msg, tmp );
           res = static_cast<int64_t>(tmp);
         }
         break;
@@ -160,6 +182,13 @@ namespace Utils {
       break;
     }
     return res;
+  }
+
+  static
+  inline
+  int64_t
+  mex_get_int64( mxArray const * arg, string msg ) {
+    return mex_get_int64( arg, msg.c_str() );
   }
 
   static
@@ -174,12 +203,23 @@ namespace Utils {
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
     mwSize const * dims = mxGetDimensions(arg);
     UTILS_MEX_ASSERT(
-      dims[0] == 1 || dims[1] == 1,
-      "{}\nExpect (1 x n or n x 1) matrix, found {} x {}\n",
+      dims[0] == 1 || dims[1] == 1 || dims[0]*dims[1] == 0,
+      "{}\nExpect (1 x n or n x 1 or empty) matrix, found {} x {}\n",
       msg, dims[0], dims[1]
     );
     sz = dims[0]*dims[1];
     return mxGetPr(arg);
+  }
+
+  static
+  inline
+  double const *
+  mex_vector_pointer(
+    mxArray const * arg,
+    mwSize        & sz,
+    string          msg
+  ) {
+    return mex_vector_pointer( arg, sz, msg.c_str() );
   }
 
   static
@@ -197,6 +237,18 @@ namespace Utils {
     nr = dims[0];
     nc = dims[1];
     return mxGetPr(arg);
+  }
+
+  static
+  inline
+  double const *
+  mex_matrix_pointer(
+    mxArray const * arg,
+    mwSize        & nr,
+    mwSize        & nc,
+    string          msg
+  ) {
+    return mex_matrix_pointer( arg, nr, nc, msg.c_str() );
   }
 
   // -----------------------------------------------------------------------------
@@ -266,23 +318,30 @@ namespace Utils {
 
   template <typename base>
   class mex_class_handle {
-    uint32_t    signature_m;
-    base        *ptr_m;
-    std::string name_m;
+    uint32_t    m_signature;
+    base *      m_ptr;
+    std::string m_name;
+
   public:
-    mex_class_handle(base *ptr)
-    : ptr_m(ptr)
-    , name_m(typeid(base).name())
-    { signature_m = CLASS_HANDLE_SIGNATURE; }
+
+    mex_class_handle<base> const & operator = ( mex_class_handle<base> const & ) = delete;
+    mex_class_handle() = delete;
+
+    explicit
+    mex_class_handle( base * ptr )
+    : m_signature(CLASS_HANDLE_SIGNATURE)
+    , m_ptr(ptr)
+    , m_name(typeid(base).name())
+    {}
 
     ~mex_class_handle()
-    { signature_m = 0; delete ptr_m; }
+    { m_signature = 0; delete m_ptr; m_ptr = nullptr; }
 
     bool is_valid()
-    { return ((signature_m == CLASS_HANDLE_SIGNATURE) &&
-              !strcmp(name_m.c_str(), typeid(base).name())); }
+    { return ((m_signature == CLASS_HANDLE_SIGNATURE) &&
+              !strcmp(m_name.c_str(), typeid(base).name())); }
 
-    base *ptr() { return ptr_m; }
+    base * ptr() { return m_ptr; }
   };
 
   template <typename base>
@@ -322,7 +381,7 @@ namespace Utils {
   template <typename base>
   inline
   void
-  mex_destroy_object( mxArray const * in ) {
+  mex_destroy_object( mxArray const * & in ) {
     if ( in != nullptr ) delete mex_convert_mx_to_handle_ptr<base>(in);
     in = nullptr;
     mexUnlock();

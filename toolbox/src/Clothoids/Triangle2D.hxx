@@ -21,6 +21,8 @@
 /// file: Triangle2D.hxx
 ///
 
+#pragma once
+
 namespace G2lib {
 
   /*\

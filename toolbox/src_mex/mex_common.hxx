@@ -59,22 +59,19 @@ do_copy(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
+  #define CMD CMD_BASE "('copy',OBJ): "
+  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  #define CMD CMD_BASE "('copy',OBJ,OBJ1): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
-
-  G2LIB_CLASS const * CC = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_2);
-  ptr->copy(*CC);
-
+  G2LIB_CLASS const * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
+  arg_out_0 = Utils::mex_convert_ptr_to_mx<G2LIB_CLASS>(new G2LIB_CLASS( *ptr ));
   #undef CMD
 }
 
 static
 void
 do_delete(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
   #define CMD CMD_BASE "('delete',OBJ): "
@@ -201,7 +198,7 @@ do_bbTriangles( int nlhs, mxArray       * plhs[],
 static
 void
 do_change_origin(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
 
@@ -225,7 +222,7 @@ do_change_origin(
 static
 void
 do_translate(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
 
@@ -248,7 +245,7 @@ do_translate(
 static
 void
 do_rotate(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
 
@@ -272,7 +269,7 @@ do_rotate(
 static
 void
 do_scale(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
 
@@ -291,7 +288,7 @@ do_scale(
 static
 void
 do_reverse(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
 
@@ -310,7 +307,7 @@ do_reverse(
 static
 void
 do_trim(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
 
@@ -679,7 +676,7 @@ do_findST(
 static
 void
 do_info(
-  int nlhs, mxArray       *plhs[],
+  int nlhs, mxArray       *[],
   int nrhs, mxArray const *prhs[]
 ) {
 
@@ -1547,12 +1544,12 @@ do_kappa_end(
 static
 void
 do_yesAABBtree(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
+  int nlhs, mxArray       *[],
+  int nrhs, mxArray const *[]
 ) {
 
-  #define CMD CMD_BASE "('yesAABBtree',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  #define CMD CMD_BASE "('yesAABBtree'): "
+  UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
   UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
   G2lib::yesAABBtree();
@@ -1563,12 +1560,12 @@ do_yesAABBtree(
 static
 void
 do_noAABBtree(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
+  int nlhs, mxArray       *[],
+  int nrhs, mxArray const *[]
 ) {
 
-  #define CMD CMD_BASE "('noAABBtree',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  #define CMD CMD_BASE "('noAABBtree'): "
+  UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
   UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
   G2lib::noAABBtree();

@@ -47,9 +47,9 @@ L3.plotBBox(0,fmt3{:});
 L4.plotBBox(0,fmt4{:});
 L5.plotBBox(0,fmt4{:});
 
-L1.plotTriangles(fmt1{:});
-L2.plotTriangles(fmt2{:});
-L3.plotTriangles(fmt3{:});
+L1.plotTriangles('red');
+L2.plotTriangles('black');
+L3.plotTriangles('blue');
 
 axis equal;
 %

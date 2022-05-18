@@ -14,8 +14,6 @@
 
 #include <vector>
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "==========================================================================\n" \
 "Compute cicle arc\n" \
@@ -141,7 +139,7 @@ namespace G2lib {
   static
   void
   do_build(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 

@@ -1,0 +1,112 @@
+#
+# ------------------------------------------------------------------------
+#
+function(ebertolazzi_artifacts_suffix VAR_NAME BUILD_STATIC)
+  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(suffix "_debug")
+  else()
+    set(suffix "")
+  endif()
+  if (${BUILD_STATIC})
+    set(suffix "_static${suffix}")
+  endif()
+  if(APPLE)
+    set(${VAR_NAME} _osx${suffix} PARENT_SCOPE)
+  elseif(UNIX)
+    set(${VAR_NAME} _linux${suffix} PARENT_SCOPE)
+  else()
+    set(${VAR_NAME} "_win_${BITS}${suffix}" PARENT_SCOPE)
+  endif()
+endfunction()
+#
+# ------------------------------------------------------------------------
+#
+# SOURCE_LIST, HEADERS_PUBLIC and HEADERS_PRIVATE contains path
+# relative to SOURCE_DIR
+#
+function(
+  ebertolazzi_setup_target
+  TARGET_NAME
+  IS_STATIC
+  SOURCE_DIR
+  SOURCE_LIST
+  HEADER_DIR
+  HEADERS_LIST
+)
+
+  if ( ${IS_STATIC} )
+    set( TARGET_S ${EB_NAMESPACE}_${TARGET_NAME}_Static )
+  else()
+    set( TARGET_S ${EB_NAMESPACE}_${TARGET_NAME} )
+  endif()
+
+  foreach (F ${HEADERS_LIST})
+    get_filename_component(DIR ${F} DIRECTORY)
+    install( FILES ${HEADER_DIR}/${F} DESTINATION ${PROJECT_PUBLIC_HEADER_DESTINATION}/${DIR})
+  endforeach()
+
+  set( SRC )
+  foreach (F ${SOURCE_LIST})
+    list( APPEND SRC $<BUILD_INTERFACE:${SOURCE_DIR}/${F}> )
+  endforeach()
+
+  # lib and ALIASES
+  if ( ${IS_STATIC} )
+    add_library( ${TARGET_S} STATIC )
+    set( SUFFIX ${ARTIFACTS_STATIC_SUFFIX} )
+    add_library( "${EB_NAMESPACE}::${TARGET_NAME}_Static" ALIAS ${TARGET_S} )
+  else()
+    add_library( ${TARGET_S} SHARED )
+    set( SUFFIX ${ARTIFACTS_DYNAMIC_SUFFIX} )
+    add_library( "${EB_NAMESPACE}::${TARGET_NAME}" ALIAS ${TARGET_S} )
+  endif()
+
+  target_sources( ${TARGET_S} PRIVATE ${SRC} )
+  # where to search headers by default
+  target_include_directories( ${TARGET_S} PUBLIC "$<BUILD_INTERFACE:${SOURCE_DIR}>" )
+  set_target_properties(
+    ${TARGET_S} PROPERTIES
+    OUTPUT_NAME "${TARGET_NAME}${SUFFIX}"
+    POSITION_INDEPENDENT_CODE ON
+  )
+
+  set( TARGETS_TO_BE_INSTALLED ${TARGETS_TO_BE_INSTALLED} ${TARGET_S} PARENT_SCOPE )
+
+  if ( EQ_INSTALL_LOCAL )
+    add_dependencies( post_build_${PROJECT_NAME} ${TARGET_S} )
+  endif()
+
+endfunction()
+#
+# ------------------------------------------------------------------------
+#
+function(ebertolazzi_final_messages)
+  if(SSE_FLAGS)
+    message(STATUS "Using ${SSE_FLAGS} extensions")
+  endif()
+  message(STATUS "C compiler                  = ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER}")
+  message(STATUS "C++ compiler                = ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER}")
+  message(STATUS "CMAKE_CXX_FLAGS_RELEASE     = ${CMAKE_CXX_FLAGS_RELEASE}")
+  message(STATUS "CMAKE_CXX_FLAGS             = ${CMAKE_CXX_FLAGS}")
+  message(STATUS "CMAKE_C_FLAGS_RELEASE       = ${CMAKE_C_FLAGS_RELEASE}")
+  message(STATUS "CMAKE_C_FLAGS               = ${CMAKE_C_FLAGS}")
+  message(STATUS "CMAKE_SYSTEM_NAME           = ${CMAKE_SYSTEM_NAME}")
+  message(STATUS "CMAKE_SYSTEM_PROCESSOR      = ${CMAKE_SYSTEM_PROCESSOR}")
+  if(APPLE)
+    message( STATUS "CMAKE_OSX_SYSROOT           = ${CMAKE_OSX_SYSROOT}" )
+    message( STATUS "CMAKE_OSX_ARCHITECTURES     = ${CMAKE_OSX_ARCHITECTURES}" )
+    message( STATUS "CMAKE_OSX_DEPLOYMENT_TARGET = ${CMAKE_OSX_DEPLOYMENT_TARGET}" )
+  endif()
+  message(STATUS "SOURCES = ${SOURCES}")
+  message(STATUS "HEADERS = ${HEADERS}")
+  message(STATUS "TARGETS_TO_BE_INSTALLED  = ${TARGETS_TO_BE_INSTALLED}")
+  message(STATUS "CMAKE_HOME_DIRECTORY     = ${CMAKE_HOME_DIRECTORY}")
+  message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
+  message(STATUS "CMAKE_INSTALL_PREFIX     = ${CMAKE_INSTALL_PREFIX}")
+  
+  message(STATUS "EB_GIT_VERSION   = ${EB_GIT_VERSION}")
+  message(STATUS "EB_ENABLE_TESTS  = ${EB_ENABLE_TESTS}")
+  message(STATUS "EB_BUILD_SHARED  = ${EB_BUILD_SHARED}")
+  message(STATUS "EB_INSTALL_LOCAL = ${EB_INSTALL_LOCAL}")
+
+endfunction()

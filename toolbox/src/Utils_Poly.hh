@@ -51,20 +51,23 @@ namespace Utils {
 
     Poly() : m_order(0) {}
 
+    explicit
     Poly( int order ) : m_order(order) {
       this->resize(order);
       this->setZero();
     }
 
     Poly( Poly_t const & c )
+    : m_order( c.m_order )
     { *this = c; }
 
+    explicit
     Poly( dvec_t const & c ) {
       this->resize( c.size() );
       // per evitare la ricorsione devo chiamare esplicitamente
       // l'operatore = della classe di base.
       this->dvec_t::operator = (c);
-      m_order = c.size();
+      m_order = Integer(c.size());
     }
 
     // accesso to the Eigen class
@@ -108,7 +111,7 @@ namespace Utils {
     //! Scale polynomial \f$ p(x) = \sum_{i=0}^n a_i x^i \f$ in such a way
     //! \f$ \max_{i=0}^n (|a_i|/S) = 1 \f$. Return the scaling value \f$ S \f$
     //!
-    Real normalize( void );
+    Real normalize();
 
     //!
     //! On the polynomial \f$ p(x) = \sum_{i=0}^n a_i x^i \f$ purge (set to 0)
@@ -121,21 +124,21 @@ namespace Utils {
     //! \f$ p(x) = \sum_{i=0}^n a_i x^i \f$ in such a way
     //! that \f$ a_n \neq 0 \f$.
     //!
-    void adjust_degree( void );
+    void adjust_degree();
 
     //!
     //! Count the sign variations of the polynomial
     //! \f$ p(x) = \sum_{i=0}^n a_i x^i \f$ i.e. the number
     //! of sign change of the sequance \f$ [a_0,a_1,\ldots,a_n] \f$.
     //!
-    Integer sign_variations( void ) const;
+    Integer sign_variations() const;
 
     //!
     //! Change the polynomial in such a way
     //! \f$ p(x) = x^n + \sum_{i=0}^{n-1} a_i x^i \f$.
     //!
     void
-    make_monic( void ) {
+    make_monic() {
       this->to_eigen() /= this->coeff(m_order-1);
       this->coeffRef(m_order-1) = 1;
     }
@@ -162,10 +165,10 @@ namespace Utils {
     typedef Eigen::Matrix<Real,Eigen::Dynamic,1> dvec_t;
 
     typedef struct {
-      Real a;
-      Real b;
-      Real va;
-      Real vb;
+      Real    a;
+      Real    b;
+      Integer va;
+      Integer vb;
     } Interval;
 
   private:

@@ -21,6 +21,8 @@
 /// file: Biarc.hxx
 ///
 
+#pragma once
+
 namespace G2lib {
 
   /*\

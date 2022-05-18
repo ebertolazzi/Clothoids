@@ -17,28 +17,13 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wpadded"
-#endif
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wsign-conversion"
-#pragma clang diagnostic ignored "-Wweak-template-vtables"
-#pragma clang diagnostic ignored "-Wc++98-compat"
-#pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
-#pragma clang diagnostic ignored "-Wpadded"
-#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
-#pragma clang diagnostic ignored "-Wnon-virtual-dtor"
-#pragma clang diagnostic ignored "-Wsigned-enum-bitfield"
-#pragma clang diagnostic ignored "-Wpoison-system-directories"
-#pragma clang diagnostic ignored "-Wexit-time-destructors"
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#endif
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-#include "Utils.hh"
+#if defined(__llvm__) || defined(__clang__)
+#pragma clang diagnostic ignored "-Wexit-time-destructors"
+#endif
 
+#include "Utils.hh"
 #include <iostream>
 
 namespace Utils {
@@ -50,7 +35,7 @@ namespace Utils {
   using std::exit;
   using std::cerr;
 
-  mutex MallocMutex;
+  std::mutex MallocMutex;
 
   int64_t CountAlloc            = 0;
   int64_t CountFreed            = 0;
@@ -75,15 +60,6 @@ namespace Utils {
     }
     return fmt::format( "{} bytes", nb );
   }
-
-  template <typename T>
-  Malloc<T>::Malloc( string const & name )
-  : m_name(name)
-  , m_numTotValues(0)
-  , m_numTotReserved(0)
-  , m_numAllocated(0)
-  , m_pMalloc(nullptr)
-  { }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -189,7 +165,7 @@ namespace Utils {
 
   template <typename T>
   void
-  Malloc<T>::hard_free(void) {
+  Malloc<T>::hard_free() {
     if ( m_pMalloc != nullptr ) {
       size_t nb;
       {
@@ -214,7 +190,7 @@ namespace Utils {
   void
   Malloc<T>::memory_exausted( size_t sz ) {
     string reason = fmt::format(
-      "nMalloc<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz
+      "Malloc<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz
     );
     print_trace( __LINE__, __FILE__, reason, cerr );
     exit(0);
@@ -224,7 +200,7 @@ namespace Utils {
 
   template <typename T>
   void
-  Malloc<T>::must_be_empty( char const * const where ) const {
+  Malloc<T>::must_be_empty( char const * where ) const {
     if ( m_numAllocated < m_numTotValues ) {
       string tmp = fmt::format(
         "in {} {}: not fully used!\nUnused: {} values\n",
@@ -239,6 +215,23 @@ namespace Utils {
       );
       print_trace( __LINE__,__FILE__, tmp, cerr );
     }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  template <typename T>
+  std::string
+  Malloc<T>::info( char const * where ) const {
+    std::size_t diff = m_numAllocated > m_numTotValues ?
+                       m_numAllocated - m_numTotValues :
+                       m_numTotValues - m_numAllocated;
+    return fmt::format(
+      "in {} {}\n"
+      "Allocated:  {}\n"
+      "Reserved:   {}\n"
+      "Difference: {} [|A-R|]\n",
+      m_name, where, m_numAllocated, m_numTotValues, diff
+    );
   }
 
   template class Malloc<char>;

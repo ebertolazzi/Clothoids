@@ -39,12 +39,12 @@ namespace Utils {
     std::string const m_delimiters;
   public:
     Tokenizer(
-      std::string const & str,
-      std::string const & delimiters
+      std::string str,
+      std::string delimiters
     )
     : m_offset(0)
-    , m_string(str)
-    , m_delimiters(delimiters)
+    , m_string(std::move(str))
+    , m_delimiters(std::move(delimiters))
     { }
 
     std::string get_token() const { return m_token; }

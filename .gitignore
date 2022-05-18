@@ -37,3 +37,7 @@ docs_build/sphinx_matlab/api-cpp
 __pycache__
 *.pyc
 toolbox/lib/.idea
+toolbox/.idea
+toolbox/cmake-build-debug
+toolbox/src_mex/.idea
+toolbox/src/.idea

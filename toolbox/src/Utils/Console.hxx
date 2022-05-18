@@ -26,7 +26,7 @@ namespace Utils {
   typedef std::basic_istream<char> istream_type;
   typedef std::basic_ostream<char> ostream_type;
 
-  std::string basename( char const * const filename );
+  std::string basename( char const * filename );
 
   class Console {
 
@@ -51,16 +51,17 @@ namespace Utils {
     // 2
     int m_level;
 
-    Console_style m_message_style;
-    Console_style m_warning_style;
-    Console_style m_error_style;
-    Console_style m_fatal_style;
+    Console_style m_message_style = { rang::style::reset,     rang::fg::reset,  rang::bg::reset };
+    Console_style m_warning_style = { rang::style::reset,     rang::fg::yellow, rang::bg::reset };
+    Console_style m_error_style   = { rang::style::italic,    rang::fg::red,    rang::bg::reset };
+    Console_style m_fatal_style   = { rang::style::underline, rang::fg::red,    rang::bg::reset };
+
+  public:
 
     Console() = delete;
     Console( Console const & ) = delete;
 
-  public:
-
+    explicit
     Console( ostream_type * stream = &std::cout, int level = 4 );
 
     void change_level( int new_level );

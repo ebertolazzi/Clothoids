@@ -14,8 +14,6 @@
 
 #include <fstream>
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "BiarcListMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \
@@ -80,12 +78,12 @@ namespace G2lib {
   void
   do_new(
     int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
+    int nrhs, mxArray const *[]
   ) {
 
     #define CMD "BiarcListMexWrapper('new'): "
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nlhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
 
     arg_out_0 = Utils::mex_convert_ptr_to_mx<BiarcList>(new BiarcList());
 
@@ -97,7 +95,7 @@ namespace G2lib {
   static
   void
   do_push_back_G1(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -132,7 +130,7 @@ namespace G2lib {
   static
   void
   do_reserve(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 

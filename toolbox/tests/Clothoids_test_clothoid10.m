@@ -21,8 +21,7 @@ dk     = 0.1;
 L      = 15;
 
 L1 = ClothoidCurve( x0, y0, theta0, kappa0, dk, L );
-L2 = ClothoidCurve();
-L2.copy(L1);
+L2 = L1.copy();
 L2.trim(1.23,10);
 
 [x1,y1,theta1,kappa1] = L1.evaluate( 1.23+0.1 );

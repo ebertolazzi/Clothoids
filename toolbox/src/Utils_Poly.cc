@@ -21,6 +21,10 @@
 /// file: Utils_Poly.cc
 ///
 
+#if defined(__llvm__) || defined(__clang__)
+#pragma clang diagnostic ignored "-Wdeprecated-copy-with-dtor"
+#endif
+
 #include "Utils_Poly.hh"
 #include "Utils/Utils_Poly.hxx"
 

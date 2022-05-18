@@ -12,8 +12,6 @@
 #include "Utils_mex.hh"
 #include "mex_info.hxx"
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "BiarcMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \
@@ -70,7 +68,7 @@ namespace G2lib {
   static
   void
   do_new( int nlhs, mxArray       *plhs[],
-          int nrhs, mxArray const *prhs[] ) {
+          int nrhs, mxArray const *[] ) {
 
     #define CMD "BiarcMexWrapper('new'): "
     UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 inputs, nrhs = {}\n", nrhs );

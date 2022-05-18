@@ -89,7 +89,7 @@ namespace Utils {
 
     public:
 
-      Style() {}
+      Style() = default;
 
       char border_top() const { return m_border_top; }
       void border_top( char borderStyle ) { m_border_top = borderStyle; }
@@ -159,8 +159,9 @@ namespace Utils {
 
     public:
 
-      Cell() {}
+      Cell() = default;
 
+      explicit
       Cell(
         Table*              table,
         std::string const & val      = "",
@@ -197,8 +198,9 @@ namespace Utils {
 
     public:
 
-      Row() {}
+      Row() = default;
 
+      explicit
       Row(
         Table *        table,
         vecstr const & cells = vecstr()
@@ -240,8 +242,9 @@ namespace Utils {
 
     public:
 
-      Table() {}
+      Table() = default;
 
+      explicit
       Table(
         Style     const & style,
         vecvecstr const & rows = vecvecstr()
@@ -295,10 +298,10 @@ namespace Utils {
 
       std::string
       render_separator(
-        char const left,
-        char const mid,
-        char const right,
-        char const sep
+        char left,
+        char mid,
+        char right,
+        char sep
       ) const;
 
       std::string render() const;

@@ -27,8 +27,7 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 SG2 = ClothoidSplineG2();
 S   = SG2.buildP2( X, Y );
 
-S1 = ClothoidList();
-S1.copy(S);
+S1 = S.copy();
 S1.rotate(pi,0,0);
 S1.translate(0,-2);
 

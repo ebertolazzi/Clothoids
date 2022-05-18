@@ -63,10 +63,10 @@ namespace Utils {
 
   void
   print_trace(
-    int                 line,
-    char const * const  file,
-    string const      & msg,
-    ostream_type      & stream
+    int            line,
+    char const *   file,
+    string const & msg,
+    ostream_type & stream
   ) {
     fmt::print( stream,
       "---------------------------------------------------------\n"
@@ -90,9 +90,9 @@ namespace Utils {
 
   string
   Runtime_TraceError::grab_backtrace(
-    string const &     reason,
-    char const * const file,
-    int                line
+    string const & reason,
+    char const *   file,
+    int            line
   ) const {
     return fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line );
   }
@@ -102,9 +102,9 @@ namespace Utils {
   static
   inline
   string
-  demang( char const * const mangled_name ) {
-    if ( mangled_name == nullptr ) return string("");
-    int status = 0 ;
+  demang( char const * mangled_name ) {
+    if ( mangled_name == nullptr ) return string{""};
+    int status = 0;
     string retval = mangled_name;
     char * name = abi::__cxa_demangle( mangled_name, nullptr, nullptr, &status );
     if ( status == 0 ) {
@@ -113,17 +113,17 @@ namespace Utils {
       char const * p = strchr(name,'(');
       if ( p != nullptr ) retval = retval.substr(0,p-name);
     }
-    if ( name != nullptr ) free(name) ;
+    if ( name != nullptr ) free(name);
     return retval;
   }
 
   //! print a trace stack used in debug
   void
   print_trace(
-    int                line,
-    char const * const file,
-    string const     & reason,
-    ostream_type     & stream
+    int            line,
+    char const *   file,
+    string const & reason,
+    ostream_type & stream
   ) {
 
     fmt::print(
@@ -173,9 +173,9 @@ namespace Utils {
 
   string
   Runtime_TraceError::grab_backtrace(
-    string const &     reason,
-    char const * const file,
-    int                line
+    string const & reason,
+    char const *   file,
+    int            line
   ) const {
     ostringstream ost;
     print_trace( line, file, reason, ost );

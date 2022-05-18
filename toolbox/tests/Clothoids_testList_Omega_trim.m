@@ -35,8 +35,8 @@ fmt1 = {'Color','red','LineWidth',4};
 fmt2 = {'Color','blue','LineWidth',4};
 S.plot( 100, fmt1, fmt2);
 
-S1 = ClothoidList();
-S1.copy(S);
+%S1 = ClothoidList();
+S1 = S.copy();
 
 fmt3 = {'Color','black','LineWidth',3};
 fmt4 = {'Color','green','LineWidth',3};

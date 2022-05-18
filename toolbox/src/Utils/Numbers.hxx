@@ -147,12 +147,12 @@ namespace Utils {
   static
   inline
   bool isInteger( double x )
-  { return isZero( x-static_cast<long>(floor(x)) ); }
+  { return isZero( x-floor(x) ); }
 
   static
   inline
   bool isInteger( float x )
-  { return isZero( x-static_cast<long>(floor(x)) ); }
+  { return isZero( x-floor(x) ); }
 
   static
   inline
@@ -165,27 +165,27 @@ namespace Utils {
   //============================================================================
 
   bool
-  foundNaN( double const * const pv, int DIM );
+  foundNaN( double const * pv, int DIM );
 
   bool
-  foundNaN( float const * const pv, int DIM );
+  foundNaN( float const * pv, int DIM );
 
   void
   checkNaN(
-    double const * const pv,
-    char   const * const v_name,
-    int                  DIM,
-    int                  line,
-    char   const * const file
+    double const * pv,
+    char   const * v_name,
+    int            DIM,
+    int            line,
+    char   const * file
   );
 
   void
   checkNaN(
-    float const * const pv,
-    char  const * const v_name,
-    int                 DIM,
-    int                 line,
-    char  const * const file
+    float const * pv,
+    char  const * v_name,
+    int           DIM,
+    int           line,
+    char  const * file
   );
 
   //============================================================================

@@ -30,8 +30,6 @@
 
 namespace Utils {
 
-  #define TOINT64(A) (static_cast<int64_t>(A.HighPart) << 32) | A.LowPart
-
   TicToc::TicToc() : m_elapsed_time(0) {
     LARGE_INTEGER frequency;
     QueryPerformanceFrequency(&frequency);
@@ -50,20 +48,45 @@ namespace Utils {
   TicToc::toc() {
     LARGE_INTEGER t2;
     QueryPerformanceCounter(&t2);
-    m_t2 = t2.QuadPart;
+    m_t2           = t2.QuadPart;
     m_elapsed_time = (m_t2 - m_t1) * 1000.0 / m_frequency;
-    ;
+  }
+
+  BOOLEAN
+  nanosleep( LONGLONG ns100 ) {
+    HANDLE        timer; // Timer handle
+    LARGE_INTEGER li;	   // Time defintion
+    // Create timer
+    if ( !(timer = CreateWaitableTimerW(NULL, TRUE, NULL)) ) return FALSE;
+    // Set timer properties
+    li.QuadPart = -ns100;
+    if ( !SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE) ) {
+      CloseHandle(timer);
+      return FALSE;
+    }
+    WaitForSingleObject(timer, INFINITE); // Start & wait for timer
+    CloseHandle(timer);                   // Clean resources
+    return TRUE;                          // Slept without problems
   }
 
   void
-  sleep_for_seconds( unsigned s ) {
-    Sleep(DWORD(s) * 1000);
+  sleep_for_seconds( unsigned s )
+  { Sleep(DWORD(s) * 1000); }
+
+  void
+  sleep_for_milliseconds( unsigned ms )
+  { Sleep(DWORD(ms)); }
+
+  void
+  sleep_for_microseconds( unsigned mus ) {
+    nanosleep( LONGLONG(mus*10) );
   }
 
   void
-  sleep_for_milliseconds( unsigned ms ) {
-    Sleep(DWORD(ms));
+  sleep_for_nanoseconds( unsigned ns ) {
+    nanosleep( LONGLONG(ns/100) );
   }
+
 }
 
 #else
@@ -82,11 +105,19 @@ namespace Utils {
 
   typename TicToc::real_type
   TicToc::elapsed_s() const
-  { return 1e-6*m_elapsed_time.count(); }
+  { return real_type(1e-6*m_elapsed_time.count()); }
 
   typename TicToc::real_type
   TicToc::elapsed_ms() const
-  { return 1e-3*m_elapsed_time.count(); }
+  { return real_type(1e-3*m_elapsed_time.count()); }
+
+  typename TicToc::real_type
+  TicToc::elapsed_mus() const
+  { return real_type(m_elapsed_time.count()); }
+
+  typename TicToc::real_type
+  TicToc::elapsed_ns() const
+  { return real_type(1e3*m_elapsed_time.count()); }
 }
 
 #endif

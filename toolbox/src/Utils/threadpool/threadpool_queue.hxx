@@ -508,7 +508,7 @@ namespace threadpool {
      * shrinks to `return_if_idle` tasks.
      */
     void
-    help(std::ptrdiff_t return_if_idle) {
+    help(int return_if_idle) {
 
       unsigned min_queue_size = return_if_idle < 0 ? 0 : return_if_idle;
 
@@ -529,7 +529,7 @@ namespace threadpool {
 
         // Try to get the next task(s)
         while ((queue_size = m_queue.size()) <= min_queue_size) {
-          if (static_cast<std::ptrdiff_t>(queue_size) <= return_if_idle) return;
+          if (static_cast<int>(queue_size) <= return_if_idle) return;
           if ( queue_size > 0 ) break;
           // The queue is empty, wait for more tasks to be put()
           lock.unlock();
@@ -565,7 +565,7 @@ namespace threadpool {
      * Help, and shut down if an exception escapes.
      */
     void
-    try_help(std::ptrdiff_t return_if_idle) {
+    try_help(int return_if_idle) {
       try {
         help(return_if_idle);
       } catch (...) {

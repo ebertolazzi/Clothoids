@@ -21,6 +21,8 @@
 /// file: Circle.hxx
 ///
 
+#pragma once
+
 namespace G2lib {
 
   /*\

@@ -142,7 +142,7 @@ namespace quickpool {
 
       inline
       void
-      free( void * ptr ) noexcept
+      free( void * & ptr ) noexcept
       { if ( ptr ) std::free( ptr ); ptr = nullptr; }
 
       //! short version of
@@ -159,7 +159,7 @@ namespace quickpool {
         };
 
         T*
-        allocate( size_t size, const void* = 0 ) {
+        allocate( size_t size, const void * = nullptr ) {
           if ( size == 0 ) return 0;
           void * p = mem::aligned::alloc(min_align, sizeof(T) * size);
           if (!p) throw std::bad_alloc();

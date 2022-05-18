@@ -12,8 +12,6 @@
 #include "Utils_mex.hh"
 #include "mex_info.hxx"
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "ClothoidCurveMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \
@@ -38,7 +36,7 @@
 "    ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
 "    [ L_D, k_D, dk_D ] = ClothoidCurveMexWrapper( 'build_G1_D', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
 "    res = ClothoidCurveMexWrapper( 'build_forward', OBJ,x0,y0,theta0,k0,x1,y1 );\n" \
-"    ClothoidCurveMexWrapper( 'copy', OBJ, OBJ1 );\n" \
+"    res = ClothoidCurveMexWrapper( 'copy', OBJ );\n" \
 "\n" \
 "  - Eval:\n" \
 "    [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'getPars', OBJ );\n" \

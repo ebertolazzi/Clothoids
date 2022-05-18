@@ -30,9 +30,9 @@ S3 = ClothoidList();
 subplot(3,1,1);
 
 S = SC.buildP2( X, Y );
-S1.copy(S);
-S2.copy(S);
-S3.copy(S);
+S1 = S.copy();
+S2 = S.copy();
+S3 = S.copy();
 
 fmt1 = {'Color','red','LineWidth',4};
 fmt2 = {'Color','blue','LineWidth',4};

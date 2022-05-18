@@ -181,7 +181,7 @@ namespace Utils {
   Poly<Real>::sign_variations() const {
     Integer sign_var  = 0;
     Integer last_sign = 0;
-    for ( Integer i=0 ; i < m_order; ++i ) {
+    for ( Integer i=0; i < m_order; ++i ) {
       Real v = this->coeff(i);
       if ( v > 0 ) {
         if ( last_sign == -1 ) ++sign_var;
@@ -629,12 +629,12 @@ namespace Utils {
 
     while ( on_root_a ) {
       // on root, move interval a
-      a -= 1e-8*(b-a);
+      a -= Real(1e-8)*(b-a);
       va = sign_variations(a,on_root_a);
     }
     while ( on_root_b ) {
       // on root, move interval a
-      b += 1e-8*(b-a);
+      b += Real(1e-8)*(b-a);
       vb = sign_variations(b,on_root_b);
     }
 
@@ -725,7 +725,11 @@ namespace Utils {
       Real fa = P.eval( a );
       Real fb = P.eval( b );
       // controlla consistenza dati del problema
-      UTILS_ASSERT( fa * fb <= 0, "ERRORE" );
+      UTILS_ASSERT(
+        fa * fb <= 0,
+        "Sturm<Real>::refine_roots fa={} and fb={}\n",
+        fa, fb
+      );
       Integer num_ok = 0;
       for ( Integer i = 0; i < m_max_iter; ++i ) {
         if ( std::abs(fa) < std::abs(fb) ) {
@@ -737,8 +741,8 @@ namespace Utils {
         }
         // If Newton failed use bisection
         Real ba    = b-a;
-        Real a_min = a+0.1*ba;
-        Real b_max = b-0.1*ba;
+        Real a_min = a+Real(0.1)*ba;
+        Real b_max = b-Real(0.1)*ba;
         if ( x < a_min || x > b_max ) { x = (a+b)/2; num_ok = 0; } // if using bisection reset quasi ok iteration count
         //if ( ! ( x > a && x < b ) ) { x = (a+b)/2 }
         Real fx = P.eval( x );
@@ -747,8 +751,9 @@ namespace Utils {
         if ( ok1 && ok2 ) break;
         if ( ok1 || ok2 ) { if ( ++num_ok > 3 ) break; }
         else              { num_ok = 0; }
-        if ( fa*fx < 0 ) { b = x; fb = fx; } // interval [a,x]
-        else             { a = x; fa = fx; } // interval [c,b]
+        if      ( fa*fx < 0 ) { b = x; fb = fx; } // interval [a,x]
+        else if ( fb*fx < 0 ) { a = x; fa = fx; } // interval [c,b]
+        else break;
       }
       m_roots.coeffRef(n++) = x;
     }

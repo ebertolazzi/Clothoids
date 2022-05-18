@@ -14,8 +14,6 @@
 
 #include <vector>
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "==========================================================================\n" \
 "Compute cicle arc\n" \
@@ -108,7 +106,7 @@ namespace G2lib {
   static
   void
   do_build(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -268,11 +266,12 @@ namespace G2lib {
   static
   void
   do_change_curvilinear_origin(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
     #define CMD "CircleArcMexWrapper('change_curvilinear_origin',OBJ,s0,L): "
+    UTILS_MEX_ASSERT(nlhs == 0, CMD "expected NOoutputs, nlhs = {}\n", nlhs );
     UTILS_MEX_ASSERT(nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
 
     CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );

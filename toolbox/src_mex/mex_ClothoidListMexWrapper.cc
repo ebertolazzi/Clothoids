@@ -14,8 +14,6 @@
 
 #include <fstream>
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "=====================================================================================\n" \
 "ClothoidListMexWrapper:  Compute parameters of the G1 Hermite clothoid fitting\n" \
@@ -90,12 +88,12 @@ namespace G2lib {
   void
   do_new(
     int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
+    int nrhs, mxArray const *[]
   ) {
 
     #define CMD "ClothoidListMexWrapper('new'): "
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nlhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
 
     //ClothoidList * ptr =
     arg_out_0 = Utils::mex_convert_ptr_to_mx<ClothoidList>(new ClothoidList());
@@ -108,7 +106,7 @@ namespace G2lib {
   static
   void
   do_push_back(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -170,7 +168,7 @@ namespace G2lib {
   static
   void
   do_push_back_G1(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -205,7 +203,7 @@ namespace G2lib {
   static
   void
   do_reserve(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -383,7 +381,7 @@ namespace G2lib {
     real_type theta1 = Utils::mex_get_scalar_value( arg_in_8, CMD "Error in reading `theta1`" );
     real_type kappa1 = Utils::mex_get_scalar_value( arg_in_9, CMD "Error in reading `kappa1`" );
 
-    static G2solve3arc g2sol;
+    G2solve3arc g2sol;
     int_type iter = g2sol.build( x0, y0, theta0, kappa0,
                                  x1, y1, theta1, kappa1 );
     if ( iter >= 0 ) {
@@ -424,7 +422,7 @@ namespace G2lib {
     real_type theta1 = Utils::mex_get_scalar_value( arg_in_8, CMD "Error in reading `theta1`" );
     real_type kappa1 = Utils::mex_get_scalar_value( arg_in_9, CMD "Error in reading `kappa1`" );
 
-    static G2solve2arc g2sol;
+    G2solve2arc g2sol;
     int_type iter = g2sol.build( x0, y0, theta0, kappa0,
                                  x1, y1, theta1, kappa1 );
     if ( iter >= 0 ) {
@@ -464,7 +462,7 @@ namespace G2lib {
     real_type theta1 = Utils::mex_get_scalar_value( arg_in_8, CMD "Error in reading `theta1`" );
     real_type kappa1 = Utils::mex_get_scalar_value( arg_in_9, CMD "Error in reading `kappa1`" );
 
-    static G2solveCLC g2sol;
+    G2solveCLC g2sol;
     int_type iter = g2sol.build( x0, y0, theta0, kappa0,
                                  x1, y1, theta1, kappa1 );
     if ( iter >= 0 ) {
@@ -506,7 +504,7 @@ namespace G2lib {
     real_type theta1 = Utils::mex_get_scalar_value( arg_in_10, CMD "Error in reading `theta1`" );
     real_type kappa1 = Utils::mex_get_scalar_value( arg_in_11, CMD "Error in reading `kappa1`" );
 
-    static G2solve3arc g2sol;
+    G2solve3arc g2sol;
     int iter = g2sol.build_fixed_length( s0, x0, y0, theta0, kappa0,
                                          s1, x1, y1, theta1, kappa1 );
     if ( iter >= 0 ) {
@@ -590,7 +588,7 @@ namespace G2lib {
 
   static
   void
-  do_make_closed( int nlhs, mxArray       *plhs[],
+  do_make_closed( int nlhs, mxArray       *[],
                   int nrhs, mxArray const *prhs[] ) {
 
     #define CMD "ClothoidListMexWrapper('make_closed',OBJ): "
@@ -608,7 +606,7 @@ namespace G2lib {
 
   static
   void
-  do_make_open( int nlhs, mxArray       *plhs[],
+  do_make_open( int nlhs, mxArray       *[],
                 int nrhs, mxArray const *prhs[] ) {
 
     #define CMD "ClothoidListMexWrapper('make_open',OBJ): "
@@ -748,7 +746,7 @@ namespace G2lib {
   static
   void
   do_export_table(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -775,7 +773,7 @@ namespace G2lib {
   static
   void
   do_export_ruby(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -1080,7 +1078,7 @@ namespace G2lib {
   static
   void
   do_load(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "ClothoidListMexWrapper('load',OBJ,filename,[epsi]): "
@@ -1113,7 +1111,7 @@ namespace G2lib {
   static
   void
   do_save(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "ClothoidListMexWrapper('save',OBJ,filename): "

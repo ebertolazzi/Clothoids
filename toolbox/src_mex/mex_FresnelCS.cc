@@ -11,8 +11,6 @@
 #include "Clothoids.hh"
 #include "Utils_mex.hh"
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "======================================================================\n" \
 "\n" \

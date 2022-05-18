@@ -34,9 +34,8 @@ for kk=1:4
   case 4; subplot('Position',[aa aa+0.5 bb bb]);
   end
 
-  L1 = ClothoidCurve( x0(kk), y0(kk), theta0, kappa0(kk), dk(kk), L(kk) );
-  L2 = ClothoidCurve();
-  L2.copy(L1);
+  L1  = ClothoidCurve( x0(kk), y0(kk), theta0, kappa0(kk), dk(kk), L(kk) );
+  L2  = L1.copy();
   len = L2.length();
   L2.trim(0.1*len,0.9*len);
 

@@ -71,10 +71,22 @@ namespace Utils {
     //!
     real_type elapsed_ms() const { return m_elapsed_time; }
 
+    //!
+    //! Return elapsed time (between tic-toc) in microseconds
+    //!
+    real_type elapsed_mus() const { return 1000*m_elapsed_time; }
+
+    //!
+    //! Return elapsed time (between tic-toc) in nanoseconds
+    //!
+    real_type elapsed_ns() const { return 1e6*m_elapsed_time; }
+
   };
 
   void sleep_for_seconds( unsigned s );
   void sleep_for_milliseconds( unsigned ms );
+  void sleep_for_microseconds( unsigned mus );
+  void sleep_for_nanoseconds( unsigned ns );
 
 #else
 
@@ -97,16 +109,16 @@ namespace Utils {
 
     elapsed_resolution m_elapsed_time;
 
+   public:
+
     TicToc( TicToc const & ) = delete;
     TicToc const & operator = ( TicToc const & ) const = delete;
-
-   public:
 
     TicToc()
     : m_elapsed_time(0)
     { this->tic(); }
 
-    ~TicToc() {}
+    ~TicToc() = default;
 
     //!
     //! Start timing
@@ -127,19 +139,37 @@ namespace Utils {
     //! Return elapsed time (between tic-toc) in milliseconds
     //!
     real_type elapsed_ms() const;
+
+    //!
+    //! Return elapsed time (between tic-toc) in microseconds
+    //!
+    real_type elapsed_mus() const;
+
+    //!
+    //! Return elapsed time (between tic-toc) in nanoseconds
+    //!
+    real_type elapsed_ns() const;
   };
 
   inline
   void
-  sleep_for_seconds( unsigned s ) {
-    std::this_thread::sleep_for(std::chrono::seconds(s));
-  }
+  sleep_for_seconds( unsigned s )
+  { std::this_thread::sleep_for(std::chrono::seconds(s)); }
 
   inline
   void
-  sleep_for_milliseconds( unsigned ms ) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-  }
+  sleep_for_milliseconds( unsigned ms )
+  {  std::this_thread::sleep_for(std::chrono::milliseconds(ms)); }
+
+  inline
+  void
+  sleep_for_microseconds( unsigned mus )
+  {  std::this_thread::sleep_for(std::chrono::microseconds(mus)); }
+
+  inline
+  void
+  sleep_for_nanoseconds( unsigned ns )
+  {  std::this_thread::sleep_for(std::chrono::nanoseconds(ns)); }
 
 #endif
 

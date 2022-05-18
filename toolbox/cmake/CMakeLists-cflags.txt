@@ -1,0 +1,42 @@
+
+SET( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
+SET( CMAKE_VERBOSE_MAKEFILE            TRUE )
+
+# /Gd Uses the __cdecl calling convention (x86 only).
+# /Gr Uses the __fastcall calling convention (x86 only).
+# /Gv Uses the __vectorcall calling convention. (x86 and x64 only)
+# /Gz Uses the __stdcall calling convention (x86 only).
+
+SET( CXX_WARN   "-Wall -Wno-float-equal -Wno-padded -Wno-comment ")
+SET( CLANG_WARN "-Weverything -Wno-alloca -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-c++2a-compat -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-format-nonliteral -Wno-implicit-fallthrough -Wno-documentation -Wno-float-equal -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-unused-macros -Wno-switch-enum -Wno-sign-conversion -Wno-signed-enum-bitfield -Wno-weak-vtables ")
+SET( VS_WARN    "")
+
+IF( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )
+  SET( CMAKE_CXX_FLAGS         "-std=c++11   ${CXX_WARN}" )
+  SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -fopenmp -O2 -g -floop-interchange -floop-block -funroll-loops " )
+  SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -fopenmp -O0 -ggdb -DMECHATRONIX_DEBUG -DDEBUG " )
+ELSEIF( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
+  SET( CMAKE_CXX_FLAGS         "-std=c++11 -stdlib=libc++  ${CLANG_WARN}" )
+  SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics " )
+  SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -gfull -fcolor-diagnostics -DMECHATRONIX_DEBUG -DDEBUG " )
+ELSEIF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
+  SET( CMAKE_CXX_FLAGS         " ${VS_WARN}" )
+  SET( CMAKE_CXX_FLAGS_RELEASE "/nologo /GS /W3 /WX- /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /O2 /MD " )
+  SET( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /W3 /WX- /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /RTC1 /guard:cf /Zi /D_DEBUG /DMECHATRONIX_DEBUG " )
+ELSE()
+  MESSAGE( FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
+ENDIF()
+
+MESSAGE( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
+
+SET( CMAKE_C_FLAGS         "" )
+SET( CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} )
+SET( CMAKE_C_FLAGS_DEBUG   ${CMAKE_CXX_FLAGS_DEBUG} )
+
+# select LAPACK library to be used
+SET( PINS_USE_ACCELERATE true )
+
+# check if link against static libgcc
+SET( PINS_USE_STATIC_LIBGCC false )
+
+SET( PINS_ON_RASPBERRY false )

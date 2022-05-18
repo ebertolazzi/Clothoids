@@ -46,6 +46,15 @@
   #else
     #define UTILS_ARCH32 1
   #endif
+  // windows headers, order matters!
+  #include <Winsock2.h>
+  #include <Windows.h>
+  #include <Ws2tcpip.h>
+  #include <iptypes.h>
+  #include <Iphlpapi.h>
+  // --------------------
+  #include <tchar.h>
+  #include <stdio.h>
 #else
   #error "unsupported OS!"
 #endif
@@ -82,6 +91,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <limits>
 
 // I/O
@@ -98,7 +108,21 @@
 #include <memory>
 
 // disable mingw-std-threads for mingw on MATLAB
-#if (defined(MINGW) || defined(__MINGW32__)) && !defined(MATLAB_MEX_FILE )
+#if defined(__MINGW32__) || defined(__MINGW64__) && !defined(MATLAB_MEX_FILE )
+  #include <_mingw.h>
+  #if defined(__MINGW64_VERSION_MAJOR)
+    #if  __MINGW64_VERSION_MAJOR < 8
+      #define UTILS_USE_MINGW_PORTABLE_THREADS
+    #endif
+  #endif
+  #if defined(__MINGW32_VERSION_MAJOR)
+    #if  __MINGW32_VERSION_MAJORs < 8
+      #define UTILS_USE_MINGW_PORTABLE_THREADS
+    #endif
+  #endif
+#endif
+
+#ifdef UTILS_USE_MINGW_PORTABLE_THREADS
   #include "mingw-std-threads/mingw.future.h"
   #include "mingw-std-threads/mingw.mutex.h"
   #include "mingw-std-threads/mingw.invoke.h"
@@ -137,6 +161,7 @@
 // order must be preserved
 #include "ThreadUtils.hxx"
 #include "ThreadPoolBase.hxx"
+#include "ThreadPool0.hxx"
 #include "ThreadPool1.hxx"
 #include "ThreadPool2.hxx"
 #include "ThreadPool3.hxx"
@@ -150,54 +175,69 @@ namespace Utils {
   using std::string;
   #endif
 
-  std::string basename( char const * const filename );
+  std::string basename( char const * filename );
+
+  void   get_MAC_address( std::map<string,string> & addr );
+  string get_host_name();
+  void   get_IP_address( std::vector<string> & addr );
+  string get_date();
+  string get_day_time();
+  string get_day_time_and_date();
+  string get_log_date_time();
+  string get_user_name();
+  string get_home_directory();
+  string get_executable_path_name();
+  bool   check_if_file_exists( char const * fname );
+  bool   check_if_dir_exists( char const * dirname );
+  bool   make_directory( char const * dirname, unsigned mode = 0777 );
+
 
   template <typename T_int, typename T_real>
   void
   search_interval(
-    T_int                npts,
-    T_real const * const X,
-    T_real             & x,
-    T_int              & lastInterval,
-    bool                 closed,
-    bool                 can_extend
+    T_int          npts,
+    T_real const * X,
+    T_real       & x,
+    T_int        & lastInterval,
+    bool           closed,
+    bool           can_extend
   );
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
   extern template void search_interval(
-    int32_t             npts,
-    float const * const X,
-    float             & x,
-    int32_t           & lastInterval,
-    bool                closed,
-    bool                can_extend
+    int32_t       npts,
+    float const * X,
+    float       & x,
+    int32_t     & lastInterval,
+    bool          closed,
+    bool          can_extend
   );
 
   extern template void search_interval(
-    int32_t              npts,
-    double const * const X,
-    double             & x,
-    int32_t            & lastInterval,
-    bool                 closed,
-    bool                 can_extend
+    int32_t        npts,
+    double const * X,
+    double       & x,
+    int32_t      & lastInterval,
+    bool           closed,
+    bool           can_extend
   );
 
   extern template void search_interval(
-    int64_t             npts,
-    float const * const X,
-    float             & x,
-    int64_t           & lastInterval,
-    bool                closed,
-    bool                can_extend
+    int64_t       npts,
+    float const * X,
+    float       & x,
+    int64_t     & lastInterval,
+    bool          closed,
+    bool          can_extend
   );
 
   extern template void search_interval(
-    int64_t              npts,
-    double const * const X,
-    double             & x,
-    int64_t            & lastInterval,
-    bool                 closed,
-    bool                 can_extend
+    int64_t        npts,
+    double const * X,
+    double       & x,
+    int64_t      & lastInterval,
+    bool           closed,
+    bool           can_extend
   );
   #endif
 
@@ -205,12 +245,12 @@ namespace Utils {
   inline
   void
   searchInterval(
-    T_int                npts,
-    T_real const * const X,
-    T_real             & x,
-    T_int              & lastInterval,
-    bool                 closed,
-    bool                 can_extend
+    T_int          npts,
+    T_real const * X,
+    T_real       & x,
+    T_int        & lastInterval,
+    bool           closed,
+    bool           can_extend
   ) {
     search_interval( npts, X, x, lastInterval, closed, can_extend );
   }

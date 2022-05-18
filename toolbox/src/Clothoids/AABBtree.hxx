@@ -25,6 +25,8 @@
 /// file: AABBtree.hxx
 ///
 
+#pragma once
+
 namespace G2lib {
 
   using std::setw;

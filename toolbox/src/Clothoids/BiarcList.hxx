@@ -21,6 +21,8 @@
 /// file: BiarcList.hh
 ///
 
+#pragma once
+
 namespace G2lib {
 
   using std::vector;

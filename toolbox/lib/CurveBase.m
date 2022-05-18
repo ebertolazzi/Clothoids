@@ -8,7 +8,20 @@ classdef CurveBase < matlab.mixin.Copyable
   end
 
   methods(Access = protected)
-    % make deep copy for copy command
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Make a deep copy of a curve object
+    %>
+    %> **Usage**
+    %>
+    %> \rst
+    %> .. code-block:: matlab
+    %>
+    %>   B = A.copy();
+    %>
+    %> \endrst
+    %>
+    %> where `A` is the curve object to be copied.
+    %>
     function obj = copyElement( self )
       obj              = copyElement@matlab.mixin.Copyable(self);
       obj.objectHandle = feval( self.mexName, 'copy', self.objectHandle );
@@ -51,23 +64,6 @@ classdef CurveBase < matlab.mixin.Copyable
     function str = is_type( self )
       str = self.objectType;
     end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Make of copy of a curve object
-    %>
-    %> **Usage**
-    %>
-    %> \rst
-    %> .. code-block:: matlab
-    %>
-    %>   ref.copy( C );
-    %>
-    %> \endrst
-    %>
-    %> where `C` id the curve object to be copied.
-    %>
-    %function copy( self, C )
-    %  feval( self.mexName, 'copy', self.objectHandle, C.obj_handle() );
-    %end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return the bounding box of the curve object
     %>
@@ -884,14 +880,14 @@ classdef CurveBase < matlab.mixin.Copyable
     %> Activate the use of AABB three in intersection/collision computations
     %>
     function yesAABBtree( self )
-      feval( self.mexName, 'yesAABBtree', self.objectHandle );
+      feval( self.mexName, 'yesAABBtree' );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
     %> Deactivate the use of AABB three in intersection/collision computations
     %>
     function noAABBtree( self )
-      feval( self.mexName, 'noAABBtree', self.objectHandle );
+      feval( self.mexName, 'noAABBtree' );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot a triangle BBOX

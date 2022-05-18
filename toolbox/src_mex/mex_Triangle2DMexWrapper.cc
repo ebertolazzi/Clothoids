@@ -14,8 +14,6 @@
 
 #include <vector>
 
-#include "mex_Workaround.hxx"
-
 #define MEX_ERROR_MESSAGE \
 "==========================================================================\n" \
 "Compute Triangle2D.hh\n" \

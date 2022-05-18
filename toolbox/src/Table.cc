@@ -369,7 +369,7 @@ namespace Utils {
       integer nc         = this->num_columns();
       for ( integer i = 0; i < nc; ++i ) {
         integer width = this->column_width(i) + padding_LR;
-        for ( integer j = 0 ; j < width; ++j ) ss << sep;
+        for ( integer j = 0; j < width; ++j ) ss << sep;
         if ( i+1 < nc ) ss << mid;
         else            ss << right;
       }
@@ -415,7 +415,7 @@ namespace Utils {
       if ( m_Headings.num_cells() > 0 )
         ss << m_Headings.render() << sep;
 
-      if ( m_Rows.size() > 0 ) {
+      if ( !m_Rows.empty() ) {
         for_each(
           m_Rows.begin(), --m_Rows.end(),
           [&ss, sep]( Row const & row ) -> void {

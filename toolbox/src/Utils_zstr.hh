@@ -50,6 +50,18 @@
 #endif
 
 #include "Utils.hh"
+
+// Mute Warning in including zstr.hpp
+#ifndef _POSIX_C_SOURCE
+  #define _POSIX_C_SOURCE 0
+#endif
+#ifndef _XOPEN_SOURCE
+  #define _XOPEN_SOURCE 0
+#endif
+#ifndef _GNU_SOURCE
+  #define _GNU_SOURCE 0
+#endif
+
 #include "Utils/zstr/zstr.hpp"
 
 #ifdef __clang__

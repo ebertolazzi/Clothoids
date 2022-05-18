@@ -1,0 +1,101 @@
+############################################################################
+#                                                                          #
+#  file: CMakeLists-common.txt                                             #
+#  Copyright (C) 2021                                                      #
+#      Enrico Bertolazzi                                                   #
+#      Dipartimento di Ingegneria Industriale                              #
+#      Universita` degli Studi di Trento                                   #
+#      email: enrico.bertolazzi@ing.unitn.it                               #
+#                                                                          #
+############################################################################
+
+option( EB_GIT_VERSION   "Get version from GIT command"           ON )
+option( EB_ENABLE_TESTS  "Enable compilation of testing targets"  ON )
+option( EB_BUILD_SHARED  "Enable shared option compilation"       ON )
+option( EB_INSTALL_LOCAL "Enable installation on local directory" ON )
+option( EB_TWEAK_VERSION_IS_TIMESTAMP "Sets tweak version to timestamp" OFF )
+
+set( EB_NAMESPACE "ebertolazzi" CACHE STRING "Sets the namespace used for exports" )
+set( TARGETS_TO_BE_INSTALLED )
+
+#
+# DEFAULT SETTINGS
+#
+set( CMAKE_INSTALL_MESSAGE         NEVER )
+set( CMAKE_EXPORT_COMPILE_COMMANDS TRUE )
+set( CMAKE_VERBOSE_MAKEFILE        HIGH )
+
+# Always export compile commands in json file
+# (this is quite useful for tools like Sourcetrail)
+set( CMAKE_EXPORT_COMPILE_COMMANDS     ON )
+set( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
+
+#
+# C++ compiler
+#
+set( CMAKE_CXX_STANDARD_REQUIRED ON )
+set( CMAKE_CXX_STANDARD          11 )
+# Fixes RPath Problem for Linux dependencies and sub dependencies (easy fix, works in 99% of cases)
+
+if (APPLE)
+  # workaround for Xcode not looking the rigth SDK
+  set(_CMAKE_OSX_SYSROOT_PATH "")
+  set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
+else()
+  set( CMAKE_INSTALL_RPATH $ORIGIN )
+endif()
+
+if( NOT UNIX )
+  set( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
+endif()
+
+# Always include cmath defines globally
+add_compile_definitions(_USE_MATH_DEFINES)
+
+#
+# LIBRARY VERSION
+#
+# If option enabled, get version from latest git tag This command will not work
+# in case of add_subdirectory, fetch content or in general when included from
+# another project
+set(
+  EB_CURRENT_VERSION "1.0"
+  CACHE STRING "Default project version, if not taken from git"
+)
+
+if ( EB_GIT_VERSION AND NOT WIN32 )
+  # FIXME: Does not work on Windows 10
+  execute_process(
+    COMMAND git describe --tags --abbrev=0
+    OUTPUT_VARIABLE EB_PROJECT_VERSION
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  )
+  string(REGEX REPLACE "\n$" "" EB_PROJECT_VERSION "${EB_PROJECT_VERSION}")
+else()
+  set( EB_BUILD_TIMESTAMP "0" )
+  if( EB_TWEAK_VERSION_IS_TIMESTAMP )
+    string(TIMESTAMP EB_BUILD_TIMESTAMP "%y%m%d%H")
+  endif()
+  set( EB_PROJECT_VERSION "${EB_CURRENT_VERSION}.${EB_BUILD_TIMESTAMP}" )
+endif()
+
+if ( EB_INSTALL_LOCAL )
+  # install in the home of the whole project
+  if ( ${CMAKE_HOME_DIRECTORY} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
+    set( INSTALL_PREFIX "lib" )
+  else()
+    set( INSTALL_PREFIX "lib3rd" )
+  endif()
+  set( PROJECT_PUBLIC_HEADER_DESTINATION "${INSTALL_PREFIX}/include" )
+  add_custom_target( post_build_${PROJECT_NAME} )
+  add_custom_command(
+    TARGET post_build_${PROJECT_NAME} POST_BUILD
+    COMMAND cmake --build . --config ${CMAKE_BUILD_TYPE} --target install
+  )
+  set( CMAKE_INSTALL_PREFIX ${CMAKE_HOME_DIRECTORY} )
+else()
+  set( INSTALL_PREFIX                    "lib" )
+  set( PROJECT_PUBLIC_HEADER_DESTINATION "${INSTALL_PREFIX}/include/${PROJECT_NAME}" )
+endif()
+
+message("${PROJECT_NAME} current version = v${EB_PROJECT_VERSION}")
