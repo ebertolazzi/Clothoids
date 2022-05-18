@@ -25,12 +25,8 @@ classdef ClothoidCurve < CurveBase
     %> - `ref`: reference handle to the object instance
     %>
     function self = ClothoidCurve( varargin )
-      self@CurveBase( 'ClothoidCurveMexWrapper' );
+      self@CurveBase( 'ClothoidCurveMexWrapper', 'ClothoidCurve' );
       self.objectHandle = ClothoidCurveMexWrapper( 'new', varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function str = is_type( ~ )
-      str = 'ClothoidCurve';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>

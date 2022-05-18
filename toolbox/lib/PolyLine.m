@@ -18,12 +18,9 @@ classdef PolyLine < CurveBase
     %> - `ref`: reference handle to the object instance
     %>
     function self = PolyLine( )
-      self@CurveBase( 'PolyLineMexWrapper' );
+      self@CurveBase( 'PolyLineMexWrapper', 'PolyLine' );
       self.objectHandle = PolyLineMexWrapper( 'new' );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function str = is_type( ~ )
-      str = 'PolyLine';
+      seld.call_delete  = true;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Build a polyline object given a list of points

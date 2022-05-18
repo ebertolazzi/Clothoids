@@ -1,7 +1,8 @@
-classdef Triangle2D < handle
+classdef Triangle2D < matlab.mixin.Copyable
   %> MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
     objectHandle; % Handle to the underlying C++ class instance
+    call_delete;
   end
 
   methods
@@ -25,11 +26,18 @@ classdef Triangle2D < handle
     %>
     function self = Triangle2D( varargin )
       self.objectHandle = Triangle2DMexWrapper( 'new', varargin{:} );
+      self.call_delete  = true;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Destroy the C++ class instance
     function delete( self )
-      Triangle2DMexWrapper( 'delete', self.objectHandle );
+      %% Destroy the C++ class instance
+      if self.objectHandle ~= 0
+        if self.call_delete
+          Triangle2DMexWrapper( 'delete', self.objectHandle );
+          self.objectHandle = 0; % avoid double destruction of object
+        end
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function obj = obj_handle( self )

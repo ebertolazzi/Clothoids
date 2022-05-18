@@ -23,26 +23,36 @@
 %>
 %> \endrst
 %>  
-classdef ClothoidSplineG2 < handle
+classdef ClothoidSplineG2 < matlab.mixin.Copyable
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
     objectHandle; % Handle to the underlying C++ class instance
+    call_delete;
     use_Ipopt;
     iter_opt;
     ipopt_check_gradient;
     isOctave;
   end
 
+  methods(Access = protected)
+    % make deep copy for copy command
+    function obj = copyElement( self )
+      obj              = copyElement@matlab.mixin.Copyable(self);
+      obj.objectHandle = ClothoidSplineG2MexWrapper( 'copy', self.objectHandle );
+      obj.call_delete  = true;
+    end
+  end
+
   methods (Hidden = true)
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ceq,jaceq] = nlsys( self, theta )
-      ceq = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
+      ceq   = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
       jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta  );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [c,ceq,jac,jaceq] = con( self, theta )
-      c   = zeros(0,0);
-      ceq = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
+      c     = zeros(0,0);
+      ceq   = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
       jac   = sparse(0,0);
       jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta  ).';
     end
@@ -201,7 +211,12 @@ classdef ClothoidSplineG2 < handle
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
-      ClothoidSplineG2MexWrapper( 'delete', self.objectHandle );
+      if self.objectHandle ~= 0
+        if self.call_delete
+          ClothoidSplineG2MexWrapper( 'delete', self.objectHandle );
+          self.objectHandle = 0; % avoid double destruction of object
+        end
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function verbose( self, yes )

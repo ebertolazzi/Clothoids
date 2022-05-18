@@ -18,14 +18,8 @@ classdef BiarcList < CurveBase
     %> - self: reference handle to the object instance
     %>
     function self = BiarcList()
-      self@CurveBase( 'BiarcListMexWrapper' );
+      self@CurveBase( 'BiarcListMexWrapper', 'BiarcList' );
       self.objectHandle = BiarcListMexWrapper( 'new' );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Return the string `"BiarcList"`with the name of the object class
-    %>
-    function str = is_type( ~ )
-      str = 'BiarcList';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Reserve memory for `N` biarc

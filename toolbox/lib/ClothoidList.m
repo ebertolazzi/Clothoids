@@ -18,12 +18,8 @@ classdef ClothoidList < CurveBase
     %> - `ref`: reference handle to the object instance
     %>
     function self = ClothoidList()
-      self@CurveBase( 'ClothoidListMexWrapper' );
+      self@CurveBase( 'ClothoidListMexWrapper', 'ClothoidList' );
       self.objectHandle = ClothoidListMexWrapper( 'new' );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function str = is_type( ~ )
-      str = 'ClothoidList';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Reserve memory for `N` segments

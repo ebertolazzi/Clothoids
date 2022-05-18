@@ -1,21 +1,36 @@
-classdef CurveBase < handle
+classdef CurveBase < matlab.mixin.Copyable
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = protected, Hidden = true)
     mexName;
     objectHandle; % Handle to the underlying C++ class instance
+    call_delete;
+    objectType;
+  end
+
+  methods(Access = protected)
+    % make deep copy for copy command
+    function obj = copyElement( self )
+      obj              = copyElement@matlab.mixin.Copyable(self);
+      obj.objectHandle = feval( self.mexName, 'copy', self.objectHandle );
+      obj.call_delete  = true;
+    end
   end
 
   methods
-    function self = CurveBase( mexName )
-      self.mexName = mexName;
+    function self = CurveBase( mexName, objectType )
+      self.mexName     = mexName;
+      self.objectType  = objectType;
+      self.call_delete = true;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
       %% Destroy the C++ class instance
       if self.objectHandle ~= 0
-        feval( self.mexName, 'delete', self.objectHandle );
+        if self.call_delete
+          feval( self.mexName, 'delete', self.objectHandle );
+          self.objectHandle = 0; % avoid double destruction of object
+        end
       end
-      self.objectHandle = 0; % avoid double destruction of object
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return the `pointer` of the interbal stored c++ object
@@ -33,6 +48,10 @@ classdef CurveBase < handle
       obj = self.objectHandle;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function str = is_type( self )
+      str = self.objectType;
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Make of copy of a curve object
     %>
     %> **Usage**
@@ -46,9 +65,9 @@ classdef CurveBase < handle
     %>
     %> where `C` id the curve object to be copied.
     %>
-    function copy( self, C )
-      feval( self.mexName, 'copy', self.objectHandle, C.obj_handle() );
-    end
+    %function copy( self, C )
+    %  feval( self.mexName, 'copy', self.objectHandle, C.obj_handle() );
+    %end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return the bounding box of the curve object
     %>

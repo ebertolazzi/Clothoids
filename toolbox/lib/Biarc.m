@@ -26,7 +26,7 @@ classdef Biarc < CurveBase
     %> - self: reference handle to the object instance
     %>
     function self = Biarc( varargin )
-      self@CurveBase( 'BiarcMexWrapper' );
+      self@CurveBase( 'BiarcMexWrapper', 'BiArc' );
       self.objectHandle = BiarcMexWrapper( 'new' );
       if nargin > 0
         ok = BiarcMexWrapper( 'build_G1', self.objectHandle, varargin{:} );
@@ -57,10 +57,6 @@ classdef Biarc < CurveBase
     function ok = build( self, x0, y0, theta0, x1, y1, theta1 )
       ok = BiarcMexWrapper( 'build_G1', self.objectHandle, ...
                             x0, y0, theta0, x1, y1, theta1 );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function str = is_type( ~ )
-      str = 'BiArc';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Build the interpolating biarc by 3 points

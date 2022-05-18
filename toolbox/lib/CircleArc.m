@@ -28,12 +28,8 @@ classdef CircleArc < CurveBase
     %> - ref: reference handle to the object instance
     %>
     function self = CircleArc( varargin )
-      self@CurveBase( 'CircleArcMexWrapper' );
+      self@CurveBase( 'CircleArcMexWrapper', 'CircleArc' );
       self.objectHandle = CircleArcMexWrapper( 'new', varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function str = is_type( ~ )
-      str = 'CircleArc';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>

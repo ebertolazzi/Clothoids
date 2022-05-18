@@ -35,12 +35,8 @@ classdef LineSegment < CurveBase
     %> - `ref`: reference handle to the object instance
     %>
     function self = LineSegment( varargin )
-      self@CurveBase( 'LineSegmentMexWrapper' );
+      self@CurveBase( 'LineSegmentMexWrapper', 'LineSegment' );
       self.objectHandle = LineSegmentMexWrapper( 'new', varargin{:} );
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function str = is_type( ~ )
-      str = 'LineSegment';
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
