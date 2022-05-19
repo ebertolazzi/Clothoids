@@ -21,8 +21,6 @@
 /// file: Line.hxx
 ///
 
-#pragma once
-
 namespace G2lib {
 
   /*\

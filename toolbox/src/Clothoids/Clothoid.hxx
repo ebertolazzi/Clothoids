@@ -21,8 +21,6 @@
 /// file: Clothoid.hh
 ///
 
-#pragma once
-
 namespace G2lib {
 
   using std::vector;

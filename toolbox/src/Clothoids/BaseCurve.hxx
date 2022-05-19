@@ -21,8 +21,6 @@
 /// file: BaseCurve.hh
 ///
 
-#pragma once
-
 namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

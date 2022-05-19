@@ -21,8 +21,6 @@
 /// file: G2lib.hh
 ///
 
-#pragma once
-
 //!
 //! Clothoid computations routine
 //!

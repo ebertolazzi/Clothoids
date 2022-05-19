@@ -21,8 +21,6 @@
 /// file: Fresnel.hxx
 ///
 
-#pragma once
-
 namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
