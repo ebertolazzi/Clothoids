@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -36,17 +36,17 @@ namespace Utils {
   */
   //! check if the vector `pv` os size `DIM` contains only regular floats
   bool
-  foundNaN( double const * pv, int DIM ) {
+  found_NaN( double const * pv, int DIM ) {
     for ( int i = 0; i < DIM; ++i )
-      if ( !isRegular(pv[i]) )
+      if ( !is_finite(pv[i]) )
         return true;
     return false;
   }
 
   bool
-  foundNaN( float const * pv, int DIM ) {
+  found_NaN( float const * pv, int DIM ) {
     for ( int i = 0; i < DIM; ++i )
-      if ( !isRegular(pv[i]) )
+      if ( !is_finite(pv[i]) )
         return true;
     return false;
   }
@@ -62,7 +62,7 @@ namespace Utils {
 
   //! check if the vector `pv` os size `DIM` contains only regular floats. If not an error is issued
   void
-  checkNaN(
+  check_NaN(
     double const * pv,
     char   const * v_name,
     int            DIM,
@@ -70,14 +70,14 @@ namespace Utils {
     char   const * file
   ) {
     for ( int i = 0; i < DIM; ++i ) {
-      if ( isInfinite(pv[i]) ) {
+      if ( is_infinite(pv[i]) ) {
         UTILS_ERROR(
           "{}\n({}):{}) found Infinity at {}[{}]\n{}\n",
           LINE_LINE_LINE_LINE,
           basename(file), line, v_name, i,
           LINE_LINE_LINE_LINE
         );
-      } else if ( isNaN(pv[i]) ) {
+      } else if ( is_NaN(pv[i]) ) {
         UTILS_ERROR(
           "{}\n({}):{}) found NaN at {}[{}]\n{}\n",
           LINE_LINE_LINE_LINE,
@@ -89,7 +89,7 @@ namespace Utils {
   }
 
   void
-  checkNaN(
+  check_NaN(
     float const * pv,
     char  const * v_name,
     int           DIM,
@@ -97,14 +97,14 @@ namespace Utils {
     char  const * file
   ) {
     for ( int i = 0; i < DIM; ++i ) {
-      if ( isInfinite(pv[i]) ) {
+      if ( is_infinite(pv[i]) ) {
         UTILS_ERROR(
           "{}\n({}):{}) found Infinity at {}[{}]\n{}\n",
           LINE_LINE_LINE_LINE,
           basename(file), line, v_name, i,
           LINE_LINE_LINE_LINE
         );
-      } else if ( isNaN(pv[i]) ) {
+      } else if ( is_NaN(pv[i]) ) {
         UTILS_ERROR(
           "{}\n({}):{}) found NaN at {}[{}]\n{}\n",
           LINE_LINE_LINE_LINE,
@@ -121,4 +121,3 @@ namespace Utils {
 ///
 /// eof: Numbers.cc
 ///
-

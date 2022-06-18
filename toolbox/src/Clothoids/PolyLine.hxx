@@ -458,7 +458,7 @@ namespace G2lib {
       real_type        offs_CL
     ) const {
       UTILS_ASSERT0(
-        Utils::isZero(offs) && Utils::isZero(offs_CL),
+        Utils::is_zero(offs) && Utils::is_zero(offs_CL),
         "PolyLine::collision( offs ... ) not available!\n"
       );
       return this->collision( CL );
@@ -520,7 +520,7 @@ namespace G2lib {
       bool             swap_s_vals
     ) {
       UTILS_ASSERT0(
-        Utils::isZero(offs) && Utils::isZero(offs_pl),
+        Utils::is_zero(offs) && Utils::is_zero(offs_pl),
         "PolyLine::intersect( offs ... ) not available!\n"
       );
       this->intersect( pl, ilist, swap_s_vals );

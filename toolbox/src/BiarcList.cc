@@ -1016,9 +1016,9 @@ namespace G2lib {
   ) const {
 
     if ( m_aabb_done &&
-         Utils::isZero( offs-m_aabb_offs ) &&
-         Utils::isZero( max_angle-m_aabb_max_angle ) &&
-         Utils::isZero( max_size-m_aabb_max_size ) ) return;
+         Utils::is_zero( offs-m_aabb_offs ) &&
+         Utils::is_zero( max_angle-m_aabb_max_angle ) &&
+         Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
     #ifdef G2LIB_USE_CXX11
     vector<shared_ptr<BBox const> > bboxes;

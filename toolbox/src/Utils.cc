@@ -133,7 +133,7 @@ namespace Utils {
         T_real const * XE = X+n;
         lastInterval += T_int(lower_bound( XL, XE, x )-XL);
         T_real const * XX = X+lastInterval;
-        if ( x < XX[0] || Utils::isZero(XX[0]-XX[1]) ) --lastInterval;
+        if ( x < XX[0] || Utils::is_zero(XX[0]-XX[1]) ) --lastInterval;
       }
     } else if ( x < XL[0] ) { // on the left
       if ( x <= X[1] ) { // x in [X[0],X[1]]
@@ -143,7 +143,7 @@ namespace Utils {
       } else {
         lastInterval = T_int(lower_bound( X+1, XL, x )-X);
         T_real const * XX = X+lastInterval;
-        if ( x < XX[0] || Utils::isZero(XX[0]-XX[1]) ) --lastInterval;
+        if ( x < XX[0] || Utils::is_zero(XX[0]-XX[1]) ) --lastInterval;
       }
     } else {
       // x in the interval [ XL[0], XL[1] ] nothing to do

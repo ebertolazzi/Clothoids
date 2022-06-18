@@ -471,7 +471,7 @@ namespace G2lib {
     real_type L  = s[1]-s[0];
     real_type dk = (kappa[1]-k)/L;
     UTILS_ASSERT(
-      Utils::isRegular( k ) && Utils::isRegular( L ) && Utils::isRegular( dk ),
+      Utils::is_finite( k ) && Utils::is_finite( L ) && Utils::is_finite( dk ),
       "ClothoidList::build, failed first segment found\n"
       "L = {} k = {} dk = {}\n",
       L, k, dk
@@ -486,7 +486,7 @@ namespace G2lib {
       }
       dk = (kappa[i]-k)/L;
       UTILS_ASSERT(
-        Utils::isRegular( k ) && Utils::isRegular( L ) && Utils::isRegular( dk ),
+        Utils::is_finite( k ) && Utils::is_finite( L ) && Utils::is_finite( dk ),
         "ClothoidList::build, failed at segment N.{} found\n"
         "L = {} k = {} dk = {}\n",
         i, L, k, dk
@@ -1299,9 +1299,9 @@ namespace G2lib {
   ) const {
 
     if ( m_aabb_done &&
-         Utils::isZero( offs-m_aabb_offs ) &&
-         Utils::isZero( max_angle-m_aabb_max_angle ) &&
-         Utils::isZero( max_size-m_aabb_max_size ) ) return;
+         Utils::is_zero( offs-m_aabb_offs ) &&
+         Utils::is_zero( max_angle-m_aabb_max_angle ) &&
+         Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
     #ifdef G2LIB_USE_CXX11
     vector<shared_ptr<BBox const> > bboxes;

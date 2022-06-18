@@ -37,11 +37,7 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_STANDARD          11 )
 # Fixes RPath Problem for Linux dependencies and sub dependencies (easy fix, works in 99% of cases)
 
-if (APPLE)
-  # workaround for Xcode not looking the rigth SDK
-  set(_CMAKE_OSX_SYSROOT_PATH "")
-  set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
-else()
+if (NOT APPLE)
   set( CMAKE_INSTALL_RPATH $ORIGIN )
 endif()
 

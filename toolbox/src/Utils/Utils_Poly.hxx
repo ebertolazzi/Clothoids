@@ -501,7 +501,7 @@ namespace Utils {
     M.set_order(dd+1);
 
     UTILS_ASSERT0(
-      !isZero(lcQ),
+      !is_zero(lcQ),
       "Poly::divide(p,q,M,R), leading coefficient of q(x) is 0!"
     );
 

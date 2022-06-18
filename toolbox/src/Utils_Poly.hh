@@ -175,13 +175,14 @@ namespace Utils {
 
     std::vector<Poly_t>   m_sturm;
     std::vector<Interval> m_intervals;
-    Real                  m_a, m_b;
     dvec_t                m_roots;
-    Integer               m_max_iter;
+    Real                  m_a = 0;
+    Real                  m_b = 0;
+    Integer               m_max_iter = 20;
 
   public:
 
-    Sturm() : m_a(0), m_b(0), m_max_iter(20) {}
+    Sturm() {}
 
     //!
     //! Given the polynomial \f$ p(x) \f$ build its Sturm sequence
