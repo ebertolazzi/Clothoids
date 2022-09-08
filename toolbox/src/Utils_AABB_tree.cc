@@ -732,14 +732,14 @@ namespace Utils {
 
   template <typename Real>
   Real
-  AABBtree<Real>::mimum_max_bbox_distance( Real const * pnt ) const {
+  AABBtree<Real>::minimum_max_bbox_distance( Real const * pnt ) const {
 
     Real minDist = numeric_limits<Real>::infinity();
 
     m_num_check = 0;
 
     // quick return on empty inputs
-    if ( m_num_tree_nodes == 0 ) return ;
+    if ( m_num_tree_nodes == 0 ) return 0;
 
     // descend tree from root
     m_stack[0] = 0;

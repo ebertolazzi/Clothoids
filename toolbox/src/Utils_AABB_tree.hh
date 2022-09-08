@@ -125,7 +125,7 @@ namespace Utils {
     void intersect_with_one_bbox_and_refine( Real const * bbox, SET & bb_index ) const;
     void intersect_and_refine( AABBtree<Real> const & aabb, MAP & bb_index ) const;
 
-    void mimum_max_bbox_distance( Real const * pnt ) const;
+    Real minimum_max_bbox_distance( Real const * pnt ) const;
 
     integer dim()            const { return m_dim; }
     integer num_objects()    const { return m_num_objects; }
