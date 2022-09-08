@@ -29,12 +29,16 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 #include <algorithm>
 
-#include "Utils.hh"
-#include "Eigen/Dense"
+#include "Utils_eigen.hh"
+#include "Utils_Algo748.hh"
 
 namespace Utils {
+
+  using std::string;
+  using std::vector;
 
   template <typename Real>
   class Poly : public Eigen::Matrix<Real,Eigen::Dynamic,1> {
@@ -97,7 +101,7 @@ namespace Utils {
     Integer order()  const { return m_order; }
 
     // stampa il polinomio
-    //friend std::basic_ostream & operator<<( std::ostream&, Poly_t const & );
+    string to_string() const;
 
     Real eval( Real x ) const;
     Real eval_D( Real x ) const;
@@ -171,14 +175,23 @@ namespace Utils {
       Integer vb;
     } Interval;
 
+    class Algo748_fun : public Algo748_base_fun<Real> {
+      Poly<Real> const * P = nullptr;
+    public:
+      void setup( Poly<Real> const * Pin ) { P = Pin; }
+      Real eval( Real x ) const override { return P->eval(x); }
+    };
+
   private:
 
-    std::vector<Poly_t>   m_sturm;
-    std::vector<Interval> m_intervals;
-    dvec_t                m_roots;
-    Real                  m_a = 0;
-    Real                  m_b = 0;
-    Integer               m_max_iter = 20;
+    Algo748<Real>    m_solver;
+    Algo748_fun      m_fun;
+
+    vector<Poly_t>   m_sturm;
+    vector<Interval> m_intervals;
+    dvec_t           m_roots;
+    Real             m_a = 0;
+    Real             m_b = 0;
 
   public:
 
@@ -219,7 +232,7 @@ namespace Utils {
     //!
     //! compute the roots in the intervals after the separation.
     //!
-    void refine_roots( Real tol );
+    void refine_roots();
 
     //!
     //! return a vector with the computed roots
@@ -308,41 +321,43 @@ namespace Utils {
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
-  template <typename Real, typename Char>
+  template <typename Real>
   inline
-  std::basic_ostream<Char> &
-  operator << ( std::basic_ostream<Char> & output, Poly<Real> const & p ) {
-    bool    empty = true; // true indica che i coefficienti finora sono nulli
-    std::string s = "";   // segno
-    Real        c = 0;    // coefficiente
-    std::string e = "";   // esponente
+  string
+  Poly<Real>::to_string() const {
 
-    if ( p.order() <= 0 ) { output << "EMPTY!"; return output; }
-    if ( p.order() == 1 ) { output << p(0); return output; }
-    if ( p.cwiseAbs().maxCoeff() == 0 ) { output << 0; return output; }
+    if ( this->order() <= 0 ) return "EMPTY!";
+    if ( this->order() == 1 ) return fmt::format( "{}", this->coeff(0) );
+    if ( (*this).cwiseAbs().maxCoeff() == 0 ) return "0";
+
+    bool empty = true; // true indica che i coefficienti finora sono nulli
+    string s   = "";   // segno
+    Real   c   = 0;    // coefficiente
+    string e   = "";   // esponente
+    string res = "";
 
     // controlla se esiste il primo coefficiente (grado 0)
-    if ( p.coeff(0) != 0 ) {
-      output << p.coeff(0);
+    if ( this->coeff(0) != 0 ) {
+      res = fmt::format( "{}", this->coeff(0) );
       empty = false;
     }
 
-    for ( typename Poly<Real>::Integer i=1; i < p.order(); ++i ) {
+    for ( typename Poly<Real>::Integer i=1; i < this->order(); ++i ) {
       // se il coefficiente e` negativo...
-      if ( p.coeff(i) < 0 ) {
+      if ( this->coeff(i) < 0 ) {
         // e se i coefficienti precenti erano nulli...
         if ( empty ) {
           s     = ""; // ...non scrive il segno
-          c     = p.coeff(i);
+          c     = this->coeff(i);
           empty = false;
         } else {
           s = " - "; // ...altrimenti scrive il segno come separatore
-          c = -p.coeff(i); // e inverte il segno del coefficiente
+          c = -this->coeff(i); // e inverte il segno del coefficiente
         }
 
         // se il coefficiente e` positivo...
-      } else if ( p.coeff(i) > 0 ) {
-        c = p.coeff(i);
+      } else if ( this->coeff(i) > 0 ) {
+        c = this->coeff(i);
         // e se i coefficienti precenti erano nulli...
         if ( empty ) {
           s     = ""; // ...non scrive il segno
@@ -361,9 +376,20 @@ namespace Utils {
       else          e = fmt::format( "x^{}", i );
 
       // se il coeff è 1 non lo stampo
-      if ( c == 1 ) output << s << e; // stampa
-      else          output << s << c << ' ' << e; // stampa
+      if ( c == 1 ) { res += s; res += e; }
+      else          res += fmt::format( "{}{} {}", s, c, e );
     }
+    return res;
+  }
+
+  /*
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  */
+  template <typename Real, typename Char>
+  inline
+  std::basic_ostream<Char> &
+  operator << ( std::basic_ostream<Char> & output, Poly<Real> const & p ) {
+    output << p.to_string();
     return output;
   }
 

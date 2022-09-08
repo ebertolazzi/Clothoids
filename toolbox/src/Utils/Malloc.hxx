@@ -45,7 +45,7 @@ namespace Utils {
   extern int64_t MaximumAllocatedBytes;
   extern bool    MallocDebug;
 
-  std::string outBytes( size_t nb );
+  std::string out_bytes( size_t nb );
 
   /*\
   :|:   __  __       _ _
@@ -66,18 +66,19 @@ namespace Utils {
   private:
 
     std::string m_name;
-    std::size_t m_numTotValues;
-    std::size_t m_numTotReserved;
-    std::size_t m_numAllocated;
-    valueType * m_pMalloc;
+    std::size_t m_num_total_values;
+    std::size_t m_num_total_reserved;
+    std::size_t m_num_allocated;
+    valueType * m_p_memory;
 
     void allocate_internal( std::size_t n );
     void memory_exausted( std::size_t sz );
+    void pop_exausted( std::size_t sz );
 
   public:
 
-    Malloc(Malloc<T> const &) = delete; // blocco costruttore di copia
-    Malloc<T> const & operator = (Malloc<T> &) const = delete; // blocco copia
+    Malloc( Malloc<T> const & ) = delete; // blocco costruttore di copia
+    Malloc<T> const & operator = ( Malloc<T> const & ) const = delete; // blocco copia
 
     //!
     //! Malloc object constructor
@@ -85,10 +86,10 @@ namespace Utils {
     explicit
     Malloc( string name )
     : m_name(std::move(name))
-    , m_numTotValues(0)
-    , m_numTotReserved(0)
-    , m_numAllocated(0)
-    , m_pMalloc(nullptr)
+    , m_num_total_values(0)
+    , m_num_total_reserved(0)
+    , m_num_allocated(0)
+    , m_p_memory(nullptr)
     { }
 
     //!
@@ -111,7 +112,7 @@ namespace Utils {
     //!
     //! Free memory without deallocating pointer.
     //!
-    void free() { m_numTotValues = m_numAllocated = 0; }
+    void free() { m_num_total_values = m_num_allocated = 0; }
 
     //!
     //! Free memory deallocating pointer.
@@ -121,16 +122,25 @@ namespace Utils {
     //!
     //! Number of objects allocated.
     //!
-    size_t size() const { return m_numTotValues; }
+    size_t size() const { return m_num_total_values; }
 
     //!
     //! Get pointer of allocated memory for `sz` objets.
     //!
     T * operator () ( std::size_t sz ) {
-      size_t offs = m_numAllocated;
-      m_numAllocated += sz;
-      if ( m_numAllocated > m_numTotValues ) memory_exausted( sz );
-      return m_pMalloc + offs;
+      size_t offs = m_num_allocated;
+      m_num_allocated += sz;
+      if ( m_num_allocated > m_num_total_values ) memory_exausted( sz );
+      return m_p_memory + offs;
+    }
+
+    //!
+    //! Free pointer of allocated memory for `sz` objets.
+    //!
+    void
+    pop( std::size_t sz ) {
+      if ( sz > m_num_allocated ) pop_exausted( sz );
+      m_num_allocated -= sz;
     }
 
     T * malloc( std::size_t n );
@@ -139,7 +149,7 @@ namespace Utils {
     //!
     //! `true` if you cannot get more memory pointers.
     //!
-    bool is_empty() const { return m_numAllocated >= m_numTotValues; }
+    bool is_empty() const { return m_num_allocated >= m_num_total_values; }
 
     //!
     //! return an error if memory is not completely used.
@@ -193,13 +203,13 @@ namespace Utils {
   private:
 
     std::string m_name;
-    std::size_t m_numAllocated;
+    std::size_t m_num_allocated;
     valueType   m_data[mem_size];
 
   public:
 
     MallocFixed(MallocFixed<T,mem_size> const &) = delete; // blocco costruttore di copia
-    MallocFixed<T,mem_size> const & operator = (MallocFixed<T,mem_size> &) const = delete; // blocco copia
+    MallocFixed<T,mem_size> const & operator = (MallocFixed<T,mem_size> const &) const = delete; // blocco copia
 
     //!
     //! Malloc object constructor
@@ -207,7 +217,7 @@ namespace Utils {
     explicit
     MallocFixed( std::string name )
     : m_name(std::move(name))
-    , m_numAllocated(0)
+    , m_num_allocated(0)
     {}
 
     //!
@@ -218,7 +228,7 @@ namespace Utils {
     //!
     //! Free memory without deallocating pointer.
     //!
-    void free() { m_numAllocated = 0; }
+    void free() { m_num_allocated = 0; }
 
     //!
     //! Number of objects allocated.
@@ -229,19 +239,31 @@ namespace Utils {
     //! Get pointer of allocated memory for `sz` objets.
     //!
     T * operator () ( std::size_t sz ) {
-      std::size_t offs = m_numAllocated;
-      m_numAllocated += sz;
+      std::size_t offs = m_num_allocated;
+      m_num_allocated += sz;
       UTILS_ASSERT(
-        m_numAllocated <= mem_size,
+        m_num_allocated <= mem_size,
         "MallocFixed<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz
       );
       return m_data + offs;
     }
 
     //!
+    //! Free pointer of allocated memory for `sz` objets.
+    //!
+    void
+    pop( std::size_t sz ) {
+      UTILS_ASSERT(
+        sz <= m_num_allocated,
+        "MallocFixed<{}>::pop({}) -- Not enough element on Stack\n", m_name, sz
+      );
+      m_num_allocated -= sz;
+    }
+
+    //!
     //! `true` if you cannot get more memory pointers.
     //!
-    bool is_empty() const { return m_numAllocated >= mem_size; }
+    bool is_empty() const { return m_num_allocated >= mem_size; }
 
   };
 

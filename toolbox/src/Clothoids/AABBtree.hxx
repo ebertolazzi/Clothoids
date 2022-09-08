@@ -278,7 +278,7 @@ namespace G2lib {
   public:
 
     //! Create an empty AABB tree.
-    AABBtree();  
+    AABBtree();
 
     //! destroy the stored AABB tree.
     ~AABBtree();
@@ -290,7 +290,7 @@ namespace G2lib {
 
     //! Check if AABB tree is empty.
     bool empty() const;
-    
+
     //!
     //! Get the Bounding Box of the whole AABB tree
     //!
@@ -393,13 +393,13 @@ namespace G2lib {
       bool             swap_tree = false
     ) const;
 
-    //! 
+    //!
     //! Select all the bboxes candidate to be at minimum distance.
-    //! 
+    //!
     //! \param[in]  x             x-coordinate of the point
     //! \param[in]  y             y-coordinate of the point
     //! \param[out] candidateList candidate list
-    //! 
+    //!
     void
     min_distance(
       real_type    x,

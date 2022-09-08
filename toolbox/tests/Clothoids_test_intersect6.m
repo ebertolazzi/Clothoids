@@ -43,6 +43,7 @@ C1.noAABBtree();
 tic
 [s1,s2] = C1.intersect( C2 );
 toc
+% 3.9 seconds
 
 size(s1)
 size(s2)

@@ -76,4 +76,7 @@ S.push_back( -0.006581, 0, 86.067741 );
 S.push_back_G1( 0, 0, 0.079964 ); % close curve
 S.plot();
 S.save('silverstone.txt');
+[ s, theta, kappa ] = S.getSTK();
+s.'
+kappa.'
 axis equal

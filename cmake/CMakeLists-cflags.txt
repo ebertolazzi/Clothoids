@@ -1,3 +1,4 @@
+
 set( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
 set( CMAKE_VERBOSE_MAKEFILE            TRUE )
 
@@ -29,16 +30,16 @@ set( VS_WARN    "")
 
 if( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )
   set( CMAKE_CXX_FLAGS         "-std=c++11  ${CXX_WARN}" )
-  set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -O2 -g -floop-interchange -floop-block -funroll-loops " )
+  set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -O2 -g " )
   set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -ggdb -DMECHATRONIX_DEBUG -DDEBUG " )
 elseif( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
   set( CMAKE_CXX_FLAGS         "-std=c++11 -stdlib=libc++  ${CLANG_WARN}" )
-  set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -finline-functions -finline-hint-functions -funroll-loops -fcolor-diagnostics " )
+  set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -fcolor-diagnostics " )
   set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -gfull -fcolor-diagnostics -DMECHATRONIX_DEBUG -DDEBUG " )
 elseif( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-  set( CMAKE_CXX_FLAGS         " ${VS_WARN}" )
-  set( CMAKE_CXX_FLAGS_RELEASE "/nologo /GS /W3 /WX- /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /O2 /MD " )
-  set( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /W3 /WX- /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /RTC1 /guard:cf /Zi /D_DEBUG /DMECHATRONIX_DEBUG " )
+  set( CMAKE_CXX_FLAGS         " ${VS_WARN} /sdl" )
+  set( CMAKE_CXX_FLAGS_RELEASE "/nologo /GS /Gy /GF /W4 /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /O2 /MD /Zo " )
+  set( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /Gy /GF /W4 /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /guard:cf /Zi /DEBUG:FULL /D_DEBUG /DMECHATRONIX_DEBUG " )
 else()
   message( FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
 endif()
@@ -48,3 +49,11 @@ message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
 set( CMAKE_C_FLAGS         "" )
 set( CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} )
 set( CMAKE_C_FLAGS_DEBUG   ${CMAKE_CXX_FLAGS_DEBUG} )
+
+# select LAPACK library to be used
+set( PINS_USE_ACCELERATE true )
+
+# check if link against static libgcc
+set( PINS_USE_STATIC_LIBGCC false )
+
+set( PINS_ON_RASPBERRY false )

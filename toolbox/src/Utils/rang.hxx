@@ -208,3 +208,7 @@ namespace rang {
   #endif
 
 }  // namespace rang
+
+///
+/// eof: rang.hxx
+///

@@ -65,28 +65,6 @@ namespace PolynomialRoots {
   isZero( valueType x )
   { return FP_ZERO == std::fpclassify(x); }
 
-  //! check if cloating point number `x` is finite
-  static
-  inline
-  bool
-  isInfinite( valueType x )
-  { return FP_INFINITE == std::fpclassify(x); }
-
-  //! check if cloating point number `x` is Not A Number
-  static
-  inline
-  bool
-  isNaN( valueType x )
-  { return FP_NAN == std::fpclassify(x); }
-
-  //! check if cloating point number `x` is regural (i.e. finite and not NaN)
-  static
-  inline
-  bool
-  isRegular( valueType x )
-  { return !( FP_INFINITE == std::fpclassify(x) ||
-              FP_NAN      == std::fpclassify(x) ); }
-
   //! evaluate real polynomial
   valueType
   evalPoly(

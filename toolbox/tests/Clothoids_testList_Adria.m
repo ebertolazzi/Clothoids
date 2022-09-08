@@ -59,3 +59,26 @@ S.push_back_G1( x0, y0, theta0); % close curve ...
 
 S.plot();
 axis equal
+
+
+X    = [];
+Y    = [];
+npts = 100;
+
+for kk=1:npts
+  ss    = S.length()*kk/npts;
+  [XX,YY] = S.eval( ss );
+  X = [X XX];
+  Y = [Y YY];
+end
+
+S2 = ClothoidSplineG2();
+SL = S2.buildP2( X, Y );
+
+hold on;
+SL.plot();
+
+
+[ s, theta, kappa ] = SL.getSTK();
+s.'
+kappa.'
