@@ -154,8 +154,38 @@ if ( EB_ENABLE_TESTS )
 
   enable_testing()
 
-  set( EXELISTBIN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/bin" )
-  set( EXELISTCPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_tests" )
+  if(APPLE OR UNIX OR MINGW )
+    find_package( ZLIB REQUIRED )
+  else()
+    if ( CMAKE_BUILD_TYPE STREQUAL "Debug" )
+      find_library( ZLIB_LIBRARIES zlibstaticd HINTS ./lib3rd/lib )
+    else()
+      find_library( ZLIB_LIBRARIES zlibstatic HINTS ./lib3rd/lib )
+    endif()
+    set( ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/zlib/include ")
+  endif()
+
+  set( LIBS ${EB_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS} ${ROOTS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+
+  if( UNIX )
+    if ( NOT APPLE )
+      set( THREADS_PREFER_PTHREAD_FLAG ON )
+      find_package( Threads REQUIRED )
+      set( LIBS ${LIBS} Threads::Threads )
+    endif()
+  else()
+    #libcmt.lib
+    #find_library( WS2 ws2_32 REQUIRED )
+    #find_library( IPH iphlpapi REQUIRED )
+    #find_library( KER kernel32 REQUIRED )
+    #find_library( IPP ippsmt REQUIRED )
+    #find_library( WPTH pthread REQUIRED )
+    #set( LIBS ${LIBS} ${WS2} ${IPH} ${KER} )
+    set( LIBS ${LIBS} ws2_32 iphlpapi kernel32 )
+    if (EB_BUILD_SHARED)
+      target_link_libraries( ${EB_NAMESPACE}_${PROJECT_NAME} ${LIBS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+    endif()
+  endif()
 
   set(
     EXELISTCPP
@@ -177,7 +207,6 @@ if ( EB_ENABLE_TESTS )
   add_custom_target( "${PROJECT_NAME}_all_tests" ALL )
 
   set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin )
-  set( LIBS ${EB_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS} ${ROOTS} ${CMAKE_DL_LIBS} )
   foreach( S ${EXELISTCPP} )
     add_executable( ${S} ${CMAKE_CURRENT_SOURCE_DIR}/src_tests/${S}.cc )
     target_link_libraries( ${S} ${LIBS} )

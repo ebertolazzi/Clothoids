@@ -90,13 +90,13 @@ namespace G2lib {
       "L must be positive!\n",
       _x0, _y0, _theta0, _k, _dk, _L
     );
-    m_CD.x0     = _x0;
-    m_CD.y0     = _y0;
-    m_CD.theta0 = _theta0;
-    m_CD.kappa0 = _k;
-    m_CD.dk     = _dk;
-    m_L         = _L;
-    m_aabb_done = false;
+    m_CD.m_x0     = _x0;
+    m_CD.m_y0     = _y0;
+    m_CD.m_theta0 = _theta0;
+    m_CD.m_kappa0 = _k;
+    m_CD.m_dk     = _dk;
+    m_L           = _L;
+    m_aabb_done   = false;
     m_aabb_tree.clear();
   }
 
@@ -161,11 +161,11 @@ namespace G2lib {
     s.push_back(0);
 
     real_type ds = m_L/npts;
-    if ( m_CD.kappa0*m_CD.dk >= 0 || m_CD.kappa(m_L)*m_CD.dk <= 0 ) {
+    if ( m_CD.m_kappa0*m_CD.m_dk >= 0 || m_CD.kappa(m_L)*m_CD.m_dk <= 0 ) {
       optimized_sample_internal_ISO( 0, m_L, offs, ds, max_angle, s );
     } else {
       // flex inside, split clothoid
-      real_type sflex = -m_CD.kappa0/m_CD.dk;
+      real_type sflex = -m_CD.m_kappa0/m_CD.m_dk;
       optimized_sample_internal_ISO( 0,   sflex, offs, ds, max_angle, s );
       optimized_sample_internal_ISO( sflex, m_L, offs, ds, max_angle, s );
     }
@@ -265,11 +265,11 @@ namespace G2lib {
     real_type            max_size,
     int_type             icurve
   ) const {
-    if ( m_CD.kappa0*m_CD.dk >= 0 || m_CD.kappa(m_L)*m_CD.dk <= 0 ) {
+    if ( m_CD.m_kappa0*m_CD.m_dk >= 0 || m_CD.kappa(m_L)*m_CD.m_dk <= 0 ) {
       bbTriangles_internal_ISO( offs, tvec, 0, m_L, max_angle, max_size, icurve );
     } else {
       // flex inside, split clothoid
-      real_type sflex = -m_CD.kappa0/m_CD.dk;
+      real_type sflex = -m_CD.m_kappa0/m_CD.m_dk;
       bbTriangles_internal_ISO( offs, tvec, 0,   sflex, max_angle, max_size, icurve );
       bbTriangles_internal_ISO( offs, tvec, sflex, m_L, max_angle, max_size, icurve );
     }
@@ -401,15 +401,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  //! 
+  //!
   //! Collision detection
-  //! 
+  //!
   //! \param[in] offs      curve offset
   //! \param[in] C         curve to compare for collision detection
   //! \param[in] offs_C    curve offset
   //! \param[in] max_angle maximum angle variation
   //! \param[in] max_size  if the segment is larger then this parameter is split
-  //! 
+  //!
   bool
   ClothoidCurve::approximate_collision_ISO(
     real_type             offs,
@@ -671,8 +671,8 @@ namespace G2lib {
     real_type & t,
     real_type & DST
   ) const {
-    
-    this->closest_point_internal( qx, qy, offs, x, y, s, DST ); 
+
+    this->closest_point_internal( qx, qy, offs, x, y, s, DST );
 
     // check if projection is orthogonal
     real_type nx, ny;
@@ -695,12 +695,12 @@ namespace G2lib {
   ClothoidCurve::theta_total_variation() const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    real_type kL  = m_CD.kappa0;
+    real_type kL  = m_CD.m_kappa0;
     real_type kR  = m_CD.kappa(m_L);
     real_type thL = 0;
     real_type thR = m_CD.deltaTheta(m_L);
     if ( kL*kR < 0 ) {
-      real_type root = -m_CD.kappa0/m_CD.dk;
+      real_type root = -m_CD.m_kappa0/m_CD.m_dk;
       if ( root > 0 && root < m_L ) {
         real_type thM  = m_CD.deltaTheta(root);
         return abs( thR - thM ) + abs( thM - thL );
@@ -715,14 +715,14 @@ namespace G2lib {
   ClothoidCurve::theta_min_max( real_type & thMin, real_type & thMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    real_type kL  = m_CD.kappa0;
+    real_type kL  = m_CD.m_kappa0;
     real_type kR  = m_CD.kappa(m_L);
     real_type thL = 0;
     real_type thR = m_CD.deltaTheta(m_L);
     if ( thL < thR ) { thMin = thL; thMax = thR; }
     else             { thMin = thR; thMax = thL; }
     if ( kL*kR < 0 ) {
-      real_type root = -m_CD.kappa0/m_CD.dk;
+      real_type root = -m_CD.m_kappa0/m_CD.m_dk;
       if ( root > 0 && root < m_L ) {
         real_type thM = m_CD.deltaTheta(root);
         if      ( thM < thMin ) thMin = thM;
@@ -738,7 +738,7 @@ namespace G2lib {
   ClothoidCurve::curvatureMinMax( real_type & kMin, real_type & kMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    kMin = m_CD.kappa0;
+    kMin = m_CD.m_kappa0;
     kMax = m_CD.kappa(m_L);
     if ( kMax < kMin ) swap( kMax, kMin );
     return kMax - kMin;
@@ -750,7 +750,7 @@ namespace G2lib {
   ClothoidCurve::curvatureTotalVariation() const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    real_type km = m_CD.kappa0;
+    real_type km = m_CD.m_kappa0;
     real_type kp = m_CD.kappa(m_L);
     return abs(kp-km);
   }
@@ -759,36 +759,37 @@ namespace G2lib {
 
   real_type
   ClothoidCurve::integralCurvature2() const {
-    return m_L*( m_CD.kappa0*(m_CD.kappa0+m_L*m_CD.dk) + (m_L*m_L)*m_CD.dk*m_CD.dk/3 );
+    return m_L*( m_CD.m_kappa0*(m_CD.m_kappa0+m_L*m_CD.m_dk) +
+                 (m_L*m_L)*m_CD.m_dk*m_CD.m_dk/3 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   ClothoidCurve::integralJerk2() const {
-    real_type k2 = m_CD.kappa0*m_CD.kappa0;
-    real_type k3 = m_CD.kappa0*k2;
+    real_type k2 = m_CD.m_kappa0*m_CD.m_kappa0;
+    real_type k3 = m_CD.m_kappa0*k2;
     real_type k4 = k2*k2;
     real_type t1 = m_L;
     real_type t2 = m_L*t1;
     real_type t3 = m_L*t2;
     real_type t4 = m_L*t3;
-    return ((((t4/5*m_CD.dk+t3*m_CD.kappa0)*m_CD.dk+(1+2*t2)*k2)*m_CD.dk+2*t1*k3)*m_CD.dk+k4)*m_L;
+    return ((((t4/5*m_CD.m_dk+t3*m_CD.m_kappa0)*m_CD.m_dk+(1+2*t2)*k2)*m_CD.m_dk+2*t1*k3)*m_CD.m_dk+k4)*m_L;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   ClothoidCurve::integralSnap2() const {
-    real_type k2  = m_CD.kappa0*m_CD.kappa0;
-    real_type k3  = m_CD.kappa0*k2;
+    real_type k2  = m_CD.m_kappa0*m_CD.m_kappa0;
+    real_type k3  = m_CD.m_kappa0*k2;
     real_type k4  = k2*k2;
-    real_type k5  = k4*m_CD.kappa0;
+    real_type k5  = k4*m_CD.m_kappa0;
     real_type k6  = k4*k2;
-    real_type dk2 = m_CD.dk*m_CD.dk;
-    real_type dk3 = m_CD.dk*dk2;
+    real_type dk2 = m_CD.m_dk*m_CD.m_dk;
+    real_type dk3 = m_CD.m_dk*dk2;
     real_type dk4 = dk2*dk2;
-    real_type dk5 = dk4*m_CD.dk;
+    real_type dk5 = dk4*m_CD.m_dk;
     real_type dk6 = dk4*dk2;
     real_type t2  = m_L;
     real_type t3  = m_L*t2;
@@ -797,9 +798,13 @@ namespace G2lib {
     real_type t6  = m_L*t5;
     real_type t7  = m_L*t6;
 
-    return ( (t7/7)*dk6 + dk5*m_CD.kappa0*t6 + 3*dk4*k2*t5 + 5*dk3*k3*t4 +
-             5*dk2*k4*t3 + 3*dk3*t3 + 3*m_CD.dk*k5*t2 + 9*dk2*m_CD.kappa0*t2 +
-             k6+9*k2*m_CD.dk ) * m_L;
+    return ( (t7/7)*dk6 +
+             dk5*m_CD.m_kappa0*t6 +
+             3*dk4*k2*t5 + 5*dk3*k3*t4 +
+             5*dk2*k4*t3 + 3*dk3*t3 +
+             3*m_CD.m_dk*k5*t2 +
+             9*dk2*m_CD.m_kappa0*t2 +
+             k6+9*k2*m_CD.m_dk ) * m_L;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -820,7 +825,7 @@ namespace G2lib {
       fmt::format("{:.6}",c.theta_end()),
       fmt::format("{:.6}",c.kappa_begin()),
       fmt::format("{:.6}",c.kappa_end()),
-      fmt::format("{:.6}",c.m_CD.dk),
+      fmt::format("{:.6}",c.m_CD.m_dk),
       fmt::format("{:.6}",c.m_L)
     );
     return stream;

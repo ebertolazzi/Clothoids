@@ -14,6 +14,8 @@ when /linux/
   OS = :linux
 when /cygwin|mswin|mingw|bccwin|wince|emx/
   OS = :win
+when /msys/
+  OS = :win
 end
 
 require_relative "./Rakefile_common.rb"
@@ -87,7 +89,7 @@ end
 
 desc "build lib"
 task :build do
-  puts "UTILS build".green
+  puts "CLOTHOIDS build".green
   case OS
   when :mac
     Rake::Task[:build_osx].invoke

@@ -117,40 +117,34 @@ namespace G2lib {
   class ClothoidData {
   public:
 
-    real_type x0;     //!< initial x coordinate of the clothoid
-    real_type y0;     //!< initial y coordinate of the clothoid
-    real_type theta0; //!< initial angle of the clothoid
-    real_type kappa0; //!< initial curvature
-    real_type dk;     //!< curvature derivative
+    real_type m_x0     = 0; //!< initial x coordinate of the clothoid
+    real_type m_y0     = 0; //!< initial y coordinate of the clothoid
+    real_type m_theta0 = 0; //!< initial angle of the clothoid
+    real_type m_kappa0 = 0; //!< initial curvature
+    real_type m_dk     = 0; //!< curvature derivative
 
-    ClothoidData()
-    : x0(0)
-    , y0(0)
-    , theta0(0)
-    , kappa0(0)
-    , dk(0)
-    {}
+    ClothoidData() = default;
 
     real_type
     deltaTheta( real_type s ) const
-    { return s*(kappa0 + 0.5*s*dk); }
+    { return s*(m_kappa0 + 0.5*s*m_dk); }
 
     //!
     //! Return angle at curvilinear coordinate `s`
     //!
     real_type theta
     ( real_type s ) const
-    { return theta0 + s*(kappa0 + 0.5*s*dk); }
+    { return m_theta0 + s*(m_kappa0 + 0.5*s*m_dk); }
 
-    real_type theta_D  ( real_type s ) const { return kappa0 + s*dk; }
-    real_type theta_DD ( real_type   ) const { return dk; }
+    real_type theta_D  ( real_type s ) const { return m_kappa0 + s*m_dk; }
+    real_type theta_DD ( real_type   ) const { return m_dk; }
     real_type theta_DDD( real_type   ) const { return 0; }
 
     //!
     //! Return curvature at curvilinear coordinate `s`
     //!
-    real_type kappa    ( real_type s ) const { return kappa0 + s*dk; }
-    real_type kappa_D  ( real_type   ) const { return dk; }
+    real_type kappa    ( real_type s ) const { return m_kappa0 + s*m_dk; }
+    real_type kappa_D  ( real_type   ) const { return m_dk; }
     real_type kappa_DD ( real_type   ) const { return 0; }
     real_type kappa_DDD( real_type   ) const { return 0; }
 
@@ -186,8 +180,8 @@ namespace G2lib {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    real_type tg0_x() const { return cos(this->theta0); }
-    real_type tg0_y() const { return sin(this->theta0); }
+    real_type tg0_x() const { return cos( m_theta0 ); }
+    real_type tg0_y() const { return sin( m_theta0 ); }
 
     real_type tg_x( real_type s ) const { return cos(this->theta(s)); }
     real_type tg_y( real_type s ) const { return sin(this->theta(s)); }
@@ -358,8 +352,8 @@ namespace G2lib {
     void
     eval( real_type s, ClothoidData & C ) const;
 
-    real_type c0x() const { return x0 - (sin(theta0)/kappa0); }
-    real_type c0y() const { return y0 + (cos(theta0)/kappa0); }
+    real_type c0x() const { return m_x0 - (sin(m_theta0)/m_kappa0); }
+    real_type c0y() const { return m_y0 + (cos(m_theta0)/m_kappa0); }
 
     void
     Pinfinity( real_type & x, real_type & y, bool plus ) const;

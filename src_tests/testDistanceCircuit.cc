@@ -22,7 +22,11 @@ main() {
   vector<real_type> X;
   vector<real_type> Y;
 
-  ifstream file("circuit-fiorano_sim_kerbs_rebuilt.txt");
+  std::string fname = "circuit-fiorano_sim_kerbs_rebuilt.txt";
+
+  ifstream file( fname.c_str() );
+
+  UTILS_ASSERT( file.good(), "Cant find file: {}\n", fname );
 
   bool skipped_header = false;
 

@@ -20,8 +20,13 @@ else
   end
 end
 
+#-------------------------
 COMPILE_DEBUG      = false unless defined?(COMPILE_DEBUG)
-COMPILE_DYNAMIC    = true  unless defined?(COMPILE_DYNAMIC)
-COMPILE_EXECUTABLE = true  unless defined?(COMPILE_EXECUTABLE)
-USE_NMAKE          = true  unless defined?(USE_NMAKE)
-RUN_CPACK          = false unless defined?(RUN_CPACK)
+COMPILE_DYNAMIC    = false unless defined?(COMPILE_DYNAMIC)
+COMPILE_EXECUTABLE = false unless defined?(COMPILE_EXECUTABLE)
+# compiler on WINDOWS
+USE_NMAKE = true  unless defined?(USE_NMAKE)
+USE_MINGW = false unless defined?(USE_MINGW)
+USE_MSYS  = false unless defined?(USE_MSYS)
+RUN_CPACK = false unless defined?(RUN_CPACK)
+#-------------------------
