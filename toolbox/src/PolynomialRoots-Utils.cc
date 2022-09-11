@@ -84,11 +84,11 @@ namespace PolynomialRoots {
     indexType       Degree,
     valueType     & x
   ) {
-    valueType p, dp;
+    valueType p, dp, xn;
     bool reverse = std::abs(x) > 1;
     if ( reverse ) {
-      p = op[Degree];
-      valueType xn(1);
+      p  = op[Degree];
+      xn = 1;
       for ( indexType i = 1; i <= Degree; ++i ) {
         p = p/x + op[Degree-i];
         xn *= x;

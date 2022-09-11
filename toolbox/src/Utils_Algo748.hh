@@ -80,8 +80,8 @@ namespace Utils {
 
     Integer m_num_iter_done = 0;
     Integer m_num_fun_eval  = 0;
-    Real    m_mu            = 0.5;
-    Real    m_tolerance     = pow(machine_eps<Real>(),2./3.);
+    Real    m_mu            = Real(0.5);
+    Real    m_tolerance     = pow(machine_eps<Real>(),Real(2./3.));
 
     bool m_converged     = false;
 

@@ -773,6 +773,7 @@ namespace Utils {
         m_stack[n_stack++] = nn+1;
       }
     }
+    return 0;
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

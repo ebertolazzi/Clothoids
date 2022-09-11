@@ -5,22 +5,20 @@
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
-#      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
+#      Enrico Bertolazzi                                                #
 #      Dipartimento di Ingegneria Industriale                           #
 #      Universita` degli Studi di Trento                                #
 #      Via Sommarive 9, I-38123, Trento, Italy                          #
 #      email: enrico.bertolazzi@unitn.it                                #
-#             francesco.biral@unitn.it                                  #
-#             paolo.bosetti@unitn.it                                    #
 #-----------------------------------------------------------------------#
 
 cmake_minimum_required( VERSION 3.14 )
 
 project( Clothoids )
 
-include(./cmake/CMakeLists-common.txt)
+include(./cmake_utils/CMakeLists-common.txt)
 
-project( ${PROJECT_NAME} VERSION ${EB_PROJECT_VERSION} )
+project( ${PROJECT_NAME} VERSION ${UTILS_PROJECT_VERSION} )
 
 set( CMAKE_BUILD_TYPE Release )
 
@@ -34,13 +32,13 @@ if ( (UNIX OR LINUX) AND NOT APPLE )
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++ -static-libgcc -Wl,--no-undefined")
 endif()
 
-include(./cmake/CMakeLists-cflags.txt)
-include(./cmake/CMakeLists-utilities.txt)
+include(./cmake_utils/CMakeLists-cflags.txt)
+include(./cmake_utils/CMakeLists-utilities.txt)
 
 # Evaluating the suffix to append to target built by this CMake file
-ebertolazzi_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
-if( EB_BUILD_SHARED )
-  ebertolazzi_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
+utils_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
+if( UTILS_BUILD_SHARED )
+  utils_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
 endif()
 
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
@@ -117,7 +115,7 @@ message( STATUS "SOURCES = ${SOURCES}" )
 #                |___/
 #
 
-ebertolazzi_final_messages()
+utils_final_messages()
 
 set(
   MEX_LIST
@@ -148,5 +146,3 @@ foreach(MEX ${MEX_LIST})
   )
   #target_precompile_headers(mex_${MEX} PUBLIC ${PRECOMPILED_HEADERS})
 endforeach()
-
-set (CMAKE_CXX_STANDARD 11)

@@ -485,7 +485,7 @@ namespace Utils {
     Poly<Real>       & R
   ) {
 
-    static Real epsi = pow(std::numeric_limits<Real>::epsilon(),0.75);
+    static Real epsi = pow(std::numeric_limits<Real>::epsilon(),Real(0.75));
 
     typedef typename Poly<Real>::Integer Integer;
 

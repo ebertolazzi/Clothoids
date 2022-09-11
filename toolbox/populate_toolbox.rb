@@ -3,6 +3,7 @@
 require 'fileutils'
 
 FileUtils.rm_rf   "src"
+FileUtils.rm_rf   "cmake_utils"
 #FileUtils.mkdir_p "src"
 #FileUtils.mkdir_p "src/Clothoids"
 #FileUtils.mkdir_p "src/Utils/fmt"
@@ -13,6 +14,7 @@ FileUtils.rm_rf   "bin"
 FileUtils.mkdir_p "bin"
 
 FileUtils.cp_r "../src/.", "./src";
+FileUtils.cp_r "../cmake_utils/.", "./cmake_utils";
 FileUtils.cp_r "../submodules/quarticRootsFlocke/src/.", "./src";
 FileUtils.cp_r "../submodules/Utils/src/.",              "./src";
 

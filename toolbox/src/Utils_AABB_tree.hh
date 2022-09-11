@@ -77,8 +77,8 @@ namespace Utils {
 
     // parameters
     integer m_max_num_objects_per_node = 16;
-    Real    m_bbox_long_edge_ratio     = 0.8;
-    Real    m_bbox_overlap_tolerance   = 0.1;
+    Real    m_bbox_long_edge_ratio     = Real(0.8);
+    Real    m_bbox_overlap_tolerance   = Real(0.1);
 
     // statistic
     mutable integer m_num_check = 0;

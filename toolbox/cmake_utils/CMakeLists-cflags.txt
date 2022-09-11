@@ -1,23 +1,5 @@
-
 set( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
 set( CMAKE_VERBOSE_MAKEFILE            TRUE )
-
-#
-# C++ compiler
-#
-set( CMAKE_CXX_STANDARD_REQUIRED ON )
-set( CMAKE_CXX_STANDARD          11 )
-# Fixes RPath Problem for Linux dependencies and sub dependencies (easy fix, works in 99% of cases)
-if ( NOT APPLE )
-  set( CMAKE_INSTALL_RPATH $ORIGIN )
-endif()
-
-if( NOT UNIX )
-  set( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
-endif()
-
-# Always include cmath defines globally
-add_compile_definitions(_USE_MATH_DEFINES)
 
 # /Gd Uses the __cdecl calling convention (x86 only).
 # /Gr Uses the __fastcall calling convention (x86 only).
@@ -31,15 +13,15 @@ set( VS_WARN    "")
 if( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )
   set( CMAKE_CXX_FLAGS         "-std=c++11  ${CXX_WARN}" )
   set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -O2 -g " )
-  set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -ggdb -DMECHATRONIX_DEBUG -DDEBUG " )
+  set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -ggdb " )
 elseif( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
-  set( CMAKE_CXX_FLAGS         "-std=c++11 -stdlib=libc++  ${CLANG_WARN}" )
+  set( CMAKE_CXX_FLAGS         "-std=c++11 -stdlib=libc++ ${CLANG_WARN}" )
   set( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -fcolor-diagnostics " )
-  set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -gfull -fcolor-diagnostics -DMECHATRONIX_DEBUG -DDEBUG " )
+  set( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -O0 -gfull -fcolor-diagnostics " )
 elseif( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
   set( CMAKE_CXX_FLAGS         " ${VS_WARN} /sdl" )
   set( CMAKE_CXX_FLAGS_RELEASE "/nologo /GS /Gy /GF /W4 /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /O2 /MD /Zo " )
-  set( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /Gy /GF /W4 /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /guard:cf /Zi /DEBUG:FULL /D_DEBUG /DMECHATRONIX_DEBUG " )
+  set( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /Gy /GF /W4 /EHsc /bigobj /D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /guard:cf /Zi /DEBUG:FULL " )
 else()
   message( FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
 endif()
@@ -49,11 +31,3 @@ message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
 set( CMAKE_C_FLAGS         "" )
 set( CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} )
 set( CMAKE_C_FLAGS_DEBUG   ${CMAKE_CXX_FLAGS_DEBUG} )
-
-# select LAPACK library to be used
-set( PINS_USE_ACCELERATE true )
-
-# check if link against static libgcc
-set( PINS_USE_STATIC_LIBGCC false )
-
-set( PINS_ON_RASPBERRY false )

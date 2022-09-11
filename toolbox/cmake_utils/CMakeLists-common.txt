@@ -5,25 +5,25 @@
 #      Enrico Bertolazzi                                                   #
 #      Dipartimento di Ingegneria Industriale                              #
 #      Universita` degli Studi di Trento                                   #
-#      email: enrico.bertolazzi@ing.unitn.it                               #
+#      email: enrico.bertolazzi@unitn.it                                   #
 #                                                                          #
 ############################################################################
 
-option( EB_GIT_VERSION   "Get version from GIT command"           ON )
-option( EB_ENABLE_TESTS  "Enable compilation of testing targets"  ON )
-option( EB_BUILD_SHARED  "Enable shared option compilation"       ON )
-option( EB_INSTALL_LOCAL "Enable installation on local directory" ON )
-option( EB_TWEAK_VERSION_IS_TIMESTAMP "Sets tweak version to timestamp" OFF )
+option( UTILS_GIT_VERSION   "Get version from GIT command"           ON )
+option( UTILS_ENABLE_TESTS  "Enable compilation of testing targets"  ON )
+option( UTILS_BUILD_SHARED  "Enable shared option compilation"       ON )
+option( UTILS_INSTALL_LOCAL "Enable installation on local directory" ON )
+option( UTILS_TWEAK_VERSION_IS_TIMESTAMP "Sets tweak version to timestamp" OFF )
 
-set( EB_NAMESPACE "ebertolazzi" CACHE STRING "Sets the namespace used for exports" )
+set( UTILS_NAMESPACE "utils" CACHE STRING "Sets the namespace used for exports" )
 set( TARGETS_TO_BE_INSTALLED )
 
 #
 # DEFAULT SETTINGS
 #
 set( CMAKE_INSTALL_MESSAGE         NEVER )
-set( CMAKE_EXPORT_COMPILE_COMMANDS TRUE )
-set( CMAKE_VERBOSE_MAKEFILE        HIGH )
+set( CMAKE_EXPORT_COMPILE_COMMANDS TRUE  )
+set( CMAKE_VERBOSE_MAKEFILE        FALSE )
 
 # Always export compile commands in json file
 # (this is quite useful for tools like Sourcetrail)
@@ -33,12 +33,9 @@ set( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
 #
 # C++ compiler
 #
-set( CMAKE_CXX_STANDARD_REQUIRED ON )
-set( CMAKE_CXX_STANDARD          11 )
-# Fixes RPath Problem for Linux dependencies and sub dependencies (easy fix, works in 99% of cases)
-if ( NOT APPLE )
-  set( CMAKE_INSTALL_RPATH $ORIGIN )
-endif()
+set( CMAKE_CXX_STANDARD_REQUIRED ON      )
+set( CMAKE_CXX_STANDARD          11      )
+set( CMAKE_INSTALL_RPATH         $ORIGIN )
 
 if( NOT UNIX )
   set( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
@@ -47,6 +44,10 @@ endif()
 # Always include cmath defines globally
 add_compile_definitions(_USE_MATH_DEFINES)
 
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_compile_definitions(DEBUG)
+endif()
+
 #
 # LIBRARY VERSION
 #
@@ -54,27 +55,27 @@ add_compile_definitions(_USE_MATH_DEFINES)
 # in case of add_subdirectory, fetch content or in general when included from
 # another project
 set(
-  EB_CURRENT_VERSION "1.0"
+  UTILS_CURRENT_VERSION "1.0"
   CACHE STRING "Default project version, if not taken from git"
 )
 
-if ( EB_GIT_VERSION AND NOT WIN32 )
+if ( UTILS_GIT_VERSION AND NOT WIN32 )
   # FIXME: Does not work on Windows 10
   execute_process(
     COMMAND git describe --tags --abbrev=0
-    OUTPUT_VARIABLE EB_PROJECT_VERSION
+    OUTPUT_VARIABLE UTILS_PROJECT_VERSION
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   )
-  string(REGEX REPLACE "\n$" "" EB_PROJECT_VERSION "${EB_PROJECT_VERSION}")
+  string(REGEX REPLACE "\n$" "" UTILS_PROJECT_VERSION "${UTILS_PROJECT_VERSION}")
 else()
-  set( EB_BUILD_TIMESTAMP "0" )
-  if( EB_TWEAK_VERSION_IS_TIMESTAMP )
-    string(TIMESTAMP EB_BUILD_TIMESTAMP "%y%m%d%H")
+  set( UTILS_BUILD_TIMESTAMP "0" )
+  if( UTILS_TWEAK_VERSION_IS_TIMESTAMP )
+    string(TIMESTAMP UTILS_BUILD_TIMESTAMP "%y%m%d%H")
   endif()
-  set( EB_PROJECT_VERSION "${EB_CURRENT_VERSION}.${EB_BUILD_TIMESTAMP}" )
+  set( UTILS_PROJECT_VERSION "${UTILS_CURRENT_VERSION}.${UTILS_BUILD_TIMESTAMP}" )
 endif()
 
-if ( EB_INSTALL_LOCAL )
+if ( UTILS_INSTALL_LOCAL )
   # install in the home of the whole project
   if ( ${CMAKE_HOME_DIRECTORY} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR} )
     set( INSTALL_PREFIX "lib" )
@@ -93,4 +94,4 @@ else()
   set( PROJECT_PUBLIC_HEADER_DESTINATION "${INSTALL_PREFIX}/include/${PROJECT_NAME}" )
 endif()
 
-message("${PROJECT_NAME} current version = v${EB_PROJECT_VERSION}")
+message("${PROJECT_NAME} current version = v${UTILS_PROJECT_VERSION}")

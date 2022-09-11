@@ -1,10 +1,6 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-#ifdef _MSC_VER
-  #include <direct.h>
-#else
-  #include <fstream>
-#endif
+#include <direct.h>
 
 namespace Utils {
 
@@ -180,16 +176,7 @@ namespace Utils {
   */
   bool
   check_if_file_exists( char const * fname ) {
-    #ifndef _MSC_VER
-      std::ifstream ifile;
-      ifile.open(fname);
-      bool ok = ifile ? true : false;
-      if ( ok ) ifile.close();
-      return ok;
-    #else
-      struct stat buffer;
-      return stat(fname, &buffer) == 0;
-    #endif
+    return FindFirstFileA( fname, NULL ) != INVALID_HANDLE_VALUE;
   }
 
   /*
@@ -207,10 +194,11 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  make_directory( char const * dirname, unsigned mode ) {
+  make_directory( char const * dirname, unsigned /* mode */ ) {
     bool ok = check_if_dir_exists( dirname );
-    if ( !ok ) ok = _mkdir( dirname ) == 0;
-    return ok;
+    if ( ok ) return false;
+    CreateDirectoryA( dirname, NULL );
+    return true;
   }
 
 }

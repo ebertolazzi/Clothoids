@@ -1,21 +1,23 @@
 #
 # ------------------------------------------------------------------------
 #
-function(ebertolazzi_artifacts_suffix VAR_NAME BUILD_STATIC)
+function(utils_artifacts_suffix VAR_NAME BUILD_STATIC)
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(suffix "_debug")
   else()
     set(suffix "")
   endif()
-  if (${BUILD_STATIC})
+  if ( ${BUILD_STATIC} )
     set(suffix "_static${suffix}")
   endif()
   if(APPLE)
-    set(${VAR_NAME} _osx${suffix} PARENT_SCOPE)
+    set( ${VAR_NAME} _osx${suffix} PARENT_SCOPE )
+  elseif(MINGW)
+    set( ${VAR_NAME} _mingw${suffix} PARENT_SCOPE )
   elseif(UNIX)
-    set(${VAR_NAME} _linux${suffix} PARENT_SCOPE)
+    set( ${VAR_NAME} _linux${suffix} PARENT_SCOPE )
   else()
-    set(${VAR_NAME} "_win_${BITS}${suffix}" PARENT_SCOPE)
+    set( ${VAR_NAME} "_win_${BITS}${suffix}" PARENT_SCOPE )
   endif()
 endfunction()
 #
@@ -25,7 +27,7 @@ endfunction()
 # relative to SOURCE_DIR
 #
 function(
-  ebertolazzi_setup_target
+  utils_setup_target
   TARGET_NAME
   IS_STATIC
   SOURCE_DIR
@@ -35,9 +37,9 @@ function(
 )
 
   if ( ${IS_STATIC} )
-    set( TARGET_S ${EB_NAMESPACE}_${TARGET_NAME}_Static )
+    set( TARGET_S ${UTILS_NAMESPACE}_${TARGET_NAME}_Static )
   else()
-    set( TARGET_S ${EB_NAMESPACE}_${TARGET_NAME} )
+    set( TARGET_S ${UTILS_NAMESPACE}_${TARGET_NAME} )
   endif()
 
   foreach (F ${HEADERS_LIST})
@@ -54,11 +56,11 @@ function(
   if ( ${IS_STATIC} )
     add_library( ${TARGET_S} STATIC )
     set( SUFFIX ${ARTIFACTS_STATIC_SUFFIX} )
-    add_library( "${EB_NAMESPACE}::${TARGET_NAME}_Static" ALIAS ${TARGET_S} )
+    add_library( "${UTILS_NAMESPACE}::${TARGET_NAME}_Static" ALIAS ${TARGET_S} )
   else()
     add_library( ${TARGET_S} SHARED )
     set( SUFFIX ${ARTIFACTS_DYNAMIC_SUFFIX} )
-    add_library( "${EB_NAMESPACE}::${TARGET_NAME}" ALIAS ${TARGET_S} )
+    add_library( "${UTILS_NAMESPACE}::${TARGET_NAME}" ALIAS ${TARGET_S} )
   endif()
 
   target_sources( ${TARGET_S} PRIVATE ${SRC} )
@@ -80,7 +82,19 @@ endfunction()
 #
 # ------------------------------------------------------------------------
 #
-function(ebertolazzi_final_messages)
+function( utils_copy_directory FROM TO )
+  file( GLOB_RECURSE S "${FROM}/*" )
+  foreach(F ${S})
+    # build relative path respect to source directory
+    file( RELATIVE_PATH RF ${FROM} ${F} )
+    get_filename_component( DIR "${TO}/${RF}" DIRECTORY )
+    file( COPY ${F} DESTINATION ${DIR} )
+  endforeach(F ${S})
+endfunction()
+#
+# ------------------------------------------------------------------------
+#
+function(utils_final_messages)
   if(SSE_FLAGS)
     message(STATUS "Using ${SSE_FLAGS} extensions")
   endif()
@@ -103,10 +117,10 @@ function(ebertolazzi_final_messages)
   message(STATUS "CMAKE_HOME_DIRECTORY     = ${CMAKE_HOME_DIRECTORY}")
   message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
   message(STATUS "CMAKE_INSTALL_PREFIX     = ${CMAKE_INSTALL_PREFIX}")
-  
-  message(STATUS "EB_GIT_VERSION   = ${EB_GIT_VERSION}")
-  message(STATUS "EB_ENABLE_TESTS  = ${EB_ENABLE_TESTS}")
-  message(STATUS "EB_BUILD_SHARED  = ${EB_BUILD_SHARED}")
-  message(STATUS "EB_INSTALL_LOCAL = ${EB_INSTALL_LOCAL}")
+
+  message(STATUS "UTILS_GIT_VERSION   = ${UTILS_GIT_VERSION}")
+  message(STATUS "UTILS_ENABLE_TESTS  = ${UTILS_ENABLE_TESTS}")
+  message(STATUS "UTILS_BUILD_SHARED  = ${UTILS_BUILD_SHARED}")
+  message(STATUS "UTILS_INSTALL_LOCAL = ${UTILS_INSTALL_LOCAL}")
 
 endfunction()

@@ -54,7 +54,17 @@
 #pragma clang diagnostic push
 #endif
 
+#ifdef _MSC_VER
+  #pragma warning ( push )
+  #pragma warning ( disable : 4244 )
+  #pragma warning ( disable : 4127 )
+#endif
+
 #include "Utils/Utils.hxx"
+
+#ifdef _MSC_VER
+  #pragma warning ( pop )
+#endif
 
 #ifdef __clang__
 #pragma clang diagnostic pop

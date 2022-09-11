@@ -34,6 +34,11 @@
 #pragma clang diagnostic ignored "-Wdeprecated-copy-with-dtor"
 #endif
 
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4127 )
+#endif
+
 #define EIGEN_DONT_PARALLELIZE
 #define EIGEN_NO_AUTOMATIC_RESIZING
 
@@ -42,6 +47,10 @@
 
 #ifdef __clang__
 #pragma clang diagnostic pop
+#endif
+
+#ifdef _MSC_VER
+#pragma warning( pop )
 #endif
 
 #endif

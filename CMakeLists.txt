@@ -5,28 +5,28 @@
 #      Enrico Bertolazzi                                                   #
 #      Dipartimento di Ingegneria Industriale                              #
 #      Universita` degli Studi di Trento                                   #
-#      email: enrico.bertolazzi@ing.unitn.it                               #
+#      email: enrico.bertolazzi@unitn.it                                   #
 #                                                                          #
 ############################################################################
 
 cmake_minimum_required(VERSION 3.14)
 
 project( Clothoids )
-include(./cmake/CMakeLists-common.txt)
+include(./cmake_utils/CMakeLists-common.txt)
 
 project(
   ${PROJECT_NAME}
-  VERSION ${EB_PROJECT_VERSION}
+  VERSION ${UTILS_PROJECT_VERSION}
   HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/"
 )
 
-include(./cmake/CMakeLists-cflags.txt)
-include(./cmake/CMakeLists-utilities.txt)
+include(./cmake_utils/CMakeLists-cflags.txt)
+include(./cmake_utils/CMakeLists-utilities.txt)
 
 # Evaluating the suffix to append to target built by this CMake file
-ebertolazzi_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
-if( EB_BUILD_SHARED )
-  ebertolazzi_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
+utils_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
+if( UTILS_BUILD_SHARED )
+  utils_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
 endif()
 
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
@@ -85,7 +85,7 @@ find_library(
 )
 if( UTILS )
   message(STATUS "Found Utils${ARTIFACTS_STATIC_SUFFIX}")
-  ebertolazzi_copy_directory(
+  utils_copy_directory(
     "${UPDIR}/Utils/lib"
     "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd"
   )
@@ -93,7 +93,7 @@ else()
   message(STATUS "NOT Found Utils${ARTIFACTS_STATIC_SUFFIX} use submodule")
   add_subdirectory(./submodules/Utils)
   include_directories(./submodules/Utils/src)
-  set( UTILS ebertolazzi_Utils_Static )
+  set( UTILS ${UTILS_NAMESPACE}_Utils_Static )
   set( DEPEND_TARGETS ${DEPEND_TARGETS} ${UTILS} )
 endif()
 
@@ -110,7 +110,7 @@ else()
   message(STATUS "NOT Found quarticRootsFlocke${ARTIFACTS_STATIC_SUFFIX}")
   add_subdirectory(./submodules/quarticRootsFlocke)
   include_directories(./submodules/quarticRootsFlocke/src)
-  set( ROOTS ebertolazzi_quarticRootsFlocke_Static )
+  set( ROOTS ${UTILS_NAMESPACE}_quarticRootsFlocke_Static )
   set( DEPEND_TARGETS ${DEPEND_TARGETS} ${ROOTS} )
 endif()
 
@@ -121,7 +121,7 @@ endif()
 #                |___/
 #
 # define target
-ebertolazzi_setup_target(
+utils_setup_target(
   ${PROJECT_NAME}
   TRUE # build static
   "${SOURCE_DIR}"
@@ -129,8 +129,8 @@ ebertolazzi_setup_target(
   "${SOURCE_DIR}"
   "${PUBLIC_HEADERS}"
 )
-if ( EB_BUILD_SHARED )
-  ebertolazzi_setup_target(
+if ( UTILS_BUILD_SHARED )
+  utils_setup_target(
     ${PROJECT_NAME}
     FALSE # build dynamic
     "${SOURCE_DIR}"
@@ -138,11 +138,11 @@ if ( EB_BUILD_SHARED )
     "${SOURCE_DIR}"
     "${PUBLIC_HEADERS}"
   )
-  target_link_libraries( ${EB_NAMESPACE}_${PROJECT_NAME} ${ROOTS} ${UTILS} )
+  target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${ROOTS} ${UTILS} )
 endif()
 
 if ( DEPEND_TARGETS )
-  add_dependencies( ${EB_NAMESPACE}_${PROJECT_NAME}_Static ${DEPEND_TARGETS} )
+  add_dependencies( ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${DEPEND_TARGETS} )
 endif()
 
 #   _____       _
@@ -150,7 +150,7 @@ endif()
 #    | |/ -_|_-<  _(_-<
 #    |_|\___/__/\__/__/
 #
-if ( EB_ENABLE_TESTS )
+if ( UTILS_ENABLE_TESTS )
 
   enable_testing()
 
@@ -165,7 +165,7 @@ if ( EB_ENABLE_TESTS )
     set( ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/zlib/include ")
   endif()
 
-  set( LIBS ${EB_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS} ${ROOTS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS} ${ROOTS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
 
   if( UNIX )
     if ( NOT APPLE )
@@ -182,8 +182,8 @@ if ( EB_ENABLE_TESTS )
     #find_library( WPTH pthread REQUIRED )
     #set( LIBS ${LIBS} ${WS2} ${IPH} ${KER} )
     set( LIBS ${LIBS} ws2_32 iphlpapi kernel32 )
-    if (EB_BUILD_SHARED)
-      target_link_libraries( ${EB_NAMESPACE}_${PROJECT_NAME} ${LIBS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+    if (UTILS_BUILD_SHARED)
+      target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${LIBS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
     endif()
   endif()
 
@@ -210,11 +210,8 @@ if ( EB_ENABLE_TESTS )
   foreach( S ${EXELISTCPP} )
     add_executable( ${S} ${CMAKE_CURRENT_SOURCE_DIR}/src_tests/${S}.cc )
     target_link_libraries( ${S} ${LIBS} )
-    add_test(
-      NAME "${S}"
-      COMMAND ./bin/${S}
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    )
+    set_target_properties( ${S} PROPERTIES SUFFIX ".exe" )
+    add_test( NAME "${S}" COMMAND ./bin/${S}.exe WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} )
     add_dependencies( "${PROJECT_NAME}_all_tests" ${S} )
   endforeach()
 
@@ -241,6 +238,6 @@ install(
 #                       |___/
 #
 
-include( ./cmake/CMakeLists-cpack.txt )
+include( ./cmake_utils/CMakeLists-cpack.txt )
 
-ebertolazzi_final_messages()
+utils_final_messages()

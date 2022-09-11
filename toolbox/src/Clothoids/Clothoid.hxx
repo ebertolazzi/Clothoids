@@ -184,12 +184,12 @@ namespace G2lib {
     : BaseCurve(G2LIB_CLOTHOID)
     , m_aabb_done(false)
     {
-      m_CD.x0     = 0;
-      m_CD.y0     = 0;
-      m_CD.theta0 = 0;
-      m_CD.kappa0 = 0;
-      m_CD.dk     = 0;
-      m_L         = 0;
+      m_CD.m_x0     = 0;
+      m_CD.m_y0     = 0;
+      m_CD.m_theta0 = 0;
+      m_CD.m_kappa0 = 0;
+      m_CD.m_dk     = 0;
+      m_L           = 0;
     }
 
     //!
@@ -222,12 +222,12 @@ namespace G2lib {
     : BaseCurve(G2LIB_CLOTHOID)
     , m_aabb_done(false)
     {
-      m_CD.x0     = x0;
-      m_CD.y0     = y0;
-      m_CD.theta0 = theta0;
-      m_CD.kappa0 = k;
-      m_CD.dk     = dk;
-      m_L         = L;
+      m_CD.m_x0     = x0;
+      m_CD.m_y0     = y0;
+      m_CD.m_theta0 = theta0;
+      m_CD.m_kappa0 = k;
+      m_CD.m_dk     = dk;
+      m_L           = L;
     }
 
     //!
@@ -279,12 +279,12 @@ namespace G2lib {
     : BaseCurve(G2LIB_CLOTHOID)
     , m_aabb_done(false)
     {
-      m_CD.x0     = LS.m_x0;
-      m_CD.y0     = LS.m_y0;
-      m_CD.theta0 = LS.m_theta0;
-      m_CD.kappa0 = 0;
-      m_CD.dk     = 0;
-      m_L         = LS.m_L;
+      m_CD.m_x0     = LS.m_x0;
+      m_CD.m_y0     = LS.m_y0;
+      m_CD.m_theta0 = LS.m_theta0;
+      m_CD.m_kappa0 = 0;
+      m_CD.m_dk     = 0;
+      m_L           = LS.m_L;
     }
 
     //!
@@ -295,12 +295,12 @@ namespace G2lib {
     : BaseCurve(G2LIB_CLOTHOID)
     , m_aabb_done(false)
     {
-      m_CD.x0     = C.m_x0;
-      m_CD.y0     = C.m_y0;
-      m_CD.theta0 = C.m_theta0;
-      m_CD.kappa0 = C.m_k;
-      m_CD.dk     = 0;
-      m_L         = C.m_L;
+      m_CD.m_x0     = C.m_x0;
+      m_CD.m_y0     = C.m_y0;
+      m_CD.m_theta0 = C.m_theta0;
+      m_CD.m_kappa0 = C.m_k;
+      m_CD.m_dk     = 0;
+      m_L           = C.m_L;
     }
 
     //!
@@ -434,13 +434,13 @@ namespace G2lib {
     //!
     void
     build( LineSegment const & LS ) {
-      m_CD.x0     = LS.m_x0;
-      m_CD.y0     = LS.m_y0;
-      m_CD.theta0 = LS.m_theta0;
-      m_CD.kappa0 = 0;
-      m_CD.dk     = 0;
-      m_L         = LS.m_L;
-      m_aabb_done = false;
+      m_CD.m_x0     = LS.m_x0;
+      m_CD.m_y0     = LS.m_y0;
+      m_CD.m_theta0 = LS.m_theta0;
+      m_CD.m_kappa0 = 0;
+      m_CD.m_dk     = 0;
+      m_L           = LS.m_L;
+      m_aabb_done   = false;
       m_aabb_tree.clear();
     }
 
@@ -449,12 +449,12 @@ namespace G2lib {
     //!
     void
     build( CircleArc const & C ) {
-      m_CD.x0     = C.m_x0;
-      m_CD.y0     = C.m_y0;
-      m_CD.theta0 = C.m_theta0;
-      m_CD.kappa0 = C.m_k;
-      m_CD.dk     = 0;
-      m_L         = C.m_L;
+      m_CD.m_x0     = C.m_x0;
+      m_CD.m_y0     = C.m_y0;
+      m_CD.m_theta0 = C.m_theta0;
+      m_CD.m_kappa0 = C.m_k;
+      m_CD.m_dk     = 0;
+      m_L           = C.m_L;
       m_aabb_done = false;
       m_aabb_tree.clear();
     }
@@ -482,7 +482,7 @@ namespace G2lib {
     //!
     //! Derivative of the curvature of the clothoid.
     //!
-    real_type dkappa() const { return m_CD.dk; }
+    real_type dkappa() const { return m_CD.m_dk; }
 
     //!
     //! Clothoid curve total variation of the angle.
@@ -655,7 +655,7 @@ namespace G2lib {
     \*/
 
     //!
-    //! Get the triangle bounding box 
+    //! Get the triangle bounding box
     //! (if angle variation less that \f$ \pi/2 \f$ )
     //!
     bool
@@ -668,7 +668,7 @@ namespace G2lib {
     }
 
     //!
-    //! Get the triangle bounding box 
+    //! Get the triangle bounding box
     //! (if angle variation less that \f$ \pi/2 \f$)
     //!
     bool
@@ -782,11 +782,11 @@ namespace G2lib {
       return 0;
     }
 
-    real_type theta_begin()  const override { return m_CD.theta0; }
-    real_type kappa_begin()  const override { return m_CD.kappa0; }
-    real_type x_begin()      const override { return m_CD.x0; }
+    real_type theta_begin()  const override { return m_CD.m_theta0; }
+    real_type kappa_begin()  const override { return m_CD.m_kappa0; }
+    real_type x_begin()      const override { return m_CD.m_x0; }
     real_type x_end()        const override { return m_CD.X(m_L); }
-    real_type y_begin()      const override { return m_CD.y0; }
+    real_type y_begin()      const override { return m_CD.m_y0; }
     real_type y_end()        const override { return m_CD.Y(m_L); }
     real_type tx_Begin()     const override { return m_CD.tg0_x(); }
     real_type ty_Begin()     const override { return m_CD.tg0_y(); }
@@ -870,14 +870,14 @@ namespace G2lib {
     { return m_CD.kappa(s); }
 
     //!
-    //! Get clothoid angle second derivative 
+    //! Get clothoid angle second derivative
     //! at curvilinear cooordinate `s`.
     //!
     //! \return angle second derivative (radiant/s^2) at curvilinear cooordinate `s`
     //!
     real_type
     theta_DD( real_type ) const override
-    { return m_CD.dk; }
+    { return m_CD.m_dk; }
 
     //!
     //! Get clothoid angle third derivative
@@ -1075,7 +1075,7 @@ namespace G2lib {
 
     void
     translate( real_type tx, real_type ty ) override
-    { m_CD.x0 += tx; m_CD.y0 += ty; }
+    { m_CD.m_x0 += tx; m_CD.m_y0 += ty; }
 
     void
     rotate( real_type angle, real_type cx, real_type cy ) override
@@ -1083,9 +1083,9 @@ namespace G2lib {
 
     void
     scale( real_type s ) override {
-      m_CD.kappa0 /= s;
-      m_CD.dk     /= s*s;
-      m_L         *= s;
+      m_CD.m_kappa0 /= s;
+      m_CD.m_dk     /= s*s;
+      m_L           *= s;
     }
 
     void
@@ -1094,7 +1094,7 @@ namespace G2lib {
 
     void
     change_origin( real_type newx0, real_type newy0 ) override
-    { m_CD.x0 = newx0; m_CD.y0 = newy0; }
+    { m_CD.m_x0 = newx0; m_CD.m_y0 = newy0; }
 
     void
     trim( real_type s_begin, real_type s_end ) override {
@@ -1102,13 +1102,13 @@ namespace G2lib {
       m_L = s_end - s_begin;
     }
 
-    //! 
+    //!
     //! change the origin of the clothoid at \f$ s_0 \f$
     //! and the length to  \f$ L \f$.
-    //! 
+    //!
     //! \param[in] s0   \f$ s_0 \f$
     //! \param[in] newL \f$ L \f$
-    //! 
+    //!
     void
     change_curvilinear_origin( real_type s0, real_type newL ) {
       m_CD.origin_at( s0 );
@@ -1226,7 +1226,7 @@ namespace G2lib {
     real_type
     thetaTotalVariation() const
     { return theta_total_variation(); }
-    
+
     real_type
     thetaMinMax( real_type & thMin, real_type & thMax ) const
     { return theta_min_max(thMin,thMax); }

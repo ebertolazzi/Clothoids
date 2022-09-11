@@ -31,6 +31,8 @@
 
 namespace Utils {
 
+  using std::isfinite;
+
   /*\
   :|:      _    _           _____ _  _    ___
   :|:     / \  | | __ _  __|___  | || |  ( _ )
@@ -76,9 +78,9 @@ namespace Utils {
     //
     // Adjust c if (b-a) is very small or if c is very close to a or b.
     {
-      Real tol = 0.7*m_tolerance;
+      Real tol = Real(0.7)*m_tolerance;
       Real ba  = m_b - m_a;
-      if      ( ba  <= 2*tol   ) m_c = m_a+0.5*ba;
+      if      ( ba  <= 2*tol   ) m_c = m_a+Real(0.5)*ba;
       else if ( m_c <= m_a+tol ) m_c = m_a+tol;
       else if ( m_c >= m_b-tol ) m_c = m_b-tol;
     }
@@ -245,8 +247,8 @@ namespace Utils {
     Real R   = ba/fba;
     m_c = abs(m_fb) < abs(m_fa) ? m_b+m_fb*R : m_a-m_fa*R;
     // impedisce m_c troppo vicino ad m_a o m_b
-    Real bmax = m_b-0.1*ba;
-    Real amin = m_a+0.1*ba;
+    Real bmax = m_b-Real(0.1)*ba;
+    Real amin = m_a+Real(0.1)*ba;
     if      ( m_c < amin ) m_c = amin;
     else if ( m_c > bmax ) m_c = bmax;
     //
@@ -329,9 +331,9 @@ namespace Utils {
       if ( abs(m_fa) < abs(m_fb) ) { u = m_a; fu = m_fa; }
       else                         { u = m_b; fu = m_fb; }
       {
-        Real ba = m_b-m_a;
-        m_c = u-2*(fu/(m_fb-m_fa))*ba;
-        if ( abs(m_c-u) > 0.5*ba ) m_c = m_a+0.5*ba;
+        Real hba = (m_b-m_a)/2;
+        m_c = u-4*(fu/(m_fb-m_fa))*hba;
+        if ( abs(m_c-u) > hba ) m_c = m_a+hba;
       }
 
       //
@@ -354,7 +356,7 @@ namespace Utils {
       // well as to update the termination criterion. stop the procedure
       // if the criterion is satisfied or the exact solution is obtained.
       //
-      m_c = m_a+0.5*(m_b-m_a);
+      m_c = m_a+Real(0.5)*(m_b-m_a);
       m_converged = this->bracketing() || (m_b-m_a) <= m_tolerance;
     }
     // TERMINATES THE PROCEDURE AND RETURN THE "ROOT".

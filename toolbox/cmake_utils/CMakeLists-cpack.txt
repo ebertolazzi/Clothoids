@@ -5,7 +5,7 @@
 #      Enrico Bertolazzi                                                   #
 #      Dipartimento di Ingegneria Industriale                              #
 #      Universita` degli Studi di Trento                                   #
-#      email: enrico.bertolazzi@ing.unitn.it                               #
+#      email: enrico.bertolazzi@unitn.it                                   #
 #                                                                          #
 ############################################################################
 
@@ -20,13 +20,13 @@ set(
   CACHE STRING "Path To ${PROJECT_NAME} Cmake Files"
 )
 
-configure_file(
-  "cmake/${PROJECT_NAME}-config.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" @ONLY
-)
+#configure_file(
+#  "cmake/${PROJECT_NAME}-config.cmake.in"
+#  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" @ONLY
+#)
 
 # Set the name of the generated installation package
-set(CPACK_PACKAGE_NAME "${EB_NAMESPACE}-${PROJECT_NAME}")
+set(CPACK_PACKAGE_NAME "${UTILS_NAMESPACE}-${PROJECT_NAME}")
 # Set the control that supports the specified installation directory to on
 if ( WIN32 )
   set(CPACK_GENERATOR "NSIS64")
@@ -42,7 +42,7 @@ elseif(UNIX)
 endif()
 # Set the directory path to install to
 # This is the version number information for the generated installation
-set(CPACK_PACKAGE_VERSION "${EB_PROJECT_VERSION}")
+set(CPACK_PACKAGE_VERSION "${UTILS_PROJECT_VERSION}")
 
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_NAME} - CPack Component Installation")
 # Set vendor name

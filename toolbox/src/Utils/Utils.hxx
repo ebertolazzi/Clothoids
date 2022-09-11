@@ -258,15 +258,15 @@ namespace Utils {
   static
   inline
   void
-  to_upper( std::string & s ) {
-    std::transform( s.begin(), s.end(), s.begin(), toupper );
+  to_upper( std::string & str ) {
+    for ( auto & c: str ) c = char(toupper(int(c)));
   }
 
   static
   inline
   void
-  to_lower( std::string & s ) {
-    std::transform( s.begin(), s.end(), s.begin(), tolower );
+  to_lower( std::string & str ) {
+    for ( auto & c: str ) c = char(tolower(int(c)));
   }
 
   static
