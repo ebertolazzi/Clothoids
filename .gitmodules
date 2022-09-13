@@ -6,4 +6,4 @@
 	url = https://github.com/ebertolazzi/quarticRootsFlocke.git
 [submodule "cmake_utils"]
 	path = cmake_utils
-	url = git@github.com:ebertolazzi/cmake_utils.git
+	url = https://github.com/ebertolazzi/cmake_utils.git
