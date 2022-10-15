@@ -93,7 +93,7 @@ namespace G2lib {
   static
   void
   do_build(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -136,7 +136,7 @@ namespace G2lib {
   static
   void
   do_delete(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "Triangle2DMexWrapper('delete',OBJ): "
@@ -152,7 +152,7 @@ namespace G2lib {
   static
   void
   do_translate(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -175,7 +175,7 @@ namespace G2lib {
   static
   void
   do_rotate(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "Triangle2DMexWrapper('rotate',OBJ,angle,cx,cy): "
@@ -198,7 +198,7 @@ namespace G2lib {
   static
   void
   do_scale(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "Triangle2DMexWrapper('scale',OBJ,scale): "
@@ -380,7 +380,7 @@ namespace G2lib {
   static
   void
   do_info(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "Triangle2DMexWrapper('info',OBJ): "

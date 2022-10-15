@@ -32,17 +32,17 @@ main() {
 #endif
 
   // test 3 archi
-  cout << "\n\nTry Solution with THREE arcs\n";
+  fmt::print( "\n\nTry Solution with THREE arcs\n" );
   int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
-  cout << "iter = " << iter << '\n';
-  
+  fmt::print( "iter = {}\n", iter );
+
   G2lib::ClothoidCurve const & S0 = g2solve3arc.getS0();
   G2lib::ClothoidCurve const & S1 = g2solve3arc.getS1();
   G2lib::ClothoidCurve const & SM = g2solve3arc.getSM();
 
-  cout << "\n\nS0 (NEW)\n" << S0;
-  cout << "\n\nSM (NEW)\n" << SM;
-  cout << "\n\nS1 (NEW)\n" << S1;
+  fmt::print( "\n\nS0 (NEW)\n {}\n", S0 );
+  fmt::print( "\n\nSM (NEW)\n {}\n", SM );
+  fmt::print( "\n\nS1 (NEW)\n {}\n", S1 );
 
   fmt::print(
     "\n"
@@ -66,7 +66,7 @@ main() {
   file.close();
   S.info( cout );
 
-  cout << "\n\nALL DONE FOLKS!!!\n";
+  fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 
   return 0;
 }

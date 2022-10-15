@@ -1,6 +1,6 @@
 /**
  * PYTHON Wrapper for Clothoids
- * 
+ *
  * License MIT - See LICENSE file
  * 2019 Matteo Ragni, Claudio Kerov Ghiglianovich,
  *      Enrico Bertolazzi, Marco Frego
@@ -20,7 +20,7 @@ namespace G2lib {
          * constructor from a Base Curve
          * constructor from a Line Segment
          * constructor from raw data
-          
+
         for this last constructor:
 
         :param float x0: starting position **x** coordinate
@@ -105,7 +105,7 @@ namespace G2lib {
         },
         R"S(
           Return the number of knots and points for the nurbs of the line segment
-          
+
           :return: knots count and point count
           :rtype: Tuple[int, int]
         )S")
@@ -116,7 +116,7 @@ namespace G2lib {
 
           int_type n_pnts, n_knots;
           self.paramNURBS(n_knots, n_pnts);
-          
+
           std::vector<real_type> knots(n_knots);
           std::vector<Point> poly(n_pnts);
           std::vector<TPoint> tpoly;
@@ -164,9 +164,9 @@ namespace G2lib {
          * constructor from a Circle Arc
          * constructor from a Biarc
          * constructor from a Clothoid Curve
-         * constructor from a Clothoid List   
+         * constructor from a Clothoid List
       )S")
-      
+
         .def(py::init<>())
         .def(py::init<BaseCurve const &>(), py::arg("c"))
         .def(py::init<PolyLine const &>(), py::arg("pl"))
@@ -179,11 +179,11 @@ namespace G2lib {
           py::arg("b"), py::arg("tol"))
         .def(py::init<ClothoidList const &, real_type>(),
           py::arg("b"), py::arg("tol"))
-      
+
         .def("getSegment", &PolyLine::getSegment,
           py::arg("n"),
         R"S(
-          Returns the n-th segment of the poly line 
+          Returns the n-th segment of the poly line
 
           :param int n: number of the segment to get
           :return: the requested segment
@@ -193,7 +193,7 @@ namespace G2lib {
         .def("__getitem__", &PolyLine::getSegment,
           py::arg("n"),
         R"S(
-          Returns the n-th segment of the poly line 
+          Returns the n-th segment of the poly line
 
           :param int n: number of the segment to get
           :return: the requested segment
@@ -240,7 +240,7 @@ namespace G2lib {
         R"S(
           Returns a list of points representing the polygon described by
           this poly line. Each point is a tuple containg the **x** and
-          **y** coordinates of the point. 
+          **y** coordinates of the point.
 
           :return: list of points of the polygon
           :rtype: List[Tuple[float, float]]
@@ -249,7 +249,7 @@ namespace G2lib {
         .def("init", py::overload_cast<>(&PolyLine::init),
         R"S(
           Empties the current list
-  
+
           :return: nothing, works in place
           :rtype: NoneType
         )S")

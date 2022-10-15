@@ -67,25 +67,30 @@ namespace G2lib {
   //!
   class G2solve2arc {
 
-    real_type tolerance;
-    int_type  maxIter;
+    real_type tolerance{real_type(1e-10)};
+    int_type  maxIter{20};
 
-    real_type x0;
-    real_type y0;
-    real_type theta0;
-    real_type kappa0;
+    real_type x0{real_type(0)};
+    real_type y0{real_type(0)};
+    real_type theta0{real_type(0)};
+    real_type kappa0{real_type(0)};
 
-    real_type x1;
-    real_type y1;
-    real_type theta1;
-    real_type kappa1;
+    real_type x1{real_type(0)};
+    real_type y1{real_type(0)};
+    real_type theta1{real_type(0)};
+    real_type kappa1{real_type(0)};
 
     // standard problem
-    real_type lambda, phi, xbar, ybar;
-    real_type th0, th1;
-    real_type k0, k1;
-    real_type DeltaK;
-    real_type DeltaTheta;
+    real_type lambda{real_type(0)};
+    real_type phi{real_type(0)};
+    real_type xbar{real_type(0)};
+    real_type ybar{real_type(0)};
+    real_type th0{real_type(0)};
+    real_type th1{real_type(0)};
+    real_type k0{real_type(0)};
+    real_type k1{real_type(0)};
+    real_type DeltaK{real_type(0)};
+    real_type DeltaTheta{real_type(0)};
 
     ClothoidCurve S0, S1;
 
@@ -143,28 +148,8 @@ namespace G2lib {
     //!
     //! Build an empty clothoid list
     //!
-    G2solve2arc()
-    : tolerance(1e-10)
-    , maxIter(20)
-    , x0(0)
-    , y0(0)
-    , theta0(0)
-    , kappa0(0)
-    , x1(0)
-    , y1(0)
-    , theta1(0)
-    , kappa1(0)
-    , lambda(0)
-    , phi(0)
-    , xbar(0)
-    , ybar(0)
-    , th0(0)
-    , th1(0)
-    , k0(0)
-    , k1(0)
-    {}
-
-    ~G2solve2arc() {}
+    G2solve2arc() = default;
+    ~G2solve2arc() = default;
 
     //!
     //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
@@ -258,22 +243,27 @@ namespace G2lib {
   //!
   class G2solveCLC {
 
-    real_type tolerance;
-    int       maxIter;
+    real_type tolerance{real_type(1e-10)};
+    int       maxIter{20};
 
-    real_type x0;
-    real_type y0;
-    real_type theta0;
-    real_type kappa0;
-    real_type x1;
-    real_type y1;
-    real_type theta1;
-    real_type kappa1;
+    real_type x0{real_type(0)};
+    real_type y0{real_type(0)};
+    real_type theta0{real_type(0)};
+    real_type kappa0{real_type(0)};
+    real_type x1{real_type(0)};
+    real_type y1{real_type(0)};
+    real_type theta1{real_type(0)};
+    real_type kappa1{real_type(0)};
 
     // standard problem
-    real_type lambda, phi, xbar, ybar;
-    real_type th0, th1;
-    real_type k0, k1;
+    real_type lambda{real_type(0)};
+    real_type phi{real_type(0)};
+    real_type xbar{real_type(0)};
+    real_type ybar{real_type(0)};
+    real_type th0{real_type(0)};
+    real_type th1{real_type(0)};
+    real_type k0{real_type(0)};
+    real_type k1{real_type(0)};
 
     ClothoidCurve S0, SM, S1;
 
@@ -285,28 +275,8 @@ namespace G2lib {
     //!
     //! Build an empty clothoid list
     //!
-    G2solveCLC()
-    : tolerance(1e-10)
-    , maxIter(20)
-    , x0(0)
-    , y0(0)
-    , theta0(0)
-    , kappa0(0)
-    , x1(0)
-    , y1(0)
-    , theta1(0)
-    , kappa1(0)
-    , lambda(0)
-    , phi(0)
-    , xbar(0)
-    , ybar(0)
-    , th0(0)
-    , th1(0)
-    , k0(0)
-    , k1(0)
-    {}
-
-    ~G2solveCLC() {}
+    G2solveCLC() = default;
+    ~G2solveCLC() = default;
 
     //!
     //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
@@ -421,26 +391,45 @@ namespace G2lib {
 
     ClothoidCurve S0, SM, S1;
 
-    real_type tolerance;
-    int       maxIter;
+    real_type tolerance{real_type(1e-10)};
+    int       maxIter{100};
 
     // G2 interpolation data
-    real_type x0;
-    real_type y0;
-    real_type theta0;
-    real_type kappa0;
-    real_type x1;
-    real_type y1;
-    real_type theta1;
-    real_type kappa1;
+    real_type x0{real_type(0)};
+    real_type y0{real_type(0)};
+    real_type theta0{real_type(0)};
+    real_type kappa0{real_type(0)};
+    real_type x1{real_type(0)};
+    real_type y1{real_type(0)};
+    real_type theta1{real_type(0)};
+    real_type kappa1{real_type(0)};
 
     // standard scaled problem
-    real_type phi, Lscale;
-    real_type th0, th1;
-    real_type s0, s1;
+    real_type phi{real_type(0)};
+    real_type Lscale{real_type(0)};
+    real_type th0{real_type(0)};
+    real_type th1{real_type(0)};
+    real_type s0{real_type(0)};
+    real_type s1{real_type(0)};
 
     // precomputed values
-    real_type K0, K1, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14;
+    real_type K0{real_type(0)},
+              K1{real_type(0)},
+              c0{real_type(0)},
+              c1{real_type(0)},
+              c2{real_type(0)},
+              c3{real_type(0)},
+              c4{real_type(0)},
+              c5{real_type(0)},
+              c6{real_type(0)},
+              c7{real_type(0)},
+              c8{real_type(0)},
+              c9{real_type(0)},
+              c10{real_type(0)},
+              c11{real_type(0)},
+              c12{real_type(0)},
+              c13{real_type(0)},
+              c14{real_type(0)};
 
     void
     evalFJ(
@@ -460,12 +449,8 @@ namespace G2lib {
 
   public:
 
-    G2solve3arc()
-    : tolerance(1e-10)
-    , maxIter(100)
-    {}
-
-    ~G2solve3arc() {}
+    G2solve3arc() = default;
+    ~G2solve3arc() = default;
 
     //!
     //! Fix tolerance for the G2 problem
@@ -807,7 +792,7 @@ namespace G2lib {
     real_type
     thetaTotalVariation() const
     { return theta_total_variation(); }
-    
+
     real_type
     thetaMinMax( real_type & thMin, real_type & thMax ) const
     { return theta_min_max(thMin,thMax); }
@@ -835,49 +820,18 @@ namespace G2lib {
   //!
   class ClothoidList : public BaseCurve {
 
-    bool                  m_curve_is_closed;
+    bool                  m_curve_is_closed{false};
     vector<real_type>     m_s0;
     vector<ClothoidCurve> m_clotoidList;
 
     mutable Utils::BinarySearch<int_type> m_lastInterval;
 
-    mutable bool               m_aabb_done;
-    mutable AABBtree           m_aabb_tree;
-    mutable real_type          m_aabb_offs;
-    mutable real_type          m_aabb_max_angle;
-    mutable real_type          m_aabb_max_size;
+    mutable bool               m_aabb_done{false};
+    mutable AABB_TREE          m_aabb_tree;
+    mutable real_type          m_aabb_offs{real_type(0)};
+    mutable real_type          m_aabb_max_angle{real_type(0)};
+    mutable real_type          m_aabb_max_size{real_type(0)};
     mutable vector<Triangle2D> m_aabb_tri;
-
-    #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    class T2D_collision_list_ISO {
-      ClothoidList const * pList1;
-      real_type    const   m_offs1;
-      ClothoidList const * pList2;
-      real_type    const   m_offs2;
-    public:
-      T2D_collision_list_ISO(
-        ClothoidList const * _pList1,
-        real_type    const   _offs1,
-        ClothoidList const * _pList2,
-        real_type    const   _offs2
-      )
-      : pList1(_pList1)
-      , m_offs1(_offs1)
-      , pList2(_pList2)
-      , m_offs2(_offs2)
-      {}
-
-      bool
-      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        Triangle2D    const & T1 = pList1->m_aabb_tri[size_t(ptr1->Ipos())];
-        Triangle2D    const & T2 = pList2->m_aabb_tri[size_t(ptr2->Ipos())];
-        ClothoidCurve const & C1 = pList1->get(T1.Icurve());
-        ClothoidCurve const & C2 = pList2->get(T2.Icurve());
-        real_type ss1, ss2;
-        return C1.aabb_intersect_ISO( T1, m_offs1, &C2, T2, m_offs2, ss1, ss2 );
-      }
-    };
-    #endif
 
     void
     resetLastInterval() {
@@ -905,9 +859,6 @@ namespace G2lib {
     //! Build an empty clothoid list
     //!
     ClothoidList()
-    : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , m_curve_is_closed(false)
-    , m_aabb_done(false)
     { this->resetLastInterval(); }
 
     ~ClothoidList() override {
@@ -920,10 +871,10 @@ namespace G2lib {
     //! Build a copy of an existing clothoid list
     //!
     ClothoidList( ClothoidList const & s )
-    : BaseCurve(G2LIB_CLOTHOID_LIST)
-    , m_curve_is_closed(false)
-    , m_aabb_done(false)
     { this->resetLastInterval(); copy(s); }
+
+    CurveType    type()      const override { return G2LIB_CLOTHOID_LIST; }
+    char const * type_name() const override { return "ClothoidList"; }
 
     //!
     //! Initialize the clothoid list
@@ -979,7 +930,15 @@ namespace G2lib {
     //!
     //! Build a clothoid from a curve
     //!
-    explicit ClothoidList( BaseCurve const & C );
+    explicit ClothoidList( BaseCurve const * pC );
+
+    void build( LineSegment const & );
+    void build( CircleArc const & );
+    void build( ClothoidCurve const & );
+    void build( Biarc const & );
+    void build( PolyLine const & );
+    void build( BiarcList const & );
+    void build( ClothoidList const & );
 
     //!
     //! Add a line segment to the tail of clothoid list
@@ -1106,12 +1065,12 @@ namespace G2lib {
     //!
     //! Difference initial final point x component
     //!
-    real_type closure_gap_x()  const { return this->x_end() - this->x_begin(); }
+    real_type closure_gap_x() const { return this->x_end() - this->x_begin(); }
 
     //!
     //! Difference initial final point y component
     //!
-    real_type closure_gap_y()  const { return this->y_end() - this->y_begin(); }
+    real_type closure_gap_y() const { return this->y_end() - this->y_begin(); }
 
     //!
     //! Difference initial final tangent x component
@@ -1342,28 +1301,28 @@ namespace G2lib {
 
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override;
 
     void
     bbTriangles_ISO(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override;
 
     void
     bbTriangles_SAE(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -1897,8 +1856,8 @@ namespace G2lib {
     //!
     void
     getSK(
-      std::vector<real_type> & s,
-      std::vector<real_type> & kappa
+      vector<real_type> & s,
+      vector<real_type> & kappa
     ) const {
       s.resize( m_clotoidList.size()+1 );
       kappa.resize( m_clotoidList.size()+1 );
@@ -1928,9 +1887,9 @@ namespace G2lib {
     //!
     void
     getSTK(
-      std::vector<real_type> & s,
-      std::vector<real_type> & theta,
-      std::vector<real_type> & kappa
+      vector<real_type> & s,
+      vector<real_type> & theta,
+      vector<real_type> & kappa
     ) const {
       s.resize( m_clotoidList.size()+1 );
       theta.resize( m_clotoidList.size()+1 );
@@ -2005,7 +1964,9 @@ namespace G2lib {
     //! Detect a collision with another clothoid list
     //!
     bool
-    collision( ClothoidList const & C ) const;
+    collision( ClothoidList const & CL ) const {
+      return collision_ISO( 0, CL, 0 );
+    }
 
     //!
     //! Detect a collision with another clothoid list with offset
@@ -2021,6 +1982,16 @@ namespace G2lib {
       real_type            offs_C
     ) const;
 
+    bool
+    collision( BaseCurve const * pC ) const override;
+
+    bool
+    collision_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_C
+    ) const override;
+
     /*\
      |   _       _                          _
      |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
@@ -2032,38 +2003,46 @@ namespace G2lib {
     //!
     //! Intersect a clothoid list with another clothoid list
     //!
-    //! \param[in]  CL          second clothoid list
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  CL    second clothoid list
+    //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
     void
     intersect(
       ClothoidList const & CL,
-      IntersectList      & ilist,
-      bool                 swap_s_vals
+      IntersectList      & ilist
     ) const {
-      intersect_ISO( 0, CL, 0, ilist, swap_s_vals );
+      this->intersect_ISO( 0, CL, 0, ilist );
     }
 
     //!
     //! Intersect a clothoid list with another clothoid list with offset (ISO)
     //!
-    //! \param[in]  offs        offset of first clothoid list
-    //! \param[in]  CL          second clothoid list
-    //! \param[in]  offs_obj    offset of second clothoid list
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  offs     offset of first clothoid list
+    //! \param[in]  CL       second clothoid list
+    //! \param[in]  offs_obj offset of second clothoid list
+    //! \param[out] ilist    list of the intersection (as parameter on the curves)
     //!
     void
     intersect_ISO(
       real_type            offs,
       ClothoidList const & CL,
       real_type            offs_obj,
-      IntersectList      & ilist,
-      bool                 swap_s_vals
+      IntersectList      & ilist
     ) const;
+
+    void
+    intersect(
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const override;
+
+    void
+    intersect_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_LS,
+      IntersectList   & ilist
+    ) const override;
 
     //!
     //! Save Clothoid list to a stream
@@ -2254,24 +2233,24 @@ namespace G2lib {
 
     Utils::Malloc<real_type> realValues;
 
-    real_type * m_x;
-    real_type * m_y;
-    TargetType  m_tt;
-    real_type   m_theta_I;
-    real_type   m_theta_F;
-    int_type    m_npts;
+    real_type * m_x{nullptr};
+    real_type * m_y{nullptr};
+    TargetType  m_tt{P1};
+    real_type   m_theta_I{real_type(0)};
+    real_type   m_theta_F{real_type(0)};
+    int_type    m_npts{0};
 
     // work vector
-    mutable real_type * m_k;
-    mutable real_type * m_dk;
-    mutable real_type * m_L;
-    mutable real_type * m_kL;
-    mutable real_type * m_L_1;
-    mutable real_type * m_L_2;
-    mutable real_type * m_k_1;
-    mutable real_type * m_k_2;
-    mutable real_type * m_dk_1;
-    mutable real_type * m_dk_2;
+    mutable real_type * m_k{nullptr};
+    mutable real_type * m_dk{nullptr};
+    mutable real_type * m_L{nullptr};
+    mutable real_type * m_kL{nullptr};
+    mutable real_type * m_L_1{nullptr};
+    mutable real_type * m_L_2{nullptr};
+    mutable real_type * m_k_1{nullptr};
+    mutable real_type * m_k_2{nullptr};
+    mutable real_type * m_dk_1{nullptr};
+    mutable real_type * m_dk_2{nullptr};
 
     real_type
     diff2pi( real_type in ) const {
@@ -2281,10 +2260,10 @@ namespace G2lib {
   public:
 
     ClothoidSplineG2()
-    : realValues("ClothoidSplineG2"), m_tt(P1)
+    : realValues("ClothoidSplineG2")
     {}
 
-    ~ClothoidSplineG2() {}
+    ~ClothoidSplineG2() = default;
 
     void
     setP1( real_type theta0, real_type thetaN )

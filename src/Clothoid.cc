@@ -41,35 +41,70 @@ namespace G2lib {
   using std::ceil;
   using std::floor;
   using std::isfinite;
-  using std::numeric_limits;
 
   int_type  ClothoidCurve::m_max_iter  = 10;
   real_type ClothoidCurve::m_tolerance = 1e-9;
 
+  //!
+  //! Build a clothoid from a line segment.
+  //!
+  void
+  ClothoidCurve::build( LineSegment const & LS ) {
+    m_CD.m_x0     = LS.m_x0;
+    m_CD.m_y0     = LS.m_y0;
+    m_CD.m_theta0 = LS.m_theta0;
+    m_CD.m_kappa0 = 0;
+    m_CD.m_dk     = 0;
+    m_L           = LS.m_L;
+    m_aabb_done   = false;
+  }
+
+  //!
+  //! Build a clothoid from a circle arc.
+  //!
+  void
+  ClothoidCurve::build( CircleArc const & C ) {
+    m_CD.m_x0     = C.m_x0;
+    m_CD.m_y0     = C.m_y0;
+    m_CD.m_theta0 = C.m_theta0;
+    m_CD.m_kappa0 = C.m_k;
+    m_CD.m_dk     = 0;
+    m_L           = C.m_L;
+    m_aabb_done   = false;
+  }
+
+  void ClothoidCurve::build( ClothoidCurve const & C ) { this->copy(C); }
+
+  void ClothoidCurve::build( Biarc const & )           { UTILS_ERROR("can convert from Biarc to ClothoidCurve\n"); }
+  void ClothoidCurve::build( PolyLine const & )        { UTILS_ERROR("can convert from PolyLine to ClothoidCurve\n"); }
+  void ClothoidCurve::build( BiarcList const & )       { UTILS_ERROR("can convert from BiarcList to ClothoidCurve\n"); }
+  void ClothoidCurve::build( ClothoidList const & )    { UTILS_ERROR("can convert from ClothoidList to ClothoidCurve\n"); }
+
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  ClothoidCurve::ClothoidCurve( BaseCurve const & C )
-  : BaseCurve(G2LIB_CLOTHOID)
-  , m_aabb_done(false)
-  {
-    switch ( C.type() ) {
+  ClothoidCurve::ClothoidCurve( BaseCurve const * pC ) : ClothoidCurve() {
+
+    G2LIB_DEBUG_MESSAGE( "ClothoidCurve convert: {}\n", pC->type_name() );
+
+    switch ( pC->type() ) {
     case G2LIB_LINE:
-      build( *static_cast<LineSegment const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidCurve\n" );
+      build( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
-      build( *static_cast<CircleArc const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidCurve\n" );
+      build( *static_cast<CircleArc const *>(pC) );
       break;
     case G2LIB_CLOTHOID:
-      copy( *static_cast<ClothoidCurve const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidCurve\n" );
+      copy( *static_cast<ClothoidCurve const *>(pC) );
       break;
-    case G2LIB_BIARC:
-    case G2LIB_BIARC_LIST:
-    case G2LIB_CLOTHOID_LIST:
-    case G2LIB_POLYLINE:
+    default:
       UTILS_ERROR(
         "ClothoidList constructor cannot convert from: {}\n",
-        CurveType_name[C.type()]
+        pC->type_name()
       );
+      break;
     }
   }
 
@@ -77,27 +112,26 @@ namespace G2lib {
 
   void
   ClothoidCurve::build(
-    real_type _x0,
-    real_type _y0,
-    real_type _theta0,
-    real_type _k,
-    real_type _dk,
-    real_type _L
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type k,
+    real_type dk,
+    real_type L
   ) {
     UTILS_ASSERT(
-      _L > 0,
+      L > 0,
       "ClothoidCurve::build( x0={}, y0={}, theta0={}, k={}, dk={}, L={} )\n"
       "L must be positive!\n",
-      _x0, _y0, _theta0, _k, _dk, _L
+      x0, y0, theta0, k, dk, L
     );
-    m_CD.m_x0     = _x0;
-    m_CD.m_y0     = _y0;
-    m_CD.m_theta0 = _theta0;
-    m_CD.m_kappa0 = _k;
-    m_CD.m_dk     = _dk;
-    m_L           = _L;
+    m_CD.m_x0     = x0;
+    m_CD.m_y0     = y0;
+    m_CD.m_theta0 = theta0;
+    m_CD.m_kappa0 = k;
+    m_CD.m_dk     = dk;
+    m_L           = L;
     m_aabb_done   = false;
-    m_aabb_tree.clear();
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -232,9 +266,9 @@ namespace G2lib {
       m_CD.eval_ISO( ss,  offs, x0, y0 );
       m_CD.eval_ISO( sss, offs, x1, y1 );
 
-      real_type tx0    = cos(thh);
-      real_type ty0    = sin(thh);
-      real_type alpha  = sss-ss; // se angolo troppo piccolo uso approx piu rozza
+      real_type tx0   = cos(thh);
+      real_type ty0   = sin(thh);
+      real_type alpha = sss-ss; // se angolo troppo piccolo uso approx piu rozza
       if ( abs(thh-thhh) > one_degree ) {
         real_type tx1 = cos(thhh);
         real_type ty1 = sin(thhh);
@@ -293,24 +327,24 @@ namespace G2lib {
   ) const {
     vector<Triangle2D> tvec;
     bbTriangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
-    xmin = ymin = numeric_limits<real_type>::infinity();
+    xmin = ymin = Utils::Inf<real_type>();
     xmax = ymax = -xmin;
     vector<Triangle2D>::const_iterator it;
-    for ( it = tvec.begin(); it != tvec.end(); ++it ) {
+    for ( auto const & T : tvec ) {
       // - - - - - - - - - - - - - - - - - - - -
-      if      ( it->x1() < xmin ) xmin = it->x1();
-      else if ( it->x1() > xmax ) xmax = it->x1();
-      if      ( it->x2() < xmin ) xmin = it->x2();
-      else if ( it->x2() > xmax ) xmax = it->x2();
-      if      ( it->x3() < xmin ) xmin = it->x3();
-      else if ( it->x3() > xmax ) xmax = it->x3();
+      if      ( T.x1() < xmin ) xmin = T.x1();
+      else if ( T.x1() > xmax ) xmax = T.x1();
+      if      ( T.x2() < xmin ) xmin = T.x2();
+      else if ( T.x2() > xmax ) xmax = T.x2();
+      if      ( T.x3() < xmin ) xmin = T.x3();
+      else if ( T.x3() > xmax ) xmax = T.x3();
       // - - - - - - - - - - - - - - - - - - - -
-      if      ( it->y1() < ymin ) ymin = it->y1();
-      else if ( it->y1() > ymax ) ymax = it->y1();
-      if      ( it->y2() < ymin ) ymin = it->y2();
-      else if ( it->y2() > ymax ) ymax = it->y2();
-      if      ( it->y3() < ymin ) ymin = it->y3();
-      else if ( it->y3() > ymax ) ymax = it->y3();
+      if      ( T.y1() < ymin ) ymin = T.y1();
+      else if ( T.y1() > ymax ) ymax = T.y1();
+      if      ( T.y2() < ymin ) ymin = T.y2();
+      else if ( T.y2() > ymax ) ymax = T.y2();
+      if      ( T.y3() < ymin ) ymin = T.y3();
+      else if ( T.y3() > ymax ) ymax = T.y3();
     }
   }
 
@@ -336,30 +370,19 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    #ifdef G2LIB_USE_CXX11
-    vector<shared_ptr<BBox const> > bboxes;
-    #else
-    vector<BBox const *> bboxes;
-    #endif
-
     bbTriangles_ISO( offs, m_aabb_tri, max_angle, max_size );
-    bboxes.reserve(m_aabb_tri.size());
-    vector<Triangle2D>::const_iterator it;
+
     int_type ipos = 0;
-    for ( it = m_aabb_tri.begin(); it != m_aabb_tri.end(); ++it, ++ipos ) {
-      real_type xmin, ymin, xmax, ymax;
-      it->bbox( xmin, ymin, xmax, ymax );
-      #ifdef G2LIB_USE_CXX11
-      bboxes.push_back( make_shared<BBox const>(
-        xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos
-      ) );
-      #else
-      bboxes.push_back(
-        new BBox( xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos )
-      );
-      #endif
+    int_type nobj = int_type(m_aabb_tri.size());
+    m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
+    m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
+    for ( auto const & clot : m_aabb_tri ) {
+      real_type bbox_min[2], bbox_max[2];
+      clot.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
+      m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
+      ++ipos;
     }
-    m_aabb_tree.build(bboxes);
+    m_aabb_tree.build();
     m_aabb_done      = true;
     m_aabb_offs      = offs;
     m_aabb_max_angle = max_angle;
@@ -377,14 +400,6 @@ namespace G2lib {
    |  \___\___/|_|_|_|___/_|\___/|_| |_|
   \*/
 
-  bool
-  ClothoidCurve::collision( ClothoidCurve const & C ) const {
-    this->build_AABBtree_ISO( 0 );
-    C.build_AABBtree_ISO( 0 );
-    T2D_collision_ISO fun( this, 0, &C, 0 );
-    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
@@ -395,8 +410,29 @@ namespace G2lib {
   ) const {
     this->build_AABBtree_ISO( offs );
     C.build_AABBtree_ISO( offs_C );
-    T2D_collision_ISO fun( this, offs, &C, offs_C );
-    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
+    AABB_MAP intersectList;
+    m_aabb_tree.intersect_and_refine( C.m_aabb_tree, intersectList );
+    for ( auto const & I : intersectList ) {
+      int_type i = I.first;
+      UTILS_ASSERT_DEBUG(
+        i >= 0 && i < int_type(m_aabb_tri.size()),
+        "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
+        offs, offs_C, i, m_aabb_tri.size()
+      );
+      Triangle2D const & T1 = m_aabb_tri[i];
+      for ( int_type j : I.second ) {
+        UTILS_ASSERT_DEBUG(
+          j >= 0 && j < int_type(C.m_aabb_tri.size()),
+          "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
+          offs, offs_C, j, C.m_aabb_tri.size()
+        );
+        Triangle2D const & T2 = C.m_aabb_tri[j];
+        real_type ss1, ss2;
+        bool collide = this->aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
+        if ( collide ) return true;
+      }
+    }
+    return false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -420,8 +456,58 @@ namespace G2lib {
   ) const {
     this->build_AABBtree_ISO( offs, max_angle, max_size );
     C.build_AABBtree_ISO( offs_C, max_angle, max_size );
-    T2D_approximate_collision fun( this, &C );
-    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
+    AABB_MAP intersectList;
+    m_aabb_tree.intersect_and_refine( C.m_aabb_tree, intersectList );
+    for ( auto const & I : intersectList ) {
+      int_type i = I.first;
+      UTILS_ASSERT_DEBUG(
+        i >= 0 && i < int_type(m_aabb_tri.size()),
+        "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
+        offs, offs_C, i, m_aabb_tri.size()
+      );
+      Triangle2D const & T1 = m_aabb_tri[i];
+      for ( int_type j : I.second ) {
+        UTILS_ASSERT_DEBUG(
+          j >= 0 && j < int_type(C.m_aabb_tri.size()),
+          "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
+          offs, offs_C, j, C.m_aabb_tri.size()
+        );
+        Triangle2D const & T2 = C.m_aabb_tri[j];
+        bool collide = T1.overlap(T2);
+        if ( collide ) return true;
+      }
+    }
+    return false;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidCurve::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == G2LIB_CLOTHOID ) {
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
+      return this->collision( C );
+    } else {
+      ClothoidCurve C(pC);
+      return this->collision( C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidCurve::collision_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C
+  ) const {
+    if ( pC->type() == G2LIB_CLOTHOID ) {
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    } else {
+      ClothoidCurve C(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -504,49 +590,125 @@ namespace G2lib {
     real_type             offs,
     ClothoidCurve const & C,
     real_type             offs_C,
-    IntersectList       & ilist,
-    bool                  swap_s_vals
+    IntersectList       & ilist
   ) const {
+    real_type ss1, ss2;
+
     if ( intersect_with_AABBtree ) {
+      #ifdef G2LIB_DEBUG
+      Utils::TicToc tictoc;
+      tictoc.tic();
+      #endif
+
       this->build_AABBtree_ISO( offs );
       C.build_AABBtree_ISO( offs_C );
-      AABBtree::VecPairPtrBBox iList;
-      m_aabb_tree.intersect( C.m_aabb_tree, iList );
-      AABBtree::VecPairPtrBBox::const_iterator ip;
+      #ifdef G2LIB_DEBUG
+      tictoc.toc();
+      #endif
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidCurve intersect_ISO: build_AABBtree_ISO elapsed {}ms\n",
+        tictoc.elapsed_ms()
+      );
 
-      for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-        size_t ipos1 = size_t(ip->first->Ipos());
-        size_t ipos2 = size_t(ip->second->Ipos());
+      #ifdef G2LIB_DEBUG
+      tictoc.tic();
+      #endif
+      AABB_MAP intersectList;
+      m_aabb_tree.intersect_and_refine( C.m_aabb_tree, intersectList );
+      #ifdef G2LIB_DEBUG
+      tictoc.toc();
+      #endif
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidCurve intersect_ISO: intersect_and_refine elapsed {}ms candidated #{}\n",
+        tictoc.elapsed_ms(), intersectList.size()
+      );
 
-        Triangle2D const & T1 = m_aabb_tri[ipos1];
-        Triangle2D const & T2 = C.m_aabb_tri[ipos2];
-
-        real_type ss1, ss2;
-        bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
-
-        if ( converged ) {
-          if ( swap_s_vals ) swap( ss1, ss2 );
-          ilist.push_back( Ipair( ss1, ss2 ) );
+      #ifdef G2LIB_DEBUG
+      tictoc.tic();
+      #endif
+      for ( auto const & I : intersectList ) {
+        int_type i = I.first;
+        UTILS_ASSERT_DEBUG(
+          i >= 0 && i < int_type(m_aabb_tri.size()),
+          "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) i={} out of range [0,{})\n",
+          offs, offs_C, i, m_aabb_tri.size()
+        );
+        Triangle2D const & T1 = m_aabb_tri[i];
+        for ( int_type j : I.second ) {
+          UTILS_ASSERT_DEBUG(
+            j >= 0 && j < int_type(C.m_aabb_tri.size()),
+            "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) j={} out of range [0,{})\n",
+            offs, offs_C, j, C.m_aabb_tri.size()
+          );
+          Triangle2D const & T2 = C.m_aabb_tri[j];
+          bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
+          if ( converged ) ilist.push_back( Ipair( ss1, ss2 ) );
         }
       }
+
+      #ifdef G2LIB_DEBUG
+      tictoc.toc();
+      #endif
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidCurve intersect_ISO: intersections elapsed {}ms candidated #{}\n",
+        tictoc.elapsed_ms(), intersectList.size()
+      );
+
     } else {
+
+      #ifdef G2LIB_DEBUG
+      Utils::TicToc tictoc;
+      tictoc.tic();
+      #endif
+
       bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
       C.bbTriangles_ISO( offs_C, C.m_aabb_tri, Utils::m_pi/18, 1e100 );
+
       vector<Triangle2D>::const_iterator i1, i2;
-      for ( i1 = m_aabb_tri.begin(); i1 != m_aabb_tri.end(); ++i1 ) {
-        for ( i2 = C.m_aabb_tri.begin(); i2 != C.m_aabb_tri.end(); ++i2 ) {
-          Triangle2D const & T1 = *i1;
-          Triangle2D const & T2 = *i2;
-
-          real_type ss1, ss2;
+      for ( Triangle2D const & T1 : m_aabb_tri ) {
+        for ( Triangle2D const & T2 : C.m_aabb_tri ) {
           bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
-
-          if ( converged ) {
-            if ( swap_s_vals ) swap( ss1, ss2 );
-            ilist.push_back( Ipair( ss1, ss2 ) );
-          }
+          if ( converged ) ilist.push_back( Ipair( ss1, ss2 ) );
         }
       }
+
+      #ifdef G2LIB_DEBUG
+      tictoc.toc();
+      #endif
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidCurve intersect_ISO: intersections elapsed {}ms noAABB tree\n",
+        tictoc.elapsed_ms()
+      );
+    }
+  }
+
+  void
+  ClothoidCurve::intersect(
+    BaseCurve const * pC,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_CLOTHOID ) {
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
+      this->intersect( C, ilist );
+    } else {
+      ClothoidCurve C(pC);
+      this->intersect( C, ilist );
+    }
+  }
+
+  void
+  ClothoidCurve::intersect_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_CLOTHOID ) {
+      ClothoidCurve const & C = *static_cast<ClothoidCurve const *>(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
+    } else {
+      ClothoidCurve C(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
     }
   }
 
@@ -628,31 +790,53 @@ namespace G2lib {
     real_type & s,
     real_type & DST
   ) const {
-    DST = numeric_limits<real_type>::infinity();
-    this->build_AABBtree_ISO( offs );
 
-    AABBtree::VecPtrBBox candidateList;
-    m_aabb_tree.min_distance( qx, qy, candidateList );
-    AABBtree::VecPtrBBox::const_iterator ic;
-    UTILS_ASSERT0(
-      candidateList.size() > 0,
-      "ClothoidCurve::closest_point_internal no candidate\n"
-    );
-    for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
-      size_t ipos = size_t((*ic)->Ipos());
-      Triangle2D const & T = m_aabb_tri[ipos];
-      real_type dst = T.distMin( qx, qy );
-      if ( dst < DST ) {
-        // refine distance
-        real_type xx, yy, ss;
-        closest_point_internal(
-          T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
+    real_type xx, yy, ss;
+    this->build_AABBtree_ISO( offs );
+    DST = Utils::Inf<real_type>();
+
+    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+
+      AABB_SET candidateList;
+      real_type xy[2] = { qx, qy };
+      m_aabb_tree.min_distance_candidates( xy, candidateList );
+      UTILS_ASSERT0(
+         candidateList.size() > 0,
+        "ClothoidCurve::closest_point_internal no candidate\n"
+      );
+      for ( int_type ipos : candidateList ) {
+        UTILS_ASSERT_DEBUG(
+          ipos >= 0 && ipos < int_type(m_aabb_tri.size()),
+          "ClothoidCurve::closest_point_internal( qx={}, qy={}, offs={}, x, y, s, DST ) ipos={} out of range [0,{})\n",
+          qx, qy, offs, ipos, m_aabb_tri.size()
         );
+        Triangle2D const & T = m_aabb_tri[ipos];
+        real_type dst = T.distMin( qx, qy );
         if ( dst < DST ) {
-          DST = dst;
-          s   = ss;
-          x   = xx;
-          y   = yy;
+          // refine distance
+          closest_point_internal( T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst );
+          if ( dst < DST ) {
+            DST = dst;
+            s   = ss;
+            x   = xx;
+            y   = yy;
+          }
+        }
+      }
+
+    } else {
+
+      for ( Triangle2D const & T : m_aabb_tri ) {
+        real_type dst = T.distMin( qx, qy );
+        if ( dst < DST ) {
+          // refine distance
+          closest_point_internal( T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst );
+          if ( dst < DST ) {
+            DST = dst;
+            s   = ss;
+            x   = xx;
+            y   = yy;
+          }
         }
       }
     }

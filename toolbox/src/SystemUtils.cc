@@ -19,14 +19,15 @@
 
 #include "Utils.hh"
 
-#if defined(UTILS_OS_WINDOWS) || defined(UTILS_OS_MINGW)
-#include "SystemUtils_win32.cxx"
+#if defined(UTILS_OS_WINDOWS)
+  // MINGW is contained in WINDOWS 
+  #include "SystemUtils_win32.cxx"
 #elif defined(UTILS_OS_OSX)
-#include "SystemUtils_osx.cxx"
+  #include "SystemUtils_osx.cxx"
 #elif defined(UTILS_OS_LINUX)
-#include "SystemUtils_linux.cxx"
+  #include "SystemUtils_linux.cxx"
 #else
-#error "unsupported OS!"
+  #error "unsupported OS!"
 #endif
 
 namespace Utils {

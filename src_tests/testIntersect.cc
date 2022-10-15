@@ -25,35 +25,36 @@ main() {
   real_type L1     = 100;
   C1.build( x1, y1, theta1, k1, dk1, L1 );
 
-  //vector<G2lib::real_type> s1, s2;
-  //G2lib::int_type  max_iter  = 100;
-  //G2lib::real_type tolerance = 1e-8;
-  //C0.intersect( C1, s1, s2, max_iter, tolerance );
-  //C1.intersect( C0, s2, s1, max_iter, tolerance );
+  G2lib::LineSegment L;
+  L.build( x0, y0, 2, 2 );
 
   G2lib::IntersectList ilist;
+  C0.intersect( C1, ilist );
+  C1.intersect( C0, ilist );
+  G2lib::intersect( &L, &C1, ilist );
+  G2lib::intersect( &C1, &L, ilist );
 
-  G2lib::noAABBtree();
+  ilist.clear();
+  C0.intersect( C1, ilist );
 
-  C0.intersect( C1, ilist, false );
-
-  cout << "L0 = " << C0.length() << '\n';
-  cout << "L1 = " << C1.length() << '\n';
-
-  for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "s1[ " << i << "] = " << ilist[i].first << '\n';
-
-  for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "s2[ " << i << "] = " << ilist[i].second << '\n';
+  fmt::print( "L0 = {}\n", C0.length() );
+  fmt::print( "L1 = {}\n", C1.length() );
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "x[" << i << "] = " << setw(10) << C0.X(ilist[i].first)
-         << " y[" << i << "] = " << setw(10) << C0.Y(ilist[i].first)
-         << "\nx[" << i << "] = " << setw(10) << C1.X(ilist[i].second)
-         << " y[" << i << "] = " << setw(10) << C1.Y(ilist[i].second)
-         << "\n\n";
+    fmt::print( "s1[{}] = {}\n", i, ilist[i].first );
 
-  cout << "\n\nALL DONE FOLKS!!!\n";
+  for ( size_t i = 0; i < ilist.size(); ++i )
+    fmt::print( "s2[{}] = {}\n", i, ilist[i].second );
+
+  for ( size_t i = 0; i < ilist.size(); ++i )
+    fmt::print( "x[{}] = {:10} y=[{}] = {:10}\n"
+                "x[{}] = {:10} y=[{}] = {:10}\n\n",
+                i, C0.X(ilist[i].first),
+                i, C0.Y(ilist[i].first),
+                i, C1.X(ilist[i].second),
+                i, C1.Y(ilist[i].second) );
+
+  fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 
   return 0;
 }

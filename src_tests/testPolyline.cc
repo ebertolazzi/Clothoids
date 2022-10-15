@@ -27,71 +27,50 @@ main() {
   C2.translate(1,-1);
 
   G2lib::IntersectList ilist;
-  C1.intersect( C2, ilist, false );
+  C1.intersect( C2, ilist );
 
-  cout << "CLOTHOIDS\n";
-
-  for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "s1[ " << i << "] = " << ilist[i].first << '\n';
+  fmt::print("CLOTHOIDS\n");
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "s2[ " << i << "] = " << ilist[i].second << '\n';
+    fmt::print( "s1[{}] = {}\n", i, ilist[i].first );
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "x[" << i << "] = " << setw(10) << C1.X(ilist[i].first)
-         << " y[" << i << "] = " << setw(10) << C1.Y(ilist[i].first)
-         << "\nx[" << i << "] = " << setw(10) << C2.X(ilist[i].second)
-         << " y[" << i << "] = " << setw(10) << C2.Y(ilist[i].second)
-         << "\n\n";
+    fmt::print( "s2[{}] = {}\n", i, ilist[i].second );
 
-  vector<real_type>::const_iterator is;
+  for ( size_t i = 0; i < ilist.size(); ++i )
+    fmt::print(
+      "x[{}] = {} y[{}] = {}\n"
+      "x[{}] = {} y[{}] = {}\n\n",
+      i, C1.X(ilist[i].first),  i, C1.Y(ilist[i].first),
+      i, C2.X(ilist[i].second), i, C2.Y(ilist[i].second)
+    );
 
   P1.build( C1, 0.00001 );
   P2.build( C2, 0.00001 );
 
-  cout << "\n\nP1\n";
-  P1.info(cout);
-  cout << "\n\nP2\n";
-  P2.info(cout);
+  fmt::print(
+    "\n\nP2\n{}\n"
+    "\n\nP1\n{}\n",
+    P1.info(),
+    P2.info()
+  );
 
   vector<real_type> s1, s2;
   P1.intersect( P2, s1, s2 );
 
-  cout << "\n\nPOLYLINE\n";
-  cout << "# inter = "
-       << s1.size() << " "
-       << s2.size() << '\n';
+  fmt::print(
+    "\n\nPOLYLINE\n"
+    "# inter = {} {}\n",
+    s1.size(), s2.size()
+  );
 
-  for ( is = s1.begin(); is != s1.end(); ++is )
-    cout << "s1[ " << is-s1.begin() << "] = "
-         << *is << '\n';
+  for ( auto is = s1.begin(); is != s1.end(); ++is )
+    fmt::print( "s1[{}] = {}\n", is-s1.begin(), *is );
 
-  for ( is = s2.begin(); is != s2.end(); ++is )
-    cout << "s2[ " << is-s2.begin() << "] = "
-         << *is << '\n';
+  for ( auto is = s2.begin(); is != s2.end(); ++is )
+    fmt::print( "s2[{}] = {}\n", is-s2.begin(), *is );
 
-  G2lib::AABBtree aabb1, aabb2;
-  P1.build_AABBtree( aabb1 );
-  P2.build_AABBtree( aabb2 );
-
-  //bool ok = aabb1.intersect(aabb2);
-  //cout << "\nintersect = " << (ok?"YES\n":"NO\n");
-
-  G2lib::AABBtree::VecPairPtrBBox intersectionList;
-  aabb1.intersect( aabb2, intersectionList );
-  cout << "# inter = " << intersectionList.size() << '\n';
-
-  G2lib::AABBtree::VecPairPtrBBox::const_iterator ils;
-  for ( ils = intersectionList.begin(); ils != intersectionList.end(); ++ils )
-    cout
-      << *(ils->first)
-      << *(ils->second)
-      << '\n';
-
-  //P1.intersect(P2,s1,s2);
-  //P2.info(cout);
-
-  cout << "\n\nALL DONE FOLKS!!!\n";
+  fmt::print("\n\nALL DONE FOLKS!!!\n");
 
   return 0;
 }

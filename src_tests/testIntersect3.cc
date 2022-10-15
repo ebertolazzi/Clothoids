@@ -44,29 +44,34 @@ main() {
   //G2lib::BaseCurve *pC0 = &CL1;
   //G2lib::BaseCurve *pC1 = &L0;
 
-  pC0->intersect( *pC1, ilist, false );
-  pC0->intersect( CL1, ilist, false );
+  pC0->intersect( pC1,  ilist );
+  pC0->intersect( &CL1, ilist );
 
-  cout << collision( *pC0, *pC1 ) << '\n';
+  fmt::print( "{}\n", collision( pC0, pC1 ) );
   //C0.intersect( C1, ilist );
 
-  cout << "L0 = " << C0.length() << '\n';
-  cout << "L1 = " << C1.length() << '\n';
+  fmt::print( "L0 = {}\n", C0.length() );
+  fmt::print( "L1 = {}\n", C1.length() );
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "s1[ " << i << "] = " << ilist[i].first << '\n';
+    fmt::print( "s1[ {} ] = {}\n", i, ilist[i].first );
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "s2[ " << i << "] = " << ilist[i].second << '\n';
+    fmt::print( "s2[ {} ] = {}\n", i, ilist[i].second );
 
   for ( size_t i = 0; i < ilist.size(); ++i )
-    cout << "x[" << i << "] = " << setw(10) << C0.X(ilist[i].first)
-         << " y[" << i << "] = " << setw(10) << C0.Y(ilist[i].first)
-         << "\nx[" << i << "] = " << setw(10) << C1.X(ilist[i].second)
-         << " y[" << i << "] = " << setw(10) << C1.Y(ilist[i].second)
-         << "\n\n";
+    fmt::print(
+      "x[ {} ] = {:10}\n"
+      "y[ {} ] = {:10}\n"
+      "x[ {} ] = {:10}\n"
+      "y[ {} ] = {:10}\n",
+      i, C0.X(ilist[i].first),
+      i, C0.Y(ilist[i].first),
+      i, C1.X(ilist[i].second),
+      i, C1.Y(ilist[i].second)
+    );
 
-  cout << "\n\nALL DONE FOLKS!!!\n";
+  fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 
   return 0;
 }

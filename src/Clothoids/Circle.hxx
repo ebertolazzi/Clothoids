@@ -38,14 +38,14 @@ namespace G2lib {
 
     friend class Biarc;
 
-    real_type m_x0;     //!< initial x coordinate of the clothoid
-    real_type m_y0;     //!< initial y coordinate of the clothoid
-    real_type m_theta0; //!< initial angle of the clothoid
-    real_type m_c0;     //!< initial cos(angle) of the clothoid
-    real_type m_s0;     //!< initial sin(angle) of the clothoid
-    real_type m_k;      //!< curvature
+    real_type m_x0{0};     //!< initial x coordinate of the clothoid
+    real_type m_y0{0};     //!< initial y coordinate of the clothoid
+    real_type m_theta0{0}; //!< initial angle of the clothoid
+    real_type m_c0{1};     //!< initial cos(angle) of the clothoid
+    real_type m_s0{0};     //!< initial sin(angle) of the clothoid
+    real_type m_k{0};      //!< curvature
 
-    real_type m_L;      //!< length of the circle segment
+    real_type m_L{0};      //!< length of the circle segment
 
   public:
 
@@ -54,22 +54,12 @@ namespace G2lib {
     //!
     //! Build an empty circle
     //!
-    CircleArc()
-    : BaseCurve(G2LIB_CIRCLE)
-    , m_x0(0)
-    , m_y0(0)
-    , m_theta0(0)
-    , m_c0(1)
-    , m_s0(0)
-    , m_k(0)
-    , m_L(0)
-    {}
+    CircleArc() = default;
 
     //!
     //! Build a copy of an existing circle arc.
     //!
     CircleArc( CircleArc const & s )
-    : BaseCurve(G2LIB_CIRCLE)
     { copy(s); }
 
     //!
@@ -89,8 +79,7 @@ namespace G2lib {
       real_type k,
       real_type L
     )
-    : BaseCurve(G2LIB_CIRCLE)
-    , m_x0(x0)
+    : m_x0(x0)
     , m_y0(y0)
     , m_theta0(theta0)
     , m_c0(cos(theta0))
@@ -105,8 +94,7 @@ namespace G2lib {
     //!
     explicit
     CircleArc( LineSegment const & LS )
-    : BaseCurve(G2LIB_CIRCLE)
-    , m_x0(LS.x_begin())
+    : m_x0(LS.x_begin())
     , m_y0(LS.y_begin())
     , m_theta0(LS.m_theta0)
     , m_c0(LS.m_c0)
@@ -133,7 +121,10 @@ namespace G2lib {
     //! Build a circle arc from a generic curve (if possibile).
     //!
     explicit
-    CircleArc( BaseCurve const & C );
+    CircleArc( BaseCurve const * pC );
+
+    CurveType    type()      const override { return G2LIB_CIRCLE; }
+    char const * type_name() const override { return "CircleArc"; }
 
     //!
     //! Make a copy of an existing circle arc.
@@ -205,6 +196,18 @@ namespace G2lib {
       real_type x2,
       real_type y2
     );
+
+    //!
+    //! Construct a circle arc from a line
+    //! segment (degenerate circle).
+    //!
+    void build( LineSegment const & );
+    void build( CircleArc const & );
+    void build( Biarc const & );
+    void build( ClothoidCurve const & );
+    void build( PolyLine const & );
+    void build( BiarcList const & );
+    void build( ClothoidList const & );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -407,7 +410,7 @@ namespace G2lib {
     //!
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
+      vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
       int_type  icurve    = 0
@@ -425,7 +428,7 @@ namespace G2lib {
     void
     bbTriangles_ISO(
       real_type offs,
-      std::vector<Triangle2D> & tvec,
+      vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
       int_type  icurve    = 0
@@ -443,7 +446,7 @@ namespace G2lib {
     void
     bbTriangles_SAE(
       real_type offs,
-      std::vector<Triangle2D> & tvec,
+      vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
       int_type  icurve    = 0
@@ -693,6 +696,16 @@ namespace G2lib {
       real_type         offs_obj
     ) const;
 
+    bool
+    collision( BaseCurve const * pC ) const override;
+
+    bool
+    collision_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_C
+    ) const override;
+
     /*\
      |   _       _                          _
      |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
@@ -704,39 +717,47 @@ namespace G2lib {
     //!
     //! Intersect a circle arc with another circle arc.
     //!
-    //! \param[in]  obj         second biarc
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  obj   second biarc
+    //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
     void
     intersect(
       CircleArc const & obj,
-      IntersectList   & ilist,
-      bool              swap_s_vals
+      IntersectList   & ilist
     ) const;
 
     //!
     //! Intersect a circle arc with another circle arc with offset (ISO).
     //!
-    //! \param[in]  offs        offset of first circle arc
-    //! \param[in]  C           second circle arc
-    //! \param[in]  offs_obj    offset of second circle arc
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  offs     offset of first circle arc
+    //! \param[in]  C        second circle arc
+    //! \param[in]  offs_obj offset of second circle arc
+    //! \param[out] ilist    list of the intersection (as parameter on the curves)
     //!
     void
     intersect_ISO(
       real_type         offs,
       CircleArc const & C,
       real_type         offs_obj,
-      IntersectList   & ilist,
-      bool              swap_s_vals
+      IntersectList   & ilist
     ) const;
 
+    void
+    intersect(
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const override;
+
+    void
+    intersect_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_LS,
+      IntersectList   & ilist
+    ) const override;
+
     //!
-    //! Return \f$ \sin \theta_0 \f$ where 
+    //! Return \f$ \sin \theta_0 \f$ where
     //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
     real_type sinTheta0() const { return sin(m_theta0); }
@@ -753,7 +774,7 @@ namespace G2lib {
     real_type curvature() const { return m_k; }
 
     //!
-    //! Return the length of the arc that 
+    //! Return the length of the arc that
     //! can approximated by a line segment.
     //!
     real_type lenTolerance( real_type tol ) const;
@@ -778,7 +799,7 @@ namespace G2lib {
     //!
     real_type
     theta_min_max( real_type & thMin, real_type & thMax ) const;
-  
+
     //!
     //! Minimum and maximum tangent angle.
     //!
@@ -855,7 +876,7 @@ namespace G2lib {
     real_type
     thetaTotalVariation() const
     { return theta_total_variation(); }
-    
+
     real_type
     thetaMinMax( real_type & thMin, real_type & thMax ) const
     { return theta_min_max(thMin,thMax); }

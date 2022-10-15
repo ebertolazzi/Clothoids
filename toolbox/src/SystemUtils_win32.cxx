@@ -1,6 +1,11 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include <direct.h>
+#include <fstream>
+
+#ifdef UTILS_OS_MINGW
+  #include <sys/stat.h>
+#endif
 
 namespace Utils {
 
@@ -140,11 +145,17 @@ namespace Utils {
   */
   string
   get_user_name() {
-    char buffer[1024];
-    GetEnvironmentVariable("USER",buffer,1024);
-    if ( buffer[0] == '\0')
-      GetEnvironmentVariable("USERNAME",buffer,1024);
-    return string(buffer);
+    #ifdef UTILS_OS_MINGW
+      char const * USER = getenv("USER");
+      UTILS_ASSERT( USER != nullptr, "get_user_name, undefined enviroment `USER`" );
+      return string{USER};
+    #else
+      char buffer[1024];
+      GetEnvironmentVariable("USER",buffer,1024);
+      if ( buffer[0] == '\0')
+        GetEnvironmentVariable("USERNAME",buffer,1024);
+      return string(buffer);
+    #endif
   }
 
   /*
@@ -152,12 +163,18 @@ namespace Utils {
   */
   string
   get_home_directory() {
-    char buffer[1024];
-    GetEnvironmentVariable("HOMEDRIVE",buffer,DWORD(1024));
-    string res = buffer;
-    GetEnvironmentVariable("HOMEPATH",buffer,DWORD(1024));
-    res += buffer;
-    return res;
+    #ifdef UTILS_OS_MINGW
+      char const * HOME = getenv("HOME");
+      UTILS_ASSERT( HOME != nullptr, "get_home_directory, undefined enviroment `HOME`" );
+      return string{HOME};
+    #else
+      char buffer[1024];
+      GetEnvironmentVariable("HOMEDRIVE",buffer,DWORD(1024));
+      string res = buffer;
+      GetEnvironmentVariable("HOMEPATH",buffer,DWORD(1024));
+      res += buffer;
+      return res;
+    #endif
   }
 
   /*
@@ -174,9 +191,19 @@ namespace Utils {
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
+
   bool
   check_if_file_exists( char const * fname ) {
-    return FindFirstFileA( fname, NULL ) != INVALID_HANDLE_VALUE;
+    #ifdef UTILS_OS_MINGW
+      struct stat buffer;
+      if (stat (fname, &buffer) == 0) return S_ISREG(buffer.st_mode);
+      return false;
+    #else
+      DWORD ftyp = GetFileAttributesA(fname);
+      if (ftyp == INVALID_FILE_ATTRIBUTES) return false;  //something is wrong with your path!
+      if (ftyp & FILE_ATTRIBUTE_DIRECTORY) return false;  // this is a directory!
+      return true; // this is not a directory!
+    #endif
   }
 
   /*
@@ -184,10 +211,16 @@ namespace Utils {
   */
   bool
   check_if_dir_exists( char const * dirname ) {
-    DWORD ftyp = GetFileAttributesA(dirname);
-    if (ftyp == INVALID_FILE_ATTRIBUTES) return false;  //something is wrong with your path!
-    if (ftyp & FILE_ATTRIBUTE_DIRECTORY) return true;   // this is a directory!
-    return false;    // this is not a directory!
+    #ifdef UTILS_OS_MINGW
+      struct stat buffer;
+      if (stat (dirname, &buffer) == 0) return S_ISDIR(buffer.st_mode);
+      return false;
+    #else
+      DWORD ftyp = GetFileAttributesA(dirname);
+      if (ftyp == INVALID_FILE_ATTRIBUTES) return false;  //something is wrong with your path!
+      if (ftyp & FILE_ATTRIBUTE_DIRECTORY) return true;   // this is a directory!
+      return false; // this is not a directory!
+    #endif
   }
 
   /*

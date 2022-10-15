@@ -1,6 +1,6 @@
 /**
  * PYTHON Wrapper for Clothoids
- * 
+ *
  * License MIT - See LICENSE file
  * 2019 Matteo Ragni, Claudio Kerov Ghiglianovich,
  *      Enrico Bertolazzi, Marco Frego
@@ -27,15 +27,15 @@ namespace G2lib {
       R"S(
         The base curve that rapresents the base for all the curves that are contained
         inside the library. The default constructor select the type from the CurveType
-        enum. The class is a pure abstract class and cannot be directly instantiated 
+        enum. The class is a pure abstract class and cannot be directly instantiated
         by the user, but acts as a prototype.
 
         Several methods are defined in ISO or SAE standard. The difference is in the
         signs for the reference frame attached to the curve.
 
-         * ISO: the positive normal direction is on the left, while the negative is 
+         * ISO: the positive normal direction is on the left, while the negative is
            on the right. This standard is used also in the undefined standard methods,
-           where the offset is always considered to be 0. This standard follows the 
+           where the offset is always considered to be 0. This standard follows the
            right-hand rule.
          * SAE: the positive normal direction is on the right while the negative is
            on the right.
@@ -44,17 +44,17 @@ namespace G2lib {
 
         :param CurveType type: enum representing the type of the curve
       )S")
-      
+
       .def(py::init<CurveType const &>(), py::arg("type"))
-      
-      .def("type", &BaseCurve::type, 
+
+      .def("type", &BaseCurve::type,
       R"S(
         Returns the type of the curve
 
         :return: the type of the curve
         :rtype: CurveType
       )S")
-      
+
       .def("length", &BaseCurve::length,
       R"S(
         Length of the current curve
@@ -62,16 +62,16 @@ namespace G2lib {
         :return: length of the curve
         :rtype: float
       )S")
-      
+
       .def("length_ISO", &BaseCurve::length_ISO, py::arg("offs"),
       R"S(
         Length of the current curve, with offset (ISO)
-        
+
         :param float offs: curve offset
         :return: length with offset (ISO)
         :rtype: float
       )S")
-      
+
       .def("length_SAE", &BaseCurve::length_SAE, py::arg("offs"),
       R"S(
         Length of the current curve, with offset (SAE)
@@ -85,26 +85,26 @@ namespace G2lib {
         real_type x_min, y_min, x_max, y_max;
         self.bbox(x_min, y_min, x_max, y_max);
         return std::make_tuple(
-          std::make_tuple(x_min, y_min), 
+          std::make_tuple(x_min, y_min),
           std::make_tuple(x_max, y_max));
       },
       R"S(
-        Compute the bounding box of the curve, as a tuple of 
+        Compute the bounding box of the curve, as a tuple of
         tuples with minimum point and maximum point.
 
         :return: the extrema of the bounding box of the curve
         :rtype: Tuple[Tuple[float, float], Tuple[float, float]]
       )S")
-      
+
       .def("bbox_ISO", [](const BaseCurve & self, real_type offs) {
         real_type x_min, y_min, x_max, y_max;
         self.bbox_ISO(offs, x_min, y_min, x_max, y_max);
         return std::make_tuple(
-          std::make_tuple(x_min, y_min), 
+          std::make_tuple(x_min, y_min),
           std::make_tuple(x_max, y_max));
       }, py::arg("offs"),
       R"S(
-        Compute the bounding box of the curve, as a tuple of 
+        Compute the bounding box of the curve, as a tuple of
         tuples with minimum point and maximum point. With ISO offset
 
         :param float offs: curve offset
@@ -116,11 +116,11 @@ namespace G2lib {
         real_type x_min, y_min, x_max, y_max;
         self.bbox_SAE(offs, x_min, y_min, x_max, y_max);
         return std::make_tuple(
-          std::make_tuple(x_min, y_min), 
+          std::make_tuple(x_min, y_min),
           std::make_tuple(x_max, y_max));
       }, py::arg("offs"),
       R"S(
-        Compute the bounding box of the curve, as a tuple of 
+        Compute the bounding box of the curve, as a tuple of
         tuples with minimum point and maximum point. With ISO offset
 
         :param float offs: curve offset
@@ -135,7 +135,7 @@ namespace G2lib {
       }, py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0,
       R"S(
         Build a cover with triangles of the curve. Returns a list of triangles.
-      
+
         :param float max_angle: maximum angle variation of the curve covered by a triangle
         :param float max_size:  maximum admissible size of the covering tirnagles
         :param int icurve:    index of the covering triangles
@@ -149,9 +149,9 @@ namespace G2lib {
         return tvec;
       }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0,
       R"S(
-        Build a cover with triangles of the curve, using an ISO curve offset. 
+        Build a cover with triangles of the curve, using an ISO curve offset.
         Returns a list of triangles.
-      
+
         :param float offs:      curve offset
         :param float max_angle: maximum angle variation of the curve covered by a triangle
         :param float max_size:  maximum admissible size of the covering tirnagles
@@ -166,9 +166,9 @@ namespace G2lib {
         return tvec;
       }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0,
       R"S(
-        Build a cover with triangles of the curve, using a SAE curve offset. 
+        Build a cover with triangles of the curve, using a SAE curve offset.
         Returns a list of triangles.
-      
+
         :param float offs:      curve offset
         :param float max_angle: maximum angle variation of the curve covered by a triangle
         :param float max_size:  maximum admissible size of the covering tirnagles
@@ -184,7 +184,7 @@ namespace G2lib {
         :return: the initial angle of the curve
         :rtype: float
       )S")
-      
+
       .def("theta", &BaseCurve::theta, py::arg("s"),
       R"S(
         Angle of the curve at curvilinear value **s**
@@ -247,14 +247,14 @@ namespace G2lib {
         :rtype: List[float]
       )S")
 
-      .def("kappaEnd", &BaseCurve::kappaEnd, 
+      .def("kappaEnd", &BaseCurve::kappaEnd,
       R"S(
         Final curvature of the curve
 
         :return: the final curvature of the curve
         :rtype: float
       )S")
-      
+
       .def("xBegin", &BaseCurve::xBegin,
       R"S(
         Initial coordinate **x** of the curve
@@ -263,7 +263,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("X", &BaseCurve::X, py::arg("s"), 
+      .def("X", &BaseCurve::X, py::arg("s"),
       R"S(
         Coordinate **x** of the curve at curvilinear value **s**
 
@@ -277,7 +277,7 @@ namespace G2lib {
         std::vector<real_type> ret(n);
         for (size_t i = 0; i < n; i++) ret[i] = self.X(s[i]);
         return ret;
-      }, py::arg("s"), 
+      }, py::arg("s"),
       R"S(
         Coordinate **x** of the curve at curvilinear value **s**. Vectorial Version.
 
@@ -286,15 +286,15 @@ namespace G2lib {
         :rtype: List[float]
       )S")
 
-      .def("xEnd", &BaseCurve::xEnd, 
+      .def("xEnd", &BaseCurve::xEnd,
       R"S(
         Final coordinate **x** of the curve
 
         :return: the final coordinate **x** of the curve
         :rtype: float
       )S")
-      
-      .def("yBegin", &BaseCurve::yBegin, 
+
+      .def("yBegin", &BaseCurve::yBegin,
       R"S(
         Initial coordinate **y** of the curve
 
@@ -316,7 +316,7 @@ namespace G2lib {
         std::vector<real_type> ret(n);
         for (size_t i = 0; i < n; i++) ret[i] = self.Y(s[i]);
         return ret;
-      }, py::arg("s"), 
+      }, py::arg("s"),
       R"S(
         Coordinate **y** of the curve at curvilinear value **s**. Vectorial Version.
 
@@ -325,7 +325,7 @@ namespace G2lib {
         :rtype: List[float]
       )S")
 
-      .def("yEnd", &BaseCurve::yEnd, 
+      .def("yEnd", &BaseCurve::yEnd,
       R"S(
         Final coordinate **y** of the curve
 
@@ -378,8 +378,8 @@ namespace G2lib {
         :return: the final coordinate **x** of the curve
         :rtype: float
       )S")
-      
-      .def("yBegin_ISO", &BaseCurve::yBegin_ISO, py::arg("offs"), 
+
+      .def("yBegin_ISO", &BaseCurve::yBegin_ISO, py::arg("offs"),
       R"S(
         Initial coordinate **y** of the curve, with ISO offset
 
@@ -417,7 +417,7 @@ namespace G2lib {
         :rtype: List[float]
       )S")
 
-      .def("yEnd_ISO", &BaseCurve::yEnd_ISO, py::arg("offs"), 
+      .def("yEnd_ISO", &BaseCurve::yEnd_ISO, py::arg("offs"),
       R"S(
         Final coordinate **y** of the curve, with ISO offset
 
@@ -425,7 +425,7 @@ namespace G2lib {
         :return: the final coordinate **y** of the curve
         :rtype: float
       )S")
-      
+
       .def("xBegin_SAE", &BaseCurve::xBegin_SAE, py::arg("offs"),
       R"S(
         Initial coordinate **x** of the curve, with SAE offset
@@ -453,8 +453,8 @@ namespace G2lib {
         :return: the final coordinate **x** of the curve
         :rtype: float
       )S")
-      
-      .def("yBegin_SAE", &BaseCurve::yBegin_SAE, py::arg("offs"), 
+
+      .def("yBegin_SAE", &BaseCurve::yBegin_SAE, py::arg("offs"),
       R"S(
         Initial coordinate **y** of the curve, with SAE offset
 
@@ -474,7 +474,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("yEnd_SAE", &BaseCurve::yEnd_SAE, py::arg("offs"), 
+      .def("yEnd_SAE", &BaseCurve::yEnd_SAE, py::arg("offs"),
       R"S(
         Final coordinate **y** of the curve, with SAE offset
 
@@ -515,7 +515,7 @@ namespace G2lib {
         :rtype: List[float]
       )S")
 
-      .def("tx_End", &BaseCurve::tx_End, 
+      .def("tx_End", &BaseCurve::tx_End,
       R"S(
         Final tangent **x** coordinate
 
@@ -570,7 +570,7 @@ namespace G2lib {
         :return: the initial normal **x** coordinate
         :rtype: float
       )S")
-      
+
       .def("ny_Begin_ISO", &BaseCurve::ny_Begin_ISO,
       R"S(
         Initial normal **y** coordinate, in ISO standard
@@ -578,8 +578,8 @@ namespace G2lib {
         :return: the initial normal **y** coordinate
         :rtype: float
       )S")
-      
-      .def("nx_End_ISO", &BaseCurve::nx_End_ISO, 
+
+      .def("nx_End_ISO", &BaseCurve::nx_End_ISO,
       R"S(
         Final normal **x** coordinate, in ISO standard
 
@@ -587,7 +587,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("ny_End_ISO", &BaseCurve::ny_End_ISO, 
+      .def("ny_End_ISO", &BaseCurve::ny_End_ISO,
       R"S(
         Final normal **y** coordinate, in ISO standard
 
@@ -602,7 +602,7 @@ namespace G2lib {
         :return: the initial normal **x** coordinate
         :rtype: float
       )S")
-      
+
       .def("ny_Begin_SAE", &BaseCurve::ny_Begin_SAE,
       R"S(
         Initial normal **y** coordinate, in SAE standard
@@ -610,8 +610,8 @@ namespace G2lib {
         :return: the initial normal **y** coordinate
         :rtype: float
       )S")
-      
-      .def("nx_End_SAE", &BaseCurve::nx_End_SAE, 
+
+      .def("nx_End_SAE", &BaseCurve::nx_End_SAE,
       R"S(
         Final normal **x** coordinate, in SAE standard
 
@@ -619,7 +619,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("ny_End_SAE", &BaseCurve::ny_End_SAE, 
+      .def("ny_End_SAE", &BaseCurve::ny_End_SAE,
       R"S(
         Final normal **y** coordinate, in SAE standard
 
@@ -653,7 +653,7 @@ namespace G2lib {
 
       .def("theta_DD", &BaseCurve::theta_DD, py::arg("s"),
       R"S(
-        Angle second derivative (derivative of curvature) at 
+        Angle second derivative (derivative of curvature) at
         curvilinear abscissa **s**
 
         :param float s: curvilinear abscissa
@@ -678,7 +678,7 @@ namespace G2lib {
 
       .def("theta_DDD", &BaseCurve::theta_DDD, py::arg("s"),
       R"S(
-        Angle third derivative (second derivative of curvature) at 
+        Angle third derivative (second derivative of curvature) at
         curvilinear abscissa **s**
 
         :param float s: curvilinear abscissa
@@ -693,7 +693,7 @@ namespace G2lib {
         return ret;
       }, py::arg("s"),
       R"S(
-        Angle third derivative (curvature second derivative) at 
+        Angle third derivative (curvature second derivative) at
         curvilinear abscissa **s**. Vectorial version.
 
         :param List[float] s: curvilinear abscissa
@@ -727,7 +727,7 @@ namespace G2lib {
         :return: the tangent **x** coordinate derivative at **s**
         :rtype: float
       )S")
-      
+
       .def("tx_DD", &BaseCurve::tx_DD, py::arg("s"),
       R"S(
         Tangent **x** coordinate second derivative at curvilinear abscissa **s**
@@ -736,7 +736,7 @@ namespace G2lib {
         :return: the tangent **x** coordinate second derivative at **s**
         :rtype: float
       )S")
-      
+
       .def("tx_DDD", &BaseCurve::tx_DDD, py::arg("s"),
       R"S(
         Tangent **x** coordinate third derivative at curvilinear abscissa **s**
@@ -754,7 +754,7 @@ namespace G2lib {
         :return: the tangent **y** coordinate derivative at **s**
         :rtype: float
       )S")
-      
+
       .def("ty_DD", &BaseCurve::ty_DD, py::arg("s"),
       R"S(
         Tangent **y** coordinate second derivative at curvilinear abscissa **s**
@@ -763,7 +763,7 @@ namespace G2lib {
         :return: the tangent **y** coordinate second derivative at **s**
         :rtype: float
       )S")
-      
+
       .def("ty_DDD", &BaseCurve::ty_DDD, py::arg("s"),
       R"S(
         Tangent **y** coordinate third derivative at curvilinear abscissa **s**
@@ -775,17 +775,17 @@ namespace G2lib {
 
       .def("nx_ISO", &BaseCurve::nx_ISO, py::arg("s"),
       R"S(
-        Normal **x** coordinate at curvilinear abscissa **s**, 
+        Normal **x** coordinate at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
         :return: normal **x** coordinate at **s**
         :rtype: float
       )S")
-      
+
       .def("nx_ISO_D", &BaseCurve::nx_ISO_D, py::arg("s"),
       R"S(
-        Normal **x** coordinate derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate derivative at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
@@ -795,7 +795,7 @@ namespace G2lib {
 
       .def("nx_ISO_DD", &BaseCurve::nx_ISO_DD, py::arg("s"),
       R"S(
-        Normal **x** coordinate second derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate second derivative at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
@@ -805,17 +805,17 @@ namespace G2lib {
 
       .def("nx_ISO_DDD", &BaseCurve::nx_ISO_DDD, py::arg("s"),
       R"S(
-        Normal **x** coordinate third derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate third derivative at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
         :return: normal **x** coordinate third derivative at **s**
         :rtype: float
       )S")
-      
+
       .def("ny_ISO", &BaseCurve::ny_ISO, py::arg("s"),
       R"S(
-        Normal **y** coordinate at curvilinear abscissa **s**, 
+        Normal **y** coordinate at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
@@ -825,7 +825,7 @@ namespace G2lib {
 
       .def("ny_ISO_D", &BaseCurve::ny_ISO_D, py::arg("s"),
       R"S(
-        Normal **y** coordinate derivative at curvilinear abscissa **s**, 
+        Normal **y** coordinate derivative at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
@@ -835,7 +835,7 @@ namespace G2lib {
 
       .def("ny_ISO_DD", &BaseCurve::ny_ISO_DD, py::arg("s"),
       R"S(
-        Normal **y** coordinate second derivative at curvilinear abscissa **s**, 
+        Normal **y** coordinate second derivative at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
@@ -845,7 +845,7 @@ namespace G2lib {
 
       .def("ny_ISO_DDD", &BaseCurve::ny_ISO_DDD, py::arg("s"),
       R"S(
-        Normal **x** coordinate third derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate third derivative at curvilinear abscissa **s**,
         in ISO standard
 
         :param float s: curvilinear abscissa
@@ -855,17 +855,17 @@ namespace G2lib {
 
       .def("nx_SAE", &BaseCurve::nx_SAE, py::arg("s"),
       R"S(
-        Normal **x** coordinate at curvilinear abscissa **s**, 
+        Normal **x** coordinate at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
         :return: normal **x** coordinate at **s**
         :rtype: float
       )S")
-      
+
       .def("nx_SAE_D", &BaseCurve::nx_SAE_D, py::arg("s"),
       R"S(
-        Normal **x** coordinate derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate derivative at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
@@ -875,7 +875,7 @@ namespace G2lib {
 
       .def("nx_SAE_DD", &BaseCurve::nx_SAE_DD, py::arg("s"),
       R"S(
-        Normal **x** coordinate second derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate second derivative at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
@@ -885,7 +885,7 @@ namespace G2lib {
 
       .def("nx_SAE_DDD", &BaseCurve::nx_SAE_DDD, py::arg("s"),
       R"S(
-        Normal **x** coordinate third derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate third derivative at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
@@ -893,10 +893,10 @@ namespace G2lib {
         :rtype: float
       )S"
       )
-      
+
       .def("ny_SAE", &BaseCurve::ny_SAE, py::arg("s"),
       R"S(
-        Normal **y** coordinate at curvilinear abscissa **s**, 
+        Normal **y** coordinate at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
@@ -906,7 +906,7 @@ namespace G2lib {
 
       .def("ny_SAE_D", &BaseCurve::ny_SAE_D, py::arg("s"),
       R"S(
-        Normal **y** coordinate derivative at curvilinear abscissa **s**, 
+        Normal **y** coordinate derivative at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
@@ -916,7 +916,7 @@ namespace G2lib {
 
       .def("ny_SAE_DD", &BaseCurve::ny_SAE_DD, py::arg("s"),
       R"S(
-        Normal **y** coordinate second derivative at curvilinear abscissa **s**, 
+        Normal **y** coordinate second derivative at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
@@ -926,7 +926,7 @@ namespace G2lib {
 
       .def("ny_SAE_DDD", &BaseCurve::ny_SAE_DDD, py::arg("s"),
       R"S(
-        Normal **x** coordinate third derivative at curvilinear abscissa **s**, 
+        Normal **x** coordinate third derivative at curvilinear abscissa **s**,
         in SAE standard
 
         :param float s: curvilinear abscissa
@@ -1097,7 +1097,7 @@ namespace G2lib {
       }, py::arg("s"),
       R"S(
         Evaluate curve at curvilinear coordinate `s`.
-        
+
         :param float s:  curvilinear coordinate
         :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float, float, float]
@@ -1113,7 +1113,7 @@ namespace G2lib {
       }, py::arg("s"),
       R"S(
         Evaluate curve at curvilinear coordinate `s`.
-        
+
         :param float s:  curvilinear coordinate
         :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float, float, float]
@@ -1126,7 +1126,7 @@ namespace G2lib {
       }, py::arg("s"),
       R"S(
         Evaluate curve at curvilinear coordinate `s`.
-        
+
         :param float s:  curvilinear coordinate
         :return: a tuple with x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float]
@@ -1142,7 +1142,7 @@ namespace G2lib {
       }, py::arg("s"),
       R"S(
         Evaluate curve at curvilinear coordinate `s`.
-        
+
         :param List[float] s: list of curvilinear coordinate
         :return: a tuple of lists with x-coordinate and y-coordinate at **s**
         :rtype: Tuple[List[float], List[float]]
@@ -1156,7 +1156,7 @@ namespace G2lib {
       R"S(
         Evaluate curve at curvilinear coordinate `s`, with an additional offset
         that follows the ISO standard.
-        
+
         :param float s:  curvilinear coordinate
         :param float offs:
         :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
@@ -1174,7 +1174,7 @@ namespace G2lib {
       R"S(
         Evaluate curve at curvilinear coordinate `s`, with an additional offset
         that follows the ISO standard.
-        
+
         :param List[float] s:  curvilinear coordinate
         :param List[float] offs:
         :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
@@ -1189,7 +1189,7 @@ namespace G2lib {
       R"S(
         Evaluate curve at curvilinear coordinate `s`, with an additional offset
         that follows the ISO standard.
-        
+
         :param float s:  curvilinear coordinate
         :param float offs:
         :return: a tuple with x-coordinate and y-coordinate at **s**
@@ -1208,7 +1208,7 @@ namespace G2lib {
         Evaluate curve at curvilinear coordinate `s`, with an additional offset
         that follows the ISO standard.
         Vector version.
-        
+
         :param List[float] s:  curvilinear coordinate
         :param List[float] offs:
         :return: a tuple with x-coordinate and y-coordinate at **s**
@@ -1223,7 +1223,7 @@ namespace G2lib {
       R"S(
         Evaluate curve at curvilinear coordinate `s`, with an additional offset
         that follows the SAE standard.
-        
+
         :param float s:  curvilinear coordinate
         :param float offs:
         :return: a tuple with angle, curvature, x-coordinate and y-coordinate at **s**
@@ -1238,13 +1238,13 @@ namespace G2lib {
       R"S(
         Evaluate curve at curvilinear coordinate `s`, with an additional offset
         that follows the SAE standard.
-        
+
         :param float s:  curvilinear coordinate
         :param float offs:
         :return: a tuple with x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float]
       )S")
-      
+
       .def("X_D", &BaseCurve::X_D, py::arg("s"),
       R"S(
         **x** coordinate derivative at curvilinear abscissa **s**
@@ -1253,7 +1253,7 @@ namespace G2lib {
         :return: **x** coordinate derivative
         :rtype: float
       )S")
-      
+
       .def("X_DD", &BaseCurve::X_DD, py::arg("s"),
       R"S(
         **x** coordinate second derivative at curvilinear abscissa **s**
@@ -1306,7 +1306,7 @@ namespace G2lib {
       }, py::arg("s"),
       R"S(
         Evaluate curve first derivative at curvilinear coordinate `s`.
-        
+
         :param float s:  curvilinear coordinate
         :return: a tuple with derivative x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float]
@@ -1323,7 +1323,7 @@ namespace G2lib {
       R"S(
         Evaluate curve first derivative at curvilinear coordinate `s`.
         Vector version.
-        
+
         :param List[float] s:  curvilinear coordinate
         :return: a tuple with derivative x-coordinate and y-coordinate at **s**
         :rtype: Tuple[List[float], List[float]]
@@ -1336,7 +1336,7 @@ namespace G2lib {
       }, py::arg("s"),
       R"S(
         Evaluate curve second derivative at curvilinear coordinate `s`.
-        
+
         :param float s:  curvilinear coordinate
         :return: a tuple with second derivative x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float]
@@ -1353,12 +1353,12 @@ namespace G2lib {
       R"S(
         Evaluate curve second derivative at curvilinear coordinate `s`.
         Vector version
-        
+
         :param List[float] s:  curvilinear coordinate
         :return: a tuple with second derivative x-coordinate and y-coordinate at **s**
         :rtype: Tuple[List[float], List[float]]
       )S")
-      
+
       .def("eval_DDD", [](const BaseCurve & self, real_type s) {
         real_type x, y;
         self.eval_DDD(s, x, y);
@@ -1366,7 +1366,7 @@ namespace G2lib {
       }, py::arg("s"),
       R"S(
         Evaluate curve third derivative at curvilinear coordinate `s`.
-        
+
         :param float s:  curvilinear coordinate
         :return: a tuple with third derivative x-coordinate and y-coordinate at **s**
         :rtype: Tuple[float, float]
@@ -1383,7 +1383,7 @@ namespace G2lib {
       R"S(
         Evaluate curve third derivative at curvilinear coordinate `s`.
         Vector version.
-        
+
         :param List[float] s:  curvilinear coordinate
         :return: a tuple with third derivative x-coordinate and y-coordinate at **s**
         :rtype: Tuple[List[float], List[float]]
@@ -1410,7 +1410,7 @@ namespace G2lib {
         :return: **x** coordinate second derivative
         :rtype: float
       )S")
-      
+
       .def("X_ISO_DDD", &BaseCurve::X_ISO_DDD, py::arg("s"), py::arg("offs"),
       R"S(
         **x** coordinate third derivative at curvilinear abscissa **s**, in ISO
@@ -1478,7 +1478,7 @@ namespace G2lib {
         :return: **x** coordinate second derivative
         :rtype: float
       )S")
-      
+
       .def("X_SAE_DDD", &BaseCurve::X_SAE_DDD, py::arg("s"), py::arg("offs"),
       R"S(
         **x** coordinate third derivative at curvilinear abscissa **s**, in SAE
@@ -1522,7 +1522,7 @@ namespace G2lib {
         :return: **y** coordinate third derivative
         :rtype: float
       )S")
-  
+
       .def("eval_ISO_D", [](const BaseCurve & self, real_type s, real_type offs) {
         real_type x, y;
         self.eval_ISO_D(s, offs, x, y);
@@ -1537,7 +1537,7 @@ namespace G2lib {
         :return: coordinate derivatives
         :rtype: Tuple[float, float]
       )S")
-      
+
       .def("eval_ISO_DD", [](const BaseCurve & self, real_type s, real_type offs) {
         real_type x, y;
         self.eval_ISO_DD(s, offs, x, y);
@@ -1582,7 +1582,7 @@ namespace G2lib {
         :return: coordinate derivatives
         :rtype: Tuple[float, float]
       )S")
-      
+
       .def("eval_SAE_DD", [](const BaseCurve & self, real_type s, real_type offs) {
         real_type x, y;
         self.eval_SAE_DD(s, offs, x, y);
@@ -1612,7 +1612,7 @@ namespace G2lib {
         :return: coordinate third derivatives
         :rtype: Tuple[float, float]
       )S")
-    
+
       .def("translate", &BaseCurve::translate, py::arg("tx"), py::arg("ty"),
       R"S(
         Translate the curve by :math:`(t_x, t_y)`. This method works in place,
@@ -1627,16 +1627,16 @@ namespace G2lib {
       .def("rotate", &BaseCurve::rotate, py::arg("angle"), py::arg("cx"), py::arg("cy"),
       R"S(
         Rotate curve by angle :math:`\theta` centered at point  :math:`(c_x, c_y)`.
-        This method works in place and forces the recalculation of the AABBtree 
+        This method works in place and forces the recalculation of the AABBtree
         of the curve
-        
+
         :param float angle: angle :math:`\theta`
         :param float cx: center origin coordinate :math:`c_x`
         :param float cy: center origin coordinate :math:`c_y`
         :return: nothing, works in place
         :rtype: NoneType
       )S")
-      
+
       .def("scale", &BaseCurve::scale, py::arg("scale"),
       R"S(
         Scale a curve by the factor provided as input. This method works in place
@@ -1646,7 +1646,7 @@ namespace G2lib {
         :return: nothing, works in place
         :rtype: NoneType
       )S")
-      
+
       .def("reverse", &BaseCurve::reverse,
       R"S(
         Reverses the curve parametrization. This method works in place and
@@ -1667,10 +1667,10 @@ namespace G2lib {
         :return: nothing, works in place
         :rtype: NoneType
       )S")
-      
+
       .def("trim", &BaseCurve::trim, py::arg("s_begin"), py::arg("s_end"),
       R"S(
-        Cuts the curve between parametric curvilinear abscissa range 
+        Cuts the curve between parametric curvilinear abscissa range
         :math:`(s_{begin}, s_{end})`. This method works in place and forces
         the recalculation of the AABBtree of the curve
 
@@ -1691,7 +1691,7 @@ namespace G2lib {
 
       .def("collision_ISO", &BaseCurve::collision_ISO, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"),
       R"S(
-        Checks collisions with another curve, considering offset on both 
+        Checks collisions with another curve, considering offset on both
         curves. Uses ISO standard references
 
         :param float offs: offset on the current curve
@@ -1703,7 +1703,7 @@ namespace G2lib {
 
       .def("collision_SAE", &BaseCurve::collision_SAE, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"),
       R"S(
-        Checks collisions with another curve, considering offset on both 
+        Checks collisions with another curve, considering offset on both
         curves. Uses SAE standard references
 
         :param float offs: offset on the current curve
@@ -1713,59 +1713,53 @@ namespace G2lib {
         :rtype: bool
       )S")
 
-      .def("intersect", [](const BaseCurve & self, const BaseCurve & curve, bool swap_s_vals) {
+      .def("intersect", [](const BaseCurve & self, const BaseCurve & curve ) {
         IntersectList ilist;
-        self.intersect(curve, ilist, swap_s_vals);
+        self.intersect(curve, ilist);
         return ilist;
-      }, py::arg("curve"), py::arg("swap_s_vals") = false,
+      }, py::arg("curve"),
       R"S(
-        Intersect the curve with another curve. The result is a list of pairs, where 
+        Intersect the curve with another curve. The result is a list of pairs, where
         each element of the pair represents the ascissa coordinate at which intersection
         occurs
-        
+
         :param BaseCurve curve: second curve intersect
-        :param bool swap_s_vals: if true store `(s2,s1)` instead of `(s1,s2)` for each
-                                 intersection. Default false.
         :return: a list of pair with intersection coordinates on both curves
         :rtype: List[Tuple[float, float]]
       )S")
 
-      .def("intersect_ISO", [](const BaseCurve & self, real_type offs, const BaseCurve & curve, 
-        real_type curve_offs, bool swap_s_vals) {
+      .def("intersect_ISO", [](const BaseCurve & self, real_type offs, const BaseCurve & curve,
+        real_type curve_offs) {
         IntersectList ilist;
-        self.intersect_ISO(offs, curve, curve_offs, ilist, swap_s_vals);
+        self.intersect_ISO(offs, curve, curve_offs, ilist);
         return ilist;
-      }, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"), py::arg("swap_s_vals") = false,
+      }, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"),
       R"S(
-        Intersect the curve with another curve. The result is a list of pairs, where 
+        Intersect the curve with another curve. The result is a list of pairs, where
         each element of the pair represents the ascissa coordinate at which intersection
         occurs. Version with offset in ISO standard reference
-        
+
         :param float offs: offset on the curve
         :param BaseCurve curve: second curve intersect
         :param float curve_offs: offset on the second curve
-        :param bool swap_s_vals: if true store `(s2,s1)` instead of `(s1,s2)` for each
-                                 intersection. Default false.
         :return: a list of pair with intersection coordinates on both curves
         :rtype: List[Tuple[float, float]]
       )S")
-      
-      .def("intersect_SAE", [](const BaseCurve & self, real_type offs, const BaseCurve & curve, 
-        real_type curve_offs, bool swap_s_vals) {
+
+      .def("intersect_SAE", [](const BaseCurve & self, real_type offs, const BaseCurve & curve,
+        real_type curve_offs) {
         IntersectList ilist;
-        self.intersect_SAE(offs, curve, curve_offs, ilist, swap_s_vals);
+        self.intersect_SAE(offs, curve, curve_offs, ilist);
         return ilist;
-      }, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"), py::arg("swap_s_vals") = false,
+      }, py::arg("offs"), py::arg("curve"), py::arg("curve_offs"),
       R"S(
-        Intersect the curve with another curve. The result is a list of pairs, where 
+        Intersect the curve with another curve. The result is a list of pairs, where
         each element of the pair represents the ascissa coordinate at which intersection
         occurs. Version with offset in ISO standard reference
-        
+
         :param float offs: offset on the curve
         :param BaseCurve curve: second curve intersect
         :param float curve_offs: offset on the second curve
-        :param bool swap_s_vals: if true store `(s2,s1)` instead of `(s1,s2)` for each
-                                 intersection. Default false.
         :return: a list of pair with intersection coordinates on both curves
         :rtype: List[Tuple[float, float]]
       )S")
@@ -1781,9 +1775,9 @@ namespace G2lib {
 
         There are 6 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
@@ -1812,9 +1806,9 @@ namespace G2lib {
 
         There are 6 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
@@ -1840,9 +1834,9 @@ namespace G2lib {
 
         There are 6 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
@@ -1868,9 +1862,9 @@ namespace G2lib {
 
         There are 6 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
@@ -1918,18 +1912,18 @@ namespace G2lib {
         :return: the distance of the point
         :rtype: float
       )S")
-        
+
       .def("findST", [](const BaseCurve & self, real_type x, real_type y) {
         real_type s, t;
         bool ret = self.findST_ISO(x, y, s, t);
         return std::make_tuple(ret, s, t);
-      }, py::arg("x"), py::arg("y"), 
+      }, py::arg("x"), py::arg("y"),
       R"S(
         Find the curvilinear coordinate of point :math:`P = (x, y)`
         with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
-        where :math:`C(s)` is the curve position respect to the curvilinear 
+        where :math:`C(s)` is the curve position respect to the curvilinear
         coordinates and :math:`t` is the normal :math:`N(s)` at the point.
-       
+
         :param float x: **x** component
         :param float y: **y** component
         :return: a tuple with a boolean value (projection found or not) and
@@ -1945,14 +1939,14 @@ namespace G2lib {
           ret[i] = self.findST_ISO(x[i], y[i], s[i], t[i]);
         }
         return std::make_tuple(ret, s, t);
-      }, py::arg("x"), py::arg("y"), 
+      }, py::arg("x"), py::arg("y"),
       R"S(
         Find the curvilinear coordinate of point :math:`P = (x, y)`
         with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
-        where :math:`C(s)` is the curve position respect to the curvilinear 
+        where :math:`C(s)` is the curve position respect to the curvilinear
         coordinates and :math:`t` is the normal :math:`N(s)` at the point.
         Vectorial version.
-       
+
         :param List[float] x: **x** component
         :param List[float] y: **y** component
         :return: a tuple with a boolean value (projection found or not) and
@@ -1964,14 +1958,14 @@ namespace G2lib {
         real_type s, t;
         bool ret = self.findST_ISO(x, y, s, t);
         return std::make_tuple(ret, s, t);
-      }, py::arg("x"), py::arg("y"), 
+      }, py::arg("x"), py::arg("y"),
       R"S(
         Find the curvilinear coordinate of point :math:`P = (x, y)`
         with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
-        where :math:`C(s)` is the curve position respect to the curvilinear 
+        where :math:`C(s)` is the curve position respect to the curvilinear
         coordinates and :math:`t` is the normal :math:`N(s)` at the point.
         It uses the ISO reference frame.
-       
+
         :param float x: **x** component
         :param float y: **y** component
         :return: a tuple with a boolean value (projection found or not) and
@@ -1983,21 +1977,21 @@ namespace G2lib {
         real_type s, t;
         bool ret = self.findST_SAE(x, y, s, t);
         return std::make_tuple(ret, s, t);
-      }, py::arg("x"), py::arg("y"), 
+      }, py::arg("x"), py::arg("y"),
       R"S(
         Find the curvilinear coordinate of point :math:`P = (x, y)`
         with respect to the curve, such that: :math:`P = C(s) + t\,N(s)`
-        where :math:`C(s)` is the curve position respect to the curvilinear 
+        where :math:`C(s)` is the curve position respect to the curvilinear
         coordinates and :math:`t` is the normal :math:`N(s)` at the point.
         It uses the SAE reference frame.
-       
+
         :param float x: **x** component
         :param float y: **y** component
         :return: a tuple with a boolean value (projection found or not) and
                  the **s** and **t** coordinates on the curve.
         :rtype: Tuple[bool, float, float]
       )S")
-      
+
       .def("__str__", [](const BaseCurve & self) {
         std::ostringstream str;
         self.info(str);

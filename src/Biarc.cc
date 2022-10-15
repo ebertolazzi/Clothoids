@@ -25,8 +25,43 @@
 
 namespace G2lib {
 
-  using std::numeric_limits;
   using std::abs;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::build( LineSegment const & LS ) {
+    // @@@@ DA RIVEDERE
+    this->build(
+      LS.x_begin(),
+      LS.y_begin(),
+      LS.theta_begin(),
+      LS.x_end(),
+      LS.y_end(),
+      LS.theta_end()
+    );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::build( CircleArc const & C ) {
+    // @@@@ DA RIVEDERE
+    this->build(
+      C.x_begin(),
+      C.y_begin(),
+      C.theta_begin(),
+      C.x_end(),
+      C.y_end(),
+      C.theta_end()
+    );
+  }
+
+  void Biarc::build( Biarc const & B )        { *this = B; }
+  void Biarc::build( ClothoidCurve const & )  { UTILS_ERROR("can convert from ClothoidCurve to Biarc\n"); }
+  void Biarc::build( PolyLine const & )       { UTILS_ERROR("can convert from PolyLine to Biarc\n"); }
+  void Biarc::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to Biarc\n"); }
+  void Biarc::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to Biarc\n"); }
 
   /*\
    |   ____  _
@@ -36,49 +71,29 @@ namespace G2lib {
    |  |____/|_|\__,_|_|  \___|
   \*/
 
-  Biarc::Biarc( BaseCurve const & C )
-  : BaseCurve(G2LIB_BIARC)
-  {
-    switch ( C.type() ) {
+  Biarc::Biarc( BaseCurve const * pC ) : Biarc() {
+
+    G2LIB_DEBUG_MESSAGE( "Biarc convert: {}\n", pC->type_name() );
+
+    switch ( pC->type() ) {
     case G2LIB_LINE:
-      {
-        LineSegment const & LS = *static_cast<LineSegment const *>(&C);
-        bool ok = this->build(
-          LS.x_begin(), LS.y_begin(), LS.theta_begin(),
-          LS.x_end(),   LS.y_end(),   LS.theta_end()
-        );
-        UTILS_ASSERT(
-          ok,
-          "Biarc constructor failed convert from: {}\n",
-          CurveType_name[C.type()]
-        );
-      }
+      G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
+      this->build( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
-      {
-        CircleArc const & LS = *static_cast<CircleArc const *>(&C);
-        bool ok = this->build(
-          LS.x_begin(), LS.y_begin(), LS.theta_begin(),
-          LS.x_end(),   LS.y_end(),   LS.theta_end()
-        );
-        UTILS_ASSERT(
-          ok,
-          "Biarc constructor failed convert from: {}\n",
-          CurveType_name[C.type()]
-        );
-      }
+      G2LIB_DEBUG_MESSAGE( "to -> CircleArc\n" );
+      this->build( *static_cast<CircleArc const *>(pC) );
       break;
     case G2LIB_BIARC:
-      *this = *static_cast<Biarc const *>(&C);
+      G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
+      *this = *static_cast<Biarc const *>(pC);
       break;
-    case G2LIB_CLOTHOID:
-    case G2LIB_BIARC_LIST:
-    case G2LIB_CLOTHOID_LIST:
-    case G2LIB_POLYLINE:
+    default:
       UTILS_ERROR(
         "Biarc constructor cannot convert from: {}\n",
-        CurveType_name[C.type()]
+        pC->type_name()
       );
+      break;
     }
   }
 
@@ -117,7 +132,7 @@ namespace G2lib {
     real_type k0 = 2*t*sin( dth0 );
     real_type k1 = -2*t*sin( dth1 );
 
-    real_type epsi = 100*d*numeric_limits<real_type>::epsilon();
+    real_type epsi = 100*d*Utils::machine_eps<real_type>();
     if ( l0 > epsi && l1 > epsi ) {
 
       m_C0.build( x0, y0, theta0, k0, l0 );
@@ -719,45 +734,62 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  Biarc::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == G2LIB_BIARC ) {
+      Biarc const & C = *static_cast<Biarc const *>(pC);
+      return this->collision( C );
+    } else {
+      Biarc C(pC);
+      return this->collision( C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  Biarc::collision_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C
+  ) const {
+    if ( pC->type() == G2LIB_BIARC ) {
+      Biarc const & C = *static_cast<Biarc const *>(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    } else {
+      Biarc C(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   Biarc::intersect(
     Biarc const   & B,
-    IntersectList & ilist,
-    bool            swap_s_vals
+    IntersectList & ilist
   ) const {
     IntersectList ilist00, ilist01, ilist10, ilist11;
-    m_C0.intersect( B.m_C0, ilist00, false );
-    m_C0.intersect( B.m_C1, ilist01, false );
-    m_C1.intersect( B.m_C0, ilist10, false );
-    m_C1.intersect( B.m_C1, ilist11, false );
+    m_C0.intersect( B.m_C0, ilist00 );
+    m_C0.intersect( B.m_C1, ilist01 );
+    m_C1.intersect( B.m_C0, ilist10 );
+    m_C1.intersect( B.m_C1, ilist11 );
     real_type L  = m_C0.length();
     real_type LB = B.m_C0.length();
-    IntersectList::iterator it;
     ilist.reserve( ilist.size() +
                    ilist00.size() +
                    ilist01.size() +
                    ilist10.size() +
                    ilist11.size() );
-    for ( it = ilist01.begin(); it != ilist01.end(); ++it ) it->second += LB;
-    for ( it = ilist10.begin(); it != ilist10.end(); ++it ) it->first  += L;
-    for ( it = ilist11.begin(); it != ilist11.end(); ++it )
-      { it->first += L; it->second += LB; }
 
-    if ( swap_s_vals ) {
-      for ( it = ilist00.begin(); it != ilist00.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist01.begin(); it != ilist01.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist10.begin(); it != ilist10.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist11.begin(); it != ilist11.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-    } else {
-      for ( it = ilist00.begin(); it != ilist00.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist01.begin(); it != ilist01.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist10.begin(); it != ilist10.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist11.begin(); it != ilist11.end(); ++it ) ilist.push_back( *it );
-    }
+    for ( auto & it : ilist01 ) it.second += LB;
+    for ( auto & it : ilist10 ) it.first  += L;
+    for ( auto & it : ilist11 ) { it.first += L; it.second += LB; }
+
+    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto & it : ilist01 ) ilist.push_back( it );
+    for ( auto & it : ilist10 ) ilist.push_back( it );
+    for ( auto & it : ilist11 ) ilist.push_back( it );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -767,42 +799,27 @@ namespace G2lib {
     real_type       offs,
     Biarc const   & B,
     real_type       offs_B,
-    IntersectList & ilist,
-    bool            swap_s_vals
+    IntersectList & ilist
   ) const {
     IntersectList ilist00, ilist01, ilist10, ilist11;
-    m_C0.intersect_ISO( offs, B.m_C0, offs_B, ilist00, false );
-    m_C0.intersect_ISO( offs, B.m_C1, offs_B, ilist01, false );
-    m_C1.intersect_ISO( offs, B.m_C0, offs_B, ilist10, false );
-    m_C1.intersect_ISO( offs, B.m_C1, offs_B, ilist11, false );
+    m_C0.intersect_ISO( offs, B.m_C0, offs_B, ilist00 );
+    m_C0.intersect_ISO( offs, B.m_C1, offs_B, ilist01 );
+    m_C1.intersect_ISO( offs, B.m_C0, offs_B, ilist10 );
+    m_C1.intersect_ISO( offs, B.m_C1, offs_B, ilist11 );
     real_type L  = m_C0.length();
     real_type LB = B.m_C0.length();
-    IntersectList::iterator it;
     ilist.reserve( ilist.size() +
                    ilist00.size() +
                    ilist01.size() +
                    ilist10.size() +
                    ilist11.size() );
-    for ( it = ilist01.begin(); it != ilist01.end(); ++it ) it->second += LB;
-    for ( it = ilist10.begin(); it != ilist10.end(); ++it ) it->first  += L;
-    for ( it = ilist11.begin(); it != ilist11.end(); ++it )
-      { it->first += L; it->second += LB; }
-
-    if ( swap_s_vals ) {
-      for ( it = ilist00.begin(); it != ilist00.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist01.begin(); it != ilist01.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist10.begin(); it != ilist10.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-      for ( it = ilist11.begin(); it != ilist11.end(); ++it )
-        ilist.push_back( Ipair(it->second,it->first) );
-    } else {
-      for ( it = ilist00.begin(); it != ilist00.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist01.begin(); it != ilist01.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist10.begin(); it != ilist10.end(); ++it ) ilist.push_back( *it );
-      for ( it = ilist11.begin(); it != ilist11.end(); ++it ) ilist.push_back( *it );
-    }
+    for ( auto & it : ilist01 ) it.second += LB;
+    for ( auto & it : ilist10 ) it.first  += L;
+    for ( auto & it : ilist11 ) { it.first += L; it.second += LB; }
+    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto & it : ilist01 ) ilist.push_back( it );
+    for ( auto & it : ilist10 ) ilist.push_back( it );
+    for ( auto & it : ilist11 ) ilist.push_back( it );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -829,6 +846,36 @@ namespace G2lib {
       res = res1;
     }
     return res;
+  }
+
+  void
+  Biarc::intersect(
+    BaseCurve const * pC,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_BIARC ) {
+      Biarc const & C = *static_cast<Biarc const *>(pC);
+      this->intersect( C, ilist );
+    } else {
+      Biarc C(pC);
+      this->intersect( C, ilist );
+    }
+  }
+
+  void
+  Biarc::intersect_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_BIARC ) {
+      Biarc const & C = *static_cast<Biarc const *>(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
+    } else {
+      Biarc C(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

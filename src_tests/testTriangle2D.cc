@@ -22,15 +22,15 @@ main() {
 
   int_type icode = T1.isInside( T1.baricenterX(), T1.baricenterY() );
 
-  cout << "icode = " << icode << "\n";
+  fmt::print( "icode = {}\n", icode );
 
   icode = T1.isInside( T1.P1() );
 
-  cout << "icode = " << icode << "\n";
+  fmt::print( "icode = {}\n", icode );
 
   icode = T1.isInside( 10, 20 );
 
-  cout << "icode = " << icode << "\n";
+  fmt::print( "icode = {}\n", icode );
 
   {
     G2lib::ClothoidCurve C;
@@ -46,12 +46,12 @@ main() {
     C.bbTriangles_ISO( 0, tvec );
 
     for ( size_t i = 0; i < tvec.size(); ++i )
-      cout << i << " " << tvec[i] << "\n\n";
+      fmt::print( "{} {}\n\n", i, tvec[i] );
 
-    cout << tvec.size() << '\n';
+    fmt::print( "{}\n",tvec.size() );
   }
 
-  cout << "\n\nALL DONE FOLKS!!!\n";
+  fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 
   return 0;
 }

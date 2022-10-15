@@ -93,7 +93,7 @@ namespace Utils {
     }
 
     void
-    setup( Real const * A, Real const * B ) {
+    setup( Real const A[], Real const B[] ) {
       m_Pa.coeffRef(0) = A[0]; m_Pa.coeffRef(1) = A[1];
       m_Pb.coeffRef(0) = B[0]; m_Pb.coeffRef(1) = B[1];
     }

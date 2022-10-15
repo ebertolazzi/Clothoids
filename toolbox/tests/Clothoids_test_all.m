@@ -25,7 +25,8 @@ for kkk=1:nFile
       fprintf('\n\n\n\n\n\n==============================================\n');
       fprintf('test file: %s\n',file);
       fprintf('==============================================\n\n');
-      pause;
+      %pause;
+      str = input('Press <<RETURN>>','s');
       disp(kkk);
       close all;
       run(name);

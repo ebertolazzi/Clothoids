@@ -168,7 +168,8 @@ namespace Utils {
   bool
   check_if_file_exists( char const * fname ) {
     struct stat buffer;
-    return (stat (fname, &buffer) == 0);
+    if (stat (fname, &buffer) == 0) return S_ISREG(buffer.st_mode);
+    return false;
   }
 
   /*
@@ -176,13 +177,9 @@ namespace Utils {
   */
   bool
   check_if_dir_exists( char const * dirname ) {
-    DIR *pDir = opendir(dirname);
-    bool bExists = false;
-    if ( pDir != nullptr ) {
-      bExists = true;
-      (void) closedir (pDir);
-    }
-    return bExists;
+    struct stat buffer;
+    if (stat (dirname, &buffer) == 0) return S_ISDIR(buffer.st_mode);
+    return false;
   }
 
   /*

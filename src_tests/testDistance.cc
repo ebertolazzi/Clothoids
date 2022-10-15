@@ -26,15 +26,17 @@ main() {
   real_type T, d;
   int_type info = C.closest_point_ISO( x, y, X, Y, S, T, d );
 
-  cout << "\nd = " << d
-       << "\nX = " << X
-       << "\nY = " << Y
-       << "\nS = " << S
-       << "\nT = " << T
-       << "\ninfo = " << info
-       << "\n";
+  fmt::print(
+    "d    = {}\n"
+    "X    = {}\n"
+    "Y    = {}\n"
+    "S    = {}\n"
+    "T    = {}\n"
+    "info = {}\n",
+    d,  X,  Y,  S,  T, info
+  );
 
-  cout << "\n\nALL DONE FOLKS!!!\n";
+  fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 
   return 0;
 }

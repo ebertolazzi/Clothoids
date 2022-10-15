@@ -5,6 +5,31 @@ typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 static
+BaseCurve *
+get_base_pointer( string const & kind, mxArray const * arg ) {
+  // mexPrintf( "get_base_pointer -> for: %s\n", kind.c_str() );
+  if ( kind == "linesegment" )
+    return Utils::mex_convert_mx_to_ptr<LineSegment>(arg);
+  else if ( kind == "circlearc" )
+    return Utils::mex_convert_mx_to_ptr<CircleArc>(arg);
+  else if ( kind == "biarc" )
+    return Utils::mex_convert_mx_to_ptr<Biarc>(arg);
+  else if ( kind == "clothoidcurve" )
+    return Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg);
+  else if ( kind == "polyline" )
+    return Utils::mex_convert_mx_to_ptr<PolyLine>(arg);
+  else if ( kind == "biarclist"  )
+    return Utils::mex_convert_mx_to_ptr<BiarcList>(arg);
+  else if ( kind == "clothoidlist"  )
+    return Utils::mex_convert_mx_to_ptr<ClothoidList>(arg);
+
+  UTILS_MEX_ASSERT( false, "in get_base_pointer type '{}' unknown\n", kind );
+  return nullptr;
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
 bool
 do_is_ISO( mxArray const * plhs, char const msg[] ) {
   UTILS_MEX_ASSERT0( mxIsChar(plhs), msg );
@@ -65,6 +90,44 @@ do_copy(
 
   G2LIB_CLASS const * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
   arg_out_0 = Utils::mex_convert_ptr_to_mx<G2LIB_CLASS>(new G2LIB_CLASS( *ptr ));
+  #undef CMD
+}
+
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+static
+void
+do_build2(
+  int nlhs, mxArray       *[],
+  int nrhs, mxArray const *prhs[]
+) {
+
+  #define CMD CMD_BASE "('build2',OBJ,OBJ1,type1): "
+  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+
+  UTILS_MEX_ASSERT0( mxIsChar(arg_in_3), CMD "'type' argument must be a string" );
+  string kind = mxArrayToString( arg_in_3 );
+  Utils::to_lower(kind);
+
+  G2LIB_CLASS     * ptr0 = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
+  BaseCurve const * ptr1 = get_base_pointer( kind, arg_in_2 );
+
+  if ( ptr1->type() == G2LIB_LINE )
+    ptr0->build( *static_cast<LineSegment const *>(ptr1) );
+  else if ( ptr1->type() == G2LIB_CIRCLE )
+    ptr0->build( *static_cast<CircleArc const *>(ptr1) );
+  else if ( ptr1->type() == G2LIB_BIARC )
+    ptr0->build( *static_cast<Biarc const *>(ptr1) );
+  else if ( ptr1->type() == G2LIB_CLOTHOID )
+    ptr0->build( *static_cast<ClothoidCurve const *>(ptr1) );
+  else if ( ptr1->type() == G2LIB_POLYLINE )
+    ptr0->build( *static_cast<PolyLine const *>(ptr1) );
+  else if ( ptr1->type() == G2LIB_BIARC_LIST )
+    ptr0->build( *static_cast<BiarcList const *>(ptr1) );
+  else if ( ptr1->type() == G2LIB_CLOTHOID_LIST )
+    ptr0->build( *static_cast<ClothoidList const *>(ptr1) );
+
   #undef CMD
 }
 
@@ -503,8 +566,6 @@ do_distance(
   #undef CMD
 }
 
-// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
 static
 void
 do_collision(
@@ -513,46 +574,30 @@ do_collision(
 ) {
 
   #define CMD CMD_BASE "('collision',OBJ,OBJ1,type[,offs,offs1,'ISO'/'SAE']): "
-  UTILS_MEX_ASSERT(
-    nrhs >= 4 || nrhs <= 7,
-    CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs
-  );
-  UTILS_MEX_ASSERT(
-    nlhs == 1,
-    CMD "expected 1 output, nlhs = {}\n", nlhs
-  );
+  UTILS_MEX_ASSERT( nrhs >= 4 || nrhs <= 7, CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   UTILS_MEX_ASSERT0( mxIsChar(arg_in_3), CMD "'type' argument must be a string" );
   string kind = mxArrayToString( arg_in_3 );
+  Utils::to_lower(kind);
 
-  G2LIB_CLASS * ptr  = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
-  BaseCurve   * ptr1 = nullptr;
+  G2LIB_CLASS * ptr0 = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
+  BaseCurve   * ptr1 = get_base_pointer( kind, arg_in_2 );
 
-  if      ( kind == "LineSegment"   ) ptr1 = Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_2);
-  else if ( kind == "CircleArc"     ) ptr1 = Utils::mex_convert_mx_to_ptr<CircleArc>(arg_in_2);
-  else if ( kind == "BiArc"         ) ptr1 = Utils::mex_convert_mx_to_ptr<Biarc>(arg_in_2);
-  else if ( kind == "ClothoidCurve" ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg_in_2);
-  else if ( kind == "ClothoidList"  ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_2);
-  else if ( kind == "PolyLine"      ) ptr1 = Utils::mex_convert_mx_to_ptr<PolyLine>(arg_in_2);
-  else {
-    UTILS_MEX_ASSERT( false, CMD "'type '{}' unsupported\n", kind );
-  }
+  G2LIB_DEBUG_MESSAGE(
+    "do_collision ADDRS: {}, {}\n", fmt::ptr(ptr0), fmt::ptr(ptr1)
+  );
 
   if ( nrhs == 4 ) {
-    Utils::mex_set_scalar_bool( arg_out_0, collision( *ptr, *ptr1 ) );
+    Utils::mex_set_scalar_bool( arg_out_0, G2lib::collision( ptr0, ptr1 ) );
   } else {
-    real_type offs, offs_obj;
-    offs = Utils::mex_get_scalar_value(
-      arg_in_4, CMD "`offs` expected to be a real scalar"
-    );
-    offs_obj = Utils::mex_get_scalar_value(
-      arg_in_5, CMD "`offs_obj` expected to be a real scalar"
-    );
+    real_type offs     = Utils::mex_get_scalar_value( arg_in_4, CMD "`offs` expected to be a real scalar" );
+    real_type offs_obj = Utils::mex_get_scalar_value( arg_in_5, CMD "`offs_obj` expected to be a real scalar" );
     bool ISO = true;
     if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string");
     bool ok;
-    if ( ISO ) ok = collision_ISO( *ptr, offs, *ptr1, offs_obj );
-    else       ok = collision_SAE( *ptr, offs, *ptr1, offs_obj );
+    if ( ISO ) ok = G2lib::collision_ISO( ptr0, offs, ptr1, offs_obj );
+    else       ok = G2lib::collision_SAE( ptr0, offs, ptr1, offs_obj );
     Utils::mex_set_scalar_bool( arg_out_0, ok );
   }
 
@@ -568,47 +613,32 @@ do_intersect(
   int nrhs, mxArray const *prhs[]
 ) {
 
-  #define CMD CMD_BASE "('intersect',OBJ,OBJ1,type,[,offs,offs1,'ISO'/'SAE']): "
-  UTILS_MEX_ASSERT(
-    nrhs >= 4 || nrhs <= 7,
-    CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs
-  );
-  UTILS_MEX_ASSERT(
-    nlhs == 2,
-    CMD "expected 2 output, nlhs = {}\n", nlhs
-  );
+  #define CMD CMD_BASE "( 'intersect', OBJ, OBJ1, type, [,offs, offs1, 'ISO'/'SAE'] ): "
+  UTILS_MEX_ASSERT( nrhs >= 4 || nrhs <= 7, CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs );
+  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
   UTILS_MEX_ASSERT0( mxIsChar(arg_in_3), CMD "'type' argument must be a string" );
   string kind = mxArrayToString( arg_in_3 );
+  Utils::to_lower(kind);
 
-  G2LIB_CLASS * ptr  = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
-  BaseCurve   * ptr1 = nullptr;
+  G2LIB_CLASS * ptr0 = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
+  BaseCurve   * ptr1 = get_base_pointer( kind, arg_in_2 );
 
-  if      ( kind == "LineSegment"   ) ptr1 = Utils::mex_convert_mx_to_ptr<LineSegment>(arg_in_2);
-  else if ( kind == "CircleArc"     ) ptr1 = Utils::mex_convert_mx_to_ptr<CircleArc>(arg_in_2);
-  else if ( kind == "BiArc"         ) ptr1 = Utils::mex_convert_mx_to_ptr<Biarc>(arg_in_2);
-  else if ( kind == "ClothoidCurve" ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg_in_2);
-  else if ( kind == "ClothoidList"  ) ptr1 = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_2);
-  else if ( kind == "PolyLine"      ) ptr1 = Utils::mex_convert_mx_to_ptr<PolyLine>(arg_in_2);
-  else {
-    UTILS_MEX_ASSERT( false, CMD "'type '{}' unsupported\n", kind );
-  }
+  G2LIB_DEBUG_MESSAGE(
+    "do_intersect ADDRS: {}, {}\n", fmt::ptr(ptr0), fmt::ptr(ptr1)
+  );
 
   IntersectList ilist;
   if ( nrhs == 4 ) {
-    intersect( *ptr, *ptr1, ilist, false );
+    intersect( ptr0, ptr1, ilist );
   } else {
     real_type offs, offs_obj;
-    offs = Utils::mex_get_scalar_value(
-      arg_in_4, CMD "`offs` expected to be a real scalar"
-    );
-    offs_obj = Utils::mex_get_scalar_value(
-      arg_in_5, CMD "`offs_obj` expected to be a real scalar"
-    );
+    offs     = Utils::mex_get_scalar_value( arg_in_4, CMD "`offs` expected to be a real scalar" );
+    offs_obj = Utils::mex_get_scalar_value( arg_in_5, CMD "`offs_obj` expected to be a real scalar" );
     bool ISO = true;
-    if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string");
-    if ( ISO ) intersect_ISO( *ptr, offs, *ptr1, offs_obj, ilist, false );
-    else       intersect_SAE( *ptr, offs, *ptr1, offs_obj, ilist, false );
+    if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string" );
+    if ( ISO ) intersect_ISO( ptr0, offs, ptr1, offs_obj, ilist );
+    else       intersect_SAE( ptr0, offs, ptr1, offs_obj, ilist );
   }
 
   double * pS1 = Utils::mex_create_matrix_value( arg_out_0, ilist.size(), 1 );
@@ -1577,6 +1607,7 @@ do_noAABBtree(
 {"length",do_length},               \
 {"delete",do_delete},               \
 {"copy",do_copy},                   \
+{"build2",do_build2},               \
 {"bbox",do_bbox},                   \
 {"bbTriangles",do_bbTriangles},     \
 {"change_origin",do_change_origin}, \

@@ -36,23 +36,29 @@ namespace G2lib {
   using std::min;
   using std::swap;
 
-  LineSegment::LineSegment( BaseCurve const & C )
-  : BaseCurve(G2LIB_LINE)
-  {
-    switch ( C.type() ) {
+  void LineSegment::build( LineSegment const & LS ) { *this = LS; }
+  void LineSegment::build( CircleArc const & )      { UTILS_ERROR("can convert from CircleArc to LineSegment\n"); }
+  void LineSegment::build( Biarc const & )          { UTILS_ERROR("can convert from Biarc to LineSegment\n"); }
+  void LineSegment::build( ClothoidCurve const & )  { UTILS_ERROR("can convert from ClothoidCurve to LineSegment\n"); }
+  void LineSegment::build( PolyLine const & )       { UTILS_ERROR("can convert from PolyLine to LineSegment\n"); }
+  void LineSegment::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to LineSegment\n"); }
+  void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
+
+  LineSegment::LineSegment( BaseCurve const * pC ) {
+
+    G2LIB_DEBUG_MESSAGE( "LineSegment convert: {}\n", pC->type_name() );
+
+    switch ( pC->type() ) {
     case G2LIB_LINE:
-      *this = *static_cast<LineSegment const *>(&C);
+      G2LIB_DEBUG_MESSAGE( "to -> LineSegment\n" );
+      *this = *static_cast<LineSegment const *>(pC);
       break;
-    case G2LIB_CIRCLE:
-    case G2LIB_CLOTHOID:
-    case G2LIB_BIARC:
-    case G2LIB_BIARC_LIST:
-    case G2LIB_CLOTHOID_LIST:
-    case G2LIB_POLYLINE:
+    default:
       UTILS_ERROR(
         "LineSegment constructor cannot convert from: {}\n",
-        CurveType_name[C.type()]
+        pC->type_name()
       );
+      break;
     }
   }
 
@@ -481,6 +487,84 @@ namespace G2lib {
    |  | | | | | ||  __/ |  \__ \  __/ (__| |_
    |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
   \*/
+
+  bool
+  LineSegment::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == G2LIB_LINE ) {
+      LineSegment const & LS = *static_cast<LineSegment const*>(pC);
+      return this->collision( LS );
+    } else {
+      LineSegment LS(pC);
+      return this->collision( LS );
+    }
+  }
+
+  bool
+  LineSegment::collision_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C
+  ) const {
+    if ( pC->type() == G2LIB_LINE ) {
+      LineSegment const & LS = *static_cast<LineSegment const*>(pC);
+      return this->collision_ISO( offs, LS, offs_C );
+    } else {
+      LineSegment LS(pC);
+      return this->collision_ISO( offs, LS, offs_C );
+    }
+  }
+
+  void
+  LineSegment::intersect(
+    LineSegment const & LS,
+    IntersectList     & ilist
+  ) const {
+    real_type s1, s2;
+    bool ok = this->intersect( LS, s1, s2 );
+    if ( ok ) ilist.push_back( Ipair(s1, s2) );
+  }
+
+  void
+  LineSegment::intersect_ISO(
+    real_type           offs,
+    LineSegment const & LS,
+    real_type           offs_LS,
+    IntersectList     & ilist
+  ) const {
+    real_type s1, s2;
+    bool ok = this->intersect_ISO( offs, LS, offs_LS, s1, s2 );
+    if ( ok ) ilist.push_back( Ipair(s1, s2) );
+  }
+
+  void
+  LineSegment::intersect(
+    BaseCurve const * pC,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_LINE ) {
+      LineSegment const & LS = *static_cast<LineSegment const *>(pC);
+      this->intersect( LS, ilist );
+    } else {
+      LineSegment LS(pC);
+      this->intersect( LS, ilist );
+    }
+  }
+
+  void
+  LineSegment::intersect_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_LINE ) {
+      LineSegment const & LS = *static_cast<LineSegment const *>(pC);
+      this->intersect_ISO( offs, LS, offs_C, ilist );
+    } else {
+      LineSegment LS(pC);
+      this->intersect_ISO( offs, LS, offs_C, ilist );
+    }
+  }
 
   /*\
    |        _                     _   ____       _       _

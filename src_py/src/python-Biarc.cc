@@ -1,6 +1,6 @@
 /**
  * PYTHON Wrapper for Clothoids
- * 
+ *
  * License MIT - See LICENSE file
  * 2019 Matteo Ragni, Claudio Kerov Ghiglianovich,
  *      Enrico Bertolazzi, Marco Frego
@@ -49,10 +49,10 @@ namespace G2lib {
       .def(py::init())
       .def(py::init<Biarc const &>(), py::arg("curve"))
       .def(py::init<real_type, real_type, real_type, real_type, real_type, real_type>(),
-        py::arg("x0"), py::arg("y0"), py::arg("theta0"), 
+        py::arg("x0"), py::arg("y0"), py::arg("theta0"),
         py::arg("x1"), py::arg("y1"), py::arg("theta1"))
       .def(py::init<BaseCurve const &>(), py::arg("curve"))
-      
+
       .def("copy", [](const Biarc & self) -> Biarc {
         Biarc other;
         other.copy(self);
@@ -65,14 +65,14 @@ namespace G2lib {
         :rtype: Biarc
       )S")
 
-      .def("build", &Biarc::build, 
-        py::arg("x0"), py::arg("y0"), py::arg("theta0"), 
+      .def("build", &Biarc::build,
+        py::arg("x0"), py::arg("y0"), py::arg("theta0"),
         py::arg("x1"), py::arg("y1"), py::arg("theta1"),
       R"S(
          Construct a biarc passing from the points
          :math:`(x_0,y_0)` to the point  :math:`(x_1,y_1)`
          with initial angle :math:`\theta_0` and final angle :math:`\theta_1`
-        
+
         :param float x0: **x** coordinate of the origin
         :param float y0: **y** coordinate of the origin
         :param float theta0: tangent in the origin
@@ -83,7 +83,7 @@ namespace G2lib {
         :rtype: bool
       )S")
 
-      .def("c0", &Biarc::C0, 
+      .def("c0", &Biarc::C0,
       R"S(
         Returns the first circle arc of the biarc
 
@@ -91,7 +91,7 @@ namespace G2lib {
         :rtype: CircleArc
       )S")
 
-      .def("c1", &Biarc::C1, 
+      .def("c1", &Biarc::C1,
       R"S(
         Returns the second circle arc of the biarc
 
@@ -103,11 +103,11 @@ namespace G2lib {
         py::arg("x0"), py::arg("y0"), py::arg("x1"), py::arg("y1"), py::arg("x2"), py::arg("y2"),
       R"S(
         Construct a biarc by 3 point at "minimum energy"
-        
+
          * Planar point set fairing and fitting by arc splines
          * Xunnian Yang and Guozhao Wang
          * Computer-Aided Design, vol 33, 2001
-        
+
         :param float x0: **x** coordinate of initial point
         :param float y0: **y** coordinate of initial point
         :param float x1: **x** coordinate of central point
@@ -117,15 +117,15 @@ namespace G2lib {
         :return: false if biarc cannot be computed
         :rtype: bool
       )S")
-      
-      .def("xMiddle", &Biarc::xMiddle, 
+
+      .def("xMiddle", &Biarc::xMiddle,
       R"S(
         Returns the **x** coordinate of the junction point of the biarc
 
         :return: **x** coordinates of the junction
         :rtype: float
       )S")
-      
+
       .def("yMiddle", &Biarc::yMiddle,
       R"S(
         Returns the **y** coordinate of the junction point of the biarc
@@ -141,8 +141,8 @@ namespace G2lib {
         :return: **x** coordinates of the junction
         :rtype: float
       )S")
-      
-      .def("kappa0", &Biarc::kappa0, 
+
+      .def("kappa0", &Biarc::kappa0,
       R"S(
         Curvature of the first circle arc
 
@@ -150,7 +150,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("kappa1", &Biarc::kappa1, 
+      .def("kappa1", &Biarc::kappa1,
       R"S(
         Curvature of the second circle arc
 
@@ -158,7 +158,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("length0", &Biarc::length0, 
+      .def("length0", &Biarc::length0,
       R"S(
         Length of the first circle arc
 
@@ -166,14 +166,14 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("length1", &Biarc::length1, 
+      .def("length1", &Biarc::length1,
       R"S(
         Length of the second circle arc
 
         :return: length of the second circle arc
         :rtype: float
       )S")
-      
+
       .def("delta_theta", &Biarc::delta_theta,
       R"S(
         Change of angle of the biarc :math:`\theta_1 - \theta_0`
@@ -189,7 +189,7 @@ namespace G2lib {
         A class to manage a list of biarc curve (not necessarily G1 or G2 connected)
 
         There exists several constructors for this class:
-         
+
          * empty constructor
          * constructor receiving a curve as parameter (BaseCurve or BiarcList or PolyLine
            or LineSegment or CircleArc or Biarc)
@@ -202,7 +202,7 @@ namespace G2lib {
       .def(py::init<LineSegment const &>())
       .def(py::init<CircleArc const &>())
       .def(py::init<Biarc const &>())
-      
+
       .def("get", &BiarcList::get, py::arg("idx"),
       R"S(
         Returns the `idx`-th element of the list
@@ -215,7 +215,7 @@ namespace G2lib {
       .def("__getitem__", &BiarcList::get, py::arg("idx"),
       R"S(
         Returns the `idx`-th element of the list
-      
+
         :param int idx: index
         :return: the biarc at that index
         :rtype: Biarc
@@ -225,14 +225,14 @@ namespace G2lib {
         BiarcList other;
         other.copy(self);
         return other;
-      }, 
+      },
       R"S(
         Returns a copy of the current biarc list
 
         :return: a copy of the current biarc list
         :rtype: BiarcList
       )S")
-      
+
       .def("init", &BiarcList::init,
       R"S(
         Empties the current biarc list
@@ -297,7 +297,7 @@ namespace G2lib {
         with initial angle :math:`\theta_0` and final angle :math:`\theta_1`
         and append the biarc to the tail of biarc list.
         The initial point and angle is taken from the tail of the biarc list.
-        
+
         :param float x1:     :math:`x_1`
         :param float y1:     :math:`y_1`
         :param float theta1: :math:`\theta_1`
@@ -312,7 +312,7 @@ namespace G2lib {
         :math:`(x_0,y_0)` to the point  :math:`(x_1,y_1)`
         with initial angle :math:`\theta_0` and final angle :math:`\theta_1`
         and append the biarc to the tail of biarc list.
-        
+
         :param float x0:     :math:`x_0`
         :param float y0:     :math:`y_0`
         :param float theta0: :math:`\theta_0`
@@ -322,13 +322,13 @@ namespace G2lib {
         :return: nothing, works in place
         :rtype: NoneType
       )S")
-      
+
       .def("build_G1", [](BiarcList & self, std::vector<real_type> x, std::vector<real_type> y) {
         const size_t n = std::min(x.size(), y.size());
         return self.build_G1(n, x.data(), y.data());
       }, py::arg("x"), py::arg("y"),
       R"S(
-        Constructs a G1 biarc list using the points provided. The two vectors 
+        Constructs a G1 biarc list using the points provided. The two vectors
         are trimmed to the length of the shortest one.
 
         :param List[float] x: list of x coordinates
@@ -337,14 +337,14 @@ namespace G2lib {
         :rtype: bool
       )S")
 
-      .def("build_G1", [](BiarcList & self, const std::vector<real_type> & x, 
+      .def("build_G1", [](BiarcList & self, const std::vector<real_type> & x,
         const std::vector<real_type> & y, const std::vector<real_type> & theta) {
         const size_t n = std::min({x.size(), y.size(), theta.size()});
         return self.build_G1(n, x.data(), y.data(), theta.data());
       }, py::arg("x"), py::arg("y"), py::arg("theta"),
       R"S(
-        Constructs a G1 biarc list using the points provided. The two vectors 
-        are trimmed to the length of the shortest one. This version allows to 
+        Constructs a G1 biarc list using the points provided. The two vectors
+        are trimmed to the length of the shortest one. This version allows to
         specify the angle at nodes.
 
         :param List[float] x: list of x coordinates
@@ -362,7 +362,7 @@ namespace G2lib {
         :return: biarc at **s**
         :rtype: Biarc
       )S")
-      
+
       .def("numSegments", &BiarcList::numSegments,
       R"S(
         Returns the number of elements in the BiarcList
@@ -378,7 +378,7 @@ namespace G2lib {
         :return: the number of elements
         :rtype: int
       )S")
-      
+
       .def("findAtS", &BiarcList::findAtS, py::arg("s"),
       R"S(
         Get the index of the biarc at coordinate **s**
@@ -387,7 +387,7 @@ namespace G2lib {
         :return: index of the biarc at that coordinate
         :rtype: int
       )S")
-      
+
       .def("segment_length", &BiarcList::segment_length, py::arg("nseg"),
       R"S(
         Return the length of the segment at index `nseg`
@@ -396,7 +396,7 @@ namespace G2lib {
         :return: length of the segment at that index
         :rtype: float
       )S")
-      
+
       .def("segment_length_ISO", &BiarcList::segment_length_ISO, py::arg("nseg"), py::arg("offs"),
       R"S(
         Return the length of the segment at index `nseg`. Version with ISO offset.
@@ -406,37 +406,37 @@ namespace G2lib {
         :return: length of the segment at that index
         :rtype: float
       )S")
-      
+
       .def("build_AABBtree_ISO", &BiarcList::build_AABBtree_ISO,
         py::arg("offs"), py::arg("max_angle") = Utils::m_pi/6, py::arg("max_size") = 1e100,
       R"S(
         Build the internal AABB tree of the biarc list with offset (ISO)
-        
+
         :param float offs:      curve offset
         :param float max_angle: maximum angle variation of the arc covered by a triangle
         :param float max_size:  maximum admissible size of the covering tirnagles
         :return: nothing, works in place
         :rtype: NoneType
       )S")
-      
+
       .def("build_AABBtree_SAE", &BiarcList::build_AABBtree_SAE,
         py::arg("offs"), py::arg("max_angle") = Utils::m_pi/6, py::arg("max_size") = 1e100,
       R"S(
         Build the internal AABB tree of the biarc list with offset (SAE)
-        
+
         :param float offs:      curve offset
         :param float max_angle: maximum angle variation of the arc covered by a triangle
         :param float max_size:  maximum admissible size of the covering tirnagles
         :return: nothing, works in place
         :rtype: NoneType
       )S")
-      
+
       .def("getSTK", [](const BiarcList & self) {
         const size_t n = self.numSegments();
         // Avoids segmentation fault for empty list
         if (!n) {
-          return make_tuple(std::vector<real_type>(), 
-                            std::vector<real_type>(), 
+          return make_tuple(std::vector<real_type>(),
+                            std::vector<real_type>(),
                             std::vector<real_type>());
         }
         std::vector<real_type> s(n), t(n), k(n);
@@ -449,12 +449,12 @@ namespace G2lib {
         :return: s, angles and curvatures in nodes as lists
         :rtype: Tuple[List[float], List[float], List[float]]
       )S")
-      
+
       .def("getXY", [](const BiarcList & self) {
         const size_t n = self.numSegments();
         // Avoids segmentation fault for empty list
         if (!n) {
-          return make_tuple(std::vector<real_type>(), 
+          return make_tuple(std::vector<real_type>(),
                             std::vector<real_type>());
         }
         std::vector<real_type> x(n+1), y(n+1);
@@ -467,14 +467,14 @@ namespace G2lib {
         :return: nodes coordinates, a list of x and y values
         :rtype: Tuple[List[float], List[float]]
       )S")
-      
+
       .def("findST1", [](const BiarcList & self, real_type x, real_type y) {
         real_type s, t;
         int_type idx = self.findST1(x, y, s, t);
         return std::make_tuple(idx, s, t);
       }, py::arg("x"), py::arg("y"),
       R"S(
-        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the
         classic `findST`, this version returns as first return value the index
         of the segment.
 
@@ -494,7 +494,7 @@ namespace G2lib {
         return std::make_tuple(idx, s, t);
       }, py::arg("x"), py::arg("y"),
       R"S(
-        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the
         classic `findST`, this version returns as first return value the index
         of the segment.
         Vectorial Version.
@@ -504,14 +504,14 @@ namespace G2lib {
         :return: a tuple with index, **s** coordinates and **t** coordinates
         :rtype: Tuple[List[bool], List[float], List[float]]
       )S")
-      
+
       .def("findST1", [](const BiarcList & self, int_type ibegin, int_type iend, real_type x, real_type y) {
         real_type s, t;
         int_type idx = self.findST1(ibegin, iend, x, y, s, t);
         return std::make_tuple(idx, s, t);
       }, py::arg("ibegin"), py::arg("iend"), py::arg("x"), py::arg("y"),
       R"S(
-        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the
         classic `findST`, this version returns as first return value the index
         of the segment. The search is done only between elements ``ibegin..iend``.
 

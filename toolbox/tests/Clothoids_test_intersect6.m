@@ -37,8 +37,8 @@ C1.plot(npts,'Color','red','LineWidth',3);
 hold on;
 C2.plot(npts,'Color','black','LineWidth',3);
 
-C1.noAABBtree();
-%C1.yesAABBtree();
+%C1.noAABBtree();
+C1.yesAABBtree();
 
 tic
 [s1,s2] = C1.intersect( C2 );

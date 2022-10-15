@@ -56,7 +56,7 @@ namespace G2lib {
   void
   do_new(
     int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
+    int nrhs, mxArray const *[]
   ) {
     #define CMD "ClothoidSplineG2MexWrapper('new'): "
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
@@ -70,7 +70,7 @@ namespace G2lib {
   static
   void
   do_delete(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "ClothoidListMexWrapper('delete',OBJ): "
@@ -89,7 +89,7 @@ namespace G2lib {
   static
   void
   do_build(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
     #define CMD "ClothoidSplineG2MexWrapper('build',OBJ,x,y): "
@@ -115,7 +115,7 @@ namespace G2lib {
   static
   void
   do_target(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -376,7 +376,7 @@ namespace G2lib {
   static
   void
   do_info(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 

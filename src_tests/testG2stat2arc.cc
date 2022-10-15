@@ -31,7 +31,7 @@ main() {
   real_type kur[1000], kmax = 10;
   real_type a = exp( 2*log(kmax)/(nkur-1) );
   nkur = 2*nkur+1;
-  cout << "a = " << a << "\n";
+  fmt::print( "a = {}\n", a );
   real_type k0 = 1/kmax;
   kur[0] = 0;
   for ( int ii = 1; ii < nkur; ii += 2 ) {
@@ -40,13 +40,14 @@ main() {
     k0 *= a;
   }
 
-  cout << "\nkur[0]      = " << kur[0]
-       << "\nkur[1]      = " << kur[1]
-       << "\nkur[2]      = " << kur[2]
-       << "\nkur[nkur-1] = " << kur[nkur-1]
-       << "\nkur[nkur-2] = " << kur[nkur-2]
-       << "\n";
-
+  fmt::print(
+    "kur[0]      = {}\n"
+    "kur[1]      = {}\n"
+    "kur[2]      = {}\n"
+    "kur[nkur-1] = {}\n"
+    "kur[nkur-2] = {}\n",
+    kur[0], kur[1], kur[2], kur[nkur-1], kur[nkur-2]
+  );
 
   // real_type kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 };
   tictoc.tic();
@@ -71,17 +72,19 @@ main() {
   }
   tictoc.tic();
 
-  cout << "stats\n";
+  fmt::print( "stats\n" );
   int acc = 0, acc1 = 0;
-  for ( map<int,int>::const_iterator is = stats.begin();
-        is != stats.end(); ++is ) {
-    cout << "iter = " << is->first << " -- " << is->second << '\n';
-    if ( is->first>0 ) acc  += is->second;
-    else               acc1 += is->second;
+  for ( auto const & S : stats ) {
+    fmt::print( "iter = {} -- {}\n", S.first, S.second );
+    if ( S.first>0 ) acc  += S.second;
+    else             acc1 += S.second;
   }
-  cout
-    << "ok = " << acc << " perc = " << double(acc)/(acc+acc1) << '\n'
-    << "elapsed = " << tictoc.elapsed_s() << '\n'
-    << "All done\n";
+  fmt::print(
+    "ok = {} perc = {}\n"
+    "elapsed = {}\n"
+    "All done\n",
+    acc, double(acc)/(acc+acc1), tictoc.elapsed_s()
+  );
+
   return 0;
 }

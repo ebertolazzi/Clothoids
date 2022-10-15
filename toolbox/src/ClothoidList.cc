@@ -33,11 +33,60 @@
 
 namespace G2lib {
 
-  using std::numeric_limits;
   using std::lower_bound;
   using std::vector;
   using std::swap;
   using std::abs;
+
+  void
+  ClothoidList::build( LineSegment const & LS ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( LS );
+  }
+
+  void
+  ClothoidList::build( CircleArc const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
+  }
+
+  void
+  ClothoidList::build( Biarc const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C.C0() );
+    this->push_back( C.C1() );
+  }
+
+  void
+  ClothoidList::build( BiarcList const & c ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( c );
+  }
+
+  void
+  ClothoidList::build( ClothoidCurve const & c ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( c );
+  }
+
+  void
+  ClothoidList::build( PolyLine const & pl ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( pl );
+  }
+
+  void
+  ClothoidList::build( ClothoidList const & pl ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( pl );
+  }
 
   /*\
    |   ____ _       _   _           _     _ _     _     _
@@ -48,96 +97,57 @@ namespace G2lib {
    |
   \*/
 
-  ClothoidList::ClothoidList( LineSegment const & LS )
-  : BaseCurve(G2LIB_CLOTHOID_LIST)
-  , m_curve_is_closed(false)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( LS );
-  }
+  ClothoidList::ClothoidList( LineSegment const & LS ) { build( LS ); }
 
-  ClothoidList::ClothoidList( CircleArc const & C )
-  : BaseCurve(G2LIB_CLOTHOID_LIST)
-  , m_curve_is_closed(false)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( C );
-  }
+  ClothoidList::ClothoidList( CircleArc const & C ) { build( C ); }
 
-  ClothoidList::ClothoidList( Biarc const & C )
-  : BaseCurve(G2LIB_CLOTHOID_LIST)
-  , m_curve_is_closed(false)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( C.C0() );
-    this->push_back( C.C1() );
-  }
+  ClothoidList::ClothoidList( Biarc const & C ) { build( C ); }
 
-  ClothoidList::ClothoidList( BiarcList const & c )
-  : BaseCurve(G2LIB_CLOTHOID_LIST)
-  , m_curve_is_closed(false)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( c );
-  }
+  ClothoidList::ClothoidList( BiarcList const & C ) { build( C ); }
 
-  ClothoidList::ClothoidList( ClothoidCurve const & c )
-  : BaseCurve(G2LIB_CLOTHOID_LIST)
-  , m_curve_is_closed(false)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( c );
-  }
+  ClothoidList::ClothoidList( ClothoidCurve const & C ) { build( C ); }
 
-  ClothoidList::ClothoidList( PolyLine const & pl )
-  : BaseCurve(G2LIB_CLOTHOID_LIST)
-  , m_curve_is_closed(false)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( pl );
-  }
+  ClothoidList::ClothoidList( PolyLine const & C ) { build( C ); }
 
-  ClothoidList::ClothoidList( BaseCurve const & C )
-  : BaseCurve(G2LIB_CLOTHOID_LIST)
-  , m_curve_is_closed(false)
-  , m_aabb_done(false)
-  {
+  ClothoidList::ClothoidList( BaseCurve const * pC ) {
+
+    G2LIB_DEBUG_MESSAGE( "ClothoidList convert: {}\n", pC->type_name() );
+
     this->resetLastInterval();
     this->init();
-    switch ( C.type() ) {
+    switch ( pC->type() ) {
     case G2LIB_LINE:
-      push_back( *static_cast<LineSegment const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidList\n" );
+      push_back( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
-      push_back( *static_cast<CircleArc const *>(&C) );
-      break;
-    case G2LIB_CLOTHOID:
-      push_back( *static_cast<ClothoidCurve const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidList\n" );
+      push_back( *static_cast<CircleArc const *>(pC) );
       break;
     case G2LIB_BIARC:
-      push_back( *static_cast<Biarc const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "Biarc -> ClothoidList\n" );
+      push_back( *static_cast<Biarc const *>(pC) );
       break;
-    case G2LIB_BIARC_LIST:
-      push_back( *static_cast<BiarcList const *>(&C) );
-      break;
-    case G2LIB_CLOTHOID_LIST:
-      copy( *static_cast<ClothoidList const *>(&C) );
+    case G2LIB_CLOTHOID:
+      G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidList\n" );
+      push_back( *static_cast<ClothoidCurve const *>(pC) );
       break;
     case G2LIB_POLYLINE:
-      push_back( *static_cast<PolyLine const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "PolyLine -> ClothoidList\n" );
+      push_back( *static_cast<PolyLine const *>(pC) );
       break;
+    case G2LIB_BIARC_LIST:
+      G2LIB_DEBUG_MESSAGE( "BiarcList -> ClothoidList\n" );
+      push_back( *static_cast<BiarcList const *>(pC) );
+      break;
+    case G2LIB_CLOTHOID_LIST:
+      copy( *static_cast<ClothoidList const *>(pC) );
+      break;
+    default:
+      UTILS_ERROR(
+        "ClothoidList::ClothoidList, missing conversion for type {}",
+        pC->type_name()
+      );
     }
   }
 
@@ -149,7 +159,7 @@ namespace G2lib {
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
       static_cast<int_type>(m_s0.size()),
-      &m_s0.front(), s, lastInterval, m_curve_is_closed, true
+      m_s0.data(), s, lastInterval, m_curve_is_closed, true
     );
     return lastInterval;
   }
@@ -280,10 +290,10 @@ namespace G2lib {
 
     if ( m_s0.empty() ) m_s0.push_back(0);
 
-    vector<LineSegment>::const_iterator ip = c.m_polylineList.begin();
-    for (; ip != c.m_polylineList.end(); ++ip ) {
-      m_s0.push_back(m_s0.back()+ip->length());
-      m_clotoidList.push_back(ClothoidCurve(*ip));
+    for ( auto const & L : c.m_polylineList ) {
+      m_s0.push_back(m_s0.back()+L.length());
+      ClothoidCurve C(&L);
+      m_clotoidList.push_back(C);
     }
   }
 
@@ -296,10 +306,9 @@ namespace G2lib {
 
     if ( m_s0.empty() ) m_s0.push_back(0);
 
-    vector<ClothoidCurve>::const_iterator ip = c.m_clotoidList.begin();
-    for (; ip != c.m_clotoidList.end(); ++ip ) {
-      m_s0.push_back(m_s0.back()+ip->length());
-      m_clotoidList.push_back(*ip);
+    for ( auto const & C : c.m_clotoidList ) {
+      m_s0.push_back(m_s0.back()+C.length());
+      m_clotoidList.push_back(C);
     }
   }
 
@@ -557,9 +566,9 @@ namespace G2lib {
 
   real_type
   ClothoidList::length() const
-  { 
-    if ( m_clotoidList.empty() ) return 0.0;
-    return m_s0.back() - m_s0.front(); 
+  {
+    if ( m_clotoidList.empty() ) return real_type(0);
+    return m_s0.back() - m_s0.front();
   }
 
   real_type
@@ -635,24 +644,23 @@ namespace G2lib {
   ) const {
     vector<Triangle2D> tvec;
     bbTriangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
-    xmin = ymin = numeric_limits<real_type>::infinity();
+    xmin = ymin = Utils::Inf<real_type>();
     xmax = ymax = -xmin;
-    vector<Triangle2D>::const_iterator it;
-    for ( it = tvec.begin(); it != tvec.end(); ++it ) {
+    for ( auto const & T : tvec ) {
       // - - - - - - - - - - - - - - - - - - - -
-      if      ( it->x1() < xmin ) xmin = it->x1();
-      else if ( it->x1() > xmax ) xmax = it->x1();
-      if      ( it->x2() < xmin ) xmin = it->x2();
-      else if ( it->x2() > xmax ) xmax = it->x2();
-      if      ( it->x3() < xmin ) xmin = it->x3();
-      else if ( it->x3() > xmax ) xmax = it->x3();
+      if      ( T.x1() < xmin ) xmin = T.x1();
+      else if ( T.x1() > xmax ) xmax = T.x1();
+      if      ( T.x2() < xmin ) xmin = T.x2();
+      else if ( T.x2() > xmax ) xmax = T.x2();
+      if      ( T.x3() < xmin ) xmin = T.x3();
+      else if ( T.x3() > xmax ) xmax = T.x3();
       // - - - - - - - - - - - - - - - - - - - -
-      if      ( it->y1() < ymin ) ymin = it->y1();
-      else if ( it->y1() > ymax ) ymax = it->y1();
-      if      ( it->y2() < ymin ) ymin = it->y2();
-      else if ( it->y2() > ymax ) ymax = it->y2();
-      if      ( it->y3() < ymin ) ymin = it->y3();
-      else if ( it->y3() > ymax ) ymax = it->y3();
+      if      ( T.y1() < ymin ) ymin = T.y1();
+      else if ( T.y1() > ymax ) ymax = T.y1();
+      if      ( T.y2() < ymin ) ymin = T.y2();
+      else if ( T.y2() > ymax ) ymax = T.y2();
+      if      ( T.y3() < ymin ) ymin = T.y3();
+      else if ( T.y3() > ymax ) ymax = T.y3();
     }
   }
 
@@ -1181,11 +1189,10 @@ namespace G2lib {
 
   void
   ClothoidList::change_origin( real_type newx0, real_type newy0 ) {
-    vector<ClothoidCurve>::iterator ic = m_clotoidList.begin();
-    for (; ic != m_clotoidList.end(); ++ic ) {
-      ic->change_origin( newx0, newy0 );
-      newx0 = ic->x_end();
-      newy0 = ic->y_end();
+    for ( ClothoidCurve & C : m_clotoidList ) {
+      C.change_origin( newx0, newy0 );
+      newx0 = C.x_end();
+      newy0 = C.y_end();
     }
   }
 
@@ -1303,30 +1310,20 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    #ifdef G2LIB_USE_CXX11
-    vector<shared_ptr<BBox const> > bboxes;
-    #else
-    vector<BBox const *> bboxes;
-    #endif
-
     bbTriangles_ISO( offs, m_aabb_tri, max_angle, max_size );
-    bboxes.reserve(m_aabb_tri.size());
-    vector<Triangle2D>::const_iterator it;
+
     int_type ipos = 0;
-    for ( it = m_aabb_tri.begin(); it != m_aabb_tri.end(); ++it, ++ipos ) {
-      real_type xmin, ymin, xmax, ymax;
-      it->bbox( xmin, ymin, xmax, ymax );
-      #ifdef G2LIB_USE_CXX11
-      bboxes.push_back( make_shared<BBox const>(
-        xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos
-      ) );
-      #else
-      bboxes.push_back(
-        new BBox( xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos )
-      );
-      #endif
+    int_type nobj = int_type(m_aabb_tri.size());
+    m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
+    m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
+    for ( Triangle2D const & T : m_aabb_tri ) {
+      real_type bbox_min[2], bbox_max[2];
+      T.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
+      m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
+      ++ipos;
     }
-    m_aabb_tree.build(bboxes);
+
+    m_aabb_tree.build();
     m_aabb_done      = true;
     m_aabb_offs      = offs;
     m_aabb_max_angle = max_angle;
@@ -1345,25 +1342,37 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidList::collision( ClothoidList const & C ) const {
-    this->build_AABBtree_ISO( 0 );
-    C.build_AABBtree_ISO( 0 );
-    T2D_collision_list_ISO fun( this, 0, &C, 0 );
-    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
   ClothoidList::collision_ISO(
     real_type            offs,
-    ClothoidList const & C,
-    real_type            offs_C
+    ClothoidList const & CL,
+    real_type            offs_CL
   ) const {
     this->build_AABBtree_ISO( offs );
-    C.build_AABBtree_ISO( offs_C );
-    T2D_collision_list_ISO fun( this, offs, &C, offs_C );
-    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
+    CL.build_AABBtree_ISO( offs_CL );
+    AABB_MAP intersectList;
+    m_aabb_tree.intersect_and_refine( CL.m_aabb_tree, intersectList );
+    for ( auto const & I : intersectList ) {
+      int_type i = I.first;
+      UTILS_ASSERT_DEBUG(
+        i >= 0 && i < int_type(m_aabb_tri.size()),
+        "ClothoidList::collision_ISO( offs={}, C, offs_CL={} ) i={} out of range [0,{})\n",
+        offs, offs_CL, i, m_aabb_tri.size()
+      );
+      Triangle2D    const & T1 = m_aabb_tri[i];
+      ClothoidCurve const & C1 = m_clotoidList[T1.Icurve()];
+      for ( int_type j : I.second ) {
+        UTILS_ASSERT_DEBUG(
+          j >= 0 && j < int_type(CL.m_aabb_tri.size()),
+          "ClothoidList::collision_ISO( offs={}, CL, offs_CL={} ) j={} out of range [0,{})\n",
+          offs, offs_CL, j, CL.m_aabb_tri.size()
+        );
+        Triangle2D    const & T2 = CL.m_aabb_tri[j];
+        ClothoidCurve const & C2 = CL.m_clotoidList[T2.Icurve()];
+        bool collide = C1.collision_ISO( offs, C2, offs_CL );
+        if ( collide ) return true;
+      }
+    }
+    return false;
   }
 
   /*\
@@ -1375,49 +1384,86 @@ namespace G2lib {
    |
   \*/
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == G2LIB_CLOTHOID_LIST ) {
+      ClothoidList const & C = *static_cast<ClothoidList const *>(pC);
+      return this->collision( C );
+    } else {
+      ClothoidList C(pC);
+      return this->collision( C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::collision_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C
+  ) const {
+    if ( pC->type() == G2LIB_CLOTHOID_LIST ) {
+      ClothoidList const & C = *static_cast<ClothoidList const *>(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    } else {
+      ClothoidList C(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::intersect_ISO(
     real_type            offs,
     ClothoidList const & CL,
     real_type            offs_CL,
-    IntersectList      & ilist,
-    bool                 swap_s_vals
+    IntersectList      & ilist
   ) const {
     if ( intersect_with_AABBtree ) {
       this->build_AABBtree_ISO( offs );
       CL.build_AABBtree_ISO( offs_CL );
-      AABBtree::VecPairPtrBBox iList;
-      m_aabb_tree.intersect( CL.m_aabb_tree, iList );
-
-      AABBtree::VecPairPtrBBox::const_iterator ip;
-      for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-        size_t ipos1 = size_t(ip->first->Ipos());
-        size_t ipos2 = size_t(ip->second->Ipos());
-
-        Triangle2D const & T1 = m_aabb_tri[ipos1];
-        Triangle2D const & T2 = CL.m_aabb_tri[ipos2];
-
+      AABB_MAP intersectList;
+      m_aabb_tree.intersect_and_refine( CL.m_aabb_tree, intersectList );
+      for ( auto const & I : intersectList ) {
+        int_type i = I.first;
+        UTILS_ASSERT_DEBUG(
+          i >= 0 && i < int_type(m_aabb_tri.size()),
+          "ClothoidList::intersect_ISO( offs={}, CL, offs_CL={}, ilist ) i={} out of range [0,{})\n",
+          offs, offs_CL, i, m_aabb_tri.size()
+        );
+        Triangle2D    const & T1 = m_aabb_tri[i];
         ClothoidCurve const & C1 = m_clotoidList[T1.Icurve()];
-        ClothoidCurve const & C2 = CL.m_clotoidList[T2.Icurve()];
 
-        real_type ss1, ss2;
-        bool converged = C1.aabb_intersect_ISO( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
+        for ( int_type j : I.second ) {
+          UTILS_ASSERT_DEBUG(
+            j >= 0 && j < int_type(CL.m_aabb_tri.size()),
+            "ClothoidList::intersect_ISO( offs={}, CL, offs_CL={}, ilist ) j={} out of range [0,{})\n",
+            offs, offs_CL, j, CL.m_aabb_tri.size()
+          );
+          Triangle2D    const & T2 = CL.m_aabb_tri[j];
+          ClothoidCurve const & C2 = CL.m_clotoidList[T2.Icurve()];
 
-        if ( converged ) {
-          ss1 += m_s0[T1.Icurve()];
-          ss2 += CL.m_s0[T2.Icurve()];
-          if ( swap_s_vals ) swap( ss1, ss2 );
-          ilist.push_back( Ipair( ss1, ss2 ) );
+          real_type ss1, ss2;
+          bool converged = C1.aabb_intersect_ISO( T1, offs, &C2, T2, offs_CL, ss1, ss2 );
+
+          if ( converged ) {
+            ss1 += m_s0[T1.Icurve()];
+            ss2 += CL.m_s0[T2.Icurve()];
+            ilist.push_back( Ipair( ss1, ss2 ) );
+          }
         }
       }
+
     } else {
+
       bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
       CL.bbTriangles_ISO( offs_CL, CL.m_aabb_tri, Utils::m_pi/18, 1e100 );
-      vector<Triangle2D>::const_iterator i1, i2;
-      for ( i1 = m_aabb_tri.begin(); i1 != m_aabb_tri.end(); ++i1 ) {
-        for ( i2 = CL.m_aabb_tri.begin(); i2 != CL.m_aabb_tri.end(); ++i2 ) {
-          Triangle2D const & T1 = *i1;
-          Triangle2D const & T2 = *i2;
+      for ( Triangle2D const & T1 : m_aabb_tri ) {
+        for ( Triangle2D const & T2 : CL.m_aabb_tri ) {
 
           ClothoidCurve const & C1 = m_clotoidList[T1.Icurve()];
           ClothoidCurve const & C2 = CL.m_clotoidList[T2.Icurve()];
@@ -1428,12 +1474,41 @@ namespace G2lib {
           if ( converged ) {
             ss1 += m_s0[T1.Icurve()];
             ss2 += CL.m_s0[T2.Icurve()];
-            if ( swap_s_vals ) swap( ss1, ss2 );
             ilist.push_back( Ipair( ss1, ss2 ) );
           }
         }
       }
 
+    }
+  }
+
+  void
+  ClothoidList::intersect(
+    BaseCurve const * pC,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_CLOTHOID_LIST ) {
+      ClothoidList const & C = *static_cast<ClothoidList const *>(pC);
+      this->intersect( C, ilist );
+    } else {
+      ClothoidList C(pC);
+      this->intersect( C, ilist );
+    }
+  }
+
+  void
+  ClothoidList::intersect_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_CLOTHOID_LIST ) {
+      ClothoidList const & C = *static_cast<ClothoidList const *>(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
+    } else {
+      ClothoidList C(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
     }
   }
 
@@ -1458,30 +1533,50 @@ namespace G2lib {
 
     this->build_AABBtree_ISO( offs );
 
-    AABBtree::VecPtrBBox candidateList;
-    m_aabb_tree.min_distance( qx, qy, candidateList );
-    AABBtree::VecPtrBBox::const_iterator ic;
-    UTILS_ASSERT0(
-      candidateList.size() > 0, "ClothoidList::closest_point_internal no candidate\n"
-    );
     int_type icurve = 0;
-    DST = numeric_limits<real_type>::infinity();
-    for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
-      size_t ipos = size_t((*ic)->Ipos());
-      Triangle2D const & T = m_aabb_tri[ipos];
-      real_type dst = T.distMin( qx, qy );
-      if ( dst < DST ) {
-        // refine distance
-        real_type xx, yy, ss;
-        m_clotoidList[T.Icurve()].closest_point_internal(
-          T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst
-        );
+    DST = Utils::Inf<real_type>();
+
+    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+
+      AABB_SET candidateList;
+      real_type xy[2] = { qx, qy };
+      m_aabb_tree.min_distance_candidates( xy, candidateList );
+      UTILS_ASSERT0(
+         candidateList.size() > 0,
+        "BiarcList::closest_point_internal no candidate\n"
+      );
+      for ( int_type ipos : candidateList ) {
+        Triangle2D const & T = m_aabb_tri[ipos];
+        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
-          DST    = dst;
-          s      = ss + m_s0[T.Icurve()];
-          x      = xx;
-          y      = yy;
-          icurve = T.Icurve();
+          // refine distance
+          real_type xx, yy, ss, tt;
+          m_clotoidList[T.Icurve()].closest_point_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
+          if ( dst < DST ) {
+            DST    = dst;
+            s      = ss + m_s0[T.Icurve()];
+            x      = xx;
+            y      = yy;
+            icurve = T.Icurve();
+          }
+        }
+      }
+
+    } else {
+
+      for ( Triangle2D const & T : m_aabb_tri ) {
+        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
+        if ( dst < DST ) {
+          // refine distance
+          real_type xx, yy, ss, tt;
+          m_clotoidList[T.Icurve()].closest_point_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
+          if ( dst < DST ) {
+            DST    = dst;
+            s      = ss + m_s0[T.Icurve()];
+            x      = xx;
+            y      = yy;
+            icurve = T.Icurve();
+          }
         }
       }
     }
@@ -1544,29 +1639,47 @@ namespace G2lib {
 
   int_type
   ClothoidList::closest_segment( real_type qx, real_type qy ) const {
+
     this->build_AABBtree_ISO( 0 );
 
-    AABBtree::VecPtrBBox candidateList;
-    m_aabb_tree.min_distance( qx, qy, candidateList );
-    AABBtree::VecPtrBBox::const_iterator ic;
-    UTILS_ASSERT0(
-      candidateList.size() > 0, "ClothoidList::closest_segment no candidate\n"
-    );
-    int_type icurve = 0;
-    real_type DST = numeric_limits<real_type>::infinity();
-    for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
-      size_t ipos = size_t((*ic)->Ipos());
-      Triangle2D const & T = m_aabb_tri[ipos];
-      real_type dst = T.distMin( qx, qy );
-      if ( dst < DST ) {
-        // refine distance
-        real_type xx, yy, ss;
-        m_clotoidList[T.Icurve()].closest_point_internal(
-          T.S0(), T.S1(), qx, qy, 0, xx, yy, ss, dst
-        );
+    int_type  icurve = 0;
+    real_type DST    = Utils::Inf<real_type>();
+
+    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+
+      AABB_SET candidateList;
+      real_type xy[2] = { qx, qy };
+      m_aabb_tree.min_distance_candidates( xy, candidateList );
+      UTILS_ASSERT0(
+         candidateList.size() > 0,
+        "ClothoidList::closest_segment no candidate\n"
+      );
+      for ( int_type ipos : candidateList ) {
+        Triangle2D const & T = m_aabb_tri[ipos];
+        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
-          DST    = dst;
-          icurve = T.Icurve();
+          // refine distance
+          real_type xx, yy, ss, tt;
+          m_clotoidList[T.Icurve()].closest_point_ISO( qx, qy, 0, xx, yy, ss, tt, dst );
+          if ( dst < DST ) {
+            DST    = dst;
+            icurve = T.Icurve();
+          }
+        }
+      }
+
+    } else {
+
+      for ( Triangle2D const & T : m_aabb_tri ) {
+        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
+        if ( dst < DST ) {
+          // refine distance
+          real_type xx, yy, ss, tt;
+          m_clotoidList[T.Icurve()].closest_point_ISO( qx, qy, 0, xx, yy, ss, tt, dst );
+          if ( dst < DST ) {
+            DST    = dst;
+            icurve = T.Icurve();
+          }
         }
       }
     }
@@ -1999,7 +2112,7 @@ namespace G2lib {
   bool
   load_segment(
     istream_type  & stream,
-    ClothoidCurve & c, 
+    ClothoidCurve & c,
     real_type       epsi
   ) {
     string line1, line2;
@@ -2044,7 +2157,7 @@ namespace G2lib {
     }
     stream << "# EOF\n";
   }
-  
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -2068,7 +2181,7 @@ namespace G2lib {
     save_segment( stream, S1 );
     stream << "# EOF\n";
   }
-  
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void

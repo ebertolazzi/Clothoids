@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -31,10 +31,10 @@ namespace G2lib {
     void
     drawClothoid(
       ClothoidCurve const& c,
-      std::string const & penna="black",
+      string const & penna="black",
       real_type offset = 0
     ) const;
-    
+
     void dot( real_type x, real_type y, string const & penna="black" ) const;
     void triangle(Triangle2D const & t, string const & penna="black" ) const;
 
@@ -51,7 +51,7 @@ namespace G2lib {
     drawLine(
       real_type x0, real_type y0,
       real_type x1, real_type y1,
-      std::string const & penna="black"
+      string const & penna="black"
     ) const;
 
     void

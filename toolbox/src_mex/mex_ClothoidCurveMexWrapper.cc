@@ -158,7 +158,7 @@ namespace G2lib {
   static
   void
   do_build(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
@@ -334,7 +334,7 @@ namespace G2lib {
   static
   void
   do_change_curvilinear_origin(
-    int nlhs, mxArray       *plhs[],
+    int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 

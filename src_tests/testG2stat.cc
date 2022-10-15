@@ -31,7 +31,7 @@ main() {
   real_type kur[1000], kmax = 10;
   real_type a = exp( 2*log(kmax)/(nkur-1) );
   nkur = 2*nkur+1;
-  cout << "a = " << a << "\n";
+  fmt::print( "a = {}\n", a );
   real_type k0 = 1/kmax;
   kur[0] = 0;
   for ( int ii = 1; ii < nkur; ii += 2 ) {
@@ -39,17 +39,19 @@ main() {
     kur[ii+1] = -kur[ii];
     k0 *= a;
   }
-  cout << "\nkur[0]      = " << kur[0]
-       << "\nkur[1]      = " << kur[1]
-       << "\nkur[2]      = " << kur[2]
-       << "\nkur[nkur-1] = " << kur[nkur-1]
-       << "\nkur[nkur-2] = " << kur[nkur-2]
-       << "\n";
+  fmt::print(
+    "kur[0]      = {}\n"
+    "kur[1]      = {}\n"
+    "kur[2]      = {}\n"
+    "kur[nkur-1] = {}\n"
+    "kur[nkur-2] = {}\n",
+    kur[0], kur[1], kur[2], kur[nkur-1], kur[nkur-2]
+  );
 
   // real_type kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 };
   tictoc.tic();
   for ( int ii = 0; ii < nkur; ++ii ) {
-    cout << "ii = " << ii << '\n';
+    fmt::print( "ii = {}\n", ii );
     k0 = kur[ii];
     for ( int jj = 0; jj < nkur; ++jj ) {
       real_type k1 = kur[jj];
@@ -59,9 +61,9 @@ main() {
           real_type th1 = thmin + ((thmax-thmin)*j)/(NMAX-1);
           int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
           if ( iter < 0 ) {
-            cout << "iter = " << iter << '\n';
+            fmt::print( "iter = {}\n", iter );
             iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
-            cout << "iter dopo = " << iter << '\n';
+            fmt::print( "iter dopo = {}\n", iter );
           }
           stats[iter]++;
         }
@@ -69,17 +71,18 @@ main() {
     }
   }
   tictoc.toc();
-  cout << "stats\n";
+  fmt::print( "stats\n" );
   long N = 0;
-  for ( map<int,int>::const_iterator is = stats.begin();
-        is != stats.end(); ++is ) {
-    cout << "iter = " << is->first << " -- " << is->second << '\n';
-    N += is->second;
+  for ( auto const & S : stats ) {
+    fmt::print( "iter = {} -- {}\n", S.first, S.second );
+    N += S.second;
   }
-  cout
-   << "elapsed = " << tictoc.elapsed_s() << "[s]\n"
-   << "ave     = " << tictoc.elapsed_s()/N << "[s]\n"
-   << "All done\n";
+  fmt::print(
+    "elapsed = {} [s]\n"
+    "ave     = {} [s]\n"
+    "All done\n",
+    tictoc.elapsed_s(), tictoc.elapsed_s()/N
+  );
   return 0;
 }
 

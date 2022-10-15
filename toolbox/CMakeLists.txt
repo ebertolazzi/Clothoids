@@ -20,7 +20,9 @@ include(./cmake_utils/CMakeLists-common.txt)
 
 project( ${PROJECT_NAME} VERSION ${UTILS_PROJECT_VERSION} )
 
-set( CMAKE_BUILD_TYPE Release )
+if ( NOT DEFINED CMAKE_BUILD_TYPE )
+  set( CMAKE_BUILD_TYPE Release )
+endif()
 
 find_package( Matlab REQUIRED )
 
@@ -117,6 +119,8 @@ message( STATUS "SOURCES = ${SOURCES}" )
 
 utils_final_messages()
 
+add_library( Clothoids STATIC ${SOURCES} )
+
 set(
   MEX_LIST
   ClothoidListMexWrapper
@@ -132,10 +136,21 @@ set(
   ClothoidSplineG2MexWrapper
   TriTriOverlap
 )
+
+message( STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
+if ( CMAKE_BUILD_TYPE MATCHES Debug )
+  message( STATUS "DEBUG MODE\n\n")
+  add_compile_definitions(G2LIB_DEBUG)
+  add_compile_definitions(DEBUG)
+endif()
+
+add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+
 foreach(MEX ${MEX_LIST})
   matlab_add_mex(
     NAME mex_${MEX}
-    SRC src_mex/mex_${MEX}.cc ${SOURCES}
+    SRC src_mex/mex_${MEX}.cc
+    LINK_TO Clothoids
     OUTPUT_NAME ${MEX}
   )
   add_custom_command(

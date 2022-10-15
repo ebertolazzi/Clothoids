@@ -50,27 +50,8 @@ namespace G2lib {
 
     mutable Utils::BinarySearch<int_type> m_lastInterval;
 
-    mutable bool     m_aabb_done;
-    mutable AABBtree m_aabb_tree;
-
-    #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    class Collision_list {
-      PolyLine const * pPL1;
-      PolyLine const * pPL2;
-    public:
-      Collision_list( PolyLine const * _pPL1, PolyLine const * _pPL2 )
-      : pPL1(_pPL1)
-      , pPL2(_pPL2)
-      {}
-
-      bool
-      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        LineSegment const & LS1 = pPL1->m_polylineList[size_t(ptr1->Ipos())];
-        LineSegment const & LS2 = pPL2->m_polylineList[size_t(ptr2->Ipos())];
-        return LS1.collision( LS2 );
-      }
-    };
-    #endif
+    mutable bool      m_aabb_done{false};
+    mutable AABB_TREE m_aabb_tree;
 
     void
     resetLastInterval() {
@@ -83,8 +64,6 @@ namespace G2lib {
 
     //explicit
     PolyLine()
-    : BaseCurve(G2LIB_POLYLINE)
-    , m_aabb_done(false)
     { this->resetLastInterval(); }
 
     void
@@ -95,8 +74,6 @@ namespace G2lib {
 
     //explicit
     PolyLine( PolyLine const & PL )
-    : BaseCurve(G2LIB_POLYLINE)
-    , m_aabb_done(false)
     { this->resetLastInterval(); copy(PL); }
 
     int_type
@@ -107,7 +84,10 @@ namespace G2lib {
     explicit PolyLine( Biarc const & B, real_type tol );
     explicit PolyLine( ClothoidCurve const & B, real_type tol );
     explicit PolyLine( ClothoidList const & B, real_type tol );
-    explicit PolyLine( BaseCurve const & C );
+    explicit PolyLine( BaseCurve const * pC );
+
+    CurveType    type()      const override { return G2LIB_POLYLINE; }
+    char const * type_name() const override { return "PolyLine"; }
 
     PolyLine const & operator = ( PolyLine const & s )
     { copy(s); return *this; }
@@ -145,6 +125,13 @@ namespace G2lib {
     void build( ClothoidCurve const & C, real_type tol );
     void build( ClothoidList const & CL, real_type tol );
 
+    void build( CircleArc const & C );
+    void build( ClothoidCurve const & );
+    void build( Biarc const & );
+    void build( BiarcList const & );
+    void build( PolyLine const & );
+    void build( ClothoidList const & );
+
     void
     bbox(
       real_type & xmin,
@@ -174,28 +161,28 @@ namespace G2lib {
 
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override;
 
     void
     bbTriangles_ISO(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override;
 
     void
     bbTriangles_SAE(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -372,9 +359,7 @@ namespace G2lib {
 
     void
     translate( real_type tx, real_type ty ) override {
-      std::vector<LineSegment>::iterator il;
-      for ( il = m_polylineList.begin(); il != m_polylineList.end(); ++il )
-        il->translate( tx, ty );
+      for ( auto & il : m_polylineList ) il.translate( tx, ty );
     }
 
     void
@@ -383,9 +368,7 @@ namespace G2lib {
       real_type cx,
       real_type cy
     ) override {
-      std::vector<LineSegment>::iterator il;
-      for ( il = m_polylineList.begin(); il != m_polylineList.end(); ++il )
-        il->rotate( angle, cx, cy );
+      for ( auto & il : m_polylineList ) il.rotate( angle, cx, cy );
     }
 
     void
@@ -464,6 +447,16 @@ namespace G2lib {
       return this->collision( CL );
     }
 
+    bool
+    collision( BaseCurve const * pC ) const override;
+
+    bool
+    collision_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_C
+    ) const override;
+
     /*\
      |   _       _                          _
      |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
@@ -477,7 +470,7 @@ namespace G2lib {
     //!
     //! \param[in]  pl  other PolyLine
     //! \param[out] ss0 list of the paramter of intersection
-    //! \param[out] ss1 list of the paramter of intersection of the other Polyline
+    //! \param[out] ss1 list of the paramter of intersection of the other PolyLine
     //!
     void
     intersect(
@@ -489,61 +482,66 @@ namespace G2lib {
     //!
     //! Intersect PolyLine with another PolyLine
     //!
-    //! \param[in]  pl          other PolyLine
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  pl    other PolyLine
+    //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
     void
     intersect(
       PolyLine const & pl,
-      IntersectList  & ilist,
-      bool             swap_s_vals
+      IntersectList  & ilist
     ) const;
 
     //!
     //! Intersect PolyLine with another PolyLine (not yet available)
     //!
-    //! \param[in]  offs        Polyline offset
-    //! \param[in]  pl          other PolyLine
-    //! \param[in]  offs_pl     Other Poliline offset
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  offs    PolyLine offset
+    //! \param[in]  pl      other PolyLine
+    //! \param[in]  offs_pl Other Poliline offset
+    //! \param[out] ilist   list of the intersection (as parameter on the curves)
     //!
     void
     intersect_ISO(
       real_type        offs,
       PolyLine const & pl,
       real_type        offs_pl,
-      IntersectList  & ilist,
-      bool             swap_s_vals
-    ) {
+      IntersectList  & ilist
+    ) const {
       UTILS_ASSERT0(
         Utils::is_zero(offs) && Utils::is_zero(offs_pl),
         "PolyLine::intersect( offs ... ) not available!\n"
       );
-      this->intersect( pl, ilist, swap_s_vals );
+      this->intersect( pl, ilist );
     }
 
     void
+    intersect(
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const override;
+
+    void
+    intersect_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_LS,
+      IntersectList   & ilist
+    ) const override;
+
+    string
+    info() const
+    { return fmt::format( "PolyLine\n{}\n", *this ); }
+
+    void
     info( ostream_type & stream ) const override
-    { stream << "PolyLine\n" << *this << '\n'; }
+    { stream << info(); }
 
     friend
     ostream_type &
     operator << ( ostream_type & stream, PolyLine const & P );
 
     void
-    build_AABBtree( AABBtree & aabb ) const;
+    build_AABBtree() const;
 
-    void
-    build_AABBtree() const {
-      if ( !m_aabb_done ) {
-        this->build_AABBtree( m_aabb_tree );
-        m_aabb_done = true;
-      }
-    }
     //@@@@ BACK COMPATIBILITY
     #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 
@@ -582,7 +580,7 @@ namespace G2lib {
       real_type & Y,
       real_type & S,
       real_type & T,
-      real_type & DST 
+      real_type & DST
     ) const {
       return closest_point_ISO( x, y, offs, X, Y, S, T, DST );
     }

@@ -105,12 +105,12 @@ namespace G2lib {
 
   static
   void
-  do_build(
+  do_build_arc(
     int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "CircleArcMexWrapper('build',OBJ,x0,y0,theta0,k0,L): "
+    #define CMD "CircleArcMexWrapper('build_arc',OBJ,x0,y0,theta0,k0,L): "
     UTILS_MEX_ASSERT(
       nrhs == 7, CMD "expected 7 inputs, nrhs = {}\n", nrhs
     );
@@ -323,7 +323,7 @@ namespace G2lib {
 
   static std::map<std::string,DO_CMD> cmd_to_fun = {
     {"new",do_new},
-    {"build",do_build},
+    {"build_arc",do_build_arc},
     {"build_3P",do_build_3P},
     {"build_G1",do_build_G1},
     {"change_curvilinear_origin",do_change_curvilinear_origin},

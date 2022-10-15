@@ -54,42 +54,12 @@ namespace G2lib {
 
     mutable Utils::BinarySearch<int_type> m_lastInterval;
 
-    mutable bool               m_aabb_done;
-    mutable AABBtree           m_aabb_tree;
-    mutable real_type          m_aabb_offs;
-    mutable real_type          m_aabb_max_angle;
-    mutable real_type          m_aabb_max_size;
+    mutable bool               m_aabb_done{false};
+    mutable AABB_TREE          m_aabb_tree;
+    mutable real_type          m_aabb_offs{real_type(0)};
+    mutable real_type          m_aabb_max_angle{real_type(0)};
+    mutable real_type          m_aabb_max_size{real_type(0)};
     mutable vector<Triangle2D> m_aabb_tri;
-
-    #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    class T2D_collision_list_ISO {
-      BiarcList const * m_pList1;
-      real_type const   m_offs1;
-      BiarcList const * m_pList2;
-      real_type const   m_offs2;
-    public:
-      T2D_collision_list_ISO(
-        BiarcList const * pList1,
-        real_type const   offs1,
-        BiarcList const * pList2,
-        real_type const   offs2
-      )
-      : m_pList1(pList1)
-      , m_offs1(offs1)
-      , m_pList2(pList2)
-      , m_offs2(offs2)
-      {}
-
-      bool
-      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        Triangle2D const & T1 = m_pList1->m_aabb_tri[size_t(ptr1->Ipos())];
-        Triangle2D const & T2 = m_pList2->m_aabb_tri[size_t(ptr2->Ipos())];
-        Biarc      const & C1 = m_pList1->get(T1.Icurve());
-        Biarc      const & C2 = m_pList2->get(T2.Icurve());
-        return C1.collision_ISO( m_offs1, C2, m_offs2 );
-      }
-    };
-    #endif
 
     void
     resetLastInterval() {
@@ -117,8 +87,6 @@ namespace G2lib {
     //! Build an empty biarc spline.
     //!
     BiarcList()
-    : BaseCurve(G2LIB_BIARC_LIST)
-    , m_aabb_done(false)
     { this->resetLastInterval(); }
 
     ~BiarcList() override {
@@ -130,10 +98,8 @@ namespace G2lib {
     //!
     //! Build a copy of another biarc spline.
     //!
-    BiarcList( BiarcList const & s )
-    : BaseCurve(G2LIB_BIARC_LIST)
-    , m_aabb_done(false)
-    { this->resetLastInterval(); copy(s); }
+    BiarcList( BiarcList const & s ) : BiarcList()
+    { copy(s); }
 
     //!
     //! Empty the the biarc list.
@@ -149,6 +115,9 @@ namespace G2lib {
     //! Copy another biarc spline.
     //!
     void copy( BiarcList const & L );
+
+    CurveType    type()      const override { return G2LIB_BIARC_LIST; }
+    char const * type_name() const override { return "BiarcList"; }
 
     //!
     //! Copy another biarc spline.
@@ -179,7 +148,15 @@ namespace G2lib {
     //!
     //! Build a biarc list from another curve.
     //!
-    explicit BiarcList( BaseCurve const & C );
+    explicit BiarcList( BaseCurve const * pC );
+
+    void build( LineSegment const & );
+    void build( CircleArc const & );
+    void build( ClothoidCurve const & );
+    void build( Biarc const & );
+    void build( BiarcList const & );
+    void build( PolyLine const & );
+    void build( ClothoidList const & );
 
     //!
     //! Append a line segment to the biarc list
@@ -188,7 +165,7 @@ namespace G2lib {
     void push_back( LineSegment const & c );
 
     //!
-    //! Append a line circle to the biarc 
+    //! Append a line circle to the biarc
     //! list (transformed to a degenerate biarc).
     //!
     void push_back( CircleArc const & c );
@@ -315,28 +292,28 @@ namespace G2lib {
 
     void
     bbTriangles_ISO(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override;
 
     void
     bbTriangles_SAE(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override;
 
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type            icurve    = 0
     ) const override;
 
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -784,21 +761,33 @@ namespace G2lib {
     //! Detect a collision with another biarc list.
     //!
     bool
-    collision( BiarcList const & C ) const;
+    collision( BiarcList const & BL ) const {
+      return collision_ISO( 0, BL, 0 );
+    }
 
     //!
     //! Detect a collision with another biarc list with offset.
     //!
     //! \param[in] offs   offset of first biarc
-    //! \param[in] CL     second biarc
+    //! \param[in] BL     second biarc
     //! \param[in] offs_C offset of second biarc
     //!
     bool
     collision_ISO(
       real_type         offs,
-      BiarcList const & CL,
+      BiarcList const & BL,
       real_type         offs_C
     ) const;
+
+    bool
+    collision( BaseCurve const * pC ) const override;
+
+    bool
+    collision_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_C
+    ) const override;
 
     /*\
      |   _       _                          _
@@ -811,38 +800,46 @@ namespace G2lib {
     //!
     //! intersect a biarc list with another biarc list
     //!
-    //! \param[in]  CL          second biarc
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  BL    second biarc
+    //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
     void
     intersect(
-      BiarcList const & CL,
-      IntersectList   & ilist,
-      bool              swap_s_vals
+      BiarcList const & BL,
+      IntersectList   & ilist
     ) const {
-      intersect_ISO( 0, CL, 0, ilist, swap_s_vals );
+      this->intersect_ISO( 0, BL, 0, ilist );
     }
 
     //!
     //! Intersect a biarc list with another biarc list with offset (ISO).
     //!
-    //! \param[in]  offs        offset of first biarc
-    //! \param[in]  CL          second biarc
-    //! \param[in]  offs_obj    offset of second biarc
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  offs     offset of first biarc
+    //! \param[in]  BL       second biarc
+    //! \param[in]  offs_obj offset of second biarc
+    //! \param[out] ilist    list of the intersection (as parameter on the curves)
     //!
     void
     intersect_ISO(
       real_type         offs,
-      BiarcList const & CL,
+      BiarcList const & BL,
       real_type         offs_obj,
-      IntersectList   & ilist,
-      bool              swap_s_vals
+      IntersectList   & ilist
     ) const;
+
+    void
+    intersect(
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const override;
+
+    void
+    intersect_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_LS,
+      IntersectList   & ilist
+    ) const override;
 
     //@@@@ BACK COMPATIBILITY
     #ifdef CLOTHOIDS_BACK_COMPATIBILITY

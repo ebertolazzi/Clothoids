@@ -60,21 +60,17 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    ~Biarc() override {}
+    ~Biarc() override = default;
 
     //!
     //! Construct and empty biarc
     //!
-    Biarc()
-    : BaseCurve(G2LIB_BIARC)
-    {}
+    Biarc() = default;
 
     //!
     //! Make a copy of an existing biarc
     //!
-    Biarc( Biarc const & ba )
-    : BaseCurve(G2LIB_BIARC)
-    { copy(ba); }
+    Biarc( Biarc const & ba ) { copy(ba); }
 
     //!
     //! Construct a biarc passing from the points
@@ -96,9 +92,7 @@ namespace G2lib {
       real_type x1,
       real_type y1,
       real_type theta1
-    )
-    : BaseCurve(G2LIB_BIARC)
-    {
+    ) {
       bool ok = build( x0, y0, theta0, x1, y1, theta1 );
       UTILS_ASSERT(
         ok,
@@ -108,7 +102,13 @@ namespace G2lib {
     }
 
     explicit
-    Biarc( BaseCurve const & C );
+    Biarc( LineSegment const & LS ) { this->build( LS ); }
+
+    explicit
+    Biarc( CircleArc const & C ) { this->build( C ); }
+
+    explicit
+    Biarc( BaseCurve const * pC );
 
     //!
     //! Make a copy of an existing biarc.
@@ -118,6 +118,9 @@ namespace G2lib {
       m_C0.copy(c.m_C0);
       m_C1.copy(c.m_C1);
     }
+
+    CurveType    type()      const override { return G2LIB_BIARC; }
+    char const * type_name() const override { return "Biarc"; }
 
     //!
     //! Make a copy of an existing biarc.
@@ -174,6 +177,21 @@ namespace G2lib {
       real_type x2,
       real_type y2
     );
+
+    //!
+    //! Build a biarc from a line segment
+    //!
+    void build( LineSegment const & LS );
+
+    //!
+    //! Build a biarc from a circle arc.
+    //!
+    void build( CircleArc const & C );
+    void build( Biarc const & );
+    void build( ClothoidCurve const & );
+    void build( PolyLine const & );
+    void build( BiarcList const & );
+    void build( ClothoidList const & );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -476,10 +494,10 @@ namespace G2lib {
 
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/18,
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/18,
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       m_C0.bbTriangles( tvec, max_angle, max_size, icurve );
       m_C1.bbTriangles( tvec, max_angle, max_size, icurve );
@@ -487,11 +505,11 @@ namespace G2lib {
 
     void
     bbTriangles_ISO(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/18,
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/18,
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       m_C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
       m_C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
@@ -499,11 +517,11 @@ namespace G2lib {
 
     void
     bbTriangles_SAE(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/18,
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/18,
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       m_C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
       m_C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
@@ -545,6 +563,16 @@ namespace G2lib {
              m_C1.collision_ISO( offs, B.m_C1, offs_B );
     }
 
+    bool
+    collision( BaseCurve const * pC ) const override;
+
+    bool
+    collision_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_C
+    ) const override;
+
     /*\
      |   _       _                          _
      |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
@@ -556,36 +584,44 @@ namespace G2lib {
     //!
     //! Intersect a biarc with another biarc.
     //!
-    //! \param[in]  B           second biarc
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  B     second biarc
+    //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
     void
     intersect(
       Biarc const   & B,
-      IntersectList & ilist,
-      bool            swap_s_vals
+      IntersectList & ilist
     ) const;
 
     //!
     //! Intersect a biarc with another biarc with offset (ISO).
     //!
-    //! \param[in]  offs        offset of first biarc
-    //! \param[in]  B           second biarc
-    //! \param[in]  offs_B      offset of second biarc
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  offs   offset of first biarc
+    //! \param[in]  B      second biarc
+    //! \param[in]  offs_B offset of second biarc
+    //! \param[out] ilist  list of the intersection (as parameter on the curves)
     //!
     void
     intersect_ISO(
       real_type       offs,
       Biarc const   & B,
       real_type       offs_B,
-      IntersectList & ilist,
-      bool            swap_s_vals
+      IntersectList & ilist
     ) const;
+
+    void
+    intersect(
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const override;
+
+    void
+    intersect_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_LS,
+      IntersectList   & ilist
+    ) const override;
 
     void
     info( ostream_type & stream ) const override
@@ -651,15 +687,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  //! 
-  //! Given a list of points \f$ (x_i,y_i) \f$ 
+  //!
+  //! Given a list of points \f$ (x_i,y_i) \f$
   //! build a guess of angles for a spline of biarc.
-  //! 
+  //!
   //! \param[in]  n     number of points
   //! \param[in]  x     x-coordinates
   //! \param[in]  y     y-coordinates
   //! \param[out] theta guessed angles
-  //! 
+  //!
   bool
   build_guess_theta(
     int_type          n,

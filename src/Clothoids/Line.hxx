@@ -39,36 +39,27 @@ namespace G2lib {
     friend class CircleArc;
     friend class PolyLine;
 
-    real_type m_x0;     //!< initial x coordinate of the line
-    real_type m_y0;     //!< initial y coordinate of the line
-    real_type m_theta0; //!< angle of the line
+    real_type m_x0{0};     //!< initial x coordinate of the line
+    real_type m_y0{0};     //!< initial y coordinate of the line
+    real_type m_theta0{0}; //!< angle of the line
 
-    real_type m_c0;     //!< `cos(theta0)`
-    real_type m_s0;     //!< `sin(theta0)`
-    real_type m_L;      //!< length of the segment
+    real_type m_c0{1};     //!< `cos(theta0)`
+    real_type m_s0{0};     //!< `sin(theta0)`
+    real_type m_L{0};      //!< length of the segment
 
   public:
 
     #include "BaseCurve_using.hxx"
 
     //explicit
-    LineSegment()
-    : BaseCurve(G2LIB_LINE)
-    , m_x0(0)
-    , m_y0(0)
-    , m_theta0(0)
-    , m_c0(1)
-    , m_s0(0)
-    , m_L(0)
-    {}
+    LineSegment() = default;
 
     //explicit
     LineSegment( LineSegment const & s )
-    : BaseCurve(G2LIB_LINE)
     { copy(s); }
 
     explicit
-    LineSegment( BaseCurve const & C );
+    LineSegment( BaseCurve const * pC );
 
     //!
     //! Construct a circle curve with the standard parameters
@@ -80,8 +71,7 @@ namespace G2lib {
       real_type _theta0,
       real_type _L
     )
-    : BaseCurve(G2LIB_LINE)
-    , m_x0(_x0)
+    : m_x0(_x0)
     , m_y0(_y0)
     , m_theta0(_theta0)
     , m_c0(cos(_theta0))
@@ -102,7 +92,8 @@ namespace G2lib {
     LineSegment const & operator = ( LineSegment const & s )
     { copy(s); return *this; }
 
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    CurveType    type()      const override { return G2LIB_LINE; }
+    char const * type_name() const override { return "LineSegment"; }
 
     real_type
     length() const override
@@ -147,10 +138,10 @@ namespace G2lib {
 
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100, // unused
-      int_type                  icurve    = 0
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100, // unused
+      int_type             icurve    = 0
     ) const override {
       real_type xmin, ymin, xmax, ymax;
       this->bbox( xmin, ymin, xmax, ymax );
@@ -172,11 +163,11 @@ namespace G2lib {
 
     void
     bbTriangles_ISO(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100, // unused
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100, // unused
+      int_type             icurve    = 0
     ) const override {
       real_type xmin, ymin, xmax, ymax;
       this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
@@ -199,11 +190,11 @@ namespace G2lib {
 
     void
     bbTriangles_SAE(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -596,6 +587,50 @@ namespace G2lib {
       p2[1] = m_y0+m_L*m_s0;
     }
 
+    void build( LineSegment const & LS );
+    void build( CircleArc const & );
+    void build( Biarc const & );
+    void build( ClothoidCurve const & );
+    void build( PolyLine const & );
+    void build( BiarcList const & );
+    void build( ClothoidList const & );
+
+    /*
+    //             _ _ _     _
+    //    ___ ___ | | (_)___(_) ___  _ __
+    //   / __/ _ \| | | / __| |/ _ \| '_ \
+    //  | (_| (_) | | | \__ \ | (_) | | | |
+    //   \___\___/|_|_|_|___/_|\___/|_| |_|
+    */
+
+    bool
+    collision( LineSegment const & S ) const;
+
+    bool
+    collision_ISO(
+      real_type           offs,
+      LineSegment const & S,
+      real_type           S_offs
+    ) const;
+
+    bool
+    collision( BaseCurve const * pC ) const override;
+
+    bool
+    collision_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_C
+    ) const override;
+
+    /*
+    //   _       _                          _
+    //  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+    //  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+    //  | | | | | ||  __/ |  \__ \  __/ (__| |_
+    //  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+    */
+
     bool
     intersect(
       LineSegment const & S,
@@ -615,42 +650,30 @@ namespace G2lib {
     void
     intersect(
       LineSegment const & LS,
-      IntersectList     & ilist,
-      bool                swap_s_vals
-    ) const {
-      real_type s1, s2;
-      bool ok = this->intersect( LS, s1, s2 );
-      if ( ok ) {
-        if ( swap_s_vals ) ilist.push_back( Ipair(s2, s1) );
-        else               ilist.push_back( Ipair(s1, s2) );
-      }
-    }
+      IntersectList     & ilist
+    ) const;
 
     void
     intersect_ISO(
       real_type           offs,
       LineSegment const & LS,
       real_type           offs_LS,
-      IntersectList     & ilist,
-      bool                swap_s_vals
-    ) const {
-      real_type s1, s2;
-      bool ok = this->intersect_ISO( offs, LS, offs_LS, s1, s2 );
-      if ( ok ) {
-        if ( swap_s_vals ) ilist.push_back( Ipair(s2, s1) );
-        else               ilist.push_back( Ipair(s1, s2) );
-      }
-    }
-
-    bool
-    collision( LineSegment const & S ) const;
-
-    bool
-    collision_ISO(
-      real_type           offs,
-      LineSegment const & S,
-      real_type           S_offs
+      IntersectList     & ilist
     ) const;
+
+    void
+    intersect(
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const override;
+
+    void
+    intersect_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_LS,
+      IntersectList   & ilist
+    ) const override;
 
     /*\
      |   _   _ _   _ ____  ____ ____

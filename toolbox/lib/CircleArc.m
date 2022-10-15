@@ -10,7 +10,7 @@ classdef CircleArc < CurveBase
     %> .. code-block:: matlab
     %>
     %>   ref = CircleArc() % create empty circle
-    %>   ref = CircleArc( x0, y0, theta0, k0, L ) % circle passing from (x0,y0) 
+    %>   ref = CircleArc( x0, y0, theta0, k0, L ) % circle passing from (x0,y0)
     %>                                            % at angle theta0 with curvature k0
     %>                                            % and length L
     %>
@@ -150,7 +150,7 @@ classdef CircleArc < CurveBase
     %>
     %>   fmt = {'Color','blue','Linewidth',2};
     %>   ref.plot( npts, fmt );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -207,7 +207,7 @@ classdef CircleArc < CurveBase
     %>
     %>   ref.plotPolygon();
     %>   ref.plotPolygon( 'Color','blue','Linewidth',2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `fmt` : format of the arc

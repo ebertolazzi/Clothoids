@@ -22,7 +22,7 @@ main() {
   vector<real_type> X;
   vector<real_type> Y;
 
-  std::string fname = "circuit-fiorano_sim_kerbs_rebuilt.txt";
+  string fname = "circuit-fiorano_sim_kerbs_rebuilt.txt";
 
   ifstream file( fname.c_str() );
 
@@ -34,7 +34,7 @@ main() {
     string str;
     getline(file,str);
     if ( str[0] == '#' ) {
-      cout << "SKIP LINE: " << str << '\n';
+      fmt::print( "SKIP LINE: {}\n", str );
       continue;
     }
     if ( !skipped_header ) { skipped_header = true; continue; }
@@ -60,12 +60,12 @@ main() {
 
   G2lib::ClothoidList C;
 
-  cout << "x = " << X[2230]-X[2231] << '\n';
-  cout << "y = " << Y[2230]-Y[2231] << '\n';
+  fmt::print( "x = {}\n", X[2230]-X[2231] );
+  fmt::print( "y = {}\n", Y[2230]-Y[2231] );
 
   bool ok = C.build( x0, y0, theta0, S, K );
 
-  cout << "build = " << ( ok ? "OK\n" : "NO OK\n" );
+  fmt::print( "build = {}\n", ( ok ? "OK" : "NO OK" ) );
 
   real_type qx1 = 2.960934079000000e+02;
   real_type qy1 = 16.391055370000000;
@@ -73,7 +73,7 @@ main() {
   //real_type qy2 = 16.475130419999999;
 
   int_type idx = C.closest_segment( qx1, qy1 );
-  cout << "idx = " << idx << '\n';
+  fmt::print( "idx = {}\n", idx );
 
   real_type x, y, s, t, dst;
   int_type  icurve;
@@ -111,7 +111,7 @@ main() {
     idx, x, y, s, t, dst, icurve
   );
 
-  cout << "\n\nALL DONE FOLKS!!!\n";
+  fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 
   return 0;
 }

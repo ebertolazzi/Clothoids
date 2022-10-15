@@ -106,11 +106,11 @@ namespace G2lib {
     static int_type  m_max_iter;
     static real_type m_tolerance;
 
-    mutable bool               m_aabb_done;
-    mutable AABBtree           m_aabb_tree;
-    mutable real_type          m_aabb_offs;
-    mutable real_type          m_aabb_max_angle;
-    mutable real_type          m_aabb_max_size;
+    mutable bool               m_aabb_done{false};
+    mutable AABB_TREE          m_aabb_tree;
+    mutable real_type          m_aabb_offs{real_type(0)};
+    mutable real_type          m_aabb_max_angle{real_type(0)};
+    mutable real_type          m_aabb_max_size{real_type(0)};
     mutable vector<Triangle2D> m_aabb_tri;
 
     bool
@@ -124,55 +124,6 @@ namespace G2lib {
       real_type           & ss2
     ) const;
 
-    #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    class T2D_approximate_collision {
-      ClothoidCurve const * pC1;
-      ClothoidCurve const * pC2;
-    public:
-      T2D_approximate_collision(
-        ClothoidCurve const * _pC1,
-        ClothoidCurve const * _pC2
-      )
-      : pC1(_pC1)
-      , pC2(_pC2)
-      {}
-
-      bool
-      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        Triangle2D const & T1 = pC1->m_aabb_tri[size_t(ptr1->Ipos())];
-        Triangle2D const & T2 = pC2->m_aabb_tri[size_t(ptr2->Ipos())];
-        return T1.overlap(T2);
-      }
-    };
-
-    class T2D_collision_ISO {
-      ClothoidCurve const * pC1;
-      real_type     const   m_offs1;
-      ClothoidCurve const * pC2;
-      real_type     const   m_offs2;
-    public:
-      T2D_collision_ISO(
-        ClothoidCurve const * _pC1,
-        real_type     const   _offs1,
-        ClothoidCurve const * _pC2,
-        real_type     const   _offs2
-      )
-      : pC1(_pC1)
-      , m_offs1(_offs1)
-      , pC2(_pC2)
-      , m_offs2(_offs2)
-      {}
-
-      bool
-      operator () ( BBox::PtrBBox ptr1, BBox::PtrBBox ptr2 ) const {
-        Triangle2D const & T1 = pC1->m_aabb_tri[size_t(ptr1->Ipos())];
-        Triangle2D const & T2 = pC2->m_aabb_tri[size_t(ptr2->Ipos())];
-        real_type ss1, ss2;
-        return pC1->aabb_intersect_ISO( T1, m_offs1, pC2, T2, m_offs2, ss1, ss2 );
-      }
-    };
-    #endif
-
   public:
 
     #include "BaseCurve_using.hxx"
@@ -180,10 +131,7 @@ namespace G2lib {
     //!
     //! Build an empty clothoid curve
     //!
-    ClothoidCurve()
-    : BaseCurve(G2LIB_CLOTHOID)
-    , m_aabb_done(false)
-    {
+    ClothoidCurve() {
       m_CD.m_x0     = 0;
       m_CD.m_y0     = 0;
       m_CD.m_theta0 = 0;
@@ -196,8 +144,6 @@ namespace G2lib {
     //! Build a copy of an existing clothoid curve
     //!
     ClothoidCurve( ClothoidCurve const & s )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , m_aabb_done(false)
     { copy(s); }
 
     //!
@@ -219,8 +165,6 @@ namespace G2lib {
       real_type dk,
       real_type L
     )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , m_aabb_done(false)
     {
       m_CD.m_x0     = x0;
       m_CD.m_y0     = y0;
@@ -253,10 +197,7 @@ namespace G2lib {
       real_type         theta0,
       real_type const * P1,
       real_type         theta1
-    )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , m_aabb_done(false)
-    {
+    ) {
       build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 );
     }
 
@@ -265,20 +206,16 @@ namespace G2lib {
     //!
     void
     copy( ClothoidCurve const & c ) {
-      m_CD = c.m_CD;
-      m_L  = c.m_L;
+      m_CD        = c.m_CD;
+      m_L         = c.m_L;
       m_aabb_done = false;
-      m_aabb_tree.clear();
     }
 
     //!
     //! Build a clothoid copying an existing line segment.
     //!
     explicit
-    ClothoidCurve( LineSegment const & LS )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , m_aabb_done(false)
-    {
+    ClothoidCurve( LineSegment const & LS ) {
       m_CD.m_x0     = LS.m_x0;
       m_CD.m_y0     = LS.m_y0;
       m_CD.m_theta0 = LS.m_theta0;
@@ -291,10 +228,7 @@ namespace G2lib {
     //! Build a clothoid copying an existing circle arc.
     //!
     explicit
-    ClothoidCurve( CircleArc const & C )
-    : BaseCurve(G2LIB_CLOTHOID)
-    , m_aabb_done(false)
-    {
+    ClothoidCurve( CircleArc const & C ) {
       m_CD.m_x0     = C.m_x0;
       m_CD.m_y0     = C.m_y0;
       m_CD.m_theta0 = C.m_theta0;
@@ -307,13 +241,16 @@ namespace G2lib {
     //! Build a clothoid copying an existing curve.
     //!
     explicit
-    ClothoidCurve( BaseCurve const & C );
+    ClothoidCurve( BaseCurve const * pC );
 
     //!
     //! Copy an existing clothoid.
     //!
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { copy(s); return *this; }
+
+    CurveType    type()      const override { return G2LIB_CLOTHOID; }
+    char const * type_name() const override { return "ClothoidCurve"; }
 
     /*\
      |  _         _ _    _
@@ -364,7 +301,6 @@ namespace G2lib {
       real_type tol = 1e-12
     ) {
       m_aabb_done = false;
-      m_aabb_tree.clear();
       return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L );
     }
 
@@ -397,10 +333,7 @@ namespace G2lib {
       real_type tol = 1e-12
     ) {
       m_aabb_done = false;
-      m_aabb_tree.clear();
-      return m_CD.build_G1(
-        x0, y0, theta0, x1, y1, theta1, tol, m_L, true, L_D, k_D, dk_D
-      );
+      return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L, true, L_D, k_D, dk_D );
     }
 
     //!
@@ -425,39 +358,23 @@ namespace G2lib {
       real_type tol = 1e-12
     ) {
       m_aabb_done = false;
-      m_aabb_tree.clear();
       return m_CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, m_L );
     }
 
     //!
     //! Build a clothoid from a line segment.
     //!
-    void
-    build( LineSegment const & LS ) {
-      m_CD.m_x0     = LS.m_x0;
-      m_CD.m_y0     = LS.m_y0;
-      m_CD.m_theta0 = LS.m_theta0;
-      m_CD.m_kappa0 = 0;
-      m_CD.m_dk     = 0;
-      m_L           = LS.m_L;
-      m_aabb_done   = false;
-      m_aabb_tree.clear();
-    }
+    void build( LineSegment const & LS );
 
     //!
     //! Build a clothoid from a circle arc.
     //!
-    void
-    build( CircleArc const & C ) {
-      m_CD.m_x0     = C.m_x0;
-      m_CD.m_y0     = C.m_y0;
-      m_CD.m_theta0 = C.m_theta0;
-      m_CD.m_kappa0 = C.m_k;
-      m_CD.m_dk     = 0;
-      m_L           = C.m_L;
-      m_aabb_done = false;
-      m_aabb_tree.clear();
-    }
+    void build( CircleArc const & );
+    void build( ClothoidCurve const & );
+    void build( Biarc const & );
+    void build( PolyLine const & );
+    void build( BiarcList const & );
+    void build( ClothoidList const & );
 
     //!
     //! Return the point at infinity of the clothoids \f$ P(s) \f$.
@@ -551,10 +468,10 @@ namespace G2lib {
     //!
     void
     optimized_sample_ISO(
-      real_type                offs,
-      int_type                 npts,
-      real_type                max_angle,
-      std::vector<real_type> & s
+      real_type           offs,
+      int_type            npts,
+      real_type           max_angle,
+      vector<real_type> & s
     ) const;
 
     //!
@@ -567,10 +484,10 @@ namespace G2lib {
     //!
     void
     optimized_sample_SAE(
-      real_type                offs,
-      int_type                 npts,
-      real_type                max_angle,
-      std::vector<real_type> & s
+      real_type           offs,
+      int_type            npts,
+      real_type           max_angle,
+      vector<real_type> & s
     ) const {
       optimized_sample_ISO( -offs, npts, max_angle, s );
     }
@@ -721,30 +638,30 @@ namespace G2lib {
 
     void
     bbTriangles_ISO(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override;
 
     void
     bbTriangles_SAE(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/6, // 30 degree
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/6, // 30 degree
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const override {
       this->bbTriangles_ISO( 0, tvec, max_angle, max_size, icurve );
     }
@@ -1177,7 +1094,9 @@ namespace G2lib {
     ) const;
 
     bool
-    collision( ClothoidCurve const & C ) const;
+    collision( ClothoidCurve const & C ) const {
+      return collision_ISO( 0, C, 0 );
+    }
 
     bool
     collision_ISO(
@@ -1185,6 +1104,16 @@ namespace G2lib {
       ClothoidCurve const & C,
       real_type             offs_C
     ) const;
+
+    bool
+    collision( BaseCurve const * pC ) const override;
+
+    bool
+    collision_ISO(
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_C
+    ) const override;
 
     /*\
      |   _       _                          _
@@ -1195,22 +1124,34 @@ namespace G2lib {
     \*/
 
     void
+    intersect_ISO(
+      real_type             offs,
+      ClothoidCurve const & C,
+      real_type             offs_C,
+      IntersectList       & ilist
+    ) const;
+
+    void
     intersect(
       ClothoidCurve const & C,
-      IntersectList       & ilist,
-      bool                  swap_s_vals
+      IntersectList       & ilist
     ) const {
-      intersect_ISO( 0, C, 0, ilist, swap_s_vals );
+      this->intersect_ISO( 0, C, 0, ilist );
     }
 
     void
+    intersect(
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const override;
+
+    void
     intersect_ISO(
-      real_type               offs,
-      ClothoidCurve const   & C,
-      real_type               offs_C,
-      IntersectList         & ilist,
-      bool                    swap_s_vals
-    ) const;
+      real_type         offs,
+      BaseCurve const * pC,
+      real_type         offs_LS,
+      IntersectList   & ilist
+    ) const override;
 
     void
     info( ostream_type & stream ) const override

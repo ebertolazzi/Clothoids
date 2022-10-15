@@ -43,6 +43,24 @@ namespace G2lib {
   using std::swap;
   using std::vector;
 
+  void
+  CircleArc::build( LineSegment const & LS ) {
+    m_x0     = LS.x_begin();
+    m_y0     = LS.y_begin();
+    m_theta0 = LS.m_theta0;
+    m_c0     = LS.m_c0;
+    m_s0     = LS.m_s0;
+    m_k      = 0;
+    m_L      = LS.length();
+  }
+
+  void CircleArc::build( CircleArc const & C )   { *this = C; }
+  void CircleArc::build( Biarc const & )         { UTILS_ERROR("can convert from Biarc to CircleArc\n"); }
+  void CircleArc::build( ClothoidCurve const & ) { UTILS_ERROR("can convert from ClothoidCurve to CircleArc\n"); }
+  void CircleArc::build( PolyLine const & )      { UTILS_ERROR("can convert from PolyLine to CircleArc\n"); }
+  void CircleArc::build( BiarcList const & )     { UTILS_ERROR("can convert from BiarcList to CircleArc\n"); }
+  void CircleArc::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to CircleArc\n"); }
+
   /*\
    |    ____ _          _         _
    |   / ___(_)_ __ ___| | ___   / \   _ __ ___
@@ -51,34 +69,25 @@ namespace G2lib {
    |   \____|_|_|  \___|_|\___/_/   \_\_|  \___|
   \*/
 
-  CircleArc::CircleArc( BaseCurve const & C )
-  : BaseCurve(G2LIB_CIRCLE)
-  {
-    switch ( C.type() ) {
+  CircleArc::CircleArc( BaseCurve const * pC ) : CircleArc() {
+
+    G2LIB_DEBUG_MESSAGE( "CircleArc convert: {}\n", pC->type_name() );
+
+    switch ( pC->type() ) {
     case G2LIB_LINE:
-      {
-        LineSegment const & LS = *static_cast<LineSegment const *>(&C);
-        m_x0     = LS.x_begin();
-        m_y0     = LS.y_begin();
-        m_theta0 = LS.m_theta0;
-        m_c0     = LS.m_c0;
-        m_s0     = LS.m_s0;
-        m_k      = 0;
-        m_L      = LS.length();
-      }
+      G2LIB_DEBUG_MESSAGE( "LineSegment -> CircleArc\n" );
+      this->build( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
-      *this = *static_cast<CircleArc const *>(&C);
+      G2LIB_DEBUG_MESSAGE( "to -> CircleArc\n" );
+      *this = *static_cast<CircleArc const *>(pC);
       break;
-    case G2LIB_CLOTHOID:
-    case G2LIB_BIARC:
-    case G2LIB_BIARC_LIST:
-    case G2LIB_CLOTHOID_LIST:
-    case G2LIB_POLYLINE:
+    default:
       UTILS_ERROR(
         "CircleArc constructor cannot convert from: {}\n",
-        CurveType_name[C.type()]
+        pC->type_name()
       );
+      break;
     }
   }
 
@@ -628,11 +637,40 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  CircleArc::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == G2LIB_CIRCLE ) {
+      CircleArc const & C = *static_cast<CircleArc const *>(pC);
+      return this->collision( C );
+    } else {
+      CircleArc C(pC);
+      return this->collision( C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  CircleArc::collision_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C
+  ) const {
+    if ( pC->type() == G2LIB_CIRCLE ) {
+      CircleArc const & C = *static_cast<CircleArc const *>(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    } else {
+      CircleArc C(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CircleArc::intersect(
     CircleArc const & C,
-    IntersectList   & ilist,
-    bool              swap_s_vals
+    IntersectList   & ilist
   ) const {
     real_type s1[2], s2[2];
     int_type ni = intersectCircleCircle(
@@ -646,8 +684,7 @@ namespace G2lib {
       real_type ss2 = s2[i];
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
            ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
-        if ( swap_s_vals ) ilist.push_back( Ipair(ss2,ss1) );
-        else               ilist.push_back( Ipair(ss1,ss2) );
+        ilist.push_back( Ipair(ss1,ss2) );
       }
     }
   }
@@ -659,8 +696,7 @@ namespace G2lib {
     real_type         offs,
     CircleArc const & C,
     real_type         offs_C,
-    IntersectList   & ilist,
-    bool              swap_s_vals
+    IntersectList   & ilist
   ) const {
     real_type s1[2], s2[2];
     real_type sc1 = 1+m_k*offs;
@@ -683,9 +719,38 @@ namespace G2lib {
       real_type ss2 = s2[i]/sc2;
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
            ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
-        if ( swap_s_vals ) ilist.push_back( Ipair(ss2,ss1) );
-        else               ilist.push_back( Ipair(ss1,ss2) );
+        ilist.push_back( Ipair(ss1,ss2) );
       }
+    }
+  }
+
+  void
+  CircleArc::intersect(
+    BaseCurve const * pC,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_CIRCLE ) {
+      CircleArc const & C = *static_cast<CircleArc const *>(pC);
+      this->intersect( C, ilist );
+    } else {
+      CircleArc C(pC);
+      this->intersect( C, ilist );
+    }
+  }
+
+  void
+  CircleArc::intersect_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_CIRCLE ) {
+      CircleArc const & C = *static_cast<CircleArc const *>(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
+    } else {
+      CircleArc C(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
     }
   }
 

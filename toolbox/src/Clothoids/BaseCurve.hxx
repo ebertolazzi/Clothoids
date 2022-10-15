@@ -42,8 +42,6 @@ namespace G2lib {
     G2LIB_CLOTHOID_LIST
   } CurveType;
 
-  extern char const *CurveType_name[];
-
   typedef std::pair<real_type,real_type> Ipair;
   typedef std::vector<Ipair>             IntersectList;
 
@@ -57,158 +55,140 @@ namespace G2lib {
 
   class BaseCurve;
 
-  //! 
+  //!
   //! Return `true` if the two curves intersect.
-  //! 
-  //! \param[in] C1 first curve
-  //! \param[in] C2 second curve
-  //! 
+  //!
+  //! \param[in] pC1 first curve
+  //! \param[in] pC2 second curve
+  //!
   bool
-  collision( BaseCurve const & C1, BaseCurve const & C2 );
+  collision( BaseCurve const * pC1, BaseCurve const * pC2 );
 
   //!
   //! Return `true` the the two curves intersect.
   //!
-  //! \param[in] C1      first curve
+  //! \param[in] pC1     first curve
   //! \param[in] offs_C1 offset of the first curve
-  //! \param[in] C2      second curve
+  //! \param[in] pC2     second curve
   //! \param[in] offs_C2 offset of the second curve
-  //! 
+  //!
   bool
   collision_ISO(
-    BaseCurve const & C1,
+    BaseCurve const * pC1,
     real_type         offs_C1,
-    BaseCurve const & C2,
+    BaseCurve const * pC2,
     real_type         offs_C2
   );
 
   //!
   //! Return `true` the the two curves intersect.
   //!
-  //! \param[in] C1      first curve
+  //! \param[in] pC1     first curve
   //! \param[in] offs_C1 offset of the first curve
-  //! \param[in] C2      second curve
+  //! \param[in] pC2     second curve
   //! \param[in] offs_C2 offset of the second curve
   //!
   inline
   bool
   collision_SAE(
-    BaseCurve const & C1,
+    BaseCurve const * pC1,
     real_type         offs_C1,
-    BaseCurve const & C2,
+    BaseCurve const * pC2,
     real_type         offs_C2
   ) {
-    return collision_ISO( C1, -offs_C1, C2, -offs_C2 );
+    return collision_ISO( pC1, -offs_C1, pC2, -offs_C2 );
   }
 
   #ifdef G2LIB_COMPATIBILITY_MODE
   //!
   //! Return `true` the the two curves intersect.
   //!
-  //! \param[in] C1      first curve
+  //! \param[in] pC1     first curve
   //! \param[in] offs_C1 offset of the first curve
-  //! \param[in] C2      second curve
+  //! \param[in] pC2     second curve
   //! \param[in] offs_C2 offset of the second curve
   //!
   inline
   bool
   collision(
-    BaseCurve const & C1,
+    BaseCurve const * pC1,
     real_type         offs_C1,
-    BaseCurve const & C2,
+    BaseCurve const * pC2,
     real_type         offs_C2
   ) {
-    if ( G2lib::use_ISO ) return collision_ISO( C1, offs_C1, C2, offs_C2 );
-    else                  return collision_SAE( C1, offs_C1, C2, offs_C2 );
+    if ( G2lib::use_ISO ) return collision_ISO( pC1, offs_C1, pC2, offs_C2 );
+    else                  return collision_SAE( pC1, offs_C1, pC2, offs_C2 );
   }
   #endif
 
   //!
   //! Collect the intersection of the two curve.
   //!
-  //! \param[in]  C1          first curve
-  //! \param[in]  C2          second curve
-  //! \param[out] ilist       list of the intersection (as parameter on the curves)
-  //! \param[out] swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-  //!                         intersection
+  //! \param[in]  pC1   first curve
+  //! \param[in]  pC2   second curve
+  //! \param[out] ilist list of the intersection (as parameter on the curves)
   //!
   void
   intersect(
-    BaseCurve const & C1,
-    BaseCurve const & C2,
-    IntersectList   & ilist,
-    bool              swap_s_vals
+    BaseCurve const * pC1,
+    BaseCurve const * pC2,
+    IntersectList   & ilist
   );
 
   //!
   //! Collect the intersections of the two curve.
   //!
-  //! \param[in]  C1          first curve
-  //! \param[in]  offs_C1     offset of the first curve
-  //! \param[in]  C2          second curve
-  //! \param[in]  offs_C2     offset of the second curve
-  //! \param[out] ilist       list of the intersection (as parameter on the curves)
-  //! \param[out] swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-  //!                         intersection
+  //! \param[in]  pC1     first curve
+  //! \param[in]  offs_C1 offset of the first curve
+  //! \param[in]  pC2     second curve
+  //! \param[in]  offs_C2 offset of the second curve
+  //! \param[out] ilist   list of the intersection (as parameter on the curves)
   //!
   void
   intersect_ISO(
-    BaseCurve const & C1,
-    real_type         offs_C1,
-    BaseCurve const & C2,
-    real_type         offs_C2,
-    IntersectList   & ilist,
-    bool              swap_s_vals
+    BaseCurve const * pC1, real_type offs_C1,
+    BaseCurve const * pC2, real_type offs_C2,
+    IntersectList   & ilist
   );
 
   //!
   //! Collect the intersections of the two curve.
   //!
-  //! \param[in]  C1          first curve
-  //! \param[in]  offs_C1     offset of the first curve
-  //! \param[in]  C2          second curve
-  //! \param[in]  offs_C2     offset of the second curve
-  //! \param[out] ilist       list of the intersection (as parameter on the curves)
-  //! \param[out] swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-  //!                         intersection
+  //! \param[in]  pC1     first curve
+  //! \param[in]  offs_C1 offset of the first curve
+  //! \param[in]  pC2     second curve
+  //! \param[in]  offs_C2 offset of the second curve
+  //! \param[out] ilist   list of the intersection (as parameter on the curves)
   //!
   inline
   void
   intersect_SAE(
-    BaseCurve const & C1,
-    real_type         offs_C1,
-    BaseCurve const & C2,
-    real_type         offs_C2,
-    IntersectList   & ilist,
-    bool              swap_s_vals
+    BaseCurve const * pC1, real_type offs_C1,
+    BaseCurve const * pC2, real_type offs_C2,
+    IntersectList   & ilist
   ) {
-    intersect_ISO( C1, -offs_C1, C2, -offs_C2, ilist, swap_s_vals );
+    G2lib::intersect_ISO( pC1, -offs_C1, pC2, -offs_C2, ilist );
   }
 
   #ifdef G2LIB_COMPATIBILITY_MODE
   //!
   //! Collect the intersections of the two curve.
   //!
-  //! \param[in]  C1          first curve
-  //! \param[in]  offs_C1     offset of the first curve
-  //! \param[in]  C2          second curve
-  //! \param[in]  offs_C2     offset of the second curve
-  //! \param[out] ilist       list of the intersection (as parameter on the curves)
-  //! \param[out] swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-  //!                         intersection
+  //! \param[in]  pC1     first curve
+  //! \param[in]  offs_C1 offset of the first curve
+  //! \param[in]  pC2     second curve
+  //! \param[in]  offs_C2 offset of the second curve
+  //! \param[out] ilist   list of the intersection (as parameter on the curves)
   //!
   inline
   void
   intersect(
-    BaseCurve const & C1,
-    real_type         offs_C1,
-    BaseCurve const & C2,
-    real_type         offs_C2,
-    IntersectList   & ilist,
-    bool              swap_s_vals
+    BaseCurve const * pC1, real_type offs_C1,
+    BaseCurve const * pC2, real_type offs_C2,
+    IntersectList   & ilist
   ) {
-    if ( G2lib::use_ISO ) intersect_ISO( C1, offs_C1, C2, offs_C2, ilist, swap_s_vals );
-    else                  intersect_SAE( C1, offs_C1, C2, offs_C2, ilist, swap_s_vals );
+    if ( G2lib::use_ISO ) G2lib::intersect_ISO( pC1,  offs_C1, pC2,  offs_C2, ilist );
+    else                  G2lib::intersect_SAE( pC1, -offs_C1, pC2, -offs_C2, ilist );
   }
   #endif
 
@@ -221,25 +201,25 @@ namespace G2lib {
     BaseCurve( BaseCurve const & ) = delete;
     BaseCurve const & operator = ( BaseCurve const & ) = delete;
 
-  protected:
-    CurveType m_type;
-
   public:
 
     //!
     //! Initialize the class storing the curve type.
     //!
-    BaseCurve( CurveType const & type )
-    : m_type(type)
-    {}
+    BaseCurve() = default;
 
     virtual
-    ~BaseCurve() {}
+    ~BaseCurve() = default;
 
     //!
     //! The name of the curve type
     //!
-    CurveType type() const { return m_type; }
+    virtual CurveType type() const = 0;
+
+    //!
+    //! The name of the curve type
+    //!
+    virtual char const * type_name() const = 0;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -277,14 +257,14 @@ namespace G2lib {
      |  |_.__/|_.__/ \___/_/\_\
     \*/
 
-    //! 
+    //!
     //! Compute the bounding box of the curve.
     //!
     //! \param[out] xmin left bottom
     //! \param[out] ymin left bottom
     //! \param[out] xmax right top
     //! \param[out] ymax right top
-    //! 
+    //!
     virtual
     void
     bbox(
@@ -294,15 +274,15 @@ namespace G2lib {
       real_type & ymax
     ) const = 0;
 
-    //! 
+    //!
     //! Compute the bounding box of the curve with offset (ISO).
-    //! 
+    //!
     //! \param[in]  offs curve offset
     //! \param[out] xmin left bottom
     //! \param[out] ymin left bottom
     //! \param[out] xmax right top
     //! \param[out] ymax right top
-    //! 
+    //!
     virtual
     void
     bbox_ISO(
@@ -313,15 +293,15 @@ namespace G2lib {
       real_type & ymax
     ) const = 0;
 
-    //! 
+    //!
     //! Compute the bounding box of the curve (SAE).
-    //! 
+    //!
     //! \param[in]  offs curve offset
     //! \param[out] xmin left bottom
     //! \param[out] ymin left bottom
     //! \param[out] xmax right top
     //! \param[out] ymax right top
-    //! 
+    //!
     void
     bbox_SAE(
       real_type   offs,
@@ -334,15 +314,15 @@ namespace G2lib {
     }
 
     #ifdef G2LIB_COMPATIBILITY_MODE
-    //! 
+    //!
     //! Compute the bounding box of the curve (ISO/SAE).
-    //! 
+    //!
     //! \param[in]  off  curve offset
     //! \param[out] xmin left bottom
     //! \param[out] ymin left bottom
     //! \param[out] xmax right top
     //! \param[out] ymax right top
-    //! 
+    //!
     void
     bbox(
       real_type   offs,
@@ -364,67 +344,67 @@ namespace G2lib {
      |                                |___/
     \*/
 
-    //! 
+    //!
     //! Build a cover with triangles of the curve.
-    //! 
+    //!
     //! \param[out] tvec      list of covering triangles
     //! \param[out] max_angle maximum angle variation of the curve covered by a triangle
     //! \param[out] max_size  maximum admissible size of the covering tirnagles
     //! \param[out] icurve    index of the covering triangles
-    //! 
+    //!
     //! \rst
-    //! 
+    //!
     //!   .. image:: ../../images/biarc_cover.jpg
     //!      :width: 80%
     //!      :align: center
-    //! 
+    //!
     //! \endrst
-    //! 
+    //!
     virtual
     void
     bbTriangles(
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/18,
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/18,
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const = 0;
 
-    //! 
+    //!
     //! Build a cover with triangles of the curve with offset (ISO).
-    //! 
+    //!
     //! \param[out] offs      curve offset
     //! \param[out] tvec      list of covering triangles
     //! \param[out] max_angle maximum angle variation of the curve covered by a triangle
     //! \param[out] max_size  maximum admissible size of the covering tirnagles
     //! \param[out] icurve    index of the covering triangles
-    //! 
+    //!
     virtual
     void
     bbTriangles_ISO(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/18,
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/18,
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const = 0;
 
-    //! 
+    //!
     //! Build a cover with triangles of the curve with offset (SAE).
-    //! 
+    //!
     //! \param[out] offs      curve offset
     //! \param[out] tvec      list of covering triangles
     //! \param[out] max_angle maximum angle variation of the arc covered by a triangle
     //! \param[out] max_size  maximum admissible size of the covering tirnagles
     //! \param[out] icurve    index of the covering triangles
-    //! 
+    //!
     virtual
     void
     bbTriangles_SAE(
-      real_type                 offs,
-      std::vector<Triangle2D> & tvec,
-      real_type                 max_angle = Utils::m_pi/18,
-      real_type                 max_size  = 1e100,
-      int_type                  icurve    = 0
+      real_type            offs,
+      vector<Triangle2D> & tvec,
+      real_type            max_angle = Utils::m_pi/18,
+      real_type            max_size  = 1e100,
+      int_type             icurve    = 0
     ) const = 0;
 
     /*\
@@ -505,7 +485,7 @@ namespace G2lib {
     //! Initial y-coordinate with offset (SAE standard).
     //!
     real_type y_begin_SAE( real_type offs ) const { return this->y_begin_ISO(-offs); }
- 
+
     //!
     //! Final y-coordinate with offset (SAE standard).
     //!
@@ -841,7 +821,7 @@ namespace G2lib {
     //!
     real_type nx_DDD( real_type s ) const
     { return G2lib::use_ISO ? this->nx_ISO_DDD(s) : this->nx_SAE_DDD(s); }
-    
+
     //!
     //! Normal y-coordinate at curvilinear coodinate `s` (ISO/SAE).
     //!
@@ -1327,14 +1307,14 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    //! 
+    //!
     //! Compute curve at position `s` with offset `offs` (ISO).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x     coordinate
     //! \param[out] y     coordinate
-    //! 
+    //!
     virtual
     void
     eval_ISO(
@@ -1344,14 +1324,14 @@ namespace G2lib {
       real_type & y
     ) const;
 
-    //! 
+    //!
     //! Compute curve at position `s` with offset `offs` (SAE).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x     coordinate
     //! \param[out] y     coordinate
-    //! 
+    //!
     void
     eval_SAE(
       real_type   s,
@@ -1363,14 +1343,14 @@ namespace G2lib {
     }
 
     #ifdef G2LIB_COMPATIBILITY_MODE
-    //! 
+    //!
     //! Compute curve at position `s` with offset `offs` (ISO/SAE).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x     coordinate
     //! \param[out] y     coordinate
-    //! 
+    //!
     void
     eval(
       real_type   s,
@@ -1385,12 +1365,12 @@ namespace G2lib {
 
     //!
     //! Compute derivative curve at position `s` with offset `offs` (ISO).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_D   x-coordinate
     //! \param[out] y_D   y-coordinate
-    //! 
+    //!
     virtual
     void
     eval_ISO_D(
@@ -1400,14 +1380,14 @@ namespace G2lib {
       real_type & y_D
     ) const;
 
-    //! 
+    //!
     //! Compute derivative curve at position `s` with offset `offs` (SAE).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_D   x-coordinate first derivative
     //! \param[out] y_D   y-coordinate first derivative
-    //! 
+    //!
     void
     eval_SAE_D(
       real_type   s,
@@ -1419,14 +1399,14 @@ namespace G2lib {
     }
 
     #ifdef G2LIB_COMPATIBILITY_MODE
-    //! 
+    //!
     //! Compute derivative curve at position `s` with offset `offs`  (ISO/SAE).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_D   x-coordinate first derivative
     //! \param[out] y_D   y-coordinate first derivative
-    //! 
+    //!
     void
     eval_D(
       real_type   s,
@@ -1441,12 +1421,12 @@ namespace G2lib {
 
     //!
     //! Compute second derivative curve at position `s` with offset `offs` (ISO).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_DD  x-coordinate second derivative
     //! \param[out] y_DD  y-coordinate second derivative
-    //! 
+    //!
     virtual
     void
     eval_ISO_DD(
@@ -1458,12 +1438,12 @@ namespace G2lib {
 
     //!
     //! Compute second derivative curve at position `s` with offset `offs` (SAE).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_DD  x-coordinate second derivative
     //! \param[out] y_DD  y-coordinate second derivative
-    //! 
+    //!
     void
     eval_SAE_DD(
       real_type   s,
@@ -1475,14 +1455,14 @@ namespace G2lib {
     }
 
     #ifdef G2LIB_COMPATIBILITY_MODE
-    //! 
+    //!
     //! Compute second derivative curve at position `s` with offset `offs`  (ISO/SAE).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_DD  x-coordinate second derivative
     //! \param[out] y_DD  y-coordinate second derivative
-    //! 
+    //!
     void
     eval_DD(
       real_type   s,
@@ -1502,7 +1482,7 @@ namespace G2lib {
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_DDD x-coordinate third derivative
     //! \param[out] y_DDD y-coordinate third derivative
-    //! 
+    //!
     virtual
     void
     eval_ISO_DDD(
@@ -1512,14 +1492,14 @@ namespace G2lib {
       real_type & y_DDD
     ) const;
 
-    //! 
+    //!
     //! Compute third derivative curve at position `s` with offset `offs` (SAE).
     //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_DDD x-coordinate third derivative
     //! \param[out] y_DDD y-coordinate third derivative
-    //! 
+    //!
     void
     eval_SAE_DDD(
       real_type   s,
@@ -1531,14 +1511,14 @@ namespace G2lib {
     }
 
     #ifdef G2LIB_COMPATIBILITY_MODE
-    //! 
+    //!
     //! Compute third derivative curve at position `s` with offset `offs` (ISO/SAE).
-    //! 
+    //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
     //! \param[out] x_DDD x-coordinate third derivative
     //! \param[out] y_DDD y-coordinate third derivative
-    //! 
+    //!
     void
     eval_DDD(
       real_type   s,
@@ -1564,7 +1544,7 @@ namespace G2lib {
     void
     translate( real_type tx, real_type ty ) = 0;
 
-    //! 
+    //!
     //! Rotate curve by angle \f$ theta \f$ centered at point  \f$ (c_x,c_y)\f$.
     //!
     //! \param[in] angle angle  \f$ theta \f$
@@ -1614,150 +1594,88 @@ namespace G2lib {
     //!
     //! Check collision with another curve.
     //!
-    bool
-    collision( BaseCurve const & C ) const
-    { return G2lib::collision( *this, C ); }
+    virtual bool collision( BaseCurve const * pC ) const = 0;
 
     //!
     //! Check collision with another curve with offset (ISO).
     //!
     //! \param[in] offs   curve offset
-    //! \param[in] C      second curve to check collision
+    //! \param[in] pC     second curve to check collision
     //! \param[in] offs_C curve offset of the second curve
     //! \return true if collision is detected
     //!
+    virtual
     bool
     collision_ISO(
       real_type         offs,
-      BaseCurve const & C,
+      BaseCurve const * pC,
       real_type         offs_C
-    ) const {
-      return G2lib::collision_ISO( *this, offs, C, offs_C );
-    }
+    ) const = 0;
 
     //!
     //! Check collision with another curve with offset (SAE).
     //!
     //! \param[in] offs   curve offset
-    //! \param[in] C      second curve to check collision
+    //! \param[in] pC     second curve to check collision
     //! \param[in] offs_C curve offset of the second curve
     //! \return true if collision is detected
-    //! 
+    //!
     bool
     collision_SAE(
       real_type         offs,
-      BaseCurve const & C,
+      BaseCurve const * pC,
       real_type         offs_C
     ) const {
-      return G2lib::collision_SAE( *this, offs, C, offs_C );
+      return this->collision_ISO( -offs, pC, -offs_C );
     }
-
-    #ifdef G2LIB_COMPATIBILITY_MODE
-    //!
-    //! Check collision with another curve with offset (ISO/SAE).
-    //!
-    //! \param[in] offs   curve offset
-    //! \param[in] C      second curve to check collision
-    //! \param[in] offs_C curve offset of the second curve
-    //! \return true if collision is detected
-    //!
-    bool
-    collision(
-      real_type         offs,
-      BaseCurve const & C,
-      real_type         offs_C
-    ) const {
-      if ( G2lib::use_ISO )
-        return G2lib::collision_ISO( *this, offs, C, offs_C );
-      else
-        return G2lib::collision_SAE( *this, offs, C, offs_C );
-    }
-    #endif
 
     //!
     //! Intersect the curve with another curve.
     //!
-    //! \param[in]  C           second curve intersect
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  pC    second curve intersect
+    //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
+    virtual
     void
     intersect(
-      BaseCurve const & C,
-      IntersectList   & ilist,
-      bool              swap_s_vals
-    ) const {
-      G2lib::intersect( *this, C, ilist, swap_s_vals );
-    }
+      BaseCurve const * pC,
+      IntersectList   & ilist
+    ) const = 0;
 
     //!
     //! Intersect the curve with another curve with offset (ISO)
     //!
-    //! \param[in]  offs        offset first curve
-    //! \param[in]  C           second curve intersect
-    //! \param[in]  offs_C      offset second curve
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  offs   offset first curve
+    //! \param[in]  pC     second curve intersect
+    //! \param[in]  offs_C offset second curve
+    //! \param[out] ilist  list of the intersection (as parameter on the curves)
     //!
+    virtual
     void
     intersect_ISO(
       real_type         offs,
-      BaseCurve const & C,
+      BaseCurve const * pC,
       real_type         offs_C,
-      IntersectList   & ilist,
-      bool              swap_s_vals
-    ) const {
-      G2lib::intersect_ISO( *this, offs, C, offs_C, ilist, swap_s_vals );
-    }
+      IntersectList   & ilist
+    ) const = 0;
 
     //!
     //! Intersect the curve with another curve with offset (SAE).
     //!
-    //! \param[in]  offs        offset first curve
-    //! \param[in]  C           second curve intersect
-    //! \param[in]  offs_C      offset second curve
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
+    //! \param[in]  offs   offset first curve
+    //! \param[in]  pC     second curve intersect
+    //! \param[in]  offs_C offset second curve
+    //! \param[out] ilist  list of the intersection (as parameter on the curves)
     //!
     void
     intersect_SAE(
       real_type         offs,
-      BaseCurve const & C,
+      BaseCurve const * pC,
       real_type         offs_C,
-      IntersectList   & ilist,
-      bool              swap_s_vals
+      IntersectList   & ilist
     ) const {
-      G2lib::intersect_SAE( *this, offs, C, offs_C, ilist, swap_s_vals );
+      this->intersect_ISO( -offs, pC, -offs_C, ilist );
     }
-
-    #ifdef G2LIB_COMPATIBILITY_MODE
-    //!
-    //! Intersect the curve with another curve with offset (ISO/SAE).
-    //!
-    //! \param[in]  offs        offset first curve
-    //! \param[in]  C           second curve intersect
-    //! \param[in]  offs_C      offset second curve
-    //! \param[out] ilist       list of the intersection (as parameter on the curves)
-    //! \param[in]  swap_s_vals if true store `(s2,s1)` instead of `(s1,s2)` for each
-    //!                         intersection
-    //!
-    void
-    intersect(
-      real_type         offs,
-      BaseCurve const & C,
-      real_type         offs_C,
-      IntersectList   & ilist,
-      bool              swap_s_vals
-    ) const {
-      if ( G2lib::use_ISO )
-        G2lib::intersect_ISO( *this, offs, C, offs_C, ilist, swap_s_vals );
-      else
-        G2lib::intersect_SAE( *this, offs, C, offs_C, ilist, swap_s_vals );
-    }
-    #endif
 
     /*\
      |      _ _     _
@@ -1806,7 +1724,7 @@ namespace G2lib {
     //! \return 1 = point is projected orthogonal
     //!         0 = more than one projection (first returned)
     //!        -1 = minimum point is not othogonal projection to curve
-    //! 
+    //!
     int_type
     closest_point_SAE(
       real_type   qx,
@@ -1822,38 +1740,6 @@ namespace G2lib {
       return res;
     }
 
-    #ifdef G2LIB_COMPATIBILITY_MODE
-    //!
-    //! Given a point find closest point on the curve.
-    //!
-    //! \param  qx  x-coordinate of the point
-    //! \param  qy  y-coordinate of the point
-    //! \param  x   x-coordinate of the projected point on the curve
-    //! \param  y   y-coordinate of the projected point on the curve
-    //! \param  s   parameter on the curve of the projection
-    //! \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
-    //! \param  dst distance point projected point
-    //! \return 1 = point is projected orthogonal
-    //!         0 = more than one projection (first returned)
-    //!        -1 = minimum point is not othogonal projection to curve
-    //! 
-    int_type
-    closest_point(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      if ( G2lib::use_ISO )
-        return this->closest_point_ISO( qx, qy, x, y, s, t, dst );
-      else
-        return this->closest_point_SAE( qx, qy, x, y, s, t, dst );
-    }
-    #endif
-
     //!
     //! Given a point find closest point on the curve.
     //!
@@ -1868,7 +1754,7 @@ namespace G2lib {
     //! \return 1 = point is projected orthogonal
     //!         0 = more than one projection (first returned)
     //!        -1 = minimum point is not othogonal projection to curve
-    //! 
+    //!
     virtual
     int_type // true if projection is unique and orthogonal
     closest_point_ISO(
@@ -1896,7 +1782,7 @@ namespace G2lib {
     //! \return 1 = point is projected orthogonal
     //!         0 = more than one projection (first returned)
     //!        -1 = minimum point is not othogonal projection to curve
-    //! 
+    //!
     int_type
     closest_point_SAE(
       real_type   qx,
@@ -1913,47 +1799,13 @@ namespace G2lib {
       return res;
     }
 
-    #ifdef G2LIB_COMPATIBILITY_MODE
-    //!
-    //! Given a point find closest point on the curve.
-    //!
-    //! \param  qx   x-coordinate of the point
-    //! \param  qy   y-coordinate of the point
-    //! \param  offs offset of the curve
-    //! \param  x    x-coordinate of the projected point on the curve
-    //! \param  y    y-coordinate of the projected point on the curve
-    //! \param  s    parameter on the curve of the projection
-    //! \param  t    curvilinear coordinate of the point x,y (if orthogonal projection)
-    //! \param  dst  distance point projected point
-    //! \return 1 = point is projected orthogonal
-    //!         0 = more than one projection (first returned)
-    //!        -1 = minimum point is not othogonal projection to curve
-    //! 
-    int_type
-    closest_point(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      if ( G2lib::use_ISO )
-        return this->closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-      else
-        return this->closest_point_SAE( qx, qy, offs, x, y, s, t, dst );
-    }
-    #endif
-
     //!
     //! Compute the distance between a point \f$ q=(q_x,q_y) \f$ and the curve.
     //!
     //! \param[in] qx component \f$ q_x \f$
     //! \param[in] qy component \f$ q_y \f$
     //! \return the computed distance
-    //! 
+    //!
     virtual
     real_type
     distance( real_type qx, real_type qy ) const {
@@ -1969,7 +1821,7 @@ namespace G2lib {
     //! \param[in] qy   component \f$ q_y \f$
     //! \param[in] offs offset of the curve
     //! \return the computed distance
-    //! 
+    //!
     real_type
     distance_ISO(
       real_type qx,
@@ -1988,7 +1840,7 @@ namespace G2lib {
     //! \param[in] qy   component \f$ q_y \f$
     //! \param[in] offs offset of the curve
     //! \return the computed distance
-    //! 
+    //!
     real_type
     distance_SAE(
       real_type qx,
@@ -2000,28 +1852,6 @@ namespace G2lib {
       return dst;
     }
 
-    #ifdef G2LIB_COMPATIBILITY_MODE
-    //! 
-    //! Compute the distance between a point \f$ q=(q_x,q_y) \f$ and the curve with offset (ISO/SAE).
-    //!
-    //! \param[in] qx   component \f$ q_x \f$
-    //! \param[in] qy   component \f$ q_y \f$
-    //! \param[in] offs offset of the curve
-    //! \return the computed distance
-    //! 
-    virtual
-    real_type
-    distance(
-      real_type qx,
-      real_type qy,
-      real_type offs
-    ) const {
-      real_type x, y, s, t, dst;
-      this->closest_point( qx, qy, offs, x, y, s, t, dst );
-      return dst;
-    }
-    #endif
-
     /*\
      |    __ _           _ ____ _____
      |   / _(_)_ __   __| / ___|_   _|
@@ -2030,11 +1860,11 @@ namespace G2lib {
      |  |_| |_|_| |_|\__,_|____/ |_|
     \*/
 
-    //! 
+    //!
     //! Find the curvilinear coordinate of point \f$ P=(x,y) \f$
     //! respect to the curve (ISO), i.e.
     //!
-    //! \f[ 
+    //! \f[
     //!     P = C(s)+N(s)t
     //! \f]
     //!
@@ -2046,7 +1876,7 @@ namespace G2lib {
     //! \param[out] s curvilinear coordinate
     //! \param[out] t offset respect to the curve of \f$ (x,y) \f$
     //! \return true if the coordinate are found
-    //! 
+    //!
     bool
     findST_ISO(
       real_type   x,
@@ -2059,23 +1889,23 @@ namespace G2lib {
       return icode >= 0;
     }
 
-    //! 
+    //!
     //! Find the curvilinear coordinate of point \f$ (x,y) \f$
     //! respect to the curve (SAE), i.e.
-    //! 
-    //! \f[ 
+    //!
+    //! \f[
     //!     P = C(s)+N(s)t
     //! \f]
     //!
     //! where \f$ C(s) \f$ is the curve position respect to the curvilinear coordinates
     //! and \f$ C(s) \f$ is the normal at the point \f$ C(s) \f$.
-    //! 
+    //!
     //! \param[in]  x component \f$ x \f$
     //! \param[in]  y component \f$ y \f$
     //! \param[out] s curvilinear coordinate
     //! \param[out] t offset respect to the curve of \f$ (x,y) \f$
     //! \return true if the coordinate are found
-    //! 
+    //!
     bool
     findST_SAE(
       real_type   x,
@@ -2087,37 +1917,6 @@ namespace G2lib {
       int_type icode = this->closest_point_SAE( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
-
-    #ifdef G2LIB_COMPATIBILITY_MODE
-    //!
-    //! Find the curvilinear coordinate of point \f$ (x,y) \f$
-    //! respect to the curve (ISO/SAE), i.e.
-    //!
-    //! \f[ 
-    //!     P = C(s)+N(s)t
-    //! \f]
-    //!
-    //! where \f$ C(s) \f$ is the curve position respect to the curvilinear coordinates
-    //! and \f$ C(s) \f$ is the normal at the point \f$ C(s) \f$.
-    //!
-    //! \param[in]  x component \f$ x \f$
-    //! \param[in]  y component \f$ y \f$
-    //! \param[out] s curvilinear coordinate
-    //! \param[out] t offset respect to the curve of \f$ (x,y) \f$
-    //! \return true if the coordinate are found
-    //!
-    bool
-    findST(
-      real_type   x,
-      real_type   y,
-      real_type & s,
-      real_type & t
-    ) const {
-      real_type X, Y, dst;
-      int_type icode = this->closest_point( x, y, X, Y, s, t, dst );
-      return icode >= 0;
-    }
-    #endif
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

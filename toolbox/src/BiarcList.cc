@@ -33,11 +33,51 @@
 
 namespace G2lib {
 
-  using std::numeric_limits;
   using std::lower_bound;
   using std::vector;
   using std::swap;
   using std::abs;
+
+  void
+  BiarcList::build( LineSegment const & LS ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( LS );
+  }
+
+  void
+  BiarcList::build( CircleArc const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
+  }
+
+  void
+  BiarcList::build( ClothoidCurve const & ) {
+    UTILS_ERROR("can convert from ClothoidCurve to BiarcList\n");
+  }
+
+  void
+  BiarcList::build( Biarc const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
+  }
+
+  void
+  BiarcList::build( BiarcList const & C ) {
+    *this = C;
+  }
+
+  void
+  BiarcList::build( PolyLine const & ) {
+    UTILS_ERROR("can convert from PolyLine to BiarcList\n");
+  }
+
+  void
+  BiarcList::build( ClothoidList const & ) {
+    UTILS_ERROR("can convert from ClothoidList to BiarcList\n");
+  }
 
   /*\
    |   ____ _       _   _           _     _ _     _     _
@@ -48,69 +88,41 @@ namespace G2lib {
    |
   \*/
 
-  BiarcList::BiarcList( LineSegment const & LS )
-  : BaseCurve(G2LIB_BIARC_LIST)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( LS );
-  }
+  BiarcList::BiarcList( LineSegment const & LS ) { this->build(LS); }
+  BiarcList::BiarcList( CircleArc const & C ) { this->build( C ); }
+  BiarcList::BiarcList( Biarc const & C ) { this->build( C ); }
+  BiarcList::BiarcList( PolyLine const & C ) { this->build( C ); }
 
-  BiarcList::BiarcList( CircleArc const & C )
-  : BaseCurve(G2LIB_BIARC_LIST)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( C );
-  }
+  BiarcList::BiarcList( BaseCurve const * pC ) : BiarcList() {
 
-  BiarcList::BiarcList( Biarc const & C )
-  : BaseCurve(G2LIB_BIARC_LIST)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    this->push_back( C );
-  }
+    G2LIB_DEBUG_MESSAGE( "BiarcList convert: {}\n", pC->type_name() );
 
-  BiarcList::BiarcList( PolyLine const & pl )
-  : BaseCurve(G2LIB_BIARC_LIST)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
     this->init();
-    this->push_back( pl );
-  }
-
-  BiarcList::BiarcList( BaseCurve const & C )
-  : BaseCurve(G2LIB_BIARC_LIST)
-  , m_aabb_done(false)
-  {
-    this->resetLastInterval();
-    this->init();
-    switch ( C.type() ) {
+    switch ( pC->type() ) {
     case G2LIB_LINE:
-      push_back( *static_cast<LineSegment const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "LineSegment -> Biarc\n" );
+      push_back( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
-      push_back( *static_cast<CircleArc const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "CircleArc -> Biarc\n" );
+      push_back( *static_cast<CircleArc const *>(pC) );
       break;
     case G2LIB_BIARC:
-      push_back( *static_cast<Biarc const *>(&C) );
-      break;
-    case G2LIB_BIARC_LIST:
-      copy( *static_cast<BiarcList const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
+      push_back( *static_cast<Biarc const *>(pC) );
       break;
     case G2LIB_POLYLINE:
-      push_back( *static_cast<PolyLine const *>(&C) );
+      G2LIB_DEBUG_MESSAGE( "to -> PolyLine\n" );
+      push_back( *static_cast<PolyLine const *>(pC) );
       break;
-    case G2LIB_CLOTHOID:
-    case G2LIB_CLOTHOID_LIST:
+    case G2LIB_BIARC_LIST:
+      G2LIB_DEBUG_MESSAGE( "to -> BiarcList\n" );
+      copy( *static_cast<BiarcList const *>(pC) );
+      break;
+    default:
       UTILS_ERROR(
         "BiarcList constructor cannot convert from: {}\n",
-        CurveType_name[C.type()]
+        pC->type_name()
       );
     }
   }
@@ -169,7 +181,8 @@ namespace G2lib {
     } else {
       m_s0.push_back(m_s0.back()+LS.length());
     }
-    m_biarcList.push_back(Biarc(LS));
+    Biarc tmp(&LS);
+    m_biarcList.push_back(tmp);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,7 +195,8 @@ namespace G2lib {
     } else {
       m_s0.push_back(m_s0.back()+C.length());
     }
-    m_biarcList.push_back(Biarc(C));
+    Biarc tmp(&C);
+    m_biarcList.push_back(tmp);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -207,10 +221,10 @@ namespace G2lib {
 
     if ( m_s0.empty() ) m_s0.push_back(0);
 
-    vector<LineSegment>::const_iterator ip = c.m_polylineList.begin();
-    for (; ip != c.m_polylineList.end(); ++ip ) {
-      m_s0.push_back(m_s0.back()+ip->length());
-      m_biarcList.push_back(Biarc(*ip));
+    for ( LineSegment const & LS : c.m_polylineList ) {
+      m_s0.push_back(m_s0.back()+LS.length());
+      Biarc B(&LS);
+      m_biarcList.push_back(B);
     }
   }
 
@@ -415,7 +429,7 @@ namespace G2lib {
   ) const {
     vector<Triangle2D> tvec;
     bbTriangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
-    xmin = ymin = numeric_limits<real_type>::infinity();
+    xmin = ymin = Utils::Inf<real_type>();
     xmax = ymax = -xmin;
     vector<Triangle2D>::const_iterator it;
     for ( it = tvec.begin(); it != tvec.end(); ++it ) {
@@ -907,16 +921,14 @@ namespace G2lib {
 
   void
   BiarcList::translate( real_type tx, real_type ty ) {
-    vector<Biarc>::iterator ic = m_biarcList.begin();
-    for (; ic != m_biarcList.end(); ++ic ) ic->translate( tx, ty );
+    for ( auto & B : m_biarcList ) B.translate( tx, ty );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BiarcList::rotate( real_type angle, real_type cx, real_type cy ) {
-    vector<Biarc>::iterator ic = m_biarcList.begin();
-    for (; ic != m_biarcList.end(); ++ic ) ic->rotate( angle, cx, cy );
+    for ( auto & B : m_biarcList ) B.rotate( angle, cx, cy );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -961,11 +973,10 @@ namespace G2lib {
 
   void
   BiarcList::change_origin( real_type newx0, real_type newy0 ) {
-    vector<Biarc>::iterator ic = m_biarcList.begin();
-    for (; ic != m_biarcList.end(); ++ic ) {
-      ic->change_origin( newx0, newy0 );
-      newx0 = ic->x_end();
-      newy0 = ic->y_end();
+    for ( auto & B : m_biarcList ) {
+      B.change_origin( newx0, newy0 );
+      newx0 = B.x_end();
+      newy0 = B.y_end();
     }
   }
 
@@ -1020,30 +1031,20 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    #ifdef G2LIB_USE_CXX11
-    vector<shared_ptr<BBox const> > bboxes;
-    #else
-    vector<BBox const *> bboxes;
-    #endif
-
     bbTriangles_ISO( offs, m_aabb_tri, max_angle, max_size );
-    bboxes.reserve(m_aabb_tri.size());
-    vector<Triangle2D>::const_iterator it;
+
     int_type ipos = 0;
-    for ( it = m_aabb_tri.begin(); it != m_aabb_tri.end(); ++it, ++ipos ) {
-      real_type xmin, ymin, xmax, ymax;
-      it->bbox( xmin, ymin, xmax, ymax );
-      #ifdef G2LIB_USE_CXX11
-      bboxes.push_back( make_shared<BBox const>(
-        xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos
-      ) );
-      #else
-      bboxes.push_back(
-        new BBox( xmin, ymin, xmax, ymax, G2LIB_CLOTHOID, ipos )
-      );
-      #endif
+    int_type nobj = int_type(m_aabb_tri.size());
+    m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
+    m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
+    for ( Triangle2D const & T : m_aabb_tri ) {
+      real_type bbox_min[2], bbox_max[2];
+      T.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
+      m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
+      ++ipos;
     }
-    m_aabb_tree.build(bboxes);
+
+    m_aabb_tree.build();
     m_aabb_done      = true;
     m_aabb_offs      = offs;
     m_aabb_max_angle = max_angle;
@@ -1062,25 +1063,67 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  BiarcList::collision( BiarcList const & C ) const {
-    this->build_AABBtree_ISO( 0 );
-    C.build_AABBtree_ISO( 0 );
-    T2D_collision_list_ISO fun( this, 0, &C, 0 );
-    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
+  BiarcList::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == G2LIB_BIARC_LIST ) {
+      BiarcList const & C = *static_cast<BiarcList const *>(pC);
+      return this->collision( C );
+    } else {
+      BiarcList C(pC);
+      return this->collision( C );
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   BiarcList::collision_ISO(
-    real_type            offs,
-    BiarcList const & C,
-    real_type            offs_C
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C
+  ) const {
+    if ( pC->type() == G2LIB_BIARC_LIST ) {
+      BiarcList const & C = *static_cast<BiarcList const *>(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    } else {
+      BiarcList C(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  BiarcList::collision_ISO(
+    real_type         offs,
+    BiarcList const & BL,
+    real_type         offs_BL
   ) const {
     this->build_AABBtree_ISO( offs );
-    C.build_AABBtree_ISO( offs_C );
-    T2D_collision_list_ISO fun( this, offs, &C, offs_C );
-    return m_aabb_tree.collision( C.m_aabb_tree, fun, false );
+    BL.build_AABBtree_ISO( offs_BL );
+    AABB_MAP intersectList;
+    m_aabb_tree.intersect_and_refine( BL.m_aabb_tree, intersectList );
+    for ( auto const & I : intersectList ) {
+      int_type i = I.first;
+      UTILS_ASSERT_DEBUG(
+        i >= 0 && i < int_type(m_aabb_tri.size()),
+        "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) i={} out of range [0,{})\n",
+        offs, offs_BL, i, m_aabb_tri.size()
+      );
+      Triangle2D const & T1  = m_aabb_tri[i];
+      Biarc      const & BA1 = m_biarcList[T1.Icurve()];
+      for ( auto const & j : I.second ) {
+        UTILS_ASSERT_DEBUG(
+          j >= 0 && j < int_type(BL.m_aabb_tri.size()),
+          "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) j={} out of range [0,{})\n",
+          offs, offs_BL, j, BL.m_aabb_tri.size()
+        );
+        Triangle2D const & T2  = BL.m_aabb_tri[j];
+        Biarc      const & BA2 = BL.m_biarcList[T2.Icurve()];
+        bool collide = BA1.collision_ISO( offs, BA2, offs_BL );
+        if ( collide ) return true;
+      }
+    }
+    return false;
   }
 
   /*\
@@ -1095,64 +1138,98 @@ namespace G2lib {
   void
   BiarcList::intersect_ISO(
     real_type         offs,
-    BiarcList const & CL,
-    real_type         offs_CL,
-    IntersectList   & ilist,
-    bool              swap_s_vals
+    BiarcList const & BL,
+    real_type         offs_BL,
+    IntersectList   & ilist
   ) const {
+
     if ( intersect_with_AABBtree ) {
+
       this->build_AABBtree_ISO( offs );
-      CL.build_AABBtree_ISO( offs_CL );
-      AABBtree::VecPairPtrBBox iList;
-      m_aabb_tree.intersect( CL.m_aabb_tree, iList );
+      BL.build_AABBtree_ISO( offs_BL );
+      AABB_MAP intersectList;
+      m_aabb_tree.intersect_and_refine( BL.m_aabb_tree, intersectList );
+      for ( auto const & I : intersectList ) {
+        int_type i = I.first;
+        UTILS_ASSERT_DEBUG(
+          i >= 0 && i < int_type(m_aabb_tri.size()),
+          "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) i={} out of range [0,{})\n",
+          offs, offs_BL, i, m_aabb_tri.size()
+        );
+        Triangle2D const & T1  = m_aabb_tri[i];
+        Biarc      const & BA1 = m_biarcList[T1.Icurve()];
 
-      AABBtree::VecPairPtrBBox::const_iterator ip;
-      for ( ip = iList.begin(); ip != iList.end(); ++ip ) {
-        size_t ipos1 = size_t(ip->first->Ipos());
-        size_t ipos2 = size_t(ip->second->Ipos());
-
-        Triangle2D const & T1 = m_aabb_tri[ipos1];
-        Triangle2D const & T2 = CL.m_aabb_tri[ipos2];
-
-        Biarc const & C1 = m_biarcList[T1.Icurve()];
-        Biarc const & C2 = CL.m_biarcList[T2.Icurve()];
-
-        IntersectList ilist1;
-        C1.intersect_ISO( offs, C2, offs_CL, ilist1, false );
-
-        for ( IntersectList::const_iterator it = ilist1.begin();
-              it != ilist1.end(); ++it ) {
-          real_type ss1 = it->first  + m_s0[T1.Icurve()];
-          real_type ss2 = it->second + CL.m_s0[T2.Icurve()];
-          if ( swap_s_vals ) swap( ss1, ss2 );
-          ilist.push_back( Ipair( ss1, ss2 ) );
-        }
-      }
-    } else {
-      bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
-      CL.bbTriangles_ISO( offs_CL, CL.m_aabb_tri, Utils::m_pi/18, 1e100 );
-      vector<Triangle2D>::const_iterator i1, i2;
-      for ( i1 = m_aabb_tri.begin(); i1 != m_aabb_tri.end(); ++i1 ) {
-        for ( i2 = CL.m_aabb_tri.begin(); i2 != CL.m_aabb_tri.end(); ++i2 ) {
-          Triangle2D const & T1 = *i1;
-          Triangle2D const & T2 = *i2;
-
-          Biarc const & C1 = m_biarcList[T1.Icurve()];
-          Biarc const & C2 = CL.m_biarcList[T2.Icurve()];
+        for ( int_type j : I.second ) {
+          UTILS_ASSERT_DEBUG(
+            j >= 0 && j < int_type(BL.m_aabb_tri.size()),
+            "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) j={} out of range [0,{})\n",
+            offs, offs_BL, j, BL.m_aabb_tri.size()
+          );
+          Triangle2D const & T2  = BL.m_aabb_tri[j];
+          Biarc      const & BA2 = BL.m_biarcList[T2.Icurve()];
 
           IntersectList ilist1;
-          C1.intersect_ISO( offs, C2, offs_CL, ilist1, false );
+          BA1.intersect_ISO( offs, BA2, offs_BL, ilist1 );
 
-          for ( IntersectList::const_iterator it = ilist1.begin();
-                it != ilist1.end(); ++it ) {
-            real_type ss1 = it->first  + m_s0[T1.Icurve()];
-            real_type ss2 = it->second + CL.m_s0[T2.Icurve()];
-            if ( swap_s_vals ) swap( ss1, ss2 );
+          for ( auto const & it : ilist1 ) {
+            real_type ss1 = it.first  + m_s0[T1.Icurve()];
+            real_type ss2 = it.second + BL.m_s0[T2.Icurve()];
             ilist.push_back( Ipair( ss1, ss2 ) );
           }
         }
       }
 
+    } else {
+
+      bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
+      BL.bbTriangles_ISO( offs_BL, BL.m_aabb_tri, Utils::m_pi/18, 1e100 );
+
+      for ( Triangle2D const & T1 : m_aabb_tri ) {
+        Biarc const & BA1 = m_biarcList[T1.Icurve()];
+
+        for ( Triangle2D const & T2 : BL.m_aabb_tri ) {
+          Biarc const & BA2 = BL.m_biarcList[T2.Icurve()];
+
+          IntersectList ilist1;
+          BA1.intersect_ISO( offs, BA2, offs_BL, ilist1 );
+
+          for ( auto const & it : ilist1 ) {
+            real_type ss1 = it.first  + m_s0[T1.Icurve()];
+            real_type ss2 = it.second + BL.m_s0[T2.Icurve()];
+            ilist.push_back( Ipair( ss1, ss2 ) );
+          }
+        }
+      }
+    }
+  }
+
+  void
+  BiarcList::intersect(
+    BaseCurve const * pC,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_BIARC_LIST ) {
+      BiarcList const & C = *static_cast<BiarcList const *>(pC);
+      this->intersect( C, ilist );
+    } else {
+      BiarcList C(pC);
+      this->intersect( C, ilist );
+    }
+  }
+
+  void
+  BiarcList::intersect_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == G2LIB_BIARC_LIST ) {
+      BiarcList const & C = *static_cast<BiarcList const *>(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
+    } else {
+      BiarcList C(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
     }
   }
 
@@ -1177,29 +1254,50 @@ namespace G2lib {
 
     this->build_AABBtree_ISO( offs );
 
-    AABBtree::VecPtrBBox candidateList;
-    m_aabb_tree.min_distance( qx, qy, candidateList );
-    AABBtree::VecPtrBBox::const_iterator ic;
-    UTILS_ASSERT0(
-      candidateList.size() > 0,
-      "BiarcList::closest_point_internal no candidate\n"
-    );
     int_type icurve = 0;
-    DST = numeric_limits<real_type>::infinity();
-    for ( ic = candidateList.begin(); ic != candidateList.end(); ++ic ) {
-      size_t ipos = size_t((*ic)->Ipos());
-      Triangle2D const & T = m_aabb_tri[ipos];
-      real_type dst = T.distMin( qx, qy );
-      if ( dst < DST ) {
-        // refine distance
-        real_type xx, yy, ss, tt;
-        m_biarcList[T.Icurve()].closest_point_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
+    DST = Utils::Inf<real_type>();
+
+    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+
+      AABB_SET candidateList;
+      real_type xy[2] = { qx, qy };
+      m_aabb_tree.min_distance_candidates( xy, candidateList );
+      UTILS_ASSERT0(
+         candidateList.size() > 0,
+        "BiarcList::closest_point_internal no candidate\n"
+      );
+      for ( int_type ipos : candidateList ) {
+        Triangle2D const & T = m_aabb_tri[ipos];
+        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
-          DST    = dst;
-          s      = ss + m_s0[T.Icurve()];
-          x      = xx;
-          y      = yy;
-          icurve = T.Icurve();
+          // refine distance
+          real_type xx, yy, ss, tt;
+          m_biarcList[T.Icurve()].closest_point_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
+          if ( dst < DST ) {
+            DST    = dst;
+            s      = ss + m_s0[T.Icurve()];
+            x      = xx;
+            y      = yy;
+            icurve = T.Icurve();
+          }
+        }
+      }
+
+    } else {
+
+      for ( Triangle2D const & T : m_aabb_tri ) {
+        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
+        if ( dst < DST ) {
+          // refine distance
+          real_type xx, yy, ss, tt;
+          m_biarcList[T.Icurve()].closest_point_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
+          if ( dst < DST ) {
+            DST    = dst;
+            s      = ss + m_s0[T.Icurve()];
+            x      = xx;
+            y      = yy;
+            icurve = T.Icurve();
+          }
         }
       }
     }

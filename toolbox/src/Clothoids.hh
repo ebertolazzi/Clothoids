@@ -31,6 +31,7 @@
 #define CLOTHOIDS_dot_HH
 
 #include "Utils.hh"
+#include "Utils_AABB_tree.hh"
 
 #include <string>
 #include <fstream>
@@ -44,14 +45,7 @@
 #include <algorithm>
 #include <iterator>
 
-// check if compiler is C++11
-#ifndef G2LIB_DO_NOT_USE_CXX11
-  #define G2LIB_USE_CXX11
-#endif
-
-#ifdef G2LIB_USE_CXX11
 #include <memory>  // shared_ptr
-#endif
 
 #ifdef G2LIB_DEBUG
   #define G2LIB_DEBUG_MESSAGE(...) std::cout << fmt::format(__VA_ARGS__) << std::flush
@@ -64,16 +58,34 @@
 #endif
 
 namespace G2lib {
-  typedef std::basic_istream<char> istream_type;
-  typedef std::basic_ostream<char> ostream_type;
-  typedef double real_type;
-  typedef int    int_type;
+
+  using std::string;
+  using std::vector;
+  using std::map;
+  using std::set;
+
+  typedef std::basic_istream<char>             istream_type;
+  typedef std::basic_ostream<char>             ostream_type;
+  typedef double                               real_type;
+  typedef int                                  int_type;
+  typedef Utils::AABBtree<real_type>           AABB_TREE;
+  typedef Utils::AABBtree<real_type>::AABB_SET AABB_SET;
+  typedef Utils::AABBtree<real_type>::AABB_MAP AABB_MAP;
+
+  class LineSegment;
+  class CircleArc;
+  class Biarc;
+  class ClothoidCurve;
+  class PolyLine;
+  class BiarcList;
+  class ClothoidList;
+  static int_type const G2LIB_AABB_CUT = 8;
 }
 
 #include "Clothoids/G2lib.hxx"
 #include "Clothoids/Triangle2D.hxx"
+#include "Clothoids/BBox.hxx"
 #include "Clothoids/BaseCurve.hxx"
-#include "Clothoids/AABBtree.hxx"
 #include "Clothoids/Fresnel.hxx"
 #include "Clothoids/Line.hxx"
 #include "Clothoids/Circle.hxx"

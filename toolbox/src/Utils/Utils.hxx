@@ -41,10 +41,19 @@
 #elif defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
   // windows architecture
   #define UTILS_OS_WINDOWS 1
-  #if defined(_M_X64) || defined(_M_AMD64) || defined(_WIN64) || defined(WIN64)
-    #define UTILS_ARCH64 1
+  // mingw subsystem
+  #if defined(__MINGW64__)
+    #define UTILS_OS_MINGW 1
+    #define UTILS_ARCH64   1
+  #elif defined(__MINGW32__)
+    #define UTILS_OS_MINGW 1
+    #define UTILS_ARCH32   1
   #else
-    #define UTILS_ARCH32 1
+    #if defined(_M_X64) || defined(_M_AMD64) || defined(_WIN64) || defined(WIN64)
+      #define UTILS_ARCH64 1
+    #else
+      #define UTILS_ARCH32 1
+    #endif
   #endif
   // windows headers, order matters!
   #include <Winsock2.h>
@@ -175,7 +184,7 @@ namespace Utils {
   using std::string;
   #endif
 
-  std::string basename( char const * filename );
+  string basename( char const filename[] );
 
   void   get_MAC_address( std::map<string,string> & addr );
   string get_host_name();
@@ -187,57 +196,57 @@ namespace Utils {
   string get_user_name();
   string get_home_directory();
   string get_executable_path_name();
-  bool   check_if_file_exists( char const * fname );
-  bool   check_if_dir_exists( char const * dirname );
-  bool   make_directory( char const * dirname, unsigned mode = 0777 );
+  bool   check_if_file_exists( char const fname[] );
+  bool   check_if_dir_exists( char const dirname[] );
+  bool   make_directory( char const dirname[], unsigned mode = 0777 );
 
 
   template <typename T_int, typename T_real>
   void
   search_interval(
-    T_int          npts,
-    T_real const * X,
-    T_real       & x,
-    T_int        & lastInterval,
-    bool           closed,
-    bool           can_extend
+    T_int        npts,
+    T_real const X[],
+    T_real     & x,
+    T_int      & lastInterval,
+    bool         closed,
+    bool         can_extend
   );
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
   extern template void search_interval(
-    int32_t       npts,
-    float const * X,
-    float       & x,
-    int32_t     & lastInterval,
-    bool          closed,
-    bool          can_extend
+    int32_t     npts,
+    float const X[],
+    float     & x,
+    int32_t   & lastInterval,
+    bool        closed,
+    bool        can_extend
   );
 
   extern template void search_interval(
-    int32_t        npts,
-    double const * X,
-    double       & x,
-    int32_t      & lastInterval,
-    bool           closed,
-    bool           can_extend
+    int32_t      npts,
+    double const X[],
+    double     & x,
+    int32_t    & lastInterval,
+    bool         closed,
+    bool         can_extend
   );
 
   extern template void search_interval(
-    int64_t       npts,
-    float const * X,
-    float       & x,
-    int64_t     & lastInterval,
-    bool          closed,
-    bool          can_extend
+    int64_t     npts,
+    float const X[],
+    float     & x,
+    int64_t   & lastInterval,
+    bool        closed,
+    bool        can_extend
   );
 
   extern template void search_interval(
-    int64_t        npts,
-    double const * X,
-    double       & x,
-    int64_t      & lastInterval,
-    bool           closed,
-    bool           can_extend
+    int64_t      npts,
+    double const X[],
+    double     & x,
+    int64_t    & lastInterval,
+    bool         closed,
+    bool         can_extend
   );
   #endif
 
@@ -245,12 +254,12 @@ namespace Utils {
   inline
   void
   searchInterval(
-    T_int          npts,
-    T_real const * X,
-    T_real       & x,
-    T_int        & lastInterval,
-    bool           closed,
-    bool           can_extend
+    T_int        npts,
+    T_real const X[],
+    T_real     & x,
+    T_int      & lastInterval,
+    bool         closed,
+    bool         can_extend
   ) {
     search_interval( npts, X, x, lastInterval, closed, can_extend );
   }
@@ -258,56 +267,56 @@ namespace Utils {
   static
   inline
   void
-  to_upper( std::string & str ) {
+  to_upper( string & str ) {
     for ( auto & c: str ) c = char(toupper(int(c)));
   }
 
   static
   inline
   void
-  to_lower( std::string & str ) {
+  to_lower( string & str ) {
     for ( auto & c: str ) c = char(tolower(int(c)));
   }
 
   static
   inline
   bool
-  is_lower( std::string const & s ) {
+  is_lower( string const & s ) {
     return std::all_of( s.begin(), s.end(), islower );
   }
 
   static
   inline
   bool
-  is_upper( std::string const & s ) {
+  is_upper( string const & s ) {
     return std::all_of( s.begin(), s.end(), isupper );
   }
 
   static
   inline
   bool
-  is_alpha( std::string const & s ) {
+  is_alpha( string const & s ) {
     return std::all_of( s.begin(), s.end(), isalpha );
   }
 
   static
   inline
   bool
-  is_alphanum( std::string const & s ) {
+  is_alphanum( string const & s ) {
     return std::all_of( s.begin(), s.end(), isalnum );
   }
 
   static
   inline
   bool
-  is_digits( std::string const & s ) {
+  is_digits( string const & s ) {
     return std::all_of( s.begin(), s.end(), isdigit );
   }
 
   static
   inline
   bool
-  is_xdigits( std::string const & s ) {
+  is_xdigits( string const & s ) {
     return std::all_of( s.begin(), s.end(), isxdigit );
   }
 
