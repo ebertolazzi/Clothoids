@@ -32,18 +32,8 @@ namespace G2lib {
    | |____/ \__,_|___/\___|\____\__,_|_|    \_/ \___|
   \*/
 
-  typedef enum {
-    G2LIB_LINE=0,
-    G2LIB_POLYLINE,
-    G2LIB_CIRCLE,
-    G2LIB_BIARC,
-    G2LIB_BIARC_LIST,
-    G2LIB_CLOTHOID,
-    G2LIB_CLOTHOID_LIST
-  } CurveType;
-
-  typedef std::pair<real_type,real_type> Ipair;
-  typedef std::vector<Ipair>             IntersectList;
+  using Ipair         = std::pair<real_type,real_type>;
+  using IntersectList = std::vector<Ipair>;
 
   /*\
    |   _       _                          _

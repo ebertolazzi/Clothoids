@@ -28,8 +28,8 @@ for kk=1:4
   L1.plot(1000,'Color','green','LineWidth',3);
   hold on;
 
-  x     = -10:0.05:10;
-  y     = -5:0.05:15;
+  x     = -10:0.2:10;
+  y     = -5:0.2:15;
   [X,Y] = meshgrid(x,y);
 
   tic

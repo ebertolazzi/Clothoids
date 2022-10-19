@@ -67,58 +67,48 @@ namespace Utils {
   */
   template <typename Real>
   class HJPatternSearch {
-    typedef Eigen::Matrix<Real,Eigen::Dynamic,1> Vec_t;
-    typedef Eigen::Map<Vec_t>                    MapVec;
-    typedef int                                  integer;
-    typedef std::function<Real(Real const[])>    HJFunc;
+    using Vec_t   = Eigen::Matrix<Real,Eigen::Dynamic,1>;
+    using MapVec  = Eigen::Map<Vec_t>;
+    using integer = int;
+    using HJFunc  = std::function<Real(Real const[])>;
+
   private:
     string const m_name;
 
     Malloc<Real> m_base_value;
 
-    HJFunc m_fun; // handle to the value function to minimize
+    HJFunc  m_fun; // handle to the value function to minimize
     Console const * m_console{nullptr}; //!< pointer to the message stream class
 
-    Real m_rho{Real(0.9)}; // stencil step decreasing factor (must be 0 < rho < 1)
-    MapVec m_h{nullptr,0}; // scale of the stencil (Remark 1966)
+    Real   m_rho{Real(0.9)}; // stencil step decreasing factor (must be 0 < rho < 1)
+    Real   m_h{0.1};
+    bool   m_stencil_failure; // stencil failure flag - used to shrink h,
+                              // stencil_failure = true means failure
 
-    bool m_stencil_failure; // stencil failure flag - used to shrink h,
-                            // stencil_failure = true means failure
+    integer m_dim{0};
+    MapVec  m_x_old{nullptr,0};
+    MapVec  m_x_best{nullptr,0};
+    Real    m_f_old;
+    Real    m_f_best;
 
-    integer m_N{0};           // problem dimension (number of variables)
-    MapVec m_x{nullptr,0};    // current iteration
-    MapVec m_pars{nullptr,0}; // current iteration
+    MapVec  m_dir{nullptr,0};         // search direction
+    MapVec  m_search_sign{nullptr,0}; // vector to keep in memory the direction of function value descent from the previous iteration in each direction j
 
-    MapVec m_x_best{nullptr,0};    // base point
-    MapVec m_pars_best{nullptr,0}; // base point
+    MapVec  m_p{nullptr,0};
+    MapVec  m_p1{nullptr,0};
+    MapVec  m_new_x{nullptr,0};
 
-    MapVec m_x_center{nullptr,0};    // stencil center
-    MapVec m_pars_center{nullptr,0}; // stencil center
-
-    MapVec m_d{nullptr,0};           // search direction
-    MapVec m_search_sign{nullptr,0}; // vector to keep in memory the direction of function value descent from the previous iteration in each direction j
-
-    MapVec m_x_current_best{nullptr,0};
-    MapVec m_pars_current_best{nullptr,0};
-
-    MapVec m_x_temporary{nullptr,0}; // temporary point representing the center of the stencil
-    MapVec m_p{nullptr,0};
-    MapVec m_p1{nullptr,0};
-
-    Real m_tolerance{Real(1e-8)};                  // tolerance on the scale h
-    Real m_sqrt_tolerance{Real(sqrt(Real(1e-8)))}; // tolerance on the scale h
-    integer m_max_iteration{50};                   // max number of iterations
-    integer m_max_fun_evaluation{1000};            // max number of function evaluations
+    Real    m_tolerance{Real(1e-8)};    // tolerance on the scale h
+    integer m_max_iteration{500};        // max number of iterations
+    integer m_max_fun_evaluation{1000}; // max number of function evaluations
     integer m_max_num_stagnation{10};
-    integer m_verbose{1};                          // flag to activate info printing
+    integer m_verbose{1};               // flag to activate info printing
 
-    Real m_fun_best;           // best value function (fun evaluated in x_best_current)
-    integer m_iteration_count; // explore iteration counter
-    integer m_num_stagnation;
+    integer m_iteration_count;          // explore iteration counter
+    integer m_fun_evaluation_count;
 
     void allocate( integer n );
-    Real h_norm_inf() const { return m_h.template lpNorm<Eigen::Infinity>(); }
-    Real eval_function( MapVec const & x, MapVec & pars ) const;
+    Real eval_function( MapVec const & x ) const { ++m_fun_evaluation; return m_fun( x.data() ); }
 
     mutable integer m_fun_evaluation;
 
@@ -135,7 +125,7 @@ namespace Utils {
     //!
     string const & name(void) const { return m_name; }
 
-    void setup( HJFunc & fun, Console const * console );
+    void setup( integer dim, HJFunc & fun, Console const * console );
 
     void change_console( Console const * console ) { m_console = console; }
 
@@ -147,9 +137,11 @@ namespace Utils {
 
     string info() const;
     void print_info( ostream_type & stream ) const { stream << info(); }
-    void explore();
+    void best_nearby();
     void search();
-    void run( Real x_sol[], Real h );
+    void run( Real const x_sol[], Real h );
+
+    void get_last_solution( Real x[] ) const { std::copy_n( m_x_best.data(), m_dim, x ); }
   };
 }
 

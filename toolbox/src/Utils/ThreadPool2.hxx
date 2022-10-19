@@ -406,8 +406,8 @@ namespace Utils {
    */
   class ThreadPool2 : public ThreadPoolBase  {
 
-    typedef HQueue<QueueElement>     QUEUE;
-    typedef GenericThreadPool<QUEUE> POOL;
+    using QUEUE = HQueue<QueueElement>;
+    using POOL  = GenericThreadPool<QUEUE>;
 
     QUEUE * m_queue;
     POOL  * m_pool;

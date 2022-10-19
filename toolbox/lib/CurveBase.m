@@ -24,7 +24,7 @@ classdef CurveBase < matlab.mixin.Copyable
     %>
     function obj = copyElement( self )
       obj              = copyElement@matlab.mixin.Copyable(self);
-      obj.objectHandle = feval( self.mexName, 'copy', self.objectHandle );
+      obj.objectHandle = feval( self.mexName, 'make_a_copy', self.objectHandle );
       obj.call_delete  = true;
     end
   end

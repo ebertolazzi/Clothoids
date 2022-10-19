@@ -40,7 +40,7 @@ namespace G2lib {
   using std::ceil;
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  typedef vector<LineSegment>::difference_type LS_dist_type;
+  using LS_dist_type = vector<LineSegment>::difference_type;
   #endif
 
   void PolyLine::build( CircleArc const & )     { UTILS_ERROR("can convert from CircleArc to PolyLine\n"); }
@@ -452,8 +452,8 @@ namespace G2lib {
       int_type nobj = int_type(m_polylineList.size());
       m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
       m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
+      real_type bbox_min[2], bbox_max[2];
       for ( auto const & line : m_polylineList ) {
-        real_type bbox_min[2], bbox_max[2];
         line.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
         m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
         ++ipos;
@@ -647,8 +647,13 @@ namespace G2lib {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       return this->collision( C );
     } else {
-      PolyLine C(pC);
-      return this->collision( C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_POLYLINE ) {
+        PolyLine C(pC);
+        return this->collision( C );
+      } else {
+        return G2lib::collision( this, pC );
+      }
     }
   }
 
@@ -664,8 +669,13 @@ namespace G2lib {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     } else {
-      PolyLine C(pC);
-      return this->collision_ISO( offs, C, offs_C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_POLYLINE ) {
+        PolyLine C(pC);
+        return this->collision_ISO( offs, C, offs_C );
+      } else {
+        return G2lib::collision_ISO( this, offs, pC, offs_C );
+      }
     }
   }
 
@@ -678,8 +688,13 @@ namespace G2lib {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       this->intersect( C, ilist );
     } else {
-      PolyLine C(pC);
-      this->intersect( C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_POLYLINE ) {
+        PolyLine C(pC);
+        this->intersect( C, ilist );
+      } else {
+        G2lib::intersect( this, pC, ilist );
+      }
     }
   }
 
@@ -694,8 +709,13 @@ namespace G2lib {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
-      PolyLine C(pC);
-      this->intersect_ISO( offs, C, offs_C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_POLYLINE ) {
+        PolyLine C(pC);
+        this->intersect_ISO( offs, C, offs_C, ilist );
+      } else {
+        G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );
+      }
     }
   }
 
@@ -721,7 +741,7 @@ namespace G2lib {
     this->build_AABBtree();
     DST = Utils::Inf<real_type>();
 
-    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+    if ( m_aabb_tree.num_tree_nodes() > G2LIB_AABB_MIN_NODES && intersect_with_AABBtree ) {
       AABB_SET candidateList;
       real_type xy[2] = { x, y };
       m_aabb_tree.min_distance_candidates( xy, candidateList );

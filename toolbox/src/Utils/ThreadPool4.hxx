@@ -9,9 +9,8 @@ namespace Utils {
 
   class ThreadPool4 : public ThreadPoolBase {
 
-    typedef double real_type;
-
-    typedef tp::Queue::TaskData TaskData;
+    using real_type = double;
+    using TaskData  = tp::Queue::TaskData;
 
     std::atomic<bool>        m_done;
     std::atomic<unsigned>    m_running_task;

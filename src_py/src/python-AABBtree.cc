@@ -1,6 +1,6 @@
 /**
  * PYTHON Wrapper for Clothoids
- * 
+ *
  * License MIT - See LICENSE file
  * 2019 Matteo Ragni, Claudio Kerov Ghiglianovich,
  *      Enrico Bertolazzi, Marco Frego
@@ -20,12 +20,12 @@ namespace G2lib {
       using PyPairBBox = std::pair<PyPtrBBox, PyPtrBBox>;
       using PyVecPairBBox = std::vector<PyPairBBox>;
 
-      py::class_<BBox, PyPtrBBox>(m, "BBox", 
+      py::class_<BBox, PyPtrBBox>(m, "BBox",
       R"S(
         Class to manipulate Bounding Boxes
 
         Construct a bounding box with additional information
-        
+
         There are two possible constructors. The first one, from coordinates:
 
         :param xmin: x-minimimum box coordinate
@@ -43,15 +43,15 @@ namespace G2lib {
 
         There is a third one, that follows some patterns exposed in python
 
-        :param extrema: a tuple of float pairs representing the minimum and 
+        :param extrema: a tuple of float pairs representing the minimum and
                         maximum point
         :param id:      identifier of the box
         :param ipos:    ranking poisition of the box
       )S")
-      
+
       .def(py::init<real_type, real_type, real_type, real_type, int_type, int_type>(),
         py::arg("xmin"), py::arg("ymin"), py::arg("xmax"), py::arg("ymax"), py::arg("id"), py::arg("ipos"))
-      
+
       .def(py::init([](PyVecPtrBBox bboxes, int_type id, int_type ipos) {
         std::vector<BBox::PtrBBox> _bboxes;
         for (auto & el: bboxes) {
@@ -59,7 +59,7 @@ namespace G2lib {
         }
         return std::make_shared<BBox>(_bboxes, id, ipos);
       }), py::arg("bboxes"), py::arg("id"), py::arg("ipos"))
-      
+
       .def(py::init([](std::tuple<std::tuple<real_type, real_type>, std::tuple<real_type, real_type>> extrema, int_type id, int_type ipos) {
         const real_type x_min = std::get<0>(std::get<0>(extrema));
         const real_type y_min = std::get<0>(std::get<1>(extrema));
@@ -68,7 +68,7 @@ namespace G2lib {
         return std::make_shared<BBox>(x_min, y_min, x_max, y_max, id, ipos);
       }), py::arg("extrema"), py::arg("id"), py::arg("ipos"))
 
-      
+
       .def("Xmin", &BBox::Xmin,
       R"S(
         Minimum **x** coordinate of the bounding box
@@ -76,23 +76,23 @@ namespace G2lib {
         :return: minimum **x** coordinate of the bounding box
         :rtype: float
       )S")
-      
-      .def("Ymin", &BBox::Ymin, 
+
+      .def("Ymin", &BBox::Ymin,
       R"S(
         Minimum **y** coordinate of the bounding box
 
         :return: minimum **y** coordinate of the bounding box
         :rtype: float
       )S")
-      
+
       .def("Xmax", &BBox::Xmax,
       R"S(
         Maximum **x** coordinate of the bounding box
-        
+
         :return: maximum **x** coordinate of the bounding box
         :rtype: float
       )S")
-      
+
       .def("Ymax", &BBox::Ymax,
       R"S(
         Maximum **y** coordinate of the bounding box
@@ -100,7 +100,7 @@ namespace G2lib {
         :return: maximum **y** coordinate of the bounding box
         :rtype: float
       )S")
-      
+
       .def("Id", &BBox::Id,
       R"S(
         Returns the bounding box identifier
@@ -108,21 +108,21 @@ namespace G2lib {
         :return: returns the bounding box identifier
         :rtype: int
       )S")
-      
-      .def("Ipos", &BBox::Ipos, 
+
+      .def("Ipos", &BBox::Ipos,
       R"S(
         Returns the bounding box position
 
         :return: returns the bounding box position
         :rtype: int
       )S")
-      
+
       .def("collision", &BBox::collision, py::arg("box"),
       R"S(
         Detects if two bounding boxes collide
 
         :param box: the second box
-        :return: a boolean on the collision 
+        :return: a boolean on the collision
         :rtype: bool
       )S")
 
@@ -140,7 +140,7 @@ namespace G2lib {
         :return: nothing, modifies in place
         :rtype: NoneType
       )S")
-      
+
       .def("distance", &BBox::distance, py::arg("x"), py::arg("y"),
       R"S(
         Distance between the point **(x, y)** and the bounding box
@@ -150,8 +150,8 @@ namespace G2lib {
         :return: a value with the distance of the point
         :rtype: float
       )S")
-      
-      .def("maxDistance", &BBox::maxDistance, py::arg("x"), py::arg("y"),
+
+      .def("max_distance", &BBox::max_distance, py::arg("x"), py::arg("y"),
       R"S(
         Maximum distance between the point **(x, y)** and the bounding box
 
@@ -160,7 +160,7 @@ namespace G2lib {
         :return: a value with the distance of the point
         :rtype: float
       )S")
-        
+
       .def("__str__", [](PyPtrBBox self) {
         std::ostringstream str;
         self->print(str);
@@ -168,20 +168,20 @@ namespace G2lib {
       });
 
 
-      py::class_<AABBtree>(m, "AABBtree", 
+      py::class_<AABBtree>(m, "AABBtree",
       R"S(
         Class to build and manage an AABB tree (Axis-Aligned Bounding Box Trees)
-        
+
         The class provides 2-dimensional aabb-tree construction and search
         for arbitrary collections of spatial objects.
         These tree-based indexing structures are useful when seeking to implement
         efficient spatial queries, reducing the complexity of intersection tests
         between collections of objects.
       )S")
-      
+
       .def(py::init<>())
-  
-      .def("clear", &AABBtree::clear, 
+
+      .def("clear", &AABBtree::clear,
       R"S(
         Initialized AABBtree. Works in place.
 
@@ -189,7 +189,7 @@ namespace G2lib {
         :rtype: NoneType
       )S")
 
-      .def("empty", &AABBtree::empty, 
+      .def("empty", &AABBtree::empty,
       R"S(
         Check if the AABBtree is empty
 
@@ -201,16 +201,16 @@ namespace G2lib {
         real_type x_min, y_min, x_max, y_max;
         self.bbox(x_min, y_min, x_max, y_max);
         return std::make_tuple(
-          std::make_tuple(x_min, y_min), 
+          std::make_tuple(x_min, y_min),
           std::make_tuple(x_max, y_max));
-      }, 
+      },
       R"S(
         Returns the extreme points of the bounding box of the the AABB tree
 
         :return: etrema of the bounding box, minimum (x, y) and maximum (x, y)
         :rtype: Tuple[Tuple[float, float], Tuple[float, float]]
       )S")
-      
+
       .def("build", [](AABBtree & self, PyVecPtrBBox bboxes) {
         std::vector<BBox::PtrBBox> _bboxes;
         for (auto & el: bboxes) {
@@ -238,10 +238,10 @@ namespace G2lib {
           result.push_back(std::make_pair(_left, _right));
         }
         return result;
-      }, 
+      },
       R"S(
         Compute all the intersection of AABB trees.
-         
+
         :param tree: an AABB tree that is used to check collision
         :param swap_tree: if true exchange the tree in computation
         :return: intersection list of pair bbox that overlaps
@@ -259,7 +259,7 @@ namespace G2lib {
       }, py::arg("x"), py::arg("y"),
       R"S(
         Select all the bboxes candidate to be at minimum distance.
-         
+
         :param x: x-coordinate of the point
         :param y: y-coordinate of the point
         :return: candidate list

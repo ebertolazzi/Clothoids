@@ -604,6 +604,24 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
+  CircleArc::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == G2LIB_CIRCLE ) {
+      CircleArc const & C = *static_cast<CircleArc const *>(pC);
+      return this->collision( C );
+    } else {
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_CIRCLE ) {
+        CircleArc C(pC);
+        return this->collision( C );
+      } else {
+        return G2lib::collision( this, pC );
+      }
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
   CircleArc::collision_ISO(
     real_type         offs,
     CircleArc const & C,
@@ -638,19 +656,6 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  CircleArc::collision( BaseCurve const * pC ) const {
-    if ( pC->type() == G2LIB_CIRCLE ) {
-      CircleArc const & C = *static_cast<CircleArc const *>(pC);
-      return this->collision( C );
-    } else {
-      CircleArc C(pC);
-      return this->collision( C );
-    }
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
   CircleArc::collision_ISO(
     real_type         offs,
     BaseCurve const * pC,
@@ -660,8 +665,13 @@ namespace G2lib {
       CircleArc const & C = *static_cast<CircleArc const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     } else {
-      CircleArc C(pC);
-      return this->collision_ISO( offs, C, offs_C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_CIRCLE ) {
+        CircleArc C(pC);
+        return this->collision_ISO( offs, C, offs_C );
+      } else {
+        return G2lib::collision_ISO( this, offs, pC, offs_C );
+      }
     }
   }
 
@@ -733,8 +743,13 @@ namespace G2lib {
       CircleArc const & C = *static_cast<CircleArc const *>(pC);
       this->intersect( C, ilist );
     } else {
-      CircleArc C(pC);
-      this->intersect( C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_CIRCLE ) {
+        CircleArc C(pC);
+        this->intersect( C, ilist );
+      } else {
+        G2lib::intersect( this, pC, ilist );
+      }
     }
   }
 
@@ -749,8 +764,13 @@ namespace G2lib {
       CircleArc const & C = *static_cast<CircleArc const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
-      CircleArc C(pC);
-      this->intersect_ISO( offs, C, offs_C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_CIRCLE ) {
+        CircleArc C(pC);
+        this->intersect_ISO( offs, C, offs_C, ilist );
+      } else {
+        G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );
+      }
     }
   }
 

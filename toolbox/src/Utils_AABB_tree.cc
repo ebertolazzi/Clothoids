@@ -33,22 +33,218 @@ namespace Utils {
   using std::copy_n;
 
   template <typename Real>
-  inline
   bool
-  check_overlap( Real const bb1[], Real const bb2[], unsigned dim ) {
-    bool overlap = true;
-    for ( unsigned i = 0; overlap && i < dim; ++i )
-      overlap = ! ( bb1[i] > bb2[i+dim] || bb1[i+dim] < bb2[i] );
+  AABBtree<Real>::overlap1( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[1] && bb1[1] >= bb2[0];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::overlap2( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[2] && bb1[2] >= bb2[0] &&
+           bb1[1] <= bb2[3] && bb1[3] >= bb2[1];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::overlap3( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[3] && bb1[3] >= bb2[0] &&
+           bb1[1] <= bb2[4] && bb1[4] >= bb2[1] &&
+           bb1[2] <= bb2[5] && bb1[5] >= bb2[2];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::overlap4( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[4] && bb1[4] >= bb2[0] &&
+           bb1[1] <= bb2[5] && bb1[5] >= bb2[1] &&
+           bb1[2] <= bb2[6] && bb1[6] >= bb2[2] &&
+           bb1[3] <= bb2[7] && bb1[7] >= bb2[3];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::overlap5( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[5] && bb1[5] >= bb2[0] &&
+           bb1[1] <= bb2[6] && bb1[6] >= bb2[1] &&
+           bb1[2] <= bb2[7] && bb1[7] >= bb2[2] &&
+           bb1[3] <= bb2[8] && bb1[8] >= bb2[3] &&
+           bb1[4] <= bb2[9] && bb1[9] >= bb2[4];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::overlap6( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[6]  && bb1[6]  >= bb2[0] &&
+           bb1[1] <= bb2[7]  && bb1[7]  >= bb2[1] &&
+           bb1[2] <= bb2[8]  && bb1[8]  >= bb2[2] &&
+           bb1[3] <= bb2[9]  && bb1[9]  >= bb2[3] &&
+           bb1[4] <= bb2[10] && bb1[10] >= bb2[4] &&
+           bb1[5] <= bb2[11] && bb1[11] >= bb2[5];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::overlap7( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[7]  && bb1[7]  >= bb2[0] &&
+           bb1[1] <= bb2[8]  && bb1[8]  >= bb2[1] &&
+           bb1[2] <= bb2[9]  && bb1[9]  >= bb2[2] &&
+           bb1[3] <= bb2[10] && bb1[10] >= bb2[3] &&
+           bb1[4] <= bb2[11] && bb1[11] >= bb2[4] &&
+           bb1[5] <= bb2[12] && bb1[12] >= bb2[5] &&
+           bb1[6] <= bb2[13] && bb1[14] >= bb2[6];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::overlap8( Real const bb1[], Real const bb2[], integer ) {
+    return bb1[0] <= bb2[8]  && bb1[8]  >= bb2[0] &&
+           bb1[1] <= bb2[9]  && bb1[9]  >= bb2[1] &&
+           bb1[2] <= bb2[10] && bb1[10] >= bb2[2] &&
+           bb1[3] <= bb2[11] && bb1[11] >= bb2[3] &&
+           bb1[4] <= bb2[12] && bb1[12] >= bb2[4] &&
+           bb1[5] <= bb2[13] && bb1[13] >= bb2[5] &&
+           bb1[6] <= bb2[14] && bb1[14] >= bb2[6] &&
+           bb1[7] <= bb2[15] && bb1[15] >= bb2[7];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap1( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[1] && pnt[0] >= bb2[0];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap2( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[2] && pnt[0] >= bb2[0] &&
+           pnt[1] <= bb2[3] && pnt[1] >= bb2[1];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap3( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[3] && pnt[0] >= bb2[0] &&
+           pnt[1] <= bb2[4] && pnt[1] >= bb2[1] &&
+           pnt[2] <= bb2[5] && pnt[2] >= bb2[2];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap4( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[4] && pnt[0] >= bb2[0] &&
+           pnt[1] <= bb2[5] && pnt[1] >= bb2[1] &&
+           pnt[2] <= bb2[6] && pnt[2] >= bb2[2] &&
+           pnt[3] <= bb2[7] && pnt[3] >= bb2[3];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap5( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[5] && pnt[0] >= bb2[0] &&
+           pnt[1] <= bb2[6] && pnt[1] >= bb2[1] &&
+           pnt[2] <= bb2[7] && pnt[2] >= bb2[2] &&
+           pnt[3] <= bb2[8] && pnt[3] >= bb2[3] &&
+           pnt[4] <= bb2[9] && pnt[4] >= bb2[4];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap6( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[6]  && pnt[0] >= bb2[0] &&
+           pnt[1] <= bb2[7]  && pnt[1] >= bb2[1] &&
+           pnt[2] <= bb2[8]  && pnt[2] >= bb2[2] &&
+           pnt[3] <= bb2[9]  && pnt[3] >= bb2[3] &&
+           pnt[4] <= bb2[10] && pnt[4] >= bb2[4] &&
+           pnt[5] <= bb2[11] && pnt[5] >= bb2[5];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap7( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[7]  && pnt[0] >= bb2[0] &&
+           pnt[1] <= bb2[8]  && pnt[1] >= bb2[1] &&
+           pnt[2] <= bb2[9]  && pnt[2] >= bb2[2] &&
+           pnt[3] <= bb2[10] && pnt[3] >= bb2[3] &&
+           pnt[4] <= bb2[11] && pnt[4] >= bb2[4] &&
+           pnt[5] <= bb2[12] && pnt[5] >= bb2[5] &&
+           pnt[6] <= bb2[13] && pnt[6] >= bb2[6];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::pnt_overlap8( Real const pnt[], Real const bb2[], integer ) {
+    return pnt[0] <= bb2[8]  && pnt[0] >= bb2[0] &&
+           pnt[1] <= bb2[9]  && pnt[1] >= bb2[1] &&
+           pnt[2] <= bb2[10] && pnt[2] >= bb2[2] &&
+           pnt[3] <= bb2[11] && pnt[3] >= bb2[3] &&
+           pnt[4] <= bb2[12] && pnt[4] >= bb2[4] &&
+           pnt[5] <= bb2[13] && pnt[5] >= bb2[5] &&
+           pnt[6] <= bb2[14] && pnt[6] >= bb2[6] &&
+           pnt[7] <= bb2[15] && pnt[7] >= bb2[7];
+  }
+
+  template <typename Real>
+  bool
+  AABBtree<Real>::check_overlap( Real const bb1[], Real const bb2[], integer dim ) {
+    bool overlap = false;
+    integer k = dim % 4;
+    switch ( k ) {
+    case 1:
+      overlap = bb1[0] <= bb2[dim] && bb1[dim] >= bb2[0];
+      break;
+    case 2:
+      overlap = bb1[0] <= bb2[dim+0] && bb1[dim+0] >= bb2[0] &&
+                bb1[1] <= bb2[dim+1] && bb1[dim+1] >= bb2[1];
+      break;
+    case 3:
+      overlap = bb1[0] <= bb2[dim+0] && bb1[dim+0] >= bb2[0] &&
+                bb1[1] <= bb2[dim+1] && bb1[dim+1] >= bb2[1] &&
+                bb1[2] <= bb2[dim+2] && bb1[dim+2] >= bb2[2];
+      break;
+    }
+    bb1 += k;
+    bb2 += k;
+    while ( !overlap && k < dim ) {
+      overlap = bb1[0] <= bb2[dim+0] && bb1[dim+0] >= bb2[0] &&
+                bb1[1] <= bb2[dim+1] && bb1[dim+1] >= bb2[1] &&
+                bb1[2] <= bb2[dim+2] && bb1[dim+2] >= bb2[2] &&
+                bb1[3] <= bb2[dim+3] && bb1[dim+3] >= bb2[3];
+      bb1 += 4;
+      bb2 += 4;
+    }
     return overlap;
   }
 
   template <typename Real>
-  inline
   bool
-  check_overlap_with_point( Real const bb1[], Real const pnt[], unsigned dim ) {
-    bool overlap = true;
-    for ( unsigned i = 0; overlap && i < dim; ++i )
-      overlap = ! ( bb1[i] > pnt[i] || bb1[i+dim] < pnt[i] );
+  AABBtree<Real>::check_overlap_with_point( Real const pnt[], Real const bb2[], integer dim ) {
+    bool overlap = false;
+    integer k = dim % 4;
+    switch ( k ) {
+    case 1:
+      overlap = pnt[0] <= bb2[dim] && pnt[0] >= bb2[0];
+      break;
+    case 2:
+      overlap = pnt[0] <= bb2[dim+0] && pnt[0] >= bb2[0] &&
+                pnt[1] <= bb2[dim+1] && pnt[1] >= bb2[1];
+      break;
+    case 3:
+      overlap = pnt[0] <= bb2[dim+0] && pnt[0] >= bb2[0] &&
+                pnt[1] <= bb2[dim+1] && pnt[1] >= bb2[1] &&
+                pnt[2] <= bb2[dim+2] && pnt[2] >= bb2[2];
+      break;
+    }
+    pnt += k;
+    bb2 += k;
+    while ( !overlap && k < dim ) {
+      overlap = pnt[0] <= bb2[dim+0] && pnt[0] >= bb2[0] &&
+                pnt[1] <= bb2[dim+1] && pnt[1] >= bb2[1] &&
+                pnt[2] <= bb2[dim+2] && pnt[2] >= bb2[2] &&
+                pnt[3] <= bb2[dim+3] && pnt[3] >= bb2[3];
+      pnt += 4;
+      bb2 += 4;
+    }
     return overlap;
   }
 
@@ -81,7 +277,8 @@ namespace Utils {
     for ( integer i = 0; i < m_dim; ++i ) {
       Real r1 = pnt[i] - bbox[i];
       Real r2 = pnt[i] - bbox[i+m_dim];
-      res += max(r1*r1,r2*r2);
+      Real mx = max(r1*r1,r2*r2);
+      res += mx*mx;
     }
     return sqrt(res);
   }
@@ -156,6 +353,20 @@ namespace Utils {
 
   template <typename Real>
   void
+  AABBtree<Real>::set_bbox_min_size_tolerance( Real tol ) {
+    UTILS_ASSERT(
+      tol >= 0,
+      "AABBtree::set_bbox_min_size_tolerance( tol = {} )\n"
+      "tol must be >= 0\n",
+      tol
+    );
+    m_bbox_min_size_tolerance = tol;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  template <typename Real>
+  void
   AABBtree<Real>::allocate( integer nbox, integer dim ) {
 
     UTILS_WARNING(
@@ -164,6 +375,45 @@ namespace Utils {
       "dim is greather that 10!!!",
       dim
     );
+
+    switch ( dim ) {
+    case 1:
+      m_check_overlap            = overlap1;
+      m_check_overlap_with_point = pnt_overlap1;
+      break;
+    case 2:
+      m_check_overlap            = overlap2;
+      m_check_overlap_with_point = pnt_overlap2;
+      break;
+    case 3:
+      m_check_overlap            = overlap3;
+      m_check_overlap_with_point = pnt_overlap3;
+      break;
+    case 4:
+      m_check_overlap            = overlap4;
+      m_check_overlap_with_point = pnt_overlap4;
+      break;
+    case 5:
+      m_check_overlap            = overlap5;
+      m_check_overlap_with_point = pnt_overlap5;
+      break;
+    case 6:
+      m_check_overlap            = overlap6;
+      m_check_overlap_with_point = pnt_overlap6;
+      break;
+    case 7:
+      m_check_overlap            = overlap7;
+      m_check_overlap_with_point = pnt_overlap7;
+      break;
+    case 8:
+      m_check_overlap            = overlap8;
+      m_check_overlap_with_point = pnt_overlap8;
+      break;
+    default:
+      m_check_overlap            = check_overlap;
+      m_check_overlap_with_point = check_overlap_with_point;
+      break;
+    }
 
     m_rmem.free();
     m_imem.free();
@@ -321,6 +571,10 @@ namespace Utils {
         Real mx1 = father_max[i] - father_min[i];
         if ( mx < mx1 ) { mx = mx1; idim = i; }
       }
+
+      // if too small bbox stop splitting
+      if ( mx < m_bbox_min_size_tolerance ) continue;
+
       Real tol_len = m_bbox_long_edge_ratio * mx;
       Real sp      = 0;
 
@@ -494,7 +748,7 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = check_overlap_with_point( bb_father, pnt, m_dim );
+      bool overlap = m_check_overlap_with_point( pnt, bb_father, m_dim );
 
       // if do not overlap skip
       if ( !overlap ) continue;
@@ -537,7 +791,7 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = check_overlap_with_point( bb_father, pnt, m_dim );
+      bool overlap = m_check_overlap_with_point( pnt, bb_father, m_dim );
 
       // if do not overlap skip
       if ( !overlap ) continue;
@@ -549,7 +803,7 @@ namespace Utils {
         integer s = ptr[ii];
         Real const * bb_s = m_bbox_objs + s * m_2dim;
         ++m_num_check;
-        bool olap = check_overlap_with_point( bb_s, pnt, m_dim );
+        bool olap = m_check_overlap_with_point( pnt, bb_s, m_dim );
         if ( olap ) bb_index.insert(s);
       }
 
@@ -587,7 +841,7 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = check_overlap( bb_father, bbox, m_dim );
+      bool overlap = m_check_overlap( bb_father, bbox, m_dim );
 
       // if do not overlap skip
       if ( !overlap ) continue;
@@ -630,7 +884,7 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = check_overlap( bb_father, bbox, m_dim );
+      bool overlap = m_check_overlap( bb_father, bbox, m_dim );
 
       // if do not overlap skip
       if ( !overlap ) continue;
@@ -642,7 +896,7 @@ namespace Utils {
         integer s = ptr[ii];
         Real const * bb_s = m_bbox_objs + ptr[ii] * m_2dim;
         ++m_num_check;
-        bool olap = check_overlap( bb_s, bbox, m_dim );
+        bool olap = m_check_overlap( bb_s, bbox, m_dim );
         if ( olap ) bb_index.insert(s);
       }
 
@@ -686,7 +940,7 @@ namespace Utils {
       Real const * bb_root2 = aabb.m_bbox_tree + root2 * m_2dim;
 
       ++m_num_check;
-      bool overlap = check_overlap( bb_root1, bb_root2, m_dim );
+      bool overlap = m_check_overlap( bb_root1, bb_root2, m_dim );
 
       // if do not overlap skip
       if ( !overlap ) continue;
@@ -748,7 +1002,7 @@ namespace Utils {
       Real const * bb_root2 = aabb.m_bbox_tree + root2 * m_2dim;
 
       ++m_num_check;
-      bool overlap = check_overlap( bb_root1, bb_root2, m_dim );
+      bool overlap = m_check_overlap( bb_root1, bb_root2, m_dim );
 
       // if do not overlap skip
       if ( !overlap ) continue;
@@ -768,7 +1022,7 @@ namespace Utils {
             integer s2 = ptr2[jj];
             Real const * bb_s2 = aabb.m_bbox_objs + s2 * m_2dim;
             ++m_num_check;
-            bool olap = check_overlap( bb_s1, bb_s2, m_dim );
+            bool olap = m_check_overlap( bb_s1, bb_s2, m_dim );
             //if ( olap ) bb_index[s1].insert(s2);
             if ( olap ) BB.insert(s2);
           }

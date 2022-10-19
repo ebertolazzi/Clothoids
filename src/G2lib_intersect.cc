@@ -44,10 +44,10 @@ namespace G2lib {
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-  typedef pair<CurveType,CurveType> Ppair;
+  using Ppair = pair<CurveType,CurveType>;
 
-  // check if compiler is C++11
   static map<Ppair,CurveType> const promote_map = {
+
     {Ppair( G2LIB_LINE, G2LIB_LINE ),          G2LIB_LINE},
     {Ppair( G2LIB_LINE, G2LIB_CIRCLE ),        G2LIB_CIRCLE},
     {Ppair( G2LIB_LINE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID},
@@ -97,6 +97,10 @@ namespace G2lib {
     {Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ),      G2LIB_POLYLINE}
   };
 
+  CurveType curve_promote( CurveType A, CurveType B ) {
+    return promote_map.at(Ppair(A,B));
+  }
+
   #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -113,7 +117,8 @@ namespace G2lib {
 
     try {
 
-      switch ( promote_map.at(Ppair(pC1->type(),pC2->type())) ) {
+      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      switch ( CT ) {
       case G2LIB_LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
@@ -212,7 +217,8 @@ namespace G2lib {
 
     try {
 
-      switch ( promote_map.at(Ppair(pC1->type(),pC2->type())) ) {
+      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      switch ( CT ) {
       case G2LIB_LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
@@ -308,7 +314,8 @@ namespace G2lib {
 
     try {
 
-      switch ( promote_map.at(Ppair(pC1->type(),pC2->type())) ) {
+      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      switch ( CT ) {
       case G2LIB_LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
@@ -403,7 +410,8 @@ namespace G2lib {
 
     try {
 
-      switch ( promote_map.at(Ppair(pC1->type(),pC2->type())) ) {
+      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      switch ( CT ) {
       case G2LIB_LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {

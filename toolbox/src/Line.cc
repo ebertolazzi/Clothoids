@@ -65,13 +65,13 @@ namespace G2lib {
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  typedef struct {
+  using L_struct = struct {
     real_type p[2];
     real_type q[2];
     real_type c;
     real_type s;
     real_type L;
-  } L_struct;
+  };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Given three colinear points p, q, r, the function checks if
@@ -494,8 +494,13 @@ namespace G2lib {
       LineSegment const & LS = *static_cast<LineSegment const*>(pC);
       return this->collision( LS );
     } else {
-      LineSegment LS(pC);
-      return this->collision( LS );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_LINE ) {
+        LineSegment C(pC);
+        return this->collision( C );
+      } else {
+        return G2lib::collision( this, pC );
+      }
     }
   }
 
@@ -509,8 +514,13 @@ namespace G2lib {
       LineSegment const & LS = *static_cast<LineSegment const*>(pC);
       return this->collision_ISO( offs, LS, offs_C );
     } else {
-      LineSegment LS(pC);
-      return this->collision_ISO( offs, LS, offs_C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_LINE ) {
+        LineSegment C(pC);
+        return this->collision_ISO( offs, C, offs_C );
+      } else {
+        return G2lib::collision_ISO( this, offs, pC, offs_C );
+      }
     }
   }
 
@@ -545,8 +555,13 @@ namespace G2lib {
       LineSegment const & LS = *static_cast<LineSegment const *>(pC);
       this->intersect( LS, ilist );
     } else {
-      LineSegment LS(pC);
-      this->intersect( LS, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_LINE ) {
+        LineSegment C(pC);
+        this->intersect( C, ilist );
+      } else {
+        G2lib::intersect( this, pC, ilist );
+      }
     }
   }
 
@@ -561,8 +576,13 @@ namespace G2lib {
       LineSegment const & LS = *static_cast<LineSegment const *>(pC);
       this->intersect_ISO( offs, LS, offs_C, ilist );
     } else {
-      LineSegment LS(pC);
-      this->intersect_ISO( offs, LS, offs_C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_LINE ) {
+        LineSegment C(pC);
+        this->intersect_ISO( offs, C, offs_C, ilist );
+      } else {
+        G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );
+      }
     }
   }
 

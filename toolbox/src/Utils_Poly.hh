@@ -43,9 +43,9 @@ namespace Utils {
   template <typename Real>
   class Poly : public Eigen::Matrix<Real,Eigen::Dynamic,1> {
   public:
-    typedef int Integer;
-    typedef Eigen::Matrix<Real,Eigen::Dynamic,1> dvec_t;
-    typedef Poly<Real> Poly_t;
+    using Integer = int;
+    using dvec_t  = Eigen::Matrix<Real,Eigen::Dynamic,1>;
+    using Poly_t  = Poly<Real>;
 
   private:
     Integer m_order;
@@ -164,16 +164,16 @@ namespace Utils {
   template <typename Real>
   class Sturm {
   public:
-    typedef int        Integer;
-    typedef Poly<Real> Poly_t;
-    typedef Eigen::Matrix<Real,Eigen::Dynamic,1> dvec_t;
+    using Integer = int;
+    using Poly_t  = Poly<Real>;
+    using dvec_t  = Eigen::Matrix<Real,Eigen::Dynamic,1>;
 
-    typedef struct {
+    using Interval = struct {
       Real    a;
       Real    b;
       Integer va;
       Integer vb;
-    } Interval;
+    };
 
     class Algo748_fun : public Algo748_base_fun<Real> {
       Poly<Real> const * P = nullptr;
@@ -400,7 +400,7 @@ namespace Utils {
   inline
   std::basic_ostream<Char> &
   operator << ( std::basic_ostream<Char> & output, Sturm<Real> const & S ) {
-    typedef typename Poly<Real>::Integer Integer;
+    using Integer = typename Poly<Real>::Integer;
     fmt::print( output, "Sturm sequence\n" );
     for ( Integer i = 0; i < S.length(); ++i )
       fmt::print( output, "P_{}(x) = {}\n", i, S.get(i) );

@@ -51,9 +51,9 @@ namespace Utils {
   class AABBtree {
   public:
 
-    typedef int                   integer;
-    typedef set<integer>          AABB_SET;
-    typedef map<integer,AABB_SET> AABB_MAP;
+    using integer  = int;
+    using AABB_SET = set<integer>;
+    using AABB_MAP = map<integer,AABB_SET>;
 
   private:
 
@@ -82,9 +82,36 @@ namespace Utils {
     integer m_max_num_objects_per_node{16};
     Real    m_bbox_long_edge_ratio{Real(0.8)};
     Real    m_bbox_overlap_tolerance{Real(0.1)};
+    Real    m_bbox_min_size_tolerance{Real(0)};
 
     // statistic
     mutable integer m_num_check = 0;
+
+    using OVERLAP_FUN = bool (*) ( Real const bbox1[], Real const bbox2[], integer dim );
+
+    OVERLAP_FUN m_check_overlap{nullptr};
+    OVERLAP_FUN m_check_overlap_with_point{nullptr};
+
+    static bool overlap1( Real const bbox1[], Real const bbox2[], integer dim );
+    static bool overlap2( Real const bbox1[], Real const bbox2[], integer dim );
+    static bool overlap3( Real const bbox1[], Real const bbox2[], integer dim );
+    static bool overlap4( Real const bbox1[], Real const bbox2[], integer dim );
+    static bool overlap5( Real const bbox1[], Real const bbox2[], integer dim );
+    static bool overlap6( Real const bbox1[], Real const bbox2[], integer dim );
+    static bool overlap7( Real const bbox1[], Real const bbox2[], integer dim );
+    static bool overlap8( Real const bbox1[], Real const bbox2[], integer dim );
+
+    static bool pnt_overlap1( Real const pnt[], Real const bbox2[], integer dim );
+    static bool pnt_overlap2( Real const pnt[], Real const bbox2[], integer dim );
+    static bool pnt_overlap3( Real const pnt[], Real const bbox2[], integer dim );
+    static bool pnt_overlap4( Real const pnt[], Real const bbox2[], integer dim );
+    static bool pnt_overlap5( Real const pnt[], Real const bbox2[], integer dim );
+    static bool pnt_overlap6( Real const pnt[], Real const bbox2[], integer dim );
+    static bool pnt_overlap7( Real const pnt[], Real const bbox2[], integer dim );
+    static bool pnt_overlap8( Real const pnt[], Real const bbox2[], integer dim );
+
+    static bool check_overlap( Real const bb1[], Real const bb2[], integer dim );
+    static bool check_overlap_with_point( Real const bb1[], Real const pnt[], integer dim );
 
     Real max_bbox_distance( Real const bbox[], Real const pnt[] ) const;
 
@@ -97,6 +124,7 @@ namespace Utils {
     void set_max_num_objects_per_node( integer n );
     void set_bbox_long_edge_ratio( Real ratio );
     void set_bbox_overlap_tolerance( Real tol );
+    void set_bbox_min_size_tolerance( Real tol );
 
     void allocate( integer nbox, integer dim );
 

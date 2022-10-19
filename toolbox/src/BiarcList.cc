@@ -1037,8 +1037,8 @@ namespace G2lib {
     int_type nobj = int_type(m_aabb_tri.size());
     m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
     m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
+    real_type bbox_min[2], bbox_max[2];
     for ( Triangle2D const & T : m_aabb_tri ) {
-      real_type bbox_min[2], bbox_max[2];
       T.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
       m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
       ++ipos;
@@ -1068,8 +1068,13 @@ namespace G2lib {
       BiarcList const & C = *static_cast<BiarcList const *>(pC);
       return this->collision( C );
     } else {
-      BiarcList C(pC);
-      return this->collision( C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC_LIST ) {
+        BiarcList C(pC);
+        return this->collision( C );
+      } else {
+        return G2lib::collision( this, pC );
+      }
     }
   }
 
@@ -1085,8 +1090,13 @@ namespace G2lib {
       BiarcList const & C = *static_cast<BiarcList const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     } else {
-      BiarcList C(pC);
-      return this->collision_ISO( offs, C, offs_C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC_LIST ) {
+        BiarcList C(pC);
+        return this->collision_ISO( offs, C, offs_C );
+      } else {
+        return G2lib::collision_ISO( this, offs, pC, offs_C );
+      }
     }
   }
 
@@ -1212,8 +1222,13 @@ namespace G2lib {
       BiarcList const & C = *static_cast<BiarcList const *>(pC);
       this->intersect( C, ilist );
     } else {
-      BiarcList C(pC);
-      this->intersect( C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC_LIST ) {
+        BiarcList C(pC);
+        this->intersect( C, ilist );
+      } else {
+        G2lib::intersect( this, pC, ilist );
+      }
     }
   }
 
@@ -1228,8 +1243,13 @@ namespace G2lib {
       BiarcList const & C = *static_cast<BiarcList const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
-      BiarcList C(pC);
-      this->intersect_ISO( offs, C, offs_C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC_LIST ) {
+        BiarcList C(pC);
+        this->intersect_ISO( offs, C, offs_C, ilist );
+      } else {
+        G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );
+      }
     }
   }
 
@@ -1257,7 +1277,7 @@ namespace G2lib {
     int_type icurve = 0;
     DST = Utils::Inf<real_type>();
 
-    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+    if ( m_aabb_tree.num_tree_nodes() > G2LIB_AABB_MIN_NODES && intersect_with_AABBtree ) {
 
       AABB_SET candidateList;
       real_type xy[2] = { qx, qy };

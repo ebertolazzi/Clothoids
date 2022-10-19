@@ -39,7 +39,7 @@ namespace Utils {
 
   template <typename Real>
   class Point2D : public Eigen::Matrix<Real,2,1> {
-    typedef Eigen::Matrix<Real,2,1> P2D;
+    using P2D = Eigen::Matrix<Real,2,1>;
   public:
     Point2D() = default;
     //~Point2D() = default;

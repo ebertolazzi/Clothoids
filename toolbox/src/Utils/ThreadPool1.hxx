@@ -43,7 +43,7 @@ namespace Utils {
 
     class Worker {
 
-      typedef double real_type;
+      using real_type = double;
 
       bool                  m_active;
       UTILS_SEMAPHORE       m_running;

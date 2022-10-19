@@ -48,7 +48,7 @@ namespace Utils {
     //!
     //! Type quaternion of coordinate.
     //!
-    typedef T real_type;
+    using real_type = T;
 
   private:
     real_type m_Q[4];

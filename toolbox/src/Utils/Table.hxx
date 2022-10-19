@@ -52,7 +52,7 @@ namespace Utils {
 
     class Table;
 
-    typedef int integer;
+    using integer = int;
 
     enum Alignment { LEFT, RIGHT, CENTER };
 
@@ -190,8 +190,8 @@ namespace Utils {
 
     class Row {
     protected:
-      typedef std::vector<Cell>        vecCell;
-      typedef std::vector<std::string> vecstr;
+      using vecCell = std::vector<Cell>;
+      using vecstr  = std::vector<std::string>;
 
       Table * m_Table = nullptr;
       vecCell m_Cells;
@@ -228,11 +228,11 @@ namespace Utils {
 
     class Table {
     public:
-      typedef std::vector<Row>    vecRow;
-      typedef std::vector<Cell>   vecCell;
-      typedef std::vector<string> vecstr;
-      typedef std::vector<vecstr> vecvecstr;
-      typedef int integer;
+      using vecRow    = std::vector<Row>;
+      using vecCell   = std::vector<Cell>;
+      using vecstr    = std::vector<string>;
+      using vecvecstr = std::vector<vecstr>;
+      using integer   = int;
 
     private:
       Style       m_Style;

@@ -2227,7 +2227,7 @@ namespace G2lib {
   //!
   class ClothoidSplineG2 {
   public:
-    typedef enum { P1 = 1, P2, P3, P4, P5, P6, P7, P8, P9 } TargetType;
+    using TargetType = enum { P1 = 1, P2, P3, P4, P5, P6, P7, P8, P9 };
 
   private:
 

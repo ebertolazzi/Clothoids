@@ -61,7 +61,7 @@ namespace Utils {
   template <typename T>
   class Malloc {
   public:
-    typedef T valueType;
+    using valueType = T;
 
   private:
 
@@ -198,7 +198,7 @@ namespace Utils {
   template <typename T, std::size_t mem_size>
   class MallocFixed {
   public:
-    typedef T valueType;
+    using valueType = T;
 
   private:
 

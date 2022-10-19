@@ -64,13 +64,25 @@ namespace G2lib {
   using std::map;
   using std::set;
 
-  typedef std::basic_istream<char>             istream_type;
-  typedef std::basic_ostream<char>             ostream_type;
-  typedef double                               real_type;
-  typedef int                                  int_type;
-  typedef Utils::AABBtree<real_type>           AABB_TREE;
-  typedef Utils::AABBtree<real_type>::AABB_SET AABB_SET;
-  typedef Utils::AABBtree<real_type>::AABB_MAP AABB_MAP;
+  using istream_type = std::basic_istream<char>;
+  using ostream_type = std::basic_ostream<char>;
+  using real_type    = double;
+  using int_type     = int;
+  using AABB_TREE    = Utils::AABBtree<real_type>;
+  using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
+  using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
+
+  using CurveType = enum {
+    G2LIB_LINE=0,
+    G2LIB_POLYLINE,
+    G2LIB_CIRCLE,
+    G2LIB_BIARC,
+    G2LIB_BIARC_LIST,
+    G2LIB_CLOTHOID,
+    G2LIB_CLOTHOID_LIST
+  };
+
+  extern CurveType curve_promote( CurveType, CurveType );
 
   class LineSegment;
   class CircleArc;
@@ -79,7 +91,6 @@ namespace G2lib {
   class PolyLine;
   class BiarcList;
   class ClothoidList;
-  static int_type const G2LIB_AABB_CUT = 8;
 }
 
 #include "Clothoids/G2lib.hxx"
@@ -95,6 +106,32 @@ namespace G2lib {
 #include "Clothoids/BiarcList.hxx"
 #include "Clothoids/ClothoidList.hxx"
 #include "Clothoids/ClothoidAsyPlot.hxx"
+
+namespace G2lib {
+
+  using std::string;
+  using std::vector;
+  using std::map;
+  using std::set;
+
+  using istream_type = std::basic_istream<char>;
+  using ostream_type = std::basic_ostream<char>;
+  using real_type    = double;
+  using int_type     = int;
+  using AABB_TREE    = Utils::AABBtree<real_type>;
+  using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
+  using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
+
+  extern CurveType curve_promote( CurveType, CurveType );
+
+  class LineSegment;
+  class CircleArc;
+  class Biarc;
+  class ClothoidCurve;
+  class PolyLine;
+  class BiarcList;
+  class ClothoidList;
+}
 
 #endif
 

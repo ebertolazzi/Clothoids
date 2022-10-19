@@ -44,7 +44,7 @@ namespace threadpool {
 
     void
     work(bool /*ignored*/) {
-      typedef iterval_traits<Iterator> IT;
+      using IT = iterval_traits<Iterator>;
       Last const & l(m_last);
       for (;;) {
         std::unique_lock<std::mutex> lock(m_mutex);
@@ -93,8 +93,8 @@ namespace threadpool {
    */
   template<class Iterator, class Last, class Function>
   class ForEach_Queue<Iterator, Last, Function, true> : public ForEach_Queue<Iterator, Last, Function, false> {
-    typedef ForEach_Queue<Iterator, Last, Function, false> Base;
-    typedef typename std::iterator_traits<Iterator>::difference_type difference_type;
+    using Base            = ForEach_Queue<Iterator, Last, Function, false>;
+    using difference_type = typename std::iterator_traits<Iterator>::difference_type;
     unsigned const  m_maxpart;
     difference_type m_remaining;
   public:
@@ -197,7 +197,8 @@ namespace threadpool {
     std::mutex       m_mutex;
     bool             m_do_shutdown = false;
 
-    typedef unsigned long long int counter_type;
+    using counter_type = unsigned long long int;
+
     counter_type            m_input_counter           = 1; // Counter of objects got from the queue
     counter_type            m_output_counter          = 1; // Counter of objects written
     Results *               m_previous_results        = nullptr;
@@ -223,7 +224,7 @@ namespace threadpool {
 
     void
     work(bool return_if_idle) {
-      typedef iterval_traits<InputIterator> IT;
+      using IT = iterval_traits<InputIterator>;
 
       std::unique_ptr<Results> results;
       Last const & last = m_last; // Does never change.
@@ -333,7 +334,7 @@ namespace threadpool {
    */
   template<class InputIterator, class Last,class OutputIterator, class Function>
   class Transform_Queue<InputIterator, Last, OutputIterator, Function, true> {
-    typedef typename std::iterator_traits<InputIterator>::difference_type difference_type;
+    using difference_type = typename std::iterator_traits<InputIterator>::difference_type;
     InputIterator   & m_current;
     Last const      & m_last;
     OutputIterator  & m_result;

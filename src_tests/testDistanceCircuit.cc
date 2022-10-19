@@ -22,8 +22,8 @@ main() {
   vector<real_type> X;
   vector<real_type> Y;
 
-  string fname = "circuit-fiorano_sim_kerbs_rebuilt.txt";
-
+  //string fname = "circuit-fiorano_sim_kerbs_rebuilt.txt";
+  string fname = "circuit-Fiorano_GoogleEarth_edges_no_kerbs_rebuilt.txt";
   ifstream file( fname.c_str() );
 
   UTILS_ASSERT( file.good(), "Cant find file: {}\n", fname );
@@ -67,6 +67,7 @@ main() {
 
   fmt::print( "build = {}\n", ( ok ? "OK" : "NO OK" ) );
 
+  #if 0
   real_type qx1 = 2.960934079000000e+02;
   real_type qy1 = 16.391055370000000;
   //real_type qx2 = 2.965952244000000e+02;
@@ -110,6 +111,49 @@ main() {
     "icurve = {}\n",
     idx, x, y, s, t, dst, icurve
   );
+
+  #endif
+
+  // Nuovo test - - - - - - - - -
+  real_type qx1 = 140.0; //100.0; //140.0;
+  real_type qy1 = 10.0;  //-100; // 10.0;
+
+  real_type x, y, s, t, dst;
+  int_type  icurve;
+
+  int_type idx = C.closest_point_ISO(qx1, qy1, x, y, s, t, dst);
+
+  fmt::print(
+    "\n\n\nclosest_point_ISO for:({},{})\n"
+    "idx    = {}\n"
+    "x      = {}\n"
+    "y      = {}\n"
+    "s      = {}\n"
+    "t      = {}\n"
+    "dst    = {}\n",
+    qx1,qy1,idx, x, y, s, t, dst, icurve
+  );
+
+  qx1 = 130.0;//80; //135;
+  qy1 = -40;//-120.0;//30;
+  real_type s_begin = s-10.0;
+  real_type s_end   = s+100.0;
+  idx = C.closest_point_in_s_range_ISO(
+    qx1, qy1, s_begin, s_end, x, y, s, t, dst, icurve
+  );
+
+  fmt::print(
+    "closest_point_in_s_range_ISO for:({},{})\n"
+    "idx    = {}\n"
+    "x      = {}\n"
+    "y      = {}\n"
+    "s      = {}\n"
+    "t      = {}\n"
+    "dst    = {}\n"
+    "icurve = {}\n",
+    qx1, qy1, idx, x, y, s, t, dst, icurve
+  );
+
 
   fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 

@@ -33,6 +33,16 @@
 
 namespace G2lib {
 
+  #ifdef G2LIB_DEBUG
+    #define G2LIB_DEBUG_TICTOC Utils::TicToc tictoc
+    #define G2LIB_DEBUG_TIC    tictoc.tic()
+    #define G2LIB_DEBUG_TOC    tictoc.toc()
+  #else
+    #define G2LIB_DEBUG_TICTOC
+    #define G2LIB_DEBUG_TIC
+    #define G2LIB_DEBUG_TOC
+  #endif
+
   using std::lower_bound;
   using std::vector;
   using std::swap;
@@ -565,8 +575,7 @@ namespace G2lib {
   \*/
 
   real_type
-  ClothoidList::length() const
-  {
+  ClothoidList::length() const {
     if ( m_clotoidList.empty() ) return real_type(0);
     return m_s0.back() - m_s0.front();
   }
@@ -1316,8 +1325,8 @@ namespace G2lib {
     int_type nobj = int_type(m_aabb_tri.size());
     m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
     m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
+    real_type bbox_min[2], bbox_max[2];
     for ( Triangle2D const & T : m_aabb_tri ) {
-      real_type bbox_min[2], bbox_max[2];
       T.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
       m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
       ++ipos;
@@ -1337,51 +1346,6 @@ namespace G2lib {
    |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
    |  | | | | | ||  __/ |  \__ \  __/ (__| |_
    |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  bool
-  ClothoidList::collision_ISO(
-    real_type            offs,
-    ClothoidList const & CL,
-    real_type            offs_CL
-  ) const {
-    this->build_AABBtree_ISO( offs );
-    CL.build_AABBtree_ISO( offs_CL );
-    AABB_MAP intersectList;
-    m_aabb_tree.intersect_and_refine( CL.m_aabb_tree, intersectList );
-    for ( auto const & I : intersectList ) {
-      int_type i = I.first;
-      UTILS_ASSERT_DEBUG(
-        i >= 0 && i < int_type(m_aabb_tri.size()),
-        "ClothoidList::collision_ISO( offs={}, C, offs_CL={} ) i={} out of range [0,{})\n",
-        offs, offs_CL, i, m_aabb_tri.size()
-      );
-      Triangle2D    const & T1 = m_aabb_tri[i];
-      ClothoidCurve const & C1 = m_clotoidList[T1.Icurve()];
-      for ( int_type j : I.second ) {
-        UTILS_ASSERT_DEBUG(
-          j >= 0 && j < int_type(CL.m_aabb_tri.size()),
-          "ClothoidList::collision_ISO( offs={}, CL, offs_CL={} ) j={} out of range [0,{})\n",
-          offs, offs_CL, j, CL.m_aabb_tri.size()
-        );
-        Triangle2D    const & T2 = CL.m_aabb_tri[j];
-        ClothoidCurve const & C2 = CL.m_clotoidList[T2.Icurve()];
-        bool collide = C1.collision_ISO( offs, C2, offs_CL );
-        if ( collide ) return true;
-      }
-    }
-    return false;
-  }
-
-  /*\
-   |   _       _                          _
-   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
-   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
-   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
-   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
-   |
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1416,6 +1380,80 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  bool
+  ClothoidList::collision_ISO(
+    real_type            offs,
+    ClothoidList const & CL,
+    real_type            offs_CL
+  ) const {
+
+    G2LIB_DEBUG_TICTOC;
+
+    G2LIB_DEBUG_TIC;
+    this->build_AABBtree_ISO( offs );
+    CL.build_AABBtree_ISO( offs_CL );
+    G2LIB_DEBUG_TOC;
+
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidList::collision_ISO( offs={}, CL, offs_L={} ) build_AABBtree_ISO elapsed {}ms\n",
+      offs, offs_CL, tictoc.elapsed_ms()
+    );
+
+    G2LIB_DEBUG_TIC;
+    AABB_MAP intersectList;
+    m_aabb_tree.intersect_and_refine( CL.m_aabb_tree, intersectList );
+    G2LIB_DEBUG_TOC;
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidList::collision_ISO intersect_and_refine elapsed {}ms candidated #{}\n",
+      tictoc.elapsed_ms(), intersectList.size()
+    );
+
+    G2LIB_DEBUG_TIC;
+    bool collide = false;
+    for ( auto const & I : intersectList ) {
+      int_type i = I.first;
+      UTILS_ASSERT_DEBUG(
+        i >= 0 && i < int_type(m_aabb_tri.size()),
+        "ClothoidList::collision_ISO( offs={}, C, offs_CL={} ) i={} out of range [0,{})\n",
+        offs, offs_CL, i, m_aabb_tri.size()
+      );
+      Triangle2D    const & T1 = m_aabb_tri[i];
+      ClothoidCurve const & C1 = m_clotoidList[T1.Icurve()];
+      for ( int_type j : I.second ) {
+        UTILS_ASSERT_DEBUG(
+          j >= 0 && j < int_type(CL.m_aabb_tri.size()),
+          "ClothoidList::collision_ISO( offs={}, CL, offs_CL={} ) j={} out of range [0,{})\n",
+          offs, offs_CL, j, CL.m_aabb_tri.size()
+        );
+        Triangle2D    const & T2 = CL.m_aabb_tri[j];
+        ClothoidCurve const & C2 = CL.m_clotoidList[T2.Icurve()];
+        collide = C1.collision_ISO( offs, C2, offs_CL );
+        if ( collide ) break;
+      }
+      if ( collide ) break;
+    }
+
+    G2LIB_DEBUG_TOC;
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidList collision_ISO: collisions elapsed {}ms\n",
+      tictoc.elapsed_ms()
+    );
+
+    return false;
+  }
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+   |
+  \*/
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::intersect_ISO(
     real_type            offs,
@@ -1423,11 +1461,32 @@ namespace G2lib {
     real_type            offs_CL,
     IntersectList      & ilist
   ) const {
+
+    G2LIB_DEBUG_TICTOC;
+
     if ( intersect_with_AABBtree ) {
+
+      G2LIB_DEBUG_TIC;
       this->build_AABBtree_ISO( offs );
       CL.build_AABBtree_ISO( offs_CL );
+      G2LIB_DEBUG_TOC;
+
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::intersect_ISO( offs={}, CL, offs_CL={}, ilist ) build_AABBtree_ISO elapsed {}ms\n",
+        offs, offs_CL, tictoc.elapsed_ms()
+      );
+
+      G2LIB_DEBUG_TIC;
       AABB_MAP intersectList;
       m_aabb_tree.intersect_and_refine( CL.m_aabb_tree, intersectList );
+      G2LIB_DEBUG_TOC;
+
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::intersect_ISO intersect_and_refine elapsed {}ms candidated #{}\n",
+        tictoc.elapsed_ms(), intersectList.size()
+      );
+
+      G2LIB_DEBUG_TIC;
       for ( auto const & I : intersectList ) {
         int_type i = I.first;
         UTILS_ASSERT_DEBUG(
@@ -1458,10 +1517,18 @@ namespace G2lib {
         }
       }
 
+      G2LIB_DEBUG_TOC;
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::intersect_ISO: intersect elapsed {}ms\n",
+        tictoc.elapsed_ms()
+      );
+
     } else {
 
+      G2LIB_DEBUG_TIC;
       bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
       CL.bbTriangles_ISO( offs_CL, CL.m_aabb_tri, Utils::m_pi/18, 1e100 );
+
       for ( Triangle2D const & T1 : m_aabb_tri ) {
         for ( Triangle2D const & T2 : CL.m_aabb_tri ) {
 
@@ -1478,6 +1545,12 @@ namespace G2lib {
           }
         }
       }
+
+      G2LIB_DEBUG_TOC;
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidCurve::intersect_ISO: collisions elapsed {}ms noAABB\n",
+        tictoc.elapsed_ms()
+      );
 
     }
   }
@@ -1530,28 +1603,47 @@ namespace G2lib {
     real_type & s,
     real_type & DST
   ) const {
+    G2LIB_DEBUG_TICTOC;
 
+    G2LIB_DEBUG_TIC;
     this->build_AABBtree_ISO( offs );
+    G2LIB_DEBUG_TOC;
+
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidList::closest_point_internal build_AABBtree_ISO elapsed {}ms\n",
+      tictoc.elapsed_ms()
+    );
 
     int_type icurve = 0;
     DST = Utils::Inf<real_type>();
 
-    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+    if ( m_aabb_tree.num_tree_nodes() > G2LIB_AABB_MIN_NODES && intersect_with_AABBtree ) {
 
+      G2LIB_DEBUG_TIC;
       AABB_SET candidateList;
       real_type xy[2] = { qx, qy };
       m_aabb_tree.min_distance_candidates( xy, candidateList );
+      G2LIB_DEBUG_TOC;
+
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closest_point_internal min_distance_candidates elapsed {}ms candidated #{}\n",
+        tictoc.elapsed_ms(), candidateList.size()
+      );
+
       UTILS_ASSERT0(
          candidateList.size() > 0,
-        "BiarcList::closest_point_internal no candidate\n"
+        "ClothoidList::closest_point_internal no candidate\n"
       );
+
+      G2LIB_DEBUG_TIC;
       for ( int_type ipos : candidateList ) {
         Triangle2D const & T = m_aabb_tri[ipos];
         real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
           // refine distance
-          real_type xx, yy, ss, tt;
-          m_clotoidList[T.Icurve()].closest_point_ISO( qx, qy, offs, xx, yy, ss, tt, dst );
+          real_type xx, yy, ss;
+          ClothoidCurve const & C = m_clotoidList[T.Icurve()];
+          C.closest_point_internal( T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst );
           if ( dst < DST ) {
             DST    = dst;
             s      = ss + m_s0[T.Icurve()];
@@ -1561,9 +1653,15 @@ namespace G2lib {
           }
         }
       }
+      G2LIB_DEBUG_TOC;
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closest_point_internal minimize elapsed {}ms\n",
+        tictoc.elapsed_ms()
+      );
 
     } else {
 
+      G2LIB_DEBUG_TIC;
       for ( Triangle2D const & T : m_aabb_tri ) {
         real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
@@ -1579,6 +1677,12 @@ namespace G2lib {
           }
         }
       }
+      G2LIB_DEBUG_TOC;
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closest_point_internal minimize elapsed {}ms noAABB\n",
+        tictoc.elapsed_ms()
+      );
+
     }
     return icurve;
   }
@@ -1640,20 +1744,39 @@ namespace G2lib {
   int_type
   ClothoidList::closest_segment( real_type qx, real_type qy ) const {
 
+    G2LIB_DEBUG_TICTOC;
+
+    G2LIB_DEBUG_TIC;
     this->build_AABBtree_ISO( 0 );
+    G2LIB_DEBUG_TOC;
+
+    G2LIB_DEBUG_MESSAGE(
+      "ClothoidList::closest_segment build_AABBtree_ISO elapsed {}ms\n",
+      tictoc.elapsed_ms()
+    );
 
     int_type  icurve = 0;
     real_type DST    = Utils::Inf<real_type>();
 
-    if ( m_aabb_tree.num_tree_nodes() > 3 && intersect_with_AABBtree ) {
+    if ( m_aabb_tree.num_tree_nodes() > G2LIB_AABB_MIN_NODES && intersect_with_AABBtree ) {
 
+      G2LIB_DEBUG_TIC;
       AABB_SET candidateList;
       real_type xy[2] = { qx, qy };
       m_aabb_tree.min_distance_candidates( xy, candidateList );
+      G2LIB_DEBUG_TOC;
+
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closest_segment min_distance_candidates elapsed {}ms candidated #{}\n",
+        tictoc.elapsed_ms(), candidateList.size()
+      );
+
       UTILS_ASSERT0(
          candidateList.size() > 0,
         "ClothoidList::closest_segment no candidate\n"
       );
+
+      G2LIB_DEBUG_TIC;
       for ( int_type ipos : candidateList ) {
         Triangle2D const & T = m_aabb_tri[ipos];
         real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
@@ -1667,9 +1790,14 @@ namespace G2lib {
           }
         }
       }
-
+      G2LIB_DEBUG_TOC;
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closest_segment elapsed {}ms\n",
+        tictoc.elapsed_ms()
+      );
     } else {
 
+      G2LIB_DEBUG_TIC;
       for ( Triangle2D const & T : m_aabb_tri ) {
         real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
@@ -1682,6 +1810,11 @@ namespace G2lib {
           }
         }
       }
+      G2LIB_DEBUG_TOC;
+      G2LIB_DEBUG_MESSAGE(
+        "ClothoidList::closest_segment elapsed {}ms noAABB\n",
+        tictoc.elapsed_ms()
+      );
     }
     return icurve;
   }

@@ -31,12 +31,12 @@ namespace threadpool {
      */
     template<class Iterator, class Last, class Function>
     class ForEach_ThreadPool {
-      typedef ForEach_Queue<
+      using Queue = ForEach_Queue<
         Iterator,
         Last,
         Function,
         is_forward_iterator<Iterator>::value
-      > Queue;
+      >;
       Queue                    m_queue;
       GenericThreadPool<Queue> m_pool;
 
@@ -237,8 +237,8 @@ namespace threadpool {
         `std::size_t` not representable in an `int`. This loop
         would run forever. Just extend type `Iterator`.
        */
-      typedef typename std::common_type<Iterator, Last>::type common_type;
-      typedef IntegralIterator<common_type> CommonIterator;
+      using common_type    = typename std::common_type<Iterator, Last>::type;
+      using CommonIterator = IntegralIterator<common_type>;
 
       return for_each<thread_count>(
         CommonIterator(std::forward<Iterator>(first)),

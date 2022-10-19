@@ -39,17 +39,19 @@ namespace G2lib {
   using std::asin;
   using std::acos;
 
-  real_type const m_1_sqrt_pi  = 0.564189583547756286948079451561; // 1/sqrt(pi)
+  real_type const m_1_sqrt_pi{0.564189583547756286948079451561}; // 1/sqrt(pi)
 
-  real_type const machepsi     = Utils::machine_eps<real_type>();
-  real_type const machepsi10   = 10*machepsi;
-  real_type const machepsi100  = 100*machepsi;
-  real_type const machepsi1000 = 1000*machepsi;
-  real_type const sqrtMachepsi = sqrt(machepsi);
-  bool            intersect_with_AABBtree = true;
+  real_type const machepsi{Utils::machine_eps<real_type>()};
+  real_type const machepsi10{10*machepsi};
+  real_type const machepsi100{100*machepsi};
+  real_type const machepsi1000{1000*machepsi};
+  real_type const sqrtMachepsi{sqrt(machepsi)};
+  bool            intersect_with_AABBtree{true};
+  int_type const  G2LIB_AABB_CUT{8};
+  int_type const  G2LIB_AABB_MIN_NODES{3};
 
   #ifdef G2LIB_COMPATIBILITY_MODE
-  bool use_ISO = true;
+  bool use_ISO{true};
   #endif
 
   void

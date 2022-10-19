@@ -37,7 +37,7 @@ namespace Utils {
 
   //! Fake thread pool!
   class ThreadPool0 : public ThreadPoolBase {
-    typedef std::function<void()> Func;
+    using Func = std::function<void()>;
 
   public:
 

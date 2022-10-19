@@ -740,8 +740,13 @@ namespace G2lib {
       Biarc const & C = *static_cast<Biarc const *>(pC);
       return this->collision( C );
     } else {
-      Biarc C(pC);
-      return this->collision( C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC ) {
+        Biarc C(pC);
+        return this->collision( C );
+      } else {
+        return G2lib::collision( this, pC );
+      }
     }
   }
 
@@ -757,8 +762,13 @@ namespace G2lib {
       Biarc const & C = *static_cast<Biarc const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     } else {
-      Biarc C(pC);
-      return this->collision_ISO( offs, C, offs_C );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC ) {
+        Biarc C(pC);
+        return this->collision_ISO( offs, C, offs_C );
+      } else {
+        return G2lib::collision_ISO( this, offs, pC, offs_C );
+      }
     }
   }
 
@@ -857,8 +867,13 @@ namespace G2lib {
       Biarc const & C = *static_cast<Biarc const *>(pC);
       this->intersect( C, ilist );
     } else {
-      Biarc C(pC);
-      this->intersect( C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC ) {
+        Biarc C(pC);
+        this->intersect( C, ilist );
+      } else {
+        G2lib::intersect( this, pC, ilist );
+      }
     }
   }
 
@@ -873,8 +888,13 @@ namespace G2lib {
       Biarc const & C = *static_cast<Biarc const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
-      Biarc C(pC);
-      this->intersect_ISO( offs, C, offs_C, ilist );
+      CurveType CT = curve_promote( this->type(), pC->type() );
+      if ( CT == G2LIB_BIARC ) {
+        Biarc C(pC);
+        this->intersect_ISO( offs, C, offs_C, ilist );
+      } else {
+        G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );
+      }
     }
   }
 

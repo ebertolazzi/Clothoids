@@ -50,7 +50,7 @@ namespace threadpool {
    */
   template <class I>
   class IntegralIterator : public std::iterator<std::random_access_iterator_tag, I, I, I, I> {
-    typedef std::iterator<std::random_access_iterator_tag, I, I, I, I> Base;
+    using Base = std::iterator<std::random_access_iterator_tag, I, I, I, I>;
     I m_i;
   public:
     IntegralIterator() : m_i(0) { }
@@ -138,7 +138,7 @@ namespace threadpool {
   template <class X>
   struct iterval_traits<X,typename std::enable_if<is_forward_iterator<X>::value>::type>
   {
-    typedef X type;
+    using type = X;
     static X const & copy( X const & r ) { return r; }
     static auto pass( X && v ) -> decltype(*std::move(v)) { return *std::move(v); }
     //static const char* name() { return "forward"; }
@@ -157,7 +157,7 @@ namespace threadpool {
   template <class X>
   struct iterval_traits<X,typename std::enable_if<!is_forward_iterator<X>::value && is_input_iterator<X>::value>::type>
   {
-    typedef typename std::decay<decltype(*std::declval<X>())>::type type;
+    using type = typename std::decay<decltype(*std::declval<X>())>::type;
     static auto copy( X const & r ) -> decltype(*r) { return *r; } // This may move if *r is an rvalue reference
     static type&& pass( type && v ) { return std::move(v); }
     //static const char* name() { return "input"; }

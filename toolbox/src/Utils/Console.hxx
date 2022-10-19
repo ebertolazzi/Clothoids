@@ -23,8 +23,8 @@
 
 namespace Utils {
 
-  typedef std::basic_istream<char> istream_type;
-  typedef std::basic_ostream<char> ostream_type;
+  using istream_type = std::basic_istream<char>;
+  using ostream_type = std::basic_ostream<char>;
 
   std::string basename( char const * filename );
 

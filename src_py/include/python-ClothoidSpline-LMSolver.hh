@@ -22,7 +22,7 @@ namespace G2lib {
     using G2lib::ClothoidSplineG2;
     using G2lib::int_type;
     using G2lib::real_type;
-    typedef Eigen::SparseFunctor<real_type, int_type> SparseFunctor;
+    using SparseFunctor = Eigen::SparseFunctor<real_type, int_type>;
 
     /* Levemberg Marquardt Solver */
     class LMSolver : public Solver {

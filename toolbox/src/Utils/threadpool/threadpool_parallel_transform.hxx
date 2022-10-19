@@ -26,14 +26,14 @@ namespace threadpool {
      */
     template<class InputIterator, class Last,class OutputIterator, class Function>
     class Transform_ThreadPool {
-      typedef Transform_Queue<
+      using Queue = Transform_Queue<
         InputIterator,
         Last,
         OutputIterator,
         Function,
         is_forward_iterator<InputIterator>::value &&
         is_forward_iterator<OutputIterator>::value
-      > Queue;
+      >;
       Queue                    m_queue;
       GenericThreadPool<Queue> m_pool;
 
@@ -248,8 +248,8 @@ namespace threadpool {
         type `std::size_t` not representable in an `int`. This
         loop would run forever. Just extend type `InputIterator`.
        */
-      typedef typename std::common_type<InputIterator, Last>::type common_type;
-      typedef IntegralIterator<common_type> CommonIterator;
+      using common_type    = typename std::common_type<InputIterator, Last>::type;
+      using CommonIterator = IntegralIterator<common_type>;
 
       return transform<thread_count>(
         CommonIterator(std::forward<InputIterator>(first)),

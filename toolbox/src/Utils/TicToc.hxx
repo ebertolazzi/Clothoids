@@ -38,7 +38,7 @@ namespace Utils {
   //!
   class TicToc {
 
-    typedef double real_type;
+    using real_type = double;
     int64_t   m_frequency;   // ticks per second
     int64_t   m_t1, m_t2;    // ticks
     real_type m_elapsed_time;
@@ -95,11 +95,11 @@ namespace Utils {
   //!
   class TicToc {
 
-    typedef double real_type;
+    using real_type = double;
     #ifdef TIC_TOC_USE_HRC
-    typedef std::chrono::high_resolution_clock clock;
+    using clock = std::chrono::high_resolution_clock;
     #else
-    typedef std::chrono::steady_clock clock;
+    using clock = std::chrono::steady_clock;
     #endif
 
     using elapsed_resolution = std::chrono::microseconds;

@@ -500,10 +500,10 @@ namespace Utils {
   template <typename DATA>
   class BinarySearch {
   private:
-    typedef std::pair<std::thread::id,DATA*> DATA_TYPE;
-    mutable std::vector<DATA_TYPE>           m_data;
-    mutable UTILS_SPINLOCK                   m_spin_write;
-    mutable WaitWorker                       m_worker_read;
+    using DATA_TYPE = std::pair<std::thread::id,DATA*>;
+    mutable std::vector<DATA_TYPE> m_data;
+    mutable UTILS_SPINLOCK         m_spin_write;
+    mutable WaitWorker             m_worker_read;
 
   public:
 

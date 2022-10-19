@@ -33,7 +33,7 @@ namespace Utils {
 
   class ThreadPool5 : public ThreadPoolBase {
 
-    typedef double real_type;
+    using real_type = double;
 
     /*\
      |  __        __         _

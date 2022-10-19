@@ -63,14 +63,18 @@ fmt2 = {'Color','red','LineWidth',3};
 S.plot(1000,fmt1,fmt2);
 qx = 200;
 qy = -100;
-s_begin = 1000;
-s_end   = 10000;
-[ icurve, x, y, s, t, iflag, dst ] = S.closest_point_in_s_range( qx, qy, s_begin, s_end );
-plot( [qx,x],[qy,y]);
-fprintf('s=%g, t=%g, dst=%g iflag=%d\n',s,t,dst,iflag);
 
-[ xx, yy ] = S.eval( s_begin:0.1:s_end );
-hold on;
-plot(xx,yy,'Linewidth',4,'Color','black');
+%Z = S.distance( qx, qy )
+Z = S.closest_point( qx, qy )
+
+%s_begin = 1000;
+%s_end   = 10000;
+%[ icurve, x, y, s, t, iflag, dst ] = S.closest_point_in_s_range( qx, qy, s_begin, s_end );
+%plot( [qx,x],[qy,y]);
+%fprintf('s=%g, t=%g, dst=%g iflag=%d\n',s,t,dst,iflag);
+
+%[ xx, yy ] = S.eval( s_begin:0.1:s_end );
+%hold on;
+%plot(xx,yy,'Linewidth',4,'Color','black');
 
 axis equal

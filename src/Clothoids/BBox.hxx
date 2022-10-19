@@ -46,18 +46,15 @@ namespace G2lib {
   //!
   class BBox {
   public:
-    typedef shared_ptr<BBox const> PtrBBox;
-    typedef pair<PtrBBox,PtrBBox>  PairPtrBBox;
-    typedef vector<PtrBBox>        VecPtrBBox;
-    typedef vector<PairPtrBBox>    VecPairPtrBBox;
+    using PtrBBox        = shared_ptr<BBox const>;
+    using PairPtrBBox    = pair<PtrBBox,PtrBBox>;
+    using VecPtrBBox     = vector<PtrBBox>;
+    using VecPairPtrBBox = vector<PairPtrBBox>;
 
   private:
-    real_type m_xmin; //!< left bottom
-    real_type m_ymin; //!< left bottom
-    real_type m_xmax; //!< right top
-    real_type m_ymax; //!< right top
-    int_type  m_id;   //!< id of the bbox
-    int_type  m_ipos; //!< rank of the bounding box used in external algorithms
+    real_type m_bbox[4]{0,0,0,0}; //!< [ xmin ymin xmax ymax ]
+    int_type  m_id{0};            //!< id of the bbox
+    int_type  m_ipos{0};          //!< rank of the bounding box used in external algorithms
 
     BBox();
 
@@ -84,10 +81,46 @@ namespace G2lib {
       int_type  id,
       int_type  ipos
     ) {
-      m_xmin = xmin;
-      m_ymin = ymin;
-      m_xmax = xmax;
-      m_ymax = ymax;
+      m_bbox[0] = xmin;
+      m_bbox[1] = ymin;
+      m_bbox[2] = xmax;
+      m_bbox[3] = ymax;
+      m_id      = id;
+      m_ipos    = ipos;
+    }
+
+    //!
+    //! Construct a bounding box with additional information
+    //!
+    //! \param[in] bbox bbox [pmin, pmax]
+    //! \param[in] id   identifier of the box
+    //! \param[in] ipos ranking position of the box
+    //!
+    BBox(
+      real_type const bbox[4],
+      int_type        id,
+      int_type        ipos
+    ) {
+      std::copy_n( bbox, 4, m_bbox );
+      m_id   = id;
+      m_ipos = ipos;
+    }
+
+    //!
+    //! Construct a bounding box with additional information
+    //!
+    //! \param[in] bbox bbox [pmin, pmax]
+    //! \param[in] id   identifier of the box
+    //! \param[in] ipos ranking position of the box
+    //!
+    BBox(
+      real_type const bbox_min[2],
+      real_type const bbox_max[2],
+      int_type        id,
+      int_type        ipos
+    ) {
+      std::copy_n( bbox_min, 2, m_bbox   );
+      std::copy_n( bbox_max, 2, m_bbox+2 );
       m_id   = id;
       m_ipos = ipos;
     }
@@ -111,10 +144,19 @@ namespace G2lib {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    real_type Xmin() const { return m_xmin; } //!< x-minimum coordinate of the bbox
-    real_type Ymin() const { return m_ymin; } //!< y-minimum coordinate of the bbox
-    real_type Xmax() const { return m_xmax; } //!< x-maximum coordinate of the bbox
-    real_type Ymax() const { return m_ymax; } //!< y-maximum coordinate of the bbox
+    real_type const * bbox()     { return m_bbox; }
+    real_type const * bbox_min() { return m_bbox; }
+    real_type const * bbox_max() { return m_bbox+2; }
+
+    real_type & x_min() { return m_bbox[0]; } //!< x-minimum coordinate of the bbox
+    real_type & y_min() { return m_bbox[1]; } //!< y-minimum coordinate of the bbox
+    real_type & x_max() { return m_bbox[2]; } //!< x-maximum coordinate of the bbox
+    real_type & y_max() { return m_bbox[3]; } //!< y-maximum coordinate of the bbox
+
+    real_type const & x_min() const { return m_bbox[0]; } //!< x-minimum coordinate of the bbox
+    real_type const & y_min() const { return m_bbox[1]; } //!< y-minimum coordinate of the bbox
+    real_type const & x_max() const { return m_bbox[2]; } //!< x-maximum coordinate of the bbox
+    real_type const & y_max() const { return m_bbox[3]; } //!< y-maximum coordinate of the bbox
 
     int_type const & Id()   const { return m_id; }   //!< return BBOX id
     int_type const & Ipos() const { return m_ipos; } //!< return BBOX position
@@ -124,10 +166,7 @@ namespace G2lib {
     //!
     BBox const &
     operator = ( BBox const & rhs ) {
-      m_xmin = rhs.m_xmin;
-      m_ymin = rhs.m_ymin;
-      m_xmax = rhs.m_xmax;
-      m_ymax = rhs.m_ymax;
+      std::copy_n( rhs.m_bbox, 4, m_bbox );
       m_id   = rhs.m_id;
       m_ipos = rhs.m_ipos;
       return *this;
@@ -138,10 +177,10 @@ namespace G2lib {
     //!
     bool
     collision( BBox const & box ) const {
-      return !( (box.m_xmin > m_xmax ) ||
-                (box.m_xmax < m_xmin ) ||
-                (box.m_ymin > m_ymax ) ||
-                (box.m_ymax < m_ymin ) );
+      return !( (box.x_min() > this->x_max() ) ||
+                (box.x_max() < this->x_min() ) ||
+                (box.y_min() > this->y_max() ) ||
+                (box.y_max() < this->y_min() ) );
     }
 
     //!
@@ -160,7 +199,7 @@ namespace G2lib {
     //! Maximum distance of the point `(x,y)` to the point of bbox
     //!
     real_type
-    maxDistance( real_type x, real_type y ) const;
+    max_distance( real_type x, real_type y ) const;
 
     //!
     //! Pretty print a bbox
@@ -169,7 +208,7 @@ namespace G2lib {
     print( ostream_type & stream ) const {
       fmt::print( stream,
         "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n",
-        m_xmin, m_ymin, m_xmax, m_ymax
+        x_min(), y_min(), x_max(), y_max()
       );
     }
   };

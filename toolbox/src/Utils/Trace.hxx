@@ -104,7 +104,7 @@ namespace Utils {
   using std::string;
   using std::runtime_error;
 
-  typedef std::basic_ostream<char> ostream_type;
+  using ostream_type = std::basic_ostream<char>;
 
   void
   print_trace(

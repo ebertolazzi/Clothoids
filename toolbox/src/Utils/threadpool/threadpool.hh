@@ -271,8 +271,8 @@ namespace threadpool {
    */
   class ThreadPool {
 
-    typedef HQueue<QueueElement>     QUEUE;
-    typedef GenericThreadPool<QUEUE> POOL;
+    using QUEUE = HQueue<QueueElement>;
+    using POOL  = GenericThreadPool<QUEUE>;
 
     QUEUE * m_queue;
     POOL  * m_pool;
@@ -306,7 +306,7 @@ namespace threadpool {
     template<class Function>
     void
     run( Function && f ) {
-      typedef typename std::remove_reference<Function>::type function_type;
+      using function_type = typename std::remove_reference<Function>::type;
       class WrappedFunction : public VirtualTask {
         function_type m_f;
       public:
@@ -346,7 +346,7 @@ namespace threadpool {
     void
     for_each( Iterator first, const Iterator& last, Function&& fun ) {
       while (first != last) {
-        typedef iterval_traits<Iterator> IT;
+        using IT = iterval_traits<Iterator>;
         Wrap<typename IT::type> e(IT::copy(first));
         ++first;
         run([&fun,e](){ fun(IT::pass(std::move(e.value))); });

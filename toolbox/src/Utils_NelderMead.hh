@@ -53,13 +53,13 @@ namespace Utils {
   template <typename Real>
   class NelderMead {
 
-    typedef Eigen::Matrix<Real,Eigen::Dynamic,1>              Vec_t;
-    typedef Eigen::Matrix<Real,Eigen::Dynamic,Eigen::Dynamic> Mat_t;
-    typedef Eigen::Map<Vec_t>                                 MapVec;
-    typedef Eigen::Map<Mat_t>                                 MapMat;
-    typedef int                                               integer;
-    typedef std::function<Real(Real const[])>                 NMFunc;
-    typedef enum {
+    using Vec_t   = Eigen::Matrix<Real,Eigen::Dynamic,1>;
+    using Mat_t   = Eigen::Matrix<Real,Eigen::Dynamic,Eigen::Dynamic>;
+    using MapVec  = Eigen::Map<Vec_t>;
+    using MapMat  = Eigen::Map<Mat_t>;
+    using integer = int;
+    using NMFunc  = std::function<Real(Real const[])>;
+    using NMstype = enum {
       NM_INIT=0,
       NM_REFLECT,
       NM_EXPAND_FE,
@@ -69,7 +69,7 @@ namespace Utils {
       NM_SHRINK,
       NM_RESTART,
       NM_WORSE
-    } NMstype;
+    };
 
   private:
 
@@ -80,15 +80,15 @@ namespace Utils {
     NMFunc m_fun; // handle to the value function to minimize
     Console const * m_console{nullptr}; //!< pointer to the message stream class
 
-    integer m_dim; // problem dimension (number of variables)
-    Real    m_r_dim;
-    Real    m_dim_factorial;
-    Real    m_dim_regular_simplex_volume;
+    integer m_dim{0}; // problem dimension (number of variables)
+    Real    m_r_dim{0};
+    Real    m_dim_factorial{0};
+    Real    m_dim_regular_simplex_volume{0};
     Real    m_tolerance{Real(1e-8)};
 
-    integer m_low;
-    integer m_0high;
-    integer m_high;
+    integer m_low{0};
+    integer m_0high{0};
+    integer m_high{0};
 
     MapVec m_f{nullptr,0};
     MapMat m_p{nullptr,0,0};
@@ -138,14 +138,7 @@ namespace Utils {
     Real outside( MapVec & po ) { return this->extrapolate( m_rho*m_gamma, m_high, po ); }
     Real inside ( MapVec & pi ) { return this->extrapolate( -m_gamma,      m_high, pi ); }
 
-    void
-    replace_point( Real fj, MapVec const & pj, integer jpos ) {
-      m_f(jpos)               = fj;
-      m_psum                 += pj - m_p.col(jpos);
-      m_p.col(jpos).noalias() = pj;
-      this->dist_update( jpos );
-    }
-
+    void replace_point( Real fj, MapVec const & pj, integer jpos );
     void spendley( Real const X0[], Real delta );
     void diamond( Real const X0[], Real delta );
 
@@ -189,6 +182,9 @@ namespace Utils {
     get_last_solution( Real x[] ) const {
       std::copy_n( m_p.col(m_low).data(), m_dim, x );
     }
+
+    Real get_better_value() const { return m_f.coeff(m_low); }
+    Real get_worst_value() const { return m_f.coeff(m_high); }
   };
 }
 

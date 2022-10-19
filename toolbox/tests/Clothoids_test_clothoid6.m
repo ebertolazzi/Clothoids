@@ -33,11 +33,11 @@ for kk=1:4
   case 3; subplot('Position',[aa+0.5 aa+0.5 bb bb]);
   case 4; subplot('Position',[aa aa+0.5 bb bb]);
   end
-  
+
   C = ClothoidCurve( x0(kk), y0(kk), theta0, kappa0(kk), dkappa(kk), L(kk) );
 
   C.plot(400,'Color','blue','LineWidth',3);
-  
+
   N = 10;
 
   x         = (-10 + 20 * rand(N,1)).';
@@ -46,7 +46,7 @@ for kk=1:4
   [xx,yy]   = C.eval(s,t);
   [xxx,yyy] = C.eval(s);
 
-  hold on;  
+  hold on;
   plot( x,   y, 'ro', 'MarkerSize',20,'MarkerEdgeColor','blue','MarkerFaceColor',[0.5,0.5,0.5]);
   plot( xx, yy, 'b*', 'MarkerSize',15,'MarkerEdgeColor','red','MarkerFaceColor',[0.9,0.9,0.5]);
   plot( [x;xxx;xx], [y;yyy;yy] );

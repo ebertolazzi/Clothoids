@@ -79,12 +79,12 @@ do_length(
 
 static
 void
-do_copy(
+do_make_a_copy(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
 
-  #define CMD CMD_BASE "('copy',OBJ): "
+  #define CMD CMD_BASE "('make_a_copy',OBJ): "
   UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
   UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
@@ -1606,7 +1606,7 @@ do_noAABBtree(
 #define CMD_MAP_FUN                 \
 {"length",do_length},               \
 {"delete",do_delete},               \
-{"copy",do_copy},                   \
+{"make_a_copy",do_make_a_copy},     \
 {"build2",do_build2},               \
 {"bbox",do_bbox},                   \
 {"bbTriangles",do_bbTriangles},     \
