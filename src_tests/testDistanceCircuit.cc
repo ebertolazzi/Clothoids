@@ -52,10 +52,10 @@ main() {
       >> slope
       >> upsilon
       >> torsion;
-    S.push_back(abscissa);
-    K.push_back(curvature);
-    X.push_back(x_mid_line);
-    Y.push_back(y_mid_line);
+    S.emplace_back(abscissa);
+    K.emplace_back(curvature);
+    X.emplace_back(x_mid_line);
+    Y.emplace_back(y_mid_line);
   }
 
   G2lib::ClothoidList C;

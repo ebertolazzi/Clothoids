@@ -42,7 +42,7 @@ classdef BiarcList < CurveBase
     %> The biarc is obtained setting the final postion and angle while
     %> the initial position and angle are taken from the last biarc on
     %> the biarc list.
-    %> Another possibility is to push a biarc is obtained 
+    %> Another possibility is to push a biarc is obtained
     %> by passing initial and final positions, initial and final angles.
     %>
     %> **Usage:**
@@ -58,7 +58,7 @@ classdef BiarcList < CurveBase
     %> - `theta0`  : initial angle of the biarc to be appended
     %> - `x1`, `y1`: final position of the biarc to be appended
     %> - `theta1`  : final angle of the biarc to be appended
-    %> 
+    %>
     function push_back( self, varargin )
       BiarcListMexWrapper( 'push_back_G1', self.objectHandle, varargin{:} );
     end
@@ -105,12 +105,12 @@ classdef BiarcList < CurveBase
     %> \endrst
     %>
     function append( self, lst )
-      if lst.is_type() == 'BiarcList'
+      if strcmp(lst.is_type(),'BiarcList')
         for k=1:lst.num_segments()
           [ x0, y0, theta0, x1, y1, theta1 ] = lst.get(k);
           self.push_back( x0, y0, theta0, x1, y1, theta1 );
         end
-      elseif lst.is_type() == 'BiArc'
+      elseif strcmp(lst.is_type(),'BiArc')
         [ x0, y0, theta0, x1, y1, theta1 ] = lst.getData();
         self.push_back( x0, y0, theta0, x1, y1, theta1 );
       else
@@ -221,7 +221,7 @@ classdef BiarcList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot( npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -263,7 +263,7 @@ classdef BiarcList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot_offs( offs, npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -301,7 +301,7 @@ classdef BiarcList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotCurvature( npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -346,7 +346,7 @@ classdef BiarcList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotAngle( npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -387,7 +387,7 @@ classdef BiarcList < CurveBase
     %> .. code-block:: matlab
     %>
     %>   ref.plotNormal( step, len );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `step`: number of sampling normals
@@ -408,7 +408,7 @@ classdef BiarcList < CurveBase
     %> .. code-block:: matlab
     %>
     %>   ref.save( filename, ds );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `filename`: file name

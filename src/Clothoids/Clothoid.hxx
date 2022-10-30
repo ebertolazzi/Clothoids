@@ -144,7 +144,7 @@ namespace G2lib {
     //! Build a copy of an existing clothoid curve
     //!
     ClothoidCurve( ClothoidCurve const & s )
-    { copy(s); }
+    { this->copy(s); }
 
     //!
     //! Construct a clothoid with the standard parameters.
@@ -247,7 +247,7 @@ namespace G2lib {
     //! Copy an existing clothoid.
     //!
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
-    { copy(s); return *this; }
+    { this->copy(s); return *this; }
 
     CurveType    type()      const override { return G2LIB_CLOTHOID; }
     char const * type_name() const override { return "ClothoidCurve"; }

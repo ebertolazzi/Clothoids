@@ -99,15 +99,15 @@ namespace G2lib {
     switch ( pC->type() ) {
     case G2LIB_LINE:
       G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidCurve\n" );
-      build( *static_cast<LineSegment const *>(pC) );
+      this->build( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
       G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidCurve\n" );
-      build( *static_cast<CircleArc const *>(pC) );
+      this->build( *static_cast<CircleArc const *>(pC) );
       break;
     case G2LIB_CLOTHOID:
       G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidCurve\n" );
-      copy( *static_cast<ClothoidCurve const *>(pC) );
+      this->copy( *static_cast<ClothoidCurve const *>(pC) );
       break;
     default:
       UTILS_ERROR(
@@ -186,7 +186,7 @@ namespace G2lib {
       }
       ss  = sss;
       thh = thhh;
-      s.push_back(ss);
+      s.emplace_back(ss);
     }
     s.back() = s_end;
   }
@@ -202,7 +202,7 @@ namespace G2lib {
   ) const {
     s.clear();
     s.reserve( size_t(npts) );
-    s.push_back(0);
+    s.emplace_back(0);
 
     real_type ds = m_L/npts;
     if ( m_CD.m_kappa0*m_CD.m_dk >= 0 || m_CD.kappa(m_L)*m_CD.m_dk <= 0 ) {
@@ -292,7 +292,7 @@ namespace G2lib {
       real_type y2 = y0 + alpha*ty0;
       Triangle2D t( x0, y0, x2, y2, x1, y1, ss, sss, icurve );
 
-      tvec.push_back( t );
+      tvec.emplace_back( t );
 
       ss  = sss;
       thh = thhh;
@@ -686,7 +686,7 @@ namespace G2lib {
           );
           Triangle2D const & T2 = C.m_aabb_tri[j];
           bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
-          if ( converged ) ilist.push_back( Ipair( ss1, ss2 ) );
+          if ( converged ) ilist.emplace_back( ss1, ss2 );
         }
       }
 
@@ -706,7 +706,7 @@ namespace G2lib {
       for ( Triangle2D const & T1 : m_aabb_tri ) {
         for ( Triangle2D const & T2 : C.m_aabb_tri ) {
           bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
-          if ( converged ) ilist.push_back( Ipair( ss1, ss2 ) );
+          if ( converged ) ilist.emplace_back( ss1, ss2 );
         }
       }
 

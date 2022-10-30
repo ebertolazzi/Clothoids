@@ -128,30 +128,30 @@ namespace G2lib {
     switch ( pC->type() ) {
     case G2LIB_LINE:
       G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidList\n" );
-      push_back( *static_cast<LineSegment const *>(pC) );
+      this->push_back( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
       G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidList\n" );
-      push_back( *static_cast<CircleArc const *>(pC) );
+      this->push_back( *static_cast<CircleArc const *>(pC) );
       break;
     case G2LIB_BIARC:
       G2LIB_DEBUG_MESSAGE( "Biarc -> ClothoidList\n" );
-      push_back( *static_cast<Biarc const *>(pC) );
+      this->push_back( *static_cast<Biarc const *>(pC) );
       break;
     case G2LIB_CLOTHOID:
       G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidList\n" );
-      push_back( *static_cast<ClothoidCurve const *>(pC) );
+      this->push_back( *static_cast<ClothoidCurve const *>(pC) );
       break;
     case G2LIB_POLYLINE:
       G2LIB_DEBUG_MESSAGE( "PolyLine -> ClothoidList\n" );
-      push_back( *static_cast<PolyLine const *>(pC) );
+      this->push_back( *static_cast<PolyLine const *>(pC) );
       break;
     case G2LIB_BIARC_LIST:
       G2LIB_DEBUG_MESSAGE( "BiarcList -> ClothoidList\n" );
-      push_back( *static_cast<BiarcList const *>(pC) );
+      this->push_back( *static_cast<BiarcList const *>(pC) );
       break;
     case G2LIB_CLOTHOID_LIST:
-      copy( *static_cast<ClothoidList const *>(pC) );
+      this->copy( *static_cast<ClothoidList const *>(pC) );
       break;
     default:
       UTILS_ERROR(
@@ -226,12 +226,12 @@ namespace G2lib {
   void
   ClothoidList::push_back( LineSegment const & LS ) {
     if ( m_clotoidList.empty() ) {
-      m_s0.push_back(0);
-      m_s0.push_back(LS.length());
+      m_s0.emplace_back(0);
+      m_s0.emplace_back(LS.length());
     } else {
-      m_s0.push_back(m_s0.back()+LS.length());
+      m_s0.emplace_back(m_s0.back()+LS.length());
     }
-    m_clotoidList.push_back(ClothoidCurve(LS));
+    m_clotoidList.emplace_back(LS);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -239,25 +239,25 @@ namespace G2lib {
   void
   ClothoidList::push_back( CircleArc const & C ) {
     if ( m_clotoidList.empty() ) {
-      m_s0.push_back(0);
-      m_s0.push_back(C.length());
+      m_s0.emplace_back(0);
+      m_s0.emplace_back(C.length());
     } else {
-      m_s0.push_back(m_s0.back()+C.length());
+      m_s0.emplace_back(m_s0.back()+C.length());
     }
-    m_clotoidList.push_back(ClothoidCurve(C));
+    m_clotoidList.emplace_back(C);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::push_back( Biarc const & c ) {
-    if ( m_clotoidList.empty() ) m_s0.push_back( 0 );
+    if ( m_clotoidList.empty() ) m_s0.emplace_back( 0 );
     CircleArc const & C0 = c.C0();
     CircleArc const & C1 = c.C1();
-    m_s0.push_back( m_s0.back()+C0.length() );
-    m_s0.push_back( m_s0.back()+C1.length() );
-    m_clotoidList.push_back( ClothoidCurve(C0) );
-    m_clotoidList.push_back( ClothoidCurve(C1) );
+    m_s0.emplace_back( m_s0.back()+C0.length() );
+    m_s0.emplace_back( m_s0.back()+C1.length() );
+    m_clotoidList.emplace_back( C0 );
+    m_clotoidList.emplace_back( C1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -265,12 +265,12 @@ namespace G2lib {
   void
   ClothoidList::push_back( ClothoidCurve const & c ) {
     if ( m_clotoidList.empty() ) {
-      m_s0.push_back(0);
-      m_s0.push_back(c.length());
+      m_s0.emplace_back(0);
+      m_s0.emplace_back(c.length());
     } else {
-      m_s0.push_back(m_s0.back()+c.length());
+      m_s0.emplace_back(m_s0.back()+c.length());
     }
-    m_clotoidList.push_back(c);
+    m_clotoidList.emplace_back(c);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -280,14 +280,14 @@ namespace G2lib {
     m_s0.reserve( m_s0.size() + c.m_biarcList.size() + 1 );
     m_clotoidList.reserve( m_clotoidList.size() + 2*c.m_biarcList.size() );
 
-    if ( m_s0.empty() ) m_s0.push_back(0);
+    if ( m_s0.empty() ) m_s0.emplace_back(0);
 
     vector<Biarc>::const_iterator ip = c.m_biarcList.begin();
     for (; ip != c.m_biarcList.end(); ++ip ) {
-      m_s0.push_back(m_s0.back()+ip->length());
+      m_s0.emplace_back(m_s0.back()+ip->length());
       Biarc const & b = *ip;
-      m_clotoidList.push_back(ClothoidCurve(b.C0()));
-      m_clotoidList.push_back(ClothoidCurve(b.C1()));
+      m_clotoidList.emplace_back(b.C0());
+      m_clotoidList.emplace_back(b.C1());
     }
   }
 
@@ -298,12 +298,12 @@ namespace G2lib {
     m_s0.reserve( m_s0.size() + c.m_polylineList.size() + 1 );
     m_clotoidList.reserve( m_clotoidList.size() + c.m_polylineList.size() );
 
-    if ( m_s0.empty() ) m_s0.push_back(0);
+    if ( m_s0.empty() ) m_s0.emplace_back(0);
 
     for ( auto const & L : c.m_polylineList ) {
-      m_s0.push_back(m_s0.back()+L.length());
+      m_s0.emplace_back(m_s0.back()+L.length());
       ClothoidCurve C(&L);
-      m_clotoidList.push_back(C);
+      m_clotoidList.emplace_back(C);
     }
   }
 
@@ -314,11 +314,11 @@ namespace G2lib {
     m_s0.reserve( m_s0.size() + c.m_clotoidList.size() + 1 );
     m_clotoidList.reserve( m_clotoidList.size() + c.m_clotoidList.size() );
 
-    if ( m_s0.empty() ) m_s0.push_back(0);
+    if ( m_s0.empty() ) m_s0.emplace_back(0);
 
     for ( auto const & C : c.m_clotoidList ) {
-      m_s0.push_back(m_s0.back()+C.length());
-      m_clotoidList.push_back(C);
+      m_s0.emplace_back(m_s0.back()+C.length());
+      m_clotoidList.emplace_back(C);
     }
   }
 
@@ -339,7 +339,7 @@ namespace G2lib {
     real_type y0     = m_clotoidList.back().y_end();
     real_type theta0 = m_clotoidList.back().theta_end();
     c.build( x0, y0, theta0, kappa0, dkappa, L );
-    push_back( c );
+    this->push_back( c );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -374,7 +374,7 @@ namespace G2lib {
     real_type y0     = m_clotoidList.back().y_end();
     real_type theta0 = m_clotoidList.back().theta_end();
     c.build_G1( x0, y0, theta0, x1, y1, theta1 );
-    push_back( c );
+    this->push_back( c );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -390,7 +390,7 @@ namespace G2lib {
   ) {
     ClothoidCurve c;
     c.build_G1( x0, y0, theta0, x1, y1, theta1 );
-    push_back( c );
+    this->push_back( c );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -413,7 +413,7 @@ namespace G2lib {
 
       real_type theta = atan2( y[1] - y[0], x[1] - x[0] );
       c.build_G1( x[0], y[0], theta, x[1], y[1], theta );
-      push_back(c);
+      this->push_back(c);
 
     } else {
 
@@ -430,19 +430,19 @@ namespace G2lib {
       real_type theta0 = ciclic ? thetaC : b.theta_begin();
       real_type theta1 = b.theta_middle();
       c.build_G1( x[0], y[0], theta0, x[1], y[1], theta1 );
-      push_back(c);
+      this->push_back(c);
       for ( int_type k = 2; k < n-1; ++k ) {
         theta0 = theta1;
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
         UTILS_ASSERT0( ok, "ClothoidList::build_G1, failed\n" );
         theta1 = b.theta_middle();
         c.build_G1( x[k-1], y[k-1], theta0, x[k], y[k], theta1 );
-        push_back(c);
+        this->push_back(c);
       }
       theta0 = theta1;
       theta1 = ciclic ? thetaC : b.theta_end();
       c.build_G1( x[n-2], y[n-2], theta0, x[n-1], y[n-1], theta1 );
-      push_back(c);
+      this->push_back(c);
     }
     return true;
   }
@@ -466,7 +466,7 @@ namespace G2lib {
     ClothoidCurve c;
     for ( int_type k = 1; k < n; ++k ) {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
-      push_back(c);
+      this->push_back(c);
     }
     return true;
   }
@@ -495,7 +495,7 @@ namespace G2lib {
       "L = {} k = {} dk = {}\n",
       L, k, dk
     );
-    push_back( x0, y0, theta0, k, dk, L );
+    this->push_back( x0, y0, theta0, k, dk, L );
     for ( int_type i = 2; i < n; ++i ) {
       k  = kappa[i-1];
       L  = s[i]-s[i-1];
@@ -510,7 +510,7 @@ namespace G2lib {
         "L = {} k = {} dk = {}\n",
         i, L, k, dk
       );
-      push_back( k, dk, L );
+      this->push_back( k, dk, L );
     }
     return true;
   }
@@ -535,9 +535,9 @@ namespace G2lib {
     real_type const * pt = theta;
     real_type const * pk = kappa;
     for ( int_type i = 1; i < n; ++i, ++px, ++py, ++pa, ++pt, ++pk ) {
-      real_type dk  = pk[1]-pk[0];
-      real_type L   = pa[1]-pa[0];
-      push_back( *px, *py, *pt, *pk, dk, L );
+      real_type dk = pk[1]-pk[0];
+      real_type L  = pa[1]-pa[0];
+      this->push_back( *px, *py, *pt, *pk, dk, L );
     }
     return true;
   }
@@ -1512,7 +1512,7 @@ namespace G2lib {
           if ( converged ) {
             ss1 += m_s0[T1.Icurve()];
             ss2 += CL.m_s0[T2.Icurve()];
-            ilist.push_back( Ipair( ss1, ss2 ) );
+            ilist.emplace_back( ss1, ss2 );
           }
         }
       }
@@ -1541,7 +1541,7 @@ namespace G2lib {
           if ( converged ) {
             ss1 += m_s0[T1.Icurve()];
             ss2 += CL.m_s0[T2.Icurve()];
-            ilist.push_back( Ipair( ss1, ss2 ) );
+            ilist.emplace_back( ss1, ss2 );
           }
         }
       }

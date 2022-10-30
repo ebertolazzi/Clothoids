@@ -484,7 +484,7 @@ namespace G2lib {
       real_type ny  = xx2-xx0;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
-      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2, 0, 0, icurve ) );
+      tvec.emplace_back( xx0, yy0, xx1, yy1, xx2, yy2, 0, 0, icurve );
       xx0 = xx2;
       yy0 = yy2;
     }
@@ -523,7 +523,7 @@ namespace G2lib {
       real_type ny = xx2-xx0;
       xx1 -= nx * tg;
       yy1 -= ny * tg;
-      tvec.push_back( Triangle2D( xx0, yy0, xx1, yy1, xx2, yy2, 0, 0, icurve ) );
+      tvec.emplace_back( xx0, yy0, xx1, yy1, xx2, yy2, 0, 0, icurve );
       xx0 = xx2;
       yy0 = yy2;
     }
@@ -694,7 +694,7 @@ namespace G2lib {
       real_type ss2 = s2[i];
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
            ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
-        ilist.push_back( Ipair(ss1,ss2) );
+        ilist.emplace_back( ss1, ss2 );
       }
     }
   }
@@ -729,7 +729,7 @@ namespace G2lib {
       real_type ss2 = s2[i]/sc2;
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
            ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
-        ilist.push_back( Ipair(ss1,ss2) );
+        ilist.emplace_back( ss1, ss2 );
       }
     }
   }

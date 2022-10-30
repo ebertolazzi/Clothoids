@@ -101,23 +101,23 @@ namespace G2lib {
     switch ( pC->type() ) {
     case G2LIB_LINE:
       G2LIB_DEBUG_MESSAGE( "LineSegment -> Biarc\n" );
-      push_back( *static_cast<LineSegment const *>(pC) );
+      this->push_back( *static_cast<LineSegment const *>(pC) );
       break;
     case G2LIB_CIRCLE:
       G2LIB_DEBUG_MESSAGE( "CircleArc -> Biarc\n" );
-      push_back( *static_cast<CircleArc const *>(pC) );
+      this->push_back( *static_cast<CircleArc const *>(pC) );
       break;
     case G2LIB_BIARC:
       G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
-      push_back( *static_cast<Biarc const *>(pC) );
+      this->push_back( *static_cast<Biarc const *>(pC) );
       break;
     case G2LIB_POLYLINE:
       G2LIB_DEBUG_MESSAGE( "to -> PolyLine\n" );
-      push_back( *static_cast<PolyLine const *>(pC) );
+      this->push_back( *static_cast<PolyLine const *>(pC) );
       break;
     case G2LIB_BIARC_LIST:
       G2LIB_DEBUG_MESSAGE( "to -> BiarcList\n" );
-      copy( *static_cast<BiarcList const *>(pC) );
+      this->copy( *static_cast<BiarcList const *>(pC) );
       break;
     default:
       UTILS_ERROR(
@@ -176,10 +176,10 @@ namespace G2lib {
   void
   BiarcList::push_back( LineSegment const & LS ) {
     if ( m_biarcList.empty() ) {
-      m_s0.push_back(0);
-      m_s0.push_back(LS.length());
+      m_s0.emplace_back(0);
+      m_s0.emplace_back(LS.length());
     } else {
-      m_s0.push_back(m_s0.back()+LS.length());
+      m_s0.emplace_back(m_s0.back()+LS.length());
     }
     Biarc tmp(&LS);
     m_biarcList.push_back(tmp);
@@ -190,10 +190,10 @@ namespace G2lib {
   void
   BiarcList::push_back( CircleArc const & C ) {
     if ( m_biarcList.empty() ) {
-      m_s0.push_back(0);
-      m_s0.push_back(C.length());
+      m_s0.emplace_back(0);
+      m_s0.emplace_back(C.length());
     } else {
-      m_s0.push_back(m_s0.back()+C.length());
+      m_s0.emplace_back(m_s0.back()+C.length());
     }
     Biarc tmp(&C);
     m_biarcList.push_back(tmp);
@@ -204,10 +204,10 @@ namespace G2lib {
   void
   BiarcList::push_back( Biarc const & c ) {
     if ( m_biarcList.empty() ) {
-      m_s0.push_back(0);
-      m_s0.push_back(c.length());
+      m_s0.emplace_back(0);
+      m_s0.emplace_back(c.length());
     } else {
-      m_s0.push_back(m_s0.back()+c.length());
+      m_s0.emplace_back(m_s0.back()+c.length());
     }
     m_biarcList.push_back(c);
   }
@@ -219,10 +219,10 @@ namespace G2lib {
     m_s0.reserve( m_s0.size() + c.m_polylineList.size() + 1 );
     m_biarcList.reserve( m_biarcList.size() + c.m_polylineList.size() );
 
-    if ( m_s0.empty() ) m_s0.push_back(0);
+    if ( m_s0.empty() ) m_s0.emplace_back(0);
 
     for ( LineSegment const & LS : c.m_polylineList ) {
-      m_s0.push_back(m_s0.back()+LS.length());
+      m_s0.emplace_back(m_s0.back()+LS.length());
       Biarc B(&LS);
       m_biarcList.push_back(B);
     }
@@ -245,7 +245,7 @@ namespace G2lib {
     real_type y0     = m_biarcList.back().y_end();
     real_type theta0 = m_biarcList.back().theta_end();
     c.build( x0, y0, theta0, x1, y1, theta1 );
-    push_back( c );
+    this->push_back( c );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -261,7 +261,7 @@ namespace G2lib {
   ) {
     Biarc c;
     c.build( x0, y0, theta0, x1, y1, theta1 );
-    push_back( c );
+    this->push_back( c );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1184,7 +1184,7 @@ namespace G2lib {
           for ( auto const & it : ilist1 ) {
             real_type ss1 = it.first  + m_s0[T1.Icurve()];
             real_type ss2 = it.second + BL.m_s0[T2.Icurve()];
-            ilist.push_back( Ipair( ss1, ss2 ) );
+            ilist.emplace_back( ss1, ss2 );
           }
         }
       }
@@ -1206,7 +1206,7 @@ namespace G2lib {
           for ( auto const & it : ilist1 ) {
             real_type ss1 = it.first  + m_s0[T1.Icurve()];
             real_type ss2 = it.second + BL.m_s0[T2.Icurve()];
-            ilist.push_back( Ipair( ss1, ss2 ) );
+            ilist.emplace_back( ss1, ss2 );
           }
         }
       }
