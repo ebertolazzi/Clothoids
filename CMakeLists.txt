@@ -77,8 +77,13 @@ include_directories( ./lib3rd/include )
 set(UTILS_DEPEND_TARGETS)
 
 # DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
-utils_add_submodule( Utils UTILS )
-utils_add_submodule( quarticRootsFlocke ROOTS )
+utils_add_library_or_submodule( "quarticRootsFlocke" ROOTS )
+utils_add_library_or_submodule( "Utils" UTILS )
+
+message( STATUS "----------------------------------------------------------------" )
+message( STATUS "UTILS = ${UTILS}" )
+message( STATUS "ROOTS = ${ROOTS}" )
+message( STATUS "----------------------------------------------------------------" )
 
 #   _____                  _
 #  |_   _|_ _ _ _ __ _ ___| |_ ___
@@ -104,7 +109,7 @@ if ( UTILS_BUILD_SHARED )
     "${SOURCE_DIR}"
     "${PUBLIC_HEADERS}"
   )
-  target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${ROOTS} ${UTILS} )
+  target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${UTILS_MODULE_LIBS} )
 endif()
 
 if ( UTILS_DEPEND_TARGETS )
@@ -131,7 +136,7 @@ if ( UTILS_ENABLE_TESTS )
     set( ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/zlib/include ")
   endif()
 
-  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS} ${ROOTS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${ROOTS} ${UTILS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
 
   if( UNIX )
     if ( NOT APPLE )
