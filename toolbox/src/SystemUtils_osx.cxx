@@ -90,7 +90,7 @@ namespace Utils {
           if( j > 0 ) str += '.';
           str += fmt::format("{}",h[j]);
         }
-        addr.push_back( str );
+        addr.emplace_back( str );
         // str now contains one local IP address - do whatever you want to do with it (probably add it to a list)
       }
     }

@@ -531,7 +531,7 @@ namespace G2lib {
   ) const {
     real_type s1, s2;
     bool ok = this->intersect( LS, s1, s2 );
-    if ( ok ) ilist.push_back( Ipair(s1, s2) );
+    if ( ok ) ilist.emplace_back( s1, s2 );
   }
 
   void
@@ -543,7 +543,7 @@ namespace G2lib {
   ) const {
     real_type s1, s2;
     bool ok = this->intersect_ISO( offs, LS, offs_LS, s1, s2 );
-    if ( ok ) ilist.push_back( Ipair(s1, s2) );
+    if ( ok ) ilist.emplace_back( s1, s2 );
   }
 
   void

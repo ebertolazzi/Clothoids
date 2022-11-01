@@ -8,6 +8,10 @@
   See the file license.txt for more details.
 \****************************************************************************/
 
+#ifdef __clang__
+#pragma GCC diagnostic ignored "-Wexit-time-destructors"
+#endif
+
 #include "Clothoids.hh"
 #include "Utils_mex.hh"
 #include "mex_info.hxx"
@@ -396,7 +400,7 @@ namespace G2lib {
 
   typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
-  static std::map<std::string,DO_CMD> cmd_to_fun = {
+  static std::map<std::string,DO_CMD> cmd_to_fun{
     {"new",do_new},
     {"delete",do_delete},
     {"build",do_build},

@@ -42,6 +42,8 @@ namespace Utils {
     m_a  = a;       m_fa = m_function->eval(m_a);
     m_b  = b;       m_fb = m_function->eval(m_b);
     m_x3 = (a+b)/2; m_f3 = m_function->eval(m_x3);
+    m_num_iter_done = 0;
+    m_num_fun_eval  = 3;
     return this->minimize();
   }
 
@@ -92,8 +94,7 @@ namespace Utils {
   Trichotomy<Real>::minimize() {
     m_num_iter_done = 0;
     m_converged     = false;
-    m_num_fun_eval  = 0;
-    for ( m_num_iter_done = 0; m_num_iter_done <= m_max_iter; ++m_num_iter_done ) {
+    while ( m_num_iter_done++ < m_max_iter ) {
       m_converged = bracketing();
       if ( m_converged ) break;
       if ( m_num_fun_eval >= m_max_fun_eval ) break;
@@ -106,22 +107,54 @@ namespace Utils {
   template <typename Real>
   Real
   Trichotomy<Real>::search( Real x, Real delta ) {
+    m_num_iter_done = 0;
+    m_num_fun_eval  = 3;
     m_a  = x-delta; m_fa = m_function->eval(m_a);
-    m_b  = x+delta; m_fb = m_function->eval(m_b);
     m_x3 = x;       m_f3 = m_function->eval(m_x3);
-    while ( m_f3 > m_fa || m_f3 > m_fb ) {
-      if ( m_fa < m_fb ) {
+    m_b  = x+delta; m_fb = m_function->eval(m_b);
+    if ( m_fa < m_fb ) {
+      // enter fa < f3 <? fb
+      while ( m_fa < m_f3 ) {
         m_b  = m_x3; m_fb = m_f3;
         m_x3 = m_a;  m_f3 = m_fa;
-        m_a  = m_a - (m_b-m_x3);
-        m_fa = m_function->eval(m_a);
+        m_a  = m_x3 - 2*(m_b-m_x3);
+        m_fa = this->evaluate(m_a);
+        ++m_num_iter_done;
+      }
+      // exit fa >= f3 < fb
+      //      a ======== x3 == b
+      m_x2 = (m_a+m_x3)/2;
+      m_f2 = this->evaluate(m_x2);
+      if ( m_f2 <= m_f3 ) {
+        m_b  = m_x3; m_fb = m_f3;
+        m_x3 = m_x2; m_f3 = m_f2; // fa >= f3 < fb
       } else {
+        m_a = m_x2; m_fa = m_f2; // fa > f3 < fb
+      }
+    } else {
+      // enter fa ?> f3 > fb
+      while ( m_f3 > m_fb ) {
         m_a  = m_x3; m_fa = m_f3;
         m_x3 = m_b;  m_f3 = m_fb;
-        m_b  = m_b + (m_a-m_x3);
-        m_fb = m_function->eval(m_b);
+        m_b  = m_x3 + 2*(m_x3-m_a);
+        m_fb = this->evaluate(m_b);
+        ++m_num_iter_done;
+      }
+      // exit fa > f3 <= fb
+      //      a == x3 ====== b
+      m_x4 = (m_x3+m_b)/2;
+      m_f4 = this->evaluate(m_x4);
+      if ( m_f4 <= m_f3 ) {
+        m_a  = m_x3; m_fa = m_f3;
+        m_x3 = m_x4; m_f3 = m_f4; // fa >= f3 < fb
+      } else {
+        m_b = m_x4; m_fb = m_f4; // fa > f3 < fb
       }
     }
+    //fmt::print(
+    //  "a={} x3={} b={} d1={} d2={} iter={} #fun={}\n",
+    //  m_a, m_x3, m_b, m_x3-m_a, m_b-m_x3, m_num_iter_done, m_num_fun_eval
+    //);
     return this->minimize();
   }
 

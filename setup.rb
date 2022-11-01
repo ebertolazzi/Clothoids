@@ -12,3 +12,6 @@ if ARGV.size() > 0 && ARGV[0] == "--last" then
   puts "\nUpdate submodules to last version"
   system('git submodule foreach --recursive git pull')
 end
+
+system('ruby submodules/Utils/setup.rb')
+system('ruby submodules/quarticRootsFlocke/setup.rb')

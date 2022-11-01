@@ -42,11 +42,11 @@
 namespace PolynomialRoots {
 
   using std::abs;
-  static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
+  static real_type const machepsi = std::numeric_limits<real_type>::epsilon();
 
-  indexType
-  Quartic::getRealRoots( valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quartic::getRealRoots( real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx0() ) r[nr++] = r0;
     if ( !cplx1() ) r[nr++] = r1;
     if ( !cplx2() ) r[nr++] = r2;
@@ -54,9 +54,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quartic::getPositiveRoots( valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quartic::getPositiveRoots( real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx0() && r0 > 0 ) r[nr++] = r0;
     if ( !cplx1() && r1 > 0 ) r[nr++] = r1;
     if ( !cplx2() && r2 > 0 ) r[nr++] = r2;
@@ -64,9 +64,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quartic::getNegativeRoots( valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quartic::getNegativeRoots( real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx0() && r0 < 0 ) r[nr++] = r0;
     if ( !cplx1() && r1 < 0 ) r[nr++] = r1;
     if ( !cplx2() && r2 < 0 ) r[nr++] = r2;
@@ -74,9 +74,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quartic::getRootsInRange( valueType a, valueType b, valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quartic::getRootsInRange( real_type a, real_type b, real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx0() && r0 >= a && r0 <= b ) r[nr++] = r0;
     if ( !cplx1() && r1 >= a && r1 <= b ) r[nr++] = r1;
     if ( !cplx2() && r2 >= a && r2 <= b ) r[nr++] = r2;
@@ -84,9 +84,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quartic::getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quartic::getRootsInOpenRange( real_type a, real_type b, real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx0() && r0 > a && r0 < b ) r[nr++] = r0;
     if ( !cplx1() && r1 > a && r1 < b ) r[nr++] = r1;
     if ( !cplx2() && r2 > a && r2 < b ) r[nr++] = r2;
@@ -101,22 +101,22 @@ namespace PolynomialRoots {
   inline
   void
   scaleQuarticMonicPolynomial(
-    valueType   A,
-    valueType   B,
-    valueType   C,
-    valueType   D,
-    valueType & AS,
-    valueType & BS,
-    valueType & CS,
-    valueType & DS,
-    indexType & i_case,
-    valueType & scale
+    real_type   A,
+    real_type   B,
+    real_type   C,
+    real_type   D,
+    real_type & AS,
+    real_type & BS,
+    real_type & CS,
+    real_type & DS,
+    integer   & i_case,
+    real_type & scale
   ) {
 
-    valueType a = std::abs(A);
-    valueType b = std::sqrt(abs(B));
-    valueType c = std::cbrt(abs(C));
-    valueType d = std::sqrt(sqrt(abs(D)));
+    real_type a = std::abs(A);
+    real_type b = std::sqrt(abs(B));
+    real_type c = std::cbrt(abs(C));
+    real_type d = std::sqrt(sqrt(abs(D)));
 
     if ( a < b ) {
       if ( b < c ) {
@@ -172,24 +172,24 @@ namespace PolynomialRoots {
 
   static
   inline
-  valueType
+  real_type
   evalHexic(
-    valueType x,
-    valueType q3,
-    valueType q2,
-    valueType q1,
-    valueType q0
+    real_type x,
+    real_type q3,
+    real_type q2,
+    real_type q1,
+    real_type q0
   ) {
-    valueType t1 = x + q3;
-    valueType t2 = x + t1;
-    valueType t3 = x + t2;
+    real_type t1 = x + q3;
+    real_type t2 = x + t1;
+    real_type t3 = x + t2;
     t1 = t1 * x + q2;
     t2 = t2 * x + t1;
     t1 = t1 * x + q1;
-    valueType Q    = t1 * x + q0; // Q(x)
-    valueType dQ   = t2 * x + t1; // Q'(x)
-    valueType ddQ  = t3 * x + t2; // Q''(x) / 2
-    valueType dddQ = x + t3;      // Q'''(x) / 6
+    real_type Q    = t1 * x + q0; // Q(x)
+    real_type dQ   = t2 * x + t1; // Q'(x)
+    real_type ddQ  = t3 * x + t2; // Q''(x) / 2
+    real_type dddQ = x + t3;      // Q'''(x) / 6
     return  Q * dddQ * dddQ - dQ * ddQ * dddQ + dQ * dQ; // H(x), usually < 0
   }
 
@@ -197,24 +197,24 @@ namespace PolynomialRoots {
   inline
   void
   evalHexic(
-    valueType   x,
-    valueType   q3,
-    valueType   q2,
-    valueType   q1,
-    valueType   q0,
-    valueType & p,
-    valueType & dp
+    real_type   x,
+    real_type   q3,
+    real_type   q2,
+    real_type   q1,
+    real_type   q0,
+    real_type & p,
+    real_type & dp
   ) {
-    valueType t1 = x + q3;
-    valueType t2 = x + t1;
-    valueType t3 = x + t2;
+    real_type t1 = x + q3;
+    real_type t2 = x + t1;
+    real_type t3 = x + t2;
     t1 = t1 * x + q2;
     t2 = t2 * x + t1;
     t1 = t1 * x + q1;
-    valueType Q    = t1 * x + q0; // Q(x)
-    valueType dQ   = t2 * x + t1; // Q'(x)
-    valueType ddQ  = t3 * x + t2; // Q''(x) / 2
-    valueType dddQ = x + t3;      // Q'''(x) / 6
+    real_type Q    = t1 * x + q0; // Q(x)
+    real_type dQ   = t2 * x + t1; // Q'(x)
+    real_type ddQ  = t3 * x + t2; // Q''(x) / 2
+    real_type dddQ = x + t3;      // Q'''(x) / 6
     p  = Q * dddQ * dddQ - dQ * ddQ * dddQ + dQ * dQ; // H(x), usually < 0
     dp = 2 * dddQ * (4 * Q - dQ * dddQ - ddQ * ddQ); // H'(x)
   }
@@ -225,20 +225,20 @@ namespace PolynomialRoots {
   static
   void
   deflateQuarticPolynomial(
-    valueType   a4,
-    valueType   a3,
-    valueType   a2,
-    valueType   a1,
-    valueType   a0,
-    valueType   r,
-    valueType & b2,
-    valueType & b1,
-    valueType & b0
+    real_type   a4,
+    real_type   a3,
+    real_type   a2,
+    real_type   a1,
+    real_type   a0,
+    real_type   r,
+    real_type & b2,
+    real_type & b1,
+    real_type & b0
   ) {
-    indexType i_cross  = 0;
-    valueType r2       = r*r;
-    valueType v_cross  = std::abs(a0);
-    valueType v_cross1 = std::abs(a1*r);
+    integer   i_cross  = 0;
+    real_type r2       = r*r;
+    real_type v_cross  = std::abs(a0);
+    real_type v_cross1 = std::abs(a1*r);
     if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 1; }
     v_cross1 = std::abs(a2*r2);
     if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 2; }
@@ -266,29 +266,29 @@ namespace PolynomialRoots {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Translate to C from Polynomial234RootSolvers
   static
-  indexType
+  integer
   zeroQuarticByNewtonBisection(
-    valueType  a,
-    valueType  b,
-    valueType  c,
-    valueType  d,
-    valueType & x
+    real_type  a,
+    real_type  b,
+    real_type  c,
+    real_type  d,
+    real_type & x
   ) {
 
-    valueType p, dp;
+    real_type p, dp;
     evalMonicQuartic( x, a, b, c, d, p, dp );
-    valueType t = p; // save p(x) for sign comparison
+    real_type t = p; // save p(x) for sign comparison
     x -= p/dp; // 1st improved root
 
-    indexType iter       = 1;
-    indexType oscillate  = 0;
-    indexType nconverged = 0;
-    bool      bisection  = false;
-    bool      converged  = false;
-    valueType s(0), u(0); // to mute warning
+    integer iter       = 1;
+    integer oscillate  = 0;
+    integer nconverged = 0;
+    bool    bisection  = false;
+    bool    converged  = false;
+    real_type s(0), u(0); // to mute warning
     while ( ! ( nconverged > 1 || bisection ) && iter < MAX_ITER_SAFETY ) {
       ++iter;
-      valueType ddp;
+      real_type ddp;
       evalMonicQuartic( x, a, b, c, d, p, dp, ddp );
       if ( p*t < 0 ) { // does Newton start oscillating ?
         if ( p < 0 ) {
@@ -324,24 +324,24 @@ namespace PolynomialRoots {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Translate to C from Polynomial234RootSolvers
   static
-  indexType
+  integer
   zeroHexicByNewtonBisection(
-    valueType   q3,
-    valueType   q2,
-    valueType   q1,
-    valueType   q0,
-    valueType & x
+    real_type   q3,
+    real_type   q2,
+    real_type   q1,
+    real_type   q0,
+    real_type & x
   ) {
-    valueType p, dp;
+    real_type p, dp;
     evalHexic( x, q3, q2, q1, q0, p, dp );
-    valueType t = p; // save p(x) for sign comparison
+    real_type t = p; // save p(x) for sign comparison
     x -= p/dp; // 1st improved root
 
-    indexType iter      = 1;
-    indexType oscillate = 0;
-    bool      bisection = false;
-    bool      converged = false;
-    valueType s(0), u(0); // to mute warning
+    integer iter      = 1;
+    integer oscillate = 0;
+    bool    bisection = false;
+    bool    converged = false;
+    real_type s(0), u(0); // to mute warning
     while ( ! (converged||bisection) ) {
       ++iter;
       evalHexic( x, q3, q2, q1, q0, p, dp );
@@ -393,11 +393,11 @@ namespace PolynomialRoots {
 
   void
   Quartic::findRoots() {
-    valueType const & A = ABCDE[0];
-    valueType const & B = ABCDE[1];
-    valueType const & C = ABCDE[2];
-    valueType const & D = ABCDE[3];
-    valueType const & E = ABCDE[4];
+    real_type const & A = ABCDE[0];
+    real_type const & B = ABCDE[1];
+    real_type const & C = ABCDE[2];
+    real_type const & D = ABCDE[3];
+    real_type const & E = ABCDE[4];
 
     iter = nreal = ncplx = 0;
 
@@ -434,14 +434,14 @@ namespace PolynomialRoots {
     if ( isZero(B) && isZero(D) ) { // biquadratic case
       // A x^4 + C x^2 + E
       Quadratic qsolve( A, C, E ) ;
-      valueType x = qsolve.real_root0() ;
-      valueType y = qsolve.real_root1() ;
+      real_type x = qsolve.real_root0() ;
+      real_type y = qsolve.real_root1() ;
       if ( qsolve.complexRoots() ) {
         // complex conjugate pair biquadratic roots x +/- iy.
         ncplx = 4;
         x /= 2; // re
         y /= 2; // im
-        valueType z = hypot(x,y);
+        real_type z = hypot(x,y);
         y = std::sqrt(z - x);
         x = std::sqrt(z + x);
         r0 = -x;
@@ -475,12 +475,12 @@ namespace PolynomialRoots {
     .. (due to underflow in the coefficients).
     */
 
-    valueType const A3 = B/A;
-    valueType const A2 = C/A;
-    valueType const A1 = D/A;
-    valueType const A0 = E/A;
-    valueType q0, q1, q2, q3, scale;
-    indexType i_case;
+    real_type const A3 = B/A;
+    real_type const A2 = C/A;
+    real_type const A1 = D/A;
+    real_type const A0 = E/A;
+    real_type q0, q1, q2, q3, scale;
+    integer   i_case;
     scaleQuarticMonicPolynomial( A3, A2, A1, A0, q3, q2, q1, q0, i_case, scale );
 
     // Q(x)    = q0 + q1 * x + q2 * x^2 + q3 * x^3 + x^4
@@ -524,19 +524,19 @@ namespace PolynomialRoots {
     ..        Same of what has been said under 2) but with x = u.
     */
 
-    valueType c2 = 3 * (q3/4);
-    valueType c1 = q2/2;
-    valueType c0 = q1/4;
+    real_type c2 = 3 * (q3/4);
+    real_type c1 = q2/2;
+    real_type c0 = q1/4;
 
     Cubic qsolve( 1, c2, c1, c0 );
-    valueType u = qsolve.real_root0(); // root according to paper
-    valueType t = qsolve.real_root1();
-    valueType s = qsolve.real_root2();
+    real_type u = qsolve.real_root0(); // root according to paper
+    real_type t = qsolve.real_root1();
+    real_type s = qsolve.real_root2();
 
     bool must_refine_r3 = true;
     if ( !qsolve.complexRoots() ) {
-      valueType Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
-      valueType Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
+      real_type Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
+      real_type Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
       bool q0pos = q0 > 0;
       nreal = 1;
       if ( Qs < 0 && Qu < 0 ) {
@@ -567,7 +567,7 @@ namespace PolynomialRoots {
         // check for astrological combination when s or u are root of the quartic
         /*
         DO NOT WORK
-        valueType epsi = 10 * ( 1 + std::abs(q3) +
+        real_type epsi = 10 * ( 1 + std::abs(q3) +
                                     std::abs(q2) +
                                     std::abs(q1) +
                                     std::abs(q0) ) * machepsi;
@@ -585,9 +585,9 @@ namespace PolynomialRoots {
       }
     } else {
       // one single real root (only 1 minimum)
-      valueType Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
+      real_type Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       if ( Qs <= 0 ) {
-        valueType tmp = q0 >= 0 ? 0 : 2;
+        real_type tmp = q0 >= 0 ? 0 : 2;
         r3 = u > 0 ? -tmp : -2;
         nreal = 1;
       }
@@ -652,23 +652,23 @@ namespace PolynomialRoots {
 
       bool iterate = notZero || (!notZero && minimum);
 
-      valueType a, b, c, d;
+      real_type a, b, c, d;
       if ( iterate ) {
-        valueType x = q3 >= 0 ? 2 : -2; // initial root -> target = smaller mag root
+        real_type x = q3 >= 0 ? 2 : -2; // initial root -> target = smaller mag root
         iter += zeroHexicByNewtonBisection( q3, q2, q1, q0, x );
 
         a = x*scale;   // 1st real component -> a
         b = -A3/2 - a; // 2nd real component -> b
 
         x = 4 * a + A3; // Q'''(a)
-        valueType y = x + 2*A3;
+        real_type y = x + 2*A3;
         y = y * a + 2*A2; // Q'(a)
         y = y * a + A1;
         y /= x;
         if ( y < 0 ) y = 0; // ensure Q'(a) / Q'''(a) >= 0
 
         x = 4 * b + A3; // Q'''(b)
-        valueType z = x + 2*A3;
+        real_type z = x + 2*A3;
         z = z * b + 2*A2; // Q'(b)
         z = z * b + A1;
         z /= x;
@@ -676,8 +676,8 @@ namespace PolynomialRoots {
 
         c = a * a;              // store a^2 for later
         d = b * b;              // store b^2 for later
-        valueType ss = c + y;   // magnitude^2 of (a + iy) root
-        valueType tt = d + z;   // magnitude^2 of (b + iz) root
+        real_type ss = c + y;   // magnitude^2 of (a + iy) root
+        real_type tt = d + z;   // magnitude^2 of (b + iz) root
 
         if ( ss > tt ) {         // minimize imaginary error
           c = std::sqrt(y);           // 1st imaginary component -> c
@@ -692,12 +692,12 @@ namespace PolynomialRoots {
         a = -A3/4; // 1st real component -> a
         b = a;     // 2nd real component -> b = a
 
-        valueType x = a + A3;
+        real_type x = a + A3;
         x = x * a + A2; // Q(a)
         x = x * a + A1;
         x = x * a + A0;
-        valueType y = A2/2 - 3*(a*a); // Q''(a) / 2
-        valueType z = y * y - x;
+        real_type y = A2/2 - 3*(a*a); // Q''(a) / 2
+        real_type z = y * y - x;
         z = z > 0 ? std::sqrt(z) : 0;     // force discriminant to be >= 0
                                      // square root of discriminant
         y = y > 0 ? y + z : y - z;   // larger magnitude root
@@ -714,12 +714,12 @@ namespace PolynomialRoots {
   }
 
   void
-  Quartic::info( std::ostream & s ) const {
-    valueType const & A = ABCDE[0];
-    valueType const & B = ABCDE[1];
-    valueType const & C = ABCDE[2];
-    valueType const & D = ABCDE[3];
-    valueType const & E = ABCDE[4];
+  Quartic::info( ostream_type & s ) const {
+    real_type const & A = ABCDE[0];
+    real_type const & B = ABCDE[1];
+    real_type const & C = ABCDE[2];
+    real_type const & D = ABCDE[3];
+    real_type const & E = ABCDE[4];
 
     s << "\npoly a=" << A << " b=" << B << " c=" << C << " d=" << D << " e=" << E
       << "\nn. complex = " << ncplx
@@ -742,48 +742,48 @@ namespace PolynomialRoots {
   }
 
   bool
-  Quartic::check( std::ostream & s ) const {
-    valueType const & A = ABCDE[0];
-    valueType const & B = ABCDE[1];
-    valueType const & C = ABCDE[2];
-    valueType const & D = ABCDE[3];
-    valueType const & E = ABCDE[4];
+  Quartic::check( ostream_type & s ) const {
+    real_type const & A = ABCDE[0];
+    real_type const & B = ABCDE[1];
+    real_type const & C = ABCDE[2];
+    real_type const & D = ABCDE[3];
+    real_type const & E = ABCDE[4];
     bool ok = true;
-    valueType epsi = 1000 * ( ( std::abs(A) +
+    real_type epsi = 1000 * ( ( std::abs(A) +
                                 std::abs(B) +
                                 std::abs(C) +
                                 std::abs(D) +
                                 std::abs(E) )*machepsi) ;
     if ( ncplx > 0 ) {
-      valueType z0 = std::abs(eval( root0() ));
-      valueType z1 = std::abs(eval( root1() ));
+      real_type z0 = std::abs(eval( root0() ));
+      real_type z1 = std::abs(eval( root1() ));
       s << "|p(r0)| = " << z0 << "\n|p(r1)| = " << z1 << '\n';
       ok = ok && std::abs(z0) < epsi && std::abs(z1) < epsi;
     } else {
       if ( nreal > 0 ) {
-        valueType z0 = eval( real_root0() );
+        real_type z0 = eval( real_root0() );
         s << "p(r0) = " << z0 << '\n';
         ok = ok && std::abs(z0) < epsi;
       }
       if ( nreal > 1 ) {
-        valueType z1 = eval( real_root1() );
+        real_type z1 = eval( real_root1() );
         s << "p(r1) = " << z1 << '\n';
         ok = ok && std::abs(z1) < epsi;
       }
     }
     if ( ncplx > 2 ) {
-      valueType z2 = std::abs(eval( root2() ));
-      valueType z3 = std::abs(eval( root3() ));
+      real_type z2 = std::abs(eval( root2() ));
+      real_type z3 = std::abs(eval( root3() ));
       s << "|p(r2)| = " << z2 << "\n|p(r3)| = " << z3 << '\n';
       ok = ok && std::abs(z2) < epsi && std::abs(z3) < epsi;
     } else {
       if ( nreal > 2 || (ncplx > 0 && nreal > 0)  ) {
-        valueType z2 = eval( real_root2() );
+        real_type z2 = eval( real_root2() );
         s << "p(r2) = " << z2 << '\n';
         ok = ok && std::abs(z2) < epsi;
       }
       if ( nreal > 3 || (ncplx > 0 && nreal > 1)  ) {
-        valueType z3 = eval( real_root3() );
+        real_type z3 = eval( real_root3() );
         s << "p(r3) = " << z3 << '\n';
         ok = ok && std::abs(z3) < epsi;
       }

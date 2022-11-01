@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -26,7 +26,7 @@
 #include <iostream>
 
 //!
-//! Implementation of Flocke algorithm for roots 
+//! Implementation of Flocke algorithm for roots
 //! of 3rd and 4th degree polynomials.
 //!
 //! There are 3 classed for 2nd, 3rd and 4th degree polynomial.
@@ -52,9 +52,11 @@
 //!
 namespace PolynomialRoots {
 
-  typedef double valueType;
-  typedef int    indexType;
-  typedef std::complex<valueType> complexType;
+  using real_type    = double;
+  using integer      = int;
+  using complex_type = std::complex<real_type>;
+  using ostream_type = std::basic_ostream<char>;
+  using istream_type = std::basic_istream<char>;
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -62,39 +64,39 @@ namespace PolynomialRoots {
   static
   inline
   bool
-  isZero( valueType x )
+  isZero( real_type x )
   { return FP_ZERO == std::fpclassify(x); }
 
   //! evaluate real polynomial
-  valueType
+  real_type
   evalPoly(
-    valueType const op[],
-    indexType       Degree,
-    valueType       x
+    real_type const op[],
+    integer         Degree,
+    real_type       x
   );
 
   void
   evalPolyDPoly(
-    valueType const op[],
-    indexType       Degree,
-    valueType       x,
-    valueType     & p,
-    valueType     & dp
+    real_type const op[],
+    integer         Degree,
+    real_type       x,
+    real_type     & p,
+    real_type     & dp
   );
 
   bool
   NewtonStep(
-    valueType const op[],
-    indexType       Degree,
-    valueType     & x
+    real_type const op[],
+    integer         Degree,
+    real_type     & x
   );
 
   //! evaluate real polynomial with complex value
-  std::complex<valueType>
+  complex_type
   evalPolyC(
-    valueType const                 op[],
-    indexType                       Degree,
-    std::complex<valueType> const & x
+    real_type const      op[],
+    integer              Degree,
+    complex_type const & x
   );
 
   #endif
@@ -111,10 +113,10 @@ namespace PolynomialRoots {
   //!
   int
   roots(
-    valueType const * op,
-    indexType         Degree,
-    valueType       * zeror,
-    valueType       * zeroi
+    real_type const * op,
+    integer           Degree,
+    real_type       * zeror,
+    real_type       * zeroi
   );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,10 +185,10 @@ namespace PolynomialRoots {
   //!
   //!   double r0 = p.real_root0();
   //!   double r1 = p.real_root1();
-  //!   complexType r0 = p.root0();
-  //!   complexType r1 = p.root1();
+  //!   complex_type r0 = p.root0();
+  //!   complex_type r1 = p.root1();
   //!
-  //!   complexType r;
+  //!   complex_type r;
   //!   double re, im;
   //!   p.getRoot0( re, im );
   //!   p.getRoot0( r );
@@ -220,9 +222,9 @@ namespace PolynomialRoots {
   //! \endrst
   //!
   class Quadratic {
-    valueType ABC[3];
-    valueType r0, r1;
-    indexType nrts;
+    real_type ABC[3];
+    real_type r0, r1;
+    integer   nrts;
     bool      cplx;
     bool      dblx;
 
@@ -242,11 +244,11 @@ namespace PolynomialRoots {
     //! \param[in] b coefficient of \f$ x \f$
     //! \param[in] c coefficient of \f$ x^0 \f$
     //!
-    Quadratic( valueType a, valueType b, valueType c )
+    Quadratic( real_type a, real_type b, real_type c )
     : nrts(0), cplx(false), dblx(false) {
-      valueType & A = ABC[0];
-      valueType & B = ABC[1];
-      valueType & C = ABC[2];
+      real_type & A = ABC[0];
+      real_type & B = ABC[1];
+      real_type & C = ABC[2];
       A = a; B = b; C = c;
       findRoots();
     }
@@ -261,10 +263,10 @@ namespace PolynomialRoots {
     //! \param[in] c coefficient of \f$ x^0 \f$
     //!
     void
-    setup( valueType a, valueType b, valueType c ) {
-      valueType & A = ABC[0];
-      valueType & B = ABC[1];
-      valueType & C = ABC[2];
+    setup( real_type a, real_type b, real_type c ) {
+      real_type & A = ABC[0];
+      real_type & B = ABC[1];
+      real_type & C = ABC[2];
       A = a; B = b; C = c;
       findRoots();
     }
@@ -279,10 +281,10 @@ namespace PolynomialRoots {
     //!
     //! \return number of computed roots
     //!
-    indexType numRoots() const { return nrts; }
+    integer numRoots() const { return nrts; }
 
     //! alias of `numRoots`
-    indexType num_roots() const { return nrts; }
+    integer num_roots() const { return nrts; }
 
     //!
     //! true if roots are complex conjugated
@@ -306,10 +308,10 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of real roots, 0, 1 or 2
     //!
-    indexType getRealRoots( valueType r[] ) const;
+    integer getRealRoots( real_type r[] ) const;
 
     //! alias of `getRealRoots`
-    indexType get_real_roots( valueType r[] ) const { return getRealRoots(r); }
+    integer get_real_roots( real_type r[] ) const { return getRealRoots(r); }
 
     //!
     //! Get positive real roots
@@ -317,10 +319,10 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of positive real roots, 0, 1 or 2
     //!
-    indexType getPositiveRoots( valueType r[] ) const;
+    integer getPositiveRoots( real_type r[] ) const;
 
     //! alias of `getPositiveRoots`
-    indexType get_positive_roots( valueType r[] ) const { return getPositiveRoots(r); }
+    integer get_positive_roots( real_type r[] ) const { return getPositiveRoots(r); }
 
     //!
     //! Get negative real roots
@@ -328,10 +330,10 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of negative real roots, 0, 1 or 2
     //!
-    indexType getNegativeRoots( valueType r[] ) const;
+    integer getNegativeRoots( real_type r[] ) const;
 
     //! alias of `getNegativeRoots`
-    indexType get_negative_roots( valueType r[] ) const { return getNegativeRoots(r); }
+    integer get_negative_roots( real_type r[] ) const { return getNegativeRoots(r); }
 
     //!
     //! Get real roots in a closed range
@@ -339,13 +341,13 @@ namespace PolynomialRoots {
     //! \param[in]  a left side of the range
     //! \param[in]  b right side of the range
     //! \param[out] r vector that will be filled with the real roots
-    //! \return the total number of real roots in the range \f$ [a,b] \f$ 
+    //! \return the total number of real roots in the range \f$ [a,b] \f$
     //!
-    indexType getRootsInRange( valueType a, valueType b, valueType r[] ) const;
+    integer getRootsInRange( real_type a, real_type b, real_type r[] ) const;
 
     //! alias of `getRootsInRange`
-    indexType
-    get_roots_in_range( valueType a, valueType b, valueType r[] ) const
+    integer
+    get_roots_in_range( real_type a, real_type b, real_type r[] ) const
     { return getRootsInRange( a, b, r ); }
 
     //!
@@ -354,38 +356,38 @@ namespace PolynomialRoots {
     //! \param[in]  a left side of the range
     //! \param[in]  b right side of the range
     //! \param[out] r vector that will be filled with the real roots
-    //! \return the total number of real roots in the open range \f$ (a,b) \f$ 
+    //! \return the total number of real roots in the open range \f$ (a,b) \f$
     //!
-    indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
+    integer getRootsInOpenRange( real_type a, real_type b, real_type r[] ) const;
 
     //! alias of `getRootsInOpenRange`
-    indexType
-    get_roots_in_open_range( valueType a, valueType b, valueType r[] ) const
+    integer
+    get_roots_in_open_range( real_type a, real_type b, real_type r[] ) const
     { return getRootsInOpenRange( a, b, r ); }
 
     //!
     //! The first real root
     //!
-    valueType real_root0() const { return r0; }
+    real_type real_root0() const { return r0; }
 
     //!
     //! The second real root
     //!
-    valueType real_root1() const { return r1; }
+    real_type real_root1() const { return r1; }
 
     //!
     //! The first complex root
     //!
-    complexType
+    complex_type
     root0() const
-    { return cplx ? complexType(r0,r1) : complexType(r0,0); }
+    { return cplx ? complex_type(r0,r1) : complex_type(r0,0); }
 
     //!
     //! The second complex root
     //!
-    complexType
+    complex_type
     root1() const
-    { return cplx ? complexType(r0,-r1) : complexType(r1,0); }
+    { return cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
 
     //!
     //! Get the first root (complex or real)
@@ -394,14 +396,14 @@ namespace PolynomialRoots {
     //! \param[out] im the first complex root, imaginary part
     //!
     void
-    getRoot0( valueType & re, valueType & im ) const {
+    getRoot0( real_type & re, real_type & im ) const {
       if ( cplx ) { re = r0; im = r1; }
       else        { re = r0; im = 0;  }
     }
 
     //! alias of `getRoot0`
     void
-    get_root0( valueType & re, valueType & im  ) const
+    get_root0( real_type & re, real_type & im  ) const
     { return getRoot0( re, im ); }
 
     //!
@@ -410,11 +412,11 @@ namespace PolynomialRoots {
     //! \param[out] r the first complex root
     //!
     void
-    getRoot0( complexType & r ) const
-    { r = cplx ? complexType(r0,r1) : complexType(r0,0); }
+    getRoot0( complex_type & r ) const
+    { r = cplx ? complex_type(r0,r1) : complex_type(r0,0); }
 
     //! alias of `getRoot0`
-    void get_root0( complexType & r ) const { return getRoot0( r ); }
+    void get_root0( complex_type & r ) const { return getRoot0( r ); }
 
     //!
     //! Get the second root (complex or real)
@@ -423,14 +425,14 @@ namespace PolynomialRoots {
     //! \param[out] im the second complex root, imaginary part
     //!
     void
-    getRoot1( valueType & re, valueType & im ) const {
+    getRoot1( real_type & re, real_type & im ) const {
       if ( cplx ) { re = r0; im = -r1; }
       else        { re = r1; im = 0;   }
     }
 
     //! alias of `getRoot1`
     void
-    get_root1( valueType & re, valueType & im  ) const
+    get_root1( real_type & re, real_type & im  ) const
     { return getRoot1( re, im ); }
 
     //!
@@ -439,11 +441,11 @@ namespace PolynomialRoots {
     //! \param[out] r the second complex root
     //!
     void
-    getRoot1( complexType & r ) const
-    { r = cplx ? complexType(r0,-r1) : complexType(r1,0); }
+    getRoot1( complex_type & r ) const
+    { r = cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
 
     //! alias of `getRoot1`
-    void get_root1( complexType & r ) const { return getRoot1( r ); }
+    void get_root1( complex_type & r ) const { return getRoot1( r ); }
 
     //!
     //! Evaluate the quadratic polynomial
@@ -451,8 +453,8 @@ namespace PolynomialRoots {
     //! \param x  value where compute \f$ p(x) \f$
     //! \return   the value \f$ p(x) \f$
     //!
-    valueType
-    eval( valueType x ) const
+    real_type
+    eval( real_type const & x ) const
     { return evalPoly( ABC, 2, x ); }
 
     //!
@@ -461,8 +463,8 @@ namespace PolynomialRoots {
     //! \param[in] x value where compute \f$ p(x)=ax^2+bx+c \f$
     //! \return      the value \f$ p(x) \f$
     //!
-    complexType
-    eval( complexType const & x ) const
+    complex_type
+    eval( complex_type const & x ) const
     { return evalPolyC( ABC, 2, x ); }
 
     //!
@@ -472,19 +474,19 @@ namespace PolynomialRoots {
     //! \param[out] p   value \f$ p(x) \f$
     //! \param[out] dp  value \f$ p'(x) \f$
     //!
-    void eval( valueType x, valueType & p, valueType & dp ) const;
+    void eval( real_type x, real_type & p, real_type & dp ) const;
 
     //!
     //! Print info of the roots of the polynomial.
     //!
     void
-    info( std::ostream & s ) const;
+    info( ostream_type & s ) const;
 
     //!
     //! Check tolerance and quality of the computed roots
     //!
     bool
-    check( std::ostream & s ) const;
+    check( ostream_type & s ) const;
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -557,11 +559,11 @@ namespace PolynomialRoots {
   //!      double r0 = p.real_root0();
   //!      double r1 = p.real_root1();
   //!      double r2 = p.real_root2();
-  //!      complexType r0 = p.root0();
-  //!      complexType r1 = p.root1();
-  //!      complexType r2 = p.root2();
+  //!      complex_type r0 = p.root0();
+  //!      complex_type r1 = p.root1();
+  //!      complex_type r2 = p.root2();
   //!
-  //!      complexType r;
+  //!      complex_type r;
   //!      double re, im;
   //!      p.getRoot0( re, im );
   //!      p.getRoot0( r );
@@ -597,9 +599,9 @@ namespace PolynomialRoots {
   //! \endrst
   //!
   class Cubic {
-    valueType ABCD[4];
-    valueType r0, r1, r2;
-    indexType nrts, iter;
+    real_type ABCD[4];
+    real_type r0, r1, r2;
+    integer   nrts, iter;
     bool      cplx; // complex root
     bool      dblx; // double root
     bool      trpx; // triple root
@@ -609,12 +611,12 @@ namespace PolynomialRoots {
   public:
 
     Cubic() : nrts(0), iter(0), cplx(false), trpx(false) {}
-    Cubic( valueType _a, valueType _b, valueType _c, valueType _d )
+    Cubic( real_type _a, real_type _b, real_type _c, real_type _d )
     : nrts(0), iter(0), cplx(false), trpx(false) {
-      valueType & A = ABCD[0];
-      valueType & B = ABCD[1];
-      valueType & C = ABCD[2];
-      valueType & D = ABCD[3];
+      real_type & A = ABCD[0];
+      real_type & B = ABCD[1];
+      real_type & C = ABCD[2];
+      real_type & D = ABCD[3];
       A = _a; B = _b; C = _c; D = _d;
       findRoots();
     }
@@ -629,11 +631,11 @@ namespace PolynomialRoots {
     //! \param[in] d coefficient of \f$ x^0 \f$
     //!
     void
-    setup( valueType a, valueType b, valueType c, valueType d ) {
-      valueType & A = ABCD[0];
-      valueType & B = ABCD[1];
-      valueType & C = ABCD[2];
-      valueType & D = ABCD[3];
+    setup( real_type a, real_type b, real_type c, real_type d ) {
+      real_type & A = ABCD[0];
+      real_type & B = ABCD[1];
+      real_type & C = ABCD[2];
+      real_type & D = ABCD[3];
       A = a; B = b; C = c; D = d;
       findRoots();
     }
@@ -641,10 +643,10 @@ namespace PolynomialRoots {
     //!
     //! Number of found roots.
     //!
-    indexType numRoots() const { return nrts; }
+    integer numRoots() const { return nrts; }
 
     //! alias of `numRoots`
-    indexType num_roots() const { return nrts; }
+    integer num_roots() const { return nrts; }
 
     //!
     //! Has complex roots?
@@ -676,11 +678,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of real roots, 0, 1, 2 or 3
     //!
-    indexType getRealRoots( valueType r[] ) const;
+    integer getRealRoots( real_type r[] ) const;
 
     //! alias of `getRealRoots`
-    indexType
-    get_real_roots( valueType r[] ) const
+    integer
+    get_real_roots( real_type r[] ) const
     { return getRealRoots( r ); }
 
     //!
@@ -689,11 +691,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of positive real roots, 0, 1, 2 or 3
     //!
-    indexType getPositiveRoots( valueType r[] ) const;
+    integer getPositiveRoots( real_type r[] ) const;
 
     //! alias of `getPositiveRoots`
-    indexType
-    get_positive_roots( valueType r[] ) const
+    integer
+    get_positive_roots( real_type r[] ) const
     { return getPositiveRoots( r ); }
 
     //!
@@ -702,11 +704,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of negative real roots, 0, 1, 2 or 3
     //!
-    indexType getNegativeRoots( valueType r[] ) const;
+    integer getNegativeRoots( real_type r[] ) const;
 
     //! alias of `getPositiveRoots`
-    indexType
-    get_negative_roots( valueType r[] ) const
+    integer
+    get_negative_roots( real_type r[] ) const
     { return getNegativeRoots( r ); }
 
     //!
@@ -717,11 +719,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of real roots in the range [a,b]
     //!
-    indexType getRootsInRange( valueType a, valueType b, valueType r[] ) const;
+    integer getRootsInRange( real_type a, real_type b, real_type r[] ) const;
 
     //! alias of `getRootsInRange`
-    indexType
-    get_roots_in_range( valueType a, valueType b, valueType r[] ) const
+    integer
+    get_roots_in_range( real_type a, real_type b, real_type r[] ) const
     { return getRootsInRange( a, b, r ); }
 
     //!
@@ -732,118 +734,118 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of real roots in the open range (a,b)
     //!
-    indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
+    integer getRootsInOpenRange( real_type a, real_type b, real_type r[] ) const;
 
     //! alias of `getRootsInOpenRange`
-    indexType
-    get_roots_in_open_range( valueType a, valueType b, valueType r[] ) const
+    integer
+    get_roots_in_open_range( real_type a, real_type b, real_type r[] ) const
     { return getRootsInOpenRange( a, b, r ); }
 
     //!
     //! First real root.
     //!
-    valueType real_root0() const { return r0; }
+    real_type real_root0() const { return r0; }
 
     //!
     //! Second real root.
     //!
-    valueType real_root1() const { return r1; }
+    real_type real_root1() const { return r1; }
 
     //!
     //! Third real root.
     //!
-    valueType real_root2() const { return r2; }
+    real_type real_root2() const { return r2; }
 
     //!
     //! First complex or real root.
     //!
-    complexType
+    complex_type
     root0() const
-    { return cplx ? complexType(r0,r1) : complexType(r0,0); }
+    { return cplx ? complex_type(r0,r1) : complex_type(r0,0); }
 
     //!
     //! Second complex or real root.
     //!
-    complexType
+    complex_type
     root1() const
-    { return cplx ? complexType(r0,-r1) : complexType(r1,0); }
+    { return cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
 
     //!
     //! Third complex or real root.
     //!
-    complexType
+    complex_type
     root2() const
-    { return complexType(r2,0); }
+    { return complex_type(r2,0); }
 
     //!
     //! First complex or real root.
     //!
     void
-    getRoot0( valueType & re, valueType & im ) const {
+    getRoot0( real_type & re, real_type & im ) const {
       if ( cplx ) { re = r0; im = r1; }
       else        { re = r0; im = 0;  }
     }
 
     //! alias of `getRoot0`
     void
-    get_root0( valueType & re, valueType & im ) const
+    get_root0( real_type & re, real_type & im ) const
     { getRoot0( re, im ); }
 
     //!
     //! First complex or real root.
     //!
     void
-    getRoot0( complexType & r ) const
-    { r = cplx ? complexType(r0,r1) : complexType(r0,0); }
+    getRoot0( complex_type & r ) const
+    { r = cplx ? complex_type(r0,r1) : complex_type(r0,0); }
 
     //! alias of `getRoot0`
-    void get_root0( complexType & r ) const { getRoot0( r ); }
+    void get_root0( complex_type & r ) const { getRoot0( r ); }
 
     //!
     //! Second complex or real root.
     //!
     void
-    getRoot1( valueType & re, valueType & im ) const {
+    getRoot1( real_type & re, real_type & im ) const {
       if ( cplx ) { re = r0; im = -r1; }
       else        { re = r1; im = 0;   }
     }
 
     //! alias of `getRoot1`
     void
-    get_root1( valueType & re, valueType & im ) const
+    get_root1( real_type & re, real_type & im ) const
     { getRoot1( re, im ); }
 
     //!
     //! Second complex or real root.
     //!
     void
-    getRoot1( complexType & r ) const
-    { r = cplx ? complexType(r0,-r1) : complexType(r1,0); }
+    getRoot1( complex_type & r ) const
+    { r = cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
 
     //! alias of `getRoot1`
-    void get_root1( complexType & r ) const { getRoot1( r ); }
+    void get_root1( complex_type & r ) const { getRoot1( r ); }
 
     //!
     //! Third complex or real root.
     //!
     void
-    getRoot2( valueType & re, valueType & im ) const
+    getRoot2( real_type & re, real_type & im ) const
     { re = r2; im = 0; }
 
     //! alias of `getRoot1`
     void
-    get_root2( valueType & re, valueType & im ) const
+    get_root2( real_type & re, real_type & im ) const
     { getRoot2( re, im ); }
 
     //!
     //! Third complex or real root.
     //!
     void
-    getRoot2( complexType & r ) const
-    { r = complexType(r2,0); }
+    getRoot2( complex_type & r ) const
+    { r = complex_type(r2,0); }
 
     //! alias of `getRoot2`
-    void get_root2( complexType & r ) const { getRoot2( r ); }
+    void get_root2( complex_type & r ) const { getRoot2( r ); }
 
     //!
     //! Evalute the cubic polynomial.
@@ -851,8 +853,8 @@ namespace PolynomialRoots {
     //! \param x   value where compute \f$ p(x) \f$
     //! \return the value \f$ p(x) \f$
     //!
-    valueType
-    eval( valueType x ) const
+    real_type
+    eval( real_type const & x ) const
     { return evalPoly( ABCD, 3, x ); }
 
     //!
@@ -861,8 +863,8 @@ namespace PolynomialRoots {
     //! \param x   value where compute \f$ p(x) \f$, x complex
     //! \return the value \f$ p(x) \f$
     //!
-    complexType
-    eval( complexType const & x ) const
+    complex_type
+    eval( complex_type const & x ) const
     { return evalPolyC( ABCD, 3, x ); }
 
     //!
@@ -872,19 +874,19 @@ namespace PolynomialRoots {
     //! \param p   value \f$ p(x) \f$
     //! \param dp  value \f$ p'(x) \f$
     //!
-    void eval( valueType x, valueType & p, valueType & dp ) const;
+    void eval( real_type x, real_type & p, real_type & dp ) const;
 
     //!
     //! Print info of the roots of the polynomial.
     //!
     void
-    info( std::ostream & s ) const;
+    info( ostream_type & s ) const;
 
     //!
     //! Check tolerenace and quality of the computed roots.
     //!
     bool
-    check( std::ostream & s ) const;
+    check( ostream_type & s ) const;
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -958,12 +960,12 @@ namespace PolynomialRoots {
   //!      double r1 = p.real_root1();
   //!      double r2 = p.real_root2();
   //!      double r3 = p.real_root3();
-  //!      complexType r0 = p.root0();
-  //!      complexType r1 = p.root1();
-  //!      complexType r2 = p.root2();
-  //!      complexType r3 = p.root3();
+  //!      complex_type r0 = p.root0();
+  //!      complex_type r1 = p.root1();
+  //!      complex_type r2 = p.root2();
+  //!      complex_type r3 = p.root3();
   //!
-  //!      complexType r;
+  //!      complex_type r;
   //!      double re, im;
   //!      p.getRoot0( re, im );
   //!      p.getRoot0( r );
@@ -1001,9 +1003,9 @@ namespace PolynomialRoots {
   //! \endrst
   //!
   class Quartic {
-    valueType ABCDE[5];
-    valueType r0, r1, r2, r3;
-    indexType iter, nreal, ncplx;
+    real_type ABCDE[5];
+    real_type r0, r1, r2, r3;
+    integer   iter, nreal, ncplx;
 
     void findRoots();
 
@@ -1016,18 +1018,18 @@ namespace PolynomialRoots {
 
     Quartic() : iter(0), nreal(0), ncplx(0) {}
     Quartic(
-      valueType _a,
-      valueType _b,
-      valueType _c,
-      valueType _d,
-      valueType _e
+      real_type _a,
+      real_type _b,
+      real_type _c,
+      real_type _d,
+      real_type _e
     )
     : iter(0), nreal(0), ncplx(0) {
-      valueType & A = ABCDE[0];
-      valueType & B = ABCDE[1];
-      valueType & C = ABCDE[2];
-      valueType & D = ABCDE[3];
-      valueType & E = ABCDE[4];
+      real_type & A = ABCDE[0];
+      real_type & B = ABCDE[1];
+      real_type & C = ABCDE[2];
+      real_type & D = ABCDE[3];
+      real_type & E = ABCDE[4];
       A = _a; B = _b; C = _c; D = _d; E = _e;
       findRoots();
     }
@@ -1044,17 +1046,17 @@ namespace PolynomialRoots {
     //!
     void
     setup(
-      valueType a,
-      valueType b,
-      valueType c,
-      valueType d,
-      valueType e
+      real_type a,
+      real_type b,
+      real_type c,
+      real_type d,
+      real_type e
     ) {
-      valueType & A = ABCDE[0];
-      valueType & B = ABCDE[1];
-      valueType & C = ABCDE[2];
-      valueType & D = ABCDE[3];
-      valueType & E = ABCDE[4];
+      real_type & A = ABCDE[0];
+      real_type & B = ABCDE[1];
+      real_type & C = ABCDE[2];
+      real_type & D = ABCDE[3];
+      real_type & E = ABCDE[4];
       A = a; B = b; C = c; D = d; E = e;
       findRoots();
     }
@@ -1062,26 +1064,26 @@ namespace PolynomialRoots {
     //!
     //! Number of roots found.
     //!
-    indexType numRoots() const { return nreal+ncplx; }
+    integer numRoots() const { return nreal+ncplx; }
 
     //! alias of `numRoots`
-    indexType num_roots() const { return nreal+ncplx; }
+    integer num_roots() const { return nreal+ncplx; }
 
     //!
     //! Number of real roots.
     //!
-    indexType numRealRoots() const { return nreal; }
+    integer numRealRoots() const { return nreal; }
 
     //! alias of `numRealRoots`
-    indexType num_real_roots() const { return nreal; }
+    integer num_real_roots() const { return nreal; }
 
     //!
     //! Number of complex roots
     //!
-    indexType numComplexRoots() const { return ncplx; }
+    integer numComplexRoots() const { return ncplx; }
 
     //! alias of `numComplexRoots`
-    indexType num_complex_roots() const { return ncplx; }
+    integer num_complex_roots() const { return ncplx; }
 
     //!
     //! Get the real roots.
@@ -1089,11 +1091,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of real roots, 0, 1, 2, 3 or 4
     //!
-    indexType getRealRoots( valueType r[] ) const;
+    integer getRealRoots( real_type r[] ) const;
 
     //! alias of `getRealRoots`
-    indexType
-    get_real_roots( valueType r[] ) const 
+    integer
+    get_real_roots( real_type r[] ) const
     { return getRealRoots(r); }
 
     //!
@@ -1102,11 +1104,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of positive real roots, 0, 1, 2, 3 or 4
     //!
-    indexType getPositiveRoots( valueType r[] ) const;
+    integer getPositiveRoots( real_type r[] ) const;
 
     //! alias of `getPositiveRoots`
-    indexType
-    get_positive_roots( valueType r[] ) const
+    integer
+    get_positive_roots( real_type r[] ) const
     { return getPositiveRoots( r ); }
 
     //!
@@ -1115,11 +1117,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of negative real roots, 0, 1, 2, 3 or 4
     //!
-    indexType getNegativeRoots( valueType r[] ) const;
+    integer getNegativeRoots( real_type r[] ) const;
 
     //! alias of `getNegativeRoots`
-    indexType
-    get_negative_roots( valueType r[] ) const
+    integer
+    get_negative_roots( real_type r[] ) const
     { return getNegativeRoots( r ); }
 
     //!
@@ -1130,11 +1132,11 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of real roots in the range [a,b]
     //!
-    indexType getRootsInRange( valueType a, valueType b, valueType r[] ) const;
+    integer getRootsInRange( real_type a, real_type b, real_type r[] ) const;
 
     //! alias of `getRootsInRange`
-    indexType
-    get_roots_in_range( valueType a, valueType b, valueType r[] ) const
+    integer
+    get_roots_in_range( real_type a, real_type b, real_type r[] ) const
     { return getRootsInRange( a, b, r ); }
 
     //!
@@ -1145,73 +1147,73 @@ namespace PolynomialRoots {
     //! \param[out] r vector that will be filled with the real roots
     //! \return the total number of real roots in the open range (a,b)
     //!
-    indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
+    integer getRootsInOpenRange( real_type a, real_type b, real_type r[] ) const;
 
     //! alias of `getRootsInRange`
-    indexType
-    get_roots_in_open_range( valueType a, valueType b, valueType r[] ) const
+    integer
+    get_roots_in_open_range( real_type a, real_type b, real_type r[] ) const
     { return getRootsInOpenRange( a, b, r ); }
 
     //!
     //! First real root.
     //!
-    valueType real_root0() const { return r0; }
+    real_type real_root0() const { return r0; }
 
     //!
     //! Second real root.
     //!
-    valueType real_root1() const { return r1; }
+    real_type real_root1() const { return r1; }
 
     //!
     //! Third real root.
     //!
-    valueType real_root2() const { return r2; }
+    real_type real_root2() const { return r2; }
 
     //!
     //! Fourth real root.
     //!
-    valueType real_root3() const { return r3; }
+    real_type real_root3() const { return r3; }
 
     //!
     //! First real or complex root.
     //!
-    complexType
+    complex_type
     root0() const
-    { return cplx0() ? complexType(r0,r1) : complexType(r0,0); }
+    { return cplx0() ? complex_type(r0,r1) : complex_type(r0,0); }
 
     //!
     //! Second real or complex root.
     //!
-    complexType
+    complex_type
     root1() const
-    { return cplx1() ? complexType(r0,-r1) : complexType(r1,0); }
+    { return cplx1() ? complex_type(r0,-r1) : complex_type(r1,0); }
 
     //!
     //! Third real or complex root.
     //!
-    complexType
+    complex_type
     root2() const
-    { return cplx2() ? complexType(r2,r3) : complexType(r2,0); }
+    { return cplx2() ? complex_type(r2,r3) : complex_type(r2,0); }
 
     //!
     //! 4th real or complex root.
     //!
-    complexType
+    complex_type
     root3() const
-    { return cplx3() ? complexType(r2,-r3) : complexType(r3,0); }
+    { return cplx3() ? complex_type(r2,-r3) : complex_type(r3,0); }
 
     //!
     //! First real or complex root.
     //!
     void
-    getRoot0( valueType & re, valueType & im ) const {
+    getRoot0( real_type & re, real_type & im ) const {
       if ( cplx0() ) { re = r0; im = r1; }
       else           { re = r0; im = 0;  }
     }
 
     //! alias of `getRoot0`
     void
-    get_root0( valueType & re, valueType & im ) const {
+    get_root0( real_type & re, real_type & im ) const {
       getRoot0( re, im );
     }
 
@@ -1219,26 +1221,26 @@ namespace PolynomialRoots {
     //! First real or complex root.
     //!
     void
-    getRoot0( complexType & r ) const {
-      if ( cplx0() ) r = complexType(r0,r1);
-      else           r = complexType(r0,0);
+    getRoot0( complex_type & r ) const {
+      if ( cplx0() ) r = complex_type(r0,r1);
+      else           r = complex_type(r0,0);
     }
 
     //! alias of `getRoot0`
-    void get_root0( complexType & r ) const { getRoot0( r ); }
+    void get_root0( complex_type & r ) const { getRoot0( r ); }
 
     //!
     //! Second real or complex root.
     //!
     void
-    getRoot1( valueType & re, valueType & im ) const {
+    getRoot1( real_type & re, real_type & im ) const {
       if ( cplx1() ) { re = r0; im = -r1; }
       else           { re = r1; im = 0;   }
     }
 
     //! alias of `getRoot1`
     void
-    get_root1( valueType & re, valueType & im ) const {
+    get_root1( real_type & re, real_type & im ) const {
       getRoot1( re, im );
     }
 
@@ -1246,26 +1248,26 @@ namespace PolynomialRoots {
     //! Second real or complex root.
     //!
     void
-    getRoot1( complexType & r ) const {
-      if ( cplx1() ) r = complexType(r0,-r1);
-      else           r = complexType(r1,0);
+    getRoot1( complex_type & r ) const {
+      if ( cplx1() ) r = complex_type(r0,-r1);
+      else           r = complex_type(r1,0);
     }
 
     //! alias of `getRoot1`
-    void get_root1( complexType & r ) const { getRoot1( r ); }
+    void get_root1( complex_type & r ) const { getRoot1( r ); }
 
     //!
     //! Third real or complex root.
     //!
     void
-    getRoot2( valueType & re, valueType & im ) const {
+    getRoot2( real_type & re, real_type & im ) const {
       if ( cplx2() ) { re = r2; im = r3; }
       else           { re = r2; im = 0;  }
     }
 
     //! alias of `getRoot2`
     void
-    get_root2( valueType & re, valueType & im ) const {
+    get_root2( real_type & re, real_type & im ) const {
       getRoot2( re, im );
     }
 
@@ -1273,26 +1275,26 @@ namespace PolynomialRoots {
     //! Third real or complex root.
     //!
     void
-    getRoot2( complexType & r ) const {
-      if ( cplx2() ) r = complexType(r2,r3);
-      else           r = complexType(r2,0);
+    getRoot2( complex_type & r ) const {
+      if ( cplx2() ) r = complex_type(r2,r3);
+      else           r = complex_type(r2,0);
     }
 
     //! alias of `getRoot2`
-    void get_root2( complexType & r ) const { getRoot2( r ); }
+    void get_root2( complex_type & r ) const { getRoot2( r ); }
 
     //!
     //! 4th real or complex root.
     //!
     void
-    getRoot3( valueType & re, valueType & im ) const {
+    getRoot3( real_type & re, real_type & im ) const {
       if ( cplx3() ) { re = r2; im = -r3; }
       else           { re = r3; im = 0;   }
     }
 
     //! alias of `getRoot3`
     void
-    get_root3( valueType & re, valueType & im ) const {
+    get_root3( real_type & re, real_type & im ) const {
       getRoot3( re, im );
     }
 
@@ -1300,13 +1302,13 @@ namespace PolynomialRoots {
     //! 4th real or complex root.
     //!
     void
-    getRoot3( complexType & r ) const {
-      if ( cplx3() ) r = complexType(r2,-r3);
-      else           r = complexType(r3,0);
+    getRoot3( complex_type & r ) const {
+      if ( cplx3() ) r = complex_type(r2,-r3);
+      else           r = complex_type(r3,0);
     }
 
     //! alias of `getRoot3`
-    void get_root3( complexType & r ) const { getRoot3( r ); }
+    void get_root3( complex_type & r ) const { getRoot3( r ); }
 
     //!
     //! Evalute the quartic polynomial.
@@ -1314,8 +1316,8 @@ namespace PolynomialRoots {
     //! \param x   value where compute \f$ p(x) \f$, x complex
     //! \return the value \f$ p(x) \f$
     //!
-    valueType
-    eval( valueType x ) const
+    real_type
+    eval( real_type const & x ) const
     { return evalPoly( ABCDE, 4, x ); }
 
     //!
@@ -1324,21 +1326,21 @@ namespace PolynomialRoots {
     //! \param x   value where compute \f$ p(x) \f$, x complex
     //! \return the value \f$ p(x) \f$
     //!
-    complexType
-    eval( complexType const & x ) const
+    complex_type
+    eval( complex_type const & x ) const
     { return evalPolyC( ABCDE, 4, x ); }
 
     //!
     //! Print info of the roots of the polynomial.
     //!
     void
-    info( std::ostream & s ) const;
+    info( ostream_type & s ) const;
 
     //!
     //! Check tolerenace and quality of the computed roots.
     //!
     bool
-    check( std::ostream & s ) const;
+    check( ostream_type & s ) const;
 
   };
 
@@ -1355,14 +1357,14 @@ namespace PolynomialRoots {
   // x^3 + a*x^2 + b*x + c
   static
   inline
-  valueType
+  real_type
   evalMonicCubic(
-    valueType x,
-    valueType a,
-    valueType b,
-    valueType c
+    real_type x,
+    real_type a,
+    real_type b,
+    real_type c
   ) {
-    valueType p;
+    real_type p;
     p = x + a;
     p = p * x + b;
     p = p * x + c;
@@ -1373,12 +1375,12 @@ namespace PolynomialRoots {
   inline
   void
   evalMonicCubic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType & p,
-    valueType & dp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & p,
+    real_type & dp
   ) {
     p  = x + a;
     dp = x + p;
@@ -1393,13 +1395,13 @@ namespace PolynomialRoots {
   inline
   void
   evalMonicCubic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType & p,
-    valueType & dp,
-    valueType & ddp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & p,
+    real_type & dp,
+    real_type & ddp
   ) {
     p   = x + a;
     dp  = x + p;      // 2*x + a
@@ -1412,15 +1414,15 @@ namespace PolynomialRoots {
   // x^4 + a*x^3 + b*x^2 + c*x + d
   static
   inline
-  valueType
+  real_type
   evalMonicQuartic(
-    valueType x,
-    valueType a,
-    valueType b,
-    valueType c,
-    valueType d
+    real_type x,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type d
   ) {
-    valueType p;
+    real_type p;
     p = x + a;     // x + a
     p = p * x + b; // x^2+ a*x + b
     p = p * x + c; // x^3+ a*x^2 + b*x + c
@@ -1432,13 +1434,13 @@ namespace PolynomialRoots {
   inline
   void
   evalMonicQuartic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType   d,
-    valueType & p,
-    valueType & dp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type   d,
+    real_type & p,
+    real_type & dp
   ) {
     p  = x + a;      // x + a
     dp = x + p;      // 2*x + a
@@ -1453,14 +1455,14 @@ namespace PolynomialRoots {
   inline
   void
   evalMonicQuartic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType   d,
-    valueType & p,
-    valueType & dp,
-    valueType & ddp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type   d,
+    real_type & p,
+    real_type & dp,
+    real_type & ddp
   ) {
     // p_{n+1}(x)   = x * p_{n}(x) + b_{n}
     // p'_{n+1}(x)  = x * p'_{n}(x) + p_{n}(x)
@@ -1488,12 +1490,12 @@ namespace PolynomialRoots {
   // x^3 + a*x^2 + b*x + c
   static
   inline
-  valueType
+  real_type
   eval_monic_cubic(
-    valueType x,
-    valueType a,
-    valueType b,
-    valueType c
+    real_type x,
+    real_type a,
+    real_type b,
+    real_type c
   ) {
     return evalMonicCubic( x, a, b, c );
   }
@@ -1502,12 +1504,12 @@ namespace PolynomialRoots {
   inline
   void
   eval_monic_cubic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType & p,
-    valueType & dp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & p,
+    real_type & dp
   ) {
     evalMonicCubic( x, a, b, c, p, dp );
   }
@@ -1518,13 +1520,13 @@ namespace PolynomialRoots {
   inline
   void
   eval_monic_cubic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType & p,
-    valueType & dp,
-    valueType & ddp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type & p,
+    real_type & dp,
+    real_type & ddp
   ) {
     evalMonicCubic( x, a, b, c, p, dp, ddp );
   }
@@ -1532,13 +1534,13 @@ namespace PolynomialRoots {
   // x^4 + a*x^3 + b*x^2 + c*x + d
   static
   inline
-  valueType
+  real_type
   eval_monic_quartic(
-    valueType x,
-    valueType a,
-    valueType b,
-    valueType c,
-    valueType d
+    real_type x,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type d
   ) {
     return evalMonicQuartic( x, a, b, c, d );
   }
@@ -1547,13 +1549,13 @@ namespace PolynomialRoots {
   inline
   void
   eval_monic_quartic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType   d,
-    valueType & p,
-    valueType & dp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type   d,
+    real_type & p,
+    real_type & dp
   ) {
     evalMonicQuartic( x, a, b, c, d, p, dp );
   }
@@ -1562,14 +1564,14 @@ namespace PolynomialRoots {
   inline
   void
   eval_monic_quartic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType   d,
-    valueType & p,
-    valueType & dp,
-    valueType & ddp
+    real_type   x,
+    real_type   a,
+    real_type   b,
+    real_type   c,
+    real_type   d,
+    real_type & p,
+    real_type & dp,
+    real_type & ddp
   ) {
     evalMonicQuartic( x, a, b, c, d, p, dp, ddp );
   }

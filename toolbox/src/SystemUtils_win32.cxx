@@ -88,7 +88,7 @@ namespace Utils {
     addr.clear();
 
     do {
-      addr.push_back(pAdapterInfo->IpAddressList.IpAddress.String);
+      addr.emplace_back(pAdapterInfo->IpAddressList.IpAddress.String);
       pAdapterInfo = pAdapterInfo->Next;	// Progress through linked list
     } while(pAdapterInfo);
   }

@@ -40,11 +40,11 @@
 namespace PolynomialRoots {
 
   using  std::abs;
-  static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
+  static real_type const machepsi = std::numeric_limits<real_type>::epsilon();
 
-  indexType
-  Quadratic::getRealRoots( valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quadratic::getRealRoots( real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx ) {
       r[nr++] = r0;
       if ( nrts > 1 ) r[nr++] = r1;
@@ -52,9 +52,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quadratic::getPositiveRoots( valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quadratic::getPositiveRoots( real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx ) {
       if ( nrts > 0 && r0 > 0 ) r[nr++] = r0;
       if ( nrts > 1 && r1 > 0 ) r[nr++] = r1;
@@ -62,9 +62,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quadratic::getNegativeRoots( valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quadratic::getNegativeRoots( real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx ) {
       if ( nrts > 0 && r0 < 0 ) r[nr++] = r0;
       if ( nrts > 1 && r1 < 0 ) r[nr++] = r1;
@@ -72,9 +72,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quadratic::getRootsInRange( valueType a, valueType b, valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quadratic::getRootsInRange( real_type a, real_type b, real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx ) {
       if ( nrts > 0 && r0 >= a && r0 <= b ) r[nr++] = r0;
       if ( nrts > 1 && r1 >= a && r1 <= b ) r[nr++] = r1;
@@ -82,9 +82,9 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  indexType
-  Quadratic::getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const {
-    indexType nr = 0;
+  integer
+  Quadratic::getRootsInOpenRange( real_type a, real_type b, real_type r[] ) const {
+    integer nr = 0;
     if ( !cplx ) {
       if ( nrts > 0 && r0 > a && r0 < b ) r[nr++] = r0;
       if ( nrts > 1 && r1 > a && r1 < b ) r[nr++] = r1;
@@ -93,14 +93,13 @@ namespace PolynomialRoots {
   }
 
   void
-  Quadratic::eval( valueType x, valueType & p, valueType & dp ) const {
-    valueType const & A = ABC[0];
-    valueType const & B = ABC[1];
-    valueType const & C = ABC[2];
+  Quadratic::eval( real_type x, real_type & p, real_type & dp ) const {
+    real_type const & A = ABC[0];
+    real_type const & B = ABC[1];
+    real_type const & C = ABC[2];
     if ( std::abs(x) > 1 ) {
-      valueType z  = 1/x;
-      valueType x2 = x*x;
-      p = ((C*z+B)*z+A)*x2;
+      real_type z  = 1/x;
+      p = (((C*z+B)*z+A)/x)/x;
     } else {
       p = (A*x+B)*x+C;
     }
@@ -117,9 +116,9 @@ namespace PolynomialRoots {
 
   void
   Quadratic::findRoots() {
-    valueType const & A = ABC[0];
-    valueType const & B = ABC[1];
-    valueType const & C = ABC[2];
+    real_type const & A = ABC[0];
+    real_type const & B = ABC[1];
+    real_type const & C = ABC[2];
 
     r0 = r1 = 0;
     nrts = 0;
@@ -135,10 +134,10 @@ namespace PolynomialRoots {
         if ( r0 < 0 ) std::swap(r0,r1);
       }
     } else { // Compute discriminant avoiding overflow.
-      valueType hb    = B/2; // b now b/2
-      valueType abs_b = std::abs(hb);
-      valueType abs_c = std::abs(C);
-      valueType e, d;
+      real_type hb    = B/2; // b now b/2
+      real_type abs_b = std::abs(hb);
+      real_type abs_c = std::abs(C);
+      real_type e, d;
       if ( abs_b < abs_c ) {
         e = C < 0 ? -A : A;
         e = (hb*hb)-e*abs_c;
@@ -170,10 +169,10 @@ namespace PolynomialRoots {
   }
 
   void
-  Quadratic::info( std::ostream & s ) const {
-    valueType const & A = ABC[0];
-    valueType const & B = ABC[1];
-    valueType const & C = ABC[2];
+  Quadratic::info( ostream_type & s ) const {
+    real_type const & A = ABC[0];
+    real_type const & B = ABC[1];
+    real_type const & C = ABC[2];
     s << "\npoly A=" << A << " B=" << B << " C=" << C
       << "\nn. roots = " << nrts
       << "\ncomplex  = " << (cplx?"YES":"NO")
@@ -193,28 +192,28 @@ namespace PolynomialRoots {
   }
 
   bool
-  Quadratic::check( std::ostream & s ) const {
-    valueType const & A = ABC[0];
-    valueType const & B = ABC[1];
-    valueType const & C = ABC[2];
+  Quadratic::check( ostream_type & s ) const {
+    real_type const & A = ABC[0];
+    real_type const & B = ABC[1];
+    real_type const & C = ABC[2];
     bool ok = true;
-    valueType epsi = 10 * ( std::abs(A) +
+    real_type epsi = 10 * ( std::abs(A) +
                             std::abs(B) +
                             std::abs(C) ) * machepsi;
     if ( cplx ) {
-      valueType z0 = std::abs(eval( root0() ));
-      valueType z1 = std::abs(eval( root1() ));
+      real_type z0 = std::abs(eval( root0() ));
+      real_type z1 = std::abs(eval( root1() ));
       s << "|p(r0)| = " << z0
         << "\n|p(r1)| = " << z1
         << '\n';
       ok = z0 < epsi && z1 < epsi;
     } else if ( nrts == 1 ) {
-      valueType z0 = eval( real_root0() );
+      real_type z0 = eval( real_root0() );
       s << "p(r0) = " << z0  << '\n';
       ok = std::abs(z0) < epsi;
     } else if ( nrts == 2 ) {
-      valueType z0 = eval( real_root0() );
-      valueType z1 = eval( real_root1() );
+      real_type z0 = eval( real_root0() );
+      real_type z1 = eval( real_root1() );
       s << "p(r0) = " << z0
         << "\np(r1) = " << z1
         << '\n';

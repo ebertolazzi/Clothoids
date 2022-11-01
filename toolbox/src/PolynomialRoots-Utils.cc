@@ -35,7 +35,7 @@
 
 namespace PolynomialRoots {
 
-  // static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
+  // static real_type const machepsi = std::numeric_limits<real_type>::epsilon();
 
   using std::pair;
   using std::abs;
@@ -48,25 +48,29 @@ namespace PolynomialRoots {
   //
   // (op[0] + op[1]/x.... + op[n]/x^n)*x^n
   //
-  valueType
+  real_type
   evalPoly(
-    valueType const op[],
-    indexType       Degree,
-    valueType       x
+    real_type const op[],
+    integer         Degree,
+    real_type       x
   ) {
     bool reverse = std::abs(x) > 1;
     if ( reverse ) {
-      valueType res(op[Degree]);
-      valueType xn(1);
-      for ( indexType i = 1; i <= Degree; ++i ) {
-        res = res/x + op[Degree-i];
-        xn *= x;
+      real_type res(op[Degree]);
+      real_type xn(1);
+      for ( integer i = 1; i <= Degree; ++i ) {
+        res /= x;
+        res += op[Degree-i];
+        xn  *= x;
       }
       res *= xn;
       return res;
     } else {
-      valueType res(op[0]);
-      for ( indexType i = 1; i <= Degree; ++i ) res = res*x + op[i];
+      real_type res(op[0]);
+      for ( integer i = 1; i <= Degree; ++i ) {
+        res *= x;
+        res += op[i];
+      }
       return res;
     }
   }
@@ -80,36 +84,41 @@ namespace PolynomialRoots {
   //
   bool
   NewtonStep(
-    valueType const op[],
-    indexType       Degree,
-    valueType     & x
+    real_type const op[],
+    integer         Degree,
+    real_type     & x
   ) {
-    valueType p, dp, xn;
+    real_type p, dp, xn;
     bool reverse = std::abs(x) > 1;
     if ( reverse ) {
       p  = op[Degree];
       xn = 1;
-      for ( indexType i = 1; i <= Degree; ++i ) {
-        p = p/x + op[Degree-i];
+      for ( integer i = 1; i <= Degree; ++i ) {
+        p  /= x;
+        p  += op[Degree-i];
         xn *= x;
       }
       p *= xn;
 
       dp = op[Degree];
       xn = 1;
-      for ( indexType i = 2; i <= Degree; ++i ) {
-        dp = dp/x + (Degree-i)*op[Degree-i];
+      for ( integer i = 2; i <= Degree; ++i ) {
+        dp /= x;
+        dp += (Degree-i)*op[Degree-i];
         xn *= x;
       }
       dp *= xn;
     } else {
       dp = Degree*op[0];
       p  = op[0];
-      for ( indexType i = 1; i < Degree; ++i ) {
-        p  = p*x  + op[i];
-        dp = dp*x + (Degree-i)*op[i];
+      for ( integer i = 1; i < Degree; ++i ) {
+        p  *= x;
+        p  += op[i];
+        dp *= x;
+        dp += (Degree-i)*op[i];
       }
-      p = p*x + op[Degree];
+      p *= x;
+      p += op[Degree];
     }
     x -= p/dp;
     return true;
@@ -124,22 +133,24 @@ namespace PolynomialRoots {
   //
   void
   evalPolyDPoly(
-    valueType const op[],
-    indexType       Degree,
-    valueType       x,
-    valueType     & p,
-    valueType     & dp
+    real_type const op[],
+    integer         Degree,
+    real_type       x,
+    real_type     & p,
+    real_type     & dp
   ) {
     bool reverse = std::abs(x) > 1;
     if ( reverse ) {
-      valueType const * pc = op+Degree;
-      valueType rD = Degree;
+      real_type const * pc = op+Degree;
+      real_type rD = Degree;
       p  = *pc--;
       dp = rD*p;
-      valueType xn(1);
-      for ( indexType i = 1; i < Degree; ++i ) {
-        p  = p/x  + *pc;
-        dp = dp/x + rD*(*pc--);
+      real_type xn(1);
+      for ( integer i = 1; i < Degree; ++i ) {
+        p  /= x;
+        p  += *pc;
+        dp /= x;
+        dp += rD*(*pc--);
         xn *= x;
       }
       dp *= xn;
@@ -148,9 +159,11 @@ namespace PolynomialRoots {
       p  *= xn;
     } else {
       p = op[0]*x+op[1];
-      for ( indexType i = 2; i <= Degree; ++i ) {
-        p  = p*x  + op[i];
-        dp = dp*x + i*op[i];
+      for ( integer i = 2; i <= Degree; ++i ) {
+        p  *= x;
+        p  += op[i];
+        dp *= x;
+        dp += i*op[i];
       }
     }
   }
@@ -158,25 +171,29 @@ namespace PolynomialRoots {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
   // op[0] * x^n + .... + op[n-1]*x + op[n]
-  std::complex<valueType>
+  complex_type
   evalPolyC(
-    valueType const                 op[],
-    indexType                       Degree,
-    std::complex<valueType> const & x
+    real_type const      op[],
+    integer              Degree,
+    complex_type const & x
   ) {
     bool reverse = std::abs(x) > 1;
     if ( reverse ) {
-      std::complex<valueType> res(op[Degree]);
-      std::complex<valueType> xn(1,0);
-      for ( indexType i = 1; i <= Degree; ++i ) {
-        res = res/x + op[Degree-i];
-        xn *= x;
+      complex_type res(op[Degree]);
+      complex_type xn(1,0);
+      for ( integer i = 1; i <= Degree; ++i ) {
+        res /= x;
+        res += op[Degree-i];
+        xn  *= x;
       }
       res *= xn;
       return res;
     } else {
-      std::complex<valueType> res(op[0]);
-      for ( indexType i = 1; i <= Degree; ++i ) res = res*x + op[i];
+      complex_type res(op[0]);
+      for ( integer i = 1; i <= Degree; ++i ) {
+        res *= x;
+        res += op[i];
+      }
       return res;
     }
   }
@@ -193,24 +210,24 @@ namespace PolynomialRoots {
   */
 
   static
-  pair<indexType,valueType>
+  pair<integer,real_type>
   scalePolynomial(
-    indexType       n, // degree
-    valueType const p[],
-    valueType       ps[]
+    integer         n, // degree
+    real_type const p[],
+    real_type       ps[]
   ) {
-    indexType i_max = n;
-    valueType an    = p[n];
-    valueType scale = -1;
-    indexType i = n;
+    integer   i_max = n;
+    real_type an    = p[n];
+    real_type scale = -1;
+    integer   i     = n;
     while ( --i >= 0 ) {
       ps[i] = p[i]/an;
-      valueType scale1 = std::pow( std::abs(ps[i]), 1.0/(n-i) );
+      real_type scale1 = std::pow( std::abs(ps[i]), 1.0/(n-i) );
       if ( scale1 > scale ) { scale = scale1; i_max = i; }
     }
     // scale coeffs
-    pair<indexType,valueType> res(i_max,scale);
-    valueType s = scale;
+    pair<integer,real_type> res(i_max,scale);
+    real_type s = scale;
     for ( i = 1; i <= n; ++i, s *= scale ) ps[n-i] /= s;
     ps[n] = 1;
     return res;
@@ -225,20 +242,20 @@ namespace PolynomialRoots {
   static
   void
   deflatePolynomial(
-    indexType       n, // degree
-    valueType const a[],
-    valueType       r,
-    valueType       b[]
+    integer         n, // degree
+    real_type const a[],
+    real_type       r,
+    real_type       b[]
   ) {
     // crossover index for forward/backward deflation
     // G. Peters and J. H. Wilkinson.
     // Practical problems arising in the solution of polynomial equations.
     // J. Inst. Math. Appl. 8 (1971), 16–35.
-    indexType i_cross = 0;
-    valueType v_cross = std::abs(a[0]);
-    valueType r1 = r;
-    for ( indexType i = 1; i < n; ++i, r1 *= r ) {
-      valueType v_cross1 = std::abs(a[i]*r1);
+    integer   i_cross = 0;
+    real_type v_cross = std::abs(a[0]);
+    real_type r1      = r;
+    for ( integer i = 1; i < n; ++i, r1 *= r ) {
+      real_type v_cross1 = std::abs(a[i]*r1);
       if ( v_cross1 > v_cross )
         { v_cross = v_cross1; i_cross = i; }
     }
@@ -246,19 +263,19 @@ namespace PolynomialRoots {
     if ( isZero(a[n]-1) ) {
       if ( i_cross > 0 ) {
         b[0] = -a[0] / r;
-        for ( indexType j = 1; j < i_cross; ++j )
+        for ( integer j = 1; j < i_cross; ++j )
           b[j] = (a[j]-b[j-1]) / r;
       }
-      for ( indexType j = n-2; j >= i_cross; --j )
+      for ( integer j = n-2; j >= i_cross; --j )
         b[j] = a[j+1]+r*b[j+1];
     } else {
-      valueType an = a[n];
+      real_type an = a[n];
       if ( i_cross > 0 ) {
         b[0] = -(a[0]/an) / r;
-        for ( indexType j = 1; j < i_cross; ++j )
+        for ( integer j = 1; j < i_cross; ++j )
           b[j] = (a[j]/an-b[j-1]) / r;
       }
-      for ( indexType j = n-2; j >= i_cross; --j )
+      for ( integer j = n-2; j >= i_cross; --j )
         b[j] = a[j+1]/an+r*b[j+1];
     }
   }
@@ -271,22 +288,22 @@ namespace PolynomialRoots {
   //
   #if 0
   // UNUSED
-  valueType
+  real_type
   CompHorner(
-    valueType const p[],
-    indexType       Degree,
-    valueType       x
+    real_type const p[],
+    integer         Degree,
+    real_type       x
   ) {
-    valueType xabs = std::abs(x);
+    real_type xabs = std::abs(x);
     bool reverse = xabs > 1;
     //bool reverse = false;
-    if ( reverse ) x = valueType(1)/x;
-    indexType ii0 = reverse ? Degree : 0;
-    valueType res(p[ii0]);
-    valueType c = 0;
-    for ( indexType i = 1; i <= Degree; ++i ) {
-      indexType ii = reverse ? Degree-i : i;
-      valueType tmp, pi, sigma;
+    if ( reverse ) x = real_type(1)/x;
+    integer ii0 = reverse ? Degree : 0;
+    real_type res(p[ii0]);
+    real_type c = 0;
+    for ( integer i = 1; i <= Degree; ++i ) {
+      integer ii = reverse ? Degree-i : i;
+      real_type tmp, pi, sigma;
       //TwoProduct( res, x, tmp, pi );
       //TwoSum( tmp, p[ii], res, sigma );
       res = res * x + p[ii];
@@ -305,19 +322,19 @@ namespace PolynomialRoots {
   inline
   void
   scaleCubicMonicPolynomial(
-    valueType   A,
-    valueType   B,
-    valueType   C,
-    valueType & AS,
-    valueType & BS,
-    valueType & CS,
-    indexType & i_case,
-    valueType & scale
+    real_type   A,
+    real_type   B,
+    real_type   C,
+    real_type & AS,
+    real_type & BS,
+    real_type & CS,
+    integer   & i_case,
+    real_type & scale
   ) {
 
-    valueType a = std::abs(A);
-    valueType b = std::sqrt(abs(B));
-    valueType c = std::cbrt(abs(C));
+    real_type a = std::abs(A);
+    real_type b = std::sqrt(abs(B));
+    real_type c = std::cbrt(abs(C));
 
     if ( a < b ) {
       if ( b < c ) i_case = 0; // a < b < c --> c MAX
@@ -355,18 +372,18 @@ namespace PolynomialRoots {
   static
   void
   deflateCubicPolynomial(
-    valueType   a3,
-    valueType   a2,
-    valueType   a1,
-    valueType   a0,
-    valueType   r,
-    valueType & b1,
-    valueType & b0
+    real_type   a3,
+    real_type   a2,
+    real_type   a1,
+    real_type   a0,
+    real_type   r,
+    real_type & b1,
+    real_type & b0
   ) {
-    indexType i_cross  = 0;
-    valueType r2       = r*r;
-    valueType v_cross  = std::abs(a0);
-    valueType v_cross1 = std::abs(a1*r);
+    integer   i_cross  = 0;
+    real_type r2       = r*r;
+    real_type v_cross  = std::abs(a0);
+    real_type v_cross1 = std::abs(a1*r);
     if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 1; }
       v_cross1 = std::abs(a2*r2);
       if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 2; }

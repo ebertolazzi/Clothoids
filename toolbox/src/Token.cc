@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -47,7 +47,7 @@ namespace Utils {
     vector<string> & arr
   ) {
     Tokenizer tk( str, sep );
-    while ( tk.next_token() ) arr.push_back(tk.get_token());
+    while ( tk.next_token() ) arr.emplace_back(tk.get_token());
   }
 
 }

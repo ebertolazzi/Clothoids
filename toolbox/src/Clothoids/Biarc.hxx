@@ -70,7 +70,8 @@ namespace G2lib {
     //!
     //! Make a copy of an existing biarc
     //!
-    Biarc( Biarc const & ba ) { copy(ba); }
+    Biarc( Biarc const & ba )
+    { this->copy(ba); }
 
     //!
     //! Construct a biarc passing from the points
@@ -126,7 +127,7 @@ namespace G2lib {
     //! Make a copy of an existing biarc.
     //!
     Biarc const & operator = ( Biarc const & ba )
-    { copy(ba); return *this; }
+    { this->copy(ba); return *this; }
 
     //!
     //! Return the first circle arc of the biarc.

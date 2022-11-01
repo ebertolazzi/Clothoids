@@ -60,7 +60,7 @@ namespace Utils {
   void
   ThreadPool5::push_worker( unsigned id ) {
     std::unique_lock<std::mutex> lock(m_stack_mutex);
-    m_stack.push_back(id);
+    m_stack.emplace_back(id);
     m_stack_cond.notify_one();
   }
 

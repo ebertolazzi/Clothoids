@@ -871,7 +871,7 @@ namespace G2lib {
     //! Build a copy of an existing clothoid list
     //!
     ClothoidList( ClothoidList const & s )
-    { this->resetLastInterval(); copy(s); }
+    { this->resetLastInterval(); this->copy(s); }
 
     CurveType    type()      const override { return G2LIB_CLOTHOID_LIST; }
     char const * type_name() const override { return "ClothoidList"; }
@@ -895,7 +895,7 @@ namespace G2lib {
     //! Copy an existing clothoid list
     //!
     ClothoidList const & operator = ( ClothoidList const & s )
-    { copy(s); return *this; }
+    { this->copy(s); return *this; }
 
     //!
     //! Build a clothoid from a line segment

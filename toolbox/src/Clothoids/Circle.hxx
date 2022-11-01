@@ -60,7 +60,7 @@ namespace G2lib {
     //! Build a copy of an existing circle arc.
     //!
     CircleArc( CircleArc const & s )
-    { copy(s); }
+    { this->copy(s); }
 
     //!
     //! Construct a circle arc with the standard parameters.
@@ -131,7 +131,7 @@ namespace G2lib {
     //!
     CircleArc const &
     operator = ( CircleArc const & s )
-    { copy(s); return *this; }
+    { this->copy(s); return *this; }
 
     //!
     //! Construct a circle arc with the standard parameters.

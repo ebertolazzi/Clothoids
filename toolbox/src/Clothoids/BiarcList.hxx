@@ -99,7 +99,7 @@ namespace G2lib {
     //! Build a copy of another biarc spline.
     //!
     BiarcList( BiarcList const & s ) : BiarcList()
-    { copy(s); }
+    { this->copy(s); }
 
     //!
     //! Empty the the biarc list.
@@ -123,7 +123,7 @@ namespace G2lib {
     //! Copy another biarc spline.
     //!
     BiarcList const & operator = ( BiarcList const & s )
-    { copy(s); return *this; }
+    { this->copy(s); return *this; }
 
     //!
     //! Build a biarc list from a line segment.

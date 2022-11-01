@@ -204,7 +204,7 @@ namespace Utils {
 
     void
     Row::cell( string const & value ) {
-      m_Cells.push_back( Cell( m_Table, value ) );
+      m_Cells.emplace_back( m_Table, value );
     }
 
     integer
@@ -263,7 +263,7 @@ namespace Utils {
 
     void
     Table::add_row( vecstr const & row ) {
-      m_Rows.push_back( Row(this, row) );
+      m_Rows.emplace_back( this, row );
     }
 
     integer
@@ -351,7 +351,7 @@ namespace Utils {
       for_each(
         rows.begin(), rows.end(),
         [this]( vecstr const & row ) {
-          m_Rows.push_back( Row(this, row) );
+          m_Rows.emplace_back( this, row );
         }
       );
     }

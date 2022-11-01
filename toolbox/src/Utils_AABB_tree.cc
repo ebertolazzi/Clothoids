@@ -536,7 +536,7 @@ namespace Utils {
     // main loop: divide nodes until all constraints satisfied
     m_stack.clear();
     m_stack.reserve(2*m_num_objects+1);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
     m_num_tree_nodes = 1;
 
     while ( !m_stack.empty() ) {
@@ -716,8 +716,8 @@ namespace Utils {
       m_ptr_nodes[id_right] = iptr + n_long + n_left;
       m_num_nodes[id_right] = n_right;
 
-      m_stack.push_back(id_left);
-      m_stack.push_back(id_right);
+      m_stack.emplace_back(id_left);
+      m_stack.emplace_back(id_right);
       m_num_tree_nodes += 2;
     }
   }
@@ -739,7 +739,7 @@ namespace Utils {
     // descend tree from root
     m_stack.clear();
     m_stack.reserve(2*m_num_tree_nodes+1);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer id_father = m_stack.back(); m_stack.pop_back();
@@ -759,8 +759,8 @@ namespace Utils {
       integer nn = m_child[id_father];
       if ( nn > 0 ) { // root == 0, children > 0
         // push on stack children
-        m_stack.push_back(nn);
-        m_stack.push_back(nn+1);
+        m_stack.emplace_back(nn);
+        m_stack.emplace_back(nn+1);
       }
     }
   }
@@ -782,7 +782,7 @@ namespace Utils {
     // descend tree from root
     m_stack.clear();
     m_stack.reserve(2*m_num_tree_nodes+1);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer id_father = m_stack.back(); m_stack.pop_back();
@@ -810,8 +810,8 @@ namespace Utils {
       integer nn = m_child[id_father];
       if ( nn > 0 ) { // root == 0, children > 0
         // push on stack children
-        m_stack.push_back(nn);
-        m_stack.push_back(nn+1);
+        m_stack.emplace_back(nn);
+        m_stack.emplace_back(nn+1);
       }
     }
   }
@@ -832,7 +832,7 @@ namespace Utils {
     // descend tree from root
     m_stack.clear();
     m_stack.reserve(2*m_num_tree_nodes+1);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer id_father = m_stack.back(); m_stack.pop_back();
@@ -852,8 +852,8 @@ namespace Utils {
       integer nn = m_child[id_father];
       if ( nn > 0 ) { // root == 0, children > 0
         // push on stack children
-        m_stack.push_back(nn);
-        m_stack.push_back(nn+1);
+        m_stack.emplace_back(nn);
+        m_stack.emplace_back(nn+1);
       }
     }
   }
@@ -875,7 +875,7 @@ namespace Utils {
     // descend tree from root
     m_stack.clear();
     m_stack.reserve(2*m_num_tree_nodes+1);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer id_father = m_stack.back(); m_stack.pop_back();
@@ -903,8 +903,8 @@ namespace Utils {
       integer nn = m_child[id_father];
       if ( nn > 0 ) { // root == 0, children > 0
         // push on stack children
-        m_stack.push_back(nn);
-        m_stack.push_back(nn+1);
+        m_stack.emplace_back(nn);
+        m_stack.emplace_back(nn+1);
       }
     }
   }
@@ -926,8 +926,8 @@ namespace Utils {
     // descend tree from root
     m_stack.clear();
     m_stack.reserve(m_num_tree_nodes+aabb.m_num_tree_nodes+2);
-    m_stack.push_back(0);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
+    m_stack.emplace_back(0);
     integer n_stack = 2;
     while ( !m_stack.empty() ) {
       // pop node from stack
@@ -960,14 +960,14 @@ namespace Utils {
       );
 
       if ( id_lr1 >= 0 ) {
-        m_stack.push_back(id_lr1);   m_stack.push_back(root2);
-        m_stack.push_back(id_lr1+1); m_stack.push_back(root2);
+        m_stack.emplace_back(id_lr1);   m_stack.emplace_back(root2);
+        m_stack.emplace_back(id_lr1+1); m_stack.emplace_back(root2);
         if ( nn1 > 0 ) {
-          m_stack.push_back(-1-root1); m_stack.push_back(root2);
+          m_stack.emplace_back(-1-root1); m_stack.emplace_back(root2);
         }
       } else if ( id_lr2 >= 0 ) {
-        m_stack.push_back(sroot1); m_stack.push_back(id_lr2);
-        m_stack.push_back(sroot1); m_stack.push_back(id_lr2+1);
+        m_stack.emplace_back(sroot1); m_stack.emplace_back(id_lr2);
+        m_stack.emplace_back(sroot1); m_stack.emplace_back(id_lr2+1);
       }
     }
   }
@@ -989,8 +989,8 @@ namespace Utils {
     // descend tree from root
     m_stack.clear();
     m_stack.reserve(m_num_tree_nodes+aabb.m_num_tree_nodes+2);
-    m_stack.push_back(0);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
+    m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer root2  = m_stack.back(); m_stack.pop_back();
@@ -1033,14 +1033,14 @@ namespace Utils {
       integer id_lr2 = aabb.m_child[root2];
 
       if ( id_lr1 >= 0 ) {
-        m_stack.push_back(id_lr1);   m_stack.push_back(root2);
-        m_stack.push_back(id_lr1+1); m_stack.push_back(root2);
+        m_stack.emplace_back(id_lr1);   m_stack.emplace_back(root2);
+        m_stack.emplace_back(id_lr1+1); m_stack.emplace_back(root2);
         if ( nn1 > 0 ) {
-          m_stack.push_back(-1-root1); m_stack.push_back(root2);
+          m_stack.emplace_back(-1-root1); m_stack.emplace_back(root2);
         }
       } else if ( id_lr2 >= 0 ) {
-        m_stack.push_back(sroot1); m_stack.push_back(id_lr2);
-        m_stack.push_back(sroot1); m_stack.push_back(id_lr2+1);
+        m_stack.emplace_back(sroot1); m_stack.emplace_back(id_lr2);
+        m_stack.emplace_back(sroot1); m_stack.emplace_back(id_lr2+1);
       }
     }
   }
@@ -1093,7 +1093,7 @@ namespace Utils {
     // descend tree from root
     m_stack.clear();
     m_stack.reserve(m_num_tree_nodes+1);
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer id_father = m_stack.back(); m_stack.pop_back();
@@ -1111,15 +1111,15 @@ namespace Utils {
         integer nn = m_child[id_father];
         if ( nn > 0 ) { // root == 0, children > 0
           // push on stack childrens
-          m_stack.push_back(nn);
-          m_stack.push_back(nn+1);
+          m_stack.emplace_back(nn);
+          m_stack.emplace_back(nn+1);
         }
       }
     }
 
     // descend tree from root
     m_stack.clear();
-    m_stack.push_back(0);
+    m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer id_father = m_stack.back(); m_stack.pop_back();
@@ -1130,8 +1130,8 @@ namespace Utils {
         integer nn = m_child[id_father];
         if ( nn > 0 ) { // root == 0, children > 0
           // push on stack childrens
-          m_stack.push_back(nn);
-          m_stack.push_back(nn+1);
+          m_stack.emplace_back(nn);
+          m_stack.emplace_back(nn+1);
         }
       }
     }

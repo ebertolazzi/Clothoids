@@ -56,7 +56,7 @@ namespace G2lib {
 
     //explicit
     LineSegment( LineSegment const & s )
-    { copy(s); }
+    { this->copy(s); }
 
     explicit
     LineSegment( BaseCurve const * pC );
@@ -90,7 +90,7 @@ namespace G2lib {
     }
 
     LineSegment const & operator = ( LineSegment const & s )
-    { copy(s); return *this; }
+    { this->copy(s); return *this; }
 
     CurveType    type()      const override { return G2LIB_LINE; }
     char const * type_name() const override { return "LineSegment"; }
@@ -150,8 +150,7 @@ namespace G2lib {
       real_type nx = (ymax-ymin)/100;
       real_type ny = (xmin-xmax)/100;
       if ( xmax > xmin || ymax > ymin ) {
-        Triangle2D t( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
-        tvec.push_back( t );
+        tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
       } else {
         UTILS_ERROR(
           "LineSegment bbTriangles found a degenerate line\n"
@@ -176,8 +175,7 @@ namespace G2lib {
       real_type nx = (ymax-ymin)/100;
       real_type ny = (xmin-xmax)/100;
       if ( xmax > xmin || ymax > ymin ) {
-        Triangle2D t( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
-        tvec.push_back( t );
+        tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
       } else {
         UTILS_ERROR(
           "LineSegment bbTriangles found a degenerate line\n"

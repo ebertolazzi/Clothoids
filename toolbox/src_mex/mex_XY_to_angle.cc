@@ -8,6 +8,10 @@
   See the file license.txt for more details.
 \****************************************************************************/
 
+#ifdef __clang__
+#pragma GCC diagnostic ignored "-Wexit-time-destructors"
+#endif
+
 #include "Clothoids.hh"
 #include "Utils_mex.hh"
 

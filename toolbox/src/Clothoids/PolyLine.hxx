@@ -74,7 +74,7 @@ namespace G2lib {
 
     //explicit
     PolyLine( PolyLine const & PL )
-    { this->resetLastInterval(); copy(PL); }
+    { this->resetLastInterval(); this->copy(PL); }
 
     int_type
     findAtS( real_type & s ) const;
@@ -90,7 +90,7 @@ namespace G2lib {
     char const * type_name() const override { return "PolyLine"; }
 
     PolyLine const & operator = ( PolyLine const & s )
-    { copy(s); return *this; }
+    { this->copy(s); return *this; }
 
     LineSegment const &
     getSegment( int_type n ) const;

@@ -126,12 +126,12 @@ namespace Utils {
     try {
       for ( unsigned i=0; i<thread_count; ++i )
         m_worker_threads.emplace_back(
-          std::thread(
-            &ThreadPool3::worker_thread, this,
-            std::ref(m_pop_ms[i]),
-            std::ref(m_job_ms[i]),
-            std::ref(m_n_job[i])
-          )
+          //std::thread(
+          &ThreadPool3::worker_thread, this,
+          std::ref(m_pop_ms[i]),
+          std::ref(m_job_ms[i]),
+          std::ref(m_n_job[i])
+          //)
         );
     } catch(...) {
       m_done = true;
