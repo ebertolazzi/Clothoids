@@ -354,7 +354,7 @@ namespace G2lib {
         :rtype: bool
       )S")
 
-      .def("getAtS", &BiarcList::getAtS, py::arg("s"),
+      .def("get_at_s", &BiarcList::get_at_s, py::arg("s"),
       R"S(
         Get the biarc at coordinates **s**
 
@@ -379,7 +379,7 @@ namespace G2lib {
         :rtype: int
       )S")
 
-      .def("findAtS", &BiarcList::findAtS, py::arg("s"),
+      .def("find_at_s", &BiarcList::find_at_s, py::arg("s"),
       R"S(
         Get the index of the biarc at coordinate **s**
 

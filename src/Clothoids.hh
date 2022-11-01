@@ -72,14 +72,30 @@ namespace G2lib {
   using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
   using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
 
-  using CurveType = enum {
-    G2LIB_LINE=0,
-    G2LIB_POLYLINE,
-    G2LIB_CIRCLE,
-    G2LIB_BIARC,
-    G2LIB_BIARC_LIST,
-    G2LIB_CLOTHOID,
-    G2LIB_CLOTHOID_LIST
+  using CurveType = enum class CurveType : int_type {
+    LINE,
+    POLYLINE,
+    CIRCLE,
+    BIARC,
+    BIARC_LIST,
+    CLOTHOID,
+    CLOTHOID_LIST
+  };
+
+  inline
+  string
+  to_string( CurveType n ) {
+    string res = "";
+    switch ( n ) {
+    case CurveType::LINE:          res = "LINE";          break;
+    case CurveType::POLYLINE:      res = "POLYLINE";      break;
+    case CurveType::CIRCLE:        res = "CIRCLE";        break;
+    case CurveType::BIARC:         res = "BIARC";         break;
+    case CurveType::BIARC_LIST:    res = "BIARC_LIST";    break;
+    case CurveType::CLOTHOID:      res = "CLOTHOID";      break;
+    case CurveType::CLOTHOID_LIST: res = "CLOTHOID_LIST"; break;
+    }
+    return res;
   };
 
   extern CurveType curve_promote( CurveType, CurveType );

@@ -14,13 +14,13 @@ namespace G2lib {
   namespace python {
     void wrap_BaseCurve(py::module & m) {
       py::enum_<CurveType>(m, "CurveType")
-        .value("G2LIB_LINE", G2lib::CurveType::G2LIB_LINE)
-        .value("G2LIB_POLYLINE", G2lib::CurveType::G2LIB_POLYLINE)
-        .value("G2LIB_CIRCLE", G2lib::CurveType::G2LIB_CIRCLE)
-        .value("G2LIB_BIARC", G2lib::CurveType::G2LIB_BIARC)
-        .value("G2LIB_BIARC_LIST", G2lib::CurveType::G2LIB_BIARC_LIST)
-        .value("G2LIB_CLOTHOID", G2lib::CurveType::G2LIB_CLOTHOID)
-        .value("G2LIB_CLOTHOID_LIST", G2lib::CurveType::G2LIB_CLOTHOID_LIST)
+        .value("G2LIB_LINE", G2lib::CurveType::LINE)
+        .value("G2LIB_POLYLINE", G2lib::CurveType::POLYLINE)
+        .value("G2LIB_CIRCLE", G2lib::CurveType::CIRCLE)
+        .value("G2LIB_BIARC", G2lib::CurveType::BIARC)
+        .value("G2LIB_BIARC_LIST", G2lib::CurveType::BIARC_LIST)
+        .value("G2LIB_CLOTHOID", G2lib::CurveType::CLOTHOID)
+        .value("G2LIB_CLOTHOID_LIST", G2lib::CurveType::CLOTHOID_LIST)
         .export_values();
 
       py::class_<BaseCurve, PythonicBaseCurve>(m, "BaseCurve",

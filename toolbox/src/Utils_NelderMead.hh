@@ -52,6 +52,7 @@ namespace Utils {
   */
   template <typename Real>
   class NelderMead {
+  public:
 
     using Vec_t   = Eigen::Matrix<Real,Eigen::Dynamic,1>;
     using Mat_t   = Eigen::Matrix<Real,Eigen::Dynamic,Eigen::Dynamic>;
@@ -59,17 +60,33 @@ namespace Utils {
     using MapMat  = Eigen::Map<Mat_t>;
     using integer = int;
     using NMFunc  = std::function<Real(Real const[])>;
-    using NMstype = enum {
-      NM_INIT=0,
-      NM_REFLECT,
-      NM_EXPAND_FE,
-      NM_EXPAND_FR,
-      NM_CONTRACT_O,
-      NM_CONTRACT_I,
-      NM_SHRINK,
-      NM_RESTART,
-      NM_WORSE
+    using NM_move = enum class NelderMead_move : integer {
+      INIT,
+      REFLECT,
+      EXPAND_FE,
+      EXPAND_FR,
+      CONTRACT_O,
+      CONTRACT_I,
+      SHRINK,
+      RESTART,
+      WORSE
     };
+
+    static string to_string( NM_move n ) {
+      string res = "";
+      switch ( n ) {
+      case NM_move::INIT:       res = "INIT";       break;
+      case NM_move::REFLECT:    res = "REFLECT";    break;
+      case NM_move::EXPAND_FE:  res = "EXPAND_FE";  break;
+      case NM_move::EXPAND_FR:  res = "EXPAND_FR";  break;
+      case NM_move::CONTRACT_O: res = "CONTRACT_O"; break;
+      case NM_move::CONTRACT_I: res = "CONTRACT_I"; break;
+      case NM_move::SHRINK:     res = "SHRINK";     break;
+      case NM_move::RESTART:    res = "RESTART";    break;
+      case NM_move::WORSE:      res = "WORSE";      break;
+      }
+      return res;
+    }
 
   private:
 
@@ -121,7 +138,7 @@ namespace Utils {
     mutable integer m_iteration_count{0};    // explore iteration counter
     mutable integer m_fun_evaluation_count{0};
 
-    NMstype m_which_step{NM_INIT};
+    NM_move m_which_step{NM_move::INIT};
     integer m_verbose{1}; // flag to activate info printing
 
     void allocate( integer n );

@@ -1,6 +1,6 @@
 /**
  * PYTHON Wrapper for Clothoids
- * 
+ *
  * License MIT - See LICENSE file
  * 2019 Matteo Ragni, Claudio Kerov Ghiglianovich,
  *      Enrico Bertolazzi, Marco Frego
@@ -25,7 +25,7 @@ namespace G2lib {
     void wrap_ClothoidCurve(py::module & m) {
       py::class_<ClothoidCurve, BaseCurve>(m, "ClothoidCurve",
       R"S(
-        Class that menages a clothoid curve (a curve with linearly variable 
+        Class that menages a clothoid curve (a curve with linearly variable
         curvature). There are several possible constructors for this class:
 
          * constructor from a base curve
@@ -51,7 +51,7 @@ namespace G2lib {
         :param Tuple[float, float] p1: ending position **(x, y)** coordinates
         :param float theta1: final angle
       )S")
-        
+
       .def(py::init())
       .def(py::init<BaseCurve const &>())
       .def(py::init<ClothoidCurve const &>())
@@ -59,7 +59,7 @@ namespace G2lib {
       .def(py::init<CircleArc const &>())
       .def(py::init<real_type, real_type, real_type, real_type, real_type, real_type>(),
         py::arg("x0"), py::arg("y0"), py::arg("theta0"), py::arg("k"), py::arg("dk"), py::arg("L"))
-      .def(py::init([](std::tuple<real_type, real_type> P0, real_type theta0, 
+      .def(py::init([](std::tuple<real_type, real_type> P0, real_type theta0,
                        std::tuple<real_type, real_type> P1, real_type theta1){
         real_type _P0[2] = {std::get<0>(P0), std::get<1>(P0)};
         real_type _P1[2] = {std::get<0>(P1), std::get<1>(P1)};
@@ -78,12 +78,12 @@ namespace G2lib {
         :rtype: ClothoidCurve
       )S")
 
-      .def("build_G1", &ClothoidCurve::build_G1, 
+      .def("build_G1", &ClothoidCurve::build_G1,
         py::arg("x0"), py::arg("y0"), py::arg("theta0"),
         py::arg("x1"), py::arg("y1"), py::arg("theta1"), py::arg("tol") = 1e-12,
       R"S(
         Build a clothoid by solving the hermite G1 problem
-        
+
         :param float x0:     initial x position :math:`x_0`
         :param float y0:     initial y position :math:`y_0`
         :param float theta0: initial angle      :math:`\theta_0`
@@ -94,7 +94,7 @@ namespace G2lib {
         :return: number of iteration performed
         :rtype: int
       )S")
-      
+
       .def("build", py::overload_cast<real_type, real_type, real_type, real_type, real_type, real_type>(&ClothoidCurve::build),
         py::arg("x0"), py::arg("y0"), py::arg("theta0"), py::arg("k"), py::arg("dk"), py::arg("L"),
       R"S(
@@ -106,26 +106,26 @@ namespace G2lib {
         :param float k: initial curvature
         :param float dk: curvature derivative
         :param float L: length of the curve
-        :return: nothing, works in place 
+        :return: nothing, works in place
         :rtype: NoneType
       )S")
 
       .def("build_G1_D", [](ClothoidCurve * self,
                             real_type x0, real_type y0, real_type theta0,
                             real_type x1, real_type y1, real_type theta1,
-                            std::tuple<real_type, real_type> L_D, std::tuple<real_type, real_type> k_D, 
+                            std::tuple<real_type, real_type> L_D, std::tuple<real_type, real_type> k_D,
                             std::tuple<real_type, real_type> dk_D, real_type tol = 1e-12) {
         real_type _L_D[2] = {std::get<0>(L_D), std::get<1>(L_D)};
         real_type _k_D[2] = {std::get<0>(k_D), std::get<1>(k_D)};
         real_type _dk_D[2] = {std::get<0>(dk_D), std::get<1>(dk_D)};
         return self->build_G1_D(x0, y0, theta0, x1, y1, theta1, _L_D, _k_D, _dk_D, tol);
-      }, 
-        py::arg("x0"), py::arg("y0"), py::arg("theta0"), 
+      },
+        py::arg("x0"), py::arg("y0"), py::arg("theta0"),
         py::arg("x1"), py::arg("y1"), py::arg("theta1"),
         py::arg("L_D"), py::arg("k_D"), py::arg("dk_D"), py::arg("tol") = 1e-12,
       R"S(
         Build a clothoid by solving the hermite G1 problem.
-        
+
         :param float x0:     initial x position :math:`x_0`
         :param float y0:     initial y position :math:`y_0`
         :param float theta0: initial angle      :math:`\theta_0`
@@ -140,12 +140,12 @@ namespace G2lib {
         :rtype: int
       )S")
 
-      .def("build_forward", &ClothoidCurve::build_forward, 
+      .def("build_forward", &ClothoidCurve::build_forward,
         py::arg("x0"), py::arg("y0"), py::arg("theta0"), py::arg("kappa0"),
         py::arg("x1"), py::arg("y1"), py::arg("tol") = 1e-12,
       R"S(
         Build a clothoid by solving the forward problem
-        
+
         :param float x0:     initial x position :math:`x_0`
         :param float y0:     initial y position :math:`y_0`
         :param float theta0: initial angle      :math:`\theta_0`
@@ -183,7 +183,7 @@ namespace G2lib {
       }, py::arg("plus") = true,
       R"S(
         Return the point at infinity of the clothoids :math:`P(s)`.
-    
+
         :param float x:    x-coordinate of the infinity point
         :param float y:    y-coordinate of the infinity point
         :param float plus: it true return :math:`\lim_{s\to+\infty} P(s) `
@@ -191,7 +191,7 @@ namespace G2lib {
         :return: the point coordinates as a tuple
         :rtype: Tuple[float, float]
       )S")
-      
+
       .def("dkappa", &ClothoidCurve::dkappa,
       R"S(
         Derivative of the curvature of the clothoid
@@ -199,7 +199,7 @@ namespace G2lib {
         :return: derivative of the curvature
         :rtype: float
       )S")
-        
+
       .def("thetaTotalVariation", &ClothoidCurve::theta_total_variation,
       R"S(
         Clothoid curve total angle variation
@@ -232,7 +232,7 @@ namespace G2lib {
         real_type cv_min, cv_max;
         self.curvatureMinMax(cv_min, cv_max);
         return std::make_tuple(cv_min, cv_max);
-      }, 
+      },
       R"S(
         Curvature minimum and maximum value for the curve
 
@@ -247,37 +247,37 @@ namespace G2lib {
         :return: clothoid total curvature variation
         :rtype: float
       )S")
-      
+
       .def("integralCurvature2", &ClothoidCurve::integralCurvature2,
       R"S(
         Given the clothoid curve :math:`P(s)` compute.
-     
+
         .. math: \int_0^L |P''(s)|^2 \mathrm{d}s
 
         :return: integral curvature
         :rtype: float
       )S")
-      
+
       .def("integralJerk2", &ClothoidCurve::integralJerk2,
       R"S(
         Given the clothoid curve :math:`P(s)` compute.
-     
+
         .. math: \int_0^L |P'''(s)|^2 \mathrm{d}s
 
         :return: integral jerk
         :rtype: float
       )S")
-      
+
       .def("integralSnap2", &ClothoidCurve::integralSnap2,
       R"S(
         Given the clothoid curve :math:`P(s)` compute.
-     
+
         .. math: \int_0^L |P''''(s)|^2 \mathrm{d}s
 
         :return: integral jerk
         :rtype: float
       )S")
-      
+
       .def("optimized_sample_ISO", [](const ClothoidCurve & self, real_type offs, int_type npts, real_type max_angle) {
         std::vector<real_type> ret;
         self.optimized_sample_ISO(offs, npts, max_angle, ret);
@@ -286,14 +286,14 @@ namespace G2lib {
       R"S(
         Return a vector of optimized sample parameters for plotting. It uses
         the ISO standard reference frame
-        
+
         :param offs: offset of the sampled curve
         :param npts: suggested minimum number of sampled points
         :param max_angle: maximum angle variation between two sampled points
         :return: vector of computed parameters
         :rtype: List[float]
       )S")
-      
+
       .def("optimized_sample_SAE", [](const ClothoidCurve & self, real_type offs, int_type npts, real_type max_angle) {
         std::vector<real_type> ret;
         self.optimized_sample_SAE(offs, npts, max_angle, ret);
@@ -302,14 +302,14 @@ namespace G2lib {
       R"S(
         Return a vector of optimized sample parameters for plotting. It uses
         the SAE standard reference frame
-        
+
         :param offs: offset of the sampled curve
         :param npts: suggested minimum number of sampled points
         :param max_angle: maximum angle variation between two sampled points
         :return: vector of computed parameters
         :rtype: List[float]
       )S")
-      
+
       .def("closestPointBySample", [](ClothoidCurve * self, real_type ds, int_type qx, real_type qy) {
         real_type x, y, s;
         real_type v = self->closest_point_by_sample(ds, qx, qy, x, y, s);
@@ -318,7 +318,7 @@ namespace G2lib {
       R"S(
         Compute the point on clothoid at minimal distance from a given point
         using the optimized algorithm described in the publication:
-        
+
          * **E.Bertolazzi, M.Frego**, Point-Clothoid distance and projection computation
            SIAM J. Scientific Computing, Vol. 41, No. 5, pp. A3326-A3353
 
@@ -328,14 +328,14 @@ namespace G2lib {
          * x-coordinate of the point on clothoid at minimal distance
          * y-coordinate of the point on clothoid at minimal distance
          * curvilinear coordinate of the point (X,Y) on the clothoid
-        
+
         :param float ds: sampling step
         :param float qx: x-coordinate of the given point
         :param float qy: y-coordinate of the given point
         :return the: the tuple as described
         :rtype: Tuple[float, float, float, float]
       )S")
-      
+
       .def("distanceBySample", [](const ClothoidCurve & self, real_type ds, int_type qx, real_type qy) {
         real_type s;
         real_type v = self.distanceBySample(ds, qx, qy, s);
@@ -344,30 +344,30 @@ namespace G2lib {
       R"S(
         Approximate the point on clothoid at minimal distance from a given point
         using simple sampling.
-         
+
         :param  ds: sampling step
         :param  qx: x-coordinate of the given point
         :param  qy: y-coordinate of the given point
-        :return: the distance of the point from the clothoid and the 
+        :return: the distance of the point from the clothoid and the
                  curvilinear coordinate of the point (X,Y) on the clothoid
         :rtype: Tuple[float, float]
       )S")
-      
+
       .def("changeCurvilinearOrigin", &ClothoidCurve::changeCurvilinearOrigin,
       R"S(
         Change the origin of the clothoid at :math:`s_0`
         and the length to  :math:`L`.
-         
+
         :param float s0:   :math:`s_0`
         :param float newL: :math:`L`
         :return: nothing, works in place
         :rtype: NoneType
       )S")
-      
+
       .def("build_AABBtree_ISO", &ClothoidCurve::build_AABBtree_ISO,
         py::arg("offs"), py::arg("max_angle"), py::arg("max_size"),
       R"S(
-        Builds the AABB tree of the current curve. Uses ISO reference 
+        Builds the AABB tree of the current curve. Uses ISO reference
         frame for offsets
 
         :param float offs: offset from the curve
@@ -376,18 +376,18 @@ namespace G2lib {
         :return: nothing works in place
         :rtype: NoneType
       )S")
-      
+
       .def("approximate_collision_ISO", &ClothoidCurve::approximate_collision_ISO,
         py::arg("offs"), py::arg("c"), py::arg("offs_C"), py::arg("max_angle"), py::arg("max_size"),
       R"S(
         Collision detection. Uses ISO standard reference frame for offsets.
-         
+
         :param float offs:      curve offset
         :param ClothoidCurve c: curve to compare for collision detection
         :param float offs_C:    curve offset
         :param float max_angle: maximum angle variation
         :param float max_size:  if the segment is larger then this parameter is split
-         
+
       )S");
     }
 
@@ -460,7 +460,7 @@ namespace G2lib {
         return result;
       }, py::arg("xs"), py::arg("ys"), py::arg("theta0"), py::arg("theta1"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P1. Requires Eigen library during compilation
@@ -468,18 +468,18 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :param float theta0: intial angle
-        :param float theta1: final angle 
+        :param float theta1: final angle
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S")
       .def("buildP2", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
         G2lib::Interpolation::Interpolator interpolator(xs, ys);
         interpolator.buildP2(result);
         return result;
-      }, py::arg("xs"), py::arg("ys"), 
+      }, py::arg("xs"), py::arg("ys"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P2. Requires Eigen library during compilation
@@ -487,16 +487,16 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S")
       .def("buildP4", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
         G2lib::Interpolation::Interpolator interpolator(xs, ys);
         interpolator.buildP4(result);
         return result;
-      }, py::arg("xs"), py::arg("ys"), 
+      }, py::arg("xs"), py::arg("ys"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P4. Requires IPOPT library during compilation
@@ -504,16 +504,16 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S")
       .def("buildP5", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
         G2lib::Interpolation::Interpolator interpolator(xs, ys);
         interpolator.buildP5(result);
         return result;
-      }, py::arg("xs"), py::arg("ys"), 
+      }, py::arg("xs"), py::arg("ys"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P5. Requires IPOPT library during compilation
@@ -521,16 +521,16 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S")
       .def("buildP6", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
         G2lib::Interpolation::Interpolator interpolator(xs, ys);
         interpolator.buildP6(result);
         return result;
-      }, py::arg("xs"), py::arg("ys"), 
+      }, py::arg("xs"), py::arg("ys"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P6. Requires IPOPT library during compilation
@@ -538,16 +538,16 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S")
       .def("buildP7", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
         G2lib::Interpolation::Interpolator interpolator(xs, ys);
         interpolator.buildP7(result);
         return result;
-      }, py::arg("xs"), py::arg("ys"), 
+      }, py::arg("xs"), py::arg("ys"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P7. Requires IPOPT library during compilation
@@ -555,16 +555,16 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S")
       .def("buildP8", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
         G2lib::Interpolation::Interpolator interpolator(xs, ys);
         interpolator.buildP8(result);
         return result;
-      }, py::arg("xs"), py::arg("ys"), 
+      }, py::arg("xs"), py::arg("ys"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P8. Requires IPOPT library during compilation
@@ -572,16 +572,16 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S")
       .def("buildP9", [](const std::vector<real_type> & xs, const std::vector<real_type> & ys) -> G2lib::ClothoidList {
         G2lib::ClothoidList result;
         G2lib::Interpolation::Interpolator interpolator(xs, ys);
         interpolator.buildP9(result);
         return result;
-      }, py::arg("xs"), py::arg("ys"), 
+      }, py::arg("xs"), py::arg("ys"),
       R"S(
-        Builds a clothoid list starting from a list of points. Build a 
+        Builds a clothoid list starting from a list of points. Build a
         clothoids between each point pair.
 
         Uses target P9. Requires IPOPT library during compilation
@@ -589,7 +589,7 @@ namespace G2lib {
         :param List[float] xs: **x** coordinates of points
         :param List[float] ys: **y** coordinates of points
         :return: the clothoid list
-        :rtype: ClothodList 
+        :rtype: ClothodList
       )S");
     }
 
@@ -619,7 +619,7 @@ namespace G2lib {
       .def(py::init<ClothoidCurve const &>())
       .def(py::init<PolyLine const &>())
       .def(py::init<BaseCurve const &>())
-      
+
       .def("get", &ClothoidList::get, py::arg("idx"),
       R"S(
         Returns the `idx`-th element of the list
@@ -642,7 +642,7 @@ namespace G2lib {
         ClothoidList other;
         other.copy(self);
         return other;
-      }, 
+      },
       R"S(
         Returns a copy of the current biarc list
 
@@ -689,7 +689,7 @@ namespace G2lib {
 
       .def("push_back", py::overload_cast<Biarc const &>(&ClothoidList::push_back), py::arg("c"),
       R"S(
-        Append a biarc to the current list. The curve is transformed to 
+        Append a biarc to the current list. The curve is transformed to
         a degenerate clothoid
 
         :param Biarc c: the biarc
@@ -699,7 +699,7 @@ namespace G2lib {
 
       .def("push_back", py::overload_cast<BiarcList const &>(&ClothoidList::push_back), py::arg("c"),
       R"S(
-        Append a biarc to the current list. The curve is transformed to 
+        Append a biarc to the current list. The curve is transformed to
         a degenerate clothoid list
 
         :param BiarcList c: the biarc list
@@ -768,7 +768,7 @@ namespace G2lib {
       R"S(
         Add a clothoid to the tail of the clothoid list solving the G1 problem.
         The initial point and angle are taken from the tail of the clothoid list.
-      
+
         :param flaot x1:     final x
         :param flaot y1:     final y
         :param flaot theta1: final angle
@@ -782,7 +782,7 @@ namespace G2lib {
         Add a clothoid to the tail of the clothoid list solving the G1 problem.
         The initial point and angle are taken from the tail of the clothoid list.
         The builded clothoid is translated to the tail of the clothioid list.
-      
+
         :param flaot x0:     initial x
         :param flaot y0:     initial y
         :param flaot theta0: initial angle
@@ -865,10 +865,10 @@ namespace G2lib {
         return self.build_G1(n, x.data(), y.data());
       }, py::arg("x"), py::arg("y"),
       R"S(
-        Build clothoid list passing to a list of points solving a series of 
-        G1 fitting problems. The angle at points are estimated using the 
+        Build clothoid list passing to a list of points solving a series of
+        G1 fitting problems. The angle at points are estimated using the
         routine `xy_to_guess_angle`
-        
+
         :param List[float] x: x-coordinates list
         :param List[float] y: y-coordinates list
         :return: false if routine fails
@@ -880,9 +880,9 @@ namespace G2lib {
         return self.build_G1(n, x.data(), y.data(), theta.data());
       }, py::arg("x"), py::arg("y"), py::arg("theta"),
       R"S(
-        Build clothoid list passing to a list of points solving a series of 
+        Build clothoid list passing to a list of points solving a series of
         G1 fitting problems. Requires angles.
-        
+
         :param List[float] x: x-coordinates list
         :param List[float] y: y-coordinates list
         :param List[float] theta: angle values
@@ -898,7 +898,7 @@ namespace G2lib {
         Build clothoid list with G2 continuity.
         The vector `s` contains the breakpoints of the curve.
         Between two breakpoint the curvature change linearly (is a clothoid)
-        
+
         :param float x0:          initial x
         :param float y0:          initial y
         :param float theta0:      initial angle
@@ -914,7 +914,7 @@ namespace G2lib {
         }, py::arg("x"), py::arg("y"), py::arg("s"), py::arg("theta"), py::arg("kappa"),
       R"S(
         Builds a clothoid list using raw data
-        
+
         :param List[float] x:     x-coordinates
         :param List[float] y:     y-coordinates
         :param List[float] s:     break point of the piecewise curve
@@ -924,7 +924,7 @@ namespace G2lib {
         :rtype: bool
       )S")
 
-      .def("getAtS", &ClothoidList::getAtS, py::arg("s"),
+      .def("get_at_s", &ClothoidList::get_at_s, py::arg("s"),
       R"S(
         Get the `idx`-th clothoid of the list where `idx` is the clothoid at parameter `s`
 
@@ -960,10 +960,10 @@ namespace G2lib {
 
         :param float s: the wrapping input s
         :return: the wrapped s
-        :rtype: float 
+        :rtype: float
       )S")
 
-      .def("findAtS", &ClothoidList::findAtS, py::arg("s"),
+      .def("find_at_s", &ClothoidList::find_at_s, py::arg("s"),
       R"S(
         Find the clothoid segment whose definition range contains `s`
 
@@ -1018,7 +1018,7 @@ namespace G2lib {
         int_type icurve;
         int_type ret = self.closest_point_in_range_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
-      }, 
+      },
         py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
       R"S(
         Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
@@ -1026,16 +1026,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
@@ -1045,7 +1045,7 @@ namespace G2lib {
         :rtype: Tuple[int, float, float, float, float, float, int]
       )S")
 
-      .def("closestPointInRange", [](const ClothoidList & self, const std::vector<real_type> & qx, 
+      .def("closestPointInRange", [](const ClothoidList & self, const std::vector<real_type> & qx,
         const std::vector<real_type> & qy, int_type icurve_begin, int_type icurve_end) {
         const size_t n = std::min(qx.size(), qy.size());
         std::vector<std::tuple<int_type, real_type, real_type, real_type, real_type, real_type, int_type>> data(n);
@@ -1054,9 +1054,9 @@ namespace G2lib {
           int_type icurve;
           int_type ret = self.closest_point_in_range_ISO(qx[i], qy[i], icurve_begin, icurve_end, x, y, s, t, dst, icurve);
           data[i] = std::make_tuple(ret, x, y, s, t, dst, icurve);
-        } 
+        }
         return data;
-      }, 
+      },
         py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
       R"S(
         Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
@@ -1065,16 +1065,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param List[float] qx: x coordinates of the point
         :param List[float] qy: y coordinates of the point
@@ -1089,7 +1089,7 @@ namespace G2lib {
         int_type icurve;
         int_type ret = self.closest_point_in_range_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
-      }, 
+      },
         py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
       R"S(
         Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
@@ -1098,16 +1098,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
@@ -1122,7 +1122,7 @@ namespace G2lib {
         int_type icurve;
         int_type ret = self.closest_point_in_range_SAE(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
-      }, 
+      },
         py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
       R"S(
         Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
@@ -1131,16 +1131,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
@@ -1155,7 +1155,7 @@ namespace G2lib {
         int_type icurve;
         int_type ret = self.closest_point_in_s_range_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
-      }, 
+      },
         py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
       R"S(
         Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
@@ -1163,16 +1163,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
@@ -1182,7 +1182,7 @@ namespace G2lib {
         :rtype: Tuple[int, float, float, float, float, float, int]
       )S")
 
-      .def("closestPointInSRange", [](const ClothoidList & self, const std::vector<real_type> & qx, 
+      .def("closestPointInSRange", [](const ClothoidList & self, const std::vector<real_type> & qx,
         const std::vector<real_type> & qy, real_type s_begin, real_type s_end) {
         const size_t n = std::min(qx.size(), qy.size());
         std::vector<std::tuple<int_type, real_type, real_type, real_type, real_type, real_type, int_type>> data(n);
@@ -1191,7 +1191,7 @@ namespace G2lib {
           int_type icurve;
           int_type ret = self.closest_point_in_s_range_ISO(qx[i], qy[i], s_begin, s_end, x, y, s, t, dst, icurve);
           data[i] = std::make_tuple(ret, x, y, s, t, dst, icurve);
-        } 
+        }
         return data;
       }, py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
       R"S(
@@ -1200,16 +1200,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param List[float] qx: x coordinates of the point
         :param List[float] qy: y coordinates of the point
@@ -1224,7 +1224,7 @@ namespace G2lib {
         int_type icurve;
         int_type ret = self.closest_point_in_s_range_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
-      }, 
+      },
         py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
       R"S(
         Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
@@ -1233,16 +1233,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
@@ -1257,7 +1257,7 @@ namespace G2lib {
         int_type icurve;
         int_type ret = self.closest_point_in_s_range_SAE(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
-      }, 
+      },
         py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
       R"S(
         Given a point :math:`(q_x, q_y)`, finds the closest point on the set of curve
@@ -1266,16 +1266,16 @@ namespace G2lib {
 
         There are 7 values in the response tuple:
 
-         1. result of the projection. If the value is 1 the projection is unique and 
+         1. result of the projection. If the value is 1 the projection is unique and
             orthogonal, if the value is 0 there is more than one orthogonal projection
-            and only the first is returned, if the value is -1 the minimum distance point 
+            and only the first is returned, if the value is -1 the minimum distance point
             has a projection which is not orthogonal
          2. **x** coordinate of the point on the clothoid
          3. **y** coordinate of the point on the clothoid
          4. **s** curvilinear abscissa of the point
          5. **t** normal distance of the point on curvilinear abscissa
          6. **dst** distance of the point from the curve
-         7. **index** of the closest segment 
+         7. **index** of the closest segment
 
         :param float qx: x coordinates of the point
         :param float qy: y coordinates of the point
@@ -1289,7 +1289,7 @@ namespace G2lib {
         py::arg("offs"), py::arg("max_angle") = Utils::m_pi/6, py::arg("max_size") = 1e100,
       R"S(
         Build the internal AABB tree of the clothoid list with offset (ISO)
-        
+
         :param float offs:      curve offset
         :param float max_angle: maximum angle variation of the curve covered by a triangle
         :param float max_size:  maximum admissible size of the covering tirnagles
@@ -1325,7 +1325,7 @@ namespace G2lib {
         const size_t n = self.numSegments();
         // Avoids segmentation fault for empty list
         if (!n) {
-          return make_tuple(std::vector<real_type>(), 
+          return make_tuple(std::vector<real_type>(),
                             std::vector<real_type>());
         }
         std::vector<real_type> x(n+1), y(n+1);
@@ -1377,7 +1377,7 @@ namespace G2lib {
         return std::make_tuple(idx, s, t);
       }, py::arg("x"), py::arg("y"),
       R"S(
-        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the
         classic `findST`, this version returns as first return value the index
         of the segment.
 
@@ -1397,7 +1397,7 @@ namespace G2lib {
         return std::make_tuple(idx, s, t);
       }, py::arg("x"), py::arg("y"),
       R"S(
-        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the
         classic `findST`, this version returns as first return value the index
         of the segment.
         Vectorial version
@@ -1414,7 +1414,7 @@ namespace G2lib {
         return std::make_tuple(idx, s, t);
       }, py::arg("ibegin"), py::arg("iend"), py::arg("x"), py::arg("y"),
       R"S(
-        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the
         classic `findST`, this version returns as first return value the index
         of the segment. The search is done only between elements ``ibegin..iend``.
 
@@ -1436,7 +1436,7 @@ namespace G2lib {
         return std::make_tuple(idx, s, t);
       }, py::arg("ibegin"), py::arg("iend"), py::arg("x"), py::arg("y"),
       R"S(
-        Find parametric coordinate :math:`(s, t)` given a point. With respect to the 
+        Find parametric coordinate :math:`(s, t)` given a point. With respect to the
         classic `findST`, this version returns as first return value the index
         of the segment. The search is done only between elements ``ibegin..iend``.
         Vectorial version.
@@ -1502,7 +1502,7 @@ namespace G2lib {
           list.push_back(self.get(i));
         }
         return list;
-      }, 
+      },
       R"S(
         Return the clothoid list as a python list
 

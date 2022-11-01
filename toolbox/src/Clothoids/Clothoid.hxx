@@ -249,8 +249,7 @@ namespace G2lib {
     ClothoidCurve const & operator = ( ClothoidCurve const & s )
     { this->copy(s); return *this; }
 
-    CurveType    type()      const override { return G2LIB_CLOTHOID; }
-    char const * type_name() const override { return "ClothoidCurve"; }
+    CurveType type() const override { return CurveType::CLOTHOID; }
 
     /*\
      |  _         _ _    _

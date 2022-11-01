@@ -873,8 +873,7 @@ namespace G2lib {
     ClothoidList( ClothoidList const & s )
     { this->resetLastInterval(); this->copy(s); }
 
-    CurveType    type()      const override { return G2LIB_CLOTHOID_LIST; }
-    char const * type_name() const override { return "ClothoidList"; }
+    CurveType type() const override { return CurveType::CLOTHOID_LIST; }
 
     //!
     //! Initialize the clothoid list
@@ -1248,7 +1247,7 @@ namespace G2lib {
     //!
     //! Get the `idx`-th clothoid of the list where `idx` is the clothoid at parameter `s`
     //!
-    ClothoidCurve const & getAtS( real_type s ) const;
+    ClothoidCurve const & get_at_s( real_type s ) const;
 
     //!
     //! Return the numbber of clothoid of the list
@@ -1265,7 +1264,7 @@ namespace G2lib {
     //!
     //! Find the clothoid segment whose definiton range contains `s`
     //!
-    int_type findAtS( real_type & s ) const;
+    int_type find_at_s( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -2227,15 +2226,35 @@ namespace G2lib {
   //!
   class ClothoidSplineG2 {
   public:
-    using TargetType = enum { P1 = 1, P2, P3, P4, P5, P6, P7, P8, P9 };
+    using TargetType = enum class TargetType : int_type
+    { P1, P2, P3, P4, P5, P6, P7, P8, P9 };
+
+    static
+    inline
+    string
+    to_string( TargetType n ) {
+      string res = "";
+      switch ( n ) {
+      case TargetType::P1: res = "P1"; break;
+      case TargetType::P2: res = "P2"; break;
+      case TargetType::P3: res = "P3"; break;
+      case TargetType::P4: res = "P4"; break;
+      case TargetType::P5: res = "P5"; break;
+      case TargetType::P6: res = "P6"; break;
+      case TargetType::P7: res = "P7"; break;
+      case TargetType::P8: res = "P8"; break;
+      case TargetType::P9: res = "P9"; break;
+      }
+      return res;
+    };
 
   private:
 
-    Utils::Malloc<real_type> realValues;
+    Utils::Malloc<real_type> real_values{"ClothoidSplineG2"};
 
     real_type * m_x{nullptr};
     real_type * m_y{nullptr};
-    TargetType  m_tt{P1};
+    TargetType  m_tt{TargetType::P1};
     real_type   m_theta_I{real_type(0)};
     real_type   m_theta_F{real_type(0)};
     int_type    m_npts{0};
@@ -2259,24 +2278,24 @@ namespace G2lib {
 
   public:
 
-    ClothoidSplineG2()
-    : realValues("ClothoidSplineG2")
-    {}
-
+    ClothoidSplineG2() = default;
     ~ClothoidSplineG2() = default;
 
     void
-    setP1( real_type theta0, real_type thetaN )
-    { m_tt = P1; m_theta_I = theta0; m_theta_F = thetaN; }
+    setP1( real_type theta0, real_type thetaN ) {
+      m_tt      = TargetType::P1;
+      m_theta_I = theta0;
+      m_theta_F = thetaN;
+    }
 
-    void setP2() { m_tt = P2; }
-    void setP3() { m_tt = P3; }
-    void setP4() { m_tt = P4; }
-    void setP5() { m_tt = P5; }
-    void setP6() { m_tt = P6; }
-    void setP7() { m_tt = P7; }
-    void setP8() { m_tt = P8; }
-    void setP9() { m_tt = P9; }
+    void setP2() { m_tt = TargetType::P2; }
+    void setP3() { m_tt = TargetType::P3; }
+    void setP4() { m_tt = TargetType::P4; }
+    void setP5() { m_tt = TargetType::P5; }
+    void setP6() { m_tt = TargetType::P6; }
+    void setP7() { m_tt = TargetType::P7; }
+    void setP8() { m_tt = TargetType::P8; }
+    void setP9() { m_tt = TargetType::P9; }
 
     void
     build(

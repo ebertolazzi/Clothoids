@@ -67,11 +67,11 @@ namespace G2lib {
 
     this->resetLastInterval();
     switch ( pC->type() ) {
-    case G2LIB_LINE:
+    case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "to -> LineSegment\n" );
       this->build( *static_cast<LineSegment const *>(pC) );
       break;
-    case G2LIB_POLYLINE:
+    case CurveType::POLYLINE:
       G2LIB_DEBUG_MESSAGE( "to -> PolyLine\n" );
       this->copy( *static_cast<PolyLine const *>(pC) );
       break;
@@ -127,7 +127,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type
-  PolyLine::findAtS( real_type & s ) const {
+  PolyLine::find_at_s( real_type & s ) const {
     bool ok;
     int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
     Utils::searchInterval<int_type,real_type>(
@@ -278,7 +278,7 @@ namespace G2lib {
 
   real_type
   PolyLine::theta( real_type s ) const {
-    int_type idx = this->findAtS( s );
+    int_type idx = this->find_at_s( s );
     return m_polylineList[idx].m_theta0;
   }
 
@@ -368,8 +368,8 @@ namespace G2lib {
       s_begin, s_end, m_s0.front(), m_s0.back()
     );
 
-    size_t i_begin = size_t(findAtS(s_begin));
-    size_t i_end   = size_t(findAtS(s_end));
+    size_t i_begin = size_t(find_at_s(s_begin));
+    size_t i_end   = size_t(find_at_s(s_end));
     m_polylineList[i_begin].trim( s_begin-m_s0[i_begin], m_s0[i_begin+1] );
     m_polylineList[i_end].trim( m_s0[i_end], s_end-m_s0[i_end] );
     m_polylineList.erase( m_polylineList.begin()+LS_dist_type(i_end+1), m_polylineList.end() );
@@ -399,8 +399,8 @@ namespace G2lib {
     while ( s_end   < 0 ) s_end   += L;
 
     int_type n_seg   = int_type( m_polylineList.size() );
-    int_type i_begin = findAtS( s_begin );
-    int_type i_end   = findAtS( s_end );
+    int_type i_begin = find_at_s( s_begin );
+    int_type i_end   = find_at_s( s_end );
 
     if ( s_begin < s_end ) {
       // get initial and final segment
@@ -638,12 +638,12 @@ namespace G2lib {
 
   bool
   PolyLine::collision( BaseCurve const * pC ) const {
-    if ( pC->type() == G2LIB_POLYLINE ) {
+    if ( pC->type() == CurveType::POLYLINE ) {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       return this->collision( C );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == G2LIB_POLYLINE ) {
+      if ( CT == CurveType::POLYLINE ) {
         PolyLine C(pC);
         return this->collision( C );
       } else {
@@ -660,12 +660,12 @@ namespace G2lib {
     BaseCurve const * pC,
     real_type         offs_C
   ) const {
-    if ( pC->type() == G2LIB_POLYLINE ) {
+    if ( pC->type() == CurveType::POLYLINE ) {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == G2LIB_POLYLINE ) {
+      if ( CT == CurveType::POLYLINE ) {
         PolyLine C(pC);
         return this->collision_ISO( offs, C, offs_C );
       } else {
@@ -679,12 +679,12 @@ namespace G2lib {
     BaseCurve const * pC,
     IntersectList   & ilist
   ) const {
-    if ( pC->type() == G2LIB_POLYLINE ) {
+    if ( pC->type() == CurveType::POLYLINE ) {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       this->intersect( C, ilist );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == G2LIB_POLYLINE ) {
+      if ( CT == CurveType::POLYLINE ) {
         PolyLine C(pC);
         this->intersect( C, ilist );
       } else {
@@ -700,12 +700,12 @@ namespace G2lib {
     real_type         offs_C,
     IntersectList   & ilist
   ) const {
-    if ( pC->type() == G2LIB_POLYLINE ) {
+    if ( pC->type() == CurveType::POLYLINE ) {
       PolyLine const & C = *static_cast<PolyLine const *>(pC);
       this->intersect_ISO( offs, C, offs_C, ilist );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == G2LIB_POLYLINE ) {
+      if ( CT == CurveType::POLYLINE ) {
         PolyLine C(pC);
         this->intersect_ISO( offs, C, offs_C, ilist );
       } else {

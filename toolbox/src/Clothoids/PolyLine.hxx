@@ -77,7 +77,7 @@ namespace G2lib {
     { this->resetLastInterval(); this->copy(PL); }
 
     int_type
-    findAtS( real_type & s ) const;
+    find_at_s( real_type & s ) const;
 
     explicit PolyLine( LineSegment const & LS );
     explicit PolyLine( CircleArc const & C, real_type tol );
@@ -86,8 +86,7 @@ namespace G2lib {
     explicit PolyLine( ClothoidList const & B, real_type tol );
     explicit PolyLine( BaseCurve const * pC );
 
-    CurveType    type()      const override { return G2LIB_POLYLINE; }
-    char const * type_name() const override { return "PolyLine"; }
+    CurveType type() const override { return CurveType::POLYLINE; }
 
     PolyLine const & operator = ( PolyLine const & s )
     { this->copy(s); return *this; }
@@ -215,14 +214,14 @@ namespace G2lib {
 
     real_type
     X( real_type s ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       real_type ss = m_s0[size_t(idx)];
       return m_polylineList[size_t(idx)].X(s-ss);
     }
 
     real_type
     X_D( real_type s ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       return m_polylineList[size_t(idx)].m_c0;
     }
 
@@ -236,14 +235,14 @@ namespace G2lib {
 
     real_type
     Y( real_type s ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       real_type ss = m_s0[size_t(idx)];
       return m_polylineList[size_t(idx)].Y(s-ss);
     }
 
     real_type
     Y_D( real_type s ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       return m_polylineList[size_t(idx)].m_s0;
     }
 
@@ -273,7 +272,7 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval( s-ss, x, y );
     }
@@ -284,7 +283,7 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
@@ -314,7 +313,7 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
@@ -326,7 +325,7 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const override {
-      int_type idx = this->findAtS( s );
+      int_type idx = this->find_at_s( s );
       real_type ss = m_s0[size_t(idx)];
       m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }

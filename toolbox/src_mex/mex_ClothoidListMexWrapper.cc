@@ -1073,7 +1073,7 @@ namespace G2lib {
       arg_in_2, CMD "`s` expected to be a real scalar"
     );
 
-    Utils::mex_set_scalar_int32( arg_out_0, ptr->findAtS( s ) );
+    Utils::mex_set_scalar_int32( arg_out_0, ptr->find_at_s( s ) );
     #undef CMD
   }
 

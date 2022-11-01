@@ -120,8 +120,7 @@ namespace G2lib {
       m_C1.copy(c.m_C1);
     }
 
-    CurveType    type()      const override { return G2LIB_BIARC; }
-    char const * type_name() const override { return "Biarc"; }
+    CurveType type() const override { return CurveType::BIARC; }
 
     //!
     //! Make a copy of an existing biarc.

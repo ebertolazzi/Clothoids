@@ -113,19 +113,19 @@ do_build2(
   G2LIB_CLASS     * ptr0 = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>(arg_in_1);
   BaseCurve const * ptr1 = get_base_pointer( kind, arg_in_2 );
 
-  if ( ptr1->type() == G2LIB_LINE )
+  if ( ptr1->type() == CurveType::LINE )
     ptr0->build( *static_cast<LineSegment const *>(ptr1) );
-  else if ( ptr1->type() == G2LIB_CIRCLE )
+  else if ( ptr1->type() == CurveType::CIRCLE )
     ptr0->build( *static_cast<CircleArc const *>(ptr1) );
-  else if ( ptr1->type() == G2LIB_BIARC )
+  else if ( ptr1->type() == CurveType::BIARC )
     ptr0->build( *static_cast<Biarc const *>(ptr1) );
-  else if ( ptr1->type() == G2LIB_CLOTHOID )
+  else if ( ptr1->type() == CurveType::CLOTHOID )
     ptr0->build( *static_cast<ClothoidCurve const *>(ptr1) );
-  else if ( ptr1->type() == G2LIB_POLYLINE )
+  else if ( ptr1->type() == CurveType::POLYLINE )
     ptr0->build( *static_cast<PolyLine const *>(ptr1) );
-  else if ( ptr1->type() == G2LIB_BIARC_LIST )
+  else if ( ptr1->type() == CurveType::BIARC_LIST )
     ptr0->build( *static_cast<BiarcList const *>(ptr1) );
-  else if ( ptr1->type() == G2LIB_CLOTHOID_LIST )
+  else if ( ptr1->type() == CurveType::CLOTHOID_LIST )
     ptr0->build( *static_cast<ClothoidList const *>(ptr1) );
 
   #undef CMD

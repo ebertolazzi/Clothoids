@@ -54,7 +54,7 @@ namespace Utils {
 
     using integer = int;
 
-    enum Alignment { LEFT, RIGHT, CENTER };
+    using Alignment = enum class Table_align : integer { LEFT, RIGHT, CENTER };
 
     class Style {
     private:

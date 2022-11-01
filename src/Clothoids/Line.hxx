@@ -92,8 +92,7 @@ namespace G2lib {
     LineSegment const & operator = ( LineSegment const & s )
     { this->copy(s); return *this; }
 
-    CurveType    type()      const override { return G2LIB_LINE; }
-    char const * type_name() const override { return "LineSegment"; }
+    CurveType type() const override { return CurveType::LINE; }
 
     real_type
     length() const override

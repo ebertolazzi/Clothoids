@@ -48,53 +48,53 @@ namespace G2lib {
 
   static map<Ppair,CurveType> const promote_map = {
 
-    {Ppair( G2LIB_LINE, G2LIB_LINE ),          G2LIB_LINE},
-    {Ppair( G2LIB_LINE, G2LIB_CIRCLE ),        G2LIB_CIRCLE},
-    {Ppair( G2LIB_LINE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID},
-    {Ppair( G2LIB_LINE, G2LIB_BIARC ),         G2LIB_BIARC_LIST},
-    {Ppair( G2LIB_LINE, G2LIB_BIARC_LIST ),    G2LIB_BIARC_LIST},
-    {Ppair( G2LIB_LINE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_LINE, G2LIB_POLYLINE ),      G2LIB_POLYLINE},
+    {Ppair( CurveType::LINE, CurveType::LINE ),          CurveType::LINE},
+    {Ppair( CurveType::LINE, CurveType::CIRCLE ),        CurveType::CIRCLE},
+    {Ppair( CurveType::LINE, CurveType::CLOTHOID ),      CurveType::CLOTHOID},
+    {Ppair( CurveType::LINE, CurveType::BIARC ),         CurveType::BIARC_LIST},
+    {Ppair( CurveType::LINE, CurveType::BIARC_LIST ),    CurveType::BIARC_LIST},
+    {Ppair( CurveType::LINE, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::LINE, CurveType::POLYLINE ),      CurveType::POLYLINE},
 
-    {Ppair( G2LIB_CIRCLE, G2LIB_LINE ),          G2LIB_CIRCLE},
-    {Ppair( G2LIB_CIRCLE, G2LIB_CIRCLE ),        G2LIB_CIRCLE},
-    {Ppair( G2LIB_CIRCLE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID},
-    {Ppair( G2LIB_CIRCLE, G2LIB_BIARC ),         G2LIB_BIARC_LIST},
-    {Ppair( G2LIB_CIRCLE, G2LIB_BIARC_LIST ),    G2LIB_BIARC_LIST},
-    {Ppair( G2LIB_CIRCLE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CIRCLE, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
+    {Ppair( CurveType::CIRCLE, CurveType::LINE ),          CurveType::CIRCLE},
+    {Ppair( CurveType::CIRCLE, CurveType::CIRCLE ),        CurveType::CIRCLE},
+    {Ppair( CurveType::CIRCLE, CurveType::CLOTHOID ),      CurveType::CLOTHOID},
+    {Ppair( CurveType::CIRCLE, CurveType::BIARC ),         CurveType::BIARC_LIST},
+    {Ppair( CurveType::CIRCLE, CurveType::BIARC_LIST ),    CurveType::BIARC_LIST},
+    {Ppair( CurveType::CIRCLE, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CIRCLE, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
 
-    {Ppair( G2LIB_BIARC, G2LIB_LINE ),          G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_BIARC, G2LIB_CIRCLE ),        G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_BIARC, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_BIARC, G2LIB_BIARC ),         G2LIB_BIARC},
-    {Ppair( G2LIB_BIARC, G2LIB_BIARC_LIST ),    G2LIB_BIARC_LIST},
-    {Ppair( G2LIB_BIARC, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_BIARC, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
+    {Ppair( CurveType::BIARC, CurveType::LINE ),          CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::BIARC, CurveType::CIRCLE ),        CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::BIARC, CurveType::CLOTHOID ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::BIARC, CurveType::BIARC ),         CurveType::BIARC},
+    {Ppair( CurveType::BIARC, CurveType::BIARC_LIST ),    CurveType::BIARC_LIST},
+    {Ppair( CurveType::BIARC, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::BIARC, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
 
-    {Ppair( G2LIB_CLOTHOID, G2LIB_LINE ),          G2LIB_CLOTHOID},
-    {Ppair( G2LIB_CLOTHOID, G2LIB_CIRCLE ),        G2LIB_CLOTHOID},
-    {Ppair( G2LIB_CLOTHOID, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID},
-    {Ppair( G2LIB_CLOTHOID, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID, G2LIB_BIARC_LIST ),    G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID, CurveType::LINE ),          CurveType::CLOTHOID},
+    {Ppair( CurveType::CLOTHOID, CurveType::CIRCLE ),        CurveType::CLOTHOID},
+    {Ppair( CurveType::CLOTHOID, CurveType::CLOTHOID ),      CurveType::CLOTHOID},
+    {Ppair( CurveType::CLOTHOID, CurveType::BIARC ),         CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID, CurveType::BIARC_LIST ),    CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
 
-    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_LINE ),          G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CIRCLE ),        G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_BIARC_LIST ),    G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_CLOTHOID_LIST, G2LIB_POLYLINE ),      G2LIB_CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::LINE ),          CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::CIRCLE ),        CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::CLOTHOID ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::BIARC ),         CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::BIARC_LIST ),    CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
 
-    {Ppair( G2LIB_POLYLINE, G2LIB_LINE ),          G2LIB_POLYLINE},
-    {Ppair( G2LIB_POLYLINE, G2LIB_CIRCLE ),        G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID ),      G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_POLYLINE, G2LIB_BIARC ),         G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_POLYLINE, G2LIB_BIARC_LIST ),    G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_POLYLINE, G2LIB_CLOTHOID_LIST ), G2LIB_CLOTHOID_LIST},
-    {Ppair( G2LIB_POLYLINE, G2LIB_POLYLINE ),      G2LIB_POLYLINE}
+    {Ppair( CurveType::POLYLINE, CurveType::LINE ),          CurveType::POLYLINE},
+    {Ppair( CurveType::POLYLINE, CurveType::CIRCLE ),        CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::POLYLINE, CurveType::CLOTHOID ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::POLYLINE, CurveType::BIARC ),         CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::POLYLINE, CurveType::BIARC_LIST ),    CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::POLYLINE, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::POLYLINE, CurveType::POLYLINE ),      CurveType::POLYLINE}
   };
 
   CurveType curve_promote( CurveType A, CurveType B ) {
@@ -119,7 +119,7 @@ namespace G2lib {
 
       CurveType CT = curve_promote( pC1->type(), pC2->type() );
       switch ( CT ) {
-      case G2LIB_LINE:
+      case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
           LineSegment L1( pC1 );
@@ -127,7 +127,7 @@ namespace G2lib {
           ok = L1.collision( L2 );
         }
         break;
-      case G2LIB_CIRCLE:
+      case CurveType::CIRCLE:
         G2LIB_DEBUG_MESSAGE( "promote -> CircleArc\n" );
         {
           CircleArc C1( pC1 );
@@ -135,7 +135,7 @@ namespace G2lib {
           ok = C1.collision( C2 );
         }
         break;
-      case G2LIB_BIARC:
+      case CurveType::BIARC:
         G2LIB_DEBUG_MESSAGE( "promote -> Biarc\n" );
         {
           Biarc B1( pC1 );
@@ -143,7 +143,7 @@ namespace G2lib {
           ok = B1.collision( B2 );
         }
         break;
-      case G2LIB_CLOTHOID:
+      case CurveType::CLOTHOID:
         G2LIB_DEBUG_MESSAGE( "promote -> ClothoidCurve\n" );
         {
           ClothoidCurve C1( pC1 );
@@ -151,7 +151,7 @@ namespace G2lib {
           ok = C1.collision( C2 );
         }
         break;
-      case G2LIB_POLYLINE:
+      case CurveType::POLYLINE:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           PolyLine PL1( pC1 );
@@ -159,7 +159,7 @@ namespace G2lib {
           ok = PL1.collision( PL2 );
         }
         break;
-      case G2LIB_BIARC_LIST:
+      case CurveType::BIARC_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           BiarcList BL1( pC1 );
@@ -167,7 +167,7 @@ namespace G2lib {
           ok = BL1.collision( BL2 );
         }
         break;
-      case G2LIB_CLOTHOID_LIST:
+      case CurveType::CLOTHOID_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> ClothoidList\n" );
         {
           ClothoidList CL1( pC1 );
@@ -219,7 +219,7 @@ namespace G2lib {
 
       CurveType CT = curve_promote( pC1->type(), pC2->type() );
       switch ( CT ) {
-      case G2LIB_LINE:
+      case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
           LineSegment L1( pC1 );
@@ -227,7 +227,7 @@ namespace G2lib {
           ok = L1.collision_ISO( offs1, L2, offs2 );
         }
         break;
-      case G2LIB_CIRCLE:
+      case CurveType::CIRCLE:
         G2LIB_DEBUG_MESSAGE( "promote -> CircleArc\n" );
         {
           CircleArc C1( pC1 );
@@ -235,7 +235,7 @@ namespace G2lib {
           ok = C1.collision_ISO( offs1, C2, offs2 );
         }
         break;
-      case G2LIB_BIARC:
+      case CurveType::BIARC:
         G2LIB_DEBUG_MESSAGE( "promote -> Biarc\n" );
         {
           Biarc B1( pC1 );
@@ -243,7 +243,7 @@ namespace G2lib {
           ok = B1.collision_ISO( offs1, B2, offs2 );
         }
         break;
-      case G2LIB_CLOTHOID:
+      case CurveType::CLOTHOID:
         G2LIB_DEBUG_MESSAGE( "promote -> ClothoidCurve\n" );
         {
           ClothoidCurve C1( pC1 );
@@ -251,7 +251,7 @@ namespace G2lib {
           ok = C1.collision_ISO( offs1, C2, offs2 );
         }
         break;
-      case G2LIB_POLYLINE:
+      case CurveType::POLYLINE:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           PolyLine PL1( pC1 );
@@ -259,7 +259,7 @@ namespace G2lib {
           ok = PL1.collision_ISO( offs1, PL2, offs2 );
         }
         break;
-      case G2LIB_BIARC_LIST:
+      case CurveType::BIARC_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           BiarcList BL1( pC1 );
@@ -267,7 +267,7 @@ namespace G2lib {
           ok = BL1.collision_ISO( offs1, BL2, offs2 );
         }
         break;
-      case G2LIB_CLOTHOID_LIST:
+      case CurveType::CLOTHOID_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> ClothoidList\n" );
         {
           ClothoidList CL1( pC1 );
@@ -316,7 +316,7 @@ namespace G2lib {
 
       CurveType CT = curve_promote( pC1->type(), pC2->type() );
       switch ( CT ) {
-      case G2LIB_LINE:
+      case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
           LineSegment L1( pC1 );
@@ -324,7 +324,7 @@ namespace G2lib {
           L1.intersect( L2, ilist );
         }
         break;
-      case G2LIB_CIRCLE:
+      case CurveType::CIRCLE:
         G2LIB_DEBUG_MESSAGE( "promote -> CircleArc\n" );
         {
           CircleArc C1( pC1 );
@@ -332,7 +332,7 @@ namespace G2lib {
           C1.intersect( C2, ilist );
         }
         break;
-      case G2LIB_BIARC:
+      case CurveType::BIARC:
         G2LIB_DEBUG_MESSAGE( "promote -> Biarc\n" );
         {
           Biarc B1( pC1 );
@@ -340,7 +340,7 @@ namespace G2lib {
           B1.intersect( B2, ilist );
         }
         break;
-      case G2LIB_CLOTHOID:
+      case CurveType::CLOTHOID:
         G2LIB_DEBUG_MESSAGE( "promote -> ClothoidCurve\n" );
         {
           ClothoidCurve C1( pC1 );
@@ -348,7 +348,7 @@ namespace G2lib {
           C1.intersect( C2, ilist );
         }
         break;
-      case G2LIB_POLYLINE:
+      case CurveType::POLYLINE:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           PolyLine PL1( pC1 );
@@ -356,7 +356,7 @@ namespace G2lib {
           PL1.intersect( PL2, ilist );
         }
         break;
-      case G2LIB_BIARC_LIST:
+      case CurveType::BIARC_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           BiarcList BL1( pC1 );
@@ -364,7 +364,7 @@ namespace G2lib {
           BL1.intersect( BL2, ilist  );
         }
         break;
-      case G2LIB_CLOTHOID_LIST:
+      case CurveType::CLOTHOID_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           ClothoidList CL1( pC1 );
@@ -412,7 +412,7 @@ namespace G2lib {
 
       CurveType CT = curve_promote( pC1->type(), pC2->type() );
       switch ( CT ) {
-      case G2LIB_LINE:
+      case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
         {
           LineSegment L1( pC1 );
@@ -420,7 +420,7 @@ namespace G2lib {
           L1.intersect_ISO( offs1, L2, offs2, ilist );
         }
         break;
-      case G2LIB_CIRCLE:
+      case CurveType::CIRCLE:
          G2LIB_DEBUG_MESSAGE( "promote -> CircleArc\n" );
         {
           CircleArc C1( pC1 );
@@ -428,7 +428,7 @@ namespace G2lib {
           C1.intersect_ISO( offs1, C2, offs2, ilist );
         }
         break;
-      case G2LIB_BIARC:
+      case CurveType::BIARC:
         G2LIB_DEBUG_MESSAGE( "promote -> Biarc\n" );
         {
           Biarc B1( pC1 );
@@ -436,7 +436,7 @@ namespace G2lib {
           B1.intersect_ISO( offs1, B2, offs2, ilist );
         }
         break;
-      case G2LIB_CLOTHOID:
+      case CurveType::CLOTHOID:
         G2LIB_DEBUG_MESSAGE( "promote -> ClothoidCurve\n" );
         {
           ClothoidCurve C1( pC1 );
@@ -444,7 +444,7 @@ namespace G2lib {
           C1.intersect_ISO( offs1, C2, offs2, ilist );
         }
         break;
-      case G2LIB_POLYLINE:
+      case CurveType::POLYLINE:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           PolyLine PL1( pC1 );
@@ -452,7 +452,7 @@ namespace G2lib {
           PL1.intersect_ISO( offs1, PL2, offs2, ilist );
         }
         break;
-      case G2LIB_BIARC_LIST:
+      case CurveType::BIARC_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> PolyLine\n" );
         {
           BiarcList BL1( pC1 );
@@ -460,7 +460,7 @@ namespace G2lib {
           BL1.intersect_ISO( offs1, BL2, offs2, ilist );
         }
         break;
-      case G2LIB_CLOTHOID_LIST:
+      case CurveType::CLOTHOID_LIST:
         G2LIB_DEBUG_MESSAGE( "promote -> ClothoidList\n" );
         {
           ClothoidList CL1( pC1 );

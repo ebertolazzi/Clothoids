@@ -206,10 +206,7 @@ namespace G2lib {
     //!
     virtual CurveType type() const = 0;
 
-    //!
-    //! The name of the curve type
-    //!
-    virtual char const * type_name() const = 0;
+    string type_name() const { return to_string(type()); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

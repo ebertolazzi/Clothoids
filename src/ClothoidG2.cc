@@ -33,7 +33,7 @@
 #endif
 
 namespace G2lib {
-  
+
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   using std::abs;
@@ -1232,20 +1232,20 @@ namespace G2lib {
     m_npts = n;
     size_t n1 = size_t(n-1);
 
-    realValues.reallocate( 2*size_t(n) + 10 * n1 );
+    real_values.reallocate( 2*size_t(n) + 10 * n1 );
 
-    m_x    = realValues( size_t(n) );
-    m_y    = realValues( size_t(n) );
-    m_k    = realValues( n1 );
-    m_dk   = realValues( n1 );
-    m_L    = realValues( n1 );
-    m_kL   = realValues( n1 );
-    m_L_1  = realValues( n1 );
-    m_L_2  = realValues( n1 );
-    m_k_1  = realValues( n1 );
-    m_k_2  = realValues( n1 );
-    m_dk_1 = realValues( n1 );
-    m_dk_2 = realValues( n1 );
+    m_x    = real_values( size_t(n) );
+    m_y    = real_values( size_t(n) );
+    m_k    = real_values( n1 );
+    m_dk   = real_values( n1 );
+    m_L    = real_values( n1 );
+    m_kL   = real_values( n1 );
+    m_L_1  = real_values( n1 );
+    m_L_2  = real_values( n1 );
+    m_k_1  = real_values( n1 );
+    m_k_2  = real_values( n1 );
+    m_dk_1 = real_values( n1 );
+    m_dk_2 = real_values( n1 );
     std::copy_n( xvec, n, m_x );
     std::copy_n( yvec, n, m_y );
   }
@@ -1260,8 +1260,8 @@ namespace G2lib {
   int_type
   ClothoidSplineG2::numConstraints() const {
     switch (m_tt) {
-      case P1:
-      case P2: return m_npts;
+      case TargetType::P1:
+      case TargetType::P2: return m_npts;
       default: break;
     }
     return m_npts-2;
@@ -1278,14 +1278,14 @@ namespace G2lib {
     int_type ne  = m_npts - 1;
     int_type ne1 = m_npts - 2;
     switch (m_tt) {
-    case P1:
-    case P2:
+    case TargetType::P1:
+    case TargetType::P2:
       f = 0;
       break;
-    case P3:
+    case TargetType::P3:
       // forward target
       break;
-    case P4:
+    case TargetType::P4:
       cL.build_G1( m_x[0],   m_y[0],   theta[0],   m_x[1],  m_y[1],  theta[1] );
       cR.build_G1( m_x[ne1], m_y[ne1], theta[ne1], m_x[ne], m_y[ne], theta[ne] );
       { real_type dk_L = cL.dkappa();
@@ -1293,19 +1293,19 @@ namespace G2lib {
         f = dk_L*dk_L+dk_R*dk_R;
       }
       break;
-    case P5:
+    case TargetType::P5:
       cL.build_G1( m_x[0],   m_y[0],   theta[0],   m_x[1],  m_y[1],  theta[1] );
       cR.build_G1( m_x[ne1], m_y[ne1], theta[ne1], m_x[ne], m_y[ne], theta[ne] );
       f = cL.length()+cR.length();
       break;
-    case P6:
+    case TargetType::P6:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         f += c.length();
       }
       break;
-    case P7:
+    case TargetType::P7:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
@@ -1315,7 +1315,7 @@ namespace G2lib {
         f = f + Len * ( Len * ( dkur*( (dkur*Len)/3 + kur) ) + kur*kur );
       }
       break;
-    case P8:
+    case TargetType::P8:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
@@ -1324,7 +1324,7 @@ namespace G2lib {
         f += Len*dkur*dkur;
       }
       break;
-    case P9:
+    case TargetType::P9:
       f = 0;
       for ( int_type j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
@@ -1357,12 +1357,12 @@ namespace G2lib {
     int_type ne  = m_npts - 1;
     int_type ne1 = m_npts - 2;
     switch (m_tt) {
-    case P1:
-    case P2:
+    case TargetType::P1:
+    case TargetType::P2:
       break;
-    case P3:
+    case TargetType::P3:
       break;
-    case P4:
+    case TargetType::P4:
       cL.build_G1_D(
         m_x[0], m_y[0], theta[0],
         m_x[1], m_y[1], theta[1],
@@ -1382,7 +1382,7 @@ namespace G2lib {
         g[ne]  = 2*dkR*dkR_D[1];
       }
       break;
-    case P5:
+    case TargetType::P5:
       cL.build_G1_D(
         m_x[0], m_y[0], theta[0],
         m_x[1], m_y[1], theta[1],
@@ -1398,7 +1398,7 @@ namespace G2lib {
       g[ne1] = LR_D[0];
       g[ne]  = LR_D[1];
       break;
-    case P6:
+    case TargetType::P6:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
@@ -1410,7 +1410,7 @@ namespace G2lib {
         g[j+1] += L_D[1];
       }
       break;
-    case P7:
+    case TargetType::P7:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
@@ -1441,7 +1441,7 @@ namespace G2lib {
                   + 2*Len*kur*k_D[1];
       }
       break;
-    case P8:
+    case TargetType::P8:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
@@ -1455,7 +1455,7 @@ namespace G2lib {
         g[j+1] += (2*Len*dk_D[1] + L_D[1]*dkur)*dkur;
       }
       break;
-    case P9:
+    case TargetType::P9:
       for ( int_type j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
@@ -1503,11 +1503,11 @@ namespace G2lib {
     for ( int_type j = 0; j < ne1; ++j ) c[j] = m_kL[j]-m_k[j+1];
 
     switch (m_tt) {
-    case P1:
+    case TargetType::P1:
       c[ne1] = diff2pi( theta[0]  - m_theta_I );
       c[ne]  = diff2pi( theta[ne] - m_theta_F );
       break;
-    case P2:
+    case TargetType::P2:
       c[ne1] = m_kL[ne1] - m_k[0];
       c[ne]  = diff2pi( theta[0] - theta[ne] );
       break;
@@ -1523,8 +1523,8 @@ namespace G2lib {
   ClothoidSplineG2::jacobian_nnz() const {
     int_type nnz = 3*(m_npts-2);
     switch (m_tt) {
-    case P1: nnz += 2; break;
-    case P2: nnz += 6; break;
+    case TargetType::P1: nnz += 2; break;
+    case TargetType::P2: nnz += 6; break;
     default:            break;
     }
     return nnz;
@@ -1549,11 +1549,11 @@ namespace G2lib {
     }
 
     switch (m_tt) {
-    case P1:
+    case TargetType::P1:
       ii[kk] = ne1; jj[kk] = 0; ++kk;
       ii[kk] = ne; jj[kk] = ne; ++kk;
       break;
-    case P2:
+    case TargetType::P2:
       ii[kk] = ne1; jj[kk] = 0; ++kk;
       ii[kk] = ne1; jj[kk] = 1; ++kk;
       ii[kk] = ne1; jj[kk] = ne1; ++kk;
@@ -1587,11 +1587,11 @@ namespace G2lib {
     }
 
     switch (m_tt) {
-    case P1:
+    case TargetType::P1:
       ii[kk] = ne;     jj[kk] = 1;      ++kk;
       ii[kk] = m_npts; jj[kk] = m_npts; ++kk;
       break;
-    case P2:
+    case TargetType::P2:
       ii[kk] = ne;     jj[kk] = 1;      ++kk;
       ii[kk] = ne;     jj[kk] = 2;      ++kk;
       ii[kk] = ne;     jj[kk] = ne;     ++kk;
@@ -1641,11 +1641,11 @@ namespace G2lib {
     }
 
     switch (m_tt) {
-    case P1:
+    case TargetType::P1:
       vals[kk++] = 1;
       vals[kk++] = 1;
       break;
-    case P2:
+    case TargetType::P2:
       vals[kk++] = -m_k_1[0];
       vals[kk++] = -m_k_2[0];
       vals[kk++] = m_k_1[ne1]+m_L_1[ne1]*m_dk[ne1]+m_L[ne1]*m_dk_1[ne1];
@@ -1666,7 +1666,7 @@ namespace G2lib {
     fmt::print( stream,
       "npts   = {}\n"
       "target = {}\n",
-      c.m_npts, int(c.m_tt)
+      c.m_npts, ClothoidSplineG2::to_string(c.m_tt)
     );
     return stream;
   }

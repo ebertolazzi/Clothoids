@@ -116,8 +116,7 @@ namespace G2lib {
     //!
     void copy( BiarcList const & L );
 
-    CurveType    type()      const override { return G2LIB_BIARC_LIST; }
-    char const * type_name() const override { return "BiarcList"; }
+    CurveType type() const override { return CurveType::BIARC_LIST; }
 
     //!
     //! Copy another biarc spline.
@@ -252,7 +251,7 @@ namespace G2lib {
     //!
     //! Get the biarc that contain the curvilinear coordinate `s`.
     //!
-    Biarc const & getAtS( real_type s ) const;
+    Biarc const & get_at_s( real_type s ) const;
 
     //!
     //! Return the number of biarc in the biarc list.
@@ -263,7 +262,7 @@ namespace G2lib {
     //! Get the of the biarc that contain
     //! the curvilinear coordinate `s`.
     //!
-    int_type findAtS( real_type & s ) const;
+    int_type find_at_s( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

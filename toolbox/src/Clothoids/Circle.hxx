@@ -123,8 +123,7 @@ namespace G2lib {
     explicit
     CircleArc( BaseCurve const * pC );
 
-    CurveType    type()      const override { return G2LIB_CIRCLE; }
-    char const * type_name() const override { return "CircleArc"; }
+    CurveType type() const override { return CurveType::CIRCLE; }
 
     //!
     //! Make a copy of an existing circle arc.
