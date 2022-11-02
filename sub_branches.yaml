@@ -1,0 +1,9 @@
+# git submodule status --recursive
+---
+#=========================
+cmake_utils: main
+submodules/Utils: master
+submodules/Utils/cmake_utils: main
+submodules/quarticRootsFlocke: master
+submodules/quarticRootsFlocke/cmake_utils: main
+...
