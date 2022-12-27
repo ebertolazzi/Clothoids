@@ -71,6 +71,12 @@
 // check if compiler is C++11
 #if (defined(_MSC_VER) &&  _MSC_VER >= 1800) || \
     (defined(__cplusplus) && __cplusplus > 199711L)
+
+  #if (defined(__cplusplus) && __cplusplus <= 201103L)
+    #define UTILS_DEFAULT {}
+  #else
+    #define UTILS_DEFAULT = default
+  #endif
 #else
   #error "Lapack Wrapper must be compiled using C++ >= C++11"
 #endif

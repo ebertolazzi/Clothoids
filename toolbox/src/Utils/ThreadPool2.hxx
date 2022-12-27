@@ -238,7 +238,7 @@ namespace Utils {
     /**
      * Destroy the task object
      */
-    virtual ~VirtualTask() = default;
+    virtual ~VirtualTask() UTILS_DEFAULT;
   };
 
   /**

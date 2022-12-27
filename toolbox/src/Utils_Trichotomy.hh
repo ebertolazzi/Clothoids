@@ -70,8 +70,8 @@ namespace Utils {
 
     Integer m_num_iter_done{0};
     Integer m_num_fun_eval{0};
-    Integer m_max_iter{100};
-    Integer m_max_fun_eval{1000};
+    Integer m_max_iteration{100};
+    Integer m_max_fun_evaluation{1000};
     Real    m_tolerance{pow(machine_eps<Real>(),Real(2./3.))};
 
     bool m_converged{false};
@@ -95,8 +95,8 @@ namespace Utils {
 
   public:
 
-    Trichotomy() = default;
-    ~Trichotomy() = default;
+    Trichotomy() UTILS_DEFAULT;
+    ~Trichotomy() UTILS_DEFAULT;
 
     Real
     eval( Real a, Real b, Trichotomy_base_fun<Real> * fun ) {
@@ -130,6 +130,9 @@ namespace Utils {
     Integer num_fun_eval() const { return m_num_fun_eval; }
     Real    tolerance()    const { return m_tolerance; }
     bool    converged()    const { return m_converged; }
+
+    void set_max_iterations( Integer mit );
+    void set_max_fun_evaluation( Integer mfev );
 
   };
 

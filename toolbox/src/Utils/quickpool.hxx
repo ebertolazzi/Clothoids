@@ -188,7 +188,7 @@ namespace quickpool {
       struct alignas(Align) atomic : public std::atomic<T>,
                                      private padding_impl::padding<T, Align> {
       public:
-        atomic() noexcept = default;
+        atomic() noexcept UTILS_DEFAULT;
         atomic(T desired) noexcept : std::atomic<T>(desired) {}
 
         // Assignment operators have been deleted, must redefine.

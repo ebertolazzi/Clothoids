@@ -943,7 +943,7 @@ namespace G2lib {
     if ( s < S0.length() ) return S0.theta(s);
     s -= S0.length();
     if ( s < SM.length() ) return SM.theta(s);
-    s -= S0.length();
+    s -= SM.length();
     return S1.theta(s);
   }
 
@@ -954,7 +954,7 @@ namespace G2lib {
     if ( s < S0.length() ) return S0.theta_D(s);
     s -= S0.length();
     if ( s < SM.length() ) return SM.theta_D(s);
-    s -= S0.length();
+    s -= SM.length();
     return S1.theta_D(s);
   }
 
@@ -965,7 +965,7 @@ namespace G2lib {
     if ( s < S0.length() ) return S0.theta_DD(s);
     s -= S0.length();
     if ( s < SM.length() ) return SM.theta_DD(s);
-    s -= S0.length();
+    s -= SM.length();
     return S1.theta_DD(s);
   }
 
@@ -976,7 +976,7 @@ namespace G2lib {
     if ( s < S0.length() ) return S0.theta_DDD(s);
     s -= S0.length();
     if ( s < SM.length() ) return SM.theta_DDD(s);
-    s -= S0.length();
+    s -= SM.length();
     return S1.theta_DDD(s);
   }
 
@@ -987,7 +987,7 @@ namespace G2lib {
     if ( s < S0.length() ) return S0.X(s);
     s -= S0.length();
     if ( s < SM.length() ) return SM.X(s);
-    s -= S0.length();
+    s -= SM.length();
     return S1.X(s);
   }
 
@@ -998,7 +998,7 @@ namespace G2lib {
     if ( s < S0.length() ) return S0.Y(s);
     s -= S0.length();
     if ( s < SM.length() ) return SM.Y(s);
-    s -= S0.length();
+    s -= SM.length();
     return S1.Y(s);
   }
 

@@ -118,7 +118,7 @@ namespace Utils {
     : m_elapsed_time(0)
     { this->tic(); }
 
-    ~TicToc() = default;
+    ~TicToc() UTILS_DEFAULT;
 
     //!
     //! Start timing

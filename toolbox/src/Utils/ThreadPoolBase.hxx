@@ -40,7 +40,7 @@ namespace Utils {
     ThreadPoolBase & operator = ( ThreadPoolBase const & ) = delete;
     ThreadPoolBase & operator = ( ThreadPoolBase && )      = delete;
 
-    ThreadPoolBase() = default;
+    ThreadPoolBase() UTILS_DEFAULT;
 
     virtual
     void
@@ -163,7 +163,7 @@ namespace Utils {
         TaskData( std::function<void()> && f ) : m_fun(std::move(f)) { }
         TaskData( std::function<void()> & f ) : m_fun(f) { }
         void operator()() { m_fun(); delete this; }
-        ~TaskData() = default;
+        ~TaskData() UTILS_DEFAULT;
       };
 
     private:
@@ -217,7 +217,7 @@ namespace Utils {
         m_queue_data.resize( m_size );
       }
 
-      ~Queue() = default;
+      ~Queue() UTILS_DEFAULT;
     };
   }
 }
