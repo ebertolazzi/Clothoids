@@ -42,10 +42,7 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    if ( nrhs == 0 && nlhs == 0 ) {
-      mexErrMsgTxt(MEX_ERROR_MESSAGE);
-      return;
-    }
+    if ( nrhs == 0 && nlhs == 0 ) { mexErrMsgTxt(MEX_ERROR_MESSAGE); return; }
 
     try {
 

@@ -147,32 +147,28 @@ namespace Utils {
     //
     // Uses cubic inverse interpolation of f(x) at a, b, d, and e to
     // get an approximate root of f(x).
-    // This procedure is a slight modification of Aitken-Neville
-    // algorithm for interpolation described by Stoer and Bulirsch
-    // in "Introduction to numerical analysis" springer-verlag. new york (1980).
-    //
-    //Real Q11 = (m_d-m_e)*m_fd/(m_fe-m_fd);
-    //Real Q21 = (m_e-m_d)*m_fb/(m_fd-m_fb);
-    //Real Q31 = (m_a-m_b)*m_fa/(m_fb-m_fa);
-    //Real D21 = (m_b-m_d)*m_fd/(m_fd-m_fb);
-    //Real D31 = (m_a-m_b)*m_fb/(m_fb-m_fa);
-    //Real Q22 = (D21-Q11)*m_fb/(m_fe-m_fb);
-    //Real Q32 = (D31-Q21)*m_fa/(m_fb-m_fa);
-    //Real D32 = (D31-Q21)*m_fd/(m_fd-m_fa);
-    //Real Q33 = (D32-Q22)*m_fa/(m_fe-m_fa);
+    // Rewritten using divided difference.
 
-    Real Q11 = (m_d-m_e)/(m_fe/m_fd-1);
-    Real Q21 = (m_e-m_d)/(m_fd/m_fb-1);
-    Real Q31 = (m_a-m_b)/(m_fb/m_fa-1);
-    Real D21 = (m_b-m_d)/(1-m_fb/m_fd);
-    Real D31 = (m_a-m_b)/(1-m_fa/m_fb);
-    Real Q22 = (D21-Q11)/(m_fe/m_fb-1);
-    Real Q32 = (D31-Q21)/(m_fb/m_fa-1);
-    Real D32 = (D31-Q21)/(1-m_fa/m_fd);
-    Real Q33 = (D32-Q22)/(m_fe/m_fa-1);
+    Real D1 = m_b-m_a;
+    Real D2 = m_d-m_a;
+    Real D3 = m_e-m_a;
+
+    Real DD0 = D1/(m_fb-m_fa);
+    Real DD1 = (D1-D2)/(m_fb-m_fd);
+    Real DD2 = (D2-D3)/(m_fd-m_fe);
+
+    Real DDD0  = (DD0-DD1)/(m_fa-m_fd);
+    Real DDD1  = (DD1-DD2)/(m_fb-m_fe);
+
+    Real DDDD0 = (DDD0-DDD1)/(m_fa-m_fe);
+
+    Real c = m_a - m_fa*(DD0-m_fb*(DDD0-m_fd*DDDD0));
+
+    Real tol = Real(0.7)*m_tolerance;
+    if ( c <= m_a+tol || c >= m_b-tol ) c = (m_a+m_b)/2;
 
     // CALCULATE THE OUTPUT C.
-    return m_a+(Q31+Q32+Q33);
+    return c;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

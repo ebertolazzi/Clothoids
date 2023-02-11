@@ -44,3 +44,4 @@ toolbox/src/.idea
 .idea
 cmake-build-debug
 toolbox/CMakeFiles
+Xcode

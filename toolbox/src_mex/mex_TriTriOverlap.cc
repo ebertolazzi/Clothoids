@@ -63,10 +63,7 @@ namespace G2lib {
     try {
 
       // Check for proper number of arguments, etc
-      if ( nrhs != 6 ) {
-        mexErrMsgTxt(MEX_ERROR_MESSAGE);
-        return;
-      }
+      if ( nrhs != 6 ) { mexErrMsgTxt(MEX_ERROR_MESSAGE); return; }
 
       for ( int kk = 0; kk < nrhs; ++kk ) {
         mwSize nDimNum = mxGetNumberOfDimensions(prhs[kk]);

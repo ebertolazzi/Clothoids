@@ -91,9 +91,16 @@
 #endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+#ifndef FMT_DEPRECATED_OSTREAM
+#define FMT_DEPRECATED_OSTREAM
+#endif
+
 #include "fmt/printf.h"
 #include "fmt/chrono.h"
 #include "fmt/ostream.h"
+#include "fmt/color.h"
+#include "fmt/std.h"
 #endif
 
 // STL

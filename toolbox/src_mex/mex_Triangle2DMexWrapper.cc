@@ -43,6 +43,8 @@
 "\n" \
 MEX_INFO_MESSAGE_END
 
+#include <unordered_map>
+
 namespace G2lib {
 
   using namespace std;
@@ -426,17 +428,15 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
+    char cmd[256];
+
     // the first argument must be a string
-    if ( nrhs == 0 ) {
-      mexErrMsgTxt(MEX_ERROR_MESSAGE);
-      return;
-    }
+    if ( nrhs == 0 ) { mexErrMsgTxt(MEX_ERROR_MESSAGE); return; }
 
     try {
       UTILS_MEX_ASSERT0( mxIsChar(arg_in_0), "Triangle2DMexWrapper(...): First argument must be a string" );
-      string cmd = mxArrayToString(arg_in_0);
-      DO_CMD pfun = cmd_to_fun.at(cmd);
-      pfun( nlhs, plhs, nrhs, prhs );
+      mxGetString( arg_in_0, cmd, 256 );
+      cmd_to_fun.at(cmd)( nlhs, plhs, nrhs, prhs );
     } catch ( std::exception const & e ) {
       mexErrMsgTxt( fmt::format( "Triangle2D Error: {}", e.what() ).c_str() );
     } catch (...) {
