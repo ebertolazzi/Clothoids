@@ -11,6 +11,15 @@
 #include "Clothoids.hh"
 #include "Utils_mex.hh"
 
+#ifdef _MSC_VER
+  #pragma comment(lib, "IPHLPAPI.lib")
+  #pragma comment(lib, "ws2_32.lib")
+  #pragma comment(lib, "Shlwapi.lib")
+  #pragma comment(lib, "Advapi32.lib")
+  #pragma comment(lib, "Shell32.lib")
+  #pragma comment(lib, "kernel32.lib")
+#endif
+
 #define MEX_ERROR_MESSAGE \
 "======================================================================\n" \
 "\n" \
