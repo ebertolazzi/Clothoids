@@ -129,9 +129,15 @@ if ( UTILS_ENABLE_TESTS )
     find_package( ZLIB REQUIRED )
   else()
     if ( CMAKE_BUILD_TYPE STREQUAL "Debug" )
-      find_library( ZLIB_LIBRARIES zlibstaticd HINTS ./lib3rd/lib )
+      find_library(
+        ZLIB_LIBRARIES zlibstaticd
+        HINTS ./lib3rd/lib ../Utils/lib3rd/lib
+      )
     else()
-      find_library( ZLIB_LIBRARIES zlibstatic HINTS ./lib3rd/lib )
+      find_library(
+        ZLIB_LIBRARIES zlibstatic
+        HINTS ./lib3rd/lib ../Utils/lib3rd/lib
+      )
     endif()
     set( ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/zlib/include ")
   endif()

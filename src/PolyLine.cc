@@ -124,6 +124,12 @@ namespace G2lib {
     this->push_back( PL, tol );
   }
 
+  real_type
+  PolyLine::length_ISO( real_type ) const {
+    UTILS_ERROR0( "PolyLine::length( offs ) not available!\n" );
+    return 0;
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   int_type

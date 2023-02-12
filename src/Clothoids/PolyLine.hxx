@@ -191,10 +191,7 @@ namespace G2lib {
     { return m_s0.back(); }
 
     real_type
-    length_ISO( real_type ) const override {
-      UTILS_ERROR0( "PolyLine::length( offs ) not available!\n" );
-      return 0;
-    }
+    length_ISO( real_type ) const override;
 
     real_type
     x_begin() const override

@@ -693,10 +693,7 @@ namespace G2lib {
     { return m_L; }
 
     real_type
-    length_ISO( real_type ) const override {
-      UTILS_ERROR0( "Offset length not available for Clothoids\n" );
-      return 0;
-    }
+    length_ISO( real_type ) const override;
 
     real_type theta_begin()  const override { return m_CD.m_theta0; }
     real_type kappa_begin()  const override { return m_CD.m_kappa0; }
