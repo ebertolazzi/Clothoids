@@ -12,7 +12,7 @@ DerivedData
 /lib/*
 Usage.pdf
 build
-bin
+/bin
 .vscode
 doxygen_doc
 Clothoids.mltbx
