@@ -11,6 +11,8 @@
 
 close all;
 
+use_ipopt = true;
+
 XY = [ ...
  144.968899755033   ,-37.8499535764433; ...
  144.9702985011624  ,-37.85107414153547; ...
@@ -202,7 +204,7 @@ XY = [ ...
 ];
 
 S = ClothoidSplineG2();
-%S.ipopt(true);
+S.ipopt(use_ipopt);
 
 SPL = S.buildP2( XY(:,1), XY(:,2) );
 SPL.rotate(pi/4,0,0);

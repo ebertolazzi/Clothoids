@@ -1,4 +1,4 @@
-%>  
+%>
 %> Construct a piecewise clothoids \f$ \G(s) \f$ composed by
 %> n clothoids that solve the G2 problem
 %>
@@ -16,13 +16,13 @@
 %>   Mathematica Methods in the Applied Sciences, vol 41, N.4, pp. 1723-1737, 2018
 %>
 %> \rst
-%> 
+%>
 %>   .. image:: ../../images/G2problem3arc.jpg
 %>      :width: 80%
 %>      :align: center
 %>
 %> \endrst
-%>  
+%>
 classdef ClothoidSplineG2 < matlab.mixin.Copyable
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
@@ -252,25 +252,27 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
       ClothoidSplineG2MexWrapper( ...
         'target', self.objectHandle, 'P1', theta0, theta1 ...
       );
-      clots = self.build_internal2( x, y );
+      %clots = self.build_internal2( x, y );
+      clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
     %> Compute the clothoid spline passing to the points (x(i),y(i))
     %> with cyclic condition (tangent and curvature meet)
-    %> 
+    %>
     %> - theta(1) = theta(end) mod 2*pi
     %> - kappa(1) = kappa(end)
     %>
     function clots = buildP2( self, x, y )
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P2' );
-      clots = self.build_internal2( x, y );
+      %clots = self.build_internal2( x, y );
+      clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
     %> Compute the clothoid spline passing to the points (x(i),y(i))
     %> with assignede initial angle and survature
-    %> NB: this target is not reccomended (its unstable), used only for debugging 
+    %> NB: this target is not reccomended (its unstable), used only for debugging
     %>
     function clots = buildP3( self, x, y, theta0, kappa0 )
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P3' );
@@ -302,7 +304,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$ 
+    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$
     %> and minimizing derivative of the curvature al the extrema
     %>
     %> minimize \f$ k'(0)^2 + k'(L)^2 \f$
@@ -313,10 +315,10 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$ 
+    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$
     %> and minimizing the length of the first and last segment
     %>
-    %> minimize \f$ (s_1-s_0)+(s_n - s_{n-1}) \f$ 
+    %> minimize \f$ (s_1-s_0)+(s_n - s_{n-1}) \f$
     %>
     function clots = buildP5( self, x, y )
       ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P5' );
@@ -324,7 +326,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$ 
+    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$
     %> and minimizing the total length of the spline
     %>
     %> \f$ L = s_n-s_0 \f$
@@ -335,7 +337,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$ 
+    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$
     %> and minimizing the integral of the square of the curvature:
     %>
     %> minimize: \f$ \displaystyle \int_0^L k(s)^2 \mathrm{d}s \f$
@@ -346,7 +348,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$ 
+    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$
     %> and minimizing the integral of the square of the curvature derivative:
     %>
     %> minimize:  \f$ \displaystyle \int_0^L k'(s)^2 \mathrm{d}s \f$
@@ -357,7 +359,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$ 
+    %> Compute the clothoid spline passing to the points \f$ (x_i,y_i)\f$
     %> and minimizing the integral of the jerk squared
     %>
     function clots = buildP9( self, x, y )

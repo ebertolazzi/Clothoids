@@ -20,7 +20,7 @@
 #include "Utils.hh"
 
 #if defined(UTILS_OS_WINDOWS)
-  // MINGW is contained in WINDOWS 
+  // MINGW is contained in WINDOWS
   #include "SystemUtils_win32.cxx"
 #elif defined(UTILS_OS_OSX)
   #include "SystemUtils_osx.cxx"
@@ -34,7 +34,7 @@ namespace Utils {
 
   #if defined(UTILS_OS_OSX) || defined(UTILS_OS_LINUX)
 
-  std::string
+  string
   get_date() {
     char   buffer[20];
     time_t rawtime;
@@ -42,10 +42,10 @@ namespace Utils {
     struct tm timeinfo;
     localtime_r( &rawtime, &timeinfo );
     strftime( buffer, 20, "%F", &timeinfo );
-    return std::string{buffer};
+    return string{buffer};
   }
 
-  std::string
+  string
   get_day_time() {
     char   buffer[20];
     time_t rawtime;
@@ -53,10 +53,10 @@ namespace Utils {
     struct tm timeinfo;
     localtime_r( &rawtime, &timeinfo );
     strftime( buffer, 20, "%T", &timeinfo );
-    return std::string{buffer};
+    return string{buffer};
   }
 
-  std::string
+  string
   get_day_time_and_date() {
     char   buffer[20];
     time_t rawtime;
@@ -64,10 +64,10 @@ namespace Utils {
     struct tm timeinfo;
     localtime_r( &rawtime, &timeinfo );
     strftime( buffer, 20, "%T %F", &timeinfo );
-    return std::string{buffer};
+    return string{buffer};
   }
 
-  std::string
+  string
   get_log_date_time() {
     char   buffer[100];
     time_t rawtime;
@@ -75,7 +75,7 @@ namespace Utils {
     struct tm timeinfo;
     localtime_r( &rawtime, &timeinfo );
     strftime( buffer, 100, "date_%Y-%m-%d_time_%H-%M-%S", &timeinfo );
-    return std::string{buffer};
+    return string{buffer};
   }
 
   #endif

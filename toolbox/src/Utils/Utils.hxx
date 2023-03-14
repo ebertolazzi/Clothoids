@@ -199,6 +199,8 @@ namespace Utils {
 
   string basename( char const filename[] );
 
+  bool   get_environment( char const ename[], string & res );
+  void   set_environment( char const ename[], char const newval[], bool overwrite );
   void   get_MAC_address( std::map<string,string> & addr );
   string get_host_name();
   void   get_IP_address( std::vector<string> & addr );

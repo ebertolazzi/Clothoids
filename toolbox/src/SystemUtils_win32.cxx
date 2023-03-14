@@ -31,6 +31,25 @@ namespace Utils {
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
+  bool
+  get_environment( char const ename[], string & res ) {
+    char buffer[1024];
+    DWORD var_size = GetEnvironmentVariable(ename,buffer,1024);
+    res = string{buffer};
+    return var_size != 0;
+  }
+
+  /*
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  */
+  void
+  set_environment( char const ename[], char const newval[], bool overwrite ) {
+    SetEnvironmentVariable( ename, newval );
+  }
+
+  /*
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  */
   // Fetches the MAC address
   void
   get_MAC_address( map<string,string> & addr ) {

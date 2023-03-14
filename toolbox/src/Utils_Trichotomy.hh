@@ -88,7 +88,7 @@ namespace Utils {
 
     bool bracketing();
     Real minimize();
-    void set_tolerance( Real tol );
+    //void set_tolerance( Real tol );
     Real evaluate( Real x ) { ++m_num_fun_eval; return m_function->eval(x); };
     Real eval( Real a, Real b );
     Real search( Real x, Real delta );

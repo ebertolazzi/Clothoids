@@ -81,9 +81,9 @@ namespace Utils {
     Console const * m_console{nullptr}; //!< pointer to the message stream class
 
     Real   m_rho{Real(0.9)}; // stencil step decreasing factor (must be 0 < rho < 1)
-    Real   m_h{0.1};
-    bool   m_stencil_failure; // stencil failure flag - used to shrink h,
-                              // stencil_failure = true means failure
+    Real   m_h{Real(0.1)};
+    bool   m_stencil_failure{false}; // stencil failure flag - used to shrink h,
+                                     // stencil_failure = true means failure
 
     integer m_dim{0};
     MapVec  m_x_old{nullptr,0};

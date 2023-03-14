@@ -54,10 +54,10 @@ namespace Utils {
 
   BOOLEAN
   nanosleep( LONGLONG ns100 ) {
-    HANDLE        timer; // Timer handle
     LARGE_INTEGER li;	   // Time defintion
     // Create timer
-    if ( !(timer = CreateWaitableTimerW(NULL, TRUE, NULL)) ) return FALSE;
+    HANDLE timer = CreateWaitableTimerW(NULL, TRUE, NULL);
+    if ( !timer ) return FALSE;
     // Set timer properties
     li.QuadPart = -ns100;
     if ( !SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE) ) {

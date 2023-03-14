@@ -144,8 +144,8 @@ namespace Utils {
     void allocate( integer n );
 
     Real extrapolate( Real alpha, integer j, MapVec & pe ) const;
-    void spendley( MapVec const & X0, Real len );
-    void gradient( MapVec & G ) const;
+    //void spendley( MapVec const & X0, Real len );
+    //void gradient( MapVec & G ) const;
     void shrink();
     void dist_init();
     void dist_update( integer jpos );
@@ -191,7 +191,7 @@ namespace Utils {
 
     string info() const;
     void print_info( ostream_type & stream ) const { stream << info(); }
-    void explore();
+    //void explore();
     bool search();
     bool run( Real const x_sol[], Real h );
 

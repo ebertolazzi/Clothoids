@@ -29,6 +29,26 @@ namespace Utils {
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
+  bool
+  get_environment( char const ename[], string & res ) {
+    char const * RES = getenv(ename);
+    if ( RES == nullptr ) return false;
+    res = string{RES};
+    return true;
+  }
+
+  /*
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  */
+  void
+  set_environment( char const ename[], char const newval[], bool overwrite ) {
+    int res = setenv( ename, newval, overwrite ? 1 : 0 );
+    UTILS_ASSERT( res == 0, "set_environment({},{},{}) faled\n", ename, newval, overwrite );
+  }
+
+  /*
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  */
   string
   get_host_name() {
     char szHostName[1024];
