@@ -318,8 +318,8 @@ namespace Utils {
 
   template <typename base>
   class mex_class_handle {
-    uint32_t    m_signature;
-    base *      m_ptr;
+    uint32_t    m_signature{CLASS_HANDLE_SIGNATURE};
+    base *      m_ptr{nullptr};
     std::string m_name;
 
   public:
@@ -329,8 +329,7 @@ namespace Utils {
 
     explicit
     mex_class_handle( base * ptr )
-    : m_signature(CLASS_HANDLE_SIGNATURE)
-    , m_ptr(ptr)
+    : m_ptr(ptr)
     , m_name(typeid(base).name())
     {}
 
@@ -362,8 +361,9 @@ namespace Utils {
   mex_convert_mx_to_handle_ptr( mxArray const * in ) {
     if ( mxGetNumberOfElements(in) != 1 ||
          mxGetClassID(in) != mxUINT64_CLASS ||
-         mxIsComplex(in) )
+         mxIsComplex(in) ) {
       mexErrMsgTxt( "Input must be an uint64 scalar." );
+    }
     mex_class_handle<base> * ptr = reinterpret_cast<mex_class_handle<base> *>(
       *((uint64_t *)mxGetData(in))
     );
