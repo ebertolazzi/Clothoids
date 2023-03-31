@@ -50,15 +50,15 @@ namespace Utils {
     size_t Gb = Mb>>10;
     if ( Gb > 0 ) {
       size_t mb = (100*(Mb & 0x3FF))/1024;
-      return fmt::format( "{}Gb (+{}Mb)", Gb, mb );
+      return fmt::format( "{}Gb(+{}Mb)", Gb, mb );
     } else if ( Mb > 0 ) {
       size_t kb = (100*(Kb & 0x3FF))/1024;
-      return fmt::format( "{}Mb (+{}Kb)", Mb, kb );
+      return fmt::format( "{}Mb(+{}Kb)", Mb, kb );
     } else if ( Kb > 0 ) {
       size_t b = (100*(nb & 0x3FF))/1024;
-      return fmt::format( "{}Kb (+{}bytes)", Kb, b );
+      return fmt::format( "{}Kb(+{}b)", Kb, b );
     }
-    return fmt::format( "{} bytes", nb );
+    return fmt::format( "{}bytes", nb );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
