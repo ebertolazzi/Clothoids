@@ -66,10 +66,10 @@ namespace Utils {
   private:
 
     std::string m_name;
-    std::size_t m_num_total_values;
-    std::size_t m_num_total_reserved;
-    std::size_t m_num_allocated;
-    valueType * m_p_memory;
+    std::size_t m_num_total_values{0};
+    std::size_t m_num_total_reserved{0};
+    std::size_t m_num_allocated{0};
+    valueType * m_p_memory{nullptr};
 
     void allocate_internal( std::size_t n );
     void memory_exausted( std::size_t sz );
@@ -86,10 +86,6 @@ namespace Utils {
     explicit
     Malloc( string name )
     : m_name(std::move(name))
-    , m_num_total_values(0)
-    , m_num_total_reserved(0)
-    , m_num_allocated(0)
-    , m_p_memory(nullptr)
     { }
 
     //!
@@ -203,7 +199,7 @@ namespace Utils {
   private:
 
     std::string m_name;
-    std::size_t m_num_allocated;
+    std::size_t m_num_allocated{0};
     valueType   m_data[mem_size];
 
   public:
@@ -217,7 +213,6 @@ namespace Utils {
     explicit
     MallocFixed( std::string name )
     : m_name(std::move(name))
-    , m_num_allocated(0)
     {}
 
     //!

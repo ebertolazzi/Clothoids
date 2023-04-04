@@ -927,6 +927,21 @@ namespace G2lib {
     explicit ClothoidList( PolyLine const & PL );
 
     //!
+    //! Build a clothoid from G2solve2arc
+    //!
+    explicit ClothoidList( G2solve2arc const & C );
+
+    //!
+    //! Build a clothoid from G2solve3arc
+    //!
+    explicit ClothoidList( G2solve3arc const & C );
+
+    //!
+    //! Build a clothoid from G2solveCLC
+    //!
+    explicit ClothoidList( G2solveCLC const & C );
+
+    //!
     //! Build a clothoid from a curve
     //!
     explicit ClothoidList( BaseCurve const * pC );
@@ -938,6 +953,9 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( BiarcList const & );
     void build( ClothoidList const & );
+    void build( G2solve2arc const & );
+    void build( G2solve3arc const & );
+    void build( G2solveCLC const & );
 
     //!
     //! Add a line segment to the tail of clothoid list
@@ -968,6 +986,21 @@ namespace G2lib {
     //! Add a clothoid list to the tail of clothoid list
     //!
     void push_back( ClothoidList const & c );
+
+    //!
+    //! Add a G2solve2arc to the tail of clothoid list
+    //!
+    void push_back( G2solve2arc const & c );
+
+    //!
+    //! Add a G2solve3arc list to the tail of clothoid list
+    //!
+    void push_back( G2solve3arc const & c );
+
+    //!
+    //! Add a clothoid list to the tail of clothoid list
+    //!
+    void push_back( G2solveCLC const & c );
 
     //!
     //! Add a list of line segment to the tail of clothoid list

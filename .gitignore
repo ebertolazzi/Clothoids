@@ -5,6 +5,8 @@ DerivedData
 *.log
 *.gz
 *.mexa64
+*.mexw64
+*.mltbx
 *.blg
 *.spl
 *.o
@@ -41,6 +43,7 @@ toolbox/.idea
 toolbox/cmake-build-debug
 toolbox/src_mex/.idea
 toolbox/src/.idea
+toolbox/build
 .idea
 cmake-build-debug
 toolbox/CMakeFiles

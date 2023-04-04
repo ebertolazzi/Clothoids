@@ -11,11 +11,9 @@ desc "compile for Visual Studio"
 task :build_win do
   # check architecture
   case `where cl.exe`.chop
-  when /x64\\cl\.exe/
+  when /(x64|amd64)\\cl\.exe/
     VS_ARCH = 'x64'
-  when /amd64\\cl\.exe/
-    VS_ARCH = 'x64'
-  when /bin\\cl\.exe/
+  when /(bin|x86|amd32)\\cl\.exe/
     VS_ARCH = 'x86'
   else
     raise RuntimeError, "Cannot determine architecture for Visual Studio".red

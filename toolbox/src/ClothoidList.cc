@@ -98,6 +98,27 @@ namespace G2lib {
     this->push_back( pl );
   }
 
+  void
+  ClothoidList::build( G2solve2arc const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
+  }
+
+  void
+  ClothoidList::build( G2solve3arc const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
+  }
+
+  void
+  ClothoidList::build( G2solveCLC const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
+  }
+
   /*\
    |   ____ _       _   _           _     _ _     _     _
    |  / ___| | ___ | |_| |__   ___ (_) __| | |   (_)___| |_
@@ -113,6 +134,10 @@ namespace G2lib {
   ClothoidList::ClothoidList( BiarcList     const & C  ) { this->build( C ); }
   ClothoidList::ClothoidList( ClothoidCurve const & C  ) { this->build( C ); }
   ClothoidList::ClothoidList( PolyLine      const & C  ) { this->build( C ); }
+
+  ClothoidList::ClothoidList( G2solve2arc const & C  ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solve3arc const & C  ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solveCLC  const & C  ) { this->build( C ); }
 
   ClothoidList::ClothoidList( BaseCurve const * pC ) {
 
@@ -315,6 +340,60 @@ namespace G2lib {
       m_s0.emplace_back(m_s0.back()+C.length());
       m_clotoidList.emplace_back(C);
     }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back( G2solve2arc const & C ) {
+    m_s0.reserve( m_s0.size() + 2 );
+    m_clotoidList.reserve( m_clotoidList.size() + 2 );
+
+    if ( m_s0.empty() ) m_s0.emplace_back(0);
+
+    m_s0.emplace_back(m_s0.back()+C.getS0().length());
+    m_clotoidList.emplace_back(C.getS0());
+
+    m_s0.emplace_back(m_s0.back()+C.getS1().length());
+    m_clotoidList.emplace_back(C.getS1());
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back( G2solve3arc const & C ) {
+    m_s0.reserve( m_s0.size() + 3 );
+    m_clotoidList.reserve( m_clotoidList.size() + 3 );
+
+    if ( m_s0.empty() ) m_s0.emplace_back(0);
+
+    m_s0.emplace_back(m_s0.back()+C.getS0().length());
+    m_clotoidList.emplace_back(C.getS0());
+
+    m_s0.emplace_back(m_s0.back()+C.getSM().length());
+    m_clotoidList.emplace_back(C.getSM());
+
+    m_s0.emplace_back(m_s0.back()+C.getS1().length());
+    m_clotoidList.emplace_back(C.getS1());
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back( G2solveCLC const & C ) {
+    m_s0.reserve( m_s0.size() + 3 );
+    m_clotoidList.reserve( m_clotoidList.size() + 3 );
+
+    if ( m_s0.empty() ) m_s0.emplace_back(0);
+
+    m_s0.emplace_back(m_s0.back()+C.getS0().length());
+    m_clotoidList.emplace_back(C.getS0());
+
+    m_s0.emplace_back(m_s0.back()+C.getSM().length());
+    m_clotoidList.emplace_back(C.getSM());
+
+    m_s0.emplace_back(m_s0.back()+C.getS1().length());
+    m_clotoidList.emplace_back(C.getS1());
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1434,7 +1513,7 @@ namespace G2lib {
       tictoc.elapsed_ms()
     );
 
-    return false;
+    return collide;
   }
 
   /*\
