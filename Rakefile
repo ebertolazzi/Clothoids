@@ -7,6 +7,13 @@ CLOBBER.include []
 desc "default task --> build"
 task :default => :build
 
+task :mingw_pacman do
+  sh 'pacman -S development'
+  sh 'pacman -S mingw-w64-x86_64-toolchain'
+  sh 'pacman -S mingw-w64-x86_64-cmake'
+  sh 'pacman -S mingw-w64-x86_64-ninja'
+end
+
 desc "compile for Visual Studio"
 task :build_win do
   # check architecture
