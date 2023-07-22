@@ -20,16 +20,16 @@ namespace G2lib {
   namespace Interpolation {
 
     using G2lib::ClothoidSplineG2;
-    using G2lib::int_type;
+    using G2lib::integer;
     using G2lib::real_type;
-    using SparseFunctor = Eigen::SparseFunctor<real_type, int_type>;
+    using SparseFunctor = Eigen::SparseFunctor<real_type, integer>;
 
     /* Levemberg Marquardt Solver */
     class LMSolver : public Solver {
       struct ClothoidSplineProblem : SparseFunctor {
         LMSolver &             m_solver;
-        std::vector<int_type>  m_jacobian_rows;
-        std::vector<int_type>  m_jacobian_cols;
+        std::vector<integer>   m_jacobian_rows;
+        std::vector<integer>   m_jacobian_cols;
         std::vector<real_type> m_jacobian_result;
 
         ClothoidSplineProblem(LMSolver & solver);

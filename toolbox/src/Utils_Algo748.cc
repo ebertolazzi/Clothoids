@@ -215,7 +215,7 @@ namespace Utils {
     m_b = b; m_fb = this->evaluate(m_b);
 
     // check if solution can exists
-    if ( m_fa*m_fb > 0 ) return 0;
+    if ( m_fa*m_fb > 0 ) return m_a;
     else                 return eval();
   }
 

@@ -1,6 +1,6 @@
 /**
  * PYTHON Wrapper for Clothoids
- * 
+ *
  * License MIT - See LICENSE file
  * 2019 Matteo Ragni, Claudio Kerov Ghiglianovich,
  *      Enrico Bertolazzi, Marco Frego
@@ -37,7 +37,7 @@ namespace G2lib {
       .def(py::init<CircleArc const &>(), py::arg("c"))
       .def(py::init<real_type, real_type, real_type, real_type, real_type>(),
         py::arg("x0"), py::arg("y0"), py::arg("theta0"), py::arg("k"), py::arg("l"))
-      
+
       .def("copy", [](const CircleArc & self) {
         CircleArc other;
         other.copy(self);
@@ -50,7 +50,7 @@ namespace G2lib {
         :rtype: CircleArc
       )S")
 
-      .def("build", &CircleArc::build, 
+      .def("build", &CircleArc::build,
         py::arg("x0"), py::arg("y0"), py::arg("theta0"), py::arg("k"), py::arg("l"),
       R"S(
         Builds a circle arc with the standard parameters
@@ -64,7 +64,7 @@ namespace G2lib {
         :rtype: NoneType
       )S")
 
-      .def("build_G1", &CircleArc::build_G1, 
+      .def("build_G1", &CircleArc::build_G1,
         py::arg("x0"), py::arg("y0"), py::arg("theta0"), py::arg("x1"), py::arg("y1"),
       R"S(
         Builds a circle arc with the standard parameters
@@ -127,7 +127,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("delta_theta", &CircleArc::delta_theta, 
+      .def("delta_theta", &CircleArc::delta_theta,
       R"S(
         Return the tangent angle variation in the circle arc
 
@@ -147,14 +147,14 @@ namespace G2lib {
         real_type th_min, th_max;
         self.theta_min_max(th_min, th_max);
         return std::make_tuple(th_min, th_max);
-      }, 
+      },
       R"S(
         Minimum and maximum tangent angle
 
         :return: the minimum and maximum tangent angle
         :rtype: Tuple[float, float]
       )S")
-      
+
       .def("changeCurvilinearOrigin", &CircleArc::changeCurvilinearOrigin,
         py::arg("s0"), py::arg("newL"),
       R"S(
@@ -188,7 +188,7 @@ namespace G2lib {
       )S")
 
       .def("paramNURBS", [](const CircleArc & self) {
-        int_type n_pnts, n_knots;
+        integer n_pnts, n_knots;
         self.paramNURBS(n_knots, n_pnts);
         return std::make_tuple(n_knots, n_pnts);
       },
@@ -203,9 +203,9 @@ namespace G2lib {
         using Point = real_type[3];
         using TPoint = std::tuple<float, float, float>;
 
-        int_type n_pnts, n_knots;
+        integer n_pnts, n_knots;
         self.paramNURBS(n_knots, n_pnts);
-        
+
         std::vector<real_type> knots(n_knots);
         std::vector<Point> poly(n_pnts);
         std::vector<TPoint> tpoly;
@@ -215,7 +215,7 @@ namespace G2lib {
         std::for_each(poly.cbegin(), poly.cend(), [&](const Point & p) {
           tpoly.push_back(std::make_tuple(p[0], p[1], p[2]));
         });
-        
+
         return std::make_tuple(knots, tpoly);
       },
       R"S(

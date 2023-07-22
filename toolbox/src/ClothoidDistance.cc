@@ -494,7 +494,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   ClothoidCurve::closest_point_ISO(
     real_type   qx,
     real_type   qy,

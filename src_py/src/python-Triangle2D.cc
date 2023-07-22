@@ -1,6 +1,6 @@
 /**
  * PYTHON Wrapper for Clothoids
- * 
+ *
  * License MIT - See LICENSE file
  * 2019 Matteo Ragni, Claudio Kerov Ghiglianovich,
  *      Enrico Bertolazzi, Marco Frego
@@ -35,16 +35,16 @@ namespace G2lib {
       )S")
         .def(py::init<>())
         .def(py::init<const Triangle2D &>())
-        .def(py::init<real_type, real_type, real_type, real_type, real_type, 
-                      real_type, real_type, real_type, int_type>())
-        .def(py::init([](std::tuple<real_type, real_type> p0, std::tuple<real_type, real_type> p1, 
-                         std::tuple<real_type, real_type> p2, real_type s0, real_type s1, int_type icurve) {
+        .def(py::init<real_type, real_type, real_type, real_type, real_type,
+                      real_type, real_type, real_type, integer>())
+        .def(py::init([](std::tuple<real_type, real_type> p0, std::tuple<real_type, real_type> p1,
+                         std::tuple<real_type, real_type> p2, real_type s0, real_type s1, integer icurve) {
           return Triangle2D(std::get<0>(p0), std::get<1>(p0), std::get<0>(p1), std::get<1>(p1),
                             std::get<0>(p2), std::get<1>(p2), s0, s1, icurve);
         }))
 
-        .def("build", [](Triangle2D & self, std::tuple<real_type, real_type> p0, std::tuple<real_type, real_type> p1, 
-                         std::tuple<real_type, real_type> p2, real_type s0, real_type s1, int_type icurve) {
+        .def("build", [](Triangle2D & self, std::tuple<real_type, real_type> p0, std::tuple<real_type, real_type> p1,
+                         std::tuple<real_type, real_type> p2, real_type s0, real_type s1, integer icurve) {
           self.build(std::get<0>(p0), std::get<1>(p0), std::get<0>(p1), std::get<1>(p1),
                       std::get<0>(p2), std::get<1>(p2), s0, s1, icurve);
         },
@@ -62,7 +62,7 @@ namespace G2lib {
         )S")
 
         .def("build", [](Triangle2D & self, real_type x0, real_type y0, real_type x1, real_type y1,
-                         real_type x2, real_type y2, real_type s0, real_type s1, int_type icurve) {
+                         real_type x2, real_type y2, real_type s0, real_type s1, integer icurve) {
           self.build(x0, y0, x1, y1, x2, y2, s0, s1, icurve);
         },
         R"S(
@@ -188,7 +188,7 @@ namespace G2lib {
           real_type x_min, y_min, x_max, y_max;
           self.bbox(x_min, y_min, x_max, y_max);
           return std::make_tuple(
-            std::make_tuple(x_min, y_min), 
+            std::make_tuple(x_min, y_min),
             std::make_tuple(x_max, y_max));
         },
         R"S(
@@ -299,7 +299,7 @@ namespace G2lib {
            * +1: inside
            * -1: outside
            *  0: on the border
-          
+
           :param Tuple[float, float]: point to check
           :return: whether the passed point is inside the triangle
           :rtype: int
@@ -328,7 +328,7 @@ namespace G2lib {
           :return: maximum distance between the point and the triangle
           :rtype: float
         )S")
-        
+
         .def("__str__", [](const Triangle2D & self) {
           std::ostringstream str;
           self.info(str);

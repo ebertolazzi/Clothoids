@@ -2,7 +2,7 @@
 #include "Clothoids.hh"
 
 using G2lib::real_type;
-using G2lib::int_type;
+using G2lib::integer;
 using namespace std;
 
 int
@@ -26,7 +26,7 @@ main() {
   C1.build( x1, y1, theta1, k1, dk1, L1 );
 
   //vector<G2lib::real_type> s1, s2;
-  //G2lib::int_type  max_iter  = 100;
+  //G2lib::integer  max_iter  = 100;
   //G2lib::real_type tolerance = 1e-8;
   //C0.intersect( C1, s1, s2, max_iter, tolerance );
   //C1.intersect( C0, s2, s1, max_iter, tolerance );

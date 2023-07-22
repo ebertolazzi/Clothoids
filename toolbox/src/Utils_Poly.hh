@@ -173,6 +173,8 @@ namespace Utils {
       Real    b;
       Integer va;
       Integer vb;
+      bool    a_on_root;
+      bool    b_on_root;
     };
 
     class Algo748_fun : public Algo748_base_fun<Real> {
@@ -223,6 +225,13 @@ namespace Utils {
     //! Return the numbers of intervals (roots) found.
     //!
     Integer separate_roots( Real a, Real b );
+
+    //!
+    //! Compute an interval \f$ [a,b] \f$ that contains all
+    //! the real roots and compute the subintervals containing a single root.
+    //! Return the numbers of intervals (roots) found.
+    //!
+    Integer separate_roots();
 
     Integer n_roots() const { return Integer(m_intervals.size()); }
     Real a() const { return m_a; }

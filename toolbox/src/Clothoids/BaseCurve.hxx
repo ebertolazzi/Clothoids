@@ -353,7 +353,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const = 0;
 
     //!
@@ -372,7 +372,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const = 0;
 
     //!
@@ -391,7 +391,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const = 0;
 
     /*\
@@ -1687,7 +1687,7 @@ namespace G2lib {
     //!        -1 = minimum point is not othogonal projection to curve
     //!
     virtual
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -1712,7 +1712,7 @@ namespace G2lib {
     //!         0 = more than one projection (first returned)
     //!        -1 = minimum point is not othogonal projection to curve
     //!
-    int_type
+    integer
     closest_point_SAE(
       real_type   qx,
       real_type   qy,
@@ -1722,7 +1722,7 @@ namespace G2lib {
       real_type & t,
       real_type & dst
     ) const {
-      int_type res = this->closest_point_ISO( qx, qy, x, y, s, t, dst );
+      integer res = this->closest_point_ISO( qx, qy, x, y, s, t, dst );
       t = -t;
       return res;
     }
@@ -1743,7 +1743,7 @@ namespace G2lib {
     //!        -1 = minimum point is not othogonal projection to curve
     //!
     virtual
-    int_type // true if projection is unique and orthogonal
+    integer // true if projection is unique and orthogonal
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -1770,7 +1770,7 @@ namespace G2lib {
     //!         0 = more than one projection (first returned)
     //!        -1 = minimum point is not othogonal projection to curve
     //!
-    int_type
+    integer
     closest_point_SAE(
       real_type   qx,
       real_type   qy,
@@ -1781,7 +1781,7 @@ namespace G2lib {
       real_type & t,
       real_type & dst
     ) const {
-      int_type res = this->closest_point_ISO( qx, qy, -offs, x, y, s, t, dst );
+      integer res = this->closest_point_ISO( qx, qy, -offs, x, y, s, t, dst );
       t = -t;
       return res;
     }
@@ -1872,7 +1872,7 @@ namespace G2lib {
       real_type & t
     ) const {
       real_type X, Y, dst;
-      int_type icode = this->closest_point_ISO( x, y, X, Y, s, t, dst );
+      integer icode = this->closest_point_ISO( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
 
@@ -1901,7 +1901,7 @@ namespace G2lib {
       real_type & t
     ) const {
       real_type X, Y, dst;
-      int_type icode = this->closest_point_SAE( x, y, X, Y, s, t, dst );
+      integer icode = this->closest_point_SAE( x, y, X, Y, s, t, dst );
       return icode >= 0;
     }
 
@@ -1938,7 +1938,7 @@ namespace G2lib {
     real_type xEnd_SAE( real_type offs )   const { return this->x_end_SAE(offs); }
     real_type yEnd_SAE( real_type offs )   const { return this->y_end_SAE(offs); }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -1951,7 +1951,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_SAE(
       real_type   qx,
       real_type   qy,
@@ -1964,7 +1964,7 @@ namespace G2lib {
       return closest_point_SAE( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -1978,7 +1978,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_SAE(
       real_type   qx,
       real_type   qy,

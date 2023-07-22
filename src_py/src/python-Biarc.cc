@@ -470,7 +470,7 @@ namespace G2lib {
 
       .def("findST1", [](const BiarcList & self, real_type x, real_type y) {
         real_type s, t;
-        int_type idx = self.findST1(x, y, s, t);
+        integer idx = self.findST1(x, y, s, t);
         return std::make_tuple(idx, s, t);
       }, py::arg("x"), py::arg("y"),
       R"S(
@@ -487,7 +487,7 @@ namespace G2lib {
       .def("findST1", [](const BiarcList & self, const std::vector<real_type> & x, const std::vector<real_type> & y) {
         const size_t n = std::min(x.size(), y.size());
         std::vector<real_type> s(n), t(n);
-        std::vector<int_type> idx(n);
+        std::vector<integer> idx(n);
         for(size_t i = 0; i < n; i++) {
           idx[i] = self.findST1(x[i], y[i], s[i], t[i]);
         }
@@ -505,9 +505,9 @@ namespace G2lib {
         :rtype: Tuple[List[bool], List[float], List[float]]
       )S")
 
-      .def("findST1", [](const BiarcList & self, int_type ibegin, int_type iend, real_type x, real_type y) {
+      .def("findST1", [](const BiarcList & self, integer ibegin, integer iend, real_type x, real_type y) {
         real_type s, t;
-        int_type idx = self.findST1(ibegin, iend, x, y, s, t);
+        integer idx = self.findST1(ibegin, iend, x, y, s, t);
         return std::make_tuple(idx, s, t);
       }, py::arg("ibegin"), py::arg("iend"), py::arg("x"), py::arg("y"),
       R"S(

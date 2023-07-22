@@ -41,9 +41,9 @@ namespace G2lib {
         throw std::runtime_error("Input size too small");
       }
 
-      const int_type         size = xs().size();
+      integer const size = xs().size();
       std::vector<real_type> chk;
-      for (int_type i = 1; i < size; i++) {
+      for (integer i = 1; i < size; i++) {
         const real_type x_diff2 = std::pow(xs()[i] - xs()[i - 1], 2);
         const real_type y_diff2 = std::pow(ys()[i] - ys()[i - 1], 2);
         chk.push_back(x_diff2 + y_diff2);
@@ -64,7 +64,7 @@ namespace G2lib {
       }
       result.init();
       result.reserve(theta.size() - 1);
-      for (int_type i = 0; i < static_cast<int_type>(theta.size()) - 1; i++)
+      for (integer i = 0; i < static_cast<integer>(theta.size()) - 1; i++)
         result.push_back_G1(xs()[i], ys()[i], theta[i], xs()[i + 1], ys()[i + 1], theta[i + 1]);
     }
 

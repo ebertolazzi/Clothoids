@@ -99,7 +99,7 @@ namespace G2lib {
         )S")
 
         .def("paramNURBS", [](LineSegment & self) {
-          int_type n_pnts, n_knots;
+          integer n_pnts, n_knots;
           self.paramNURBS(n_knots, n_pnts);
           return std::make_tuple(n_knots, n_pnts);
         },
@@ -114,7 +114,7 @@ namespace G2lib {
           using Point = real_type[3];
           using TPoint = std::tuple<float, float, float>;
 
-          int_type n_pnts, n_knots;
+          integer n_pnts, n_knots;
           self.paramNURBS(n_knots, n_pnts);
 
           std::vector<real_type> knots(n_knots);
@@ -225,14 +225,14 @@ namespace G2lib {
         )S")
 
         .def("polygon", [](const PolyLine & self) {
-          int_type n = self.numSegments();
+          integer n = self.numSegments();
           std::vector<std::tuple<real_type, real_type>> ret;
 
           std::vector<real_type> x(n);
           std::vector<real_type> y(n);
           ret.reserve(n);
           self.polygon(x.data(), y.data());
-          for (int_type i = 0; i < n; i++) {
+          for (integer i = 0; i < n; i++) {
             ret.push_back(std::make_tuple(x[i], y[i]));
           }
           return ret;

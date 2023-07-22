@@ -2,7 +2,7 @@
 #include "Clothoids.hh"
 
 using G2lib::real_type;
-using G2lib::int_type;
+using G2lib::integer;
 using namespace std;
 
 int

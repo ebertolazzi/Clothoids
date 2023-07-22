@@ -67,12 +67,12 @@ namespace G2lib {
   using istream_type = std::basic_istream<char>;
   using ostream_type = std::basic_ostream<char>;
   using real_type    = double;
-  using int_type     = int;
+  using integer      = int;
   using AABB_TREE    = Utils::AABBtree<real_type>;
   using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
   using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
 
-  using CurveType = enum class CurveType : int_type {
+  using CurveType = enum class CurveType : integer {
     LINE,
     POLYLINE,
     CIRCLE,
@@ -122,6 +122,7 @@ namespace G2lib {
 #include "Clothoids/BiarcList.hxx"
 #include "Clothoids/ClothoidList.hxx"
 #include "Clothoids/ClothoidAsyPlot.hxx"
+#include "Clothoids/Dubins.hxx"
 
 namespace G2lib {
 
@@ -133,7 +134,7 @@ namespace G2lib {
   using istream_type = std::basic_istream<char>;
   using ostream_type = std::basic_ostream<char>;
   using real_type    = double;
-  using int_type     = int;
+  using integer      = int;
   using AABB_TREE    = Utils::AABBtree<real_type>;
   using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
   using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;

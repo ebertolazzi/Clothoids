@@ -232,7 +232,7 @@ namespace G2lib {
       // Rational approximation for f
       real_type sumn = 0.0;
       real_type sumd = fd[11];
-      for ( int_type k=10; k >= 0; --k ) {
+      for ( integer k=10; k >= 0; --k ) {
         sumn = fn[k] + x*sumn;
         sumd = fd[k] + x*sumd;
       }
@@ -241,7 +241,7 @@ namespace G2lib {
       // Rational approximation for g
       sumn = 0.0;
       sumd = gd[11];
-      for ( int_type k=10; k >= 0; --k ) {
+      for ( integer k=10; k >= 0; --k ) {
         sumn = gn[k] + x*sumn;
         sumd = gd[k] + x*sumd;
       }
@@ -320,7 +320,7 @@ namespace G2lib {
 
   void
   FresnelCS(
-    int_type    nk,
+    integer     nk,
     real_type   t,
     real_type * C,
     real_type * S
@@ -375,7 +375,7 @@ namespace G2lib {
   static
   void
   evalXYaLarge(
-    int_type    nk,
+    integer     nk,
     real_type   a,
     real_type   b,
     real_type * X,
@@ -434,7 +434,7 @@ namespace G2lib {
   LommelReduced( real_type mu, real_type nu, real_type b ) {
     real_type tmp = 1/((mu+nu+1)*(mu-nu+1));
     real_type res = tmp;
-    for ( int_type n = 1; n <= 100; ++n ) {
+    for ( integer n = 1; n <= 100; ++n ) {
       tmp *= (-b/(2*n+mu-nu+1)) * (b/(2*n+mu+nu+1));
       res += tmp;
       if ( abs(tmp) < abs(res) * 1e-50 ) break;
@@ -448,7 +448,7 @@ namespace G2lib {
   static
   void
   evalXYazero(
-    int_type    nk,
+    integer     nk,
     real_type   b,
     real_type * X,
     real_type * Y
@@ -464,10 +464,10 @@ namespace G2lib {
       Y[0] = (1-cb)/b;
     }
     // use recurrence in the stable part
-    int_type m = int_type(floor(2*b));
+    integer m = integer(floor(2*b));
     if ( m >= nk ) m = nk-1;
     if ( m < 1   ) m = 1;
-    for ( int_type k = 1; k < m; ++k ) {
+    for ( integer k = 1; k < m; ++k ) {
       X[k] = (sb-k*Y[k-1])/b;
       Y[k] = (k*X[k-1]-cb)/b;
     }
@@ -479,7 +479,7 @@ namespace G2lib {
       real_type C   = -b2*sb;
       real_type rLa = LommelReduced(m+0.5,1.5,b);
       real_type rLd = LommelReduced(m+0.5,0.5,b);
-      for ( int_type k = m; k < nk; ++k ) {
+      for ( integer k = m; k < nk; ++k ) {
         real_type rLb = LommelReduced(k+1.5,0.5,b);
         real_type rLc = LommelReduced(k+1.5,1.5,b);
         X[k] = ( k*A*rLa + B*rLb + cb ) / (1+k);
@@ -498,7 +498,7 @@ namespace G2lib {
   evalXYaSmall(
     real_type   a,
     real_type   b,
-    int_type    p,
+    integer     p,
     real_type & X,
     real_type & Y
   ) {
@@ -509,7 +509,7 @@ namespace G2lib {
 
     real_type X0[43], Y0[43];
 
-    int_type nkk = 4*p + 3; // max 43
+    integer nkk = 4*p + 3; // max 43
     evalXYazero( nkk, b, X0, Y0 );
 
     X = X0[0]-(a/2)*Y0[2];
@@ -517,10 +517,10 @@ namespace G2lib {
 
     real_type t  = 1;
     real_type aa = -a*a/4; // controllare!
-    for ( int_type n=1; n <= p; ++n ) {
+    for ( integer n=1; n <= p; ++n ) {
       t *= aa/(2*n*(2*n-1));
       real_type bf = a/(4*n+2);
-      int_type  jj = 4*n;
+      integer   jj = 4*n;
       X += t*(X0[jj]-bf*Y0[jj+2]);
       Y += t*(Y0[jj]+bf*X0[jj+2]);
     }
@@ -531,15 +531,15 @@ namespace G2lib {
   static
   void
   evalXYaSmall(
-    int_type    nk,
+    integer     nk,
     real_type   a,
     real_type   b,
-    int_type    p,
+    integer     p,
     real_type * X,
     real_type * Y
   ) {
 
-    int_type  nkk = nk + 4*p + 2; // max 45
+    integer   nkk{nk + 4*p + 2}; // max 45
     real_type X0[45], Y0[45];
 
     UTILS_ASSERT(
@@ -551,18 +551,18 @@ namespace G2lib {
 
     evalXYazero( nkk, b, X0, Y0 );
 
-    for ( int_type j=0; j < nk; ++j ) {
+    for ( integer j=0; j < nk; ++j ) {
       X[j] = X0[j]-(a/2)*Y0[j+2];
       Y[j] = Y0[j]+(a/2)*X0[j+2];
     }
 
     real_type t  = 1;
     real_type aa = -a*a/4; // controllare!
-    for ( int_type n=1; n <= p; ++n ) {
+    for ( integer n=1; n <= p; ++n ) {
       t *= aa/(2*n*(2*n-1));
       real_type bf = a/(4*n+2);
-      for ( int_type j = 0; j < nk; ++j ) {
-        int_type jj = 4*n+j;
+      for ( integer j = 0; j < nk; ++j ) {
+        integer jj = 4*n+j;
         X[j] += t*(X0[jj]-bf*Y0[jj+2]);
         Y[j] += t*(Y0[jj]+bf*X0[jj+2]);
       }
@@ -597,7 +597,7 @@ namespace G2lib {
 
   void
   GeneralizedFresnelCS(
-    int_type    nk,
+    integer     nk,
     real_type   a,
     real_type   b,
     real_type   c,
@@ -612,7 +612,7 @@ namespace G2lib {
     real_type cosc = cos(c);
     real_type sinc = sin(c);
 
-    for ( int_type k = 0; k < nk; ++k ) {
+    for ( integer k = 0; k < nk; ++k ) {
       real_type xx = intC[k];
       real_type yy = intS[k];
       intC[k] = xx * cosc - yy * sinc;
@@ -1368,8 +1368,8 @@ namespace G2lib {
     real_type A = (phi0+phi1) * ( CF[0] + xy*(CF[1] + xy*CF[2]) +
                                   (CF[3]+xy*CF[4])*(X+Y) + CF[5]*(X*X+Y*Y) );
     // newton
-    real_type g=0, dg, intC[3], intS[3];
-    int_type  niter = 0;
+    real_type g{0}, dg, intC[3], intS[3];
+    integer   niter{0};
     do {
       GeneralizedFresnelCS( 3, 2*A, delta-A, phi0, intC, intS );
       g   = intS[0];
@@ -1458,7 +1458,7 @@ namespace G2lib {
     PolynomialRoots::Cubic cubicSolver( A, B, C, D );
 
     real_type r[3];
-    int_type nr = cubicSolver.getRealRoots(r);
+    integer   nr{cubicSolver.getRealRoots(r)};
 
     // cerco radice reale piu vicina
     real_type theta;
@@ -1476,7 +1476,7 @@ namespace G2lib {
       break;
     case 3:
       theta = r[0];
-      for ( int_type i = 1; i < 3; ++i ) {
+      for ( integer i = 1; i < 3; ++i ) {
         if ( abs(theta-theta0) > abs(r[i]-theta0) )
           theta = r[i];
       }
@@ -1521,7 +1521,7 @@ namespace G2lib {
     bool ok;
     real_type th = theta_guess( th0, max(min(k0,Kmax),Kmin), ok );
     if ( ok ) {
-      for ( int_type iter = 0; iter < 20; ++iter ) {
+      for ( integer iter = 0; iter < 20; ++iter ) {
         real_type LL, L_D[2], k_D[2], dk_D[2];
         build_G1(
           0, 0, th0,

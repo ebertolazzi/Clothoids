@@ -38,7 +38,7 @@ namespace G2lib {
     real_type m_p1[2], m_p2[2], m_p3[2];
     real_type m_s0;
     real_type m_s1;
-    int_type  m_icurve;
+    integer   m_icurve;
 
   public:
 
@@ -57,7 +57,7 @@ namespace G2lib {
       real_type x2, real_type y2,
       real_type x3, real_type y3,
       real_type s0, real_type s1,
-      int_type  icurve
+      integer   icurve
     ) {
       m_p1[0]  = x1; m_p1[1] = y1;
       m_p2[0]  = x2; m_p2[1] = y2;
@@ -73,7 +73,7 @@ namespace G2lib {
       real_type const p3[2],
       real_type       s0,
       real_type       s1,
-      int_type        icurve
+      integer         icurve
     ) {
       m_p1[0] = p1[0]; m_p1[1] = p1[1];
       m_p2[0] = p2[0]; m_p2[1] = p2[1];
@@ -103,7 +103,7 @@ namespace G2lib {
       real_type const p3[2],
       real_type       s0,
       real_type       s1,
-      int_type        icurve
+      integer         icurve
     ) {
       m_p1[0] = p1[0]; m_p1[1] = p1[1];
       m_p2[0] = p2[0]; m_p2[1] = p2[1];
@@ -120,7 +120,7 @@ namespace G2lib {
       real_type x3, real_type y3,
       real_type s0,
       real_type s1,
-      int_type  icurve
+      integer   icurve
     ) {
       m_p1[0] = x1; m_p1[1] = y1;
       m_p2[0] = x2; m_p2[1] = y2;
@@ -130,7 +130,7 @@ namespace G2lib {
       m_icurve = icurve;
     }
 
-    int_type  Icurve() const { return m_icurve; }
+    integer Icurve() const { return m_icurve; }
 
     real_type x1() const { return m_p1[0]; }
     real_type y1() const { return m_p1[1]; }
@@ -183,7 +183,7 @@ namespace G2lib {
     //! return -1 = Clockwise
     //! return  0 = degenerate triangle
     //!
-    int_type
+    integer
     isCounterClockwise() const {
       return G2lib::isCounterClockwise( m_p1, m_p2, m_p3 );
     }
@@ -193,13 +193,13 @@ namespace G2lib {
     //! return -1 = outside
     //! return  0 = on the border
     //!
-    int_type
+    integer
     isInside( real_type x, real_type y ) const {
       real_type const pt[2] = {x,y};
       return isPointInTriangle( pt, m_p1, m_p2, m_p3 );
     }
 
-    int_type
+    integer
     isInside( real_type const pt[2] ) const {
       return isPointInTriangle( pt, m_p1, m_p2, m_p3 );
     }

@@ -140,7 +140,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100, // unused
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       real_type xmin, ymin, xmax, ymax;
       this->bbox( xmin, ymin, xmax, ymax );
@@ -165,7 +165,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100, // unused
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       real_type xmin, ymin, xmax, ymax;
       this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
@@ -191,7 +191,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -512,7 +512,7 @@ namespace G2lib {
     //!        -1 = minimum point is not othogonal projection to curve
     //!
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -523,7 +523,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -681,7 +681,7 @@ namespace G2lib {
     \*/
 
     void
-    paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
+    paramNURBS( integer & n_knots, integer & n_pnts ) const;
 
     void
     toNURBS( real_type * knots, real_type Poly[][3] ) const;
@@ -713,7 +713,7 @@ namespace G2lib {
     real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
     real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -726,7 +726,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,

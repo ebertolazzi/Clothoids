@@ -52,7 +52,7 @@ namespace G2lib {
   using std::floor;
   using std::isfinite;
 
-  int_type  ClothoidCurve::m_max_iter  = 10;
+  integer   ClothoidCurve::m_max_iter  = 10;
   real_type ClothoidCurve::m_tolerance = 1e-9;
 
   //!
@@ -163,7 +163,7 @@ namespace G2lib {
   ) const {
     real_type ss  = s_begin;
     real_type thh = theta(s_begin);
-    for ( int_type npts = 0; ss < s_end; ++npts ) {
+    for ( integer npts = 0; ss < s_end; ++npts ) {
       UTILS_ASSERT0(
         npts < 100000000,
         "ClothoidCurve::optimized_sample_internal "
@@ -202,7 +202,7 @@ namespace G2lib {
   void
   ClothoidCurve::optimized_sample_ISO(
     real_type           offs,
-    int_type            npts,
+    integer             npts,
     real_type           max_angle,
     vector<real_type> & s
   ) const {
@@ -241,7 +241,7 @@ namespace G2lib {
     real_type            s_end,
     real_type            max_angle,
     real_type            max_size,
-    int_type             icurve
+    integer              icurve
   ) const {
 
     static real_type const one_degree = Utils::m_pi/180;
@@ -249,7 +249,7 @@ namespace G2lib {
     real_type ss  = s_begin;
     real_type thh = m_CD.theta(ss);
     real_type MX  = min( m_L, max_size );
-    for ( int_type npts = 0; ss < s_end; ++npts ) {
+    for ( integer npts = 0; ss < s_end; ++npts ) {
       UTILS_ASSERT0(
         npts < 100000000,
         "ClothoidCurve::bbTriangles_internal "
@@ -313,7 +313,7 @@ namespace G2lib {
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
-    int_type             icurve
+    integer              icurve
   ) const {
     if ( m_CD.m_kappa0*m_CD.m_dk >= 0 || m_CD.kappa(m_L)*m_CD.m_dk <= 0 ) {
       bbTriangles_internal_ISO( offs, tvec, 0, m_L, max_angle, max_size, icurve );
@@ -388,8 +388,8 @@ namespace G2lib {
 
     bbTriangles_ISO( offs, m_aabb_tri, max_angle, max_size );
 
-    int_type ipos = 0;
-    int_type nobj = int_type(m_aabb_tri.size());
+    integer ipos = 0;
+    integer nobj = integer(m_aabb_tri.size());
     m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
     m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
     real_type bbox_min[2], bbox_max[2];
@@ -455,16 +455,16 @@ namespace G2lib {
     G2LIB_DEBUG_TIC;
     bool collide = false;
     for ( auto const & I : intersectList ) {
-      int_type i = I.first;
+      integer i = I.first;
       UTILS_ASSERT_DEBUG(
-        i >= 0 && i < int_type(m_aabb_tri.size()),
+        i >= 0 && i < integer(m_aabb_tri.size()),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
         offs, offs_C, i, m_aabb_tri.size()
       );
       Triangle2D const & T1 = m_aabb_tri[i];
-      for ( int_type j : I.second ) {
+      for ( integer j : I.second ) {
         UTILS_ASSERT_DEBUG(
-          j >= 0 && j < int_type(C.m_aabb_tri.size()),
+          j >= 0 && j < integer(C.m_aabb_tri.size()),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
           offs, offs_C, j, C.m_aabb_tri.size()
         );
@@ -512,16 +512,16 @@ namespace G2lib {
     m_aabb_tree.intersect_and_refine( C.m_aabb_tree, intersectList );
 
     for ( auto const & I : intersectList ) {
-      int_type i = I.first;
+      integer i = I.first;
       UTILS_ASSERT_DEBUG(
-        i >= 0 && i < int_type(m_aabb_tri.size()),
+        i >= 0 && i < integer(m_aabb_tri.size()),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
         offs, offs_C, i, m_aabb_tri.size()
       );
       Triangle2D const & T1 = m_aabb_tri[i];
-      for ( int_type j : I.second ) {
+      for ( integer j : I.second ) {
         UTILS_ASSERT_DEBUG(
-          j >= 0 && j < int_type(C.m_aabb_tri.size()),
+          j >= 0 && j < integer(C.m_aabb_tri.size()),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
           offs, offs_C, j, C.m_aabb_tri.size()
         );
@@ -596,12 +596,12 @@ namespace G2lib {
     real_type s1_max = T1.S1()+eps1;
     real_type s2_min = T2.S0()-eps2;
     real_type s2_max = T2.S1()+eps2;
-    int_type  nout   = 0;
+    integer   nout   = 0;
     bool converged   = false;
 
     ss1 = (s1_min+s1_max)/2;
     ss2 = (s2_min+s2_max)/2;
-    for ( int_type i = 0; i < m_max_iter && !converged; ++i ) {
+    for ( integer i = 0; i < m_max_iter && !converged; ++i ) {
       real_type t1[2], t2[2], p1[2], p2[2];
       m_CD.eval_ISO  ( ss1, offs, p1[0], p1[1] );
       m_CD.eval_ISO_D( ss1, offs, t1[0], t1[1] );
@@ -677,16 +677,16 @@ namespace G2lib {
 
       G2LIB_DEBUG_TIC;
       for ( auto const & I : intersectList ) {
-        int_type i = I.first;
+        integer i = I.first;
         UTILS_ASSERT_DEBUG(
-          i >= 0 && i < int_type(m_aabb_tri.size()),
+          i >= 0 && i < integer(m_aabb_tri.size()),
           "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) i={} out of range [0,{})\n",
           offs, offs_C, i, m_aabb_tri.size()
         );
         Triangle2D const & T1 = m_aabb_tri[i];
-        for ( int_type j : I.second ) {
+        for ( integer j : I.second ) {
           UTILS_ASSERT_DEBUG(
-            j >= 0 && j < int_type(C.m_aabb_tri.size()),
+            j >= 0 && j < integer(C.m_aabb_tri.size()),
             "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) j={} out of range [0,{})\n",
             offs, offs_C, j, C.m_aabb_tri.size()
           );
@@ -777,9 +777,9 @@ namespace G2lib {
     #if 1
     // minimize using circle approximation
     s = (s_begin + s_end)/2;
-    int_type nout = 0;
-    int_type n_ok = 0;
-    for ( int_type iter = 0; iter < m_max_iter; ++iter ) {
+    integer nout = 0;
+    integer n_ok = 0;
+    for ( integer iter = 0; iter < m_max_iter; ++iter ) {
       // osculating circle
       m_CD.eval_ISO( s, offs, x, y );
       real_type th = m_CD.theta( s );
@@ -803,7 +803,7 @@ namespace G2lib {
     dst = hypot( qx-x, qy-y );
     #else
     real_type ds = (s_end-s_begin)/10;
-    for ( int_type iter = 0; iter <= 10; ++iter ) {
+    for ( integer iter = 0; iter <= 10; ++iter ) {
       real_type ss = s_begin + iter * ds;
       real_type xx, yy;
       CD.eval( ss, offs, xx, yy );
@@ -865,9 +865,9 @@ namespace G2lib {
       );
 
       G2LIB_DEBUG_TIC;
-      for ( int_type ipos : candidateList ) {
+      for ( integer ipos : candidateList ) {
         UTILS_ASSERT_DEBUG(
-          ipos >= 0 && ipos < int_type(m_aabb_tri.size()),
+          ipos >= 0 && ipos < integer(m_aabb_tri.size()),
           "ClothoidCurve::closest_point_internal( qx={}, qy={}, offs={}, x, y, s, DST ) ipos={} out of range [0,{})\n",
           qx, qy, offs, ipos, m_aabb_tri.size()
         );
@@ -918,7 +918,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   ClothoidCurve::closest_point_ISO(
     real_type   qx,
     real_type   qy,

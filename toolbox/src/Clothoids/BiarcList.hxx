@@ -52,7 +52,7 @@ namespace G2lib {
     vector<real_type> m_s0;
     vector<Biarc>     m_biarcList;
 
-    mutable Utils::BinarySearch<int_type> m_lastInterval;
+    mutable Utils::BinarySearch<integer> m_lastInterval;
 
     mutable bool               m_aabb_done{false};
     mutable AABB_TREE          m_aabb_tree;
@@ -64,11 +64,11 @@ namespace G2lib {
     void
     resetLastInterval() {
       bool ok;
-      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
       lastInterval = 0;
     }
 
-    int_type
+    integer
     closest_point_internal(
       real_type   qx,
       real_type   qy,
@@ -109,7 +109,7 @@ namespace G2lib {
     //!
     //! Reserve memory for `n` biarcs.
     //!
-    void reserve( int_type n );
+    void reserve( integer n );
 
     //!
     //! Copy another biarc spline.
@@ -221,7 +221,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      int_type          n,
+      integer           n,
       real_type const * x,
       real_type const * y
     );
@@ -237,7 +237,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      int_type          n,
+      integer           n,
       real_type const * x,
       real_type const * y,
       real_type const * theta
@@ -246,7 +246,7 @@ namespace G2lib {
     //!
     //! Get the `idx`-th biarc.
     //!
-    Biarc const & get( int_type idx ) const;
+    Biarc const & get( integer idx ) const;
 
     //!
     //! Get the biarc that contain the curvilinear coordinate `s`.
@@ -256,13 +256,13 @@ namespace G2lib {
     //!
     //! Return the number of biarc in the biarc list.
     //!
-    int_type num_segments() const { return int_type(m_biarcList.size()); }
+    integer num_segments() const { return integer(m_biarcList.size()); }
 
     //!
     //! Get the of the biarc that contain
     //! the curvilinear coordinate `s`.
     //!
-    int_type find_at_s( real_type & s ) const;
+    integer find_at_s( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -273,13 +273,13 @@ namespace G2lib {
     //! The length of the `nseg`-th biarc.
     //!
     real_type
-    segment_length( int_type nseg ) const;
+    segment_length( integer nseg ) const;
 
     //!
     //! The length of the `nseg`-th biarc with offset `offs`.
     //!
     real_type
-    segment_length_ISO( int_type nseg, real_type offs ) const;
+    segment_length_ISO( integer nseg, real_type offs ) const;
 
     /*\
      |  _    _   _____    _                _
@@ -295,7 +295,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     void
@@ -304,7 +304,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     void
@@ -312,7 +312,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type            icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -653,7 +653,7 @@ namespace G2lib {
      |  \__,_|_|___/\__\__,_|_| |_|\___\___|
     \*/
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -664,7 +664,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    int_type // true if projection is unique and orthogonal
+    integer // true if projection is unique and orthogonal
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -718,7 +718,7 @@ namespace G2lib {
     //! \return idx  the segment with point at minimal distance, otherwise
     //!              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     //!
-    int_type
+    integer
     findST1(
       real_type   x,
       real_type   y,
@@ -738,10 +738,10 @@ namespace G2lib {
     //! \return idx    the segment with point at minimal distance, otherwise
     //!                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     //!
-    int_type
+    integer
     findST1(
-      int_type    ibegin,
-      int_type    iend,
+      integer     ibegin,
+      integer     iend,
       real_type   x,
       real_type   y,
       real_type & s,
@@ -854,9 +854,9 @@ namespace G2lib {
     real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
     real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
 
-    int_type numSegments() const { return num_segments(); }
+    integer numSegments() const { return num_segments(); }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -869,7 +869,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,

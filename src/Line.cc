@@ -105,7 +105,7 @@ namespace G2lib {
   // 1 --> Clockwise
   // 2 --> Counterclockwise
   static
-  int_type
+  integer
   orientation(
     real_type const p[2],
     real_type const q[2],
@@ -137,10 +137,10 @@ namespace G2lib {
   ) {
 
     // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
+    integer o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    integer o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    integer o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    integer o4 = orientation( L2.p, L2.q, L1.q, epsi );
 
     // General case
     if ( o1 != o2 && o3 != o4 ) {
@@ -196,10 +196,10 @@ namespace G2lib {
   ) {
 
     // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
+    integer o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    integer o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    integer o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    integer o4 = orientation( L2.p, L2.q, L1.q, epsi );
 
     // General case
     if ( o1 != o2 && o3 != o4 ) return true;
@@ -316,7 +316,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::paramNURBS( int_type & n_knots, int_type & n_pnts ) const {
+  LineSegment::paramNURBS( integer & n_knots, integer & n_pnts ) const {
     n_pnts  = 2;
     n_knots = 4;
   }
@@ -594,7 +594,7 @@ namespace G2lib {
    |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
   \*/
 
-  int_type
+  integer
   LineSegment::closest_point_ISO(
     real_type   qx,
     real_type   qy,
@@ -632,7 +632,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   LineSegment::closest_point_ISO(
     real_type   qx,
     real_type   qy,

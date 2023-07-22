@@ -54,7 +54,7 @@ namespace G2lib {
   //!
   void
   FresnelCS(
-    int_type    nk,
+    integer     nk,
     real_type   x,
     real_type * C,
     real_type * S
@@ -77,7 +77,7 @@ namespace G2lib {
   //!
   void
   GeneralizedFresnelCS(
-    int_type    nk,
+    integer     nk,
     real_type   a,
     real_type   b,
     real_type   c,

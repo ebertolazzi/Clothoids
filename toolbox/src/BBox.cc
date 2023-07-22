@@ -86,7 +86,7 @@ namespace G2lib {
      |   0          1          2
      |
     \*/
-    int_type icase = 4;
+    integer icase = 4;
     if      ( x < x_min() ) icase = 3;
     else if ( x > x_max() ) icase = 5;
     if      ( y < y_min() ) icase -= 3;

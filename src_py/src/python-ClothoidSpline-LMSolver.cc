@@ -18,8 +18,8 @@ namespace G2lib {
 
     LMSolver::ClothoidSplineProblem::ClothoidSplineProblem(LMSolver & solver)
         : SparseFunctor(solver.theta_size(), solver.constraints_size()), m_solver(solver),
-          m_jacobian_rows(std::vector<int_type>(solver.jacobian_pattern_size(), 0)),
-          m_jacobian_cols(std::vector<int_type>(solver.jacobian_pattern_size(), 0)),
+          m_jacobian_rows(std::vector<integer>(solver.jacobian_pattern_size(), 0)),
+          m_jacobian_cols(std::vector<integer>(solver.jacobian_pattern_size(), 0)),
           m_jacobian_result(std::vector<real_type>(solver.jacobian_pattern_size(), 0.0)) {
       m_solver.spline().jacobian_pattern(&m_jacobian_rows.front(), &m_jacobian_cols.front());
     }

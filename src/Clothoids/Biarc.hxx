@@ -426,7 +426,7 @@ namespace G2lib {
      |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
     \*/
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -437,7 +437,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -497,7 +497,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       m_C0.bbTriangles( tvec, max_angle, max_size, icurve );
       m_C1.bbTriangles( tvec, max_angle, max_size, icurve );
@@ -509,7 +509,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       m_C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
       m_C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
@@ -521,7 +521,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       m_C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
       m_C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
@@ -654,7 +654,7 @@ namespace G2lib {
     real_type yMiddle()     const { return y_middle(); }
     real_type thetaMiddle() const { return theta_middle(); }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -667,7 +667,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -698,7 +698,7 @@ namespace G2lib {
   //!
   bool
   build_guess_theta(
-    int_type          n,
+    integer           n,
     real_type const * x,
     real_type const * y,
     real_type       * theta

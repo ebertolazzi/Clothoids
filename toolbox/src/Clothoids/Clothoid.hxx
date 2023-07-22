@@ -76,7 +76,7 @@ namespace G2lib {
       real_type            s1,
       real_type            max_angle,
       real_type            max_size,
-      int_type             icurve
+      integer              icurve
     ) const;
 
     void
@@ -103,7 +103,7 @@ namespace G2lib {
       real_type & dst
     ) const;
 
-    static int_type  m_max_iter;
+    static integer   m_max_iter;
     static real_type m_tolerance;
 
     mutable bool               m_aabb_done{false};
@@ -468,7 +468,7 @@ namespace G2lib {
     void
     optimized_sample_ISO(
       real_type           offs,
-      int_type            npts,
+      integer             npts,
       real_type           max_angle,
       vector<real_type> & s
     ) const;
@@ -484,7 +484,7 @@ namespace G2lib {
     void
     optimized_sample_SAE(
       real_type           offs,
-      int_type            npts,
+      integer             npts,
       real_type           max_angle,
       vector<real_type> & s
     ) const {
@@ -612,7 +612,7 @@ namespace G2lib {
     }
 
     bool
-    bbTriangle( Triangle2D & t, int_type icurve = 0 ) const {
+    bbTriangle( Triangle2D & t, integer icurve = 0 ) const {
       real_type x0, y0, x1, y1, x2, y2;
       bool ok = m_CD.bbTriangle( m_L, x0, y0, x1, y1, x2, y2 );
       if ( ok ) t.build( x0, y0, x1, y1, x2, y2, 0, 0, icurve );
@@ -620,7 +620,7 @@ namespace G2lib {
     }
 
     bool
-    bbTriangle_ISO( real_type offs, Triangle2D & t, int_type icurve = 0 ) const {
+    bbTriangle_ISO( real_type offs, Triangle2D & t, integer icurve = 0 ) const {
       real_type x0, y0, x1, y1, x2, y2;
       bool ok = m_CD.bbTriangle_ISO( m_L, offs, x0, y0, x1, y1, x2, y2 );
       if ( ok ) t.build( x0, y0, x1, y1, x2, y2, 0, 0, icurve );
@@ -628,7 +628,7 @@ namespace G2lib {
     }
 
     bool
-    bbTriangle_SAE( real_type offs, Triangle2D & t, int_type icurve = 0 ) const {
+    bbTriangle_SAE( real_type offs, Triangle2D & t, integer icurve = 0 ) const {
       real_type x0, y0, x1, y1, x2, y2;
       bool ok = m_CD.bbTriangle_SAE( m_L, offs, x0, y0, x1, y1, x2, y2 );
       if ( ok ) t.build( x0, y0, x1, y1, x2, y2, 0, 0, icurve );
@@ -641,7 +641,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     void
@@ -650,7 +650,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -660,7 +660,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       this->bbTriangles_ISO( 0, tvec, max_angle, max_size, icurve );
     }
@@ -1036,7 +1036,7 @@ namespace G2lib {
      |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
     \*/
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -1047,7 +1047,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -1201,7 +1201,7 @@ namespace G2lib {
       return closest_point_by_sample( ds, qx, qy, X, Y, S );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -1214,7 +1214,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,

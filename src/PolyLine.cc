@@ -132,12 +132,12 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   PolyLine::find_at_s( real_type & s ) const {
     bool ok;
-    int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
-    Utils::searchInterval<int_type,real_type>(
-      static_cast<int_type>(m_s0.size()),
+    integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    Utils::searchInterval<integer,real_type>(
+      static_cast<integer>(m_s0.size()),
       m_s0.data(), s, lastInterval, false, true
     );
     return lastInterval;
@@ -172,13 +172,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   LineSegment const &
-  PolyLine::getSegment( int_type n ) const {
+  PolyLine::getSegment( integer n ) const {
     UTILS_ASSERT0(
       !m_polylineList.empty(),
       "PolyLine::getSegment(...) empty PolyLine\n"
     );
     UTILS_ASSERT(
-      n >= 0 && n < int_type(m_polylineList.size()),
+      n >= 0 && n < integer(m_polylineList.size()),
       "PolyLine::getSegment( {} ) out of range [0,{}]\n",
       n, m_polylineList.size()-1
     );
@@ -189,7 +189,7 @@ namespace G2lib {
 
   void
   PolyLine::polygon( real_type * x, real_type * y) const {
-    int_type n = int_type(m_polylineList.size());
+    integer n = integer(m_polylineList.size());
     for ( size_t k = 0; k < size_t(n); ++k ) {
       x[k] = m_polylineList[k].x_begin();
       y[k] = m_polylineList[k].y_begin();
@@ -258,10 +258,10 @@ namespace G2lib {
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
-    int_type             icurve
+    integer              icurve
   ) const {
     vector<LineSegment>::const_iterator ic = m_polylineList.begin();
-    for ( int_type ipos = icurve; ic != m_polylineList.end(); ++ic, ++ipos )
+    for ( integer ipos = icurve; ic != m_polylineList.end(); ++ic, ++ipos )
       ic->bbTriangles( tvec, max_angle, max_size, ipos );
   }
 
@@ -273,10 +273,10 @@ namespace G2lib {
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
-    int_type             icurve
+    integer              icurve
   ) const {
     vector<LineSegment>::const_iterator ic = m_polylineList.begin();
-    for ( int_type ipos = icurve; ic != m_polylineList.end(); ++ic, ++ipos )
+    for ( integer ipos = icurve; ic != m_polylineList.end(); ++ic, ++ipos )
       ic->bbTriangles_ISO( offs, tvec, max_angle, max_size, ipos );
   }
 
@@ -284,7 +284,7 @@ namespace G2lib {
 
   real_type
   PolyLine::theta( real_type s ) const {
-    int_type idx = this->find_at_s( s );
+    integer idx = this->find_at_s( s );
     return m_polylineList[idx].m_theta0;
   }
 
@@ -404,9 +404,9 @@ namespace G2lib {
     while ( s_end   > L ) s_end   -= L;
     while ( s_end   < 0 ) s_end   += L;
 
-    int_type n_seg   = int_type( m_polylineList.size() );
-    int_type i_begin = find_at_s( s_begin );
-    int_type i_end   = find_at_s( s_end );
+    integer n_seg   = integer( m_polylineList.size() );
+    integer i_begin = find_at_s( s_begin );
+    integer i_end   = find_at_s( s_end );
 
     if ( s_begin < s_end ) {
       // get initial and final segment
@@ -449,8 +449,8 @@ namespace G2lib {
   void
   PolyLine::build_AABBtree() const {
     if ( !m_aabb_done ) {
-      int_type ipos = 0;
-      int_type nobj = int_type(m_polylineList.size());
+      integer ipos = 0;
+      integer nobj = integer(m_polylineList.size());
       m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
       m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
       real_type bbox_min[2], bbox_max[2];
@@ -509,10 +509,10 @@ namespace G2lib {
   void
   PolyLine::push_back( CircleArc const & C, real_type tol ) {
     real_type L  = C.length();
-    int_type  ns = int_type(ceil( L / C.lenTolerance( tol ) ));
+    integer   ns = integer(ceil( L / C.lenTolerance( tol ) ));
     real_type tx = m_xe - C.x_begin();
     real_type ty = m_ye - C.y_begin();
-    for ( int_type i = 1; i < ns; ++i ) {
+    for ( integer i = 1; i < ns; ++i ) {
       real_type s = (i*L)/ns;
       this->push_back( tx + C.X(s), ty + C.Y(s) );
     }
@@ -530,18 +530,18 @@ namespace G2lib {
     CircleArc const & C1 = B.C1();
     real_type L0  = C0.length();
     real_type L1  = C1.length();
-    int_type  ns0 = int_type(ceil( L0 / C0.lenTolerance( tol ) ));
-    int_type  ns1 = int_type(ceil( L1 / C1.lenTolerance( tol ) ));
+    integer   ns0 = integer(ceil( L0 / C0.lenTolerance( tol ) ));
+    integer   ns1 = integer(ceil( L1 / C1.lenTolerance( tol ) ));
 
     real_type tx = m_xe - C0.x_begin();
     real_type ty = m_ye - C0.y_begin();
 
-    for ( int_type i = 1; i < ns0; ++i ) {
+    for ( integer i = 1; i < ns0; ++i ) {
       real_type s = (i*L0)/ns0;
       this->push_back( tx + C0.X(s), ty + C0.Y(s) );
     }
     this->push_back( tx + C1.x_begin(), ty + C1.y_begin() );
-    for ( int_type i = 1; i < ns1; ++i ) {
+    for ( integer i = 1; i < ns1; ++i ) {
       real_type s = (i*L1)/ns1;
       this->push_back( tx + C1.X(s), ty + C1.Y(s) );
     }
@@ -559,12 +559,12 @@ namespace G2lib {
     real_type L    = C.length();
     real_type absk = max(abs(C.kappa_begin()), abs(C.kappa_end()));
     real_type tmp  = absk*tol - 1;
-    int_type ns = 1;
-    if ( tmp > -1 ) ns = int_type( ceil( L*absk/(2*(Utils::m_pi-acos(tmp))) ) );
+    integer   ns   = 1;
+    if ( tmp > -1 ) ns = integer( ceil( L*absk/(2*(Utils::m_pi-acos(tmp))) ) );
 
     real_type tx = m_xe - C.x_begin();
     real_type ty = m_ye - C.y_begin();
-    for ( int_type i = 1; i < ns; ++i ) {
+    for ( integer i = 1; i < ns; ++i ) {
       real_type s = (i*L)/ns;
       this->push_back( tx + C.X(s), ty + C.Y(s) );
     }
@@ -579,8 +579,8 @@ namespace G2lib {
 
   void
   PolyLine::push_back( ClothoidList const & L, real_type tol ) {
-    int_type ns = L.num_segments();
-    for ( int_type idx = 0; idx < ns; ++idx ) {
+    integer ns = L.num_segments();
+    for ( integer idx = 0; idx < ns; ++idx ) {
       ClothoidCurve const & C = L.get( idx );
       this->push_back( C, tol );
     }
@@ -593,10 +593,10 @@ namespace G2lib {
   PolyLine::build(
     real_type const * x,
     real_type const * y,
-    int_type          npts
+    integer           npts
   ) {
     init( x[0], y[0] );
-    for ( int_type k = 1; k < npts; ++k )
+    for ( integer k = 1; k < npts; ++k )
       this->push_back( x[k], y[k] );
   }
 
@@ -722,7 +722,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   PolyLine::closest_point_ISO(
     real_type   x,
     real_type   y,
@@ -736,7 +736,7 @@ namespace G2lib {
       !m_polylineList.empty(),
       "PolyLine::closest_point_ISO, empty list\n"
     );
-    int_type  ipos = 0;
+    integer ipos{0};
     real_type X1, Y1, S1, T1, DST1;
 
     this->build_AABBtree();
@@ -765,7 +765,7 @@ namespace G2lib {
         }
       }
     } else {
-      int_type i = 0;
+      integer i{0};
       for ( LineSegment const & LS : m_polylineList ) {
         LS.closest_point_ISO( x, y, X1, Y1, S1, T1, DST1 );
         if ( DST1 < DST ) {
@@ -802,16 +802,16 @@ namespace G2lib {
     AABB_MAP intersectList;
     m_aabb_tree.intersect_and_refine( PL.m_aabb_tree, intersectList );
     for ( auto const & I : intersectList ) {
-      int_type i = I.first;
+      integer i = I.first;
       UTILS_ASSERT_DEBUG(
-        i >= 0 && i < int_type(m_polylineList.size()),
+        i >= 0 && i < integer(m_polylineList.size()),
         "PolyLine::collision( PL ) i={} out of range [0,{})\n",
         i, m_polylineList.size()
       );
       LineSegment const & LS1 = m_polylineList[i];
       for ( auto const & j : I.second ) {
         UTILS_ASSERT_DEBUG(
-          j >= 0 && j < int_type(PL.m_polylineList.size()),
+          j >= 0 && j < integer(PL.m_polylineList.size()),
           "PolyLine::collision( PL ) j={} out of range [0,{})\n",
           j, PL.m_polylineList.size()
         );
@@ -845,11 +845,11 @@ namespace G2lib {
       AABB_MAP intersectList;
       m_aabb_tree.intersect_and_refine( PL.m_aabb_tree, intersectList );
       for ( auto const & ilist : intersectList ) {
-        int_type ipos0 = ilist.first;
-        UTILS_ASSERT_DEBUG( ipos0 < int_type(m_polylineList.size()), "PolyLine::intersect, bad ipos0 = {}\n", ipos0 );
+        integer ipos0 = ilist.first;
+        UTILS_ASSERT_DEBUG( ipos0 < integer(m_polylineList.size()), "PolyLine::intersect, bad ipos0 = {}\n", ipos0 );
         LineSegment const & LS0 = m_polylineList[ipos0];
         for ( auto const & ipos1 : ilist.second ) {
-          UTILS_ASSERT_DEBUG( ipos1 < int_type(PL.m_polylineList.size()), "PolyLine::intersect, bad ipos1 = {}\n", ipos1 );
+          UTILS_ASSERT_DEBUG( ipos1 < integer(PL.m_polylineList.size()), "PolyLine::intersect, bad ipos1 = {}\n", ipos1 );
           LineSegment const & LS1 = PL.m_polylineList[ipos1];
           real_type sss0, sss1;
           bool ok = LS0.intersect( LS1, sss0, sss1 );
@@ -862,9 +862,9 @@ namespace G2lib {
     } else {
       ss0.clear();
       ss1.clear();
-      int_type ipos0 = 0;
+      integer ipos0{0};
       for ( auto const & LS0 : m_polylineList ) {
-        int_type ipos1 = 0;
+        integer ipos1{0};
         for ( auto const & LS1 : PL.m_polylineList ) {
           real_type sss0, sss1;
           bool ok = LS0.intersect( LS1, sss0, sss1 );

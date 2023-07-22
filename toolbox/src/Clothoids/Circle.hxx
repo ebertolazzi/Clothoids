@@ -344,7 +344,7 @@ namespace G2lib {
       Triangle2D & t,
       real_type    ss0    = 0,
       real_type    ss1    = 0,
-      int_type     icurve = 0
+      integer      icurve = 0
     ) const {
       real_type p0[2], p1[2], p2[2];
       bool ok = bbTriangle( p0, p1, p2 );
@@ -369,7 +369,7 @@ namespace G2lib {
       Triangle2D & t,
       real_type    ss0    = 0,
       real_type    ss1    = 0,
-      int_type     icurve = 0
+      integer      icurve = 0
     ) const {
       real_type p0[2], p1[2], p2[2];
       bool ok = bbTriangle_ISO( offs, p0, p1, p2 );
@@ -394,7 +394,7 @@ namespace G2lib {
       Triangle2D & t,
       real_type    ss0    = 0,
       real_type    ss1    = 0,
-      int_type     icurve = 0
+      integer      icurve = 0
     ) const {
       return this->bbTriangle_ISO( -offs, t, ss0, ss1, icurve );
     }
@@ -412,7 +412,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
-      int_type  icurve    = 0
+      integer   icurve    = 0
     ) const override; // 10 degree
 
     //!
@@ -430,7 +430,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
-      int_type  icurve    = 0
+      integer   icurve    = 0
     ) const override; // 10 degree
 
     //!
@@ -448,7 +448,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
-      int_type  icurve    = 0
+      integer   icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -636,7 +636,7 @@ namespace G2lib {
      |
     \*/
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -647,7 +647,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -849,7 +849,7 @@ namespace G2lib {
     //! \param[out] n_pnts  number of point of the polygon of the NURBS
     //!
     void
-    paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
+    paramNURBS( integer & n_knots, integer & n_pnts ) const;
 
     //!
     //! Get the parameters to build a NURBS for the circle ars.
@@ -901,7 +901,7 @@ namespace G2lib {
     real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
     real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -914,7 +914,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,

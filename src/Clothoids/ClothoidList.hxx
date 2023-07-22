@@ -68,7 +68,7 @@ namespace G2lib {
   class G2solve2arc {
 
     real_type tolerance{real_type(1e-10)};
-    int_type  maxIter{20};
+    integer   maxIter{20};
 
     real_type x0{real_type(0)};
     real_type y0{real_type(0)};
@@ -824,7 +824,7 @@ namespace G2lib {
     vector<real_type>     m_s0;
     vector<ClothoidCurve> m_clotoidList;
 
-    mutable Utils::BinarySearch<int_type> m_lastInterval;
+    mutable Utils::BinarySearch<integer> m_lastInterval;
 
     mutable bool               m_aabb_done{false};
     mutable AABB_TREE          m_aabb_tree;
@@ -836,11 +836,11 @@ namespace G2lib {
     void
     resetLastInterval() {
       bool ok;
-      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
       lastInterval = 0;
     }
 
-    int_type
+    integer
     closest_point_internal(
       real_type   qx,
       real_type   qy,
@@ -883,7 +883,7 @@ namespace G2lib {
     //!
     //! Reserve memory for `n` clothoid
     //!
-    void reserve( int_type n );
+    void reserve( integer n );
 
     //!
     //! Build a clothoid list copying an existing one
@@ -1143,7 +1143,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      int_type          n,
+      integer           n,
       real_type const * x,
       real_type const * y
     );
@@ -1161,7 +1161,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      int_type          n,
+      integer           n,
       real_type const * x,
       real_type const * y,
       real_type const * theta
@@ -1186,7 +1186,7 @@ namespace G2lib {
       real_type         x0,
       real_type         y0,
       real_type         theta0,
-      int_type          n,
+      integer           n,
       real_type const * s,
       real_type const * kappa
     );
@@ -1215,7 +1215,7 @@ namespace G2lib {
       if ( s.size() != kappa.size() ) return false;
       return build(
         x0, y0, theta0,
-        int_type(s.size()),
+        integer(s.size()),
         &s.front(), &kappa.front()
       );
     }
@@ -1234,7 +1234,7 @@ namespace G2lib {
     //!
     bool
     build_raw(
-      int_type          n,
+      integer           n,
       real_type const * x,
       real_type const * y,
       real_type const * abscissa,
@@ -1261,11 +1261,11 @@ namespace G2lib {
       vector<real_type> const & theta,
       vector<real_type> const & kappa
     ) {
-      int_type n = int_type(x.size());
-      if ( n != int_type(y.size())        ||
-           n != int_type(abscissa.size()) ||
-           n != int_type(theta.size())    ||
-           n != int_type(kappa.size()) ) return false;
+      integer n = integer(x.size());
+      if ( n != integer(y.size())        ||
+           n != integer(abscissa.size()) ||
+           n != integer(theta.size())    ||
+           n != integer(kappa.size()) ) return false;
       return build_raw(
         n, &x.front(), &y.front(),
         &abscissa.front(), &theta.front(), &kappa.front()
@@ -1275,7 +1275,7 @@ namespace G2lib {
     //!
     //! Get the `idx`-th clothoid of the list
     //!
-    ClothoidCurve const & get( int_type idx ) const;
+    ClothoidCurve const & get( integer idx ) const;
 
     //!
     //! Get the `idx`-th clothoid of the list where `idx` is the clothoid at parameter `s`
@@ -1285,7 +1285,7 @@ namespace G2lib {
     //!
     //! Return the numbber of clothoid of the list
     //!
-    int_type num_segments() const { return int_type(m_clotoidList.size()); }
+    integer num_segments() const { return integer(m_clotoidList.size()); }
 
     //!
     //! The list of clothoid has total length \f$ L \f$
@@ -1297,7 +1297,7 @@ namespace G2lib {
     //!
     //! Find the clothoid segment whose definiton range contains `s`
     //!
-    int_type find_at_s( real_type & s ) const;
+    integer find_at_s( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1308,19 +1308,19 @@ namespace G2lib {
     //! Return the length of the `nseg`-th clothoid of the list
     //!
     real_type
-    segment_length( int_type nseg ) const;
+    segment_length( integer nseg ) const;
 
     //!
     //! Return the length of the `nseg`-th clothoid of the list with offset
     //!
     real_type
-    segment_length_ISO( int_type nseg, real_type offs ) const;
+    segment_length_ISO( integer nseg, real_type offs ) const;
 
     //!
     //! Return the length of the `nseg`-th clothoid of the list with offset
     //!
     real_type
-    segment_length_SAE( int_type nseg, real_type offs ) const
+    segment_length_SAE( integer nseg, real_type offs ) const
     { return segment_length_ISO( nseg, -offs ); }
 
     /*\
@@ -1336,7 +1336,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     void
@@ -1345,7 +1345,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     void
@@ -1354,7 +1354,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -1686,7 +1686,7 @@ namespace G2lib {
     //! \return n >= 0 point is projected orthogonal, n is the number of the segment at minimum distance<br>
     //!        -(n+1)  minimum point is not othogonal projection to curve
     //!
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -1709,7 +1709,7 @@ namespace G2lib {
     //! \return n > 0 point is projected orthogonal, n-1 is the number of the segment at minimum distance<br>
     //!        -(n+1) minimum point is not othogonal projection to curve
     //!
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -1734,7 +1734,7 @@ namespace G2lib {
     //! \param  qy  y-coordinate of the point
     //! \return the segment at minimal distance from point (qx,qy)
     //!
-    int_type
+    integer
     closest_segment( real_type qx, real_type qy ) const;
 
     //!
@@ -1752,18 +1752,18 @@ namespace G2lib {
     //!         0 =          more than one projection (first returned)<br>
     //!        -1 =          minimum point is not othogonal projection to curve
     //!
-    int_type
+    integer
     closest_point_in_range_ISO(
       real_type   qx,
       real_type   qy,
-      int_type    icurve_begin,
-      int_type    icurve_end,
+      integer     icurve_begin,
+      integer     icurve_end,
       real_type & x,
       real_type & y,
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const;
 
     //!
@@ -1781,20 +1781,20 @@ namespace G2lib {
     //!         0            = more than one projection (first returned)<br>
     //!        -1            = minimum point is not othogonal projection to curve<br>
     //!
-    int_type
+    integer
     closest_point_in_range_SAE(
       real_type   qx,
       real_type   qy,
-      int_type    icurve_begin,
-      int_type    icurve_end,
+      integer     icurve_begin,
+      integer     icurve_end,
       real_type & x,
       real_type & y,
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const {
-      int_type res = this->closest_point_in_range_ISO(
+      integer res = this->closest_point_in_range_ISO(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
       );
       t = -t;
@@ -1815,7 +1815,7 @@ namespace G2lib {
     //!
     //! \return 1 ok -1 projection failed
     //!
-    int_type
+    integer
     closest_point_in_s_range_ISO(
       real_type   qx,
       real_type   qy,
@@ -1826,7 +1826,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const;
 
     //!
@@ -1843,20 +1843,20 @@ namespace G2lib {
     //!
     //! \return 1 ok -1 projection failed
     //!
-    int_type
+    integer
     closest_point_in_s_range_SAE(
       real_type   qx,
       real_type   qy,
-      int_type    s_begin,
-      int_type    s_end,
+      integer     s_begin,
+      integer     s_end,
       real_type & x,
       real_type & y,
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const {
-      int_type res = this->closest_point_in_s_range_ISO(
+      integer res = this->closest_point_in_s_range_ISO(
         qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
       );
       t = -t;
@@ -1954,7 +1954,7 @@ namespace G2lib {
     //! \return idx  the segment with point at minimal distance, otherwise
     //!              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     //!
-    int_type
+    integer
     findST1(
       real_type   x,
       real_type   y,
@@ -1974,10 +1974,10 @@ namespace G2lib {
     //! \return idx    the segment with point at minimal distance, otherwise
     //!                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     //!
-    int_type
+    integer
     findST1(
-      int_type    ibegin,
-      int_type    iend,
+      integer     ibegin,
+      integer     iend,
       real_type   x,
       real_type   y,
       real_type & s,
@@ -2135,14 +2135,14 @@ namespace G2lib {
     real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
     real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
 
-    int_type numSegments() const { return num_segments(); }
+    integer numSegments() const { return num_segments(); }
 
-    int_type
+    integer
     closestSegment( real_type qx, real_type qy ) const {
       return closest_segment( qx, qy );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -2155,7 +2155,7 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPoint_ISO(
       real_type   qx,
       real_type   qy,
@@ -2169,43 +2169,43 @@ namespace G2lib {
       return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
     }
 
-    int_type
+    integer
     closestPointInRange_ISO(
       real_type   qx,
       real_type   qy,
-      int_type    icurve_begin,
-      int_type    icurve_end,
+      integer     icurve_begin,
+      integer     icurve_end,
       real_type & x,
       real_type & y,
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const {
       return closest_point_in_range_ISO(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
       );
     }
 
-    int_type
+    integer
     closestPointInRange_SAE(
       real_type   qx,
       real_type   qy,
-      int_type    icurve_begin,
-      int_type    icurve_end,
+      integer     icurve_begin,
+      integer     icurve_end,
       real_type & x,
       real_type & y,
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const {
       return closest_point_in_range_SAE(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
       );
     }
 
-    int_type
+    integer
     closestPointInSRange_ISO(
       real_type   qx,
       real_type   qy,
@@ -2216,14 +2216,14 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const {
       return closest_point_in_s_range_ISO(
         qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
       );
     }
 
-    int_type
+    integer
     closestPointInSRange_SAE(
       real_type   qx,
       real_type   qy,
@@ -2234,7 +2234,7 @@ namespace G2lib {
       real_type & s,
       real_type & t,
       real_type & dst,
-      int_type  & icurve
+      integer   & icurve
     ) const {
       return closest_point_in_s_range_SAE(
         qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
@@ -2259,7 +2259,7 @@ namespace G2lib {
   //!
   class ClothoidSplineG2 {
   public:
-    using TargetType = enum class TargetType : int_type
+    using TargetType = enum class TargetType : integer
     { P1, P2, P3, P4, P5, P6, P7, P8, P9 };
 
     static
@@ -2290,7 +2290,7 @@ namespace G2lib {
     TargetType  m_tt{TargetType::P1};
     real_type   m_theta_I{real_type(0)};
     real_type   m_theta_F{real_type(0)};
-    int_type    m_npts{0};
+    integer     m_npts{0};
 
     // work vector
     mutable real_type * m_k{nullptr};
@@ -2334,12 +2334,12 @@ namespace G2lib {
     build(
       real_type const * xvec,
       real_type const * yvec,
-      int_type          npts
+      integer           npts
     );
 
-    int_type numPnts() const { return m_npts; }
-    int_type numTheta() const;
-    int_type numConstraints() const;
+    integer numPnts() const { return m_npts; }
+    integer numTheta() const;
+    integer numConstraints() const;
 
     void
     guess(
@@ -2357,11 +2357,11 @@ namespace G2lib {
     bool
     constraints( real_type const * theta, real_type * c ) const;
 
-    int_type
+    integer
     jacobian_nnz() const;
 
     bool
-    jacobian_pattern( int_type * i, int_type * j ) const;
+    jacobian_pattern( integer * i, integer * j ) const;
 
     bool
     jacobian_pattern_matlab( real_type * i, real_type * j ) const;
