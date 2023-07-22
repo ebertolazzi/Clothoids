@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: ClothoidList.hh
+/// file: ClothoidList.hxx
 ///
 
 namespace G2lib {
@@ -177,12 +177,14 @@ namespace G2lib {
     //!
     //! Fix tolerance for the G2 problem
     //!
-    void setTolerance( real_type tol );
+    void set_tolerance( real_type tol );
+    void setTolerance( real_type tol ) { set_tolerance( tol ); }
 
     //!
     //! Fix maximum number of iteration for the G2 problem
     //!
-    void setMaxIter( int tol );
+    void set_max_iter( integer miter );
+    void setMaxIter( integer miter ) { set_max_iter( miter ); }
 
     //!
     //! Solve the G2 problem
@@ -304,12 +306,14 @@ namespace G2lib {
     //!
     //! Fix tolerance for the G2 problem
     //!
-    void setTolerance( real_type tol );
+    void set_tolerance( real_type tol );
+    void setTolerance( real_type tol ) { set_tolerance( tol ); }
 
     //!
     //! Fix maximum number of iteration for the G2 problem
     //!
-    void setMaxIter( int tol );
+    void set_max_iter( integer miter );
+    void setMaxIter( integer miter ) { set_max_iter( miter ); }
 
     //!
     //! Solve the G2 problem
@@ -455,12 +459,14 @@ namespace G2lib {
     //!
     //! Fix tolerance for the G2 problem
     //!
-    void setTolerance( real_type tol );
+    void set_tolerance( real_type tol );
+    void setTolerance( real_type tol ) { set_tolerance( tol ); }
 
     //!
     //! Fix maximum number of iteration for the G2 problem
     //!
-    void setMaxIter( int miter );
+    void set_max_iter( integer miter );
+    void setMaxIter( integer miter ) { set_max_iter( miter ); }
 
     //!
     //! Compute the 3 arc clothoid spline that fit the data
@@ -541,9 +547,11 @@ namespace G2lib {
     //! \return get the length of the 3 arc G2 fitting
     //!
     real_type
-    totalLength() const {
+    total_length() const {
       return S0.length() + S1.length() + SM.length();
     }
+
+    real_type totalLength() const { return total_length(); }
 
     //!
     //! \return get the total angle variation of the 3 arc G2 fitting
@@ -559,21 +567,25 @@ namespace G2lib {
     //! \return get the total curvature variation of the 3 arc G2 fitting
     //!
     real_type
-    curvatureTotalVariation() const {
-      return S0.curvatureTotalVariation() +
-             S1.curvatureTotalVariation() +
-             SM.curvatureTotalVariation();
+    curvature_total_variation() const {
+      return S0.curvature_total_variation() +
+             S1.curvature_total_variation() +
+             SM.curvature_total_variation();
     }
 
     //!
     //! \return get the integral of the curvature squared of the 3 arc G2 fitting
     //!
     real_type
-    integralCurvature2() const {
-      return S0.integralCurvature2() +
-             S1.integralCurvature2() +
-             SM.integralCurvature2();
+    integral_curvature2() const {
+      return S0.integral_curvature2() +
+             S1.integral_curvature2() +
+             SM.integral_curvature2();
     }
+
+    real_type
+    integralCurvature2() const
+    { return integral_curvature2(); }
 
     //!
     //! \return get the integral of the jerk squared of the 3 arc G2 fitting
@@ -589,11 +601,13 @@ namespace G2lib {
     //! \return get the integral of the snap squared of the 3 arc G2 fitting
     //!
     real_type
-    integralSnap2() const {
-      return S0.integralSnap2() +
-             S1.integralSnap2() +
-             SM.integralSnap2();
+    integral_snap2() const {
+      return S0.integral_snap2() +
+             S1.integral_snap2() +
+             SM.integral_snap2();
     }
+
+    real_type integralSnap2() const { return integral_snap2(); }
 
     //!
     //! \param[out] thMin minimum angle in the 3 arc G2 fitting curve
@@ -607,8 +621,10 @@ namespace G2lib {
     //! Return the difference of maximum-minimum angle in the 3 arc G2 fitting curve
     //!
     real_type
-    deltaTheta() const
+    delta_theta() const
     { real_type thMin, thMax; return theta_min_max( thMin, thMax ); }
+
+    real_type deltaTheta() const { return delta_theta(); }
 
     //!
     //! \param[out] kMin minimum curvature in the 3 arc G2 fitting curve
@@ -616,7 +632,7 @@ namespace G2lib {
     //! \return the difference of `kMax` and `kMin`
     //!
     real_type
-    curvatureMinMax( real_type & kMin, real_type & kMax ) const;
+    curvature_min_max( real_type & kMin, real_type & kMax ) const;
 
     //!
     //! Return angle as a function of curvilinear coordinate
@@ -1107,12 +1123,12 @@ namespace G2lib {
     //!
     //! Difference initial final tangent x component
     //!
-    real_type closure_gap_tx() const { return this->tx_End() - this->tx_Begin(); }
+    real_type closure_gap_tx() const { return this->tx_end() - this->tx_begin(); }
 
     //!
     //! Difference initial final tangent y component
     //!
-    real_type closure_gap_ty() const { return this->ty_End() - this->ty_Begin(); }
+    real_type closure_gap_ty() const { return this->ty_end() - this->ty_begin(); }
 
     //!
     //! check if clothoid list is closed
@@ -1445,36 +1461,36 @@ namespace G2lib {
     { return m_clotoidList.back().y_end_ISO( offs ); }
 
     real_type
-    tx_Begin() const override
-    { return m_clotoidList.front().tx_Begin(); }
+    tx_begin() const override
+    { return m_clotoidList.front().tx_begin(); }
 
     real_type
-    ty_Begin() const override
-    { return m_clotoidList.front().ty_Begin(); }
+    ty_begin() const override
+    { return m_clotoidList.front().ty_begin(); }
 
     real_type
-    tx_End() const override
-    { return m_clotoidList.back().tx_End(); }
+    tx_end() const override
+    { return m_clotoidList.back().tx_end(); }
 
     real_type
-    ty_End() const override
-    { return m_clotoidList.back().ty_End(); }
+    ty_end() const override
+    { return m_clotoidList.back().ty_end(); }
 
     real_type
-    nx_Begin_ISO() const override
-    { return m_clotoidList.front().nx_Begin_ISO(); }
+    nx_begin_ISO() const override
+    { return m_clotoidList.front().nx_begin_ISO(); }
 
     real_type
-    ny_Begin_ISO() const override
-    { return m_clotoidList.front().ny_Begin_ISO(); }
+    ny_begin_ISO() const override
+    { return m_clotoidList.front().ny_begin_ISO(); }
 
     real_type
-    nx_End_ISO() const override
-    { return m_clotoidList.back().nx_End_ISO(); }
+    nx_end_ISO() const override
+    { return m_clotoidList.back().nx_end_ISO(); }
 
     real_type
-    ny_End_ISO() const override
-    { return m_clotoidList.back().ny_End_ISO(); }
+    ny_end_ISO() const override
+    { return m_clotoidList.back().ny_end_ISO(); }
 
     /*\
      |  _   _          _
@@ -1878,7 +1894,7 @@ namespace G2lib {
     //! \param[out] kappa curvature
     //!
     void
-    getSK( real_type * s, real_type * kappa ) const;
+    get_SK( real_type * s, real_type * kappa ) const;
 
     //!
     //! Return the clothoid list as a list of nodes and curvatures
@@ -1887,13 +1903,13 @@ namespace G2lib {
     //! \param[out] kappa curvature
     //!
     void
-    getSK(
+    get_SK(
       vector<real_type> & s,
       vector<real_type> & kappa
     ) const {
       s.resize( m_clotoidList.size()+1 );
       kappa.resize( m_clotoidList.size()+1 );
-      getSK( &s.front(), &kappa.front() );
+      get_SK( &s.front(), &kappa.front() );
     }
 
     //!
@@ -1904,7 +1920,7 @@ namespace G2lib {
     //! \param[out] kappa curvature
     //!
     void
-    getSTK(
+    get_STK(
       real_type * s,
       real_type * theta,
       real_type * kappa
@@ -1918,7 +1934,7 @@ namespace G2lib {
     //! \param[out] kappa curvature
     //!
     void
-    getSTK(
+    get_STK(
       vector<real_type> & s,
       vector<real_type> & theta,
       vector<real_type> & kappa
@@ -1926,7 +1942,7 @@ namespace G2lib {
       s.resize( m_clotoidList.size()+1 );
       theta.resize( m_clotoidList.size()+1 );
       kappa.resize( m_clotoidList.size()+1 );
-      getSTK( &s.front(), &theta.front(), &kappa.front() );
+      get_STK( &s.front(), &theta.front(), &kappa.front() );
     }
 
     //!
@@ -1936,13 +1952,13 @@ namespace G2lib {
     //! \param[out] y y-coordinates
     //!
     void
-    getXY( real_type * x, real_type * y ) const;
+    get_XY( real_type * x, real_type * y ) const;
 
     void
-    getDeltaTheta( real_type * deltaTheta ) const;
+    get_delta_theta( real_type * delta_theta ) const;
 
     void
-    getDeltaKappa( real_type * deltaKappa ) const;
+    get_delta_kappa( real_type * deltaKappa ) const;
 
     //!
     //! Find parametric coordinate.
@@ -2116,132 +2132,9 @@ namespace G2lib {
     //!
     void load( istream_type & stream, real_type epsi = 1e-8 );
 
-    //@@@@ BACK COMPATIBILITY
-
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-
-    void
-    changeOrigin( real_type newx0, real_type newy0 )
-    { change_origin( newx0, newy0 ); }
-
-    real_type thetaBegin() const { return theta_begin(); }
-    real_type thetaEnd()   const { return theta_end(); }
-    real_type xBegin()     const { return x_begin(); }
-    real_type yBegin()     const { return y_begin(); }
-    real_type xEnd()       const { return x_end(); }
-    real_type yEnd()       const { return y_end(); }
-    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
-    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
-
-    integer numSegments() const { return num_segments(); }
-
-    integer
-    closestSegment( real_type qx, real_type qy ) const {
-      return closest_segment( qx, qy );
-    }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, x, y, s, t, dst );
-    }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    integer
-    closestPointInRange_ISO(
-      real_type   qx,
-      real_type   qy,
-      integer     icurve_begin,
-      integer     icurve_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
-    ) const {
-      return closest_point_in_range_ISO(
-        qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
-      );
-    }
-
-    integer
-    closestPointInRange_SAE(
-      real_type   qx,
-      real_type   qy,
-      integer     icurve_begin,
-      integer     icurve_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
-    ) const {
-      return closest_point_in_range_SAE(
-        qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
-      );
-    }
-
-    integer
-    closestPointInSRange_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   s_begin,
-      real_type   s_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
-    ) const {
-      return closest_point_in_s_range_ISO(
-        qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
-      );
-    }
-
-    integer
-    closestPointInSRange_SAE(
-      real_type   qx,
-      real_type   qy,
-      real_type   s_begin,
-      real_type   s_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
-    ) const {
-      return closest_point_in_s_range_SAE(
-        qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
-      );
-    }
-
-    #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#include "ClothoidList_compatibility.hxx"
+#endif
 
   };
 
@@ -2382,5 +2275,5 @@ namespace G2lib {
 }
 
 ///
-/// eof: ClothoidList.hh
+/// eof: ClothoidList.hxx
 ///

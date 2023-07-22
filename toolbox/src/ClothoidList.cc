@@ -2077,7 +2077,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getSK( real_type * s, real_type * kappa ) const {
+  ClothoidList::get_SK( real_type * s, real_type * kappa ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     integer   k  = 0;
     real_type ss = 0;
@@ -2099,7 +2099,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getSTK(
+  ClothoidList::get_STK(
     real_type * s,
     real_type * theta,
     real_type * kappa
@@ -2124,7 +2124,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getXY( real_type * x, real_type * y ) const {
+  ClothoidList::get_XY( real_type * x, real_type * y ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     integer k = 0;
     while ( ic != m_clotoidList.end() ) {
@@ -2140,21 +2140,21 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getDeltaTheta( real_type * deltaTheta ) const {
+  ClothoidList::get_delta_theta( real_type * delta_theta ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     integer k = 0;
     for ( ++ic; ic != m_clotoidList.end(); ++ic, ++k ) {
       real_type tmp = ic->theta_begin()-ic[-1].theta_end();
       if      ( tmp >  Utils::m_pi ) tmp -= Utils::m_2pi;
       else if ( tmp < -Utils::m_pi ) tmp += Utils::m_2pi;
-      deltaTheta[k] = tmp;
+      delta_theta[k] = tmp;
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::getDeltaKappa( real_type * deltaKappa ) const {
+  ClothoidList::get_delta_kappa( real_type * deltaKappa ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clotoidList.begin();
     integer k = 0;
     for ( ++ic; ic != m_clotoidList.end(); ++ic, ++k  )

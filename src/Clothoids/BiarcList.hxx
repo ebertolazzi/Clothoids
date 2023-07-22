@@ -716,10 +716,6 @@ namespace G2lib {
     void
     get_XY( real_type * x, real_type * y ) const;
 
-    void
-    getXY( real_type * x, real_type * y ) const
-    { get_XY( x, y ); }
-
     //!
     //! Find parametric coordinate.
     //!

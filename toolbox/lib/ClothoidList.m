@@ -3,7 +3,7 @@ classdef ClothoidList < CurveBase
   methods
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Create a new C++ class instance for the clothoid list object
-    %> 
+    %>
     %> **Usage:**
     %>
     %> \rst
@@ -129,8 +129,8 @@ classdef ClothoidList < CurveBase
     %> \endrst
     %>
     %> **Mode 1**
-    %> 
-    %> Build a clothoid arc using final point and angle of the 
+    %>
+    %> Build a clothoid arc using final point and angle of the
     %> clothoid list and
     %>
     %> - `x1`, `y1` : final point
@@ -206,7 +206,7 @@ classdef ClothoidList < CurveBase
     %>
     %> .. code-block:: matlab
     %>
-    %>  [ s, theta, kappa ] = ref.getSTK();
+    %>  [ s, theta, kappa ] = ref.get_STK();
     %>
     %> \endrst
     %>
@@ -214,8 +214,8 @@ classdef ClothoidList < CurveBase
     %> - `theta` angles at nodes
     %> - `kappa` curvature at nodes
     %>
-    function [ s, theta, kappa ] = getSTK( self )
-      [ s, theta, kappa ] = ClothoidListMexWrapper( 'getSTK', self.objectHandle );
+    function [ s, theta, kappa ] = get_STK( self )
+      [ s, theta, kappa ] = ClothoidListMexWrapper( 'get_STK', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
@@ -225,15 +225,15 @@ classdef ClothoidList < CurveBase
     %>
     %> .. code-block:: matlab
     %>
-    %>  [ x, y ] = ref.getXY();
+    %>  [ x, y ] = ref.get_XY();
     %>
     %> \endrst
     %>
     %> - `x` x-coordinates at nodes
     %> - `y` y-coordinates at nodes
     %>
-    function [ x, y ] = getXY( self )
-      [ x, y ] = ClothoidListMexWrapper( 'getXY', self.objectHandle );
+    function [ x, y ] = get_XY( self )
+      [ x, y ] = ClothoidListMexWrapper( 'get_XY', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     % Number of segments of the clothoid list
@@ -307,7 +307,7 @@ classdef ClothoidList < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
-    %> Given a list of curvilinear coordinated and curvatures 
+    %> Given a list of curvilinear coordinated and curvatures
     %> at nodes build a G2 clothoid list.
     %> Initial position and angle must be set to determine a unique clothoid list.
     %>
@@ -519,7 +519,7 @@ classdef ClothoidList < CurveBase
         S.kappa0(k) = k0;
         S.dkappa(k) = dk;
         S.L(k)      = ell;
-      end  
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the clothoid list
@@ -535,7 +535,7 @@ classdef ClothoidList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot( npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -581,7 +581,7 @@ classdef ClothoidList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2}; % first arc of the biarc
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot_offs( offs, npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -623,7 +623,7 @@ classdef ClothoidList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotCurvature( npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -672,7 +672,7 @@ classdef ClothoidList < CurveBase
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotAngle( npts, fmt1, fmt2 );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -717,7 +717,7 @@ classdef ClothoidList < CurveBase
     %> .. code-block:: matlab
     %>
     %>   ref.plotNormal( step, len );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `step`: number of sampling normals
@@ -742,7 +742,7 @@ classdef ClothoidList < CurveBase
     %> .. code-block:: matlab
     %>
     %>   ref.saveSampled( filename, ds );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `filename`: file name
@@ -784,7 +784,7 @@ classdef ClothoidList < CurveBase
     %> .. code-block:: matlab
     %>
     %>   ref.saveClothoids( filename, ds );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `filename`: file name
@@ -806,7 +806,7 @@ classdef ClothoidList < CurveBase
       fprintf(fd,'x0\ty0\ttheta0\tkappa0\tdk\tL\n');
       for k=1:self.num_segments()
         C = self.get(k);
-        [x0,y0,theta0,k0,dk,L] = C.getPars();
+        [x0,y0,theta0,k0,dk,L] = C.get_pars();
         fprintf(fd,'%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\t%20.10g\n',x0,y0,theta0,k0,dk,L);
       end
       fclose(fd);

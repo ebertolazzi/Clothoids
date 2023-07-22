@@ -180,27 +180,6 @@ closestPoint_ISO(
   return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
 }
 
-real_type
-distanceBySample(
-  real_type   ds,
-  real_type   qx,
-  real_type   qy,
-  real_type & S
-) const {
-  real_type X, Y;
-  return closest_point_by_sample( ds, qx, qy, X, Y, S );
-}
-
-real_type
-distanceBySample(
-  real_type ds,
-  real_type qx,
-  real_type qy
-) const {
-  real_type X, Y, S;
-  return closest_point_by_sample( ds, qx, qy, X, Y, S );
-}
-
 ///
 /// eof: Clothoid_compatibulity.hxx
 ///

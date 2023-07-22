@@ -182,7 +182,7 @@ namespace G2lib {
 
     ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
 
-    int_type N = ptr->numPnts();
+    integer N = ptr->numPnts();
 
     real_type * theta_guess = Utils::mex_create_matrix_value( arg_out_0, N, 1 );
     real_type * theta_min   = Utils::mex_create_matrix_value( arg_out_1, N, 1 );
@@ -303,9 +303,9 @@ namespace G2lib {
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
 
-    int_type n   = ptr->numConstraints();
-    int_type m   = ptr->numTheta();
-    int_type nnz = ptr->jacobian_nnz();
+    integer n   = ptr->numConstraints();
+    integer m   = ptr->numTheta();
+    integer nnz = ptr->jacobian_nnz();
 
     mxArray *args[5];
 
@@ -340,9 +340,9 @@ namespace G2lib {
 
     ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
 
-    int_type n   = ptr->numConstraints();
-    int_type m   = ptr->numTheta();
-    int_type nnz = ptr->jacobian_nnz();
+    integer n   = ptr->numConstraints();
+    integer m   = ptr->numTheta();
+    integer nnz = ptr->jacobian_nnz();
 
     mxArray *args[5];
 
@@ -377,8 +377,8 @@ namespace G2lib {
 
     ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
 
-    int_type m = ptr->numTheta();
-    int_type n = ptr->numConstraints();
+    integer m = ptr->numTheta();
+    integer n = ptr->numConstraints();
 
     Utils::mex_set_scalar_int32( arg_out_0, m );
     Utils::mex_set_scalar_int32( arg_out_1, n );

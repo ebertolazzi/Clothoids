@@ -1,0 +1,262 @@
+/*--------------------------------------------------------------------------*\
+ |                                                                          |
+ |  Copyright (C) 2017                                                      |
+ |                                                                          |
+ |         , __                 , __                                        |
+ |        /|/  \               /|/  \                                       |
+ |         | __/ _   ,_         | __/ _   ,_                                |
+ |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+ |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+ |                           /|                   /|                        |
+ |                           \|                   \|                        |
+ |                                                                          |
+ |      Enrico Bertolazzi                                                   |
+ |      Dipartimento di Ingegneria Industriale                              |
+ |      Universita` degli Studi di Trento                                   |
+ |      email: enrico.bertolazzi@unitn.it                                   |
+ |                                                                          |
+\*--------------------------------------------------------------------------*/
+
+///
+/// file: Dubins.cc
+///
+
+#include "Clothoids.hh"
+#include "PolynomialRoots.hh"
+
+namespace G2lib {
+
+  using PolynomialRoots::Quadratic;
+
+  /*\
+   |   ____        _     _
+   |  |  _ \ _   _| |__ (_)_ __  ___
+   |  | | | | | | | '_ \| | '_ \/ __|
+   |  | |_| | |_| | |_) | | | | \__ \
+   |  |____/ \__,_|_.__/|_|_| |_|___/
+  \*/
+
+  static
+  void
+  zero_2pi( real_type & a ) {
+    while ( a < 0            ) a += Utils::m_2pi;
+    while ( a > Utils::m_2pi ) a -= Utils::m_2pi;
+  }
+
+  static
+  void
+  minus_pi_pi( real_type & a ) {
+    while ( a < -Utils::m_pi ) a += Utils::m_2pi;
+    while ( a >  Utils::m_pi ) a -= Utils::m_2pi;
+  }
+
+  bool
+  Dubins::build(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+
+    real_type x3,
+    real_type y3,
+    real_type theta3,
+
+    real_type k_max
+  ) {
+    // ruoto di -theta0
+    real_type C0 = cos(theta0);
+    real_type S0 = sin(theta0);
+    real_type xx = x3-x0;
+    real_type yy = y3-y0;
+    real_type X3 = k_max * ( C0*xx+S0*yy );
+    real_type Y3 = k_max * ( C0*yy-S0*xx );
+
+    real_type dtheta = theta3-theta0;
+    real_type C      = cos(dtheta);
+    real_type S      = sin(dtheta);
+
+    // metto angolo in -Pi, Pi
+    minus_pi_pi( dtheta );
+
+    real_type t1  = C+Y3-1;
+    real_type t2  = S-X3;
+    real_type t3  = 1-C+Y3;
+    real_type t4  = -S-X3;
+    real_type t10 = 2*S*X3;
+    real_type t11 = X3*X3;
+    real_type t12 = Y3*Y3;
+    real_type t13 = 2*Y3;
+    real_type t17 = 6*Y3;
+
+    real_type t18 = t11+t12;
+    real_type t19 = t10+t17;
+    real_type t20 = t10-t13;
+
+    real_type poly0[3]{t1,2*t2,-t1};
+    real_type poly1[3]{t3,2*t4,C-Y3+3};
+    real_type poly2[3]{-t1,2*t2,C+Y3+3};
+    real_type poly3[3]{-t3,2*t4,t3};
+    real_type poly4[3]{2*(Y3+1)*C+t18-t20-2,8*t2,t18+(t13-6)*C-t19+6};
+    real_type poly5[3]{2*(1-Y3)*C+t18+t20-2,8*t4,t18-(t13+6)*C+t19+6};
+
+    real_type min_len = Utils::Inf<real_type>();
+
+    real_type L0{0}, L1{0}, L2{0}, theta1{0}, theta2{0}, s0{0}, s1{0}, s2{0};
+
+    integer   nr;
+    real_type Z[2];
+
+    Quadratic Q0( poly0[2], poly0[1], poly0[0] ); // LSL = 1, 0, 1
+    nr = Q0.get_real_roots( Z );
+    for ( integer ir = 0; ir < nr; ++ir ) {
+      real_type z   = Z[ir];
+      real_type l0  = 2*atan(z);   zero_2pi( l0 );
+      real_type l2  = dtheta - l0; zero_2pi( l2 );
+      real_type th1 = theta0 + l0;
+      real_type l1  = cos(l0)*X3 + sin(l0)*Y3 - sin(l0) - sin(l2);
+      if ( l1 < 0 ) continue;
+      real_type len = l0+l1+l2;
+      if ( len >= min_len ) continue;
+      L0      = l0;
+      L1      = l1;
+      L2      = l2;
+      theta1  = th1;
+      theta2  = th1;
+      min_len = len;
+      s0      = 1;
+      s1      = 0;
+      s2      = 1;
+    }
+
+    Quadratic Q1( poly1[2], poly1[1], poly1[0] ); // LSL = 1, 0, -1
+    nr = Q1.get_real_roots( Z );
+    for ( integer ir = 0; ir < nr; ++ir ) {
+      real_type z   = Z[ir];
+      real_type l0  = 2*atan(z);   zero_2pi( l0 );
+      real_type l2  = l0 - dtheta; zero_2pi( l2 );
+      real_type th1 = theta0 + l0;
+      real_type l1  = cos(l0)*X3 + sin(l0)*Y3 - sin(l0) - sin(l2);
+      if ( l1 < 0 ) continue;
+      real_type len = l0+l1+l2;
+      if ( len >= min_len ) continue;
+      L0      = l0;
+      L1      = l1;
+      L2      = l2;
+      theta1  = th1;
+      theta2  = th1;
+      min_len = len;
+      s0      = 1;
+      s1      = 0;
+      s2      = -1;
+    }
+
+    Quadratic Q2( poly2[2], poly2[1], poly2[0] ); // LSL = -1, 0, 1
+    nr = Q2.get_real_roots( Z );
+    for ( integer ir = 0; ir < nr; ++ir ) {
+      real_type z   = Z[ir];
+      real_type l0  = 2*atan(z);   zero_2pi( l0 );
+      real_type l2  = l0 + dtheta; zero_2pi( l2 );
+      real_type th1 = theta0 - l0;
+      real_type l1  = cos(l0)*X3 - sin(l0)*Y3 - sin(l0) - sin(l2);
+      if ( l1 < 0 ) continue;
+      real_type len = l0+l1+l2;
+      if ( len >= min_len ) continue;
+      L0      = l0;
+      L1      = l1;
+      L2      = l2;
+      theta1  = th1;
+      theta2  = th1;
+      min_len = len;
+      s0      = -1;
+      s1      = 0;
+      s2      = 1;
+    }
+
+    Quadratic Q3( poly3[2], poly3[1], poly3[0] ); // LSL = -1, 0, -1
+    nr = Q3.get_real_roots( Z );
+    for ( integer ir = 0; ir < nr; ++ir ) {
+      real_type z   = Z[ir];
+      real_type l0  = 2*atan(z);  zero_2pi( l0 );
+      real_type l2  = -l0-dtheta; zero_2pi( l2 );
+      real_type th1 = theta0 - l0;
+      real_type l1  = cos(l0)*X3 - sin(l0)*Y3 - sin(l0) - sin(l2);
+      if ( l1 < 0 ) continue;
+      real_type len = l0+l1+l2;
+      if ( len >= min_len ) continue;
+      L0      = l0;
+      L1      = l1;
+      L2      = l2;
+      theta1  = th1;
+      theta2  = th1;
+      min_len = len;
+      s0      = -1;
+      s1      =  0;
+      s2      = -1;
+    }
+
+    Quadratic Q4( poly4[2], poly4[1], poly4[0] ); // LSL = 1, -1, 1
+    nr = Q4.get_real_roots( Z );
+    for ( integer ir = 0; ir < nr; ++ir ) {
+      real_type z   = Z[ir];
+      real_type l0  = 2*atan(z); zero_2pi( l0 );
+      real_type t3  = Y3-1;
+      real_type t6  = l0-dtheta;
+      real_type Cl2 = (t3*C-S*X3)/2+cos(t6)+0.5;
+      real_type Sl2 = (t3*S+C*X3)/2-sin(t6);
+      //fmt::print("S^2+C^2 = {}\n",Cl2*Cl2+Sl2*Sl2);
+      real_type l2  = atan2( Sl2, Cl2 ); zero_2pi( l2 );
+      real_type th1 = theta0+l0;
+      real_type l1  = l0+l2-dtheta; zero_2pi( l1 );
+      real_type len = l0+l1+l2;
+      if ( len >= min_len ) continue;
+      L0      = l0;
+      L1      = l1;
+      L2      = l2;
+      theta1  = th1;
+      theta2  = th1-l1;
+      min_len = len;
+      s0      =  1;
+      s1      = -1;
+      s2      =  1;
+    }
+
+    Quadratic Q5( poly5[2], poly5[1], poly5[0] ); // LSL = -1, 1, -1
+    nr = Q5.get_real_roots( Z );
+    for ( integer ir = 0; ir < nr; ++ir ) {
+      real_type z   = Z[ir];
+      real_type l0  = 2*atan(z); zero_2pi( l0 );
+      real_type t3  = Y3+1;
+      real_type t6  = l0+dtheta;
+      real_type Cl2 = (S*X3-t3*C)/2+cos(t6)+0.5;
+      real_type Sl2 = (C*X3+t3*S)/2-sin(t6);
+      real_type l2  = atan2( Sl2, Cl2 ); zero_2pi( l2 );
+      //fmt::print("S^2+C^2 = {}\n",Cl2*Cl2+Sl2*Sl2);
+      real_type th1 = theta0-l0;
+      real_type l1  = l0+l2+dtheta; zero_2pi( l1 );
+      real_type len = l0+l1+l2;
+      if ( len >= min_len ) continue;
+      L0      = l0;
+      L1      = l1;
+      L2      = l2;
+      theta1  = th1;
+      theta2  = th1+l1;
+      min_len = len;
+      s0      = -1;
+      s1      =  1;
+      s2      = -1;
+    }
+
+    if ( min_len == Utils::Inf<real_type>() ) return false;
+    L0 /= k_max;
+    L1 /= k_max;
+    L2 /= k_max;
+    m_C0.build( x0, y0, theta0, s0*k_max, L0 );
+    m_C1.build( m_C0.x_end(), m_C0.y_end(), theta1, s1*k_max, L1 );
+    m_C2.build( m_C1.x_end(), m_C1.y_end(), theta2, s2*k_max, L2 );
+    return true;
+  }
+
+}
+
+///
+/// eof: Dubins.cc
+///

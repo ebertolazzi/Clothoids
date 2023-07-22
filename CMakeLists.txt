@@ -164,22 +164,14 @@ if ( UTILS_ENABLE_TESTS )
     endif()
   endif()
 
-  set(
-    EXELISTCPP
-    testBiarc
-    testDistance
-    testDistanceCircuit
-    testG2
-    testG2plot
-    testG2stat
-    testG2stat2arc
-    testG2statCLC
-    testIntersect
-    testIntersect2
-    testIntersect3
-    testPolyline
-    testTriangle2D
-  )
+  set( EXELISTCPP )
+  file( GLOB S ${CMAKE_CURRENT_SOURCE_DIR}/src_tests/test*.cc )
+  foreach(F ${S})
+    # build relative path respect to source directory
+    file( RELATIVE_PATH RF "${CMAKE_CURRENT_SOURCE_DIR}/src_tests" "${F}" )
+    string(REGEX REPLACE "\\.[^.]*$" "" RF1 ${RF}) # rimuove .cc
+    list( APPEND EXELISTCPP ${RF1} )
+  endforeach(F ${S})
 
   add_custom_target( "${PROJECT_NAME}_all_tests" ALL )
 

@@ -79,6 +79,6 @@ hold on;
 SL.plot();
 
 
-[ s, theta, kappa ] = SL.getSTK();
+[ s, theta, kappa ] = SL.get_STK();
 s.'
 kappa.'

@@ -131,6 +131,8 @@ do_build2(
   #undef CMD
 }
 
+// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
 static
 void
 do_delete(

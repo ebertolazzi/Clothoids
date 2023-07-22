@@ -960,12 +960,15 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, CircleArc const & c ) {
     fmt::print( stream,
-      "x0     = {}\n"
-      "y0     = {}\n"
-      "theta0 = {}\n"
-      "k      = {}\n"
-      "L      = {}\n",
-      c.m_x0, c.m_y0, c.m_theta0, c.m_k, c.m_L
+      "x     = {} : {}\n"
+      "y     = {} : {}\n"
+      "theta = {} : {}\n"
+      "k     = {}\n"
+      "L     = {}\n",
+      c.m_x0,     c.x_end(),
+      c.m_y0,     c.y_end(),
+      c.m_theta0, c.theta_end(),
+      c.m_k, c.m_L
     );
     return stream;
   }

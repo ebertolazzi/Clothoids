@@ -38,11 +38,6 @@ namespace G2lib {
 
     CircleArc m_C0, m_C1, m_C2; //! Three arc solution of DUBINS problem
 
-    //  {LSL, RSR, RSL, LSR, RLR, LRL}
-    using DubinsType = enum class DubinsType : integer {
-      LSL, RSR, RSL, LSR, RLR, LRL
-    };
-
   public:
 
     //!
@@ -81,7 +76,7 @@ namespace G2lib {
     }
 
     //!
-    //! Make a copy of an existing circle arc.
+    //! Make a copy of an existing Dubins solution.
     //!
     void
     copy( Dubins const & d ) {
@@ -101,7 +96,7 @@ namespace G2lib {
     //! \param[in] theta1 final angle
     //! \param[in] kmax   max curvature
     //!
-    void
+    bool
     build(
       real_type x0,
       real_type y0,
@@ -115,17 +110,17 @@ namespace G2lib {
     //!
     //! Return the first cicle of the Dubins solution
     //!
-    CircleArc const & get_C0() const { return m_C0; }
+    CircleArc const & C0() const { return m_C0; }
 
     //!
     //! Return the second cicle of the Dubins solution
     //!
-    CircleArc const & get_C1() const { return m_C1; }
+    CircleArc const & C1() const { return m_C1; }
 
     //!
     //! Return the third cicle of the Dubins solution
     //!
-    CircleArc const & get_C2() const { return m_C2; }
+    CircleArc const & C2() const { return m_C2; }
 
     void
     get_solution( ClothoidList & CL ) const {

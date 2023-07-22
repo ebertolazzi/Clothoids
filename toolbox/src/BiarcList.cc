@@ -1374,7 +1374,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BiarcList::getSTK(
+  BiarcList::get_STK(
     real_type * s,
     real_type * theta,
     real_type * kappa
@@ -1399,7 +1399,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BiarcList::getXY( real_type * x, real_type * y ) const {
+  BiarcList::get_XY( real_type * x, real_type * y ) const {
     vector<Biarc>::const_iterator ic = m_biarcList.begin();
     integer k = 0;
     while ( ic != m_biarcList.end() ) {

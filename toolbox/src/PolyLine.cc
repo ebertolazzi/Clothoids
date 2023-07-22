@@ -509,7 +509,7 @@ namespace G2lib {
   void
   PolyLine::push_back( CircleArc const & C, real_type tol ) {
     real_type L  = C.length();
-    integer   ns = integer(ceil( L / C.lenTolerance( tol ) ));
+    integer   ns = integer(ceil( L / C.len_tolerance( tol ) ));
     real_type tx = m_xe - C.x_begin();
     real_type ty = m_ye - C.y_begin();
     for ( integer i = 1; i < ns; ++i ) {
@@ -530,8 +530,8 @@ namespace G2lib {
     CircleArc const & C1 = B.C1();
     real_type L0  = C0.length();
     real_type L1  = C1.length();
-    integer   ns0 = integer(ceil( L0 / C0.lenTolerance( tol ) ));
-    integer   ns1 = integer(ceil( L1 / C1.lenTolerance( tol ) ));
+    integer   ns0 = integer(ceil( L0 / C0.len_tolerance( tol ) ));
+    integer   ns1 = integer(ceil( L1 / C1.len_tolerance( tol ) ));
 
     real_type tx = m_xe - C0.x_begin();
     real_type ty = m_ye - C0.y_begin();

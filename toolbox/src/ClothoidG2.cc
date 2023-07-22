@@ -117,10 +117,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::setTolerance( real_type tol ) {
+  G2solve2arc::set_tolerance( real_type tol ) {
     UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solve2arc::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+      "G2solve2arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol
     );
     tolerance = tol;
   }
@@ -128,10 +128,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::setMaxIter( int miter ) {
+  G2solve2arc::set_max_iter( int miter ) {
     UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solve2arc::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+      "G2solve2arc::set_max_iter( miter = {} ) must be in [1,1000]\n", miter
     );
     maxIter = miter;
   }
@@ -376,10 +376,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solveCLC::setTolerance( real_type tol ) {
+  G2solveCLC::set_tolerance( real_type tol ) {
     UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solveCLC::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+      "G2solveCLC::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol
     );
     tolerance = tol;
   }
@@ -387,10 +387,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solveCLC::setMaxIter( int miter ) {
+  G2solveCLC::set_max_iter( int miter ) {
     UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solveCLC::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+      "G2solveCLC::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter
     );
     maxIter = miter;
   }
@@ -481,10 +481,10 @@ namespace G2lib {
   \*/
 
   void
-  G2solve3arc::setTolerance( real_type tol ) {
+  G2solve3arc::set_tolerance( real_type tol ) {
     UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solve3arc::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+      "G2solve3arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol
     );
     tolerance = tol;
   }
@@ -492,10 +492,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::setMaxIter( int miter ) {
+  G2solve3arc::set_max_iter( int miter ) {
     UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solve3arc::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+      "G2solve3arc::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter
     );
     maxIter = miter;
   }
@@ -924,13 +924,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  G2solve3arc::curvatureMinMax( real_type & kMin, real_type & kMax ) const {
+  G2solve3arc::curvature_min_max( real_type & kMin, real_type & kMax ) const {
     real_type kMin1, kMax1;
-    S0.curvatureMinMax( kMin,  kMax );
-    S1.curvatureMinMax( kMin1, kMax1 );
+    S0.curvature_min_max( kMin,  kMax );
+    S1.curvature_min_max( kMin1, kMax1 );
     if ( kMin > kMin1 ) kMin = kMin1;
     if ( kMax < kMax1 ) kMax = kMax1;
-    SM.curvatureMinMax( kMin1, kMax1 );
+    SM.curvature_min_max( kMin1, kMax1 );
     if ( kMin > kMin1 ) kMin = kMin1;
     if ( kMax < kMax1 ) kMax = kMax1;
     return kMax-kMin;

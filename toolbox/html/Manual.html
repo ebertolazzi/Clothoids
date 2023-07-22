@@ -336,7 +336,7 @@ kbd {
 
 <h2 id="toc_1">Mex files for fast computation</h2>
 
-<p>In directory <code>src_mex</code> you find the C++ implementation of the proposed algorithm 
+<p>In directory <code>src_mex</code> you find the C++ implementation of the proposed algorithm
 with <code>mex</code> interface. To compile run <code>CompileClothoidsLib</code> from MATLAB window.
 After compilation the compiled version of the scripts
 are available in the <code>bin</code> directory.</p>
@@ -632,7 +632,7 @@ case when curvature is constant and 0.</p>
 
 <p>The G1 fitting problem of method <code>build_G1</code> implements the algorithm described
 in reference [1].
-Given two points and two direction associated with the points, 
+Given two points and two direction associated with the points,
 a clothoid, i.e. a curve with linear varying curvature is computed
 in such a way it pass to the points with the prescribed direction.
 The solution in general is not unique but chosing the one for
@@ -641,7 +641,7 @@ is unique.</p>
 
 <p><strong>Constuctors</strong></p>
 
-<div><pre><code class="language-none">% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature 
+<div><pre><code class="language-none">% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature
 % `kappa0` the curvature derivative is `dk` while `L` is the curve length.
 CL = ClothoidCurve( x0, y0, theta0, kappa0, dk, L );
 
@@ -696,7 +696,7 @@ dk = CL.kappa_D();
 L = CL.length();
 
 % point at infinity of the clothoid
-% `[xp,yp]` point at curvilinear coordinate +infinity 
+% `[xp,yp]` point at curvilinear coordinate +infinity
 % `[xm,ym]` point at curvilinear coordinate -infinity
 [xp,yp,xm,ym] = CL.infinity();
 
@@ -704,7 +704,7 @@ L = CL.length();
 CL.info();
 
 % return the parameters defining the clothoid curve
-[x0,y0,theta0,k0,dk,L] = CL.getPars();
+[x0,y0,theta0,k0,dk,L] = CL.get_pars();
 
 % plot the clothoid curve
 CL.plot();

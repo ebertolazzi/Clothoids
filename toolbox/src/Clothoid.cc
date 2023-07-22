@@ -956,11 +956,11 @@ namespace G2lib {
     real_type kL  = m_CD.m_kappa0;
     real_type kR  = m_CD.kappa(m_L);
     real_type thL = 0;
-    real_type thR = m_CD.deltaTheta(m_L);
+    real_type thR = m_CD.delta_theta(m_L);
     if ( kL*kR < 0 ) {
       real_type root = -m_CD.m_kappa0/m_CD.m_dk;
       if ( root > 0 && root < m_L ) {
-        real_type thM  = m_CD.deltaTheta(root);
+        real_type thM  = m_CD.delta_theta(root);
         return abs( thR - thM ) + abs( thM - thL );
       }
     }
@@ -976,13 +976,13 @@ namespace G2lib {
     real_type kL  = m_CD.m_kappa0;
     real_type kR  = m_CD.kappa(m_L);
     real_type thL = 0;
-    real_type thR = m_CD.deltaTheta(m_L);
+    real_type thR = m_CD.delta_theta(m_L);
     if ( thL < thR ) { thMin = thL; thMax = thR; }
     else             { thMin = thR; thMax = thL; }
     if ( kL*kR < 0 ) {
       real_type root = -m_CD.m_kappa0/m_CD.m_dk;
       if ( root > 0 && root < m_L ) {
-        real_type thM = m_CD.deltaTheta(root);
+        real_type thM = m_CD.delta_theta(root);
         if      ( thM < thMin ) thMin = thM;
         else if ( thM > thMax ) thMax = thM;
       }
@@ -993,7 +993,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::curvatureMinMax( real_type & kMin, real_type & kMax ) const {
+  ClothoidCurve::curvature_min_max( real_type & kMin, real_type & kMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk;
     kMin = m_CD.m_kappa0;
@@ -1005,7 +1005,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::curvatureTotalVariation() const {
+  ClothoidCurve::curvature_total_variation() const {
     // cerco punto minimo parabola
     // root = -k/dk;
     real_type km = m_CD.m_kappa0;
@@ -1016,7 +1016,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::integralCurvature2() const {
+  ClothoidCurve::integral_curvature2() const {
     return m_L*( m_CD.m_kappa0*(m_CD.m_kappa0+m_L*m_CD.m_dk) +
                  (m_L*m_L)*m_CD.m_dk*m_CD.m_dk/3 );
   }
@@ -1024,7 +1024,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::integralJerk2() const {
+  ClothoidCurve::integral_jerk2() const {
     real_type k2 = m_CD.m_kappa0*m_CD.m_kappa0;
     real_type k3 = m_CD.m_kappa0*k2;
     real_type k4 = k2*k2;
@@ -1038,7 +1038,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  ClothoidCurve::integralSnap2() const {
+  ClothoidCurve::integral_snap2() const {
     real_type k2  = m_CD.m_kappa0*m_CD.m_kappa0;
     real_type k3  = m_CD.m_kappa0*k2;
     real_type k4  = k2*k2;

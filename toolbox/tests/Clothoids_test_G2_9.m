@@ -63,7 +63,7 @@ for s0=X
     SS1 = SS.get(2);
     SS2 = SS.get(3);
 
-    [ ~, ~, kappa ] = SS.getSTK();
+    [ ~, ~, kappa ] = SS.get_STK();
     Z(i,j) = NaN;
 
     %iter

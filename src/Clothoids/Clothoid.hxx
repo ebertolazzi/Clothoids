@@ -502,11 +502,7 @@ namespace G2lib {
      | \__,_|_/__/\__\__,_|_||_\__\___|
     \*/
     //!
-    //! Compute the point on clothoid at minimal distance from a given point
-    //! using the optimized algorithm described in the publication:
-    //!
-    //! - **E.Bertolazzi, M.Frego**, Point-Clothoid distance and projection computation
-    //!   SIAM J. Scientific Computing, Vol. 41, No. 5, pp. A3326-A3353
+    //! Compute the point on clothoid at minimal distance from a given point.
     //!
     //! \param  ds sampling step
     //! \param  qx x-coordinate of the given point
@@ -547,17 +543,6 @@ namespace G2lib {
       return closest_point_by_sample( ds, qx, qy, X, Y, S );
     }
 
-    real_type
-    distanceBySample(
-      real_type   ds,
-      real_type   qx,
-      real_type   qy,
-      real_type & S
-    ) const {
-      real_type X, Y;
-      return closest_point_by_sample( ds, qx, qy, X, Y, S );
-    }
-
     //!
     //! Approximate the point on clothoid at minimal distance from a given point
     //! using simple sampling.
@@ -569,16 +554,6 @@ namespace G2lib {
     //!
     real_type
     distance_by_sample(
-      real_type ds,
-      real_type qx,
-      real_type qy
-    ) const {
-      real_type X, Y, S;
-      return closest_point_by_sample( ds, qx, qy, X, Y, S );
-    }
-
-    real_type
-    distanceBySample(
       real_type ds,
       real_type qx,
       real_type qy
@@ -1046,7 +1021,24 @@ namespace G2lib {
      |  | (__| | (_) \__ \  __/\__ \ |_|  __/ (_) | | | | | |_
      |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
     \*/
-
+    //!
+    //! Compute the point on clothoid at minimal distance from a given point
+    //! using the optimized algorithm described in the publication:
+    //!
+    //! - **E.Bertolazzi, M.Frego**, Point-Clothoid distance and projection computation
+    //!   SIAM J. Scientific Computing, Vol. 41, No. 5, pp. A3326-A3353
+    //!
+    //! \param  qx  x-coordinate of the given point
+    //! \param  qy  y-coordinate of the given point
+    //! \param  x   x-coordinate of the point on clothoid at minimal distance
+    //! \param  y   y-coordinate of the point on clothoid at minimal distance
+    //! \param  s   curvilinear coordinate of the point (X,Y) on the clothoid
+    //! \param  t   normal coordinate of the point (X,Y) on the clothoid
+    //! \param  dst the distance of the point from the clothoid
+    //! \return 1 = point is projected orthogonal
+    //!         0 = more than one projection (first returned)
+    //!        -1 = minimum point is not othogonal projection to curve
+    //!
     integer
     closest_point_ISO(
       real_type   qx,
