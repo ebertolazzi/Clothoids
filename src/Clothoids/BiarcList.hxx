@@ -424,36 +424,36 @@ namespace G2lib {
     { return m_biarcList.back().y_end_ISO( offs ); }
 
     real_type
-    tx_Begin() const override
-    { return m_biarcList.front().tx_Begin(); }
+    tx_begin() const override
+    { return m_biarcList.front().tx_begin(); }
 
     real_type
-    ty_Begin() const override
-    { return m_biarcList.front().ty_Begin(); }
+    ty_begin() const override
+    { return m_biarcList.front().ty_begin(); }
 
     real_type
-    tx_End() const override
-    { return m_biarcList.back().tx_End(); }
+    tx_end() const override
+    { return m_biarcList.back().tx_end(); }
 
     real_type
-    ty_End() const override
-    { return m_biarcList.back().ty_End(); }
+    ty_end() const override
+    { return m_biarcList.back().ty_end(); }
 
     real_type
-    nx_Begin_ISO() const override
-    { return m_biarcList.front().nx_Begin_ISO(); }
+    nx_begin_ISO() const override
+    { return m_biarcList.front().nx_begin_ISO(); }
 
     real_type
-    ny_Begin_ISO() const override
-    { return m_biarcList.front().ny_Begin_ISO(); }
+    ny_begin_ISO() const override
+    { return m_biarcList.front().ny_begin_ISO(); }
 
     real_type
-    nx_End_ISO() const override
-    { return m_biarcList.back().nx_End_ISO(); }
+    nx_end_ISO() const override
+    { return m_biarcList.back().nx_end_ISO(); }
 
     real_type
-    ny_End_ISO() const override
-    { return m_biarcList.back().ny_End_ISO(); }
+    ny_end_ISO() const override
+    { return m_biarcList.back().ny_end_ISO(); }
 
     /*\
      |  _   _          _
@@ -693,11 +693,19 @@ namespace G2lib {
     //! \param[out] kappa curvature
     //!
     void
-    getSTK(
+    get_STK(
       real_type * s,
       real_type * theta,
       real_type * kappa
     ) const;
+
+    void
+    getSTK(
+      real_type * s,
+      real_type * theta,
+      real_type * kappa
+    ) const
+    { get_STK( s, theta, kappa ); }
 
     //!
     //! Return the biarc XY nodes
@@ -706,7 +714,11 @@ namespace G2lib {
     //! \param[out] y y-nodes
     //!
     void
-    getXY( real_type * x, real_type * y ) const;
+    get_XY( real_type * x, real_type * y ) const;
+
+    void
+    getXY( real_type * x, real_type * y ) const
+    { get_XY( x, y ); }
 
     //!
     //! Find parametric coordinate.
@@ -840,50 +852,9 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    //@@@@ BACK COMPATIBILITY
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-
-    real_type thetaBegin() const { return theta_begin(); }
-    real_type thetaEnd()   const { return theta_end(); }
-    real_type xBegin()     const { return x_begin(); }
-    real_type yBegin()     const { return y_begin(); }
-    real_type xEnd()       const { return x_end(); }
-    real_type yEnd()       const { return y_end(); }
-    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
-    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
-
-    integer numSegments() const { return num_segments(); }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, x, y, s, t, dst );
-    }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#include "BiarcList_compatibility.hxx"
+#endif
 
   };
 

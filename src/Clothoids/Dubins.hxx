@@ -36,7 +36,7 @@ namespace G2lib {
   //!
   class Dubins {
 
-    CircleArc m_C1, m_C2, m_C3; //! Three arc solution of DUBINS problem
+    CircleArc m_C0, m_C1, m_C2; //! Three arc solution of DUBINS problem
 
     //  {LSL, RSR, RSL, LSR, RLR, LRL}
     using DubinsType = enum class DubinsType : integer {
@@ -57,7 +57,7 @@ namespace G2lib {
     { this->copy(s); }
 
     //!
-    //! Construct a circle arc with the standard parameters.
+    //! Construct a Dubins solution
     //!
     //! \param[in] x0     initial position x-coordinate
     //! \param[in] y0     initial position y-coordinate
@@ -76,17 +76,66 @@ namespace G2lib {
       real_type y1,
       real_type theta1,
       real_type k_max
-    );
+    ) {
+      this->build( x0, y0, theta0, x1, y1, theta1, k_max );
+    }
 
     //!
     //! Make a copy of an existing circle arc.
     //!
     void
     copy( Dubins const & d ) {
+      m_C0 = d.m_C0;
       m_C1 = d.m_C1;
       m_C2 = d.m_C2;
-      m_C3 = d.m_C3;
     }
+
+    //!
+    //! Construct a Dubins solution
+    //!
+    //! \param[in] x0     initial position x-coordinate
+    //! \param[in] y0     initial position y-coordinate
+    //! \param[in] theta0 initial angle
+    //! \param[in] x1     final position x-coordinate
+    //! \param[in] y1     final position y-coordinate
+    //! \param[in] theta1 final angle
+    //! \param[in] kmax   max curvature
+    //!
+    void
+    build(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type x1,
+      real_type y1,
+      real_type theta1,
+      real_type k_max
+    );
+
+    //!
+    //! Return the first cicle of the Dubins solution
+    //!
+    CircleArc const & get_C0() const { return m_C0; }
+
+    //!
+    //! Return the second cicle of the Dubins solution
+    //!
+    CircleArc const & get_C1() const { return m_C1; }
+
+    //!
+    //! Return the third cicle of the Dubins solution
+    //!
+    CircleArc const & get_C2() const { return m_C2; }
+
+    void
+    get_solution( ClothoidList & CL ) const {
+      CL.init();
+      CL.reserve(3);
+      CL.push_back( m_C0 );
+      CL.push_back( m_C1 );
+      CL.push_back( m_C2 );
+    }
+
   };
 
 }

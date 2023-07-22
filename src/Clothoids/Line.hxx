@@ -205,15 +205,15 @@ namespace G2lib {
      |              |___/
     \*/
 
-    real_type tx_Begin() const override { return m_c0; }
-    real_type ty_Begin() const override { return m_s0; }
-    real_type tx_End()   const override { return m_c0; }
-    real_type ty_End()   const override { return m_s0; }
+    real_type tx_begin() const override { return m_c0; }
+    real_type ty_begin() const override { return m_s0; }
+    real_type tx_end()   const override { return m_c0; }
+    real_type ty_end()   const override { return m_s0; }
 
-    real_type nx_Begin_ISO() const override { return -m_s0; }
-    real_type ny_Begin_ISO() const override { return m_c0; }
-    real_type nx_End_ISO()   const override { return -m_s0; }
-    real_type ny_End_ISO()   const override { return m_c0; }
+    real_type nx_begin_ISO() const override { return -m_s0; }
+    real_type ny_begin_ISO() const override { return m_c0; }
+    real_type nx_end_ISO()   const override { return -m_s0; }
+    real_type ny_end_ISO()   const override { return m_c0; }
 
     real_type x_begin() const override { return m_x0; }
     real_type y_begin() const override { return m_y0; }
@@ -222,19 +222,19 @@ namespace G2lib {
 
     real_type
     x_begin_ISO( real_type offs ) const override
-    { return m_x0+offs*nx_Begin_ISO(); }
+    { return m_x0+offs*nx_begin_ISO(); }
 
     real_type
     y_begin_ISO( real_type offs ) const override
-    { return m_y0+offs*ny_Begin_ISO(); }
+    { return m_y0+offs*ny_begin_ISO(); }
 
     real_type
     x_end_ISO( real_type offs ) const override
-    { return x_end()+offs*nx_Begin_ISO(); }
+    { return x_end()+offs*nx_begin_ISO(); }
 
     real_type
     y_end_ISO( real_type offs ) const override
-    { return y_end()+offs*ny_Begin_ISO(); }
+    { return y_end()+offs*ny_begin_ISO(); }
 
     /*\
      |  _   _          _
@@ -244,21 +244,10 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    real_type
-    theta( real_type ) const override
-    { return m_theta0; }
-
-    real_type
-    theta_D( real_type ) const override
-    { return 0; }
-
-    real_type
-    theta_DD( real_type ) const override
-    { return 0; }
-
-    real_type
-    theta_DDD( real_type ) const override
-    { return 0; }
+    real_type theta    ( real_type ) const override { return m_theta0; }
+    real_type theta_D  ( real_type ) const override { return 0; }
+    real_type theta_DD ( real_type ) const override { return 0; }
+    real_type theta_DDD( real_type ) const override { return 0; }
 
 
     /*\
@@ -269,12 +258,12 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    real_type tx( real_type ) const override { return m_c0; }
-    real_type ty( real_type ) const override { return m_s0; }
-    real_type tx_D( real_type ) const override { return 0; }
-    real_type ty_D( real_type ) const override { return 0; }
-    real_type tx_DD( real_type ) const override { return 0; }
-    real_type ty_DD( real_type ) const override { return 0; }
+    real_type tx    ( real_type ) const override { return m_c0; }
+    real_type ty    ( real_type ) const override { return m_s0; }
+    real_type tx_D  ( real_type ) const override { return 0; }
+    real_type ty_D  ( real_type ) const override { return 0; }
+    real_type tx_DD ( real_type ) const override { return 0; }
+    real_type ty_DD ( real_type ) const override { return 0; }
     real_type tx_DDD( real_type ) const override { return 0; }
     real_type ty_DDD( real_type ) const override { return 0; }
 
@@ -298,37 +287,17 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type
-    X( real_type s ) const override
-    { return m_x0+s*m_c0; }
+    real_type X( real_type s ) const override { return m_x0+s*m_c0; }
+    real_type Y( real_type s ) const override { return m_y0+s*m_s0; }
 
-    real_type
-    Y( real_type s ) const override
-    { return m_y0+s*m_s0; }
+    real_type X_D( real_type ) const override { return m_c0; }
+    real_type Y_D( real_type ) const override { return m_s0; }
 
-    real_type
-    X_D( real_type ) const override
-    { return m_c0; }
+    real_type X_DD( real_type ) const override { return 0; }
+    real_type Y_DD( real_type ) const override { return 0; }
 
-    real_type
-    Y_D( real_type ) const override
-    { return m_s0; }
-
-    real_type
-    X_DD( real_type ) const override
-    { return 0; }
-
-    real_type
-    Y_DD( real_type ) const override
-    { return 0; }
-
-    real_type
-    X_DDD( real_type ) const override
-    { return 0; }
-
-    real_type
-    Y_DDD( real_type ) const override
-    { return 0; }
+    real_type X_DDD( real_type ) const override { return 0; }
+    real_type Y_DDD( real_type ) const override { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -382,11 +351,11 @@ namespace G2lib {
 
     real_type
     X_ISO( real_type s, real_type offs ) const override
-    { return m_x0 + s*m_c0 + offs*nx_Begin_ISO(); }
+    { return m_x0 + s*m_c0 + offs*nx_begin_ISO(); }
 
     real_type
     Y_ISO( real_type s, real_type offs ) const override
-    { return m_y0 + s*m_s0 + offs*ny_Begin_ISO(); }
+    { return m_y0 + s*m_s0 + offs*ny_begin_ISO(); }
 
     real_type
     X_ISO_D( real_type, real_type ) const override
@@ -421,8 +390,8 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const override {
-      x = m_x0 + s*m_c0 + offs*nx_Begin_ISO();
-      y = m_y0 + s*m_s0 + offs*ny_Begin_ISO();
+      x = m_x0 + s*m_c0 + offs*nx_begin_ISO();
+      y = m_y0 + s*m_s0 + offs*ny_begin_ISO();
     }
 
     void
@@ -696,51 +665,9 @@ namespace G2lib {
 
     friend class ClothoidCurve;
 
-    //@@@@ BACK COMPATIBILITY
-
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-
-    void
-    changeOrigin( real_type newx0, real_type newy0 )
-    { change_origin( newx0, newy0 ); }
-
-    real_type xBegin()     const { return x_begin(); }
-    real_type yBegin()     const { return y_begin(); }
-    real_type xEnd()       const { return x_end(); }
-    real_type yEnd()       const { return y_end(); }
-    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
-    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, x, y, s, t, dst );
-    }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#include "Line_compatibility.hxx"
+#endif
 
   };
 

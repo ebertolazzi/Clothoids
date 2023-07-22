@@ -230,14 +230,14 @@ namespace G2lib {
     real_type x_end()        const override { return m_C1.x_end(); }
     real_type y_begin()      const override { return m_C0.y_begin(); }
     real_type y_end()        const override { return m_C1.y_end(); }
-    real_type tx_Begin()     const override { return m_C0.tx_Begin(); }
-    real_type tx_End()       const override { return m_C1.tx_End(); }
-    real_type ty_Begin()     const override { return m_C0.ty_Begin(); }
-    real_type ty_End()       const override { return m_C1.ty_End(); }
-    real_type nx_Begin_ISO() const override { return m_C0.nx_Begin_ISO(); }
-    real_type nx_End_ISO()   const override { return m_C1.nx_End_ISO(); }
-    real_type ny_Begin_ISO() const override { return m_C0.ny_Begin_ISO(); }
-    real_type ny_End_ISO()   const override { return m_C1.ny_End_ISO(); }
+    real_type tx_begin()     const override { return m_C0.tx_begin(); }
+    real_type tx_end()       const override { return m_C1.tx_end(); }
+    real_type ty_begin()     const override { return m_C0.ty_begin(); }
+    real_type ty_end()       const override { return m_C1.ty_end(); }
+    real_type nx_begin_ISO() const override { return m_C0.nx_begin_ISO(); }
+    real_type nx_end_ISO()   const override { return m_C1.nx_end_ISO(); }
+    real_type ny_begin_ISO() const override { return m_C0.ny_begin_ISO(); }
+    real_type ny_end_ISO()   const override { return m_C1.ny_end_ISO(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -634,54 +634,9 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, Biarc const & bi );
 
-    //@@@@ BACK COMPATIBILITY
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-
-    real_type thetaBegin() const { return theta_begin(); }
-    real_type thetaEnd()   const { return theta_end(); }
-    real_type kappaBegin() const { return kappa_begin(); }
-    real_type kappaEnd()   const { return kappa_end(); }
-    real_type xBegin()     const { return x_begin(); }
-    real_type yBegin()     const { return y_begin(); }
-    real_type xEnd()       const { return x_end(); }
-    real_type yEnd()       const { return y_end(); }
-    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
-    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
-
-    real_type xMiddle()     const { return x_middle(); }
-    real_type yMiddle()     const { return y_middle(); }
-    real_type thetaMiddle() const { return theta_middle(); }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, x, y, s, t, dst );
-    }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#include "Biarc_compatibility.hxx"
+#endif
 
   };
 

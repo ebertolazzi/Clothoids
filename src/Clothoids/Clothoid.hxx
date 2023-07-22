@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Clothoid.hh
+/// file: Clothoid.hxx
 ///
 
 namespace G2lib {
@@ -416,19 +416,20 @@ namespace G2lib {
     //! Clothoid angle range.
     //!
     real_type
-    deltaTheta() const
+    delta_theta() const
     { real_type thMin, thMax; return theta_min_max( thMin, thMax ); }
 
     //!
     //! Max and min of the curvatire of the clothoid curve.
     //!
     real_type
-    curvatureMinMax( real_type & kMin, real_type & kMax ) const;
+    curvature_min_max( real_type & kMin, real_type & kMax ) const;
 
     //!
     //! Clothoid total curvature variation.
     //!
-    real_type curvatureTotalVariation() const;
+    real_type curvature_total_variation() const;
+    real_type curvatureTotalVariation() const { return curvature_total_variation(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -437,7 +438,8 @@ namespace G2lib {
     //!    \int_0^L |P''(s)|^2 \mathrm{d}s
     //! \f]
     //!
-    real_type integralCurvature2() const;
+    real_type integral_curvature2() const;
+    real_type integralCurvature2() const { return integral_curvature2(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -446,7 +448,8 @@ namespace G2lib {
     //!    \int_0^L |P'''(s)|^2 \mathrm{d}s
     //! \f]
     //!
-    real_type integralJerk2() const;
+    real_type integral_jerk2() const;
+    real_type integralJerk2() const { return integral_jerk2(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -455,7 +458,8 @@ namespace G2lib {
     //!    \int_0^L |P''''(s)|^2 \mathrm{d}s
     //! \f]
     //!
-    real_type integralSnap2() const;
+    real_type integral_snap2() const;
+    real_type integralSnap2() const { return integral_snap2(); }
 
     //!
     //! Return a vector of optimized sample parameters for plotting.
@@ -533,6 +537,17 @@ namespace G2lib {
     //! \return the distance of the point from the clothoid
     //!
     real_type
+    distance_by_sample(
+      real_type   ds,
+      real_type   qx,
+      real_type   qy,
+      real_type & S
+    ) const {
+      real_type X, Y;
+      return closest_point_by_sample( ds, qx, qy, X, Y, S );
+    }
+
+    real_type
     distanceBySample(
       real_type   ds,
       real_type   qx,
@@ -552,6 +567,16 @@ namespace G2lib {
     //! \param  qy y-coordinate of the given point
     //! \return the distance of the point from the clothoid
     //!
+    real_type
+    distance_by_sample(
+      real_type ds,
+      real_type qx,
+      real_type qy
+    ) const {
+      real_type X, Y, S;
+      return closest_point_by_sample( ds, qx, qy, X, Y, S );
+    }
+
     real_type
     distanceBySample(
       real_type ds,
@@ -701,10 +726,10 @@ namespace G2lib {
     real_type x_end()        const override { return m_CD.X(m_L); }
     real_type y_begin()      const override { return m_CD.m_y0; }
     real_type y_end()        const override { return m_CD.Y(m_L); }
-    real_type tx_Begin()     const override { return m_CD.tg0_x(); }
-    real_type ty_Begin()     const override { return m_CD.tg0_y(); }
-    real_type nx_Begin_ISO() const override { return m_CD.nor0_x_ISO(); }
-    real_type ny_Begin_ISO() const override { return m_CD.nor0_y_ISO(); }
+    real_type tx_begin()     const override { return m_CD.tg0_x(); }
+    real_type ty_begin()     const override { return m_CD.tg0_y(); }
+    real_type nx_begin_ISO() const override { return m_CD.nor0_x_ISO(); }
+    real_type ny_begin_ISO() const override { return m_CD.nor0_y_ISO(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -716,12 +741,12 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    real_type tx( real_type s ) const override { return m_CD.tg_x( s ); }
-    real_type ty( real_type s ) const override { return m_CD.tg_y( s ); }
-    real_type tx_D( real_type s ) const override { return m_CD.tg_x_D( s ); }
-    real_type ty_D( real_type s ) const override { return m_CD.tg_y_D( s ); }
-    real_type tx_DD( real_type s ) const override { return m_CD.tg_x_DD( s ); }
-    real_type ty_DD( real_type s ) const override { return m_CD.tg_y_DD( s ); }
+    real_type tx    ( real_type s ) const override { return m_CD.tg_x( s ); }
+    real_type ty    ( real_type s ) const override { return m_CD.tg_y( s ); }
+    real_type tx_D  ( real_type s ) const override { return m_CD.tg_x_D( s ); }
+    real_type ty_D  ( real_type s ) const override { return m_CD.tg_y_D( s ); }
+    real_type tx_DD ( real_type s ) const override { return m_CD.tg_x_DD( s ); }
+    real_type ty_DD ( real_type s ) const override { return m_CD.tg_y_DD( s ); }
     real_type tx_DDD( real_type s ) const override { return m_CD.tg_x_DDD( s ); }
     real_type ty_DDD( real_type s ) const override { return m_CD.tg_y_DDD( s ); }
 
@@ -801,20 +826,6 @@ namespace G2lib {
     real_type
     theta_DDD( real_type ) const override
     { return 0; }
-
-    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-    #ifdef G2LIB_COMPATIBILITY_MODE
-    void
-    evaluate(
-      real_type   s,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
-    ) const override
-    { m_CD.evaluate( s, th, k, x, y ); }
-    #endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1157,82 +1168,14 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
-    //@@@@ BACK COMPATIBILITY
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#ifdef G2LIB_COMPATIBILITY_MODE
+#include "Clothoid_compatibility.hxx"
+#endif
 
-    real_type
-    thetaTotalVariation() const
-    { return theta_total_variation(); }
-
-    real_type
-    thetaMinMax( real_type & thMin, real_type & thMax ) const
-    { return theta_min_max(thMin,thMax); }
-
-    void
-    changeOrigin( real_type newx0, real_type newy0 )
-    { change_origin( newx0, newy0 ); }
-
-    void
-    changeCurvilinearOrigin( real_type s0, real_type newL )
-    { change_curvilinear_origin( s0, newL ); }
-
-    real_type thetaBegin() const { return theta_begin(); }
-    real_type thetaEnd()   const { return theta_end(); }
-    real_type kappaBegin() const { return kappa_begin(); }
-    real_type kappaEnd()   const { return kappa_end(); }
-    real_type xBegin()     const { return x_begin(); }
-    real_type yBegin()     const { return y_begin(); }
-    real_type xEnd()       const { return x_end(); }
-    real_type yEnd()       const { return y_end(); }
-    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
-    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
-
-    real_type
-    closestPointBySample(
-      real_type   ds,
-      real_type   qx,
-      real_type   qy,
-      real_type & X,
-      real_type & Y,
-      real_type & S
-    ) const {
-      return closest_point_by_sample( ds, qx, qy, X, Y, S );
-    }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, x, y, s, t, dst );
-    }
-
-    integer
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    #endif
   };
 
 }
 
 ///
-/// eof: Clothoid.hh
+/// eof: Clothoid.hxx
 ///

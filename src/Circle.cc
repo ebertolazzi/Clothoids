@@ -838,8 +838,8 @@ namespace G2lib {
   ) const  {
     real_type cc0 = cos(m_theta0);
     real_type ss0 = sin(m_theta0);
-    real_type xx0 = m_x0+offs*nx_Begin_ISO();
-    real_type yy0 = m_y0+offs*ny_Begin_ISO();
+    real_type xx0 = m_x0+offs*nx_begin_ISO();
+    real_type yy0 = m_y0+offs*ny_begin_ISO();
     real_type ff  = 1+m_k*offs;
     real_type LL  = m_L*ff;
     s = projectPointOnCircleArc( xx0, yy0, cc0, ss0, m_k/ff, LL, qx, qy );
@@ -944,7 +944,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  CircleArc::lenTolerance( real_type tol ) const {
+  CircleArc::len_tolerance( real_type tol ) const {
     real_type absk = abs(m_k);
     real_type tmp  = absk*tol;
     if ( tmp > 0 ) {
