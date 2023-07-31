@@ -161,10 +161,11 @@ namespace G2lib {
       nr = Q.get_real_roots( Z );
       for ( integer ir = 0; ir < nr; ++ir ) {
         real_type z = Z[ir];
-        if ( z < 0 ) continue;
         real_type l0 = 2*atan(z);
-        //real_type l1 = d*cos(alpha+l0) - sin(alpha-beta+l0) - sin(l0);
-        real_type l1 = (Cad-Sab)*cos(l0) - (Sad+Cab+1)*sin(l0);
+        if ( l0 < 0 ) l0 += Utils::m_2pi;
+        real_type S0 = sin(l0);
+        real_type C0 = cos(l0);
+        real_type l1 = (Cad-Sab)*C0 - (Sad+Cab+1)*S0;
         if ( l1 < 0 ) continue;
         real_type l2 = alpha-beta+l0;
         into_0_2pi( l2 );
@@ -183,11 +184,12 @@ namespace G2lib {
       real_type Z[2];
       nr = Q.get_real_roots( Z );
       for ( integer ir = 0; ir < nr; ++ir ) {
-        real_type z = Z[ir];
-        if ( z < 0 ) continue;
+        real_type z  = Z[ir];
         real_type l0 = 2*atan(z);
-        //real_type l1 = d*cos(alpha-l0) + sin(alpha-beta-l0) - sin(l0);
-        real_type l1 = (Sad-Cab-1)*sin(l0) + (Cad+Sab)*cos(l0);
+        if ( l0 < 0 ) l0 += Utils::m_2pi;
+        real_type S0 = sin(l0);
+        real_type C0 = cos(l0);
+        real_type l1 = (Sad-Cab-1)*S0 + (Cad+Sab)*C0;
         if ( l1 < 0 ) continue;
         real_type l2 = beta-alpha+l0;
         into_0_2pi( l2 );
@@ -207,16 +209,12 @@ namespace G2lib {
       nr = Q.get_real_roots( Z );
       for ( integer ir = 0; ir < nr; ++ir ) {
         real_type z = Z[ir];
-        if ( z < 0 ) continue;
         real_type l0 = 2*atan(z);
+        if ( l0 < 0 ) l0 += Utils::m_2pi;
         real_type S0 = sin(l0);
         real_type C0 = cos(l0);
-        //real_type t1 = alpha + l0;
-        //real_type t2 = t1 - beta;
-        //real_type l1 = atan2( d*cos(t1) - sin(l0) + sin(t2),
-        //                    2-d*sin(t1) - cos(l0) + cos(t2) );
         real_type l1 = atan2( (Cab-Sad-1)*S0 + (Cad + Sab)*C0, 2 - (Cad+Sab)*S0 - (Sad-Cab+1)*C0 );
-        if ( l1 < 0 ) l1 += Utils::m_2pi;
+        if ( l1 < 0 ) l1 += Utils::m_2pi; // @@@@@@@@@@@@@
         real_type l2 = beta-alpha-l0+l1;
         into_0_2pi( l2 );
         real_type len = l0+l1+l2;
@@ -235,16 +233,12 @@ namespace G2lib {
       nr = Q.get_real_roots( Z );
       for ( integer ir = 0; ir < nr; ++ir ) {
         real_type z = Z[ir];
-        if ( z < 0 ) continue;
         real_type l0 = 2*atan(z);
+        if ( l0 < 0 ) l0 += Utils::m_2pi;
         real_type S0 = sin(l0);
         real_type C0 = cos(l0);
-        //real_type t1 = alpha - l0;
-        //real_type t2 = t1 - beta;
-        //real_type l1 = atan2( d*cos(t1) - sin(t2) - sin(l0),
-        //                      d*sin(t1) + cos(t2) - cos(l0) + 2);
         real_type l1 = atan2( (Sad+Cab-1)*S0 + (Cad-Sab)*C0, 2 - (Cad-Sab)*S0 + (Sad+Cab-1)*C0 );
-        if ( l1 < 0 ) l1 += Utils::m_2pi;
+        if ( l1 < 0 ) l1 += Utils::m_2pi; // @@@@@@@@@@@@@
         real_type l2 = alpha-beta-l0+l1;
         into_0_2pi( l2 );
         real_type len = l0+l1+l2;
