@@ -35,6 +35,12 @@ namespace G2lib {
   //! Class to manage a circle arc
   //!
   class Dubins {
+  public:
+    using DubinsType = enum class DubinsType : integer
+    { LSL, RSR, LSR, RSL, LRL, RLR };
+
+  private:
+    DubinsType m_solution_type;
 
     CircleArc m_C0, m_C1, m_C2; //! Three arc solution of DUBINS problem
 
@@ -83,6 +89,7 @@ namespace G2lib {
       m_C0 = d.m_C0;
       m_C1 = d.m_C1;
       m_C2 = d.m_C2;
+      m_solution_type = d.m_solution_type;
     }
 
     //!
@@ -131,8 +138,26 @@ namespace G2lib {
       CL.push_back( m_C2 );
     }
 
+    real_type length() const { return m_C0.length()+m_C1.length()+m_C2.length(); }
+
+    DubinsType solution_type() const { return m_solution_type; }
+
   };
 
+  inline
+  string
+  to_string( Dubins::DubinsType n ) {
+    string res = "";
+    switch ( n ) {
+    case Dubins::DubinsType::LSL: res = "LSL"; break;
+    case Dubins::DubinsType::RSR: res = "RSR"; break;
+    case Dubins::DubinsType::LSR: res = "LSR"; break;
+    case Dubins::DubinsType::RSL: res = "RSL"; break;
+    case Dubins::DubinsType::LRL: res = "LRL"; break;
+    case Dubins::DubinsType::RLR: res = "RLR"; break;
+    }
+    return res;
+  };
 }
 
 ///
