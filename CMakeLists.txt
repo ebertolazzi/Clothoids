@@ -29,6 +29,10 @@ if( UTILS_BUILD_SHARED )
   utils_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
 endif()
 
+if ( APPLE )
+  set( CMAKE_OSX_ARCHITECTURES arm64;x86_64 )
+endif()
+
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
 message( STATUS "BASE SUFFIXES = ${ARTIFACTS_STATIC_SUFFIX} ${ARTIFACTS_DYNAMIC_SUFFIX}" )
 
