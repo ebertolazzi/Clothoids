@@ -147,7 +147,7 @@ namespace G2lib {
   real_type
   ClothoidCurve::length_ISO( real_type ) const {
     UTILS_ERROR0( "Offset length not available for Clothoids\n" );
-    return 0;
+    //return 0;
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

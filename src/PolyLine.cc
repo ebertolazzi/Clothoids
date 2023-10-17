@@ -127,7 +127,7 @@ namespace G2lib {
   real_type
   PolyLine::length_ISO( real_type ) const {
     UTILS_ERROR0( "PolyLine::length( offs ) not available!\n" );
-    return 0;
+    //return 0;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

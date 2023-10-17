@@ -1773,6 +1773,13 @@ namespace G2lib {
   ) const {
 
     integer icurve = this->closest_point_internal( qx, qy, offs, x, y, s, DST );
+    UTILS_ASSERT(
+      icurve >= 0 && icurve < integer(m_clotoid_list.size()),
+      "ClothoidList::closest_point_ISO\n"
+      "call to closest_point_internal return icurve = {}\n"
+      "icurve must be in [0,{})\n",
+      icurve, m_clotoid_list.size()
+    );
 
     // check if projection is orthogonal
     real_type nx, ny;
