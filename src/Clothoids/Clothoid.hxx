@@ -111,7 +111,7 @@ namespace G2lib {
     mutable real_type          m_aabb_offs{real_type(0)};
     mutable real_type          m_aabb_max_angle{real_type(0)};
     mutable real_type          m_aabb_max_size{real_type(0)};
-    mutable vector<Triangle2D> m_aabb_tri;
+    mutable vector<Triangle2D> m_aabb_triangles;
 
     bool
     aabb_intersect_ISO(
@@ -209,6 +209,7 @@ namespace G2lib {
       m_CD        = c.m_CD;
       m_L         = c.m_L;
       m_aabb_done = false;
+      m_aabb_triangles.clear();
     }
 
     //!
@@ -300,6 +301,7 @@ namespace G2lib {
       real_type tol = 1e-12
     ) {
       m_aabb_done = false;
+      m_aabb_triangles.clear();
       return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L );
     }
 
@@ -332,6 +334,7 @@ namespace G2lib {
       real_type tol = 1e-12
     ) {
       m_aabb_done = false;
+      m_aabb_triangles.clear();
       return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L, true, L_D, k_D, dk_D );
     }
 
@@ -357,6 +360,7 @@ namespace G2lib {
       real_type tol = 1e-12
     ) {
       m_aabb_done = false;
+      m_aabb_triangles.clear();
       return m_CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, m_L );
     }
 

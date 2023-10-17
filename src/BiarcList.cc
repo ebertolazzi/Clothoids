@@ -135,6 +135,7 @@ namespace G2lib {
     m_biarcList.clear();
     this->resetLastInterval();
     m_aabb_done = false;
+    m_aabb_triangles.clear();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1031,14 +1032,14 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    bbTriangles_ISO( offs, m_aabb_tri, max_angle, max_size );
+    bbTriangles_ISO( offs, m_aabb_triangles, max_angle, max_size );
 
     integer ipos = 0;
-    integer nobj = integer(m_aabb_tri.size());
+    integer nobj = integer(m_aabb_triangles.size());
     m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
     m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
     real_type bbox_min[2], bbox_max[2];
-    for ( Triangle2D const & T : m_aabb_tri ) {
+    for ( Triangle2D const & T : m_aabb_triangles ) {
       T.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
       m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
       ++ipos;
@@ -1115,19 +1116,19 @@ namespace G2lib {
     for ( auto const & I : intersectList ) {
       integer i = I.first;
       UTILS_ASSERT_DEBUG(
-        i >= 0 && i < integer(m_aabb_tri.size()),
+        i >= 0 && i < integer(m_aabb_triangles.size()),
         "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) i={} out of range [0,{})\n",
-        offs, offs_BL, i, m_aabb_tri.size()
+        offs, offs_BL, i, m_aabb_triangles.size()
       );
-      Triangle2D const & T1  = m_aabb_tri[i];
+      Triangle2D const & T1  = m_aabb_triangles[i];
       Biarc      const & BA1 = m_biarcList[T1.Icurve()];
       for ( auto const & j : I.second ) {
         UTILS_ASSERT_DEBUG(
-          j >= 0 && j < integer(BL.m_aabb_tri.size()),
+          j >= 0 && j < integer(BL.m_aabb_triangles.size()),
           "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) j={} out of range [0,{})\n",
-          offs, offs_BL, j, BL.m_aabb_tri.size()
+          offs, offs_BL, j, BL.m_aabb_triangles.size()
         );
-        Triangle2D const & T2  = BL.m_aabb_tri[j];
+        Triangle2D const & T2  = BL.m_aabb_triangles[j];
         Biarc      const & BA2 = BL.m_biarcList[T2.Icurve()];
         bool collide = BA1.collision_ISO( offs, BA2, offs_BL );
         if ( collide ) return true;
@@ -1162,20 +1163,20 @@ namespace G2lib {
       for ( auto const & I : intersectList ) {
         integer i = I.first;
         UTILS_ASSERT_DEBUG(
-          i >= 0 && i < integer(m_aabb_tri.size()),
+          i >= 0 && i < integer(m_aabb_triangles.size()),
           "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) i={} out of range [0,{})\n",
-          offs, offs_BL, i, m_aabb_tri.size()
+          offs, offs_BL, i, m_aabb_triangles.size()
         );
-        Triangle2D const & T1  = m_aabb_tri[i];
+        Triangle2D const & T1  = m_aabb_triangles[i];
         Biarc      const & BA1 = m_biarcList[T1.Icurve()];
 
         for ( integer j : I.second ) {
           UTILS_ASSERT_DEBUG(
-            j >= 0 && j < integer(BL.m_aabb_tri.size()),
+            j >= 0 && j < integer(BL.m_aabb_triangles.size()),
             "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) j={} out of range [0,{})\n",
-            offs, offs_BL, j, BL.m_aabb_tri.size()
+            offs, offs_BL, j, BL.m_aabb_triangles.size()
           );
-          Triangle2D const & T2  = BL.m_aabb_tri[j];
+          Triangle2D const & T2  = BL.m_aabb_triangles[j];
           Biarc      const & BA2 = BL.m_biarcList[T2.Icurve()];
 
           IntersectList ilist1;
@@ -1191,13 +1192,13 @@ namespace G2lib {
 
     } else {
 
-      bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
-      BL.bbTriangles_ISO( offs_BL, BL.m_aabb_tri, Utils::m_pi/18, 1e100 );
+      bbTriangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      BL.bbTriangles_ISO( offs_BL, BL.m_aabb_triangles, Utils::m_pi/18, 1e100 );
 
-      for ( Triangle2D const & T1 : m_aabb_tri ) {
+      for ( Triangle2D const & T1 : m_aabb_triangles ) {
         Biarc const & BA1 = m_biarcList[T1.Icurve()];
 
-        for ( Triangle2D const & T2 : BL.m_aabb_tri ) {
+        for ( Triangle2D const & T2 : BL.m_aabb_triangles ) {
           Biarc const & BA2 = BL.m_biarcList[T2.Icurve()];
 
           IntersectList ilist1;
@@ -1287,7 +1288,7 @@ namespace G2lib {
         "BiarcList::closest_point_internal no candidate\n"
       );
       for ( integer ipos : candidateList ) {
-        Triangle2D const & T = m_aabb_tri[ipos];
+        Triangle2D const & T = m_aabb_triangles[ipos];
         real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
           // refine distance
@@ -1305,7 +1306,7 @@ namespace G2lib {
 
     } else {
 
-      for ( Triangle2D const & T : m_aabb_tri ) {
+      for ( Triangle2D const & T : m_aabb_triangles ) {
         real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
           // refine distance

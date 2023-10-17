@@ -67,6 +67,7 @@ namespace G2lib {
     m_CD.m_dk     = 0;
     m_L           = LS.m_L;
     m_aabb_done   = false;
+    m_aabb_triangles.clear();
   }
 
   //!
@@ -81,6 +82,7 @@ namespace G2lib {
     m_CD.m_dk     = 0;
     m_L           = C.m_L;
     m_aabb_done   = false;
+    m_aabb_triangles.clear();
   }
 
   void ClothoidCurve::build( ClothoidCurve const & C ) { this->copy(C); }
@@ -142,6 +144,7 @@ namespace G2lib {
     m_CD.m_dk     = dk;
     m_L           = L;
     m_aabb_done   = false;
+    m_aabb_triangles.clear();
   }
 
   real_type
@@ -386,14 +389,14 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    bbTriangles_ISO( offs, m_aabb_tri, max_angle, max_size );
+    bbTriangles_ISO( offs, m_aabb_triangles, max_angle, max_size );
 
     integer ipos = 0;
-    integer nobj = integer(m_aabb_tri.size());
+    integer nobj = integer(m_aabb_triangles.size());
     m_aabb_tree.set_max_num_objects_per_node( G2LIB_AABB_CUT );
     m_aabb_tree.allocate( nobj, 2 ); // nbox, space dimension
     real_type bbox_min[2], bbox_max[2];
-    for ( auto const & clot : m_aabb_tri ) {
+    for ( auto const & clot : m_aabb_triangles ) {
       clot.bbox( bbox_min[0], bbox_min[1], bbox_max[0], bbox_max[1] );
       m_aabb_tree.replace_bbox( bbox_min, bbox_max, ipos );
       ++ipos;
@@ -457,18 +460,18 @@ namespace G2lib {
     for ( auto const & I : intersectList ) {
       integer i = I.first;
       UTILS_ASSERT_DEBUG(
-        i >= 0 && i < integer(m_aabb_tri.size()),
+        i >= 0 && i < integer(m_aabb_triangles.size()),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
-        offs, offs_C, i, m_aabb_tri.size()
+        offs, offs_C, i, m_aabb_triangles.size()
       );
-      Triangle2D const & T1 = m_aabb_tri[i];
+      Triangle2D const & T1 = m_aabb_triangles[i];
       for ( integer j : I.second ) {
         UTILS_ASSERT_DEBUG(
-          j >= 0 && j < integer(C.m_aabb_tri.size()),
+          j >= 0 && j < integer(C.m_aabb_triangles.size()),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
-          offs, offs_C, j, C.m_aabb_tri.size()
+          offs, offs_C, j, C.m_aabb_triangles.size()
         );
-        Triangle2D const & T2 = C.m_aabb_tri[j];
+        Triangle2D const & T2 = C.m_aabb_triangles[j];
         real_type ss1, ss2;
         collide = this->aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
         if ( collide ) break;
@@ -514,18 +517,18 @@ namespace G2lib {
     for ( auto const & I : intersectList ) {
       integer i = I.first;
       UTILS_ASSERT_DEBUG(
-        i >= 0 && i < integer(m_aabb_tri.size()),
+        i >= 0 && i < integer(m_aabb_triangles.size()),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
-        offs, offs_C, i, m_aabb_tri.size()
+        offs, offs_C, i, m_aabb_triangles.size()
       );
-      Triangle2D const & T1 = m_aabb_tri[i];
+      Triangle2D const & T1 = m_aabb_triangles[i];
       for ( integer j : I.second ) {
         UTILS_ASSERT_DEBUG(
-          j >= 0 && j < integer(C.m_aabb_tri.size()),
+          j >= 0 && j < integer(C.m_aabb_triangles.size()),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
-          offs, offs_C, j, C.m_aabb_tri.size()
+          offs, offs_C, j, C.m_aabb_triangles.size()
         );
-        Triangle2D const & T2 = C.m_aabb_tri[j];
+        Triangle2D const & T2 = C.m_aabb_triangles[j];
         bool collide = T1.overlap(T2);
         if ( collide ) return true;
       }
@@ -679,18 +682,18 @@ namespace G2lib {
       for ( auto const & I : intersectList ) {
         integer i = I.first;
         UTILS_ASSERT_DEBUG(
-          i >= 0 && i < integer(m_aabb_tri.size()),
+          i >= 0 && i < integer(m_aabb_triangles.size()),
           "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) i={} out of range [0,{})\n",
-          offs, offs_C, i, m_aabb_tri.size()
+          offs, offs_C, i, m_aabb_triangles.size()
         );
-        Triangle2D const & T1 = m_aabb_tri[i];
+        Triangle2D const & T1 = m_aabb_triangles[i];
         for ( integer j : I.second ) {
           UTILS_ASSERT_DEBUG(
-            j >= 0 && j < integer(C.m_aabb_tri.size()),
+            j >= 0 && j < integer(C.m_aabb_triangles.size()),
             "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) j={} out of range [0,{})\n",
-            offs, offs_C, j, C.m_aabb_tri.size()
+            offs, offs_C, j, C.m_aabb_triangles.size()
           );
-          Triangle2D const & T2 = C.m_aabb_tri[j];
+          Triangle2D const & T2 = C.m_aabb_triangles[j];
           bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
           if ( converged ) ilist.emplace_back( ss1, ss2 );
         }
@@ -705,12 +708,12 @@ namespace G2lib {
     } else {
 
       G2LIB_DEBUG_TIC;
-      bbTriangles_ISO( offs, m_aabb_tri, Utils::m_pi/18, 1e100 );
-      C.bbTriangles_ISO( offs_C, C.m_aabb_tri, Utils::m_pi/18, 1e100 );
+      bbTriangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      C.bbTriangles_ISO( offs_C, C.m_aabb_triangles, Utils::m_pi/18, 1e100 );
 
       vector<Triangle2D>::const_iterator i1, i2;
-      for ( Triangle2D const & T1 : m_aabb_tri ) {
-        for ( Triangle2D const & T2 : C.m_aabb_tri ) {
+      for ( Triangle2D const & T1 : m_aabb_triangles ) {
+        for ( Triangle2D const & T2 : C.m_aabb_triangles ) {
           bool converged = aabb_intersect_ISO( T1, offs, &C, T2, offs_C, ss1, ss2 );
           if ( converged ) ilist.emplace_back( ss1, ss2 );
         }
@@ -867,11 +870,11 @@ namespace G2lib {
       G2LIB_DEBUG_TIC;
       for ( integer ipos : candidateList ) {
         UTILS_ASSERT_DEBUG(
-          ipos >= 0 && ipos < integer(m_aabb_tri.size()),
+          ipos >= 0 && ipos < integer(m_aabb_triangles.size()),
           "ClothoidCurve::closest_point_internal( qx={}, qy={}, offs={}, x, y, s, DST ) ipos={} out of range [0,{})\n",
-          qx, qy, offs, ipos, m_aabb_tri.size()
+          qx, qy, offs, ipos, m_aabb_triangles.size()
         );
-        Triangle2D const & T = m_aabb_tri[ipos];
+        Triangle2D const & T = m_aabb_triangles[ipos];
         real_type dst = T.distMin( qx, qy );
         if ( dst < DST ) {
           // refine distance
@@ -894,7 +897,7 @@ namespace G2lib {
     } else {
 
       G2LIB_DEBUG_TIC;
-      for ( Triangle2D const & T : m_aabb_tri ) {
+      for ( Triangle2D const & T : m_aabb_triangles ) {
         real_type dst = T.distMin( qx, qy );
         if ( dst < DST ) {
           // refine distance

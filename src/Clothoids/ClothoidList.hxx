@@ -847,7 +847,7 @@ namespace G2lib {
     mutable real_type          m_aabb_offs{real_type(0)};
     mutable real_type          m_aabb_max_angle{real_type(0)};
     mutable real_type          m_aabb_max_size{real_type(0)};
-    mutable vector<Triangle2D> m_aabb_tri;
+    mutable vector<Triangle2D> m_aabb_triangles;
 
     void
     resetLastInterval() {
@@ -880,7 +880,7 @@ namespace G2lib {
     ~ClothoidList() override {
       m_s0.clear();
       m_clotoid_list.clear();
-      m_aabb_tri.clear();
+      m_aabb_triangles.clear();
     }
 
     //!
