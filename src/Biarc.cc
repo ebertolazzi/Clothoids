@@ -173,7 +173,7 @@ namespace G2lib {
     real_type at = (La/(La+Lb))*om;
     real_type bt = (Lb/(La+Lb))*om;
     // find solution using Halley
-    real_type Delta = 0;
+    real_type Delta{0};
     bool found = false;
     for ( integer iter = 0; iter < 10 && !found; ++iter ) {
       real_type ga[3], gb[3];

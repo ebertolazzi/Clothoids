@@ -78,7 +78,7 @@ namespace Utils {
     ~WinCriticalSection() { DeleteCriticalSection(&m_critical); }
     void lock() {	EnterCriticalSection(&m_critical); }
     void unlock() {	LeaveCriticalSection(&m_critical); }
-    bool try_lock() {	return TRUE == TryEnterCriticalSection(&m_critical); }
+    bool try_lock() {	return TryEnterCriticalSection(&m_critical) ? true : false; }
     void wait() {	lock(); unlock(); }
     CRITICAL_SECTION const & data() const { return m_critical; }
     CRITICAL_SECTION       & data()       { return m_critical; }

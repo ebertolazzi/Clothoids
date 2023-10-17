@@ -256,8 +256,8 @@ namespace G2lib {
   int
   G2solve2arc::solve() {
     Solve2x2 solver;
-    real_type X[2] = { 0.5, 2 };
-    int iter = 0;
+    real_type X[2]{ 0.5, 2 };
+    integer   iter{0};
     bool converged = false;
     do {
       real_type F[2], J[2][2], d[2];
@@ -400,8 +400,8 @@ namespace G2lib {
   int
   G2solveCLC::solve() {
     real_type X0[3], Y0[3], X1[3], Y1[3];
-    real_type thM = 0, sM = 0.0;
-    int iter = 0;
+    real_type thM{0}, sM{0};
+    integer   iter{0};
     bool converged = false;
     do {
       real_type D0 = thM - th0;
@@ -800,8 +800,8 @@ namespace G2lib {
     //real_type thmin = min(th0,th1)-2*m_2pi;
     //real_type thmax = max(th0,th1)+2*m_2pi;
 
-    int iter = 0;
-    bool converged = false;
+    integer iter{0};
+    bool converged{false};
     try {
       do {
         evalFJ(X, F, J);
@@ -1633,7 +1633,7 @@ namespace G2lib {
       m_dk_1[j] = dk_D[0]; m_dk_2[j] = dk_D[1];
     }
 
-    integer kk = 0;
+    integer kk{0};
     for ( integer j = 0; j < ne1; ++j ) {
       vals[kk++] =  m_k_1[j] + m_dk_1[j]*m_L[j] + m_dk[j]*m_L_1[j];
       vals[kk++] =  m_k_2[j] + m_dk_2[j]*m_L[j] + m_dk[j]*m_L_2[j] - m_k_1[j+1];

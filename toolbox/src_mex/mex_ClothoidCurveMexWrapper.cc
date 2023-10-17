@@ -440,10 +440,10 @@ namespace G2lib {
       if ( nlhs > 1 ) {
         real_type * s = Utils::mex_create_matrix_value( arg_out_1, nrx, ncx );
         for ( mwSize i = 0; i < size; ++i )
-          *dst++ = ptr->distanceBySample( ds, *x++, *y++, *s++ );
+          *dst++ = ptr->distance_by_sample( ds, *x++, *y++, *s++ );
       } else {
         for ( mwSize i = 0; i < size; ++i )
-          *dst++ = ptr->distanceBySample( ds, *x++, *y++ );
+          *dst++ = ptr->distance_by_sample( ds, *x++, *y++ );
       }
     }
 

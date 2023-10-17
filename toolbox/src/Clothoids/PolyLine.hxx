@@ -50,8 +50,9 @@ namespace G2lib {
 
     mutable Utils::BinarySearch<integer> m_lastInterval;
 
-    mutable bool      m_aabb_done{false};
-    mutable AABB_TREE m_aabb_tree;
+    mutable bool       m_aabb_done{false};
+    mutable AABB_TREE  m_aabb_tree;
+    mutable std::mutex m_aabb_mutex;
 
     void
     resetLastInterval() {
@@ -212,14 +213,14 @@ namespace G2lib {
     real_type
     X( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0[size_t(idx)];
+      real_type ss = m_s0.at(size_t(idx));
       return m_polylineList[size_t(idx)].X(s-ss);
     }
 
     real_type
     X_D( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      return m_polylineList[size_t(idx)].m_c0;
+      return m_polylineList.at(size_t(idx)).m_c0;
     }
 
     real_type
@@ -233,7 +234,7 @@ namespace G2lib {
     real_type
     Y( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0[size_t(idx)];
+      real_type ss = m_s0.at(size_t(idx));
       return m_polylineList[size_t(idx)].Y(s-ss);
     }
 
@@ -270,7 +271,7 @@ namespace G2lib {
       real_type & y
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0[size_t(idx)];
+      real_type ss = m_s0.at(size_t(idx));
       m_polylineList[size_t(idx)].eval( s-ss, x, y );
     }
 
@@ -281,7 +282,7 @@ namespace G2lib {
       real_type & y_D
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0[size_t(idx)];
+      real_type ss = m_s0.at(size_t(idx));
       m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
 
@@ -311,7 +312,7 @@ namespace G2lib {
       real_type & y
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0[size_t(idx)];
+      real_type ss = m_s0.at(size_t(idx));
       m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
@@ -323,7 +324,7 @@ namespace G2lib {
       real_type & y_D
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0[size_t(idx)];
+      real_type ss = m_s0.at(size_t(idx));
       m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 

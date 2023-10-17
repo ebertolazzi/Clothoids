@@ -50,7 +50,7 @@ namespace G2lib {
     friend class ClothoidList;
 
     vector<real_type> m_s0;
-    vector<Biarc>     m_biarcList;
+    vector<Biarc>     m_biarc_list;
 
     mutable Utils::BinarySearch<integer> m_lastInterval;
 
@@ -59,7 +59,8 @@ namespace G2lib {
     mutable real_type          m_aabb_offs{real_type(0)};
     mutable real_type          m_aabb_max_angle{real_type(0)};
     mutable real_type          m_aabb_max_size{real_type(0)};
-    mutable vector<Triangle2D> m_aabb_tri;
+    mutable vector<Triangle2D> m_aabb_triangles;
+    mutable std::mutex         m_aabb_mutex;
 
     void
     resetLastInterval() {
@@ -91,8 +92,8 @@ namespace G2lib {
 
     ~BiarcList() override {
       m_s0.clear();
-      m_biarcList.clear();
-      m_aabb_tri.clear();
+      m_biarc_list.clear();
+      m_aabb_triangles.clear();
     }
 
     //!
@@ -256,7 +257,7 @@ namespace G2lib {
     //!
     //! Return the number of biarc in the biarc list.
     //!
-    integer num_segments() const { return integer(m_biarcList.size()); }
+    integer num_segments() const { return integer(m_biarc_list.size()); }
 
     //!
     //! Get the of the biarc that contain
@@ -385,75 +386,75 @@ namespace G2lib {
 
     real_type
     theta_begin() const override
-    { return m_biarcList.front().theta_begin(); }
+    { return m_biarc_list.front().theta_begin(); }
 
     real_type
     theta_end() const override
-    { return m_biarcList.back().theta_end(); }
+    { return m_biarc_list.back().theta_end(); }
 
     real_type
     x_begin() const override
-    { return m_biarcList.front().x_begin(); }
+    { return m_biarc_list.front().x_begin(); }
 
     real_type
     y_begin() const override
-    { return m_biarcList.front().y_begin(); }
+    { return m_biarc_list.front().y_begin(); }
 
     real_type
     x_end() const override
-    { return m_biarcList.back().x_end(); }
+    { return m_biarc_list.back().x_end(); }
 
     real_type
     y_end() const override
-    { return m_biarcList.back().y_end(); }
+    { return m_biarc_list.back().y_end(); }
 
     real_type
     x_begin_ISO( real_type offs ) const override
-    { return m_biarcList.front().x_begin_ISO( offs ); }
+    { return m_biarc_list.front().x_begin_ISO( offs ); }
 
     real_type
     y_begin_ISO( real_type offs ) const override
-    { return m_biarcList.front().y_begin_ISO( offs ); }
+    { return m_biarc_list.front().y_begin_ISO( offs ); }
 
     real_type
     x_end_ISO( real_type offs ) const override
-    { return m_biarcList.back().x_end_ISO( offs ); }
+    { return m_biarc_list.back().x_end_ISO( offs ); }
 
     real_type
     y_end_ISO( real_type offs ) const override
-    { return m_biarcList.back().y_end_ISO( offs ); }
+    { return m_biarc_list.back().y_end_ISO( offs ); }
 
     real_type
     tx_begin() const override
-    { return m_biarcList.front().tx_begin(); }
+    { return m_biarc_list.front().tx_begin(); }
 
     real_type
     ty_begin() const override
-    { return m_biarcList.front().ty_begin(); }
+    { return m_biarc_list.front().ty_begin(); }
 
     real_type
     tx_end() const override
-    { return m_biarcList.back().tx_end(); }
+    { return m_biarc_list.back().tx_end(); }
 
     real_type
     ty_end() const override
-    { return m_biarcList.back().ty_end(); }
+    { return m_biarc_list.back().ty_end(); }
 
     real_type
     nx_begin_ISO() const override
-    { return m_biarcList.front().nx_begin_ISO(); }
+    { return m_biarc_list.front().nx_begin_ISO(); }
 
     real_type
     ny_begin_ISO() const override
-    { return m_biarcList.front().ny_begin_ISO(); }
+    { return m_biarc_list.front().ny_begin_ISO(); }
 
     real_type
     nx_end_ISO() const override
-    { return m_biarcList.back().nx_end_ISO(); }
+    { return m_biarc_list.back().nx_end_ISO(); }
 
     real_type
     ny_end_ISO() const override
-    { return m_biarcList.back().ny_end_ISO(); }
+    { return m_biarc_list.back().ny_end_ISO(); }
 
     /*\
      |  _   _          _

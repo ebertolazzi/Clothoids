@@ -909,9 +909,9 @@ namespace G2lib {
     Poly[0][1] = p0[1];
     Poly[0][2] = 1;
 
-    real_type s  = 0;
-    real_type ds = m_L/ns;
-    integer   kk = 0;
+    real_type s{0};
+    real_type ds{m_L/ns};
+    integer   kk{0};
     for ( integer i = 0; i < ns; ++i ) {
       s += ds;
       eval( s, p2[0], p2[1] );

@@ -848,6 +848,7 @@ namespace G2lib {
     mutable real_type          m_aabb_max_angle{real_type(0)};
     mutable real_type          m_aabb_max_size{real_type(0)};
     mutable vector<Triangle2D> m_aabb_triangles;
+    mutable std::mutex         m_aabb_mutex;
 
     void
     resetLastInterval() {

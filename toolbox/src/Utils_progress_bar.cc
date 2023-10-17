@@ -32,7 +32,7 @@ namespace Utils {
   string
   progress_bar( double progress, int width ) {
     string res{"["};
-    int pos = width * progress;
+    int pos = int(width * progress);
     for (int i = 0; i < width; ++i) {
       if      (i  < pos) res += '=';
       else if (i == pos) res += '>';
@@ -45,7 +45,7 @@ namespace Utils {
   void
   progress_bar( ostream & s, double progress, int width, char const * msg ) {
     s << "[";
-    int pos = width * progress;
+    int pos = int(width * progress);
     for (int i = 0; i < width; ++i)
       s << (i<pos? u8"\u25A0":u8"\u25A1");
     fmt::print( s, "] {:3.0f}% {}\r", ceil(100*progress), msg );
@@ -57,8 +57,8 @@ namespace Utils {
     vector<string> ch{"_", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"};
     s << "[";
     double ww = width * progress;
-    int pos   = floor(ww);
-    int frac8 = round(8*(ww-pos));
+    int pos   = int(floor(ww));
+    int frac8 = int(round(8*(ww-pos)));
     for (int i = 0; i < width; ++i) {
       if      (i < pos) s << ch.back();
       else if (i > pos) s << ' ';
