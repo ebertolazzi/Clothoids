@@ -152,9 +152,9 @@
   #include "mingw-std-threads/mingw.thread.h"
   #include "mingw-std-threads/mingw.condition_variable.h"
 #else
-  //#include <future>
+  #include <future>
   #include <mutex>
-  //#include <shared_mutex>
+  #include <shared_mutex>
   #include <thread>
   #include <condition_variable>
   #include <atomic>

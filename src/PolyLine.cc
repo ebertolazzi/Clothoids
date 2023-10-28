@@ -134,8 +134,12 @@ namespace G2lib {
 
   integer
   PolyLine::find_at_s( real_type & s ) const {
+    #ifdef CLOTHOIDS_USE_THREADS
     bool ok;
     integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    #else
+    integer & lastInterval = m_lastInterval;
+    #endif
     Utils::searchInterval<integer,real_type>(
       static_cast<integer>(m_s0.size()),
       m_s0.data(), s, lastInterval, false, true
@@ -321,13 +325,13 @@ namespace G2lib {
     vector<LineSegment>::iterator ic = m_polylineList.begin();
     real_type newx0 = ic->x_begin();
     real_type newy0 = ic->y_begin();
-    m_s0.at(0) = 0;
+    m_s0[0] = 0;
     for ( size_t k=0; ic != m_polylineList.end(); ++ic, ++k ) {
       ic->scale( sfactor );
       ic->change_origin( newx0, newy0 );
-      newx0        = ic->x_end();
-      newy0        = ic->y_end();
-      m_s0.at(k+1) = m_s0.at(k) + ic->length();
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
+      m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
 
@@ -340,15 +344,15 @@ namespace G2lib {
     ic->reverse();
     real_type newx0 = ic->x_end();
     real_type newy0 = ic->y_end();
-    m_s0.at(0) = 0;
-    m_s0.at(1) = ic->length();
+    m_s0[0] = 0;
+    m_s0[1] = ic->length();
     size_t k = 1;
     for ( ++ic; ic != m_polylineList.end(); ++ic, ++k ) {
       ic->reverse();
       ic->change_origin( newx0, newy0 );
-      newx0        = ic->x_end();
-      newy0        = ic->y_end();
-      m_s0.at(k+1) = m_s0.at(k) + ic->length();
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
+      m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
 
@@ -375,15 +379,15 @@ namespace G2lib {
 
     size_t i_begin = size_t(find_at_s(s_begin));
     size_t i_end   = size_t(find_at_s(s_end));
-    m_polylineList[i_begin].trim( s_begin-m_s0.at(i_begin), m_s0.at(i_begin+1) );
-    m_polylineList[i_end].trim( m_s0.at(i_end), s_end-m_s0.at(i_end) );
+    m_polylineList[i_begin].trim( s_begin-m_s0[i_begin], m_s0[i_begin+1] );
+    m_polylineList[i_end].trim( m_s0[i_end], s_end-m_s0[i_end] );
     m_polylineList.erase( m_polylineList.begin()+LS_dist_type(i_end+1), m_polylineList.end() );
     m_polylineList.erase( m_polylineList.begin(), m_polylineList.begin()+LS_dist_type(i_begin) );
     vector<LineSegment>::iterator ic = m_polylineList.begin();
-    m_s0.at(0) = 0;
+    m_s0[0] = 0;
     size_t k{0};
     for (; ic != m_polylineList.end(); ++ic, ++k )
-      m_s0.at(k+1) = m_s0.at(k) + ic->length();
+      m_s0[k+1] = m_s0[k] + ic->length();
     this->resetLastInterval();
   }
 
@@ -410,25 +414,25 @@ namespace G2lib {
     if ( s_begin < s_end ) {
       // get initial and final segment
       if ( i_begin == i_end ) { // stesso segmento
-        real_type   ss0 = m_s0.at(i_begin);
+        real_type   ss0 = m_s0[i_begin];
         LineSegment LL  = m_polylineList[i_begin];
         LL.trim( s_begin-ss0, s_end-ss0 );
         newPL.push_back( LL );
       } else {
         LineSegment L0 = m_polylineList[i_begin];
-        L0.trim( s_begin - m_s0.at(i_begin), L0.length() );
+        L0.trim( s_begin - m_s0[i_begin], L0.length() );
         newPL.push_back( L0 );
 
         for ( ++i_begin; i_begin < i_end; ++i_begin )
           newPL.push_back( m_polylineList[i_begin] );
 
         LineSegment L1 = m_polylineList[i_end];
-        L1.trim( 0, s_end - m_s0.at(i_end) );
+        L1.trim( 0, s_end - m_s0[i_end] );
         newPL.push_back( L1 );
       }
     } else {
       LineSegment L0 = m_polylineList[i_begin];
-      L0.trim( s_begin - m_s0.at(i_begin), L0.length() );
+      L0.trim( s_begin - m_s0[i_begin], L0.length() );
       newPL.push_back( L0 );
 
       for ( ++i_begin; i_begin < n_seg; ++i_begin )
@@ -438,7 +442,7 @@ namespace G2lib {
         newPL.push_back( m_polylineList[i_begin] );
 
       LineSegment L1 = m_polylineList[i_end];
-      L1.trim( 0, s_end - m_s0.at(i_end) );
+      L1.trim( 0, s_end - m_s0[i_end] );
       newPL.push_back( L1 );
     }
   }
@@ -448,7 +452,9 @@ namespace G2lib {
   void
   PolyLine::build_AABBtree() const {
 
+    #ifdef CLOTHOIDS_USE_THREADS
     std::lock_guard<std::mutex> lock(m_aabb_mutex);
+    #endif
 
     if ( m_aabb_done ) return;
 
@@ -761,7 +767,7 @@ namespace G2lib {
           DST  = DST1;
           X    = X1;
           Y    = Y1;
-          S    = m_s0.at(i) + S1;
+          S    = m_s0[i] + S1;
           T    = T1;
           ipos = i;
         }
@@ -774,14 +780,14 @@ namespace G2lib {
           DST  = DST1;
           X    = X1;
           Y    = Y1;
-          S    = m_s0.at(ipos) + S1;
+          S    = m_s0[ipos] + S1;
           T    = T1;
           ipos = i;
         }
         ++i;
       }
     }
-    m_polylineList[size_t(ipos)].eval_ISO( S - m_s0.at(size_t(ipos)), T, X1, Y1 );
+    m_polylineList[size_t(ipos)].eval_ISO( S - m_s0[ipos], T, X1, Y1 );
     real_type err = hypot( x - X1, y - Y1 );
     real_type tol = (DST > 1 ? DST*machepsi1000 : machepsi1000);
     if ( err > tol ) return -(ipos+1);
@@ -856,8 +862,8 @@ namespace G2lib {
           real_type sss0, sss1;
           bool ok = LS0.intersect( LS1, sss0, sss1 );
           if ( ok ) {
-            ss0.emplace_back( sss0 + m_s0.at(ipos0) );
-            ss1.emplace_back( sss1 + PL.m_s0.at(ipos1) );
+            ss0.emplace_back( sss0 + m_s0[ipos0] );
+            ss1.emplace_back( sss1 + PL.m_s0[ipos1] );
           }
         }
       }
@@ -871,8 +877,8 @@ namespace G2lib {
           real_type sss0, sss1;
           bool ok = LS0.intersect( LS1, sss0, sss1 );
           if ( ok ) {
-            ss0.emplace_back( sss0 + m_s0.at(ipos0) );
-            ss1.emplace_back( sss1 + PL.m_s0.at(ipos1) );
+            ss0.emplace_back( sss0 + m_s0[ipos0] );
+            ss1.emplace_back( sss1 + PL.m_s0[ipos1] );
           }
         }
       }

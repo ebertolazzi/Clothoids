@@ -30,6 +30,9 @@
 #ifndef CLOTHOIDS_dot_HH
 #define CLOTHOIDS_dot_HH
 
+// comment to disable threads support
+#define CLOTHOIDS_USE_THREADS 1
+
 #include "Utils.hh"
 #include "Utils_AABB_tree.hh"
 

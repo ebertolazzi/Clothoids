@@ -383,7 +383,9 @@ namespace G2lib {
     real_type max_size
   ) const {
 
+    #ifdef CLOTHOIDS_USE_THREADS
     std::lock_guard<std::mutex> lock(m_aabb_mutex);
+    #endif
 
     if ( m_aabb_done &&
          Utils::is_zero( offs-m_aabb_offs ) &&

@@ -48,16 +48,27 @@ namespace G2lib {
     real_type           m_xe;
     real_type           m_ye;
 
+    #ifdef CLOTHOIDS_USE_THREADS
     mutable Utils::BinarySearch<integer> m_lastInterval;
+    #else
+    mutable integer m_lastInterval{0};
+    #endif
 
     mutable bool       m_aabb_done{false};
     mutable AABB_TREE  m_aabb_tree;
+
+    #ifdef CLOTHOIDS_USE_THREADS
     mutable std::mutex m_aabb_mutex;
+    #endif
 
     void
     resetLastInterval() {
+      #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
       integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      #else
+      integer & lastInterval = m_lastInterval;
+      #endif
       lastInterval = 0;
     }
 
@@ -213,7 +224,7 @@ namespace G2lib {
     real_type
     X( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0.at(size_t(idx));
+      real_type ss = m_s0[idx];
       return m_polylineList[size_t(idx)].X(s-ss);
     }
 
@@ -234,7 +245,7 @@ namespace G2lib {
     real_type
     Y( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0.at(size_t(idx));
+      real_type ss = m_s0[idx];
       return m_polylineList[size_t(idx)].Y(s-ss);
     }
 
@@ -271,7 +282,7 @@ namespace G2lib {
       real_type & y
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0.at(size_t(idx));
+      real_type ss = m_s0[idx];
       m_polylineList[size_t(idx)].eval( s-ss, x, y );
     }
 
@@ -282,7 +293,7 @@ namespace G2lib {
       real_type & y_D
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0.at(size_t(idx));
+      real_type ss = m_s0[idx];
       m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
 
@@ -312,7 +323,7 @@ namespace G2lib {
       real_type & y
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0.at(size_t(idx));
+      real_type ss = m_s0[idx];
       m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
@@ -324,7 +335,7 @@ namespace G2lib {
       real_type & y_D
     ) const override {
       integer idx = this->find_at_s( s );
-      real_type ss = m_s0.at(size_t(idx));
+      real_type ss = m_s0[idx];
       m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 

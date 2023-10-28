@@ -52,7 +52,11 @@ namespace G2lib {
     vector<real_type> m_s0;
     vector<Biarc>     m_biarc_list;
 
+    #ifdef CLOTHOIDS_USE_THREADS
     mutable Utils::BinarySearch<integer> m_lastInterval;
+    #else
+    mutable integer m_lastInterval{0};
+    #endif
 
     mutable bool               m_aabb_done{false};
     mutable AABB_TREE          m_aabb_tree;
@@ -60,12 +64,19 @@ namespace G2lib {
     mutable real_type          m_aabb_max_angle{real_type(0)};
     mutable real_type          m_aabb_max_size{real_type(0)};
     mutable vector<Triangle2D> m_aabb_triangles;
-    mutable std::mutex         m_aabb_mutex;
+
+    #ifdef CLOTHOIDS_USE_THREADS
+    mutable std::mutex m_aabb_mutex;
+    #endif
 
     void
     resetLastInterval() {
+      #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
       integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      #else
+      integer & lastInterval = m_lastInterval;
+      #endif
       lastInterval = 0;
     }
 

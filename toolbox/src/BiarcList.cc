@@ -155,8 +155,12 @@ namespace G2lib {
 
   integer
   BiarcList::find_at_s( real_type & s ) const {
+    #ifdef CLOTHOIDS_USE_THREADS
     bool ok;
     integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    #else
+    integer & lastInterval = m_lastInterval;
+    #endif
     Utils::searchInterval<integer,real_type>(
       static_cast<integer>(m_s0.size()),
       &m_s0.front(), s, lastInterval, false, true
@@ -318,12 +322,13 @@ namespace G2lib {
       !m_biarc_list.empty(),
       "BiarcList::get( {} ) empty list\n", idx
     );
-    UTILS_ASSERT(
-      idx >= 0 && idx < integer(m_biarc_list.size()),
-      "BiarcList::get( {} ) bad index, must be in [0,{}]\n",
-      idx, m_biarc_list.size()-1
-    );
-    return m_biarc_list.at(idx);
+    try {
+      return m_biarc_list.at(idx);
+    } catch ( std::exception & exc ) {
+      UTILS_ERROR( "BiarcList::get( {} ): {}\n", idx, exc.what() );
+    } catch ( ... ) {
+      UTILS_ERROR( "BiarcList::get( {} ): unknown error\n", idx );
+    }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -461,7 +466,7 @@ namespace G2lib {
   BiarcList::theta( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.theta( s - m_s0.at(idx) );
+    return c.theta( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -470,7 +475,7 @@ namespace G2lib {
   BiarcList::theta_D( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.theta_D( s - m_s0.at(idx) );
+    return c.theta_D( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -479,7 +484,7 @@ namespace G2lib {
   BiarcList::theta_DD( real_type s ) const  {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.theta_DD( s - m_s0.at(idx) );
+    return c.theta_DD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -488,7 +493,7 @@ namespace G2lib {
   BiarcList::theta_DDD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.theta_DDD( s - m_s0.at(idx) );
+    return c.theta_DDD( s - m_s0[idx] );
   }
 
   /*\
@@ -503,7 +508,7 @@ namespace G2lib {
   BiarcList::tx( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tx( s - m_s0.at(idx) );
+    return c.tx( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -512,7 +517,7 @@ namespace G2lib {
   BiarcList::ty( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.ty( s - m_s0.at(idx) );
+    return c.ty( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -521,7 +526,7 @@ namespace G2lib {
   BiarcList::tx_D( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tx_D( s - m_s0.at(idx) );
+    return c.tx_D( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -530,7 +535,7 @@ namespace G2lib {
   BiarcList::ty_D( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.ty_D( s - m_s0.at(idx) );
+    return c.ty_D( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -539,7 +544,7 @@ namespace G2lib {
   BiarcList::tx_DD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tx_DD( s - m_s0.at(idx) );
+    return c.tx_DD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -548,7 +553,7 @@ namespace G2lib {
   BiarcList::ty_DD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.ty_DD( s - m_s0.at(idx) );
+    return c.ty_DD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -557,7 +562,7 @@ namespace G2lib {
   BiarcList::tx_DDD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tx_DDD( s - m_s0.at(idx) );
+    return c.tx_DDD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -566,7 +571,7 @@ namespace G2lib {
   BiarcList::ty_DDD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.ty_DDD( s - m_s0.at(idx) );
+    return c.ty_DDD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -579,7 +584,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tg( s - m_s0.at(idx), tg_x, tg_y );
+    return c.tg( s - m_s0[idx], tg_x, tg_y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -592,7 +597,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tg_D( s - m_s0.at(idx), tg_x_D, tg_y_D );
+    return c.tg_D( s - m_s0[idx], tg_x_D, tg_y_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -605,7 +610,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tg_DD( s - m_s0.at(idx), tg_x_DD, tg_y_DD );
+    return c.tg_DD( s - m_s0[idx], tg_x_DD, tg_y_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -618,7 +623,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.tg_DDD( s - m_s0.at(idx), tg_x_DDD, tg_y_DDD );
+    return c.tg_DDD( s - m_s0[idx], tg_x_DDD, tg_y_DDD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -633,7 +638,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    c.evaluate( s - m_s0.at(idx), th, k, x, y );
+    c.evaluate( s - m_s0[idx], th, k, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -649,7 +654,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    c.evaluate_ISO( s - m_s0.at(idx), offs, th, k, x, y );
+    c.evaluate_ISO( s - m_s0[idx], offs, th, k, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -658,7 +663,7 @@ namespace G2lib {
   BiarcList::X( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X( s - m_s0.at(idx) );
+    return c.X( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -667,7 +672,7 @@ namespace G2lib {
   BiarcList::Y( real_type s ) const  {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y( s - m_s0.at(idx) );
+    return c.Y( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -676,7 +681,7 @@ namespace G2lib {
   BiarcList::X_D( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X_D( s - m_s0.at(idx) );
+    return c.X_D( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -685,7 +690,7 @@ namespace G2lib {
   BiarcList::Y_D( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y_D( s - m_s0.at(idx) );
+    return c.Y_D( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -694,7 +699,7 @@ namespace G2lib {
   BiarcList::X_DD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X_DD( s - m_s0.at(idx) );
+    return c.X_DD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -703,7 +708,7 @@ namespace G2lib {
   BiarcList::Y_DD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y_DD( s - m_s0.at(idx) );
+    return c.Y_DD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -712,7 +717,7 @@ namespace G2lib {
   BiarcList::X_DDD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X_DDD( s - m_s0.at(idx) );
+    return c.X_DDD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -721,7 +726,7 @@ namespace G2lib {
   BiarcList::Y_DDD( real_type s ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y_DDD( s - m_s0.at(idx) );
+    return c.Y_DDD( s - m_s0[idx] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -734,7 +739,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval( s - m_s0.at(idx), x, y );
+    return c.eval( s - m_s0[idx], x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -747,7 +752,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval_D( s - m_s0.at(idx), x_D, y_D );
+    return c.eval_D( s - m_s0[idx], x_D, y_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -760,7 +765,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval_DD( s - m_s0.at(idx), x_DD, y_DD );
+    return c.eval_DD( s - m_s0[idx], x_DD, y_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -773,7 +778,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval_DDD( s - m_s0.at(idx), x_DDD, y_DDD );
+    return c.eval_DDD( s - m_s0[idx], x_DDD, y_DDD );
   }
 
   /*\
@@ -788,7 +793,7 @@ namespace G2lib {
   BiarcList::X_ISO( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X_ISO( s - m_s0.at(idx), offs );
+    return c.X_ISO( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -797,7 +802,7 @@ namespace G2lib {
   BiarcList::Y_ISO( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y_ISO( s - m_s0.at(idx), offs );
+    return c.Y_ISO( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -806,7 +811,7 @@ namespace G2lib {
   BiarcList::X_ISO_D( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X_ISO_D( s - m_s0.at(idx), offs );
+    return c.X_ISO_D( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -815,7 +820,7 @@ namespace G2lib {
   BiarcList::Y_ISO_D( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y_ISO_D( s - m_s0.at(idx), offs );
+    return c.Y_ISO_D( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -824,7 +829,7 @@ namespace G2lib {
   BiarcList::X_ISO_DD( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X_ISO_DD( s - m_s0.at(idx), offs );
+    return c.X_ISO_DD( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -833,7 +838,7 @@ namespace G2lib {
   BiarcList::Y_ISO_DD( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y_ISO_DD( s - m_s0.at(idx), offs );
+    return c.Y_ISO_DD( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -842,7 +847,7 @@ namespace G2lib {
   BiarcList::X_ISO_DDD( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.X_ISO_DDD( s - m_s0.at(idx), offs );
+    return c.X_ISO_DDD( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -851,7 +856,7 @@ namespace G2lib {
   BiarcList::Y_ISO_DDD( real_type s, real_type offs ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.Y_ISO_DDD( s - m_s0.at(idx), offs );
+    return c.Y_ISO_DDD( s - m_s0[idx], offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -865,7 +870,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval_ISO( s - m_s0.at(idx), offs, x, y );
+    return c.eval_ISO( s - m_s0[idx], offs, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -879,7 +884,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval_ISO_D( s - m_s0.at(idx), offs, x_D, y_D );
+    return c.eval_ISO_D( s - m_s0[idx], offs, x_D, y_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -893,7 +898,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval_ISO_DD( s - m_s0.at(idx), offs, x_DD, y_DD );
+    return c.eval_ISO_DD( s - m_s0[idx], offs, x_DD, y_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -907,7 +912,7 @@ namespace G2lib {
   ) const {
     integer idx = this->find_at_s( s );
     Biarc const & c = this->get( idx );
-    return c.eval_ISO_DDD( s - m_s0.at(idx), offs, x_DDD, y_DDD );
+    return c.eval_ISO_DDD( s - m_s0[idx], offs, x_DDD, y_DDD );
   }
 
   /*\
@@ -937,13 +942,13 @@ namespace G2lib {
     vector<Biarc>::iterator ic = m_biarc_list.begin();
     real_type newx0 = ic->x_begin();
     real_type newy0 = ic->y_begin();
-    m_s0.at(0) = 0;
+    m_s0[0] = 0;
     for ( size_t k=0; ic != m_biarc_list.end(); ++ic, ++k ) {
       ic->scale( sfactor );
       ic->change_origin( newx0, newy0 );
-      newx0        = ic->x_end();
-      newy0        = ic->y_end();
-      m_s0.at(k+1) = m_s0.at(k) + ic->length();
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
+      m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
 
@@ -956,15 +961,15 @@ namespace G2lib {
     ic->reverse();
     real_type newx0 = ic->x_end();
     real_type newy0 = ic->y_end();
-    m_s0.at(0) = 0;
-    m_s0.at(1) = ic->length();
+    m_s0[0] = 0;
+    m_s0[1] = ic->length();
     size_t k = 1;
     for ( ++ic; ic != m_biarc_list.end(); ++ic, ++k ) {
       ic->reverse();
       ic->change_origin( newx0, newy0 );
-      newx0        = ic->x_end();
-      newy0        = ic->y_end();
-      m_s0.at(k+1) = m_s0.at(k) + ic->length();
+      newx0     = ic->x_end();
+      newy0     = ic->y_end();
+      m_s0[k+1] = m_s0[k] + ic->length();
     }
   }
 
@@ -992,20 +997,20 @@ namespace G2lib {
     size_t i_begin = size_t( find_at_s( s_begin ) );
     size_t i_end   = size_t( find_at_s( s_end ) );
     if ( i_begin == i_end ) {
-      m_biarc_list.at(i_begin).trim( s_begin-m_s0.at(i_begin), s_end-m_s0.at(i_begin) );
+      m_biarc_list[i_begin].trim( s_begin-m_s0[i_begin], s_end-m_s0[i_begin] );
     } else {
-      m_biarc_list.at(i_begin).trim( s_begin-m_s0.at(i_begin), m_s0.at(i_begin+1)-m_s0.at(i_begin) );
-      m_biarc_list.at(i_end).trim( 0, s_end-m_s0.at(i_end) );
+      m_biarc_list[i_begin].trim( s_begin-m_s0[i_begin], m_s0[i_begin+1]-m_s0[i_begin] );
+      m_biarc_list[i_end].trim( 0, s_end-m_s0[i_end] );
     }
     m_biarc_list.erase( m_biarc_list.begin()+i_end+1, m_biarc_list.end() );
     m_biarc_list.erase( m_biarc_list.begin(), m_biarc_list.begin()+i_begin );
     if ( m_biarc_list.back().length() <= machepsi100 ) m_biarc_list.pop_back();
     vector<Biarc>::iterator ic = m_biarc_list.begin();
     m_s0.resize( m_biarc_list.size() + 1 );
-    m_s0.at(0) = 0;
+    m_s0[0] = 0;
     size_t k{0};
     for ( ++ic; ic != m_biarc_list.end(); ++ic, ++k )
-      m_s0.at(k+1) = m_s0.at(k) + ic->length();
+      m_s0[k+1] = m_s0[k] + ic->length();
     this->resetLastInterval();
   }
 
@@ -1025,7 +1030,9 @@ namespace G2lib {
     real_type max_size
   ) const {
 
+    #ifdef CLOTHOIDS_USE_THREADS
     std::lock_guard<std::mutex> lock(m_aabb_mutex);
+    #endif
 
     if ( m_aabb_done &&
          Utils::is_zero( offs-m_aabb_offs ) &&
@@ -1480,13 +1487,13 @@ namespace G2lib {
     integer iseg = 0;
     bool ok = false;
     for ( integer k = ibegin; k <= iend; ++k ) {
-      Biarc const & ck = m_biarc_list.at(k);
+      Biarc const & ck = m_biarc_list[k];
       real_type S, T;
       bool ok1 = ck.findST_ISO( x, y, S, T );
       if ( ok && ok1 ) ok1 = abs(T) < abs(t);
       if ( ok1 ) {
         ok   = true;
-        s    = m_s0.at(k) + S;
+        s    = m_s0[k] + S;
         t    = T;
         iseg = k;
       }
