@@ -135,6 +135,7 @@ set(
   ClothoidCurveMexWrapper
   ClothoidSplineG2MexWrapper
   TriTriOverlap
+  DubinsMexWrapper
 )
 
 message( STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")

@@ -3,7 +3,7 @@
 #include <sstream>
 
 using G2lib::real_type;
-using G2lib::int_type;
+using G2lib::integer;
 using namespace std;
 
 int
@@ -75,13 +75,13 @@ main() {
     //real_type qx2 = 2.965952244000000e+02;
     //real_type qy2 = 16.475130419999999;
 
-    int_type idx = C.closest_segment( qx1, qy1 );
+    integer idx = C.closest_segment( qx1, qy1 );
     fmt::print( "idx = {}\n", idx );
 
     real_type x, y, s, t, dst;
-    int_type  icurve;
-    int_type  icurve_begin = 140;
-    int_type  icurve_end   = 200;
+    integer  icurve;
+    integer  icurve_begin = 140;
+    integer  icurve_end   = 200;
     idx = C.closest_point_in_range_ISO(
       qx1, qy1, icurve_begin, icurve_end, x, y, s, t, dst, icurve
     );
@@ -97,8 +97,8 @@ main() {
       idx, x, y, s, t, dst, icurve
     );
 
-    int_type s_begin = 200;
-    int_type s_end   = 300;
+    integer s_begin = 200;
+    integer s_end   = 300;
     idx = C.closest_point_in_s_range_ISO(
       qx1, qy1, s_begin, s_end, x, y, s, t, dst, icurve
     );
@@ -121,9 +121,8 @@ main() {
     real_type qy1 = 10.0;  //-100; // 10.0;
 
     real_type x, y, s, t, dst;
-    int_type  icurve;
-
-    int_type idx = C.closest_point_ISO(qx1, qy1, x, y, s, t, dst);
+    integer   icurve;
+    integer   idx = C.closest_point_ISO(qx1, qy1, x, y, s, t, dst);
 
     fmt::print(
       "\n\n\nclosest_point_ISO for:({},{})\n"

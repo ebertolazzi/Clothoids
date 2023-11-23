@@ -105,7 +105,7 @@ namespace G2lib {
   // 1 --> Clockwise
   // 2 --> Counterclockwise
   static
-  int_type
+  integer
   orientation(
     real_type const p[2],
     real_type const q[2],
@@ -137,10 +137,10 @@ namespace G2lib {
   ) {
 
     // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
+    integer o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    integer o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    integer o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    integer o4 = orientation( L2.p, L2.q, L1.q, epsi );
 
     // General case
     if ( o1 != o2 && o3 != o4 ) {
@@ -196,10 +196,10 @@ namespace G2lib {
   ) {
 
     // Find the four orientations needed for general and special cases
-    int_type o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    int_type o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    int_type o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    int_type o4 = orientation( L2.p, L2.q, L1.q, epsi );
+    integer o1 = orientation( L1.p, L1.q, L2.p, epsi );
+    integer o2 = orientation( L1.p, L1.q, L2.q, epsi );
+    integer o3 = orientation( L2.p, L2.q, L1.p, epsi );
+    integer o4 = orientation( L2.p, L2.q, L1.q, epsi );
 
     // General case
     if ( o1 != o2 && o3 != o4 ) return true;
@@ -276,8 +276,8 @@ namespace G2lib {
     real_type & xmax,
     real_type & ymax
   ) const {
-    real_type dx = offs*nx_Begin_ISO();
-    real_type dy = offs*ny_Begin_ISO();
+    real_type dx = offs*nx_begin_ISO();
+    real_type dy = offs*ny_begin_ISO();
     xmin = m_x0+dx; xmax = x_end()+dx;
     ymin = m_y0+dy; ymax = y_end()+dy;
     if ( xmin > xmax ) swap( xmin, xmax );
@@ -316,7 +316,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::paramNURBS( int_type & n_knots, int_type & n_pnts ) const {
+  LineSegment::paramNURBS( integer & n_knots, integer & n_pnts ) const {
     n_pnts  = 2;
     n_knots = 4;
   }
@@ -594,7 +594,7 @@ namespace G2lib {
    |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
   \*/
 
-  int_type
+  integer
   LineSegment::closest_point_ISO(
     real_type   qx,
     real_type   qy,
@@ -607,8 +607,8 @@ namespace G2lib {
 
     real_type dx = qx - m_x0;
     real_type dy = qy - m_y0;
-    s = dx * tx_Begin() + dy * ty_Begin();
-    t = dx * nx_Begin_ISO() + dy * ny_Begin_ISO();
+    s = dx * tx_begin() + dy * ty_begin();
+    t = dx * nx_begin_ISO() + dy * ny_begin_ISO();
 
     if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
@@ -625,14 +625,14 @@ namespace G2lib {
 
     dx  = qx-x;
     dy  = qy-y;
-    t   = dx * nx_Begin_ISO() + dy * ny_Begin_ISO();
+    t   = dx * nx_begin_ISO() + dy * ny_begin_ISO();
     dst = hypot( dx, dy );
     return -1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   LineSegment::closest_point_ISO(
     real_type   qx,
     real_type   qy,
@@ -643,13 +643,13 @@ namespace G2lib {
     real_type & t,
     real_type & dst
   ) const {
-    real_type xx0 = m_x0+offs*nx_Begin_ISO();
-    real_type yy0 = m_y0+offs*ny_Begin_ISO();
+    real_type xx0 = m_x0+offs*nx_begin_ISO();
+    real_type yy0 = m_y0+offs*ny_begin_ISO();
 
     real_type dx = qx - xx0;
     real_type dy = qy - yy0;
-    s = dx * tx_Begin() + dy * ty_Begin();
-    t = dx * nx_Begin_ISO() + dy * ny_Begin_ISO();
+    s = dx * tx_begin() + dy * ty_begin();
+    t = dx * nx_begin_ISO() + dy * ny_begin_ISO();
 
     if ( s < 0 ) { // distanza sul bordo 0
       s = 0;
@@ -666,7 +666,7 @@ namespace G2lib {
 
     dx  = qx-x;
     dy  = qy-y;
-    t   = dx * nx_Begin_ISO() + dy * ny_Begin_ISO() + offs;
+    t   = dx * nx_begin_ISO() + dy * ny_begin_ISO() + offs;
     dst = hypot( dx, dy );
     return -1;
   }

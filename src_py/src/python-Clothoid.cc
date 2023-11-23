@@ -278,7 +278,7 @@ namespace G2lib {
         :rtype: float
       )S")
 
-      .def("optimized_sample_ISO", [](const ClothoidCurve & self, real_type offs, int_type npts, real_type max_angle) {
+      .def("optimized_sample_ISO", [](const ClothoidCurve & self, real_type offs, integer npts, real_type max_angle) {
         std::vector<real_type> ret;
         self.optimized_sample_ISO(offs, npts, max_angle, ret);
         return ret;
@@ -294,7 +294,7 @@ namespace G2lib {
         :rtype: List[float]
       )S")
 
-      .def("optimized_sample_SAE", [](const ClothoidCurve & self, real_type offs, int_type npts, real_type max_angle) {
+      .def("optimized_sample_SAE", [](const ClothoidCurve & self, real_type offs, integer npts, real_type max_angle) {
         std::vector<real_type> ret;
         self.optimized_sample_SAE(offs, npts, max_angle, ret);
         return ret;
@@ -310,7 +310,7 @@ namespace G2lib {
         :rtype: List[float]
       )S")
 
-      .def("closestPointBySample", [](ClothoidCurve * self, real_type ds, int_type qx, real_type qy) {
+      .def("closestPointBySample", [](ClothoidCurve * self, real_type ds, integer qx, real_type qy) {
         real_type x, y, s;
         real_type v = self->closest_point_by_sample(ds, qx, qy, x, y, s);
         return std::make_tuple(v, x, y, s);
@@ -336,7 +336,7 @@ namespace G2lib {
         :rtype: Tuple[float, float, float, float]
       )S")
 
-      .def("distanceBySample", [](const ClothoidCurve & self, real_type ds, int_type qx, real_type qy) {
+      .def("distanceBySample", [](const ClothoidCurve & self, real_type ds, integer qx, real_type qy) {
         real_type s;
         real_type v = self.distanceBySample(ds, qx, qy, s);
         return std::make_tuple(v, s);
@@ -404,7 +404,7 @@ namespace G2lib {
       .def("setP8", &ClothoidSplineG2::setP8)
       .def("setP9", &ClothoidSplineG2::setP9)
       .def("build", [](ClothoidSplineG2 * self, std::vector<real_type> x, std::vector<real_type> y) {
-        int_type n = static_cast<int_type>(std::min(x.size(), y.size()));
+        integer n = static_cast<integer>(std::min(x.size(), y.size()));
         self->build(&x.front(), &y.front(), n);
       })
       .def("numPnts", &ClothoidSplineG2::numPnts)
@@ -433,7 +433,7 @@ namespace G2lib {
       })
       .def("jacobian_nnz", &ClothoidSplineG2::jacobian_nnz)
       .def("jacobian_pattern", [](ClothoidSplineG2 * self) {
-        std::vector<int_type> ii(self->jacobian_nnz()), jj(self->jacobian_nnz());
+        std::vector<integer> ii(self->jacobian_nnz()), jj(self->jacobian_nnz());
         bool result = self->jacobian_pattern(&ii.front(), &jj.front());
         return std::make_tuple(result, ii, jj);
       })
@@ -1013,10 +1013,10 @@ namespace G2lib {
         :rtype: int
       )S")
 
-      .def("closestPointInRange", [](const ClothoidList & self, real_type qx, real_type qy, int_type icurve_begin, int_type icurve_end) {
+      .def("closestPointInRange", [](const ClothoidList & self, real_type qx, real_type qy, integer icurve_begin, integer icurve_end) {
         real_type x, y, s, t, dst;
-        int_type icurve;
-        int_type ret = self.closest_point_in_range_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+        integer icurve;
+        integer ret = self.closest_point_in_range_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
       },
         py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
@@ -1046,13 +1046,13 @@ namespace G2lib {
       )S")
 
       .def("closestPointInRange", [](const ClothoidList & self, const std::vector<real_type> & qx,
-        const std::vector<real_type> & qy, int_type icurve_begin, int_type icurve_end) {
+        const std::vector<real_type> & qy, integer icurve_begin, integer icurve_end) {
         const size_t n = std::min(qx.size(), qy.size());
-        std::vector<std::tuple<int_type, real_type, real_type, real_type, real_type, real_type, int_type>> data(n);
+        std::vector<std::tuple<integer, real_type, real_type, real_type, real_type, real_type, integer>> data(n);
         for (size_t i = 0; i < n; i++) {
           real_type x, y, s, t, dst;
-          int_type icurve;
-          int_type ret = self.closest_point_in_range_ISO(qx[i], qy[i], icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+          integer icurve;
+          integer ret = self.closest_point_in_range_ISO(qx[i], qy[i], icurve_begin, icurve_end, x, y, s, t, dst, icurve);
           data[i] = std::make_tuple(ret, x, y, s, t, dst, icurve);
         }
         return data;
@@ -1084,10 +1084,10 @@ namespace G2lib {
         :rtype: List[Tuple[int, float, float, float, float, float, int]]
       )S")
 
-      .def("closestPointInRange_ISO", [](const ClothoidList & self, real_type qx, real_type qy, int_type icurve_begin, int_type icurve_end) {
+      .def("closestPointInRange_ISO", [](const ClothoidList & self, real_type qx, real_type qy, integer icurve_begin, integer icurve_end) {
         real_type x, y, s, t, dst;
-        int_type icurve;
-        int_type ret = self.closest_point_in_range_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+        integer icurve;
+        integer ret = self.closest_point_in_range_ISO(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
       },
         py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
@@ -1117,10 +1117,10 @@ namespace G2lib {
         :rtype: Tuple[int, float, float, float, float, float, int]
       )S")
 
-      .def("closestPointInRange_SAE", [](const ClothoidList & self, real_type qx, real_type qy, int_type icurve_begin, int_type icurve_end) {
+      .def("closestPointInRange_SAE", [](const ClothoidList & self, real_type qx, real_type qy, integer icurve_begin, integer icurve_end) {
         real_type x, y, s, t, dst;
-        int_type icurve;
-        int_type ret = self.closest_point_in_range_SAE(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
+        integer icurve;
+        integer ret = self.closest_point_in_range_SAE(qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
       },
         py::arg("qx"), py::arg("qy"), py::arg("icurve_begin"), py::arg("icurve_end"),
@@ -1152,8 +1152,8 @@ namespace G2lib {
 
       .def("closestPointInSRange", [](const ClothoidList & self, real_type qx, real_type qy, real_type s_begin, real_type s_end) {
         real_type x, y, s, t, dst;
-        int_type icurve;
-        int_type ret = self.closest_point_in_s_range_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
+        integer icurve;
+        integer ret = self.closest_point_in_s_range_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
       },
         py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
@@ -1185,11 +1185,11 @@ namespace G2lib {
       .def("closestPointInSRange", [](const ClothoidList & self, const std::vector<real_type> & qx,
         const std::vector<real_type> & qy, real_type s_begin, real_type s_end) {
         const size_t n = std::min(qx.size(), qy.size());
-        std::vector<std::tuple<int_type, real_type, real_type, real_type, real_type, real_type, int_type>> data(n);
+        std::vector<std::tuple<integer, real_type, real_type, real_type, real_type, real_type, integer>> data(n);
         for (size_t i = 0; i < n; i++) {
           real_type x, y, s, t, dst;
-          int_type icurve;
-          int_type ret = self.closest_point_in_s_range_ISO(qx[i], qy[i], s_begin, s_end, x, y, s, t, dst, icurve);
+          integer icurve;
+          integer ret = self.closest_point_in_s_range_ISO(qx[i], qy[i], s_begin, s_end, x, y, s, t, dst, icurve);
           data[i] = std::make_tuple(ret, x, y, s, t, dst, icurve);
         }
         return data;
@@ -1221,8 +1221,8 @@ namespace G2lib {
 
       .def("closestPointInSRange_ISO", [](const ClothoidList & self, real_type qx, real_type qy, real_type s_begin, real_type s_end) {
         real_type x, y, s, t, dst;
-        int_type icurve;
-        int_type ret = self.closest_point_in_s_range_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
+        integer icurve;
+        integer ret = self.closest_point_in_s_range_ISO(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
       },
         py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
@@ -1254,8 +1254,8 @@ namespace G2lib {
 
       .def("closestPointInSRange_SAE", [](const ClothoidList & self, real_type qx, real_type qy, real_type s_begin, real_type s_end) {
         real_type x, y, s, t, dst;
-        int_type icurve;
-        int_type ret = self.closest_point_in_s_range_SAE(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
+        integer icurve;
+        integer ret = self.closest_point_in_s_range_SAE(qx, qy, s_begin, s_begin, x, y, s, t, dst, icurve);
         return std::make_tuple(ret, x, y, s, t, dst, icurve);
       },
         py::arg("qx"), py::arg("qy"), py::arg("s_begin"), py::arg("s_end"),
@@ -1373,7 +1373,7 @@ namespace G2lib {
 
       .def("findST1", [](const ClothoidList & self, real_type x, real_type y) {
         real_type s, t;
-        int_type idx = self.findST1(x, y, s, t);
+        integer idx = self.findST1(x, y, s, t);
         return std::make_tuple(idx, s, t);
       }, py::arg("x"), py::arg("y"),
       R"S(
@@ -1390,7 +1390,7 @@ namespace G2lib {
       .def("findST1", [](const ClothoidList & self, const std::vector<real_type> & x, const std::vector<real_type> & y) {
         const size_t n = std::min(x.size(), y.size());
         std::vector<real_type> s(n), t(n);
-        std::vector<int_type> idx(n);
+        std::vector<integer> idx(n);
         for (size_t i = 0; i < n; i++) {
           idx[i] = self.findST1(x[i], y[i], s[i], t[i]);
         }
@@ -1408,9 +1408,9 @@ namespace G2lib {
         :rtype: Tuple[List[int], List[float], List[float]]
       )S")
 
-      .def("findST1", [](const ClothoidList & self, int_type ibegin, int_type iend, real_type x, real_type y) {
+      .def("findST1", [](const ClothoidList & self, integer ibegin, integer iend, real_type x, real_type y) {
         real_type s, t;
-        int_type idx = self.findST1(ibegin, iend, x, y, s, t);
+        integer idx = self.findST1(ibegin, iend, x, y, s, t);
         return std::make_tuple(idx, s, t);
       }, py::arg("ibegin"), py::arg("iend"), py::arg("x"), py::arg("y"),
       R"S(
@@ -1426,10 +1426,10 @@ namespace G2lib {
         :rtype: Tuple[int, float, float]
       )S")
 
-      .def("findST1", [](const ClothoidList & self, int_type ibegin, int_type iend, const std::vector<real_type> & x, const std::vector<real_type> & y) {
+      .def("findST1", [](const ClothoidList & self, integer ibegin, integer iend, const std::vector<real_type> & x, const std::vector<real_type> & y) {
         const size_t n = std::min(x.size(), y.size());
         std::vector<real_type> s(n), t(n);
-        std::vector<int_type> idx(n);
+        std::vector<integer> idx(n);
         for (size_t i = 0; i < n; i++) {
           idx[i] = self.findST1(ibegin, iend, x[i], y[i], s[i], t[i]);
         }

@@ -232,7 +232,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-    int_type npts, nknots;
+    integer npts, nknots;
     ptr->paramNURBS( nknots, npts );
 
     real_type knots[12], Poly[9][3];
@@ -260,10 +260,10 @@ namespace G2lib {
     mxSetFieldByNumber( arg_out_0, 0, 5, mx_Poly );
 
     double *kb = mxGetPr(mx_knots);
-    for ( int_type i = 0; i < nknots; ++i ) *kb++ = knots[i];
+    for ( integer i = 0; i < nknots; ++i ) *kb++ = knots[i];
 
     double *pr = mxGetPr(mx_Poly);
-    for ( int_type i = 0; i < npts; ++i ) {
+    for ( integer i = 0; i < npts; ++i ) {
       *pr++ = Poly[i][0];
       *pr++ = Poly[i][1];
       *pr++ = Poly[i][2];

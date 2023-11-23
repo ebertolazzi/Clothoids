@@ -98,7 +98,7 @@ namespace G2lib {
 
       } else if ( nrhs == 4 ) {
 
-        int_type nk = Utils::mex_get_int64(
+        integer nk = Utils::mex_get_int64(
           arg_in_0, "FresnelCS: argument `nk` expected to be and integer"
         );
         UTILS_MEX_ASSERT(

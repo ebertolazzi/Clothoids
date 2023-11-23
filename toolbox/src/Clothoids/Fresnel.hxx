@@ -54,7 +54,7 @@ namespace G2lib {
   //!
   void
   FresnelCS(
-    int_type    nk,
+    integer     nk,
     real_type   x,
     real_type * C,
     real_type * S
@@ -77,7 +77,7 @@ namespace G2lib {
   //!
   void
   GeneralizedFresnelCS(
-    int_type    nk,
+    integer     nk,
     real_type   a,
     real_type   b,
     real_type   c,
@@ -117,23 +117,25 @@ namespace G2lib {
   class ClothoidData {
   public:
 
-    real_type m_x0     = 0; //!< initial x coordinate of the clothoid
-    real_type m_y0     = 0; //!< initial y coordinate of the clothoid
-    real_type m_theta0 = 0; //!< initial angle of the clothoid
-    real_type m_kappa0 = 0; //!< initial curvature
-    real_type m_dk     = 0; //!< curvature derivative
+    real_type m_x0{0};     //!< initial x coordinate of the clothoid
+    real_type m_y0{0};     //!< initial y coordinate of the clothoid
+    real_type m_theta0{0}; //!< initial angle of the clothoid
+    real_type m_kappa0{0}; //!< initial curvature
+    real_type m_dk{0};     //!< curvature derivative
 
     ClothoidData() = default;
 
     real_type
-    deltaTheta( real_type s ) const
+    delta_theta( real_type s ) const
     { return s*(m_kappa0 + 0.5*s*m_dk); }
+
+    real_type deltaTheta( real_type s ) const { return delta_theta( s ); }
 
     //!
     //! Return angle at curvilinear coordinate `s`
     //!
-    real_type theta
-    ( real_type s ) const
+    real_type
+    theta( real_type s ) const
     { return m_theta0 + s*(m_kappa0 + 0.5*s*m_dk); }
 
     real_type theta_D  ( real_type s ) const { return m_kappa0 + s*m_dk; }

@@ -83,10 +83,10 @@ namespace G2lib {
   ) {
 
     // S = GUESS
-    int nb = 0;
+    integer nb{0};
     real_type theta, kappa, dS, dx, dy;
     real_type s = S;
-    for ( int iter = 0; iter < 20 && nb < 2; ++iter ) {
+    for ( integer iter = 0; iter < 20 && nb < 2; ++iter ) {
       CD.evaluate( s, theta, kappa, dx, dy ); dx -= qx; dy -= qy;
 
       real_type Cs  = cos(theta);
@@ -250,9 +250,9 @@ namespace G2lib {
     real_type & S
   ) {
     // S = GUESS
-    int nb = 0;
+    integer nb{0};
     real_type s = S, dS, dx, dy;
-    for ( int iter = 0; iter < 20 && nb < 2; ++iter ) {
+    for ( integer iter = 0; iter < 20 && nb < 2; ++iter ) {
       // approx clothoid with a circle
       real_type kappa = Utils::m_pi * s;
       real_type theta = 0.5*(kappa*s);
@@ -411,7 +411,7 @@ namespace G2lib {
 
     real_type ss = a;
     bool converged = false;
-    for ( int iter = 0; iter < 20 && !converged; ++iter ) {
+    for ( integer iter = 0; iter < 20 && !converged; ++iter ) {
       FresnelCS( ss, xx, yy );
       real_type kappa = Utils::m_pi * ss;
       real_type theta = Utils::m_pi_2 * (ss*ss);
@@ -494,7 +494,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   ClothoidCurve::closest_point_ISO(
     real_type   qx,
     real_type   qy,

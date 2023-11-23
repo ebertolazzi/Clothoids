@@ -43,7 +43,7 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   void
-  set_environment( char const ename[], char const newval[], bool overwrite ) {
+  set_environment( char const ename[], char const newval[], bool /* overwrite */ ) {
     SetEnvironmentVariable( ename, newval );
   }
 

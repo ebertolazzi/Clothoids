@@ -2,7 +2,7 @@
 #include "Clothoids.hh"
 
 using G2lib::real_type;
-using G2lib::int_type;
+using G2lib::integer;
 using namespace std;
 
 int
@@ -24,7 +24,7 @@ main() {
   real_type X, Y, S;
 
   real_type T, d;
-  int_type info = C.closest_point_ISO( x, y, X, Y, S, T, d );
+  integer info = C.closest_point_ISO( x, y, X, Y, S, T, d );
 
   fmt::print(
     "d    = {}\n"

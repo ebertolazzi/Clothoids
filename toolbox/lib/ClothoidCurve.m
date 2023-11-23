@@ -1,8 +1,8 @@
 classdef ClothoidCurve < CurveBase
   methods
-    %> Create a new C++ class instance for the 
+    %> Create a new C++ class instance for the
     %> clothoid arc object
-    %> 
+    %>
     %> **Usage:**
     %>
     %> \rst
@@ -111,7 +111,7 @@ classdef ClothoidCurve < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Find the closest point to a clothoid curve using the 
+    %> Find the closest point to a clothoid curve using the
     %> algorithm described in
     %>
     %>  \rst
@@ -275,7 +275,7 @@ classdef ClothoidCurve < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>    [ x0, y0, theta0, k0, dk, L ] = ref.getPars();
+    %>    [ x0, y0, theta0, k0, dk, L ] = ref.get_pars();
     %>
     %> \endrst
     %>
@@ -285,7 +285,7 @@ classdef ClothoidCurve < CurveBase
     %> - `dk`:       curvature derivative
     %> - `L`:        length of the clothoid arc
     %>
-    function [ x0, y0, theta0, k0, dk, L ] = getPars( self )
+    function [ x0, y0, theta0, k0, dk, L ] = get_pars( self )
       x0     = self.x_begin();
       y0     = self.y_begin();
       theta0 = self.theta_begin();
@@ -367,7 +367,7 @@ classdef ClothoidCurve < CurveBase
     %>   ref.plot();
     %>   ref.plot( npts );
     %>   ref.plot( npts, 'Color','blue','Linewidth',2);
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -391,7 +391,7 @@ classdef ClothoidCurve < CurveBase
     %>   ref.plot_offs( offs );
     %>   ref.plot_offs( offs, npts );
     %>   ref.pplot_offslot( offs, npts, 'Color','blue','Linewidth',2);
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -412,7 +412,7 @@ classdef ClothoidCurve < CurveBase
     %>
     %>   ref.plotCurvature( npts );
     %>   ref.plotCurvature( npts, 'Color','blue','Linewidth',2);
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -442,7 +442,7 @@ classdef ClothoidCurve < CurveBase
     %>
     %>   ref.plotAngle( npts );
     %>   ref.plotAngle( npts, 'Color','blue','Linewidth',2);
-    %> 
+    %>
     %> \endrst
     %>
     %> - `npts`: number of sampling points for plotting
@@ -471,7 +471,7 @@ classdef ClothoidCurve < CurveBase
     %> .. code-block:: matlab
     %>
     %>   ref.plotNormal( step, len );
-    %> 
+    %>
     %> \endrst
     %>
     %> - `step`: number of sampling normals

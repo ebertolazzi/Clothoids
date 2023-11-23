@@ -42,7 +42,7 @@
 "    [arc0,arc1] = BiarcMexWrapper( 'to_nurbs', OBJ );\n" \
 "\n" \
 "  - Eval:\n" \
-"    [x0,y0,theta0,kappa0,L0,x1,y1,theta1,kappa1,L1] = BiarcMexWrapper( 'getPars', OBJ );\n" \
+"    [x0,y0,theta0,kappa0,L0,x1,y1,theta1,kappa1,L1] = BiarcMexWrapper( 'get_pars', OBJ );\n" \
 "\n" \
 MEX_INFO_MESSAGE("BiarcMexWrapper") \
 MEX_INFO_MESSAGE_END
@@ -331,7 +331,7 @@ namespace G2lib {
     CircleArc const & C0 = ptr->C0();
     CircleArc const & C1 = ptr->C1();
 
-    int_type npts0, nknots0, npts1, nknots1;
+    integer npts0, nknots0, npts1, nknots1;
     C0.paramNURBS( nknots0, npts0 );
     C1.paramNURBS( nknots1, npts1 );
 

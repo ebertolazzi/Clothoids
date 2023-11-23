@@ -30,7 +30,7 @@ SL = S.buildP2( X, Y );
 %DX = X(2:end)-X(1:end-1);
 %DY = Y(2:end)-Y(1:end-1);
 %T  = [0,cumsum(hypot(DX,DY))];
-[ T, ~, ~ ] = SL.getSTK();
+[ T, ~, ~ ] = SL.get_STK();
 
 ppX = spline( T, X );
 ppY = spline( T, Y );

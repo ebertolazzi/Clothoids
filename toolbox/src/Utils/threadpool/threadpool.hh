@@ -24,10 +24,6 @@
 #include <limits>
 #include <limits>
 
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-
 #include "threadpool_utils.hxx"
 #include "threadpool_queue.hxx"
 

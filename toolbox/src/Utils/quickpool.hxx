@@ -54,19 +54,6 @@
 #include <exception>
 #include <memory>
 
-#include <atomic>
-#include <condition_variable>
-#include <mutex>
-#include <thread>
-
-#ifdef UTILS_QP_USE_FUTURE
-#include <future>
-#endif
-
-#if (defined __linux__ || defined AFFINITY)
-#include <pthread.h>
-#endif
-
 // Layout of quickpool.hpp
 //
 // 1. Memory related utilities.

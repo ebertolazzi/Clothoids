@@ -52,7 +52,7 @@
 "    res = ClothoidCurveMexWrapper( 'copy', OBJ );\n" \
 "\n" \
 "  - Eval:\n" \
-"    [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'getPars', OBJ );\n" \
+"    [x0,y0,theta0,k0,dk,smin,smax] = ClothoidCurveMexWrapper( 'get_pars', OBJ );\n" \
 "\n" \
 "    [xp, yp, xm, ym] = ClothoidCurveMexWrapper( 'infinity', OBJ );\n" \
 "\n" \
@@ -263,7 +263,7 @@ namespace G2lib {
     y1     = Utils::mex_get_scalar_value( arg_in_6, CMD "Error in reading y1" );
     theta1 = Utils::mex_get_scalar_value( arg_in_7, CMD "Error in reading theta1" );
 
-    int_type iter = ptr->build_G1( x0, y0, theta0, x1, y1, theta1 );
+    integer iter = ptr->build_G1( x0, y0, theta0, x1, y1, theta1 );
     if ( nlhs == 1 ) Utils::mex_set_scalar_int32( arg_out_0, iter );
 
     #undef CMD
@@ -306,7 +306,7 @@ namespace G2lib {
     real_type * L_D  = Utils::mex_create_matrix_value( arg_out_0, 2, 1 );
     real_type * k_D  = Utils::mex_create_matrix_value( arg_out_1, 2, 1 );
     real_type * dk_D = Utils::mex_create_matrix_value( arg_out_2, 2, 1 );
-    int_type iter = ptr->build_G1_D( x0, y0, theta0, x1, y1, theta1, L_D, k_D, dk_D );
+    integer iter = ptr->build_G1_D( x0, y0, theta0, x1, y1, theta1, L_D, k_D, dk_D );
     if ( nlhs == 4 ) Utils::mex_set_scalar_int32( arg_out_3, iter );
 
     #undef CMD
@@ -440,10 +440,10 @@ namespace G2lib {
       if ( nlhs > 1 ) {
         real_type * s = Utils::mex_create_matrix_value( arg_out_1, nrx, ncx );
         for ( mwSize i = 0; i < size; ++i )
-          *dst++ = ptr->distanceBySample( ds, *x++, *y++, *s++ );
+          *dst++ = ptr->distance_by_sample( ds, *x++, *y++, *s++ );
       } else {
         for ( mwSize i = 0; i < size; ++i )
-          *dst++ = ptr->distanceBySample( ds, *x++, *y++ );
+          *dst++ = ptr->distance_by_sample( ds, *x++, *y++ );
       }
     }
 
@@ -520,20 +520,12 @@ namespace G2lib {
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg_in_1);
 
-    int_type  npts;
+    integer   npts;
     real_type max_angle, offs;
 
-    npts = int_type(Utils::mex_get_int64(
-      arg_in_2, CMD "`max_angle` expected to be a real scalar"
-    ));
-
-    max_angle = Utils::mex_get_scalar_value(
-      arg_in_3, CMD "`max_angle` expected to be a real scalar"
-    );
-
-    offs = Utils::mex_get_scalar_value(
-      arg_in_4, CMD "`max_size` expected to be a real scalar"
-    );
+    npts      = integer(Utils::mex_get_int64( arg_in_2, CMD "`max_angle` expected to be a real scalar" ));
+    max_angle = Utils::mex_get_scalar_value( arg_in_3, CMD "`max_angle` expected to be a real scalar" );
+    offs      = Utils::mex_get_scalar_value( arg_in_4, CMD "`max_size` expected to be a real scalar" );
 
     bool ISO = true;
     if ( nrhs == 6 ) ISO = do_is_ISO( arg_in_5, CMD " last argument must be a string");

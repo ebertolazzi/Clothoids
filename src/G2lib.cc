@@ -47,8 +47,8 @@ namespace G2lib {
   real_type const machepsi1000{1000*machepsi};
   real_type const sqrtMachepsi{sqrt(machepsi)};
   bool            intersect_with_AABBtree{true};
-  int_type const  G2LIB_AABB_CUT{8};
-  int_type const  G2LIB_AABB_MIN_NODES{3};
+  integer  const  G2LIB_AABB_CUT{8};
+  integer  const  G2LIB_AABB_MIN_NODES{3};
 
   #ifdef G2LIB_COMPATIBILITY_MODE
   bool use_ISO{true};
@@ -205,7 +205,7 @@ namespace G2lib {
   }
   #endif
 
-  int_type
+  integer
   solveLinearQuadratic(
     real_type   A,
     real_type   B,
@@ -247,7 +247,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   solveLinearQuadratic2(
     real_type   A,
     real_type   B,
@@ -285,7 +285,7 @@ namespace G2lib {
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   static
-  int_type
+  integer
   solveNLsysCircleCircle(
     real_type kA,
     real_type T,
@@ -304,9 +304,9 @@ namespace G2lib {
     real_type c   = T*T;
     PolynomialRoots::Quadratic qsolve( a, b, c);
     if ( qsolve.complexRoots() ) return 0;
-    real_type z[2] = { qsolve.real_root0(), qsolve.real_root1() };
-    int_type nint = 0;
-    for ( int_type i = 0; i < qsolve.numRoots(); ++i ) {
+    real_type z[2]{ qsolve.real_root0(), qsolve.real_root1() };
+    integer nint{0};
+    for ( integer i = 0; i < qsolve.numRoots(); ++i ) {
       real_type tmp = z[i]*(4-kB2*z[i]);
       if ( tmp < 0 ) continue;
       real_type xx = kB*z[i]/2;
@@ -332,7 +332,7 @@ namespace G2lib {
   invCoscSinc( real_type k, real_type x, real_type y ) {
     real_type ds, s = y;
     if ( abs(k) > sqrtMachepsi ) s = atan2( y*k, 1-k*x )/k;
-    int_type iter = 0;
+    integer iter{0};
     do {
       real_type sk = s*k;
       ds = (y-Sinc(sk)*s)*cos(sk)/(1-sin(sk)*k*y);
@@ -343,7 +343,7 @@ namespace G2lib {
 
   #endif
 
-  int_type
+  integer
   intersectCircleCircle(
     real_type   x1,
     real_type   y1,
@@ -373,12 +373,12 @@ namespace G2lib {
     real_type T1    = L2*kappa2+2*Sa2;
     real_type T2    = L2*kappa1-2*Sa1;
     real_type xx1[2], yy1[2], xx2[2], yy2[3];
-    int_type nsol;
+    integer nsol;
     if ( abs(T1) > abs(T2) ) {
       real_type Tx1 = -2*(Sa1*kappa2+C12);
       real_type Ty1 = -2*(Ca1*kappa2+S12);
       nsol = solveNLsysCircleCircle( kappa2, T1, Tx1, Ty1, kappa1, xx1, yy1 );
-      for ( int_type i = 0; i < nsol; ++i ) {
+      for ( integer i = 0; i < nsol; ++i ) {
         xx2[i] = C12*xx1[i]+S12*yy1[i]-Sa2;
         yy2[i] = C12*yy1[i]-S12*xx1[i]-Ca2;
       }
@@ -386,14 +386,14 @@ namespace G2lib {
       real_type Tx2 = 2*(Sa2*kappa1-C12);
       real_type Ty2 = 2*(Ca2*kappa1+S12);
       nsol = solveNLsysCircleCircle( kappa1, T2, Tx2, Ty2, kappa2, xx2, yy2 );
-      for ( int_type i = 0; i < nsol; ++i ) {
+      for ( integer i = 0; i < nsol; ++i ) {
         xx1[i] = C12*xx2[i]-S12*yy2[i]+Sa1;
         yy1[i] = C12*yy2[i]+S12*xx2[i]+Ca1;
       }
     }
     real_type len1 = Utils::m_2pi/(machepsi+abs(kappa1));
     real_type len2 = Utils::m_2pi/(machepsi+abs(kappa1));
-    for ( int_type i = 0; i < nsol; ++i ) {
+    for ( integer i = 0; i < nsol; ++i ) {
       real_type ss1 = invCoscSinc( kappa1, xx1[i], yy1[i] );
       real_type ss2 = invCoscSinc( kappa2, xx2[i], yy2[i] );
       while ( ss1 < 0    ) ss1 += len1;
@@ -416,7 +416,7 @@ namespace G2lib {
 
   void
   xy_to_guess_angle(
-    int_type          npts,
+    integer           npts,
     real_type const * x,
     real_type const * y,
     real_type       * theta,
@@ -428,14 +428,14 @@ namespace G2lib {
     //
     // Compute guess angles
     //
-    int_type ne  = npts-1;
-    int_type ne1 = npts-2;
+    integer ne  = npts-1;
+    integer ne1 = npts-2;
 
     real_type dx = x[1]-x[0];
     real_type dy = y[1]-y[0];
     omega[0] = atan2(dy,dx);
     len[0]   = hypot(dy,dx);
-    for ( int_type j = 1; j < ne; ++j ) {
+    for ( integer j = 1; j < ne; ++j ) {
       dx       = x[j+1]-x[j];
       dy       = y[j+1]-y[j];
       omega[j] = atan2(dy,dx);
@@ -457,7 +457,7 @@ namespace G2lib {
 
     real_type omega_L = omega[0];
     real_type len_L   = len[0];
-    for ( int_type j = 1; j < ne; ++j ) {
+    for ( integer j = 1; j < ne; ++j ) {
       real_type omega_R = omega[j];
       real_type len_R   = len[j];
       theta[j] = ( omega_L/len_L + omega_R / len_R ) / ( 1/len_L + 1/len_R );
@@ -488,7 +488,7 @@ namespace G2lib {
     // full pivoting
     real_type Amax = abs(A[0][0]);
     real_type tmp  = abs(A[0][1]);
-    int_type ij = 0;
+    integer   ij{0};
     if ( tmp > Amax ) { ij = 1; Amax = tmp; }
     tmp = abs(A[1][0]);
     if ( tmp > Amax ) { ij = 2; Amax = tmp; }
@@ -541,7 +541,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   isCounterClockwise(
     real_type const * P1,
     real_type const * P2,
@@ -637,17 +637,17 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   isPointInTriangle(
     real_type const * point,
     real_type const * p1,
     real_type const * p2,
     real_type const * p3
   ) {
-    int_type d = isCounterClockwise(p1, p2, p3);
-    int_type a = isCounterClockwise(p1, p2, point);
-    int_type b = isCounterClockwise(p2, p3, point);
-    int_type c = isCounterClockwise(p3, p1, point);
+    integer d = isCounterClockwise(p1, p2, p3);
+    integer a = isCounterClockwise(p1, p2, point);
+    integer b = isCounterClockwise(p2, p3, point);
+    integer c = isCounterClockwise(p3, p1, point);
     if ( d < 0) { a = -a; b = -b; c = -c; }
     if ( a < 0 ) return -1;
     if ( b < 0 ) return -1;

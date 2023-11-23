@@ -141,7 +141,10 @@ namespace Utils {
     void search();
     void run( Real const x_sol[], Real h );
 
-    void get_last_solution( Real x[] ) const { std::copy_n( m_x_best.data(), m_dim, x ); }
+    Real
+    get_last_solution( Real x[] ) const
+    { std::copy_n( m_x_best.data(), m_dim, x ); return m_f_best; }
+
   };
 }
 

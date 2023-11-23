@@ -16,22 +16,22 @@ namespace G2lib {
   namespace Interpolation {
 
     using G2lib::ClothoidSplineG2;
-    using G2lib::int_type;
+    using G2lib::integer;
     using G2lib::real_type;
 
     class Solver {
-     private:
-      const ClothoidSplineG2 & m_spline;
-      int_type                 m_theta_size;
-      int_type                 m_constraints_size;
-      int_type                 m_jacobian_pattern_size;
-      int_type                 m_jacobian_size;
-      int_type                 m_lagrangian_hessian_size;
+    private:
+      ClothoidSplineG2 const & m_spline;
+      integer                  m_theta_size;
+      integer                  m_constraints_size;
+      integer                  m_jacobian_pattern_size;
+      integer                  m_jacobian_size;
+      integer                  m_lagrangian_hessian_size;
       std::vector<real_type>   m_theta_solution;
       std::vector<real_type>   m_theta_min;
       std::vector<real_type>   m_theta_max;
 
-     public:
+    public:
       Solver(const ClothoidSplineG2 & spline);
 
       void guess();

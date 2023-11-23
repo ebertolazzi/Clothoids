@@ -49,10 +49,10 @@ namespace G2lib {
         :param ipos:    ranking poisition of the box
       )S")
 
-      .def(py::init<real_type, real_type, real_type, real_type, int_type, int_type>(),
+      .def(py::init<real_type, real_type, real_type, real_type, integer, integer>(),
         py::arg("xmin"), py::arg("ymin"), py::arg("xmax"), py::arg("ymax"), py::arg("id"), py::arg("ipos"))
 
-      .def(py::init([](PyVecPtrBBox bboxes, int_type id, int_type ipos) {
+      .def(py::init([](PyVecPtrBBox bboxes, integer id, integer ipos) {
         std::vector<BBox::PtrBBox> _bboxes;
         for (auto & el: bboxes) {
           _bboxes.push_back(static_cast<BBox::PtrBBox>(el));
@@ -60,7 +60,7 @@ namespace G2lib {
         return std::make_shared<BBox>(_bboxes, id, ipos);
       }), py::arg("bboxes"), py::arg("id"), py::arg("ipos"))
 
-      .def(py::init([](std::tuple<std::tuple<real_type, real_type>, std::tuple<real_type, real_type>> extrema, int_type id, int_type ipos) {
+      .def(py::init([](std::tuple<std::tuple<real_type, real_type>, std::tuple<real_type, real_type>> extrema, integer id, integer ipos) {
         const real_type x_min = std::get<0>(std::get<0>(extrema));
         const real_type y_min = std::get<0>(std::get<1>(extrema));
         const real_type x_max = std::get<1>(std::get<0>(extrema));
@@ -272,7 +272,7 @@ namespace G2lib {
         return str.str();
       })
 
-      .def("print", [](const AABBtree & self, int_type level = 0) {
+      .def("print", [](const AABBtree & self, integer level = 0) {
         std::ostringstream str;
         self.print(str, 0);
         return str.str();

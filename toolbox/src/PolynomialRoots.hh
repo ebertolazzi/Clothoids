@@ -46,7 +46,7 @@
 //!    | A Three-Stage Algorithm for Real Polynomials Using Quadratic
 //!      Iteration
 //!    | SIAM Journal on Numerical Analysis
-//!    | Vol. 7, No. 4 (Dec., 1970), pp. 545-566
+//!    | Vol. 7, No.4 (Dec., 1970), pp.545-566
 //!
 //! \endrst
 //!
@@ -224,15 +224,15 @@ namespace PolynomialRoots {
   class Quadratic {
     real_type ABC[3];
     real_type r0, r1;
-    integer   nrts;
-    bool      cplx;
-    bool      dblx;
+    integer   nrts{0};
+    bool      cplx{false};
+    bool      dblx{false};
 
     void findRoots();
 
   public:
 
-    Quadratic() : nrts(0), cplx(false), dblx(false) {}
+    Quadratic() {}
 
     //!
     //! Build the object that store the roots
@@ -246,11 +246,15 @@ namespace PolynomialRoots {
     //!
     Quadratic( real_type a, real_type b, real_type c )
     : nrts(0), cplx(false), dblx(false) {
+      using std::isfinite;
       real_type & A = ABC[0];
       real_type & B = ABC[1];
       real_type & C = ABC[2];
       A = a; B = b; C = c;
-      findRoots();
+      // find roots only on finite values
+      if ( isfinite(a) && isfinite(b) && isfinite(c) ) {
+        findRoots();
+      }
     }
 
     //!
@@ -601,24 +605,28 @@ namespace PolynomialRoots {
   class Cubic {
     real_type ABCD[4];
     real_type r0, r1, r2;
-    integer   nrts, iter;
-    bool      cplx; // complex root
-    bool      dblx; // double root
-    bool      trpx; // triple root
+    integer   nrts{0};
+    integer   iter{0};
+    bool      cplx{false}; // complex root
+    bool      dblx{false}; // double root
+    bool      trpx{false}; // triple root
 
     void findRoots();
 
   public:
 
-    Cubic() : nrts(0), iter(0), cplx(false), trpx(false) {}
-    Cubic( real_type _a, real_type _b, real_type _c, real_type _d )
-    : nrts(0), iter(0), cplx(false), trpx(false) {
+    Cubic() {}
+    Cubic( real_type a, real_type b, real_type c, real_type d ) {
+      using std::isfinite;
       real_type & A = ABCD[0];
       real_type & B = ABCD[1];
       real_type & C = ABCD[2];
       real_type & D = ABCD[3];
-      A = _a; B = _b; C = _c; D = _d;
-      findRoots();
+      A = a; B = b; C = c; D = d;
+      // find roots only on finite values
+      if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) ) {
+        findRoots();
+      }
     }
 
     //!
@@ -632,12 +640,20 @@ namespace PolynomialRoots {
     //!
     void
     setup( real_type a, real_type b, real_type c, real_type d ) {
+      using std::isfinite;
       real_type & A = ABCD[0];
       real_type & B = ABCD[1];
       real_type & C = ABCD[2];
       real_type & D = ABCD[3];
+      nrts = 0;
+      iter = 0;
+      cplx = false; // complex root
+      dblx = false; // double root
+      trpx = false; // triple root
       A = a; B = b; C = c; D = d;
-      findRoots();
+      if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) ) {
+        findRoots();
+      }
     }
 
     //!
@@ -1005,7 +1021,7 @@ namespace PolynomialRoots {
   class Quartic {
     real_type ABCDE[5];
     real_type r0, r1, r2, r3;
-    integer   iter, nreal, ncplx;
+    integer   iter{0}, nreal{0}, ncplx{0};
 
     void findRoots();
 
@@ -1016,22 +1032,25 @@ namespace PolynomialRoots {
 
   public:
 
-    Quartic() : iter(0), nreal(0), ncplx(0) {}
+    Quartic() {}
     Quartic(
-      real_type _a,
-      real_type _b,
-      real_type _c,
-      real_type _d,
-      real_type _e
-    )
-    : iter(0), nreal(0), ncplx(0) {
+      real_type a,
+      real_type b,
+      real_type c,
+      real_type d,
+      real_type e
+    ) {
+      using std::isfinite;
       real_type & A = ABCDE[0];
       real_type & B = ABCDE[1];
       real_type & C = ABCDE[2];
       real_type & D = ABCDE[3];
       real_type & E = ABCDE[4];
-      A = _a; B = _b; C = _c; D = _d; E = _e;
-      findRoots();
+      A = a; B = b; C = c; D = d; E = e;
+      // find roots only on finite values
+      if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) && isfinite(e) ) {
+        findRoots();
+      }
     }
 
     //!
@@ -1052,13 +1071,20 @@ namespace PolynomialRoots {
       real_type d,
       real_type e
     ) {
+      using std::isfinite;
       real_type & A = ABCDE[0];
       real_type & B = ABCDE[1];
       real_type & C = ABCDE[2];
       real_type & D = ABCDE[3];
       real_type & E = ABCDE[4];
       A = a; B = b; C = c; D = d; E = e;
-      findRoots();
+      iter  = 0;
+      nreal = 0;
+      ncplx = 0;
+      // find roots only on finite values
+      if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) && isfinite(e) ) {
+        findRoots();
+      }
     }
 
     //!
@@ -1483,9 +1509,6 @@ namespace PolynomialRoots {
     dp  = dp * x + p;
     p   = p * x + d;
   }
-
-
-
 
   // x^3 + a*x^2 + b*x + c
   static

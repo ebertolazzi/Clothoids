@@ -279,7 +279,7 @@ namespace G2lib {
   real_type
   Triangle2D::distMin( real_type x, real_type y ) const {
 
-    int_type in = isInside( x, y );
+    integer in = isInside( x, y );
     if ( in >= 0 ) return 0;
 
 #if 0

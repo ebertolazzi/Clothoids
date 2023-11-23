@@ -46,8 +46,8 @@
 "    ClothoidListMexWrapper( 'push_back_G1', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
 "    ClothoidListMexWrapper( 'copy', OBJ, OBJ1 );\n" \
 "\n" \
-"    [s,theta,kappa] = ClothoidListMexWrapper( 'getSTK', OBJ );\n" \
-"    [x,y]           = ClothoidListMexWrapper( 'getXY', OBJ );\n" \
+"    [s,theta,kappa] = ClothoidListMexWrapper( 'get_STK', OBJ );\n" \
+"    [x,y]           = ClothoidListMexWrapper( 'get_XY', OBJ );\n" \
 "\n" \
 "  - Bounding Box:\n" \
 "    TT = ClothoidListMexWrapper( 'bbox', OBJ, max_angle, max_size );%\n" \
@@ -238,25 +238,25 @@ namespace G2lib {
 
   static
   void
-  do_getSTK(
+  do_get_STK(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('getSTK',OBJ): "
+    #define CMD "ClothoidListMexWrapper('get_STK',OBJ): "
 
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = {}\n", nlhs );
 
     ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
 
-    int_type n = ptr->num_segments();
+    integer n = ptr->num_segments();
 
     real_type * s     = Utils::mex_create_matrix_value( arg_out_0, 1, n+1 );
     real_type * theta = Utils::mex_create_matrix_value( arg_out_1, 1, n+1 );
     real_type * kappa = Utils::mex_create_matrix_value( arg_out_2, 1, n+1 );
 
-    ptr->getSTK( s, theta, kappa );
+    ptr->get_STK( s, theta, kappa );
 
     #undef CMD
   }
@@ -265,23 +265,23 @@ namespace G2lib {
 
   static
   void
-  do_getXY(
+  do_get_XY(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidListMexWrapper('getXY',OBJ): "
+    #define CMD "ClothoidListMexWrapper('get_XY',OBJ): "
 
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = {}\n", nlhs );
 
     ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
 
-    int_type    n = ptr->num_segments();
+    integer     n = ptr->num_segments();
     real_type * x = Utils::mex_create_matrix_value( arg_out_0, 1, n+1 );
     real_type * y = Utils::mex_create_matrix_value( arg_out_1, 1, n+1 );
 
-    ptr->getXY( x, y );
+    ptr->get_XY( x, y );
 
     #undef CMD
   }
@@ -396,8 +396,7 @@ namespace G2lib {
     real_type kappa1 = Utils::mex_get_scalar_value( arg_in_9, CMD "Error in reading `kappa1`" );
 
     G2solve3arc g2sol;
-    int_type iter = g2sol.build( x0, y0, theta0, kappa0,
-                                 x1, y1, theta1, kappa1 );
+    integer iter = g2sol.build( x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 );
     if ( iter >= 0 ) {
       ptr->init();
       ptr->reserve(3);
@@ -437,8 +436,7 @@ namespace G2lib {
     real_type kappa1 = Utils::mex_get_scalar_value( arg_in_9, CMD "Error in reading `kappa1`" );
 
     G2solve2arc g2sol;
-    int_type iter = g2sol.build( x0, y0, theta0, kappa0,
-                                 x1, y1, theta1, kappa1 );
+    integer iter = g2sol.build( x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 );
     if ( iter >= 0 ) {
       ptr->init();
       ptr->reserve(2);
@@ -477,8 +475,7 @@ namespace G2lib {
     real_type kappa1 = Utils::mex_get_scalar_value( arg_in_9, CMD "Error in reading `kappa1`" );
 
     G2solveCLC g2sol;
-    int_type iter = g2sol.build( x0, y0, theta0, kappa0,
-                                 x1, y1, theta1, kappa1 );
+    integer iter = g2sol.build( x0, y0, theta0, kappa0, x1, y1, theta1, kappa1 );
     if ( iter >= 0 ) {
       ptr->init();
       ptr->reserve(3);
@@ -723,10 +720,10 @@ namespace G2lib {
 
     ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
 
-    int_type nseg = ptr->num_segments();
+    integer nseg = ptr->num_segments();
 
     real_type * dtheta = Utils::mex_create_matrix_value( arg_out_0, nseg, 1 );
-    ptr->getDeltaTheta( dtheta );
+    ptr->get_delta_theta( dtheta );
 
     #undef CMD
   }
@@ -747,10 +744,10 @@ namespace G2lib {
 
     ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
 
-    int_type nseg = ptr->num_segments();
+    integer nseg = ptr->num_segments();
 
     real_type * dkappa = Utils::mex_create_matrix_value( arg_out_0, nseg, 1 );
-    ptr->getDeltaKappa( dkappa );
+    ptr->get_delta_kappa( dkappa );
 
     #undef CMD
   }
@@ -857,7 +854,7 @@ namespace G2lib {
 
     mwSize size = nrx*ncx;
     for ( mwSize i = 0; i < size; ++i ) {
-      int_type nseg = ptr->findST1( *x++, *y++, *s++, *t++ );
+      integer nseg = ptr->findST1( *x++, *y++, *s++, *t++ );
       *idx++ = nseg >= 0 ? nseg+1 : nseg;
     }
 
@@ -936,7 +933,7 @@ namespace G2lib {
     if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string" );
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
 
-    int_type  iflag, icurve;
+    integer iflag, icurve;
     real_type x, y, s, t, dst;
     if ( ISO ) {
       iflag = ptr->closest_point_in_range_ISO(
@@ -1022,7 +1019,7 @@ namespace G2lib {
     if ( nrhs == 7 ) ISO = do_is_ISO( arg_in_6, CMD " last argument must be a string" );
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
 
-    int_type  iflag, icurve;
+    integer iflag, icurve;
     real_type x, y, s, t, dst;
     if ( ISO ) {
       iflag = ptr->closest_point_in_s_range_ISO(
@@ -1152,8 +1149,8 @@ namespace G2lib {
     {"push_back",do_push_back},
     {"push_back_G1",do_push_back_G1},
     {"reserve",do_reserve},
-    {"getSTK",do_getSTK},
-    {"getXY",do_getXY},
+    {"get_STK",do_get_STK},
+    {"get_XY",do_get_XY},
     {"build_G1",do_build_G1},
     {"build_raw",do_build_raw},
     {"build_3arcG2",do_build_3arcG2},

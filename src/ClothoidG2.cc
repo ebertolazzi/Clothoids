@@ -117,10 +117,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::setTolerance( real_type tol ) {
+  G2solve2arc::set_tolerance( real_type tol ) {
     UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solve2arc::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+      "G2solve2arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol
     );
     tolerance = tol;
   }
@@ -128,10 +128,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::setMaxIter( int miter ) {
+  G2solve2arc::set_max_iter( int miter ) {
     UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solve2arc::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+      "G2solve2arc::set_max_iter( miter = {} ) must be in [1,1000]\n", miter
     );
     maxIter = miter;
   }
@@ -256,8 +256,8 @@ namespace G2lib {
   int
   G2solve2arc::solve() {
     Solve2x2 solver;
-    real_type X[2] = { 0.5, 2 };
-    int iter = 0;
+    real_type X[2]{ 0.5, 2 };
+    integer   iter{0};
     bool converged = false;
     do {
       real_type F[2], J[2][2], d[2];
@@ -376,10 +376,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solveCLC::setTolerance( real_type tol ) {
+  G2solveCLC::set_tolerance( real_type tol ) {
     UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solveCLC::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+      "G2solveCLC::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol
     );
     tolerance = tol;
   }
@@ -387,10 +387,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solveCLC::setMaxIter( int miter ) {
+  G2solveCLC::set_max_iter( int miter ) {
     UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solveCLC::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+      "G2solveCLC::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter
     );
     maxIter = miter;
   }
@@ -400,8 +400,8 @@ namespace G2lib {
   int
   G2solveCLC::solve() {
     real_type X0[3], Y0[3], X1[3], Y1[3];
-    real_type thM = 0, sM = 0.0;
-    int iter = 0;
+    real_type thM{0}, sM{0};
+    integer   iter{0};
     bool converged = false;
     do {
       real_type D0 = thM - th0;
@@ -481,10 +481,10 @@ namespace G2lib {
   \*/
 
   void
-  G2solve3arc::setTolerance( real_type tol ) {
+  G2solve3arc::set_tolerance( real_type tol ) {
     UTILS_ASSERT(
       tol > 0 && tol <= 0.1,
-      "G2solve3arc::setTolerance, tolerance = {} must be in (0,0.1]\n", tol
+      "G2solve3arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol
     );
     tolerance = tol;
   }
@@ -492,10 +492,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::setMaxIter( int miter ) {
+  G2solve3arc::set_max_iter( int miter ) {
     UTILS_ASSERT(
       miter > 0 && miter <= 1000,
-      "G2solve3arc::setMaxIter, maxIter = {} must be in [1,1000]\n", miter
+      "G2solve3arc::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter
     );
     maxIter = miter;
   }
@@ -800,8 +800,8 @@ namespace G2lib {
     //real_type thmin = min(th0,th1)-2*m_2pi;
     //real_type thmax = max(th0,th1)+2*m_2pi;
 
-    int iter = 0;
-    bool converged = false;
+    integer iter{0};
+    bool converged{false};
     try {
       do {
         evalFJ(X, F, J);
@@ -924,13 +924,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  G2solve3arc::curvatureMinMax( real_type & kMin, real_type & kMax ) const {
+  G2solve3arc::curvature_min_max( real_type & kMin, real_type & kMax ) const {
     real_type kMin1, kMax1;
-    S0.curvatureMinMax( kMin,  kMax );
-    S1.curvatureMinMax( kMin1, kMax1 );
+    S0.curvature_min_max( kMin,  kMax );
+    S1.curvature_min_max( kMin1, kMax1 );
     if ( kMin > kMin1 ) kMin = kMin1;
     if ( kMax < kMax1 ) kMax = kMax1;
-    SM.curvatureMinMax( kMin1, kMax1 );
+    SM.curvature_min_max( kMin1, kMax1 );
     if ( kMin > kMin1 ) kMin = kMin1;
     if ( kMax < kMax1 ) kMax = kMax1;
     return kMax-kMin;
@@ -1227,7 +1227,7 @@ namespace G2lib {
   ClothoidSplineG2::build(
     real_type const * xvec,
     real_type const * yvec,
-    int_type          n
+    integer           n
   ) {
     m_npts = n;
     size_t n1 = size_t(n-1);
@@ -1252,12 +1252,12 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   ClothoidSplineG2::numTheta() const { return m_npts; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   ClothoidSplineG2::numConstraints() const {
     switch (m_tt) {
       case TargetType::P1:
@@ -1275,8 +1275,8 @@ namespace G2lib {
     real_type       & f
   ) const {
     ClothoidCurve cL, cR, c;
-    int_type ne  = m_npts - 1;
-    int_type ne1 = m_npts - 2;
+    integer ne  = m_npts - 1;
+    integer ne1 = m_npts - 2;
     switch (m_tt) {
     case TargetType::P1:
     case TargetType::P2:
@@ -1300,14 +1300,14 @@ namespace G2lib {
       break;
     case TargetType::P6:
       f = 0;
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         f += c.length();
       }
       break;
     case TargetType::P7:
       f = 0;
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
         real_type kur  = c.kappa_begin();
@@ -1317,7 +1317,7 @@ namespace G2lib {
       break;
     case TargetType::P8:
       f = 0;
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
         real_type dkur = c.dkappa();
@@ -1326,7 +1326,7 @@ namespace G2lib {
       break;
     case TargetType::P9:
       f = 0;
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         c.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
         real_type Len  = c.length();
         real_type kur  = c.kappa_begin();
@@ -1354,8 +1354,8 @@ namespace G2lib {
     real_type     LL_D[2], kL_D[2], dkL_D[2];
     real_type     LR_D[2], kR_D[2], dkR_D[2];
     std::fill_n( g, m_npts, 0 );
-    int_type ne  = m_npts - 1;
-    int_type ne1 = m_npts - 2;
+    integer ne  = m_npts - 1;
+    integer ne1 = m_npts - 2;
     switch (m_tt) {
     case TargetType::P1:
     case TargetType::P2:
@@ -1399,7 +1399,7 @@ namespace G2lib {
       g[ne]  = LR_D[1];
       break;
     case TargetType::P6:
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
           m_x[j],   m_y[j],   theta[j],
@@ -1411,7 +1411,7 @@ namespace G2lib {
       }
       break;
     case TargetType::P7:
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
           m_x[j],   m_y[j],   theta[j],
@@ -1442,7 +1442,7 @@ namespace G2lib {
       }
       break;
     case TargetType::P8:
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
           m_x[j],   m_y[j],   theta[j],
@@ -1456,7 +1456,7 @@ namespace G2lib {
       }
       break;
     case TargetType::P9:
-      for ( int_type j = 0; j < ne; ++j ) {
+      for ( integer j = 0; j < ne; ++j ) {
         real_type L_D[2], k_D[2], dk_D[2];
         c.build_G1_D(
           m_x[j],   m_y[j],   theta[j],
@@ -1489,10 +1489,10 @@ namespace G2lib {
     real_type       * c
   ) const {
     ClothoidCurve cc;
-    int_type ne  = m_npts - 1;
-    int_type ne1 = m_npts - 2;
+    integer ne  = m_npts - 1;
+    integer ne1 = m_npts - 2;
 
-    for ( int_type j = 0; j < ne; ++j ) {
+    for ( integer j = 0; j < ne; ++j ) {
       cc.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
       m_k[j]  = cc.kappa_begin();
       m_dk[j] = cc.dkappa();
@@ -1500,7 +1500,7 @@ namespace G2lib {
       m_kL[j] = m_k[j]+m_dk[j]*m_L[j];
     }
 
-    for ( int_type j = 0; j < ne1; ++j ) c[j] = m_kL[j]-m_k[j+1];
+    for ( integer j = 0; j < ne1; ++j ) c[j] = m_kL[j]-m_k[j+1];
 
     switch (m_tt) {
     case TargetType::P1:
@@ -1519,9 +1519,9 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   ClothoidSplineG2::jacobian_nnz() const {
-    int_type nnz = 3*(m_npts-2);
+    integer nnz = 3*(m_npts-2);
     switch (m_tt) {
     case TargetType::P1: nnz += 2; break;
     case TargetType::P2: nnz += 6; break;
@@ -1534,15 +1534,15 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::jacobian_pattern(
-    int_type * ii,
-    int_type * jj
+    integer * ii,
+    integer * jj
   ) const {
     ClothoidCurve cc;
-    int_type ne  = m_npts - 1;
-    int_type ne1 = m_npts - 2;
+    integer ne  = m_npts - 1;
+    integer ne1 = m_npts - 2;
 
-    int_type kk = 0;
-    for ( int_type j = 0; j < ne1; ++j ) {
+    integer kk = 0;
+    for ( integer j = 0; j < ne1; ++j ) {
       ii[kk] = j; jj[kk] = j; ++kk;
       ii[kk] = j; jj[kk] = j+1; ++kk;
       ii[kk] = j; jj[kk] = j+2; ++kk;
@@ -1576,11 +1576,11 @@ namespace G2lib {
     real_type * jj
   ) const {
     ClothoidCurve cc;
-    int_type ne  = m_npts - 1;
-    int_type ne1 = m_npts - 2;
+    integer ne  = m_npts - 1;
+    integer ne1 = m_npts - 2;
 
-    int_type kk = 0;
-    for ( int_type j = 1; j <= ne1; ++j ) {
+    integer kk = 0;
+    for ( integer j = 1; j <= ne1; ++j ) {
       ii[kk] = j; jj[kk] = j;   ++kk;
       ii[kk] = j; jj[kk] = j+1; ++kk;
       ii[kk] = j; jj[kk] = j+2; ++kk;
@@ -1614,10 +1614,10 @@ namespace G2lib {
     real_type       * vals
   ) const {
     ClothoidCurve cc;
-    int_type ne  = m_npts - 1;
-    int_type ne1 = m_npts - 2;
+    integer ne  = m_npts - 1;
+    integer ne1 = m_npts - 2;
 
-    for ( int_type j = 0; j < ne; ++j ) {
+    for ( integer j = 0; j < ne; ++j ) {
       real_type L_D[2], k_D[2], dk_D[2];
       cc.build_G1_D(
         m_x[j],   m_y[j],   theta[j],
@@ -1633,8 +1633,8 @@ namespace G2lib {
       m_dk_1[j] = dk_D[0]; m_dk_2[j] = dk_D[1];
     }
 
-    int_type kk = 0;
-    for ( int_type j = 0; j < ne1; ++j ) {
+    integer kk{0};
+    for ( integer j = 0; j < ne1; ++j ) {
       vals[kk++] =  m_k_1[j] + m_dk_1[j]*m_L[j] + m_dk[j]*m_L_1[j];
       vals[kk++] =  m_k_2[j] + m_dk_2[j]*m_L[j] + m_dk[j]*m_L_2[j] - m_k_1[j+1];
       vals[kk++] = -m_k_2[j+1];

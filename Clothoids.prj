@@ -6,7 +6,7 @@
     <param.company>Unversità degli Studi di Trento</param.company>
     <param.summary>Clothoids, a library for clothoids computation and more</param.summary>
     <param.description>A library for clothoids computation and more.</param.description>
-    <param.screenshot>${PROJECT_ROOT}/toolbox/logo.png</param.screenshot>
+    <param.screenshot>${PROJECT_ROOT}/logo.jpeg</param.screenshot>
     <param.version>2.0.12</param.version>
     <param.output>${PROJECT_ROOT}/Clothoids.mltbx</param.output>
     <param.products.name />
@@ -101,6 +101,7 @@ setup.m
       <file>${PROJECT_ROOT}/toolbox/CMakeLists.txt</file>
       <file>${PROJECT_ROOT}/toolbox/bin</file>
       <file>${PROJECT_ROOT}/toolbox/build</file>
+      <file>${PROJECT_ROOT}/toolbox/build.rb</file>
       <file>${PROJECT_ROOT}/toolbox/cmake_utils</file>
       <file>${PROJECT_ROOT}/toolbox/demos.xml</file>
       <file>${PROJECT_ROOT}/toolbox/doc</file>
@@ -166,7 +167,7 @@ setup.m
       <vista>false</vista>
       <linux>false</linux>
       <solaris>false</solaris>
-      <osver>13.1</osver>
+      <osver>14.0</osver>
       <os32>false</os32>
       <os64>true</os64>
       <arch>maci64</arch>

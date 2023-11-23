@@ -128,7 +128,7 @@ namespace G2lib {
         :rtype: Tuple[Tuple[float, float], Tuple[float, float]]
       )S")
 
-      .def("bbTriangles", [](const BaseCurve & self, real_type max_angle, real_type max_size, int_type icurve) {
+      .def("bbTriangles", [](const BaseCurve & self, real_type max_angle, real_type max_size, integer icurve) {
         std::vector<Triangle2D> tvec;
         self.bbTriangles(tvec, max_angle, max_size, icurve);
         return tvec;
@@ -143,7 +143,7 @@ namespace G2lib {
         :rtype: List[Triangle2D]
       )S")
 
-      .def("bbTriangles_ISO", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, int_type icurve) {
+      .def("bbTriangles_ISO", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, integer icurve) {
         std::vector<Triangle2D> tvec;
         self.bbTriangles_ISO(offs, tvec, max_angle, max_size, icurve);
         return tvec;
@@ -160,7 +160,7 @@ namespace G2lib {
         :rtype: List[Triangle2D]
       )S")
 
-      .def("bbTriangles_SAE", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, int_type icurve) {
+      .def("bbTriangles_SAE", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, integer icurve) {
         std::vector<Triangle2D> tvec;
         self.bbTriangles_SAE(offs, tvec, max_angle, max_size, icurve);
         return tvec;
@@ -1765,7 +1765,7 @@ namespace G2lib {
       )S")
 
       .def("closestPoint", [](const BaseCurve & self, real_type qx, real_type qy) {
-        int_type ret;
+        integer ret;
         real_type x, y, s, t, dst;
         ret = self.closest_point_ISO(qx, qy, x, y, s, t, dst);
         return std::make_tuple(ret, x, y, s, t, dst);
@@ -1793,7 +1793,7 @@ namespace G2lib {
 
       .def("closestPoint", [](const BaseCurve & self, const std::vector<real_type> & qx, const std::vector<real_type> & qy) {
         const size_t n = std::min(qx.size(), qy.size());
-        std::vector<int_type> ret(n);
+        std::vector<integer> ret(n);
         std::vector<real_type> x(n), y(n), s(n), t(n), dst(n);
         for (size_t i = 0; i < n; i++) {
           ret[i] = self.closest_point_ISO(qx[i], qy[i], x[i], y[i], s[i], t[i], dst[i]);
@@ -1823,7 +1823,7 @@ namespace G2lib {
       )S")
 
       .def("closestPoint_ISO", [](const BaseCurve & self, real_type qx, real_type qy) {
-        int_type ret;
+        integer ret;
         real_type x, y, s, t, dst;
         ret = self.closest_point_ISO(qx, qy, x, y, s, t, dst);
         return std::make_tuple(ret, x, y, s, t, dst);
@@ -1851,7 +1851,7 @@ namespace G2lib {
       )S")
 
       .def("closestPoint_SAE", [](const BaseCurve & self, real_type qx, real_type qy) {
-        int_type ret;
+        integer ret;
         real_type x, y, s, t, dst;
         ret = self.closest_point_SAE(qx, qy, x, y, s, t, dst);
         return std::make_tuple(ret, x, y, s, t, dst);

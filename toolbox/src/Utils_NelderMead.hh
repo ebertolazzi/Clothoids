@@ -195,9 +195,10 @@ namespace Utils {
     bool search();
     bool run( Real const x_sol[], Real h );
 
-    void
+    Real
     get_last_solution( Real x[] ) const {
       std::copy_n( m_p.col(m_low).data(), m_dim, x );
+      return m_f.coeff(m_low);
     }
 
     Real get_better_value() const { return m_f.coeff(m_low); }

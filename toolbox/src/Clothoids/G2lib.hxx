@@ -34,8 +34,8 @@ namespace G2lib {
   extern real_type const machepsi1000; //!< \f$ 1000\varepsilon \f$
   extern real_type const sqrtMachepsi; //!< \f$ \sqrt{\varepsilon} \f$
   extern bool            intersect_with_AABBtree;
-  extern int_type const  G2LIB_AABB_CUT;
-  extern int_type const  G2LIB_AABB_MIN_NODES;
+  extern integer const  G2LIB_AABB_CUT;
+  extern integer const  G2LIB_AABB_MIN_NODES;
 
   #ifdef G2LIB_COMPATIBILITY_MODE
 
@@ -223,7 +223,7 @@ namespace G2lib {
   //! \param[out] y y-coordinates of the solutions
   //! \return the number of solution 0, 1 or 2
   //!
-  int_type
+  integer
   solveLinearQuadratic(
     real_type   A,
     real_type   B,
@@ -248,7 +248,7 @@ namespace G2lib {
   //! \param[out] y y-coordinates of the solutions
   //! \return the number of solution 0, 1 or 2
   //!
-  int_type
+  integer
   solveLinearQuadratic2(
     real_type   A,
     real_type   B,
@@ -280,7 +280,7 @@ namespace G2lib {
   //!
   //! \return the number of solution 0, 1 or 2
   //!
-  int_type
+  integer
   intersectCircleCircle(
     real_type   x1,
     real_type   y1,
@@ -306,7 +306,7 @@ namespace G2lib {
   //! to manage singular and near singular cases
   //!
   class Solve2x2 {
-    int_type  i[2], j[2];
+    integer   i[2], j[2];
     real_type LU[2][2];
     real_type epsi;
     bool      singular;
@@ -355,7 +355,7 @@ namespace G2lib {
   //!
   //!  Algorithm from FileExchage geom2d adapated from Sedgewick's book.
   //!
-  int_type
+  integer
   isCounterClockwise(
     real_type const * P1,
     real_type const * P2,
@@ -374,7 +374,7 @@ namespace G2lib {
   //!         return -1 = Outsize
   //!         return  0 = on border
   //!
-  int_type
+  integer
   isPointInTriangle(
     real_type const * pt,
     real_type const * P1,
@@ -414,7 +414,7 @@ namespace G2lib {
   //!
   void
   xy_to_guess_angle(
-    int_type          npts,
+    integer           npts,
     real_type const * x,
     real_type const * y,
     real_type       * theta,

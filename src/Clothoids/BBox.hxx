@@ -53,8 +53,8 @@ namespace G2lib {
 
   private:
     real_type m_bbox[4]{0,0,0,0}; //!< [ xmin ymin xmax ymax ]
-    int_type  m_id{0};            //!< id of the bbox
-    int_type  m_ipos{0};          //!< rank of the bounding box used in external algorithms
+    integer   m_id{0};            //!< id of the bbox
+    integer   m_ipos{0};          //!< rank of the bounding box used in external algorithms
 
     BBox();
 
@@ -78,8 +78,8 @@ namespace G2lib {
       real_type ymin,
       real_type xmax,
       real_type ymax,
-      int_type  id,
-      int_type  ipos
+      integer   id,
+      integer   ipos
     ) {
       m_bbox[0] = xmin;
       m_bbox[1] = ymin;
@@ -98,8 +98,8 @@ namespace G2lib {
     //!
     BBox(
       real_type const bbox[4],
-      int_type        id,
-      int_type        ipos
+      integer         id,
+      integer         ipos
     ) {
       std::copy_n( bbox, 4, m_bbox );
       m_id   = id;
@@ -116,8 +116,8 @@ namespace G2lib {
     BBox(
       real_type const bbox_min[2],
       real_type const bbox_max[2],
-      int_type        id,
-      int_type        ipos
+      integer         id,
+      integer         ipos
     ) {
       std::copy_n( bbox_min, 2, m_bbox   );
       std::copy_n( bbox_max, 2, m_bbox+2 );
@@ -134,8 +134,8 @@ namespace G2lib {
     //!
     BBox(
       vector<PtrBBox> const & bboxes,
-      int_type                id,
-      int_type                ipos
+      integer                 id,
+      integer                 ipos
     ) {
       m_id   = id;
       m_ipos = ipos;
@@ -158,8 +158,8 @@ namespace G2lib {
     real_type const & x_max() const { return m_bbox[2]; } //!< x-maximum coordinate of the bbox
     real_type const & y_max() const { return m_bbox[3]; } //!< y-maximum coordinate of the bbox
 
-    int_type const & Id()   const { return m_id; }   //!< return BBOX id
-    int_type const & Ipos() const { return m_ipos; } //!< return BBOX position
+    integer const & Id()   const { return m_id; }   //!< return BBOX id
+    integer const & Ipos() const { return m_ipos; } //!< return BBOX position
 
     //!
     //! copy a bbox

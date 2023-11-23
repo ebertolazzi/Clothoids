@@ -46,8 +46,8 @@
 "    BiarcListMexWrapper( 'push_back_G1', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
 "    BiarcListMexWrapper( 'copy', OBJ, OBJ1 );\n" \
 "\n" \
-"    [s,theta,kappa] = BiarcListMexWrapper( 'getSTK', OBJ );\n" \
-"    [x,y]           = BiarcListMexWrapper( 'getXY', OBJ );\n" \
+"    [s,theta,kappa] = BiarcListMexWrapper( 'get_STK', OBJ );\n" \
+"    [x,y]           = BiarcListMexWrapper( 'get_XY', OBJ );\n" \
 "\n" \
 "  - Bounding Box:\n" \
 "    TT = BiarcListMexWrapper( 'bbox', OBJ, max_angle, max_size );%\n" \
@@ -166,25 +166,25 @@ namespace G2lib {
 
   static
   void
-  do_getSTK(
+  do_get_STK(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "BiarcListMexWrapper('getSTK',OBJ): "
+    #define CMD "BiarcListMexWrapper('get_STK',OBJ): "
 
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>(arg_in_1);
 
-    int_type n = ptr->num_segments();
+    integer n = ptr->num_segments();
 
     real_type * s     = Utils::mex_create_matrix_value( arg_out_0, 1, n+1 );
     real_type * theta = Utils::mex_create_matrix_value( arg_out_1, 1, n+1 );
     real_type * kappa = Utils::mex_create_matrix_value( arg_out_2, 1, n+1 );
 
-    ptr->getSTK( s, theta, kappa );
+    ptr->get_STK( s, theta, kappa );
 
     #undef CMD
   }
@@ -193,23 +193,23 @@ namespace G2lib {
 
   static
   void
-  do_getXY(
+  do_get_XY(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "BiarcListMexWrapper('getXY',OBJ): "
+    #define CMD "BiarcListMexWrapper('get_XY',OBJ): "
 
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>(arg_in_1);
 
-    int_type    n = ptr->num_segments();
+    integer     n = ptr->num_segments();
     real_type * x = Utils::mex_create_matrix_value( arg_out_0, 1, n+1 );
     real_type * y = Utils::mex_create_matrix_value( arg_out_1, 1, n+1 );
 
-    ptr->getXY( x, y );
+    ptr->get_XY( x, y );
 
     #undef CMD
   }
@@ -392,7 +392,7 @@ namespace G2lib {
 
     mwSize size = nrx*ncx;
     for ( mwSize i = 0; i < size; ++i ) {
-      int_type nseg = ptr->findST1( *x++, *y++, *s++, *t++ );
+      integer nseg = ptr->findST1( *x++, *y++, *s++, *t++ );
       *idx++ = nseg >= 0 ? nseg+1 : nseg;
     }
 
@@ -405,8 +405,8 @@ namespace G2lib {
     {"new",do_new},
     {"push_back_G1",do_push_back_G1},
     {"reserve",do_reserve},
-    {"getSTK",do_getSTK},
-    {"getXY",do_getXY},
+    {"get_STK",do_get_STK},
+    {"get_XY",do_get_XY},
     {"build_G1",do_build_G1},
     {"build_theta",do_build_theta},
     {"get",do_get},

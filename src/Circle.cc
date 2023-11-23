@@ -460,12 +460,12 @@ namespace G2lib {
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
-    int_type             icurve
+    integer              icurve
   ) const {
     real_type dtheta = abs( min(m_L,max_size) * m_k);
-    int_type  n      = 1;
+    integer   n      = 1;
     if ( dtheta > max_angle ) {
-      n       = int_type(ceil( dtheta/max_angle ));
+      n       = integer(ceil( dtheta/max_angle ));
       dtheta /= n;
     }
     real_type tg = tan(dtheta/2)/2;
@@ -475,7 +475,7 @@ namespace G2lib {
     real_type yy0 = m_y0;
     real_type ds  = m_L/n;
     real_type ss  = ds;
-    for ( int_type iter = 0; iter < n; ++iter, ss += ds ) {
+    for ( integer iter = 0; iter < n; ++iter, ss += ds ) {
       real_type xx2, yy2;
       eval( ss, xx2, yy2 );
       real_type xx1 = (xx0+xx2)/2;
@@ -498,13 +498,13 @@ namespace G2lib {
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
-    int_type             icurve
+    integer              icurve
   ) const {
     real_type scale  = 1+m_k*offs;
     real_type dtheta = abs( min(m_L,max_size/scale) * m_k );
-    int_type  n      = 1;
+    integer   n      = 1;
     if ( dtheta > max_angle ) {
-      n       = int_type(ceil( dtheta/max_angle ));
+      n       = integer(ceil( dtheta/max_angle ));
       dtheta /= n;
     }
     tvec.reserve( size_t(n) );
@@ -514,7 +514,7 @@ namespace G2lib {
     if ( m_k < 0 ) tg = -tg;
     real_type xx0, yy0;
     eval_ISO( 0, offs, xx0, yy0 );
-    for ( int_type iter = 0; iter < n; ++iter, ss += ds ) {
+    for ( integer iter = 0; iter < n; ++iter, ss += ds ) {
       real_type xx2, yy2;
       eval_ISO( ss, offs, xx2, yy2 );
       real_type xx1 = (xx0+xx2)/2;
@@ -541,7 +541,7 @@ namespace G2lib {
     vector<Triangle2D> tvec;
     this->bbTriangles( tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
-    for ( int_type iter = 1; iter < int_type(tvec.size()); ++iter ) {
+    for ( integer iter = 1; iter < integer(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
       tvec[size_t(iter)].bbox( xmin1, ymin1, xmax1, ymax1 );
       if ( xmin1 < xmin ) xmin = xmin1;
@@ -564,7 +564,7 @@ namespace G2lib {
     vector<Triangle2D> tvec;
     this->bbTriangles_ISO( offs, tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
-    for ( int_type iter = 1; iter < int_type(tvec.size()); ++iter ) {
+    for ( integer iter = 1; iter < integer(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
       tvec[size_t(iter)].bbox( xmin1, ymin1, xmax1, ymax1 );
       if ( xmin1 < xmin ) xmin = xmin1;
@@ -587,13 +587,13 @@ namespace G2lib {
   bool
   CircleArc::collision( CircleArc const & C ) const {
     real_type s1[2], s2[2];
-    int_type ni = intersectCircleCircle(
+    integer ni = intersectCircleCircle(
       m_x0, m_y0, m_theta0, m_k,
       C.m_x0, C.m_y0, C.m_theta0, C.m_k, s1, s2
     );
     real_type eps1 = machepsi100*m_L;
     real_type eps2 = machepsi100*C.m_L;
-    for ( int_type i = 0; i < ni; ++i ) {
+    for ( integer i = 0; i < ni; ++i ) {
       if ( s1[i] >= -eps1 && s1[i] <= m_L+eps1 &&
            s2[i] >= -eps2 && s2[i] <= m_L+eps2 )
         return true;
@@ -630,7 +630,7 @@ namespace G2lib {
     real_type s1[2], s2[2];
     real_type sc1 = 1+m_k*offs;
     real_type sc2 = 1+C.m_k*offs_C;
-    int_type ni = intersectCircleCircle(
+    integer ni = intersectCircleCircle(
       this->X_ISO(0,offs),
       this->Y_ISO(0,offs),
       m_theta0,
@@ -643,7 +643,7 @@ namespace G2lib {
     );
     real_type eps1 = machepsi100*m_L;
     real_type eps2 = machepsi100*C.m_L;
-    for ( int_type i = 0; i < ni; ++i ) {
+    for ( integer i = 0; i < ni; ++i ) {
       real_type ss1 = s1[i]/sc1;
       real_type ss2 = s2[i]/sc2;
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
@@ -683,13 +683,13 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     real_type s1[2], s2[2];
-    int_type ni = intersectCircleCircle(
+    integer ni = intersectCircleCircle(
       m_x0, m_y0, m_theta0, m_k,
       C.m_x0, C.m_y0, C.m_theta0, C.m_k, s1, s2
     );
     real_type eps1 = machepsi100*m_L;
     real_type eps2 = machepsi100*C.m_L;
-    for ( int_type i = 0; i < ni; ++i ) {
+    for ( integer i = 0; i < ni; ++i ) {
       real_type ss1 = s1[i];
       real_type ss2 = s2[i];
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
@@ -711,7 +711,7 @@ namespace G2lib {
     real_type s1[2], s2[2];
     real_type sc1 = 1+m_k*offs;
     real_type sc2 = 1+C.m_k*offs_C;
-    int_type ni = intersectCircleCircle(
+    integer   ni  = intersectCircleCircle(
       this->X_ISO(0,offs),
       this->Y_ISO(0,offs),
       m_theta0,
@@ -724,7 +724,7 @@ namespace G2lib {
     );
     real_type eps1 = machepsi100*m_L;
     real_type eps2 = machepsi100*C.m_L;
-    for ( int_type i = 0; i < ni; ++i ) {
+    for ( integer i = 0; i < ni; ++i ) {
       real_type ss1 = s1[i]/sc1;
       real_type ss2 = s2[i]/sc2;
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
@@ -782,7 +782,7 @@ namespace G2lib {
    |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
   \*/
 
-  int_type
+  integer
   CircleArc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
@@ -795,7 +795,7 @@ namespace G2lib {
     real_type cc0 = cos(m_theta0);
     real_type ss0 = sin(m_theta0);
     s = projectPointOnCircleArc( m_x0, m_y0, cc0, ss0, m_k, m_L, qx, qy );
-    int_type res = 1;
+    integer res = 1;
     if ( s < 0 || s > m_L ) {
       s = m_L;
       t = 0;
@@ -825,7 +825,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   CircleArc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
@@ -838,12 +838,12 @@ namespace G2lib {
   ) const  {
     real_type cc0 = cos(m_theta0);
     real_type ss0 = sin(m_theta0);
-    real_type xx0 = m_x0+offs*nx_Begin_ISO();
-    real_type yy0 = m_y0+offs*ny_Begin_ISO();
+    real_type xx0 = m_x0+offs*nx_begin_ISO();
+    real_type yy0 = m_y0+offs*ny_begin_ISO();
     real_type ff  = 1+m_k*offs;
     real_type LL  = m_L*ff;
     s = projectPointOnCircleArc( xx0, yy0, cc0, ss0, m_k/ff, LL, qx, qy );
-    int_type res = 1;
+    integer res = 1;
     if ( s < 0 || s > LL ) {
       s = m_L;
       eval_ISO( s, offs, x, y );
@@ -874,11 +874,11 @@ namespace G2lib {
 
   void
   CircleArc::paramNURBS(
-    int_type & n_knots,
-    int_type & n_pnts
+    integer & n_knots,
+    integer & n_pnts
   ) const {
     real_type dtheta = m_L*m_k;
-    int_type  ns     = int_type(floor(3*abs(dtheta)/Utils::m_pi));
+    integer   ns     = integer(floor(3*abs(dtheta)/Utils::m_pi));
     if ( ns < 1 ) ns = 1;
     n_pnts  = 1+2*ns;
     n_knots = n_pnts+3;
@@ -893,7 +893,7 @@ namespace G2lib {
   ) const {
 
     real_type dtheta = m_L*m_k;
-    int_type  ns     = int_type(floor(3*abs(dtheta)/Utils::m_pi));
+    integer   ns     = integer(floor(3*abs(dtheta)/Utils::m_pi));
     if ( ns < 1 ) ns = 1;
 
     real_type th = dtheta/(2*ns);
@@ -909,10 +909,10 @@ namespace G2lib {
     Poly[0][1] = p0[1];
     Poly[0][2] = 1;
 
-    real_type s  = 0;
-    real_type ds = m_L/ns;
-    int_type  kk = 0;
-    for ( int_type i = 0; i < ns; ++i ) {
+    real_type s{0};
+    real_type ds{m_L/ns};
+    integer   kk{0};
+    for ( integer i = 0; i < ns; ++i ) {
       s += ds;
       eval( s, p2[0], p2[1] );
 
@@ -944,7 +944,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  CircleArc::lenTolerance( real_type tol ) const {
+  CircleArc::len_tolerance( real_type tol ) const {
     real_type absk = abs(m_k);
     real_type tmp  = absk*tol;
     if ( tmp > 0 ) {
@@ -960,12 +960,15 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, CircleArc const & c ) {
     fmt::print( stream,
-      "x0     = {}\n"
-      "y0     = {}\n"
-      "theta0 = {}\n"
-      "k      = {}\n"
-      "L      = {}\n",
-      c.m_x0, c.m_y0, c.m_theta0, c.m_k, c.m_L
+      "x     = {} : {}\n"
+      "y     = {} : {}\n"
+      "theta = {} : {}\n"
+      "k     = {}\n"
+      "L     = {}\n",
+      c.m_x0,     c.x_end(),
+      c.m_y0,     c.y_end(),
+      c.m_theta0, c.theta_end(),
+      c.m_k, c.m_L
     );
     return stream;
   }

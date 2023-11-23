@@ -2,7 +2,7 @@
 #include "Clothoids.hh"
 
 using G2lib::real_type;
-using G2lib::int_type;
+using G2lib::integer;
 using namespace std;
 
 int
@@ -20,7 +20,7 @@ main() {
   G2lib::Triangle2D T1;
   T1.build( x0, y0, x1, y1, x2, y2, 0, 0, 0 );
 
-  int_type icode = T1.isInside( T1.baricenterX(), T1.baricenterY() );
+  integer icode = T1.isInside( T1.baricenterX(), T1.baricenterY() );
 
   fmt::print( "icode = {}\n", icode );
 

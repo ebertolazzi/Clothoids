@@ -3,7 +3,7 @@
 
 using namespace std;
 using G2lib::real_type;
-using G2lib::int_type;
+using G2lib::integer;
 
 int
 main() {

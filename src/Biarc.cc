@@ -173,9 +173,9 @@ namespace G2lib {
     real_type at = (La/(La+Lb))*om;
     real_type bt = (Lb/(La+Lb))*om;
     // find solution using Halley
-    real_type Delta = 0;
+    real_type Delta{0};
     bool found = false;
-    for ( int_type iter = 0; iter < 10 && !found; ++iter ) {
+    for ( integer iter = 0; iter < 10 && !found; ++iter ) {
       real_type ga[3], gb[3];
       gfun( at+Delta, ga );
       gfun( bt-Delta, gb );
@@ -834,7 +834,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   Biarc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
@@ -845,8 +845,8 @@ namespace G2lib {
     real_type & dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    int_type res  = m_C0.closest_point_ISO( qx, qy, x,  y,  s,  t,  dst  );
-    int_type res1 = m_C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 );
+    integer res  = m_C0.closest_point_ISO( qx, qy, x,  y,  s,  t,  dst  );
+    integer res1 = m_C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 );
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -900,7 +900,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  int_type
+  integer
   Biarc::closest_point_ISO(
     real_type   qx,
     real_type   qy,
@@ -912,8 +912,8 @@ namespace G2lib {
     real_type & dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    int_type res  = m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
-    int_type res1 = m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
+    integer res  = m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
+    integer res1 = m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -929,7 +929,7 @@ namespace G2lib {
 
   bool
   build_guess_theta(
-    int_type          n,
+    integer           n,
     real_type const * x,
     real_type const * y,
     real_type       * theta
@@ -947,7 +947,7 @@ namespace G2lib {
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
         theta[0] = theta[n-1] = b.theta_middle();
       }
-      for ( int_type k = 1; k < n-1; ++k ) {
+      for ( integer k = 1; k < n-1; ++k ) {
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
         theta[k] = b.theta_middle();

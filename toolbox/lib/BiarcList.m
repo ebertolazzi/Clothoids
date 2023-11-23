@@ -123,11 +123,11 @@ classdef BiarcList < CurveBase
     %> \rst
     %> .. code-block:: matlab
     %>
-    %>   [ x, y ] = ref.getXY();
+    %>   [ x, y ] = ref.get_XY();
     %> \endrst
     %>
-    function [ x, y ] = getXY( self )
-      [ x, y ] = BiarcListMexWrapper( 'getXY', self.objectHandle );
+    function [ x, y ] = get_XY( self )
+      [ x, y ] = BiarcListMexWrapper( 'get_XY', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return number of biarc in the list

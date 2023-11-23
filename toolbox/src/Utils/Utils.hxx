@@ -152,9 +152,9 @@
   #include "mingw-std-threads/mingw.thread.h"
   #include "mingw-std-threads/mingw.condition_variable.h"
 #else
-  //#include <future>
+  #include <future>
   #include <mutex>
-  //#include <shared_mutex>
+  #include <shared_mutex>
   #include <thread>
   #include <condition_variable>
   #include <atomic>
@@ -376,6 +376,11 @@ namespace Utils {
     N |= N >> 32;
     return tab64[uint64_t((N - (N>>1))*0x07EDD5E59A4E28C2) >> 58];
   }
+
+  string progress_bar( double progress, int width );
+  void   progress_bar( ostream &, double progress, int width, char const * msg );
+  void   progress_bar2( ostream &, double progress, int width, char const * msg );
+
 }
 
 ///

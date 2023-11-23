@@ -86,22 +86,22 @@ namespace G2lib {
      |   0          1          2
      |
     \*/
-    int_type icase = 4;
+    integer icase = 4;
     if      ( x < x_min() ) icase = 3;
     else if ( x > x_max() ) icase = 5;
     if      ( y < y_min() ) icase -= 3;
     else if ( y > y_max() ) icase += 3;
-    real_type dst = 0;
+    real_type dst{0};
     switch ( icase ) {
-      case 0: dst = hypot( x-x_min(), y-y_min()); break;
-      case 1: dst = y_min()-y;                    break;
-      case 2: dst = hypot( x-x_max(), y-y_min()); break;
-      case 3: dst = x_min()-x;                    break;
-      case 4:                                     break;
-      case 5: dst = x-x_max();                    break;
-      case 6: dst = hypot( x-x_min(), y-y_max()); break;
-      case 7: dst = y-y_max();                    break;
-      case 8: dst = hypot( x-x_max(), y-y_max()); break;
+      case 0: dst = hypot( x-x_min(), y-y_min() ); break;
+      case 1: dst = y_min()-y;                     break;
+      case 2: dst = hypot( x-x_max(), y-y_min() ); break;
+      case 3: dst = x_min()-x;                     break;
+      case 4:                                      break;
+      case 5: dst = x-x_max();                     break;
+      case 6: dst = hypot( x-x_min(), y-y_max() ); break;
+      case 7: dst = y-y_max();                     break;
+      case 8: dst = hypot( x-x_max(), y-y_max() ); break;
     }
     return dst;
   }

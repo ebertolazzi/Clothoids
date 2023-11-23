@@ -50,25 +50,37 @@ namespace G2lib {
     friend class ClothoidList;
 
     vector<real_type> m_s0;
-    vector<Biarc>     m_biarcList;
+    vector<Biarc>     m_biarc_list;
 
-    mutable Utils::BinarySearch<int_type> m_lastInterval;
+    #ifdef CLOTHOIDS_USE_THREADS
+    mutable Utils::BinarySearch<integer> m_lastInterval;
+    #else
+    mutable integer m_lastInterval{0};
+    #endif
 
     mutable bool               m_aabb_done{false};
     mutable AABB_TREE          m_aabb_tree;
     mutable real_type          m_aabb_offs{real_type(0)};
     mutable real_type          m_aabb_max_angle{real_type(0)};
     mutable real_type          m_aabb_max_size{real_type(0)};
-    mutable vector<Triangle2D> m_aabb_tri;
+    mutable vector<Triangle2D> m_aabb_triangles;
+
+    #ifdef CLOTHOIDS_USE_THREADS
+    mutable std::mutex m_aabb_mutex;
+    #endif
 
     void
     resetLastInterval() {
+      #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
-      int_type & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      #else
+      integer & lastInterval = m_lastInterval;
+      #endif
       lastInterval = 0;
     }
 
-    int_type
+    integer
     closest_point_internal(
       real_type   qx,
       real_type   qy,
@@ -91,8 +103,8 @@ namespace G2lib {
 
     ~BiarcList() override {
       m_s0.clear();
-      m_biarcList.clear();
-      m_aabb_tri.clear();
+      m_biarc_list.clear();
+      m_aabb_triangles.clear();
     }
 
     //!
@@ -109,7 +121,7 @@ namespace G2lib {
     //!
     //! Reserve memory for `n` biarcs.
     //!
-    void reserve( int_type n );
+    void reserve( integer n );
 
     //!
     //! Copy another biarc spline.
@@ -221,7 +233,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      int_type          n,
+      integer           n,
       real_type const * x,
       real_type const * y
     );
@@ -237,7 +249,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      int_type          n,
+      integer           n,
       real_type const * x,
       real_type const * y,
       real_type const * theta
@@ -246,7 +258,7 @@ namespace G2lib {
     //!
     //! Get the `idx`-th biarc.
     //!
-    Biarc const & get( int_type idx ) const;
+    Biarc const & get( integer idx ) const;
 
     //!
     //! Get the biarc that contain the curvilinear coordinate `s`.
@@ -256,13 +268,13 @@ namespace G2lib {
     //!
     //! Return the number of biarc in the biarc list.
     //!
-    int_type num_segments() const { return int_type(m_biarcList.size()); }
+    integer num_segments() const { return integer(m_biarc_list.size()); }
 
     //!
     //! Get the of the biarc that contain
     //! the curvilinear coordinate `s`.
     //!
-    int_type find_at_s( real_type & s ) const;
+    integer find_at_s( real_type & s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -273,13 +285,13 @@ namespace G2lib {
     //! The length of the `nseg`-th biarc.
     //!
     real_type
-    segment_length( int_type nseg ) const;
+    segment_length( integer nseg ) const;
 
     //!
     //! The length of the `nseg`-th biarc with offset `offs`.
     //!
     real_type
-    segment_length_ISO( int_type nseg, real_type offs ) const;
+    segment_length_ISO( integer nseg, real_type offs ) const;
 
     /*\
      |  _    _   _____    _                _
@@ -295,7 +307,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     void
@@ -304,7 +316,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type             icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     void
@@ -312,7 +324,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
-      int_type            icurve    = 0
+      integer              icurve    = 0
     ) const override;
 
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -385,75 +397,75 @@ namespace G2lib {
 
     real_type
     theta_begin() const override
-    { return m_biarcList.front().theta_begin(); }
+    { return m_biarc_list.front().theta_begin(); }
 
     real_type
     theta_end() const override
-    { return m_biarcList.back().theta_end(); }
+    { return m_biarc_list.back().theta_end(); }
 
     real_type
     x_begin() const override
-    { return m_biarcList.front().x_begin(); }
+    { return m_biarc_list.front().x_begin(); }
 
     real_type
     y_begin() const override
-    { return m_biarcList.front().y_begin(); }
+    { return m_biarc_list.front().y_begin(); }
 
     real_type
     x_end() const override
-    { return m_biarcList.back().x_end(); }
+    { return m_biarc_list.back().x_end(); }
 
     real_type
     y_end() const override
-    { return m_biarcList.back().y_end(); }
+    { return m_biarc_list.back().y_end(); }
 
     real_type
     x_begin_ISO( real_type offs ) const override
-    { return m_biarcList.front().x_begin_ISO( offs ); }
+    { return m_biarc_list.front().x_begin_ISO( offs ); }
 
     real_type
     y_begin_ISO( real_type offs ) const override
-    { return m_biarcList.front().y_begin_ISO( offs ); }
+    { return m_biarc_list.front().y_begin_ISO( offs ); }
 
     real_type
     x_end_ISO( real_type offs ) const override
-    { return m_biarcList.back().x_end_ISO( offs ); }
+    { return m_biarc_list.back().x_end_ISO( offs ); }
 
     real_type
     y_end_ISO( real_type offs ) const override
-    { return m_biarcList.back().y_end_ISO( offs ); }
+    { return m_biarc_list.back().y_end_ISO( offs ); }
 
     real_type
-    tx_Begin() const override
-    { return m_biarcList.front().tx_Begin(); }
+    tx_begin() const override
+    { return m_biarc_list.front().tx_begin(); }
 
     real_type
-    ty_Begin() const override
-    { return m_biarcList.front().ty_Begin(); }
+    ty_begin() const override
+    { return m_biarc_list.front().ty_begin(); }
 
     real_type
-    tx_End() const override
-    { return m_biarcList.back().tx_End(); }
+    tx_end() const override
+    { return m_biarc_list.back().tx_end(); }
 
     real_type
-    ty_End() const override
-    { return m_biarcList.back().ty_End(); }
+    ty_end() const override
+    { return m_biarc_list.back().ty_end(); }
 
     real_type
-    nx_Begin_ISO() const override
-    { return m_biarcList.front().nx_Begin_ISO(); }
+    nx_begin_ISO() const override
+    { return m_biarc_list.front().nx_begin_ISO(); }
 
     real_type
-    ny_Begin_ISO() const override
-    { return m_biarcList.front().ny_Begin_ISO(); }
+    ny_begin_ISO() const override
+    { return m_biarc_list.front().ny_begin_ISO(); }
 
     real_type
-    nx_End_ISO() const override
-    { return m_biarcList.back().nx_End_ISO(); }
+    nx_end_ISO() const override
+    { return m_biarc_list.back().nx_end_ISO(); }
 
     real_type
-    ny_End_ISO() const override
-    { return m_biarcList.back().ny_End_ISO(); }
+    ny_end_ISO() const override
+    { return m_biarc_list.back().ny_end_ISO(); }
 
     /*\
      |  _   _          _
@@ -653,7 +665,7 @@ namespace G2lib {
      |  \__,_|_|___/\__\__,_|_| |_|\___\___|
     \*/
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -664,7 +676,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    int_type // true if projection is unique and orthogonal
+    integer // true if projection is unique and orthogonal
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -693,11 +705,19 @@ namespace G2lib {
     //! \param[out] kappa curvature
     //!
     void
-    getSTK(
+    get_STK(
       real_type * s,
       real_type * theta,
       real_type * kappa
     ) const;
+
+    void
+    getSTK(
+      real_type * s,
+      real_type * theta,
+      real_type * kappa
+    ) const
+    { get_STK( s, theta, kappa ); }
 
     //!
     //! Return the biarc XY nodes
@@ -706,7 +726,7 @@ namespace G2lib {
     //! \param[out] y y-nodes
     //!
     void
-    getXY( real_type * x, real_type * y ) const;
+    get_XY( real_type * x, real_type * y ) const;
 
     //!
     //! Find parametric coordinate.
@@ -718,7 +738,7 @@ namespace G2lib {
     //! \return idx  the segment with point at minimal distance, otherwise
     //!              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     //!
-    int_type
+    integer
     findST1(
       real_type   x,
       real_type   y,
@@ -738,10 +758,10 @@ namespace G2lib {
     //! \return idx    the segment with point at minimal distance, otherwise
     //!                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
     //!
-    int_type
+    integer
     findST1(
-      int_type    ibegin,
-      int_type    iend,
+      integer     ibegin,
+      integer     iend,
       real_type   x,
       real_type   y,
       real_type & s,
@@ -840,50 +860,9 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    //@@@@ BACK COMPATIBILITY
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-
-    real_type thetaBegin() const { return theta_begin(); }
-    real_type thetaEnd()   const { return theta_end(); }
-    real_type xBegin()     const { return x_begin(); }
-    real_type yBegin()     const { return y_begin(); }
-    real_type xEnd()       const { return x_end(); }
-    real_type yEnd()       const { return y_end(); }
-    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
-    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
-
-    int_type numSegments() const { return num_segments(); }
-
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, x, y, s, t, dst );
-    }
-
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#include "BiarcList_compatibility.hxx"
+#endif
 
   };
 

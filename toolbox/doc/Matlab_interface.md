@@ -381,7 +381,7 @@ case when curvature is constant and 0.
 
 The G1 fitting problem of method `build_G1` implements the algorithm described
 in reference [1].
-Given two points and two direction associated with the points, 
+Given two points and two direction associated with the points,
 a clothoid, i.e. a curve with linear varying curvature is computed
 in such a way it pass to the points with the prescribed direction.
 The solution in general is not unique but chosing the one for
@@ -392,7 +392,7 @@ is unique.
 ### Constuctors
 
 ```matlab
-% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature 
+% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature
 % `kappa0` the curvature derivative is `dk` while `L` is the curve length.
 CL = ClothoidCurve( x0, y0, theta0, kappa0, dk, L );
 
@@ -454,7 +454,7 @@ dk = CL.kappa_D();
 L = CL.length();
 
 % point at infinity of the clothoid
-% `[xp,yp]` point at curvilinear coordinate +infinity 
+% `[xp,yp]` point at curvilinear coordinate +infinity
 % `[xm,ym]` point at curvilinear coordinate -infinity
 [xp,yp,xm,ym] = CL.infinity();
 
@@ -462,7 +462,7 @@ L = CL.length();
 CL.info();
 
 % return the parameters defining the clothoid curve
-[x0,y0,theta0,k0,dk,L] = CL.getPars();
+[x0,y0,theta0,k0,dk,L] = CL.get_pars();
 
 % plot the clothoid curve
 CL.plot();
@@ -552,36 +552,36 @@ documentation will be available soon, see examples in `tests` for the moments
 
 Authors
 -------
-	
-Enrico Bertolazzi (<enrico.bertolazzi@unitn.it>) and Marco Frego (<m.fregox@gmail.com>)  
-Department of Industrial Engineering  
-University of Trento  
+
+Enrico Bertolazzi (<enrico.bertolazzi@unitn.it>) and Marco Frego (<m.fregox@gmail.com>)
+Department of Industrial Engineering
+University of Trento
 
 References
 ----------
 
 1. *E. Bertolazzi, M. Frego*,
-   **G1 fitting with clothoids**,  
-   Mathematical Methods in the Applied Sciences,  
-   John Wiley & Sons, 2014, vol. 38, n.5, pp. 881-897,  
+   **G1 fitting with clothoids**,
+   Mathematical Methods in the Applied Sciences,
+   John Wiley & Sons, 2014, vol. 38, n.5, pp. 881-897,
    [https://doi.org/10.1002/mma.3114]
    ([https://doi.org/10.1002/mma.3114)
 
 2. *E. Bertolazzi, M. Frego*,
-   **On the G2 Hermite interpolation problem with clothoids**,  
-   Journal of Computational and Applied Mathematics,  
-   2018, vol. 15, n.341, pp. 99-116.  
+   **On the G2 Hermite interpolation problem with clothoids**,
+   Journal of Computational and Applied Mathematics,
+   2018, vol. 15, n.341, pp. 99-116.
    [https://doi.org/10.1016/j.cam.2018.03.029]
    (https://doi.org/10.1016/j.cam.2018.03.029)
 
 3. *E. Bertolazzi, M. Frego*,
-   **Interpolating clothoid splines with curvature continuity**,  
-   Mathematical Methods in the Applied Sciences,  
-   2018, vol. 41, n.4, pp. 1099-1476.  
+   **Interpolating clothoid splines with curvature continuity**,
+   Mathematical Methods in the Applied Sciences,
+   2018, vol. 41, n.4, pp. 1099-1476.
    [https://doi.org/10.1002/mma.4700](https://doi.org/10.1002/mma.4700)
-   
+
 4. *E. Bertolazzi, M. Frego*
-   **A Note on Robust Biarc Computation**,  
-   Computer-Aided Design & Applications 16 (5), 822-835  
+   **A Note on Robust Biarc Computation**,
+   Computer-Aided Design & Applications 16 (5), 822-835
    [http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf]
    (http://www.cad-journal.net/files/vol_16/CAD_16(5)_2019_822-835.pdf)

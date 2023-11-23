@@ -10,7 +10,7 @@ Clothoids, a library for clothoids computation and more
 Mex files for fast computation
 ------------------------------
 
-In directory `src_mex` you find the C++ implementation of the proposed algorithm 
+In directory `src_mex` you find the C++ implementation of the proposed algorithm
 with `mex` interface. To compile run `CompileClothoidsLib` from MATLAB window.
 After compilation the compiled version of the scripts
 are available in the `bin` directory.
@@ -352,7 +352,7 @@ case when curvature is constant and 0.
 
 The G1 fitting problem of method `build_G1` implements the algorithm described
 in reference [1].
-Given two points and two direction associated with the points, 
+Given two points and two direction associated with the points,
 a clothoid, i.e. a curve with linear varying curvature is computed
 in such a way it pass to the points with the prescribed direction.
 The solution in general is not unique but chosing the one for
@@ -363,7 +363,7 @@ is unique.
 **Constuctors**
 
 ~~~~~
-% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature 
+% build a clothoid curve starting at `[x0,y0]` with angle `theta0` and curvature
 % `kappa0` the curvature derivative is `dk` while `L` is the curve length.
 CL = ClothoidCurve( x0, y0, theta0, kappa0, dk, L );
 
@@ -425,7 +425,7 @@ dk = CL.kappa_D();
 L = CL.length();
 
 % point at infinity of the clothoid
-% `[xp,yp]` point at curvilinear coordinate +infinity 
+% `[xp,yp]` point at curvilinear coordinate +infinity
 % `[xm,ym]` point at curvilinear coordinate -infinity
 [xp,yp,xm,ym] = CL.infinity();
 
@@ -433,7 +433,6 @@ L = CL.length();
 CL.info();
 
 % return the parameters defining the clothoid curve
-[x0,y0,theta0,k0,dk,L] = CL.getPars();
 [x0,y0,theta0,k0,dk,L] = CL.get_pars();
 
 % plot the clothoid curve
@@ -521,7 +520,7 @@ documentation will be available soon, see examples in `tests` for the moments
 
 Authors
 -------
-	
+
 	Enrico Bertolazzi and Marco Frego
 	Department of Industrial Engineering
 	University of Trento
@@ -546,7 +545,7 @@ References
    **Interpolating clothoid splines with curvature continuity**,<br>
    Mathematical Methods in the Applied Sciences, 2018, vol. 41, n.4, pp. 1099-1476.<br>
    https://doi.org/10.1002/mma.4700
-   
+
 4. E. Bertolazzi, M. Frego
    **A Note on Robust Biarc Computation**,<br>
    Computer-Aided Design & Applications 16 (5), 822-835

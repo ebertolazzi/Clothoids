@@ -312,7 +312,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-    int_type npts, nknots;
+    integer npts, nknots;
     ptr->paramNURBS( nknots, npts );
 
     mxArray * mx_knots, * mx_Poly;

@@ -246,7 +246,7 @@ moving another thread to it.\n");
 #endif
             std::terminate();
         }
-        swap(std::forward<std::thread>(other));
+        swap(std::forward<thread>(other));
         return *this;
     }
     void swap(thread&& other) noexcept

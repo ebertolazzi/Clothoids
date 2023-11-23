@@ -344,7 +344,7 @@ namespace G2lib {
       Triangle2D & t,
       real_type    ss0    = 0,
       real_type    ss1    = 0,
-      int_type     icurve = 0
+      integer      icurve = 0
     ) const {
       real_type p0[2], p1[2], p2[2];
       bool ok = bbTriangle( p0, p1, p2 );
@@ -369,7 +369,7 @@ namespace G2lib {
       Triangle2D & t,
       real_type    ss0    = 0,
       real_type    ss1    = 0,
-      int_type     icurve = 0
+      integer      icurve = 0
     ) const {
       real_type p0[2], p1[2], p2[2];
       bool ok = bbTriangle_ISO( offs, p0, p1, p2 );
@@ -394,7 +394,7 @@ namespace G2lib {
       Triangle2D & t,
       real_type    ss0    = 0,
       real_type    ss1    = 0,
-      int_type     icurve = 0
+      integer      icurve = 0
     ) const {
       return this->bbTriangle_ISO( -offs, t, ss0, ss1, icurve );
     }
@@ -412,7 +412,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
-      int_type  icurve    = 0
+      integer   icurve    = 0
     ) const override; // 10 degree
 
     //!
@@ -430,7 +430,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
-      int_type  icurve    = 0
+      integer   icurve    = 0
     ) const override; // 10 degree
 
     //!
@@ -448,7 +448,7 @@ namespace G2lib {
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
-      int_type  icurve    = 0
+      integer   icurve    = 0
     ) const override {
       this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -487,10 +487,10 @@ namespace G2lib {
     real_type kappa_end()    const override { return m_k; }
     real_type x_begin()      const override { return m_x0; }
     real_type y_begin()      const override { return m_y0; }
-    real_type tx_Begin()     const override { return m_c0; }
-    real_type ty_Begin()     const override { return m_s0; }
-    real_type nx_Begin_ISO() const override { return m_s0; }
-    real_type ny_Begin_ISO() const override { return -m_c0; }
+    real_type tx_begin()     const override { return m_c0; }
+    real_type ty_begin()     const override { return m_s0; }
+    real_type nx_begin_ISO() const override { return m_s0; }
+    real_type ny_begin_ISO() const override { return -m_c0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -566,37 +566,17 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    real_type
-    tx( real_type s ) const override
-    { return cos(theta(s)); }
+    real_type tx( real_type s ) const override { return cos(theta(s)); }
+    real_type ty( real_type s ) const override { return sin(theta(s)); }
 
-    real_type
-    tx_D( real_type s ) const override
-    { return -sin(theta(s))*m_k; }
+    real_type tx_D( real_type s ) const override { return -sin(theta(s))*m_k; }
+    real_type ty_D( real_type s ) const override { return cos(theta(s))*m_k; }
 
-    real_type
-    tx_DD( real_type s ) const override
-    { return -cos(theta(s))*m_k*m_k; }
+    real_type tx_DD( real_type s ) const override { return -cos(theta(s))*m_k*m_k; }
+    real_type ty_DD( real_type s ) const override { return -sin(theta(s))*m_k*m_k; }
 
-    real_type
-    tx_DDD( real_type s ) const override
-    { return sin(theta(s))*m_k*m_k*m_k; }
-
-    real_type
-    ty( real_type s ) const override
-    { return sin(theta(s)); }
-
-    real_type
-    ty_D( real_type s ) const override
-    { return cos(theta(s))*m_k; }
-
-    real_type
-    ty_DD( real_type s ) const override
-    { return -sin(theta(s))*m_k*m_k; }
-
-    real_type
-    ty_DDD( real_type s ) const override
-    { return -cos(theta(s))*m_k*m_k*m_k; }
+    real_type tx_DDD( real_type s ) const override { return sin(theta(s))*m_k*m_k*m_k; }
+    real_type ty_DDD( real_type s ) const override { return -cos(theta(s))*m_k*m_k*m_k; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -636,7 +616,7 @@ namespace G2lib {
      |
     \*/
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -647,7 +627,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    int_type
+    integer
     closest_point_ISO(
       real_type   qx,
       real_type   qy,
@@ -759,13 +739,13 @@ namespace G2lib {
     //! Return \f$ \sin \theta_0 \f$ where
     //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
-    real_type sinTheta0() const { return sin(m_theta0); }
+    real_type sin_theta0() const { return sin(m_theta0); }
 
     //!
     //! Return \f$ \cos \theta_0 \f$ where
     //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
-    real_type cosTheta0() const { return cos(m_theta0); }
+    real_type cos_theta0() const { return cos(m_theta0); }
 
     //!
     //! Return curvature of the circle arc.
@@ -776,18 +756,18 @@ namespace G2lib {
     //! Return the length of the arc that
     //! can approximated by a line segment.
     //!
-    real_type lenTolerance( real_type tol ) const;
+    real_type len_tolerance( real_type tol ) const;
 
     //!
     //! Return the tangent angle variation in the circle arc.
     //!
-    real_type delta_theta() const { return m_L*m_k; }
+    real_type delta_theta() const { return std::abs(m_L*m_k); }
 
     //!
     //! Return the absolute value of the tangent
     //! angle variation in the circle arc.
     //!
-    real_type theta_total_variation() const { return std::abs(m_L*m_k); }
+    real_type theta_total_variation() const { return delta_theta(); }
 
     //!
     //! Minimum and maximum tangent angle.
@@ -798,17 +778,6 @@ namespace G2lib {
     //!
     real_type
     theta_min_max( real_type & thMin, real_type & thMax ) const;
-
-    //!
-    //! Minimum and maximum tangent angle.
-    //!
-    //! \param[out] thMin mimimum tangent angle
-    //! \param[out] thMax maximum tangent angle
-    //! \return `thMax`-`thMin`
-    //!
-    real_type
-    deltaTheta() const
-    { real_type thMin, thMax; return theta_min_max( thMin, thMax ); }
 
     //!
     //! Change the origin of the circle arc at \f$ s_0 \f$
@@ -849,7 +818,7 @@ namespace G2lib {
     //! \param[out] n_pnts  number of point of the polygon of the NURBS
     //!
     void
-    paramNURBS( int_type & n_knots, int_type & n_pnts ) const;
+    paramNURBS( integer & n_knots, integer & n_pnts ) const;
 
     //!
     //! Get the parameters to build a NURBS for the circle ars.
@@ -869,66 +838,10 @@ namespace G2lib {
 
     friend class ClothoidCurve;
 
-    //@@@@ BACK COMPATIBILITY
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#ifdef G2LIB_COMPATIBILITY_MODE
+#include "Circle_compatibility.hxx"
+#endif
 
-    real_type
-    thetaTotalVariation() const
-    { return theta_total_variation(); }
-
-    real_type
-    thetaMinMax( real_type & thMin, real_type & thMax ) const
-    { return theta_min_max(thMin,thMax); }
-
-    void
-    changeOrigin( real_type newx0, real_type newy0 )
-    { change_origin( newx0, newy0 ); }
-
-    void
-    changeCurvilinearOrigin( real_type s0, real_type newL )
-    { change_curvilinear_origin( s0, newL ); }
-
-    real_type thetaBegin() const { return theta_begin(); }
-    real_type thetaEnd()   const { return theta_end(); }
-    real_type kappaBegin() const { return kappa_begin(); }
-    real_type kappaEnd()   const { return kappa_end(); }
-    real_type xBegin()     const { return x_begin(); }
-    real_type yBegin()     const { return y_begin(); }
-    real_type xEnd()       const { return x_end(); }
-    real_type yEnd()       const { return y_end(); }
-    real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-    real_type yBegin_ISO( real_type offs ) const { return y_Begin_ISO( offs ); }
-    real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-    real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
-
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, x, y, s, t, dst );
-    }
-
-    int_type
-    closestPoint_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const {
-      return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
-    }
-
-    #endif
   };
 
 }
