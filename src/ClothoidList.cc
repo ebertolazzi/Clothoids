@@ -119,6 +119,13 @@ namespace G2lib {
     this->push_back( C );
   }
 
+  void
+  ClothoidList::build( Dubins const & C ) {
+    this->resetLastInterval();
+    this->init();
+    this->push_back( C );
+  }
+
   /*\
    |   ____ _       _   _           _     _ _     _     _
    |  / ___| | ___ | |_| |__   ___ (_) __| | |   (_)___| |_
@@ -172,6 +179,9 @@ namespace G2lib {
       break;
     case CurveType::CLOTHOID_LIST:
       this->copy( *static_cast<ClothoidList const *>(pC) );
+      break;
+    case CurveType::DUBINS:
+      this->push_back( *static_cast<Dubins const *>(pC) );
       break;
     //default:
     //  UTILS_ERROR(
@@ -397,6 +407,22 @@ namespace G2lib {
 
     m_s0.emplace_back(m_s0.back()+C.getS1().length());
     m_clotoid_list.emplace_back(C.getS1());
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back( Dubins const & c ) {
+    if ( m_clotoid_list.empty() ) m_s0.emplace_back( 0 );
+    CircleArc const & C0 = c.C0();
+    CircleArc const & C1 = c.C1();
+    CircleArc const & C2 = c.C2();
+    m_s0.emplace_back( m_s0.back()+C0.length() );
+    m_s0.emplace_back( m_s0.back()+C1.length() );
+    m_s0.emplace_back( m_s0.back()+C2.length() );
+    m_clotoid_list.emplace_back( C0 );
+    m_clotoid_list.emplace_back( C1 );
+    m_clotoid_list.emplace_back( C2 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

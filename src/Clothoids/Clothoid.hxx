@@ -382,6 +382,7 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( BiarcList const & );
     void build( ClothoidList const & );
+    void build( Dubins const & );
 
     //!
     //! Return the point at infinity of the clothoids \f$ P(s) \f$.

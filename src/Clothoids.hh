@@ -82,7 +82,8 @@ namespace G2lib {
     BIARC,
     BIARC_LIST,
     CLOTHOID,
-    CLOTHOID_LIST
+    CLOTHOID_LIST,
+    DUBINS
   };
 
   inline
@@ -97,6 +98,7 @@ namespace G2lib {
     case CurveType::BIARC_LIST:    res = "BIARC_LIST";    break;
     case CurveType::CLOTHOID:      res = "CLOTHOID";      break;
     case CurveType::CLOTHOID_LIST: res = "CLOTHOID_LIST"; break;
+    case CurveType::DUBINS:        res = "DUBINS";        break;
     }
     return res;
   };
@@ -110,6 +112,7 @@ namespace G2lib {
   class PolyLine;
   class BiarcList;
   class ClothoidList;
+  class Dubins;
 }
 
 #include "Clothoids/G2lib.hxx"
@@ -138,6 +141,7 @@ namespace fmt {
   template <> struct formatter<G2lib::LineSegment>      : ostream_formatter {};
   template <> struct formatter<G2lib::PolyLine>         : ostream_formatter {};
   template <> struct formatter<G2lib::Triangle2D>       : ostream_formatter {};
+  template <> struct formatter<G2lib::Dubins>           : ostream_formatter {};
 }
 
 namespace G2lib {
@@ -156,14 +160,6 @@ namespace G2lib {
   using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
 
   extern CurveType curve_promote( CurveType, CurveType );
-
-  class LineSegment;
-  class CircleArc;
-  class Biarc;
-  class ClothoidCurve;
-  class PolyLine;
-  class BiarcList;
-  class ClothoidList;
 }
 
 #endif

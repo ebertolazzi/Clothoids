@@ -1,12 +1,12 @@
-classdef Dubins < matlab.mixin.Copyable
+classdef Dubins < CurveBase
   %> MATLAB class wrapper for the underlying C++ class
 
-  properties (SetAccess = protected, Hidden = true)
-    mexName;
-    objectHandle; % Handle to the underlying C++ class instance
-    call_delete;
-    objectType;
-  end
+  %properties (SetAccess = protected, Hidden = true)
+  %  mexName;
+  %  objectHandle; % Handle to the underlying C++ class instance
+  %  call_delete;
+  %  objectType;
+  %end
 
   methods(Access = protected)
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -23,11 +23,11 @@ classdef Dubins < matlab.mixin.Copyable
     %>
     %> where `A` is the curve object to be copied.
     %>
-    function obj = copyElement( self )
-      obj              = copyElement@matlab.mixin.Copyable(self);
-      obj.objectHandle = feval( self.mexName, 'make_a_copy', self.objectHandle );
-      obj.call_delete  = true;
-    end
+    %function obj = copyElement( self )
+    %  obj              = copyElement@matlab.mixin.Copyable(self);
+    %  obj.objectHandle = feval( self.mexName, 'make_a_copy', self.objectHandle );
+    %  obj.call_delete  = true;
+    %end
   end
 
   methods
@@ -55,9 +55,7 @@ classdef Dubins < matlab.mixin.Copyable
     %> - self: reference handle to the object instance
     %>
     function self = Dubins( varargin )
-      self.mexName     = 'DubinsMexWrapper';
-      self.objectType  = 'Dubins';
-      self.call_delete = true;
+      self@CurveBase( 'DubinsMexWrapper', 'Dubins' );
       self.objectHandle = DubinsMexWrapper( 'new' );
       if nargin > 0
         ok = DubinsMexWrapper( 'build', self.objectHandle, varargin{:} );

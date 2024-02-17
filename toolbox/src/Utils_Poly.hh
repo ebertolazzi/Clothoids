@@ -411,9 +411,9 @@ namespace Utils {
   std::basic_ostream<Char> &
   operator << ( std::basic_ostream<Char> & output, Sturm<Real> const & S ) {
     using Integer = typename Poly<Real>::Integer;
-    fmt::print( output, "Sturm sequence\n" );
+    output << "Sturm sequence\n";
     for ( Integer i = 0; i < S.length(); ++i )
-      fmt::print( output, "P_{}(x) = {}\n", i, S.get(i) );
+      output << "P_" << i << "(x) = " << S.get(i) << '\n';
 
     Integer n = S.n_roots();
     if ( n > 0 ) {
@@ -437,6 +437,11 @@ namespace Utils {
   extern template class Sturm<double>;
   #endif
 
+}
+
+namespace fmt {
+  template <typename Real> struct formatter<Utils::Poly<Real>> : ostream_formatter {};
+  template <typename Real> struct formatter<Utils::Sturm<Real>> : ostream_formatter {};
 }
 
 #endif

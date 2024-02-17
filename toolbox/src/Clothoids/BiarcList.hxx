@@ -168,6 +168,7 @@ namespace G2lib {
     void build( BiarcList const & );
     void build( PolyLine const & );
     void build( ClothoidList const & );
+    void build( Dubins const & );
 
     //!
     //! Append a line segment to the biarc list

@@ -55,6 +55,7 @@ namespace G2lib {
     {Ppair( CurveType::LINE, CurveType::BIARC_LIST ),    CurveType::BIARC_LIST},
     {Ppair( CurveType::LINE, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::LINE, CurveType::POLYLINE ),      CurveType::POLYLINE},
+    {Ppair( CurveType::LINE, CurveType::DUBINS ),        CurveType::CLOTHOID_LIST},
 
     {Ppair( CurveType::CIRCLE, CurveType::LINE ),          CurveType::CIRCLE},
     {Ppair( CurveType::CIRCLE, CurveType::CIRCLE ),        CurveType::CIRCLE},
@@ -63,6 +64,7 @@ namespace G2lib {
     {Ppair( CurveType::CIRCLE, CurveType::BIARC_LIST ),    CurveType::BIARC_LIST},
     {Ppair( CurveType::CIRCLE, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::CIRCLE, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CIRCLE, CurveType::DUBINS ),        CurveType::CLOTHOID_LIST},
 
     {Ppair( CurveType::BIARC, CurveType::LINE ),          CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::BIARC, CurveType::CIRCLE ),        CurveType::CLOTHOID_LIST},
@@ -71,6 +73,7 @@ namespace G2lib {
     {Ppair( CurveType::BIARC, CurveType::BIARC_LIST ),    CurveType::BIARC_LIST},
     {Ppair( CurveType::BIARC, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::BIARC, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::BIARC, CurveType::DUBINS ),        CurveType::CLOTHOID_LIST},
 
     {Ppair( CurveType::CLOTHOID, CurveType::LINE ),          CurveType::CLOTHOID},
     {Ppair( CurveType::CLOTHOID, CurveType::CIRCLE ),        CurveType::CLOTHOID},
@@ -79,6 +82,7 @@ namespace G2lib {
     {Ppair( CurveType::CLOTHOID, CurveType::BIARC_LIST ),    CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::CLOTHOID, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::CLOTHOID, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID, CurveType::DUBINS ),        CurveType::CLOTHOID_LIST},
 
     {Ppair( CurveType::CLOTHOID_LIST, CurveType::LINE ),          CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::CLOTHOID_LIST, CurveType::CIRCLE ),        CurveType::CLOTHOID_LIST},
@@ -87,6 +91,7 @@ namespace G2lib {
     {Ppair( CurveType::CLOTHOID_LIST, CurveType::BIARC_LIST ),    CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::CLOTHOID_LIST, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::CLOTHOID_LIST, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::CLOTHOID_LIST, CurveType::DUBINS ),        CurveType::CLOTHOID_LIST},
 
     {Ppair( CurveType::POLYLINE, CurveType::LINE ),          CurveType::POLYLINE},
     {Ppair( CurveType::POLYLINE, CurveType::CIRCLE ),        CurveType::CLOTHOID_LIST},
@@ -94,7 +99,17 @@ namespace G2lib {
     {Ppair( CurveType::POLYLINE, CurveType::BIARC ),         CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::POLYLINE, CurveType::BIARC_LIST ),    CurveType::CLOTHOID_LIST},
     {Ppair( CurveType::POLYLINE, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
-    {Ppair( CurveType::POLYLINE, CurveType::POLYLINE ),      CurveType::POLYLINE}
+    {Ppair( CurveType::POLYLINE, CurveType::POLYLINE ),      CurveType::POLYLINE},
+    {Ppair( CurveType::POLYLINE, CurveType::DUBINS ),        CurveType::CLOTHOID_LIST},
+
+    {Ppair( CurveType::DUBINS, CurveType::LINE ),          CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::DUBINS, CurveType::CIRCLE ),        CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::DUBINS, CurveType::CLOTHOID ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::DUBINS, CurveType::BIARC ),         CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::DUBINS, CurveType::BIARC_LIST ),    CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::DUBINS, CurveType::CLOTHOID_LIST ), CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::DUBINS, CurveType::POLYLINE ),      CurveType::CLOTHOID_LIST},
+    {Ppair( CurveType::DUBINS, CurveType::DUBINS ),        CurveType::DUBINS}
   };
 
   CurveType curve_promote( CurveType A, CurveType B ) {
@@ -175,19 +190,22 @@ namespace G2lib {
           ok = CL1.collision( CL2 );
         }
         break;
+      case CurveType::DUBINS:
+        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+        ok = DB1.collision( DB2 );
+        break;
       //default:
       //  UTILS_ERROR0( "G2lib::collision, missing curve type" );
       //  break;
       }
 
     } catch ( std::exception const & e ) {
-
-      std::cerr << "G2lib::collision error: " << e.what() << '\n';
-      throw;
-
+      G2LIB_DEBUG_MESSAGE( "G2lib::collision error: {}\n", e.what() );
+      UTILS_ERROR( "G2lib::collision error: {}\n", e.what() );
     } catch (...) {
-      std::cerr << "G2lib::collision unknown error!\n";
-      throw;
+      G2LIB_DEBUG_MESSAGE( "G2lib::collision unknown error!\n" );
+      UTILS_ERROR( "G2lib::collision unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(
@@ -275,19 +293,22 @@ namespace G2lib {
           ok = CL1.collision_ISO( offs1, CL2, offs2 );
         }
         break;
+      case CurveType::DUBINS:
+        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+        ok = DB1.collision_ISO( offs1, DB2, offs2 );
+        break;
       //default:
       //  UTILS_ERROR0( "G2lib::collision_ISO, missing curve type" );
       //  break;
       }
 
     } catch ( std::exception const & e ) {
-
-      std::cerr << "G2lib::collision_ISO error: " << e.what() << '\n';
-      throw;
-
+      G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO error: {}\n", e.what() );
+      UTILS_ERROR( "G2lib::collision_ISO error: {}\n", e.what() );
     } catch (...) {
-      std::cerr << "G2lib::collision_ISO unknown error!\n";
-      throw;
+      G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO unknown error!\n" );
+      UTILS_ERROR( "G2lib::collision_ISO unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(
@@ -372,19 +393,22 @@ namespace G2lib {
           CL1.intersect( CL2, ilist );
         }
         break;
+      case CurveType::DUBINS:
+        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+        DB1.intersect( DB2, ilist );
+        break;
       //default:
       //  UTILS_ERROR0( "G2lib::intersect, missing curve type" );
       //  break;
       }
 
     } catch ( std::exception const & e ) {
-
-      std::cerr << "G2lib::intersect error: " << e.what() << '\n';
-      throw;
-
+      G2LIB_DEBUG_MESSAGE( "G2lib::intersect error: {}\n", e.what() );
+      UTILS_ERROR( "G2lib::intersect error: {}\n", e.what() );
     } catch (...) {
-      std::cerr << "G2lib::intersect unknown error!\n";
-      throw;
+      G2LIB_DEBUG_MESSAGE( "G2lib::intersect unknown error!\n" );
+      UTILS_ERROR( "G2lib::intersect unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(
@@ -468,19 +492,22 @@ namespace G2lib {
           CL1.intersect_ISO( offs1, CL2, offs2, ilist );
         }
         break;
+      case CurveType::DUBINS:
+        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+        DB1.intersect_ISO( offs1, DB2, offs2, ilist );
+        break;
       //default:
       //  UTILS_ERROR0( "G2lib::intersect_ISO, missing curve type" );
       //  break;
       }
 
     } catch ( std::exception const & e ) {
-
-      std::cerr << "G2lib::intersect_ISO error: " << e.what() << '\n';
-      throw;
-
+      G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO error: {}\n", e.what() );
+      UTILS_ERROR( "G2lib::intersect_ISO error: {}\n", e.what() );
     } catch (...) {
-      std::cerr << "G2lib::intersect_ISO unknown error!\n";
-      throw;
+      G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO unknown error!\n" );
+      UTILS_ERROR( "G2lib::intersect_ISO unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(

@@ -20,6 +20,12 @@ project(
   HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/"
 )
 
+if (APPLE)
+  set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
+  execute_process( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
+  set( CMAKE_OSX_ARCHITECTURES ${ARCHITECTURE} )
+endif()
+
 include(./cmake_utils/CMakeLists-cflags.txt)
 include(./cmake_utils/CMakeLists-utilities.txt)
 

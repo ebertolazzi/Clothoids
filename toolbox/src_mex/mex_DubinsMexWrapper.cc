@@ -50,6 +50,13 @@ MEX_INFO_MESSAGE_END
 #include <unordered_map>
 
 namespace G2lib {
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  #define CMD_BASE "DubinsMexWrapper"
+  #define G2LIB_CLASS Dubins
+  #include "mex_common.hxx"
+  //#undef CMD_BASE
+  #undef G2LIB_CLASS
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -71,8 +78,6 @@ namespace G2lib {
    *
   \*/
 
-  #define CMD_BASE "DubinsMexWrapper"
-
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -87,40 +92,6 @@ namespace G2lib {
     #undef CMD
 
     arg_out_0 = Utils::mex_convert_ptr_to_mx<Dubins>(new Dubins());
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_delete(
-    int nlhs, mxArray       *[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-    #define CMD CMD_BASE "('delete',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
-    // Destroy the C++ object
-    Utils::mex_destroy_object<Dubins>( arg_in_1 );
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_make_a_copy(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD CMD_BASE "('make_a_copy',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-
-    Dubins const * ptr = Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1);
-    arg_out_0 = Utils::mex_convert_ptr_to_mx<Dubins>(new Dubins( *ptr ));
-    #undef CMD
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -208,10 +179,9 @@ namespace G2lib {
 
   static std::map<std::string,DO_CMD> cmd_to_fun{
     {"new",do_new},
-    {"delete",do_delete},
-    {"make_a_copy",do_make_a_copy},
     {"build",do_build},
-    {"get_pars",do_get_pars}
+    {"get_pars",do_get_pars},
+    CMD_MAP_FUN
   };
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

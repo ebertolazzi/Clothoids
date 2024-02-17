@@ -22,6 +22,8 @@ get_base_pointer( string const & kind, mxArray const * arg ) {
     return Utils::mex_convert_mx_to_ptr<BiarcList>(arg);
   else if ( kind == "clothoidlist"  )
     return Utils::mex_convert_mx_to_ptr<ClothoidList>(arg);
+  else if ( kind == "dubins"  )
+    return Utils::mex_convert_mx_to_ptr<Dubins>(arg);
 
   UTILS_MEX_ASSERT( false, "in get_base_pointer type '{}' unknown\n", kind );
   return nullptr;
@@ -127,6 +129,8 @@ do_build2(
     ptr0->build( *static_cast<BiarcList const *>(ptr1) );
   else if ( ptr1->type() == CurveType::CLOTHOID_LIST )
     ptr0->build( *static_cast<ClothoidList const *>(ptr1) );
+  else if ( ptr1->type() == CurveType::DUBINS )
+    ptr0->build( *static_cast<Dubins const *>(ptr1) );
 
   #undef CMD
 }

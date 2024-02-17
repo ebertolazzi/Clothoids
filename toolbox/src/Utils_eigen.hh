@@ -44,6 +44,21 @@
 
 #include "Eigen/Core"
 #include "Eigen/Dense"
+#include <type_traits>
+
+namespace fmt {
+  template <typename TYPE, int ROW, int COL>
+  struct formatter<Eigen::Matrix<TYPE,ROW,COL>> : ostream_formatter {};
+
+  template <typename PlainObjectType, int MapOptions, typename StrideType>
+  struct formatter<Eigen::Map<PlainObjectType,MapOptions,StrideType>> : ostream_formatter {};
+
+  template <typename MAT>
+  struct formatter<Eigen::Transpose<MAT>> : ostream_formatter {};
+
+  template <typename EXPR>
+  struct formatter<Eigen::WithFormat<EXPR>> : ostream_formatter {};
+}
 
 #ifdef __clang__
 #pragma clang diagnostic pop

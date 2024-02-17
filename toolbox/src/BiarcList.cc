@@ -79,6 +79,11 @@ namespace G2lib {
     UTILS_ERROR("can convert from ClothoidList to BiarcList\n");
   }
 
+  void
+  BiarcList::build( Dubins const & ) {
+    UTILS_ERROR("can convert from Dubins to BiarcList\n");
+  }
+
   /*\
    |   ____ _       _   _           _     _ _     _     _
    |  / ___| | ___ | |_| |__   ___ (_) __| | |   (_)___| |_
