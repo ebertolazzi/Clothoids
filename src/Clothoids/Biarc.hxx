@@ -624,9 +624,13 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "BiArc\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "BiArc\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     //!
     //! Pretty print of the biarc.

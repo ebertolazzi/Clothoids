@@ -640,9 +640,20 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "CircleArc\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "CircleArc\n" << *this << '\n'; }
+    { stream << this->info(); }
+
+    //!
+    //! Pretty print of the CirleArc.
+    //!
+    friend
+    ostream_type &
+    operator << ( ostream_type & stream, CircleArc const & bi );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -829,13 +840,6 @@ namespace G2lib {
     //!
     void
     toNURBS( real_type * knots, real_type Poly[][3] ) const;
-
-    //!
-    //! Pretty print circle arc.
-    //!
-    friend
-    ostream_type &
-    operator << ( ostream_type & stream, CircleArc const & c );
 
     friend class ClothoidCurve;
 

@@ -475,12 +475,16 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "Dubins\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "Dubins\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     //!
-    //! Pretty print of the biarc.
+    //! Pretty print of Dubins class.
     //!
     friend
     ostream_type &

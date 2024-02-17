@@ -504,9 +504,17 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "LineSegment\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "LineSegment\n" << *this << '\n'; }
+    { stream << this->info(); }
+
+    friend
+    ostream_type &
+    operator << ( ostream_type & stream, LineSegment const & c );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -659,10 +667,6 @@ namespace G2lib {
     virtual
     void
     toBS( real_type * knots, real_type Poly[][2] ) const;
-
-    friend
-    ostream_type &
-    operator << ( ostream_type & stream, LineSegment const & c );
 
     friend class ClothoidCurve;
 

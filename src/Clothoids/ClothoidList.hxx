@@ -1913,9 +1913,13 @@ namespace G2lib {
       return res;
     }
 
+    string
+    info() const
+    { return fmt::format( "ClothoidList\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "ClothoidList\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &
@@ -2296,9 +2300,13 @@ namespace G2lib {
     bool
     jacobian( real_type const * theta, real_type * vals ) const;
 
+    string
+    info() const
+    { return fmt::format( "ClothoidSplineG2\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const
-    { stream << "ClothoidSplineG2\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &

@@ -1161,9 +1161,13 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "Clothoid\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "Clothoid\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &
