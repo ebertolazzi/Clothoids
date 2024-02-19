@@ -51,11 +51,10 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    //explicit
-    LineSegment() = default;
+    LineSegment() = delete;
+    LineSegment( string const & name ) : BaseCurve( name ) {};
 
-    //explicit
-    LineSegment( LineSegment const & s )
+    LineSegment( LineSegment const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 
     explicit
@@ -69,9 +68,11 @@ namespace G2lib {
       real_type _x0,
       real_type _y0,
       real_type _theta0,
-      real_type _L
+      real_type _L,
+      string const & name
     )
-    : m_x0(_x0)
+    : BaseCurve( name )
+    , m_x0(_x0)
     , m_y0(_y0)
     , m_theta0(_theta0)
     , m_c0(cos(_theta0))

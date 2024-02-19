@@ -45,7 +45,7 @@ namespace G2lib {
   void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
   void LineSegment::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to LineSegment\n"); }
 
-  LineSegment::LineSegment( BaseCurve const * pC ) {
+  LineSegment::LineSegment( BaseCurve const * pC ) : BaseCurve( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "LineSegment convert: {}\n", pC->type_name() );
 

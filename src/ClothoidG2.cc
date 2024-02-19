@@ -317,9 +317,9 @@ namespace G2lib {
     dk0 /= lambda*lambda;
     dk1 /= lambda*lambda;
 
-    S0.build( x0, y0, theta0, kappa0, dk0, s0 );
-    S1.build( x1, y1, theta1, kappa1, dk1, s1 );
-    S1.change_curvilinear_origin( -s1, s1 );
+    m_S0.build( x0, y0, theta0, kappa0, dk0, s0 );
+    m_S1.build( x1, y1, theta1, kappa1, dk1, s1 );
+    m_S1.change_curvilinear_origin( -s1, s1 );
   }
 
   /*\
@@ -464,10 +464,10 @@ namespace G2lib {
 
     if ( ! ( L0 > 0 && L1 > 0 ) ) return false;
 
-    S0.build( x0, y0, theta0, kappa0, dk0, L0 );
-    S1.build( x1, y1, theta1, kappa1, dk1, L1 );
-    S1.change_curvilinear_origin( -L1, L1 );
-    SM.build( S0.x_end(), S0.y_end(), S0.theta_end(), 0, 0, 2*sM*lambda );
+    m_S0.build( x0, y0, theta0, kappa0, dk0, L0 );
+    m_S1.build( x1, y1, theta1, kappa1, dk1, L1 );
+    m_S1.change_curvilinear_origin( -L1, L1 );
+    m_SM.build( m_S0.x_end(), m_S0.y_end(), m_S0.theta_end(), 0, 0, 2*sM*lambda );
 
     return true;
   }
@@ -549,7 +549,7 @@ namespace G2lib {
       if ( dmax > Utils::m_pi/4 ) dmax = Utils::m_pi/4;
 
       // compute guess G1
-      ClothoidCurve SG;
+      ClothoidCurve SG{"G2solve3arc::build temporary SG"};
       SG.build_G1( -1, 0, th0, 1, 0, th1 );
 
       real_type kA = SG.kappa_begin();
@@ -652,7 +652,7 @@ namespace G2lib {
       K1 = (kappa1/Lscale); // k1
 
       // compute guess G1
-      ClothoidCurve SG;
+      ClothoidCurve SG{"G2solve3arc::build temporary SG"};
       SG.build_G1( -1, 0, th0, 1, 0, th1 );
 
       s0 = _s0 * Lscale;
@@ -887,9 +887,9 @@ namespace G2lib {
 
     //th0 = theta0 - phi;
     //th1 = theta1 - phi;
-    S0.build( x0, y0, phi+th0, kappa0, dK0, L0 );
-    S1.build( x1, y1, phi+th1, kappa1, dK1, L1 );
-    S1.change_curvilinear_origin( -L1, L1 );
+    m_S0.build( x0, y0, phi+th0, kappa0, dK0, L0 );
+    m_S1.build( x1, y1, phi+th1, kappa1, dK1, L1 );
+    m_S1.change_curvilinear_origin( -L1, L1 );
 
     // la trasformazione inversa da [-1,1] a (x0,y0)-(x1,y1)
     // g(x,y) = RotInv(phi)*(1/lambda*[X;Y] - [xbar;ybar]) = [x;y]
@@ -898,12 +898,12 @@ namespace G2lib {
     real_type S  = sin(phi);
     real_type dx = (xM + 1) / Lscale;
     real_type dy = yM / Lscale;
-    SM.build(
+    m_SM.build(
       x0 + C * dx - S * dy,
       y0 + C * dy + S * dx,
       thM + phi, KM, dKM, 2*LM
     );
-    SM.change_curvilinear_origin( -LM, 2*LM );
+    m_SM.change_curvilinear_origin( -LM, 2*LM );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -911,11 +911,11 @@ namespace G2lib {
   real_type
   G2solve3arc::theta_min_max( real_type & thMin, real_type & thMax ) const {
     real_type thMin1, thMax1;
-    S0.theta_min_max( thMin,  thMax );
-    S1.theta_min_max( thMin1, thMax1 );
+    m_S0.theta_min_max( thMin,  thMax );
+    m_S1.theta_min_max( thMin1, thMax1 );
     if ( thMin > thMin1 ) thMin = thMin1;
     if ( thMax < thMax1 ) thMax = thMax1;
-    SM.theta_min_max( thMin1, thMax1 );
+    m_SM.theta_min_max( thMin1, thMax1 );
     if ( thMin > thMin1 ) thMin = thMin1;
     if ( thMax < thMax1 ) thMax = thMax1;
     return thMax-thMin;
@@ -926,11 +926,11 @@ namespace G2lib {
   real_type
   G2solve3arc::curvature_min_max( real_type & kMin, real_type & kMax ) const {
     real_type kMin1, kMax1;
-    S0.curvature_min_max( kMin,  kMax );
-    S1.curvature_min_max( kMin1, kMax1 );
+    m_S0.curvature_min_max( kMin,  kMax );
+    m_S1.curvature_min_max( kMin1, kMax1 );
     if ( kMin > kMin1 ) kMin = kMin1;
     if ( kMax < kMax1 ) kMax = kMax1;
-    SM.curvature_min_max( kMin1, kMax1 );
+    m_SM.curvature_min_max( kMin1, kMax1 );
     if ( kMin > kMin1 ) kMin = kMin1;
     if ( kMax < kMax1 ) kMax = kMax1;
     return kMax-kMin;
@@ -940,66 +940,66 @@ namespace G2lib {
 
   real_type
   G2solve3arc::theta( real_type s ) const {
-    if ( s < S0.length() ) return S0.theta(s);
-    s -= S0.length();
-    if ( s < SM.length() ) return SM.theta(s);
-    s -= SM.length();
-    return S1.theta(s);
+    if ( s < m_S0.length() ) return m_S0.theta(s);
+    s -= m_S0.length();
+    if ( s < m_SM.length() ) return m_SM.theta(s);
+    s -= m_SM.length();
+    return m_S1.theta(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::theta_D( real_type s ) const {
-    if ( s < S0.length() ) return S0.theta_D(s);
-    s -= S0.length();
-    if ( s < SM.length() ) return SM.theta_D(s);
-    s -= SM.length();
-    return S1.theta_D(s);
+    if ( s < m_S0.length() ) return m_S0.theta_D(s);
+    s -= m_S0.length();
+    if ( s < m_SM.length() ) return m_SM.theta_D(s);
+    s -= m_SM.length();
+    return m_S1.theta_D(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::theta_DD( real_type s ) const {
-    if ( s < S0.length() ) return S0.theta_DD(s);
-    s -= S0.length();
-    if ( s < SM.length() ) return SM.theta_DD(s);
-    s -= SM.length();
-    return S1.theta_DD(s);
+    if ( s < m_S0.length() ) return m_S0.theta_DD(s);
+    s -= m_S0.length();
+    if ( s < m_SM.length() ) return m_SM.theta_DD(s);
+    s -= m_SM.length();
+    return m_S1.theta_DD(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::theta_DDD( real_type s ) const {
-    if ( s < S0.length() ) return S0.theta_DDD(s);
-    s -= S0.length();
-    if ( s < SM.length() ) return SM.theta_DDD(s);
-    s -= SM.length();
-    return S1.theta_DDD(s);
+    if ( s < m_S0.length() ) return m_S0.theta_DDD(s);
+    s -= m_S0.length();
+    if ( s < m_SM.length() ) return m_SM.theta_DDD(s);
+    s -= m_SM.length();
+    return m_S1.theta_DDD(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::X( real_type s ) const {
-    if ( s < S0.length() ) return S0.X(s);
-    s -= S0.length();
-    if ( s < SM.length() ) return SM.X(s);
-    s -= SM.length();
-    return S1.X(s);
+    if ( s < m_S0.length() ) return m_S0.X(s);
+    s -= m_S0.length();
+    if ( s < m_SM.length() ) return m_SM.X(s);
+    s -= m_SM.length();
+    return m_S1.X(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
   G2solve3arc::Y( real_type s ) const {
-    if ( s < S0.length() ) return S0.Y(s);
-    s -= S0.length();
-    if ( s < SM.length() ) return SM.Y(s);
-    s -= SM.length();
-    return S1.Y(s);
+    if ( s < m_S0.length() ) return m_S0.Y(s);
+    s -= m_S0.length();
+    if ( s < m_SM.length() ) return m_SM.Y(s);
+    s -= m_SM.length();
+    return m_S1.Y(s);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1012,15 +1012,15 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( s < S0.length() ) {
-      S0.evaluate( s, theta, kappa, x, y );
+    if ( s < m_S0.length() ) {
+      m_S0.evaluate( s, theta, kappa, x, y );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.evaluate( s, theta, kappa, x, y );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.evaluate( s, theta, kappa, x, y );
       } else {
-        s -= SM.length();
-        S1.evaluate( s, theta, kappa, x, y );
+        s -= m_SM.length();
+        m_S1.evaluate( s, theta, kappa, x, y );
       }
     }
   }
@@ -1033,15 +1033,15 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval(s, x, y );
+    if ( s < m_S0.length() ) {
+      m_S0.eval(s, x, y );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval(s, x, y );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval(s, x, y );
       } else {
-        s -= SM.length();
-        S1.eval(s, x, y );
+        s -= m_SM.length();
+        m_S1.eval(s, x, y );
       }
     }
   }
@@ -1054,15 +1054,15 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval_D(s, x_D, y_D );
+    if ( s < m_S0.length() ) {
+      m_S0.eval_D(s, x_D, y_D );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval_D(s, x_D, y_D );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval_D(s, x_D, y_D );
       } else {
-        s -= SM.length();
-        S1.eval_D(s, x_D, y_D );
+        s -= m_SM.length();
+        m_S1.eval_D(s, x_D, y_D );
       }
     }
   }
@@ -1075,15 +1075,15 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval_DD(s, x_DD, y_DD );
+    if ( s < m_S0.length() ) {
+      m_S0.eval_DD(s, x_DD, y_DD );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval_DD(s, x_DD, y_DD );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval_DD(s, x_DD, y_DD );
       } else {
-        s -= SM.length();
-        S1.eval_DD(s, x_DD, y_DD );
+        s -= m_SM.length();
+        m_S1.eval_DD(s, x_DD, y_DD );
       }
     }
   }
@@ -1096,15 +1096,15 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval_DDD(s, x_DDD, y_DDD );
+    if ( s < m_S0.length() ) {
+      m_S0.eval_DDD(s, x_DDD, y_DDD );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval_DDD(s, x_DDD, y_DDD );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval_DDD(s, x_DDD, y_DDD );
       } else {
-        s -= SM.length();
-        S1.eval_DDD(s, x_DDD, y_DDD );
+        s -= m_SM.length();
+        m_S1.eval_DDD(s, x_DDD, y_DDD );
       }
     }
   }
@@ -1119,15 +1119,15 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval_ISO( s, offs, x, y );
+    if ( s < m_S0.length() ) {
+      m_S0.eval_ISO( s, offs, x, y );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval_ISO( s, offs, x, y );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval_ISO( s, offs, x, y );
       } else {
-        s -= SM.length();
-        S1.eval_ISO( s, offs, x, y );
+        s -= m_SM.length();
+        m_S1.eval_ISO( s, offs, x, y );
       }
     }
   }
@@ -1141,15 +1141,15 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval_ISO_D( s, offs, x_D, y_D );
+    if ( s < m_S0.length() ) {
+      m_S0.eval_ISO_D( s, offs, x_D, y_D );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval_ISO_D( s, offs, x_D, y_D );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval_ISO_D( s, offs, x_D, y_D );
       } else {
-        s -= SM.length();
-        S1.eval_ISO_D( s, offs, x_D, y_D );
+        s -= m_SM.length();
+        m_S1.eval_ISO_D( s, offs, x_D, y_D );
       }
     }
   }
@@ -1163,15 +1163,15 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval_ISO_DD( s, offs, x_DD, y_DD );
+    if ( s < m_S0.length() ) {
+      m_S0.eval_ISO_DD( s, offs, x_DD, y_DD );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval_ISO_DD( s, offs, x_DD, y_DD );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval_ISO_DD( s, offs, x_DD, y_DD );
       } else {
-        s -= SM.length();
-        S1.eval_ISO_DD( s, offs, x_DD, y_DD );
+        s -= m_SM.length();
+        m_S1.eval_ISO_DD( s, offs, x_DD, y_DD );
       }
     }
   }
@@ -1185,15 +1185,15 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    if ( s < S0.length() ) {
-      S0.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
+    if ( s < m_S0.length() ) {
+      m_S0.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
     } else {
-      s -= S0.length();
-      if ( s < SM.length() ) {
-        SM.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
+      s -= m_S0.length();
+      if ( s < m_SM.length() ) {
+        m_SM.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
       } else {
-        s -= SM.length();
-        S1.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
+        s -= m_SM.length();
+        m_S1.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
       }
     }
   }
@@ -1274,7 +1274,9 @@ namespace G2lib {
     real_type const * theta,
     real_type       & f
   ) const {
-    ClothoidCurve cL, cR, c;
+    ClothoidCurve cL{"ClothoidSplineG2::objective temporary cL"};
+    ClothoidCurve cR{"ClothoidSplineG2::objective temporary cR"};
+    ClothoidCurve c{"ClothoidSplineG2::objective temporary c"};
     integer ne  = m_npts - 1;
     integer ne1 = m_npts - 2;
     switch (m_tt) {
@@ -1350,7 +1352,9 @@ namespace G2lib {
     real_type const * theta,
     real_type       * g
   ) const {
-    ClothoidCurve cL, cR, c;
+    ClothoidCurve cL{"ClothoidSplineG2::objective temporary cL"};
+    ClothoidCurve cR{"ClothoidSplineG2::objective temporary cR"};
+    ClothoidCurve c{"ClothoidSplineG2::objective temporary c"};
     real_type     LL_D[2], kL_D[2], dkL_D[2];
     real_type     LR_D[2], kR_D[2], dkR_D[2];
     std::fill_n( g, m_npts, 0 );
@@ -1488,7 +1492,7 @@ namespace G2lib {
     real_type const * theta,
     real_type       * c
   ) const {
-    ClothoidCurve cc;
+    ClothoidCurve cc{"ClothoidSplineG2::constraints temporary cc"};
     integer ne  = m_npts - 1;
     integer ne1 = m_npts - 2;
 
@@ -1537,7 +1541,7 @@ namespace G2lib {
     integer * ii,
     integer * jj
   ) const {
-    ClothoidCurve cc;
+    ClothoidCurve cc{"ClothoidSplineG2::jacobian_pattern temporary cc"};
     integer ne  = m_npts - 1;
     integer ne1 = m_npts - 2;
 
@@ -1575,7 +1579,7 @@ namespace G2lib {
     real_type * ii,
     real_type * jj
   ) const {
-    ClothoidCurve cc;
+    ClothoidCurve cc{"ClothoidSplineG2::jacobian_pattern_matlab temporary cc"};
     integer ne  = m_npts - 1;
     integer ne1 = m_npts - 2;
 
@@ -1613,7 +1617,7 @@ namespace G2lib {
     real_type const * theta,
     real_type       * vals
   ) const {
-    ClothoidCurve cc;
+    ClothoidCurve cc{"ClothoidSplineG2::jacobian temporary cc"};
     integer ne  = m_npts - 1;
     integer ne1 = m_npts - 2;
 

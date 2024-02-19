@@ -60,7 +60,7 @@ main() {
     S1.theta_begin(), SM.theta_end(),   S1.theta_begin()-SM.theta_end()
   );
 
-  G2lib::ClothoidList S;
+  G2lib::ClothoidList S{"S"};
   ifstream file("G2_test.txt");
   S.load(file);
   file.close();

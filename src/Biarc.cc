@@ -72,7 +72,7 @@ namespace G2lib {
    |  |____/|_|\__,_|_|  \___|
   \*/
 
-  Biarc::Biarc( BaseCurve const * pC ) : Biarc() {
+  Biarc::Biarc( BaseCurve const * pC ) : Biarc( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "Biarc convert: {}\n", pC->type_name() );
 
@@ -936,7 +936,7 @@ namespace G2lib {
     UTILS_ASSERT0(
       n > 1, "build_guess_theta, at least 2 points are necessary\n"
     );
-    Biarc b;
+    Biarc b("build_guess_theta temporary b");
     if ( n == 2 ) {
       theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] );
     } else {

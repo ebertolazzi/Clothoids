@@ -187,16 +187,19 @@ namespace G2lib {
   //!
   class BaseCurve {
 
-    // block default constructor
-    BaseCurve( BaseCurve const & ) = delete;
-    BaseCurve const & operator = ( BaseCurve const & ) = delete;
+    string const m_name;
 
   public:
+
+    // block default constructor
+    BaseCurve( ) = delete;
+    BaseCurve( BaseCurve const & ) = delete;
+    BaseCurve const & operator = ( BaseCurve const & ) = delete;
 
     //!
     //! Initialize the class storing the curve type.
     //!
-    BaseCurve() = default;
+    BaseCurve( string const & name ) : m_name(name) {}
 
     virtual
     ~BaseCurve() = default;
@@ -206,6 +209,7 @@ namespace G2lib {
     //!
     virtual CurveType type() const = 0;
 
+    string name()      const { return m_name; }
     string type_name() const { return to_string(type()); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

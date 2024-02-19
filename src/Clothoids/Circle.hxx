@@ -54,12 +54,13 @@ namespace G2lib {
     //!
     //! Build an empty circle
     //!
-    CircleArc() = default;
+    CircleArc() = delete;
+    CircleArc( string const & name ) : BaseCurve( name ) {};
 
     //!
     //! Build a copy of an existing circle arc.
     //!
-    CircleArc( CircleArc const & s )
+    CircleArc( CircleArc const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 
     //!
@@ -73,13 +74,15 @@ namespace G2lib {
     //!
     explicit
     CircleArc(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type k,
-      real_type L
+      real_type      x0,
+      real_type      y0,
+      real_type      theta0,
+      real_type      k,
+      real_type      L,
+      string const & name
     )
-    : m_x0(x0)
+    : BaseCurve( name )
+    , m_x0(x0)
     , m_y0(y0)
     , m_theta0(theta0)
     , m_c0(cos(theta0))
@@ -94,7 +97,8 @@ namespace G2lib {
     //!
     explicit
     CircleArc( LineSegment const & LS )
-    : m_x0(LS.x_begin())
+    : BaseCurve( LS.name() )
+    , m_x0(LS.x_begin())
     , m_y0(LS.y_begin())
     , m_theta0(LS.m_theta0)
     , m_c0(LS.m_c0)

@@ -135,18 +135,18 @@ namespace G2lib {
    |
   \*/
 
-  ClothoidList::ClothoidList( LineSegment   const & LS ) { this->build( LS ); }
-  ClothoidList::ClothoidList( CircleArc     const & C  ) { this->build( C ); }
-  ClothoidList::ClothoidList( Biarc         const & C  ) { this->build( C ); }
-  ClothoidList::ClothoidList( BiarcList     const & C  ) { this->build( C ); }
-  ClothoidList::ClothoidList( ClothoidCurve const & C  ) { this->build( C ); }
-  ClothoidList::ClothoidList( PolyLine      const & C  ) { this->build( C ); }
+  ClothoidList::ClothoidList( LineSegment   const & C ) : BaseCurve( C.name() ) { this->build( C ); }
+  ClothoidList::ClothoidList( CircleArc     const & C ) : BaseCurve( C.name() ) { this->build( C ); }
+  ClothoidList::ClothoidList( Biarc         const & C ) : BaseCurve( C.name() ) { this->build( C ); }
+  ClothoidList::ClothoidList( BiarcList     const & C ) : BaseCurve( C.name() ) { this->build( C ); }
+  ClothoidList::ClothoidList( ClothoidCurve const & C ) : BaseCurve( C.name() ) { this->build( C ); }
+  ClothoidList::ClothoidList( PolyLine      const & C ) : BaseCurve( C.name() ) { this->build( C ); }
 
-  ClothoidList::ClothoidList( G2solve2arc const & C  ) { this->build( C ); }
-  ClothoidList::ClothoidList( G2solve3arc const & C  ) { this->build( C ); }
-  ClothoidList::ClothoidList( G2solveCLC  const & C  ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solve2arc const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solve3arc const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solveCLC  const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
 
-  ClothoidList::ClothoidList( BaseCurve const * pC ) {
+  ClothoidList::ClothoidList( BaseCurve const * pC ) : BaseCurve( pC->name() )  {
 
     G2LIB_DEBUG_MESSAGE( "ClothoidList convert: {}\n", pC->type_name() );
 
@@ -433,11 +433,8 @@ namespace G2lib {
     real_type dkappa,
     real_type L
   ) {
-    UTILS_ASSERT0(
-      !m_clotoid_list.empty(),
-      "ClothoidList::push_back_G1(...) empty list!\n"
-    );
-    ClothoidCurve c;
+    UTILS_ASSERT0( !m_clotoid_list.empty(), "ClothoidList::push_back_G1(...) empty list!\n" );
+    ClothoidCurve c{"ClothoidList::push_back temporary c"};
     real_type x0     = m_clotoid_list.back().x_end();
     real_type y0     = m_clotoid_list.back().y_end();
     real_type theta0 = m_clotoid_list.back().theta_end();
@@ -456,7 +453,7 @@ namespace G2lib {
     real_type dkappa,
     real_type L
   ) {
-    ClothoidCurve c;
+    ClothoidCurve c{"ClothoidList::push_back temporary c"};
     c.build( x0, y0, theta0, kappa0, dkappa, L );
     push_back( c );
   }
@@ -468,11 +465,8 @@ namespace G2lib {
     real_type y1,
     real_type theta1
   ) {
-    UTILS_ASSERT0(
-      !m_clotoid_list.empty(),
-      "ClothoidList::push_back_G1(...) empty list!\n"
-    );
-    ClothoidCurve c;
+    UTILS_ASSERT0( !m_clotoid_list.empty(), "ClothoidList::push_back_G1(...) empty list!\n" );
+    ClothoidCurve c{"ClothoidList::push_back_G1 temporary c"};
     real_type x0     = m_clotoid_list.back().x_end();
     real_type y0     = m_clotoid_list.back().y_end();
     real_type theta0 = m_clotoid_list.back().theta_end();
@@ -491,7 +485,7 @@ namespace G2lib {
     real_type y1,
     real_type theta1
   ) {
-    ClothoidCurve c;
+    ClothoidCurve c{"ClothoidList::push_back_G1 temporary c"};
     c.build_G1( x0, y0, theta0, x1, y1, theta1 );
     this->push_back( c );
   }
@@ -500,17 +494,16 @@ namespace G2lib {
 
   bool
   ClothoidList::build_G1(
-    integer           n,
-    real_type const * x,
-    real_type const * y
+    integer         n,
+    real_type const x[],
+    real_type const y[]
   ) {
+    UTILS_ASSERT0( n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n" );
+
+    ClothoidCurve c{"ClothoidList::build_G1 temporary c"};
+
     init();
     reserve( n-1 );
-    ClothoidCurve c;
-
-    UTILS_ASSERT0(
-      n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n"
-    );
 
     if ( n == 2 ) {
 
@@ -520,7 +513,7 @@ namespace G2lib {
 
     } else {
 
-      Biarc b;
+      Biarc b("build_guess_theta temporary b");
       bool ok, ciclic = hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10;
       real_type thetaC(0);
       if ( ciclic ) {
@@ -554,19 +547,18 @@ namespace G2lib {
 
   bool
   ClothoidList::build_G1(
-    integer           n,
-    real_type const * x,
-    real_type const * y,
-    real_type const * theta
+    integer         n,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[]
   ) {
+    UTILS_ASSERT0( n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n" );
 
-    UTILS_ASSERT0(
-      n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n"
-    );
+    ClothoidCurve c{"ClothoidList::build_G1 temporary c"};
 
     init();
     reserve( n-1 );
-    ClothoidCurve c;
+
     for ( integer k = 1; k < n; ++k ) {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       this->push_back(c);
@@ -1311,7 +1303,7 @@ namespace G2lib {
   void
   ClothoidList::trim( real_type s_begin, real_type s_end ) {
 
-    ClothoidList newCL;
+    ClothoidList newCL{"ClothoidList::trim temporary newCL"};
     this->trim( s_begin, s_end, newCL );
     this->copy( newCL );
 
@@ -2433,7 +2425,7 @@ namespace G2lib {
   ClothoidList::load( istream_type & stream, real_type epsi ) {
     this->init();
     while ( stream.good() ) {
-      ClothoidCurve c;
+      ClothoidCurve c{"ClothoidList::load temporary c"};
       bool ok = load_segment( stream, c, epsi );
       if ( !ok ) break;
       this->push_back( c );
@@ -2445,9 +2437,9 @@ namespace G2lib {
   void
   G2solveCLC::save( ostream_type & stream ) const {
     stream << "# x y theta kappa\n";
-    save_segment( stream, S0 );
-    save_segment( stream, SM );
-    save_segment( stream, S1 );
+    save_segment( stream, m_S0 );
+    save_segment( stream, m_SM );
+    save_segment( stream, m_S1 );
     stream << "# EOF\n";
   }
 
@@ -2456,9 +2448,9 @@ namespace G2lib {
   void
   G2solve3arc::save( ostream_type & stream ) const {
     stream << "# x y theta kappa\n";
-    save_segment( stream, S0 );
-    save_segment( stream, SM );
-    save_segment( stream, S1 );
+    save_segment( stream, m_S0 );
+    save_segment( stream, m_SM );
+    save_segment( stream, m_S1 );
     stream << "# EOF\n";
   }
 

@@ -74,22 +74,21 @@ namespace G2lib {
 
   public:
 
+    PolyLine() = delete;
+
     //explicit
-    PolyLine()
+    PolyLine( string const & name ) : BaseCurve( name )
     { this->resetLastInterval(); }
 
-    void
-    init();
+    void init();
 
-    void
-    copy( PolyLine const & l );
+    void copy( PolyLine const & l );
 
     //explicit
-    PolyLine( PolyLine const & PL )
+    PolyLine( PolyLine const & PL ) : BaseCurve( PL.name() )
     { this->resetLastInterval(); this->copy(PL); }
 
-    integer
-    find_at_s( real_type & s ) const;
+    integer find_at_s( real_type & s ) const;
 
     explicit PolyLine( LineSegment const & LS );
     explicit PolyLine( CircleArc const & C, real_type tol );
@@ -114,7 +113,7 @@ namespace G2lib {
     numPoints() const
     { return integer(m_s0.size()); }
 
-    void polygon( real_type * x, real_type * y) const;
+    void polygon( real_type x[], real_type y[] ) const;
     void init( real_type x0, real_type y0 );
     void push_back( real_type x, real_type y );
     void push_back( LineSegment const & C );
@@ -125,9 +124,9 @@ namespace G2lib {
 
     void
     build(
-      real_type const * x,
-      real_type const * y,
-      integer           npts
+      real_type const x[],
+      real_type const y[],
+      integer         npts
     );
 
     void build( LineSegment const & L );

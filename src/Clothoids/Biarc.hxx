@@ -44,7 +44,8 @@ namespace G2lib {
   //!
 
   class Biarc : public BaseCurve {
-    CircleArc m_C0, m_C1;
+    CircleArc m_C0{"Biarc_C0"};
+    CircleArc m_C1{"Biarc_C1"};
 
     void
     gfun( real_type alpha, real_type g[3] ) const {
@@ -60,17 +61,18 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    ~Biarc() override = default;
-
     //!
     //! Construct and empty biarc
     //!
-    Biarc() = default;
+    Biarc() = delete;
+    Biarc( string const & name ) : BaseCurve( name ) {};
+
+    ~Biarc() override = default;
 
     //!
     //! Make a copy of an existing biarc
     //!
-    Biarc( Biarc const & ba )
+    Biarc( Biarc const & ba ) : BaseCurve( ba.name() )
     { this->copy(ba); }
 
     //!
@@ -92,8 +94,10 @@ namespace G2lib {
       real_type theta0,
       real_type x1,
       real_type y1,
-      real_type theta1
-    ) {
+      real_type theta1,
+      string const & name
+    ) : BaseCurve( name )
+    {
       bool ok = build( x0, y0, theta0, x1, y1, theta1 );
       UTILS_ASSERT(
         ok,
@@ -103,10 +107,12 @@ namespace G2lib {
     }
 
     explicit
-    Biarc( LineSegment const & LS ) { this->build( LS ); }
+    Biarc( LineSegment const & LS ) : BaseCurve( LS.name() )
+    { this->build( LS ); }
 
     explicit
-    Biarc( CircleArc const & C ) { this->build( C ); }
+    Biarc( CircleArc const & C ) : BaseCurve( C.name() )
+    { this->build( C ); }
 
     explicit
     Biarc( BaseCurve const * pC );

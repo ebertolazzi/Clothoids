@@ -8,7 +8,7 @@ using G2lib::integer;
 int
 main() {
 
-  G2lib::CircleArc C0, C1;
+  G2lib::CircleArc C0{"C0"}, C1{"C1"};
 #if 0
   real_type x0     = 0;
   real_type y0     = 2;

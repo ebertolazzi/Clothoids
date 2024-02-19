@@ -62,7 +62,7 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  PolyLine::PolyLine( BaseCurve const * pC ) {
+  PolyLine::PolyLine( BaseCurve const * pC ) : BaseCurve( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "PolyLine convert: {}\n", pC->type_name() );
 
@@ -87,7 +87,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  PolyLine::PolyLine( LineSegment const & LS ) {
+  PolyLine::PolyLine( LineSegment const & LS ) : BaseCurve( LS.name() ) {
     this->resetLastInterval();
     this->init( LS.x_begin(), LS.y_begin() );
     this->push_back( LS );
@@ -95,7 +95,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  PolyLine::PolyLine( CircleArc const & C, real_type tol ) {
+  PolyLine::PolyLine( CircleArc const & C, real_type tol ) : BaseCurve( C.name() ) {
     this->resetLastInterval();
     this->init( C.x_begin(), C.y_begin() );
     this->push_back( C, tol );
@@ -103,7 +103,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  PolyLine::PolyLine( Biarc const & B, real_type tol ) {
+  PolyLine::PolyLine( Biarc const & B, real_type tol ) : BaseCurve( B.name() ) {
     this->resetLastInterval();
     this->init( B.x_begin(), B.y_begin() );
     this->push_back( B, tol );
@@ -111,7 +111,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  PolyLine::PolyLine( ClothoidCurve const & C, real_type tol ) {
+  PolyLine::PolyLine( ClothoidCurve const & C, real_type tol ) : BaseCurve( C.name() ) {
     this->resetLastInterval();
     this->init( C.x_begin(), C.y_begin() );
     this->push_back( C, tol );
@@ -119,7 +119,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  PolyLine::PolyLine( ClothoidList const & PL, real_type tol ) {
+  PolyLine::PolyLine( ClothoidList const & PL, real_type tol ) : BaseCurve( PL.name() ) {
     this->resetLastInterval();
     this->init( PL.x_begin(), PL.y_begin() );
     this->push_back( PL, tol );
@@ -489,7 +489,7 @@ namespace G2lib {
 
   void
   PolyLine::push_back( real_type x, real_type y ) {
-    LineSegment s;
+    LineSegment s("PolyLine::push_back temporary s");
     s.build_2P( m_xe, m_ye, x, y );
     m_polylineList.emplace_back( s );
     real_type slast = m_s0.back() + s.length();

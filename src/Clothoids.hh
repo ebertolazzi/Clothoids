@@ -35,6 +35,7 @@
 
 #include "Utils.hh"
 #include "Utils_AABB_tree.hh"
+#include "GenericContainer/GenericContainer.hh"
 
 #include <string>
 #include <fstream>
@@ -89,7 +90,7 @@ namespace G2lib {
   inline
   string
   to_string( CurveType n ) {
-    string res = "";
+    string res{""};
     switch ( n ) {
     case CurveType::LINE:          res = "LINE";          break;
     case CurveType::POLYLINE:      res = "POLYLINE";      break;

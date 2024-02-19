@@ -70,7 +70,7 @@ namespace G2lib {
    |   \____|_|_|  \___|_|\___/_/   \_\_|  \___|
   \*/
 
-  CircleArc::CircleArc( BaseCurve const * pC ) : CircleArc() {
+  CircleArc::CircleArc( BaseCurve const * pC ) : CircleArc( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "CircleArc convert: {}\n", pC->type_name() );
 

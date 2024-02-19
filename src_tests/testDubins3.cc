@@ -12,7 +12,8 @@ main() {
   using std::abs;
   using Utils::m_pi;
 
-  G2lib::Dubins DB1, DB2;
+  G2lib::Dubins DB1{"DB1"};
+  G2lib::Dubins DB2{"DB2"};
 
   {
     real_type k_max  = 1;

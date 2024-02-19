@@ -8,13 +8,13 @@ using G2lib::integer;
 int
 main() {
 
-  G2lib::LineSegment L0;
+  G2lib::LineSegment L0{"L0"};
   real_type x00     = 0;
   real_type y00     = 0;
   real_type theta00 = 3.14*0.9;
   L0.build( x00, y00, theta00, 10);
 
-  G2lib::Biarc C0, C1;
+  G2lib::Biarc C0{"C0"}, C1{"C1"};
   real_type x0     = 0;
   real_type y0     = 0;
   real_type theta0 = 3.14*0.7;

@@ -42,19 +42,22 @@ namespace G2lib {
   private:
     DubinsType m_solution_type;
 
-    CircleArc m_C0, m_C1, m_C2; //! Three arc solution of DUBINS problem
+    CircleArc m_C0{"Dubins_C0"}; //! Three arc solution of DUBINS problem
+    CircleArc m_C1{"Dubins_C1"}; //! Three arc solution of DUBINS problem
+    CircleArc m_C2{"Dubins_C2"}; //! Three arc solution of DUBINS problem
 
   public:
 
     //!
     //! Build an empty circle
     //!
-    Dubins() = default;
+    Dubins() = delete;
+    Dubins( string const & name ) : BaseCurve( name ) {};
 
     //!
     //! Build a copy of an existing Dubins problem.
     //!
-    Dubins( Dubins const & s )
+    Dubins( Dubins const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 
     //!
@@ -70,14 +73,15 @@ namespace G2lib {
     //!
     explicit
     Dubins(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type x1,
-      real_type y1,
-      real_type theta1,
-      real_type k_max
-    ) {
+      real_type      x0,
+      real_type      y0,
+      real_type      theta0,
+      real_type      x1,
+      real_type      y1,
+      real_type      theta1,
+      real_type      k_max,
+      string const & name
+    ) : BaseCurve( name ) {
       this->build( x0, y0, theta0, x1, y1, theta1, k_max );
     }
 
@@ -497,7 +501,7 @@ namespace G2lib {
   inline
   string
   to_string( Dubins::DubinsType n ) {
-    string res = "";
+    string res{""};
     switch ( n ) {
     case Dubins::DubinsType::LSL: res = "LSL"; break;
     case Dubins::DubinsType::RSR: res = "RSR"; break;

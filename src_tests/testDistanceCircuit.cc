@@ -60,7 +60,7 @@ main() {
       Y.emplace_back(y_mid_line);
     }
 
-    G2lib::ClothoidList C;
+    G2lib::ClothoidList C{"temporary"};
 
     fmt::print( "x = {}\n", X[2230]-X[2231] );
     fmt::print( "y = {}\n", Y[2230]-Y[2231] );

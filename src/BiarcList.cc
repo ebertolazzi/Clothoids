@@ -93,12 +93,12 @@ namespace G2lib {
    |
   \*/
 
-  BiarcList::BiarcList( LineSegment const & LS ) { this->build(LS); }
-  BiarcList::BiarcList( CircleArc const & C ) { this->build( C ); }
-  BiarcList::BiarcList( Biarc const & C ) { this->build( C ); }
-  BiarcList::BiarcList( PolyLine const & C ) { this->build( C ); }
+  BiarcList::BiarcList( LineSegment const & C ) : BaseCurve( C.name() ) { this->build( C ); }
+  BiarcList::BiarcList( CircleArc const & C )   : BaseCurve( C.name() ) { this->build( C ); }
+  BiarcList::BiarcList( Biarc const & C )       : BaseCurve( C.name() ) { this->build( C ); }
+  BiarcList::BiarcList( PolyLine const & C )    : BaseCurve( C.name() ) { this->build( C ); }
 
-  BiarcList::BiarcList( BaseCurve const * pC ) : BiarcList() {
+  BiarcList::BiarcList( BaseCurve const * pC ) : BiarcList( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "BiarcList convert: {}\n", pC->type_name() );
 
@@ -246,11 +246,8 @@ namespace G2lib {
     real_type y1,
     real_type theta1
   ) {
-    UTILS_ASSERT0(
-      !m_biarc_list.empty(),
-      "BiarcList::push_back_G1(...) empty list!\n"
-    );
-    Biarc c;
+    UTILS_ASSERT0( !m_biarc_list.empty(), "BiarcList::push_back_G1(...) empty list!\n" );
+    Biarc c{"BiarcList::push_back_G1 temporary c"};
     real_type x0     = m_biarc_list.back().x_end();
     real_type y0     = m_biarc_list.back().y_end();
     real_type theta0 = m_biarc_list.back().theta_end();
@@ -269,7 +266,7 @@ namespace G2lib {
     real_type y1,
     real_type theta1
   ) {
-    Biarc c;
+    Biarc c{"BiarcList::push_back_G1 temporary c"};
     c.build( x0, y0, theta0, x1, y1, theta1 );
     this->push_back( c );
   }
@@ -289,7 +286,7 @@ namespace G2lib {
     );
     init();
     reserve( n-1 );
-    Biarc c;
+    Biarc c{"BiarcList::build_G1 temporary c"};
     for ( integer k = 1; k < n; ++k ) {
       c.build( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       this->push_back(c);

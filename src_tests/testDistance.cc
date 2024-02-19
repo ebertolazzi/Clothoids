@@ -8,7 +8,8 @@ using namespace std;
 int
 main() {
 
-  G2lib::ClothoidCurve C;
+  G2lib::ClothoidCurve C{"temporary"};
+
   real_type x0     = 0;
   real_type y0     = 2;
   real_type theta0 = 0;

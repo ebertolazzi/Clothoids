@@ -135,20 +135,12 @@ namespace G2lib {
     //!
     //! Build an empty clothoid curve
     //!
-    ClothoidCurve() {
-      m_CD.m_x0     = 0;
-      m_CD.m_y0     = 0;
-      m_CD.m_theta0 = 0;
-      m_CD.m_kappa0 = 0;
-      m_CD.m_dk     = 0;
-      m_L           = 0;
-    }
+    ClothoidCurve( string const & name );
 
     //!
     //! Build a copy of an existing clothoid curve
     //!
-    ClothoidCurve( ClothoidCurve const & s )
-    { this->copy(s); }
+    ClothoidCurve( ClothoidCurve const & s );
 
     //!
     //! Construct a clothoid with the standard parameters.
@@ -162,21 +154,14 @@ namespace G2lib {
     //!
     explicit
     ClothoidCurve(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type k,
-      real_type dk,
-      real_type L
-    )
-    {
-      m_CD.m_x0     = x0;
-      m_CD.m_y0     = y0;
-      m_CD.m_theta0 = theta0;
-      m_CD.m_kappa0 = k;
-      m_CD.m_dk     = dk;
-      m_L           = L;
-    }
+      real_type      x0,
+      real_type      y0,
+      real_type      theta0,
+      real_type      k,
+      real_type      dk,
+      real_type      L,
+      string const & name
+    );
 
     //!
     //! Construct a clothoid \f$ \G(s) \f$ solving the G1 problem.
@@ -197,50 +182,29 @@ namespace G2lib {
     //!
     explicit
     ClothoidCurve(
-      real_type const * P0,
+      real_type const   P0[],
       real_type         theta0,
-      real_type const * P1,
-      real_type         theta1
-    ) {
-      build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 );
-    }
+      real_type const   P1[],
+      real_type         theta1,
+      string    const & name
+    );
 
     //!
     //! Build a clothoid copying an existing one.
     //!
-    void
-    copy( ClothoidCurve const & c ) {
-      m_CD        = c.m_CD;
-      m_L         = c.m_L;
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-    }
+    void copy( ClothoidCurve const & c );
 
     //!
     //! Build a clothoid copying an existing line segment.
     //!
     explicit
-    ClothoidCurve( LineSegment const & LS ) {
-      m_CD.m_x0     = LS.m_x0;
-      m_CD.m_y0     = LS.m_y0;
-      m_CD.m_theta0 = LS.m_theta0;
-      m_CD.m_kappa0 = 0;
-      m_CD.m_dk     = 0;
-      m_L           = LS.m_L;
-    }
+    ClothoidCurve( LineSegment const & LS );
 
     //!
     //! Build a clothoid copying an existing circle arc.
     //!
     explicit
-    ClothoidCurve( CircleArc const & C ) {
-      m_CD.m_x0     = C.m_x0;
-      m_CD.m_y0     = C.m_y0;
-      m_CD.m_theta0 = C.m_theta0;
-      m_CD.m_kappa0 = C.m_k;
-      m_CD.m_dk     = 0;
-      m_L           = C.m_L;
-    }
+    ClothoidCurve( CircleArc const & C );
 
     //!
     //! Build a clothoid copying an existing curve.
@@ -303,11 +267,7 @@ namespace G2lib {
       real_type y1,
       real_type theta1,
       real_type tol = 1e-12
-    ) {
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-      return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L );
-    }
+    );
 
     //!
     //! Build a clothoid by solving the hermite G1 problem.
@@ -336,11 +296,7 @@ namespace G2lib {
       real_type k_D[2],
       real_type dk_D[2],
       real_type tol = 1e-12
-    ) {
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-      return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L, true, L_D, k_D, dk_D );
-    }
+    );
 
     //!
     //! Build a clothoid by solving the forward problem.
@@ -362,11 +318,7 @@ namespace G2lib {
       real_type x1,
       real_type y1,
       real_type tol = 1e-12
-    ) {
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-      return m_CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, m_L );
-    }
+    );
 
     //!
     //! Build a clothoid from a line segment.
@@ -438,7 +390,6 @@ namespace G2lib {
     //! Clothoid total curvature variation.
     //!
     real_type curvature_total_variation() const;
-    real_type curvatureTotalVariation() const { return curvature_total_variation(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -448,7 +399,6 @@ namespace G2lib {
     //! \f]
     //!
     real_type integral_curvature2() const;
-    real_type integralCurvature2() const { return integral_curvature2(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -458,7 +408,6 @@ namespace G2lib {
     //! \f]
     //!
     real_type integral_jerk2() const;
-    real_type integralJerk2() const { return integral_jerk2(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -468,7 +417,6 @@ namespace G2lib {
     //! \f]
     //!
     real_type integral_snap2() const;
-    real_type integralSnap2() const { return integral_snap2(); }
 
     //!
     //! Return a vector of optimized sample parameters for plotting.

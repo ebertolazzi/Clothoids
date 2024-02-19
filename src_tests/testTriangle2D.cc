@@ -33,7 +33,8 @@ main() {
   fmt::print( "icode = {}\n", icode );
 
   {
-    G2lib::ClothoidCurve C;
+    G2lib::ClothoidCurve C{"temporary"};
+
     real_type xx0    = 0;
     real_type yy0    = 2;
     real_type theta0 = 0;

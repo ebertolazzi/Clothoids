@@ -55,9 +55,66 @@ namespace G2lib {
   integer   ClothoidCurve::m_max_iter  = 10;
   real_type ClothoidCurve::m_tolerance = 1e-9;
 
-  //!
-  //! Build a clothoid from a line segment.
-  //!
+  ClothoidCurve::ClothoidCurve( string const & name )
+  : BaseCurve( name )
+  {
+    m_CD.m_x0     = 0;
+    m_CD.m_y0     = 0;
+    m_CD.m_theta0 = 0;
+    m_CD.m_kappa0 = 0;
+    m_CD.m_dk     = 0;
+    m_L           = 0;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  ClothoidCurve::ClothoidCurve( ClothoidCurve const & s )
+  : BaseCurve( s.name() )
+  { this->copy(s); }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  ClothoidCurve::ClothoidCurve(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type k,
+    real_type dk,
+    real_type L,
+    string const & name
+  ) : BaseCurve( name ) {
+    m_CD.m_x0     = x0;
+    m_CD.m_y0     = y0;
+    m_CD.m_theta0 = theta0;
+    m_CD.m_kappa0 = k;
+    m_CD.m_dk     = dk;
+    m_L           = L;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  ClothoidCurve::ClothoidCurve(
+    real_type const   P0[],
+    real_type         theta0,
+    real_type const   P1[],
+    real_type         theta1,
+    string    const & name
+  ) : BaseCurve( name ) {
+    build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 );
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  ClothoidCurve::copy( ClothoidCurve const & c ) {
+    m_CD        = c.m_CD;
+    m_L         = c.m_L;
+    m_aabb_done = false;
+    m_aabb_triangles.clear();
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   void
   ClothoidCurve::build( LineSegment const & LS ) {
     m_CD.m_x0     = LS.m_x0;
@@ -70,9 +127,8 @@ namespace G2lib {
     m_aabb_triangles.clear();
   }
 
-  //!
-  //! Build a clothoid from a circle arc.
-  //!
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   void
   ClothoidCurve::build( CircleArc const & C ) {
     m_CD.m_x0     = C.m_x0;
@@ -85,41 +141,19 @@ namespace G2lib {
     m_aabb_triangles.clear();
   }
 
-  void ClothoidCurve::build( ClothoidCurve const & C ) { this->copy(C); }
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  void ClothoidCurve::build( Biarc const & )           { UTILS_ERROR("can convert from Biarc to ClothoidCurve\n"); }
-  void ClothoidCurve::build( PolyLine const & )        { UTILS_ERROR("can convert from PolyLine to ClothoidCurve\n"); }
-  void ClothoidCurve::build( BiarcList const & )       { UTILS_ERROR("can convert from BiarcList to ClothoidCurve\n"); }
-  void ClothoidCurve::build( ClothoidList const & )    { UTILS_ERROR("can convert from ClothoidList to ClothoidCurve\n"); }
-  void ClothoidCurve::build( Dubins const & )          { UTILS_ERROR("can convert from Dubins to ClothoidCurve\n"); }
+  void
+  ClothoidCurve::build( ClothoidCurve const & C )
+  { this->copy(C); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  ClothoidCurve::ClothoidCurve( BaseCurve const * pC ) : ClothoidCurve() {
-
-    G2LIB_DEBUG_MESSAGE( "ClothoidCurve convert: {}\n", pC->type_name() );
-
-    switch ( pC->type() ) {
-    case CurveType::LINE:
-      G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidCurve\n" );
-      this->build( *static_cast<LineSegment const *>(pC) );
-      break;
-    case CurveType::CIRCLE:
-      G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidCurve\n" );
-      this->build( *static_cast<CircleArc const *>(pC) );
-      break;
-    case CurveType::CLOTHOID:
-      G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidCurve\n" );
-      this->copy( *static_cast<ClothoidCurve const *>(pC) );
-      break;
-    default:
-      UTILS_ERROR(
-        "ClothoidList constructor cannot convert from: {}\n",
-        pC->type_name()
-      );
-      break;
-    }
-  }
+  void ClothoidCurve::build( Biarc const & )        { UTILS_ERROR("can convert from Biarc to ClothoidCurve\n"); }
+  void ClothoidCurve::build( PolyLine const & )     { UTILS_ERROR("can convert from PolyLine to ClothoidCurve\n"); }
+  void ClothoidCurve::build( BiarcList const & )    { UTILS_ERROR("can convert from BiarcList to ClothoidCurve\n"); }
+  void ClothoidCurve::build( ClothoidList const & ) { UTILS_ERROR("can convert from ClothoidList to ClothoidCurve\n"); }
+  void ClothoidCurve::build( Dubins const & )       { UTILS_ERROR("can convert from Dubins to ClothoidCurve\n"); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -146,6 +180,114 @@ namespace G2lib {
     m_L           = L;
     m_aabb_done   = false;
     m_aabb_triangles.clear();
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  int
+  ClothoidCurve::build_G1(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    real_type tol
+  ) {
+    m_aabb_done = false;
+    m_aabb_triangles.clear();
+    return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L );
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  int
+  ClothoidCurve::build_G1_D(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    real_type L_D[2],
+    real_type k_D[2],
+    real_type dk_D[2],
+    real_type tol
+  ) {
+    m_aabb_done = false;
+    m_aabb_triangles.clear();
+    return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L, true, L_D, k_D, dk_D );
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  bool
+  ClothoidCurve::build_forward(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type kappa0,
+    real_type x1,
+    real_type y1,
+    real_type tol
+  ) {
+    m_aabb_done = false;
+    m_aabb_triangles.clear();
+    return m_CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, m_L );
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  ClothoidCurve::ClothoidCurve( LineSegment const & LS )
+  : BaseCurve( LS.name() ) {
+    m_CD.m_x0     = LS.m_x0;
+    m_CD.m_y0     = LS.m_y0;
+    m_CD.m_theta0 = LS.m_theta0;
+    m_CD.m_kappa0 = 0;
+    m_CD.m_dk     = 0;
+    m_L           = LS.m_L;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  ClothoidCurve::ClothoidCurve( CircleArc const & C )
+  : BaseCurve( C.name() ) {
+    m_CD.m_x0     = C.m_x0;
+    m_CD.m_y0     = C.m_y0;
+    m_CD.m_theta0 = C.m_theta0;
+    m_CD.m_kappa0 = C.m_k;
+    m_CD.m_dk     = 0;
+    m_L           = C.m_L;
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+  ClothoidCurve::ClothoidCurve( BaseCurve const * pC )
+  : ClothoidCurve( pC->name() ) {
+
+    G2LIB_DEBUG_MESSAGE( "ClothoidCurve convert: {}\n", pC->type_name() );
+
+    switch ( pC->type() ) {
+    case CurveType::LINE:
+      G2LIB_DEBUG_MESSAGE( "LineSegment -> ClothoidCurve\n" );
+      this->build( *static_cast<LineSegment const *>(pC) );
+      break;
+    case CurveType::CIRCLE:
+      G2LIB_DEBUG_MESSAGE( "CircleArc -> ClothoidCurve\n" );
+      this->build( *static_cast<CircleArc const *>(pC) );
+      break;
+    case CurveType::CLOTHOID:
+      G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidCurve\n" );
+      this->copy( *static_cast<ClothoidCurve const *>(pC) );
+      break;
+    default:
+      UTILS_ERROR(
+        "ClothoidList constructor cannot convert from: {}\n",
+        pC->type_name()
+      );
+      break;
+    }
   }
 
   real_type

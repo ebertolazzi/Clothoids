@@ -98,7 +98,7 @@ namespace G2lib {
     //!
     //! Build an empty biarc spline.
     //!
-    BiarcList()
+    BiarcList( string const & name ) : BaseCurve( name )
     { this->resetLastInterval(); }
 
     ~BiarcList() override {
@@ -110,7 +110,7 @@ namespace G2lib {
     //!
     //! Build a copy of another biarc spline.
     //!
-    BiarcList( BiarcList const & s ) : BiarcList()
+    BiarcList( BiarcList const & s ) : BiarcList( s.name() )
     { this->copy(s); }
 
     //!
