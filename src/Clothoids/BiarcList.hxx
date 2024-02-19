@@ -234,9 +234,9 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer           n,
-      real_type const * x,
-      real_type const * y
+      integer         n,
+      real_type const x[],
+      real_type const y[]
     );
 
     //!
@@ -250,10 +250,10 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer           n,
-      real_type const * x,
-      real_type const * y,
-      real_type const * theta
+      integer         n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta[]
     );
 
     //!

@@ -275,10 +275,10 @@ namespace G2lib {
 
   bool
   BiarcList::build_G1(
-    integer           n,
-    real_type const * x,
-    real_type const * y,
-    real_type const * theta
+    integer         n,
+    real_type const x[],
+    real_type const y[],
+    real_type const theta[]
   ) {
     UTILS_ASSERT0(
       n > 1,
@@ -298,9 +298,9 @@ namespace G2lib {
 
   bool
   BiarcList::build_G1(
-    integer           n,
-    real_type const * x,
-    real_type const * y
+    integer         n,
+    real_type const x[],
+    real_type const y[]
   ) {
     size_t nn = size_t(n);
     Utils::Malloc<real_type> mem( "BiarcList::build_G1" );

@@ -357,9 +357,9 @@ namespace G2lib {
   //!
   integer
   isCounterClockwise(
-    real_type const * P1,
-    real_type const * P2,
-    real_type const * P3
+    real_type const P1[],
+    real_type const P2[],
+    real_type const P3[]
   );
 
   //!
@@ -376,10 +376,10 @@ namespace G2lib {
   //!
   integer
   isPointInTriangle(
-    real_type const * pt,
-    real_type const * P1,
-    real_type const * P2,
-    real_type const * P3
+    real_type const pt[],
+    real_type const P1[],
+    real_type const P2[],
+    real_type const P3[]
   );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

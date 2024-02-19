@@ -246,10 +246,10 @@ namespace G2lib {
   static
   real_type
   distSeg(
-    real_type         x,
-    real_type         y,
-    real_type const * A,
-    real_type const * B
+    real_type       x,
+    real_type       y,
+    real_type const A[],
+    real_type const B[]
   ) {
     real_type dx  = x    - A[0];
     real_type dy  = y    - A[1];

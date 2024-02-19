@@ -570,12 +570,12 @@ namespace G2lib {
 
   bool
   ClothoidList::build(
-    real_type         x0,
-    real_type         y0,
-    real_type         theta0,
-    integer           n,
-    real_type const * s,
-    real_type const * kappa
+    real_type       x0,
+    real_type       y0,
+    real_type       theta0,
+    integer         n,
+    real_type const s[],
+    real_type const kappa[]
   ) {
     if ( n < 2 ) return false;
     real_type tol = abs(s[n-1]-s[0])*machepsi10; // minimum admissible length
@@ -614,12 +614,12 @@ namespace G2lib {
 
   bool
   ClothoidList::build_raw(
-    integer           n,
-    real_type const * x,
-    real_type const * y,
-    real_type const * abscissa,
-    real_type const * theta,
-    real_type const * kappa
+    integer         n,
+    real_type const x[],
+    real_type const y[],
+    real_type const abscissa[],
+    real_type const theta[],
+    real_type const kappa[]
   ) {
     if ( n < 2 ) return false;
     init();

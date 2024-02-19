@@ -664,10 +664,10 @@ namespace G2lib {
   //!
   bool
   build_guess_theta(
-    integer           n,
-    real_type const * x,
-    real_type const * y,
-    real_type       * theta
+    integer         n,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[]
   );
 
 }

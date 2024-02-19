@@ -600,9 +600,9 @@ namespace G2lib {
 
   void
   PolyLine::build(
-    real_type const * x,
-    real_type const * y,
-    integer           npts
+    real_type const x[],
+    real_type const y[],
+    integer         npts
   ) {
     init( x[0], y[0] );
     for ( integer k = 1; k < npts; ++k )

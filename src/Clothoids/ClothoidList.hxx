@@ -67,30 +67,30 @@ namespace G2lib {
   //!
   class G2solve2arc {
 
-    real_type tolerance{real_type(1e-10)};
-    integer   maxIter{20};
+    real_type m_tolerance{real_type(1e-10)};
+    integer   m_max_iter{20};
 
-    real_type x0{real_type(0)};
-    real_type y0{real_type(0)};
-    real_type theta0{real_type(0)};
-    real_type kappa0{real_type(0)};
+    real_type m_x0{real_type(0)};
+    real_type m_y0{real_type(0)};
+    real_type m_theta0{real_type(0)};
+    real_type m_kappa0{real_type(0)};
 
-    real_type x1{real_type(0)};
-    real_type y1{real_type(0)};
-    real_type theta1{real_type(0)};
-    real_type kappa1{real_type(0)};
+    real_type m_x1{real_type(0)};
+    real_type m_y1{real_type(0)};
+    real_type m_theta1{real_type(0)};
+    real_type m_kappa1{real_type(0)};
 
     // standard problem
-    real_type lambda{real_type(0)};
-    real_type phi{real_type(0)};
-    real_type xbar{real_type(0)};
-    real_type ybar{real_type(0)};
-    real_type th0{real_type(0)};
-    real_type th1{real_type(0)};
-    real_type k0{real_type(0)};
-    real_type k1{real_type(0)};
-    real_type DeltaK{real_type(0)};
-    real_type DeltaTheta{real_type(0)};
+    real_type m_lambda{real_type(0)};
+    real_type m_phi{real_type(0)};
+    real_type m_xbar{real_type(0)};
+    real_type m_ybar{real_type(0)};
+    real_type m_th0{real_type(0)};
+    real_type m_th1{real_type(0)};
+    real_type m_k0{real_type(0)};
+    real_type m_k1{real_type(0)};
+    real_type m_DeltaK{real_type(0)};
+    real_type m_DeltaTheta{real_type(0)};
 
     ClothoidCurve m_S0{"G2solve2arc_S0"};
     ClothoidCurve m_S1{"G2solve2arc_S1"};
@@ -248,27 +248,27 @@ namespace G2lib {
   //!
   class G2solveCLC {
 
-    real_type tolerance{real_type(1e-10)};
-    int       maxIter{20};
+    real_type m_tolerance{real_type(1e-10)};
+    int       m_max_iter{20};
 
-    real_type x0{real_type(0)};
-    real_type y0{real_type(0)};
-    real_type theta0{real_type(0)};
-    real_type kappa0{real_type(0)};
-    real_type x1{real_type(0)};
-    real_type y1{real_type(0)};
-    real_type theta1{real_type(0)};
-    real_type kappa1{real_type(0)};
+    real_type m_x0{real_type(0)};
+    real_type m_y0{real_type(0)};
+    real_type m_theta0{real_type(0)};
+    real_type m_kappa0{real_type(0)};
+    real_type m_x1{real_type(0)};
+    real_type m_y1{real_type(0)};
+    real_type m_theta1{real_type(0)};
+    real_type m_kappa1{real_type(0)};
 
     // standard problem
-    real_type lambda{real_type(0)};
-    real_type phi{real_type(0)};
-    real_type xbar{real_type(0)};
-    real_type ybar{real_type(0)};
-    real_type th0{real_type(0)};
-    real_type th1{real_type(0)};
-    real_type k0{real_type(0)};
-    real_type k1{real_type(0)};
+    real_type m_lambda{real_type(0)};
+    real_type m_phi{real_type(0)};
+    real_type m_xbar{real_type(0)};
+    real_type m_ybar{real_type(0)};
+    real_type m_th0{real_type(0)};
+    real_type m_th1{real_type(0)};
+    real_type m_k0{real_type(0)};
+    real_type m_k1{real_type(0)};
 
     ClothoidCurve m_S0{"G2solveCLC_S0"};
     ClothoidCurve m_SM{"G2solveCLC_SM"};
@@ -406,45 +406,45 @@ namespace G2lib {
     ClothoidCurve m_SM{"G2solve3arc_SM"};
     ClothoidCurve m_S1{"G2solve3arc_S1"};
 
-    real_type tolerance{real_type(1e-10)};
-    int       maxIter{100};
+    real_type m_tolerance{real_type(1e-10)};
+    int       m_max_iter{100};
 
     // G2 interpolation data
-    real_type x0{real_type(0)};
-    real_type y0{real_type(0)};
-    real_type theta0{real_type(0)};
-    real_type kappa0{real_type(0)};
-    real_type x1{real_type(0)};
-    real_type y1{real_type(0)};
-    real_type theta1{real_type(0)};
-    real_type kappa1{real_type(0)};
+    real_type m_x0{real_type(0)};
+    real_type m_y0{real_type(0)};
+    real_type m_theta0{real_type(0)};
+    real_type m_kappa0{real_type(0)};
+    real_type m_x1{real_type(0)};
+    real_type m_y1{real_type(0)};
+    real_type m_theta1{real_type(0)};
+    real_type m_kappa1{real_type(0)};
 
     // standard scaled problem
-    real_type phi{real_type(0)};
-    real_type Lscale{real_type(0)};
-    real_type th0{real_type(0)};
-    real_type th1{real_type(0)};
-    real_type s0{real_type(0)};
-    real_type s1{real_type(0)};
+    real_type m_phi{real_type(0)};
+    real_type m_Lscale{real_type(0)};
+    real_type m_th0{real_type(0)};
+    real_type m_th1{real_type(0)};
+    real_type m_s0{real_type(0)};
+    real_type m_s1{real_type(0)};
 
     // precomputed values
-    real_type K0{real_type(0)},
-              K1{real_type(0)},
-              c0{real_type(0)},
-              c1{real_type(0)},
-              c2{real_type(0)},
-              c3{real_type(0)},
-              c4{real_type(0)},
-              c5{real_type(0)},
-              c6{real_type(0)},
-              c7{real_type(0)},
-              c8{real_type(0)},
-              c9{real_type(0)},
-              c10{real_type(0)},
-              c11{real_type(0)},
-              c12{real_type(0)},
-              c13{real_type(0)},
-              c14{real_type(0)};
+    real_type m_K0{real_type(0)},
+              m_K1{real_type(0)},
+              m_c0{real_type(0)},
+              m_c1{real_type(0)},
+              m_c2{real_type(0)},
+              m_c3{real_type(0)},
+              m_c4{real_type(0)},
+              m_c5{real_type(0)},
+              m_c6{real_type(0)},
+              m_c7{real_type(0)},
+              m_c8{real_type(0)},
+              m_c9{real_type(0)},
+              m_c10{real_type(0)},
+              m_c11{real_type(0)},
+              m_c12{real_type(0)},
+              m_c13{real_type(0)},
+              m_c14{real_type(0)};
 
     void
     evalFJ(
@@ -2293,13 +2293,13 @@ namespace G2lib {
     ) const;
 
     bool
-    objective( real_type const * theta, real_type & f ) const;
+    objective( real_type const theta[], real_type & f ) const;
 
     bool
-    gradient( real_type const * theta, real_type * g ) const;
+    gradient( real_type const theta[], real_type g[] ) const;
 
     bool
-    constraints( real_type const * theta, real_type * c ) const;
+    constraints( real_type const theta[], real_type c[] ) const;
 
     integer
     jacobian_nnz() const;
