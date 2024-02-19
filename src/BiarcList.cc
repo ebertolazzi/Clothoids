@@ -166,7 +166,7 @@ namespace G2lib {
     #else
     integer & last_interval = m_last_interval;
     #endif
-    Utils::searchInterval<integer,real_type>(
+    Utils::search_interval<integer,real_type>(
       static_cast<integer>(m_s0.size()),
       &m_s0.front(), s, last_interval, false, true
     );
@@ -226,12 +226,12 @@ namespace G2lib {
 
   void
   BiarcList::push_back( PolyLine const & c ) {
-    m_s0.reserve( m_s0.size() + c.m_polylineList.size() + 1 );
-    m_biarc_list.reserve( m_biarc_list.size() + c.m_polylineList.size() );
+    m_s0.reserve( m_s0.size() + c.m_polyline_list.size() + 1 );
+    m_biarc_list.reserve( m_biarc_list.size() + c.m_polyline_list.size() );
 
     if ( m_s0.empty() ) m_s0.emplace_back(0);
 
-    for ( LineSegment const & LS : c.m_polylineList ) {
+    for ( LineSegment const & LS : c.m_polyline_list ) {
       m_s0.emplace_back(m_s0.back()+LS.length());
       Biarc B(&LS);
       m_biarc_list.push_back(B);

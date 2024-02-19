@@ -364,14 +364,12 @@ namespace G2lib {
     //!
     //! Clothoid curve total variation of the angle.
     //!
-    real_type
-    theta_total_variation() const;
+    real_type theta_total_variation() const;
 
     //!
     //! Max and min angle of the curve.
     //!
-    real_type
-    theta_min_max( real_type & thMin, real_type & thMax ) const;
+    real_type theta_min_max( real_type & thMin, real_type & thMax ) const;
 
     //!
     //! Clothoid angle range.
@@ -383,8 +381,7 @@ namespace G2lib {
     //!
     //! Max and min of the curvatire of the clothoid curve.
     //!
-    real_type
-    curvature_min_max( real_type & kMin, real_type & kMax ) const;
+    real_type curvature_min_max( real_type & kMin, real_type & kMax ) const;
 
     //!
     //! Clothoid total curvature variation.
@@ -546,7 +543,7 @@ namespace G2lib {
     //!
     bool
     bbTriangle_ISO(
-      real_type offs,
+      real_type   offs,
       real_type & xx0, real_type & yy0,
       real_type & xx1, real_type & yy1,
       real_type & xx2, real_type & yy2
@@ -560,7 +557,7 @@ namespace G2lib {
     //!
     bool
     bbTriangle_SAE(
-      real_type offs,
+      real_type   offs,
       real_type & xx0, real_type & yy0,
       real_type & xx1, real_type & yy1,
       real_type & xx2, real_type & yy2
@@ -645,12 +642,9 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type
-    length() const override
-    { return m_L; }
+    real_type length() const override { return m_L; }
 
-    real_type
-    length_ISO( real_type ) const override;
+    real_type length_ISO( real_type ) const override;
 
     real_type theta_begin()  const override { return m_CD.m_theta0; }
     real_type kappa_begin()  const override { return m_CD.m_kappa0; }
@@ -767,21 +761,10 @@ namespace G2lib {
     //! \param s curvilinear coordinate
     //! \return clothoid X coordinate
     //!
-    real_type
-    X( real_type s ) const override
-    { return m_CD.X(s); }
-
-    real_type
-    X_D( real_type s ) const override
-    { return m_CD.X_D(s); }
-
-    real_type
-    X_DD( real_type s ) const override
-    { return m_CD.X_DD(s); }
-
-    real_type
-    X_DDD( real_type s ) const override
-    { return m_CD.X_DDD(s); }
+    real_type X    ( real_type s ) const override { return m_CD.X(s); }
+    real_type X_D  ( real_type s ) const override { return m_CD.X_D(s); }
+    real_type X_DD ( real_type s ) const override { return m_CD.X_DD(s); }
+    real_type X_DDD( real_type s ) const override { return m_CD.X_DDD(s); }
 
     //!
     //! Clothoid Y coordinate at curvilinear coordinate `s`.
@@ -789,21 +772,10 @@ namespace G2lib {
     //! \param s curvilinear coordinate
     //! \return clothoid Y coordinate
     //!
-    real_type
-    Y( real_type s ) const override
-    { return m_CD.Y(s); }
-
-    real_type
-    Y_D( real_type s ) const override
-    { return m_CD.Y_D(s); }
-
-    real_type
-    Y_DD ( real_type s ) const override
-    { return m_CD.Y_DD(s); }
-
-    real_type
-    Y_DDD( real_type s ) const override
-    { return m_CD.Y_DDD(s); }
+    real_type Y    ( real_type s ) const override { return m_CD.Y(s); }
+    real_type Y_D  ( real_type s ) const override { return m_CD.Y_D(s); }
+    real_type Y_DD ( real_type s ) const override { return m_CD.Y_DD(s); }
+    real_type Y_DDD( real_type s ) const override { return m_CD.Y_DDD(s); }
 
     //!
     //! Clothoid X coordinate at curvilinear coordinate `s`.

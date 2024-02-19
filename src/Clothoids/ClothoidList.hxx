@@ -194,12 +194,12 @@ namespace G2lib {
     //!
     //! Return the first clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS0() const { return m_S0; }
+    ClothoidCurve const & S0() const { return m_S0; }
 
     //!
     //! Return the second clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS1() const { return m_S1; }
+    ClothoidCurve const & S1() const { return m_S1; }
 
     #ifdef G2LIB_COMPATIBILITY_MODE
     void setTolerance( real_type tol ) { set_tolerance( tol ); }
@@ -328,17 +328,17 @@ namespace G2lib {
     //!
     //! Return the first clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS0() const { return m_S0; }
+    ClothoidCurve const & S0() const { return m_S0; }
 
     //!
     //! Return the second segment (the line) as a clothoid
     //!
-    ClothoidCurve const & getSM() const { return m_SM; }
+    ClothoidCurve const & SM() const { return m_SM; }
 
     //!
     //! Return the third clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS1() const { return m_S1; }
+    ClothoidCurve const & S1() const { return m_S1; }
 
     void save( ostream_type & stream ) const;
 
@@ -538,17 +538,17 @@ namespace G2lib {
     //!
     //! \return get the first clothoid for the 3 arc G2 fitting
     //!
-    ClothoidCurve const & getS0() const { return m_S0; }
+    ClothoidCurve const & S0() const { return m_S0; }
 
     //!
     //! \return get the last clothoid for the 3 arc G2 fitting
     //!
-    ClothoidCurve const & getS1() const { return m_S1; }
+    ClothoidCurve const & S1() const { return m_S1; }
 
     //!
     //! \return get the middle clothoid for the 3 arc G2 fitting
     //!
-    ClothoidCurve const & getSM() const { return m_SM; }
+    ClothoidCurve const & SM() const { return m_SM; }
 
     //!
     //! \return get the length of the 3 arc G2 fitting
@@ -842,7 +842,7 @@ namespace G2lib {
 
     bool                  m_curve_is_closed{false};
     vector<real_type>     m_s0;
-    vector<ClothoidCurve> m_clotoid_list;
+    vector<ClothoidCurve> m_clothoid_list;
 
     #ifdef CLOTHOIDS_USE_THREADS
     mutable Utils::BinarySearch<integer> m_last_interval;
@@ -897,7 +897,7 @@ namespace G2lib {
 
     ~ClothoidList() override {
       m_s0.clear();
-      m_clotoid_list.clear();
+      m_clothoid_list.clear();
       m_aabb_triangles.clear();
     }
 
@@ -1325,7 +1325,7 @@ namespace G2lib {
     //!
     //! Return the numbber of clothoid of the list
     //!
-    integer num_segments() const { return integer(m_clotoid_list.size()); }
+    integer num_segments() const { return integer(m_clothoid_list.size()); }
 
     //!
     //! The list of clothoid has total length \f$ L \f$
@@ -1446,75 +1446,75 @@ namespace G2lib {
 
     real_type
     theta_begin() const override
-    { return m_clotoid_list.front().theta_begin(); }
+    { return m_clothoid_list.front().theta_begin(); }
 
     real_type
     theta_end() const override
-    { return m_clotoid_list.back().theta_end(); }
+    { return m_clothoid_list.back().theta_end(); }
 
     real_type
     x_begin() const override
-    { return m_clotoid_list.front().x_begin(); }
+    { return m_clothoid_list.front().x_begin(); }
 
     real_type
     y_begin() const override
-    { return m_clotoid_list.front().y_begin(); }
+    { return m_clothoid_list.front().y_begin(); }
 
     real_type
     x_end() const override
-    { return m_clotoid_list.back().x_end(); }
+    { return m_clothoid_list.back().x_end(); }
 
     real_type
     y_end() const override
-    { return m_clotoid_list.back().y_end(); }
+    { return m_clothoid_list.back().y_end(); }
 
     real_type
     x_begin_ISO( real_type offs ) const override
-    { return m_clotoid_list.front().x_begin_ISO( offs ); }
+    { return m_clothoid_list.front().x_begin_ISO( offs ); }
 
     real_type
     y_begin_ISO( real_type offs ) const override
-    { return m_clotoid_list.front().y_begin_ISO( offs ); }
+    { return m_clothoid_list.front().y_begin_ISO( offs ); }
 
     real_type
     x_end_ISO( real_type offs ) const override
-    { return m_clotoid_list.back().x_end_ISO( offs ); }
+    { return m_clothoid_list.back().x_end_ISO( offs ); }
 
     real_type
     y_end_ISO( real_type offs ) const override
-    { return m_clotoid_list.back().y_end_ISO( offs ); }
+    { return m_clothoid_list.back().y_end_ISO( offs ); }
 
     real_type
     tx_begin() const override
-    { return m_clotoid_list.front().tx_begin(); }
+    { return m_clothoid_list.front().tx_begin(); }
 
     real_type
     ty_begin() const override
-    { return m_clotoid_list.front().ty_begin(); }
+    { return m_clothoid_list.front().ty_begin(); }
 
     real_type
     tx_end() const override
-    { return m_clotoid_list.back().tx_end(); }
+    { return m_clothoid_list.back().tx_end(); }
 
     real_type
     ty_end() const override
-    { return m_clotoid_list.back().ty_end(); }
+    { return m_clothoid_list.back().ty_end(); }
 
     real_type
     nx_begin_ISO() const override
-    { return m_clotoid_list.front().nx_begin_ISO(); }
+    { return m_clothoid_list.front().nx_begin_ISO(); }
 
     real_type
     ny_begin_ISO() const override
-    { return m_clotoid_list.front().ny_begin_ISO(); }
+    { return m_clothoid_list.front().ny_begin_ISO(); }
 
     real_type
     nx_end_ISO() const override
-    { return m_clotoid_list.back().nx_end_ISO(); }
+    { return m_clothoid_list.back().nx_end_ISO(); }
 
     real_type
     ny_end_ISO() const override
-    { return m_clotoid_list.back().ny_end_ISO(); }
+    { return m_clothoid_list.back().ny_end_ISO(); }
 
     /*\
      |  _   _          _
@@ -1957,8 +1957,8 @@ namespace G2lib {
       vector<real_type> & s,
       vector<real_type> & kappa
     ) const {
-      s.resize( m_clotoid_list.size()+1 );
-      kappa.resize( m_clotoid_list.size()+1 );
+      s.resize( m_clothoid_list.size()+1 );
+      kappa.resize( m_clothoid_list.size()+1 );
       get_SK( &s.front(), &kappa.front() );
     }
 
@@ -1989,9 +1989,9 @@ namespace G2lib {
       vector<real_type> & theta,
       vector<real_type> & kappa
     ) const {
-      s.resize( m_clotoid_list.size()+1 );
-      theta.resize( m_clotoid_list.size()+1 );
-      kappa.resize( m_clotoid_list.size()+1 );
+      s.resize( m_clothoid_list.size()+1 );
+      theta.resize( m_clothoid_list.size()+1 );
+      kappa.resize( m_clothoid_list.size()+1 );
       get_STK( &s.front(), &theta.front(), &kappa.front() );
     }
 

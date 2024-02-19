@@ -43,7 +43,7 @@ namespace G2lib {
     friend class ClothoidList;
     friend class BiarcList;
   private:
-    vector<LineSegment> m_polylineList;
+    vector<LineSegment> m_polyline_list;
     vector<real_type>   m_s0;
     real_type           m_xe;
     real_type           m_ye;
@@ -107,7 +107,7 @@ namespace G2lib {
 
     integer
     num_segments() const
-    { return integer(m_polylineList.size()); }
+    { return integer(m_polyline_list.size()); }
 
     integer
     numPoints() const
@@ -207,31 +207,31 @@ namespace G2lib {
 
     real_type
     x_begin() const override
-    { return m_polylineList.front().x_begin(); }
+    { return m_polyline_list.front().x_begin(); }
 
     real_type
     y_begin() const override
-    { return m_polylineList.front().y_begin(); }
+    { return m_polyline_list.front().y_begin(); }
 
     real_type
     x_end() const override
-    { return m_polylineList.back().x_end(); }
+    { return m_polyline_list.back().x_end(); }
 
     real_type
     y_end() const override
-    { return m_polylineList.back().y_end(); }
+    { return m_polyline_list.back().y_end(); }
 
     real_type
     X( real_type s ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      return m_polylineList[size_t(idx)].X(s-ss);
+      return m_polyline_list[size_t(idx)].X(s-ss);
     }
 
     real_type
     X_D( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      return m_polylineList.at(size_t(idx)).m_c0;
+      return m_polyline_list.at(size_t(idx)).m_c0;
     }
 
     real_type
@@ -246,13 +246,13 @@ namespace G2lib {
     Y( real_type s ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      return m_polylineList[size_t(idx)].Y(s-ss);
+      return m_polyline_list[size_t(idx)].Y(s-ss);
     }
 
     real_type
     Y_D( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      return m_polylineList[size_t(idx)].m_s0;
+      return m_polyline_list[size_t(idx)].m_s0;
     }
 
     real_type
@@ -283,7 +283,7 @@ namespace G2lib {
     ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval( s-ss, x, y );
+      m_polyline_list[size_t(idx)].eval( s-ss, x, y );
     }
 
     void
@@ -294,7 +294,7 @@ namespace G2lib {
     ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
+      m_polyline_list[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
 
     void
@@ -324,7 +324,7 @@ namespace G2lib {
     ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
+      m_polyline_list[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
     void
@@ -336,7 +336,7 @@ namespace G2lib {
     ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
+      m_polyline_list[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 
     void
@@ -367,7 +367,7 @@ namespace G2lib {
 
     void
     translate( real_type tx, real_type ty ) override {
-      for ( auto & il : m_polylineList ) il.translate( tx, ty );
+      for ( auto & il : m_polyline_list ) il.translate( tx, ty );
     }
 
     void
@@ -376,7 +376,7 @@ namespace G2lib {
       real_type cx,
       real_type cy
     ) override {
-      for ( auto & il : m_polylineList ) il.rotate( angle, cx, cy );
+      for ( auto & il : m_polyline_list ) il.rotate( angle, cx, cy );
     }
 
     void
