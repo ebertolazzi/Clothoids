@@ -40,14 +40,14 @@ namespace G2lib {
 
   void
   BiarcList::build( LineSegment const & LS ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( LS );
   }
 
   void
   BiarcList::build( CircleArc const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
@@ -59,7 +59,7 @@ namespace G2lib {
 
   void
   BiarcList::build( Biarc const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
@@ -138,7 +138,7 @@ namespace G2lib {
   BiarcList::init() {
     m_s0.clear();
     m_biarc_list.clear();
-    this->resetLastInterval();
+    this->reset_last_interval();
     m_aabb_done = false;
     m_aabb_triangles.clear();
   }
@@ -162,15 +162,15 @@ namespace G2lib {
   BiarcList::find_at_s( real_type & s ) const {
     #ifdef CLOTHOIDS_USE_THREADS
     bool ok;
-    integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
     #else
-    integer & lastInterval = m_lastInterval;
+    integer & last_interval = m_last_interval;
     #endif
     Utils::searchInterval<integer,real_type>(
       static_cast<integer>(m_s0.size()),
-      &m_s0.front(), s, lastInterval, false, true
+      &m_s0.front(), s, last_interval, false, true
     );
-    return lastInterval;
+    return last_interval;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1013,7 +1013,7 @@ namespace G2lib {
     size_t k{0};
     for ( ++ic; ic != m_biarc_list.end(); ++ic, ++k )
       m_s0[k+1] = m_s0[k] + ic->length();
-    this->resetLastInterval();
+    this->reset_last_interval();
   }
 
   /*\

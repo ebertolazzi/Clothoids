@@ -631,8 +631,7 @@ namespace G2lib {
     //! \param[out] kMax maximum curvature in the 3 arc G2 fitting curve
     //! \return the difference of `kMax` and `kMin`
     //!
-    real_type
-    curvature_min_max( real_type & kMin, real_type & kMax ) const;
+    real_type curvature_min_max( real_type & kMin, real_type & kMax ) const;
 
     //!
     //! Return angle as a function of curvilinear coordinate
@@ -846,9 +845,9 @@ namespace G2lib {
     vector<ClothoidCurve> m_clotoid_list;
 
     #ifdef CLOTHOIDS_USE_THREADS
-    mutable Utils::BinarySearch<integer> m_lastInterval;
+    mutable Utils::BinarySearch<integer> m_last_interval;
     #else
-    mutable integer m_lastInterval{0};
+    mutable integer m_last_interval{0};
     #endif
 
     mutable bool               m_aabb_done{false};
@@ -863,14 +862,14 @@ namespace G2lib {
     #endif
 
     void
-    resetLastInterval() {
+    reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
-      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
       #else
-      integer & lastInterval = m_lastInterval;
+      integer & last_interval = m_last_interval;
       #endif
-      lastInterval = 0;
+      last_interval = 0;
     }
 
     integer
@@ -894,7 +893,7 @@ namespace G2lib {
     //! Build an empty clothoid list
     //!
     ClothoidList( string const & name ) : BaseCurve( name )
-    { this->resetLastInterval(); }
+    { this->reset_last_interval(); }
 
     ~ClothoidList() override {
       m_s0.clear();
@@ -906,7 +905,7 @@ namespace G2lib {
     //! Build a copy of an existing clothoid list
     //!
     ClothoidList( ClothoidList const & s ) : BaseCurve( s.name() )
-    { this->resetLastInterval(); this->copy(s); }
+    { this->reset_last_interval(); this->copy(s); }
 
     CurveType type() const override { return CurveType::CLOTHOID_LIST; }
 

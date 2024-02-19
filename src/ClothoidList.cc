@@ -50,21 +50,21 @@ namespace G2lib {
 
   void
   ClothoidList::build( LineSegment const & LS ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( LS );
   }
 
   void
   ClothoidList::build( CircleArc const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
 
   void
   ClothoidList::build( Biarc const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C.C0() );
     this->push_back( C.C1() );
@@ -72,56 +72,56 @@ namespace G2lib {
 
   void
   ClothoidList::build( BiarcList const & c ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( c );
   }
 
   void
   ClothoidList::build( ClothoidCurve const & c ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( c );
   }
 
   void
   ClothoidList::build( PolyLine const & pl ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( pl );
   }
 
   void
   ClothoidList::build( ClothoidList const & pl ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( pl );
   }
 
   void
   ClothoidList::build( G2solve2arc const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
 
   void
   ClothoidList::build( G2solve3arc const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
 
   void
   ClothoidList::build( G2solveCLC const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
 
   void
   ClothoidList::build( Dubins const & C ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
@@ -150,7 +150,7 @@ namespace G2lib {
 
     G2LIB_DEBUG_MESSAGE( "ClothoidList convert: {}\n", pC->type_name() );
 
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init();
     switch ( pC->type() ) {
     case CurveType::LINE:
@@ -197,15 +197,15 @@ namespace G2lib {
   ClothoidList::find_at_s( real_type & s ) const {
     #ifdef CLOTHOIDS_USE_THREADS
     bool ok;
-    integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
     #else
-    integer & lastInterval = m_lastInterval;
+    integer & last_interval = m_last_interval;
     #endif
     Utils::searchInterval<integer,real_type>(
       static_cast<integer>(m_s0.size()),
-      m_s0.data(), s, lastInterval, m_curve_is_closed, true
+      m_s0.data(), s, last_interval, m_curve_is_closed, true
     );
-    return lastInterval;
+    return last_interval;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -229,10 +229,10 @@ namespace G2lib {
   ClothoidList::init() {
     m_s0.clear();
     m_clotoid_list.clear();
-    this->resetLastInterval();
+    this->reset_last_interval();
     m_aabb_done = false;
     m_aabb_triangles.clear();
-    this->resetLastInterval();
+    this->reset_last_interval();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1331,7 +1331,7 @@ namespace G2lib {
     size_t k{0};
     for (; ic != m_clotoid_list.end(); ++ic, ++k )
       m_s0[k+1] = m_s0[k] + ic->length();
-    this->resetLastInterval();
+    this->reset_last_interval();
 #endif
   }
 

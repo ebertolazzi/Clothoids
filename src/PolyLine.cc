@@ -66,7 +66,7 @@ namespace G2lib {
 
     G2LIB_DEBUG_MESSAGE( "PolyLine convert: {}\n", pC->type_name() );
 
-    this->resetLastInterval();
+    this->reset_last_interval();
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "to -> LineSegment\n" );
@@ -88,7 +88,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( LineSegment const & LS ) : BaseCurve( LS.name() ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init( LS.x_begin(), LS.y_begin() );
     this->push_back( LS );
   }
@@ -96,7 +96,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( CircleArc const & C, real_type tol ) : BaseCurve( C.name() ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init( C.x_begin(), C.y_begin() );
     this->push_back( C, tol );
   }
@@ -104,7 +104,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( Biarc const & B, real_type tol ) : BaseCurve( B.name() ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init( B.x_begin(), B.y_begin() );
     this->push_back( B, tol );
   }
@@ -112,7 +112,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( ClothoidCurve const & C, real_type tol ) : BaseCurve( C.name() ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init( C.x_begin(), C.y_begin() );
     this->push_back( C, tol );
   }
@@ -120,7 +120,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   PolyLine::PolyLine( ClothoidList const & PL, real_type tol ) : BaseCurve( PL.name() ) {
-    this->resetLastInterval();
+    this->reset_last_interval();
     this->init( PL.x_begin(), PL.y_begin() );
     this->push_back( PL, tol );
   }
@@ -137,15 +137,15 @@ namespace G2lib {
   PolyLine::find_at_s( real_type & s ) const {
     #ifdef CLOTHOIDS_USE_THREADS
     bool ok;
-    integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+    integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
     #else
-    integer & lastInterval = m_lastInterval;
+    integer & last_interval = m_last_interval;
     #endif
     Utils::searchInterval<integer,real_type>(
       static_cast<integer>(m_s0.size()),
-      m_s0.data(), s, lastInterval, false, true
+      m_s0.data(), s, last_interval, false, true
     );
-    return lastInterval;
+    return last_interval;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -154,9 +154,9 @@ namespace G2lib {
   PolyLine::init() {
     m_s0.clear();
     m_polylineList.clear();
-    this->resetLastInterval();
+    this->reset_last_interval();
     m_aabb_done = false;
-    this->resetLastInterval();
+    this->reset_last_interval();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -389,7 +389,7 @@ namespace G2lib {
     size_t k{0};
     for (; ic != m_polylineList.end(); ++ic, ++k )
       m_s0[k+1] = m_s0[k] + ic->length();
-    this->resetLastInterval();
+    this->reset_last_interval();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

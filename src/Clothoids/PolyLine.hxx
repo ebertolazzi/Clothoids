@@ -49,9 +49,9 @@ namespace G2lib {
     real_type           m_ye;
 
     #ifdef CLOTHOIDS_USE_THREADS
-    mutable Utils::BinarySearch<integer> m_lastInterval;
+    mutable Utils::BinarySearch<integer> m_last_interval;
     #else
-    mutable integer m_lastInterval{0};
+    mutable integer m_last_interval{0};
     #endif
 
     mutable bool       m_aabb_done{false};
@@ -62,14 +62,14 @@ namespace G2lib {
     #endif
 
     void
-    resetLastInterval() {
+    reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
-      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
       #else
-      integer & lastInterval = m_lastInterval;
+      integer & last_interval = m_last_interval;
       #endif
-      lastInterval = 0;
+      last_interval = 0;
     }
 
   public:
@@ -78,7 +78,7 @@ namespace G2lib {
 
     //explicit
     PolyLine( string const & name ) : BaseCurve( name )
-    { this->resetLastInterval(); }
+    { this->reset_last_interval(); }
 
     void init();
 
@@ -86,7 +86,7 @@ namespace G2lib {
 
     //explicit
     PolyLine( PolyLine const & PL ) : BaseCurve( PL.name() )
-    { this->resetLastInterval(); this->copy(PL); }
+    { this->reset_last_interval(); this->copy(PL); }
 
     integer find_at_s( real_type & s ) const;
 
