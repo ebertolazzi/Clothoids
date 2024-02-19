@@ -500,38 +500,38 @@ namespace G2lib {
     real_type delta_theta() const { return m_C0.delta_theta() + m_C1.delta_theta(); }
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles( tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles( tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles( tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles( tvec, max_angle, max_size, icurve );
     }
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
     }
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\

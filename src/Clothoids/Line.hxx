@@ -65,19 +65,19 @@ namespace G2lib {
     //!
     explicit
     LineSegment(
-      real_type _x0,
-      real_type _y0,
-      real_type _theta0,
-      real_type _L,
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type L,
       string const & name
     )
     : BaseCurve( name )
-    , m_x0(_x0)
-    , m_y0(_y0)
-    , m_theta0(_theta0)
-    , m_c0(cos(_theta0))
-    , m_s0(sin(_theta0))
-    , m_L(_L)
+    , m_x0(x0)
+    , m_y0(y0)
+    , m_theta0(theta0)
+    , m_c0(cos(theta0))
+    , m_s0(sin(theta0))
+    , m_L(L)
     {}
 
     void
@@ -137,7 +137,7 @@ namespace G2lib {
     \*/
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100, // unused
@@ -153,7 +153,7 @@ namespace G2lib {
         tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
       } else {
         UTILS_ERROR(
-          "LineSegment bbTriangles found a degenerate line\n"
+          "LineSegment bb_triangles found a degenerate line\n"
           "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ] max_angle={} max_size={}\n",
           xmin, ymin, xmax, ymax, max_angle, max_size
         );
@@ -161,7 +161,7 @@ namespace G2lib {
     }
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
@@ -178,7 +178,7 @@ namespace G2lib {
         tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
       } else {
         UTILS_ERROR(
-          "LineSegment bbTriangles found a degenerate line\n"
+          "LineSegment bb_triangles found a degenerate line\n"
           "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ]\n"
           "offs={} max_angle={} max_size={}\n",
           xmin, ymin, xmax, ymax, offs, max_angle, max_size
@@ -187,14 +187,14 @@ namespace G2lib {
     }
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\

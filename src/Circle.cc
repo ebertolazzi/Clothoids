@@ -457,7 +457,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangles(
+  CircleArc::bb_triangles(
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
@@ -494,7 +494,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangles_ISO(
+  CircleArc::bb_triangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
@@ -540,7 +540,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    this->bbTriangles( tvec, Utils::m_pi/4 );
+    this->bb_triangles( tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( integer iter = 1; iter < integer(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
@@ -563,7 +563,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    this->bbTriangles_ISO( offs, tvec, Utils::m_pi/4 );
+    this->bb_triangles_ISO( offs, tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( integer iter = 1; iter < integer(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;

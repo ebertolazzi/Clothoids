@@ -542,7 +542,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  isCounterClockwise(
+  is_counter_clockwise(
     real_type const P1[],
     real_type const P2[],
     real_type const P3[]
@@ -638,16 +638,16 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  isPointInTriangle(
+  is_point_in_triangle(
     real_type const point[],
     real_type const p1[],
     real_type const p2[],
     real_type const p3[]
   ) {
-    integer d = isCounterClockwise(p1, p2, p3);
-    integer a = isCounterClockwise(p1, p2, point);
-    integer b = isCounterClockwise(p2, p3, point);
-    integer c = isCounterClockwise(p3, p1, point);
+    integer d = is_counter_clockwise(p1, p2, p3);
+    integer a = is_counter_clockwise(p1, p2, point);
+    integer b = is_counter_clockwise(p2, p3, point);
+    integer c = is_counter_clockwise(p3, p1, point);
     if ( d < 0) { a = -a; b = -b; c = -c; }
     if ( a < 0 ) return -1;
     if ( b < 0 ) return -1;

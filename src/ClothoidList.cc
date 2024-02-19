@@ -704,7 +704,7 @@ namespace G2lib {
   \*/
 
   void
-  ClothoidList::bbTriangles(
+  ClothoidList::bb_triangles(
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
@@ -712,13 +712,13 @@ namespace G2lib {
   ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clothoid_list.begin();
     for ( integer ipos = icurve; ic != m_clothoid_list.end(); ++ic, ++ipos )
-      ic->bbTriangles( tvec, max_angle, max_size, ipos );
+      ic->bb_triangles( tvec, max_angle, max_size, ipos );
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidList::bbTriangles_ISO(
+  ClothoidList::bb_triangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
@@ -727,7 +727,7 @@ namespace G2lib {
   ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clothoid_list.begin();
     for ( integer ipos = icurve; ic != m_clothoid_list.end(); ++ic, ++ipos )
-      ic->bbTriangles_ISO( offs, tvec, max_angle, max_size, ipos );
+      ic->bb_triangles_ISO( offs, tvec, max_angle, max_size, ipos );
   }
 
   /*\
@@ -747,7 +747,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    bbTriangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
+    bb_triangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
     xmin = ymin = Utils::Inf<real_type>();
     xmax = ymax = -xmin;
     for ( auto const & T : tvec ) {
@@ -1416,7 +1416,7 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    bbTriangles_ISO( offs, m_aabb_triangles, max_angle, max_size );
+    bb_triangles_ISO( offs, m_aabb_triangles, max_angle, max_size );
 
     integer ipos{0};
     integer nobj{ integer(m_aabb_triangles.size()) };
@@ -1623,8 +1623,8 @@ namespace G2lib {
     } else {
 
       G2LIB_DEBUG_TIC;
-      bbTriangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
-      CL.bbTriangles_ISO( offs_CL, CL.m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      bb_triangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      CL.bb_triangles_ISO( offs_CL, CL.m_aabb_triangles, Utils::m_pi/18, 1e100 );
 
       for ( Triangle2D const & T1 : m_aabb_triangles ) {
         for ( Triangle2D const & T2 : CL.m_aabb_triangles ) {
@@ -1735,7 +1735,7 @@ namespace G2lib {
       G2LIB_DEBUG_TIC;
       for ( integer ipos : candidateList ) {
         Triangle2D const & T = m_aabb_triangles.at(ipos);
-        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
+        real_type dst = T.dist_min( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
           // refine distance
           real_type xx, yy, ss;
@@ -1760,7 +1760,7 @@ namespace G2lib {
 
       G2LIB_DEBUG_TIC;
       for ( Triangle2D const & T : m_aabb_triangles ) {
-        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
+        real_type dst = T.dist_min( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
           // refine distance
           real_type xx, yy, ss, tt;
@@ -1883,7 +1883,7 @@ namespace G2lib {
       G2LIB_DEBUG_TIC;
       for ( integer ipos : candidateList ) {
         Triangle2D const & T = m_aabb_triangles.at(ipos);
-        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
+        real_type dst = T.dist_min( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
           // refine distance
           real_type xx, yy, ss, tt;
@@ -1903,7 +1903,7 @@ namespace G2lib {
 
       G2LIB_DEBUG_TIC;
       for ( Triangle2D const & T : m_aabb_triangles ) {
-        real_type dst = T.distMin( qx, qy ); // distanza approssimata con triangolo
+        real_type dst = T.dist_min( qx, qy ); // distanza approssimata con triangolo
         if ( dst < DST ) {
           // refine distance
           real_type xx, yy, ss, tt;

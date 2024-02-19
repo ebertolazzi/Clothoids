@@ -171,7 +171,7 @@ namespace G2lib {
     \*/
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
@@ -179,7 +179,7 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
@@ -188,14 +188,14 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     real_type
@@ -263,17 +263,10 @@ namespace G2lib {
     Y_DDD( real_type ) const override
     { return 0; }
 
-    real_type
-    theta( real_type s ) const override;
-
-    real_type
-    theta_D( real_type s ) const override;
-
-    real_type
-    theta_DD( real_type s ) const override;
-
-    real_type
-    theta_DDD( real_type s ) const override;
+    real_type theta    ( real_type s ) const override;
+    real_type theta_D  ( real_type s ) const override;
+    real_type theta_DD ( real_type s ) const override;
+    real_type theta_DDD( real_type s ) const override;
 
     void
     eval(
@@ -322,8 +315,8 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const override {
-      integer idx = this->find_at_s( s );
-      real_type ss = m_s0[idx];
+      integer idx{ this->find_at_s( s ) };
+      real_type ss{ m_s0[idx] };
       m_polyline_list[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
@@ -334,8 +327,8 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const override {
-      integer idx = this->find_at_s( s );
-      real_type ss = m_s0[idx];
+      integer idx{ this->find_at_s( s ) };
+      real_type ss{ m_s0[idx] };
       m_polyline_list[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 
@@ -379,20 +372,15 @@ namespace G2lib {
       for ( auto & il : m_polyline_list ) il.rotate( angle, cx, cy );
     }
 
-    void
-    reverse() override;
+    void reverse() override;
 
-    void
-    scale( real_type sc ) override;
+    void scale( real_type sc ) override;
 
-    void
-    change_origin( real_type newx0, real_type newy0 ) override;
+    void change_origin( real_type newx0, real_type newy0 ) override;
 
-    void
-    trim( real_type s_begin, real_type s_end ) override;
+    void trim( real_type s_begin, real_type s_end ) override;
 
-    void
-    trim( real_type s_begin, real_type s_end, PolyLine & newPL ) const;
+    void trim( real_type s_begin, real_type s_end, PolyLine & newPL ) const;
 
     //!
     //! Compute the point at minimum distance from a point `[x,y]` and the line segment

@@ -380,7 +380,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::bbTriangles_internal_ISO(
+  ClothoidCurve::bb_triangles_internal_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            s_begin,
@@ -398,7 +398,7 @@ namespace G2lib {
     for ( integer npts = 0; ss < s_end; ++npts ) {
       UTILS_ASSERT0(
         npts < 100000000,
-        "ClothoidCurve::bbTriangles_internal "
+        "ClothoidCurve::bb_triangles_internal "
         "is generating too much triangles (>100000000)\n"
         "something is going wrong or parameters are not well set\n"
       );
@@ -454,7 +454,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  ClothoidCurve::bbTriangles_ISO(
+  ClothoidCurve::bb_triangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
@@ -462,12 +462,12 @@ namespace G2lib {
     integer              icurve
   ) const {
     if ( m_CD.m_kappa0*m_CD.m_dk >= 0 || m_CD.kappa(m_L)*m_CD.m_dk <= 0 ) {
-      bbTriangles_internal_ISO( offs, tvec, 0, m_L, max_angle, max_size, icurve );
+      bb_triangles_internal_ISO( offs, tvec, 0, m_L, max_angle, max_size, icurve );
     } else {
       // flex inside, split clothoid
       real_type sflex = -m_CD.m_kappa0/m_CD.m_dk;
-      bbTriangles_internal_ISO( offs, tvec, 0,   sflex, max_angle, max_size, icurve );
-      bbTriangles_internal_ISO( offs, tvec, sflex, m_L, max_angle, max_size, icurve );
+      bb_triangles_internal_ISO( offs, tvec, 0,   sflex, max_angle, max_size, icurve );
+      bb_triangles_internal_ISO( offs, tvec, sflex, m_L, max_angle, max_size, icurve );
     }
   }
 
@@ -488,7 +488,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    bbTriangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
+    bb_triangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
     xmin = ymin = Utils::Inf<real_type>();
     xmax = ymax = -xmin;
     for ( auto const & T : tvec ) {
@@ -535,7 +535,7 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    bbTriangles_ISO( offs, m_aabb_triangles, max_angle, max_size );
+    bb_triangles_ISO( offs, m_aabb_triangles, max_angle, max_size );
 
     integer ipos{0};
     integer nobj{ integer(m_aabb_triangles.size()) };
@@ -854,8 +854,8 @@ namespace G2lib {
     } else {
 
       G2LIB_DEBUG_TIC;
-      bbTriangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
-      C.bbTriangles_ISO( offs_C, C.m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      bb_triangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      C.bb_triangles_ISO( offs_C, C.m_aabb_triangles, Utils::m_pi/18, 1e100 );
 
       for ( Triangle2D const & T1 : m_aabb_triangles ) {
         for ( Triangle2D const & T2 : C.m_aabb_triangles ) {
@@ -1020,7 +1020,7 @@ namespace G2lib {
           qx, qy, offs, ipos, m_aabb_triangles.size()
         );
         Triangle2D const & T = m_aabb_triangles.at(ipos);
-        real_type dst = T.distMin( qx, qy );
+        real_type dst = T.dist_min( qx, qy );
         if ( dst < DST ) {
           // refine distance
           closest_point_internal( T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst );
@@ -1043,7 +1043,7 @@ namespace G2lib {
 
       G2LIB_DEBUG_TIC;
       for ( Triangle2D const & T : m_aabb_triangles ) {
-        real_type dst = T.distMin( qx, qy );
+        real_type dst = T.dist_min( qx, qy );
         if ( dst < DST ) {
           // refine distance
           closest_point_internal( T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst );

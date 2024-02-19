@@ -259,7 +259,7 @@ namespace G2lib {
   \*/
 
   void
-  PolyLine::bbTriangles(
+  PolyLine::bb_triangles(
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
@@ -267,13 +267,13 @@ namespace G2lib {
   ) const {
     vector<LineSegment>::const_iterator ic = m_polyline_list.begin();
     for ( integer ipos = icurve; ic != m_polyline_list.end(); ++ic, ++ipos )
-      ic->bbTriangles( tvec, max_angle, max_size, ipos );
+      ic->bb_triangles( tvec, max_angle, max_size, ipos );
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void
-  PolyLine::bbTriangles_ISO(
+  PolyLine::bb_triangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
@@ -282,7 +282,7 @@ namespace G2lib {
   ) const {
     vector<LineSegment>::const_iterator ic = m_polyline_list.begin();
     for ( integer ipos = icurve; ic != m_polyline_list.end(); ++ic, ++ipos )
-      ic->bbTriangles_ISO( offs, tvec, max_angle, max_size, ipos );
+      ic->bb_triangles_ISO( offs, tvec, max_angle, max_size, ipos );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
