@@ -57,6 +57,8 @@ namespace G2lib {
     CircleArc() = delete;
     CircleArc( string const & name ) : BaseCurve( name ) {};
 
+    void setup( GenericContainer const & gc ) override;
+
     //!
     //! Build a copy of an existing circle arc.
     //!

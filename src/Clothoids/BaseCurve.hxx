@@ -204,6 +204,10 @@ namespace G2lib {
     virtual
     ~BaseCurve() = default;
 
+    virtual void setup( GenericContainer const & gc ) = 0;
+
+    void build( GenericContainer const & gc ) { this->setup( gc ); }
+
     //!
     //! The name of the curve type
     //!

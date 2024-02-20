@@ -55,6 +55,15 @@ namespace G2lib {
   integer   ClothoidCurve::m_max_iter  = 10;
   real_type ClothoidCurve::m_tolerance = 1e-9;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidCurve::setup( GenericContainer const & gc ) {
+    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   ClothoidCurve::ClothoidCurve( string const & name )
   : BaseCurve( name )
   {

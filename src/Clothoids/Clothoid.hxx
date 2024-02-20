@@ -142,6 +142,8 @@ namespace G2lib {
     //!
     ClothoidCurve( ClothoidCurve const & s );
 
+    void setup( GenericContainer const & gc ) override;
+
     //!
     //! Construct a clothoid with the standard parameters.
     //!

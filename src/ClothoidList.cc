@@ -48,6 +48,15 @@ namespace G2lib {
   using std::swap;
   using std::abs;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::setup( GenericContainer const & gc ) {
+    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::build( LineSegment const & LS ) {
     this->reset_last_interval();
@@ -55,12 +64,16 @@ namespace G2lib {
     this->push_back( LS );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::build( CircleArc const & C ) {
     this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::build( Biarc const & C ) {
@@ -70,12 +83,16 @@ namespace G2lib {
     this->push_back( C.C1() );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::build( BiarcList const & c ) {
     this->reset_last_interval();
     this->init();
     this->push_back( c );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::build( ClothoidCurve const & c ) {
@@ -84,12 +101,16 @@ namespace G2lib {
     this->push_back( c );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::build( PolyLine const & pl ) {
     this->reset_last_interval();
     this->init();
     this->push_back( pl );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::build( ClothoidList const & pl ) {
@@ -98,12 +119,16 @@ namespace G2lib {
     this->push_back( pl );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::build( G2solve2arc const & C ) {
     this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::build( G2solve3arc const & C ) {
@@ -112,12 +137,16 @@ namespace G2lib {
     this->push_back( C );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   ClothoidList::build( G2solveCLC const & C ) {
     this->reset_last_interval();
     this->init();
     this->push_back( C );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   ClothoidList::build( Dubins const & C ) {
@@ -145,6 +174,8 @@ namespace G2lib {
   ClothoidList::ClothoidList( G2solve2arc const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
   ClothoidList::ClothoidList( G2solve3arc const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
   ClothoidList::ClothoidList( G2solveCLC  const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   ClothoidList::ClothoidList( BaseCurve const * pC ) : BaseCurve( pC->name() )  {
 

@@ -52,6 +52,13 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  Dubins::setup( GenericContainer const & gc ) {
+    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void Dubins::build( LineSegment const & )   { UTILS_ERROR("can convert from LineSegment to Dubins\n"); }
   void Dubins::build( CircleArc const & )      { UTILS_ERROR("can convert from CircleArc to Dubins\n"); }
   void Dubins::build( Biarc const & )          { UTILS_ERROR("can convert from Biarc to Dubins\n"); }

@@ -107,6 +107,8 @@ namespace G2lib {
       m_aabb_triangles.clear();
     }
 
+    void setup( GenericContainer const & gc ) override;
+
     //!
     //! Build a copy of another biarc spline.
     //!

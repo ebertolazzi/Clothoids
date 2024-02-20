@@ -80,6 +80,8 @@ namespace G2lib {
     PolyLine( string const & name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 
+    void setup( GenericContainer const & gc ) override;
+
     void init();
 
     void copy( PolyLine const & l );

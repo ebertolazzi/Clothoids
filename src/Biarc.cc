@@ -30,6 +30,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  Biarc::setup( GenericContainer const & gc ) {
+    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   Biarc::build( LineSegment const & LS ) {
     // @@@@ DA RIVEDERE
     this->build(

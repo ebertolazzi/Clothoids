@@ -43,6 +43,15 @@ namespace G2lib {
   using LS_dist_type = vector<LineSegment>::difference_type;
   #endif
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  PolyLine::setup( GenericContainer const & gc ) {
+    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void PolyLine::build( CircleArc const & )     { UTILS_ERROR("can convert from CircleArc to PolyLine\n"); }
   void PolyLine::build( ClothoidCurve const & ) { UTILS_ERROR("can convert from Clothoid to PolyLine\n"); }
   void PolyLine::build( Biarc const & )         { UTILS_ERROR("can convert from Biarc to PolyLine\n"); }

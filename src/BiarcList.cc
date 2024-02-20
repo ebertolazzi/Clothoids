@@ -38,12 +38,23 @@ namespace G2lib {
   using std::swap;
   using std::abs;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  BiarcList::setup( GenericContainer const & gc ) {
+    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   BiarcList::build( LineSegment const & LS ) {
     this->reset_last_interval();
     this->init();
     this->push_back( LS );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BiarcList::build( CircleArc const & C ) {
@@ -52,10 +63,14 @@ namespace G2lib {
     this->push_back( C );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   BiarcList::build( ClothoidCurve const & ) {
     UTILS_ERROR("can convert from ClothoidCurve to BiarcList\n");
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BiarcList::build( Biarc const & C ) {
@@ -64,25 +79,35 @@ namespace G2lib {
     this->push_back( C );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   BiarcList::build( BiarcList const & C ) {
     *this = C;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   BiarcList::build( PolyLine const & ) {
     UTILS_ERROR("can convert from PolyLine to BiarcList\n");
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   BiarcList::build( ClothoidList const & ) {
     UTILS_ERROR("can convert from ClothoidList to BiarcList\n");
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   BiarcList::build( Dubins const & ) {
     UTILS_ERROR("can convert from Dubins to BiarcList\n");
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   ____ _       _   _           _     _ _     _     _
@@ -97,6 +122,8 @@ namespace G2lib {
   BiarcList::BiarcList( CircleArc const & C )   : BaseCurve( C.name() ) { this->build( C ); }
   BiarcList::BiarcList( Biarc const & C )       : BaseCurve( C.name() ) { this->build( C ); }
   BiarcList::BiarcList( PolyLine const & C )    : BaseCurve( C.name() ) { this->build( C ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   BiarcList::BiarcList( BaseCurve const * pC ) : BiarcList( pC->name() ) {
 

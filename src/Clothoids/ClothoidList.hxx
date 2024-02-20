@@ -151,6 +151,8 @@ namespace G2lib {
 
     ~G2solve2arc() = default;
 
+    //void setup( GenericContainer const & gc );
+
     //!
     //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
     //! two clothoids arc that solve the G2 problem, with data
@@ -284,6 +286,8 @@ namespace G2lib {
     G2solveCLC() = default;
 
     ~G2solveCLC() = default;
+
+    //void setup( GenericContainer const & gc );
 
     //!
     //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
@@ -464,6 +468,8 @@ namespace G2lib {
     G2solve3arc() = default;
 
     ~G2solve3arc() = default;
+
+    //void setup( GenericContainer const & gc );
 
     //!
     //! Fix tolerance for the G2 problem
@@ -900,6 +906,8 @@ namespace G2lib {
       m_clothoid_list.clear();
       m_aabb_triangles.clear();
     }
+
+    void setup( GenericContainer const & gc ) override;
 
     //!
     //! Build a copy of an existing clothoid list

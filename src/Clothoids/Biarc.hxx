@@ -69,6 +69,8 @@ namespace G2lib {
 
     ~Biarc() override = default;
 
+    void setup( GenericContainer const & gc ) override;
+
     //!
     //! Make a copy of an existing biarc
     //!

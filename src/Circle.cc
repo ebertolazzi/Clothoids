@@ -43,6 +43,15 @@ namespace G2lib {
   using std::swap;
   using std::vector;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::setup( GenericContainer const & gc ) {
+    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CircleArc::build( LineSegment const & LS ) {
     m_x0     = LS.x_begin();
@@ -53,6 +62,8 @@ namespace G2lib {
     m_k      = 0;
     m_L      = LS.length();
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void CircleArc::build( CircleArc const & C )   { *this = C; }
   void CircleArc::build( Biarc const & )         { UTILS_ERROR("can convert from Biarc to CircleArc\n"); }
