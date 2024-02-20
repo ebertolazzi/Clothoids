@@ -1212,7 +1212,7 @@ namespace G2lib {
       integer         n,
       real_type const x[],
       real_type const y[],
-      real_type       theta[]
+      real_type const theta[]
     );
 
     //!

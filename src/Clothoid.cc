@@ -59,7 +59,16 @@ namespace G2lib {
 
   void
   ClothoidCurve::setup( GenericContainer const & gc ) {
-    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+    string cwhere{ fmt::format("ClothoidCurve[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    real_type x0     = gc.get_map_number("x0",     where );
+    real_type y0     = gc.get_map_number("y0",     where );
+    real_type theta0 = gc.get_map_number("theta0", where );
+    real_type x1     = gc.get_map_number("x1",     where );
+    real_type y1     = gc.get_map_number("y1",     where );
+    real_type theta1 = gc.get_map_number("theta1", where );
+    bool ok = this->build_G1( x0, y0, theta0, x1, y1, theta1 );
+    UTILS_ASSERT( ok, "ClothoidCurve[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

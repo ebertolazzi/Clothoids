@@ -47,7 +47,17 @@ namespace G2lib {
 
   void
   PolyLine::setup( GenericContainer const & gc ) {
-    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+    string cwhere{ fmt::format("PolyLine[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    GenericContainer::vec_real_type const & x = gc.get_map_vec_real("x", where );
+    GenericContainer::vec_real_type const & y = gc.get_map_vec_real("y", where );
+    integer n{ integer(x.size()) };
+    UTILS_ASSERT(
+      n == integer( y.size() ),
+      "PolyLine[{}]::setup( gc ) (size(x)={}) != (size(y)={})\n",
+      this->name(), x.size(), y.size()
+    );
+    this->build( n, x.data(), y.data() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -609,9 +619,9 @@ namespace G2lib {
 
   void
   PolyLine::build(
+    integer         npts,
     real_type const x[],
-    real_type const y[],
-    integer         npts
+    real_type const y[]
   ) {
     init( x[0], y[0] );
     for ( integer k = 1; k < npts; ++k )

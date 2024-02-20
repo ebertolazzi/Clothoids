@@ -52,7 +52,29 @@ namespace G2lib {
 
   void
   ClothoidList::setup( GenericContainer const & gc ) {
-    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+    string cwhere{ fmt::format("ClothoidList[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    GenericContainer::vec_real_type const & x = gc.get_map_vec_real("x", where );
+    GenericContainer::vec_real_type const & y = gc.get_map_vec_real("y", where );
+    integer n{ integer(x.size()) };
+    UTILS_ASSERT(
+      n == integer( y.size() ),
+      "ClothoidList[{}]::setup( gc ) (size(x)={}) != (size(y)={})\n",
+      this->name(), x.size(), y.size()
+    );
+    bool ok{true};
+    if ( gc.exists("theta") ) {
+      GenericContainer::vec_real_type const & theta = gc.get_map_vec_real("theta", where );
+      UTILS_ASSERT(
+        n == integer( theta.size() ),
+        "ClothoidList[{}]::setup( gc ) (size(x)={}) != (size(theta)={})\n",
+        this->name(), x.size(), theta.size()
+      );
+      ok = this->build_G1( n, x.data(), y.data(), theta.data() );
+    } else {
+      ok = this->build_G1( n, x.data(), y.data() );
+    }
+    UTILS_ASSERT( ok, "ClothoidList[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -581,7 +603,7 @@ namespace G2lib {
     integer         n,
     real_type const x[],
     real_type const y[],
-    real_type       theta[]
+    real_type const theta[]
   ) {
     UTILS_ASSERT0( n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n" );
 

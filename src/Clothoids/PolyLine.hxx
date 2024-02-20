@@ -126,9 +126,9 @@ namespace G2lib {
 
     void
     build(
+      integer         npts,
       real_type const x[],
-      real_type const y[],
-      integer         npts
+      real_type const y[]
     );
 
     void build( LineSegment const & L );

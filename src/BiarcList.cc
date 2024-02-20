@@ -42,7 +42,29 @@ namespace G2lib {
 
   void
   BiarcList::setup( GenericContainer const & gc ) {
-    // @@@@@@@@@@@ DA FARE @@@@@@@@@@@@@@
+    string cwhere{ fmt::format("BiarcList[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    GenericContainer::vec_real_type const & x = gc.get_map_vec_real("x", where );
+    GenericContainer::vec_real_type const & y = gc.get_map_vec_real("y", where );
+    integer n{ integer(x.size()) };
+    UTILS_ASSERT(
+      n == integer( y.size() ),
+      "BiarcList[{}]::setup( gc ) (size(x)={}) != (size(y)={})\n",
+      this->name(), x.size(), y.size()
+    );
+    bool ok{true};
+    if ( gc.exists("theta") ) {
+      GenericContainer::vec_real_type const & theta = gc.get_map_vec_real("theta", where );
+      UTILS_ASSERT(
+        n == integer( theta.size() ),
+        "BiarcList[{}]::setup( gc ) (size(x)={}) != (size(theta)={})\n",
+        this->name(), x.size(), theta.size()
+      );
+      ok = this->build_G1( n, x.data(), y.data(), theta.data() );
+    } else {
+      ok = this->build_G1( n, x.data(), y.data() );
+    }
+    UTILS_ASSERT( ok, "BiarcList[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
