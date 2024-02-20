@@ -209,6 +209,30 @@ namespace G2lib {
     real_type nx_begin_ISO() const override { return m_C0.nx_begin_ISO(); }
     real_type ny_begin_ISO() const override { return m_C0.ny_begin_ISO(); }
 
+    real_type theta0_begin() const { return m_C0.theta_begin(); }
+    real_type theta0_end()   const { return m_C0.theta_end(); }
+
+    real_type theta1_begin() const { return m_C1.theta_begin(); }
+    real_type theta1_end()   const { return m_C1.theta_end(); }
+
+    real_type theta2_begin() const { return m_C2.theta_begin(); }
+    real_type theta2_end()   const { return m_C2.theta_end(); }
+
+    real_type x0_begin() const { return m_C0.x_begin(); }
+    real_type y0_begin() const { return m_C0.y_begin(); }
+    real_type x0_end()   const { return m_C0.x_end(); }
+    real_type y0_end()   const { return m_C0.y_end(); }
+
+    real_type x1_begin() const { return m_C1.x_begin(); }
+    real_type y1_begin() const { return m_C1.y_begin(); }
+    real_type x1_end()   const { return m_C1.x_end(); }
+    real_type y1_end()   const { return m_C1.y_end(); }
+
+    real_type x2_begin() const { return m_C2.x_begin(); }
+    real_type y2_begin() const { return m_C2.y_begin(); }
+    real_type x2_end()   const { return m_C2.x_end(); }
+    real_type y2_end()   const { return m_C2.y_end(); }
+
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     real_type theta    ( real_type s ) const override;
