@@ -42,19 +42,24 @@ namespace G2lib {
   private:
     DubinsType m_solution_type;
 
-    CircleArc m_C0, m_C1, m_C2; //! Three arc solution of DUBINS problem
+    CircleArc m_C0{"Dubins_C0"}; //! Three arc solution of DUBINS problem
+    CircleArc m_C1{"Dubins_C1"}; //! Three arc solution of DUBINS problem
+    CircleArc m_C2{"Dubins_C2"}; //! Three arc solution of DUBINS problem
 
   public:
 
     //!
     //! Build an empty circle
     //!
-    Dubins() = default;
+    Dubins() = delete;
+    Dubins( string const & name ) : BaseCurve( name ) {};
+
+    void setup( GenericContainer const & gc ) override;
 
     //!
     //! Build a copy of an existing Dubins problem.
     //!
-    Dubins( Dubins const & s )
+    Dubins( Dubins const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 
     //!
@@ -70,14 +75,15 @@ namespace G2lib {
     //!
     explicit
     Dubins(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type x1,
-      real_type y1,
-      real_type theta1,
-      real_type k_max
-    ) {
+      real_type      x0,
+      real_type      y0,
+      real_type      theta0,
+      real_type      x1,
+      real_type      y1,
+      real_type      theta1,
+      real_type      k_max,
+      string const & name
+    ) : BaseCurve( name ) {
       this->build( x0, y0, theta0, x1, y1, theta1, k_max );
     }
 
@@ -203,6 +209,30 @@ namespace G2lib {
     real_type nx_begin_ISO() const override { return m_C0.nx_begin_ISO(); }
     real_type ny_begin_ISO() const override { return m_C0.ny_begin_ISO(); }
 
+    real_type theta0_begin() const { return m_C0.theta_begin(); }
+    real_type theta0_end()   const { return m_C0.theta_end(); }
+
+    real_type theta1_begin() const { return m_C1.theta_begin(); }
+    real_type theta1_end()   const { return m_C1.theta_end(); }
+
+    real_type theta2_begin() const { return m_C2.theta_begin(); }
+    real_type theta2_end()   const { return m_C2.theta_end(); }
+
+    real_type x0_begin() const { return m_C0.x_begin(); }
+    real_type y0_begin() const { return m_C0.y_begin(); }
+    real_type x0_end()   const { return m_C0.x_end(); }
+    real_type y0_end()   const { return m_C0.y_end(); }
+
+    real_type x1_begin() const { return m_C1.x_begin(); }
+    real_type y1_begin() const { return m_C1.y_begin(); }
+    real_type x1_end()   const { return m_C1.x_end(); }
+    real_type y1_end()   const { return m_C1.y_end(); }
+
+    real_type x2_begin() const { return m_C2.x_begin(); }
+    real_type y2_begin() const { return m_C2.y_begin(); }
+    real_type x2_end()   const { return m_C2.x_end(); }
+    real_type y2_end()   const { return m_C2.y_end(); }
+
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     real_type theta    ( real_type s ) const override;
@@ -321,41 +351,41 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles( tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles( tvec, max_angle, max_size, icurve );
-      m_C2.bbTriangles( tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles( tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles( tvec, max_angle, max_size, icurve );
+      m_C2.bb_triangles( tvec, max_angle, max_size, icurve );
     }
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
-      m_C2.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C2.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
     }
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
-      m_C2.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C2.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\
@@ -475,12 +505,16 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "Dubins\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "Dubins\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     //!
-    //! Pretty print of the biarc.
+    //! Pretty print of Dubins class.
     //!
     friend
     ostream_type &
@@ -493,7 +527,7 @@ namespace G2lib {
   inline
   string
   to_string( Dubins::DubinsType n ) {
-    string res = "";
+    string res{""};
     switch ( n ) {
     case Dubins::DubinsType::LSL: res = "LSL"; break;
     case Dubins::DubinsType::RSR: res = "RSR"; break;

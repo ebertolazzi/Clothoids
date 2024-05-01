@@ -90,7 +90,7 @@ namespace Utils {
     T_int        npts,
     T_real const X[],
     T_real     & x,
-    T_int      & lastInterval,
+    T_int      & last_interval,
     bool         closed,
     bool         can_extend
   ) {
@@ -98,10 +98,10 @@ namespace Utils {
     // check points
     T_int n  = npts-1;
     UTILS_ASSERT(
-      npts > 1 && lastInterval >= 0 && lastInterval < n,
-      "In search_interval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
-      "npts musrt be >= 2 and lastInterval must be in [0,npts-2]\n",
-      npts, lastInterval, closed, can_extend
+      npts > 1 && last_interval >= 0 && last_interval < n,
+      "In search_interval( npts={}, X, x={}, last_interval={}, closed={}, can_extend={})\n"
+      "npts musrt be >= 2 and last_interval must be in [0,npts-2]\n",
+      npts, x, last_interval, closed, can_extend
     );
 
     // checl range
@@ -116,44 +116,44 @@ namespace Utils {
     } else {
       UTILS_ASSERT(
         can_extend || (x >= xl && x <= xr),
-        "In search_interval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
+        "In search_interval( npts={}, X, x={}, last_interval={}, closed={}, can_extend={})\n"
         "out of range: [{},{}]\n",
-        npts, lastInterval, closed, can_extend, xl, xr
+        npts, x, last_interval, closed, can_extend, xl, xr
       );
     }
 
     // find the interval of the support of the B-spline
-    T_real const * XL = X+lastInterval;
+    T_real const * XL = X+last_interval;
     if ( XL[1] < x ) { // x on the right
       if ( x >= X[n-1] ) {
-        lastInterval = n-1; // last interval
+        last_interval = n-1; // last interval
       } else if ( x < XL[2] ) { // x in (XL[1],XL[2])
-        ++lastInterval;
+        ++last_interval;
       } else { // x >= XL[2] search the right interval
         T_real const * XE = X+n;
-        lastInterval += T_int(lower_bound( XL, XE, x )-XL);
-        T_real const * XX = X+lastInterval;
-        if ( x < XX[0] || Utils::is_zero(XX[0]-XX[1]) ) --lastInterval;
+        last_interval += T_int(lower_bound( XL, XE, x )-XL);
+        T_real const * XX = X+last_interval;
+        if ( x < XX[0] || Utils::is_zero(XX[0]-XX[1]) ) --last_interval;
       }
     } else if ( x < XL[0] ) { // on the left
       if ( x <= X[1] ) { // x in [X[0],X[1]]
-        lastInterval = 0; // first interval
+        last_interval = 0; // first interval
       } else if ( XL[-1] <= x ) { // x in [XL[-1],XL[0])
-        --lastInterval;
+        --last_interval;
       } else {
-        lastInterval = T_int(lower_bound( X+1, XL, x )-X);
-        T_real const * XX = X+lastInterval;
-        if ( x < XX[0] || Utils::is_zero(XX[0]-XX[1]) ) --lastInterval;
+        last_interval = T_int(lower_bound( X+1, XL, x )-X);
+        T_real const * XX = X+last_interval;
+        if ( x < XX[0] || Utils::is_zero(XX[0]-XX[1]) ) --last_interval;
       }
     } else {
       // x in the interval [ XL[0], XL[1] ] nothing to do
     }
     // check computed interval
     UTILS_ASSERT(
-      lastInterval >= 0 && lastInterval < n,
-      "In search_interval( npts={}, X, x={}, lastInterval={}, closed={}, can_extend={})\n"
-      "computed lastInterval of range: [{},{}]\n",
-      npts, lastInterval, closed, can_extend, xl, xr
+      last_interval >= 0 && last_interval < n,
+      "In search_interval( npts={}, X, x={}, last_interval={}, closed={}, can_extend={})\n"
+      "computed last_interval of range: [{},{}]\n",
+      npts, x, last_interval, closed, can_extend, xl, xr
     );
 
   }
@@ -162,7 +162,7 @@ namespace Utils {
     int32_t     npts,
     float const X[],
     float     & x,
-    int32_t   & lastInterval,
+    int32_t   & last_interval,
     bool        closed,
     bool        can_extend
   );
@@ -171,7 +171,7 @@ namespace Utils {
     int32_t      npts,
     double const X[],
     double     & x,
-    int32_t    & lastInterval,
+    int32_t    & last_interval,
     bool         closed,
     bool         can_extend
   );
@@ -180,7 +180,7 @@ namespace Utils {
     int64_t     npts,
     float const X[],
     float     & x,
-    int64_t   & lastInterval,
+    int64_t   & last_interval,
     bool        closed,
     bool        can_extend
   );
@@ -189,7 +189,7 @@ namespace Utils {
     int64_t      npts,
     double const X[],
     double     & x,
-    int64_t    & lastInterval,
+    int64_t    & last_interval,
     bool         closed,
     bool         can_extend
   );

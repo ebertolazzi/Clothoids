@@ -21,6 +21,11 @@
 /// file: ClothoidList_compatibility.hxx
 ///
 
+real_type curvatureTotalVariation() const { return curvature_total_variation(); }
+real_type integralCurvature2() const { return integral_curvature2(); }
+real_type integralJerk2() const { return integral_jerk2(); }
+real_type integralSnap2() const { return integral_snap2(); }
+
 real_type tx_Begin() const { return tx_begin(); }
 real_type ty_Begin() const { return ty_begin(); }
 real_type tx_End()   const { return tx_end(); }

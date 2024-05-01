@@ -44,7 +44,8 @@ namespace G2lib {
   //!
 
   class Biarc : public BaseCurve {
-    CircleArc m_C0, m_C1;
+    CircleArc m_C0{"Biarc_C0"};
+    CircleArc m_C1{"Biarc_C1"};
 
     void
     gfun( real_type alpha, real_type g[3] ) const {
@@ -60,17 +61,20 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    ~Biarc() override = default;
-
     //!
     //! Construct and empty biarc
     //!
-    Biarc() = default;
+    Biarc() = delete;
+    Biarc( string const & name ) : BaseCurve( name ) {};
+
+    ~Biarc() override = default;
+
+    void setup( GenericContainer const & gc ) override;
 
     //!
     //! Make a copy of an existing biarc
     //!
-    Biarc( Biarc const & ba )
+    Biarc( Biarc const & ba ) : BaseCurve( ba.name() )
     { this->copy(ba); }
 
     //!
@@ -92,8 +96,10 @@ namespace G2lib {
       real_type theta0,
       real_type x1,
       real_type y1,
-      real_type theta1
-    ) {
+      real_type theta1,
+      string const & name
+    ) : BaseCurve( name )
+    {
       bool ok = build( x0, y0, theta0, x1, y1, theta1 );
       UTILS_ASSERT(
         ok,
@@ -103,10 +109,12 @@ namespace G2lib {
     }
 
     explicit
-    Biarc( LineSegment const & LS ) { this->build( LS ); }
+    Biarc( LineSegment const & LS ) : BaseCurve( LS.name() )
+    { this->build( LS ); }
 
     explicit
-    Biarc( CircleArc const & C ) { this->build( C ); }
+    Biarc( CircleArc const & C ) : BaseCurve( C.name() )
+    { this->build( C ); }
 
     explicit
     Biarc( BaseCurve const * pC );
@@ -494,38 +502,38 @@ namespace G2lib {
     real_type delta_theta() const { return m_C0.delta_theta() + m_C1.delta_theta(); }
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles( tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles( tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles( tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles( tvec, max_angle, max_size, icurve );
     }
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
     }
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      m_C0.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
-      m_C1.bbTriangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C0.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
+      m_C1.bb_triangles_SAE( offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\
@@ -624,9 +632,13 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "BiArc\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "BiArc\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     //!
     //! Pretty print of the biarc.
@@ -654,10 +666,10 @@ namespace G2lib {
   //!
   bool
   build_guess_theta(
-    integer           n,
-    real_type const * x,
-    real_type const * y,
-    real_type       * theta
+    integer         n,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[]
   );
 
 }

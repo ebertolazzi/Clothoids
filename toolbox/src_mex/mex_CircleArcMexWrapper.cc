@@ -99,7 +99,7 @@ namespace G2lib {
     );
     #undef CMD
 
-    CircleArc * ptr = new CircleArc();
+    CircleArc * ptr = new CircleArc("circle");
     arg_out_0 = Utils::mex_convert_ptr_to_mx<CircleArc>(ptr);
 
     if ( nrhs == 6 ) {

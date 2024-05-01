@@ -110,7 +110,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
 
     //ClothoidList * ptr =
-    arg_out_0 = Utils::mex_convert_ptr_to_mx<ClothoidList>(new ClothoidList());
+    arg_out_0 = Utils::mex_convert_ptr_to_mx<ClothoidList>(new ClothoidList("clothoid list"));
 
     #undef CMD
   }
@@ -400,9 +400,9 @@ namespace G2lib {
     if ( iter >= 0 ) {
       ptr->init();
       ptr->reserve(3);
-      ptr->push_back(g2sol.getS0());
-      ptr->push_back(g2sol.getSM());
-      ptr->push_back(g2sol.getS1());
+      ptr->push_back(g2sol.S0());
+      ptr->push_back(g2sol.SM());
+      ptr->push_back(g2sol.S1());
     }
 
     Utils::mex_set_scalar_int32( arg_out_0, iter );
@@ -440,8 +440,8 @@ namespace G2lib {
     if ( iter >= 0 ) {
       ptr->init();
       ptr->reserve(2);
-      ptr->push_back(g2sol.getS0());
-      ptr->push_back(g2sol.getS1());
+      ptr->push_back(g2sol.S0());
+      ptr->push_back(g2sol.S1());
     }
 
     Utils::mex_set_scalar_int32( arg_out_0, iter );
@@ -479,9 +479,9 @@ namespace G2lib {
     if ( iter >= 0 ) {
       ptr->init();
       ptr->reserve(3);
-      ptr->push_back(g2sol.getS0());
-      ptr->push_back(g2sol.getSM());
-      ptr->push_back(g2sol.getS1());
+      ptr->push_back(g2sol.S0());
+      ptr->push_back(g2sol.SM());
+      ptr->push_back(g2sol.S1());
     }
 
     Utils::mex_set_scalar_int32( arg_out_0, iter );
@@ -521,9 +521,9 @@ namespace G2lib {
     if ( iter >= 0 ) {
       ptr->init();
       ptr->reserve(3);
-      ptr->push_back(g2sol.getS0());
-      ptr->push_back(g2sol.getSM());
-      ptr->push_back(g2sol.getS1());
+      ptr->push_back(g2sol.S0());
+      ptr->push_back(g2sol.SM());
+      ptr->push_back(g2sol.S1());
     }
 
     Utils::mex_set_scalar_int32( arg_out_0, iter );

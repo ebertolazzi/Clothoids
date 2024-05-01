@@ -90,7 +90,7 @@ namespace G2lib {
     #define CMD "PolyLineMexWrapper('new'): "
     UTILS_MEX_ASSERT( nlhs == 1, "expected 1 input, nlhs = {}\n", nlhs );
     UTILS_MEX_ASSERT( nrhs == 1, "expected 1 output, nrhs = {}\n", nrhs );
-    arg_out_0 = Utils::mex_convert_ptr_to_mx<PolyLine>(new PolyLine());
+    arg_out_0 = Utils::mex_convert_ptr_to_mx<PolyLine>(new PolyLine("polyline"));
     #undef CMD
   }
 
@@ -124,7 +124,7 @@ namespace G2lib {
     );
 
     PolyLine * ptr = Utils::mex_convert_mx_to_ptr<PolyLine>( arg_in_1 );
-    ptr->build( x, y, size0 );
+    ptr->build( size0, x, y );
     #undef CMD
   }
 

@@ -111,8 +111,8 @@ namespace Utils {
 
   public:
 
-    Algo748() UTILS_DEFAULT;
-    ~Algo748() UTILS_DEFAULT;
+    Algo748() = default;
+    ~Algo748() = default;
 
     Real
     eval( Real a, Real b, Algo748_base_fun<Real> * fun ) {

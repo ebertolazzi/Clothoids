@@ -168,7 +168,7 @@ namespace Utils {
     using Poly_t  = Poly<Real>;
     using dvec_t  = Eigen::Matrix<Real,Eigen::Dynamic,1>;
 
-    using Interval = struct {
+    using Interval = struct Interval {
       Real    a;
       Real    b;
       Integer va;

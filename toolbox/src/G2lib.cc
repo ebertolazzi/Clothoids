@@ -416,14 +416,14 @@ namespace G2lib {
 
   void
   xy_to_guess_angle(
-    integer           npts,
-    real_type const * x,
-    real_type const * y,
-    real_type       * theta,
-    real_type       * theta_min,
-    real_type       * theta_max,
-    real_type       * omega,
-    real_type       * len
+    integer         npts,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[],
+    real_type       theta_min[],
+    real_type       theta_max[],
+    real_type       omega[],
+    real_type       len[]
   ) {
     //
     // Compute guess angles
@@ -542,10 +542,10 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  isCounterClockwise(
-    real_type const * P1,
-    real_type const * P2,
-    real_type const * P3
+  is_counter_clockwise(
+    real_type const P1[],
+    real_type const P2[],
+    real_type const P3[]
   ) {
     real_type dx1 = P2[0] - P1[0];
     real_type dy1 = P2[1] - P1[1];
@@ -638,16 +638,16 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  isPointInTriangle(
-    real_type const * point,
-    real_type const * p1,
-    real_type const * p2,
-    real_type const * p3
+  is_point_in_triangle(
+    real_type const point[],
+    real_type const p1[],
+    real_type const p2[],
+    real_type const p3[]
   ) {
-    integer d = isCounterClockwise(p1, p2, p3);
-    integer a = isCounterClockwise(p1, p2, point);
-    integer b = isCounterClockwise(p2, p3, point);
-    integer c = isCounterClockwise(p3, p1, point);
+    integer d = is_counter_clockwise(p1, p2, p3);
+    integer a = is_counter_clockwise(p1, p2, point);
+    integer b = is_counter_clockwise(p2, p3, point);
+    integer c = is_counter_clockwise(p3, p1, point);
     if ( d < 0) { a = -a; b = -b; c = -c; }
     if ( a < 0 ) return -1;
     if ( b < 0 ) return -1;

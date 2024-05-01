@@ -169,8 +169,8 @@ namespace G2lib {
       minmax3( m_p1[1], m_p2[1], m_p3[1], ymin, ymax );
     }
 
-    real_type baricenterX() const { return (m_p1[0]+m_p2[0]+m_p3[0])/3; }
-    real_type baricenterY() const { return (m_p1[1]+m_p2[1]+m_p3[1])/3; }
+    real_type baricenter_x() const { return (m_p1[0]+m_p2[0]+m_p3[0])/3; }
+    real_type baricenter_y() const { return (m_p1[1]+m_p2[1]+m_p3[1])/3; }
 
     real_type const * P1() const { return m_p1; }
     real_type const * P2() const { return m_p2; }
@@ -184,8 +184,8 @@ namespace G2lib {
     //! return  0 = degenerate triangle
     //!
     integer
-    isCounterClockwise() const {
-      return G2lib::isCounterClockwise( m_p1, m_p2, m_p3 );
+    is_counter_clockwise() const {
+      return G2lib::is_counter_clockwise( m_p1, m_p2, m_p3 );
     }
 
     //!
@@ -194,25 +194,29 @@ namespace G2lib {
     //! return  0 = on the border
     //!
     integer
-    isInside( real_type x, real_type y ) const {
+    is_inside( real_type x, real_type y ) const {
       real_type const pt[2] = {x,y};
-      return isPointInTriangle( pt, m_p1, m_p2, m_p3 );
+      return is_point_in_triangle( pt, m_p1, m_p2, m_p3 );
     }
 
     integer
-    isInside( real_type const pt[2] ) const {
-      return isPointInTriangle( pt, m_p1, m_p2, m_p3 );
+    is_inside( real_type const pt[2] ) const {
+      return is_point_in_triangle( pt, m_p1, m_p2, m_p3 );
     }
 
     real_type
-    distMin( real_type x, real_type y ) const;
+    dist_min( real_type x, real_type y ) const;
 
     real_type
-    distMax( real_type x, real_type y ) const;
+    dist_max( real_type x, real_type y ) const;
+
+    string
+    info() const
+    { return fmt::format( "Triangle2D\n{}\n", *this ); }
 
     void
     info( ostream_type & stream ) const
-    { stream << "Triangle2D\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &

@@ -52,6 +52,23 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  Dubins::setup( GenericContainer const & gc ) {
+    string cwhere{ fmt::format("Dubins[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    real_type x0     = gc.get_map_number("x0",     where );
+    real_type y0     = gc.get_map_number("y0",     where );
+    real_type theta0 = gc.get_map_number("theta0", where );
+    real_type x1     = gc.get_map_number("x1",     where );
+    real_type y1     = gc.get_map_number("y1",     where );
+    real_type theta1 = gc.get_map_number("theta1", where );
+    real_type kmax   = gc.get_map_number("kmax",   where );
+    bool ok = this->build( x0, y0, theta0, x1, y1, theta1, kmax );
+    UTILS_ASSERT( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void Dubins::build( LineSegment const & )   { UTILS_ERROR("can convert from LineSegment to Dubins\n"); }
   void Dubins::build( CircleArc const & )      { UTILS_ERROR("can convert from CircleArc to Dubins\n"); }
   void Dubins::build( Biarc const & )          { UTILS_ERROR("can convert from Biarc to Dubins\n"); }
@@ -68,6 +85,7 @@ namespace G2lib {
     m_solution_type = DB.m_solution_type;
   }
 
+#if 0
   bool
   Dubins::build(
     real_type x0,
@@ -177,6 +195,169 @@ namespace G2lib {
     m_C2.build( m_C1.x_end(), m_C1.y_end(), m_C1.theta_end(), s2*k_max, L2/k_max );
     return true;
   }
+#else
+  bool
+  Dubins::build(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+
+    real_type x3,
+    real_type y3,
+    real_type theta3,
+
+    real_type k_max
+  ) {
+
+    // setup in standard form
+    real_type dx    { x3 - x0                 };
+    real_type dy    { y3 - y0                 };
+    real_type th    { atan2( dy, dx )         };
+    real_type alpha { theta0 - th             };
+    real_type beta  { theta3 - th             };
+    real_type d     { k_max * hypot( dx, dy ) };
+
+    // metto angolo in -Pi, Pi
+    minus_pi_pi( alpha );
+    minus_pi_pi( beta );
+
+    // common constants
+    real_type ca   { cos(alpha) };
+    real_type sa   { sin(alpha) };
+    real_type cb   { cos(beta)  };
+    real_type sb   { sin(beta)  };
+    real_type ab   { alpha-beta };
+    real_type cab  { cos(ab)    };
+    real_type sab  { sin(ab)    };
+    real_type sasb { sa+sb      };
+    real_type cacb { ca+cb      };
+
+    real_type min_len{ Utils::Inf<real_type>() };
+    real_type L1{0}, L2{0}, L3{0}, s1{0}, s2{0}, s3{0};
+
+    #define CHECK( S1, S2, S3) \
+    if ( ll < min_len ) { min_len = ll; L1 = l1; L2 = l2; L3 = l3; s1 = S1; s2 = S2; s3 = S3; }
+
+    auto LSL = [&]() -> void {
+      real_type A{ d + sa - sb };
+      real_type B{ cb - ca };
+      real_type thM{ atan2( B, A ) };
+      real_type l1{ thM  - alpha }; into_0_2pi(l1);
+      real_type l3{ beta - thM   }; into_0_2pi(l3);
+      real_type l2{ A * cos(thM) + B * sin(thM) };
+      real_type ll{l1+l2+l3};
+      CHECK( 1, 0, 1 );
+    };
+
+    auto RSR = [&]() -> void {
+      real_type A{ d - sa + sb };
+      real_type B{ ca - cb };
+      real_type thM{ atan2( B, A ) };
+      real_type l1{ alpha - thM  }; into_0_2pi( l1 );
+      real_type l3{ thM   - beta }; into_0_2pi( l3 );
+      real_type l2{ A * cos(thM) + B * sin(thM) };
+      real_type ll{l1+l2+l3};
+      CHECK( -1, 0, -1 );
+    };
+
+    auto LSR = [&]() -> void {
+
+      Quadratic Q( 2-cacb, 2*(d+sasb), 2+cacb );
+      real_type X[2];
+      integer nr{ Q.get_real_roots( X ) };
+
+      for ( integer ir = 0; ir < nr; ++ir ) {
+        real_type Xsol{ X[ir] };
+        real_type th{ atan2( -2*Xsol, Xsol*Xsol-1 ) };
+        real_type A{ d + sasb };
+        real_type B{ -cacb };
+        real_type l1{ th - alpha }; into_0_2pi( l1 );
+        real_type l3{ th - beta  }; into_0_2pi( l3 );
+        real_type l2{ A*cos(th) + B*sin(th) };
+        if ( l2 >= 0 ) {
+          real_type ll{l1+l2+l3};
+          CHECK( 1, 0, -1 );
+        }
+      }
+    };
+
+    auto RSL = [&]() -> void {
+
+      Quadratic Q( cacb-2, 2*(d-sasb), -cacb-2 );
+      real_type X[2];
+      integer nr{ Q.get_real_roots( X ) };
+
+      for ( integer ir = 0; ir < nr; ++ir ) {
+        real_type Xsol{ X[ir] };
+        real_type th{ atan2( -2*Xsol, Xsol*Xsol-1 ) };
+        real_type A{ d - sasb };
+        real_type B{ cacb };
+        real_type l1{ alpha - th }; into_0_2pi( l1 );
+        real_type l3{ beta  - th }; into_0_2pi( l3 );
+        real_type l2{ A*cos(th) + B*sin(th) };
+        if ( l2 >= 0 ) {
+          real_type ll{l1+l2+l3};
+          CHECK( -1, 0, 1 );
+        }
+      }
+    };
+
+    auto LRL = [&]() -> void {
+
+      real_type d2{d*d/2};
+      real_type C1{cab-1};
+      Quadratic Q( d*sasb+C1+d2, 4*(d*cb+sab), d*(sa-3*sb)-3*C1+d2 );
+      real_type Z[2];
+      integer nr{ Q.get_real_roots( Z ) };
+
+      for ( integer ir = 0; ir < nr; ++ir ) {
+        real_type Zsol{ Z[ir] };
+        real_type l3{ Utils::m_pi + 2*atan( Zsol ) };
+        real_type th{ l3 + ab };
+        real_type t{ d*ca+sab-2*sin(th) };
+        real_type b{ d*sa-C1+2*cos(th) };
+        real_type l1{ atan2( t, b ) }; into_0_2pi( l1 );
+        real_type l2{ l1 + l3 - ab  }; into_0_2pi( l2 );
+        real_type ll{l1+l2+l3};
+        CHECK( 1, -1, 1 );
+      }
+    };
+
+    auto RLR = [&]() -> void {
+
+      real_type d2{d*d/2};
+      real_type C1{cab-1};
+      Quadratic Q( -d*sasb+C1+d2, 4*(d*cb-sab), d*(3*sb-sa)-3*C1+d2 );
+      real_type Z[2];
+      integer nr{ Q.get_real_roots( Z ) };
+
+      for ( integer ir = 0; ir < nr; ++ir ) {
+        real_type Zsol{ Z[ir] };
+        real_type l3{ Utils::m_pi + 2*atan( Zsol ) };
+        real_type th{ ab - l3 };
+        real_type t{ d*ca-sab+2*sin(th) };
+        real_type b{ -d*sa-C1+2*cos(th) };
+        real_type l1{ atan2( t, b ) }; into_0_2pi( l1 );
+        real_type l2{ l1 + l3 - ab  }; into_0_2pi( l2 );
+        real_type ll{l1+l2+l3};
+        CHECK( -1, 1, -1 );
+      }
+    };
+
+    LSL(); RSR();
+    LSR(); RSL();
+    LRL(); RLR();
+
+    if ( min_len == Utils::Inf<real_type>() ) return false;
+
+    m_C0.build( x0,           y0,           theta0,           s1*k_max, L1/k_max );
+    m_C1.build( m_C0.x_end(), m_C0.y_end(), m_C0.theta_end(), s2*k_max, L2/k_max );
+    m_C2.build( m_C1.x_end(), m_C1.y_end(), m_C1.theta_end(), s3*k_max, L3/k_max );
+    return true;
+  }
+
+
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -197,115 +378,38 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Dubins::theta( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.theta(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.theta(s);
-    s -= m_C2.length();
-    return m_C2.theta(s);
-  }
+#define DUBINS_SELECT(FUN)                    \
+if ( s < m_C0.length() ) return m_C0.FUN(s);  \
+s -= m_C0.length();                           \
+if ( s < m_C1.length() ) return m_C1.FUN(s);  \
+s -= m_C1.length();                           \
+return m_C2.FUN(s)
+
+  real_type Dubins::theta  ( real_type s ) const { DUBINS_SELECT( theta ); }
+  real_type Dubins::theta_D( real_type s ) const { DUBINS_SELECT( theta_D ); }
+  real_type Dubins::X( real_type s ) const { DUBINS_SELECT( X ); }
+  real_type Dubins::X_D( real_type s ) const { DUBINS_SELECT( X_D ); }
+  real_type Dubins::X_DD( real_type s ) const { DUBINS_SELECT( X_DD ); }
+  real_type Dubins::X_DDD( real_type s ) const { DUBINS_SELECT( X_DDD ); }
+  real_type Dubins::Y( real_type s ) const { DUBINS_SELECT( Y ); }
+  real_type Dubins::Y_D( real_type s ) const { DUBINS_SELECT( Y_D ); }
+  real_type Dubins::Y_DD( real_type s ) const { DUBINS_SELECT( Y_DD ); }
+  real_type Dubins::Y_DDD( real_type s ) const { DUBINS_SELECT( Y_DDD ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Dubins::theta_D( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.theta_D(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.theta_D(s);
-    s -= m_C1.length();
-    return m_C2.theta_D(s);
+#define DUBINS_SELECT_EVAL(FUN,...)    \
+  if ( s < m_C0.length() ) {           \
+    m_C0.FUN( s, __VA_ARGS__ );        \
+  } else {                             \
+    s -= m_C0.length();                \
+    if ( s < m_C1.length() ) {         \
+      m_C1.FUN( s, __VA_ARGS__ );      \
+    } else {                           \
+      s -= m_C1.length();              \
+      m_C2.FUN( s, __VA_ARGS__ );      \
+    }                                  \
   }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::X( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.X(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.X(s);
-    s -= m_C1.length();
-    return m_C2.X(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::Y( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.Y(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.Y(s);
-    s -= m_C1.length();
-    return m_C2.Y(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::X_D( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.X_D(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.X_D(s);
-    s -= m_C1.length();
-    return m_C2.X_D(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::Y_D( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.Y_D(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.Y_D(s);
-    s -= m_C1.length();
-    return m_C2.Y_D(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::X_DD( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.X_DD(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.X_DD(s);
-    s -= m_C1.length();
-    return m_C2.X_DD(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::Y_DD( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.Y_DD(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.Y_DD(s);
-    s -= m_C1.length();
-    return m_C2.Y_DD(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::X_DDD( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.X_DDD(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.X_DDD(s);
-    s -= m_C1.length();
-    return m_C2.X_DDD(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::Y_DDD( real_type s ) const {
-    if ( s < m_C0.length() ) return m_C0.Y_DDD(s);
-    s -= m_C0.length();
-    if ( s < m_C1.length() ) return m_C1.Y_DDD(s);
-    s -= m_C1.length();
-    return m_C2.Y_DDD(s);
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
   Dubins::eval(
@@ -315,17 +419,7 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.evaluate( s, theta, kappa, x, y );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.evaluate( s, theta, kappa, x, y );
-      } else {
-        s -= m_C1.length();
-        m_C2.evaluate( s, theta, kappa, x, y );
-      }
-    }
+    DUBINS_SELECT_EVAL( evaluate, theta, kappa, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -336,17 +430,7 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval(s, x, y );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval(s, x, y );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval(s, x, y );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -357,17 +441,7 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_D(s, x_D, y_D );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval_D(s, x_D, y_D );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval_D(s, x_D, y_D );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval_D, x_D, y_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -378,17 +452,7 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_DD(s, x_DD, y_DD );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval_DD(s, x_DD, y_DD );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval_DD(s, x_DD, y_DD );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval_DD, x_DD, y_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -399,17 +463,7 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_DDD(s, x_DDD, y_DDD );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval_DDD(s, x_DDD, y_DDD );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval_DDD(s, x_DDD, y_DDD );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval_DDD, x_DDD, y_DDD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -422,17 +476,7 @@ namespace G2lib {
     real_type & x,
     real_type & y
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO( s, offs, x, y );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval_ISO( s, offs, x, y );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval_ISO( s, offs, x, y );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval_ISO, offs, x, y );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -444,17 +488,7 @@ namespace G2lib {
     real_type & x_D,
     real_type & y_D
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO_D( s, offs, x_D, y_D );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval_ISO_D( s, offs, x_D, y_D );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval_ISO_D( s, offs, x_D, y_D );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval_ISO_D, offs, x_D, y_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -466,17 +500,7 @@ namespace G2lib {
     real_type & x_DD,
     real_type & y_DD
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO_DD( s, offs, x_DD, y_DD );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval_ISO_DD( s, offs, x_DD, y_DD );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval_ISO_DD( s, offs, x_DD, y_DD );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval_ISO_DD, offs, x_DD, y_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -488,17 +512,7 @@ namespace G2lib {
     real_type & x_DDD,
     real_type & y_DDD
   ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
-    } else {
-      s -= m_C0.length();
-      if ( s < m_C1.length() ) {
-        m_C1.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
-      } else {
-        s -= m_C1.length();
-        m_C2.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
-      }
-    }
+    DUBINS_SELECT_EVAL( eval_ISO_DDD, offs, x_DDD, y_DDD );
   }
 
   void

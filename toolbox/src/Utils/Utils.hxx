@@ -181,12 +181,7 @@
 #include "ThreadPoolBase.hxx"
 #include "ThreadPool0.hxx"
 #include "ThreadPool1.hxx"
-
-#ifndef UTILS_OS_WINDOWS
-  // removed due to problem with windows
-  #include "ThreadPool2.hxx"
-#endif
-
+#include "ThreadPool2.hxx"
 #include "ThreadPool3.hxx"
 #include "ThreadPool4.hxx"
 #include "ThreadPool5.hxx"
@@ -223,7 +218,7 @@ namespace Utils {
     T_int        npts,
     T_real const X[],
     T_real     & x,
-    T_int      & lastInterval,
+    T_int      & last_interval,
     bool         closed,
     bool         can_extend
   );
@@ -233,7 +228,7 @@ namespace Utils {
     int32_t     npts,
     float const X[],
     float     & x,
-    int32_t   & lastInterval,
+    int32_t   & last_interval,
     bool        closed,
     bool        can_extend
   );
@@ -242,7 +237,7 @@ namespace Utils {
     int32_t      npts,
     double const X[],
     double     & x,
-    int32_t    & lastInterval,
+    int32_t    & last_interval,
     bool         closed,
     bool         can_extend
   );
@@ -251,7 +246,7 @@ namespace Utils {
     int64_t     npts,
     float const X[],
     float     & x,
-    int64_t   & lastInterval,
+    int64_t   & last_interval,
     bool        closed,
     bool        can_extend
   );
@@ -260,7 +255,7 @@ namespace Utils {
     int64_t      npts,
     double const X[],
     double     & x,
-    int64_t    & lastInterval,
+    int64_t    & last_interval,
     bool         closed,
     bool         can_extend
   );
@@ -273,11 +268,11 @@ namespace Utils {
     T_int        npts,
     T_real const X[],
     T_real     & x,
-    T_int      & lastInterval,
+    T_int      & last_interval,
     bool         closed,
     bool         can_extend
   ) {
-    search_interval( npts, X, x, lastInterval, closed, can_extend );
+    search_interval( npts, X, x, last_interval, closed, can_extend );
   }
 
   static

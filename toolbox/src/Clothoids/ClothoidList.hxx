@@ -67,32 +67,33 @@ namespace G2lib {
   //!
   class G2solve2arc {
 
-    real_type tolerance{real_type(1e-10)};
-    integer   maxIter{20};
+    real_type m_tolerance{real_type(1e-10)};
+    integer   m_max_iter{20};
 
-    real_type x0{real_type(0)};
-    real_type y0{real_type(0)};
-    real_type theta0{real_type(0)};
-    real_type kappa0{real_type(0)};
+    real_type m_x0{real_type(0)};
+    real_type m_y0{real_type(0)};
+    real_type m_theta0{real_type(0)};
+    real_type m_kappa0{real_type(0)};
 
-    real_type x1{real_type(0)};
-    real_type y1{real_type(0)};
-    real_type theta1{real_type(0)};
-    real_type kappa1{real_type(0)};
+    real_type m_x1{real_type(0)};
+    real_type m_y1{real_type(0)};
+    real_type m_theta1{real_type(0)};
+    real_type m_kappa1{real_type(0)};
 
     // standard problem
-    real_type lambda{real_type(0)};
-    real_type phi{real_type(0)};
-    real_type xbar{real_type(0)};
-    real_type ybar{real_type(0)};
-    real_type th0{real_type(0)};
-    real_type th1{real_type(0)};
-    real_type k0{real_type(0)};
-    real_type k1{real_type(0)};
-    real_type DeltaK{real_type(0)};
-    real_type DeltaTheta{real_type(0)};
+    real_type m_lambda{real_type(0)};
+    real_type m_phi{real_type(0)};
+    real_type m_xbar{real_type(0)};
+    real_type m_ybar{real_type(0)};
+    real_type m_th0{real_type(0)};
+    real_type m_th1{real_type(0)};
+    real_type m_k0{real_type(0)};
+    real_type m_k1{real_type(0)};
+    real_type m_DeltaK{real_type(0)};
+    real_type m_DeltaTheta{real_type(0)};
 
-    ClothoidCurve S0, S1;
+    ClothoidCurve m_S0{"G2solve2arc_S0"};
+    ClothoidCurve m_S1{"G2solve2arc_S1"};
 
     void
     evalA(
@@ -147,7 +148,10 @@ namespace G2lib {
     //! Build an empty clothoid list
     //!
     G2solve2arc() = default;
+
     ~G2solve2arc() = default;
+
+    //void setup( GenericContainer const & gc );
 
     //!
     //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
@@ -176,13 +180,11 @@ namespace G2lib {
     //! Fix tolerance for the G2 problem
     //!
     void set_tolerance( real_type tol );
-    void setTolerance( real_type tol ) { set_tolerance( tol ); }
 
     //!
     //! Fix maximum number of iteration for the G2 problem
     //!
     void set_max_iter( integer miter );
-    void setMaxIter( integer miter ) { set_max_iter( miter ); }
 
     //!
     //! Solve the G2 problem
@@ -194,12 +196,17 @@ namespace G2lib {
     //!
     //! Return the first clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS0() const { return S0; }
+    ClothoidCurve const & S0() const { return m_S0; }
 
     //!
     //! Return the second clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS1() const { return S1; }
+    ClothoidCurve const & S1() const { return m_S1; }
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    void setTolerance( real_type tol ) { set_tolerance( tol ); }
+    void setMaxIter( integer miter ) { set_max_iter( miter ); }
+    #endif
 
   };
 
@@ -243,29 +250,31 @@ namespace G2lib {
   //!
   class G2solveCLC {
 
-    real_type tolerance{real_type(1e-10)};
-    int       maxIter{20};
+    real_type m_tolerance{real_type(1e-10)};
+    int       m_max_iter{20};
 
-    real_type x0{real_type(0)};
-    real_type y0{real_type(0)};
-    real_type theta0{real_type(0)};
-    real_type kappa0{real_type(0)};
-    real_type x1{real_type(0)};
-    real_type y1{real_type(0)};
-    real_type theta1{real_type(0)};
-    real_type kappa1{real_type(0)};
+    real_type m_x0{real_type(0)};
+    real_type m_y0{real_type(0)};
+    real_type m_theta0{real_type(0)};
+    real_type m_kappa0{real_type(0)};
+    real_type m_x1{real_type(0)};
+    real_type m_y1{real_type(0)};
+    real_type m_theta1{real_type(0)};
+    real_type m_kappa1{real_type(0)};
 
     // standard problem
-    real_type lambda{real_type(0)};
-    real_type phi{real_type(0)};
-    real_type xbar{real_type(0)};
-    real_type ybar{real_type(0)};
-    real_type th0{real_type(0)};
-    real_type th1{real_type(0)};
-    real_type k0{real_type(0)};
-    real_type k1{real_type(0)};
+    real_type m_lambda{real_type(0)};
+    real_type m_phi{real_type(0)};
+    real_type m_xbar{real_type(0)};
+    real_type m_ybar{real_type(0)};
+    real_type m_th0{real_type(0)};
+    real_type m_th1{real_type(0)};
+    real_type m_k0{real_type(0)};
+    real_type m_k1{real_type(0)};
 
-    ClothoidCurve S0, SM, S1;
+    ClothoidCurve m_S0{"G2solveCLC_S0"};
+    ClothoidCurve m_SM{"G2solveCLC_SM"};
+    ClothoidCurve m_S1{"G2solveCLC_S1"};
 
     bool build_solution( real_type sM, real_type thM );
 
@@ -275,7 +284,10 @@ namespace G2lib {
     //! Build an empty clothoid list
     //!
     G2solveCLC() = default;
+
     ~G2solveCLC() = default;
+
+    //void setup( GenericContainer const & gc );
 
     //!
     //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
@@ -304,13 +316,11 @@ namespace G2lib {
     //! Fix tolerance for the G2 problem
     //!
     void set_tolerance( real_type tol );
-    void setTolerance( real_type tol ) { set_tolerance( tol ); }
 
     //!
     //! Fix maximum number of iteration for the G2 problem
     //!
     void set_max_iter( integer miter );
-    void setMaxIter( integer miter ) { set_max_iter( miter ); }
 
     //!
     //! Solve the G2 problem
@@ -322,19 +332,25 @@ namespace G2lib {
     //!
     //! Return the first clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS0() const { return S0; }
+    ClothoidCurve const & S0() const { return m_S0; }
 
     //!
     //! Return the second segment (the line) as a clothoid
     //!
-    ClothoidCurve const & getSM() const { return SM; }
+    ClothoidCurve const & SM() const { return m_SM; }
 
     //!
     //! Return the third clothoid of the G2 clothoid list
     //!
-    ClothoidCurve const & getS1() const { return S1; }
+    ClothoidCurve const & S1() const { return m_S1; }
 
     void save( ostream_type & stream ) const;
+
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    void setTolerance( real_type tol ) { set_tolerance( tol ); }
+    void setMaxIter( integer miter ) { set_max_iter( miter ); }
+    #endif
+
   };
 
   /*\
@@ -390,47 +406,49 @@ namespace G2lib {
   //!
   class G2solve3arc {
 
-    ClothoidCurve S0, SM, S1;
+    ClothoidCurve m_S0{"G2solve3arc_S0"};
+    ClothoidCurve m_SM{"G2solve3arc_SM"};
+    ClothoidCurve m_S1{"G2solve3arc_S1"};
 
-    real_type tolerance{real_type(1e-10)};
-    int       maxIter{100};
+    real_type m_tolerance{real_type(1e-10)};
+    int       m_max_iter{100};
 
     // G2 interpolation data
-    real_type x0{real_type(0)};
-    real_type y0{real_type(0)};
-    real_type theta0{real_type(0)};
-    real_type kappa0{real_type(0)};
-    real_type x1{real_type(0)};
-    real_type y1{real_type(0)};
-    real_type theta1{real_type(0)};
-    real_type kappa1{real_type(0)};
+    real_type m_x0{real_type(0)};
+    real_type m_y0{real_type(0)};
+    real_type m_theta0{real_type(0)};
+    real_type m_kappa0{real_type(0)};
+    real_type m_x1{real_type(0)};
+    real_type m_y1{real_type(0)};
+    real_type m_theta1{real_type(0)};
+    real_type m_kappa1{real_type(0)};
 
     // standard scaled problem
-    real_type phi{real_type(0)};
-    real_type Lscale{real_type(0)};
-    real_type th0{real_type(0)};
-    real_type th1{real_type(0)};
-    real_type s0{real_type(0)};
-    real_type s1{real_type(0)};
+    real_type m_phi{real_type(0)};
+    real_type m_Lscale{real_type(0)};
+    real_type m_th0{real_type(0)};
+    real_type m_th1{real_type(0)};
+    real_type m_s0{real_type(0)};
+    real_type m_s1{real_type(0)};
 
     // precomputed values
-    real_type K0{real_type(0)},
-              K1{real_type(0)},
-              c0{real_type(0)},
-              c1{real_type(0)},
-              c2{real_type(0)},
-              c3{real_type(0)},
-              c4{real_type(0)},
-              c5{real_type(0)},
-              c6{real_type(0)},
-              c7{real_type(0)},
-              c8{real_type(0)},
-              c9{real_type(0)},
-              c10{real_type(0)},
-              c11{real_type(0)},
-              c12{real_type(0)},
-              c13{real_type(0)},
-              c14{real_type(0)};
+    real_type m_K0{real_type(0)},
+              m_K1{real_type(0)},
+              m_c0{real_type(0)},
+              m_c1{real_type(0)},
+              m_c2{real_type(0)},
+              m_c3{real_type(0)},
+              m_c4{real_type(0)},
+              m_c5{real_type(0)},
+              m_c6{real_type(0)},
+              m_c7{real_type(0)},
+              m_c8{real_type(0)},
+              m_c9{real_type(0)},
+              m_c10{real_type(0)},
+              m_c11{real_type(0)},
+              m_c12{real_type(0)},
+              m_c13{real_type(0)},
+              m_c14{real_type(0)};
 
     void
     evalFJ(
@@ -448,19 +466,20 @@ namespace G2lib {
   public:
 
     G2solve3arc() = default;
+
     ~G2solve3arc() = default;
+
+    //void setup( GenericContainer const & gc );
 
     //!
     //! Fix tolerance for the G2 problem
     //!
     void set_tolerance( real_type tol );
-    void setTolerance( real_type tol ) { set_tolerance( tol ); }
 
     //!
     //! Fix maximum number of iteration for the G2 problem
     //!
     void set_max_iter( integer miter );
-    void setMaxIter( integer miter ) { set_max_iter( miter ); }
 
     //!
     //! Compute the 3 arc clothoid spline that fit the data
@@ -525,36 +544,37 @@ namespace G2lib {
     //!
     //! \return get the first clothoid for the 3 arc G2 fitting
     //!
-    ClothoidCurve const & getS0() const { return S0; }
+    ClothoidCurve const & S0() const { return m_S0; }
 
     //!
     //! \return get the last clothoid for the 3 arc G2 fitting
     //!
-    ClothoidCurve const & getS1() const { return S1; }
+    ClothoidCurve const & S1() const { return m_S1; }
 
     //!
     //! \return get the middle clothoid for the 3 arc G2 fitting
     //!
-    ClothoidCurve const & getSM() const { return SM; }
+    ClothoidCurve const & SM() const { return m_SM; }
 
     //!
     //! \return get the length of the 3 arc G2 fitting
     //!
     real_type
     total_length() const {
-      return S0.length() + S1.length() + SM.length();
+      return m_S0.length() +
+             m_S1.length() +
+             m_SM.length();
     }
 
-    real_type totalLength() const { return total_length(); }
 
     //!
     //! \return get the total angle variation of the 3 arc G2 fitting
     //!
     real_type
     theta_total_variation() const {
-      return S0.theta_total_variation() +
-             S1.theta_total_variation() +
-             SM.theta_total_variation();
+      return m_S0.theta_total_variation() +
+             m_S1.theta_total_variation() +
+             m_SM.theta_total_variation();
     }
 
     //!
@@ -562,9 +582,9 @@ namespace G2lib {
     //!
     real_type
     curvature_total_variation() const {
-      return S0.curvature_total_variation() +
-             S1.curvature_total_variation() +
-             SM.curvature_total_variation();
+      return m_S0.curvature_total_variation() +
+             m_S1.curvature_total_variation() +
+             m_SM.curvature_total_variation();
     }
 
     //!
@@ -572,23 +592,19 @@ namespace G2lib {
     //!
     real_type
     integral_curvature2() const {
-      return S0.integral_curvature2() +
-             S1.integral_curvature2() +
-             SM.integral_curvature2();
+      return m_S0.integral_curvature2() +
+             m_S1.integral_curvature2() +
+             m_SM.integral_curvature2();
     }
-
-    real_type
-    integralCurvature2() const
-    { return integral_curvature2(); }
 
     //!
     //! \return get the integral of the jerk squared of the 3 arc G2 fitting
     //!
     real_type
-    integralJerk2() const {
-      return S0.integralJerk2() +
-             S1.integralJerk2() +
-             SM.integralJerk2();
+    integral_jerk2() const {
+      return m_S0.integral_jerk2() +
+             m_S1.integral_jerk2() +
+             m_SM.integral_jerk2();
     }
 
     //!
@@ -596,12 +612,10 @@ namespace G2lib {
     //!
     real_type
     integral_snap2() const {
-      return S0.integral_snap2() +
-             S1.integral_snap2() +
-             SM.integral_snap2();
+      return m_S0.integral_snap2() +
+             m_S1.integral_snap2() +
+             m_SM.integral_snap2();
     }
-
-    real_type integralSnap2() const { return integral_snap2(); }
 
     //!
     //! \param[out] thMin minimum angle in the 3 arc G2 fitting curve
@@ -618,15 +632,12 @@ namespace G2lib {
     delta_theta() const
     { real_type thMin, thMax; return theta_min_max( thMin, thMax ); }
 
-    real_type deltaTheta() const { return delta_theta(); }
-
     //!
     //! \param[out] kMin minimum curvature in the 3 arc G2 fitting curve
     //! \param[out] kMax maximum curvature in the 3 arc G2 fitting curve
     //! \return the difference of `kMax` and `kMin`
     //!
-    real_type
-    curvature_min_max( real_type & kMin, real_type & kMax ) const;
+    real_type curvature_min_max( real_type & kMin, real_type & kMax ) const;
 
     //!
     //! Return angle as a function of curvilinear coordinate
@@ -661,42 +672,42 @@ namespace G2lib {
     //!
     //! Return initial x coordinate of the 3 arc clothoid
     //!
-    real_type x_begin() const { return S0.x_begin(); }
+    real_type x_begin() const { return m_S0.x_begin(); }
 
     //!
     //! Return initial y coordinate of the 3 arc clothoid
     //!
-    real_type y_begin() const { return S0.y_begin(); }
+    real_type y_begin() const { return m_S0.y_begin(); }
 
     //!
     //! Return initial curvature of the 3 arc clothoid
     //!
-    real_type kappa_begin() const { return S0.kappa_begin(); }
+    real_type kappa_begin() const { return m_S0.kappa_begin(); }
 
     //!
     //! Return initial angle of the 3 arc clothoid
     //!
-    real_type theta_begin() const { return S0.theta_begin(); }
+    real_type theta_begin() const { return m_S0.theta_begin(); }
 
     //!
     //! Return final x coordinate of the 3 arc clothoid
     //!
-    real_type x_end()const { return S1.x_end(); }
+    real_type x_end()const { return m_S1.x_end(); }
 
     //!
     //! Return final y coordinate of the 3 arc clothoid
     //!
-    real_type y_end() const { return S1.y_end(); }
+    real_type y_end() const { return m_S1.y_end(); }
 
     //!
     //! Return final curvature of the 3 arc clothoid
     //!
-    real_type kappa_end() const { return S1.kappa_end(); }
+    real_type kappa_end() const { return m_S1.kappa_end(); }
 
     //!
     //! Return final angle of the 3 arc clothoid
     //!
-    real_type theta_end() const { return S1.theta_end(); }
+    real_type theta_end() const { return m_S1.theta_end(); }
 
     //!
     //! Compute parameters of 3 arc clothoid at curvilinear coordinate `s`
@@ -765,9 +776,9 @@ namespace G2lib {
     //!
     void
     rotate( real_type angle, real_type cx, real_type cy ) {
-      S0.rotate( angle, cx, cy );
-      S1.rotate( angle, cx, cy );
-      SM.rotate( angle, cx, cy );
+      m_S0.rotate( angle, cx, cy );
+      m_S1.rotate( angle, cx, cy );
+      m_SM.rotate( angle, cx, cy );
     }
 
     //!
@@ -775,9 +786,9 @@ namespace G2lib {
     //!
     void
     translate( real_type tx, real_type ty ){
-      S0.translate( tx, ty );
-      S1.translate( tx, ty );
-      SM.translate( tx, ty );
+      m_S0.translate( tx, ty );
+      m_S1.translate( tx, ty );
+      m_SM.translate( tx, ty );
     }
 
     //!
@@ -785,10 +796,10 @@ namespace G2lib {
     //!
     void
     reverse() {
-      ClothoidCurve tmp(S0); S1 = S0; S0 = tmp;
-      S0.reverse();
-      S1.reverse();
-      SM.reverse();
+      ClothoidCurve tmp(m_S0); m_S1 = m_S0; m_S0 = tmp;
+      m_S0.reverse();
+      m_S1.reverse();
+      m_SM.reverse();
     }
 
     friend
@@ -799,13 +810,18 @@ namespace G2lib {
     void save( ostream_type & stream ) const;
 
     // BACK COMPATIBILITY
-    real_type
-    thetaTotalVariation() const
-    { return theta_total_variation(); }
+    #ifdef G2LIB_COMPATIBILITY_MODE
+    void setTolerance( real_type tol ) { set_tolerance( tol ); }
+    void setMaxIter( integer miter ) { set_max_iter( miter ); }
+    real_type thetaTotalVariation() const { return theta_total_variation(); }
+    real_type thetaMinMax( real_type & thMin, real_type & thMax ) const { return theta_min_max(thMin,thMax); }
+    real_type totalLength() const { return total_length(); }
+    real_type integralCurvature2() const { return integral_curvature2(); }
+    real_type integralJerk2() const { return integral_jerk2(); }
+    real_type integralSnap2() const { return integral_snap2(); }
+    real_type deltaTheta() const { return delta_theta(); }
+    #endif
 
-    real_type
-    thetaMinMax( real_type & thMin, real_type & thMax ) const
-    { return theta_min_max(thMin,thMax); }
   };
 
   /*\
@@ -832,12 +848,12 @@ namespace G2lib {
 
     bool                  m_curve_is_closed{false};
     vector<real_type>     m_s0;
-    vector<ClothoidCurve> m_clotoid_list;
+    vector<ClothoidCurve> m_clothoid_list;
 
     #ifdef CLOTHOIDS_USE_THREADS
-    mutable Utils::BinarySearch<integer> m_lastInterval;
+    mutable Utils::BinarySearch<integer> m_last_interval;
     #else
-    mutable integer m_lastInterval{0};
+    mutable integer m_last_interval{0};
     #endif
 
     mutable bool               m_aabb_done{false};
@@ -852,14 +868,14 @@ namespace G2lib {
     #endif
 
     void
-    resetLastInterval() {
+    reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
-      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
       #else
-      integer & lastInterval = m_lastInterval;
+      integer & last_interval = m_last_interval;
       #endif
-      lastInterval = 0;
+      last_interval = 0;
     }
 
     integer
@@ -877,23 +893,27 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
+    ClothoidList() = delete;
+
     //!
     //! Build an empty clothoid list
     //!
-    ClothoidList()
-    { this->resetLastInterval(); }
+    ClothoidList( string const & name ) : BaseCurve( name )
+    { this->reset_last_interval(); }
 
     ~ClothoidList() override {
       m_s0.clear();
-      m_clotoid_list.clear();
+      m_clothoid_list.clear();
       m_aabb_triangles.clear();
     }
+
+    void setup( GenericContainer const & gc ) override;
 
     //!
     //! Build a copy of an existing clothoid list
     //!
-    ClothoidList( ClothoidList const & s )
-    { this->resetLastInterval(); this->copy(s); }
+    ClothoidList( ClothoidList const & s ) : BaseCurve( s.name() )
+    { this->reset_last_interval(); this->copy(s); }
 
     CurveType type() const override { return CurveType::CLOTHOID_LIST; }
 
@@ -951,17 +971,17 @@ namespace G2lib {
     //!
     //! Build a clothoid from G2solve2arc
     //!
-    explicit ClothoidList( G2solve2arc const & C );
+    explicit ClothoidList( G2solve2arc const & C, string const & name );
 
     //!
     //! Build a clothoid from G2solve3arc
     //!
-    explicit ClothoidList( G2solve3arc const & C );
+    explicit ClothoidList( G2solve3arc const & C, string const & name  );
 
     //!
     //! Build a clothoid from G2solveCLC
     //!
-    explicit ClothoidList( G2solveCLC const & C );
+    explicit ClothoidList( G2solveCLC const & C, string const & name  );
 
     //!
     //! Build a clothoid from a curve
@@ -1171,9 +1191,9 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer           n,
-      real_type const * x,
-      real_type const * y
+      integer         n,
+      real_type const x[],
+      real_type const y[]
     );
 
     //!
@@ -1189,10 +1209,10 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer           n,
-      real_type const * x,
-      real_type const * y,
-      real_type const * theta
+      integer         n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta[]
     );
 
     //!
@@ -1211,12 +1231,12 @@ namespace G2lib {
     //!
     bool
     build(
-      real_type         x0,
-      real_type         y0,
-      real_type         theta0,
-      integer           n,
-      real_type const * s,
-      real_type const * kappa
+      real_type       x0,
+      real_type       y0,
+      real_type       theta0,
+      integer         n,
+      real_type const s[],
+      real_type const kappa[]
     );
 
     //!
@@ -1262,12 +1282,12 @@ namespace G2lib {
     //!
     bool
     build_raw(
-      integer           n,
-      real_type const * x,
-      real_type const * y,
-      real_type const * abscissa,
-      real_type const * theta,
-      real_type const * kappa
+      integer         n,
+      real_type const x[],
+      real_type const y[],
+      real_type const abscissa[],
+      real_type const theta[],
+      real_type const kappa[]
     );
 
     //!
@@ -1313,7 +1333,7 @@ namespace G2lib {
     //!
     //! Return the numbber of clothoid of the list
     //!
-    integer num_segments() const { return integer(m_clotoid_list.size()); }
+    integer num_segments() const { return integer(m_clothoid_list.size()); }
 
     //!
     //! The list of clothoid has total length \f$ L \f$
@@ -1360,7 +1380,7 @@ namespace G2lib {
     \*/
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
@@ -1368,7 +1388,7 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
@@ -1377,14 +1397,14 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -1434,75 +1454,75 @@ namespace G2lib {
 
     real_type
     theta_begin() const override
-    { return m_clotoid_list.front().theta_begin(); }
+    { return m_clothoid_list.front().theta_begin(); }
 
     real_type
     theta_end() const override
-    { return m_clotoid_list.back().theta_end(); }
+    { return m_clothoid_list.back().theta_end(); }
 
     real_type
     x_begin() const override
-    { return m_clotoid_list.front().x_begin(); }
+    { return m_clothoid_list.front().x_begin(); }
 
     real_type
     y_begin() const override
-    { return m_clotoid_list.front().y_begin(); }
+    { return m_clothoid_list.front().y_begin(); }
 
     real_type
     x_end() const override
-    { return m_clotoid_list.back().x_end(); }
+    { return m_clothoid_list.back().x_end(); }
 
     real_type
     y_end() const override
-    { return m_clotoid_list.back().y_end(); }
+    { return m_clothoid_list.back().y_end(); }
 
     real_type
     x_begin_ISO( real_type offs ) const override
-    { return m_clotoid_list.front().x_begin_ISO( offs ); }
+    { return m_clothoid_list.front().x_begin_ISO( offs ); }
 
     real_type
     y_begin_ISO( real_type offs ) const override
-    { return m_clotoid_list.front().y_begin_ISO( offs ); }
+    { return m_clothoid_list.front().y_begin_ISO( offs ); }
 
     real_type
     x_end_ISO( real_type offs ) const override
-    { return m_clotoid_list.back().x_end_ISO( offs ); }
+    { return m_clothoid_list.back().x_end_ISO( offs ); }
 
     real_type
     y_end_ISO( real_type offs ) const override
-    { return m_clotoid_list.back().y_end_ISO( offs ); }
+    { return m_clothoid_list.back().y_end_ISO( offs ); }
 
     real_type
     tx_begin() const override
-    { return m_clotoid_list.front().tx_begin(); }
+    { return m_clothoid_list.front().tx_begin(); }
 
     real_type
     ty_begin() const override
-    { return m_clotoid_list.front().ty_begin(); }
+    { return m_clothoid_list.front().ty_begin(); }
 
     real_type
     tx_end() const override
-    { return m_clotoid_list.back().tx_end(); }
+    { return m_clothoid_list.back().tx_end(); }
 
     real_type
     ty_end() const override
-    { return m_clotoid_list.back().ty_end(); }
+    { return m_clothoid_list.back().ty_end(); }
 
     real_type
     nx_begin_ISO() const override
-    { return m_clotoid_list.front().nx_begin_ISO(); }
+    { return m_clothoid_list.front().nx_begin_ISO(); }
 
     real_type
     ny_begin_ISO() const override
-    { return m_clotoid_list.front().ny_begin_ISO(); }
+    { return m_clothoid_list.front().ny_begin_ISO(); }
 
     real_type
     nx_end_ISO() const override
-    { return m_clotoid_list.back().nx_end_ISO(); }
+    { return m_clothoid_list.back().nx_end_ISO(); }
 
     real_type
     ny_end_ISO() const override
-    { return m_clotoid_list.back().ny_end_ISO(); }
+    { return m_clothoid_list.back().ny_end_ISO(); }
 
     /*\
      |  _   _          _
@@ -1913,9 +1933,13 @@ namespace G2lib {
       return res;
     }
 
+    string
+    info() const
+    { return fmt::format( "ClothoidList\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "ClothoidList\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &
@@ -1941,8 +1965,8 @@ namespace G2lib {
       vector<real_type> & s,
       vector<real_type> & kappa
     ) const {
-      s.resize( m_clotoid_list.size()+1 );
-      kappa.resize( m_clotoid_list.size()+1 );
+      s.resize( m_clothoid_list.size()+1 );
+      kappa.resize( m_clothoid_list.size()+1 );
       get_SK( &s.front(), &kappa.front() );
     }
 
@@ -1973,9 +1997,9 @@ namespace G2lib {
       vector<real_type> & theta,
       vector<real_type> & kappa
     ) const {
-      s.resize( m_clotoid_list.size()+1 );
-      theta.resize( m_clotoid_list.size()+1 );
-      kappa.resize( m_clotoid_list.size()+1 );
+      s.resize( m_clothoid_list.size()+1 );
+      theta.resize( m_clothoid_list.size()+1 );
+      kappa.resize( m_clothoid_list.size()+1 );
       get_STK( &s.front(), &theta.front(), &kappa.front() );
     }
 
@@ -2193,7 +2217,7 @@ namespace G2lib {
     inline
     string
     to_string( TargetType n ) {
-      string res = "";
+      string res{""};
       switch ( n ) {
       case TargetType::P1: res = "P1"; break;
       case TargetType::P2: res = "P2"; break;
@@ -2276,13 +2300,13 @@ namespace G2lib {
     ) const;
 
     bool
-    objective( real_type const * theta, real_type & f ) const;
+    objective( real_type const theta[], real_type & f ) const;
 
     bool
-    gradient( real_type const * theta, real_type * g ) const;
+    gradient( real_type const theta[], real_type g[] ) const;
 
     bool
-    constraints( real_type const * theta, real_type * c ) const;
+    constraints( real_type const theta[], real_type c[] ) const;
 
     integer
     jacobian_nnz() const;
@@ -2296,9 +2320,13 @@ namespace G2lib {
     bool
     jacobian( real_type const * theta, real_type * vals ) const;
 
+    string
+    info() const
+    { return fmt::format( "ClothoidSplineG2\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const
-    { stream << "ClothoidSplineG2\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &

@@ -9,6 +9,7 @@
 %=========================================================================%
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
+close all;
 
 DB = Dubins();
 hold on;
@@ -24,14 +25,24 @@ theta0 = pi/2;
 x3     = 6;
 y3     = 0;
 theta3 = pi/2;
+
+x3     = 0.1;
+y3     = 0;
+theta3 = -pi/2;
+
+
 k_max  = 1;
 r_min  = 1/k_max;
 
 dubConnObj = dubinsConnection('MinTurningRadius',r_min);
 
+subplot(2,1,1);
 DB.build( x0, y0, theta0, x3, y3, theta3, k_max );
 DB.plot();
+axis equal;
 
+
+subplot(2,1,2);
 startPose = [x0 y0 theta0]+offs;
 goalPose  = [x3 y3 theta3]+offs;
 [pathSegObj, pathCosts] = connect(dubConnObj,startPose,goalPose);

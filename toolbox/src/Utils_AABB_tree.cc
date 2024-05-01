@@ -506,14 +506,14 @@ namespace Utils {
   void
   AABBtree<Real>::build() {
 
-    Real otol = pow( m_bbox_overlap_tolerance, m_dim );
+    Real otol{ Real(pow( m_bbox_overlap_tolerance, m_dim )) };
 
     // root contains all rectangles, build its bbox
     for ( integer j = 0; j < m_dim; ++j ) {
       Real & minj = m_bbox_tree[j];
       Real & maxj = m_bbox_tree[m_dim+j];
-      Real const * pmin = m_bbox_objs+j;
-      Real const * pmax = m_bbox_objs+j+m_dim;
+      Real const * pmin{m_bbox_objs+j};
+      Real const * pmax{m_bbox_objs+j+m_dim};
       minj = *pmin;
       maxj = *pmax;
       UTILS_ASSERT0(
@@ -687,9 +687,9 @@ namespace Utils {
       // check again if split improve the AABBtree otherwise stop exploration
       if ( n_left < m_max_num_objects_per_node || n_right < m_max_num_objects_per_node ) {
         // few nodes, check if improve volume
-        Real vo = 1;
-        Real vL = 1;
-        Real vR = 1;
+        Real vo{1};
+        Real vL{1};
+        Real vR{1};
         for ( integer j = 0l; j < m_dim; ++j ) {
           Real Lmin = bb_left_min[j];
           Real Lmax = bb_left_max[j];

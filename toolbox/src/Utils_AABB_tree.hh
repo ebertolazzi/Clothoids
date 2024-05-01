@@ -117,7 +117,7 @@ namespace Utils {
 
   public:
 
-    AABBtree() UTILS_DEFAULT;
+    AABBtree() = default;
 
     AABBtree( AABBtree<Real> const & t );
 

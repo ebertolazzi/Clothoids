@@ -43,15 +43,15 @@ namespace G2lib {
     friend class ClothoidList;
     friend class BiarcList;
   private:
-    vector<LineSegment> m_polylineList;
+    vector<LineSegment> m_polyline_list;
     vector<real_type>   m_s0;
     real_type           m_xe;
     real_type           m_ye;
 
     #ifdef CLOTHOIDS_USE_THREADS
-    mutable Utils::BinarySearch<integer> m_lastInterval;
+    mutable Utils::BinarySearch<integer> m_last_interval;
     #else
-    mutable integer m_lastInterval{0};
+    mutable integer m_last_interval{0};
     #endif
 
     mutable bool       m_aabb_done{false};
@@ -62,34 +62,35 @@ namespace G2lib {
     #endif
 
     void
-    resetLastInterval() {
+    reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
-      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
       #else
-      integer & lastInterval = m_lastInterval;
+      integer & last_interval = m_last_interval;
       #endif
-      lastInterval = 0;
+      last_interval = 0;
     }
 
   public:
 
-    //explicit
-    PolyLine()
-    { this->resetLastInterval(); }
-
-    void
-    init();
-
-    void
-    copy( PolyLine const & l );
+    PolyLine() = delete;
 
     //explicit
-    PolyLine( PolyLine const & PL )
-    { this->resetLastInterval(); this->copy(PL); }
+    PolyLine( string const & name ) : BaseCurve( name )
+    { this->reset_last_interval(); }
 
-    integer
-    find_at_s( real_type & s ) const;
+    void setup( GenericContainer const & gc ) override;
+
+    void init();
+
+    void copy( PolyLine const & l );
+
+    //explicit
+    PolyLine( PolyLine const & PL ) : BaseCurve( PL.name() )
+    { this->reset_last_interval(); this->copy(PL); }
+
+    integer find_at_s( real_type & s ) const;
 
     explicit PolyLine( LineSegment const & LS );
     explicit PolyLine( CircleArc const & C, real_type tol );
@@ -108,13 +109,13 @@ namespace G2lib {
 
     integer
     num_segments() const
-    { return integer(m_polylineList.size()); }
+    { return integer(m_polyline_list.size()); }
 
     integer
     numPoints() const
     { return integer(m_s0.size()); }
 
-    void polygon( real_type * x, real_type * y) const;
+    void polygon( real_type x[], real_type y[] ) const;
     void init( real_type x0, real_type y0 );
     void push_back( real_type x, real_type y );
     void push_back( LineSegment const & C );
@@ -125,9 +126,9 @@ namespace G2lib {
 
     void
     build(
-      real_type const * x,
-      real_type const * y,
-      integer           npts
+      integer         npts,
+      real_type const x[],
+      real_type const y[]
     );
 
     void build( LineSegment const & L );
@@ -172,7 +173,7 @@ namespace G2lib {
     \*/
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
@@ -180,7 +181,7 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
@@ -189,14 +190,14 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     real_type
@@ -208,31 +209,31 @@ namespace G2lib {
 
     real_type
     x_begin() const override
-    { return m_polylineList.front().x_begin(); }
+    { return m_polyline_list.front().x_begin(); }
 
     real_type
     y_begin() const override
-    { return m_polylineList.front().y_begin(); }
+    { return m_polyline_list.front().y_begin(); }
 
     real_type
     x_end() const override
-    { return m_polylineList.back().x_end(); }
+    { return m_polyline_list.back().x_end(); }
 
     real_type
     y_end() const override
-    { return m_polylineList.back().y_end(); }
+    { return m_polyline_list.back().y_end(); }
 
     real_type
     X( real_type s ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      return m_polylineList[size_t(idx)].X(s-ss);
+      return m_polyline_list[size_t(idx)].X(s-ss);
     }
 
     real_type
     X_D( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      return m_polylineList.at(size_t(idx)).m_c0;
+      return m_polyline_list.at(size_t(idx)).m_c0;
     }
 
     real_type
@@ -247,13 +248,13 @@ namespace G2lib {
     Y( real_type s ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      return m_polylineList[size_t(idx)].Y(s-ss);
+      return m_polyline_list[size_t(idx)].Y(s-ss);
     }
 
     real_type
     Y_D( real_type s ) const override {
       integer idx = this->find_at_s( s );
-      return m_polylineList[size_t(idx)].m_s0;
+      return m_polyline_list[size_t(idx)].m_s0;
     }
 
     real_type
@@ -264,17 +265,10 @@ namespace G2lib {
     Y_DDD( real_type ) const override
     { return 0; }
 
-    real_type
-    theta( real_type s ) const override;
-
-    real_type
-    theta_D( real_type s ) const override;
-
-    real_type
-    theta_DD( real_type s ) const override;
-
-    real_type
-    theta_DDD( real_type s ) const override;
+    real_type theta    ( real_type s ) const override;
+    real_type theta_D  ( real_type s ) const override;
+    real_type theta_DD ( real_type s ) const override;
+    real_type theta_DDD( real_type s ) const override;
 
     void
     eval(
@@ -284,7 +278,7 @@ namespace G2lib {
     ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval( s-ss, x, y );
+      m_polyline_list[size_t(idx)].eval( s-ss, x, y );
     }
 
     void
@@ -295,7 +289,7 @@ namespace G2lib {
     ) const override {
       integer idx = this->find_at_s( s );
       real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval_D( s-ss, x_D, y_D );
+      m_polyline_list[size_t(idx)].eval_D( s-ss, x_D, y_D );
     }
 
     void
@@ -323,9 +317,9 @@ namespace G2lib {
       real_type & x,
       real_type & y
     ) const override {
-      integer idx = this->find_at_s( s );
-      real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval_ISO( s-ss, offs, x, y );
+      integer idx{ this->find_at_s( s ) };
+      real_type ss{ m_s0[idx] };
+      m_polyline_list[size_t(idx)].eval_ISO( s-ss, offs, x, y );
     }
 
     void
@@ -335,9 +329,9 @@ namespace G2lib {
       real_type & x_D,
       real_type & y_D
     ) const override {
-      integer idx = this->find_at_s( s );
-      real_type ss = m_s0[idx];
-      m_polylineList[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
+      integer idx{ this->find_at_s( s ) };
+      real_type ss{ m_s0[idx] };
+      m_polyline_list[size_t(idx)].eval_ISO_D( s-ss, offs, x_D, y_D );
     }
 
     void
@@ -368,7 +362,7 @@ namespace G2lib {
 
     void
     translate( real_type tx, real_type ty ) override {
-      for ( auto & il : m_polylineList ) il.translate( tx, ty );
+      for ( auto & il : m_polyline_list ) il.translate( tx, ty );
     }
 
     void
@@ -377,23 +371,18 @@ namespace G2lib {
       real_type cx,
       real_type cy
     ) override {
-      for ( auto & il : m_polylineList ) il.rotate( angle, cx, cy );
+      for ( auto & il : m_polyline_list ) il.rotate( angle, cx, cy );
     }
 
-    void
-    reverse() override;
+    void reverse() override;
 
-    void
-    scale( real_type sc ) override;
+    void scale( real_type sc ) override;
 
-    void
-    change_origin( real_type newx0, real_type newy0 ) override;
+    void change_origin( real_type newx0, real_type newy0 ) override;
 
-    void
-    trim( real_type s_begin, real_type s_end ) override;
+    void trim( real_type s_begin, real_type s_end ) override;
 
-    void
-    trim( real_type s_begin, real_type s_end, PolyLine & newPL ) const;
+    void trim( real_type s_begin, real_type s_end, PolyLine & newPL ) const;
 
     //!
     //! Compute the point at minimum distance from a point `[x,y]` and the line segment

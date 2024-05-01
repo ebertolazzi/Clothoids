@@ -90,7 +90,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     #undef CMD
 
-    arg_out_0 = Utils::mex_convert_ptr_to_mx<Biarc>(new Biarc());
+    arg_out_0 = Utils::mex_convert_ptr_to_mx<Biarc>(new Biarc("biarc"));
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

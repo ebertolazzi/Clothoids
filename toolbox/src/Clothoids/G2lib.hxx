@@ -356,10 +356,10 @@ namespace G2lib {
   //!  Algorithm from FileExchage geom2d adapated from Sedgewick's book.
   //!
   integer
-  isCounterClockwise(
-    real_type const * P1,
-    real_type const * P2,
-    real_type const * P3
+  is_counter_clockwise(
+    real_type const P1[],
+    real_type const P2[],
+    real_type const P3[]
   );
 
   //!
@@ -375,11 +375,11 @@ namespace G2lib {
   //!         return  0 = on border
   //!
   integer
-  isPointInTriangle(
-    real_type const * pt,
-    real_type const * P1,
-    real_type const * P2,
-    real_type const * P3
+  is_point_in_triangle(
+    real_type const pt[],
+    real_type const P1[],
+    real_type const P2[],
+    real_type const P3[]
   );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -36,7 +36,7 @@ getSTK(
 //! \param[out] y y-nodes
 //
 void
-getXY( real_type * x, real_type * y ) const
+getXY( real_type x[], real_type y[] ) const
 { get_XY( x, y ); }
 
 real_type thetaBegin()                 const { return theta_begin(); }

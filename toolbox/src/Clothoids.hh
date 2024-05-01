@@ -35,6 +35,7 @@
 
 #include "Utils.hh"
 #include "Utils_AABB_tree.hh"
+#include "GenericContainer/GenericContainer.hh"
 
 #include <string>
 #include <fstream>
@@ -67,13 +68,14 @@ namespace G2lib {
   using std::map;
   using std::set;
 
-  using istream_type = std::basic_istream<char>;
-  using ostream_type = std::basic_ostream<char>;
-  using real_type    = double;
-  using integer      = int;
-  using AABB_TREE    = Utils::AABBtree<real_type>;
-  using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
-  using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
+  using istream_type     = std::basic_istream<char>;
+  using ostream_type     = std::basic_ostream<char>;
+  using real_type        = double;
+  using integer          = int;
+  using AABB_TREE        = Utils::AABBtree<real_type>;
+  using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET;
+  using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP;
+  using GenericContainer = GC_namespace::GenericContainer;
 
   using CurveType = enum class CurveType : integer {
     LINE,
@@ -89,7 +91,7 @@ namespace G2lib {
   inline
   string
   to_string( CurveType n ) {
-    string res = "";
+    string res{""};
     switch ( n ) {
     case CurveType::LINE:          res = "LINE";          break;
     case CurveType::POLYLINE:      res = "POLYLINE";      break;

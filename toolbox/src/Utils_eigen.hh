@@ -30,17 +30,22 @@
 #include "Utils.hh"
 
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-copy-with-dtor"
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wdeprecated-copy-with-dtor"
 #endif
 
 #ifdef _MSC_VER
-#pragma warning( push )
-#pragma warning( disable : 4127 )
+  #pragma warning( push )
+  #pragma warning( disable : 4127 )
 #endif
 
-#define EIGEN_DONT_PARALLELIZE
-#define EIGEN_NO_AUTOMATIC_RESIZING
+#ifndef EIGEN_DONT_PARALLELIZE
+  #define EIGEN_DONT_PARALLELIZE
+#endif
+
+#ifndef EIGEN_NO_AUTOMATIC_RESIZING
+  #define EIGEN_NO_AUTOMATIC_RESIZING
+#endif
 
 #include "Eigen/Core"
 #include "Eigen/Dense"
@@ -61,11 +66,11 @@ namespace fmt {
 }
 
 #ifdef __clang__
-#pragma clang diagnostic pop
+  #pragma clang diagnostic pop
 #endif
 
 #ifdef _MSC_VER
-#pragma warning( pop )
+  #pragma warning( pop )
 #endif
 
 #endif

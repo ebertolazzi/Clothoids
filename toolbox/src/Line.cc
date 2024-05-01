@@ -36,6 +36,20 @@ namespace G2lib {
   using std::min;
   using std::swap;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LineSegment::setup( GenericContainer const & gc ) {
+    string cwhere{ fmt::format("LineSegment[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    real_type x0 = gc.get_map_number("x0", where );
+    real_type y0 = gc.get_map_number("y0", where );
+    real_type x1 = gc.get_map_number("x1", where );
+    real_type y1 = gc.get_map_number("y1", where );
+    this->build_2P( x0, y0, x1, y1 );
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void LineSegment::build( LineSegment const & LS ) { *this = LS; }
   void LineSegment::build( CircleArc const & )      { UTILS_ERROR("can convert from CircleArc to LineSegment\n"); }
   void LineSegment::build( Biarc const & )          { UTILS_ERROR("can convert from Biarc to LineSegment\n"); }
@@ -45,7 +59,9 @@ namespace G2lib {
   void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
   void LineSegment::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to LineSegment\n"); }
 
-  LineSegment::LineSegment( BaseCurve const * pC ) {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  LineSegment::LineSegment( BaseCurve const * pC ) : BaseCurve( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "LineSegment convert: {}\n", pC->type_name() );
 
