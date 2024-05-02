@@ -97,15 +97,18 @@ namespace G2lib {
     DubinsType & type,
     real_type  & L1,
     real_type  & L2,
-    real_type  & L3
+    real_type  & L3,
+    real_type    grad[2]
   ) {
 
+    using std::abs;
+
     // setup in standard form
-    real_type dx    { x3 - x0                 };
-    real_type dy    { y3 - y0                 };
-    real_type th    { atan2( dy, dx )         };
-    real_type alpha { theta0 - th             };
-    real_type beta  { theta3 - th             };
+    real_type dx    { x3 - x0 };
+    real_type dy    { y3 - y0 };
+    real_type th    { atan2( dy, dx ) };
+    real_type alpha { theta0 - th };
+    real_type beta  { theta3 - th };
     real_type d     { k_max * hypot( dx, dy ) };
 
     // metto angolo in -Pi, Pi
@@ -124,6 +127,10 @@ namespace G2lib {
     real_type cacb { ca+cb      };
     real_type dx2  { 2*d        };
     real_type dd2  { d*d/2      };
+    real_type dca  { d*ca       };
+    real_type dsa  { d*sa       };
+    real_type dcb  { d*cb       };
+    real_type dsb  { d*sb       };
 
     real_type a2 { 2-cacb };
     real_type b2 { 2*sasb };
@@ -141,8 +148,8 @@ namespace G2lib {
       real_type A{ d + sa - sb };
       real_type B{ cb - ca };
       real_type thM{ atan2( B, A ) };
-      real_type l1{ thM  - alpha }; into_0_2pi(l1);
-      real_type l3{ beta - thM   }; into_0_2pi(l3);
+      real_type l1{ thM  - alpha }; into_0_2pi( l1 );
+      real_type l3{ beta - thM   }; into_0_2pi( l3 );
       real_type l2{ A * cos(thM) + B * sin(thM) };
       CHECK_DUBINS( LSL );
     };
@@ -158,62 +165,70 @@ namespace G2lib {
     };
 
     auto LSR = [&]() -> void {
-
-      Quadratic Q( a2, b2 + dx2, c2 );
       real_type X[2];
+      bool good{abs(a2) > abs(c2)};
+
+      Quadratic Q( good ? a2 : c2, b2 + dx2, good ? c2 : a2 );
       integer nr{ Q.get_real_roots( X ) };
 
-      for ( integer ir = 0; ir < nr; ++ir ) {
+      for ( integer ir{0}; ir < nr; ++ir ) {
         real_type Xsol{ X[ir] };
-        real_type th{ atan2( -2*Xsol, Xsol*Xsol-1 ) };
+        real_type Xsol2{ Xsol*Xsol };
+        real_type th{ atan2( -2*Xsol, good ? Xsol2-1:1-Xsol2 ) };
         real_type A{ d + sasb };
         real_type B{ -cacb };
-        real_type l1{ th - alpha }; into_0_2pi( l1 );
-        real_type l3{ th - beta  }; into_0_2pi( l3 );
         real_type l2{ A*cos(th) + B*sin(th) };
-        if ( l2 >= 0 ) { CHECK_DUBINS( LSR ); }
+        if ( l2 >= 0 ) {
+          real_type l1{ th - alpha }; into_0_2pi( l1 );
+          real_type l3{ th - beta  }; into_0_2pi( l3 );
+          CHECK_DUBINS( LSR );
+        }
       }
     };
 
     auto RSL = [&]() -> void {
-
-      Quadratic Q( a2, b2 - dx2, c2 );
       real_type X[2];
+      bool good{abs(a2) > abs(c2)};
+
+      Quadratic Q( good ? a2 : c2, b2 - dx2, good ? c2 : a2 );
       integer nr{ Q.get_real_roots( X ) };
 
-      for ( integer ir = 0; ir < nr; ++ir ) {
+      for ( integer ir{0}; ir < nr; ++ir ) {
         real_type Xsol{ X[ir] };
-        real_type th{ atan2( -2*Xsol, Xsol*Xsol-1 ) };
+        real_type Xsol2{ Xsol*Xsol };
+        real_type th{ atan2( -2*Xsol, good ? Xsol2-1:1-Xsol2 ) };
         real_type A{ d - sasb };
         real_type B{ cacb };
-        real_type l1{ alpha - th }; into_0_2pi( l1 );
-        real_type l3{ beta  - th }; into_0_2pi( l3 );
         real_type l2{ A*cos(th) + B*sin(th) };
-        if ( l2 >= 0 ) {  CHECK_DUBINS( RSL ); }
+        if ( l2 >= 0 ) {
+          real_type l1{ alpha - th }; into_0_2pi( l1 );
+          real_type l3{ beta  - th }; into_0_2pi( l3 );
+          CHECK_DUBINS( RSL );
+        }
       }
     };
 
     auto LRL = [&]() -> void {
 
-      Quadratic Q( cab-1+dd2+d*sasb, 4*(d*cb+sab), d*(sa-3*sb)-3*cab+3+dd2 );
+      Quadratic Q( cab-1+dd2+d*sasb, 4*(dcb+sab), 3+dd2+dsa-3*(dsb+cab) );
       real_type Z[2];
       integer nr{ Q.get_real_roots( Z ) };
 
-      for ( integer ir = 0; ir < nr; ++ir ) {
+      for ( integer ir{0}; ir < nr; ++ir ) {
         real_type Zsol{ Z[ir] };
         real_type l3{ Utils::m_pi + 2*atan( Zsol ) };
         real_type th{ l3 + ab };
-        real_type t{ d*ca+sab-2*sin(th)   };
-        real_type b{ d*sa+1-cab+2*cos(th) };
+        real_type t{ dca+sab-2*sin(th)   };
+        real_type b{ dsa+1-cab+2*cos(th) };
         real_type l1{ atan2( t, b ) }; into_0_2pi( l1 );
-        real_type l2{ l1 + l3 + ab  }; into_0_2pi( l2 );
+        real_type l2{ l1 + th  };      into_0_2pi( l2 );
         CHECK_DUBINS( LRL );
       }
     };
 
     auto RLR = [&]() -> void {
 
-      Quadratic Q( cab-1+dd2-d*sasb, 4*(d*cb-sab), d*(3*sb-sa)-3*cab+3+dd2 );
+      Quadratic Q( cab-1+dd2-d*sasb, 4*(dcb-sab), 3+dd2-dsa+3*(dsb-cab) );
       real_type Z[2];
       integer nr{ Q.get_real_roots( Z ) };
 
@@ -221,10 +236,10 @@ namespace G2lib {
         real_type Zsol{ Z[ir] };
         real_type l3{ Utils::m_pi + 2*atan( Zsol ) };
         real_type th{ ab - l3 };
-        real_type t{ d*ca-sab+2*sin(th) };
-        real_type b{ 1-d*sa-cab+2*cos(th) };
+        real_type t{ dca-sab+2*sin(th)   };
+        real_type b{ 1-dsa-cab+2*cos(th) };
         real_type l1{ atan2( t, b ) }; into_0_2pi( l1 );
-        real_type l2{ l1 + l3 - ab  }; into_0_2pi( l2 );
+        real_type l2{ l1 - th  };      into_0_2pi( l2 );
         CHECK_DUBINS( RLR );
       }
     };
@@ -233,12 +248,43 @@ namespace G2lib {
     LSR(); RSL();
     LRL(); RLR();
 
-    if ( type == DubinsType::ERROR ) return false;
+    switch ( type ) {
+    case DubinsType::LSL:
+    case DubinsType::RSR:
+    case DubinsType::LSR:
+    case DubinsType::RSL:
+      {
+        real_type C1{cos(L1)};
+        real_type C3{cos(L3)};
+        switch ( type ) {
+        case DubinsType::LSL: grad[0] = C1-1; grad[1] = 1-C3; break;
+        case DubinsType::RSR: grad[0] = 1-C1; grad[1] = C3-1; break;
+        case DubinsType::LSR: grad[0] = C1-1; grad[1] = C3-1; break;
+        case DubinsType::RSL: grad[0] = 1-C1; grad[1] = 1-C3; break;
+        default:                                              break;
+        }
+      }
+      break;
+    case DubinsType::LRL:
+      {
+        real_type t2{2*sin(ab+(L1+L3))};
+        grad[0] = (dca+sab)/t2-1;
+        grad[1] = 1-(dcb+sab)/t2;
+      }
+      break;
+    case DubinsType::RLR:
+      {
+        real_type t2{2*sin(ab-(L1+L3))};
+        grad[0] = (dca-sab)/t2+1;
+        grad[1] = (sab-dcb)/t2-1;
+      }
+      break;
+    default:
+      grad[0] = grad[1] = 0;
+      break;
+    }
 
-    L1 /= k_max;
-    L2 /= k_max;
-    L3 /= k_max;
-    return true;
+    return type != DubinsType::ERROR;
   }
 
   bool
@@ -253,25 +299,33 @@ namespace G2lib {
 
     real_type k_max
   ) {
-    real_type L1, L2, L3;
-    DubinsType type;
-    bool ok{ Dubins_build( x0, y0, theta0, x3, y3, theta3, k_max, type, L1, L2, L3 ) };
+    real_type L1, L2, L3, grad[2];
+    bool ok{ Dubins_build(
+      x0, y0, theta0, x3, y3, theta3, k_max,
+      m_solution_type, L1, L2, L3, grad
+    ) };
 
     if ( ok ) {
-      real_type K1{k_max}, K2{0}, K3{k_max};
-      switch ( type ) {
-      case DubinsType::LSL:                   break;
-      case DubinsType::RSR: K1 = K3 = -k_max; break;
-      case DubinsType::LSR: K3 = -k_max;      break;
-      case DubinsType::RSL: K1 = -k_max;      break;
-      case DubinsType::LRL: K2 = -k_max;      break;
-      case DubinsType::RLR: K1 = K3 = -k_max;
-                            K2 = k_max;       break;
-      default:                                break;
+      real_type s1{1}, s2{0}, s3{1};
+      switch ( m_solution_type ) {
+      case DubinsType::LSL:                       break;
+      case DubinsType::RSR: s1 = s3 = -1;         break;
+      case DubinsType::LSR: s3 = -1;              break;
+      case DubinsType::RSL: s1 = -1;              break;
+      case DubinsType::LRL: s2 = -1;              break;
+      case DubinsType::RLR: s1 = s3 = -1; s2 = 1; break;
+      default:                                    break;
       }
-      m_C0.build( x0,           y0,           theta0,           K1, L1 );
-      m_C1.build( m_C0.x_end(), m_C0.y_end(), m_C0.theta_end(), K2, L2 );
-      m_C2.build( m_C1.x_end(), m_C1.y_end(), m_C1.theta_end(), K3, L3 );
+
+      // scale derivative
+      m_length        = (L1+L2+L3)/k_max;
+      m_length_Dalpha = grad[0]/k_max;
+      m_length_Dbeta  = grad[1]/k_max;
+
+      // salva e riscala
+      m_C0.build( x0,           y0,           theta0,           s1*k_max, L1/k_max );
+      m_C1.build( m_C0.x_end(), m_C0.y_end(), m_C0.theta_end(), s2*k_max, L2/k_max );
+      m_C2.build( m_C1.x_end(), m_C1.y_end(), m_C1.theta_end(), s3*k_max, L3/k_max );
     }
     return ok;
   }
@@ -279,13 +333,6 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Dubins::length() const {
-    return m_C0.length()+m_C1.length()+m_C2.length();
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
@@ -304,14 +351,14 @@ return m_C2.FUN(s)
 
   real_type Dubins::theta  ( real_type s ) const { DUBINS_SELECT( theta ); }
   real_type Dubins::theta_D( real_type s ) const { DUBINS_SELECT( theta_D ); }
-  real_type Dubins::X( real_type s ) const { DUBINS_SELECT( X ); }
-  real_type Dubins::X_D( real_type s ) const { DUBINS_SELECT( X_D ); }
-  real_type Dubins::X_DD( real_type s ) const { DUBINS_SELECT( X_DD ); }
-  real_type Dubins::X_DDD( real_type s ) const { DUBINS_SELECT( X_DDD ); }
-  real_type Dubins::Y( real_type s ) const { DUBINS_SELECT( Y ); }
-  real_type Dubins::Y_D( real_type s ) const { DUBINS_SELECT( Y_D ); }
-  real_type Dubins::Y_DD( real_type s ) const { DUBINS_SELECT( Y_DD ); }
-  real_type Dubins::Y_DDD( real_type s ) const { DUBINS_SELECT( Y_DDD ); }
+  real_type Dubins::X( real_type s )       const { DUBINS_SELECT( X ); }
+  real_type Dubins::X_D( real_type s )     const { DUBINS_SELECT( X_D ); }
+  real_type Dubins::X_DD( real_type s )    const { DUBINS_SELECT( X_DD ); }
+  real_type Dubins::X_DDD( real_type s )   const { DUBINS_SELECT( X_DDD ); }
+  real_type Dubins::Y( real_type s )       const { DUBINS_SELECT( Y ); }
+  real_type Dubins::Y_D( real_type s )     const { DUBINS_SELECT( Y_D ); }
+  real_type Dubins::Y_DD( real_type s )    const { DUBINS_SELECT( Y_DD ); }
+  real_type Dubins::Y_DDD( real_type s )   const { DUBINS_SELECT( Y_DDD ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

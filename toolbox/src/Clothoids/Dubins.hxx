@@ -46,7 +46,8 @@ namespace G2lib {
     DubinsType & type,
     real_type  & L1,
     real_type  & L2,
-    real_type  & L3
+    real_type  & L3,
+    real_type    grad[2]
   );
 
   //!
@@ -55,6 +56,9 @@ namespace G2lib {
   class Dubins : public BaseCurve {
   private:
     DubinsType m_solution_type{DubinsType::ERROR};
+    real_type  m_length{0};
+    real_type  m_length_Dalpha{0};
+    real_type  m_length_Dbeta{0};
 
     CircleArc m_C0{"Dubins_C0"}; //! Three arc solution of DUBINS problem
     CircleArc m_C1{"Dubins_C1"}; //! Three arc solution of DUBINS problem
@@ -184,8 +188,14 @@ namespace G2lib {
       CL.push_back( m_C2 );
     }
 
-    real_type length() const override;
+    real_type length() const override { return m_length; }
     real_type length_ISO( real_type offs ) const override;
+
+    void
+    length_grad( real_type grad[2] ) const {
+      grad[0] = m_length_Dalpha;
+      grad[1] = m_length_Dbeta;
+    }
 
     DubinsType solution_type() const { return m_solution_type; }
 

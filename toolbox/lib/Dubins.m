@@ -98,6 +98,14 @@ classdef Dubins < CurveBase
       C2 = CircleArc( S.x2, S.y2, S.theta2, S.kappa2, S.L2 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function varargout = length( self )
+      [varargout{1:nargout}] = DubinsMexWrapper( 'get_length', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function res = curve_type( self )
+      res = DubinsMexWrapper( 'curve_type', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the biarc
     %>
     %> **Usage:**

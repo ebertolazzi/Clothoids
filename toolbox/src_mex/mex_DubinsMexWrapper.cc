@@ -106,7 +106,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 9, CMD "expected 9 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-    Dubins * ptr = Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1);
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
 
     real_type x0     = Utils::mex_get_scalar_value( arg_in_2, CMD "Error in reading x0" );
     real_type y0     = Utils::mex_get_scalar_value( arg_in_3, CMD "Error in reading y0" );
@@ -131,15 +131,15 @@ namespace G2lib {
   do_get_pars( int nlhs, mxArray       *plhs[],
                int nrhs, mxArray const *prhs[] ) {
 
-    Dubins * ptr = Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1);
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
 
     #define CMD "DubinsMexWrapper('get_pars',OBJ): "
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-    CircleArc const & C0 = ptr->C0();
-    CircleArc const & C1 = ptr->C1();
-    CircleArc const & C2 = ptr->C2();
+    CircleArc const & C0{ ptr->C0() };
+    CircleArc const & C1{ ptr->C1() };
+    CircleArc const & C2{ ptr->C2() };
 
     static char const * fieldnames[] = {
       "x0", "y0", "theta0", "kappa0", "L0",
@@ -173,6 +173,50 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  static
+  void
+  do_get_length( int nlhs, mxArray       *plhs[],
+                 int nrhs, mxArray const *prhs[] ) {
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
+
+    #define CMD "DubinsMexWrapper('get_length',OBJ): "
+    UTILS_MEX_ASSERT( nrhs == 2,               CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1 || nlhs == 3 , CMD "expected 1 or 3 output, nlhs = {}\n", nlhs );
+
+    Utils::mex_set_scalar_value( arg_out_0, ptr->length() );
+    if ( nlhs == 3 ) {
+      real_type grad[2];
+      ptr->length_grad( grad );
+      Utils::mex_set_scalar_value( arg_out_1, grad[0] );
+      Utils::mex_set_scalar_value( arg_out_2, grad[1] );
+    }
+
+    #undef CMD
+
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_curve_type( int nlhs, mxArray       *plhs[],
+                 int nrhs, mxArray const *prhs[] ) {
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
+
+    #define CMD "DubinsMexWrapper('curve_type',OBJ): "
+    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Utils::mex_set_scalar_value( arg_out_0, static_cast<int>(ptr->solution_type()) );
+
+    #undef CMD
+
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -181,6 +225,8 @@ namespace G2lib {
     {"new",do_new},
     {"build",do_build},
     {"get_pars",do_get_pars},
+    {"get_length",do_get_length},
+    {"curve_type",do_curve_type},
     CMD_MAP_FUN
   };
 
