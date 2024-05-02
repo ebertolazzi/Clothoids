@@ -31,16 +31,30 @@ namespace G2lib {
    |  |____/ \__,_|_.__/|_|_| |_|___/
   \*/
 
+  using DubinsType = enum class DubinsType : integer
+  { LSL, RSR, LSR, RSL, LRL, RLR, ERROR };
+
+  bool
+  Dubins_build(
+    real_type    x0,
+    real_type    y0,
+    real_type    theta0,
+    real_type    x1,
+    real_type    y1,
+    real_type    theta1,
+    real_type    k_max,
+    DubinsType & type,
+    real_type  & L1,
+    real_type  & L2,
+    real_type  & L3
+  );
+
   //!
   //! Class to manage a circle arc
   //!
   class Dubins : public BaseCurve {
-  public:
-    using DubinsType = enum class DubinsType : integer
-    { LSL, RSR, LSR, RSL, LRL, RLR };
-
   private:
-    DubinsType m_solution_type;
+    DubinsType m_solution_type{DubinsType::ERROR};
 
     CircleArc m_C0{"Dubins_C0"}; //! Three arc solution of DUBINS problem
     CircleArc m_C1{"Dubins_C1"}; //! Three arc solution of DUBINS problem
@@ -526,15 +540,16 @@ namespace G2lib {
 
   inline
   string
-  to_string( Dubins::DubinsType n ) {
+  to_string( DubinsType n ) {
     string res{""};
     switch ( n ) {
-    case Dubins::DubinsType::LSL: res = "LSL"; break;
-    case Dubins::DubinsType::RSR: res = "RSR"; break;
-    case Dubins::DubinsType::LSR: res = "LSR"; break;
-    case Dubins::DubinsType::RSL: res = "RSL"; break;
-    case Dubins::DubinsType::LRL: res = "LRL"; break;
-    case Dubins::DubinsType::RLR: res = "RLR"; break;
+    case DubinsType::LSL:   res = "LSL";   break;
+    case DubinsType::RSR:   res = "RSR";   break;
+    case DubinsType::LSR:   res = "LSR";   break;
+    case DubinsType::RSL:   res = "RSL";   break;
+    case DubinsType::LRL:   res = "LRL";   break;
+    case DubinsType::RLR:   res = "RLR";   break;
+    case DubinsType::ERROR: res = "ERROR"; break;
     }
     return res;
   };
