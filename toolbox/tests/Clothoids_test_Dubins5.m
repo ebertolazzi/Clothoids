@@ -14,41 +14,53 @@ close all;
 
 DB = Dubins();
 
-k_max  = 1;
-d      = 1/2;
+k_max  = 0.9;
+d      = 1/4;
 x0     = -d;
 y0     = 0;
 x3     = d;
 y3     = 0;
-theta0 = pi/2;
-theta3 = linspace(0,pi,400);
+theta0 = -pi/2;
+theta3 = linspace(-pi,pi,100);
 len    = [];
-Dlen   = [];
+DlenA  = [];
+DlenB  = [];
 kind   = [];
+subplot(2,2,1);
+title('curves');
+hold on;
 for th=theta3
   DB.build( x0, y0, theta0, x3, y3, th, k_max );
-  [l,~,D]   = DB.length();
-  len(end+1)  = l;
-  Dlen(end+1) = D;
-  kind(end+1) = DB.curve_type();
+  [l,Da,Db]    = DB.length();
+  len(end+1)   = l;
+  DlenA(end+1) = Da;
+  DlenB(end+1) = Db;
+  kind(end+1)  = DB.curve_type();
+  DB.plot();
 end
 
-subplot(3,1,1);
-plot( theta3, len, '-', 'Color', 'blue');
+subplot(2,2,2);
+plot( theta3, len, '-', 'Color', 'blue', 'LineWidth', 2);
+title('length vs second angle');
 
-subplot(3,1,2);
+subplot(2,2,3);
 hold off
-plot( theta3, Dlen, '-', 'Color', 'blue');
-if false
-  hold on
-  DDlen   = diff(Dlen)./diff(len);
+%plot( theta3, DlenA, '-', 'Color', 'blue', 'LineWidth', 2 );
+plot( theta3, DlenB, '-', 'Color', 'red', 'LineWidth', 2 );
+hold on
+if true
+  DDlen   = diff(len)./diff(theta3);
   atheta3 = (theta3(1:end-1)+theta3(2:end))/2;
-  idx     = find( abs(DDlen) > 100 )
+  idx     = find( abs(DDlen) > 100 );
   DDlen(idx) = 0;
-  plot( atheta3, DDlen, '-', 'Color', 'red');
+  plot( atheta3, DDlen, '-.', 'Color', 'black', 'LineWidth', 2 );
 end
+ylim([-1.5,1.5]);
+legend('analitic','numeric');
+title('length derivative');
 
-subplot(3,1,3);
+subplot(2,2,4);
 hold off
 plot( theta3, kind, '-', 'Color', 'blue');
+title('curve type');
 
