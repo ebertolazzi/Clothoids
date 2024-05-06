@@ -148,9 +148,10 @@ namespace G2lib {
       real_type A{ d + sa - sb };
       real_type B{ cb - ca };
       real_type thM{ atan2( B, A ) };
+      real_type l2{ A * cos(thM) + B * sin(thM) };
+      if ( l2 < 0 ) { thM += Utils::m_pi; l2 = -l2; }
       real_type l1{ thM  - alpha }; into_0_2pi( l1 );
       real_type l3{ beta - thM   }; into_0_2pi( l3 );
-      real_type l2{ A * cos(thM) + B * sin(thM) };
       CHECK_DUBINS( LSL );
     };
 
@@ -158,9 +159,10 @@ namespace G2lib {
       real_type A{ d - sa + sb };
       real_type B{ ca - cb };
       real_type thM{ atan2( B, A ) };
-      real_type l1{ alpha - thM  }; into_0_2pi( l1 );
-      real_type l3{ thM   - beta }; into_0_2pi( l3 );
       real_type l2{ A * cos(thM) + B * sin(thM) };
+      if ( l2 < 0 ) { thM += Utils::m_pi; l2 = -l2; }
+      real_type l1{ alpha - thM }; into_0_2pi( l1 );
+      real_type l3{ thM - beta  }; into_0_2pi( l3 );
       CHECK_DUBINS( RSR );
     };
 
@@ -175,9 +177,7 @@ namespace G2lib {
         real_type Xsol{ X[ir] };
         real_type Xsol2{ Xsol*Xsol };
         real_type th{ atan2( -2*Xsol, good ? Xsol2-1:1-Xsol2 ) };
-        real_type A{ d + sasb };
-        real_type B{ -cacb };
-        real_type l2{ A*cos(th) + B*sin(th) };
+        real_type l2{ (d + sasb)*cos(th) - cacb*sin(th) };
         if ( l2 >= 0 ) {
           real_type l1{ th - alpha }; into_0_2pi( l1 );
           real_type l3{ th - beta  }; into_0_2pi( l3 );
@@ -197,9 +197,7 @@ namespace G2lib {
         real_type Xsol{ X[ir] };
         real_type Xsol2{ Xsol*Xsol };
         real_type th{ atan2( -2*Xsol, good ? Xsol2-1:1-Xsol2 ) };
-        real_type A{ d - sasb };
-        real_type B{ cacb };
-        real_type l2{ A*cos(th) + B*sin(th) };
+        real_type l2{ ( d - sasb)*cos(th) + cacb*sin(th) };
         if ( l2 >= 0 ) {
           real_type l1{ alpha - th }; into_0_2pi( l1 );
           real_type l3{ beta  - th }; into_0_2pi( l3 );
@@ -221,7 +219,7 @@ namespace G2lib {
         real_type t{ dca+sab-2*sin(th)   };
         real_type b{ dsa+1-cab+2*cos(th) };
         real_type l1{ atan2( t, b ) }; into_0_2pi( l1 );
-        real_type l2{ l1 + th  };      into_0_2pi( l2 );
+        real_type l2{ l1 + th };       into_0_2pi( l2 );
         CHECK_DUBINS( LRL );
       }
     };
@@ -239,7 +237,7 @@ namespace G2lib {
         real_type t{ dca-sab+2*sin(th)   };
         real_type b{ 1-dsa-cab+2*cos(th) };
         real_type l1{ atan2( t, b ) }; into_0_2pi( l1 );
-        real_type l2{ l1 - th  };      into_0_2pi( l2 );
+        real_type l2{ l1 - th };       into_0_2pi( l2 );
         CHECK_DUBINS( RLR );
       }
     };
