@@ -32,7 +32,7 @@ namespace G2lib {
   \*/
 
   using DubinsType = enum class DubinsType : integer
-  { LSL, RSR, LSR, RSL, LRL, RLR, ERROR };
+  { LSL, RSR, LSR, RSL, LRL, RLR, DUBINS_ERROR };
 
   bool
   Dubins_build(
@@ -55,7 +55,7 @@ namespace G2lib {
   //!
   class Dubins : public BaseCurve {
   private:
-    DubinsType m_solution_type{DubinsType::ERROR};
+    DubinsType m_solution_type{DubinsType::DUBINS_ERROR};
     real_type  m_length{0};
     real_type  m_length_Dalpha{0};
     real_type  m_length_Dbeta{0};
@@ -553,13 +553,13 @@ namespace G2lib {
   to_string( DubinsType n ) {
     string res{""};
     switch ( n ) {
-    case DubinsType::LSL:   res = "LSL";   break;
-    case DubinsType::RSR:   res = "RSR";   break;
-    case DubinsType::LSR:   res = "LSR";   break;
-    case DubinsType::RSL:   res = "RSL";   break;
-    case DubinsType::LRL:   res = "LRL";   break;
-    case DubinsType::RLR:   res = "RLR";   break;
-    case DubinsType::ERROR: res = "ERROR"; break;
+    case DubinsType::LSL:          res = "LSL";   break;
+    case DubinsType::RSR:          res = "RSR";   break;
+    case DubinsType::LSR:          res = "LSR";   break;
+    case DubinsType::RSL:          res = "RSL";   break;
+    case DubinsType::LRL:          res = "LRL";   break;
+    case DubinsType::RLR:          res = "RLR";   break;
+    case DubinsType::DUBINS_ERROR: res = "ERROR"; break;
     }
     return res;
   };

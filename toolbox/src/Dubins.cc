@@ -138,7 +138,7 @@ namespace G2lib {
 
     real_type min_len{ Utils::Inf<real_type>() };
 
-    type = DubinsType::ERROR;
+    type = DubinsType::DUBINS_ERROR;
 
     #define CHECK_DUBINS( TYPE ) \
     real_type ll{l1+l2+l3};      \
@@ -282,7 +282,7 @@ namespace G2lib {
       break;
     }
 
-    return type != DubinsType::ERROR;
+    return type != DubinsType::DUBINS_ERROR;
   }
 
   bool
