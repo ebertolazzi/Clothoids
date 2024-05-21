@@ -40,7 +40,7 @@ thetaMinMax( real_type & thMin, real_type & thMax ) const
 //!
 real_type
 deltaTheta() const
-{ return this->deltaTheta(); }
+{ return this->delta_theta(); }
 
 //!
 //! Max and min of the curvatire of the clothoid curve.
