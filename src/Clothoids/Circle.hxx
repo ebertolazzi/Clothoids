@@ -849,7 +849,7 @@ namespace G2lib {
 
     friend class ClothoidCurve;
 
-#ifdef G2LIB_COMPATIBILITY_MODE
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Circle_compatibility.hxx"
 #endif
 

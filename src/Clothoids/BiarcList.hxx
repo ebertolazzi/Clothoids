@@ -718,14 +718,6 @@ namespace G2lib {
       real_type * kappa
     ) const;
 
-    void
-    getSTK(
-      real_type * s,
-      real_type * theta,
-      real_type * kappa
-    ) const
-    { get_STK( s, theta, kappa ); }
-
     //!
     //! Return the biarc XY nodes
     //!

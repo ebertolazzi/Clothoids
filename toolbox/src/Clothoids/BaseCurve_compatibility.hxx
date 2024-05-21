@@ -77,25 +77,25 @@ real_type yEnd( real_type offs ) const
 //! Intial normal x-coordinate.
 //!
 real_type nx_Begin() const
-{ return G2lib::use_ISO ? this->nx_Begin_ISO() : this->nx_Begin_SAE(); }
+{ return G2lib::use_ISO ? this->nx_begin_ISO() : this->nx_begin_SAE(); }
 
 //!
 //! Intial normal y-coordinate.
 //!
 real_type ny_Begin() const
-{ return G2lib::use_ISO ? this->ny_Begin_ISO() : this->ny_Begin_SAE(); }
+{ return G2lib::use_ISO ? this->ny_begin_ISO() : this->ny_begin_SAE(); }
 
 //!
 //! Final normal x-coordinate.
 //!
 real_type nx_End() const
-{ return G2lib::use_ISO ? this->nx_End_ISO() : this->nx_End_SAE(); }
+{ return G2lib::use_ISO ? this->nx_end_ISO() : this->nx_end_SAE(); }
 
 //!
 //! Final normal y-coordinate.
 //!
 real_type ny_End() const
-{ return G2lib::use_ISO ? this->ny_End_ISO() : this->ny_End_SAE(); }
+{ return G2lib::use_ISO ? this->ny_end_ISO() : this->ny_end_SAE(); }
 
 //!
 //! Normal x-coordinate at curvilinear coodinate `s` (ISO/SAE).

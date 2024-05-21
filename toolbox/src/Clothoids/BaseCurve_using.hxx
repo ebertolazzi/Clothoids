@@ -111,7 +111,7 @@ using BaseCurve::closest_point_SAE;
 using BaseCurve::distance_ISO;
 using BaseCurve::distance_SAE;
 
-#ifdef G2LIB_COMPATIBILITY_MODE
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
 using BaseCurve::nx_begin;
 using BaseCurve::ny_begin;
 using BaseCurve::nx_end;

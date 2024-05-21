@@ -37,9 +37,10 @@ namespace G2lib {
   extern integer const  G2LIB_AABB_CUT;
   extern integer const  G2LIB_AABB_MIN_NODES;
 
-  #ifdef G2LIB_COMPATIBILITY_MODE
-
+  // for CLOTHOIDS_BACK_COMPATIBILITY
   extern bool use_ISO;
+
+  #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 
   static
   inline

@@ -1095,7 +1095,7 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
-#ifdef G2LIB_COMPATIBILITY_MODE
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Clothoid_compatibility.hxx"
 #endif
 

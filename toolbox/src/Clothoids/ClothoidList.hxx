@@ -203,7 +203,7 @@ namespace G2lib {
     //!
     ClothoidCurve const & S1() const { return m_S1; }
 
-    #ifdef G2LIB_COMPATIBILITY_MODE
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type tol ) { set_tolerance( tol ); }
     void setMaxIter( integer miter ) { set_max_iter( miter ); }
     #endif
@@ -346,7 +346,7 @@ namespace G2lib {
 
     void save( ostream_type & stream ) const;
 
-    #ifdef G2LIB_COMPATIBILITY_MODE
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type tol ) { set_tolerance( tol ); }
     void setMaxIter( integer miter ) { set_max_iter( miter ); }
     #endif
@@ -810,7 +810,7 @@ namespace G2lib {
     void save( ostream_type & stream ) const;
 
     // BACK COMPATIBILITY
-    #ifdef G2LIB_COMPATIBILITY_MODE
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type tol ) { set_tolerance( tol ); }
     void setMaxIter( integer miter ) { set_max_iter( miter ); }
     real_type thetaTotalVariation() const { return theta_total_variation(); }

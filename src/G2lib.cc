@@ -50,9 +50,8 @@ namespace G2lib {
   integer  const  G2LIB_AABB_CUT{8};
   integer  const  G2LIB_AABB_MIN_NODES{3};
 
-  #ifdef G2LIB_COMPATIBILITY_MODE
+  // for CLOTHOIDS_BACK_COMPATIBILITY
   bool use_ISO{true};
-  #endif
 
   void
   rangeSymm( real_type & ang ) {
