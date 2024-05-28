@@ -172,6 +172,7 @@ namespace G2lib {
   void ClothoidCurve::build( BiarcList const & )    { UTILS_ERROR("can convert from BiarcList to ClothoidCurve\n"); }
   void ClothoidCurve::build( ClothoidList const & ) { UTILS_ERROR("can convert from ClothoidList to ClothoidCurve\n"); }
   void ClothoidCurve::build( Dubins const & )       { UTILS_ERROR("can convert from Dubins to ClothoidCurve\n"); }
+  void ClothoidCurve::build( Dubins3p const & )     { UTILS_ERROR("can convert from Dubins3p to ClothoidCurve\n"); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

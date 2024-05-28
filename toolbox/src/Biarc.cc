@@ -79,6 +79,7 @@ namespace G2lib {
   void Biarc::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to Biarc\n"); }
   void Biarc::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to Biarc\n"); }
   void Biarc::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to CircleArc\n"); }
+  void Biarc::build( Dubins3p const & )       { UTILS_ERROR("can convert from Dubins3p to CircleArc\n"); }
 
   /*\
    |   ____  _

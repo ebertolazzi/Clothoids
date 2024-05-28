@@ -131,6 +131,13 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  void
+  BiarcList::build( Dubins3p const & ) {
+    UTILS_ERROR("can convert from Dubins3p to BiarcList\n");
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   /*\
    |   ____ _       _   _           _     _ _     _     _
    |  / ___| | ___ | |_| |__   ___ (_) __| | |   (_)___| |_

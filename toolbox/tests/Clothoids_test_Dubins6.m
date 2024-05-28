@@ -14,6 +14,7 @@ close all;
 
 DB1 = Dubins();
 DB2 = Dubins();
+DB3 = Dubins3p();
 
 k_max  = 0.500035;
 d      = 3;
@@ -30,6 +31,9 @@ len    = [];
 Dlen   = [];
 kind1  = [];
 kind2  = [];
+
+DB3.build( x0, y0, theta0, x1, y1, x2, y2, theta2, k_max, 'pattern_bisection' );
+
 subplot(2,2,1);
 title('curves');
 hold on;
@@ -45,6 +49,7 @@ for th=theta1
   DB1.plot();
   DB2.plot();
 end
+
 
 subplot(2,2,2);
 plot( theta1, len, '-', 'Color', 'blue', 'LineWidth', 2);
@@ -72,11 +77,13 @@ subplot(2,2,4);
 th = theta1(idx);
 DB1.build( x0, y0, theta0, x1, y1, th,     k_max );
 DB2.build( x1, y1, th,     x2, y2, theta2, k_max );
+hold on
 DB1.plot();
 DB2.plot();
 plot( x0, y0, 'o', 'Color', 'blue',  'MarkerSize', 10, 'MarkerFaceColor', 'blue'  );
 plot( x1, y1, 'o', 'Color', 'green', 'MarkerSize', 10, 'MarkerFaceColor', 'green' );
 plot( x2, y2, 'o', 'Color', 'blue',  'MarkerSize', 10, 'MarkerFaceColor', 'blue'  );
+DB3.plot();
 
 axis equal;
 title('solution');

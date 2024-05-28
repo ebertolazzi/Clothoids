@@ -69,6 +69,7 @@ namespace G2lib {
   void PolyLine::build( PolyLine const & PL )   { *this = PL; }
   void PolyLine::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to PolyLine\n"); }
   void PolyLine::build( Dubins const & )        { UTILS_ERROR("can convert from Dubins to PolyLine\n"); }
+  void PolyLine::build( Dubins3p const & )      { UTILS_ERROR("can convert from Dubins3p to PolyLine\n"); }
 
   /*\
    |  ____       _       _     _

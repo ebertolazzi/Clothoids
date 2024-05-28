@@ -52,6 +52,22 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  integer
+  to_integer( DubinsType d ) {
+    switch ( d ) {
+    case DubinsType::LSL: return 0;
+    case DubinsType::RSR: return 1;
+    case DubinsType::LSR: return 2;
+    case DubinsType::RSL: return 3;
+    case DubinsType::LRL: return 4;
+    case DubinsType::RLR: return 5;
+    default: break;
+    }
+    return 6;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   Dubins::setup( GenericContainer const & gc ) {
     string cwhere{ fmt::format("Dubins[{}]::setup( gc ):", this->name() ) };
@@ -76,6 +92,7 @@ namespace G2lib {
   void Dubins::build( PolyLine const & )      { UTILS_ERROR("can convert from PolyLine to Dubins\n"); }
   void Dubins::build( BiarcList const & )     { UTILS_ERROR("can convert from BiarcList to Dubins\n"); }
   void Dubins::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to Dubins\n"); }
+  void Dubins::build( Dubins3p const & )      { UTILS_ERROR("can convert from Dubins3p to Dubins\n"); }
 
   void
   Dubins::build( Dubins const & DB ) {

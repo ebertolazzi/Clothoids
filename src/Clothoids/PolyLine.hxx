@@ -144,6 +144,7 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( ClothoidList const & );
     void build( Dubins const & );
+    void build( Dubins3p const & );
 
     void
     bbox(

@@ -112,13 +112,13 @@ using BaseCurve::distance_ISO;
 using BaseCurve::distance_SAE;
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-using BaseCurve::nx_begin;
-using BaseCurve::ny_begin;
-using BaseCurve::nx_end;
-using BaseCurve::ny_end;
-using BaseCurve::evaluate;
-using BaseCurve::closest_point;
-using BaseCurve::distance;
+using BaseCurve::nx_Begin;
+using BaseCurve::ny_Begin;
+using BaseCurve::nx_End;
+using BaseCurve::ny_End;
+//using BaseCurve::evaluate;
+//using BaseCurve::closestPoint;
+//using BaseCurve::distance;
 #endif
 
 ///

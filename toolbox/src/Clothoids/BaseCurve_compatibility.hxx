@@ -427,7 +427,7 @@ closestPoint_ISO(
   real_type & t,
   real_type & dst
 ) const {
-  return closest_point_ISO( qx, qy, x, y, s, t, dst );
+  return this->closest_point_ISO( qx, qy, x, y, s, t, dst );
 }
 
 integer
@@ -440,7 +440,7 @@ closestPoint_SAE(
   real_type & t,
   real_type & dst
 ) const {
-  return closest_point_SAE( qx, qy, x, y, s, t, dst );
+  return this->closest_point_SAE( qx, qy, x, y, s, t, dst );
 }
 
 integer
@@ -454,7 +454,7 @@ closestPoint_ISO(
   real_type & t,
   real_type & dst
 ) const {
-  return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+  return this->closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
 }
 
 integer
@@ -468,7 +468,7 @@ closestPoint_SAE(
   real_type & t,
   real_type & dst
 ) const {
-  return closest_point_SAE( qx, qy, offs, x, y, s, t, dst );
+  return this->closest_point_SAE( qx, qy, offs, x, y, s, t, dst );
 }
 
 ///

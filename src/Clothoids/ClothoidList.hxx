@@ -995,10 +995,11 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( BiarcList const & );
     void build( ClothoidList const & );
-    void build( Dubins const & );
     void build( G2solve2arc const & );
     void build( G2solve3arc const & );
     void build( G2solveCLC const & );
+    void build( Dubins const & );
+    void build( Dubins3p const & );
 
     //!
     //! Add a line segment to the tail of clothoid list
@@ -1034,6 +1035,11 @@ namespace G2lib {
     //! Add a dubins 3 arc curve to the tail of clothoid list
     //!
     void push_back( Dubins const & c );
+
+    //!
+    //! Add a dubins 6 arc curve to the tail of clothoid list
+    //!
+    void push_back( Dubins3p const & c );
 
     //!
     //! Add a G2solve2arc to the tail of clothoid list

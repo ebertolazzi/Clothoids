@@ -236,6 +236,9 @@ namespace G2lib {
     case CurveType::DUBINS:
       this->push_back( *static_cast<Dubins const *>(pC) );
       break;
+    case CurveType::DUBINS3P:
+      this->push_back( *static_cast<Dubins3p const *>(pC) );
+      break;
     //default:
     //  UTILS_ERROR(
     //    "ClothoidList::ClothoidList, missing conversion for type {}",
@@ -476,6 +479,31 @@ namespace G2lib {
     m_clothoid_list.emplace_back( C0 );
     m_clothoid_list.emplace_back( C1 );
     m_clothoid_list.emplace_back( C2 );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  ClothoidList::push_back( Dubins3p const & c3p ) {
+    if ( m_clothoid_list.empty() ) m_s0.emplace_back( 0 );
+    CircleArc const & C0 = c3p.C0();
+    CircleArc const & C1 = c3p.C1();
+    CircleArc const & C2 = c3p.C2();
+    CircleArc const & C3 = c3p.C3();
+    CircleArc const & C4 = c3p.C4();
+    CircleArc const & C5 = c3p.C5();
+    m_s0.emplace_back( m_s0.back()+C0.length() );
+    m_s0.emplace_back( m_s0.back()+C1.length() );
+    m_s0.emplace_back( m_s0.back()+C2.length() );
+    m_s0.emplace_back( m_s0.back()+C3.length() );
+    m_s0.emplace_back( m_s0.back()+C4.length() );
+    m_s0.emplace_back( m_s0.back()+C5.length() );
+    m_clothoid_list.emplace_back( C0 );
+    m_clothoid_list.emplace_back( C1 );
+    m_clothoid_list.emplace_back( C2 );
+    m_clothoid_list.emplace_back( C3 );
+    m_clothoid_list.emplace_back( C4 );
+    m_clothoid_list.emplace_back( C5 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

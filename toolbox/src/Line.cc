@@ -58,6 +58,7 @@ namespace G2lib {
   void LineSegment::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to LineSegment\n"); }
   void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
   void LineSegment::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to LineSegment\n"); }
+  void LineSegment::build( Dubins3p const & )       { UTILS_ERROR("can convert from Dubins3p to LineSegment\n"); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

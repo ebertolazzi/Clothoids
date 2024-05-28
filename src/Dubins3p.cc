@@ -1,0 +1,674 @@
+/*--------------------------------------------------------------------------*\
+ |                                                                          |
+ |  Copyright (C) 2017                                                      |
+ |                                                                          |
+ |         , __                 , __                                        |
+ |        /|/  \               /|/  \                                       |
+ |         | __/ _   ,_         | __/ _   ,_                                |
+ |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+ |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+ |                           /|                   /|                        |
+ |                           \|                   \|                        |
+ |                                                                          |
+ |      Enrico Bertolazzi                                                   |
+ |      Dipartimento di Ingegneria Industriale                              |
+ |      Universita` degli Studi di Trento                                   |
+ |      email: enrico.bertolazzi@unitn.it                                   |
+ |                                                                          |
+\*--------------------------------------------------------------------------*/
+
+///
+/// file: Dubins.cc
+///
+
+#include "Clothoids.hh"
+#include "PolynomialRoots.hh"
+
+namespace G2lib {
+
+  using PolynomialRoots::Quadratic;
+
+  Dubins3pBuildType
+  string_to_Dubins3pBuildType( string const & str ) {
+    map<string,Dubins3pBuildType> str_to_type {
+      {"sample",Dubins3pBuildType::SAMPLE_ONE_DEGREE},
+      {"pattern",Dubins3pBuildType::PATTERN_SEARCH},
+      {"pattern_search",Dubins3pBuildType::PATTERN_SEARCH},
+      {"pattern_bisection",Dubins3pBuildType::PATTERN_BISECTION},
+      {"poly",Dubins3pBuildType::POLYNOMIAL_SYSTEM},
+      {"polynomial",Dubins3pBuildType::POLYNOMIAL_SYSTEM}
+    };
+    return str_to_type.at( str );
+  }
+
+  /*
+  //   ____        _     _           _____
+  //  |  _ \ _   _| |__ (_)_ __  ___|___ / _ __
+  //  | | | | | | | '_ \| | '_ \/ __| |_ \| '_ \
+  //  | |_| | |_| | |_) | | | | \__ \___) | |_) |
+  //  |____/ \__,_|_.__/|_|_| |_|___/____/| .__/
+  //                                      |_|
+  */
+
+  bool
+  Dubins3p::build(
+    real_type         xi,
+    real_type         yi,
+    real_type         thetai,
+    real_type         xm,
+    real_type         ym,
+    real_type         xf,
+    real_type         yf,
+    real_type         thetaf,
+    real_type         k_max,
+    Dubins3pBuildType method
+  ) {
+    switch ( method ) {
+    case Dubins3pBuildType::SAMPLE_ONE_DEGREE:
+      return build_sample( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, Utils::m_pi/180 );
+    case Dubins3pBuildType::PATTERN_SEARCH:
+      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, false );
+    case Dubins3pBuildType::PATTERN_BISECTION:
+      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, true );
+    case Dubins3pBuildType::POLYNOMIAL_SYSTEM:
+      break;
+    }
+    return false;
+  }
+
+  bool
+  Dubins3p::build_sample(
+    real_type xi,
+    real_type yi,
+    real_type thetai,
+    real_type xm,
+    real_type ym,
+    real_type xf,
+    real_type yf,
+    real_type thetaf,
+    real_type k_max,
+    real_type dangle
+  ) {
+    real_type thetam{0};
+    m_Dubins0.build( xi, yi, thetai, xm, ym, thetam, k_max );
+    m_Dubins1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+    real_type len{m_Dubins0.length()+m_Dubins1.length()};
+
+    Dubins D0{"temporary Dubins A"};
+    Dubins D1{"temporary Dubins B"};
+    for ( thetam = dangle; thetam < Utils::m_2pi; thetam += dangle ) {
+      D0.build( xi, yi, thetai, xm, ym, thetam, k_max );
+      D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+      real_type len1{D0.length()+D1.length()};
+      if ( len1 < len ) { len = len1; m_Dubins0.copy(D0); m_Dubins1.copy(D1); }
+    }
+    m_evaluation = 360;
+    return true;
+  }
+
+  bool
+  Dubins3p::build_pattern_search(
+    real_type xi,
+    real_type yi,
+    real_type thetai,
+    real_type xm,
+    real_type ym,
+    real_type xf,
+    real_type yf,
+    real_type thetaf,
+    real_type k_max,
+    real_type tolerance,
+    bool      use_bisection
+  ) {
+
+    typedef struct Dubins3p_data {
+      Dubins    D0{"temporary Dubins A"};
+      Dubins    D1{"temporary Dubins B"};
+      real_type thetam{0};
+      real_type len{0};
+
+      void
+      copy( Dubins3p_data const & rhs ) {
+        D0.copy(rhs.D0);
+        D1.copy(rhs.D1);
+        thetam = rhs.thetam;
+        len    = rhs.len;
+      }
+
+      bool
+      compare( Dubins3p_data const & D ) const {
+        return D0.solution_type() == D.D0.solution_type() &&
+               D1.solution_type() == D.D1.solution_type();
+      }
+
+    } Dubins3p_data;
+
+    integer const NSEG{16};
+    Dubins3p_data DB[NSEG];
+    Dubins3p_data L, C, R, LL, RR;
+
+    auto eval3p = [xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P ) -> void {
+      D3P.D0.build( xi, yi, thetai, xm, ym, D3P.thetam, k_max );
+      D3P.D1.build( xm, ym, D3P.thetam, xf, yf, thetaf, k_max );
+      D3P.len = D3P.D0.length() + D3P.D1.length();
+    };
+
+    // initialize and find min
+    integer imin{0};
+    DB[0].thetam = 0;
+    eval3p( DB[0] );
+    for ( integer i{1}; i < NSEG; ++i ) {
+      DB[i].thetam = (i*Utils::m_2pi)/NSEG;
+      eval3p( DB[i] );
+      if ( DB[i].len < DB[imin].len ) imin = i;
+    }
+
+    m_evaluation = NSEG;
+
+    // select interval
+    L.copy( DB[(imin+NSEG-1)%NSEG] );
+    C.copy( DB[imin]               );
+    R.copy( DB[(imin+1)%NSEG]      );
+
+    // make angles monotone increasing
+    if ( imin == 0      ) L.thetam -= Utils::m_2pi;
+    if ( imin == NSEG-1 ) R.thetam += Utils::m_2pi;
+
+    while ( R.thetam-L.thetam > tolerance ) {
+      LL.thetam = (C.thetam+L.thetam)/2;
+      RR.thetam = (C.thetam+R.thetam)/2;
+      eval3p( LL );
+      eval3p( RR );
+      m_evaluation += 2;
+      if ( LL.len < RR.len ) {
+        if ( LL.len < C.len ) { R.copy(C);  C.copy(LL); }
+        else                  { L.copy(LL); R.copy(RR); }
+      } else {
+        if ( RR.len < C.len ) { L.copy(C);  C.copy(RR); }
+        else                  { L.copy(LL); R.copy(RR); }
+      }
+      if ( use_bisection ) {
+        // check if can start bisection
+        // all the 3 points must be on the same type
+        if ( L.compare(C) && R.compare(C) ) {
+          std::cout << "TROVA TRIPLA\n";
+        }
+      }
+    }
+
+    m_Dubins0.copy(C.D0);
+    m_Dubins1.copy(C.D1);
+
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::setup( GenericContainer const & gc ) {
+    string cwhere{ fmt::format("Dubins[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    real_type x0     { gc.get_map_number("x0",     where ) };
+    real_type y0     { gc.get_map_number("y0",     where ) };
+    real_type theta0 { gc.get_map_number("theta0", where ) };
+    real_type xm     { gc.get_map_number("xm",     where ) };
+    real_type ym     { gc.get_map_number("ym",     where ) };
+    real_type x1     { gc.get_map_number("x1",     where ) };
+    real_type y1     { gc.get_map_number("y1",     where ) };
+    real_type theta1 { gc.get_map_number("theta1", where ) };
+    real_type kmax   { gc.get_map_number("kmax",   where ) };
+
+    string method_str{ gc.get_map_string("method", where ) };
+
+    Dubins3pBuildType method{ string_to_Dubins3pBuildType(method_str) };
+    bool ok = this->build( x0, y0, theta0, xm, ym, x1, y1, theta1, kmax, method );
+    UTILS_ASSERT( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void Dubins3p::build( LineSegment const & )   { UTILS_ERROR("can convert from LineSegment to Dubins3p\n"); }
+  void Dubins3p::build( CircleArc const & )     { UTILS_ERROR("can convert from CircleArc to Dubins3p\n"); }
+  void Dubins3p::build( Biarc const & )         { UTILS_ERROR("can convert from Biarc to Dubins3p\n"); }
+  void Dubins3p::build( ClothoidCurve const & ) { UTILS_ERROR("can convert from ClothoidCurve to Dubins3p\n"); }
+  void Dubins3p::build( PolyLine const & )      { UTILS_ERROR("can convert from PolyLine to Dubins3p\n"); }
+  void Dubins3p::build( BiarcList const & )     { UTILS_ERROR("can convert from BiarcList to Dubins3p\n"); }
+  void Dubins3p::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to Dubins3p\n"); }
+  void Dubins3p::build( Dubins const & )        { UTILS_ERROR("can convert from Dubins to Dubins3p\n"); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Dubins3p::length() const {
+    return m_Dubins0.length() + m_Dubins1.length();
+  }
+
+  real_type
+  Dubins3p::length_ISO( real_type offs ) const {
+    return m_Dubins0.length_ISO( offs ) + m_Dubins1.length_ISO( offs );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#define DUBINS_SELECT(FUN)                              \
+if ( s < m_Dubins0.length() ) return m_Dubins0.FUN(s);  \
+s -= m_Dubins0.length();                                \
+return m_Dubins1.FUN(s)
+
+  real_type Dubins3p::theta   ( real_type s ) const { DUBINS_SELECT( theta ); }
+  real_type Dubins3p::theta_D ( real_type s ) const { DUBINS_SELECT( theta_D ); }
+  real_type Dubins3p::X       ( real_type s ) const { DUBINS_SELECT( X ); }
+  real_type Dubins3p::X_D     ( real_type s ) const { DUBINS_SELECT( X_D ); }
+  real_type Dubins3p::X_DD    ( real_type s ) const { DUBINS_SELECT( X_DD ); }
+  real_type Dubins3p::X_DDD   ( real_type s ) const { DUBINS_SELECT( X_DDD ); }
+  real_type Dubins3p::Y       ( real_type s ) const { DUBINS_SELECT( Y ); }
+  real_type Dubins3p::Y_D     ( real_type s ) const { DUBINS_SELECT( Y_D ); }
+  real_type Dubins3p::Y_DD    ( real_type s ) const { DUBINS_SELECT( Y_DD ); }
+  real_type Dubins3p::Y_DDD   ( real_type s ) const { DUBINS_SELECT( Y_DDD ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#define DUBINS_SELECT_EVAL(FUN,...)    \
+  if ( s < m_Dubins0.length() ) {      \
+    m_Dubins0.FUN( s, __VA_ARGS__ );   \
+  } else {                             \
+    s -= m_Dubins0.length();           \
+    m_Dubins1.FUN( s, __VA_ARGS__ );   \
+  }
+
+  void
+  Dubins3p::eval(
+    real_type   s,
+    real_type & theta,
+    real_type & kappa,
+    real_type & x,
+    real_type & y
+  ) const {
+    DUBINS_SELECT_EVAL( evaluate, theta, kappa, x, y );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::eval(
+    real_type   s,
+    real_type & x,
+    real_type & y
+  ) const {
+    DUBINS_SELECT_EVAL( eval, x, y );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::eval_D(
+    real_type   s,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
+    DUBINS_SELECT_EVAL( eval_D, x_D, y_D );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::eval_DD(
+    real_type   s,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
+    DUBINS_SELECT_EVAL( eval_DD, x_DD, y_DD );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::eval_DDD(
+    real_type   s,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
+    DUBINS_SELECT_EVAL( eval_DDD, x_DDD, y_DDD );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // offset curve
+  void
+  Dubins3p::eval_ISO(
+    real_type   s,
+    real_type   offs,
+    real_type & x,
+    real_type & y
+  ) const {
+    DUBINS_SELECT_EVAL( eval_ISO, offs, x, y );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::eval_ISO_D(
+    real_type   s,
+    real_type   offs,
+    real_type & x_D,
+    real_type & y_D
+  ) const {
+    DUBINS_SELECT_EVAL( eval_ISO_D, offs, x_D, y_D );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::eval_ISO_DD(
+    real_type   s,
+    real_type   offs,
+    real_type & x_DD,
+    real_type & y_DD
+  ) const {
+    DUBINS_SELECT_EVAL( eval_ISO_DD, offs, x_DD, y_DD );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::eval_ISO_DDD(
+    real_type   s,
+    real_type   offs,
+    real_type & x_DDD,
+    real_type & y_DDD
+  ) const {
+    DUBINS_SELECT_EVAL( eval_ISO_DDD, offs, x_DDD, y_DDD );
+  }
+
+  void
+  Dubins3p::reverse() {
+    Dubins TMP{m_Dubins0}; m_Dubins0.copy(m_Dubins1); m_Dubins1.copy(TMP);
+    m_Dubins0.reverse();
+    m_Dubins1.reverse();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::scale( real_type scl ) {
+    m_Dubins0.scale( scl );
+    m_Dubins1.scale( scl );
+    m_Dubins1.change_origin( m_Dubins0.x_end(), m_Dubins0.y_end() );
+  }
+
+  void
+  Dubins3p::change_origin( real_type newx0, real_type newy0 ) {
+    m_Dubins0.change_origin(newx0,newy0);
+    m_Dubins1.change_origin( m_Dubins0.x_end(), m_Dubins0.y_end() );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::bbox(
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
+    m_Dubins0.bbox( xmin, ymin, xmax, ymax );
+    real_type xmi1, ymi1, xma1, yma1;
+    m_Dubins1.bbox( xmi1, ymi1, xma1, yma1 );
+    if ( xmi1 < xmin ) xmin = xmi1;
+    if ( xma1 > xmax ) xmax = xma1;
+    if ( ymi1 < ymin ) ymin = ymi1;
+    if ( yma1 > ymax ) ymax = yma1;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::bbox_ISO(
+    real_type   offs,
+    real_type & xmin,
+    real_type & ymin,
+    real_type & xmax,
+    real_type & ymax
+  ) const {
+    m_Dubins0.bbox_ISO( offs, xmin, ymin, xmax, ymax );
+    real_type xmi1, ymi1, xma1, yma1;
+    m_Dubins1.bbox_ISO( offs, xmi1, ymi1, xma1, yma1 );
+    if ( xmi1 < xmin ) xmin = xmi1;
+    if ( xma1 > xmax ) xmax = xma1;
+    if ( ymi1 < ymin ) ymin = ymi1;
+    if ( yma1 > ymax ) ymax = yma1;
+  }
+
+  /*\
+   |             _ _ _     _
+   |    ___ ___ | | (_)___(_) ___  _ __
+   |   / __/ _ \| | | / __| |/ _ \| '_ \
+   |  | (_| (_) | | | \__ \ | (_) | | | |
+   |   \___\___/|_|_|_|___/_|\___/|_| |_|
+  \*/
+
+  bool
+  Dubins3p::collision( Dubins3p const & B ) const {
+    return m_Dubins0.collision( B.m_Dubins0 ) ||
+           m_Dubins0.collision( B.m_Dubins1 ) ||
+           m_Dubins1.collision( B.m_Dubins0 ) ||
+           m_Dubins1.collision( B.m_Dubins1 );
+  }
+
+  bool
+  Dubins3p::collision_ISO(
+    real_type        offs,
+    Dubins3p const & B,
+    real_type        offs_B
+  ) const {
+    return m_Dubins0.collision_ISO( offs, B.m_Dubins0, offs_B ) ||
+           m_Dubins0.collision_ISO( offs, B.m_Dubins1, offs_B ) ||
+
+           m_Dubins1.collision_ISO( offs, B.m_Dubins0, offs_B ) ||
+           m_Dubins1.collision_ISO( offs, B.m_Dubins1, offs_B );
+  }
+
+  /*\
+   |   _       _                          _
+   |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_
+   |  | | '_ \| __/ _ \ '__/ __|/ _ \/ __| __|
+   |  | | | | | ||  __/ |  \__ \  __/ (__| |_
+   |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  Dubins3p::collision( BaseCurve const * pC ) const {
+    if ( pC->type() == CurveType::DUBINS3P ) {
+      Dubins3p const & C = *static_cast<Dubins3p const *>(pC);
+      return this->collision( C );
+    } else {
+      return G2lib::collision( this, pC );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  Dubins3p::collision_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C
+  ) const {
+    if ( pC->type() == CurveType::DUBINS ) {
+      Dubins3p const & C = *static_cast<Dubins3p const *>(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    } else {
+      return G2lib::collision_ISO( this, offs, pC, offs_C );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::intersect(
+    Dubins3p const & B,
+    IntersectList  & ilist
+  ) const {
+
+    IntersectList ilist00, ilist01, ilist10, ilist11;
+
+    m_Dubins0.intersect( B.m_Dubins0, ilist00 );
+    m_Dubins0.intersect( B.m_Dubins1, ilist01 );
+
+    m_Dubins1.intersect( B.m_Dubins0, ilist10 );
+    m_Dubins1.intersect( B.m_Dubins1, ilist11 );
+
+    real_type L0  = m_Dubins0.length();
+    real_type LB0 = B.m_Dubins0.length();
+
+    ilist.reserve( ilist.size() +
+
+                   ilist00.size() +
+                   ilist01.size() +
+
+                   ilist10.size() +
+                   ilist11.size() );
+
+    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto & it : ilist01 ) { it.second += LB0; ilist.push_back( it ); }
+
+    for ( auto & it : ilist10 ) { it.first += L0; ilist.push_back( it ); }
+    for ( auto & it : ilist11 ) { it.first += L0; it.second += LB0; ilist.push_back( it ); }
+
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::intersect_ISO(
+    real_type         offs,
+    Dubins3p const  & B,
+    real_type         offs_B,
+    IntersectList   & ilist
+  ) const {
+
+    IntersectList ilist00, ilist01, ilist10, ilist11;
+
+    m_Dubins0.intersect_ISO( offs, B.m_Dubins0, offs_B, ilist00 );
+    m_Dubins0.intersect_ISO( offs, B.m_Dubins1, offs_B, ilist01 );
+
+    m_Dubins1.intersect_ISO( offs, B.m_Dubins0, offs_B, ilist10 );
+    m_Dubins1.intersect_ISO( offs, B.m_Dubins1, offs_B, ilist11 );
+
+    real_type L0  = m_Dubins0.length();
+    real_type LB0 = B.m_Dubins0.length();
+
+    ilist.reserve( ilist.size() +
+
+                   ilist00.size() +
+                   ilist01.size() +
+
+                   ilist10.size() +
+                   ilist11.size() );
+
+    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto & it : ilist01 ) { it.second += LB0; ilist.push_back( it ); }
+
+    for ( auto & it : ilist10 ) { it.first += L0; ilist.push_back( it ); }
+    for ( auto & it : ilist11 ) { it.first += L0; it.second += LB0; ilist.push_back( it ); }
+ }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Dubins3p::closest_point_ISO(
+    real_type   qx,
+    real_type   qy,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst
+  ) const {
+    real_type x1, y1, s1, t1, dst1;
+    integer res  = m_Dubins0.closest_point_ISO( qx, qy, x,  y,  s,  t,  dst  );
+    integer res1 = m_Dubins1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 );
+    if ( dst1 < dst ) {
+      x   = x1;
+      y   = y1;
+      s   = s1+m_Dubins0.length();
+      t   = t1;
+      dst = dst1;
+      res = res1;
+    }
+    return res;
+  }
+
+  void
+  Dubins3p::intersect(
+    BaseCurve const * pC,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == CurveType::DUBINS3P ) {
+      Dubins3p const & C = *static_cast<Dubins3p const *>(pC);
+      this->intersect( C, ilist );
+    } else {
+      G2lib::intersect( this, pC, ilist );
+    }
+  }
+
+  void
+  Dubins3p::intersect_ISO(
+    real_type         offs,
+    BaseCurve const * pC,
+    real_type         offs_C,
+    IntersectList   & ilist
+  ) const {
+    if ( pC->type() == CurveType::DUBINS3P ) {
+      Dubins3p const & C = *static_cast<Dubins3p const *>(pC);
+      this->intersect_ISO( offs, C, offs_C, ilist );
+    } else {
+      G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Dubins3p::closest_point_ISO(
+    real_type   qx,
+    real_type   qy,
+    real_type   offs,
+    real_type & x,
+    real_type & y,
+    real_type & s,
+    real_type & t,
+    real_type & dst
+  ) const {
+    real_type x1, y1, s1, t1, dst1;
+    integer res  = m_Dubins0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
+    integer res1 = m_Dubins1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
+    if ( dst1 < dst ) {
+      x   = x1;
+      y   = y1;
+      s   = s1+m_Dubins0.length_ISO(offs);
+      t   = t1;
+      dst = dst1;
+      res = res1;
+    }
+    return res;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ostream_type &
+  operator << ( ostream_type & stream, Dubins3p const & bi ) {
+    stream
+      << "Dubins0\n" << bi.m_Dubins0
+      << "Dubins1\n" << bi.m_Dubins1
+      << "\n";
+    return stream;
+  }
+
+}
+
+///
+/// eof: Dubins3p.cc
+///

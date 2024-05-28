@@ -572,6 +572,7 @@ namespace G2lib {
     void build( BiarcList const & );
     void build( ClothoidList const & );
     void build( Dubins const & );
+    void build( Dubins3p const & );
 
     /*
     //             _ _ _     _

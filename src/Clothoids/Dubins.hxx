@@ -34,6 +34,8 @@ namespace G2lib {
   using DubinsType = enum class DubinsType : integer
   { LSL, RSR, LSR, RSL, LRL, RLR, DUBINS_ERROR };
 
+  integer to_integer( DubinsType d );
+
   bool
   Dubins_build(
     real_type    x0,
@@ -51,7 +53,7 @@ namespace G2lib {
   );
 
   //!
-  //! Class to manage a circle arc
+  //! Class to manage a Dubins curve
   //!
   class Dubins : public BaseCurve {
   private:
@@ -110,9 +112,12 @@ namespace G2lib {
     //!
     void
     copy( Dubins const & d ) {
-      m_C0 = d.m_C0;
-      m_C1 = d.m_C1;
-      m_C2 = d.m_C2;
+      m_C0            = d.m_C0;
+      m_C1            = d.m_C1;
+      m_C2            = d.m_C2;
+      m_length        = d.m_length;
+      m_length_Dalpha = d.m_length_Dalpha;
+      m_length_Dbeta  = d.m_length_Dbeta;
       m_solution_type = d.m_solution_type;
     }
 
@@ -146,6 +151,7 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( ClothoidList const & );
     void build( Dubins const & );
+    void build( Dubins3p const & );
 
     void
     bbox(
@@ -199,6 +205,8 @@ namespace G2lib {
 
     DubinsType solution_type() const { return m_solution_type; }
 
+    integer icode() const { return to_integer(m_solution_type); }
+
     real_type length0() const { return m_C0.length(); }
     real_type length1() const { return m_C1.length(); }
     real_type length2() const { return m_C2.length(); }
@@ -222,16 +230,27 @@ namespace G2lib {
 
     real_type theta_begin()  const override { return m_C0.theta_begin(); }
     real_type theta_end()    const override { return m_C2.theta_end(); }
+
     real_type kappa_begin()  const override { return m_C0.kappa_begin(); }
     real_type kappa_end()    const override { return m_C2.kappa_end(); }
+
     real_type x_begin()      const override { return m_C0.x_begin(); }
-    real_type y_begin()      const override { return m_C0.y_begin(); }
     real_type x_end()        const override { return m_C2.x_end(); }
+
+    real_type y_begin()      const override { return m_C0.y_begin(); }
     real_type y_end()        const override { return m_C2.y_end(); }
+
     real_type tx_begin()     const override { return m_C0.tx_begin(); }
+    real_type tx_end()       const override { return m_C2.tx_end(); }
+
     real_type ty_begin()     const override { return m_C0.ty_begin(); }
+    real_type ty_end()       const override { return m_C2.ty_end(); }
+
     real_type nx_begin_ISO() const override { return m_C0.nx_begin_ISO(); }
+    real_type nx_end_ISO()   const override { return m_C2.nx_end_ISO(); }
+
     real_type ny_begin_ISO() const override { return m_C0.ny_begin_ISO(); }
+    real_type ny_end_ISO()   const override { return m_C2.ny_end_ISO(); }
 
     real_type theta0_begin() const { return m_C0.theta_begin(); }
     real_type theta0_end()   const { return m_C0.theta_end(); }
@@ -243,18 +262,21 @@ namespace G2lib {
     real_type theta2_end()   const { return m_C2.theta_end(); }
 
     real_type x0_begin() const { return m_C0.x_begin(); }
-    real_type y0_begin() const { return m_C0.y_begin(); }
     real_type x0_end()   const { return m_C0.x_end(); }
+
+    real_type y0_begin() const { return m_C0.y_begin(); }
     real_type y0_end()   const { return m_C0.y_end(); }
 
     real_type x1_begin() const { return m_C1.x_begin(); }
-    real_type y1_begin() const { return m_C1.y_begin(); }
     real_type x1_end()   const { return m_C1.x_end(); }
+
+    real_type y1_begin() const { return m_C1.y_begin(); }
     real_type y1_end()   const { return m_C1.y_end(); }
 
     real_type x2_begin() const { return m_C2.x_begin(); }
-    real_type y2_begin() const { return m_C2.y_begin(); }
     real_type x2_end()   const { return m_C2.x_end(); }
+
+    real_type y2_begin() const { return m_C2.y_begin(); }
     real_type y2_end()   const { return m_C2.y_end(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -546,6 +568,7 @@ namespace G2lib {
 
     CurveType type() const override { return CurveType::DUBINS; }
 
+    friend class Dubins3p;
   };
 
   inline
@@ -563,6 +586,7 @@ namespace G2lib {
     }
     return res;
   };
+
 }
 
 ///

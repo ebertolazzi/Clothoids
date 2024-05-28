@@ -85,7 +85,8 @@ namespace G2lib {
     BIARC_LIST,
     CLOTHOID,
     CLOTHOID_LIST,
-    DUBINS
+    DUBINS,
+    DUBINS3P
   };
 
   inline
@@ -101,6 +102,7 @@ namespace G2lib {
     case CurveType::CLOTHOID:      res = "CLOTHOID";      break;
     case CurveType::CLOTHOID_LIST: res = "CLOTHOID_LIST"; break;
     case CurveType::DUBINS:        res = "DUBINS";        break;
+    case CurveType::DUBINS3P:      res = "DUBINS3P";      break;
     }
     return res;
   };
@@ -115,6 +117,7 @@ namespace G2lib {
   class BiarcList;
   class ClothoidList;
   class Dubins;
+  class Dubins3p;
 }
 
 #include "Clothoids/G2lib.hxx"
@@ -131,6 +134,7 @@ namespace G2lib {
 #include "Clothoids/ClothoidList.hxx"
 #include "Clothoids/ClothoidAsyPlot.hxx"
 #include "Clothoids/Dubins.hxx"
+#include "Clothoids/Dubins3p.hxx"
 
 namespace fmt {
   template <> struct formatter<G2lib::Biarc>            : ostream_formatter {};
@@ -144,6 +148,7 @@ namespace fmt {
   template <> struct formatter<G2lib::PolyLine>         : ostream_formatter {};
   template <> struct formatter<G2lib::Triangle2D>       : ostream_formatter {};
   template <> struct formatter<G2lib::Dubins>           : ostream_formatter {};
+  template <> struct formatter<G2lib::Dubins3p>         : ostream_formatter {};
 }
 
 namespace G2lib {

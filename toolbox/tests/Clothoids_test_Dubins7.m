@@ -20,6 +20,7 @@ addpath('../tests');
 
 DB_A = Dubins();
 DB_B = Dubins();
+DB3  = Dubins3p();
 
 k_max  = 0.6;
 d      = 3;
@@ -37,6 +38,8 @@ DlenB  = [];
 kind   = [];
 epsilon = 1e-4;
 
+DB3.build( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max, 'pattern_bisection' );
+
 thetaGuess = (atan2(yM-y0,xM-x0) + atan2(yf-yM,xf-xM)) / 2;
 
 % non-derivative algorithm to find the optimal thetaM0 (residual = 0)
@@ -52,7 +55,8 @@ DB_A.build( x0, y0, theta0,  xM, yM, thetaM0, k_max );
 DB_B.build( xM, yM, thetaM0, xf, yf, thetaf,  k_max );
 
 figure();
-subplot(3,1,1);
+
+subplot(2,2,1);
 
 hold on;
 DB_A.plot();
@@ -60,6 +64,15 @@ DB_B.plot();
 plot([x0,xM,xf],[y0,yM,yf],'o','MarkerSize',15,'MarkerFaceColor','red');
 axis equal
 grid on
+
+subplot(2,2,2);
+
+hold on;
+DB3.plot();
+plot([x0,xM,xf],[y0,yM,yf],'o','MarkerSize',15,'MarkerFaceColor','red');
+axis equal
+grid on
+
 
 npts     = 1000;
 thetas   = linspace(thetaGuess-pi,thetaGuess+pi,npts);
@@ -77,7 +90,7 @@ IDX = find( abs(D_LAB_FD) > 5 );
 D_LAB_FD(IDX) = NaN;
 
 
-subplot(3,1,2);
+subplot(2,2,3);
 plot(thetas,LAB,'LineWidth',3);
 hold on
 plot(thetaGuess,L(thetaGuess),'o','MarkerSize',15,'MarkerFaceColor','magenta');
@@ -87,7 +100,7 @@ plot(thetas(min_idx),min_tmp,'o','MarkerSize',10,'MarkerFaceColor','green');
 grid on
 
 
-subplot(3,1,3);
+subplot(2,2,4);
 plot(thetas,D_LAB,'LineWidth',3);
 hold on
 plot(thetas,D_LAB_FD,'LineWidth',2);

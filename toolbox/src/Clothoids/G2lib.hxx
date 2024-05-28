@@ -34,6 +34,7 @@ namespace G2lib {
   extern real_type const machepsi1000; //!< \f$ 1000\varepsilon \f$
   extern real_type const sqrtMachepsi; //!< \f$ \sqrt{\varepsilon} \f$
   extern bool            intersect_with_AABBtree;
+
   extern integer const  G2LIB_AABB_CUT;
   extern integer const  G2LIB_AABB_MIN_NODES;
 
