@@ -109,6 +109,14 @@ classdef Dubins3p < CurveBase
       res = Dubins3pMexWrapper( 'num_evaluation', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function set_tolerance( self, tol )
+      Dubins3pMexWrapper( 'set_tolerance', self.objectHandle, tol );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function set_max_evaluation( self, max_eval )
+      Dubins3pMexWrapper( 'set_max_evaluation', self.objectHandle, max_eval );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the biarc
     %>
     %> **Usage:**

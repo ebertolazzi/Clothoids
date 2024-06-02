@@ -33,7 +33,7 @@ namespace G2lib {
   */
 
   using Dubins3pBuildType = enum class Dubins3pBuildType : integer
-  { SAMPLE_ONE_DEGREE, PATTERN_SEARCH, PATTERN_BISECTION, POLYNOMIAL_SYSTEM };
+  { SAMPLE_ONE_DEGREE, PATTERN_SEARCH, PATTERN_TRICHOTOMY, POLYNOMIAL_SYSTEM };
 
   Dubins3pBuildType string_to_Dubins3pBuildType( string const & str );
 
@@ -46,7 +46,7 @@ namespace G2lib {
     Dubins m_Dubins0{"Dubins0"};
     Dubins m_Dubins1{"Dubins1"};
 
-    real_type m_tolerance{1e-8};
+    real_type m_tolerance{Utils::m_pi/180}; // one degree
     integer   m_max_evaluation{1000};
     integer   m_evaluation;
 
@@ -75,8 +75,8 @@ namespace G2lib {
       real_type yf,
       real_type thetaf,
       real_type k_max,
-      real_type tolerance     = 1e-8,
-      bool      use_bisection = true
+      real_type tolerance      = 1e-8,
+      bool      use_trichotomy = true
     );
 
     bool
@@ -176,6 +176,10 @@ namespace G2lib {
       Dubins3pBuildType method
     );
 
+    void set_tolerance( real_type tol );
+    void set_max_evaluation( integer max_eval );
+
+    real_type  tolerance()      const { return m_tolerance; }
     DubinsType solution_type0() const { return m_Dubins0.solution_type(); }
     DubinsType solution_type1() const { return m_Dubins1.solution_type(); }
     integer    icode()          const { return m_Dubins0.icode()+16*m_Dubins1.icode(); }

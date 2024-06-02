@@ -38,7 +38,7 @@ DlenB  = [];
 kind   = [];
 epsilon = 1e-4;
 
-DB3.build( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max, 'pattern_bisection' );
+DB3.build( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max, 'pattern' );
 
 thetaGuess = (atan2(yM-y0,xM-x0) + atan2(yf-yM,xf-xM)) / 2;
 

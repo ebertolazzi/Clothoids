@@ -235,6 +235,46 @@ namespace G2lib {
     #undef CMD
 
   }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_set_tolerance( int nlhs, mxArray       *plhs[],
+                    int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "Dubins3pMexWrapper('set_tolerance',OBJ,tol): "
+
+    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
+
+    real_type tol = Utils::mex_get_scalar_value( arg_in_2, CMD "Error in reading tol" );
+    ptr->set_tolerance( tol );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_set_max_evaluation( int nlhs, mxArray       *plhs[],
+                         int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "Dubins3pMexWrapper('set_max_evaluation',OBJ,tol): "
+
+    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
+
+    Utils::int64_t max_eval = Utils::mex_get_int64( arg_in_2, CMD "Error in reading tol" );
+    ptr->set_max_evaluation( max_eval );
+
+    #undef CMD
+  }
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
@@ -247,6 +287,8 @@ namespace G2lib {
     {"get_pars",do_get_pars},
     {"curve_type",do_curve_type},
     {"num_evaluation",do_num_evaluation},
+    {"set_tolerance",do_set_tolerance},
+    {"set_max_evaluation",do_set_max_evaluation},
     CMD_MAP_FUN
   };
 

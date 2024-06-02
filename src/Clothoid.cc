@@ -53,7 +53,7 @@ namespace G2lib {
   using std::isfinite;
 
   integer   ClothoidCurve::m_max_iter  = 10;
-  real_type ClothoidCurve::m_tolerance = 1e-9;
+  real_type ClothoidCurve::m_tolerance = 0.01745329252; // 1 degree
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

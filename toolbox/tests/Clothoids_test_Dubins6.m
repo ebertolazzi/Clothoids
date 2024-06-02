@@ -32,7 +32,8 @@ Dlen   = [];
 kind1  = [];
 kind2  = [];
 
-DB3.build( x0, y0, theta0, x1, y1, x2, y2, theta2, k_max, 'pattern_bisection' );
+%DB3.set_tolerance(1e-20);
+DB3.build( x0, y0, theta0, x1, y1, x2, y2, theta2, k_max, 'pattern_trichotomy' );
 
 subplot(2,2,1);
 title('curves');
@@ -90,5 +91,7 @@ title('solution');
 
 DB1.info
 DB2.info
+
+DB3.num_evaluation
 
 
