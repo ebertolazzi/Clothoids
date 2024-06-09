@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using namespace std;
 using G2lib::real_type;

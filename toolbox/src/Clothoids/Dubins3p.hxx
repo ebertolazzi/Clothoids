@@ -400,10 +400,7 @@ namespace G2lib {
 
     void change_origin( real_type newx0, real_type newy0 ) override;
 
-    void
-    trim( real_type, real_type ) override {
-      UTILS_ERROR0( "Dubins::trim not defined, convert to ClothoidList to trim the curve!");
-    }
+    void trim( real_type, real_type ) override;
 
     void scale( real_type s ) override;
 
@@ -630,9 +627,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "Dubins3p\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override

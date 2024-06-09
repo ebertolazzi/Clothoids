@@ -1,4 +1,5 @@
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 namespace G2lib {
 

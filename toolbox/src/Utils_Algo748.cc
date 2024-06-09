@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Utils_Algo748.hh"
+#include "Utils_fmt.hh"
 
 #include <vector>
 

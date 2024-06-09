@@ -161,9 +161,7 @@ namespace G2lib {
       real_type & /* ymin */,
       real_type & /* xmax */,
       real_type & /* ymax */
-    ) const override {
-      UTILS_ERROR0( "PolyLine::bbox( offs ... ) not available!\n" );
-    }
+    ) const override;
 
     /*\
      |  _    _   _____    _                _
@@ -418,9 +416,7 @@ namespace G2lib {
       real_type & /* S    */,
       real_type & /* T    */,
       real_type & /* DST  */
-    ) const override {
-      UTILS_ERROR( "PolyLine::closest_point_ISO( ... offs ... ) not available!\n" );
-    }
+    ) const override;
 
     /*\
      |             _ _ _     _
@@ -438,13 +434,7 @@ namespace G2lib {
       real_type        offs,
       PolyLine const & CL,
       real_type        offs_CL
-    ) const {
-      UTILS_ASSERT0(
-        Utils::is_zero(offs) && Utils::is_zero(offs_CL),
-        "PolyLine::collision( offs ... ) not available!\n"
-      );
-      return this->collision( CL );
-    }
+    ) const;
 
     bool
     collision( BaseCurve const * pC ) const override;
@@ -504,13 +494,7 @@ namespace G2lib {
       PolyLine const & pl,
       real_type        offs_pl,
       IntersectList  & ilist
-    ) const {
-      UTILS_ASSERT0(
-        Utils::is_zero(offs) && Utils::is_zero(offs_pl),
-        "PolyLine::intersect( offs ... ) not available!\n"
-      );
-      this->intersect( pl, ilist );
-    }
+    ) const;
 
     void
     intersect(
@@ -526,9 +510,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "PolyLine\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override

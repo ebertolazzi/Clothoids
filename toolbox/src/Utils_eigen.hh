@@ -28,6 +28,7 @@
 #define UTILS_EIGEN_dot_HH
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 
 #ifdef __clang__
   #pragma clang diagnostic push

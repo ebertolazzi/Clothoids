@@ -1084,9 +1084,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "Clothoid\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override

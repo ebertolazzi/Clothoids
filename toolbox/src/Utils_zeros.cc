@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Utils_zeros.hh"
+#include "Utils_fmt.hh"
 
 #include <vector>
 

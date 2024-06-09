@@ -210,9 +210,7 @@ namespace G2lib {
     real_type
     dist_max( real_type x, real_type y ) const;
 
-    string
-    info() const
-    { return fmt::format( "Triangle2D\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const

@@ -41,6 +41,7 @@
  */
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // workaround for windows that defines max and min as macros!
 #ifdef max
@@ -318,6 +319,12 @@ namespace G2lib {
     );
     return stream;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Triangle2D::info() const
+  { return fmt::format( "Triangle2D\n{}\n", *this ); }
 
 }
 

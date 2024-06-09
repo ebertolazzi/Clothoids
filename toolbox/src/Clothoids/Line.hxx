@@ -144,23 +144,7 @@ namespace G2lib {
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100, // unused
       integer              icurve    = 0
-    ) const override {
-      real_type xmin, ymin, xmax, ymax;
-      this->bbox( xmin, ymin, xmax, ymax );
-      real_type xc = (xmax+xmin)/2;
-      real_type yc = (ymax+ymin)/2;
-      real_type nx = (ymax-ymin)/100;
-      real_type ny = (xmin-xmax)/100;
-      if ( xmax > xmin || ymax > ymin ) {
-        tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
-      } else {
-        UTILS_ERROR(
-          "LineSegment bb_triangles found a degenerate line\n"
-          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ] max_angle={} max_size={}\n",
-          xmin, ymin, xmax, ymax, max_angle, max_size
-        );
-      }
-    }
+    ) const override;
 
     void
     bb_triangles_ISO(
@@ -169,24 +153,7 @@ namespace G2lib {
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100, // unused
       integer              icurve    = 0
-    ) const override {
-      real_type xmin, ymin, xmax, ymax;
-      this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
-      real_type xc = (xmax+xmin)/2;
-      real_type yc = (ymax+ymin)/2;
-      real_type nx = (ymax-ymin)/100;
-      real_type ny = (xmin-xmax)/100;
-      if ( xmax > xmin || ymax > ymin ) {
-        tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
-      } else {
-        UTILS_ERROR(
-          "LineSegment bb_triangles found a degenerate line\n"
-          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ]\n"
-          "offs={} max_angle={} max_size={}\n",
-          xmin, ymin, xmax, ymax, offs, max_angle, max_size
-        );
-      }
-    }
+    ) const override;
 
     void
     bb_triangles_SAE(
@@ -507,9 +474,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "LineSegment\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override

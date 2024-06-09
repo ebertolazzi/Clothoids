@@ -22,10 +22,31 @@
 ///
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 namespace G2lib {
 
   using std::abs;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Biarc::Biarc(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    string const & name
+  ) : BaseCurve( name )
+  {
+    bool ok = build( x0, y0, theta0, x1, y1, theta1 );
+    UTILS_ASSERT(
+      ok,
+      "Biarc( x0={}, y0={}, theta0={}, x1={}, y1={}, theta1={}) cannot be computed\n",
+      x0, y0, theta0, x1, y1, theta1
+    );
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -973,6 +994,12 @@ namespace G2lib {
     }
     return true;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Biarc::info() const
+  { return fmt::format( "BiArc\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

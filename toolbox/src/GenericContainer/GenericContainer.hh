@@ -2694,111 +2694,24 @@ namespace GC_namespace {
     GenericContainerExplorer() { head.push_back(&data); }
     ~GenericContainerExplorer() {}
 
-    GenericContainer *
-    top() {
-      GC_ASSERT(
-        head.size() > 0,
-        "GenericContainerExplorer::top() empty stack!"
-      )
-      GC_ASSERT(
-        head.back() != nullptr,
-        "GenericContainerExplorer::top() bad top pointer!"
-      )
-      return head.back();
-    }
-
-    GenericContainer const *
-    top() const {
-      GC_ASSERT(
-        head.size() > 0,
-        "GenericContainerExplorer::top() empty stack!"
-      )
-      GC_ASSERT(
-        head.back() != nullptr,
-        "GenericContainerExplorer::top() bad top pointer!"
-      )
-      return head.back();
-    }
+    GenericContainer       * top();
+    GenericContainer const * top() const;
 
     void       * mem_ptr()       { return &data; }
     void const * mem_ptr() const { return &data; }
 
-    int
-    check( GC_type data_type ) const {
-      if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
-      if ( data_type == head.back()->get_type() ) {
-        if ( head.back() == nullptr ) return GENERIC_CONTAINER_NO_DATA;
-        return GENERIC_CONTAINER_OK;
-      } else {
-        return GENERIC_CONTAINER_BAD_TYPE;
-      }
-    }
+    int check( GC_type data_type ) const;
+    int check_no_data( GC_type data_type ) const;
 
-    int
-    check_no_data( GC_type data_type ) const {
-      if ( head.empty() ) return GENERIC_CONTAINER_BAD_HEAD;
-      if ( GC_type::NOTYPE == head.back()->get_type() ||
-           data_type       == head.back()->get_type() ) return GENERIC_CONTAINER_OK;
-      return GENERIC_CONTAINER_NOT_EMPTY;
-    }
+    int pop();
+    int push( GenericContainer * gc );
+    int push_vector_position( unsigned pos );
+    int push_map_position( char const pos[] );
+    int init_map_key();
 
-    int
-    pop() {
-      if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA;
-      head.pop_back();
-      return GENERIC_CONTAINER_OK;
-    }
+    char const * next_map_key();
 
-    int
-    push( GenericContainer * gc ) {
-      head.push_back( gc );
-      return GENERIC_CONTAINER_OK;
-    }
-
-    int
-    push_vector_position( unsigned pos ) {
-      int ok = check( GC_type::VECTOR );
-      if ( ok == GENERIC_CONTAINER_OK  ) {
-        GenericContainer * gc = &((*head.back())[pos]);
-        head.push_back( gc );
-      }
-      return ok;
-    }
-
-    int
-    push_map_position( char const pos[] ) {
-      int ok = check( GC_type::MAP );
-      if ( ok == GENERIC_CONTAINER_OK  ) {
-        GenericContainer * gc = &((*head.back())[pos]);
-        head.push_back( gc );
-      }
-      return ok;
-    }
-
-    int
-    init_map_key() {
-      int ok = check( GC_type::MAP );
-      if ( ok == GENERIC_CONTAINER_OK ) {
-        ptr_map = &head.back()->get_map();
-        map_iterator = ptr_map->begin();
-      }
-      return ok;
-    }
-
-    char const *
-    next_map_key() {
-      if ( map_iterator != ptr_map->end() )
-        return map_iterator++->first.c_str();
-      else
-        return nullptr;
-    }
-
-    int
-    reset() {
-      if ( head.empty() ) return GENERIC_CONTAINER_NO_DATA;
-      while ( head.size() > 1 ) head.pop_back();
-      return GENERIC_CONTAINER_OK;
-    }
+    int reset();
 
   };
 }

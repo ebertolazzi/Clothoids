@@ -18,40 +18,18 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Trace.hxx
+/// file: Utils_trace.hh
 ///
+
+#pragma once
+
+#ifndef UTILS_TRACE_HH
+#define UTILS_TRACE_HH
+
+#include "Utils.hh"
+#include "Utils_trace.hh"
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-#include <string.h>
-#ifndef __FILENAME__
-  #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr("/" __FILE__, '/') + 1 : __FILE__)
-#endif
-
-#ifndef UTILS_ERROR0
-  #define UTILS_ERROR0(MSG) \
-  throw Utils::Runtime_Error( MSG, __FILENAME__, __LINE__ )
-#endif
-
-#ifndef UTILS_ASSERT0
-  #define UTILS_ASSERT0(COND,MSG) if ( !(COND) ) UTILS_ERROR0( MSG )
-#endif
-
-#ifndef UTILS_WARNING0
-  #define UTILS_WARNING0(COND,MSG) if ( !(COND) ) std::cerr << MSG
-#endif
-
-#ifndef UTILS_ERROR
-  #define UTILS_ERROR(...) \
-  throw Utils::Runtime_Error( fmt::format(__VA_ARGS__), __FILENAME__, __LINE__ )
-#endif
-
-#ifndef UTILS_ASSERT
-  #define UTILS_ASSERT(COND,...) if ( !(COND) ) UTILS_ERROR( __VA_ARGS__ )
-#endif
-
-#ifndef UTILS_WARNING
-  #define UTILS_WARNING(COND,...) if ( !(COND) ) fmt::print( __VA_ARGS__ )
-#endif
 
 #ifndef UTILS_ERROR_TRACE0
   #define UTILS_ERROR_TRACE0(MSG) \
@@ -71,22 +49,6 @@
   #define UTILS_ASSERT_TRACE(COND,...) if ( !(COND) ) UTILS_ERROR_TRACE( __VA_ARGS__ )
 #endif
 
-#ifdef UTILS_NO_DEBUG
-  #ifndef UTILS_ASSERT0_DEBUG
-    #define UTILS_ASSERT0_DEBUG(COND,MSG)
-  #endif
-  #ifndef UTILS_ASSERT_DEBUG
-    #define UTILS_ASSERT_DEBUG(COND,...)
-  #endif
-#else
-  #ifndef UTILS_ASSERT0_DEBUG
-    #define UTILS_ASSERT0_DEBUG(COND,MSG) UTILS_ASSERT0(COND,MSG)
-  #endif
-  #ifndef UTILS_ASSERT_DEBUG
-    #define UTILS_ASSERT_DEBUG(COND,...) UTILS_ASSERT(COND,__VA_ARGS__)
-  #endif
-#endif
-
 #endif
 
 #ifdef __GNUC__
@@ -100,11 +62,8 @@
 
 namespace Utils {
 
-  using std::basic_ostream;
   using std::string;
   using std::runtime_error;
-
-  using ostream_type = std::basic_ostream<char>;
 
   void
   print_trace(
@@ -147,31 +106,10 @@ namespace Utils {
     char const * what() const noexcept override;
   };
 
-  class Runtime_Error : public runtime_error {
-  public:
-    explicit
-    Runtime_Error(
-      std::string const & reason,
-      char const *        file,
-      int                 line
-    )
-    : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
-    { }
-
-    explicit
-    Runtime_Error(
-      char const * reason,
-      char const * file,
-      int          line
-    )
-    : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
-    { }
-
-    char const * what() const noexcept override;
-  };
-
 }
 
+#endif
+
 ///
-/// eof: Trace.hxx
+/// eof: Utils_trace.hh
 ///

@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 #include <cfloat>
 #include <limits>
@@ -2515,6 +2516,12 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  string
+  ClothoidList::info() const
+  { return fmt::format( "ClothoidList\n{}\n", *this ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   G2solveCLC::save( ostream_type & stream ) const {
     stream << "# x y theta kappa\n";
@@ -2534,6 +2541,12 @@ namespace G2lib {
     save_segment( stream, m_S1 );
     stream << "# EOF\n";
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  ClothoidSplineG2::info() const
+  { return fmt::format( "ClothoidSplineG2\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

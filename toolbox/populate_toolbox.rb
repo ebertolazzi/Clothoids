@@ -7,7 +7,7 @@ Dir.glob("bin/*.mex*").each { |file| File.delete(file)}
 
 FileUtils.cp_r  "../src/.",                                 "./src";
 FileUtils.cp_r  "../submodules/quarticRootsFlocke/src/.",   "./src";
-FileUtils.cp_r  "../submodules/Utils/src/.",                "./src";
+FileUtils.cp_r  "../submodules/UtilsLite/src/.",            "./src";
 FileUtils.cp_r  "../submodules/GenericContainer/src/.",     "./src";
 FileUtils.cp_r  "../submodules/GenericContainer/include/.", "./src";
 

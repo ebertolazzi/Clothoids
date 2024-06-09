@@ -136,21 +136,6 @@ namespace G2lib {
 #include "Clothoids/Dubins.hxx"
 #include "Clothoids/Dubins3p.hxx"
 
-namespace fmt {
-  template <> struct formatter<G2lib::Biarc>            : ostream_formatter {};
-  template <> struct formatter<G2lib::BiarcList>        : ostream_formatter {};
-  template <> struct formatter<G2lib::BBox>             : ostream_formatter {};
-  template <> struct formatter<G2lib::CircleArc>        : ostream_formatter {};
-  template <> struct formatter<G2lib::ClothoidCurve>    : ostream_formatter {};
-  template <> struct formatter<G2lib::ClothoidSplineG2> : ostream_formatter {};
-  template <> struct formatter<G2lib::ClothoidList>     : ostream_formatter {};
-  template <> struct formatter<G2lib::LineSegment>      : ostream_formatter {};
-  template <> struct formatter<G2lib::PolyLine>         : ostream_formatter {};
-  template <> struct formatter<G2lib::Triangle2D>       : ostream_formatter {};
-  template <> struct formatter<G2lib::Dubins>           : ostream_formatter {};
-  template <> struct formatter<G2lib::Dubins3p>         : ostream_formatter {};
-}
-
 namespace G2lib {
 
   using std::string;

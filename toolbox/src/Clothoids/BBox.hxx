@@ -204,13 +204,8 @@ namespace G2lib {
     //!
     //! Pretty print a bbox
     //!
-    void
-    print( ostream_type & stream ) const {
-      fmt::print( stream,
-        "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n",
-        x_min(), y_min(), x_max(), y_max()
-      );
-    }
+    void print( ostream_type & stream ) const;
+
   };
 
   //!

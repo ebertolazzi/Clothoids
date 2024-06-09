@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // workaround for windows that defines max and min as macros!
 #ifdef max
@@ -1231,6 +1232,12 @@ namespace G2lib {
              9*dk2*m_CD.m_kappa0*t2 +
              k6+9*k2*m_CD.m_dk ) * m_L;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  ClothoidCurve::info() const
+  { return fmt::format( "Clothoid\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

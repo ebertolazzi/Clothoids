@@ -98,15 +98,7 @@ namespace G2lib {
       real_type y1,
       real_type theta1,
       string const & name
-    ) : BaseCurve( name )
-    {
-      bool ok = build( x0, y0, theta0, x1, y1, theta1 );
-      UTILS_ASSERT(
-        ok,
-        "Biarc( x0={}, y0={}, theta0={}, x1={}, y1={}, theta1={}) cannot be computed\n",
-        x0, y0, theta0, x1, y1, theta1
-      );
-    }
+    );
 
     explicit
     Biarc( LineSegment const & LS ) : BaseCurve( LS.name() )
@@ -633,9 +625,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "BiArc\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override

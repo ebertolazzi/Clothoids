@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                | 
+ |         | __/ _   ,_         | __/ _   ,_                                |
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -20,6 +20,8 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
+#include "Utils_trace.hh"
 
 #ifdef UTILS_OS_WINDOWS
 #include <windows.h>

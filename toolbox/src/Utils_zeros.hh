@@ -54,9 +54,9 @@ namespace Utils {
   class Zeros_base_fun {
   public:
     virtual Real eval    ( Real ) const = 0;
-    virtual Real eval_D  ( Real ) const { UTILS_ERROR("Zeros_base_fun derivative not defined"); };
-    virtual Real eval_DD ( Real ) const { UTILS_ERROR("Zeros_base_fun second derivative not defined"); };
-    virtual Real eval_DDD( Real ) const { UTILS_ERROR("Zeros_base_fun third derivative not defined"); };
+    virtual Real eval_D  ( Real ) const = 0;
+    virtual Real eval_DD ( Real ) const = 0;
+    virtual Real eval_DDD( Real ) const = 0;
     Real operator () ( Real x ) const { return this->eval(x); }
     Real D           ( Real x ) const { return this->eval_D(x); }
     Real DD          ( Real x ) const { return this->eval_DD(x); }

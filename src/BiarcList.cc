@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 #include <cfloat>
 #include <limits>
@@ -1558,6 +1559,12 @@ namespace G2lib {
     }
     return ok ? iseg : -(1+iseg);
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  BiarcList::info() const
+  { return fmt::format( "BiarcList\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

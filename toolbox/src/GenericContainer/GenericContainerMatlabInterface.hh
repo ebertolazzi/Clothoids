@@ -41,52 +41,52 @@ namespace GC_namespace {
   //!
   //! Convert a boolean to a `mxArray`
   //!
-  void to_mxArray( bool             const & val, mxArray * & mx );
+  void to_mxArray( bool const & val, mxArray * & mx );
 
   //!
   //! Convert an integer to a `mxArray`
   //!
-  void to_mxArray( int_type         const & val, mxArray * & mx );
+  void to_mxArray( int_type const & val, mxArray * & mx );
 
   //!
   //! Convert a long integer to a `mxArray`
   //!
-  void to_mxArray( long_type        const & val, mxArray * & mx );
+  void to_mxArray( long_type const & val, mxArray * & mx );
 
   //!
   //! Convert a real number to a `mxArray`
   //!
-  void to_mxArray( real_type        const & val, mxArray * & mx );
+  void to_mxArray( real_type const & val, mxArray * & mx );
 
   //!
   //! Convert a complex number to a `mxArray`
   //!
-  void to_mxArray( complex_type     const & val, mxArray * & mx );
+  void to_mxArray( complex_type const & val, mxArray * & mx );
 
   //!
   //! Convert a string integer to a `mxArray`
   //!
-  void to_mxArray( string_type      const & val, mxArray * & mx );
+  void to_mxArray( string_type const & val, mxArray * & mx );
 
   //!
   //! Convert a vector of boolean to a `mxArray`
   //!
-  void to_mxArray( vec_bool_type    const & val, mxArray * & mx );
+  void to_mxArray( vec_bool_type const & val, mxArray * & mx );
 
   //!
   //! Convert a vector of integer to a `mxArray`
   //!
-  void to_mxArray( vec_int_type     const & val, mxArray * & mx );
+  void to_mxArray( vec_int_type const & val, mxArray * & mx );
 
   //!
   //! Convert a vector of long integer to a `mxArray`
   //!
-  void to_mxArray( vec_long_type    const & val, mxArray * & mx );
+  void to_mxArray( vec_long_type const & val, mxArray * & mx );
 
   //!
   //! Convert a vector of real number to a `mxArray`
   //!
-  void to_mxArray( vec_real_type    const & val, mxArray * & mx );
+  void to_mxArray( vec_real_type const & val, mxArray * & mx );
 
   //!
   //! Convert a vector of complex number to a `mxArray`
@@ -97,22 +97,22 @@ namespace GC_namespace {
   //! Convert a vector of string to a `mxArray`.
   //! The data will be a cell array.
   //!
-  void to_mxArray( vec_string_type  const & val, mxArray * & mx );
+  void to_mxArray( vec_string_type const & val, mxArray * & mx );
 
   //!
   //! Convert a matrix of integer to a `mxArray`
   //!
-  void to_mxArray( mat_int_type     const & val, mxArray * & mx );
+  void to_mxArray( mat_int_type const & val, mxArray * & mx );
 
   //!
   //! Convert a matrix of long integer to a `mxArray`
   //!
-  void to_mxArray( mat_long_type    const & val, mxArray * & mx );
+  void to_mxArray( mat_long_type const & val, mxArray * & mx );
 
   //!
   //! Convert a matrix of real number to a `mxArray`
   //!
-  void to_mxArray( mat_real_type    const & val, mxArray * & mx );
+  void to_mxArray( mat_real_type const & val, mxArray * & mx );
 
   //!
   //! Convert a matrix of complex number to a `mxArray`

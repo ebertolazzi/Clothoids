@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"

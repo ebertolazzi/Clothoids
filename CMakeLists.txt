@@ -12,7 +12,18 @@
 cmake_minimum_required(VERSION 3.14)
 
 project( Clothoids )
-include(./cmake_utils/CMakeLists-common.txt)
+
+if (IS_DIRECTORY "${PROJECT_SOURCE_DIR}/cmake_utils")
+  set( HOME "${PROJECT_SOURCE_DIR}/cmake_utils/" )
+else()
+  if (IS_DIRECTORY "${PROJECT_SOURCE_DIR}/../cmake_utils")
+    set( HOME "${PROJECT_SOURCE_DIR}/../cmake_utils/" )
+  else()
+    set( HOME "${PROJECT_SOURCE_DIR}/../../cmake_utils/" )
+  endif()
+endif()
+
+include( "${HOME}/CMakeLists-common.txt" )
 
 project(
   ${PROJECT_NAME}
@@ -26,8 +37,8 @@ if (APPLE)
   set( CMAKE_OSX_ARCHITECTURES ${ARCHITECTURE} )
 endif()
 
-include(./cmake_utils/CMakeLists-cflags.txt)
-include(./cmake_utils/CMakeLists-utilities.txt)
+include( "${HOME}/CMakeLists-cflags.txt" )
+include( "${HOME}/CMakeLists-utilities.txt" )
 
 # Evaluating the suffix to append to target built by this CMake file
 utils_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
@@ -88,7 +99,7 @@ set(UTILS_DEPEND_TARGETS)
 
 # DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
 utils_add_library_or_submodule( "quarticRootsFlocke" ROOTS )
-utils_add_library_or_submodule( "Utils" UTILS )
+utils_add_library_or_submodule( "UtilsLite" UTILS )
 utils_add_library_or_submodule( "GenericContainer" GC "GC" )
 
 message( STATUS "----------------------------------------------------------------" )
@@ -219,6 +230,6 @@ install(
 #                       |___/
 #
 
-include( ./cmake_utils/CMakeLists-cpack.txt )
+include( "${HOME}/CMakeLists-cpack.txt" )
 
 utils_final_messages()

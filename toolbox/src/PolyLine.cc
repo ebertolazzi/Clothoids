@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // Workaround for Visual Studio
 #ifdef min
@@ -268,6 +269,17 @@ namespace G2lib {
       if      ( y < ymin ) ymin = y;
       else if ( y > ymax ) ymax = y;
     }
+  }
+
+  void
+  PolyLine::bbox_ISO(
+    real_type   /* offs */,
+    real_type & /* xmin */,
+    real_type & /* ymin */,
+    real_type & /* xmax */,
+    real_type & /* ymax */
+  ) const {
+    UTILS_ERROR0( "PolyLine::bbox( offs ... ) not available!\n" );
   }
 
   /*\
@@ -815,6 +827,20 @@ namespace G2lib {
     return ipos;
   }
 
+  integer
+  PolyLine::closest_point_ISO(
+    real_type   /* x    */,
+    real_type   /* y    */,
+    real_type   /* offs */,
+    real_type & /* X    */,
+    real_type & /* Y    */,
+    real_type & /* S    */,
+    real_type & /* T    */,
+    real_type & /* DST  */
+  ) const {
+    UTILS_ERROR( "PolyLine::closest_point_ISO( ... offs ... ) not available!\n" );
+  }
+
   /*\
    |             _ _ _     _
    |    ___ ___ | | (_)___(_) ___  _ __
@@ -850,6 +876,19 @@ namespace G2lib {
       }
     }
     return false;
+  }
+
+  bool
+  PolyLine::collision_ISO(
+    real_type        offs,
+    PolyLine const & CL,
+    real_type        offs_CL
+  ) const {
+    UTILS_ASSERT0(
+      Utils::is_zero(offs) && Utils::is_zero(offs_CL),
+      "PolyLine::collision( offs ... ) not available!\n"
+    );
+    return this->collision( CL );
   }
 
   /*\
@@ -917,6 +956,26 @@ namespace G2lib {
     for ( size_t i=0; i < s1.size(); ++i )
       ilist.emplace_back( s1[i], s2[i] );
   }
+
+  void
+  PolyLine::intersect_ISO(
+    real_type        offs,
+    PolyLine const & pl,
+    real_type        offs_pl,
+    IntersectList  & ilist
+  ) const {
+    UTILS_ASSERT0(
+      Utils::is_zero(offs) && Utils::is_zero(offs_pl),
+      "PolyLine::intersect( offs ... ) not available!\n"
+    );
+    this->intersect( pl, ilist );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  PolyLine::info() const
+  { return fmt::format( "PolyLine\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

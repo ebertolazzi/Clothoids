@@ -22,6 +22,7 @@
 ///
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 #include "PolynomialRoots.hh"
 
 namespace G2lib {
@@ -521,6 +522,13 @@ return m_C2.FUN(s)
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  Dubins::trim( real_type, real_type ) {
+    UTILS_ERROR0( "Dubins::trim not defined, convert to ClothoidList to trim the curve!");
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   Dubins::bbox(
     real_type & xmin,
     real_type & ymin,
@@ -856,6 +864,12 @@ return m_C2.FUN(s)
     }
     return res;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Dubins::info() const
+  { return fmt::format( "Dubins\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

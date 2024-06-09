@@ -692,9 +692,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "BiarcList\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override
