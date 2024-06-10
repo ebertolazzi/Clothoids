@@ -33,7 +33,7 @@ namespace G2lib {
   */
 
   using Dubins3pBuildType = enum class Dubins3pBuildType : integer
-  { SAMPLE_ONE_DEGREE, PATTERN_SEARCH, PATTERN_TRICHOTOMY, POLYNOMIAL_SYSTEM };
+  { SAMPLE_ONE_DEGREE, PATTERN_SEARCH, PATTERN_TRICHOTOMY, ELLIPSE, POLYNOMIAL_SYSTEM };
 
   Dubins3pBuildType string_to_Dubins3pBuildType( string const & str );
 
@@ -81,6 +81,19 @@ namespace G2lib {
 
     bool
     build_poly_system(
+      real_type xi,
+      real_type yi,
+      real_type thetai,
+      real_type xm,
+      real_type ym,
+      real_type xf,
+      real_type yf,
+      real_type thetaf,
+      real_type k_max
+    );
+
+    bool
+    build_ellipse(
       real_type xi,
       real_type yi,
       real_type thetai,
@@ -179,11 +192,14 @@ namespace G2lib {
     void set_tolerance( real_type tol );
     void set_max_evaluation( integer max_eval );
 
-    real_type  tolerance()      const { return m_tolerance; }
-    DubinsType solution_type0() const { return m_Dubins0.solution_type(); }
-    DubinsType solution_type1() const { return m_Dubins1.solution_type(); }
-    integer    icode()          const { return m_Dubins0.icode()+16*m_Dubins1.icode(); }
-    integer    num_evaluation() const { return m_evaluation; }
+    real_type  tolerance()          const { return m_tolerance; }
+    DubinsType solution_type0()     const { return m_Dubins0.solution_type(); }
+    DubinsType solution_type1()     const { return m_Dubins1.solution_type(); }
+    integer    icode()              const { return m_Dubins0.icode()+16*m_Dubins1.icode(); }
+    integer    icode0()             const { return m_Dubins0.icode(); }
+    integer    icode1()             const { return m_Dubins1.icode(); }
+    integer    num_evaluation()     const { return m_evaluation; }
+    integer    max_num_evaluation() const { return m_max_evaluation; }
 
     void build( LineSegment const & L );
     void build( CircleArc const & C );
@@ -643,7 +659,6 @@ namespace G2lib {
     CurveType type() const override { return CurveType::DUBINS; }
 
   };
-
 
 }
 

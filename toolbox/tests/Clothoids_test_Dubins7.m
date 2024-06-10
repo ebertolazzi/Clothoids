@@ -24,7 +24,7 @@ DB3  = Dubins3p();
 
 k_max  = 0.6;
 d      = 3;
-x0     = -d;
+x0     = -2*d;
 y0     = 0;
 xM     = 0;
 yM     = 0.5*d;
@@ -38,7 +38,8 @@ DlenB  = [];
 kind   = [];
 epsilon = 1e-4;
 
-DB3.build( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max, 'pattern' );
+%DB3.build( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max, 'pattern' );
+DB3.build( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max, 'ellipse' );
 
 thetaGuess = (atan2(yM-y0,xM-x0) + atan2(yf-yM,xf-xM)) / 2;
 

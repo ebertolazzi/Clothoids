@@ -1,4 +1,4 @@
-classdef Dubins3p < CurveBase
+ classdef Dubins3p < CurveBase
   %> MATLAB class wrapper for the underlying C++ class
 
   %properties (SetAccess = protected, Hidden = true)
@@ -91,14 +91,14 @@ classdef Dubins3p < CurveBase
       S = Dubins3pMexWrapper( 'get_pars', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function [ C0, C1, C2, C3, C4, C5 ] = get_circles( self )
+    function [ C1, C2, C3, C4, C5, C6 ] = get_circles( self )
       S  = Dubins3pMexWrapper( 'get_pars', self.objectHandle );
-      C0 = CircleArc( S.x0, S.y0, S.theta0, S.kappa0, S.L0 );
-      C1 = CircleArc( S.x1, S.y1, S.theta1, S.kappa1, S.L1 );
-      C2 = CircleArc( S.x2, S.y2, S.theta2, S.kappa2, S.L2 );
-      C3 = CircleArc( S.x3, S.y3, S.theta3, S.kappa3, S.L3 );
-      C4 = CircleArc( S.x4, S.y4, S.theta4, S.kappa4, S.L4 );
-      C5 = CircleArc( S.x5, S.y5, S.theta5, S.kappa5, S.L5 );
+      C1 = CircleArc( S.x0, S.y0, S.theta0, S.kappa1, S.L1 );
+      C2 = CircleArc( S.x1, S.y1, S.theta1, S.kappa2, S.L2 );
+      C3 = CircleArc( S.x2, S.y2, S.theta2, S.kappa3, S.L3 );
+      C4 = CircleArc( S.x3, S.y3, S.theta3, S.kappa4, S.L4 );
+      C5 = CircleArc( S.x4, S.y4, S.theta4, S.kappa5, S.L5 );
+      C6 = CircleArc( S.x5, S.y5, S.theta5, S.kappa6, S.L6 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [L,R] = curve_type( self )

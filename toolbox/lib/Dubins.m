@@ -93,9 +93,9 @@ classdef Dubins < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [C0,C1,C2] = get_circles( self )
       S = DubinsMexWrapper( 'get_pars', self.objectHandle );
-      C0 = CircleArc( S.x0, S.y0, S.theta0, S.kappa0, S.L0 );
-      C1 = CircleArc( S.x1, S.y1, S.theta1, S.kappa1, S.L1 );
-      C2 = CircleArc( S.x2, S.y2, S.theta2, S.kappa2, S.L2 );
+      C0 = CircleArc( S.x0, S.y0, S.theta0, S.kappa1, S.L1 );
+      C1 = CircleArc( S.x1, S.y1, S.theta1, S.kappa2, S.L2 );
+      C2 = CircleArc( S.x2, S.y2, S.theta2, S.kappa3, S.L3 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function varargout = length( self )

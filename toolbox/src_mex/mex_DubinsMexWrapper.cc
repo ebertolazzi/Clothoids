@@ -143,30 +143,44 @@ namespace G2lib {
     CircleArc const & C2{ ptr->C2() };
 
     static char const * fieldnames[] = {
-      "x0", "y0", "theta0", "kappa0", "L0",
-      "x1", "y1", "theta1", "kappa1", "L1",
-      "x2", "y2", "theta2", "kappa2", "L2"
+      "x0", "y0", "theta0",
+      "x1", "y1", "theta1",
+      "x2", "y2", "theta2",
+      "x3", "y3", "theta3",
+      "kappa1", "kappa2", "kappa3",
+      "L1", "L2", "L3", "L123",
+      "dubins_type"
     };
 
-    arg_out_0 = mxCreateStructMatrix(1,1,15,fieldnames);
+    arg_out_0 = mxCreateStructMatrix(1,1,20,fieldnames);
 
     mxSetFieldByNumber( arg_out_0, 0, 0, mxCreateDoubleScalar(C0.x_begin()) );
     mxSetFieldByNumber( arg_out_0, 0, 1, mxCreateDoubleScalar(C0.y_begin()) );
     mxSetFieldByNumber( arg_out_0, 0, 2, mxCreateDoubleScalar(C0.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 3, mxCreateDoubleScalar(C0.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 4, mxCreateDoubleScalar(C0.length()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 5, mxCreateDoubleScalar(C1.x_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 6, mxCreateDoubleScalar(C1.y_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 7, mxCreateDoubleScalar(C1.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 8, mxCreateDoubleScalar(C1.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 9, mxCreateDoubleScalar(C1.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 3, mxCreateDoubleScalar(C1.x_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 4, mxCreateDoubleScalar(C1.y_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 5, mxCreateDoubleScalar(C1.theta_begin()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 10, mxCreateDoubleScalar(C2.x_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 11, mxCreateDoubleScalar(C2.y_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 12, mxCreateDoubleScalar(C2.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 13, mxCreateDoubleScalar(C2.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 14, mxCreateDoubleScalar(C2.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 6, mxCreateDoubleScalar(C2.x_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 7, mxCreateDoubleScalar(C2.y_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 8, mxCreateDoubleScalar(C2.theta_begin()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 9, mxCreateDoubleScalar(C2.x_end()) );
+    mxSetFieldByNumber( arg_out_0, 0, 10, mxCreateDoubleScalar(C2.y_end()) );
+    mxSetFieldByNumber( arg_out_0, 0, 11, mxCreateDoubleScalar(C2.theta_end()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 12,  mxCreateDoubleScalar(C0.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 13, mxCreateDoubleScalar(C1.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 14, mxCreateDoubleScalar(C2.kappa_begin()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 15, mxCreateDoubleScalar(C0.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 16, mxCreateDoubleScalar(C1.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 17, mxCreateDoubleScalar(C2.length()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 18, mxCreateDoubleScalar(C0.length()+C1.length()+C2.length()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 19, mxCreateDoubleScalar(ptr->icode()) );
 
     #undef CMD
 

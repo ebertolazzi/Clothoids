@@ -148,51 +148,74 @@ namespace G2lib {
     CircleArc const & C5{ ptr->C5() };
 
     static char const * fieldnames[] = {
-      "x0", "y0", "theta0", "kappa0", "L0",
-      "x1", "y1", "theta1", "kappa1", "L1",
-      "x2", "y2", "theta2", "kappa2", "L2",
-      "x3", "y3", "theta3", "kappa3", "L3",
-      "x4", "y4", "theta4", "kappa4", "L4",
-      "x5", "y5", "theta5", "kappa5", "L5"
+      "x0", "y0", "theta0",
+      "x1", "y1", "theta1",
+      "x2", "y2", "theta2",
+      "x3", "y3", "theta3",
+      "x4", "y4", "theta4",
+      "x5", "y5", "theta5",
+      "x6", "y6", "theta6",
+      "kappa1", "kappa2", "kappa3", "kappa4", "kappa5", "kappa6",
+      "L1",     "L2",     "L3",     "L4",     "L5",     "L6",
+      "L123", "L456", "L123456",
+      "tolerance", "max_evaluation", "evaluation",
+      "dubins1_type", "dubins2_type"
     };
 
-    arg_out_0 = mxCreateStructMatrix(1,1,30,fieldnames);
+    arg_out_0 = mxCreateStructMatrix(1,1,41,fieldnames);
 
     mxSetFieldByNumber( arg_out_0, 0, 0, mxCreateDoubleScalar(C0.x_begin()) );
     mxSetFieldByNumber( arg_out_0, 0, 1, mxCreateDoubleScalar(C0.y_begin()) );
     mxSetFieldByNumber( arg_out_0, 0, 2, mxCreateDoubleScalar(C0.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 3, mxCreateDoubleScalar(C0.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 4, mxCreateDoubleScalar(C0.length()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 5, mxCreateDoubleScalar(C1.x_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 6, mxCreateDoubleScalar(C1.y_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 7, mxCreateDoubleScalar(C1.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 8, mxCreateDoubleScalar(C1.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 9, mxCreateDoubleScalar(C1.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 3, mxCreateDoubleScalar(C1.x_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 4, mxCreateDoubleScalar(C1.y_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 5, mxCreateDoubleScalar(C1.theta_begin()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 10, mxCreateDoubleScalar(C2.x_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 11, mxCreateDoubleScalar(C2.y_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 12, mxCreateDoubleScalar(C2.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 13, mxCreateDoubleScalar(C2.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 14, mxCreateDoubleScalar(C2.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 6, mxCreateDoubleScalar(C2.x_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 7, mxCreateDoubleScalar(C2.y_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 8, mxCreateDoubleScalar(C2.theta_begin()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 15, mxCreateDoubleScalar(C3.x_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 16, mxCreateDoubleScalar(C3.y_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 17, mxCreateDoubleScalar(C3.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 18, mxCreateDoubleScalar(C3.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 19, mxCreateDoubleScalar(C3.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 9,  mxCreateDoubleScalar(C3.x_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 10, mxCreateDoubleScalar(C3.y_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 11, mxCreateDoubleScalar(C3.theta_begin()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 20, mxCreateDoubleScalar(C4.x_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 21, mxCreateDoubleScalar(C4.y_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 22, mxCreateDoubleScalar(C4.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 23, mxCreateDoubleScalar(C4.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 24, mxCreateDoubleScalar(C4.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 12, mxCreateDoubleScalar(C4.x_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 13, mxCreateDoubleScalar(C4.y_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 14, mxCreateDoubleScalar(C4.theta_begin()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 25, mxCreateDoubleScalar(C5.x_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 26, mxCreateDoubleScalar(C5.y_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 27, mxCreateDoubleScalar(C5.theta_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 28, mxCreateDoubleScalar(C5.kappa_begin()) );
-    mxSetFieldByNumber( arg_out_0, 0, 29, mxCreateDoubleScalar(C5.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 15, mxCreateDoubleScalar(C5.x_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 16, mxCreateDoubleScalar(C5.y_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 17, mxCreateDoubleScalar(C5.theta_begin()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 18, mxCreateDoubleScalar(C5.x_end()) );
+    mxSetFieldByNumber( arg_out_0, 0, 19, mxCreateDoubleScalar(C5.y_end()) );
+    mxSetFieldByNumber( arg_out_0, 0, 20, mxCreateDoubleScalar(C5.theta_end()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 21, mxCreateDoubleScalar(C0.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 22, mxCreateDoubleScalar(C1.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 23, mxCreateDoubleScalar(C2.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 24, mxCreateDoubleScalar(C3.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 25, mxCreateDoubleScalar(C4.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 26, mxCreateDoubleScalar(C5.kappa_begin()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 27, mxCreateDoubleScalar(C0.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 28, mxCreateDoubleScalar(C1.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 29, mxCreateDoubleScalar(C2.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 30, mxCreateDoubleScalar(C3.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 31, mxCreateDoubleScalar(C4.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 32, mxCreateDoubleScalar(C5.length()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 33, mxCreateDoubleScalar(C0.length()+C1.length()+C2.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 34, mxCreateDoubleScalar(C3.length()+C4.length()+C5.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 35, mxCreateDoubleScalar(C0.length()+C1.length()+C2.length()+C3.length()+C4.length()+C5.length()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 36, mxCreateDoubleScalar(ptr->tolerance()) );
+    mxSetFieldByNumber( arg_out_0, 0, 37, mxCreateDoubleScalar(ptr->max_num_evaluation()) );
+    mxSetFieldByNumber( arg_out_0, 0, 38, mxCreateDoubleScalar(ptr->num_evaluation()) );
+
+    mxSetFieldByNumber( arg_out_0, 0, 39, mxCreateDoubleScalar(ptr->icode0()) );
+    mxSetFieldByNumber( arg_out_0, 0, 40, mxCreateDoubleScalar(ptr->icode1()) );
 
     #undef CMD
 

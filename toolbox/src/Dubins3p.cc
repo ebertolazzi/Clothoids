@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// file: Dubins.cc
+/// file: Dubins3p.cc
 ///
 
 #include "Clothoids.hh"
@@ -28,8 +28,6 @@
 
 namespace G2lib {
 
-  using PolynomialRoots::Quadratic;
-
   Dubins3pBuildType
   string_to_Dubins3pBuildType( string const & str ) {
     map<string,Dubins3pBuildType> str_to_type {
@@ -38,7 +36,8 @@ namespace G2lib {
       {"pattern_search",Dubins3pBuildType::PATTERN_SEARCH},
       {"pattern_trichotomy",Dubins3pBuildType::PATTERN_TRICHOTOMY},
       {"poly",Dubins3pBuildType::POLYNOMIAL_SYSTEM},
-      {"polynomial",Dubins3pBuildType::POLYNOMIAL_SYSTEM}
+      {"polynomial",Dubins3pBuildType::POLYNOMIAL_SYSTEM},
+      {"ellipse",Dubins3pBuildType::ELLIPSE}
     };
     return str_to_type.at( str );
   }
@@ -72,6 +71,8 @@ namespace G2lib {
       return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, false );
     case Dubins3pBuildType::PATTERN_TRICHOTOMY:
       return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, true );
+    case Dubins3pBuildType::ELLIPSE:
+      return build_ellipse( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max );
     case Dubins3pBuildType::POLYNOMIAL_SYSTEM:
       break;
     }
@@ -105,125 +106,6 @@ namespace G2lib {
       if ( len1 < len ) { len = len1; m_Dubins0.copy(D0); m_Dubins1.copy(D1); }
     }
     m_evaluation = 360;
-    return true;
-  }
-
-  bool
-  Dubins3p::build_pattern_search(
-    real_type xi,
-    real_type yi,
-    real_type thetai,
-    real_type xm,
-    real_type ym,
-    real_type xf,
-    real_type yf,
-    real_type thetaf,
-    real_type k_max,
-    real_type tolerance,
-    bool      use_trichotomy
-  ) {
-
-    typedef struct Dubins3p_data {
-      Dubins    D0{"temporary Dubins A"};
-      Dubins    D1{"temporary Dubins B"};
-      real_type thetam{0};
-      real_type len{0};
-
-      void
-      copy( Dubins3p_data const & rhs ) {
-        D0.copy(rhs.D0);
-        D1.copy(rhs.D1);
-        thetam = rhs.thetam;
-        len    = rhs.len;
-      }
-
-      bool
-      compare( Dubins3p_data const & D ) const {
-        return D0.solution_type() == D.D0.solution_type() &&
-               D1.solution_type() == D.D1.solution_type();
-      }
-
-    } Dubins3p_data;
-
-    integer const NSEG{16};
-    Dubins3p_data DB[NSEG];
-    Dubins3p_data L, C, R;
-
-    auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P ) -> void {
-      D3P.D0.build( xi, yi, thetai, xm, ym, D3P.thetam, k_max );
-      D3P.D1.build( xm, ym, D3P.thetam, xf, yf, thetaf, k_max );
-      D3P.len = D3P.D0.length() + D3P.D1.length();
-      ++m_evaluation;
-    };
-
-    auto bracketing = [&eval3p]( Dubins3p_data & A, Dubins3p_data & P3, Dubins3p_data & B ) -> void {
-      Dubins3p_data P1, P2, P4, P5;
-      P2.thetam = (A.thetam+2*P3.thetam)/3;
-      eval3p(P2);
-      if ( P2.len <= P3.len ) {
-        P1.thetam = (A.thetam+P2.thetam)/2;
-        eval3p(P1);
-        if ( P1.len <= P2.len ) { P3.copy(P1); B.copy(P2); }
-        else                    { A.copy(P1); B.copy(P3); P3.copy(P2); }
-      } else {
-        P4.thetam = (B.thetam+2*P3.thetam)/3;
-        eval3p(P4);
-        if ( P4.len <= P3.len ) {
-          P5.thetam = (2*B.thetam+P3.thetam)/3;
-          eval3p(P5);
-          if ( P5.len <= P4.len ) { A.copy(P4); P3.copy(P5); }
-          else                    { A.copy(P3); P3.copy(P4); B.copy(P5); }
-        } else {
-          A.copy(P2);
-          B.copy(P4);
-        }
-      }
-    };
-
-    auto simple_search = [&eval3p]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> void {
-      Dubins3p_data LL, RR;
-      LL.thetam = (C.thetam+L.thetam)/2; eval3p( LL );
-      RR.thetam = (C.thetam+R.thetam)/2; eval3p( RR );
-      if ( LL.len < RR.len ) {
-        if ( LL.len < C.len ) { R.copy(C);  C.copy(LL); }
-        else                  { L.copy(LL); R.copy(RR); }
-      } else {
-        if ( RR.len < C.len ) { L.copy(C);  C.copy(RR); }
-        else                  { L.copy(LL); R.copy(RR); }
-      }
-    };
-
-    // initialize and find min
-    integer imin{0};
-    DB[0].thetam = 0;
-    m_evaluation = 0;
-    eval3p( DB[0] );
-    for ( integer i{1}; i < NSEG; ++i ) {
-      DB[i].thetam = (i*Utils::m_2pi)/NSEG;
-      eval3p( DB[i] );
-      if ( DB[i].len < DB[imin].len ) imin = i;
-    }
-
-    // select interval
-    L.copy( DB[(imin+NSEG-1)%NSEG] );
-    C.copy( DB[imin]               );
-    R.copy( DB[(imin+1)%NSEG]      );
-
-    // make angles monotone increasing
-    if ( imin == 0      ) L.thetam -= Utils::m_2pi;
-    if ( imin == NSEG-1 ) R.thetam += Utils::m_2pi;
-
-    if ( use_trichotomy ) {
-      while ( R.thetam-L.thetam > tolerance && m_evaluation < m_max_evaluation )
-        bracketing( L, C, R );
-    } else {
-      while ( R.thetam-L.thetam > tolerance && m_evaluation < m_max_evaluation )
-        simple_search( L, C, R );
-    }
-
-    m_Dubins0.copy(C.D0);
-    m_Dubins1.copy(C.D1);
-
     return true;
   }
 
