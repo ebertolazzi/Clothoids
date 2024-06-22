@@ -33,8 +33,14 @@
 // comment to disable threads support
 #define CLOTHOIDS_USE_THREADS 1
 
-#include "Utils.hh"
-#include "Utils_AABB_tree.hh"
+#ifdef NO_SYSTEM_UTILS
+  #include "Utils.hh"
+  #include "Utils_AABB_tree.hh"
+#else
+  #include <Utils.hh>
+  #include <Utils_AABB_tree.hh>
+#endif
+
 #include "GenericContainer/GenericContainer.hh"
 
 #include <string>
