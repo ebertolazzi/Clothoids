@@ -47,6 +47,8 @@ namespace G2lib {
     Dubins m_Dubins1{"Dubins1"};
 
     real_type m_tolerance{Utils::m_pi/180}; // one degree
+    real_type m_sample_angle{10*Utils::m_pi/180}; // ten degree
+    real_type m_sample_points{360};
     integer   m_max_evaluation{1000};
     integer   m_evaluation;
 
@@ -60,8 +62,7 @@ namespace G2lib {
       real_type xf,
       real_type yf,
       real_type thetaf,
-      real_type k_max,
-      real_type dangle
+      real_type k_max
     );
 
     bool
@@ -190,9 +191,12 @@ namespace G2lib {
     );
 
     void set_tolerance( real_type tol );
+    void set_sample_angle( real_type ang );
     void set_max_evaluation( integer max_eval );
+    void set_sample_points( integer npts );
 
     real_type  tolerance()          const { return m_tolerance; }
+    real_type  sample_angle()       const { return m_sample_angle; }
     DubinsType solution_type0()     const { return m_Dubins0.solution_type(); }
     DubinsType solution_type1()     const { return m_Dubins1.solution_type(); }
     integer    icode()              const { return m_Dubins0.icode()+16*m_Dubins1.icode(); }

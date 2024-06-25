@@ -117,7 +117,15 @@
       Dubins3pMexWrapper( 'set_max_evaluation', self.objectHandle, max_eval );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    %> Plot the biarc
+    function set_sample_angle( self, ang )
+      Dubins3pMexWrapper( 'set_sample_angle', self.objectHandle, ang );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function sample_points( self, npts )
+      Dubins3pMexWrapper( 'sample_points', self.objectHandle, npts );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %> Plot the Dubins
     %>
     %> **Usage:**
     %>

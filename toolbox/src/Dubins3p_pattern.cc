@@ -63,8 +63,9 @@ namespace G2lib {
 
     } Dubins3p_data;
 
-    integer const NSEG{16};
-    Dubins3p_data DB[NSEG];
+    integer NSEG{ integer(std::floor(Utils::m_2pi / m_sample_angle)) };
+
+    vector<Dubins3p_data> DB(NSEG);
     Dubins3p_data L, C, R;
 
     auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P ) -> void {
@@ -117,7 +118,7 @@ namespace G2lib {
     m_evaluation = 0;
     eval3p( DB[0] );
     for ( integer i{1}; i < NSEG; ++i ) {
-      DB[i].thetam = (i*Utils::m_2pi)/NSEG;
+      DB[i].thetam = i*m_sample_angle;
       eval3p( DB[i] );
       if ( DB[i].len < DB[imin].len ) imin = i;
     }

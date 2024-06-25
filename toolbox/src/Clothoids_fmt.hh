@@ -30,7 +30,11 @@
 #ifndef CLOTHOIDS_FMT_dot_HH
 #define CLOTHOIDS_FMT_dot_HH
 
-#include "Utils_fmt.hh"
+#ifdef NO_SYSTEM_UTILS
+  #include "Utils_fmt.hh"
+#else
+  #include <Utils_fmt.hh>
+#endif
 
 namespace fmt {
   template <> struct formatter<G2lib::Biarc>            : ostream_formatter {};

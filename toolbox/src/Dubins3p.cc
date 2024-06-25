@@ -66,7 +66,7 @@ namespace G2lib {
   ) {
     switch ( method ) {
     case Dubins3pBuildType::SAMPLE_ONE_DEGREE:
-      return build_sample( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, Utils::m_pi/180 );
+      return build_sample( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max );
     case Dubins3pBuildType::PATTERN_SEARCH:
       return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, false );
     case Dubins3pBuildType::PATTERN_TRICHOTOMY:
@@ -89,8 +89,7 @@ namespace G2lib {
     real_type xf,
     real_type yf,
     real_type thetaf,
-    real_type k_max,
-    real_type dangle
+    real_type k_max
   ) {
     real_type thetam{0};
     m_Dubins0.build( xi, yi, thetai, xm, ym, thetam, k_max );
@@ -99,13 +98,14 @@ namespace G2lib {
 
     Dubins D0{"temporary Dubins A"};
     Dubins D1{"temporary Dubins B"};
+    real_type dangle{Utils::m_2pi/m_sample_points};
     for ( thetam = dangle; thetam < Utils::m_2pi; thetam += dangle ) {
       D0.build( xi, yi, thetai, xm, ym, thetam, k_max );
       D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+      m_evaluation += 2;
       real_type len1{D0.length()+D1.length()};
       if ( len1 < len ) { len = len1; m_Dubins0.copy(D0); m_Dubins1.copy(D1); }
     }
-    m_evaluation = 360;
     return true;
   }
 
@@ -142,6 +142,30 @@ namespace G2lib {
       tol
     );
     m_tolerance = tol;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::set_sample_angle( real_type ang ) {
+    UTILS_ASSERT(
+      180*ang > Utils::m_pi && 3*ang <= Utils::m_2pi,
+      "Dubins3p::set_sample_angle( ang={} ) ang must be > pi/180 and less than (2/3)*pi\n",
+      ang
+    );
+    m_sample_angle = ang;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Dubins3p::set_sample_points( integer npts ) {
+    UTILS_ASSERT(
+      npts >= 4 && npts <= 36000000,
+      "Dubins3p::set_sample_points( npts={} ) npts must be >= 4 and less 36000000\n",
+      npts
+    );
+    m_sample_points = npts;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

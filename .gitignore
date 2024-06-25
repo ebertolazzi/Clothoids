@@ -48,3 +48,4 @@ toolbox/build
 cmake-build-debug
 toolbox/CMakeFiles
 Xcode
+*.csv

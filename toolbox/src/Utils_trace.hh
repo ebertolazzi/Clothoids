@@ -27,7 +27,6 @@
 #define UTILS_TRACE_HH
 
 #include "Utils.hh"
-#include "Utils_trace.hh"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 

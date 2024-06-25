@@ -264,7 +264,7 @@ namespace G2lib {
 
   static
   void
-  do_set_tolerance( int nlhs, mxArray       *plhs[],
+  do_set_tolerance( int nlhs, mxArray       *[],
                     int nrhs, mxArray const *prhs[] ) {
 
     #define CMD "Dubins3pMexWrapper('set_tolerance',OBJ,tol): "
@@ -284,7 +284,47 @@ namespace G2lib {
 
   static
   void
-  do_set_max_evaluation( int nlhs, mxArray       *plhs[],
+  do_set_sample_angle( int nlhs, mxArray       *[],
+                       int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "Dubins3pMexWrapper('set_sample_angle',OBJ,ang): "
+
+    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
+
+    real_type ang = Utils::mex_get_scalar_value( arg_in_2, CMD "Error in reading ang" );
+    ptr->set_sample_angle( ang );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_set_sample_points( int nlhs, mxArray       *[],
+                        int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "Dubins3pMexWrapper('set_sample_points',OBJ,ang): "
+
+    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
+
+    Utils::int64_t npts = Utils::mex_get_int64( arg_in_2, CMD "Error in reading npts" );
+    ptr->set_sample_points( npts );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_set_max_evaluation( int nlhs, mxArray       *[],
                          int nrhs, mxArray const *prhs[] ) {
 
     #define CMD "Dubins3pMexWrapper('set_max_evaluation',OBJ,tol): "
@@ -312,6 +352,8 @@ namespace G2lib {
     {"curve_type",do_curve_type},
     {"num_evaluation",do_num_evaluation},
     {"set_tolerance",do_set_tolerance},
+    {"set_sample_angle",do_set_sample_angle},
+    {"set_sample_points",do_set_sample_points},
     {"set_max_evaluation",do_set_max_evaluation},
     CMD_MAP_FUN
   };

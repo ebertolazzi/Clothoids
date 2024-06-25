@@ -43,6 +43,8 @@ namespace G2lib {
     real_type k_max
   ) {
 
+    m_evaluation = 0;
+
     typedef struct Dubins3p_data {
       Dubins    D0{"temporary Dubins A"};
       Dubins    D1{"temporary Dubins B"};
