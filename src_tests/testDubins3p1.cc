@@ -39,7 +39,7 @@ main() {
   // Pattern trichotomy
   G2lib::Dubins3p DB_PT{"D3P_pattern_trichotomy"};
   DB_PT.set_tolerance(0.1*m_pi/180.0);
-  DB_PT.set_sample_angle(m_2pi/16);
+  DB_PT.set_sample_angle(m_2pi/8);
 
   // Ellipse
   G2lib::Dubins3p DB_EL{"D3P_ellipse"};

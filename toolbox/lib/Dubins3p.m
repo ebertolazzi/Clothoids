@@ -131,6 +131,10 @@
       Dubins3pMexWrapper( 'sample_points', self.objectHandle, npts );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function angles = get_range_angles( self, xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max )
+      angles = Dubins3pMexWrapper( 'get_range_angles', self.objectHandle, xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max);
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the Dubins
     %>
     %> **Usage:**

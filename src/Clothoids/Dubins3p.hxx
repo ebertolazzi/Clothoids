@@ -218,6 +218,35 @@ namespace G2lib {
     void build( Dubins const & );
     void build( Dubins3p const & );
 
+    //!
+    //! Construct a Dubins3p solution
+    //!
+    //! \param[in] xi     initial position x-coordinate
+    //! \param[in] yi     initial position y-coordinate
+    //! \param[in] thetai initial angle
+    //! \param[in] xm     intermediate position x-coordinate
+    //! \param[in] ym     intermediate position y-coordinate
+    //! \param[in] xf     final position x-coordinate
+    //! \param[in] yf     final position y-coordinate
+    //! \param[in] thetaf final angle
+    //! \param[in] kmax   max curvature
+    //! \param[in] angles angles of possibile dicontinuity
+    //! \return    number of point computed
+    //!
+    integer
+    get_range_angles(
+      real_type xi,
+      real_type yi,
+      real_type thetai,
+      real_type xm,
+      real_type ym,
+      real_type xf,
+      real_type yf,
+      real_type thetaf,
+      real_type k_max,
+      real_type angles[]
+    ) const;
+
     void
     bbox(
       real_type & xmin,

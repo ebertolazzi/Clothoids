@@ -91,6 +91,7 @@ namespace G2lib {
     real_type thetaf,
     real_type k_max
   ) {
+    m_evaluation = 0;
     real_type thetam{0};
     m_Dubins0.build( xi, yi, thetai, xm, ym, thetam, k_max );
     m_Dubins1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
@@ -636,6 +637,27 @@ return m_Dubins1.FUN(s)
   Dubins3p::solution_type_string_short() const {
     return m_Dubins0.solution_type_string_short()+
            m_Dubins1.solution_type_string_short();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Dubins3p::get_range_angles(
+    real_type xi,
+    real_type yi,
+    real_type thetai,
+    real_type xm,
+    real_type ym,
+    real_type xf,
+    real_type yf,
+    real_type thetaf,
+    real_type k_max,
+    real_type angles[]
+  ) const {
+    integer npts{0};
+    npts += m_Dubins0.get_range_angles_end   ( xi, yi, thetai, xm, ym,         k_max, angles        );
+    npts += m_Dubins1.get_range_angles_begin ( xm, ym,         xf, yf, thetaf, k_max, angles + npts );
+    return npts;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

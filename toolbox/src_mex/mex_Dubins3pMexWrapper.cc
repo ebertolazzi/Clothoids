@@ -363,6 +363,41 @@ namespace G2lib {
 
     #undef CMD
   }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_get_range_angles( int nlhs, mxArray       *plhs[],
+                       int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "DubinsMexWrapper('get_range_angles',OBJ,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max): "
+
+    UTILS_MEX_ASSERT( nrhs == 11, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1,  CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
+
+    real_type xi     = Utils::mex_get_scalar_value( arg_in_2,  CMD "Error in reading xi"     );
+    real_type yi     = Utils::mex_get_scalar_value( arg_in_3,  CMD "Error in reading yi"     );
+    real_type thetai = Utils::mex_get_scalar_value( arg_in_4,  CMD "Error in reading thetai" );
+    real_type xm     = Utils::mex_get_scalar_value( arg_in_5,  CMD "Error in reading xm"     );
+    real_type ym     = Utils::mex_get_scalar_value( arg_in_6,  CMD "Error in reading ym"     );
+    real_type xf     = Utils::mex_get_scalar_value( arg_in_7,  CMD "Error in reading xf"     );
+    real_type yf     = Utils::mex_get_scalar_value( arg_in_8,  CMD "Error in reading yf"     );
+    real_type thetaf = Utils::mex_get_scalar_value( arg_in_9,  CMD "Error in reading thetaf" );
+    real_type k_max  = Utils::mex_get_scalar_value( arg_in_10, CMD "Error in reading k_max"  );
+
+    real_type angles[12];
+    integer npts = ptr->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, angles );
+
+    double * Angles = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+    std::copy_n( angles, npts, Angles );
+
+    #undef CMD
+
+  }
+
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   typedef void (*DO_CMD)( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
@@ -380,6 +415,7 @@ namespace G2lib {
     {"set_sample_angle",do_set_sample_angle},
     {"set_sample_points",do_set_sample_points},
     {"set_max_evaluation",do_set_max_evaluation},
+    {"get_range_angles",do_get_range_angles},
     CMD_MAP_FUN
   };
 

@@ -41,6 +41,8 @@ namespace G2lib {
     bool      use_trichotomy
   ) {
 
+    m_evaluation = 0;
+
     typedef struct Dubins3p_data {
       Dubins    D0{"temporary Dubins A"};
       Dubins    D1{"temporary Dubins B"};
@@ -55,18 +57,13 @@ namespace G2lib {
         len    = rhs.len;
       }
 
-      bool
-      compare( Dubins3p_data const & D ) const {
-        return D0.solution_type() == D.D0.solution_type() &&
-               D1.solution_type() == D.D1.solution_type();
-      }
+      //bool
+      //compare( Dubins3p_data const & D ) const {
+      //  return D0.solution_type() == D.D0.solution_type() &&
+      //         D1.solution_type() == D.D1.solution_type();
+      //}
 
     } Dubins3p_data;
-
-    integer NSEG{ integer(std::floor(Utils::m_2pi / m_sample_angle)) };
-
-    vector<Dubins3p_data> DB(NSEG);
-    Dubins3p_data L, C, R;
 
     auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P ) -> void {
       D3P.D0.build( xi, yi, thetai, xm, ym, D3P.thetam, k_max );
@@ -112,15 +109,34 @@ namespace G2lib {
       }
     };
 
+    // select angles
+    integer NSEG{ integer(std::floor(Utils::m_2pi / m_sample_angle)) };
+    vector<real_type> angles;
+    angles.reserve( NSEG + 12 );
+    for ( integer i{0}; i < NSEG; ++i ) angles.push_back( i*m_sample_angle );
+    {
+      real_type ang[12];
+      integer npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
+      for ( integer i{0}; i < npts; ++i ) {
+        // Find the position to insert the new value using lower_bound
+        auto it = std::lower_bound(angles.begin(), angles.end(), ang[i]);
+        angles.insert(it,ang[i]);
+      }
+    }
+
+    vector<Dubins3p_data> DB(angles.size());
+    Dubins3p_data L, C, R;
+
     // initialize and find min
-    integer imin{0};
-    DB[0].thetam = 0;
-    m_evaluation = 0;
-    eval3p( DB[0] );
-    for ( integer i{1}; i < NSEG; ++i ) {
-      DB[i].thetam = i*m_sample_angle;
-      eval3p( DB[i] );
-      if ( DB[i].len < DB[imin].len ) imin = i;
+    integer   imin{0};
+    real_type lmin{Utils::Inf<real_type>()};
+    NSEG = 0;
+    for ( real_type a : angles ) {
+      Dubins3p_data & db{ DB[NSEG] };
+      db.thetam = a;
+      eval3p( db );
+      if ( db.len < lmin ) { imin = NSEG; lmin = db.len; }
+      ++NSEG;
     }
 
     // select interval

@@ -23,7 +23,7 @@ DB_B = Dubins();
 DB3  = Dubins3p();
 
 k_max  = 0.6;
-d      = 3;
+d      = 0.38;
 x0     = -2*d;
 y0     = 0;
 xM     = 0;
@@ -57,6 +57,7 @@ DB_B.build( xM, yM, thetaM0, xf, yf, thetaf,  k_max );
 
 angles_A = DB_A.get_range_angles_end( x0, y0, theta0,  xM, yM, k_max );
 angles_B = DB_B.get_range_angles_begin( xM, yM, xf, yf, thetaf,  k_max );
+angles   = DB3.get_range_angles( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max );
 
 figure();
 
@@ -103,7 +104,7 @@ plot(thetaM0,L(thetaM0),'o','MarkerSize',15,'MarkerFaceColor','blue');
 plot(thetas(min_idx),min_tmp,'o','MarkerSize',10,'MarkerFaceColor','green');
 grid on
 
-for a=[angles_A,angles_B]
+for a=angles%[angles_A,angles_B]
   plot([a,a],[10,25],'-','LineWidth',2);
 end
 
@@ -144,7 +145,7 @@ function thetaM0 = pattern_search( func )
   theta_max       = 2*pi;
   theta_min       = 0;
   theta_candidate = 0;
-  numpts          = 16;
+  numpts          = 8;
   delta_theta     = (theta_max - theta_min) / numpts;
   min_residual    = Inf;
   while delta_theta > 1e-16
@@ -161,4 +162,6 @@ function thetaM0 = pattern_search( func )
     delta_theta     = (theta_max - theta_min) / numpts;
   end
   thetaM0 = theta_candidate;
+  if thetaM0 >  pi; thetaM0 = thetaM0-2*pi; end
+  if thetaM0 < -pi; thetaM0 = thetaM0+2*pi; end
 end

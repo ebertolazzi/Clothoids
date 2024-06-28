@@ -932,7 +932,7 @@ return m_C2.FUN(s)
       real_type t15 { 16 * cb };
       real_type t16 { (t10 * t7 - 48) * sb };
 
-      for ( real_type s{-1}; s != 1; s = 1 ) {
+      for ( real_type s{-1}; s <= 1; s += 2 ) {
 
         real_type t5  { s * d };
         real_type t6  { t5 * sb };
@@ -958,7 +958,7 @@ return m_C2.FUN(s)
     }
     { // case CSC+
       real_type t{ d*d/2-1 };
-      for ( real_type s{-1}; s != 1; s = 1 ) {
+      for ( real_type s{-1}; s <= 1; s += 2 ) {
         real_type tmp { s*d*sb + t };
         real_type A   { tmp - cb   };
         real_type B   { 2*(s*d+sb) };
@@ -1020,7 +1020,7 @@ return m_C2.FUN(s)
       real_type t15 { 16 * ca };
       real_type t16 { (t10 * t5 - 48) * sa };
 
-      for ( real_type s{-1}; s != 1; s = 1 ) {
+      for ( real_type s{-1}; s <= 1; s += 2 ) {
 
         real_type t8  { s * d   };
         real_type t9  { t8 * sa } ;
@@ -1046,7 +1046,7 @@ return m_C2.FUN(s)
     }
     { // case CSC+
       real_type t{ d*d/2-1 };
-      for ( real_type s{-1}; s != 1; s = 1 ) {
+      for ( real_type s{-1}; s <= 1; s += 2 ) {
         real_type tmp { s*d*sa + t };
         real_type A   { tmp - ca   };
         real_type B   { 2*(s*d+sa) };
