@@ -134,11 +134,11 @@ namespace G2lib {
   do_get_pars( int nlhs, mxArray       *plhs[],
                int nrhs, mxArray const *prhs[] ) {
 
-    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
-
     #define CMD "Dubins3pMexWrapper('get_pars',OBJ): "
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
 
     CircleArc const & C0{ ptr->C0() };
     CircleArc const & C1{ ptr->C1() };
@@ -208,7 +208,8 @@ namespace G2lib {
 
     mxSetFieldByNumber( arg_out_0, 0, 33, mxCreateDoubleScalar(C0.length()+C1.length()+C2.length()) );
     mxSetFieldByNumber( arg_out_0, 0, 34, mxCreateDoubleScalar(C3.length()+C4.length()+C5.length()) );
-    mxSetFieldByNumber( arg_out_0, 0, 35, mxCreateDoubleScalar(C0.length()+C1.length()+C2.length()+C3.length()+C4.length()+C5.length()) );
+    mxSetFieldByNumber( arg_out_0, 0, 35, mxCreateDoubleScalar(C0.length()+C1.length()+C2.length()+
+                                                               C3.length()+C4.length()+C5.length()) );
 
     mxSetFieldByNumber( arg_out_0, 0, 36, mxCreateDoubleScalar(ptr->tolerance()) );
     mxSetFieldByNumber( arg_out_0, 0, 37, mxCreateDoubleScalar(ptr->max_num_evaluation()) );
@@ -228,11 +229,11 @@ namespace G2lib {
   do_curve_type( int nlhs, mxArray       *plhs[],
                  int nrhs, mxArray const *prhs[] ) {
 
-    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
-
     #define CMD "Dubins3pMexWrapper('curve_type',OBJ): "
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
 
     Utils::mex_set_scalar_value( arg_out_0, static_cast<int>(ptr->solution_type0()) );
     Utils::mex_set_scalar_value( arg_out_1, static_cast<int>(ptr->solution_type1()) );
@@ -245,14 +246,37 @@ namespace G2lib {
 
   static
   void
-  do_num_evaluation( int nlhs, mxArray       *plhs[],
-                     int nrhs, mxArray const *prhs[] ) {
+  do_curve_type_string( int nlhs, mxArray       *plhs[],
+                        int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "Dubins3pMexWrapper('curve_type_string',OBJ): "
+    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
+
+    string s1{ ptr->solution_type_string() };
+    string s2{ ptr->solution_type_string_short() };
+
+    plhs[0] = mxCreateString( s1.c_str() );
+    plhs[1] = mxCreateString( s2.c_str() );
+
+    #undef CMD
+
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_num_evaluation( int nlhs, mxArray       *plhs[],
+                     int nrhs, mxArray const *prhs[] ) {
 
     #define CMD "Dubins3pMexWrapper('num_evaluation',OBJ): "
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>(arg_in_1) };
 
     Utils::mex_set_scalar_value( arg_out_0, ptr->num_evaluation() );
 
@@ -350,6 +374,7 @@ namespace G2lib {
     {"build",do_build},
     {"get_pars",do_get_pars},
     {"curve_type",do_curve_type},
+    {"curve_type_string",do_curve_type_string},
     {"num_evaluation",do_num_evaluation},
     {"set_tolerance",do_set_tolerance},
     {"set_sample_angle",do_set_sample_angle},

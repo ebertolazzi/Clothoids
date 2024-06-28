@@ -105,6 +105,12 @@
       [L,R] = Dubins3pMexWrapper( 'curve_type', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [l,s] = curve_type_string( self )
+      % l = long string
+      % s = short string
+      [l,s] = Dubins3pMexWrapper( 'curve_type_string', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = num_evaluation( self )
       res = Dubins3pMexWrapper( 'num_evaluation', self.objectHandle );
     end

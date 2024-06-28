@@ -80,7 +80,7 @@ namespace G2lib {
       P2.thetam = (A.thetam+2*P3.thetam)/3;
       eval3p(P2);
       if ( P2.len <= P3.len ) {
-        P1.thetam = (A.thetam+P2.thetam)/2;
+        P1.thetam = (2*A.thetam+P3.thetam)/3;
         eval3p(P1);
         if ( P1.len <= P2.len ) { P3.copy(P1); B.copy(P2); }
         else                    { A.copy(P1); B.copy(P3); P3.copy(P2); }

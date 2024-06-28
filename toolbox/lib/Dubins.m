@@ -87,6 +87,14 @@ classdef Dubins < CurveBase
       ok = DubinsMexWrapper( 'build', self.objectHandle, x0, y0, theta0, x3, y3, theta3, k_max );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function angles = get_range_angles_begin( self, x0, y0, x3, y3, theta3, k_max )
+      angles = DubinsMexWrapper( 'get_range_angles_begin', self.objectHandle, x0, y0, x3, y3, theta3, k_max );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function angles = get_range_angles_end( self, x0, y0, theta0, x3, y3, k_max )
+      angles = DubinsMexWrapper( 'get_range_angles_end', self.objectHandle, x0, y0, theta0, x3, y3, k_max );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function S = get_pars( self )
       S = DubinsMexWrapper( 'get_pars', self.objectHandle );
     end
@@ -104,6 +112,12 @@ classdef Dubins < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function res = curve_type( self )
       res = DubinsMexWrapper( 'curve_type', self.objectHandle );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [l,s] = curve_type_string( self )
+      % l = long string
+      % s = short string
+      [l,s] = DubinsMexWrapper( 'curve_type_string', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the biarc

@@ -28,6 +28,7 @@
 namespace G2lib {
 
   using PolynomialRoots::Quadratic;
+  using PolynomialRoots::Quartic;
 
   /*\
    |   ____        _     _
@@ -870,6 +871,201 @@ return m_C2.FUN(s)
   string
   Dubins::info() const
   { return fmt::format( "Dubins\n{}\n", *this ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Dubins::solution_type_string() const {
+    return to_string( m_solution_type );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Dubins::solution_type_string_short() const {
+    string tmp{to_string( m_solution_type )};
+    string res{""};
+    if ( m_C0.length() > 0 ) res += tmp[0];
+    if ( m_C1.length() > 0 ) res += tmp[1];
+    if ( m_C2.length() > 0 ) res += tmp[2];
+    return res;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Dubins::get_range_angles_begin(
+    real_type x0,
+    real_type y0,
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    real_type k_max,
+    real_type angles[]
+  ) const {
+
+    // setup in standard form
+    real_type dx   { x1 - x0 };
+    real_type dy   { y1 - y0 };
+    real_type th   { atan2( dy, dx ) };
+    real_type beta { theta1 - th };
+    real_type d    { k_max * hypot( dx, dy ) };
+
+    // metto angolo in -Pi, Pi
+    minus_pi_pi( beta );
+
+    integer npts{0};
+    real_type sb{sin(beta)};
+    real_type cb{cos(beta)};
+
+    { // case CCC
+      real_type b2  { 2 * beta };
+      real_type t3  { sin(b2) };
+      real_type t2  { cos(b2) };
+      real_type t7  { d * d  };
+      real_type t8  { t7 * sb };
+      real_type t9  { cb * d  };
+      real_type t10 { 24  };
+      real_type t11 { (10-t7) * t7  };
+      real_type t12 { 2*t2 * (1-t7) };
+      real_type t14 { 8 };
+      real_type t15 { 16 * cb };
+      real_type t16 { (t10 * t7 - 48) * sb };
+
+      for ( real_type s{-1}; s != 1; s = 1 ) {
+
+        real_type t5  { s * d };
+        real_type t6  { t5 * sb };
+        real_type t13 { t5 * (t2-t7) };
+
+        real_type A { -t10 * (t6 - cb) + 4*d * ((t8+t3) * s - t9) + 26 + t11 - t12 };
+        real_type B { t14 * (t13 + t3) + t16 + t5 * (40-t15) };
+        real_type C { d * ((t14 * t7 - 16) * sb * s -2 * d * t7) + 12*t2 + 4*t7 * (t2 + 1) + 52 };
+        real_type D { t14 * (t13 - t3) + t16 + t5 * (t15 + 40) };
+        real_type E { -t10 * (t6 + cb) - 4*d * ((t3-t8) * s - t9) + 26 + t11 - t12 };
+
+        Quartic Q( A, B, C, D, E );
+
+        real_type X[4];
+        integer nr{ Q.get_real_roots( X ) };
+        for ( integer ir{0}; ir < nr; ++ir ) {
+          // convert to angle
+          real_type theta{ 2*atan(X[ir]) + th };
+          minus_pi_pi( theta );
+          angles[npts++] = theta;
+        }
+      }
+    }
+    { // case CSC+
+      real_type t{ d*d/2-1 };
+      for ( real_type s{-1}; s != 1; s = 1 ) {
+        real_type tmp { s*d*sb + t };
+        real_type A   { tmp - cb   };
+        real_type B   { 2*(s*d+sb) };
+        real_type C   { tmp + cb   };
+
+        Quadratic Q( A, B, C );
+
+        real_type X[2];
+        integer nr{ Q.get_real_roots( X ) };
+        for ( integer ir{0}; ir < nr; ++ir ) {
+          // convert to angle
+          real_type theta{ 2*atan(X[ir]) + th };
+          minus_pi_pi( theta );
+          angles[npts++] = theta;
+        }
+      }
+    }
+    return npts;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer
+  Dubins::get_range_angles_end(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1,
+    real_type k_max,
+    real_type angles[]
+  ) const {
+
+    // setup in standard form
+    real_type dx    { x1 - x0 };
+    real_type dy    { y1 - y0 };
+    real_type th    { atan2( dy, dx ) };
+    real_type alpha { theta0 - th };
+    real_type d     { k_max * hypot( dx, dy ) };
+
+    // metto angolo in -Pi, Pi
+    minus_pi_pi( alpha );
+
+    integer npts{0};
+    real_type sa{sin(alpha)};
+    real_type ca{cos(alpha)};
+
+    { // case CCC
+      real_type a2  { 2*alpha };
+      real_type t3  { sin(a2) };
+      real_type t2  { cos(a2) };
+      real_type t5  { d * d   };
+      real_type t6  { t5 * sa };
+      real_type t7  { ca * d  };
+      real_type t10 { 24 };
+      real_type t11 { (10-t5) * t5 };
+      real_type t12 { 2*t2 * (1 - t5) };
+      real_type t14 { -8 };
+      real_type t15 { 16 * ca };
+      real_type t16 { (t10 * t5 - 48) * sa };
+
+      for ( real_type s{-1}; s != 1; s = 1 ) {
+
+        real_type t8  { s * d   };
+        real_type t9  { t8 * sa } ;
+        real_type t13 { t8 * (t2-t5) };
+
+        real_type A { -4*d * ((t6 + t3) * s + t7) + t10 * (t9 + ca) + 26 + t11 - t12 };
+        real_type B { t14 * (t13 - t3) + t16 + t8 * (t15 - 40) };
+        real_type C { d * (-2*d * t5 + (t14 * t5 + 16) * sa * s) + 12 * t2 + 4*t5 * (t2 + 1) + 52 };
+        real_type D { t14 * (t13 + t3) + t16 + t8 * (-t15 - 40) };
+        real_type E { t10 * (t9 - ca) + t11 - t12 - 4 * d * ((t6 - t3) * s - t7) + 26 };
+
+        Quartic Q( A, B, C, D, E );
+
+        real_type X[4];
+        integer nr{ Q.get_real_roots( X ) };
+        for ( integer ir{0}; ir < nr; ++ir ) {
+          // convert to angle
+          real_type theta{ 2*atan(X[ir]) + th };
+          minus_pi_pi( theta );
+          angles[npts++] = theta;
+        }
+      }
+    }
+    { // case CSC+
+      real_type t{ d*d/2-1 };
+      for ( real_type s{-1}; s != 1; s = 1 ) {
+        real_type tmp { s*d*sa + t };
+        real_type A   { tmp - ca   };
+        real_type B   { 2*(s*d+sa) };
+        real_type C   { tmp + ca   };
+
+        Quadratic Q( A, B, C );
+
+        real_type X[2];
+        integer nr{ Q.get_real_roots( X ) };
+        for ( integer ir{0}; ir < nr; ++ir ) {
+          // convert to angle
+          real_type theta{ 2*atan(X[ir]) + th };
+          minus_pi_pi( theta );
+          angles[npts++] = theta;
+        }
+      }
+    }
+    return npts;
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

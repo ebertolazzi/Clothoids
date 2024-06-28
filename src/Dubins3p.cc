@@ -624,6 +624,22 @@ return m_Dubins1.FUN(s)
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  string
+  Dubins3p::solution_type_string() const {
+    return m_Dubins0.solution_type_string()+
+           m_Dubins1.solution_type_string();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Dubins3p::solution_type_string_short() const {
+    return m_Dubins0.solution_type_string_short()+
+           m_Dubins1.solution_type_string_short();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   ostream_type &
   operator << ( ostream_type & stream, Dubins3p const & bi ) {
     stream

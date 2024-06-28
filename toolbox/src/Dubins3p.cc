@@ -102,7 +102,7 @@ namespace G2lib {
     for ( thetam = dangle; thetam < Utils::m_2pi; thetam += dangle ) {
       D0.build( xi, yi, thetai, xm, ym, thetam, k_max );
       D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
-      m_evaluation += 2;
+      ++m_evaluation;
       real_type len1{D0.length()+D1.length()};
       if ( len1 < len ) { len = len1; m_Dubins0.copy(D0); m_Dubins1.copy(D1); }
     }
@@ -621,6 +621,22 @@ return m_Dubins1.FUN(s)
   string
   Dubins3p::info() const
   { return fmt::format( "Dubins3p\n{}\n", *this ); }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Dubins3p::solution_type_string() const {
+    return m_Dubins0.solution_type_string()+
+           m_Dubins1.solution_type_string();
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Dubins3p::solution_type_string_short() const {
+    return m_Dubins0.solution_type_string_short()+
+           m_Dubins1.solution_type_string_short();
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

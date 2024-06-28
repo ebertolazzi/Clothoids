@@ -132,11 +132,11 @@ namespace G2lib {
   do_get_pars( int nlhs, mxArray       *plhs[],
                int nrhs, mxArray const *prhs[] ) {
 
-    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
-
     #define CMD "DubinsMexWrapper('get_pars',OBJ): "
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
 
     CircleArc const & C0{ ptr->C0() };
     CircleArc const & C1{ ptr->C1() };
@@ -170,7 +170,7 @@ namespace G2lib {
     mxSetFieldByNumber( arg_out_0, 0, 10, mxCreateDoubleScalar(C2.y_end()) );
     mxSetFieldByNumber( arg_out_0, 0, 11, mxCreateDoubleScalar(C2.theta_end()) );
 
-    mxSetFieldByNumber( arg_out_0, 0, 12,  mxCreateDoubleScalar(C0.kappa_begin()) );
+    mxSetFieldByNumber( arg_out_0, 0, 12, mxCreateDoubleScalar(C0.kappa_begin()) );
     mxSetFieldByNumber( arg_out_0, 0, 13, mxCreateDoubleScalar(C1.kappa_begin()) );
     mxSetFieldByNumber( arg_out_0, 0, 14, mxCreateDoubleScalar(C2.kappa_begin()) );
 
@@ -193,11 +193,11 @@ namespace G2lib {
   do_get_length( int nlhs, mxArray       *plhs[],
                  int nrhs, mxArray const *prhs[] ) {
 
-    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
-
     #define CMD "DubinsMexWrapper('get_length',OBJ): "
     UTILS_MEX_ASSERT( nrhs == 2,               CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1 || nlhs == 3 , CMD "expected 1 or 3 output, nlhs = {}\n", nlhs );
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
 
     Utils::mex_set_scalar_value( arg_out_0, ptr->length() );
     if ( nlhs == 3 ) {
@@ -218,16 +218,100 @@ namespace G2lib {
   do_curve_type( int nlhs, mxArray       *plhs[],
                  int nrhs, mxArray const *prhs[] ) {
 
-    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
-
     #define CMD "DubinsMexWrapper('curve_type',OBJ): "
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
 
     Utils::mex_set_scalar_value( arg_out_0, static_cast<int>(ptr->solution_type()) );
 
     #undef CMD
 
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_curve_type_string( int nlhs, mxArray       *plhs[],
+                        int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "DubinsMexWrapper('curve_type_string',OBJ): "
+    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
+
+    string s1{ ptr->solution_type_string() };
+    string s2{ ptr->solution_type_string_short() };
+
+    plhs[0] = mxCreateString( s1.c_str() );
+    plhs[1] = mxCreateString( s2.c_str() );
+
+    #undef CMD
+
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_get_range_angles_begin( int nlhs, mxArray       *plhs[],
+                             int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "DubinsMexWrapper('get_range_angles_begin',OBJ,x0,y0,x1,y1,theta1,k_max): "
+
+    UTILS_MEX_ASSERT( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
+
+    real_type x0     = Utils::mex_get_scalar_value( arg_in_2, CMD "Error in reading x0" );
+    real_type y0     = Utils::mex_get_scalar_value( arg_in_3, CMD "Error in reading y0" );
+    real_type x1     = Utils::mex_get_scalar_value( arg_in_4, CMD "Error in reading x1" );
+    real_type y1     = Utils::mex_get_scalar_value( arg_in_5, CMD "Error in reading y1" );
+    real_type theta1 = Utils::mex_get_scalar_value( arg_in_6, CMD "Error in reading theta1" );
+    real_type k_max  = Utils::mex_get_scalar_value( arg_in_7, CMD "Error in reading k_max" );
+
+    real_type angles[12];
+    integer npts = ptr->get_range_angles_begin( x0, y0, x1, y1, theta1, k_max, angles );
+
+    double * Angles = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+    std::copy_n( angles, npts, Angles );
+
+    #undef CMD
+
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_get_range_angles_end( int nlhs, mxArray       *plhs[],
+                           int nrhs, mxArray const *prhs[] ) {
+
+    #define CMD "DubinsMexWrapper('get_range_angles_init',OBJ,x0,y0,theta0,x1,y1,k_max): "
+
+    UTILS_MEX_ASSERT( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>(arg_in_1) };
+
+    real_type x0     = Utils::mex_get_scalar_value( arg_in_2, CMD "Error in reading x0" );
+    real_type y0     = Utils::mex_get_scalar_value( arg_in_3, CMD "Error in reading y0" );
+    real_type theta0 = Utils::mex_get_scalar_value( arg_in_4, CMD "Error in reading theta0" );
+    real_type x1     = Utils::mex_get_scalar_value( arg_in_5, CMD "Error in reading x1" );
+    real_type y1     = Utils::mex_get_scalar_value( arg_in_6, CMD "Error in reading y1" );
+    real_type k_max  = Utils::mex_get_scalar_value( arg_in_7, CMD "Error in reading k_max" );
+
+    real_type angles[12];
+    integer npts = ptr->get_range_angles_end( x0, y0, theta0, x1, y1, k_max, angles );
+
+    double * Angles = Utils::mex_create_matrix_value( arg_out_0, 1, npts );
+    std::copy_n( angles, npts, Angles );
+
+    #undef CMD
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -242,6 +326,9 @@ namespace G2lib {
     {"get_pars",do_get_pars},
     {"get_length",do_get_length},
     {"curve_type",do_curve_type},
+    {"curve_type_string",do_curve_type_string},
+    {"get_range_angles_begin",do_get_range_angles_begin},
+    {"get_range_angles_end",do_get_range_angles_end},
     CMD_MAP_FUN
   };
 

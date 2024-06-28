@@ -205,6 +205,9 @@ namespace G2lib {
     integer    num_evaluation()     const { return m_evaluation; }
     integer    max_num_evaluation() const { return m_max_evaluation; }
 
+    string solution_type_string() const;
+    string solution_type_string_short() const;
+
     void build( LineSegment const & L );
     void build( CircleArc const & C );
     void build( ClothoidCurve const & );

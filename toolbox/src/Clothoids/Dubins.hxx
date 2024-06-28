@@ -143,6 +143,52 @@ namespace G2lib {
       real_type k_max
     );
 
+    //!
+    //! Construct a Dubins solution
+    //!
+    //! \param[in]  x0     initial position x-coordinate
+    //! \param[in]  y0     initial position y-coordinate
+    //! \param[in]  x1     final position x-coordinate
+    //! \param[in]  y1     final position y-coordinate
+    //! \param[in]  theta1 final angle
+    //! \param[in]  kmax   max curvature
+    //! \param[out] angles range points
+    //! \return     number of range points
+    //!
+    integer
+    get_range_angles_begin(
+      real_type x0,
+      real_type y0,
+      real_type x1,
+      real_type y1,
+      real_type theta1,
+      real_type k_max,
+      real_type angles[]
+    ) const;
+
+    //!
+    //! Construct a Dubins solution
+    //!
+    //! \param[in]  x0     initial position x-coordinate
+    //! \param[in]  y0     initial position y-coordinate
+    //! \param[in]  theta0 initial angle
+    //! \param[in]  x1     final position x-coordinate
+    //! \param[in]  y1     final position y-coordinate
+    //! \param[in]  kmax   max curvature
+    //! \param[out] angles range points
+    //! \return     number of range points
+    //!
+    integer
+    get_range_angles_end(
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type x1,
+      real_type y1,
+      real_type k_max,
+      real_type angles[]
+    ) const;
+
     void build( LineSegment const & L );
     void build( CircleArc const & C );
     void build( ClothoidCurve const & );
@@ -204,6 +250,9 @@ namespace G2lib {
     }
 
     DubinsType solution_type() const { return m_solution_type; }
+
+    string solution_type_string() const;
+    string solution_type_string_short() const;
 
     integer icode() const { return to_integer(m_solution_type); }
 

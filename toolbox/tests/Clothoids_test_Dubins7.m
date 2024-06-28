@@ -55,6 +55,9 @@ thetaM0 = pattern_search(L);
 DB_A.build( x0, y0, theta0,  xM, yM, thetaM0, k_max );
 DB_B.build( xM, yM, thetaM0, xf, yf, thetaf,  k_max );
 
+angles_A = DB_A.get_range_angles_end( x0, y0, theta0,  xM, yM, k_max );
+angles_B = DB_B.get_range_angles_begin( xM, yM, xf, yf, thetaf,  k_max );
+
 figure();
 
 subplot(2,2,1);
@@ -99,6 +102,10 @@ plot(thetaM0,L(thetaM0),'o','MarkerSize',15,'MarkerFaceColor','blue');
 [min_tmp, min_idx] = min(LAB);
 plot(thetas(min_idx),min_tmp,'o','MarkerSize',10,'MarkerFaceColor','green');
 grid on
+
+for a=[angles_A,angles_B]
+  plot([a,a],[10,25],'-','LineWidth',2);
+end
 
 
 subplot(2,2,4);
