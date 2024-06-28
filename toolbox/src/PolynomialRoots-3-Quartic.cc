@@ -45,7 +45,7 @@ namespace PolynomialRoots {
   static real_type const machepsi = std::numeric_limits<real_type>::epsilon();
 
   integer
-  Quartic::getRealRoots( real_type r[] ) const {
+  Quartic::get_real_roots( real_type r[] ) const {
     integer nr = 0;
     if ( !cplx0() ) r[nr++] = r0;
     if ( !cplx1() ) r[nr++] = r1;
@@ -55,7 +55,7 @@ namespace PolynomialRoots {
   }
 
   integer
-  Quartic::getPositiveRoots( real_type r[] ) const {
+  Quartic::get_positive_roots( real_type r[] ) const {
     integer nr = 0;
     if ( !cplx0() && r0 > 0 ) r[nr++] = r0;
     if ( !cplx1() && r1 > 0 ) r[nr++] = r1;
@@ -65,7 +65,7 @@ namespace PolynomialRoots {
   }
 
   integer
-  Quartic::getNegativeRoots( real_type r[] ) const {
+  Quartic::get_negative_roots( real_type r[] ) const {
     integer nr = 0;
     if ( !cplx0() && r0 < 0 ) r[nr++] = r0;
     if ( !cplx1() && r1 < 0 ) r[nr++] = r1;
@@ -75,7 +75,7 @@ namespace PolynomialRoots {
   }
 
   integer
-  Quartic::getRootsInRange( real_type a, real_type b, real_type r[] ) const {
+  Quartic::get_roots_in_range( real_type a, real_type b, real_type r[] ) const {
     integer nr = 0;
     if ( !cplx0() && r0 >= a && r0 <= b ) r[nr++] = r0;
     if ( !cplx1() && r1 >= a && r1 <= b ) r[nr++] = r1;
@@ -85,7 +85,7 @@ namespace PolynomialRoots {
   }
 
   integer
-  Quartic::getRootsInOpenRange( real_type a, real_type b, real_type r[] ) const {
+  Quartic::get_roots_in_open_range( real_type a, real_type b, real_type r[] ) const {
     integer nr = 0;
     if ( !cplx0() && r0 > a && r0 < b ) r[nr++] = r0;
     if ( !cplx1() && r1 > a && r1 < b ) r[nr++] = r1;
@@ -392,7 +392,7 @@ namespace PolynomialRoots {
   \*/
 
   void
-  Quartic::findRoots() {
+  Quartic::find_roots() {
     real_type const & A = ABCDE[0];
     real_type const & B = ABCDE[1];
     real_type const & C = ABCDE[2];
@@ -404,18 +404,18 @@ namespace PolynomialRoots {
     // special cases
     if ( isZero(A) ) {
       Cubic csolve( B, C, D, E );
-      nreal = csolve.numRoots();
+      nreal = csolve.num_roots();
       switch ( nreal ) {
         case 3: r2 = csolve.real_root2();
         case 2: r1 = csolve.real_root1();
         case 1: r0 = csolve.real_root0();
       }
-      if ( csolve.complexRoots() ) { ncplx = 2; nreal -= 2; }
+      if ( csolve.complex_root() ) { ncplx = 2; nreal -= 2; }
       return;
     }
     if ( isZero(E) ) {
       Cubic csolve( A, B, C, D );
-      nreal = csolve.numRoots();
+      nreal = csolve.num_roots();
       r0 = r1 = r2 = r3 = 0;
       switch ( nreal ) {
         case 3: r2 = csolve.real_root2();
@@ -423,7 +423,7 @@ namespace PolynomialRoots {
         case 1: r0 = csolve.real_root0();
       }
       ++nreal;
-      if ( csolve.complexRoots() ) { ncplx = 2; nreal -= 2; }
+      if ( csolve.complex_root() ) { ncplx = 2; nreal -= 2; }
       if ( nreal == 4 ) { // caso regolare, 4 radici reali maintain order
         if ( r3 < r2 ) std::swap(r2,r3);
         if ( r2 < r1 ) std::swap(r1,r2);
@@ -436,7 +436,7 @@ namespace PolynomialRoots {
       Quadratic qsolve( A, C, E ) ;
       real_type x = qsolve.real_root0() ;
       real_type y = qsolve.real_root1() ;
-      if ( qsolve.complexRoots() ) {
+      if ( qsolve.complex_root() ) {
         // complex conjugate pair biquadratic roots x +/- iy.
         ncplx = 4;
         x /= 2; // re
@@ -534,7 +534,7 @@ namespace PolynomialRoots {
     real_type s = qsolve.real_root2();
 
     bool must_refine_r3 = true;
-    if ( !qsolve.complexRoots() ) {
+    if ( !qsolve.complex_root() ) {
       real_type Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       real_type Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
       bool q0pos = q0 > 0;
@@ -623,7 +623,7 @@ namespace PolynomialRoots {
       r0 = csolve.real_root0();
       r1 = csolve.real_root1();
       r2 = csolve.real_root2();
-      if ( csolve.complexRoots() ) {
+      if ( csolve.complex_root() ) {
         nreal = ncplx = 2;
         if ( r2 > r3 ) std::swap( r2, r3 );
       } else {

@@ -127,12 +127,16 @@
       Dubins3pMexWrapper( 'set_sample_angle', self.objectHandle, ang );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function sample_points( self, npts )
-      Dubins3pMexWrapper( 'sample_points', self.objectHandle, npts );
+    function set_sample_points( self, npts )
+      Dubins3pMexWrapper( 'set_sample_points', self.objectHandle, npts );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function angles = get_range_angles( self, xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max )
       angles = Dubins3pMexWrapper( 'get_range_angles', self.objectHandle, xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max);
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function angles = get_sample_angles( self, xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, tol )
+      angles = Dubins3pMexWrapper( 'get_sample_angles', self.objectHandle, xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, tol );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the Dubins

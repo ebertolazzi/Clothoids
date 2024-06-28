@@ -26,6 +26,57 @@
 
 namespace G2lib {
 
+  void
+  Dubins3p::get_sample_angles(
+    real_type xi,
+    real_type yi,
+    real_type thetai,
+    real_type xm,
+    real_type ym,
+    real_type xf,
+    real_type yf,
+    real_type thetaf,
+    real_type k_max,
+    real_type tolerance,
+    vector<real_type> & angles
+  ) const {
+
+    // select angles
+    integer NSEG{ integer(std::floor(Utils::m_2pi / m_sample_angle)) };
+    angles.clear();
+    angles.reserve( 2*NSEG + 12 );
+    {
+      real_type ang[12];
+      integer npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
+      if ( npts > 0 ) {
+        for ( integer i{0}; i < npts; ++i ) {
+          real_type a{ i == 0 ? ang[npts-1]-Utils::m_2pi : ang[i-1] };
+          //real_type b{ i == npts ? ang[0]+Utils::m_2pi      : ang[i]   };
+          real_type b{ ang[i] };
+          real_type delta{ std::min( (b-a)/3, m_sample_angle ) };
+          while ( a < b ) {
+            real_type aa{ a };
+            if      ( aa < 0            ) aa += Utils::m_2pi;
+            else if ( aa > Utils::m_2pi ) aa -= Utils::m_2pi;
+            angles.push_back( aa );
+            a += delta;
+          }
+        }
+      } else {
+        real_type a{ 0 };
+        while ( a < Utils::m_2pi ) { angles.push_back( a ); a += m_sample_angle; }
+      }
+    }
+    std::sort( angles.begin(), angles.end() );
+    // remove duplicates
+    integer i{integer(angles.size())};
+    for ( --i; i > 0; --i ) {
+      if ( std::abs(angles[i]-angles[i-1]) < tolerance ) {
+        angles.erase(angles.begin()+i);
+      }
+    }
+  }
+
   bool
   Dubins3p::build_pattern_search(
     real_type xi,
@@ -109,55 +160,48 @@ namespace G2lib {
       }
     };
 
-    // select angles
-    integer NSEG{ integer(std::floor(Utils::m_2pi / m_sample_angle)) };
     vector<real_type> angles;
-    angles.reserve( NSEG + 12 );
-    for ( integer i{0}; i < NSEG; ++i ) angles.push_back( i*m_sample_angle );
-    {
-      real_type ang[12];
-      integer npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
-      for ( integer i{0}; i < npts; ++i ) {
-        // Find the position to insert the new value using lower_bound
-        auto it = std::lower_bound(angles.begin(), angles.end(), ang[i]);
-        angles.insert(it,ang[i]);
+    this->get_sample_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, tolerance, angles );
+
+    vector<Dubins3p_data> DB(angles.size());
+    Dubins3p_data L, C, R, BEST;
+
+    // initialize and find min
+    real_type lmin{Utils::Inf<real_type>()};
+    integer NSEG{integer(angles.size())};
+    C.thetam = angles[NSEG-2]; eval3p( C );
+    R.thetam = angles[NSEG-1]; eval3p( R );
+    for ( real_type a : angles ) {
+      L.copy( C );
+      C.copy( R );
+      R.thetam = a;
+      eval3p( R );
+      if ( C.len <= L.len && C.len <= R.len ) {
+        if ( C.len < 1.5*lmin ) {
+          Dubins3p_data LL, CC, RR;
+          LL.copy(L);
+          CC.copy(C);
+          RR.copy(R);
+          // make angles monotone increasing
+          if ( LL.thetam > CC.thetam ) LL.thetam -= Utils::m_2pi;
+          if ( RR.thetam < CC.thetam ) RR.thetam += Utils::m_2pi;
+          if ( use_trichotomy ) {
+            while ( RR.thetam-LL.thetam > tolerance && m_evaluation < m_max_evaluation )
+              bracketing( LL, CC, RR );
+          } else {
+            while ( RR.thetam-LL.thetam > tolerance && m_evaluation < m_max_evaluation )
+              simple_search( LL, CC, RR );
+          }
+          if ( CC.len < lmin ) {
+            lmin = CC.len;
+            BEST.copy(CC);
+          }
+        }
       }
     }
 
-    vector<Dubins3p_data> DB(angles.size());
-    Dubins3p_data L, C, R;
-
-    // initialize and find min
-    integer   imin{0};
-    real_type lmin{Utils::Inf<real_type>()};
-    NSEG = 0;
-    for ( real_type a : angles ) {
-      Dubins3p_data & db{ DB[NSEG] };
-      db.thetam = a;
-      eval3p( db );
-      if ( db.len < lmin ) { imin = NSEG; lmin = db.len; }
-      ++NSEG;
-    }
-
-    // select interval
-    L.copy( DB[(imin+NSEG-1)%NSEG] );
-    C.copy( DB[imin]               );
-    R.copy( DB[(imin+1)%NSEG]      );
-
-    // make angles monotone increasing
-    if ( imin == 0      ) L.thetam -= Utils::m_2pi;
-    if ( imin == NSEG-1 ) R.thetam += Utils::m_2pi;
-
-    if ( use_trichotomy ) {
-      while ( R.thetam-L.thetam > tolerance && m_evaluation < m_max_evaluation )
-        bracketing( L, C, R );
-    } else {
-      while ( R.thetam-L.thetam > tolerance && m_evaluation < m_max_evaluation )
-        simple_search( L, C, R );
-    }
-
-    m_Dubins0.copy(C.D0);
-    m_Dubins1.copy(C.D1);
+    m_Dubins0.copy(BEST.D0);
+    m_Dubins1.copy(BEST.D1);
 
     return true;
   }

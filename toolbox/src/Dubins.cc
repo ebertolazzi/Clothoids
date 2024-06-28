@@ -893,6 +893,11 @@ return m_C2.FUN(s)
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #define OFFSET_ROOT \
+  real_type p, dp;    \
+  Q.eval( x, p, dp ); \
+  x += 1e-4 * (dp > 0?1:-1)
+
   integer
   Dubins::get_range_angles_begin(
     real_type x0,
@@ -932,25 +937,33 @@ return m_C2.FUN(s)
       real_type t15 { 16 * cb };
       real_type t16 { (t10 * t7 - 48) * sb };
 
-      for ( real_type s{-1}; s <= 1; s += 2 ) {
+      real_type s_x_d[2]{d,-d};
+      for ( integer i{0}; i < 2; ++i ) {
 
-        real_type t5  { s * d };
+        real_type t5  { s_x_d[i] };
         real_type t6  { t5 * sb };
         real_type t13 { t5 * (t2-t7) };
 
-        real_type A { -t10 * (t6 - cb) + 4*d * ((t8+t3) * s - t9) + 26 + t11 - t12 };
+        real_type A { -t10 * (t6 - cb) + 4* ((t8+t3) * t5 - d*t9) + 26 + t11 - t12 };
         real_type B { t14 * (t13 + t3) + t16 + t5 * (40-t15) };
-        real_type C { d * ((t14 * t7 - 16) * sb * s -2 * d * t7) + 12*t2 + 4*t7 * (t2 + 1) + 52 };
+        real_type C { (t14 * t7 - 16) * sb * t5 - 2 * (d*d) * t7 + 12*t2 + 4*t7 * (t2 + 1) + 52 };
         real_type D { t14 * (t13 - t3) + t16 + t5 * (t15 + 40) };
-        real_type E { -t10 * (t6 + cb) - 4*d * ((t3-t8) * s - t9) + 26 + t11 - t12 };
+        real_type E { -t10 * (t6 + cb) - 4* ((t3-t8) * t5 - d*t9) + 26 + t11 - t12 };
 
+        bool reciprocal{ std::abs(A) >= std::abs(E) };
+        if ( reciprocal ) {
+          std::swap( A, E );
+          std::swap( B, D );
+        }
         Quartic Q( A, B, C, D, E );
-
         real_type X[4];
         integer nr{ Q.get_real_roots( X ) };
         for ( integer ir{0}; ir < nr; ++ir ) {
           // convert to angle
-          real_type theta{ 2*atan(X[ir]) + th };
+          real_type y{ X[ir] };
+          real_type x{ 1     };
+          if ( reciprocal ) std::swap( y, x );
+          real_type theta{ 2*atan2(y,x)+th };
           minus_pi_pi( theta );
           angles[npts++] = theta;
         }
@@ -958,19 +971,25 @@ return m_C2.FUN(s)
     }
     { // case CSC+
       real_type t{ d*d/2-1 };
-      for ( real_type s{-1}; s <= 1; s += 2 ) {
-        real_type tmp { s*d*sb + t };
-        real_type A   { tmp - cb   };
-        real_type B   { 2*(s*d+sb) };
-        real_type C   { tmp + cb   };
+      real_type s_x_d[2]{d,-d};
+      for ( integer i{0}; i < 2; ++i ) {
+        real_type tmp { s_x_d[i]*sb + t };
+        real_type A   { tmp - cb        };
+        real_type B   { 2*(s_x_d[i]+sb) };
+        real_type C   { tmp + cb        };
+
+        bool reciprocal{ std::abs(A) >= std::abs(C) };
+        if ( reciprocal ) std::swap( A, C );
 
         Quadratic Q( A, B, C );
-
         real_type X[2];
         integer nr{ Q.get_real_roots( X ) };
         for ( integer ir{0}; ir < nr; ++ir ) {
           // convert to angle
-          real_type theta{ 2*atan(X[ir]) + th };
+          real_type y{ X[ir] };
+          real_type x{ 1     };
+          if ( reciprocal ) std::swap( y, x );
+          real_type theta{ 2*atan2(y,x)+th };
           minus_pi_pi( theta );
           angles[npts++] = theta;
         }
@@ -1020,25 +1039,34 @@ return m_C2.FUN(s)
       real_type t15 { 16 * ca };
       real_type t16 { (t10 * t5 - 48) * sa };
 
-      for ( real_type s{-1}; s <= 1; s += 2 ) {
+      real_type s_x_d[2]{d,-d};
+      for ( integer i{0}; i < 2; ++i ) {
 
-        real_type t8  { s * d   };
-        real_type t9  { t8 * sa } ;
+        real_type t8  { s_x_d[i]     };
+        real_type t9  { t8 * sa      };
         real_type t13 { t8 * (t2-t5) };
 
-        real_type A { -4*d * ((t6 + t3) * s + t7) + t10 * (t9 + ca) + 26 + t11 - t12 };
+        real_type A { t10 * (t9 + ca) + t11 - t12 - 4 * ((t6 + t3) * t8 + d*t7) + 26 };
         real_type B { t14 * (t13 - t3) + t16 + t8 * (t15 - 40) };
-        real_type C { d * (-2*d * t5 + (t14 * t5 + 16) * sa * s) + 12 * t2 + 4*t5 * (t2 + 1) + 52 };
+        real_type C { -2*(d*d) * t5 + (t14 * t5 + 16) * sa * t8 + 12 * t2 + 4*t5 * (t2 + 1) + 52 };
         real_type D { t14 * (t13 + t3) + t16 + t8 * (-t15 - 40) };
-        real_type E { t10 * (t9 - ca) + t11 - t12 - 4 * d * ((t6 - t3) * s - t7) + 26 };
+        real_type E { t10 * (t9 - ca) + t11 - t12 - 4 * ((t6 - t3) * t8 - d*t7) + 26 };
+
+        bool reciprocal{ std::abs(A) >= std::abs(E) };
+        if ( reciprocal ) {
+          std::swap( A, E );
+          std::swap( B, D );
+        }
 
         Quartic Q( A, B, C, D, E );
-
         real_type X[4];
         integer nr{ Q.get_real_roots( X ) };
         for ( integer ir{0}; ir < nr; ++ir ) {
           // convert to angle
-          real_type theta{ 2*atan(X[ir]) + th };
+          real_type y{ X[ir] };
+          real_type x{ 1     };
+          if ( reciprocal ) std::swap( y, x );
+          real_type theta{ 2*atan2(y,x)+th };
           minus_pi_pi( theta );
           angles[npts++] = theta;
         }
@@ -1046,19 +1074,26 @@ return m_C2.FUN(s)
     }
     { // case CSC+
       real_type t{ d*d/2-1 };
-      for ( real_type s{-1}; s <= 1; s += 2 ) {
-        real_type tmp { s*d*sa + t };
-        real_type A   { tmp - ca   };
-        real_type B   { 2*(s*d+sa) };
-        real_type C   { tmp + ca   };
+      real_type s_x_d[2]{d,-d};
+      for ( integer i{0}; i < 2; ++i ) {
+
+        real_type tmp { s_x_d[i]*sa + t };
+        real_type A   { tmp - ca        };
+        real_type B   { 2*(s_x_d[i]+sa) };
+        real_type C   { tmp + ca        };
+
+        bool reciprocal{ std::abs(A) >= std::abs(C) };
+        if ( reciprocal ) std::swap( A, C );
 
         Quadratic Q( A, B, C );
-
         real_type X[2];
         integer nr{ Q.get_real_roots( X ) };
         for ( integer ir{0}; ir < nr; ++ir ) {
           // convert to angle
-          real_type theta{ 2*atan(X[ir]) + th };
+          real_type y{ X[ir] };
+          real_type x{ 1     };
+          if ( reciprocal ) std::swap( y, x );
+          real_type theta{ 2*atan2(y,x)+th };
           minus_pi_pi( theta );
           angles[npts++] = theta;
         }

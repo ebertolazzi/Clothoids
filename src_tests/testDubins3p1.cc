@@ -31,15 +31,18 @@ main() {
   G2lib::Dubins3p DB_SD{"D3P_sample_one_degree"};
   DB_SD.set_sample_points(360);
 
+  real_type tol{ 0.1*m_pi/180.0 };
+  real_type sang{ m_2pi/4 };
+
   // Patern search
   G2lib::Dubins3p DB_PS{"D3P_pattern_search"};
-  DB_PS.set_tolerance(0.1*m_pi/180.0);
-  DB_PS.set_sample_angle(m_2pi/16);
+  DB_PS.set_tolerance( tol );
+  DB_PS.set_sample_angle( sang );
 
   // Pattern trichotomy
   G2lib::Dubins3p DB_PT{"D3P_pattern_trichotomy"};
-  DB_PT.set_tolerance(0.1*m_pi/180.0);
-  DB_PT.set_sample_angle(m_2pi/8);
+  DB_PT.set_tolerance( tol );
+  DB_PT.set_sample_angle( sang );
 
   // Ellipse
   G2lib::Dubins3p DB_EL{"D3P_ellipse"};
@@ -174,6 +177,27 @@ main() {
     lengthsTable_PT(i, 3) = DB_PT.length3();
     lengthsTable_PT(i, 4) = DB_PT.length4();
     lengthsTable_PT(i, 5) = DB_PT.length5();
+
+    if ( 1.013*DB_SD.length() < DB_PT.length() ) {
+      fmt::print(
+        "x0     = {:30.20};\n"
+        "y0     = {:30.20};\n"
+        "theta0 = {:30.20};\n"
+        "xM     = {:30.20};\n"
+        "yM     = {:30.20};\n"
+        "xf     = {:30.20};\n"
+        "yf     = {:30.20};\n"
+        "thetaf = {:30.20};\n"
+        "k_max  = {:30.20};\n"
+        "thetaM = {:30.20}; (SAMPLE)\n"
+        "len    = {:30.20}; (SAMPLE)\n"
+        "thetaM = {:30.20}; (PATTERN)\n"
+        "len    = {:30.20}; (PATTERN)\n\n",
+        xi, yi, thi, xm, ym, xf, yf, thf, k_max,
+        DB_SD.theta3_begin(), DB_SD.length(),
+        DB_PT.theta3_begin(), DB_PT.length()
+      );
+    }
 
     // ███████╗██╗     ██╗     ██╗██████╗ ███████╗███████╗
     // ██╔════╝██║     ██║     ██║██╔══██╗██╔════╝██╔════╝

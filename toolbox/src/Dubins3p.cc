@@ -91,6 +91,7 @@ namespace G2lib {
     real_type thetaf,
     real_type k_max
   ) {
+    m_evaluation = 0;
     real_type thetam{0};
     m_Dubins0.build( xi, yi, thetai, xm, ym, thetam, k_max );
     m_Dubins1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
@@ -656,6 +657,13 @@ return m_Dubins1.FUN(s)
     integer npts{0};
     npts += m_Dubins0.get_range_angles_end   ( xi, yi, thetai, xm, ym,         k_max, angles        );
     npts += m_Dubins1.get_range_angles_begin ( xm, ym,         xf, yf, thetaf, k_max, angles + npts );
+    // put in [0,2pi]
+    for ( integer i{0}; i < npts; ++i ) {
+      real_type & a{angles[i]};
+      while ( a < 0            ) a += Utils::m_2pi;
+      while ( a > Utils::m_2pi ) a -= Utils::m_2pi;
+    }
+    std::sort( angles, angles + npts );
     return npts;
   }
 
@@ -664,12 +672,13 @@ return m_Dubins1.FUN(s)
   ostream_type &
   operator << ( ostream_type & stream, Dubins3p const & bi ) {
     stream
-      << "tolerance      = " << bi.m_tolerance
-      << "max_evaluation = " << bi.m_max_evaluation
-      << "evaluation     = " << bi.m_evaluation
-      << "Dubins0\n" << bi.m_Dubins0
-      << "Dubins1\n" << bi.m_Dubins1
-      << "\n";
+      << "tolerance      = " << bi.m_tolerance      << '\n'
+      << "max_evaluation = " << bi.m_max_evaluation << '\n'
+      << "evaluation     = " << bi.m_evaluation     << '\n'
+      << "length         = " << bi.length()         << '\n'
+      << "theta_M        = " << bi.theta3_begin()   << "\n\n"
+      << "Dubins0\n"         << bi.m_Dubins0
+      << "Dubins1\n"         << bi.m_Dubins1;
     return stream;
   }
 
