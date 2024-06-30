@@ -178,7 +178,7 @@ main() {
     lengthsTable_PT(i, 4) = DB_PT.length4();
     lengthsTable_PT(i, 5) = DB_PT.length5();
 
-    if ( 1.013*DB_SD.length() < DB_PT.length() ) {
+    if ( 1.0014*DB_SD.length() < DB_PT.length() ) {
       fmt::print(
         "x0     = {:30.20};\n"
         "y0     = {:30.20};\n"
@@ -294,7 +294,7 @@ main() {
     integer o_PS{ integer( (rappPS.array() > r).count() ) };
     integer o_PT{ integer( (rappPT.array() > r).count() ) };
     fmt::print(
-      "num outliers > {:>8.3f}  EL = {:>6}  PS = {:>6}  PT = {:>6}\n",
+      "num outliers > {:>12.8f}  EL = {:>6}  PS = {:>6}  PT = {:>6}\n",
       r, o_EL, o_PS, o_PT
     );
     if ( o_EL == 0 && o_PS == 0 && o_PT == 0 ) break;

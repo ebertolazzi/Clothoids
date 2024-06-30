@@ -53,7 +53,7 @@ namespace G2lib {
           real_type a{ i == 0 ? ang[npts-1]-Utils::m_2pi : ang[i-1] };
           //real_type b{ i == npts ? ang[0]+Utils::m_2pi      : ang[i]   };
           real_type b{ ang[i] };
-          real_type delta{ std::min( (b-a)/3, m_sample_angle ) };
+          real_type delta{ std::min( (b-a)/2.99999, m_sample_angle ) };
           while ( a < b ) {
             real_type aa{ a };
             if      ( aa < 0            ) aa += Utils::m_2pi;
