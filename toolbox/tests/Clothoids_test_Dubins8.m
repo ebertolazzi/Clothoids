@@ -33,7 +33,8 @@ DB3b.set_sample_angle( sang );
 
 DB3c.set_sample_points(360);
 
-if false
+switch ( 1 )
+case 1
   k_max  = 0.7497906241084955;
 
   x0     = -1;
@@ -46,7 +47,7 @@ if false
   xf     = 1;
   yf     = 0;
   thetaf = -0.2253391520601129;
-else
+case 2
   x0     =                             -1;
   y0     =                              0;
   theta0 =         -1.4793802997313432179;
@@ -56,10 +57,56 @@ else
   yf     =                              0;
   thetaf =         -1.4793802997313432179;
   k_max  =         0.47036903761898174459;
-  %thetaM =          4.5902159327450595683; (SAMPLE)
-  %len    =          15.846598851367838634; (SAMPLE)
-  %thetaM =          4.9447976995266156308; (PATTERN)
-  %len    =          16.097284941403650294; (PATTERN)
+case 3
+  x0     =                             -1;
+  y0     =                              0;
+  theta0 =        -0.74119245023775892633;
+  xM     =        -0.47185776895093201055;
+  yM     =        -0.47185776895093201055;
+  xf     =                              1;
+  yf     =                              0;
+  thetaf =        -0.74119245023775892633;
+  k_max  =         0.63484978086717369639;
+case 4
+  x0     =                             -1;
+  y0     =                              0;
+  theta0 =         -1.5838139880349093591;
+  xM     =         -1.0082873005353754081;
+  yM     =         -1.0082873005353754081;
+  xf     =                              1;
+  yf     =                              0;
+  thetaf =         -1.5838139880349093591;
+  k_max  =         0.44709944481261865157;
+case 5
+  x0     =                             -1;
+  y0     =                              0;
+  theta0 =        -0.76909997144257191692;
+  xM     =        -0.48962424874768339933;
+  yM     =        -0.48962424874768339933;
+  xf     =                              1;
+  yf     =                              0;
+  thetaf =        -0.76909997144257191692;
+  k_max  =         0.62863151293831076583;
+case 6
+  x0     =                             -1;
+  y0     =                              0;
+  theta0 =        -0.77127444447922410831;
+  xM     =        -0.49100856127729630707;
+  yM     =        -0.49100856127729630707;
+  xf     =                              1;
+  yf     =                              0;
+  thetaf =        -0.77127444447922410831;
+  k_max  =         0.62814700355294628142;
+case 7
+  x0     =                             -1;
+  y0     =                              0;
+  theta0 =        -0.75982596200527785513;
+  xM     =        -0.48372023097077865295;
+  yM     =        -0.48372023097077865295;
+  xf     =                              1;
+  yf     =                              0;
+  thetaf =        -0.75982596200527785513;
+  k_max  =         0.63069791916022743816;
 end
 
 L = @(thetaM) len_Dubins(x0, y0, theta0, xM, yM, thetaM, k_max ) + ...
@@ -91,12 +138,17 @@ for i=1:npts
   th     = thetas(i);
   LAB(i) = L(th);
 end
+LMIN  = min(min(LAB));
+LMAX  = max(max(LAB));
+DELTA = LMAX-LMIN;
+LMIN  = LMIN - 0.1*DELTA;
+LMAX  = LMAX + 0.1*DELTA;
 plot( thetas, LAB, 'LineWidth', 2 );
 hold on;
 
 Lmin = L(pa.theta3);
 plot(pa.theta3,Lmin,'o','MarkerSize',12,'MarkerFaceColor','red');
-plot([0,2*pi],[Lmin,Lmin],'-','Color','red', 'LineWidth', 2);
+plot([0,2*pi],[Lmin,Lmin],'-','Color','red', 'LineWidth', 1);
 
 samples=DB3a.get_sample_angles( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max, tol );
 for a=samples
@@ -106,7 +158,7 @@ end
 
 angles=DB3a.get_range_angles( x0, y0, theta0, xM, yM, xf, yf, thetaf, k_max );
 for a=angles
-  plot([a,a],[15,30],'-','LineWidth',2);
+  plot([a,a],[LMIN,LMAX],'-','LineWidth',2);
   plot(a,L(a),'o','MarkerSize',3,'MarkerFaceColor','red');
 end
 

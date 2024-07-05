@@ -59,11 +59,11 @@ namespace G2lib {
         len    = rhs.len;
       }
 
-      bool
-      compare( Dubins3p_data const & D ) const {
-        return D0.solution_type() == D.D0.solution_type() &&
-               D1.solution_type() == D.D1.solution_type();
-      }
+      //bool
+      //compare( Dubins3p_data const & D ) const {
+      //  return D0.solution_type() == D.D0.solution_type() &&
+      //         D1.solution_type() == D.D1.solution_type();
+      //}
 
     } Dubins3p_data;
 

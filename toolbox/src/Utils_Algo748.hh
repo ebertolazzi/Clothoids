@@ -142,6 +142,18 @@ namespace Utils {
       return this->eval( a, b, amin, bmax );
     }
 
+    template <typename PFUN>
+    Real
+    eval3( Real a, Real b, Real fa, Real fb, PFUN pfun ) {
+      Algo748_fun<Real,PFUN> fun( pfun );
+      m_function             = &fun;
+      m_iteration_count      = 0;
+      m_fun_evaluation_count = 0;
+      m_a = a; m_fa = fa;
+      m_b = b; m_fb = fb;
+      return eval();
+    }
+
     void set_max_iterations( Integer mit );
     void set_max_fun_evaluation( Integer mfev );
 

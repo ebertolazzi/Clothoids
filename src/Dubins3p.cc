@@ -33,8 +33,13 @@ namespace G2lib {
     map<string,Dubins3pBuildType> str_to_type {
       {"sample",Dubins3pBuildType::SAMPLE_ONE_DEGREE},
       {"pattern",Dubins3pBuildType::PATTERN_SEARCH},
+      {"pattern748",Dubins3pBuildType::PATTERN_SEARCH_WITH_ALGO748},
       {"pattern_search",Dubins3pBuildType::PATTERN_SEARCH},
+      {"pattern_search748",Dubins3pBuildType::PATTERN_SEARCH_WITH_ALGO748},
+      {"trichotomy",Dubins3pBuildType::PATTERN_TRICHOTOMY},
+      {"trichotomy748",Dubins3pBuildType::PATTERN_TRICHOTOMY_WITH_ALGO748},
       {"pattern_trichotomy",Dubins3pBuildType::PATTERN_TRICHOTOMY},
+      {"pattern_trichotomy748",Dubins3pBuildType::PATTERN_TRICHOTOMY_WITH_ALGO748},
       {"poly",Dubins3pBuildType::POLYNOMIAL_SYSTEM},
       {"polynomial",Dubins3pBuildType::POLYNOMIAL_SYSTEM},
       {"ellipse",Dubins3pBuildType::ELLIPSE}
@@ -68,9 +73,13 @@ namespace G2lib {
     case Dubins3pBuildType::SAMPLE_ONE_DEGREE:
       return build_sample( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max );
     case Dubins3pBuildType::PATTERN_SEARCH:
-      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, false );
+      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, false, false );
     case Dubins3pBuildType::PATTERN_TRICHOTOMY:
-      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, true );
+      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, true, false );
+    case Dubins3pBuildType::PATTERN_SEARCH_WITH_ALGO748:
+      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, false, true );
+    case Dubins3pBuildType::PATTERN_TRICHOTOMY_WITH_ALGO748:
+      return build_pattern_search( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, m_tolerance, true, true );
     case Dubins3pBuildType::ELLIPSE:
       return build_ellipse( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max );
     case Dubins3pBuildType::POLYNOMIAL_SYSTEM:

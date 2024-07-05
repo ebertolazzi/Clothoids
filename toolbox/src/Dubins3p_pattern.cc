@@ -23,6 +23,7 @@
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
+#include "Utils_Algo748.hh"
 
 namespace G2lib {
 
@@ -50,10 +51,10 @@ namespace G2lib {
       integer npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
       if ( npts > 0 ) {
         for ( integer i{0}; i < npts; ++i ) {
-          real_type a{ i == 0    ? ang[npts-1]-Utils::m_2pi : ang[i-1] };
+          real_type a{ i == 0 ? ang[npts-1]-Utils::m_2pi : ang[i-1] };
           //real_type b{ i == npts ? ang[0]+Utils::m_2pi      : ang[i]   };
           real_type b{ ang[i] };
-          real_type delta{ std::min( (b-a)/3, m_sample_angle ) };
+          real_type delta{ std::min( (b-a)/2.99999, m_sample_angle ) };
           while ( a < b ) {
             real_type aa{ a };
             if      ( aa < 0            ) aa += Utils::m_2pi;
@@ -89,7 +90,8 @@ namespace G2lib {
     real_type thetaf,
     real_type k_max,
     real_type tolerance,
-    bool      use_trichotomy
+    bool      use_trichotomy,
+    bool      use_748
   ) {
 
     m_evaluation = 0;
@@ -99,6 +101,7 @@ namespace G2lib {
       Dubins    D1{"temporary Dubins B"};
       real_type thetam{0};
       real_type len{0};
+      real_type len_D{0};
 
       void
       copy( Dubins3p_data const & rhs ) {
@@ -106,57 +109,90 @@ namespace G2lib {
         D1.copy(rhs.D1);
         thetam = rhs.thetam;
         len    = rhs.len;
+        len_D  = rhs.len_D;
       }
-
-      //bool
-      //compare( Dubins3p_data const & D ) const {
-      //  return D0.solution_type() == D.D0.solution_type() &&
-      //         D1.solution_type() == D.D1.solution_type();
-      //}
 
     } Dubins3p_data;
 
-    auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P ) -> void {
-      D3P.D0.build( xi, yi, thetai, xm, ym, D3P.thetam, k_max );
-      D3P.D1.build( xm, ym, D3P.thetam, xf, yf, thetaf, k_max );
-      D3P.len = D3P.D0.length() + D3P.D1.length();
+    auto check_change_sign = []( Dubins3p_data const & A, Dubins3p_data const & B ) -> bool {
+      bool ok{ A.D0.icode() == B.D0.icode() &&
+               A.D1.icode() == B.D1.icode() };
+      if ( ok ) ok = A.len_D * B.len_D <= 0;
+      return ok;
+    };
+
+    auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P, real_type thetam ) -> void {
+      D3P.thetam = thetam;
+      D3P.D0.build( xi, yi, thetai, xm, ym, thetam, k_max );
+      D3P.D1.build( xm, ym, thetam, xf, yf, thetaf,     k_max );
+      D3P.len   = D3P.D0.length()       + D3P.D1.length();
+      D3P.len_D = D3P.D0.length_Dbeta() + D3P.D1.length_Dalpha();
       ++m_evaluation;
     };
 
-    auto bracketing = [&eval3p]( Dubins3p_data & A, Dubins3p_data & P3, Dubins3p_data & B ) -> void {
-      Dubins3p_data P1, P2, P4, P5;
-      P2.thetam = (A.thetam+2*P3.thetam)/3;
-      eval3p(P2);
-      if ( P2.len <= P3.len ) {
-        P1.thetam = (2*A.thetam+P3.thetam)/3;
-        eval3p(P1);
-        if ( P1.len <= P2.len ) { P3.copy(P1); B.copy(P2); }
-        else                    { A.copy(P1); B.copy(P3); P3.copy(P2); }
-      } else {
-        P4.thetam = (B.thetam+2*P3.thetam)/3;
-        eval3p(P4);
-        if ( P4.len <= P3.len ) {
-          P5.thetam = (2*B.thetam+P3.thetam)/3;
-          eval3p(P5);
-          if ( P5.len <= P4.len ) { A.copy(P4); P3.copy(P5); }
-          else                    { A.copy(P3); P3.copy(P4); B.copy(P5); }
+    auto eval_for_748 = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( real_type theta ) -> real_type {
+      Dubins D0{"temporary Dubins A"};
+      Dubins D1{"temporary Dubins B"};
+      D0.build( xi, yi, thetai, xm, ym, theta,  k_max );
+      D1.build( xm, ym, theta,  xf, yf, thetaf, k_max );
+      ++m_evaluation;
+      return D0.length_Dbeta() + D1.length_Dalpha();
+    };
+
+    auto do_748 = [&check_change_sign,&eval3p,&eval_for_748]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> bool {
+      Utils::Algo748<real_type> algo748;
+      real_type theta{0};
+      bool ok{ false };
+      if ( check_change_sign(L,C) ) {
+        theta = algo748.eval3( L.thetam, C.thetam, L.len_D, C.len_D, eval_for_748 );
+        ok    = algo748.converged();
+      } else if ( check_change_sign(C,R) ) {
+        theta = algo748.eval3( C.thetam, R.thetam, C.len_D, R.len_D, eval_for_748 );
+        ok    = algo748.converged();
+      }
+      // if ok collapse to one point
+      if ( ok ) { eval3p( C, theta ); L.copy(C); R.copy(C); }
+      return ok;
+    };
+
+    auto bracketing = [&eval3p,&do_748,use_748]( Dubins3p_data & A, Dubins3p_data & P3, Dubins3p_data & B ) -> void {
+      bool ok{ use_748 };
+      if ( ok ) ok = do_748( A, P3, B );
+      if ( !ok ) {
+        Dubins3p_data P1, P2, P4, P5;
+        eval3p( P2, (A.thetam+2*P3.thetam)/3 );
+        if ( P2.len <= P3.len ) {
+          eval3p( P1, (2*A.thetam+P3.thetam)/3 );
+          if ( P1.len <= P2.len ) { P3.copy(P1); B.copy(P2); }
+          else                    { A.copy(P1);  B.copy(P3); P3.copy(P2); }
         } else {
-          A.copy(P2);
-          B.copy(P4);
+          eval3p( P4, (B.thetam+2*P3.thetam)/3 );
+          if ( P4.len <= P3.len ) {
+            eval3p( P5, (2*B.thetam+P3.thetam)/3 );
+            if ( P5.len <= P4.len ) { A.copy(P4); P3.copy(P5); }
+            else                    { A.copy(P3); P3.copy(P4); B.copy(P5); }
+          } else {
+            A.copy(P2);
+            B.copy(P4);
+          }
         }
       }
     };
 
-    auto simple_search = [&eval3p]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> void {
-      Dubins3p_data LL, RR;
-      LL.thetam = (C.thetam+L.thetam)/2; eval3p( LL );
-      RR.thetam = (C.thetam+R.thetam)/2; eval3p( RR );
-      if ( LL.len < RR.len ) {
-        if ( LL.len < C.len ) { R.copy(C);  C.copy(LL); }
-        else                  { L.copy(LL); R.copy(RR); }
-      } else {
-        if ( RR.len < C.len ) { L.copy(C);  C.copy(RR); }
-        else                  { L.copy(LL); R.copy(RR); }
+    auto simple_search = [&eval3p,&do_748,use_748]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> void {
+      bool ok{ use_748 };
+      if ( ok ) ok = do_748( L, C, R );
+      if ( !ok ) {
+        Dubins3p_data LL, RR;
+        eval3p( LL, (C.thetam+L.thetam)/2 );
+        eval3p( RR, (C.thetam+R.thetam)/2 );
+        if ( LL.len < RR.len ) {
+          if ( LL.len < C.len ) { R.copy(C);  C.copy(LL); }
+          else                  { L.copy(LL); R.copy(RR); }
+        } else {
+          if ( RR.len < C.len ) { L.copy(C);  C.copy(RR); }
+          else                  { L.copy(LL); R.copy(RR); }
+        }
       }
     };
 
@@ -169,13 +205,14 @@ namespace G2lib {
     // initialize and find min
     real_type lmin{Utils::Inf<real_type>()};
     integer NSEG{integer(angles.size())};
-    C.thetam = angles[NSEG-2]; eval3p( C );
-    R.thetam = angles[NSEG-1]; eval3p( R );
+    eval3p( C, angles[NSEG-2] );
+    eval3p( R, angles[NSEG-1] );
+
     for ( real_type a : angles ) {
       L.copy( C );
       C.copy( R );
-      R.thetam = a;
-      eval3p( R );
+      eval3p( R, a );
+
       if ( C.len <= L.len && C.len <= R.len ) {
         if ( C.len < 1.5*lmin ) {
           Dubins3p_data LL, CC, RR;

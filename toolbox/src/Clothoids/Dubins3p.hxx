@@ -32,8 +32,15 @@ namespace G2lib {
   //                                      |_|
   */
 
-  using Dubins3pBuildType = enum class Dubins3pBuildType : integer
-  { SAMPLE_ONE_DEGREE, PATTERN_SEARCH, PATTERN_TRICHOTOMY, ELLIPSE, POLYNOMIAL_SYSTEM };
+  using Dubins3pBuildType = enum class Dubins3pBuildType : integer {
+    SAMPLE_ONE_DEGREE,
+    PATTERN_SEARCH,
+    PATTERN_TRICHOTOMY,
+    PATTERN_SEARCH_WITH_ALGO748,
+    PATTERN_TRICHOTOMY_WITH_ALGO748,
+    ELLIPSE,
+    POLYNOMIAL_SYSTEM
+  };
 
   Dubins3pBuildType string_to_Dubins3pBuildType( string const & str );
 
@@ -77,7 +84,8 @@ namespace G2lib {
       real_type thetaf,
       real_type k_max,
       real_type tolerance      = 1e-8,
-      bool      use_trichotomy = true
+      bool      use_trichotomy = true,
+      bool      use_748        = true
     );
 
     bool

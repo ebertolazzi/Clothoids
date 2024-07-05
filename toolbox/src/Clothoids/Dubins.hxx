@@ -240,7 +240,9 @@ namespace G2lib {
       CL.push_back( m_C2 );
     }
 
-    real_type length() const override { return m_length; }
+    real_type length()        const override { return m_length; }
+    real_type length_Dalpha() const          { return m_length_Dalpha; }
+    real_type length_Dbeta()  const          { return m_length_Dbeta; }
     real_type length_ISO( real_type offs ) const override;
 
     void
